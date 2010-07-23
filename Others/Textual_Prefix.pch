@@ -1,0 +1,28 @@
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+	#import <Foundation/Foundation.h>
+	#import <Carbon/Carbon.h>
+
+	#import "GlobalModels.h"
+	#import "Preferences.h"
+	#import "NSObject+DDExtensions.h"
+
+	#import "NSStringHelper.h"
+	#import "NSArrayHelper.h"
+
+	#import <RegexKit/RegexKit.h>
+#endif
+
+#ifdef DEBUG
+	#define LOG(...) NSLog(__VA_ARGS__);
+	#define LOG_METHOD NSLog(@"%s", __func__);
+	#define APPLOG(...) NSLog(__VA_ARGS__);
+	#define START_WATCH			CFAbsoluteTime start_time__ = CFAbsoluteTimeGetCurrent();
+	#define END_WATCH			LOG(@"### time elapsed: %f", CFAbsoluteTimeGetCurrent() - start_time__);
+#else
+	#define LOG(...) ;
+	#define LOG_METHOD ;
+	#define APPLOG(...) { if (NSAppEnableApplicationLog) NSLog(__VA_ARGS__); }
+	#define START_WATCH	;
+	#define END_WATCH ;
+#endif

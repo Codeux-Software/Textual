@@ -1,0 +1,202 @@
+/* Copyright © 2010 Codeux Software. */
+
+/* General Language Settings */
+"SHUN_REASON" = "1d Shunned.";
+"KILL_REASON" = "Your behavior is not conducive to the desired environment.";
+"KICK_REASON" = "Your behavior is not conducive to the desired environment.";
+"GLINE_REASON" = "35d Your behavior is not conducive to the desired environment.";
+
+"DEFAULT_QPS_MESSAGE" = "Leaving...";
+"NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";  
+"SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
+"UNTITLED_CONNECTION_NAME" = "Untitled Connection";
+"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE" = "Notify List";
+
+"LOG_PATH_DOESNT_EXIST_TITLE" = "Logs Do Not Exist";
+"LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display";
+
+"CONFIG_MOVE_DIALOG_TITLE" = "Textual requires restart to apply changes";
+"CONFIG_MOVE_DIALOG_MESSAGE" = "Textual has made some changes to its configuration file that requires a restart. Once restarted no more restarts will be necessary.";
+
+"INPUT_REQUIRED_TO_CONTINUE" = "Input Required to Continue";
+
+"PLEASE_ENTER_DESIRED_USER_VHOST" = "Please enter desired vHost. (e.g. google.vhost)";
+
+"CHANNEL_APPLICATION_TITLE_USERS" = " (%i Users)";
+"CHANNEL_APPLICATION_TITLE_MODES" = " (%@)";
+
+"OK_BUTTON" = "OK";
+"QUIT_BUTTON" = "Quit";
+"CANCEL_BUTTON" = "Cancel";
+"DELETE_BUTTON" = "Delete";
+
+"FIND_SEARCH_PHRASE_PROMPT_BUTTON" = "Search";
+"FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to next result and the combination ⇧⌘G to return to previous.";
+
+"BETA_BUILD_EXPIRED_TITLE" = "Beta Build Expired";
+"BETA_BUILD_EXPIRED_MESSAGE" = "This beta build of Textual has expired. Unfortunately, this means that it can no longer be used. This is done to ensure that the most recent version is kept in use. Please try downloading the most recent build to override this error message.";
+
+"WANT_QUIT_TITLE" = "Do you want to quit Textual?";
+"WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";
+
+"WANT_SERVER_DELETE_TITLE" = "Do you want to delete the selection?";
+"WANT_SERVER_DELETE_MESSAGE" = "There is no undo and all data related to this server will be erased.";
+
+"ABOUT_WINDOW_BUILD_NUMBER" = "Version %1$@ (Build #%2$@)";
+"TEXTUAL_PREFERENCES_WINDOW_TITLE" = "Textual Preferences: %@";
+
+/* Dynamic NSMenu items */
+
+"USER_OPTIONS_MENU_ITEM" = "User Options: %@";
+"DELETE_QUERY_MENU_ITEM" = "Delete Query";
+"DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
+
+/* IRC Specific Settings */
+
+"IRC_IS_RECONNECTING" = "Reconnecting...";
+"IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";
+"IRC_USER_IS_AWAY" = "%1$@ is away (%2$@)";
+"IRC_IS_RETRYING_CONNECTION" = "Retrying...";
+"IRC_USER_WHOIS_CHANNELS" = "%1$@ is on %2$@";
+"IRC_CHANNEL_HAS_MODES" = "Mode is \002%@\002";
+"IRC_YOU_HAVE_UMODES" = "Your user mode is %@";
+"IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
+"IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
+"IRC_CONNECTED_TO_SERVER" = "Connected to host.";
+"IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
+"IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
+"IRC_IS_CONNECTING" = "Connecting to %1$@ on port %2$i";
+"IRC_USER_INVITED_OTHER_USER" = "Inviting %@ to join...";
+"IRC_RECIEVED_CTCP_REPLY" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
+"IRC_RECIEVED_CTCP_REQUEST" = "\002-CTCP-\002 %1$@ from %2$@";
+"IRC_CHANNEL_HAS_TOPIC_AUTHOR" = "Set by \002%1$@\002 on %2$@";
+"IRC_USER_HAS_GOOD_LIFE" = "You are now an IRC operator on %@";
+"IRC_SCRIPT_EXECUTION_FAILURE" = "Script Execution Failure: %@";
+"IRC_USER_CHANGED_NICKNAME" = "%1$@ is now known as \002%2$@\002";
+"IRC_USER_DISCONNECTED" = "\002%1$@\002 (%2$@@%3$@) left IRC. (%4$@)";
+"IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
+"IRC_USER_WHOIS_CONNECTED_FROM" = "%1$@ is connected on %2$@ (%3$@)";
+"IRC_WEIGHTS_COMMAND_RESULT" = "%@ - sent: %f receive: %f total: %f";
+"IRC_HAS_IGNORED_CTCP" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
+"IRC_USER_PARTED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) left the channel.";
+"IRC_TIMER_REQUIRES_REALINT" = "Timer command needs interval as a number";
+"IRC_RECIEVED_CTCP_PING_REPLY" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
+"IRC_USER_JOINED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) joined the channel.";
+"IRC_USER_WHOIS_HOSTMASK" = "%1$@ has userhost %2$@@%3$@ and realname %4$@";
+"IRC_CTCP_CLIENT_INFO" = "DCC VERSION CLIENTINFO USERINFO PING TIME UPTIME";
+"IRC_HAS_UNKNOWN_DCC" = "\002-CTCP-\002 unknown (DCC %1$@) from %2$@ : %3$@";
+"IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
+"IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
+"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@) (%7$@)";
+"IRC_IS_TRYING_FILE_TRANSFER" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+"IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
+"IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
+"IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
+"IRC_RECIEVED_FILE_TRANSFER_REQUEST" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+"IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
+
+/* Dialog Settings */
+"LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
+"LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";
+
+"INVITE_SHEET_TWO_PEOPLE" = "%1$@ and %2$@";
+"INVITE_SHEET_MULTIPLE_PEOPLE" = "%d users";
+"INVITE_SHEET_TARGET_DESC" = "Invite %@ to:";
+
+/* DCC Specific Settings */
+"DCC_DISCONNECTED" = "Disconnected";
+"DCC_SENDING_ITEM_TO" = "To %@    ";
+"DCC_LISTENING" = "%@  — Requesting";
+"DCC_CONNECTING" = "%@  — Connecting";
+"DCC_SENDING_ITEM_FROM" = "From %@    ";
+"DCC_TRANSFER_STATUS" = "%1$@ / %2$@ (%3$@/s)";
+"DCC_SEND_NO_PORTS" = "No available ports";
+"DCC_TRANSFER_COMPLETED" = "%@  — Complete";
+"DCC_TRANSFER_STOPPED" = "%1$@ / %2$@  — Stopped";
+"DCC_TRANSFER_HAS_ERROR" = "%1$@ / %2$@  — Error: %3$@";
+"DCC_SEND_FILE_OPEN_FAIL" = "Could not open file";
+"DCC_TRANSFER_TIME_REMAINING" = "  — %@ remaining";
+"DCC_SEND_UNKNOWN_IP_ADDRESS" = "Cannot detect your IP address";
+
+/* Time Convert Prefixes */
+
+"TIME_CONVERT_SECOND" = "sec";
+"TIME_CONVERT_MINUTE" = "min";
+"TIME_CONVERT_HOUR" = "hr";
+"TIME_CONVERT_DAY" = "day";
+"TIME_CONVERT_WEEK" = "wk";
+"TIME_CONVERT_MONTH" = "month";
+"TIME_CONVERT_YEAR" = "year";
+
+"TIME_CONVERT_SECOND_PLURAL" = "secs";
+"TIME_CONVERT_MINUTE_PLURAL" = "min";
+"TIME_CONVERT_HOUR_PLURAL" = "hrs";
+"TIME_CONVERT_DAY_PLURAL" = "day";
+"TIME_CONVERT_WEEK_PLURAL" = "wks";
+"TIME_CONVERT_MONTH_PLURAL" = "months";
+"TIME_CONVERT_YEAR_PLURAL" = "years";
+
+/* Growl Alert Types */
+"GROWL_ADDRESS_BOOK_MATCH" = "Address Book Match";
+"GROWL_CHANNEL_NOTICE" = "Channel Notice";
+"GROWL_NEW_TALK" = "New Private Message";
+"GROWL_CHANNEL_MSG" = "Channel Message";
+"GROWL_TALK_NOTICE" = "Private Notice";
+"GROWL_TALK_MSG" = "Private Message";
+"GROWL_DISCONNECT" = "Disconnected";
+"GROWL_HIGHLIGHT" = "Highlight";
+"GROWL_INVITED" = "Invited";
+"GROWL_LOGIN" = "Connected";
+"GROWL_KICKED" = "Kicked";
+
+/* Growl Alert Bubbles */
+"GROWL_FILE_RECEIVE_REQUEST" = "DCC file receive request";
+"GROWL_FILE_RECEIVE_SUCCESS" = "DCC file receive success";
+"GROWL_FILE_RECEIVE_ERROR" = "DCC file receive failure";
+"GROWL_FILE_SEND_SUCCESS" = "DCC file send success";
+"GROWL_FILE_SEND_ERROR" = "DCC file send failure";
+"GROWL_MSG_LOGIN" = "Connected";
+"GROWL_MSG_LOGIN_TITLE" = "Connected: %@";
+"GROWL_MSG_DISCONNECT" = "Disconnected";
+"GROWL_MSG_DISCONNECT_TITLE" = "Disconnected: %@";
+"GROWL_MSG_INVITED" = "Invited to channel";
+"GROWL_MSG_INVITED_TITLE" = "Invited: %@";
+"GROWL_MSG_INVITED_DESC" = "%1$@ has invited you to %2$@";
+"GROWL_MSG_TALK_MSG" = "Private message received";
+"GROWL_MSG_TALK_MSG_TITLE" = "Private Message";
+"GROWL_MSG_KICKED" = "Kicked out from channel";
+"GROWL_MSG_KICKED_TITLE" = "Kicked: %@";
+"GROWL_MSG_KICKED_DESC" = "%1$@ has kicked you out: %2$@";
+"GROWL_MSG_TALK_NOTICE" = "Private notice received";
+"GROWL_MSG_TALK_NOTICE_TITLE" = "Private Notice";
+"GROWL_NSG_FILE_SEND_FAILED" = "File send failed";
+"GROWL_MSG_FILE_SEND_FAILED_DESC" = "To %1$@\n%2$@";
+"GROWL_MSG_FILE_SEND_FAILED_TITLE" = "File send failed";
+"GROWL_MSG_HIGHLIGHT" = "Highlight message received";
+"GROWL_MSG_HIGHLIGHT_TITLE" = "Highlight: %@";
+"GROWL_MSG_NEW_TALK" = "New private message started";
+"GROWL_MSG_NEW_TALK_TITLE" = "New Private Message";
+"GROWL_MSG_CHANNEL_MSG" = "Channel message received";
+"GROWL_MSG_CHANNEL_NOTICE" = "Channel notice received";
+"GROWL_MSG_CHANNEL_NOTICE_TITLE" = "Notice: %@";
+"GROWL_MSG_ADDRESS_BOOK_MATCH" = "%@ Connected";
+"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Match";
+"GROWL_MSG_FILE_SEND_SUCCEEDED" = "File send succeeded";
+"GROWL_MSG_FILE_SEND_SUCCEEDED_DESC" = "To %1$@\n%2$@";
+"GROWL_MSG_FILE_SEND_SUCCEEDED_TITLE" = "File send succeeded";
+"GROWL_MSG_FILE_RECEIVE_FAILED" = "File receive failed";
+"GROWL_MSG_FILE_RECIEVE_FAILED_DESC" = "From %1$@\n%2$@";
+"GROWL_MSG_FILE_RECIEVE_FAILED_TITLE" = "File receive failed";
+"GROWL_MSG_FILE_RECEIVE_REQUEST" = "File receive requested";
+"GROWL_MSG_FILE_RECIEVE_REQUEST_DESC" = "From %1$@\n%2$@";
+"GROWL_MSG_FILE_RECIEVE_REQUEST_TITLE" = "File receive request";
+"GROWL_MSG_FILE_RECEIVE_SUCCEEDED" = "File receive succeeded";
+"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_DESC" = "From %1$@\n%2$@";
+"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_TITLE" = "File receive succeeded";
+
+/* Valid Top Level Domains (TLD) for URL Matching */
+/* Included within this file to make future updates easier. */
+/* These are in a regular expression format so should be treated as such. */
+/* This expression is very large but tests show average execution of 0.000036 seconds. */
+
+"ALL_DOMAIN_EXTENSIONS" = "(?:ac|ad|aero|ae|af|ag|ai|al|am|an|ao|aq|arpa|ar|asia|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|biz|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|cat|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|coop|com|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|info|int|in|io|iq|ir|is|it|je|jm|jobs|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mil|mk|ml|mm|mn|mobi|mo|mp|mq|mr|ms|mt|museum|mu|mv|mw|mx|my|mz|name|na|nc|net|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pro|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tel|tf|tg|th|tj|tk|tl|tm|tn|to|tp|travel|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|xn--0zwm56d|xn--11b5bs3a9aj6g|xn--80akhbyknj4f|xn--9t4b11yi5a|xn--deba0ad|xn--g6w251d|xn--hgbk6aj7f53bba|xn--hlcj6aya9esc7a|xn--jxalpdlp|xn--kgbechtv|xn--zckzah|ye|yt|yu|za|zm|zw)";
