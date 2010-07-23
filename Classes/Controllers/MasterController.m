@@ -17,7 +17,6 @@
 
 #define KInternetEventClass	1196773964
 #define KAEGetURL			1196773964
-#define MAX_USE_TIME		1280466000
 
 @interface NSTextView (NSTextViewCompatibility)
 - (void)setAutomaticSpellingCorrectionEnabled:(BOOL)v;
@@ -66,6 +65,8 @@
 	[[SUUpdater sharedUpdater] setDelegate:self];
 	
 	[window makeMainWindow];
+	
+	NSLog(@"%@", [[NSBundle mainBundle] bundlePath]);
 	
 	[Preferences initPreferences];
 	
@@ -188,14 +189,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
-	if ([Preferences startTime] > MAX_USE_TIME) {
-		NSInteger result = NSRunAlertPanel(TXTLS(@"BETA_BUILD_EXPIRED_TITLE"), TXTLS(@"BETA_BUILD_EXPIRED_MESSAGE"), TXTLS(@"OK_BUTTON"), nil, nil);
-		if (result == NSAlertDefaultReturn) {
-			terminating = YES;
-			[NSApp terminate:nil];
-		}
-	}
-	
 	[window makeFirstResponder:text];
 	[window makeKeyAndOrderFront:nil];
 	
