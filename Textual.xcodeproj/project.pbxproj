@@ -971,7 +971,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# We want to only run these scripts on Xcode 4\nif [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then\nexit\nfi\n\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/\\*\ncp -r $DSTROOT/Textual.app $PROJECT_DIR/build/$CONFIGURATION/Textual.app";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1278,7 +1278,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_OWNER = "Codeux Software";
+				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
 				OTHER_LDFLAGS = (
 					"-framework",
