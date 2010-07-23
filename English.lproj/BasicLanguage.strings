@@ -15,9 +15,6 @@
 "LOG_PATH_DOESNT_EXIST_TITLE" = "Logs Do Not Exist";
 "LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display";
 
-"CONFIG_MOVE_DIALOG_TITLE" = "Textual requires restart to apply changes";
-"CONFIG_MOVE_DIALOG_MESSAGE" = "Textual has made some changes to its configuration file that requires a restart. Once restarted no more restarts will be necessary.";
-
 "INPUT_REQUIRED_TO_CONTINUE" = "Input Required to Continue";
 
 "PLEASE_ENTER_DESIRED_USER_VHOST" = "Please enter desired vHost. (e.g. google.vhost)";
@@ -32,9 +29,6 @@
 
 "FIND_SEARCH_PHRASE_PROMPT_BUTTON" = "Search";
 "FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to next result and the combination ⇧⌘G to return to previous.";
-
-"BETA_BUILD_EXPIRED_TITLE" = "Beta Build Expired";
-"BETA_BUILD_EXPIRED_MESSAGE" = "This beta build of Textual has expired. Unfortunately, this means that it can no longer be used. This is done to ensure that the most recent version is kept in use. Please try downloading the most recent build to override this error message.";
 
 "WANT_QUIT_TITLE" = "Do you want to quit Textual?";
 "WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";
