@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
-		4C5D331E11F96DA100DBC4A8 /* SystemProfiler.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
+		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4CA9456211E1AFBA00D36367 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C119CD711AD74880004F157 /* application.icns */; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
@@ -135,9 +135,9 @@
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
-		4CA945E911E1AFBA00D36367 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
+		4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
-		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
+		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -158,19 +158,21 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
+				4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CA945E711E1AFBA00D36367 /* CopyFiles */ = {
+		4CA945E711E1AFBA00D36367 /* Copy Files (2 items) */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in CopyFiles */,
-				4CA945E911E1AFBA00D36367 /* Sparkle.framework in CopyFiles */,
+				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */,
+				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			name = "Copy Files (2 items)";
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -887,7 +889,7 @@
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4CA9457511E1AFBA00D36367 /* Copy Files (1 item) */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
-				4CA945E711E1AFBA00D36367 /* CopyFiles */,
+				4CA945E711E1AFBA00D36367 /* Copy Files (2 items) */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4CA945EA11E1AFBA00D36367 /* Run Script */,
@@ -952,7 +954,6 @@
 				4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */,
 				4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */,
 				4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */,
-				4C5D331E11F96DA100DBC4A8 /* SystemProfiler.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
