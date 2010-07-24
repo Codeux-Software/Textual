@@ -66,8 +66,6 @@
 	
 	[window makeMainWindow];
 	
-	NSLog(@"%@", [[NSBundle mainBundle] bundlePath]);
-	
 	[Preferences initPreferences];
 	
 	[ViewTheme createUserDirectory];
