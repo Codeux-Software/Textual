@@ -3210,7 +3210,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)receiveNumericReply:(IRCMessage*)m
 {
-	NSInteger n = m.numericReply;
+	NSInteger n = m.numericReply; 
 	if (400 <= n && n < 600 && n != 403 && n != 422) {
 		[self receiveErrorNumericReply:m];
 		return;
@@ -3673,6 +3673,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 437:   // ERR_NICKTEMPUNAVAIL
 			[self receiveNickCollisionError:m];
 			break;
+		case 404:
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:2]];
+			
+			IRCChannel* c = [self findChannel:chname];
+			if (c) {
+				[self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:text];
+			}
+			
+			return;
+			break;
+		}
 	}
 	
 	[self printErrorReply:m];
