@@ -33,9 +33,11 @@
 		slchar = [strChopper safeSubstringFromIndex:([strChopper length] - 1)];
 		strChopper = [strChopper safeSubstringToIndex:([strChopper length] - 1)];
 		
-		if ([chars containsObject:slchar]) {
-			chopMnt++;
+		if (![chars containsObject:slchar]) {
+			break;
 		}
+		
+		chopMnt++;
 	}
 	
 	if (chopMnt > 0) {
