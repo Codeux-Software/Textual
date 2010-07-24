@@ -971,7 +971,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# We want to only run these scripts on Xcode 4\nif [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then\nexit\nfi\n\n# Only copy file when it is a version for distribution\nif [ $DEPLOYMENT_LOCATION == \"NO\" ]; then\nexit\nfi\n\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/\\*\ncp -r $DSTROOT/Textual.app $PROJECT_DIR/build/$CONFIGURATION/Textual.app";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\nif [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then\nexit\nfi\n\nif [ $DEPLOYMENT_LOCATION == \"NO\" ]; then\nexit\nfi\n\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/\\*\ncp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME";
 		};
 /* End PBXShellScriptBuildPhase section */
 
