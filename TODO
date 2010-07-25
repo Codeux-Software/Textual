@@ -5,5 +5,7 @@ Features & changes to accomplish in future versions of Textual:
 * Options for Changing User Interface Fonts & Colors
 * Flood Control
 * Support for /NOTIFY for when someone connects other than relying on IRCop notices
-* Menu item for Next Channel and Previous Channel
+* Menu item for Next Channel and Previous Channel | Servers also
 * Fix autocomplete prefix not allowing blank value
+* Option to change action of double click in user list
+* Now Playing script has missing play count value

@@ -84,7 +84,6 @@
 		4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
 		4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		4CA945B111E1AFBA00D36367 /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16911737F660044E7A1 /* LogTheme.m */; };
-		4CA945B211E1AFBA00D36367 /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16B11737F660044E7A1 /* OtherTheme.m */; };
 		4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
 		4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
 		4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
@@ -136,8 +135,10 @@
 		4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
 		4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
+		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files (1 item) */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
+		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -148,6 +149,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4CA9457611E1AFBA00D36367 /* Badges in Copy Files (1 item) */,
+				4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files (1 item) */,
 			);
 			name = "Copy Files (1 item)";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,7 +166,7 @@
 		};
 		4CA945E711E1AFBA00D36367 /* Copy Files (2 items) */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -172,7 +174,7 @@
 				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */,
 			);
 			name = "Copy Files (2 items)";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -205,6 +207,7 @@
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		4CBC02A611EDDE3C002AD262 /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
 		4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginProtocol.h; sourceTree = "<group>"; };
 		4CC33FD011ADA2CE005ECD84 /* Badges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Badges; path = Resources/Images/Badges; sourceTree = "<group>"; };
@@ -368,7 +371,6 @@
 		78A8C16811737F660044E7A1 /* LogTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogTheme.h; sourceTree = "<group>"; };
 		78A8C16911737F660044E7A1 /* LogTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogTheme.m; sourceTree = "<group>"; };
 		78A8C16A11737F660044E7A1 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherTheme.h; sourceTree = "<group>"; };
-		78A8C16B11737F660044E7A1 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		78A8C16C11737F660044E7A1 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78A8C16E11737F660044E7A1 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
@@ -799,7 +801,7 @@
 				78A8C16811737F660044E7A1 /* LogTheme.h */,
 				78A8C16911737F660044E7A1 /* LogTheme.m */,
 				78A8C16A11737F660044E7A1 /* OtherTheme.h */,
-				78A8C16B11737F660044E7A1 /* OtherTheme.m */,
+				4CA999D011FCF7180040D8E7 /* OtherTheme.m */,
 				780FF69D11813BC3003C7648 /* CustomJSFile.h */,
 				780FF69E11813BC3003C7648 /* CustomJSFile.m */,
 			);
@@ -981,6 +983,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */,
 				4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */,
 				4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */,
 				4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */,
@@ -1037,7 +1040,6 @@
 				4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */,
 				4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */,
 				4CA945B111E1AFBA00D36367 /* LogTheme.m in Sources */,
-				4CA945B211E1AFBA00D36367 /* OtherTheme.m in Sources */,
 				4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */,
 				4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */,
 				4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */,
