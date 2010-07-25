@@ -972,7 +972,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\nif [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then\nexit\nfi\n\nif [ $DEPLOYMENT_LOCATION == \"NO\" ]; then\nexit\nfi\n\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/*\ncp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME\n\necho \"Build #$(($buildNumber - 1)) built.\"";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1214,7 +1214,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "Textual IRC Client";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1256,7 +1256,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "Textual IRC Client";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
