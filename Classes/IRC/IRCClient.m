@@ -3604,6 +3604,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			inList = NO;
 			break;
 		case 329:
+		case 330:
 			// do nothing
 			break;
 		case 367:
