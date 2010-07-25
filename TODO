@@ -4,3 +4,6 @@ Features & changes to accomplish in future versions of Textual:
 * Option to Logs from Previous Session
 * Options for Changing User Interface Fonts & Colors
 * Flood Control
+* Support for /NOTIFY for when someone connects other than relying on IRCop notices
+* Menu item for Next Channel and Previous Channel
+* Fix autocomplete prefix not allowing blank value
