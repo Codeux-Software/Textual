@@ -136,9 +136,6 @@
 - (void)onWantToReadTextualLogs:(id)sender;
 - (void)onWantToReadChannelLogs:(id)sender;
 
-- (void)onWantTextualHelp:(id)sender;
-- (void)onWantReportTextualBug:(id)sender;
-- (void)onWantTextualFeedbackForm:(id)sender;
 - (void)onWantTextualConnnectToHelp:(id)sender;
 
 - (void)onWantHostServVhostSet:(id)sender;

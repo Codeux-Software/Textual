@@ -1282,21 +1282,6 @@
 	}
 }
 
-- (void)onWantTextualHelp:(id)sender 
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/help/"]];
-}
-
-- (void)onWantReportTextualBug:(id)sender 
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/reportbug/"]];
-}
-
-- (void)onWantTextualFeedbackForm:(id)sender 
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/feedback/"]];
-}
-
 - (void)onWantTextualConnnectToHelp:(id)sender 
 {
 	[world createConnection:@"irc.wyldryde.org +6697" chan:@"#textual"];
