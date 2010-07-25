@@ -11,7 +11,12 @@ based off AppleScript is also supported.
 
 - Compiling -
 
-Textual compiles as any normal application except for one exception. Code Signing is used since Textual uses keychain access so the certificate that is used to do the sign must be placed in keychain. The certificate can be found in the folder Extra/Code Signing/ - Simply double click to open and install. After it is installed compiling can be done. 
+Textual compiles as any normal application except for one small 
+difference. Code Signing is used since Textual uses keychain access 
+so the certificate that is used to do the sign must be placed in 
+keychain. The certificate can be found in the folder Extra/Code Signing/ 
+Simply double click to open and install. After it is installed compiling 
+can be done. 
 
 --------------
 
