@@ -1,5 +1,14 @@
 #import "OtherTheme.h"
 #import "NSColorHelper.h"
+#import "NSDictionaryHelper.h"
+
+@interface OtherTheme (Private)
+- (NSColor *)processStringValue:(NSString *)value def:(NSString *)defaultv;
+
+- (NSFont *)processFontValue:(NSString *)style_value 
+				   font_size:(NSInteger)style_size
+						 def:(NSFont *)defaultv;
+@end
 
 @implementation OtherTheme
 
@@ -36,8 +45,25 @@
 	return self;
 }
 
+- (NSString*)fileName
+{
+	return fileName;
+}
+
+- (void)setFileName:(NSString *)value
+{
+	if (fileName != value) {
+		[fileName release];
+		fileName = [value retain];
+	}
+	
+	[self reload];
+}
+
 - (void)dealloc
 {
+	[fileName release];
+	
 	[inputTextFont release];
 	[inputTextBgColor release];
 	[inputTextColor release];
@@ -72,37 +98,145 @@
 	[super dealloc];
 }
 
-- (void)populateValues 
+- (NSColor *)processStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	inputTextBgColor = [[NSColor fromCSS:@"#000000"] retain];
-	inputTextColor = [[NSColor fromCSS:@"#ccc"] retain];
+	return [NSColor fromCSS:((value == nil || [[value trim] isEmpty]) ? defaultv : value)];
+}
+
+- (NSFont *)processFontValue:(NSString *)style_value 
+				   font_size:(NSInteger)style_size
+						 def:(NSFont *)defaultv
+{
+	if (style_size < 1 || (style_value == nil || [[style_value trim] isEmpty])) {
+		return defaultv;
+	} else {
+		return [NSFont fontWithName:style_value size:style_size];
+	}
+}
+
+- (void)reload 
+{	
+	NSLog(@"lol?");
+	[inputTextFont release];
+	inputTextFont = nil;
+	[inputTextBgColor release];
+	inputTextBgColor = nil;
+	[inputTextColor release];
+	inputTextColor = nil;
 	
-	treeBgColor = [[NSColor fromCSS:@"#1e1e27"] retain];
-	treeHighlightColor = [[NSColor fromCSS:@"#007f00"] retain];
-	treeNewTalkColor = [[NSColor fromCSS:@"#699fcf"] retain];
-	treeUnreadColor = [[NSColor fromCSS:@"#699fcf"] retain];
+	[treeFont release];
+	treeFont = nil;
+	[treeBgColor release];
+	treeBgColor = nil;
+	[treeHighlightColor release];
+	treeHighlightColor = nil;
+	[treeNewTalkColor release];
+	treeNewTalkColor = nil;
+	[treeUnreadColor release];
+	treeUnreadColor = nil;
 	
-	treeActiveColor = [[NSColor fromCSS:@"#fff"] retain];
-	treeInactiveColor = [[NSColor fromCSS:@"#ccc"] retain];
-	treeSelActiveColor = [[NSColor fromCSS:@"#cfbc99"] retain];
-	treeSelInactiveColor = [[NSColor fromCSS:@"#eee"] retain];
-	treeSelTopLineColor = [[NSColor fromCSS:@"#3f3e4c"] retain];	
-	treeSelBottomLineColor = [[NSColor fromCSS:@"#3f3e4c"] retain];
-	treeSelTopColor = [[NSColor fromCSS:@"#3f3e4c"] retain];
-	treeSelBottomColor = [[NSColor fromCSS:@"#201f27"] retain];
+	[treeActiveColor release];
+	treeActiveColor = nil;
+	[treeInactiveColor release];
+	treeInactiveColor = nil;
 	
-	memberListBgColor = [[NSColor fromCSS:@"#1e1e27"] retain];
-	memberListColor = [[NSColor fromCSS:@"#ccc"] retain];
-	memberListOpColor = [[NSColor fromCSS:@"#dedede"] retain];
-	memberListSelColor = [[NSColor fromCSS:@"#cfbc99"] retain];
-	memberListSelTopLineColor = [[NSColor fromCSS:@"#3f3e4c"] retain];
-	memberListSelBottomLineColor = [[NSColor fromCSS:@"#3f3e4c"] retain];
-	memberListSelTopColor = [[NSColor fromCSS:@"#3f3e4c"] retain];
-	memberListSelBottomColor = [[NSColor fromCSS:@"#201f27"] retain];
+	[treeSelActiveColor release];
+	treeSelActiveColor = nil;
+	[treeSelInactiveColor release];
+	treeSelInactiveColor = nil;
+	[treeSelTopLineColor release];
+	treeSelTopLineColor = nil;
+	[treeSelBottomLineColor release];
+	treeSelBottomLineColor = nil;
+	[treeSelTopColor release];
+	treeSelTopColor = nil;
+	[treeSelBottomColor release];
+	treeSelBottomColor = nil;
 	
-	inputTextFont = [[NSFont systemFontOfSize:0] retain];
-	treeFont = [[NSFont fontWithName:@"Lucida Grande" size:11] retain];
-	memberListFont = [[NSFont fontWithName:@"Lucida Grande" size:11] retain];	
+	[memberListFont release];
+	memberListFont = nil;
+	[memberListBgColor release];
+	memberListBgColor = nil;
+	[memberListColor release];
+	memberListColor = nil;
+	[memberListOpColor release];
+	memberListOpColor = nil;
+	
+	[memberListSelColor release];
+	memberListSelColor = nil;
+	[memberListSelTopLineColor release];
+	memberListSelTopLineColor = nil;
+	[memberListSelBottomLineColor release];
+	memberListSelBottomLineColor = nil;
+	[memberListSelTopColor release];
+	memberListSelTopColor = nil;
+	[memberListSelBottomColor release];
+	memberListSelBottomColor = nil;
+	
+	// ====================================================== //
+	
+	NSDictionary *userInterface = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:fileName];
+	
+	NSDictionary *inputTextFormat = [userInterface objectForKey:@"Input Box"];
+	NSDictionary *memberListFormat = [userInterface objectForKey:@"Member List"];
+	NSDictionary *serverListFormat = [userInterface objectForKey:@"Server List"];
+	
+	// ====================================================== //
+	
+	inputTextColor = [[self processStringValue:[inputTextFormat objectForKey:@"Text Color"] def:@"#ccc"] retain];
+	inputTextBgColor = [[self processStringValue:[inputTextFormat objectForKey:@"Background Color"] def:@"#000000"] retain];
+	
+	inputTextFont = [[self processFontValue:[inputTextFormat objectForKey:@"Text Font Style"] 
+								  font_size:[inputTextFormat intForKey:@"Text Font Size"] 
+										def:[NSFont systemFontOfSize:0]] retain];
+	
+	// ====================================================== //
+	
+	treeBgColor = [[self processStringValue:[serverListFormat objectForKey:@"Background Color"] def:@"#1e1e27"] retain];
+	treeUnreadColor = [[self processStringValue:[serverListFormat objectForKey:@"Unread Count"] def:@"#699fcf"] retain];
+	treeHighlightColor = [[self processStringValue:[serverListFormat objectForKey:@"Highlight Color"] def:@"#007f00"] retain];
+	treeNewTalkColor = [[self processStringValue:[serverListFormat objectForKey:@"New Private Message Color"] def:@"#699fcf"] retain];
+	
+	treeActiveColor = [[self processStringValue:[serverListFormat objectForKey:@"Active Color"] def:@"#fff"] retain];
+	treeInactiveColor = [[self processStringValue:[serverListFormat objectForKey:@"Inactive Color"] def:@"#ccc"] retain];
+	treeSelActiveColor = [[self processStringValue:[serverListFormat objectForKey:@"Active Color (Selected)"] def:@"#cfbc99"] retain];
+	treeSelInactiveColor = [[self processStringValue:[serverListFormat objectForKey:@"Inactive Color (Selected)"] def:@"#eee"] retain];
+	
+	NSDictionary *serverTreeGradient = [serverListFormat objectForKey:@"Gradient"];
+	
+	treeSelTopColor = [[self processStringValue:[serverTreeGradient objectForKey:@"Top Color"] def:@"#3f3e4c"] retain];
+	treeSelBottomColor = [[self processStringValue:[serverTreeGradient objectForKey:@"Bottom Color"] def:@"#201f27"] retain];
+	treeSelTopLineColor = [[self processStringValue:[serverTreeGradient objectForKey:@"Top Line Color"] def:@"#3f3e4c"] retain];	
+	treeSelBottomLineColor = [[self processStringValue:[serverTreeGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"] retain];
+	
+	treeFont = [[self processFontValue:[serverListFormat objectForKey:@"Text Font Style"] 
+							 font_size:[serverListFormat intForKey:@"Text Font Size"] 
+								   def:[NSFont fontWithName:@"Lucida Grande" size:11]] retain];
+	
+	// ====================================================== //
+	
+	memberListColor = [[self processStringValue:[memberListFormat objectForKey:@"Text Color"] def:@"#ccc"] retain];
+	memberListOpColor = [[self processStringValue:[memberListFormat objectForKey:@"Op Text Color"] def:@"#dedede"] retain];
+	memberListBgColor = [[self processStringValue:[memberListFormat objectForKey:@"Background Color"] def:@"#1e1e27"] retain];
+	memberListSelColor = [[self processStringValue:[memberListFormat objectForKey:@"Text Color (Selected)"] def:@"#cfbc99"] retain];
+	
+	NSDictionary *memberListGradient = [memberListFormat objectForKey:@"Gradient"];
+	
+	memberListSelTopColor = [[self processStringValue:[memberListGradient objectForKey:@"Top Color"] def:@"#3f3e4c"] retain];
+	memberListSelBottomColor = [[self processStringValue:[memberListGradient objectForKey:@"Bottom Color"] def:@"#201f27"] retain];
+	memberListSelTopLineColor = [[self processStringValue:[memberListGradient objectForKey:@"Top Line Color"] def:@"#3f3e4c"] retain];
+	memberListSelBottomLineColor = [[self processStringValue:[memberListGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"] retain];
+	
+	memberListFont = [[self processFontValue:[memberListFormat objectForKey:@"Text Font Style"] 
+							 font_size:[memberListFormat intForKey:@"Text Font Size"] 
+								   def:[NSFont fontWithName:@"Lucida Grande" size:11]] retain];
+	
+	// ====================================================== //
+	
+	inputTextFormat = memberListFormat = serverListFormat = serverTreeGradient = memberListGradient = nil;
+	
+	[userInterface release];
+	userInterface = nil;
 }
 
 @end

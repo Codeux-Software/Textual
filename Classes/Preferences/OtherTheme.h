@@ -2,6 +2,8 @@
 
 @interface OtherTheme : NSObject
 {	
+	NSString *fileName;
+	
 	NSFont* inputTextFont;
 	NSColor* inputTextBgColor;
 	NSColor* inputTextColor;
@@ -34,6 +36,7 @@
 	NSColor* memberListSelBottomColor;
 }
 
+@property (retain, getter=fileName, setter=setFileName:) NSString* fileName;
 @property (readonly) NSFont* inputTextFont;
 @property (readonly) NSColor* inputTextBgColor;
 @property (readonly) NSColor* inputTextColor;
@@ -60,6 +63,6 @@
 @property (readonly) NSColor* memberListSelTopColor;
 @property (readonly) NSColor* memberListSelBottomColor;
 
-- (void)populateValues;
+- (void)reload;
 
 @end

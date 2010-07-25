@@ -1,4 +1,5 @@
 #import "ViewTheme.h"
+#import "OtherTheme.h"
 #import "Preferences.h"
 
 @interface ViewTheme (Private)
@@ -48,8 +49,6 @@
 
 - (void)load
 {
-	[other populateValues];
-	
 	if (name) {
 		NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
 		if (kindAndName) {
@@ -65,17 +64,20 @@
 			
 			log.fileName = [fullName stringByAppendingPathComponent:@"/design.css"];
 			js.fileName = [fullName stringByAppendingPathComponent:@"/scripts.js"];
+			other.fileName = [fullName stringByAppendingPathComponent:@"/userInterface.plist"];
 			return;
 		}
 	}
 	
 	log.fileName = nil;
 	js.fileName = nil;
+	other.fileName = nil;
 }
 
 - (void)reload
 {
 	[log reload];
+	[other reload];
 	[js reload];
 }
 
