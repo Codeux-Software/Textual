@@ -185,13 +185,13 @@
 
 - (void)updateTimer
 {
-	if ([Preferences floodControlIsEnabled]) {
-		if (sendQueue.count < 1 && maxMsgCount < 1) {
-			if (timer.isActive) {
-				[timer stop];
-			}
-		} else {
-			if (!timer.isActive) {
+	if (sendQueue.count < 1 && maxMsgCount < 1) {
+		if (timer.isActive) {
+			[timer stop];
+		}
+	} else {
+		if (!timer.isActive) {
+			if ([Preferences floodControlIsEnabled]) {
 				[timer start:[Preferences floodControlDelayTimer]];
 			}
 		}
