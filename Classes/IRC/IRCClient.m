@@ -3575,7 +3575,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 			break;
 		}
-		case 321:	// RPL_LISTSTART obsolete
+		case 320:
+			NSString* text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
+			
+			if (whoisChannel) {
+				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
+			} else {		
+				IRCChannel* c = [world selectedChannel];
+				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+			}
 			break;
 		case 322:	// RPL_LIST
 		{
@@ -3603,10 +3611,22 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 323:	// RPL_LISTEND
 			inList = NO;
 			break;
+		case 321:
 		case 329:
-		case 330:
 			// do nothing
 			break;
+		case 330:
+		{
+			NSString* text = [NSString stringWithFormat:@"%@ %@", [m sequence:2], [m paramAt:1]];
+			
+			if (whoisChannel) {
+				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
+			} else {		
+				IRCChannel* c = [world selectedChannel];
+				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+			}
+			break;
+		}
 		case 367:
 		{
 			NSString* mask = [m paramAt:2];
