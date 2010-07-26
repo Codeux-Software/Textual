@@ -645,10 +645,8 @@
 		NSMutableArray* lowerNicks = [NSMutableArray array];
 		
 		for (IRCUser* m in users) {
-			if (!m.isMyself) {
-				[nicks addObject:m.nick];
-				[lowerNicks addObject:m.canonicalNick];
-			}
+			[nicks addObject:m.nick];
+			[lowerNicks addObject:m.canonicalNick];
 		}
 		
 		choices = nicks;
@@ -666,7 +664,7 @@
 		}
 		++i;
 	}
-
+	
 	if (!currentChoices.count) return;
 		
 	NSString* t;
@@ -692,7 +690,9 @@
 	if ((commandMode || channelMode) || !head) {
 		t = [t stringByAppendingString:@" "];
 	} else {
-		t = [t stringByAppendingString:[Preferences completionSuffix]];
+		if ([[Preferences completionSuffix] length] > 1) {
+			t = [t stringByAppendingString:[Preferences completionSuffix]];
+		}
 	}
 	
 	NSRange r = selectedRange;

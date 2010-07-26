@@ -976,7 +976,6 @@ static NSMutableArray* excludeWords;
 	[d setInt:DCC_SHOW_DIALOG forKey:@"Preferences.DCC.action"];
 	[d setInt:ADDRESS_DETECT_JOIN forKey:@"Preferences.DCC.address_detection_method"];
 	[d setObject:@"" forKey:@"Preferences.DCC.myaddress"];
-	[d setObject:@" " forKey:@"Preferences.General.completion_suffix"];
 	[d setObject:nick forKey:@"Preferences.Identity.nickname"];
 	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
