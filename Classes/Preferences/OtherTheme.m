@@ -193,7 +193,7 @@
 	// ====================================================== //
 	
 	treeBgColor = [[self processStringValue:[serverListFormat objectForKey:@"Background Color"] def:@"#1e1e27"] retain];
-	treeUnreadColor = [[self processStringValue:[serverListFormat objectForKey:@"Unread Count"] def:@"#699fcf"] retain];
+	treeUnreadColor = [[self processStringValue:[serverListFormat objectForKey:@"Unread Color"] def:@"#699fcf"] retain];
 	treeHighlightColor = [[self processStringValue:[serverListFormat objectForKey:@"Highlight Color"] def:@"#007f00"] retain];
 	treeNewTalkColor = [[self processStringValue:[serverListFormat objectForKey:@"New Private Message Color"] def:@"#699fcf"] retain];
 	
