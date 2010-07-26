@@ -1,0 +1,299 @@
+/* Basic Body Structure */
+
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+  	word-wrap: break-word;
+}	
+
+body {
+	color: #000;
+	height: 100%;
+ 	z-index: 100;
+	font-size: 10px;
+	overflow: hidden;
+	overflow-y: visible;
+	background-color: #fff;
+}
+
+body div#body_home {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+	max-height: 97.5%;
+	position: absolute;
+}
+
+body div#body_home div {
+ 	margin-top: -1px;
+}
+
+body div#body_home p {
+	clear: both;
+	position: relative;
+}
+
+/* Time */
+
+body .time {
+	color: #aaa;
+	text-indent: 0;
+	word-wrap: normal;
+	white-space: nowrap
+	display: inline-block;
+}
+
+/* Links */
+
+a {
+  color: #00e;
+  border-color: #00e;
+  text-decoration: none;
+  border-bottom: dotted 1px;
+}
+
+a:hover {
+  color: #0080FF;
+  border-color: #0080FF;
+}
+
+/* Topic Bar */
+
+#topic_bar {
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #000;
+  z-index: 400;
+  opacity: 0.95;
+  font-size: 9px;
+  position: fixed;
+  background: #CFD4DD;
+  padding: 2px 0.5em 3px;
+  border-bottom: 1px solid #8387B6;
+  -webkit-box-shadow: 0 1px 5px #777;
+}
+
+#topic_bar a {
+  color: #00e;
+  border-color: #00e;
+}
+
+#topic_bar a:hover {
+  color: #0080FF;
+  border-color: #0080FF;
+}
+
+/* Images */
+
+body a img {
+    border: 0;
+}
+
+body img {
+    display: block;
+    max-width: 95%;
+    padding-top: 5px;
+    padding-left: 8px;
+    padding-bottom: 5px;
+}
+
+/* Remember Line */
+
+div[id=mark] {
+  position: relative;
+  z-index: 295;
+  margin-top: -1px;
+  border-bottom: 1px dashed;
+  border-color: #444;
+  -webkit-transition: 0.2s linear;
+}
+
+/* Nickname Colors */
+
+body div[type=privmsg] .sender[type=myself],
+body div[type=action] .sender[type=myself] { 
+	color: #FF1676; 
+}
+
+body .sender[type=normal][colornumber='0'] { color: #0080ff; }
+body .sender[type=normal][colornumber='1'] { color: #00DF00; }
+body .sender[type=normal][colornumber='2'] { color: #ff0080; }
+body .sender[type=normal][colornumber='3'] { color: #dd00ff; }
+body .sender[type=normal][colornumber='4'] { color: #76E0BD; }
+body .sender[type=normal][colornumber='5'] { color: #7F4FFF; }
+body .sender[type=normal][colornumber='6'] { color: #8BC100; }
+body .sender[type=normal][colornumber='7'] { color: #cc66ff; }
+body .sender[type=normal][colornumber='8'] { color: #BB0008; }
+body .sender[type=normal][colornumber='9'] { color: #6F42BC; }
+body .sender[type=normal][colornumber='10'] { color: #008080; }
+body .sender[type=normal][colornumber='11'] { color: #904000; }
+body .sender[type=normal][colornumber='12'] { color: #808000; }
+body .sender[type=normal][colornumber='13'] { color: #4ABFD1; }
+body .sender[type=normal][colornumber='14'] { color: #3333dd; }
+body .sender[type=normal][colornumber='15'] { color: #C19C46; }
+
+/* NOTICE/CTCP/WALLOPS */
+
+body div[type=notice],
+body div[type=ctcp],
+body div[type=wallops] {
+	color: #f00;
+  	z-index: 191;
+	background: #fcc;
+  	position: relative;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid #f77;
+	border-bottom: 1px solid #f77;
+}
+
+body div[type=notice] .sender {
+	color: #f00;
+	font-weight: 700;
+}
+
+/* PRIVMSG */
+
+body div[type=privmsg][highlight=false]  {
+ 	padding: 3px 5px 3px 5px;
+}
+
+body div[type=privmsg][highlight=true],
+body div[type=action][highlight=true] {
+	font-weight: normal;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid #F6E73F;
+	border-bottom: 1px solid #F6E73F;
+  	background-color: #FAF4AF !important;
+}
+
+body div[type=privmsg] .message {
+	color: #000;
+}
+
+body div[type=privmsg] p[type=myself] .message {
+	color: #000;
+}
+
+body div[type=privmsg] .sender {
+	font-weight: 700;
+}
+
+/* ACTION */
+
+body div[type=action]  {
+ 	padding: 3px 5px 3px 5px;
+}
+
+body div[type=action] .message {
+	color: #000;
+}
+
+body div[type=action] .sender {
+	font-weight: 700;
+}
+
+body div[type=action] p[type=myself] .sender,
+body div[type=action] p[type=myself] .message {
+	color: #B52CF6;
+}
+
+body div[type=action] .sender:before {
+	content: "\2022";
+	margin-right: 0.4em;
+}
+
+body div[type=action] .sender:after {
+	content: "";
+}
+
+/* REPLY/SYSTEM/ERROR/DCC/DEBUG/INVITE */
+
+body div[type=invite],
+body div[type=reply],
+body div[type=system],
+body div[type=error],
+body div[type=error_reply],
+body div[type=dcc_send_send],
+body div[type=dcc_send_receive],
+body div[type=debug_send],
+body div[type=debug_receive] {
+	color: #777;
+  	z-index: 190;
+	background: #eee;
+  	position: relative;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+/* GENERAL EVENT */
+
+body div[type=join],
+body div[type=part],
+body div[type=kick],
+body div[type=quit],
+body div[type=kill],
+body div[type=nick],
+body div[type=mode],
+body div[type=topic] {
+ 	padding: 3px 5px 3px 5px;
+    color: #aaa;
+}
+
+body div[type=join] .message:before {
+	content: "→";
+  	color: #0c0;
+  	margin-right: 3px;
+}
+
+body div[type=kick] .message:before,
+body div[type=part] .message:before,
+body div[type=quit] .message:before {
+	content: "←";
+  	color: #e00;
+  	margin-right: 3px;
+}
+
+body div[type=nick] .message:before {
+	content:"•";
+  	color: #0c0;
+  	margin-right: 3px;
+}
+
+/* mIRC Color Codes */
+
+.effect[color-number='0'] { color: #fff; }
+.effect[color-number='1'] { color: #000; }
+.effect[color-number='2'] { color: #008; }
+.effect[color-number='3'] { color: #080; }
+.effect[color-number='4'] { color: #f00; }
+.effect[color-number='5'] { color: #800; }
+.effect[color-number='6'] { color: #808; }
+.effect[color-number='7'] { color: #f80; }
+.effect[color-number='8'] { color: #ff0; }
+.effect[color-number='9'] { color: #0f0; }
+.effect[color-number='10'] { color: #088; }
+.effect[color-number='11'] { color: #0ff; }
+.effect[color-number='12'] { color: #00f; }
+.effect[color-number='13'] { color: #f0f; }
+.effect[color-number='14'] { color: #888; }
+.effect[color-number='15'] { color: #ccc; }
+.effect[bgcolor-number='0'] { background-color: #fff; }
+.effect[bgcolor-number='1'] { background-color: #000; }
+.effect[bgcolor-number='2'] { background-color: #008; }
+.effect[bgcolor-number='3'] { background-color: #080; }
+.effect[bgcolor-number='4'] { background-color: #f00; }
+.effect[bgcolor-number='5'] { background-color: #800; }
+.effect[bgcolor-number='6'] { background-color: #808; }
+.effect[bgcolor-number='7'] { background-color: #f80; }
+.effect[bgcolor-number='8'] { background-color: #ff0; }
+.effect[bgcolor-number='9'] { background-color: #0f0; }
+.effect[bgcolor-number='10'] { background-color: #088; }
+.effect[bgcolor-number='11'] { background-color: #0ff; }
+.effect[bgcolor-number='12'] { background-color: #00f; }
+.effect[bgcolor-number='13'] { background-color: #f0f; }
+.effect[bgcolor-number='14'] { background-color: #888; }
+.effect[bgcolor-number='15'] { background-color: #ccc; }
