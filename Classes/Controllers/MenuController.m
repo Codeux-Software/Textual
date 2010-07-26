@@ -836,7 +836,15 @@
 		if ([[view selectedRowIndexes] count] > 0) {
 			[view selectItemAtIndex:n];
 		}
-		[self whoisSelectedMembers:nil deselect:NO];
+		
+		switch ([Preferences userDoubleClickOption]) {
+			case USERDC_ACTION_WHOIS: 
+				[self whoisSelectedMembers:nil deselect:NO];
+				break;
+			case USERDC_ACTION_QUERY: 
+				[self onMemberTalk:nil];
+				break;
+		}
 	}
 }
 
