@@ -211,6 +211,27 @@ static NSMutableDictionary *commandIndex;
 }
 
 #pragma mark -
+#pragma mark Flood Control
+
++ (BOOL)floodControlIsEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.FloodControl.enabled"];
+}
+
++ (NSInteger)floodControlMaxMessages
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.FloodControl.maxmsg"];
+}
+
++ (NSInteger)floodControlDelayTimer
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.FloodControl.timer"];
+}
+
+#pragma mark -
 #pragma mark Default Identity
 
 + (NSString*)defaultNickname
@@ -962,11 +983,8 @@ static NSMutableArray* excludeWords;
 	
 	NSString* nick = NSUserName();
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-
-#if defined(MAC_OS_X_VERSION_10_6) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6)
 	nick = [nick stringByMatching:@"[^a-zA-Z0-9-_]" replace:RKReplaceAll withReferenceString:@""];
-#endif
-	
+
 	if (nick == nil) {
 		nick = @"User";
 	}
@@ -986,6 +1004,9 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
 	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
 	[d setBool:NO forKey:@"Preferences.General.handle_server_notices"];
+	[d setBool:NO forKey:@"Preferences.FloodControl.enabled"];
+	[d setInt:2 forKey:@"Preferences.FloodControl.timer"];
+	[d setInt:100 forKey:@"Preferences.FloodControl.maxmsg"];
 	[d setBool:NO forKey:@"Preferences.General.handle_operalerts"];
 	[d setBool:NO forKey:@"Preferences.General.process_channel_modes"];
 	[d setBool:NO forKey:@"Preferences.General.rejoin_onkick"];

@@ -3576,6 +3576,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		}
 		case 320:
+		{
 			NSString* text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
 			
 			if (whoisChannel) {
@@ -3585,6 +3586,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
+		}
 		case 322:	// RPL_LIST
 		{
 			NSString* chname = [m paramAt:1];

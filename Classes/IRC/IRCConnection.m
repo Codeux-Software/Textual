@@ -1,10 +1,15 @@
 #import "IRCConnection.h"
-#include <SystemConfiguration/SystemConfiguration.h>
+
 #import "IRC.h"
+#import "Timer.h"
 #import "NSData+Kana.h"
+#import "Preferences.h"
+
+#include <SystemConfiguration/SystemConfiguration.h>
 
 @interface IRCConnection (Private)
-- (void)tryToSend;
+- (void)updateTimer;
+- (BOOL)tryToSend;
 @end
 
 @implementation IRCConnection
@@ -22,12 +27,19 @@
 @synthesize proxyUser;
 @synthesize proxyPassword;
 @synthesize loggedIn;
+@synthesize conn;
+@synthesize timer;
+@synthesize maxMsgCount;
+@synthesize sendQueue;
+@synthesize sending;
 
 - (id)init
 {
 	if (self = [super init]) {
 		encoding = NSUTF8StringEncoding;
 		sendQueue = [NSMutableArray new];
+		timer = [Timer new];
+		timer.delegate = self;
 	}
 	return self;
 }
@@ -43,6 +55,9 @@
 	[conn autorelease];
 	
 	[sendQueue release];
+	
+	[timer stop];
+	[timer release];
 	
 	[super dealloc];
 }
@@ -80,6 +95,7 @@
 - (void)close
 {
 	loggedIn = NO;
+	[timer stop];
 	[sendQueue removeAllObjects];
 	[conn close];
 	[conn autorelease];
@@ -103,18 +119,20 @@
 
 - (BOOL)readyToSend
 {
-	return !sending;
+	return (!sending && maxMsgCount < [Preferences floodControlMaxMessages]);
 }
 
 - (void)clearSendQueue
 {
 	[sendQueue removeAllObjects];
+	[self updateTimer];
 }
 
 - (void)sendLine:(NSString*)line
 {
 	[sendQueue addObject:line];
 	[self tryToSend];
+	[self updateTimer];
 }
 
 - (NSData*)convertToCommonEncoding:(NSString*)s
@@ -136,12 +154,13 @@
 	return data;
 }
 
-- (void)tryToSend
+- (BOOL)tryToSend
 {
-	if ([sendQueue count] == 0) return;
-	if (sending) return;
+	if ([sendQueue count] == 0) return NO;
+	if (sending) return NO;
+	if (maxMsgCount > [Preferences floodControlMaxMessages]) return NO;
 	
-	NSString* s = [sendQueue safeObjectAtIndex:0];
+	NSString* s = [sendQueue objectAtIndex:0];
 	s = [s stringByAppendingString:@"\r\n"];
 	[sendQueue removeObjectAtIndex:0];
 	
@@ -150,11 +169,49 @@
 	if (data) {
 		sending = YES;
 		
+		if (loggedIn && [Preferences floodControlIsEnabled]) {
+			maxMsgCount++;
+		}
+		
 		[conn write:data];
 		
 		if ([delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
 			[delegate ircConnectionWillSend:s];
 		}
+	}
+	
+	return YES;
+}
+
+- (void)updateTimer
+{
+	if ([Preferences floodControlIsEnabled]) {
+		if (sendQueue.count < 1 && maxMsgCount < 1) {
+			if (timer.isActive) {
+				[timer stop];
+			}
+		} else {
+			if (!timer.isActive) {
+				[timer start:[Preferences floodControlDelayTimer]];
+			}
+		}
+	}
+}
+
+- (void)timerOnTimer:(id)sender
+{
+	maxMsgCount = 0;
+	
+	if (sendQueue.count > 0) {
+		while (sendQueue.count > 0) {
+			if ([self tryToSend] == NO) {
+				break;
+			}
+			
+			[self updateTimer];
+		}
+	} else {
+		[self updateTimer];
 	}
 }
 
@@ -169,6 +226,7 @@
 
 - (void)tcpClient:(TCPClient*)sender error:(NSString*)error
 {
+	[timer stop];
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidError:)]) {
@@ -178,6 +236,7 @@
 
 - (void)tcpClientDidDisconnect:(TCPClient*)sender
 {
+	[timer stop];
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
@@ -203,7 +262,4 @@
 	[self tryToSend];
 }
 
-@synthesize conn;
-@synthesize sendQueue;
-@synthesize sending;
 @end

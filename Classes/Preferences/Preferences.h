@@ -48,6 +48,9 @@ typedef enum {
 + (NSArray*)bannedURLRegexChars;
 + (NSArray*)bannedURLRegexLineTypes;
 + (NSArray*)bannedURLRegexBufferChars;
++ (BOOL)floodControlIsEnabled;
++ (NSInteger)floodControlDelayTimer;
++ (NSInteger)floodControlMaxMessages;
 + (BOOL)displayServerMOTD;
 + (BOOL)copyOnSelect;
 + (BOOL)handleIRCopAlerts;
