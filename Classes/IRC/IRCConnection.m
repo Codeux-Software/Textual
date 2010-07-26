@@ -160,7 +160,7 @@
 	if (sending) return NO;
 	if (maxMsgCount > [Preferences floodControlMaxMessages]) return NO;
 	
-	NSString* s = [sendQueue safeO	bjectAtIndex:0];
+	NSString* s = [sendQueue safeObjectAtIndex:0];
 	s = [s stringByAppendingString:@"\r\n"];
 	[sendQueue removeObjectAtIndex:0];
 	
