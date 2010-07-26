@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
+		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
+		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4CA9456211E1AFBA00D36367 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C119CD711AD74880004F157 /* application.icns */; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
@@ -172,6 +174,7 @@
 			files = (
 				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */,
 				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */,
+				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files (2 items) */,
 			);
 			name = "Copy Files (2 items)";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,6 +201,7 @@
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
+		4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Framework/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C7832F211AE4AF100D8928D /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
@@ -430,6 +434,7 @@
 				4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */,
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
 				4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */,
+				4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +490,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
 				4CBC02A611EDDE3C002AD262 /* RegexKit.framework */,
 				4C27C20911B1747D008EAA24 /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
@@ -1226,6 +1232,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
+					"\"$(SRCROOT)/Framework/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1268,6 +1275,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
+					"\"$(SRCROOT)/Framework/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
