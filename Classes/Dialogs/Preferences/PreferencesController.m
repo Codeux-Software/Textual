@@ -98,10 +98,13 @@
 		case 6:
 			[self firstPane:logView];
 			break;
-		case 8:
-			[self firstPane:identityView];
+		case 7:
+			[self firstPane:floodControlView];
 			break;
 		case 9:
+			[self firstPane:identityView];
+			break;
+		case 10:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -534,4 +537,5 @@
 @synthesize preferenceSelectButton;
 @synthesize transcriptFolderOpenPanel;
 @synthesize logFont;
+@synthesize floodControlView;
 @end

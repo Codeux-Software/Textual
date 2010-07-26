@@ -8,24 +8,29 @@
 	
 	NSString* host;
 	NSInteger port;
-	BOOL useSSL;
 	NSStringEncoding encoding;
 	
-	BOOL useSystemSocks;
-	BOOL useSocks;
-	NSInteger socksVersion;
 	NSString* proxyHost;
 	NSInteger proxyPort;
 	NSString* proxyUser;
+	NSInteger socksVersion;
 	NSString* proxyPassword;
 	
 	TCPClient* conn;
+	
+	Timer* timer;
+	NSInteger maxMsgCount;
 	NSMutableArray* sendQueue;
-	BOOL sending;
+	
+	BOOL useSystemSocks;
 	BOOL loggedIn;
+	BOOL useSocks;
+	BOOL sending;
+	BOOL useSSL;
 }
 
 @property (assign) id delegate;
+@property (assign) Timer* timer;
 @property (retain) NSString* host;
 @property (assign) NSInteger port;
 @property (assign) BOOL useSSL;
@@ -33,6 +38,7 @@
 @property (assign) BOOL useSystemSocks;
 @property (assign) BOOL useSocks;
 @property (assign) NSInteger socksVersion;
+@property (assign) NSInteger maxMsgCount;
 @property (retain) NSString* proxyHost;
 @property (assign) NSInteger proxyPort;
 @property (retain) NSString* proxyUser;
