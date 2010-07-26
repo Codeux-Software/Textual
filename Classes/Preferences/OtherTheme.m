@@ -116,7 +116,6 @@
 
 - (void)reload 
 {	
-	NSLog(@"lol?");
 	[inputTextFont release];
 	inputTextFont = nil;
 	[inputTextBgColor release];
