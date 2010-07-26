@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme>
+   <BuildAction
+      buildConfiguration = "Release">
+      <BuildableProductReferences>
+         <BuildableProductReference
+            BuildableProductIdentifier = "Textual.app">
+         </BuildableProductReference>
+      </BuildableProductReferences>
+   </BuildAction>
+   <TestAction>
+   </TestAction>
+   <ArchiveAction>
+      <ArchivingStrategy
+         StrategyType = "Xcode.IDEStandardArchivingStrategies.ArchivingStrategyType.Application">
+         <StrategyContent>
+         </StrategyContent>
+      </ArchivingStrategy>
+   </ArchiveAction>
+</Scheme>
