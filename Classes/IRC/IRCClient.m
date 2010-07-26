@@ -2594,10 +2594,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							BOOL sendEvent = NO;
 							IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
 							ignoreChecks = [self checkIgnore:[chunks safeObjectAtIndex:1] 
-											   uname:[chunks safeObjectAtIndex:0] 
-											    name:anick
-										  matchAgainst:[NSArray arrayWithObjects:@"notifyWhoisJoins", 
-																     @"notifyJoins", nil]];
+													   uname:[chunks safeObjectAtIndex:0] 
+														name:anick
+												matchAgainst:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 						
 							if (!c && ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES)) {
 								c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];

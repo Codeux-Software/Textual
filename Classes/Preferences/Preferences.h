@@ -23,6 +23,11 @@ typedef enum {
 	TAB_NONE = 100,
 } TabActionType;
 
+typedef enum {
+	USERDC_ACTION_WHOIS = 100,
+	USERDC_ACTION_QUERY = 200,
+} UserDoubleClickAction;
+
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
@@ -79,6 +84,7 @@ typedef enum {
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
++ (UserDoubleClickAction)userDoubleClickOption;
 
 + (NSString*)themeName;
 + (void)setThemeName:(NSString*)value;

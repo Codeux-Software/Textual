@@ -459,6 +459,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud objectForKey:@"Preferences.Keyword.words"];
 }
 
++ (UserDoubleClickAction)userDoubleClickOption
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.General.user_doubleclick_action"];
+}
+
 #pragma mark -
 #pragma mark Theme
 
@@ -1044,6 +1050,7 @@ static NSMutableArray* excludeWords;
 	[d setInt:1115 forKey:@"Preferences.DCC.last_port"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
+	[d setInt:100 forKey:@"Preferences.General.user_doubleclick_action"];
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud registerDefaults:d];
