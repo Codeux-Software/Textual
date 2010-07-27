@@ -1,12 +1,10 @@
-// Created by Satoshi Nakagawa.
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "TCPClient.h"
 
-
 #define LF	0xa
 #define CR	0xd
-
 
 @interface TCPClient (Private)
 - (BOOL)checkTag:(AsyncSocket*)sock;
