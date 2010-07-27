@@ -31,6 +31,7 @@
 	ViewTheme* theme;
 	NSInteger maxLines;
 	NSColor* initialBackgroundColor;
+	NSMutableArray* highlightedLineNumbers;
 	
 	BOOL becameVisible;
 	BOOL bottom;
@@ -47,6 +48,7 @@
 	NSInteger scrollTop;
 }
 
+@property (retain) NSMutableArray* highlightedLineNumbers;
 @property (readonly) LogView* view;
 @property (assign) IRCWorld* world;
 @property (assign) IRCClient* client;
