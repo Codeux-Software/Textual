@@ -29,8 +29,9 @@ trusted for signing.
 
 The New BSD License
 
-Copyright (c) 2010 Michael Morris
-All rights reserved.
+Based on work by Satoshi Nakagawa <psychs AT limechat DOT net>
+Copyright (c) 2008-2010 All rights reserved.
+<http://github.com/psychs/limechat>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
