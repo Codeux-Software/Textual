@@ -1,10 +1,11 @@
-#import "NSData+Kana.h"
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
+// You can redistribute it and/or modify it under the new BSD license.
 
+#import "NSData+Kana.h"
 
 #define ESC		0x1B
 #define SO		0x0E
 #define SI		0x0F
-
 
 typedef enum {
 	ENC_OTHER,

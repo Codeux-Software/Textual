@@ -1,13 +1,11 @@
-// Created by Satoshi Nakagawa.
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "TCPServer.h"
 #import "AsyncSocket.h"
 
-
 @interface TCPServer (Private)
 @end
-
 
 @implementation TCPServer
 

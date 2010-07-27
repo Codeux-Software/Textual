@@ -1,3 +1,6 @@
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
+// You can redistribute it and/or modify it under the new BSD license.
+
 #import "DCCReceiver.h"
 
 #define DOWNLOADING_PREFIX	@"__download__"

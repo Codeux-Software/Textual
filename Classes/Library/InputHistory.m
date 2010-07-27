@@ -1,8 +1,8 @@
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>// You can redistribute it and/or modify it under the new BSD license.
+
 #import "InputHistory.h"
 
-
 #define INPUT_HISTORY_MAX	50
-
 
 @implementation InputHistory
 
