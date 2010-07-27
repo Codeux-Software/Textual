@@ -694,7 +694,7 @@
 	if ((commandMode || channelMode) || !head) {
 		t = [t stringByAppendingString:@" "];
 	} else {
-		if ([[Preferences completionSuffix] length] > 1) {
+		if ([[Preferences completionSuffix] length] >= 1) {
 			t = [t stringByAppendingString:[Preferences completionSuffix]];
 		}
 	}
