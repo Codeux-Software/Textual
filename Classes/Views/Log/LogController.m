@@ -38,6 +38,7 @@
 @synthesize theme;
 @synthesize maxLines;
 @synthesize initialBackgroundColor;
+@synthesize highlightedLineNumbers;
 
 - (id)init
 {
@@ -45,6 +46,7 @@
 		bottom = YES;
 		maxLines = 300;
 		lines = [NSMutableArray new];
+		highlightedLineNumbers = [NSMutableArray new];
 	}
 	return self;
 }
@@ -66,6 +68,7 @@
 	[memberMenu release];
 	[theme release];
 	[initialBackgroundColor release];
+	[highlightedLineNumbers release];
 	
 	[lines release];
 	
@@ -359,6 +362,29 @@
 		[body removeChild:[nodeList item:i]];
 	}
 	
+	if (highlightedLineNumbers.count > 0) {
+		DOMNodeList* nodeList = [body childNodes];
+		if (nodeList.length) {
+			DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
+			if (firstNode) {
+				NSString* lineId = [firstNode valueForKey:@"id"];
+				if (lineId && lineId.length > 4) {
+					NSString* lineNumStr = [lineId substringFromIndex:4];
+					NSInteger lineNum = [lineNumStr integerValue];
+					while (highlightedLineNumbers.count) {
+						NSInteger i = [[highlightedLineNumbers objectAtIndex:0] integerValue];
+						if (lineNum <= i) break;
+						[highlightedLineNumbers removeObjectAtIndex:0];
+					}
+				}
+			}
+		} else {
+			[highlightedLineNumbers removeAllObjects];
+		}
+	} else {
+		[highlightedLineNumbers removeAllObjects];
+	}
+	
 	count -= n;
 	if (count < 0) count = 0;
 	
@@ -487,6 +513,10 @@
 	
 	if (maxLines > 0 && count > maxLines) {
 		[self setNeedsLimitNumberOfLines];
+	}
+	
+	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
+		[highlightedLineNumbers addObject:[NSNumber numberWithInt:lineNumber]];
 	}
 	
 	if (scroller) {
@@ -706,6 +736,33 @@
 - (void)logViewDidResize
 {
 	[self restorePosition];
+}
+
+#pragma mark -
+#pragma mark MarkedScroller Delegate
+
+- (NSArray*)markedScrollerPositions:(MarkedScroller*)sender
+{
+	NSMutableArray* result = [NSMutableArray array];
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (doc) {
+		for (NSNumber* n in highlightedLineNumbers) {
+			NSString* key = [NSString stringWithFormat:@"line%d", [n integerValue]];
+			DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:key];
+			if (e) {
+				NSInteger pos = [[e valueForKey:@"offsetTop"] integerValue] + [[e valueForKey:@"offsetHeight"] integerValue] / 2;
+				[result addObject:[NSNumber numberWithInt:pos]];
+			}
+		}
+	}
+	
+	return result;
+}
+
+- (NSColor*)markedScrollerColor:(MarkedScroller*)sender
+{
+	return [NSColor redColor];
 }
 
 @synthesize policy;
