@@ -46,7 +46,7 @@
 - (BOOL)isOnCurrentWorkspace
 {
 	if ([self respondsToSelector:@selector(isOnActiveSpace)]) {
-		return [[self performSelector:@selector(isOnActiveSpace)] boolValue];
+		return [self performSelector:@selector(isOnActiveSpace)];
 	}
 	
 	return YES;
