@@ -1,7 +1,5 @@
-.Features & changes to accomplish in future versions of Textual:
+Features & changes to accomplish in future versions of Textual:
 
 * Color/Bold Text Formatting
 * Option to Display Logs from Previous Session
 * Support for /NOTIFY for when someone connects other than relying on IRCop notices
-* Menu item for Next Channel and Previous Channel | Servers also
-
