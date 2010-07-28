@@ -1052,6 +1052,7 @@ static NSMutableArray* excludeWords;
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setInt:1096 forKey:@"Preferences.DCC.first_port"];
 	[d setInt:1115 forKey:@"Preferences.DCC.last_port"];
+	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:100 forKey:@"Preferences.General.user_doubleclick_action"];

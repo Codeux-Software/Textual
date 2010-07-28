@@ -91,4 +91,18 @@
 @property (retain) NickCompletinStatus* completionStatus;
 @property BOOL terminating;
 @property BOOL terminatingWithAuthority;
+
+- (void)textEntered:(id)sender;
+
+- (void)selectPreviousChannel:(NSEvent*)e;
+- (void)selectNextChannel:(NSEvent*)e;
+- (void)selectPreviousUnreadChannel:(NSEvent*)e;
+- (void)selectNextUnreadChannel:(NSEvent*)e;
+- (void)selectPreviousActiveChannel:(NSEvent*)e;
+- (void)selectNextActiveChannel:(NSEvent*)e;
+- (void)selectNextServer:(NSEvent*)e;
+- (void)selectPreviousActiveServer:(NSEvent*)e;
+- (void)selectNextActiveServer:(NSEvent*)e;
+- (void)selectPreviousSelection:(NSEvent*)e;
+- (void)selectPreviousServer:(NSEvent*)e;
 @end

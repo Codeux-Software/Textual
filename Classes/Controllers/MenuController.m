@@ -20,6 +20,7 @@
 #import "NSPasteboardHelper.h"
 #import "AboutPanel.h"
 #import "NSWindowHelper.h"
+#import "MasterController.h"
 
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && !u.isConnected)
@@ -1331,6 +1332,47 @@
 	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
+- (void)processNavigationItem:(NSMenuItem *)sender
+{
+	switch ([sender tag]) {
+		case 50001:
+			[master selectNextServer:nil];
+			break;
+		case 50002:
+			[master selectPreviousServer:nil];
+			break;
+		case 50003:
+			[master selectNextActiveServer:nil];
+			break;
+		case 50004:
+			[master selectPreviousActiveServer:nil];
+			break;
+		case 50005:
+			[master selectNextChannel:nil];
+			break;
+		case 50006:
+			[master selectPreviousChannel:nil];
+			break;
+		case 50007:
+			[master selectNextActiveChannel:nil];
+			break;
+		case 50008:
+			[master selectPreviousActiveChannel:nil];
+			break;
+		case 50009:
+			[master selectNextUnreadChannel:nil];
+			break;
+		case 50010:
+			[master selectPreviousUnreadChannel:nil];
+			break;
+		case 50011:
+			[master selectPreviousSelection:nil];
+			break;
+		default:
+			break;
+	}
+}
+
 @synthesize closeWindowItem;
 @synthesize preferencesController;
 @synthesize ServerSheets;
@@ -1343,4 +1385,5 @@
 @synthesize fileSendPanel;
 @synthesize fileSendTargets;
 @synthesize fileSendUID;
+@synthesize master;
 @end

@@ -166,6 +166,7 @@
 	menu.tree = tree;
 	menu.memberList = memberList;
 	menu.text = text;
+	menu.master = self;
 	
 	memberList.target = menu;
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
@@ -913,27 +914,6 @@ typedef enum {
 	[world selectPreviousItem];
 }
 
-- (void)selectChannelAtNumber:(NSEvent*)e
-{
-	NSString* s = [e charactersIgnoringModifiers];
-	if (s.length) {
-		UniChar c = [s characterAtIndex:0];
-		NSInteger n = c - '0';
-		[world selectChannelAt:n];
-	}
-}
-
-- (void)selectServerAtNumber:(NSEvent*)e
-{
-	NSString* s = [e charactersIgnoringModifiers];
-	if (s.length) {
-		UniChar c = [s characterAtIndex:0];
-		NSInteger n = c - '0';
-		n = (n == 0) ? 9 : (n - 1);
-		[world selectClientAt:n];
-	}
-}
-
 - (void)tab:(NSEvent*)e
 {
 	switch ([Preferences tabAction]) {
@@ -990,11 +970,6 @@ typedef enum {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
-- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
-{
-	[window registerKeyHandler:sel character:c modifiers:mods];
-}
-
 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1009,30 +984,6 @@ typedef enum {
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
-	[self handler:@selector(selectPreviousActiveChannel:) char:'[' mods:NSCommandKeyMask];
-	[self handler:@selector(selectNextActiveChannel:) char:']' mods:NSCommandKeyMask];
-	[self handler:@selector(selectPreviousChannel:) code:KEY_UP mods:NSControlKeyMask];
-	[self handler:@selector(selectNextChannel:) code:KEY_DOWN mods:NSControlKeyMask];
-	[self handler:@selector(selectPreviousServer:) code:KEY_LEFT mods:NSControlKeyMask];
-	[self handler:@selector(selectNextServer:) code:KEY_RIGHT mods:NSControlKeyMask];
-	[self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask];
-	[self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask|NSAlternateKeyMask];
-	[self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask];
-	[self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask|NSAlternateKeyMask];
-	[self handler:@selector(selectPreviousActiveServer:) code:KEY_LEFT mods:NSCommandKeyMask|NSAlternateKeyMask];
-	[self handler:@selector(selectNextActiveServer:) code:KEY_RIGHT mods:NSCommandKeyMask|NSAlternateKeyMask];
-	[self handler:@selector(selectNextUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask];
-	[self handler:@selector(selectPreviousUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask|NSShiftKeyMask];
-	[self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask];
-	[self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
-	[self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
-	
-	for (NSInteger i=0; i<=9; ++i) {
-		[self handler:@selector(selectChannelAtNumber:) char:'0'+i mods:NSCommandKeyMask];
-	}
-	for (NSInteger i=0; i<=9; ++i) {
-		[self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSCommandKeyMask|NSControlKeyMask];
-	}
 	
 	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
