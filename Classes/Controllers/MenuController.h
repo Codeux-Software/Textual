@@ -13,10 +13,12 @@
 #import "TopicSheet.h"
 #import "InviteSheet.h"
 #import "AboutPanel.h"
+#import "MasterController.h"
 
 @class IRCWorld;
 @class IRCClient;
 @class IRCExtras;
+@class MasterController;
 
 @interface MenuController : NSObject
 {
@@ -26,6 +28,7 @@
 	MainWindow* window;
 	InputTextField* text;
 	ServerTreeView* tree;
+	MasterController* master;
 	MemberListView* memberList;
 	
 	NSString* pointedUrl;
@@ -50,6 +53,7 @@
 @property (assign) MainWindow* window;
 @property (assign) InputTextField* text;
 @property (assign) ServerTreeView* tree;
+@property (assign) MasterController* master;
 @property (assign) MemberListView* memberList;
 @property (retain) NSString* pointedUrl;
 @property (retain) NSString* pointedAddress;
@@ -136,16 +140,13 @@
 - (void)onWantMainWindowShown:(id)sender;
 - (void)onWantIgnoreListShown:(id)sender;
 - (void)onWantAboutWindowShown:(id)sender;
-
 - (void)onWantToReadTextualLogs:(id)sender;
 - (void)onWantToReadChannelLogs:(id)sender;
-
 - (void)onWantTextualConnnectToHelp:(id)sender;
-
 - (void)onWantHostServVhostSet:(id)sender;
-
 - (void)onWantFindPanel:(id)sender;
-
 - (void)onWantChannelBanList:(id)sender;
 - (void)onWantMainWindowCentered:(id)sender;
+
+- (void)processNavigationItem:(NSMenuItem *)sender;
 @end
