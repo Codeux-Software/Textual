@@ -102,10 +102,10 @@
 		NSString* dest = [[Preferences whereScriptsPath] stringByAppendingPathComponent:file];
 		
 		if ([fm fileExistsAtPath:dest]) {
-			[fm removeItemAtPath:dest error:NULL];
+			//[fm removeItemAtPath:dest error:NULL];
+		} else {
+			[fm copyItemAtPath:source toPath:dest error:NULL];
 		}
-		
-		[fm copyItemAtPath:source toPath:dest error:NULL];
 	}
 	
 	if (![fm fileExistsAtPath:[Preferences whereThemesPath] isDirectory:&isDir]) {
@@ -118,10 +118,10 @@
 		NSString* dest = [[Preferences whereThemesPath] stringByAppendingPathComponent:file];
 		
 		if ([fm fileExistsAtPath:dest]) {
-			[fm removeItemAtPath:dest error:NULL];
+			//[fm removeItemAtPath:dest error:NULL];
+		} else {
+			[fm copyItemAtPath:source toPath:dest error:NULL];
 		}
-		
-		[fm copyItemAtPath:source toPath:dest error:NULL];
 	}
 	
 	if (![fm fileExistsAtPath:[Preferences wherePluginsPath] isDirectory:&isDir]) {
@@ -134,10 +134,10 @@
 		NSString* dest = [[Preferences wherePluginsPath] stringByAppendingPathComponent:file];
 		
 		if ([fm fileExistsAtPath:dest]) {
-			[fm removeItemAtPath:dest error:NULL];
+			//[fm removeItemAtPath:dest error:NULL];
+		} else {
+			[fm copyItemAtPath:source toPath:dest error:NULL];
 		}
-		
-		[fm copyItemAtPath:source toPath:dest error:NULL];
 	}
 }
 
