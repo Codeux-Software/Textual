@@ -80,19 +80,19 @@
 	
 	NSString *_loadavg = [self loadAverages];
 	if ([_loadavg length] > 0) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load Average:\002 %@ \002•\002", _loadavg];
+		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@ \002•\002", _loadavg];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Time Since Boot:\002 %@ \002•\002", [self systemUptime]];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Primary Hard Drive:\002 %@ \002•\002", [self diskInfo]];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
 	NSString *_gpu_model = [self graphicsCardInfo];
 	if ([_gpu_model length] > 0) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics Card:\002 %@ \002•\002", _gpu_model];
+		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics:\002 %@ \002•\002", _gpu_model];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Operating System:\002 %1$@ %2$@ (Build %3$@) \002•\002",
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@) \002•\002",
 		     [systemVersionPlist objectForKey:@"ProductName"], 
 		     [systemVersionPlist objectForKey:@"ProductVersion"], 
 		     [systemVersionPlist objectForKey:@"ProductBuildVersion"]];
