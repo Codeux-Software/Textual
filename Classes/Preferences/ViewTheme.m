@@ -134,10 +134,10 @@
 		NSString* dest = [[Preferences wherePluginsPath] stringByAppendingPathComponent:file];
 		
 		if ([fm fileExistsAtPath:dest]) {
-			//[fm removeItemAtPath:dest error:NULL];
-		} else {
-			[fm copyItemAtPath:source toPath:dest error:NULL];
-		}
+			[fm removeItemAtPath:dest error:NULL];
+		} 
+		
+		[fm copyItemAtPath:source toPath:dest error:NULL];
 	}
 }
 
