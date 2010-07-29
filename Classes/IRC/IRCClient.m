@@ -85,6 +85,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			     name:(NSString *)nickname
 		   matchAgainst:(NSArray *)matches;
 
+- (AddressBook*)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+
 - (void)startReconnectTimer;
 
 @end
@@ -361,19 +363,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[world reloadTree];
 }
 
-- (AddressBook*)checkIgnore:(NSString *)hostmask 
-			    uname:(NSString *)username 
-			     name:(NSString *)nickname
-		   matchAgainst:(NSArray *)matches
+- (AddressBook*)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches
 {
-	if ([nickname contains:@"."]) return NO;
-	
-	NSString *real_host = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
-	
 	for (AddressBook* g in config.ignores) {
-		if ([g checkIgnore:real_host]) {
+		if ([g checkIgnore:host]) {
 			NSDictionary *ignoreDict = [g dictionaryValue];
-							    
+			
 			NSInteger totalMatches = 0;
 			
 			for (NSString *matchkey in matches) {
@@ -389,6 +384,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	return nil;
+}
+
+- (AddressBook*)checkIgnore:(NSString *)hostmask 
+			    uname:(NSString *)username 
+			     name:(NSString *)nickname
+		   matchAgainst:(NSArray *)matches
+{
+	if ([nickname contains:@"."]) return nil;
+	
+	NSString *real_host = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
+	
+	return [self checkIgnoreAgainstHostmask:real_host withMatches:matches];
 }
 
 #pragma mark -
@@ -2505,6 +2512,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 													@"ignoreNotices", 
 													@"ignorePublicMsg", 
 													@"ignorePrivateMsg", nil]];
+								
 	
 	if ([ignoreChecks ignoreHighlights] == YES) {
 		if (type == LINE_TYPE_ACTION) {
@@ -2563,46 +2571,49 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		} else if ([anick contains:@"."]) {
 			if ([Preferences handleServerNotices]) {
 				if (type == LINE_TYPE_NOTICE) {
-					if ([text isMatchedByRegex:@"^(?:\\*\\*\\* Notice -- )?(Exiting ssl client|Forbidding Q-lined nick|Client exiting|Client connecting|\\*\\*\\* You are connected to)"]) {
+					if ([text hasPrefix:@"*** Notice -- Client connecting"] || 
+					    [text hasPrefix:@"*** Notice -- Client exiting"] || 
+					    [text hasPrefix:@"*** You are connected to"] || 
+					    [text hasPrefix:@"Forbidding Q-lined nick"] || 
+					    [text hasPrefix:@"Exiting ssl client"]) {
 						[self printBoth:nil type:type text:text];	
 						
 						BOOL processData = NO;
 						
-						NSArray *chunks;
-						NSString *anick;
 						NSString *host;
+						NSString *snick;
+						
+						NSInteger match_math = 0;
 						
 						if ([text hasPrefix:@"*** Notice -- Client connecting at"]) {
-							chunks = [text componentsSeparatedByString:@" "];
-							
 							processData = YES;
-							
-							anick = [chunks safeObjectAtIndex:7];
-							host = [chunks safeObjectAtIndex:8];
-							host = [host safeSubstringFromIndex:1];
-							host = [host safeSubstringToIndex:([host length] - 1)];
 						} else if ([text hasPrefix:@"*** Notice -- Client connecting on port"]) {
-							chunks = [text componentsSeparatedByString:@" "];
-							
 							processData = YES;
 							
-							anick = [chunks safeObjectAtIndex:8];
-							host = [chunks safeObjectAtIndex:9];
-							host = [host safeSubstringFromIndex:1];
-							host = [host safeSubstringToIndex:([host length] - 1)];
+							match_math = 1;
 						}
 						
-						if (processData) {
-							chunks = [host componentsSeparatedByString:@"@"];
-											
-							BOOL sendEvent = NO;
+						if (processData) {	
+							NSArray *chunks = [text componentsSeparatedByString:@" "];
+							
+							host = [chunks safeObjectAtIndex:(8 + match_math)];
+							snick = [chunks safeObjectAtIndex:(7 + match_math)];
+							
+							host = [host safeSubstringFromIndex:1];
+							host = [host safeSubstringToIndex:([host length] - 1)];
+							host = [NSString stringWithFormat:@"%@!%@", snick, host];
+							
+							NSLog(@"%@", host);
+							
+							// ===================================================== //
+							
 							IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
-							ignoreChecks = [self checkIgnore:[chunks safeObjectAtIndex:1] 
-													   uname:[chunks safeObjectAtIndex:0] 
-														name:anick
-												matchAgainst:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
+							ignoreChecks = [self checkIgnoreAgainstHostmask:host
+													withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 						
-							if (!c && ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES)) {
+							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
+							
+							if (!c && sendEvent) {
 								c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
 							}
 							
@@ -2610,25 +2621,25 @@ static NSDateFormatter* dateTimeFormatter = nil;
 								sendEvent = YES;
 								c.isUnread = YES;
 								
-								[self printBoth:c type:type text:text];
+								[self printBoth:c type:type text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
 							}
 							
 							if ([ignoreChecks notifyWhoisJoins] == YES) {
 								sendEvent = YES;
-								whoisChannel = c;
 								c.isUnread = YES;
 								
-								[self sendWhois:anick];
+								whoisChannel = c;
+								
+								[self sendWhois:snick];
 							}
 							
 							if (sendEvent == YES) {
-								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:anick text:[NSString stringWithFormat:@"%@ (%@@%@)", anick, [chunks safeObjectAtIndex:0], [chunks safeObjectAtIndex:1]]];
+								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
 							}
 						}
 					} else {
 						if ([Preferences handleIRCopAlerts] && [text contains:@"ircop alert"]) {
-							IRCChannel* c = [world selectedChannel];
-							[self printBoth:c ?: (id)[c name] type:LINE_TYPE_NOTICE text:text];
+							[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_NOTICE text:text];
 						} else {
 							IRCChannel* c = [self findChannel:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")];
 							

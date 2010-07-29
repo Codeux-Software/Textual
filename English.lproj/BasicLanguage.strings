@@ -57,6 +57,7 @@
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
 "IRC_CONNECTED_TO_SERVER" = "Connected to host.";
+"IRC_USER_MATCHES_HOSTMASK" = "%@ has connected.";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRC_IS_CONNECTING" = "Connecting to %1$@ on port %2$i";
