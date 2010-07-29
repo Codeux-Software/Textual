@@ -2603,8 +2603,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							host = [host safeSubstringToIndex:([host length] - 1)];
 							host = [NSString stringWithFormat:@"%@!%@", snick, host];
 							
-							NSLog(@"%@", host);
-							
 							// ===================================================== //
 							
 							IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
