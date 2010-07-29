@@ -26,13 +26,17 @@
 
 @interface IRCISupportInfo : NSObject
 {
-	unsigned char modes[MODES_SIZE];
 	NSInteger nickLen;
 	NSInteger modesCount;
+	
+	BOOL supportsWatchCommand;
+	
+	unsigned char modes[MODES_SIZE];
 }
 
 @property (readonly) NSInteger nickLen;
 @property (readonly) NSInteger modesCount;
+@property (assign) BOOL supportsWatchCommand;
 
 - (void)reset;
 - (void)update:(NSString*)s;

@@ -271,6 +271,18 @@ static NSMutableDictionary *commandIndex;
 	return [ud integerForKey:@"Preferences.DCC.address_detection_method"];
 }
 
++ (NSString*)IRCopAlertMatch
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.General.ircop_alert_match"];
+}
+
++ (BOOL)clearAllOnlyOnActiveServer
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.clear_only_active"];
+}
+
 + (BOOL)displayServerMOTD
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1014,11 +1026,13 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
 	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
 	[d setBool:NO forKey:@"Preferences.General.handle_server_notices"];
+	[d setObject:@"ircop alert" forKey:@"Preferences.General.ircop_alert_match"];
 	[d setBool:NO forKey:@"Preferences.FloodControl.enabled"];
 	[d setInt:2 forKey:@"Preferences.FloodControl.timer"];
 	[d setInt:100 forKey:@"Preferences.FloodControl.maxmsg"];
 	[d setBool:NO forKey:@"Preferences.General.handle_operalerts"];
 	[d setBool:NO forKey:@"Preferences.General.process_channel_modes"];
+	[d setBool:NO forKey:@"Preferences.General.clear_only_active"];
 	[d setBool:NO forKey:@"Preferences.General.rejoin_onkick"];
 	[d setBool:NO forKey:@"Preferences.General.autojoin_oninvite"];
 	[d setBool:NO forKey:@"Preferences.General.amsg_allconnections"];

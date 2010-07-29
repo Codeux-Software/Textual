@@ -60,6 +60,8 @@ typedef enum {
 + (BOOL)floodControlIsEnabled;
 + (NSInteger)floodControlDelayTimer;
 + (NSInteger)floodControlMaxMessages;
++ (NSString*)IRCopAlertMatch;
++ (BOOL)clearAllOnlyOnActiveServer;
 + (BOOL)displayServerMOTD;
 + (BOOL)copyOnSelect;
 + (BOOL)handleIRCopAlerts;

@@ -105,10 +105,13 @@
 		case 7:
 			[self firstPane:floodControlView];
 			break;
-		case 9:
-			[self firstPane:identityView];
+		case 8:
+			[self firstPane:IRCopServicesView];
 			break;
 		case 10:
+			[self firstPane:identityView];
+			break;
+		case 11:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -542,4 +545,5 @@
 @synthesize transcriptFolderOpenPanel;
 @synthesize logFont;
 @synthesize floodControlView;
+@synthesize IRCopServicesView;
 @end

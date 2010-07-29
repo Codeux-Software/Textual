@@ -23,6 +23,7 @@
 	IBOutlet NSView *scriptsView;
 	IBOutlet NSView *identityView;
 	IBOutlet NSView *floodControlView;
+	IBOutlet NSView *IRCopServicesView;
 	
 	IBOutlet NSTableView* keywordsTable;
 	IBOutlet NSTableView* excludeWordsTable;
@@ -54,6 +55,7 @@
 @property (retain) NSView *scriptsView;
 @property (retain) NSView *identityView;
 @property (retain) NSView *floodControlView;
+@property (retain) NSView *IRCopServicesView;
 @property (retain) NSTableView* keywordsTable;
 @property (retain) NSTableView* excludeWordsTable;
 @property (retain) NSArrayController* keywordsArrayController;
