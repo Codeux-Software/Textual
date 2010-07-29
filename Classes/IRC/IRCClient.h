@@ -27,59 +27,61 @@ typedef enum {
 
 @interface IRCClient : IRCTreeItem
 {
-    IRCWorld* world;
-    IRCClientConfig* config;
+	IRCWorld* world;
+	IRCClientConfig* config;
 
-    NSMutableArray* channels;
-    IRCISupportInfo* isupport;
+	NSMutableArray* channels;
+	IRCISupportInfo* isupport;
 
-    IRCConnection* conn;
-    NSInteger connectDelay;
-    BOOL reconnectEnabled;
-    BOOL retryEnabled;
+	IRCConnection* conn;
+	NSInteger connectDelay;
+	BOOL reconnectEnabled;
+	BOOL retryEnabled;
 
-    BOOL rawModeEnabled;
+	BOOL rawModeEnabled;
 
-    BOOL isConnecting;
-    BOOL isConnected;
-    BOOL isLoggedIn;
-    BOOL isQuitting;
-    NSStringEncoding encoding;
+	BOOL isConnecting;
+	BOOL isConnected;
+	BOOL isLoggedIn;
+	BOOL isQuitting;
+	NSStringEncoding encoding;
 
-    NSString* inputNick;
-    NSString* sentNick;
-    NSString* myNick;
-    NSInteger tryingNickNumber;
+	NSString* inputNick;
+	NSString* sentNick;
+	NSString* myNick;
+	NSInteger tryingNickNumber;
 
-    NSString* serverHostname;
-    BOOL inList;
-    BOOL identifyMsg;
-    BOOL identifyCTCP;
-    BOOL inChanBanList;
+	NSString* serverHostname;
+	BOOL inList;
+	BOOL identifyMsg;
+	BOOL identifyCTCP;
+	BOOL inChanBanList;
 
-    AddressDetectionType addressDetectionMethod;
-    HostResolver* nameResolver;
-    NSString* joinMyAddress;
-    NSString* myAddress;
+	AddressDetectionType addressDetectionMethod;
+	HostResolver* nameResolver;
+	NSString* joinMyAddress;
+	NSString* myAddress;
 
-    Timer* pongTimer;
-    Timer* quitTimer;
-    Timer* reconnectTimer;
-    Timer* retryTimer;
-    Timer* autoJoinTimer;
-    Timer* commandQueueTimer;
-    NSMutableArray* commandQueue;
+	Timer* pongTimer;
+	Timer* quitTimer;
+	Timer* reconnectTimer;
+	Timer* retryTimer;
+	Timer* autoJoinTimer;
+	Timer* commandQueueTimer;
+	NSMutableArray* commandQueue;
 
-    IRCChannel* lastSelectedChannel;
+	IRCChannel* lastSelectedChannel;
 
-    ChanBanSheet* chanBanListSheet;
-    ListDialog* channelListDialog;
-    ServerSheet* propertyDialog;
+	ChanBanSheet* chanBanListSheet;
+	ListDialog* channelListDialog;
+	ServerSheet* propertyDialog;
 
-    FileLogger* logFile;
-    NSString* logDate;
+	FileLogger* logFile;
+	NSString* logDate;
 
-    IRCChannel *whoisChannel;
+	IRCChannel *whoisChannel;
+	
+	NSMutableArray *trackedUsers;
 }
 
 @property (assign) IRCWorld* world;
@@ -87,6 +89,7 @@ typedef enum {
 @property (readonly) IRCClientConfig* config;
 @property (readonly) IRCISupportInfo* isupport;
 @property (readonly) NSMutableArray* channels;
+@property (readonly) NSMutableArray *trackedUsers;
 @property (readonly) BOOL isConnecting;
 @property (readonly) BOOL isConnected;
 @property (readonly) BOOL isReconnecting;

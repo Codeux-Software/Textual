@@ -21,6 +21,7 @@
 
 @synthesize nickLen;
 @synthesize modesCount;
+@synthesize supportsWatchCommand;
 
 - (id)init
 {
@@ -74,6 +75,7 @@
 		if (r.location != NSNotFound) {
 			NSString* key = [[s safeSubstringToIndex:r.location] uppercaseString];
 			NSString* value = [s safeSubstringFromIndex:NSMaxRange(r)];
+			
 			if ([key isEqualToString:@"PREFIX"]) {
 				[self parsePrefix:value];
 			} else if ([key isEqualToString:@"CHANMODES"]) {
@@ -82,6 +84,8 @@
 				nickLen = [value integerValue];
 			} else if ([key isEqualToString:@"MODES"]) {
 				modesCount = [value integerValue];
+			} else if ([key isEqualToString:@"WATCH"]) {
+				supportsWatchCommand = YES;
 			}
 		}
 	}
@@ -235,4 +239,5 @@
 	[param release];
 	[super dealloc];
 }
+
 @end
