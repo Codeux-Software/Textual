@@ -36,7 +36,7 @@ static NSString *urlAddrRegexComplex;
 
 + (NSArray*)bannedURLRegexBufferChars
 {
-	return [NSArray arrayWithObjects:@".", @"@", nil];
+	return [NSArray arrayWithObjects:@".", @"@", @"#", nil];
 }
 
 + (NSArray*)bannedURLRegexLineTypes
@@ -1061,7 +1061,7 @@ static NSMutableArray* excludeWords;
 	[ud registerDefaults:d];
 	[ud addObserver:(NSObject*)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:(NSObject*)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
-
+	
 	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
 	if( !systemVersionPlist ) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
