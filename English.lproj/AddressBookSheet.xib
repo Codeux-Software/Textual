@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="425"/>
 			<integer value="6"/>
 			<integer value="424"/>
-			<integer value="425"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -306,7 +306,7 @@
 					<object class="NSTextField" id="414404645">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 112}, {39, 17}}</string>
+						<string key="NSFrame">{{70, 103}, {39, 14}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="368550053">
@@ -315,7 +315,7 @@
 							<string key="NSContents">Note:</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
-								<double key="NSSize">13</double>
+								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
 							<reference key="NSControlView" ref="414404645"/>
@@ -326,18 +326,14 @@
 					<object class="NSTextField" id="1056718837">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 78}, {324, 51}}</string>
+						<string key="NSFrame">{{69, 75}, {266, 42}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">          Currently, Textual is only able to detect when a user has connected based on IRC Operator (IRCop)  connection notices. </string>
-							<object class="NSFont" key="NSSupport" id="189449220">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">13</double>
-								<int key="NSfFlags">16</int>
-							</object>
+							<string key="NSContents">          Textual requires IRC Operator (IRCop) privileges to view the notices that are processed for these types of notifications.</string>
+							<reference key="NSSupport" ref="570868298"/>
 							<reference key="NSControlView" ref="1056718837"/>
 							<reference key="NSBackgroundColor" ref="996912065"/>
 							<reference key="NSTextColor" ref="490053101"/>
@@ -346,7 +342,7 @@
 					<object class="NSButton" id="848515587">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{274, 12}, {82, 32}}</string>
+						<string key="NSFrame">{{276, 12}, {82, 32}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="802340022">
@@ -357,7 +353,11 @@
 							<reference key="NSControlView" ref="848515587"/>
 							<int key="NSButtonFlags">-2038284033</int>
 							<int key="NSButtonFlags2">1</int>
-							<reference key="NSAlternateImage" ref="189449220"/>
+							<object class="NSFont" key="NSAlternateImage" id="189449220">
+								<string key="NSName">LucidaGrande</string>
+								<double key="NSSize">13</double>
+								<int key="NSfFlags">16</int>
+							</object>
 							<string key="NSAlternateContents"/>
 							<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
 							<int key="NSPeriodicDelay">200</int>
@@ -367,7 +367,7 @@
 					<object class="NSButton" id="582643135">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{191, 12}, {83, 32}}</string>
+						<string key="NSFrame">{{193, 12}, {83, 32}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1013291006">
@@ -410,7 +410,7 @@
 					<object class="NSButton" id="583266023">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 144}, {316, 18}}</string>
+						<string key="NSFrame">{{18, 129}, {316, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="421622405">
@@ -437,7 +437,7 @@
 					<object class="NSButton" id="410707626">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 174}, {316, 18}}</string>
+						<string key="NSFrame">{{18, 159}, {316, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="494906863">
@@ -457,7 +457,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{372, 210}</string>
+				<string key="NSFrameSize">{372, 195}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -1055,11 +1055,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="410707626"/>
 							<reference ref="583266023"/>
+							<reference ref="1056718837"/>
+							<reference ref="414404645"/>
 							<reference ref="86381240"/>
 							<reference ref="582643135"/>
 							<reference ref="848515587"/>
-							<reference ref="1056718837"/>
-							<reference ref="414404645"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Notification View</string>
@@ -1376,6 +1376,7 @@
 					<string>446.IBViewBoundsToFrameTransform</string>
 					<string>447.IBPluginDependency</string>
 					<string>448.IBPluginDependency</string>
+					<string>448.IBViewBoundsToFrameTransform</string>
 					<string>449.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
@@ -1430,22 +1431,22 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{461, 712}, {372, 210}}</string>
+					<string>{{461, 727}, {372, 195}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{636, 688}, {369, 297}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUEQAABDwAAAA</bytes>
+						<bytes key="NSTransformStruct">AUEgAABCjgAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDPgAAw7gAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDPwAAwigAAA</bytes>
 					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDiIAAw7gAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDiQAAwigAAA</bytes>
 					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1459,10 +1460,13 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAw8IAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBgAAAwv4AAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwv4AAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{625, 372}, {369, 502}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3011,6 +3015,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IRCopServicesView</string>
 							<string>alertsView</string>
 							<string>contentView</string>
 							<string>delegate</string>
@@ -3034,6 +3039,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>id</string>
@@ -3060,6 +3066,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IRCopServicesView</string>
 							<string>alertsView</string>
 							<string>contentView</string>
 							<string>delegate</string>
@@ -3083,6 +3090,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">IRCopServicesView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">alertsView</string>
 								<string key="candidateClassName">NSView</string>
@@ -4454,7 +4465,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

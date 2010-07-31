@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
+		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">804</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -19,13 +19,8 @@
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<object class="NSArray" key="dict.sortedKeys" id="0">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="285530636">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,7 +43,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="884577729">
 					<reference key="NSNextResponder"/>
@@ -77,7 +72,7 @@
 									<string key="NSColorName">controlColor</string>
 									<object class="NSColor" key="NSColor">
 										<int key="NSColorSpace">3</int>
-										<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+										<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 									</object>
 								</object>
 								<object class="NSColor" key="NSTextColor" id="574710092">
@@ -315,13 +310,13 @@
 						<object class="NSTextField" id="242778001">
 							<reference key="NSNextResponder" ref="884577729"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{101, 80}, {204, 42}}</string>
+							<string key="NSFrame">{{109, 80}, {196, 42}}</string>
 							<reference key="NSSuperview" ref="884577729"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="305098669">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">These settings are used to create the channel if it does not exist when you attempt to join.</string>
+								<string key="NSContents">The above mode and topic settings are used to create a channel if it is empty once joined.</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -400,7 +395,7 @@
 									<string key="NSColorName">disabledControlTextColor</string>
 									<object class="NSColor" key="NSColor">
 										<int key="NSColorSpace">3</int>
-										<bytes key="NSWhite">MC4zMzMzMzMzNDMzAA</bytes>
+										<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 									</object>
 								</object>
 							</object>
@@ -408,7 +403,7 @@
 						<object class="NSTextField" id="251884850">
 							<reference key="NSNextResponder" ref="884577729"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{67, 108}, {39, 14}}</string>
+							<string key="NSFrame">{{75, 108}, {39, 14}}</string>
 							<reference key="NSSuperview" ref="884577729"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="580693663">
@@ -431,7 +426,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 129}</string>
-				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -547,7 +542,9 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<reference key="object" ref="0"/>
+						<object class="NSArray" key="object" id="0">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="children" ref="285530636"/>
 						<nil key="parent"/>
 					</object>
@@ -595,12 +592,12 @@
 							<reference ref="683015914"/>
 							<reference ref="414471245"/>
 							<reference ref="643222762"/>
-							<reference ref="242778001"/>
-							<reference ref="251884850"/>
 							<reference ref="337755552"/>
 							<reference ref="610922394"/>
 							<reference ref="514948295"/>
 							<reference ref="1020081453"/>
+							<reference ref="242778001"/>
+							<reference ref="251884850"/>
 						</object>
 						<reference key="parent" ref="1004075932"/>
 					</object>
@@ -879,6 +876,7 @@
 					<string>38.IBPluginDependency</string>
 					<string>38.ImportedFromIB2</string>
 					<string>40.IBPluginDependency</string>
+					<string>40.IBViewBoundsToFrameTransform</string>
 					<string>40.ImportedFromIB2</string>
 					<string>41.IBPluginDependency</string>
 					<string>41.ImportedFromIB2</string>
@@ -916,6 +914,7 @@
 					<string>95.IBPluginDependency</string>
 					<string>96.IBPluginDependency</string>
 					<string>97.IBPluginDependency</string>
+					<string>97.IBViewBoundsToFrameTransform</string>
 					<string>98.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
@@ -943,6 +942,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABC4AAAwvAAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -980,6 +982,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABCnAAAwvAAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
@@ -1178,6 +1183,78 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ChanBanSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>onRemoveBans:</string>
+							<string>onUpdate:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>onRemoveBans:</string>
+							<string>onUpdate:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">onRemoveBans:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onUpdate:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>table</string>
+							<string>updateButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ListView</string>
+							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>table</string>
+							<string>updateButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">table</string>
+								<string key="candidateClassName">ListView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">updateButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="966564247">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Dialogs/ChanBanSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1569,7 +1646,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>aCheck</string>
 							<string>iCheck</string>
 							<string>kCheck</string>
 							<string>kText</string>
@@ -1583,7 +1659,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -1600,7 +1675,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>aCheck</string>
 							<string>iCheck</string>
 							<string>kCheck</string>
 							<string>kText</string>
@@ -1614,10 +1688,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">aCheck</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">iCheck</string>
 								<string key="candidateClassName">NSButton</string>
@@ -1715,6 +1785,42 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="578790222"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chanBanDialogOnUpdate:</string>
+							<string>chanBanDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ChanBanSheet</string>
+							<string>ChanBanSheet</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chanBanDialogOnUpdate:</string>
+							<string>chanBanDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">chanBanDialogOnUpdate:</string>
+								<string key="candidateClassName">ChanBanSheet</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">chanBanDialogWillClose:</string>
+								<string key="candidateClassName">ChanBanSheet</string>
+							</object>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="966564247"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -2419,11 +2525,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IRCopServicesView</string>
 							<string>alertsView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
 							<string>excludeWordsTable</string>
+							<string>floodControlView</string>
 							<string>generalView</string>
 							<string>highlightView</string>
 							<string>identityView</string>
@@ -2443,9 +2551,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSView</string>
 							<string>NSView</string>
+							<string>NSView</string>
 							<string>id</string>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
+							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
@@ -2466,11 +2576,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IRCopServicesView</string>
 							<string>alertsView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
 							<string>excludeWordsTable</string>
+							<string>floodControlView</string>
 							<string>generalView</string>
 							<string>highlightView</string>
 							<string>identityView</string>
@@ -2488,6 +2600,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">IRCopServicesView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">alertsView</string>
 								<string key="candidateClassName">NSView</string>
@@ -2507,6 +2623,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">excludeWordsTable</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">floodControlView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">generalView</string>
@@ -3259,6 +3379,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSApplication</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSApplication+BWAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSArrayController</string>
 					<string key="superclassName">NSObjectController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3776,6 +3903,13 @@
 					<reference key="sourceIdentifier" ref="24240265"/>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSView+BWAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -3795,6 +3929,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSWindow+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3826,7 +3967,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

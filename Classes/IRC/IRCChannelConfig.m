@@ -24,9 +24,9 @@
 		growl = YES;
 		
 		name = @"";
-		password = @"";
-		mode = @"+sn";
+		mode = @"";
 		topic = @"";
+		password = @"";
 	}
 	return self;
 }
@@ -40,8 +40,8 @@
 	name = [[dic stringForKey:@"name"] retain] ?: @"";
 	password = [[dic stringForKey:@"password"] retain] ?: @"";
 	
-	autoJoin = [dic boolForKey:@"auto_join"];
 	growl = [dic boolForKey:@"growl"];
+	autoJoin = [dic boolForKey:@"auto_join"];
 	
 	mode = [[dic stringForKey:@"mode"] retain] ?: @"";
 	topic = [[dic stringForKey:@"topic"] retain] ?: @"";
@@ -69,8 +69,8 @@
 	if (name) [dic setObject:name forKey:@"name"];
 	if (password) [dic setObject:password forKey:@"password"];
 	
-	[dic setBool:autoJoin forKey:@"auto_join"];
 	[dic setBool:growl forKey:@"growl"];
+	[dic setBool:autoJoin forKey:@"auto_join"];
 	
 	if (mode) [dic setObject:mode forKey:@"mode"];
 	if (topic) [dic setObject:topic forKey:@"topic"];
