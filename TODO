@@ -1,5 +1,1 @@
-Features & changes to accomplish in future versions of Textual:
-
-* Color/Bold Text Formatting
-* Option to Display Logs from Previous Session
-* Support for /NOTIFY for when someone connects other than relying on IRCop notices
+The Textual TODO list has been relocated to http://wiki.github.com/mikemac11/Textual/feature-requests
