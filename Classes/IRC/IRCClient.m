@@ -3068,22 +3068,28 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)receiveNick:(IRCMessage*)m
 {
+	BOOL myself = NO;
+	
+	AddressBook* ignoreChecks;
+	
 	NSString* nick = m.sender.nick;
 	NSString* toNick = [m paramAt:0];
 	
 	if ([nick isEqualNoCase:myNick]) {
 		[myNick release];
 		myNick = [toNick retain];
+		
+		myself = YES;
+	} else {
+		ignoreChecks = [self checkIgnore:m.sender.address 
+								   uname:m.sender.user 
+									name:m.sender.nick
+							matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 	}
 	
 	for (IRCChannel* c in channels) {
-		if ([c findMember:nick]) {
-			AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
-									    uname:m.sender.user 
-									     name:m.sender.nick
-								   matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
-			
-			if ([ignoreChecks ignoreJPQE] == NO) {
+		if ([c findMember:nick]) { 
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
 				NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_CHANGED_NICKNAME"), nick, toNick];
 				[self printChannel:c type:LINE_TYPE_NICK text:text];
 			}
@@ -3317,6 +3323,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 307: // RPL_WHOISGENERAL
 		case 310: // RPL_WHOISGENERAL
 		case 313: // RPL_WHOISGENERAL
+		case 335: // RPL_WHOISGENERAL
 		case 378: // RPL_WHOISGENERAL
 		case 379: // RPL_WHOISGENERAL
 		case 671: // RPL_WHOISGENERAL
@@ -3645,7 +3652,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		case 330:
 		{
-			NSString* text = [NSString stringWithFormat:@"%@ %@", [m sequence:2], [m paramAt:1]];
+			NSString* text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
