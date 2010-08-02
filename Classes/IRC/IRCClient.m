@@ -1255,6 +1255,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self send:cmd, targetChannelName, peer, s, nil];
 			return YES;
 			break;
+		case 9: // Command: KILL
+		{
+			NSMutableString* t = [[s mutableCopy] autorelease];
+				
+			NSString *peer = [s getToken];
+			NSString *reason = TXTLS(@"KILL_REASON");
+				
+			NSInteger substrIndex = ([peer length] + 1);
+				
+			if (substrIndex < [t length]) {
+				reason = [t safeSubstringFromIndex:substrIndex];
+			}
+				
+			[self send:KILL, peer, reason, nil];
+			return YES;
+			break;
+		}
 		case 13: // Command: NICK
 		{
 			NSString *newnick = [s getToken];
