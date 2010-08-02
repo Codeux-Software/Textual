@@ -2134,10 +2134,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)setKeywordState:(id)t
 {
-	if ([t isChannel] == YES || [t isTalk] == YES) {
-		if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
-			[t setKeywordCount:([t keywordCount] + 1)];
-			[world updateIcon];
+	if ([t isKindOfClass:[IRCChannel class]]) {
+		if ([t isChannel] == YES || [t isTalk] == YES) {
+			if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
+				[t setKeywordCount:([t keywordCount] + 1)];
+				[world updateIcon];
+			}
 		}
 	}
 	
@@ -2160,12 +2162,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)setUnreadState:(id)t
 {
-	if ([t isTalk] == YES) {
-		if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
-			[t setUnreadCount:([t unreadCount] + 1)];
-			[world updateIcon];
+	if ([t isKindOfClass:[IRCChannel class]]) {
+		if ([t isTalk] == YES) {
+			if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
+				[t setUnreadCount:([t unreadCount] + 1)];
+				[world updateIcon];
+			}
 		}
 	}
+	
 	if ([NSApp isActive] && world.selected == t) return;
 	if ([t isUnread]) return;
 	[t setIsUnread:YES];
