@@ -11,12 +11,11 @@
 #define URL_ATTR				(1 << 31)
 #define ADDRESS_ATTR			(1 << 30)
 #define CHANNEL_NAME_ATTR		(1 << 29)
-#define KEYWORD_ATTR			(1 << 28)
-#define BOLD_ATTR				(1 << 27)
-#define UNDERLINE_ATTR			(1 << 26)
-#define ITALIC_ATTR				(1 << 25)
-#define TEXT_COLOR_ATTR			(1 << 24)
-#define BACKGROUND_COLOR_ATTR	(1 << 23)
+#define BOLD_ATTR				(1 << 28)
+#define UNDERLINE_ATTR			(1 << 27)
+#define ITALIC_ATTR				(1 << 26)
+#define TEXT_COLOR_ATTR			(1 << 25)
+#define BACKGROUND_COLOR_ATTR	(1 << 24)
 #define BACKGROUND_COLOR_MASK	(0xF0)
 #define TEXT_COLOR_MASK			(0x0F)
 
@@ -96,15 +95,6 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url()\">%@</a>", link, content];
 		} else {
 			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url()\">%@</a>%@", link, content, metacontent];
-		}
-	} else if (attr & KEYWORD_ATTR) {
-		content = logEscape(content);
-		if (attr & ADDRESS_ATTR) {
-			return [NSString stringWithFormat:@"<span class=\"highlight\"><span class=\"address\" oncontextmenu=\"on_addr()\">%@</span></span>", content];
-		} else if (attr & CHANNEL_NAME_ATTR) {
-			return [NSString stringWithFormat:@"<span class=\"highlight\"><span class=\"channel\" oncontextmenu=\"on_chname()\">%@</span></span>", content];
-		} else {
-			return [NSString stringWithFormat:@"<span class=\"highlight\">%@</span>", content];
 		}
 	} else if (attr & ADDRESS_ATTR) {
 		content = logEscape(content);
@@ -343,7 +333,6 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 			if (enabled) {
 				if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
 					foundKeyword = YES;
-					setFlag(attrBuf, KEYWORD_ATTR, 0, len);
 					break;
 				}
 			}
