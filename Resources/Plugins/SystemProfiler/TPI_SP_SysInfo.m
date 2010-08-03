@@ -1,5 +1,6 @@
 #import "TPI_SP_SysInfo.h"
 
+#include <mach/mach.h>
 #include <mach/mach_host.h>
 #include <mach/host_info.h>
 
@@ -138,6 +139,19 @@
 
 #pragma mark -
 #pragma mark System Information
+
++ (NSString *)applicationMemoryUsage
+{
+	struct task_basic_info info;
+	mach_msg_type_number_t size = sizeof(info);
+	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
+	
+	if (kerr == KERN_SUCCESS) {
+		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:(TXLongInt)info.resident_size]];
+	} 
+	
+	return nil;
+}
 
 + (NSString *)graphicsCardInfo
 {
