@@ -22,6 +22,8 @@
 "CHANNEL_APPLICATION_TITLE_USERS" = " (%i Users)";
 "CHANNEL_APPLICATION_TITLE_MODES" = " (%@)";
 
+"SOURCE_RESOURCES_FILES_RESET" = "Files reset. Please restart Textual to apply changes.";
+
 "OK_BUTTON" = "OK";
 "QUIT_BUTTON" = "Quit";
 "CANCEL_BUTTON" = "Cancel";

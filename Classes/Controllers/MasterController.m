@@ -72,7 +72,7 @@
 	
 	[Preferences initPreferences];
 	
-	[ViewTheme createUserDirectory];
+	[ViewTheme createUserDirectory:NO];
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
@@ -625,8 +625,8 @@
 				   @"dehalfop", @"deop", @"devoice", @"halfop", @"hop", @"ignore", @"j", @"leave", @"m", @"me", 
 				   @"msg", @"op", @"raw", @"rejoin", @"query", @"quote", @"t", @"timer", @"voice", @"unban", 
 				   @"unignore", @"umode", @"version", @"weights", @"echo", @"debug", @"clearall", @"amsg", 
-				   @"ame", @"wreck", @"avalove", @"jimc", @"remove", @"kb", @"kickban", @"icbadge", 
-				   @"server", @"conn", @"myversion",
+				   @"ame", @"remove", @"kb", @"kickban", @"icbadge",  @"server", @"conn", @"myversion", 
+                   @"sysinfo", @"memory", @"resetfiles", 
 				   nil];
 		lowerChoices = choices;
 	} else if (channelMode) {
