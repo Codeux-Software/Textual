@@ -22,5 +22,6 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
 + (NSString *)systemUptime;
 + (NSString *)diskInfo;
 + (NSString *)graphicsCardInfo;
++ (NSString *)applicationMemoryUsage;
 
 @end

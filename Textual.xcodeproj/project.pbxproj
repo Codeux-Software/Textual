@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
 		4C49192711FF723D0065E5D5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 4C49192611FF723D0065E5D5 /* README */; };
-		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
+		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4CA9456211E1AFBA00D36367 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C119CD711AD74880004F157 /* application.icns */; };
@@ -30,7 +30,7 @@
 		4CA9457111E1AFBA00D36367 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C33F97111AA81FF003EAB65 /* BasicLanguage.strings */; };
 		4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */; };
 		4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */; };
-		4CA9457611E1AFBA00D36367 /* Badges in Copy Files (1 item) */ = {isa = PBXBuildFile; fileRef = 4CC33FD011ADA2CE005ECD84 /* Badges */; };
+		4CA9457611E1AFBA00D36367 /* Badges in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CC33FD011ADA2CE005ECD84 /* Badges */; };
 		4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* MasterController.m */; };
 		4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
 		4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
@@ -137,24 +137,24 @@
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
-		4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
-		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files (1 item) */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
+		4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
+		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
-		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
+		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4CA9457511E1AFBA00D36367 /* Copy Files (1 item) */ = {
+		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = Images;
 			dstSubfolderSpec = 7;
 			files = (
-				4CA9457611E1AFBA00D36367 /* Badges in Copy Files (1 item) */,
-				4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files (1 item) */,
+				4CA9457611E1AFBA00D36367 /* Badges in Copy Files */,
+				4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files */,
 			);
-			name = "Copy Files (1 item)";
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CA9457711E1AFBA00D36367 /* CopyFiles */ = {
@@ -167,17 +167,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CA945E711E1AFBA00D36367 /* Copy Files (2 items) */ = {
+		4CA945E711E1AFBA00D36367 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files (2 items) */,
-				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files (2 items) */,
-				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files (2 items) */,
+				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */,
+				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files */,
+				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */,
 			);
-			name = "Copy Files (2 items)";
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -898,9 +898,9 @@
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
 				4CA9456111E1AFBA00D36367 /* Resources */,
-				4CA9457511E1AFBA00D36367 /* Copy Files (1 item) */,
+				4CA9457511E1AFBA00D36367 /* Copy Files */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
-				4CA945E711E1AFBA00D36367 /* Copy Files (2 items) */,
+				4CA945E711E1AFBA00D36367 /* Copy Files */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4CA945EA11E1AFBA00D36367 /* Run Script */,

@@ -5,18 +5,22 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", nil];
 }
 
 - (void)messageSentByUser:(NSObject*)client
-			message:(NSString*)messageString
-			command:(NSString*)commandString
+				  message:(NSString*)messageString
+				  command:(NSString*)commandString
 {
 	if ([client isConnected]) {
 		NSString *channelName = [[[client world] selectedChannel] name];
-	
+		
 		if ([channelName length] >= 1) {
-			[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
+			if ([commandString isEqualToString:@"SYSINFO"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
+			} else if ([commandString isEqualToString:@"MEMORY"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
+			}
 		}
 	}
 }
