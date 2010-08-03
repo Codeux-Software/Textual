@@ -6,6 +6,11 @@
 
 #define TIME_BUFFER_SIZE 256
 
+extern NSInteger TXRandomThousandNumber(void)
+{
+	return (1 + arc4random() % (9999 + 1));
+}
+
 void TXCFSpecialRelease(CFTypeRef cf)
 {
 	if (!cf || cf == NULL || cf == nil) return;

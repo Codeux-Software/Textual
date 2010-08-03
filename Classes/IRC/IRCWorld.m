@@ -504,7 +504,8 @@
 	if (!c) return;
 	if (n == 0) {
 		[self select:c];
-	} else {		--n;
+	} else {		
+		--n;
 		if (0 <= n && n < c.channels.count) {
 			IRCChannel* e = [c.channels safeObjectAtIndex:n];
 			[self select:e];
@@ -591,6 +592,16 @@
 
 #pragma mark -
 #pragma mark Factory
+
+- (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u
+{
+	[c.log clear];
+}
+
+- (void)clearContentsOflient:(IRCClient*)u
+{
+	[u.log clear];
+}
 
 - (void)createConnection:(NSString*)str chan:(NSString*)channel
 {
