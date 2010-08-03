@@ -22,7 +22,7 @@
 
 - (void)reload;
 
-+ (void)createUserDirectory;
++ (void)createUserDirectory:(BOOL)force_reset;
 
 + (NSString*)buildResourceFileName:(NSString*)name;
 + (NSString*)buildUserFileName:(NSString*)name;

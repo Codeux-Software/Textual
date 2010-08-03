@@ -85,7 +85,7 @@
 	[js reload];
 }
 
-+ (void)copyItemsFrom:(NSString *)location to:(NSString *)dest
++ (void)copyItemsFrom:(NSString *)location to:(NSString *)dest whileForcing:(BOOL)force_reset
 {
 	BOOL isDir = NO;
 	
@@ -125,7 +125,7 @@
 			resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
 		}
 		
-		if (resetAttrInfo == YES) {
+		if (resetAttrInfo == YES || force_reset == YES) {
 			[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 				 ofItemAtPath:sdest 
 						error:NULL];
@@ -133,11 +133,11 @@
 	}	
 }
 
-+ (void)createUserDirectory
++ (void)createUserDirectory:(BOOL)force_reset
 {
-	[self copyItemsFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath]];
-	[self copyItemsFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath]];
-	[self copyItemsFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath]];
+	[self copyItemsFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath] whileForcing:force_reset];
+	[self copyItemsFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];
+	[self copyItemsFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath] whileForcing:force_reset];
 }
 
 + (NSString*)buildResourceFileName:(NSString*)name

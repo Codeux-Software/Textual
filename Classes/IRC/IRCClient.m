@@ -1796,18 +1796,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self reloadTree];
 			return YES;
 			break;
-		case 74: // Command: WRECK
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://listen.grooveshark.com/#/s/~/1WRk09"]];
-			return YES;
-			break;
-		case 75: // Command: AVALOVE
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://modlife.com/angelsandairwaves/love"]];
-			return YES;
-			break;
-		case 76: // Command: JIMC
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://listen.grooveshark.com/#/s/~/2gfiF4"]];
-			return YES;
-			break;
 		case 78: // Command: KB
 		case 79: // Command: KICKBAN 
 			if (c) {
@@ -1845,7 +1833,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			return YES;
 			break;
-		case 83: // Command: CONNECT
+		case 83: // Command: CONN
 			if ([s length] >= 1) {
 				[config setHost:s];
 			}
@@ -1871,6 +1859,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
+		case 90: // Command: RESETFILES
+			[ViewTheme createUserDirectory:YES];
+			
+			[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"SOURCE_RESOURCES_FILES_RESET")];
+			
+			return YES;
+			break;
 		default:
 		{
 			if ([[world bundlesForUserInput] objectForKey:cmd]) {
