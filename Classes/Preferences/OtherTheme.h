@@ -8,6 +8,8 @@
 {	
 	NSString *fileName;
 	
+	NSColor *underlyingWindowColor;
+	
 	NSFont* inputTextFont;
 	NSColor* inputTextBgColor;
 	NSColor* inputTextColor;
@@ -42,6 +44,7 @@
 
 @property (retain, getter=fileName, setter=setFileName:) NSString* fileName;
 @property (readonly) NSFont* inputTextFont;
+@property (readonly) NSColor* underlyingWindowColor;
 @property (readonly) NSColor* inputTextBgColor;
 @property (readonly) NSColor* inputTextColor;
 @property (readonly) NSFont* treeFont;

@@ -87,6 +87,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (NSMutableDictionary*)dictionaryValue;
 
 - (void)destroyKeychains;
+- (void)verifyKeychainsExistsOrAdd;
+
 - (NSString*)keychainServiceID;
 - (NSString*)keychainServiceName:(NSInteger)type;
 @end

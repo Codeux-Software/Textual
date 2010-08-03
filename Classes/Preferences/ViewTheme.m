@@ -85,60 +85,59 @@
 	[js reload];
 }
 
-+ (void)createUserDirectory
++ (void)copyItemsFrom:(NSString *)location to:(NSString *)dest
 {
+	BOOL isDir = NO;
+	
+	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
+	
 	NSFileManager* fm = [NSFileManager defaultManager];
 	
-	BOOL isDir = NO;
-	NSArray* resourceFiles;
-	
-	if (![fm fileExistsAtPath:[Preferences whereScriptsPath] isDirectory:&isDir]) {
-		[fm createDirectoryAtPath:[Preferences whereScriptsPath] withIntermediateDirectories:YES attributes:nil error:NULL];
+	if (![fm fileExistsAtPath:dest isDirectory:&isDir]) {
+		[fm createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
+	NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:location error:NULL];
 	for (NSString* file in resourceFiles) {
-		NSString* source = [[Preferences whereScriptsLocalPath] stringByAppendingPathComponent:file];
-		NSString* dest = [[Preferences whereScriptsPath] stringByAppendingPathComponent:file];
+		NSString* source = [location stringByAppendingPathComponent:file];
+		NSString* sdest = [dest stringByAppendingPathComponent:file];
 		
-		if ([fm fileExistsAtPath:dest]) {
-			//[fm removeItemAtPath:dest error:NULL];
+		[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+			 ofItemAtPath:source
+					error:NULL];
+		
+		BOOL resetAttrInfo = NO;
+		
+		if ([fm fileExistsAtPath:sdest]) {
+			NSDictionary *attributes = [fm attributesOfItemAtPath:sdest error:nil];
+			
+			if (attributes) {
+				NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
+				NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
+				
+				if (creationDate == modificationDate || creationDate < 1) {
+					[fm removeItemAtPath:sdest error:NULL];
+					
+					resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+				}
+			}
 		} else {
-			[fm copyItemAtPath:source toPath:dest error:NULL];
+			resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
 		}
-	}
-	
-	if (![fm fileExistsAtPath:[Preferences whereThemesPath] isDirectory:&isDir]) {
-		[fm createDirectoryAtPath:[Preferences whereThemesPath] withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
-	
-	resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereThemesLocalPath] error:NULL];
-	for (NSString* file in resourceFiles) {
-		NSString* source = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:file];
-		NSString* dest = [[Preferences whereThemesPath] stringByAppendingPathComponent:file];
 		
-		if ([fm fileExistsAtPath:dest]) {
-			//[fm removeItemAtPath:dest error:NULL];
-		} else {
-			[fm copyItemAtPath:source toPath:dest error:NULL];
+		if (resetAttrInfo == YES) {
+			[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+				 ofItemAtPath:sdest 
+						error:NULL];
 		}
-	}
-	
-	if (![fm fileExistsAtPath:[Preferences wherePluginsPath] isDirectory:&isDir]) {
-		[fm createDirectoryAtPath:[Preferences wherePluginsPath] withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
-	
-	resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences wherePluginsLocalPath] error:NULL];
-	for (NSString* file in resourceFiles) {
-		NSString* source = [[Preferences wherePluginsLocalPath] stringByAppendingPathComponent:file];
-		NSString* dest = [[Preferences wherePluginsPath] stringByAppendingPathComponent:file];
-		
-		if ([fm fileExistsAtPath:dest]) {
-			[fm removeItemAtPath:dest error:NULL];
-		} 
-		
-		[fm copyItemAtPath:source toPath:dest error:NULL];
-	}
+	}	
+}
+
++ (void)createUserDirectory
+{
+	[self copyItemsFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath]];
+	[self copyItemsFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath]];
+	[self copyItemsFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath]];
 }
 
 + (NSString*)buildResourceFileName:(NSString*)name

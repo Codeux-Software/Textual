@@ -151,4 +151,7 @@
 - (void)logDoubleClick:(NSString*)s;
 
 - (void)createConnection:(NSString*)str chan:(NSString*)channel;
+
+- (void)clearContentsOflient:(IRCClient*)u;
+- (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u;
 @end

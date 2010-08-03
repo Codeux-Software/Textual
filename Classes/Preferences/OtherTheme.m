@@ -41,6 +41,7 @@
 @synthesize memberListSelBottomLineColor;
 @synthesize memberListSelTopColor;
 @synthesize memberListSelBottomColor;
+@synthesize underlyingWindowColor;
 
 - (id)init
 {
@@ -98,6 +99,8 @@
 	[memberListSelBottomLineColor release];
 	[memberListSelTopColor release];
 	[memberListSelBottomColor release];
+	
+	[underlyingWindowColor release];
 	
 	[super dealloc];
 }
@@ -183,6 +186,8 @@
 	NSDictionary *inputTextFormat = [userInterface objectForKey:@"Input Box"];
 	NSDictionary *memberListFormat = [userInterface objectForKey:@"Member List"];
 	NSDictionary *serverListFormat = [userInterface objectForKey:@"Server List"];
+	
+	underlyingWindowColor = [[self processStringValue:[userInterface objectForKey:@"Underlying Window Color"] def:@"#FFFFFF"] retain];
 	
 	// ====================================================== //
 	

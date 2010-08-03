@@ -72,8 +72,6 @@
 	
 	[Preferences initPreferences];
 	
-	[ViewTheme createUserDirectory];
-	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
@@ -192,6 +190,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
+	[ViewTheme createUserDirectory];
+	
 	[window makeFirstResponder:text];
 	[window makeKeyAndOrderFront:nil];
 	

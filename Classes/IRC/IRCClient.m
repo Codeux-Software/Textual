@@ -1570,10 +1570,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		case 42: // Command: CLEAR
 			if (c) {
-				[c.log clear];
+				[world clearContentsOfChannel:c inClient:self];
 				[c setUnreadCount:0];
 			} else if (u) {
-				[u.log clear];
+				[world clearContentsOflient:self];
 				[u setUnreadCount:0];
 			}
 			
@@ -1735,18 +1735,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		case 71: // Command: CLEARALL
 			if ([Preferences clearAllOnlyOnActiveServer]) {
-				[self.log clear];
+				[world clearContentsOflient:self];
 				
 				for (IRCChannel* c in channels) {
-					[c.log clear];
+					[world clearContentsOfChannel:c inClient:self];
 					[c setUnreadCount:0];
 				}
 			} else {
 				for (IRCClient* u in [world clients]) {
-					[u.log clear];
+					[world clearContentsOflient:u];
 					
 					for (IRCChannel* c in [u channels]) {
-						[c.log clear];
+						[world clearContentsOfChannel:c inClient:u];
 						[c setUnreadCount:0];
 					}
 				}
