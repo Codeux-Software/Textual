@@ -49,6 +49,7 @@
 @synthesize clients;
 @synthesize bundlesForUserInput;
 @synthesize bundlesForServerInput;
+@synthesize soundMuted;
 
 - (id)init
 {

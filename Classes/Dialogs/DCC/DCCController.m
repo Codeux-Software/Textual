@@ -503,7 +503,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_ERROR]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_ERROR] isMuted:world.soundMuted];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
@@ -515,7 +515,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_SUCCESS]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_SUCCESS] isMuted:world.soundMuted];
 }
 
 #pragma mark -
@@ -578,7 +578,7 @@
 	[self updateTimer];
 	
 	[world notifyOnGrowl:GROWL_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_ERROR]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_ERROR] isMuted:world.soundMuted];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
@@ -590,7 +590,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_SUCCESS]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_SUCCESS] isMuted:world.soundMuted];
 }
 
 #pragma mark -

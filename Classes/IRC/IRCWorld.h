@@ -54,6 +54,8 @@
 	BOOL reloadingTree;
 	IRCTreeItem* selected;
 	
+	BOOL soundMuted;
+	
 	NSInteger previousSelectedClientId;
 	NSInteger previousSelectedChannelId;
 	
@@ -82,6 +84,7 @@
 @property (assign) NSMenu* chanMenu;
 @property (assign) NSMenu* memberMenu;
 @property (readonly) NSMutableArray* clients;
+@property (assign) BOOL soundMuted;
 @property (retain) IRCTreeItem* selected;
 @property (readonly) IRCClient* selectedClient;
 @property (readonly) IRCChannel* selectedChannel;

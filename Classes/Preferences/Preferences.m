@@ -154,6 +154,8 @@ static NSMutableDictionary *commandIndex;
 	[commandIndex setObject:@"71" forKey:@"CLEARALL"];
 	[commandIndex setObject:@"72" forKey:@"AMSG"];
 	[commandIndex setObject:@"73" forKey:@"AME"];
+	[commandIndex setObject:@"74" forKey:@"MUTE"];
+	[commandIndex setObject:@"75" forKey:@"UNMUTE"];
 	[commandIndex setObject:@"77" forKey:@"REMOVE"];
 	[commandIndex setObject:@"78" forKey:@"KB"];
 	[commandIndex setObject:@"79" forKey:@"KICKBAN"];

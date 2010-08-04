@@ -626,7 +626,7 @@
 				   @"msg", @"op", @"raw", @"rejoin", @"query", @"quote", @"t", @"timer", @"voice", @"unban", 
 				   @"unignore", @"umode", @"version", @"weights", @"echo", @"debug", @"clearall", @"amsg", 
 				   @"ame", @"remove", @"kb", @"kickban", @"icbadge",  @"server", @"conn", @"myversion", 
-                   @"sysinfo", @"memory", @"resetfiles", 
+                   @"sysinfo", @"memory", @"resetfiles", @"mute", @"unmute",
 				   nil];
 		lowerChoices = choices;
 	} else if (channelMode) {
