@@ -3,25 +3,41 @@
 
 #import "ScriptsWrapper.h"
 #import "Preferences.h"
+#import "IRCWorld.h"
 
 @implementation ScriptsWrapper
+
+@synthesize scripts;
+@synthesize world;
 
 - (id)init
 {
 	if (self = [super init]) {
 		 if (!scripts) {
 			 scripts = [NSMutableArray new];
-			 NSFileManager *fm = [NSFileManager defaultManager];
-			 
-			 NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-			 for (NSString* file in resourceFiles) {
-				 if ([file hasSuffix:@".scpt"]) {
-					 [scripts addObject:[file safeSubstringToIndex:([file length] - 5)]];
-				 }
-			 }
-		}	
+		 }
 	}
 	return self;
+}
+
+- (void)populateData;
+{			
+	NSFileManager *fm = [NSFileManager defaultManager];
+
+	NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+	for (NSString* file in resourceFiles) {
+		if ([file hasSuffix:@".scpt"]) {
+			[scripts addObject:[[file safeSubstringToIndex:([file length] - 5)] lowercaseString]];
+		}
+	}
+
+	for (NSString *cmd in world.bundlesForUserInput) {
+		if (![scripts containsObject:cmd]) {
+			[scripts addObject:[cmd lowercaseString]];
+		}
+	}
+	
+	[scripts sortUsingSelector:@selector(compare:)];
 }
 
 - (void)dealloc
@@ -40,5 +56,4 @@
 	return [scripts safeObjectAtIndex:rowIndex];
 }
 
-@synthesize scripts;
 @end

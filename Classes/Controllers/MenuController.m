@@ -365,6 +365,7 @@
 	if (!preferencesController) {
 		preferencesController = [PreferencesController new];
 		preferencesController.delegate = self;
+		preferencesController.world = world;
 	}
 	[preferencesController show];
 }

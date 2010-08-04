@@ -41,6 +41,7 @@ typedef enum {
 + (DCCActionType)dccAction;
 + (AddressDetectionType)dccAddressDetectionMethod;
 + (NSString*)whereScriptsPath;
++ (NSString*)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
 + (NSString*)whereThemesPath;
 + (NSString*)whereScriptsLocalPath;

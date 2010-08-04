@@ -3,10 +3,11 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import <Cocoa/Cocoa.h>
+#import "ScriptsWrapper.h"
 
-#define ThemeDidChangeNotification		 @"ThemeDidChangeNotification"
-#define ThemeSelectedConsoleNotification	 @"ThemeSelectedConsoleNotification"
-#define ThemeSelectedChannelNotification   @"ThemeSelectedChannelNotification"
+#define ThemeDidChangeNotification			@"ThemeDidChangeNotification"
+#define ThemeSelectedConsoleNotification	@"ThemeSelectedConsoleNotification"
+#define ThemeSelectedChannelNotification	@"ThemeSelectedChannelNotification"
 
 @interface PreferencesController : NSWindowController
 {
@@ -27,6 +28,7 @@
 	
 	IBOutlet NSTableView* keywordsTable;
 	IBOutlet NSTableView* excludeWordsTable;
+	IBOutlet NSTableView* installedScriptsTable;
 	IBOutlet NSArrayController* keywordsArrayController;
 	IBOutlet NSArrayController* excludeWordsArrayController;
 	IBOutlet NSPopUpButton* transcriptFolderButton;
@@ -34,16 +36,19 @@
 	IBOutlet NSTextField* scriptLocationField;
 	IBOutlet NSPopUpButton* preferenceSelectButton;
 	
+	NSFont* logFont;
+	IRCWorld *world;
 	NSMutableArray* sounds;
 	NSOpenPanel* transcriptFolderOpenPanel;
-	NSFont* logFont;
 }
 
 @property (assign) id delegate;
+@property (assign) IRCWorld *world;
 @property (assign) NSString* fontDisplayName;
 @property (assign) CGFloat fontPointSize;
 @property (readonly) NSArray* availableSounds;
 @property (readonly) NSMutableArray* sounds;
+@property (readonly) NSMutableArray* scripts;
 @property (retain) NSView *contentView;
 @property (retain) NSView *highlightView;
 @property (retain) NSView *interfaceView;
@@ -58,6 +63,7 @@
 @property (retain) NSView *IRCopServicesView;
 @property (retain) NSTableView* keywordsTable;
 @property (retain) NSTableView* excludeWordsTable;
+@property (retain) NSTableView* installedScriptsTable;
 @property (retain) NSArrayController* keywordsArrayController;
 @property (retain) NSArrayController* excludeWordsArrayController;
 @property (retain) NSPopUpButton* transcriptFolderButton;
