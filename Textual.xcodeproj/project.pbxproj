@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
+		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C49192711FF723D0065E5D5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 4C49192611FF723D0065E5D5 /* README */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
@@ -119,7 +120,6 @@
 		4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
 		4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* AddressBook.m */; };
 		4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */; };
-		4CA945D311E1AFBA00D36367 /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C004DB8119A0A32005F4276 /* ScriptsWrapper.m */; };
 		4CA945D411E1AFBA00D36367 /* TextualApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC80119C92790046BC5C /* TextualApplication.m */; };
 		4CA945D511E1AFBA00D36367 /* IconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7832F311AE4AF100D8928D /* IconManager.m */; };
 		4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7E561311B0386200B5DE98 /* AboutPanel.m */; };
@@ -186,8 +186,6 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4C004DB7119A0A32005F4276 /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptsWrapper.h; sourceTree = "<group>"; };
-		4C004DB8119A0A32005F4276 /* ScriptsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptsWrapper.m; sourceTree = "<group>"; };
 		4C0C42931197423600578ABB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C119CD711AD74880004F157 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/application.icns; sourceTree = "<group>"; };
 		4C27C20911B1747D008EAA24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
@@ -198,6 +196,8 @@
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		4C33F97211AA81FF003EAB65 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C34851D11F96CEA005D91D6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = "Extra/Sparkle Tools/dsa_pub.pem"; sourceTree = "<group>"; };
+		4C3761E512095DD700E02C1A /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptsWrapper.h; sourceTree = "<group>"; };
+		4C3761E612095DD700E02C1A /* ScriptsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptsWrapper.m; sourceTree = "<group>"; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C5938E411D0E0790094B049 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGKeychain.h; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
@@ -678,8 +678,8 @@
 			children = (
 				78A8C0DD11737F660044E7A1 /* PreferencesController.h */,
 				78A8C0DE11737F660044E7A1 /* PreferencesController.m */,
-				4C004DB7119A0A32005F4276 /* ScriptsWrapper.h */,
-				4C004DB8119A0A32005F4276 /* ScriptsWrapper.m */,
+				4C3761E512095DD700E02C1A /* ScriptsWrapper.h */,
+				4C3761E612095DD700E02C1A /* ScriptsWrapper.m */,
 				78A8C0DF11737F660044E7A1 /* SoundWrapper.h */,
 				78A8C0E011737F660044E7A1 /* SoundWrapper.m */,
 			);
@@ -1082,7 +1082,6 @@
 				4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */,
 				4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */,
 				4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */,
-				4CA945D311E1AFBA00D36367 /* ScriptsWrapper.m in Sources */,
 				4CA945D411E1AFBA00D36367 /* TextualApplication.m in Sources */,
 				4CA945D511E1AFBA00D36367 /* IconManager.m in Sources */,
 				4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */,
@@ -1094,6 +1093,7 @@
 				4CA945DC11E1AFBA00D36367 /* NSObject+DDExtensions.m in Sources */,
 				4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */,
 				4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */,
+				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

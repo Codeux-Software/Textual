@@ -6,6 +6,7 @@
 #import "Preferences.h"
 #import "ViewTheme.h"
 #import "SoundWrapper.h"
+#import "ScriptsWrapper.h"
 
 #define LINES_MIN			100
 #define LINES_MAX			5000
@@ -45,6 +46,9 @@
 	[logView release];
 	[generalView release];
 	[scriptsView release];
+	[identityView release];
+	[floodControlView release];
+	[IRCopServicesView release];
 	
 	[super dealloc];
 }
@@ -54,10 +58,17 @@
 
 - (void)show
 {
+	ScriptsWrapper *scriptsController = [[ScriptsWrapper alloc] init];
+	installedScriptsTable.dataSource = scriptsController;
+	
+	scriptsController.world = world;
+	[scriptsController populateData];
+	[installedScriptsTable reloadData];
+	
 	[self updateTranscriptFolder];
 	[self updateTheme];
 	
-	[scriptLocationField setStringValue:[Preferences whereScriptsPath]];
+	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
 	[logFont release];
 	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
@@ -546,4 +557,6 @@
 @synthesize logFont;
 @synthesize floodControlView;
 @synthesize IRCopServicesView;
+@synthesize world;
+@synthesize installedScriptsTable;
 @end

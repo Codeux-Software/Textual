@@ -3,10 +3,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ScriptsWrapper : NSTableView
+@interface ScriptsWrapper : NSObject 
 {
+	IRCWorld *world;
 	NSMutableArray *scripts;
 }
 
+@property (assign) IRCWorld* world;
 @property (retain) NSMutableArray *scripts;
+
+- (void)populateData;
 @end

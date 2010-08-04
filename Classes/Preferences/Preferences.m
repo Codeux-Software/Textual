@@ -178,6 +178,11 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Path Index
 
++ (NSString*)whereApplicationSupportPath
+{
+	return [@"~/Library/Application Support/Textual/" stringByExpandingTildeInPath];
+}
+
 + (NSString*)whereScriptsPath
 {
 	return [@"~/Library/Application Support/Textual/Scripts" stringByExpandingTildeInPath];
