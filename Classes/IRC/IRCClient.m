@@ -1866,6 +1866,26 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		case 74: // Command: MUTE
+			if (world.soundMuted) {
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_ALREADY_MUTED")];
+			} else {
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_HAS_BEEN_MUTED")];
+				
+				[world setSoundMuted:YES];
+			}
+			return YES;
+			break;
+		case 75: // Command: UNMUTE
+			if (world.soundMuted) {
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_NO_LONGER_MUTED")];
+				
+				[world setSoundMuted:NO];
+			} else {
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_NOT_MUTED")];
+			}
+			return YES;
+			break;
 		default:
 		{
 			if ([[world bundlesForUserInput] objectForKey:cmd]) {
@@ -2571,7 +2591,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		
 		if (type == LINE_TYPE_NOTICE) {
 			[self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:anick text:text];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_CHANNEL_NOTICE]];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_CHANNEL_NOTICE] isMuted:world.soundMuted];
 		} else {
 			id t = c ?: (id)self;
 			[self setUnreadState:t];
@@ -2579,7 +2599,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : GROWL_CHANNEL_MSG;
 			[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
-			[SoundPlayer play:[Preferences soundForEvent:kind]];
+			[SoundPlayer play:[Preferences soundForEvent:kind] isMuted:world.soundMuted];
 			
 			if (c) {
 				IRCUser* sender = [c findMember:anick];
@@ -2711,7 +2731,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				}
 				
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:anick text:text];
-				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE]];
+				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE] isMuted:world.soundMuted];
 			} else {
 				id t = c ?: (id)self;
 				[self setUnreadState:t];
@@ -2720,7 +2740,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
 				[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
-				[SoundPlayer play:[Preferences soundForEvent:kind]];
+				[SoundPlayer play:[Preferences soundForEvent:kind] isMuted:world.soundMuted];
 				
 				[c.log setTopic:[NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address]];
 			}
@@ -2882,7 +2902,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
 			
 			[self notifyEvent:GROWL_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]isMuted:world.soundMuted];
 			
 			if (![NSApp isActive]) {
 				[NSApp requestUserAttention:NSInformationalRequest];
@@ -3022,7 +3042,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[c deactivate];
 			[self reloadTree];
 			[self notifyEvent:GROWL_KICKED target:c nick:nick text:comment];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_KICKED]];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_KICKED] isMuted:world.soundMuted];
 		}
 		
 		[c removeMember:target];
@@ -3183,7 +3203,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 
 	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_INVITED]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_INVITED] isMuted:world.soundMuted];
 	
 	if ([Preferences autoJoinOnInvite]) {
 		[self send:JOIN, chname, nil, nil];
@@ -3223,7 +3243,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	myNick = [[m paramAt:0] retain];
 	
 	[self notifyEvent:GROWL_LOGIN];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN] isMuted:world.soundMuted];
 	
 	if (config.nickPassword.length) {
 		[self startAutoJoinTimer];
@@ -3871,7 +3891,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (prevConnected) {
 		[self notifyEvent:GROWL_DISCONNECT];
-		[SoundPlayer play:[Preferences soundForEvent:GROWL_DISCONNECT]];
+		[SoundPlayer play:[Preferences soundForEvent:GROWL_DISCONNECT] isMuted:world.soundMuted]; 
 	}
 }
 

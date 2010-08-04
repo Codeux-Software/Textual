@@ -24,6 +24,11 @@
 
 "SOURCE_RESOURCES_FILES_RESET" = "Files reset. Please restart Textual to apply changes.";
 
+"SOUND_HAS_BEEN_MUTED" = "Sound has been muted.";
+"SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
+"SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
+"SOUND_IS_NOT_MUTED" = "Sound is not muted.";
+
 "OK_BUTTON" = "OK";
 "QUIT_BUTTON" = "Quit";
 "CANCEL_BUTTON" = "Cancel";

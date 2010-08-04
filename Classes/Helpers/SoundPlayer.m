@@ -5,9 +5,9 @@
 
 @implementation SoundPlayer
 
-+ (void)play:(NSString*)name
++ (void)play:(NSString*)name isMuted:(BOOL)muted
 {
-	if (!name || !name.length) return;
+	if (!name || !name.length || muted) return;
 	
 	if ([name isEqualToString:@"Beep"]) {
 		NSBeep();
