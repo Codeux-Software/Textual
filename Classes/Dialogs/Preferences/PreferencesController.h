@@ -48,7 +48,6 @@
 @property (assign) CGFloat fontPointSize;
 @property (readonly) NSArray* availableSounds;
 @property (readonly) NSMutableArray* sounds;
-@property (readonly) NSMutableArray* scripts;
 @property (retain) NSView *contentView;
 @property (retain) NSView *highlightView;
 @property (retain) NSView *interfaceView;
