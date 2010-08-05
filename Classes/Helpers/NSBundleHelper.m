@@ -2,11 +2,11 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "NSBundleHelper.h"
-#import "TextualPluginItem.h"
 #import "IRCWorld.h"
 #import "IRCMessage.h"
 #import "IRCClient.h"
 #import "Preferences.h"
+#import "PluginProtocol.h"
 
 @implementation NSBundle (NSBundleHelper)
 
@@ -20,8 +20,10 @@
 	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
 	
 	if ([cmdPlugins count] >= 1) {
-		for (TextualPluginItem *plugin in cmdPlugins) {
-			[[plugin bundleClass] messageSentByUser:client message:message command:command];
+		for (NSBundle *plugin in cmdPlugins) {
+			PluginProtocol *bundle = (PluginProtocol*)[[[plugin principalClass] new] autorelease];
+			
+			[bundle messageSentByUser:client message:message command:command];
 		}
 	}
 	
@@ -51,12 +53,51 @@
 								[NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
 								[msg command], @"messageCommand", nil];
 		
-		for (TextualPluginItem *plugin in cmdPlugins) {
-			[[plugin bundleClass] messageReceivedByServer:client sender:senderData message:messageData];
+		for (NSBundle *plugin in cmdPlugins) {
+			PluginProtocol *bundle = (PluginProtocol*)[[[plugin principalClass] new] autorelease];
+			
+			[bundle messageReceivedByServer:client sender:senderData message:messageData];
 		}
 	}
 	
 	[pool drain];
+}
+
++ (void)reloadAllAvailableBundles:(IRCWorld*)world
+{
+	[self deallocAllAvailableBundlesFromMemory:world];
+	[self loadAllAvailableBundlesIntoMemory:world];
+}
+
++ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld*)world
+{
+	NSMutableArray *allPlugins = [[NSMutableArray new] autorelease];
+	
+	for (NSString *command in world.bundlesForUserInput) {
+		for (NSBundle *plugin in [world.bundlesForUserInput objectForKey:command]) {
+			if (plugin && ![allPlugins containsObject:plugin]) {
+				[allPlugins addObject:plugin];
+			}
+		}
+	}
+	
+	for (NSString *command in world.bundlesForServerInput) {
+		for (NSBundle *plugin in [world.bundlesForServerInput objectForKey:command]) {
+			if (plugin && ![allPlugins containsObject:plugin]) {
+				[allPlugins addObject:plugin];
+			}
+		}
+	}
+	
+	for (NSBundle *plugin in allPlugins) {
+		[plugin unload];
+	}
+	
+	[world.bundlesForUserInput release];
+	world.bundlesForUserInput = nil;
+				 
+	[world.bundlesForServerInput release];
+	world.bundlesForServerInput = nil;
 }
 
 + (void)loadAllAvailableBundlesIntoMemory:(IRCWorld*)world
@@ -65,8 +106,8 @@
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
-	NSMutableDictionary *userInputBundles = [[NSMutableDictionary new] autorelease];
-	NSMutableDictionary *serverInputBundles = [[NSMutableDictionary new] autorelease];
+	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
+	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
 	NSArray* resourceFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
 	
@@ -79,13 +120,9 @@
 				Class currPrincipalClass = [currBundle principalClass];       
 				
 				if (currPrincipalClass) {
-					PluginProtocol *currInstance = [[currPrincipalClass alloc] init];  
+					PluginProtocol *currInstance = [[currPrincipalClass new] autorelease];
 					
 					if (currInstance) {
-						TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
-						
-						[plugin setBundleClass:[currInstance autorelease]];
-									
 						// User Input
 						if ([currInstance respondsToSelector:@selector(messageSentByUser:message:command:)]) {
 							if ([currInstance respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
@@ -101,8 +138,8 @@
 											[userInputBundles setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 										}
 										
-										if (![cmdDict containsObject:plugin]) {
-											[[userInputBundles objectForKey:cmd] addObject:plugin];
+										if (![cmdDict containsObject:currBundle]) {
+											[[userInputBundles objectForKey:cmd] addObject:currBundle];
 										}
 									}
 								}
@@ -124,8 +161,8 @@
 											[serverInputBundles setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 										}
 										
-										if (![cmdDict containsObject:plugin]) {
-											[[serverInputBundles objectForKey:cmd] addObject:plugin];
+										if (![cmdDict containsObject:currBundle]) {
+											[[serverInputBundles objectForKey:cmd] addObject:currBundle];
 										}
 									}
 								}

@@ -156,6 +156,7 @@ static NSMutableDictionary *commandIndex;
 	[commandIndex setObject:@"73" forKey:@"AME"];
 	[commandIndex setObject:@"74" forKey:@"MUTE"];
 	[commandIndex setObject:@"75" forKey:@"UNMUTE"];
+	[commandIndex setObject:@"76" forKey:@"UNLOAD_PLUGINS"];
 	[commandIndex setObject:@"77" forKey:@"REMOVE"];
 	[commandIndex setObject:@"78" forKey:@"KB"];
 	[commandIndex setObject:@"79" forKey:@"KICKBAN"];
@@ -170,6 +171,7 @@ static NSMutableDictionary *commandIndex;
 	[commandIndex setObject:@"88" forKey:@"NACHAT"];
 	[commandIndex setObject:@"89" forKey:@"ADCHAT"];
 	[commandIndex setObject:@"90" forKey:@"RESETFILES"];
+	[commandIndex setObject:@"91" forKey:@"LOAD_PLUGINS"];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 

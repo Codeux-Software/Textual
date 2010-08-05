@@ -48,7 +48,7 @@
 	}
 	
 	if (value.length) {
-		[SoundPlayer play:value];
+		[SoundPlayer play:value isMuted:NO];
 	}
 	[Preferences setSound:value forEvent:eventType];
 }

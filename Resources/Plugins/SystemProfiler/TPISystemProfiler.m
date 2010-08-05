@@ -8,7 +8,7 @@
 	return [NSArray arrayWithObjects:@"sysinfo", @"memory", nil];
 }
 
-- (void)messageSentByUser:(NSObject*)client
+- (void)messageSentByUser:(IRCClient*)client
 				  message:(NSString*)messageString
 				  command:(NSString*)commandString
 {

@@ -68,6 +68,7 @@
 - (void)deactivate;
 
 - (BOOL)print:(LogLine*)line;
+- (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML;
 
 - (void)addMember:(IRCUser*)user;
 - (void)addMember:(IRCUser*)user reload:(BOOL)reload;
