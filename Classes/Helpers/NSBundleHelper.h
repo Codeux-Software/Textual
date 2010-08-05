@@ -8,15 +8,17 @@
 
 @interface NSBundle (NSBundleHelper)
 
++ (void)reloadAllAvailableBundles:(IRCWorld*)world;
 + (void)loadAllAvailableBundlesIntoMemory:(IRCWorld*)world;
++ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld*)world;
 
 + (void)sendUserInputDataToBundles:(IRCWorld*)world
-				   message:(NSString*)message
-				   command:(NSString*)command
-				    client:(IRCClient*)client;
-
+						   message:(NSString*)message
+						   command:(NSString*)command
+							client:(IRCClient*)client;
+	
 + (void)sendServerInputDataToBundles:(IRCWorld*)world
-					client:(IRCClient*)client
-				     message:(IRCMessage*)msg;
+							  client:(IRCClient*)client
+							 message:(IRCMessage*)msg;
 
 @end

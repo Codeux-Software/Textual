@@ -1886,6 +1886,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 			return YES;
 			break;
+		case 76: // Command: UNLOAD_PLUGINS
+			[NSBundle deallocAllAvailableBundlesFromMemory:world];
+			return YES;
+			break;
+		case 91: // Command: LOAD_PLUGINS
+			[NSBundle loadAllAvailableBundlesIntoMemory:world];
+			return YES;
+			break;
 		default:
 		{
 			if ([[world bundlesForUserInput] objectForKey:cmd]) {
@@ -2280,9 +2288,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	return [self printChannel:chan type:type nick:nil text:text identified:NO];
 }
 
-- (BOOL)printAndLog:(LogLine*)line
+- (BOOL)printAndLog:(LogLine*)line withHTML:(BOOL)rawHTML
 {
-	BOOL result = [log print:line];
+	BOOL result = [log print:line withHTML:rawHTML];
 	
 	if (!self.isConnected) return NO;
 	
@@ -2312,6 +2320,49 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	return result;
+}
+
+- (BOOL)printRawHTMLToCurrentChannel:(NSString*)text 
+{
+	return [self printRawHTMLToCurrentChannel:text withTimestamp:YES];
+}
+
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString*)text 
+{
+	return [self printRawHTMLToCurrentChannel:text withTimestamp:NO];
+}
+
+- (BOOL)printRawHTMLToCurrentChannel:(NSString*)text withTimestamp:(BOOL)showTime
+{
+	IRCChannel* channel = [world selectedChannel];
+	LogLineType memberType = MEMBER_TYPE_NORMAL;
+	LogLineType type = LINE_TYPE_REPLY;
+	
+	LogLine* c = [[LogLine new] autorelease];
+	
+	if (showTime) {
+		NSString* time = TXFormattedTimestamp([Preferences themeTimestampFormat]);
+		
+		if (time.length) {
+			time = [time stringByAppendingString:@" "];
+		}
+	
+		c.time = time;
+	}
+	
+	c.body = text;
+	c.lineType = type;
+	c.memberType = memberType;
+	
+	if (channel) {
+		return [channel print:c withHTML:YES];
+	} else {
+		if ([Preferences logTranscript]) {
+			return [self printAndLog:c withHTML:YES];
+		} else {
+			return [log print:c withHTML:YES];
+		}
+	}
 }
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified
@@ -2408,7 +2459,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			return NO;
 		} else {
 			if ([Preferences logTranscript]) {
-				return [self printAndLog:c];
+				return [self printAndLog:c withHTML:NO];
 			} else {
 				return [log print:c];
 			}

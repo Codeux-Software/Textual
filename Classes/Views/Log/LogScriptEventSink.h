@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import <Cocoa/Cocoa.h>
-#import <HIToolbox/Events.h>
+#import <Carbon/Carbon.h>
 
 @class LogController;
 

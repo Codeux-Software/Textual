@@ -405,6 +405,11 @@
 
 - (BOOL)print:(LogLine*)line
 {
+	return [self print:line withHTML:NO];
+}
+
+- (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML
+{
 	BOOL key = NO;
 	NSArray* urlRanges = nil;
 	NSString* body;
@@ -414,14 +419,18 @@
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
-	body = [LogRenderer renderBody:line.body
-				     nolinks:[[Preferences bannedURLRegexLineTypes] containsObject:lineTypeString]
-				    keywords:line.keywords
-				excludeWords:line.excludeWords
-			    exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)
-				 highlighted:&key
-				   URLRanges:&urlRanges];
-
+	if (rawHTML == NO) {
+		body = [LogRenderer renderBody:line.body
+							   nolinks:[[Preferences bannedURLRegexLineTypes] containsObject:lineTypeString]
+							  keywords:line.keywords
+						  excludeWords:line.excludeWords
+						exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)
+						   highlighted:&key
+							 URLRanges:&urlRanges];
+	} else {
+		body = line.body;
+	}
+	
 	if (!loaded) {
 		[lines addObject:line];
 		return key;
@@ -435,7 +444,7 @@
 		[s appendFormat:@"<p>"];
 	}
 	
-	if ([line.time length] < 1) {
+	if ([line.time length] < 1 && rawHTML == NO) {
 		return NO;
 	}
 	

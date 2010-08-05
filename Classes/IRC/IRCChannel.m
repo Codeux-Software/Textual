@@ -161,7 +161,12 @@
 
 - (BOOL)print:(LogLine*)line
 {
-	BOOL result = [log print:line];
+	return [self print:line withHTML:NO];
+}
+
+- (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML
+{
+	BOOL result = [log print:line withHTML:rawHTML];
 	
 	if ([Preferences logTranscript]) {
 		if (!logFile) {

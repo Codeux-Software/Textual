@@ -101,6 +101,7 @@
 - (void)changeTextSize:(BOOL)bigger;
 
 - (BOOL)print:(LogLine*)line;
+- (BOOL)print:(LogLine*)line withHTML:(BOOL)stripHTML;
 
 - (void)logViewOnDoubleClick:(NSString*)e;
 

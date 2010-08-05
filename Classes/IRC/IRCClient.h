@@ -172,4 +172,10 @@ typedef enum {
 - (NSInteger)indexOfTalkChannel;
 
 - (void)createChannelListDialog;
+
+- (void)sendPrivmsgToSelectedChannel:(NSString*)message;
+
+- (BOOL)printRawHTMLToCurrentChannel:(NSString*)text;
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString*)text ;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString*)text withTimestamp:(BOOL)showTime;
 @end
