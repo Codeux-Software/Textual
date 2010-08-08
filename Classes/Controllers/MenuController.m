@@ -1215,10 +1215,10 @@
 	NSArray *nicknames = [self selectedMembers:sender];
 	
 	if (pointedNick && [nicknames isEqual:[NSArray array]]) {
-		[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", pointedNick, TXTLS(@"KILL_REASON")] completeTarget:NO target:nil];
+		[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", pointedNick, [Preferences IRCopDefaultKillMessage]] completeTarget:NO target:nil];
 	} else {
 		for (IRCUser* m in nicknames) {
-			[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", m.nick, TXTLS(@"KILL_REASON")] completeTarget:NO target:nil];
+			[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", m.nick, [Preferences IRCopDefaultKillMessage]] completeTarget:NO target:nil];
 		}
 		
 		[self deselectMembers:sender];
@@ -1237,10 +1237,10 @@
 	NSArray *nicknames = [self selectedMembers:sender];
 	
 	if (pointedNick && [nicknames isEqual:[NSArray array]]) {
-		[u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", pointedNick, TXTLS(@"GLINE_REASON")] completeTarget:NO target:nil];
+		[u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", pointedNick, [Preferences IRCopDefaultGlineMessage]] completeTarget:NO target:nil];
 	} else {
 		for (IRCUser* m in nicknames) {
-			[u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, TXTLS(@"GLINE_REASON")] completeTarget:NO target:nil];
+			[u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, [Preferences IRCopDefaultGlineMessage]] completeTarget:NO target:nil];
 		}
 		
 		[self deselectMembers:sender];
@@ -1259,10 +1259,10 @@
 	NSArray *nicknames = [self selectedMembers:sender];
 	
 	if (pointedNick && [nicknames isEqual:[NSArray array]]) {
-		[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", pointedNick, TXTLS(@"SHUN_REASON")] completeTarget:NO target:nil];
+		[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", pointedNick, [Preferences IRCopDefaultShunMessage]] completeTarget:NO target:nil];
 	} else {
 		for (IRCUser* m in nicknames) {
-			[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", m.nick, TXTLS(@"SHUN_REASON")] completeTarget:NO target:nil];
+			[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", m.nick, [Preferences IRCopDefaultShunMessage]] completeTarget:NO target:nil];
 		}
 		
 		[self deselectMembers:sender];

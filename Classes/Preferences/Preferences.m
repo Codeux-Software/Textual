@@ -20,6 +20,7 @@ static NSInteger startUpTime;
 #pragma mark URL Regex
 
 static NSString *urlAddrRegexComplex;
+
 + (NSString*)complexURLRegularExpression
 {
 	if (!urlAddrRegexComplex) {
@@ -34,10 +35,16 @@ static NSString *urlAddrRegexComplex;
 	return [NSArray arrayWithObjects:@")", @"]", @"'", @"\"", @":", @">", @"<", @"}", @"|", @",", nil];
 }
 
-+ (NSArray*)bannedURLRegexBufferChars
++ (NSArray*)bannedURLRegexLeftBufferChars
 {
-	return [NSArray arrayWithObjects:@"~", @"!", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", @"=", @"-", 
-									 @"`", @"\"", @":", @"'", @";", @"/", @".", @",", @"?", nil];
+	return [NSArray arrayWithObjects:@"~", @"!", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", 
+									 @"=", @"-", @"`", @":", @";", @"/", @".", @",", @"?", nil];
+}
+
++ (NSArray*)bannedURLRegexRightBufferChars
+{
+	return [NSArray arrayWithObjects:@"~", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", 
+									 @"=", @"-", @"`", @"/", @".", @",", nil];
 }
 
 + (NSArray*)bannedURLRegexLineTypes
@@ -277,6 +284,24 @@ static NSMutableDictionary *commandIndex;
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	return [ud integerForKey:@"Preferences.DCC.address_detection_method"];
+}
+
++ (NSString*)IRCopDefaultKillMessage
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.General.ircop_kill_message"];
+}
+
++ (NSString*)IRCopDefaultGlineMessage
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.General.ircop_gline_message"];
+}
+
++ (NSString*)IRCopDefaultShunMessage
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.General.ircop_shun_message"];
 }
 
 + (NSString*)IRCopAlertMatch
@@ -1046,6 +1071,9 @@ static NSMutableArray* excludeWords;
 	[d setBool:NO forKey:@"Preferences.General.amsg_allconnections"];
 	[d setBool:NO forKey:@"Preferences.General.away_allconnections"];
 	[d setBool:NO forKey:@"Preferences.General.nick_allconnections"];
+	[d setObject:TXTLS(@"SHUN_REASON") forKey:@"Preferences.General.ircop_shun_message"];
+	[d setObject:TXTLS(@"KILL_REASON") forKey:@"Preferences.General.ircop_kill_message"];
+	[d setObject:TXTLS(@"GLINE_REASON") forKey:@"Preferences.General.ircop_gline_message"];
 	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
 	[d setBool:NO forKey:@"Preferences.General.connect_on_doubleclick"];
 	[d setBool:NO forKey:@"Preferences.General.disconnect_on_doubleclick"];
@@ -1077,7 +1105,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
-	[d setInt:100 forKey:@"Preferences.General.user_doubleclick_action"];
+	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud registerDefaults:d];

@@ -1,11 +1,8 @@
 #import <Cocoa/Cocoa.h>
 
+#include "GlobalModels.h"
+
 typedef unsigned long long TXLongInt;
-
-/* Textual specific items header declarations */
-
-extern NSTimeInterval IntervalSinceTextualStart(void);
-extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
 
 /* Plugin Specific Class */
 
