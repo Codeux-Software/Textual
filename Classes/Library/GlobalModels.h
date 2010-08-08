@@ -5,14 +5,14 @@
 
 void TXCFSpecialRelease(CFTypeRef cf);
 
-NSString *TXTLS(NSString *key);
-
+extern NSString *TXTLS(NSString *key);
+extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhole - Good for "variable not used" warnings. 
 extern NSInteger TXRandomThousandNumber(void);
 extern NSTimeInterval IntervalSinceTextualStart(void);
 extern NSString *TXFormattedTimestamp(NSString *format);
 extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
 extern NSString *promptForInput(NSString *whatFor, 
-					  NSString *title, 
-					  NSString *defaultButton, 
-					  NSString *altButton, 
-					  NSString *defaultInput);
+								NSString *title, 
+								NSString *defaultButton, 
+								NSString *altButton, 
+								NSString *defaultInput);

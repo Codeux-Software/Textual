@@ -6,6 +6,11 @@
 
 #define TIME_BUFFER_SIZE 256
 
+extern void TXDevNullDestroyObject(void* objt)
+{
+	return;
+}
+
 extern NSInteger TXRandomThousandNumber(void)
 {
 	return (1 + arc4random() % (9999 + 1));
@@ -29,10 +34,10 @@ NSString *TXTLS(NSString *key)
 }
 
 extern NSString *promptForInput(NSString *whatFor, 
-					  NSString *title, 
-					  NSString *defaultButton, 
-					  NSString *altButton, 
-					  NSString *defaultInput)
+								NSString *title, 
+								NSString *defaultButton, 
+								NSString *altButton, 
+								NSString *defaultInput)
 {
 	NSAlert *alert = [NSAlert alertWithMessageText:((title == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : title)
 									 defaultButton:((defaultButton == nil) ? TXTLS(@"OK_BUTTON") : defaultButton)

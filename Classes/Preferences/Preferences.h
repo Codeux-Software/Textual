@@ -57,7 +57,11 @@ typedef enum {
 + (NSString*)complexURLRegularExpression;
 + (NSArray*)bannedURLRegexChars;
 + (NSArray*)bannedURLRegexLineTypes;
-+ (NSArray*)bannedURLRegexBufferChars;
++ (NSArray*)bannedURLRegexLeftBufferChars;
++ (NSArray*)bannedURLRegexRightBufferChars;
++ (NSString*)IRCopDefaultKillMessage;
++ (NSString*)IRCopDefaultGlineMessage;
++ (NSString*)IRCopDefaultShunMessage;
 + (BOOL)floodControlIsEnabled;
 + (NSInteger)floodControlDelayTimer;
 + (NSInteger)floodControlMaxMessages;

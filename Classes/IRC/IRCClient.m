@@ -1260,7 +1260,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSMutableString* t = [[s mutableCopy] autorelease];
 				
 			NSString *peer = [s getToken];
-			NSString *reason = TXTLS(@"KILL_REASON");
+			NSString *reason = [Preferences IRCopDefaultKillMessage];
 				
 			NSInteger substrIndex = ([peer length] + 1);
 				

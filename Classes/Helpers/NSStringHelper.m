@@ -392,16 +392,28 @@ BOOL isUnicharDigit(unichar c)
 	if (self.length <= start) return NSMakeRange(NSNotFound, 0);
 
 	NSString *shortstring = [self safeSubstringFromIndex:start];
+	NSInteger sstring_length = [shortstring length];
+	
 	NSRange rs = [shortstring rangeOfRegex:[Preferences complexURLRegularExpression]];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
+	NSString *leftchar = nil;
+	NSString *rightchar = nil;
+	
+	NSInteger rightcharLocal = (rs.location + rs.length);
+	
 	if (rs.location > 0) {
-		NSString *leftchar = [shortstring substringWithRange:NSMakeRange((rs.location - 1), 1)];
-		
-		if ([[Preferences bannedURLRegexBufferChars] containsObject:leftchar]) {
-			return NSMakeRange((r.location + r.length), 1000);
-		}
+		leftchar = [shortstring substringWithRange:NSMakeRange((rs.location - 1), 1)];
+	}
+	
+	if (rightcharLocal < sstring_length) {
+		rightchar = [shortstring substringWithRange:NSMakeRange(rightcharLocal, 1)];
+	}
+	
+	if ([[Preferences bannedURLRegexLeftBufferChars] containsObject:leftchar] ||
+		[[Preferences bannedURLRegexRightBufferChars] containsObject:rightchar]) {
+		return NSMakeRange((r.location + r.length), 1000);
 	}
 	
 	return r;

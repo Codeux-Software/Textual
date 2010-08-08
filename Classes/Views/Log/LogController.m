@@ -171,16 +171,14 @@
 		if ([[self topicValue] isEqualToString:topic]) return YES;
 		
 		BOOL key = NO;
-		
 		NSArray* urlRanges = nil;
-		
 		NSString *body = [LogRenderer renderBody:topic
-							   nolinks:NO
-							  keywords:nil
-						    excludeWords:nil
-						  exactWordMatch:NO
-						     highlighted:&key
-							 URLRanges:&urlRanges];
+										 nolinks:NO
+										keywords:nil
+									excludeWords:nil
+								  exactWordMatch:NO
+									 highlighted:&key
+									   URLRanges:&urlRanges];
 		
 		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 		if (!doc) return NO;

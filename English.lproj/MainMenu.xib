@@ -12,6 +12,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="21"/>
+			<integer value="327"/>
 			<integer value="29"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -1215,16 +1216,6 @@
 			<object class="NSMenu" id="765356395">
 				<string key="NSTitle">Menu</string>
 				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="208034414">
-						<reference key="NSMenu" ref="765356395"/>
-						<string key="NSTitle">Query (Chat)</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSKeyEquivModMask">1048576</int>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="197509670"/>
-						<reference key="NSMixedImage" ref="554703973"/>
-						<int key="NSTag">2002</int>
-					</object>
 					<object class="NSMenuItem" id="117915178">
 						<reference key="NSMenu" ref="765356395"/>
 						<string key="NSTitle">Get Info (Whois)</string>
@@ -1234,6 +1225,16 @@
 						<reference key="NSOnImage" ref="197509670"/>
 						<reference key="NSMixedImage" ref="554703973"/>
 						<int key="NSTag">2001</int>
+					</object>
+					<object class="NSMenuItem" id="208034414">
+						<reference key="NSMenu" ref="765356395"/>
+						<string key="NSTitle">Private Message (Query)</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSKeyEquivModMask">1048576</int>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="197509670"/>
+						<reference key="NSMixedImage" ref="554703973"/>
+						<int key="NSTag">2002</int>
 					</object>
 					<object class="NSMenuItem" id="942283315">
 						<reference key="NSMenu" ref="765356395"/>
@@ -3889,7 +3890,6 @@
 							<reference ref="892049604"/>
 							<reference ref="454991127"/>
 							<reference ref="787257747"/>
-							<reference ref="208034414"/>
 							<reference ref="942283315"/>
 							<reference ref="636280688"/>
 							<reference ref="297207291"/>
@@ -3904,6 +3904,7 @@
 							<reference ref="149367709"/>
 							<reference ref="590917589"/>
 							<reference ref="925899411"/>
+							<reference ref="208034414"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">MemberMenu</string>
@@ -4991,12 +4992,12 @@
 				<boolean value="YES" key="267.ImportedFromIB2"/>
 				<string key="276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="276.ImportedFromIB2"/>
-				<string key="277.IBEditorWindowLastContentRect">{{1030, 815}, {225, 143}}</string>
+				<string key="277.IBEditorWindowLastContentRect">{{708, 701}, {225, 143}}</string>
 				<string key="277.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="277.ImportedFromIB2"/>
 				<string key="286.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="286.ImportedFromIB2"/>
-				<string key="287.IBEditorWindowLastContentRect">{{975, 701}, {217, 253}}</string>
+				<string key="287.IBEditorWindowLastContentRect">{{648, 591}, {217, 253}}</string>
 				<string key="287.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="287.ImportedFromIB2"/>
 				<string key="288.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5043,7 +5044,7 @@
 				<boolean value="YES" key="319.ImportedFromIB2"/>
 				<string key="320.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="320.ImportedFromIB2"/>
-				<string key="327.IBEditorWindowLastContentRect">{{613, 650}, {259, 343}}</string>
+				<string key="327.IBEditorWindowLastContentRect">{{613, 651}, {267, 343}}</string>
 				<string key="327.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="327.ImportedFromIB2"/>
 				<string key="328.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6693,6 +6694,7 @@
 						<string key="generalView">NSView</string>
 						<string key="highlightView">NSView</string>
 						<string key="identityView">NSView</string>
+						<string key="installedScriptsTable">NSTableView</string>
 						<string key="interfaceView">NSView</string>
 						<string key="keywordsArrayController">NSArrayController</string>
 						<string key="keywordsTable">NSTableView</string>
@@ -6745,6 +6747,10 @@
 						<object class="IBToOneOutletInfo" key="identityView">
 							<string key="name">identityView</string>
 							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="installedScriptsTable">
+							<string key="name">installedScriptsTable</string>
+							<string key="candidateClassName">NSTableView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="interfaceView">
 							<string key="name">interfaceView</string>
@@ -8063,7 +8069,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

@@ -164,6 +164,7 @@
 	CGLContextObj cglContext = 0;
 	CGLPixelFormatObj pixelFormat = NULL;
 	CGLContextObj curr_ctx = CGLGetCurrentContext();
+	TXDevNullDestroyObject(curr_ctx);
 	
 	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
 	
