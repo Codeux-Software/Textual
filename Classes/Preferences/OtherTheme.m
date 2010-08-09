@@ -241,7 +241,11 @@
 	
 	// ====================================================== //
 	
-	inputTextFormat = memberListFormat = serverListFormat = serverTreeGradient = memberListGradient = nil;
+	inputTextFormat = nil;
+	memberListFormat = nil;
+	serverListFormat = nil;
+	serverTreeGradient = nil;
+	memberListGradient = nil;
 	
 	[userInterface release];
 	userInterface = nil;

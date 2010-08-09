@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
-		4C49192711FF723D0065E5D5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 4C49192611FF723D0065E5D5 /* README */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -54,7 +53,6 @@
 		4C9E12641209DF8C004E5032 /* LogPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18711737F660044E7A1 /* LogPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12651209DF8C004E5032 /* AddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 789ED3F11193EF4400CFC0B2 /* AddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12661209DF8C004E5032 /* ChatBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C17111737F660044E7A1 /* ChatBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C9E12671209DF8C004E5032 /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2BEE4811CC3E30002F65F7 /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12681209DF8C004E5032 /* TopicSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E511737F660044E7A1 /* TopicSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E126A1209DF8C004E5032 /* FieldEditorTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C17511737F660044E7A1 /* FieldEditorTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E126B1209DF8C004E5032 /* Preferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C16C11737F660044E7A1 /* Preferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -243,7 +241,6 @@
 		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
-		4CD1733D120EB20600F03B37 /* TextualPluginItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD1733B120EB20600F03B37 /* TextualPluginItem.h */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
@@ -1043,7 +1040,6 @@
 				4C9E12641209DF8C004E5032 /* LogPolicy.h in Headers */,
 				4C9E12651209DF8C004E5032 /* AddressBook.h in Headers */,
 				4C9E12661209DF8C004E5032 /* ChatBox.h in Headers */,
-				4C9E12671209DF8C004E5032 /* NSBundleHelper.h in Headers */,
 				4C9E12681209DF8C004E5032 /* TopicSheet.h in Headers */,
 				4C9E126A1209DF8C004E5032 /* FieldEditorTextView.h in Headers */,
 				4C9E126B1209DF8C004E5032 /* Preferences.h in Headers */,
@@ -1104,7 +1100,6 @@
 				4C9E12A21209DF8C004E5032 /* LogScriptEventSink.h in Headers */,
 				4C9E12A31209DF8C004E5032 /* IRCUser.h in Headers */,
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
-				4CD1733D120EB20600F03B37 /* TextualPluginItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,7 +1179,6 @@
 				4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */,
 				4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */,
 				4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */,
-				4C49192711FF723D0065E5D5 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
