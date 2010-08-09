@@ -24,7 +24,6 @@
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
-#define NICKSERV_INTERVAL	2
 
 static NSDateFormatter* dateTimeFormatter = nil;
 
@@ -555,7 +554,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)startAutoJoinTimer
 {
 	[autoJoinTimer stop];
-	[autoJoinTimer start:NICKSERV_INTERVAL];
+	[autoJoinTimer start:[Preferences connectAutoJoinDelay]];
 }
 
 - (void)stopAutoJoinTimer
@@ -3307,8 +3306,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN] isMuted:world.soundMuted];
 	
 	if (config.nickPassword.length) {
-		[self startAutoJoinTimer];
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+		[self startAutoJoinTimer];
 	}
 	
 	for (NSString* s in config.loginCommands) {

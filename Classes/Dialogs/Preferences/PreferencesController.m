@@ -50,6 +50,8 @@
 	[floodControlView release];
 	[IRCopServicesView release];
 	
+	[scriptsController release];
+	
 	[super dealloc];
 }
 
@@ -58,7 +60,7 @@
 
 - (void)show
 {
-	ScriptsWrapper *scriptsController = [[[ScriptsWrapper alloc] init] autorelease];
+	scriptsController = [[ScriptsWrapper alloc] init];
 	installedScriptsTable.dataSource = scriptsController;
 	
 	scriptsController.world = world;
@@ -559,4 +561,5 @@
 @synthesize IRCopServicesView;
 @synthesize world;
 @synthesize installedScriptsTable;
+@synthesize scriptsController;
 @end

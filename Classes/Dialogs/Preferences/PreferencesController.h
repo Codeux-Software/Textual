@@ -36,6 +36,8 @@
 	IBOutlet NSTextField* scriptLocationField;
 	IBOutlet NSPopUpButton* preferenceSelectButton;
 	
+	ScriptsWrapper *scriptsController;
+	
 	NSFont* logFont;
 	IRCWorld *world;
 	NSMutableArray* sounds;
@@ -44,6 +46,7 @@
 
 @property (assign) id delegate;
 @property (assign) IRCWorld *world;
+@property (retain) ScriptsWrapper *scriptsController;
 @property (assign) NSString* fontDisplayName;
 @property (assign) CGFloat fontPointSize;
 @property (readonly) NSArray* availableSounds;
