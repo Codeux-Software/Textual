@@ -178,4 +178,7 @@ typedef enum {
 - (BOOL)printRawHTMLToCurrentChannel:(NSString*)text;
 - (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString*)text ;
 - (BOOL)printRawHTMLToCurrentChannel:(NSString*)text withTimestamp:(BOOL)showTime;
+
+- (void)unloadUserCreatedBundles;
+- (void)loadUserCreatedBundles;
 @end

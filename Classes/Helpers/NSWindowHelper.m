@@ -43,13 +43,13 @@
 	}	
 }
 
-- (BOOL)isOnCurrentWorkspace
+- (id)isOnCurrentWorkspace
 {
 	if ([self respondsToSelector:@selector(isOnActiveSpace)]) {
 		return [self performSelector:@selector(isOnActiveSpace)];
 	}
 	
-	return YES;
+	return (id)YES;
 }
 
 @end

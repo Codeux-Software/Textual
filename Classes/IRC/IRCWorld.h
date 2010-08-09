@@ -59,12 +59,14 @@
 	NSInteger previousSelectedClientId;
 	NSInteger previousSelectedChannelId;
 	
-	NSDictionary *bundlesForUserInput;
-	NSDictionary *bundlesForServerInput;
+	NSMutableArray *allLoadedBundles;
+	NSMutableDictionary *bundlesForUserInput;
+	NSMutableDictionary *bundlesForServerInput;
 }
 
-@property (retain) NSDictionary *bundlesForUserInput;
-@property (retain) NSDictionary *bundlesForServerInput;
+@property (retain) NSMutableArray *allLoadedBundles;
+@property (retain) NSMutableDictionary *bundlesForUserInput;
+@property (retain) NSMutableDictionary *bundlesForServerInput;
 @property (assign) IRCExtras* extrac;
 @property (assign) MainWindow* window;
 @property (assign) GrowlController* growl;
@@ -105,6 +107,8 @@
 
 - (void)setServerMenuItem:(NSMenuItem*)item;
 - (void)setChannelMenuItem:(NSMenuItem*)item;
+
+- (void)resetLoadedBundles;
 
 - (void)onTimer;
 - (void)autoConnect:(BOOL)afterWakeUp;

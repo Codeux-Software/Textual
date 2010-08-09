@@ -16,7 +16,7 @@
 						   message:(NSString*)message
 						   command:(NSString*)command
 							client:(IRCClient*)client;
-	
+
 + (void)sendServerInputDataToBundles:(IRCWorld*)world
 							  client:(IRCClient*)client
 							 message:(IRCMessage*)msg;

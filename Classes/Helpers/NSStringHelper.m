@@ -413,6 +413,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	if ([[Preferences bannedURLRegexLeftBufferChars] containsObject:leftchar] ||
 		[[Preferences bannedURLRegexRightBufferChars] containsObject:rightchar]) {
+		
 		return NSMakeRange((r.location + r.length), 1000);
 	}
 	

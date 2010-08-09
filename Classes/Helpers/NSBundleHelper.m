@@ -7,21 +7,22 @@
 #import "IRCClient.h"
 #import "Preferences.h"
 #import "PluginProtocol.h"
+#import "TextualPluginItem.h"
 
 @implementation NSBundle (NSBundleHelper)
 
 + (void)sendUserInputDataToBundles:(IRCWorld*)world
-				   message:(NSString*)message
-				   command:(NSString*)command
-				    client:(IRCClient*)client
+						   message:(NSString*)message
+						   command:(NSString*)command
+							client:(IRCClient*)client
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
 	
 	if ([cmdPlugins count] >= 1) {
-		for (NSBundle *plugin in cmdPlugins) {
-			PluginProtocol *bundle = (PluginProtocol*)[[[plugin principalClass] new] autorelease];
+		for (TextualPluginItem *plugin in cmdPlugins) {
+			PluginProtocol *bundle = [plugin pluginPrimaryClass];
 			
 			[bundle messageSentByUser:client message:message command:command];
 		}
@@ -31,8 +32,8 @@
 }
 
 + (void)sendServerInputDataToBundles:(IRCWorld*)world
-					client:(IRCClient*)client
-				     message:(IRCMessage*)msg
+							  client:(IRCClient*)client
+							 message:(IRCMessage*)msg
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -53,8 +54,8 @@
 								[NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
 								[msg command], @"messageCommand", nil];
 		
-		for (NSBundle *plugin in cmdPlugins) {
-			PluginProtocol *bundle = (PluginProtocol*)[[[plugin principalClass] new] autorelease];
+		for (TextualPluginItem *plugin in cmdPlugins) {
+			PluginProtocol *bundle = [plugin pluginPrimaryClass];
 			
 			[bundle messageReceivedByServer:client sender:senderData message:messageData];
 		}
@@ -70,34 +71,18 @@
 }
 
 + (void)deallocAllAvailableBundlesFromMemory:(IRCWorld*)world
-{
-	NSMutableArray *allPlugins = [[NSMutableArray new] autorelease];
+{		
+	NSArray *allBundles = [world.allLoadedBundles copy];
 	
-	for (NSString *command in world.bundlesForUserInput) {
-		for (NSBundle *plugin in [world.bundlesForUserInput objectForKey:command]) {
-			if (plugin && ![allPlugins containsObject:plugin]) {
-				[allPlugins addObject:plugin];
-			}
+	[world resetLoadedBundles];
+	
+	for (NSBundle *bundle in allBundles) {
+		if ([bundle isLoaded]) {
+			[bundle unload];
 		}
 	}
 	
-	for (NSString *command in world.bundlesForServerInput) {
-		for (NSBundle *plugin in [world.bundlesForServerInput objectForKey:command]) {
-			if (plugin && ![allPlugins containsObject:plugin]) {
-				[allPlugins addObject:plugin];
-			}
-		}
-	}
-	
-	for (NSBundle *plugin in allPlugins) {
-		[plugin unload];
-	}
-	
-	[world.bundlesForUserInput release];
-	world.bundlesForUserInput = nil;
-				 
-	[world.bundlesForServerInput release];
-	world.bundlesForServerInput = nil;
+	[allBundles release];
 }
 
 + (void)loadAllAvailableBundlesIntoMemory:(IRCWorld*)world
@@ -106,7 +91,8 @@
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
-	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
+	NSMutableArray *completeBundleIndex = [NSMutableArray new];
+ 	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
 	NSArray* resourceFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
@@ -117,67 +103,32 @@
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
 			if (currBundle) {
-				Class currPrincipalClass = [currBundle principalClass];       
+				TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
 				
-				if (currPrincipalClass) {
-					PluginProtocol *currInstance = [[currPrincipalClass new] autorelease];
-					
-					if (currInstance) {
-						// User Input
-						if ([currInstance respondsToSelector:@selector(messageSentByUser:message:command:)]) {
-							if ([currInstance respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
-								NSArray *spdcmds = [currInstance pluginSupportsUserInputCommands];
-								
-								if ([spdcmds count] >= 1) {
-									for (NSString *cmd in spdcmds) {
-										cmd = [cmd uppercaseString];
-										
-										NSArray *cmdDict = [userInputBundles objectForKey:cmd];
-										
-										if (!cmdDict) {
-											[userInputBundles setObject:[[NSMutableArray new] autorelease] forKey:cmd];
-										}
-										
-										if (![cmdDict containsObject:currBundle]) {
-											[[userInputBundles objectForKey:cmd] addObject:currBundle];
-										}
-									}
-								}
-							}
-						}
-						
-						// Server Input
-						if ([currInstance respondsToSelector:@selector(messageReceivedByServer:sender:message:)]) {
-							if ([currInstance respondsToSelector:@selector(pluginSupportsServerInputCommands)]) {
-								NSArray *spdcmds = [currInstance pluginSupportsServerInputCommands];
-								
-								if ([spdcmds count] >= 1) {
-									for (NSString *cmd in spdcmds) {
-										cmd = [cmd uppercaseString];
-										
-										NSArray *cmdDict = [serverInputBundles objectForKey:cmd];
-										
-										if (!cmdDict) {
-											[serverInputBundles setObject:[[NSMutableArray new] autorelease] forKey:cmd];
-										}
-										
-										if (![cmdDict containsObject:currBundle]) {
-											[[serverInputBundles objectForKey:cmd] addObject:currBundle];
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				[plugin initWithPluginClass:[currBundle principalClass] 
+								  andBundle:currBundle 
+								andIRCWorld:world
+						  withUserInputDict:userInputBundles 
+						withServerInputDict:serverInputBundles 
+					  withUserInputDictRefs:&userInputBundles 
+					withServerInputDictRefs:&serverInputBundles];
+				
+				[completeBundleIndex addObject:currBundle];
+				
+				[plugin autorelease];
 			}
 		}
 	}
 	
+	[world setAllLoadedBundles:completeBundleIndex];
 	[world setBundlesForUserInput:userInputBundles];
 	[world setBundlesForServerInput:serverInputBundles];
 	
-	[pool drain];
+	[userInputBundles release];
+	[serverInputBundles release];
+	[completeBundleIndex release];
+	
+	[pool release];
 }
 
 @end

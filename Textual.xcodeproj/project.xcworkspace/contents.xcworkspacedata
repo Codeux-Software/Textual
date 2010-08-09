@@ -3,4 +3,7 @@
    <FileRef
       location = "self:Textual.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "container:../Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj">
+   </FileRef>
 </Workspace>
