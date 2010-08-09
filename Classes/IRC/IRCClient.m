@@ -1161,6 +1161,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[pool drain];
 }
 
+- (void)unloadUserCreatedBundles
+{
+	[NSBundle deallocAllAvailableBundlesFromMemory:world];
+}
+
+- (void)loadUserCreatedBundles
+{
+	[NSBundle loadAllAvailableBundlesIntoMemory:world];
+}
+
 - (void)processBundlesServerMessage:(IRCMessage*)msg
 {
 	[NSBundle sendServerInputDataToBundles:world client:self message:msg];
@@ -1887,11 +1897,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			return YES;
 			break;
 		case 76: // Command: UNLOAD_PLUGINS
-			[NSBundle deallocAllAvailableBundlesFromMemory:world];
+			[self performSelectorInBackground:@selector(unloadUserCreatedBundles) withObject:nil];
 			return YES;
 			break;
 		case 91: // Command: LOAD_PLUGINS
-			[NSBundle loadAllAvailableBundlesIntoMemory:world];
+			[self performSelectorInBackground:@selector(loadUserCreatedBundles) withObject:self];
 			return YES;
 			break;
 		default:

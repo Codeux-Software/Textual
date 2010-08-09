@@ -6,6 +6,6 @@
 
 @interface NSWindow (NSWindowHelper)
 - (void)centerOfWindow:(NSWindow*)window;
-- (BOOL)isOnCurrentWorkspace;
+- (id)isOnCurrentWorkspace;
 - (void)centerWindow;
 @end

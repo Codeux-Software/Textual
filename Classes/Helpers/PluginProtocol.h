@@ -17,4 +17,7 @@
 - (NSArray*)pluginSupportsUserInputCommands;
 - (NSArray*)pluginSupportsServerInputCommands;
 
+- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
+- (void)pluginUnloadedFromMemory;
+
 @end

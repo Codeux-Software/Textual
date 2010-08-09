@@ -58,7 +58,7 @@
 
 - (void)show
 {
-	ScriptsWrapper *scriptsController = [[ScriptsWrapper alloc] init];
+	ScriptsWrapper *scriptsController = [[[ScriptsWrapper alloc] init] autorelease];
 	installedScriptsTable.dataSource = scriptsController;
 	
 	scriptsController.world = world;

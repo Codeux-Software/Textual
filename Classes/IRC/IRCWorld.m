@@ -10,6 +10,7 @@
 #import "NSStringHelper.h"
 #import "IconManager.h"
 #import "IRCExtras.h"
+#import "NSBundleHelper.h"
 
 #define AUTO_CONNECT_DELAY			1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8
@@ -27,6 +28,7 @@
 
 @implementation IRCWorld;
 
+@synthesize dcc;
 @synthesize window;
 @synthesize extrac;
 @synthesize growl;
@@ -37,7 +39,6 @@
 @synthesize fieldEditor;
 @synthesize memberList;
 @synthesize menuController;
-@synthesize dcc;
 @synthesize viewTheme;
 @synthesize treeMenu;
 @synthesize logMenu;
@@ -47,9 +48,10 @@
 @synthesize memberMenu;
 @synthesize selected;
 @synthesize clients;
+@synthesize soundMuted;
+@synthesize allLoadedBundles;
 @synthesize bundlesForUserInput;
 @synthesize bundlesForServerInput;
-@synthesize soundMuted;
 
 - (id)init
 {
@@ -62,6 +64,8 @@
 
 - (void)dealloc
 {
+	[NSBundle deallocAllAvailableBundlesFromMemory:self];
+	
 	[serverMenu release];
 	[channelMenu release];
 	[dummyLog release];
@@ -70,6 +74,7 @@
 	[clients release];
 	[selected release];
 	[iconManager release];
+	[allLoadedBundles release];
 	[bundlesForUserInput release];
 	[bundlesForServerInput release];
 	
@@ -170,6 +175,17 @@
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)resetLoadedBundles
+{
+	[allLoadedBundles release];
+	[bundlesForUserInput release];
+	[bundlesForServerInput release];
+	
+	allLoadedBundles = [NSMutableArray new];
+	bundlesForUserInput = [NSMutableDictionary new];
+	bundlesForServerInput = [NSMutableDictionary new];
+}
 
 - (void)onTimer
 {

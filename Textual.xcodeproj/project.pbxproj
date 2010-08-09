@@ -243,6 +243,8 @@
 		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
+		4CD1733D120EB20600F03B37 /* TextualPluginItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD1733B120EB20600F03B37 /* TextualPluginItem.h */; };
+		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
 
@@ -321,6 +323,8 @@
 		4CC5AC80119C92790046BC5C /* TextualApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextualApplication.m; path = ../Library/TextualApplication.m; sourceTree = "<group>"; };
 		4CCD0F8611BAE7E900758B81 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalModels.h; sourceTree = "<group>"; };
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
+		4CD1733B120EB20600F03B37 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualPluginItem.h; sourceTree = "<group>"; };
+		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
 		4CF1681711DC7B9200B60505 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanSheet.h; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
 		4CF1682D11DC7CAA00B60505 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanSheet.xib; sourceTree = "<group>"; };
@@ -668,9 +672,11 @@
 		4CB34D0011CCB4C90023206B /* Plug-In Architecture */ = {
 			isa = PBXGroup;
 			children = (
+				4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */,
 				4C2BEE4811CC3E30002F65F7 /* NSBundleHelper.h */,
 				4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */,
-				4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */,
+				4CD1733B120EB20600F03B37 /* TextualPluginItem.h */,
+				4CD1733C120EB20600F03B37 /* TextualPluginItem.m */,
 			);
 			name = "Plug-In Architecture";
 			sourceTree = "<group>";
@@ -1098,6 +1104,7 @@
 				4C9E12A21209DF8C004E5032 /* LogScriptEventSink.h in Headers */,
 				4C9E12A31209DF8C004E5032 /* IRCUser.h in Headers */,
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
+				4CD1733D120EB20600F03B37 /* TextualPluginItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1305,6 +1312,7 @@
 				4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */,
 				4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */,
 				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
+				4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
