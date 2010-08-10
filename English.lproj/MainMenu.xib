@@ -11,9 +11,9 @@
 			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="29"/>
 			<integer value="21"/>
 			<integer value="327"/>
-			<integer value="29"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1207,9 +1207,6 @@
 			<object class="NSCustomObject" id="569757849">
 				<string key="NSClassName">MasterController</string>
 			</object>
-			<object class="NSCustomObject" id="56632216">
-				<string key="NSClassName">SUUpdater</string>
-			</object>
 			<object class="NSCustomObject" id="361464326">
 				<string key="NSClassName">MenuController</string>
 			</object>
@@ -2245,6 +2242,9 @@
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 129}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+			</object>
+			<object class="NSCustomObject" id="56632216">
+				<string key="NSClassName">SUUpdater</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -4441,11 +4441,6 @@
 						<reference key="parent" ref="211985183"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1402</int>
-						<reference key="object" ref="56632216"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1410</int>
 						<reference key="object" ref="514329322"/>
 						<reference key="parent" ref="784916333"/>
@@ -4788,6 +4783,11 @@
 						<int key="objectID">1577</int>
 						<reference key="object" ref="596368552"/>
 						<reference key="parent" ref="609329107"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1402</int>
+						<reference key="object" ref="56632216"/>
+						<reference key="parent" ref="0"/>
 					</object>
 				</array>
 			</object>
@@ -8069,7 +8069,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

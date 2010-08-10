@@ -161,4 +161,6 @@
 
 - (void)clearContentsOflient:(IRCClient*)u;
 - (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u;
+
+- (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel;
 @end

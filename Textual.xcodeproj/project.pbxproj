@@ -11,6 +11,10 @@
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
+		4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
+		4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
+		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
+		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123E1209DF8C004E5032 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C211737F660044E7A1 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123F1209DF8C004E5032 /* SheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E311737F660044E7A1 /* SheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -235,12 +239,8 @@
 		4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
-		4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
-		4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C27C20911B1747D008EAA24 /* Sparkle.framework */; };
 		4CA999D111FCF7180040D8E7 /* OtherTheme.m in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
-		4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
-		4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4CBC02A611EDDE3C002AD262 /* RegexKit.framework */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
@@ -274,8 +274,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CBC02CA11EDDEBB002AD262 /* RegexKit.framework in Copy Files */,
-				4CA945E911E1AFBA00D36367 /* Sparkle.framework in Copy Files */,
+				4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */,
+				4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */,
 				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */,
 			);
 			name = "Copy Files";
@@ -289,7 +289,6 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C0C42931197423600578ABB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C119CD711AD74880004F157 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/application.icns; sourceTree = "<group>"; };
-		4C27C20911B1747D008EAA24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
 		4C2BEE4811CC3E30002F65F7 /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleHelper.h; sourceTree = "<group>"; };
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -309,11 +308,12 @@
 		4C7832F311AE4AF100D8928D /* IconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconManager.m; sourceTree = "<group>"; };
 		4C7E561211B0386200B5DE98 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPanel.h; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
+		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
+		4C80087012117C8100EB6DAF /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
-		4CBC02A611EDDE3C002AD262 /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
 		4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginProtocol.h; sourceTree = "<group>"; };
 		4CC33FD011ADA2CE005ECD84 /* Badges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Badges; path = Resources/Images/Badges; sourceTree = "<group>"; };
 		4CC5AC7F119C92790046BC5C /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../Library/TextualApplication.h; sourceTree = "<group>"; };
@@ -531,14 +531,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CBC02C711EDDEB2002AD262 /* RegexKit.framework in Frameworks */,
 				4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */,
 				4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */,
 				4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */,
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
-				4CA945E511E1AFBA00D36367 /* Sparkle.framework in Frameworks */,
 				4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
+				4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */,
+				4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,9 +593,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C80086F12117C8100EB6DAF /* RegexKit.framework */,
+				4C80087012117C8100EB6DAF /* Sparkle.framework */,
 				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
-				4CBC02A611EDDE3C002AD262 /* RegexKit.framework */,
-				4C27C20911B1747D008EAA24 /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
@@ -1450,12 +1450,13 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
+					"\"$(SRCROOT)/../../../Downloads\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1493,6 +1494,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
+					"\"$(SRCROOT)/../../../Downloads\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";

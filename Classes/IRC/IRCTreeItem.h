@@ -4,7 +4,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class IRCWorld;
 @class IRCClient;
+@class IRCChannel;
 @class LogController;
 
 @interface IRCTreeItem : NSObject 
@@ -34,5 +36,7 @@
 - (void)resetState;
 - (NSInteger)numberOfChildren;
 - (IRCTreeItem*)childAtIndex:(NSInteger)index;
+
+- (void)resetLogView:(IRCWorld*)world withChannel:(IRCChannel*)c andClient:(IRCClient*)u;
 
 @end

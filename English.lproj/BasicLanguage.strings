@@ -29,6 +29,8 @@
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 "SOUND_IS_NOT_MUTED" = "Sound is not muted.";
 
+"UPDATING_APPLICATION_QUIT_MESSAGE" = "Updating Textual - http://www.codeux.com/textual/";
+
 "OK_BUTTON" = "OK";
 "QUIT_BUTTON" = "Quit";
 "CANCEL_BUTTON" = "Cancel";

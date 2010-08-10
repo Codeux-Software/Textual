@@ -3307,8 +3307,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (config.nickPassword.length) {
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
-		[self startAutoJoinTimer];
 	}
+	
+	[self startAutoJoinTimer];
 	
 	for (NSString* s in config.loginCommands) {
 		if ([s hasPrefix:@"/"]) {
@@ -3334,7 +3335,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[self updateClientTitle];
 	[self reloadTree];
-	[self performAutoJoin];
 }
 
 - (void)receiveNumericReply:(IRCMessage*)m

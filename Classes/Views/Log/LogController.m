@@ -24,8 +24,6 @@
 - (NSArray*)buildBody:(LogLine*)line;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument:(NSString*)topic;
-- (NSString*)defaultCSS;
-- (NSString*)now;
 @end
 
 @implementation LogController
@@ -58,6 +56,7 @@
 - (void)dealloc
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	
 	[view release];
 	[policy release];
 	[sink release];
