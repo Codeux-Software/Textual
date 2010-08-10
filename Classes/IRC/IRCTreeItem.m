@@ -3,6 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCTreeItem.h"
+#import "IRCWorld.h"
 
 @implementation IRCTreeItem
 
@@ -18,6 +19,14 @@
 {
 	[log release];
 	[super dealloc];
+}
+
+- (void)resetLogView:(IRCWorld*)world withChannel:(IRCChannel*)c andClient:(IRCClient*)u
+{
+	[log release];
+	log = nil;
+	
+	log = [world createLogWithClient:u channel:c];
 }
 
 - (IRCClient*)client

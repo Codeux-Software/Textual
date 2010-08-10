@@ -1051,7 +1051,7 @@ typedef enum {
 {
 	for (IRCClient *c in world.clients) {
 		if (c.isConnected) {
-			[c quit:@"Updating Application"];
+			[c quit:TXTLS(@"UPDATING_APPLICATION_QUIT_MESSAGE")];
 		}
 	}
 	

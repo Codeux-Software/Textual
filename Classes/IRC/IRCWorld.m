@@ -613,11 +613,23 @@
 - (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u
 {
 	[c.log clear];
+	
+	[c resetLogView:self withChannel:nil andClient:u];
+	
+	if ([c.name isEqualToString:[[self selectedChannel] name]]) {
+		[self outlineViewSelectionDidChange:nil];
+	}
 }
 
 - (void)clearContentsOflient:(IRCClient*)u
 {
 	[u.log clear];
+	
+	[u resetLogView:self withChannel:nil andClient:u];
+	
+	if ([u.name isEqualToString:[[self selectedClient] name]]) {
+		[self outlineViewSelectionDidChange:nil];
+	}
 }
 
 - (void)createConnection:(NSString*)str chan:(NSString*)channel
