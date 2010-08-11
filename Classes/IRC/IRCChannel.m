@@ -237,7 +237,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
-		[members removeObjectAtIndex:n];
+		[members safeRemoveObjectAtIndex:n];
 	}
 	
 	[self sortedInsert:user];
@@ -255,7 +255,7 @@
 	NSInteger n = [self indexOfMember:nick];
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
-		[members removeObjectAtIndex:n];
+		[members safeRemoveObjectAtIndex:n];
 	}
 
 	if (reload) [self reloadMemberList];
@@ -273,7 +273,7 @@
 	m.nick = toNick;
 	
 	[[[members safeObjectAtIndex:n] retain] autorelease];
-	[members removeObjectAtIndex:n];
+	[members safeRemoveObjectAtIndex:n];
 	
 	[self sortedInsert:m];
 	[self reloadMemberList];
@@ -284,7 +284,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
-		[members removeObjectAtIndex:n];
+		[members safeRemoveObjectAtIndex:n];
 	}
 	
 	[self sortedInsert:user];
@@ -306,7 +306,7 @@
 	}
 	
 	[[[members safeObjectAtIndex:n] retain] autorelease];
-	[members removeObjectAtIndex:n];
+	[members safeRemoveObjectAtIndex:n];
 	
 	[self sortedInsert:m];
 	[self reloadMemberList];

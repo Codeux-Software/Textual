@@ -298,7 +298,7 @@
 	for (NSInteger i=ignores.count-1; i>=0; --i) {
 		AddressBook* g = [ignores safeObjectAtIndex:i];
 		if ([g.hostmask length] < 1) {
-			[ignores removeObjectAtIndex:i];
+			[ignores safeRemoveObjectAtIndex:i];
 		}
 	}
 	
@@ -416,7 +416,7 @@
 	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
 	
-	[config.channels removeObjectAtIndex:sel];
+	[config.channels safeRemoveObjectAtIndex:sel];
 	
 	NSInteger count = config.channels.count;
 	if (count) {
@@ -462,7 +462,7 @@
 	NSInteger sel = [ignoreTable selectedRow];
 	if (sel < 0) return;
 	
-	[config.ignores removeObjectAtIndex:sel];
+	[config.ignores safeRemoveObjectAtIndex:sel];
 	
 	NSInteger count = config.ignores.count;
 	if (count) {

@@ -26,7 +26,7 @@
 	[log release];
 	log = nil;
 	
-	log = [world createLogWithClient:u channel:c];
+	log = [[world createLogWithClient:u channel:c] retain];
 }
 
 - (IRCClient*)client

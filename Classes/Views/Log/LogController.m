@@ -375,7 +375,7 @@
 					while (highlightedLineNumbers.count) {
 						NSInteger i = [[highlightedLineNumbers objectAtIndex:0] integerValue];
 						if (lineNum <= i) break;
-						[highlightedLineNumbers removeObjectAtIndex:0];
+						[highlightedLineNumbers safeRemoveObjectAtIndex:0];
 					}
 				}
 			}

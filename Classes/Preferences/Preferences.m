@@ -286,6 +286,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud integerForKey:@"Preferences.DCC.address_detection_method"];
 }
 
++ (NSInteger)autojoinMaxChannelJoins
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.General.autojoin_maxchans"];
+}
+
 + (NSInteger)connectAutoJoinDelay
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1068,7 +1074,8 @@ static NSMutableArray* excludeWords;
 	[d setObject:@"ircop alert" forKey:@"Preferences.General.ircop_alert_match"];
 	[d setBool:NO forKey:@"Preferences.FloodControl.enabled"];
 	[d setInt:2 forKey:@"Preferences.FloodControl.timer"];
-	[d setInt:100 forKey:@"Preferences.FloodControl.maxmsg"];
+	[d setInt:2 forKey:@"Preferences.FloodControl.maxmsg"];
+	[d setInt:1 forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setBool:NO forKey:@"Preferences.General.handle_operalerts"];
 	[d setBool:NO forKey:@"Preferences.General.process_channel_modes"];
 	[d setBool:NO forKey:@"Preferences.General.clear_only_active"];

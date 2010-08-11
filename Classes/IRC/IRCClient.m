@@ -18,9 +18,7 @@
 #import <sys/sysctl.h>  
 
 #define PONG_INTERVAL		150
-#define MAX_JOIN_CHANNELS	10
 #define MAX_BODY_LEN		480
-
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
@@ -876,7 +874,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[ary addObject:c];
 		}
 		
-		if (ary.count >= MAX_JOIN_CHANNELS) {
+		if (ary.count >= [Preferences autojoinMaxChannelJoins]) {
 			[self quickJoin:ary];
 			[ary removeAllObjects];
 			pass = YES;
@@ -1667,7 +1665,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					for (NSInteger i=ignores.count-1; i>=0; --i) {
 						AddressBook* e = [ignores safeObjectAtIndex:i];
 						if ([g.hostmask isEqualToString:e.hostmask]) {
-							[ignores removeObjectAtIndex:i];
+							[ignores safeRemoveObjectAtIndex:i];
 							[world save];
 							break;
 						}
@@ -2008,7 +2006,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			[self sendCommand:m.input completeTarget:YES target:target];
 			
-			[commandQueue removeObjectAtIndex:0];
+			[commandQueue safeRemoveObjectAtIndex:0];
 		} else {
 			break;
 		}
@@ -4093,7 +4091,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				NSString *text = [m.params safeObjectAtIndex:1];
 				
-				[m.params removeObjectAtIndex:1];
+				[m.params safeRemoveObjectAtIndex:1];
 				[m.params insertObject:[NSString stringWithFormat:@"[%@]: %@", m.command, text] atIndex:1];
 				
 				m.command = NOTICE;

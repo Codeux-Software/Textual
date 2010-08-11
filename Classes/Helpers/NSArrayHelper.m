@@ -15,3 +15,14 @@
 }
 
 @end
+
+@implementation NSMutableArray (NSMutableArrayHelper)
+
+- (void)safeRemoveObjectAtIndex:(NSInteger)n
+{
+	if (n >= 0 && n < self.count) {
+		[self removeObjectAtIndex:n];
+	}
+}
+
+@end

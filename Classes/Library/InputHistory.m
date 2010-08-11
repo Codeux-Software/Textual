@@ -29,7 +29,7 @@
 	[buf addObject:s];
 	
 	if (buf.count > INPUT_HISTORY_MAX) {
-		[buf removeObjectAtIndex:0];
+		[buf safeRemoveObjectAtIndex:0];
 	}
 	pos = buf.count;
 }
@@ -46,7 +46,7 @@
 			// if the text was modified, add it
 			[buf addObject:s];
 			if (buf.count > INPUT_HISTORY_MAX) {
-				[buf removeObjectAtIndex:0];
+				[buf safeRemoveObjectAtIndex:0];
 				--pos;
 			}
 		}

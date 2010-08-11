@@ -95,7 +95,7 @@
 {
 	NSInteger n = [channelTable selectedRow];
 	if (n >= 0) {
-		[channels removeObjectAtIndex:n];
+		[channels safeRemoveObjectAtIndex:n];
 		[channelTable reloadData];
 		NSInteger count = channels.count;
 		if (count <= n) n = count - 1;

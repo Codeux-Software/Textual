@@ -242,7 +242,7 @@
 		[bar removeFromSuperview];
 	}
 	[[e retain] autorelease];
-	[receivers removeObjectAtIndex:i];
+	[receivers safeRemoveObjectAtIndex:i];
 }
 
 - (void)destroySenderAtIndex:(NSInteger)i
@@ -253,7 +253,7 @@
 		[bar removeFromSuperview];
 	}
 	[[e retain] autorelease];
-	[senders removeObjectAtIndex:i];
+	[senders safeRemoveObjectAtIndex:i];
 }
 
 #pragma mark -
