@@ -3018,7 +3018,7 @@ Failed:
 		{
 			// Dequeue the next object in the write queue
 			theCurrentRead = [[theReadQueue safeObjectAtIndex:0] retain];
-			[theReadQueue removeObjectAtIndex:0];
+			[theReadQueue safeRemoveObjectAtIndex:0];
 			
 			if([theCurrentRead isKindOfClass:[AsyncSpecialPacket class]])
 			{
@@ -3452,7 +3452,7 @@ Failed:
 		{
 			// Dequeue the next object in the write queue
 			theCurrentWrite = [[theWriteQueue safeObjectAtIndex:0] retain];
-			[theWriteQueue removeObjectAtIndex:0];
+			[theWriteQueue safeRemoveObjectAtIndex:0];
 			
 			if([theCurrentWrite isKindOfClass:[AsyncSpecialPacket class]])
 			{

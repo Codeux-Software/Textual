@@ -65,7 +65,7 @@
 		NSString *objk = [modeIndexes objectForKey:modec];
 		if (objk) {
 			NSInteger moindex = [objk integerValue];
-			[allModes removeObjectAtIndex:moindex];
+			[allModes safeRemoveObjectAtIndex:moindex];
 			[allModes insertObject:h atIndex:moindex];
 		} else {
 			[allModes addObject:h];

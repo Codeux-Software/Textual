@@ -128,7 +128,7 @@
 	if (status != DCC_RECEIVING) return;
 	
 	[speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
-	if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
+	if (speedRecords.count > RECORDS_LEN) [speedRecords safeRemoveObjectAtIndex:0];
 	currentRecord = 0;
 }
 

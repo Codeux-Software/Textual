@@ -6,3 +6,7 @@
 @interface NSArray (NSArrayHelper)
 - (id)safeObjectAtIndex:(NSInteger)n;
 @end
+
+@interface NSMutableArray (NSMutableArrayHelper)
+- (void)safeRemoveObjectAtIndex:(NSInteger)n;
+@end

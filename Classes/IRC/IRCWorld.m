@@ -12,10 +12,10 @@
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
 
-#define AUTO_CONNECT_DELAY			1
+#define AUTO_CONNECT_DELAY              1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8
 
-#define TREE_DRAG_ITEM_TYPE	@"tree"
+#define TREE_DRAG_ITEM_TYPE     @"tree"
 #define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
 
 @interface IRCWorld (Private)
@@ -23,7 +23,6 @@
 - (void)changeInputTextTheme;
 - (void)changeTreeTheme;
 - (void)changeMemberListTheme;
-- (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel;
 @end
 
 @implementation IRCWorld;
@@ -612,8 +611,6 @@
 
 - (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u
 {
-	[c.log clear];
-	
 	[c resetLogView:self withChannel:nil andClient:u];
 	
 	if ([c.name isEqualToString:[[self selectedChannel] name]]) {
@@ -623,8 +620,6 @@
 
 - (void)clearContentsOflient:(IRCClient*)u
 {
-	[u.log clear];
-	
 	[u resetLogView:self withChannel:nil andClient:u];
 	
 	if ([u.name isEqualToString:[[self selectedClient] name]]) {

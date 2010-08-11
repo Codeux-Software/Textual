@@ -67,6 +67,7 @@ typedef enum {
 + (NSInteger)floodControlMaxMessages;
 + (NSString*)IRCopAlertMatch;
 + (NSInteger)connectAutoJoinDelay;
++ (NSInteger)autojoinMaxChannelJoins;
 + (BOOL)clearAllOnlyOnActiveServer;
 + (BOOL)displayServerMOTD;
 + (BOOL)copyOnSelect;

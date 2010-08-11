@@ -166,7 +166,7 @@
 	
 	NSString* s = [sendQueue safeObjectAtIndex:0];
 	s = [s stringByAppendingString:@"\r\n"];
-	[sendQueue removeObjectAtIndex:0];
+	[sendQueue safeRemoveObjectAtIndex:0];
 	
 	NSData* data = [self convertToCommonEncoding:s];
 	
