@@ -283,7 +283,10 @@
 	NSString *searchPhrase = [ud stringForKey:@"LastSearchQuery"];
 	
 	if ((NSInteger)[sender tag] == 1 || searchPhrase == nil) {
-		searchPhrase = promptForInput(TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE"), nil, TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON"), nil, searchPhrase);
+		searchPhrase = promptForInput(TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE"), 
+									  TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE"), 
+									  TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON"), 
+									  nil, searchPhrase);
 		
 		if (searchPhrase == nil) {
 			[ud removeObjectForKey:@"LastSearchQuery"];
@@ -591,8 +594,11 @@
 	IRCClient* u = world.selectedClient;
 	if (!u || u.isConnected) return;
 	
-	NSInteger result = NSRunAlertPanel(TXTLS(@"WANT_SERVER_DELETE_TITLE"), TXTLS(@"WANT_SERVER_DELETE_MESSAGE"), TXTLS(@"DELETE_BUTTON"), TXTLS(@"CANCEL_BUTTON"), nil);
-	if (result != NSAlertDefaultReturn) {
+	BOOL result = promptWithSuppression(TXTLS(@"WANT_SERVER_DELETE_MESSAGE"), 
+										TXTLS(@"WANT_SERVER_DELETE_TITLE"), 
+										nil, nil, @"Preferences.prompts.delete_server", nil);
+	
+	if (result == NO) {
 		return;
 	}
 	
@@ -760,6 +766,15 @@
 {
 	IRCChannel* c = world.selectedChannel;
 	if (!c) return;
+	
+	BOOL result = promptWithSuppression(TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE"), 
+										TXTLS(@"WANT_CHANNEL_DELETE_TITLE"), 
+										nil, nil,@"Preferences.prompts.delete_channel", nil);
+	
+	if (result == NO) {
+		return;
+	}
+	
 	[world destroyChannel:c];
 	[world save];
 }
@@ -1305,7 +1320,8 @@
 
 - (void)onWantHostServVhostSet:(id)sender
 {
-	NSString *vhost = promptForInput(TXTLS(@"PLEASE_ENTER_DESIRED_USER_VHOST"), nil, nil, nil, nil);
+	NSString *vhost = promptForInput(TXTLS(@"SET_USER_VHOST_PROMPT_MESSAGE"), 
+									 TXTLS(@"SET_USER_VHOST_PROMPT_TITLE"), nil, nil, nil);
 	
 	if ([vhost length] >= 1 && vhost != nil) {
 		IRCClient* u = world.selectedClient;

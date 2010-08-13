@@ -91,6 +91,8 @@
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
+	BOOL mergeItems = NO;
+	
 	NSMutableArray *completeBundleIndex = [NSMutableArray new];
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
@@ -103,6 +105,18 @@
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
 			if (currBundle) {
+				if ([world.allLoadedBundles containsObject:currBundle]) {
+					if (mergeItems == NO) {
+						userInputBundles = world.bundlesForUserInput;
+						completeBundleIndex = world.allLoadedBundles;
+						serverInputBundles = world.bundlesForServerInput;
+					}
+					
+					mergeItems = YES;
+					
+					continue;
+				}
+				
 				TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
 				
 				[plugin initWithPluginClass:[currBundle principalClass] 

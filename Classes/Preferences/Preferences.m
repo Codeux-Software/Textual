@@ -44,7 +44,7 @@ static NSString *urlAddrRegexComplex;
 + (NSArray*)bannedURLRegexRightBufferChars
 {
 	return [NSArray arrayWithObjects:@"~", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", 
-									 @"=", @"-", @"`", @"/", @".", @",", nil];
+									 @"=", @"-", @"`", @"/", @".", @",", @"!", nil];
 }
 
 + (NSArray*)bannedURLRegexLineTypes
