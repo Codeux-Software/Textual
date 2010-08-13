@@ -105,4 +105,5 @@
 - (void)selectNextActiveServer:(NSEvent*)e;
 - (void)selectPreviousSelection:(NSEvent*)e;
 - (void)selectPreviousServer:(NSEvent*)e;
+- (void)selectNextSelection:(NSEvent*)e;
 @end

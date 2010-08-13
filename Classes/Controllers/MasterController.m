@@ -914,6 +914,35 @@ typedef enum {
 	[world selectPreviousItem];
 }
 
+- (void)selectNextSelection:(NSEvent*)e
+{
+	[self move:MOVE_DOWN target:MOVE_ALL];
+}
+
+- (void)insertColorCharIntoTextBox:(NSEvent*)e
+{
+	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x03]];
+	[text focus];
+}
+
+- (void)insertBoldCharIntoTextBox:(NSEvent*)e
+{
+	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x02]];
+	[text focus];
+}
+
+- (void)insertItalicCharIntoTextBox:(NSEvent*)e
+{
+	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x16]];
+	[text focus];
+}
+
+- (void)insertUnderlineCharIntoTextBox:(NSEvent*)e
+{
+	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x1F]];
+	[text focus];
+}
+
 - (void)tab:(NSEvent*)e
 {
 	switch ([Preferences tabAction]) {
@@ -975,6 +1004,11 @@ typedef enum {
 	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
+- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[window registerKeyHandler:sel character:c modifiers:mods];
+}
+
 - (void)registerKeyHandlers
 {
 	[window setKeyHandlerTarget:self];
@@ -984,6 +1018,11 @@ typedef enum {
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
+	
+	[self handler:@selector(insertBoldCharIntoTextBox:) char:'b' mods:NSControlKeyMask];
+	[self handler:@selector(insertColorCharIntoTextBox:) char:'k' mods:NSControlKeyMask];
+	[self handler:@selector(insertItalicCharIntoTextBox:) char:'i' mods:NSControlKeyMask];
+	[self handler:@selector(insertUnderlineCharIntoTextBox:) char:'u' mods:NSControlKeyMask];
 	
 	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
