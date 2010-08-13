@@ -36,6 +36,7 @@
 	IBOutlet ThinSplitView* infoSplitter;
 	IBOutlet ThinSplitView* treeSplitter;
 	IBOutlet MenuController* menu;
+	IBOutlet NSMenuItem* formattingMenu;
 	IBOutlet NSMenuItem* serverMenu;
 	IBOutlet NSMenuItem* channelMenu;
 	IBOutlet NSMenu* memberMenu;
@@ -80,6 +81,7 @@
 @property (retain) NSMenu* urlMenu;
 @property (retain) NSMenu* addrMenu;
 @property (retain) NSMenu* chanMenu;
+@property (retain) NSMenuItem* formattingMenu;
 @property (retain) IRCExtras* extrac;
 @property (retain) WelcomeSheet* WelcomeSheetDisplay;
 @property (retain) GrowlController* growl;
@@ -91,6 +93,11 @@
 @property (retain) NickCompletinStatus* completionStatus;
 @property BOOL terminating;
 @property BOOL terminatingWithAuthority;
+
+- (IBAction)insertColorCharIntoTextBox:(id)sender;
+- (IBAction)insertBoldCharIntoTextBox:(id)sender;
+- (IBAction)insertItalicCharIntoTextBox:(id)sender;
+- (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
 
 - (void)textEntered:(id)sender;
 
