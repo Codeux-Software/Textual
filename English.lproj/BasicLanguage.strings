@@ -60,7 +60,6 @@
 "USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
-"TEXT_INPUT_FORMATTING_MENU_ITEM" = "Format";
 
 /* IRC Specific Settings */
 
