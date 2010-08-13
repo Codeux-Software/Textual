@@ -16,3 +16,9 @@ extern NSString *promptForInput(NSString *whatFor,
 								NSString *defaultButton, 
 								NSString *altButton, 
 								NSString *defaultInput);
+extern BOOL promptWithSuppression(NSString *whatFor,
+								  NSString *title,
+								  NSString *defaultButton,
+								  NSString *altButton,
+								  NSString *suppressionKey,
+								  NSString *suppressionText);

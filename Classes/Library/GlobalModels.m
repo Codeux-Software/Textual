@@ -3,6 +3,7 @@
 
 #import "GlobalModels.h"
 #import "Preferences.h"
+#import "NSDictionaryHelper.h"
 
 #define TIME_BUFFER_SIZE 256
 
@@ -32,6 +33,38 @@ NSString *TXTLS(NSString *key)
 {
 	return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);;
 }
+	
+extern BOOL promptWithSuppression(NSString *whatFor,
+								  NSString *title,
+								  NSString *defaultButton,
+								  NSString *altButton,
+								  NSString *suppressionKey,
+								  NSString *suppressionText)
+{
+	BOOL suppCheck = [[NSUserDefaults standardUserDefaults] boolForKey:suppressionKey];
+	
+	if (suppCheck == YES) {
+		return YES;
+	} else {
+		NSAlert *alert = [NSAlert alertWithMessageText:((title == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : title)
+										 defaultButton:((defaultButton == nil) ? TXTLS(@"OK_BUTTON") : defaultButton)
+									   alternateButton:((altButton == nil) ? TXTLS(@"CANCEL_BUTTON") : altButton)
+										   otherButton:nil
+							 informativeTextWithFormat:whatFor];
+		
+		[alert setShowsSuppressionButton:YES];
+		[[alert suppressionButton] setTitle:((suppressionText == nil) ? TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE") : suppressionText)];
+		
+		NSInteger button = [alert runModal];
+		if (button == NSAlertDefaultReturn) {
+			[[NSUserDefaults standardUserDefaults] setBool:[[alert suppressionButton] state] forKey:suppressionKey];
+			
+			return YES;
+		} else {
+			return NO;
+		}
+	}
+}
 
 extern NSString *promptForInput(NSString *whatFor, 
 								NSString *title, 
@@ -56,6 +89,7 @@ extern NSString *promptForInput(NSString *whatFor,
 	NSInteger button = [alert runModal];
 	if (button == NSAlertDefaultReturn) {
 		NSString *result = [[input stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	
 		[input release];
 		
 		if ([result length] < 1) {
@@ -65,6 +99,7 @@ extern NSString *promptForInput(NSString *whatFor,
 		}
 	} else {
 		[input release];
+		
 		return nil;
 	}
 }
