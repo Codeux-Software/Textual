@@ -1387,6 +1387,9 @@
 		case 50011:
 			[master selectPreviousSelection:nil];
 			break;
+		case 50012:
+			[master selectNextSelection:nil];
+			break;
 		default:
 			break;
 	}

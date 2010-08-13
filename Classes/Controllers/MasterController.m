@@ -381,10 +381,67 @@
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
 	if (client == text) {
+		NSMenu *fMenu = [fieldEditor menu];
+		
+		if ([fMenu indexOfItem:formattingMenu] < 1) {
+			[fMenu addItem:[NSMenuItem separatorItem]];
+			[fMenu addItem:formattingMenu];
+ 		
+			[fieldEditor setMenu:fMenu];
+		}
+		
 		return fieldEditor;
 	} else {
 		return nil;
 	}
+}
+
+- (IBAction)insertColorCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [[text currentEditor] selectedRange];
+	if (selectedTextRange.location == NSNotFound) return;
+	
+	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, [sender tag], selectedText, (UniChar)0x03];
+	
+	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	[text focus];
+}
+
+- (IBAction)insertBoldCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [[text currentEditor] selectedRange];
+	if (selectedTextRange.location == NSNotFound) return;
+	
+	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x02, selectedText, (UniChar)0x02];
+	
+	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	[text focus];
+}
+
+- (IBAction)insertItalicCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [[text currentEditor] selectedRange];
+	if (selectedTextRange.location == NSNotFound) return;
+	
+	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x16, selectedText, (UniChar)0x16];
+	
+	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	[text focus];
+}
+
+- (IBAction)insertUnderlineCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [[text currentEditor] selectedRange];
+	if (selectedTextRange.location == NSNotFound) return;
+	
+	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x1F, selectedText, (UniChar)0x1F];
+	
+	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	[text focus];
 }
 
 #pragma mark -
@@ -919,30 +976,6 @@ typedef enum {
 	[self move:MOVE_DOWN target:MOVE_ALL];
 }
 
-- (void)insertColorCharIntoTextBox:(NSEvent*)e
-{
-	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x03]];
-	[text focus];
-}
-
-- (void)insertBoldCharIntoTextBox:(NSEvent*)e
-{
-	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x02]];
-	[text focus];
-}
-
-- (void)insertItalicCharIntoTextBox:(NSEvent*)e
-{
-	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x16]];
-	[text focus];
-}
-
-- (void)insertUnderlineCharIntoTextBox:(NSEvent*)e
-{
-	[text setStringValue:[NSString stringWithFormat:@"%@%c", [text stringValue], (UniChar)0x1F]];
-	[text focus];
-}
-
 - (void)tab:(NSEvent*)e
 {
 	switch ([Preferences tabAction]) {
@@ -1018,11 +1051,6 @@ typedef enum {
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
-	
-	[self handler:@selector(insertBoldCharIntoTextBox:) char:'b' mods:NSControlKeyMask];
-	[self handler:@selector(insertColorCharIntoTextBox:) char:'k' mods:NSControlKeyMask];
-	[self handler:@selector(insertItalicCharIntoTextBox:) char:'i' mods:NSControlKeyMask];
-	[self handler:@selector(insertUnderlineCharIntoTextBox:) char:'u' mods:NSControlKeyMask];
 	
 	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
@@ -1118,6 +1146,7 @@ typedef enum {
 @synthesize urlMenu;
 @synthesize addrMenu;
 @synthesize chanMenu;
+@synthesize formattingMenu;
 @synthesize extrac;
 @synthesize WelcomeSheetDisplay;
 @synthesize growl;
