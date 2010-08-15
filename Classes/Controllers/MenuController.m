@@ -1351,6 +1351,23 @@
 	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
+- (void)openHelpMenuLinkItem:(id)sender
+{
+	switch ([sender tag]) {
+		case 101:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/"]];
+			break;
+		case 102: 
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://github.com/mikemac11/Textual"]];
+			break;
+		case 103:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/text-formatting"]];
+			break;
+		default:
+			break;
+	}
+}
+
 - (void)processNavigationItem:(NSMenuItem *)sender
 {
 	switch ([sender tag]) {

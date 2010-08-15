@@ -31,6 +31,7 @@
 		4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
+		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123E1209DF8C004E5032 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C211737F660044E7A1 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123F1209DF8C004E5032 /* SheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E311737F660044E7A1 /* SheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -340,6 +341,7 @@
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
 		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
 		4C80087012117C8100EB6DAF /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
+		4C81B9AC12187F83007E9EE2 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = Resources/Images/Colors/rainbow.png; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -640,6 +642,7 @@
 		4C16007C12158CFA00C6C894 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
+				4C81B9AC12187F83007E9EE2 /* rainbow.png */,
 				4C16007E12158D2100C6C894 /* FormattingColor_0.png */,
 				4C16007F12158D2100C6C894 /* FormattingColor_1.png */,
 				4C16008012158D2100C6C894 /* FormattingColor_2.png */,
@@ -1249,6 +1252,7 @@
 				4C16009B12158D2100C6C894 /* FormattingColor_13.png in Resources */,
 				4C16009C12158D2100C6C894 /* FormattingColor_14.png in Resources */,
 				4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */,
+				4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

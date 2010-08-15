@@ -424,7 +424,7 @@
 			
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
 				
-			charValue = [NSString stringWithFormat:@"%c%c%@%c%@%c%c", (UniChar)0x02, (UniChar)0x03, [colorCodes objectAtIndex:rainbowArrayIndex], (UniChar)0x01, charValue, (UniChar)0x03, (UniChar)0x02];
+			charValue = [NSString stringWithFormat:@"%c%@%c%@%c", (UniChar)0x03, [colorCodes objectAtIndex:rainbowArrayIndex], (UniChar)0x01, charValue, (UniChar)0x03];
 			[rainbowRanges addObject:charValue];
 			
 			charCountIndex++;
