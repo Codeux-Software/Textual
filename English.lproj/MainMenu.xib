@@ -2,16 +2,16 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.SystemVersion">10H525</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.AppKitVersion">1038.34</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="29"/>
+			<integer value="1385"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1198,6 +1198,53 @@
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
+								<object class="NSMenuItem" id="457634096">
+									<reference key="NSMenu" ref="403887256"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="688064040">
+									<reference key="NSMenu" ref="403887256"/>
+									<string key="NSTitle">Textual Wiki</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">101</int>
+								</object>
+								<object class="NSMenuItem" id="949184879">
+									<reference key="NSMenu" ref="403887256"/>
+									<string key="NSTitle">Source Code</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">102</int>
+								</object>
+								<object class="NSMenuItem" id="970609257">
+									<reference key="NSMenu" ref="403887256"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="686748612">
+									<reference key="NSMenu" ref="403887256"/>
+									<string key="NSTitle">Text Formatting</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">103</int>
+								</object>
 							</array>
 							<string key="NSName">_NSHelpMenu</string>
 						</object>
@@ -1515,9 +1562,12 @@
 										<string key="NSTitle"> Rainbow</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="934594776"/>
-										<reference key="NSOffImage" ref="934594776"/>
-										<reference key="NSMixedImage" ref="934594776"/>
+										<object class="NSCustomResource" key="NSOnImage" id="281281900">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">rainbow</string>
+										</object>
+										<reference key="NSOffImage" ref="281281900"/>
+										<reference key="NSMixedImage" ref="281281900"/>
 										<int key="NSTag">100</int>
 										<object class="NSAttributedString" key="NSAttributedTitle">
 											<string key="NSString"> Rainbow</string>
@@ -4018,6 +4068,30 @@
 					</object>
 					<int key="connectionID">1660</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openHelpMenuLinkItem:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="688064040"/>
+					</object>
+					<int key="connectionID">1664</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openHelpMenuLinkItem:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="949184879"/>
+					</object>
+					<int key="connectionID">1665</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openHelpMenuLinkItem:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="686748612"/>
+					</object>
+					<int key="connectionID">1668</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -5095,6 +5169,11 @@
 						<reference key="object" ref="403887256"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="114437229"/>
+							<reference ref="457634096"/>
+							<reference ref="688064040"/>
+							<reference ref="949184879"/>
+							<reference ref="970609257"/>
+							<reference ref="686748612"/>
 						</array>
 						<reference key="parent" ref="758853065"/>
 					</object>
@@ -5621,6 +5700,31 @@
 						<reference key="object" ref="200502962"/>
 						<reference key="parent" ref="100129553"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1661</int>
+						<reference key="object" ref="457634096"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1662</int>
+						<reference key="object" ref="688064040"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1663</int>
+						<reference key="object" ref="949184879"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1666</int>
+						<reference key="object" ref="970609257"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1667</int>
+						<reference key="object" ref="686748612"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -5669,7 +5773,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{1180, 851}, {241, 103}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{845, 771}, {222, 103}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5792,6 +5896,11 @@
 				<boolean value="YES" key="164.ImportedFromIB2"/>
 				<string key="1658.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1659.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1661.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1662.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1663.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1666.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1667.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="168.ImportedFromIB2"/>
 				<string key="169.IBEditorWindowLastContentRect">{{878, 724}, {204, 233}}</string>
@@ -6049,7 +6158,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1660</int>
+			<int key="maxID">1668</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6690,6 +6799,7 @@
 						<string key="onWantTextualConnnectToHelp:">id</string>
 						<string key="onWantToReadChannelLogs:">id</string>
 						<string key="onWantToReadTextualLogs:">id</string>
+						<string key="openHelpMenuLinkItem:">id</string>
 						<string key="processNavigationItem:">NSMenuItem</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -6947,6 +7057,10 @@
 						</object>
 						<object class="IBActionInfo" key="onWantToReadTextualLogs:">
 							<string key="name">onWantToReadTextualLogs:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openHelpMenuLinkItem:">
+							<string key="name">openHelpMenuLinkItem:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="processNavigationItem:">
@@ -8979,6 +9093,7 @@
 			<string key="FormattingColor_9">{16, 16}</string>
 			<string key="NSMenuCheckmark">{9, 8}</string>
 			<string key="NSMenuMixedState">{7, 2}</string>
+			<string key="rainbow">{16, 16}</string>
 		</dictionary>
 	</data>
 </archive>

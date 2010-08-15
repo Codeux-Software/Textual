@@ -2760,6 +2760,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							
 							[self printBoth:c type:type text:text];
 						}
+					} else {
+						[self printBoth:nil type:type text:text];
 					}
 				}
 			} else {
@@ -3411,8 +3413,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* comment = [m paramAt:2];
 			
 			IRCChannel* c = [self findChannel:nick];
+			
 			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_IS_AWAY"), nick, comment];
-			[self printBoth:(c ?: (id)nick) type:LINE_TYPE_REPLY text:text];
+			
+			if (c) {
+				[self printBoth:(id)nick type:LINE_TYPE_REPLY text:text];
+			}
+			
+			if (whoisChannel && ![whoisChannel isEqualTo:c]) {
+				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
+			} else {		
+				if (![[world selectedChannel] isEqualTo:c]) {
+					[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				}
+			}
+			
 			break;
 		}
 		case 307: // RPL_WHOISGENERAL
@@ -3428,8 +3443,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3445,8 +3459,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3461,8 +3474,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3488,8 +3500,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3504,8 +3515,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:(id)[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3710,8 +3720,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:(id)[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3752,8 +3761,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				IRCChannel* c = [world selectedChannel];
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:(id)[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3835,6 +3843,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self receiveNickCollisionError:m];
 			break;
 		case 404:
+		case 402:
 		{
 			NSString* chname = [m paramAt:1];
 			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:2]];
