@@ -590,9 +590,9 @@
 		@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
 		@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
 	];
-	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\" /> ", [[theme log] fileName]];
-	[s appendFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>", [[theme js] fileName]];
-	if (overrideStyle) [s appendFormat:@"<style><!-- %@ --></style>", overrideStyle];
+	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme log] fileName], [[theme log] content]];
+	[s appendFormat:@"<script type=\"text/javascript\">\n/* JSF: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
+	if (overrideStyle) [s appendFormat:@"<style type=\"text/css\">%@</style>", overrideStyle];
 	[s appendString:@"</head>"];
 	[s appendFormat:@"<body %@>", bodyAttrs];
 	[s appendString:@"<div id=\"body_home\"></div>"];
