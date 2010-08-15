@@ -402,7 +402,43 @@
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, [sender tag], selectedText, (UniChar)0x03];
+	
+	if ([sender tag] == 100) {
+		NSInteger charCountIndex = 0;
+		NSInteger rainbowArrayIndex = 0;
+		
+		NSMutableArray *rainbowRanges = [NSMutableArray new];
+		NSArray *colorCodes = [NSArray arrayWithObjects:@"4", @"7", @"8", @"3", @"12", @"2", @"6", nil];
+		
+		while (1 == 1) {
+			if (charCountIndex >= [selectedText length]) break;
+				
+			NSRange charRange = NSMakeRange(charCountIndex, 1);
+			NSString *charValue = [selectedText substringWithRange:charRange];
+			
+			if ([charValue isEqualToString:@" "]) {
+				[rainbowRanges addObject:@" "];
+				charCountIndex++;
+				continue;
+			}
+			
+			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
+				
+			charValue = [NSString stringWithFormat:@"%c%c%@%c%@%c%c", (UniChar)0x02, (UniChar)0x03, [colorCodes objectAtIndex:rainbowArrayIndex], (UniChar)0x01, charValue, (UniChar)0x03, (UniChar)0x02];
+			[rainbowRanges addObject:charValue];
+			
+			charCountIndex++;
+			rainbowArrayIndex++;
+		}
+		
+		selectedText = [rainbowRanges componentsJoinedByString:nil];
+		[rainbowRanges release];
+	} else {
+		// We insert the 0x01 to define the end of color tag identifier. Now
+		// values such as 0-9 wont be accidentally interpreted as color value. 
+		
+		selectedText = [NSString stringWithFormat:@"%c%i%c%@%c", (UniChar)0x03, [sender tag], (UniChar)0x01, selectedText, (UniChar)0x03];
+	}
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
 	[text focus];

@@ -1232,7 +1232,7 @@
 							<object class="NSAttributedString" key="NSAttributedTitle">
 								<string key="NSString">Bold</string>
 								<dictionary key="NSAttributes">
-									<object class="NSFont" key="NSFont">
+									<object class="NSFont" key="NSFont" id="600528549">
 										<string key="NSName">Helvetica-Bold</string>
 										<double key="NSSize">14</double>
 										<int key="NSfFlags">16</int>
@@ -1385,7 +1385,7 @@
 									</object>
 									<object class="NSMenuItem" id="572768858">
 										<reference key="NSMenu" ref="100129553"/>
-										<string key="NSTitle"> Orange (Olive)</string>
+										<string key="NSTitle"> Orange</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<object class="NSCustomResource" key="NSOnImage" id="428412772">
@@ -1499,6 +1499,133 @@
 										<reference key="NSOffImage" ref="806021887"/>
 										<reference key="NSMixedImage" ref="852898728"/>
 										<int key="NSTag">15</int>
+									</object>
+									<object class="NSMenuItem" id="306560715">
+										<reference key="NSMenu" ref="100129553"/>
+										<bool key="NSIsDisabled">YES</bool>
+										<bool key="NSIsSeparator">YES</bool>
+										<string key="NSTitle"/>
+										<string key="NSKeyEquiv"/>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="222848805"/>
+										<reference key="NSMixedImage" ref="852898728"/>
+									</object>
+									<object class="NSMenuItem" id="200502962">
+										<reference key="NSMenu" ref="100129553"/>
+										<string key="NSTitle"> Rainbow</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="934594776"/>
+										<reference key="NSOffImage" ref="934594776"/>
+										<reference key="NSMixedImage" ref="934594776"/>
+										<int key="NSTag">100</int>
+										<object class="NSAttributedString" key="NSAttributedTitle">
+											<string key="NSString"> Rainbow</string>
+											<array class="NSMutableArray" key="NSAttributes">
+												<dictionary>
+													<object class="NSColor" key="NSColor" id="224476917">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MSAwIDAAA</bytes>
+													</object>
+													<object class="NSFont" key="NSFont">
+														<string key="NSName">Helvetica-Bold</string>
+														<double key="NSSize">12</double>
+														<int key="NSfFlags">16</int>
+													</object>
+													<object class="NSParagraphStyle" key="NSParagraphStyle">
+														<int key="NSAlignment">4</int>
+														<double key="NSTighteningFactorForTruncation">0.05000000074505806</double>
+														<array key="NSTabStops">
+															<reference ref="409748678"/>
+															<reference ref="574738685"/>
+															<reference ref="910469460"/>
+															<reference ref="937317102"/>
+															<reference ref="1058810687"/>
+															<reference ref="970206948"/>
+															<reference ref="166463984"/>
+															<reference ref="858156165"/>
+															<reference ref="484419763"/>
+															<reference ref="655102573"/>
+															<reference ref="2770192"/>
+															<reference ref="58024476"/>
+														</array>
+													</object>
+												</dictionary>
+												<dictionary>
+													<reference key="NSColor" ref="224476917"/>
+													<reference key="NSFont" ref="600528549"/>
+													<object class="NSParagraphStyle" key="NSParagraphStyle" id="905968279">
+														<int key="NSAlignment">4</int>
+														<double key="NSTighteningFactorForTruncation">0.05000000074505806</double>
+														<array key="NSTabStops">
+															<reference ref="409748678"/>
+															<reference ref="574738685"/>
+															<reference ref="910469460"/>
+															<reference ref="937317102"/>
+															<reference ref="1058810687"/>
+															<reference ref="970206948"/>
+															<reference ref="166463984"/>
+															<reference ref="858156165"/>
+															<reference ref="484419763"/>
+															<reference ref="655102573"/>
+															<reference ref="2770192"/>
+															<reference ref="58024476"/>
+														</array>
+													</object>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MSAwLjUwMTk2MDc4NDMgMAA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MSAxIDAAA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MCAwLjY3ODQzMTM3MjUgMAA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MCAwIDEAA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MCAwIDAuMzYwNzg0MzEzNwA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+												<dictionary>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MC41MDE5NjA3ODQzIDAgMC41MDE5NjA3ODQzAA</bytes>
+													</object>
+													<reference key="NSFont" ref="600528549"/>
+													<reference key="NSParagraphStyle" ref="905968279"/>
+												</dictionary>
+											</array>
+											<object class="NSMutableData" key="NSAttributeInfo">
+												<bytes key="NS.bytes">AQABAQECAQMBBAEFAQYBBw</bytes>
+											</object>
+										</object>
 									</object>
 								</array>
 							</object>
@@ -3883,6 +4010,14 @@
 					</object>
 					<int key="connectionID">1656</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">insertColorCharIntoTextBox:</string>
+						<reference key="source" ref="569757849"/>
+						<reference key="destination" ref="200502962"/>
+					</object>
+					<int key="connectionID">1660</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -5391,6 +5526,8 @@
 							<reference ref="732331680"/>
 							<reference ref="842287129"/>
 							<reference ref="260537571"/>
+							<reference ref="306560715"/>
+							<reference ref="200502962"/>
 						</array>
 						<reference key="parent" ref="481618333"/>
 					</object>
@@ -5472,6 +5609,16 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1619</int>
 						<reference key="object" ref="260537571"/>
+						<reference key="parent" ref="100129553"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1658</int>
+						<reference key="object" ref="306560715"/>
+						<reference key="parent" ref="100129553"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1659</int>
+						<reference key="object" ref="200502962"/>
 						<reference key="parent" ref="100129553"/>
 					</object>
 				</array>
@@ -5643,6 +5790,8 @@
 				<string key="1634.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="164.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="164.ImportedFromIB2"/>
+				<string key="1658.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1659.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="168.ImportedFromIB2"/>
 				<string key="169.IBEditorWindowLastContentRect">{{878, 724}, {204, 233}}</string>
@@ -5900,7 +6049,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1657</int>
+			<int key="maxID">1660</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
