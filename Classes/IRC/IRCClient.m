@@ -3052,7 +3052,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
 				
 				if (!nsc && sendEvent) {
-					c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
+					nsc = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
 				}
 				
 				if ([ignoreChecks notifyJoins] == YES) {
