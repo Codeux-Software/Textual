@@ -2681,92 +2681,100 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self printBoth:nil type:type text:text];
 		} else if ([anick contains:@"."]) {
 			if (type == LINE_TYPE_NOTICE) {
-				if ([text hasPrefix:@"*** Notice -- Client connecting"] || 
-				    [text hasPrefix:@"*** Notice -- Client exiting"] || 
-				    [text hasPrefix:@"*** You are connected to"] || 
-				    [text hasPrefix:@"Forbidding Q-lined nick"] || 
-				    [text hasPrefix:@"Exiting ssl client"]) {
-					[self printBoth:nil type:type text:text];	
-					
-					BOOL processData = NO;
-					
-					NSString *host;
-					NSString *snick;
-					
-					NSInteger match_math = 0;
-					
-					if ([text hasPrefix:@"*** Notice -- Client connecting at"]) {
-						processData = YES;
-					} else if ([text hasPrefix:@"*** Notice -- Client connecting on port"]) {
-						processData = YES;
+				if (hasIRCopAccess) {
+					if ([text hasPrefix:@"*** Notice -- Client connecting"] || 
+						[text hasPrefix:@"*** Notice -- Client exiting"] || 
+						[text hasPrefix:@"*** You are connected to"] || 
+						[text hasPrefix:@"Forbidding Q-lined nick"] || 
+						[text hasPrefix:@"Exiting ssl client"]) {
+						[self printBoth:nil type:type text:text];	
 						
-						match_math = 1;
-					}
-					
-					if (processData) {	
-						NSArray *chunks = [text componentsSeparatedByString:@" "];
+						BOOL processData = NO;
 						
-						host = [chunks safeObjectAtIndex:(8 + match_math)];
-						snick = [chunks safeObjectAtIndex:(7 + match_math)];
+						NSString *host;
+						NSString *snick;
 						
-						host = [host safeSubstringFromIndex:1];
-						host = [host safeSubstringToIndex:([host length] - 1)];
-						host = [NSString stringWithFormat:@"%@!%@", snick, host];
+						NSInteger match_math = 0;
 						
-						// ===================================================== //
-						
-						IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
-						ignoreChecks = [self checkIgnoreAgainstHostmask:host
-												withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
-					
-						BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
-						
-						if (!c && sendEvent) {
-							c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
+						if ([text hasPrefix:@"*** Notice -- Client connecting at"]) {
+							processData = YES;
+						} else if ([text hasPrefix:@"*** Notice -- Client connecting on port"]) {
+							processData = YES;
+							
+							match_math = 1;
 						}
 						
-						if ([ignoreChecks notifyJoins] == YES) {
-							sendEvent = YES;
-							c.isUnread = YES;
+						if (processData) {	
+							NSArray *chunks = [text componentsSeparatedByString:@" "];
 							
-							[self printBoth:c type:type text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
-						}
+							host = [chunks safeObjectAtIndex:(8 + match_math)];
+							snick = [chunks safeObjectAtIndex:(7 + match_math)];
+							
+							host = [host safeSubstringFromIndex:1];
+							host = [host safeSubstringToIndex:([host length] - 1)];
+							host = [NSString stringWithFormat:@"%@!%@", snick, host];
+							
+							// ===================================================== //
+							
+							IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
+							ignoreChecks = [self checkIgnoreAgainstHostmask:host
+													withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 						
-						if ([ignoreChecks notifyWhoisJoins] == YES) {
-							sendEvent = YES;
-							c.isUnread = YES;
+							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
 							
-							whoisChannel = c;
+							if (!c && sendEvent) {
+								c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
+							}
 							
-							[self sendWhois:snick];
+							if ([ignoreChecks notifyJoins] == YES) {
+								sendEvent = YES;
+								c.isUnread = YES;
+								
+								[self printBoth:c type:type text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
+							}
+							
+							if ([ignoreChecks notifyWhoisJoins] == YES) {
+								sendEvent = YES;
+								c.isUnread = YES;
+								
+								whoisChannel = c;
+								
+								[self sendWhois:snick];
+							}
+							
+							if (sendEvent == YES) {
+								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
+								[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
+							}
 						}
-						
-						if (sendEvent == YES) {
-							[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
+					} else {
+						if ([Preferences handleServerNotices]) {
+							if ([Preferences handleIRCopAlerts] && [text contains:[Preferences IRCopAlertMatch]]) {
+								[self printBoth:[world selectedChannel] type:LINE_TYPE_NOTICE text:text];
+							} else {
+								IRCChannel* c = [self findChannel:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")];
+								
+								if (!c) {
+									c = [world createTalk:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE") client:self];
+								}
+								
+								c.isUnread = YES;
+								
+								[self printBoth:c type:type text:text];
+							}
+						} else {
+							[self printBoth:nil type:type text:text];
 						}
 					}
 				} else {
-					if ([Preferences handleServerNotices]) {
-						if ([Preferences handleIRCopAlerts] && [text contains:[Preferences IRCopAlertMatch]]) {
-							[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_NOTICE text:text];
-						} else {
-							IRCChannel* c = [self findChannel:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")];
-							
-							if (!c) {
-								c = [world createTalk:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE") client:self];
-							}
-							
-							c.isUnread = YES;
-							
-							[self printBoth:c type:type text:text];
-						}
-					} else {
-						[self printBoth:nil type:type text:text];
-					}
+					[self printBoth:nil type:type text:text];
 				}
 			} else {
 				[self printBoth:nil type:type text:text];
 			}
+			
+			
+			
 		} else {
 			if ([ignoreChecks ignorePrivateMsg] == YES) {
 				return;
@@ -3030,9 +3038,47 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if ([Preferences showJoinLeave]) {
 		AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
-								    uname:m.sender.user 
-								     name:m.sender.nick
-							   matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+												uname:m.sender.user 
+												 name:m.sender.nick
+										 matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyWhoisJoins", @"notifyJoins", nil]];
+		
+		if (!myself && hasIRCopAccess == NO && isupport.supportsWatchCommand == NO) {
+			NSString *hostaddr = [NSString stringWithFormat:@"%@@%@", m.sender.user, m.sender.address];
+			NSString *host = [NSString stringWithFormat:@"%@!%@", m.sender.nick, hostaddr];
+			
+			if (![trackedUsers containsObject:hostaddr]) {
+				IRCChannel* nsc = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
+				
+				BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
+				
+				if (!nsc && sendEvent) {
+					c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
+				}
+				
+				if ([ignoreChecks notifyJoins] == YES) {
+					sendEvent = YES;
+					nsc.isUnread = YES;
+					
+					[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
+				}
+				
+				if ([ignoreChecks notifyWhoisJoins] == YES) {
+					sendEvent = YES;
+					nsc.isUnread = YES;
+					
+					whoisChannel = nsc;
+					
+					[self sendWhois:m.sender.nick];
+				}
+				
+				if (sendEvent == YES) {
+					[trackedUsers addObject:hostaddr];
+					
+					[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:nsc nick:m.sender.nick text:host];
+					[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
+				}
+			}
+		}
 		
 		if ([ignoreChecks ignoreJPQE] == YES) {
 			return;
@@ -3129,10 +3175,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSString* comment = [m paramAt:0];
 	
+	NSString *hostaddr = [NSString stringWithFormat:@"%@@%@", m.sender.user, m.sender.address];
+	
 	AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
-							    uname:m.sender.user 
-							     name:m.sender.nick
-						   matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+											uname:m.sender.user 
+											 name:m.sender.nick
+									 matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+	
+	if ([trackedUsers containsObject:hostaddr] && hasIRCopAccess == NO && isupport.supportsWatchCommand == NO) {
+		[trackedUsers removeObject:hostaddr];
+	}
 	
 	if ([ignoreChecks ignoreJPQE] == YES) {
 		return;
@@ -3424,7 +3476,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
 				if (![[world selectedChannel] isEqualTo:c]) {
-					[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:text];
+					[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 				}
 			}
 			
@@ -3443,7 +3495,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3459,7 +3511,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3474,7 +3526,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3500,7 +3552,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				[self printBoth:[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
@@ -3792,6 +3844,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			inChanBanList = NO;
 			break;
 	    case 381:
+			hasIRCopAccess = YES;
 		    [self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_USER_HAS_GOOD_LIFE"), m.sender.nick]];
 		    break;
 		case 328:
@@ -4164,4 +4217,5 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize chanBanListSheet;
 @synthesize inChanBanList;
 @synthesize trackedUsers;
+@synthesize hasIRCopAccess;
 @end

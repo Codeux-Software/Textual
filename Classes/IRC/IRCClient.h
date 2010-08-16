@@ -56,6 +56,8 @@ typedef enum {
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	BOOL inChanBanList;
+	
+	BOOL hasIRCopAccess;
 
 	AddressDetectionType addressDetectionMethod;
 	HostResolver* nameResolver;
@@ -113,6 +115,7 @@ typedef enum {
 @property BOOL inChanBanList;
 @property BOOL identifyMsg;
 @property BOOL identifyCTCP;
+@property BOOL hasIRCopAccess;
 @property (retain) HostResolver* nameResolver;
 @property (retain) NSString* joinMyAddress;
 @property (retain) Timer* pongTimer;

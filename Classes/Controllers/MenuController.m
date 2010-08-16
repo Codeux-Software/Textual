@@ -767,12 +767,14 @@
 	IRCChannel* c = world.selectedChannel;
 	if (!c) return;
 	
-	BOOL result = promptWithSuppression(TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE"), 
-										TXTLS(@"WANT_CHANNEL_DELETE_TITLE"), 
-										nil, nil,@"Preferences.prompts.delete_channel", nil);
-	
-	if (result == NO) {
-		return;
+	if ([c isChannel]) {
+		BOOL result = promptWithSuppression(TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE"), 
+											TXTLS(@"WANT_CHANNEL_DELETE_TITLE"), 
+											nil, nil, @"Preferences.prompts.delete_channel", nil);
+		
+		if (result == NO) {
+			return;
+		}
 	}
 	
 	[world destroyChannel:c];
