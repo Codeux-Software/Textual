@@ -306,6 +306,9 @@
 		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
 		[ary addObject:e];
 		
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH];
+		[ary addObject:e];
+		
 		sounds = ary;
 	}
 	return sounds;
