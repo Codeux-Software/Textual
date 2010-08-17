@@ -423,8 +423,15 @@
 			}
 			
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
-				
-			charValue = [NSString stringWithFormat:@"%c%@%c%@%c", (UniChar)0x03, [colorCodes objectAtIndex:rainbowArrayIndex], (UniChar)0x01, charValue, (UniChar)0x03];
+			
+			NSInteger colorChar = [[colorCodes objectAtIndex:rainbowArrayIndex] integerValue];
+			
+			if (colorChar < 10) {
+				charValue = [NSString stringWithFormat:@"%c0%i%@%c", (UniChar)0x03, colorChar, charValue, (UniChar)0x03];
+			} else {
+				charValue = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, colorChar, charValue, (UniChar)0x03];
+			}
+			
 			[rainbowRanges addObject:charValue];
 			
 			charCountIndex++;
@@ -434,10 +441,13 @@
 		selectedText = [rainbowRanges componentsJoinedByString:nil];
 		[rainbowRanges release];
 	} else {
-		// We insert the 0x01 to define the end of color tag identifier. Now
-		// values such as 0-9 wont be accidentally interpreted as color value. 
+		NSInteger colorChar = [sender tag];
 		
-		selectedText = [NSString stringWithFormat:@"%c%i%c%@%c", (UniChar)0x03, [sender tag], (UniChar)0x01, selectedText, (UniChar)0x03];
+		if (colorChar < 10) {
+			selectedText = [NSString stringWithFormat:@"%c0%i%@%c", (UniChar)0x03, colorChar, selectedText, (UniChar)0x03];
+		} else {
+			selectedText = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, colorChar, selectedText, (UniChar)0x03];
+		}
 	}
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
