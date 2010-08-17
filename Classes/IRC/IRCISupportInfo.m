@@ -21,7 +21,6 @@
 
 @synthesize nickLen;
 @synthesize modesCount;
-@synthesize supportsWatchCommand;
 
 - (id)init
 {
@@ -62,7 +61,7 @@
 	[self setValue:4 forMode:'r'];
 }
 
-- (void)update:(NSString*)str
+- (BOOL)update:(NSString*)str
 {
 	if ([str hasSuffix:ISUPPORT_SUFFIX]) {
 		str = [str safeSubstringToIndex:str.length - [ISUPPORT_SUFFIX length]];
@@ -84,11 +83,11 @@
 				nickLen = [value integerValue];
 			} else if ([key isEqualToString:@"MODES"]) {
 				modesCount = [value integerValue];
-			} else if ([key isEqualToString:@"WATCH"]) {
-				supportsWatchCommand = YES;
 			}
 		}
 	}
+	
+	return NO;
 }
 
 - (NSArray*)parseMode:(NSString*)str

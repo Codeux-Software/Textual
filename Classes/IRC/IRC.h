@@ -74,6 +74,7 @@
 #define ICBADGE		@"ICBADGE"
 #define SERVER		@"SERVER"
 #define CONNECT		@"CONN"
+#define WATCH		@"WATCH"
 
 #define IRC_BODY_LEN		500
 #define IRC_ADDRESS_LEN		50

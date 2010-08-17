@@ -13,7 +13,6 @@
 
 @implementation IRCUser
 
-@synthesize canonicalNick;
 @synthesize username;
 @synthesize address;
 @synthesize q;
@@ -37,7 +36,6 @@
 - (void)dealloc
 {
 	[nick release];
-	[canonicalNick release];
 	[username release];
 	[address release];
 	[super dealloc];
@@ -53,9 +51,6 @@
 	if (nick != value) {
 		[nick release];
 		nick = [value retain];
-		
-		[canonicalNick release];
-		canonicalNick = [[nick canonicalName] retain];
 	}
 }
 
@@ -95,7 +90,7 @@
 - (NSInteger)colorNumber
 {
 	if (colorNumber < 0) {
-		colorNumber = CFHash(canonicalNick) % COLOR_NUMBER_MAX;
+		colorNumber = CFHash([nick lowercaseString]) % COLOR_NUMBER_MAX;
 	}
 	return colorNumber;
 }
@@ -191,7 +186,7 @@
 
 	if (mine > others) return NSOrderedAscending;
 	if (mine < others) return NSOrderedDescending;
-	return [canonicalNick compare:other.canonicalNick];
+	return [[nick lowercaseString] compare:[other.nick lowercaseString]];
 }
 
 - (NSString*)description
