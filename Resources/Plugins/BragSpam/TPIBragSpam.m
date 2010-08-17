@@ -64,7 +64,7 @@
 		[trackedUsers release];
 	}
 	
-	[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"I am on %i channels, across %i networks. I have %i olines, %i ops, %i halfops, and %i voices. I have power over %i individual users.",
+	[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"I am on %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.",
 															   channelCount, networkCount, operCount, chanOpCount, chanHopCount, chanVopCount, powerOverCount]];
 }
 
