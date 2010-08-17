@@ -144,7 +144,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		pongTimer.reqeat = YES;
 		pongTimer.selector = @selector(onPongTimer:);
 		
-		trackedUsers = [NSMutableDictionary new];
 		commandQueue = [NSMutableArray new];
 	}
 	
@@ -164,7 +163,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[myNick release];
 	
 	[serverHostname release];
-	
 	[trackedUsers release];
 	
 	nameResolver.delegate = nil;

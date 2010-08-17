@@ -176,12 +176,10 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 								if (i+1 < len) {
 									c = source[i+1];
 									if (c == ',') {
-										++i;
-										
-										if (i+1 < len) {
-											c = source[i+1];
+										if (i+2 < len) {
+											c = source[i+2];
 											if (IsNumeric(c)) {
-												++i;
+												i += 3;
 												backgroundColor = c - '0';
 												if (i+1 < len) {
 													c = source[i+1];
