@@ -744,7 +744,7 @@
 		
 		for (IRCUser* m in users) {
 			[nicks addObject:m.nick];
-			[lowerNicks addObject:m.canonicalNick];
+			[lowerNicks addObject:[m.nick lowercaseString]];
 		}
 		
 		choices = nicks;

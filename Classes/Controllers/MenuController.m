@@ -622,6 +622,7 @@
 	d.window = window;
 	d.config = u.storedConfig;
 	d.uid = u.uid;
+	d.client = u;
 	[ServerSheets addObject:d];
 	[d startWithIgnoreTab:ignore];
 }

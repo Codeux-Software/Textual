@@ -7,7 +7,6 @@
 @interface IRCUser : NSObject
 {
 	NSString* nick;
-	NSString* canonicalNick;
 	NSString* username;
 	NSString* address;
 	BOOL q;
@@ -25,7 +24,6 @@
 }
 
 @property (retain, setter=setNick:, getter=nick) NSString* nick;
-@property (readonly) NSString* canonicalNick;
 @property (retain) NSString* username;
 @property (retain) NSString* address;
 @property (assign) BOOL q;

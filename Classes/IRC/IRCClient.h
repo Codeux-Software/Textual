@@ -81,9 +81,9 @@ typedef enum {
 	FileLogger* logFile;
 	NSString* logDate;
 
-	IRCChannel *whoisChannel;
+	IRCChannel* whoisChannel;
 	
-	NSMutableArray *trackedUsers;
+	NSMutableArray* trackedUsers;
 }
 
 @property (assign) IRCWorld* world;
@@ -91,7 +91,7 @@ typedef enum {
 @property (readonly) IRCClientConfig* config;
 @property (readonly) IRCISupportInfo* isupport;
 @property (readonly) NSMutableArray* channels;
-@property (readonly) NSMutableArray *trackedUsers;
+@property (retain) NSMutableArray* trackedUsers;
 @property (readonly) BOOL isConnecting;
 @property (readonly) BOOL isConnected;
 @property (readonly) BOOL isReconnecting;

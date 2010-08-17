@@ -5,6 +5,8 @@
 
 @interface AddressBook : NSObject
 {
+	NSInteger cid;
+	 
 	NSString* hostmask;
 	
 	BOOL ignorePublicMsg;
@@ -20,6 +22,7 @@
 	NSString* hostmaskRegex;
 }
 
+@property NSInteger cid;
 @property (retain) NSString* hostmask;
 @property (assign) BOOL ignorePublicMsg;
 @property (assign) BOOL ignorePrivateMsg;

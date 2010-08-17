@@ -29,17 +29,14 @@
 	NSInteger nickLen;
 	NSInteger modesCount;
 	
-	BOOL supportsWatchCommand;
-	
 	unsigned char modes[MODES_SIZE];
 }
 
 @property (readonly) NSInteger nickLen;
 @property (readonly) NSInteger modesCount;
-@property (assign) BOOL supportsWatchCommand;
 
 - (void)reset;
-- (void)update:(NSString*)s;
+- (BOOL)update:(NSString*)s;
 - (NSArray*)parseMode:(NSString*)s;
 - (IRCModeInfo*)createMode:(NSString*)mode;
 @end

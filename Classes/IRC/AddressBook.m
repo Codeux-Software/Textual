@@ -4,9 +4,11 @@
 #import "AddressBook.h"
 #import "NSDictionaryHelper.h"
 #import "NSStringHelper.h"
+#import "GlobalModels.h"
 
 @implementation AddressBook
 
+@synthesize cid;
 @synthesize hostmask;
 @synthesize ignorePublicMsg;
 @synthesize ignorePrivateMsg;
@@ -15,6 +17,9 @@
 @synthesize ignoreCTCP;
 @synthesize ignoreDCC;
 @synthesize ignoreJPQE;
+@synthesize hostmaskRegex;
+@synthesize notifyJoins;
+@synthesize notifyWhoisJoins;
 
 - (void)dealloc
 {
@@ -33,6 +38,9 @@
 - (id)initWithDictionary:(NSDictionary*)dic
 {
 	if ([self init]) {
+		cid = TXRandomThousandNumber();
+		
+		cid = [dic intForKey:@"cid"] ?: cid;
 		hostmask = [[dic objectForKey:@"hostmask"] retain];
 		ignorePublicMsg = [dic boolForKey:@"ignorePublicMsg"];
 		ignorePrivateMsg = [dic boolForKey:@"ignorePrivateMsg"];
@@ -70,6 +78,7 @@
 	
 	if (hostmask) [dic setObject:hostmask forKey:@"hostmask"];
 	
+	[dic setInt:cid forKey:@"cid"];
 	[dic setBool:ignorePublicMsg forKey:@"ignorePublicMsg"];
 	[dic setBool:ignorePrivateMsg forKey:@"ignorePrivateMsg"];
 	[dic setBool:ignoreHighlights forKey:@"ignoreHighlights"];
@@ -94,7 +103,4 @@
 	return NO;
 }
 
-@synthesize hostmaskRegex;
-@synthesize notifyJoins;
-@synthesize notifyWhoisJoins;
 @end

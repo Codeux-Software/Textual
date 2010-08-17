@@ -109,6 +109,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
 		
+		hasIRCopAccess = NO;
+		
 		nameResolver = [HostResolver new];
 		nameResolver.delegate = self;
 		
@@ -142,6 +144,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		pongTimer.reqeat = YES;
 		pongTimer.selector = @selector(onPongTimer:);
 		
+		trackedUsers = [NSMutableDictionary new];
 		commandQueue = [NSMutableArray new];
 	}
 	
@@ -161,6 +164,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[myNick release];
 	
 	[serverHostname release];
+	
+	[trackedUsers release];
 	
 	nameResolver.delegate = nil;
 	[nameResolver autorelease];
@@ -297,13 +302,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Utilities
 
-- (void)registerNicknameWatchKeys
-{
-	if (isupport.supportsWatchCommand == YES) {
-		
-	} 
-}
-
 - (NSInteger)connectDelay
 {
 	return connectDelay;
@@ -323,10 +321,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	[self quit];
 	[self closeDialogs];
+	
 	for (IRCChannel* c in channels) {
 		[c terminate];
 	}
+	
 	[self disconnect];
+	
+	[trackedUsers release];
 }
 
 - (void)closeDialogs
@@ -977,7 +979,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSInteger delta = len - max;
 		if (delta <= 0) break;
 		
-		// for faster convergence
 		if (delta < 5) {
 			s = [s safeSubstringToIndex:s.length - 1];
 		} else {
@@ -1646,6 +1647,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				g.ignoreCTCP = YES;
 				g.ignoreDCC = YES;
 				g.ignoreJPQE = YES;
+				g.notifyJoins = NO;
+				g.notifyWhoisJoins = NO;
 				
 				if ([cmd isEqualToString:IGNORE]) {
 					BOOL found = NO;
@@ -3026,7 +3029,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	if (c) {
+	if (c && ![c findMember:nick]) {
 		IRCUser* u = [[IRCUser new] autorelease];
 		u.nick = nick;
 		u.username = m.sender.user;
@@ -3042,38 +3045,34 @@ static NSDateFormatter* dateTimeFormatter = nil;
 												 name:m.sender.nick
 										 matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyWhoisJoins", @"notifyJoins", nil]];
 		
-		if (!myself && hasIRCopAccess == NO && isupport.supportsWatchCommand == NO) {
-			NSString *hostaddr = [NSString stringWithFormat:@"%@@%@", m.sender.user, m.sender.address];
-			NSString *host = [NSString stringWithFormat:@"%@!%@", m.sender.nick, hostaddr];
+		if (!myself && hasIRCopAccess == NO) {
+			NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
 			
-			if (![trackedUsers containsObject:hostaddr]) {
-				IRCChannel* nsc = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
-				
-				BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
-				
-				if (!nsc && sendEvent) {
-					nsc = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
-				}
-				
-				if ([ignoreChecks notifyJoins] == YES) {
-					sendEvent = YES;
-					nsc.isUnread = YES;
+			BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
+			
+			if (sendEvent) {
+				if (![trackedUsers containsObject:[NSNumber numberWithInteger:ignoreChecks.cid]]) {
+					IRCChannel* nsc = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
 					
-					[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
-				}
-				
-				if ([ignoreChecks notifyWhoisJoins] == YES) {
-					sendEvent = YES;
-					nsc.isUnread = YES;
+					if (!nsc) {
+						nsc = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
+					}
 					
-					whoisChannel = nsc;
+					if ([ignoreChecks notifyJoins] == YES) {
+						nsc.isUnread = YES;
+						
+						[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
+					}
 					
-					[self sendWhois:m.sender.nick];
-				}
-				
-				if (sendEvent == YES) {
-					[trackedUsers addObject:hostaddr];
+					if ([ignoreChecks notifyWhoisJoins] == YES) {
+						nsc.isUnread = YES;
+						whoisChannel = nsc;
+						
+						[self sendWhois:m.sender.nick];
+					}
 					
+					[trackedUsers addObject:[NSNumber numberWithInteger:ignoreChecks.cid]];
+						
 					[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:nsc nick:m.sender.nick text:host];
 					[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
 				}
@@ -3086,15 +3085,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		
 		NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_JOINED_CHANNEL"), nick, m.sender.user, m.sender.address];
 		[self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text];
-	}
-	
-	c = [self findChannel:nick];
-	if (c) {
-		IRCUser* u = [[IRCUser new] autorelease];
-		u.nick = nick;
-		u.username = m.sender.user;
-		u.address = m.sender.address;
-		[c addMember:u];
 	}
 }
 
@@ -3175,15 +3165,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSString* comment = [m paramAt:0];
 	
-	NSString *hostaddr = [NSString stringWithFormat:@"%@@%@", m.sender.user, m.sender.address];
-	
 	AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
 											uname:m.sender.user 
 											 name:m.sender.nick
 									 matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 	
-	if ([trackedUsers containsObject:hostaddr] && hasIRCopAccess == NO && isupport.supportsWatchCommand == NO) {
-		[trackedUsers removeObject:hostaddr];
+	if ([trackedUsers containsObject:[NSNumber numberWithInteger:ignoreChecks.cid]] && hasIRCopAccess == NO) {
+		[trackedUsers removeObject:[NSNumber numberWithInteger:ignoreChecks.cid]];
 	}
 	
 	if ([ignoreChecks ignoreJPQE] == YES) {
@@ -3269,7 +3257,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* modeStr = [m sequence:1];
 	
 	if ([target isChannelName]) {
-		// channel
 		IRCChannel* c = [self findChannel:target];
 		if (c) {
 			NSArray* info = [c.mode update:modeStr];
@@ -3694,23 +3681,26 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (c && c.isActive && !c.isNamesInit) {
 				NSArray* ary = [trail componentsSeparatedByString:@" "];
 				for (NSString* nick in ary) {
+					nick = [nick trim];
+					
 					if (!nick.length) continue;
-					UniChar u = [nick characterAtIndex:0];
-					char op = ' ';
-					if (u == '@' || u == '~' || 
-					    u == '&' || u == '%' || 
-					    u == '+' || u == '!') {
-						op = ((u == '!') ? '&' : u);
+				
+					NSString *u = [nick substringWithRange:NSMakeRange(0, 1)];
+					NSString *op = @" ";
+					if ([u isEqualTo:@"@"] || [u isEqualTo:@"~"] || 
+					    [u isEqualTo:@"&"] || [u isEqualTo:@"%"] || 
+					    [u isEqualTo:@"+"] || [u isEqualTo:@"!"]) {
+						op = ((u == @"!") ? @"&" : u);
 						nick = [nick safeSubstringFromIndex:1];
 					}
 					
 					IRCUser* m = [[IRCUser new] autorelease];
 					m.nick = nick;
-					m.q = op == '~';
-					m.a = op == '&';
-					m.o = op == '@' || m.q;
-					m.h = op == '%';
-					m.v = op == '+';
+					m.q = ([op isEqualTo:@"~"]);
+					m.a = ([op isEqualTo:@"&"]);
+					m.o = ([op isEqualTo:@"@"] || m.q);
+					m.h = ([op isEqualTo:@"%"]);
+					m.v = ([op isEqualTo:@"+"]);
 					m.isMyself = [nick isEqualNoCase:myNick];
 					[c addMember:m reload:NO];
 					if ([myNick isEqualNoCase:nick]) {
@@ -3859,16 +3849,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			break;
 		}
-		/*
-		case 600: // nick userid host time :logged offline
-		case 601: // nick userid host time :logged online
-		case 602: // nick userid host time :stopped watching
-		case 603: // You have mine and are on other WATCH entries
-		case 604: // nick userid host time :is online
-		case 605: // nick userid host time :is offline
-		case 606: // nicklist
-			break;
-		*/
 	    default:
 		    [self printUnknownReply:m];
 		    break;

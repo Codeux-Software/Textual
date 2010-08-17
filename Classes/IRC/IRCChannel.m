@@ -320,14 +320,14 @@
 
 - (NSInteger)indexOfMember:(NSString*)nick
 {
-	NSString* canonicalNick = [nick canonicalName];
+	NSInteger i = -1;
 	
-	NSInteger i = 0;
 	for (IRCUser* m in members) {
-		if ([m.canonicalNick isEqualToString:canonicalNick]) {
+		i++;
+		
+		if ([m.nick isEqualToString:nick]) {
 			return i;
 		}
-		++i;
 	}
 	
 	return -1;

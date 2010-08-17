@@ -91,7 +91,9 @@
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
-	BOOL mergeItems = NO;
+	if ([world.allLoadedBundles count] > 0) {
+		[self deallocAllAvailableBundlesFromMemory:world];
+	}
 	
 	NSMutableArray *completeBundleIndex = [NSMutableArray new];
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
@@ -103,34 +105,20 @@
 		if ([file hasSuffix:@".bundle"]) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
+				
+			TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
 			
-			if (currBundle) {
-				if ([world.allLoadedBundles containsObject:currBundle]) {
-					if (mergeItems == NO) {
-						userInputBundles = world.bundlesForUserInput;
-						completeBundleIndex = world.allLoadedBundles;
-						serverInputBundles = world.bundlesForServerInput;
-					}
-					
-					mergeItems = YES;
-					
-					continue;
-				}
-				
-				TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
-				
-				[plugin initWithPluginClass:[currBundle principalClass] 
-								  andBundle:currBundle 
-								andIRCWorld:world
-						  withUserInputDict:userInputBundles 
-						withServerInputDict:serverInputBundles 
-					  withUserInputDictRefs:&userInputBundles 
-					withServerInputDictRefs:&serverInputBundles];
-				
-				[completeBundleIndex addObject:currBundle];
-				
-				[plugin autorelease];
-			}
+			[plugin initWithPluginClass:[currBundle principalClass] 
+							  andBundle:currBundle 
+							andIRCWorld:world
+					  withUserInputDict:userInputBundles 
+					withServerInputDict:serverInputBundles 
+				  withUserInputDictRefs:&userInputBundles 
+				withServerInputDictRefs:&serverInputBundles];
+			
+			[completeBundleIndex addObject:currBundle];
+			
+			[plugin autorelease];
 		}
 	}
 	

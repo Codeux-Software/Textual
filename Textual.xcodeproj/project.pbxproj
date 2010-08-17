@@ -27,6 +27,7 @@
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
+		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
@@ -279,6 +280,7 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
+				4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */,
 				4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +339,7 @@
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C7832F211AE4AF100D8928D /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
 		4C7832F311AE4AF100D8928D /* IconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconManager.m; sourceTree = "<group>"; };
+		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561211B0386200B5DE98 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPanel.h; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
 		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
@@ -717,6 +720,7 @@
 		4C82A68A11DBB1C600C01FBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4C7AD473121AEF830021648A /* BragSpam.bundle */,
 				4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */,
 			);
 			name = Extensions;

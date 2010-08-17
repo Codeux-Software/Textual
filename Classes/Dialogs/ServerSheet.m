@@ -7,6 +7,8 @@
 #import "IRCChannelConfig.h"
 #import "AddressBook.h"
 #import "Preferences.h"
+#import "IRC.h"
+#import "IRCClient.h"
 
 #define IGNORE_TAB_INDEX	3
 #define WINDOW_TOOLBAR_HEIGHT 30
@@ -461,6 +463,14 @@
 {
 	NSInteger sel = [ignoreTable selectedRow];
 	if (sel < 0) return;
+    
+    AddressBook *g = [config.ignores safeObjectAtIndex:sel];
+    
+    if (g.notifyJoins || g.notifyWhoisJoins) {
+        if ([client.trackedUsers containsObject:[NSNumber numberWithInteger:g.cid]]) {
+            [client.trackedUsers removeObject:[NSNumber numberWithInteger:g.cid]];
+        }
+    }
 	
 	[config.ignores safeRemoveObjectAtIndex:sel];
 	
@@ -676,4 +686,5 @@
 @synthesize deleteIgnoreButton;
 @synthesize channelSheet;
 @synthesize ignoreSheet;
+@synthesize client;
 @end

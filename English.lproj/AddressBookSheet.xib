@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.SystemVersion">10H525</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.AppKitVersion">1038.34</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -306,7 +306,7 @@
 					<object class="NSTextField" id="414404645">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{70, 103}, {39, 14}}</string>
+						<string key="NSFrame">{{23, 102}, {34, 14}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="368550053">
@@ -326,13 +326,13 @@
 					<object class="NSTextField" id="1056718837">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{69, 75}, {266, 42}}</string>
+						<string key="NSFrame">{{23, 74}, {324, 42}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">          Textual requires IRC Operator (IRCop) privileges to view the notices that are processed for these types of notifications.</string>
+							<string key="NSContents">          Unless the current user is granted IRC Operator (IRCop) access upon connection Textual will track join/quit activity to determine when a user has signed off and on.</string>
 							<reference key="NSSupport" ref="570868298"/>
 							<reference key="NSControlView" ref="1056718837"/>
 							<reference key="NSBackgroundColor" ref="996912065"/>
@@ -410,7 +410,7 @@
 					<object class="NSButton" id="583266023">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 129}, {316, 18}}</string>
+						<string key="NSFrame">{{18, 127}, {316, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="421622405">
@@ -437,7 +437,7 @@
 					<object class="NSButton" id="410707626">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 159}, {316, 18}}</string>
+						<string key="NSFrame">{{18, 157}, {316, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="494906863">
@@ -457,7 +457,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{372, 195}</string>
+				<string key="NSFrameSize">{372, 193}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -1276,20 +1276,6 @@
 						<reference key="parent" ref="424958826"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">446</int>
-						<reference key="object" ref="1056718837"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="169079955"/>
-						</object>
-						<reference key="parent" ref="37769083"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">447</int>
-						<reference key="object" ref="169079955"/>
-						<reference key="parent" ref="1056718837"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">448</int>
 						<reference key="object" ref="414404645"/>
 						<object class="NSMutableArray" key="children">
@@ -1302,6 +1288,20 @@
 						<int key="objectID">449</int>
 						<reference key="object" ref="368550053"/>
 						<reference key="parent" ref="414404645"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">446</int>
+						<reference key="object" ref="1056718837"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="169079955"/>
+						</object>
+						<reference key="parent" ref="37769083"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">447</int>
+						<reference key="object" ref="169079955"/>
+						<reference key="parent" ref="1056718837"/>
 					</object>
 				</object>
 			</object>
@@ -1431,22 +1431,22 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{461, 727}, {372, 195}}</string>
+					<string>{{461, 729}, {372, 193}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{636, 688}, {369, 297}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUEgAABCjgAAA</bytes>
+						<bytes key="NSTransformStruct">AUEgAABDj4AAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDPwAAwigAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDQQAAw4eAAA</bytes>
 					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDiQAAwigAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDigAAw4eAAA</bytes>
 					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1460,17 +1460,17 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBgAAAwv4AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBuAAAw7mAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwv4AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBuAAAw7mAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{625, 372}, {369, 502}}</string>
+					<string>{{641, 374}, {369, 502}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{625, 372}, {369, 502}}</string>
+					<string>{{641, 374}, {369, 502}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -3025,6 +3025,7 @@
 							<string>generalView</string>
 							<string>highlightView</string>
 							<string>identityView</string>
+							<string>installedScriptsTable</string>
 							<string>interfaceView</string>
 							<string>keywordsArrayController</string>
 							<string>keywordsTable</string>
@@ -3049,6 +3050,7 @@
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
+							<string>NSTableView</string>
 							<string>NSView</string>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
@@ -3076,6 +3078,7 @@
 							<string>generalView</string>
 							<string>highlightView</string>
 							<string>identityView</string>
+							<string>installedScriptsTable</string>
 							<string>interfaceView</string>
 							<string>keywordsArrayController</string>
 							<string>keywordsTable</string>
@@ -3129,6 +3132,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">identityView</string>
 								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">installedScriptsTable</string>
+								<string key="candidateClassName">NSTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">interfaceView</string>
@@ -4465,7 +4472,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
