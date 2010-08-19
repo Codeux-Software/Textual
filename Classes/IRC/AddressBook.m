@@ -52,24 +52,29 @@
 		notifyJoins = [dic boolForKey:@"notifyJoins"];
 		notifyWhoisJoins = [dic boolForKey:@"notifyWhoisJoins"];
 		
-		if (!hostmaskRegex && hostmask) {
-			NSString *new_hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
-			
-			hostmaskRegex = [[NSString stringWithFormat:@"^%@$", new_hostmask] retain];
-			new_hostmask = nil;
-		}
+		[self processHostMaskRegex];
 	}
 	return self;
+}
+
+- (void)processHostMaskRegex
+{
+	if (!hostmaskRegex && hostmask) {
+		NSString *new_hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
+		
+		hostmaskRegex = [[NSString stringWithFormat:@"^%@$", new_hostmask] retain];
+		new_hostmask = nil;
+	}
 }
 
 - (NSDictionary*)dictionaryValue

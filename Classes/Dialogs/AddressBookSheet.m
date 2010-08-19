@@ -97,6 +97,11 @@
 	ignore.notifyJoins = [notifyJoins state];
 	ignore.notifyWhoisJoins = [notifyWhoisJoins state];
 	
+	[ignore.hostmaskRegex release];
+	ignore.hostmaskRegex = nil;
+	
+	[ignore processHostMaskRegex];
+	
 	if ([delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
 		[delegate ignoreItemSheetOnOK:self];
 	}

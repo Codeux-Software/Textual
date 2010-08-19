@@ -38,4 +38,5 @@
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSDictionary*)dictionaryValue;
 - (BOOL)checkIgnore:(NSString*)thehost;
+- (void)processHostMaskRegex;
 @end
