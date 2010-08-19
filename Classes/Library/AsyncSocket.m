@@ -200,14 +200,14 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 - (NSUInteger)prebufferReadLengthForTerm;
 - (CFIndex)searchForTermAfterPreBuffering:(CFIndex)numBytes;
-@property (retain) NSMutableData *buffer;
+@property (nonatomic, retain) NSMutableData *buffer;
 @property CFIndex startOffset;
 @property CFIndex bytesDone;
 @property CFIndex maxLength;
 @property NSTimeInterval timeout;
 @property CFIndex readLength;
-@property (retain) NSData *term;
-@property BOOL bufferOwner;
+@property (nonatomic, retain) NSData *term;
+@property (nonatomic) BOOL bufferOwner;
 @property NSUInteger originalBufferLength;
 @property long tag;
 @end
@@ -479,7 +479,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	NSTimeInterval timeout;
 }
 - (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i;
-@property (retain) NSData *buffer;
+@property (nonatomic, retain) NSData *buffer;
 @property CFIndex bytesDone;
 @property long tag;
 @property NSTimeInterval timeout;
@@ -525,7 +525,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	NSDictionary *tlsSettings;
 }
 - (id)initWithTLSSettings:(NSDictionary *)settings;
-@property (retain) NSDictionary *tlsSettings;
+@property (nonatomic, retain) NSDictionary *tlsSettings;
 @end
 
 @implementation AsyncSpecialPacket

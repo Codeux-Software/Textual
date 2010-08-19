@@ -18,9 +18,9 @@
 	CFAbsoluteTime lastClickTime;
 }
 
-@property (assign) id owner;
-@property (retain) id policy;
-@property NSInteger x;
-@property NSInteger y;
+@property (nonatomic, assign) id owner;
+@property (nonatomic, retain) id policy;
+@property (nonatomic) NSInteger x;
+@property (nonatomic) NSInteger y;
 @property CFAbsoluteTime lastClickTime;
 @end

@@ -20,15 +20,15 @@
 	IBOutlet NSButton* growlCheck;
 }
 
-@property (assign) NSInteger uid;
-@property (assign) NSInteger cid;
-@property (retain) IRCChannelConfig* config;
-@property (retain) NSTextField* nameText;
-@property (retain) NSTextField* passwordText;
-@property (retain) NSTextField* modeText;
-@property (retain) NSTextField* topicText;
-@property (retain) NSButton* autoJoinCheck;
-@property (retain) NSButton* growlCheck;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, retain) IRCChannelConfig* config;
+@property (nonatomic, retain) NSTextField* nameText;
+@property (nonatomic, retain) NSTextField* passwordText;
+@property (nonatomic, retain) NSTextField* modeText;
+@property (nonatomic, retain) NSTextField* topicText;
+@property (nonatomic, retain) NSButton* autoJoinCheck;
+@property (nonatomic, retain) NSButton* growlCheck;
 
 - (void)start;
 - (void)show;

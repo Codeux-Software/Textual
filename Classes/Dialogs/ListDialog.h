@@ -19,15 +19,15 @@
 	IBOutlet NSTextField* channelCount;
 }
 
-@property (assign) id delegate;
-@property (readonly) NSInteger sortKey;
-@property (readonly) NSComparisonResult sortOrder;
-@property (retain) NSMutableArray* list;
-@property (retain) NSMutableArray* filteredList;
-@property (retain) ListView* table;
-@property (retain) NSSearchField* filterText;
-@property (retain) NSButton* updateButton;
-@property (retain) NSTextField* channelCount;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, readonly) NSInteger sortKey;
+@property (nonatomic, readonly) NSComparisonResult sortOrder;
+@property (nonatomic, retain) NSMutableArray* list;
+@property (nonatomic, retain) NSMutableArray* filteredList;
+@property (nonatomic, retain) ListView* table;
+@property (nonatomic, retain) NSSearchField* filterText;
+@property (nonatomic, retain) NSButton* updateButton;
+@property (nonatomic, retain) NSTextField* channelCount;
 
 - (void)start;
 - (void)show;

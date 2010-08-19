@@ -8,7 +8,7 @@
 	id delegate;
 }
 
-@property (assign) id delegate;
+@property (nonatomic, assign) id delegate;
 
 - (id)initWithDelegate:(id)aDelegate;
 - (void)resolve:(NSString*)hostname;

@@ -35,11 +35,11 @@ typedef enum {
 	BOOL registered;
 }
 
-@property (assign) IRCWorld* owner;
-@property (retain) TinyGrowlClient* growl;
-@property (retain) id lastClickedContext;
+@property (nonatomic, assign) IRCWorld* owner;
+@property (nonatomic, retain) TinyGrowlClient* growl;
+@property (nonatomic, retain) id lastClickedContext;
 @property CFAbsoluteTime lastClickedTime;
-@property BOOL registered;
+@property (nonatomic) BOOL registered;
 
 - (void)registerToGrowl;
 - (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;

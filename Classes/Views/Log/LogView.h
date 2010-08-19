@@ -10,8 +10,8 @@
 	id resizeDelegate;
 }
 
-@property (assign) id keyDelegate;
-@property (assign) id resizeDelegate;
+@property (nonatomic, assign) id keyDelegate;
+@property (nonatomic, assign) id resizeDelegate;
 
 - (NSString*)contentString;
 

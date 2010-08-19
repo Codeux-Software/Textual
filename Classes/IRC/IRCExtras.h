@@ -8,7 +8,7 @@
 	IRCWorld *world;
 }
 
-@property (assign) IRCWorld* world;
+@property (nonatomic, assign) IRCWorld* world;
 
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString*)channel;
 @end

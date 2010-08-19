@@ -13,11 +13,11 @@
 	IBOutlet NSButton* cancelButton;
 }
 
-@property (assign) id delegate;
-@property (assign) NSWindow* window;
-@property (retain) NSWindow* sheet;
-@property (retain) NSButton* okButton;
-@property (retain) NSButton* cancelButton;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) NSWindow* window;
+@property (nonatomic, retain) NSWindow* sheet;
+@property (nonatomic, retain) NSButton* okButton;
+@property (nonatomic, retain) NSButton* cancelButton;
 
 - (void)startSheet;
 - (void)endSheet;

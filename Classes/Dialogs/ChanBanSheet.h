@@ -14,10 +14,10 @@
 	IBOutlet NSButton* updateButton;
 }
 
-@property (retain) NSMutableArray* list;
-@property (retain) ListView* table;
-@property (retain) NSButton* updateButton;
-@property (retain) NSString* modeString;
+@property (nonatomic, retain) NSMutableArray* list;
+@property (nonatomic, retain) ListView* table;
+@property (nonatomic, retain) NSButton* updateButton;
+@property (nonatomic, retain) NSString* modeString;
 
 - (void)show;
 - (void)clear;

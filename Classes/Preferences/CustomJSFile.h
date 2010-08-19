@@ -10,8 +10,8 @@
 	NSString* content;
 }
 
-@property (retain, getter=fileName, setter=setFileName:) NSString* fileName;
-@property (readonly) NSString* content;
+@property (nonatomic, retain, getter=fileName, setter=setFileName:) NSString* fileName;
+@property (nonatomic, readonly) NSString* content;
 
 - (void)reload;
 

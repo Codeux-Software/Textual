@@ -11,9 +11,9 @@
 	NSString* content;
 }
 
-@property (retain, getter=fileName, setter=setFileName:) NSString* fileName;
-@property (readonly) NSURL* baseUrl;
-@property (retain) NSString* content;
+@property (nonatomic, retain, getter=fileName, setter=setFileName:) NSString* fileName;
+@property (nonatomic, readonly) NSURL* baseUrl;
+@property (nonatomic, retain) NSString* content;
 
 - (void)reload;
 

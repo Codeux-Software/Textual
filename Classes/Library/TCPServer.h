@@ -14,11 +14,11 @@
 	NSInteger port;
 }
 
-@property (assign) id delegate;
-@property (readonly) NSArray* clients;
-@property (readonly) BOOL isActive;
-@property (assign) NSInteger port;
-@property (retain) AsyncSocket* conn;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, readonly) NSArray* clients;
+@property (nonatomic, readonly) BOOL isActive;
+@property (nonatomic, assign) NSInteger port;
+@property (nonatomic, retain) AsyncSocket* conn;
 
 - (BOOL)open;
 - (void)close;

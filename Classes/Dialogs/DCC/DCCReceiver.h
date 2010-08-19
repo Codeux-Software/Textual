@@ -28,24 +28,24 @@
 	double currentRecord;
 }
 
-@property (assign) id delegate;
-@property (assign) NSInteger uid;
-@property (retain) NSString* peerNick;
-@property (retain) NSString* host;
-@property (assign) NSInteger port;
-@property (assign) long long size;
-@property (readonly) long long processedSize;
-@property (readonly) DCCFileTransferStatus status;
-@property (readonly) NSString* error;
-@property (retain, setter = setPath:, getter = path) NSString* path;
-@property (retain, setter = setFileName:, getter = fileName) NSString* fileName;
-@property (readonly) NSString* downloadFileName;
-@property (readonly) NSImage* icon;
-@property (retain) NSProgressIndicator* progressBar;
-@property (readonly) double speed;
-@property (retain) TCPClient* sock;
-@property (retain) NSFileHandle* file;
-@property (retain) NSMutableArray* speedRecords;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, retain) NSString* peerNick;
+@property (nonatomic, retain) NSString* host;
+@property (nonatomic, assign) NSInteger port;
+@property (nonatomic, assign) long long size;
+@property (nonatomic, readonly) long long processedSize;
+@property (nonatomic, readonly) DCCFileTransferStatus status;
+@property (nonatomic, readonly) NSString* error;
+@property (nonatomic, retain, setter = setPath:, getter = path) NSString* path;
+@property (nonatomic, retain, setter = setFileName:, getter = fileName) NSString* fileName;
+@property (nonatomic, readonly) NSString* downloadFileName;
+@property (nonatomic, readonly) NSImage* icon;
+@property (nonatomic, retain) NSProgressIndicator* progressBar;
+@property (nonatomic, readonly) double speed;
+@property (nonatomic, retain) TCPClient* sock;
+@property (nonatomic, retain) NSFileHandle* file;
+@property (nonatomic, retain) NSMutableArray* speedRecords;
 @property double currentRecord;
 
 - (void)open;

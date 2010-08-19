@@ -1059,15 +1059,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self sendCTCPQuery:target command:PING text:[NSString stringWithFormat:@"%f", CFAbsoluteTimeGetCurrent()]];
 }
 
-- (NSString*)expandVariables:(NSString*)s
-{
-	if ([s contains:@"$nick"]) {
-		return [s stringByReplacingOccurrencesOfString:@"$nick" withString:myNick];
-	} else {
-		return s;
-	}
-}
-
 - (BOOL)sendCommand:(NSString*)s
 {
 	return [self sendCommand:s completeTarget:YES target:nil];
@@ -1083,8 +1074,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	NSDictionary *errors = [NSDictionary dictionary];
 	NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:
-											[NSURL fileURLWithPath:[details objectForKey:@"path"]] error:&errors];
-			
+								  [NSURL fileURLWithPath:[details objectForKey:@"path"]] error:&errors];
+	
 	if (appleScript) {
 		NSAppleEventDescriptor *firstParameter = [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
 		
@@ -1093,16 +1084,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		
 		ProcessSerialNumber psn = { 0, kCurrentProcess };
 		NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
-													bytes:&psn
-													length:sizeof(ProcessSerialNumber)];
+																						bytes:&psn
+																					   length:sizeof(ProcessSerialNumber)];
 		
 		NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:[@"textualcmd" lowercaseString]];
 		
 		NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
-																		 eventID:kASSubroutineEvent
-																		 targetDescriptor:target
-																		 returnID:kAutoGenerateReturnID
-																		 transactionID:kAnyTransactionID];
+																				 eventID:kASSubroutineEvent
+																		targetDescriptor:target
+																				returnID:kAutoGenerateReturnID
+																		   transactionID:kAnyTransactionID];
 		
 		[event setParamDescriptor:handler forKeyword:keyASSubroutineName];
 		[event setParamDescriptor:parameters forKeyword:keyDirectObject];
@@ -1114,7 +1105,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		} else {	
 			NSString *finalResult = [result stringValue];
 			finalResult = [finalResult stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		
+			
 			if ([finalResult length] >= 1) {
 				if ([[finalResult safeSubstringToIndex:1] isEqualToString:@"/"]) {
 					finalResult = [finalResult safeSubstringFromIndex:1];
@@ -1123,9 +1114,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					finalResult = [NSString stringWithFormat:@"MSG %@ %@", [details objectForKey:@"channel"], finalResult];
 				}
 				
-				[details setObject:finalResult forKey:@"result"];
-				
-				[self performSelectorOnMainThread:@selector(sendThreadedCommand:) withObject:details waitUntilDone:NO];
+				[[self invokeOnMainThread] sendCommand:finalResult completeTarget:[[details objectForKey:@"completeTarget"] boolValue] target:[details objectForKey:@"target"]];
 			}
 		}
 	} else {
@@ -1134,11 +1123,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[appleScript release];
 	[pool drain];
-}
-
-- (void)sendThreadedCommand:(NSMutableDictionary*)details
-{
-	[self sendCommand:[details objectForKey:@"result"] completeTarget:[[details objectForKey:@"completeTarget"] boolValue] target:[details objectForKey:@"target"]];
 }
 
 - (void)processBundlesUserMessage:(NSArray*)info
@@ -1174,16 +1158,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (BOOL)sendCommand:(NSString*)str completeTarget:(BOOL)completeTarget target:(NSString*)targetChannelName
 {
-	str = [self expandVariables:str];
-	
 	NSMutableString* s = [[str mutableCopy] autorelease];
 	
 	NSString* cmd = [[s getToken] uppercaseString];
-	if (!cmd.length) return NO;
 	
-	if (!str.length) {
-		return NO;
-	}
+	if (!cmd.length) return NO;
+	if (!str.length) return NO;
 	
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
@@ -1216,6 +1196,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					[[u client] send:cmd, s, nil];
 				}
 			} else {
+				if (![self isConnected]) return NO;
+				
 				[self send:cmd, s, nil];
 			}
 			return YES;
@@ -1226,6 +1208,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (!s.length && !cutColon) {
 				s = nil;
 			}
+			
 			[self send:cmd, targetChannelName, s, nil];
 			return YES;
 			break;
@@ -1258,23 +1241,31 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 	
 			NSString* peer = [s getToken];
-			[self send:cmd, targetChannelName, peer, s, nil];
+			
+			if (peer) {
+				NSString* reason = [s trim];
+				
+				if ([reason length] < 1) {
+					reason = TXTLS(@"KICK_REASON");
+				}
+				
+				[self send:cmd, targetChannelName, peer, reason, nil];
+			}
 			return YES;
 			break;
 		case 9: // Command: KILL
 		{
-			NSMutableString* t = [[s mutableCopy] autorelease];
-				
 			NSString *peer = [s getToken];
-			NSString *reason = [Preferences IRCopDefaultKillMessage];
-				
-			NSInteger substrIndex = ([peer length] + 1);
-				
-			if (substrIndex < [t length]) {
-				reason = [t safeSubstringFromIndex:substrIndex];
+			
+			if (peer) {
+				NSString *reason = [s trim];
+					
+				if ([reason length] < 1) {
+					reason = [Preferences IRCopDefaultKillMessage];
+				}
+					
+				[self send:KILL, peer, reason, nil];
 			}
-				
-			[self send:KILL, peer, reason, nil];
 			return YES;
 			break;
 		}
@@ -1289,8 +1280,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					[[u client] changeNick:newnick];
 				}
 			} else {
+				if (![self isConnected]) return NO;
+				
 				[self changeNick:newnick];
 			}
+			
 			return YES;
 			break;
 		}
@@ -1441,10 +1435,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				targetChannelName = [s getToken];
 			}
 			
-			if (!s.length && !cutColon) {
-				s = nil;
+			if (targetChannelName) {
+				NSString *reason = [s trim];
+				
+				if (!s.length && !cutColon) {
+					reason = [config leavingComment];
+				}
+				
+				[self send:PART, targetChannelName, reason, nil];
 			}
-			[self send:PART, targetChannelName, s, nil];
 			return YES;
 			break;
 		case 20: // Command: QUIT
@@ -1459,10 +1458,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				targetChannelName = [s getToken];
 			}
 			
-			if (!s.length && !cutColon) {
-				s = nil;
+			if (targetChannelName) {
+				if (!s.length && !cutColon) {
+					s = nil;
+				}
+			
+				[self send:TOPIC, targetChannelName, s, nil];
 			}
-			[self send:TOPIC, targetChannelName, s, nil];
 			return YES;
 			break;
 		case 24: // Command: WHOIS
@@ -1471,19 +1473,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			} else {
 				[self send:WHOIS, s, s, nil];
 			}
+			
 			return YES;
 			break;
 		case 32: // Command: CTCP
 		{ 
 			NSString* subCommand = [[s getToken] uppercaseString];
+			
 			if (subCommand.length) {
 				targetChannelName = [s getToken];
+				
 				if ([subCommand isEqualToString:PING]) {
 					[self sendCTCPPing:targetChannelName];
 				} else {
 					[self sendCTCPQuery:targetChannelName command:subCommand text:s];
 				}
 			}
+			
 			return YES;
 			break;
 		}
@@ -1496,20 +1502,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 41: // Command: BAN
 		case 64: // Command: UNBAN
 			if (c) {
-				NSString *host;
+				NSString *host = nil;
 				NSString *peer = [s getToken];
-				IRCUser *user = [c findMember:peer];
 				
-				if (!c) {
-					host = peer;
-				} else {
-					host = [user banMask];
-				}
-				
-				if ([cmd isEqualToString:BAN]) {
-					[self sendCommand:[NSString stringWithFormat:@"MODE +b %@", host] completeTarget:YES target:c.name];
-				} else {
-					[self sendCommand:[NSString stringWithFormat:@"MODE -b %@", host] completeTarget:YES target:c.name];
+				if (peer) {
+					IRCUser *user = [c findMember:peer];
+					
+					if (user) {
+						host = [user banMask];
+					} else {
+						host = peer;
+					}
+					
+					if ([cmd isEqualToString:BAN]) {
+						[self sendCommand:[NSString stringWithFormat:@"MODE +b %@", host] completeTarget:YES target:c.name];
+					} else {
+						[self sendCommand:[NSString stringWithFormat:@"MODE -b %@", host] completeTarget:YES target:c.name];
+					}
 				}
 			}
 			return YES;
@@ -1552,9 +1561,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				} else {
 					NSMutableString* ms = [NSMutableString stringWithString:sign];
 					NSString* modeCharStr = [[cmd safeSubstringToIndex:1] lowercaseString];
+					
 					for (NSInteger i=params.count-1; i>=0; --i) {
 						[ms appendString:modeCharStr];
 					}
+					
 					[ms appendString:@" "];
 					[ms appendString:s];
 					[s setString:ms];
@@ -1563,14 +1574,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			NSMutableString* line = [NSMutableString string];
 			[line appendString:MODE];
+			
 			if (targetChannelName.length) {
 				[line appendString:@" "];
 				[line appendString:targetChannelName];
 			}
+			
 			if (s.length) {
 				[line appendString:@" "];
 				[line appendString:s];
 			}
+			
 			[self sendLine:line];
 			return YES;
 			break;
@@ -1590,12 +1604,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 77: // Command: REMOVE
 		{
 			NSString* nick = [s getToken];
+			
 			if (nick.length) {
 				c = [self findChannel:nick];
 			}
-			if (c && c.isTalk) {
+			
+			if (c) {
+				if ([c isChannel]) {
+					[self send:PART, [c name], [config leavingComment], nil];
+				}
+				
 				[world destroyChannel:c];
 			}
+			
 			return YES;
 			break;
 		}
@@ -1650,6 +1671,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				if ([cmd isEqualToString:IGNORE]) {
 					BOOL found = NO;
+					
 					for (AddressBook* e in config.ignores) {
 						if ([g.hostmask isEqualToString:e.hostmask]) {
 							found = YES;
@@ -1663,8 +1685,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					}
 				} else {
 					NSMutableArray* ignores = config.ignores;
+					
 					for (NSInteger i=ignores.count-1; i>=0; --i) {
 						AddressBook* e = [ignores safeObjectAtIndex:i];
+						
 						if ([g.hostmask isEqualToString:e.hostmask]) {
 							[ignores safeRemoveObjectAtIndex:i];
 							[world save];
@@ -1672,9 +1696,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 						}
 					}
 				}
-				
-				return YES;
 			}
+			return YES;
 			break;
 		case 57: // Command: RAW
 		case 60: // Command: QUOTE
@@ -1684,15 +1707,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 59: // Command: QUERY
 		{
 			NSString* nick = [s getToken];
+			
 			if (!nick.length) {
 				if (c && c.isTalk) {
 					[world destroyChannel:c];
 				}
 			} else {
 				IRCChannel* c = [self findChannel:nick];
+				
 				if (!c) {
 					c = [world createTalk:nick client:self];
 				}
+				
 				[world select:c];
 			}
 			return YES;
@@ -1701,45 +1727,53 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 62: // Command: TIMER
 		{	
 			NSInteger interval = [[s getToken] integerValue];
+			
 			if (interval > 0) {
 				TimerCommand* cmd = [[TimerCommand new] autorelease];
+				
 				if ([s hasPrefix:@"/"]) {
 					[s deleteCharactersInRange:NSMakeRange(0, 1)];
 				}
+				
 				cmd.input = s;
 				cmd.time = CFAbsoluteTimeGetCurrent() + interval;
 				cmd.cid = c ? c.uid : -1;
+				
 				[self addCommandToCommandQueue:cmd];
 			} else {
-				[self printBoth:nil type:LINE_TYPE_ERROR_REPLY text:TXTLS(@"IRC_TIMER_REQUIRES_REALINT")];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_ERROR_REPLY text:TXTLS(@"IRC_TIMER_REQUIRES_REALINT")];
 			}
+			
 			return YES;
 			break;
 		}
 		case 68: // Command: WEIGHTS
 			if (c) {
-				[self printBoth:nil type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
+				
 				for (IRCUser* m in c.members) {
 					if (m.weight > 0) {
 						NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_WEIGHTS_COMMAND_RESULT"), m.nick, m.incomingWeight, m.outgoingWeight, m.weight];
-						[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+						[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 					}
 				}
 			}
+			
 			return YES;
 			break;
 		case 69: // Command: ECHO
 		case 70: // Command: DEBUG
 			if ([s isEqualToString:@"raw on"]) {
 				rawModeEnabled = YES;
-				[self printBoth:nil type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_ENABLED")];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_ENABLED")];
 			} else if ([s isEqualToString:@"raw off"]) {
 				rawModeEnabled = NO;	
-				[self printBoth:nil type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_DISABLED")];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_DISABLED")];
 			} else {
-				[self printBoth:c ?: (id)[c name] type:LINE_TYPE_REPLY text:s];
-				return YES;
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:s];
 			}
+			
+			return YES;
 			break;
 		case 71: // Command: CLEARALL
 			if ([Preferences clearAllOnlyOnActiveServer]) {
@@ -1775,6 +1809,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					}
 				}
 			} else {
+				if (![self isConnected]) return NO;
+				
 				for (IRCChannel* c in channels) {
 					c.isUnread = YES;
 					[self sendCommand:[NSString stringWithFormat:@"MSG %@ %@", c.name, s] completeTarget:YES target:c.name];
@@ -1795,6 +1831,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					}
 				}
 			} else {
+				if (![self isConnected]) return NO;
+				
 				for (IRCChannel* c in channels) {
 					c.isUnread = YES;
 					[self sendCommand:[NSString stringWithFormat:@"ME %@", s] completeTarget:YES target:c.name];
@@ -1807,22 +1845,29 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 78: // Command: KB
 		case 79: // Command: KICKBAN 
 			if (c) {
-				NSMutableString* t = [[s mutableCopy] autorelease];
-				
-				NSString *reason = TXTLS(@"KICK_REASON");
+				NSString *host = nil;
 				NSString *peer = [s getToken];
 				
-				IRCUser *user = [c findMember:peer];
-				
-				NSInteger substrIndex = ([peer length] + 1);
-				
-				if (substrIndex < [t length]) {
-					reason = [t safeSubstringFromIndex:substrIndex];
+				if (peer) {
+					NSString *reason = [s trim];
+					
+					IRCUser *user = [c findMember:peer];
+					
+					if (user) {
+						host = [user banMask];
+					} else {
+						host = peer;
+					}
+					
+					if ([reason length] < 1) {
+						reason = TXTLS(@"KICK_REASON");
+					}
+					
+					[self send:MODE, c.name, @"+b", [user banMask], nil];
+					[self send:KICK, c.name, user.nick, reason, nil];
 				}
-				
-				[self send:MODE, c.name, @"+b", [user banMask], nil];
-				[self send:KICK, c.name, user.nick, reason, nil];
 			}
+			
 			return YES;
 			break;
 		case 81: // Command: ICBADGE
@@ -1862,7 +1907,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
 							  [Preferences systemProcessor]];
 			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			
 			return YES;
 			break;
@@ -1910,14 +1955,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
 				
 				if ([[NSFileManager defaultManager] fileExistsAtPath:scriptPath]) {
-					NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", [NSNumber numberWithBool:completeTarget], @"completeTarget", targetChannelName, @"target", nil];
+					NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", 
+											   [NSNumber numberWithBool:completeTarget], @"completeTarget", targetChannelName, @"target", nil];
 					[NSThread detachNewThreadSelector:@selector(executeTextualCmdScript:) toTarget:self withObject:[[inputInfo mutableCopy] autorelease]];
 				} else {
 					if (cutColon) {
 						[s insertString:@":" atIndex:0];
 					}
+					
 					[s insertString:@" " atIndex:0];
 					[s insertString:cmd atIndex:0];
+					
 					[self sendLine:s];
 				}
 			}
@@ -3552,7 +3600,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				[self printBoth:(id)[[world selectedChannel] name] type:LINE_TYPE_REPLY text:text];
+				[self printBoth:[world selectedChannel] type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
