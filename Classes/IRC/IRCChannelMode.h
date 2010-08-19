@@ -12,9 +12,9 @@
 	NSMutableDictionary *modeIndexes;
 }
 
-@property (retain) IRCISupportInfo* isupport;
-@property (readonly) NSMutableArray *allModes;
-@property (readonly) NSMutableDictionary *modeIndexes;
+@property (nonatomic, retain) IRCISupportInfo* isupport;
+@property (nonatomic, readonly) NSMutableArray *allModes;
+@property (nonatomic, readonly) NSMutableDictionary *modeIndexes;
 
 - (void)clear;
 - (NSArray*)update:(NSString*)str;

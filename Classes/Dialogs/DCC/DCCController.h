@@ -27,17 +27,17 @@
 	IBOutlet NSButton* clearButton;
 }
 
-@property (assign) id delegate;
-@property (assign) IRCWorld* world;
-@property (assign) NSWindow* mainWindow;
-@property BOOL loaded;
-@property (retain) NSMutableArray* receivers;
-@property (retain) NSMutableArray* senders;
-@property (retain) Timer* timer;
-@property (retain) ListView* receiverTable;
-@property (retain) ListView* senderTable;
-@property (retain) ThinSplitView* splitter;
-@property (retain) NSButton* clearButton;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) IRCWorld* world;
+@property (nonatomic, assign) NSWindow* mainWindow;
+@property (nonatomic) BOOL loaded;
+@property (nonatomic, retain) NSMutableArray* receivers;
+@property (nonatomic, retain) NSMutableArray* senders;
+@property (nonatomic, retain) Timer* timer;
+@property (nonatomic, retain) ListView* receiverTable;
+@property (nonatomic, retain) ListView* senderTable;
+@property (nonatomic, retain) ThinSplitView* splitter;
+@property (nonatomic, retain) NSButton* clearButton;
 
 - (void)show:(BOOL)key;
 - (void)close;

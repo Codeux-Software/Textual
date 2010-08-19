@@ -23,13 +23,13 @@ typedef enum {
 	NSString* topic;
 }
 
-@property (assign) ChannelType type;
-@property (retain) NSString* name;
-@property (retain) NSString* password;
-@property (assign) BOOL autoJoin;
-@property (assign) BOOL growl;
-@property (retain) NSString* mode;
-@property (retain) NSString* topic;
+@property (nonatomic, assign) ChannelType type;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* password;
+@property (nonatomic, assign) BOOL autoJoin;
+@property (nonatomic, assign) BOOL growl;
+@property (nonatomic, retain) NSString* mode;
+@property (nonatomic, retain) NSString* topic;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSMutableDictionary*)dictionaryValue;

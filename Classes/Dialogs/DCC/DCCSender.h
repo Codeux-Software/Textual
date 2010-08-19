@@ -27,23 +27,23 @@
 	double currentRecord;
 }
 
-@property (assign) id delegate;
-@property (assign) NSInteger uid;
-@property (retain) NSString* peerNick;
-@property (readonly) NSInteger port;
-@property (readonly) NSString* fileName;
-@property (retain, setter = setFullFileName:, getter = fullFileName) NSString* fullFileName;
-@property (readonly) long long size;
-@property (readonly) long long processedSize;
-@property (readonly) DCCFileTransferStatus status;
-@property (readonly) NSString* error;
-@property (readonly) NSImage* icon;
-@property (retain) NSProgressIndicator* progressBar;
-@property (readonly) double speed;
-@property (retain) TCPServer* sock;
-@property (retain) TCPClient* client;
-@property (retain) NSFileHandle* file;
-@property (retain) NSMutableArray* speedRecords;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, retain) NSString* peerNick;
+@property (nonatomic, readonly) NSInteger port;
+@property (nonatomic, readonly) NSString* fileName;
+@property (nonatomic, retain, setter = setFullFileName:, getter = fullFileName) NSString* fullFileName;
+@property (nonatomic, readonly) long long size;
+@property (nonatomic, readonly) long long processedSize;
+@property (nonatomic, readonly) DCCFileTransferStatus status;
+@property (nonatomic, readonly) NSString* error;
+@property (nonatomic, readonly) NSImage* icon;
+@property (nonatomic, retain) NSProgressIndicator* progressBar;
+@property (nonatomic, readonly) double speed;
+@property (nonatomic, retain) TCPServer* sock;
+@property (nonatomic, retain) TCPClient* client;
+@property (nonatomic, retain) NSFileHandle* file;
+@property (nonatomic, retain) NSMutableArray* speedRecords;
 @property double currentRecord;
 
 - (BOOL)open;

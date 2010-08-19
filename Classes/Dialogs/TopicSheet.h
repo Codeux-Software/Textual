@@ -12,9 +12,9 @@
 	IBOutlet NSTextField* text;
 }
 
-@property (assign) NSInteger uid;
-@property (assign) NSInteger cid;
-@property (retain) NSTextField* text;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, retain) NSTextField* text;
 
 - (void)start:(NSString*)topic;
 @end

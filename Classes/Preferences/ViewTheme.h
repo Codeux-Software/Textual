@@ -15,10 +15,10 @@
 	CustomJSFile* js;
 }
 
-@property (retain, getter=name, setter=setName:) NSString* name;
-@property (readonly) LogTheme* log;
-@property (readonly) OtherTheme* other;
-@property (readonly) CustomJSFile* js;
+@property (nonatomic, retain, getter=name, setter=setName:) NSString* name;
+@property (nonatomic, readonly) LogTheme* log;
+@property (nonatomic, readonly) OtherTheme* other;
+@property (nonatomic, readonly) CustomJSFile* js;
 
 - (void)reload;
 

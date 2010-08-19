@@ -9,8 +9,8 @@
 	id textDelegate;
 }
 
-@property (assign) id keyDelegate;
-@property (assign) id textDelegate;
+@property (nonatomic, assign) id keyDelegate;
+@property (nonatomic, assign) id textDelegate;
 
 - (NSInteger)countSelectedRows;
 - (void)selectItemAtIndex:(NSInteger)index;

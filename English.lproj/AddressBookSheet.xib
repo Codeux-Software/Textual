@@ -13,8 +13,8 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="425"/>
-			<integer value="6"/>
 			<integer value="424"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -332,7 +332,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">          Unless the current user is granted IRC Operator (IRCop) access upon connection Textual will track join/quit activity to determine when a user has signed off and on.</string>
+							<string key="NSContents">          This feature will tracks Join/Quit activity of a user to determine when they have signed on or off if IRC Operator (IRCop) access is not gained upon connection to a server. </string>
 							<reference key="NSSupport" ref="570868298"/>
 							<reference key="NSControlView" ref="1056718837"/>
 							<reference key="NSBackgroundColor" ref="996912065"/>

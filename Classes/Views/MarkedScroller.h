@@ -8,7 +8,7 @@
 	id dataSource;
 }
 
-@property (assign) id dataSource;
+@property (nonatomic, assign) id dataSource;
 @end
 
 @interface NSObject (MarkedScrollerDataSource)

@@ -16,12 +16,12 @@
 	NSGradient* gradient;
 }
 
-@property (assign) id responderDelegate;
-@property (retain) OtherTheme* theme;
-@property (retain) NSColor* bgColor;
-@property (retain) NSColor* topLineColor;
-@property (retain) NSColor* bottomLineColor;
-@property (retain) NSGradient* gradient;
+@property (nonatomic, assign) id responderDelegate;
+@property (nonatomic, retain) OtherTheme* theme;
+@property (nonatomic, retain) NSColor* bgColor;
+@property (nonatomic, retain) NSColor* topLineColor;
+@property (nonatomic, retain) NSColor* bottomLineColor;
+@property (nonatomic, retain) NSGradient* gradient;
 
 - (void)themeChanged;
 @end

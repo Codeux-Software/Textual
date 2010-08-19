@@ -9,8 +9,8 @@
 	NSInteger pos;
 }
 
-@property (retain) NSMutableArray* buf;
-@property NSInteger pos;
+@property (nonatomic, retain) NSMutableArray* buf;
+@property (nonatomic) NSInteger pos;
 
 - (void)add:(NSString*)s;
 - (NSString*)up:(NSString*)s;

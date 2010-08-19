@@ -13,9 +13,9 @@
 	IBOutlet NSTextField* newText;
 }
 
-@property (assign) NSInteger uid;
-@property (retain) NSTextField* currentText;
-@property (retain) NSTextField* newText;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, retain) NSTextField* currentText;
+@property (nonatomic, retain) NSTextField* newText;
 
 - (void)start:(NSString*)nick;
 @end

@@ -12,9 +12,9 @@
 	BOOL isServer;
 }
 
-@property (retain) NSString* raw;
-@property (retain) NSString* nick;
-@property (retain) NSString* user;
-@property (retain) NSString* address;
-@property (assign) BOOL isServer;
+@property (nonatomic, retain) NSString* raw;
+@property (nonatomic, retain) NSString* nick;
+@property (nonatomic, retain) NSString* user;
+@property (nonatomic, retain) NSString* address;
+@property (nonatomic, assign) BOOL isServer;
 @end

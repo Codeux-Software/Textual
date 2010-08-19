@@ -35,26 +35,26 @@
 	ChannelSheet* propertyDialog;
 }
 
-@property (assign) IRCClient* client;
-@property (readonly) IRCChannelConfig* config;
-@property (assign) NSString* name;
-@property (readonly) NSString* password;
-@property (readonly) IRCChannelMode* mode;
-@property (readonly) NSMutableArray* members;
-@property (readonly) NSString* channelTypeString;
-@property (retain) NSString* topic;
-@property (retain) NSString* storedTopic;
-@property (assign) BOOL isActive;
-@property (assign) BOOL isOp;
-@property (assign) BOOL isHalfOp;
-@property (assign) BOOL isModeInit;
-@property (assign) BOOL isNamesInit;
-@property (assign) BOOL isWhoInit;
-@property (readonly) BOOL isChannel;
-@property (readonly) BOOL isTalk;
-@property (retain) ChannelSheet* propertyDialog;
-@property (retain) FileLogger* logFile;
-@property (retain) NSString* logDate;
+@property (nonatomic, assign) IRCClient* client;
+@property (nonatomic, readonly) IRCChannelConfig* config;
+@property (nonatomic, assign) NSString* name;
+@property (nonatomic, readonly) NSString* password;
+@property (nonatomic, readonly) IRCChannelMode* mode;
+@property (nonatomic, readonly) NSMutableArray* members;
+@property (nonatomic, readonly) NSString* channelTypeString;
+@property (nonatomic, retain) NSString* topic;
+@property (nonatomic, retain) NSString* storedTopic;
+@property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, assign) BOOL isOp;
+@property (nonatomic, assign) BOOL isHalfOp;
+@property (nonatomic, assign) BOOL isModeInit;
+@property (nonatomic, assign) BOOL isNamesInit;
+@property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, readonly) BOOL isChannel;
+@property (nonatomic, readonly) BOOL isTalk;
+@property (nonatomic, retain) ChannelSheet* propertyDialog;
+@property (nonatomic, retain) FileLogger* logFile;
+@property (nonatomic, retain) NSString* logDate;
 
 - (void)setup:(IRCChannelConfig*)seed;
 - (void)updateConfig:(IRCChannelConfig*)seed;
