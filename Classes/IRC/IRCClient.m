@@ -1592,9 +1592,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (c) {
 				[world clearContentsOfChannel:c inClient:self];
 				[c setUnreadCount:0];
+				[c setKeywordCount:0];
 			} else if (u) {
 				[world clearContentsOflient:self];
 				[u setUnreadCount:0];
+				[u setKeywordCount:0];
 			}
 			
 			[world updateIcon];
@@ -1668,6 +1670,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				g.ignoreJPQE = YES;
 				g.notifyJoins = NO;
 				g.notifyWhoisJoins = NO;
+				
+				[g processHostMaskRegex];
 				
 				if ([cmd isEqualToString:IGNORE]) {
 					BOOL found = NO;
@@ -1782,6 +1786,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				for (IRCChannel* c in channels) {
 					[world clearContentsOfChannel:c inClient:self];
 					[c setUnreadCount:0];
+					[c setKeywordCount:0];
 				}
 			} else {
 				for (IRCClient* u in [world clients]) {
@@ -1790,6 +1795,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					for (IRCChannel* c in [u channels]) {
 						[world clearContentsOfChannel:c inClient:u];
 						[c setUnreadCount:0];
+						[c setKeywordCount:0];
 					}
 				}
 			}
