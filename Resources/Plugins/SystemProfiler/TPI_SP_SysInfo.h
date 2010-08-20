@@ -20,5 +20,6 @@ typedef unsigned long long TXLongInt;
 + (NSString *)diskInfo;
 + (NSString *)graphicsCardInfo;
 + (NSString *)applicationMemoryUsage;
++ (NSString *)applicationAndSystemUptime;
 
 @end

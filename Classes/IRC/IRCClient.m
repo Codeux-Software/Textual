@@ -3144,7 +3144,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* nick = m.sender.nick;
 	NSString* chname = [m paramAt:0];
-	NSString* comment = [m paramAt:1];
+	NSString* comment = [[m paramAt:1] trim];
 	
 	IRCChannel* c = [self findChannel:chname];
 	if (c) {
@@ -3152,6 +3152,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[c deactivate];
 			[self reloadTree];
 		}
+		
 		[c removeMember:nick];
 		[self updateChannelTitle:c];
 	}
@@ -3181,11 +3182,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSString* chname = [m paramAt:0];
 	NSString* target = [m paramAt:1];
-	NSString* comment = [m paramAt:2];
+	NSString* comment = [[m paramAt:2] trim];
 	
 	IRCChannel* c = [self findChannel:chname];
 	if (c) {
 		BOOL myself = [target isEqualNoCase:myNick];
+		
 		if (myself) {
 			[c deactivate];
 			[self reloadTree];
@@ -3215,7 +3217,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)receiveQuit:(IRCMessage*)m
 {
 	NSString* nick = m.sender.nick;
-	NSString* comment = [m paramAt:0];
+	NSString* comment = [[m paramAt:0] trim];
 	
 	AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
 											uname:m.sender.user 
@@ -3230,13 +3232,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		return;
 	}
 	
-	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_DISCONNECTED"), nick, m.sender.user, m.sender.address, comment];
+	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_DISCONNECTED"), nick, m.sender.user, m.sender.address];
+	
+	if ([comment length] > 0) {
+		text = [text stringByAppendingFormat:@" (%@)", comment];
+	}
 	
 	for (IRCChannel* c in channels) {
 		if ([c findMember:nick]) {
 			if ([Preferences showJoinLeave]) {
 				[self printChannel:c type:LINE_TYPE_QUIT text:text];
 			}
+			
 			[c removeMember:nick];
 			[self updateChannelTitle:c];
 		}

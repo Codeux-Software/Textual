@@ -82,9 +82,9 @@
 "IRC_RECIEVED_CTCP_REQUEST" = "\002-CTCP-\002 %1$@ from %2$@";
 "IRC_CHANNEL_HAS_TOPIC_AUTHOR" = "Set by \002%1$@\002 on %2$@";
 "IRC_USER_HAS_GOOD_LIFE" = "You are now an IRC operator on %@";
+"IRC_USER_DISCONNECTED" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "IRC_SCRIPT_EXECUTION_FAILURE" = "Script Execution Failure: %@";
 "IRC_USER_CHANGED_NICKNAME" = "%1$@ is now known as \002%2$@\002";
-"IRC_USER_DISCONNECTED" = "\002%1$@\002 (%2$@@%3$@) left IRC. (%4$@)";
 "IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC_USER_WHOIS_CONNECTED_FROM" = "%1$@ is connected on %2$@ (%3$@)";
 "IRC_WEIGHTS_COMMAND_RESULT" = "%@ - sent: %f receive: %f total: %f";
