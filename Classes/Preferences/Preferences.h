@@ -54,11 +54,6 @@ typedef enum {
 + (NSString*)defaultRealname;
 + (NSString*)defaultUsername;
 + (NSString*)defaultNickname;
-+ (NSString*)complexURLRegularExpression;
-+ (NSArray*)bannedURLRegexChars;
-+ (NSArray*)bannedURLRegexLineTypes;
-+ (NSArray*)bannedURLRegexLeftBufferChars;
-+ (NSArray*)bannedURLRegexRightBufferChars;
 + (NSString*)IRCopDefaultKillMessage;
 + (NSString*)IRCopDefaultGlineMessage;
 + (NSString*)IRCopDefaultShunMessage;

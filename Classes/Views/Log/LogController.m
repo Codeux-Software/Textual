@@ -9,6 +9,7 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "ImageURLParser.h"
+#import "URLParser.h"
 
 #define BOTTOM_EPSILON	0
 #define TIME_BUFFER_SIZE	256
@@ -418,7 +419,7 @@
 	
 	if (rawHTML == NO) {
 		body = [LogRenderer renderBody:line.body
-							   nolinks:[[Preferences bannedURLRegexLineTypes] containsObject:lineTypeString]
+							   nolinks:[[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]
 							  keywords:line.keywords
 						  excludeWords:line.excludeWords
 						exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)

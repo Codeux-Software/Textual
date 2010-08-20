@@ -5,6 +5,7 @@
 #import "NSStringHelper.h"
 #import "UnicodeHelper.h"
 #import "Preferences.h"
+#import "URLParser.h"
 
 #define LF	0xa
 #define CR	0xd
@@ -389,35 +390,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSRange)rangeOfUrlStart:(NSInteger)start
 {
-	if (self.length <= start) return NSMakeRange(NSNotFound, 0);
-
-	NSString *shortstring = [self safeSubstringFromIndex:start];
-	NSInteger sstring_length = [shortstring length];
-	
-	NSRange rs = [shortstring rangeOfRegex:[Preferences complexURLRegularExpression]];
-	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	NSRange r = NSMakeRange((rs.location + start), rs.length);
-	
-	NSString *leftchar = nil;
-	NSString *rightchar = nil;
-	
-	NSInteger rightcharLocal = (rs.location + rs.length);
-	
-	if (rs.location > 0) {
-		leftchar = [shortstring substringWithRange:NSMakeRange((rs.location - 1), 1)];
-	}
-	
-	if (rightcharLocal < sstring_length) {
-		rightchar = [shortstring substringWithRange:NSMakeRange(rightcharLocal, 1)];
-	}
-	
-	if ([[Preferences bannedURLRegexLeftBufferChars] containsObject:leftchar] ||
-		[[Preferences bannedURLRegexRightBufferChars] containsObject:rightchar]) {
-		
-		return NSMakeRange((r.location + r.length), 1000);
-	}
-	
-	return r;
+	return [URLParser rangeOfUrlStart:start withString:self];
 }
 
 - (NSRange)rangeOfAddress
@@ -437,7 +410,6 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSInteger prev = r.location - 1;
 	if (0 <= prev && prev < len) {
-		// check previous character
 		UniChar c = [self characterAtIndex:prev];
 		if (IsWordLetter(c)) {
 			return [self rangeOfAddressStart:NSMaxRange(r)];
@@ -446,7 +418,6 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSInteger next = NSMaxRange(r);
 	if (next < len) {
-		// check next character
 		UniChar c = [self characterAtIndex:next];
 		if (IsWordLetter(c)) {
 			return [self rangeOfAddressStart:NSMaxRange(r)];
@@ -473,7 +444,6 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSInteger prev = r.location - 1;
 	if (0 <= prev && prev < len) {
-		// check previous character
 		UniChar c = [self characterAtIndex:prev];
 		if (IsWordLetter(c)) {
 			return [self rangeOfAddressStart:NSMaxRange(r)];
@@ -482,7 +452,6 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSInteger next = NSMaxRange(r);
 	if (next < len) {
-		// check next character
 		UniChar c = [self characterAtIndex:next];
 		if (IsWordLetter(c)) {
 			return [self rangeOfAddressStart:NSMaxRange(r)];

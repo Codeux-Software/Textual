@@ -17,42 +17,6 @@ static NSInteger startUpTime;
 }
 
 #pragma mark -
-#pragma mark URL Regex
-
-static NSString *urlAddrRegexComplex;
-
-+ (NSString*)complexURLRegularExpression
-{
-	if (!urlAddrRegexComplex) {
-		urlAddrRegexComplex = [NSString stringWithFormat:@"((((\\b(?:[a-zA-Z][a-zA-Z0-9+.-]{2,6}://)?)([a-zA-Z0-9-]+\\.))+%@\\b)|((\\b([a-zA-Z][a-zA-Z0-9+.-]{2,6}://))+(([0-9]{1,3}\\.){3})+([0-9]{1,3})\\b))(?:\\:([0-9]+))?(?:/[a-zA-Z0-9;/\\?\\:\\,\\]\\[\\)\\(\\=\\&\\._\\#\\>\\<\\$\\'\\\"\\}\\{\\`\\~\\!\\@\\^\\|\\*\\+\\-\\%%]*)?", TXTLS(@"ALL_DOMAIN_EXTENSIONS")];
-	}
-	
-	return urlAddrRegexComplex;
-}
-
-+ (NSArray*)bannedURLRegexChars
-{
-	return [NSArray arrayWithObjects:@")", @"]", @"'", @"\"", @":", @">", @"<", @"}", @"|", @",", nil];
-}
-
-+ (NSArray*)bannedURLRegexLeftBufferChars
-{
-	return [NSArray arrayWithObjects:@"~", @"!", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", 
-									 @"=", @"-", @"`", @":", @";", @"/", @".", @",", @"?", nil];
-}
-
-+ (NSArray*)bannedURLRegexRightBufferChars
-{
-	return [NSArray arrayWithObjects:@"~", @"@", @"#", @"$", @"%", @"^", @"&", @"*", @"_", @"+", 
-									 @"=", @"-", @"`", @"/", @".", @",", @"!", nil];
-}
-
-+ (NSArray*)bannedURLRegexLineTypes
-{
-	return [NSArray arrayWithObjects:@"mode", @"join", @"nick", @"invite", nil];
-}
-
-#pragma mark -
 #pragma mark Version Dictonaries
 
 static NSDictionary *textualPlist;

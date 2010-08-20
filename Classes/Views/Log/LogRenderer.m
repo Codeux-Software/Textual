@@ -7,6 +7,7 @@
 #import "GTMNSString+HTML.h"
 #import "UnicodeHelper.h"
 #import "Preferences.h"
+#import "URLParser.h"
 
 #define URL_ATTR				(1 << 31)
 #define ADDRESS_ATTR			(1 << 30)
@@ -71,23 +72,14 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
 	
 	if (attr & URL_ATTR) {
-		NSString* link = content;
-		NSString* metacontent = nil;
+		NSArray *parsedURL = [URLParser fastChopURL:content];
 		
-		NSString *choppedString = [link fastChopEndWithChars:[Preferences bannedURLRegexChars]];
+		content = [parsedURL objectAtIndex:0];
+		NSString *link = [parsedURL objectAtIndex:1];
 		
-		NSInteger origLenth = [link length];
-		NSInteger choppedLenth = [choppedString length];
-		
-		if (choppedLenth < origLenth) {
-			metacontent = [link safeSubstringFromIndex:choppedLenth];
-			
-			link = [link safeSubstringToIndex:choppedLenth];
-			content = [content safeSubstringToIndex:choppedLenth];
-		}
-		
-		if (![link contains:@"://"]) {
-			link = [NSString stringWithFormat:@"http://%@", link];
+		NSString *metacontent = nil;
+		if ([parsedURL count] > 2) {
+			metacontent = [parsedURL objectAtIndex:2];
 		}
 		
 		content = logEscape(content);		
