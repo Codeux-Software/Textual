@@ -33,6 +33,8 @@
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
+		4C982D16121F32430051543F /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C982D14121F32430051543F /* URLParser.h */; };
+		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123E1209DF8C004E5032 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C211737F660044E7A1 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123F1209DF8C004E5032 /* SheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E311737F660044E7A1 /* SheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -347,6 +349,8 @@
 		4C81B9AC12187F83007E9EE2 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = Resources/Images/Colors/rainbow.png; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
+		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
+		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 1; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginProtocol.h; sourceTree = "<group>"; };
@@ -957,6 +961,8 @@
 				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
 				4CCD0F8611BAE7E900758B81 /* GlobalModels.h */,
 				4CCD0F8711BAE7E900758B81 /* GlobalModels.m */,
+				4C982D14121F32430051543F /* URLParser.h */,
+				4C982D15121F32430051543F /* URLParser.m */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1161,6 +1167,7 @@
 				4C9E12A21209DF8C004E5032 /* LogScriptEventSink.h in Headers */,
 				4C9E12A31209DF8C004E5032 /* IRCUser.h in Headers */,
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
+				4C982D16121F32430051543F /* URLParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1392,7 @@
 				4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */,
 				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
 				4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */,
+				4C982D17121F32430051543F /* URLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
