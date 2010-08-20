@@ -332,7 +332,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">          This feature will tracks Join/Quit activity of a user to determine when they have signed on or off if IRC Operator (IRCop) access is not gained upon connection to a server. </string>
+							<string key="NSContents">          This feature will track Join/Quit activity of an user to determine when they have signed on or off if IRC Operator (IRCop) access is not gained upon connection to a server. </string>
 							<reference key="NSSupport" ref="570868298"/>
 							<reference key="NSControlView" ref="1056718837"/>
 							<reference key="NSBackgroundColor" ref="996912065"/>
