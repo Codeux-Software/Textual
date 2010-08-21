@@ -45,6 +45,8 @@
 
 + (NSArray*)fastChopURL:(NSString *)url
 {
+	NSString* link = url;
+	
 	NSString* lastchar = nil;
 	NSString* finalurl = nil;
 	NSString* metacontent = nil;
@@ -61,19 +63,19 @@
 		
 		if (mapChar && [url contains:mapChar]) {
 			choppedLenth += 1;
-		}
+		} 
 		
-		url = [url safeSubstringToIndex:choppedLenth];
-		metacontent = [url safeSubstringFromIndex:choppedLenth];
+		link = [url safeSubstringToIndex:choppedLenth];
+		metacontent = [url safeSubstringFromIndex:choppedLenth];		
 	}
 	
-	finalurl = url;
+	finalurl = link;
 	
-	if (![url contains:@"://"]) {
+	if (![link contains:@"://"]) {
 		finalurl = [NSString stringWithFormat:@"http://%@", finalurl];
 	}
 	
-	return [NSArray arrayWithObjects:url, finalurl, metacontent, nil];
+	return [NSArray arrayWithObjects:link, finalurl, metacontent, nil];
 }
 
 #pragma mark -
