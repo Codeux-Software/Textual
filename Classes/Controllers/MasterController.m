@@ -1098,6 +1098,9 @@ typedef enum {
 	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
 	
+	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+	
 	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
 	[self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];

@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.SystemVersion">10H529</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -22,6 +22,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="5425"/>
+			<integer value="5153"/>
 			<integer value="4778"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -3414,7 +3415,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="818672693">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3475,7 +3476,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="410591155">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">                                 A script can be executed similar to any other IRC command. Place the script name in front of a forward slash (/) plus any other parameters required by it and press enter to continue. Textual will execute it like a normal command and output the result as determined by the script.  </string>
+							<string key="NSContents">                                 A script can be executed similar to any other IRC command. Place the script name in front of a forward slash (/) plus any other parameters required by it and press return to continue. Textual will execute it like a normal command and output the result as determined by the script.  </string>
 							<reference key="NSSupport" ref="90392730"/>
 							<reference key="NSControlView" ref="1053075921"/>
 							<reference key="NSBackgroundColor" ref="326222776"/>
@@ -3647,6 +3648,7 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{514, 422}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1027187129">
@@ -9908,7 +9910,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{785, 354}, {514, 422}}</string>
+					<string>{{559, 354}, {514, 422}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

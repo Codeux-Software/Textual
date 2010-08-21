@@ -421,6 +421,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self createChanBanListDialog];
 		return;
 	}
+	
+	inChanBanList = YES;
 
 	[chanBanListSheet show];
 }
@@ -436,6 +438,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", MODE, [[world selectedChannel] name], sender.modeString]];
 	}
 	
+	inChanBanList = NO;
 	chanBanListSheet = nil;
 }
 
@@ -3871,18 +3874,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* mask = [m paramAt:2];
 			NSString* owner = [m paramAt:3];
 			long long seton = [[m paramAt:4] longLongValue];
-		    
-			if (!inChanBanList) {
-			    inChanBanList = YES;
-			    
-			    if (chanBanListSheet) {
-				    [chanBanListSheet clear];
-			    } else {
-				    [self createChanBanListDialog];
-			    }
-			}
 			
-			if (chanBanListSheet) {
+			if (inChanBanList && chanBanListSheet) {
 			    [chanBanListSheet addBan:mask tset:[dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:seton]] setby:owner];
 			} else {
 			    [self printUnknownReply:m];
@@ -3956,7 +3949,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)receiveNickCollisionError:(IRCMessage*)m
 {
 	if (config.altNicks.count && !isLoggedIn) {
-		// only works when not logged in
 		++tryingNickNumber;
 		NSArray* altNicks = config.altNicks;
 		
