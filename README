@@ -23,6 +23,11 @@ be trusted for Code Signing. This can be done by right clicking it and
 selecting "Get Info" - From the dialog that appears it can be set to be
 trusted for signing. 
 
+Also, Textual uses the BWToolkit plugin in order to add new user interface 
+elements to its library. Therefore, before compiling make sure that the 
+BWToolkit.ibplugin file has been loaded into the Interface Builder application.
+This file can be found in the folder Frameworks/BWToolkit/.
+
 --------------
 
 - License -
