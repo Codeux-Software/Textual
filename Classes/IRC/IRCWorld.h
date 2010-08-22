@@ -110,6 +110,8 @@
 
 - (void)resetLoadedBundles;
 
+- (IRCChannel*)selectedChannelOn:(IRCClient*)c;
+
 - (void)onTimer;
 - (void)autoConnect:(BOOL)afterWakeUp;
 - (void)terminate;

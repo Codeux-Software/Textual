@@ -172,6 +172,14 @@
 	return (IRCChannel*)selected;
 }
 
+- (IRCChannel*)selectedChannelOn:(IRCClient*)c
+{
+	if (!selected) return nil;
+	if ([selected isClient]) return nil;
+	if (![[selected client] isEqualTo:c]) return nil;
+	return (IRCChannel*)selected;
+}
+
 #pragma mark -
 #pragma mark Utilities
 
