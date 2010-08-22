@@ -224,7 +224,7 @@
 - (void)prepareForSleep
 {
 	for (IRCClient* c in clients) {
-		[c disconnect];
+		[c quit:c.config.sleepQuitMessage];
 	}
 }
 

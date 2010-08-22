@@ -47,6 +47,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSStringEncoding encoding;
 	NSStringEncoding fallbackEncoding;
 	NSString* leavingComment;
+	NSString* sleepQuitMessage;
 	NSString* userInfo;
 	BOOL invisibleMode;
 	NSMutableArray* loginCommands;
@@ -75,6 +76,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, assign) NSStringEncoding fallbackEncoding;
 @property (nonatomic, retain) NSString* leavingComment;
+@property (nonatomic, retain) NSString* sleepQuitMessage;
 @property (nonatomic, retain) NSString* userInfo;
 @property (nonatomic, assign) BOOL invisibleMode;
 @property (nonatomic, readonly) NSMutableArray* loginCommands;

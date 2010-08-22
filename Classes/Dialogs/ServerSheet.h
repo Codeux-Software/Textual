@@ -41,6 +41,7 @@
 	IBOutlet NSTextField* nickPasswordText;
 	IBOutlet NSTextField* altNicksText;
 	
+	IBOutlet NSTextField* sleepQuitMessageText;
 	IBOutlet NSTextField* leavingCommentText;
 	IBOutlet NSTextField* userInfoText;
 	
@@ -93,6 +94,7 @@
 @property (nonatomic, retain) NSTextField* realNameText;
 @property (nonatomic, retain) NSTextField* nickPasswordText;
 @property (nonatomic, retain) NSTextField* altNicksText;
+@property (nonatomic, retain) NSTextField* sleepQuitMessageText;
 @property (nonatomic, retain) NSTextField* leavingCommentText;
 @property (nonatomic, retain) NSTextField* userInfoText;
 @property (nonatomic, retain) NSPopUpButton* encodingCombo;
