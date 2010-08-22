@@ -275,7 +275,8 @@
 		for (IRCClient* u in clients) {
 			for (IRCChannel* c in u.channels) {
 				if (![c.name isEqualToString:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")] && 
-				    ![c.name isEqualToString:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")]) {
+				    ![c.name isEqualToString:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")] &&
+					![c.name isEqualToString:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE")]) {
 					newTalkCount = (newTalkCount + [c unreadCount]);
 					highlightCount = (highlightCount + [c keywordCount]);
 				}

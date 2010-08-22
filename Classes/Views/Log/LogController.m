@@ -511,6 +511,9 @@
 		line.excludeWords = nil;
 		
 		[hlc print:line];
+		
+		[hlc setIsUnread:YES];
+		[world reloadTree];
 	}
 	
 	return key;
