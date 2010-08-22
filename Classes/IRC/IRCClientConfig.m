@@ -17,6 +17,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @implementation IRCClientConfig
 
+@synthesize cuid;
 @synthesize name;
 @synthesize host;
 @synthesize port;
@@ -42,7 +43,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize loginCommands;
 @synthesize channels;
 @synthesize ignores;
-@synthesize cuid;
+@synthesize server;
+@synthesize network;
+@synthesize sleepQuitMessage;
 
 - (id)init
 {
@@ -72,6 +75,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		username = [[Preferences defaultUsername] retain];
 		realName = [[Preferences defaultRealname] retain];
 		leavingComment = [TXTLS(@"DEFAULT_QPS_MESSAGE") retain];
+		sleepQuitMessage = [TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE") retain];
 	}
 	
 	return self;
@@ -194,6 +198,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
 	}
 	
+	if ([dic stringForKey:@"sleep_quit_message"]) {
+		[sleepQuitMessage release];
+		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
+	}
+	
 	userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
 	invisibleMode = [dic boolForKey:@"invisible"];
 	
@@ -230,6 +239,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[proxyPassword release];
 	
 	[leavingComment release];
+	[sleepQuitMessage release];
 	[userInfo release];
 	[loginCommands release];
 	[channels release];
@@ -283,6 +293,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setInt:encoding forKey:@"encoding"];
 	[dic setInt:fallbackEncoding forKey:@"fallback_encoding"];
 	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
+	if (sleepQuitMessage) [dic setObject:sleepQuitMessage forKey:@"sleep_quit_message"];
 	if (userInfo) [dic setObject:userInfo forKey:@"userinfo"];
 	[dic setBool:invisibleMode forKey:@"invisible"];
 	
@@ -310,6 +321,4 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 }
 
-@synthesize server;
-@synthesize network;
 @end

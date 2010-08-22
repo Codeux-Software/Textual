@@ -174,6 +174,7 @@
 		altNicksText.stringValue = @"";
 	}
 
+	sleepQuitMessageText.stringValue = config.sleepQuitMessage;
 	leavingCommentText.stringValue = config.leavingComment;
 	userInfoText.stringValue = config.userInfo;
 
@@ -229,6 +230,7 @@
 		}
 	}
 	
+	config.sleepQuitMessage = sleepQuitMessageText.stringValue;
 	config.leavingComment = leavingCommentText.stringValue;
 	config.userInfo = userInfoText.stringValue;
 	
@@ -665,6 +667,7 @@
 @synthesize realNameText;
 @synthesize nickPasswordText;
 @synthesize altNicksText;
+@synthesize sleepQuitMessageText;
 @synthesize leavingCommentText;
 @synthesize userInfoText;
 @synthesize encodingCombo;
