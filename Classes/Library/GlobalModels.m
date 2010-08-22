@@ -33,7 +33,7 @@ NSString *TXTLS(NSString *key)
 {
 	return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);;
 }
-	
+
 extern BOOL promptWithSuppression(NSString *whatFor,
 								  NSString *title,
 								  NSString *defaultButton,
@@ -89,7 +89,7 @@ extern NSString *promptForInput(NSString *whatFor,
 	NSInteger button = [alert runModal];
 	if (button == NSAlertDefaultReturn) {
 		NSString *result = [[input stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	
+		
 		[input release];
 		
 		if ([result length] < 1) {
