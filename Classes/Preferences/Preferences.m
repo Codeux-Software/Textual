@@ -286,6 +286,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud objectForKey:@"Preferences.General.ircop_alert_match"];
 }
 
++ (BOOL)logAllHighlightsToQuery
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.log_highlights"];
+}
+
 + (BOOL)clearAllOnlyOnActiveServer
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1077,6 +1083,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:NO forKey:@"Preferences.Theme.override_timestamp_format"];
 	[d setObject:@"[%m/%d/%Y -:- %I:%M:%S %p]" forKey:@"Preferences.Theme.timestamp_format"];
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
+	[d setBool:NO forKey:@"Preferences.General.log_highlights"];
 	[d setInt:1 forKey:@"Preferences.General.autojoin_delay"];
 	[d setInt:1096 forKey:@"Preferences.DCC.first_port"];
 	[d setInt:1115 forKey:@"Preferences.DCC.last_port"];

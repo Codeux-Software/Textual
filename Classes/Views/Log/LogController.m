@@ -10,6 +10,7 @@
 #import "IRCChannel.h"
 #import "ImageURLParser.h"
 #import "URLParser.h"
+#import "NSObject+DDExtensions.h"
 
 #define BOTTOM_EPSILON	0
 #define TIME_BUFFER_SIZE	256
@@ -64,7 +65,7 @@
 	[scroller release];
 	[js release];
 	[autoScroller release];
-
+	
 	[menu release];
 	[urlMenu release];
 	[addrMenu release];
@@ -409,13 +410,13 @@
 - (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML
 {
 	BOOL key = NO;
+	NSString* body = nil;
 	NSArray* urlRanges = nil;
-	NSString* body;
 	
+	BOOL showInlineImage = NO;
 	LogLineType type = line.lineType;
 	NSString* lineTypeString = [LogLine lineTypeString:type];
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
-	BOOL showInlineImage = NO;
 	
 	if (rawHTML == NO) {
 		body = [LogRenderer renderBody:line.body
@@ -433,7 +434,7 @@
 		[lines addObject:line];
 		return key;
 	}
-
+	
 	NSMutableString* s = [NSMutableString string];
 	
 	if (line.memberType == MEMBER_TYPE_MYSELF) {
@@ -455,7 +456,7 @@
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
 		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
 	}
-
+	
 	if (isText && urlRanges.count && [Preferences showInlineImages]) {
 		NSString* imagePageUrl = nil;
 		NSString* imageUrl = nil;
@@ -479,9 +480,9 @@
 	if (!showInlineImage) {
 		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
 	}
-
+	
 	[s appendFormat:@"</p>"];
-
+	
 	NSString* klass = isText ? @"line text" : @"line event";
 	
 	NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
@@ -492,11 +493,25 @@
 	if (line.nickInfo) {
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}
-
+	
 	[self writeLine:s attributes:attrs];
 	
 	[prevNickInfo autorelease];
 	prevNickInfo = [line.nickInfo retain];
+	
+	if (key && [Preferences logAllHighlightsToQuery]) {
+		IRCChannel *hlc = [client findChannel:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE")];
+		if (!hlc) {
+			hlc = [world createTalk:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") client:client];
+		}
+		
+		line.body = [NSString stringWithFormat:TXTLS(@"IRC_USER_WAS_HIGHLIGHTED"), [channel name], line.body];
+		line.lineType = LINE_TYPE_PRIVMSG;
+		line.keywords = nil;
+		line.excludeWords = nil;
+		
+		[hlc print:line];
+	}
 	
 	return key;
 }
@@ -507,13 +522,13 @@
 	
 	++lineNumber;
 	++count;
-
+	
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
 	[div setInnerHTML:aHtml];
-
+	
 	for (NSString* key in attrs) {
 		NSString* value = [attrs objectForKey:key];
 		[div setAttribute:key value:value];
@@ -554,7 +569,7 @@
 	NSString* overrideStyle = nil;
 	NSString* name = [Preferences themeLogFontName];
 	double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
-
+	
 	NSMutableString* sf = [NSMutableString string];
 	[sf appendString:@"html, body, body[type], body {"];
 	[sf appendFormat:@"font-family:'%@';", name];
@@ -586,11 +601,11 @@
 	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
 	[s appendFormat:@"<html %@>", bodyAttrs];
 	[s appendString:
-		@"<head>"
-		@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-		@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
-		@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
-	];
+	 @"<head>"
+	 @"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+	 @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
+	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
+	 ];
 	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme log] fileName], [[theme log] content]];
 	[s appendFormat:@"<script type=\"text/javascript\">\n/* JSF: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
 	if (overrideStyle) [s appendFormat:@"<style type=\"text/css\">%@</style>", overrideStyle];

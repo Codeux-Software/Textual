@@ -50,10 +50,10 @@
 		case LINE_TYPE_DCC_SEND_SEND: return @"dcc_send_send";
 		case LINE_TYPE_DCC_SEND_RECEIVE: return @"dcc_send_receive";
 		case LINE_TYPE_PRIVMSG: return @"privmsg";
-		case LINE_TYPE_PRIVMSG_NH: return @"privmsg_nh";
+		case LINE_TYPE_PRIVMSG_NH: return @"privmsg";
 		case LINE_TYPE_NOTICE: return @"notice";
 		case LINE_TYPE_ACTION: return @"action";
-		case LINE_TYPE_ACTION_NH: return @"action_nh";
+		case LINE_TYPE_ACTION_NH: return @"action";
 		case LINE_TYPE_JOIN: return @"join";
 		case LINE_TYPE_PART: return @"part";
 		case LINE_TYPE_KICK: return @"kick";

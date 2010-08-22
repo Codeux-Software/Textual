@@ -8,9 +8,10 @@
 
 "DEFAULT_QPS_MESSAGE" = "Leaving...";
 "NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";  
+"HIGHLIGHTS_LOG_WINDOW_TITLE" = "Highlights";
 "SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
 "UNTITLED_CONNECTION_NAME" = "Untitled Connection";
-"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE" = "Notify List";
+"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE" = "Notifications";
 
 "LOG_PATH_DOESNT_EXIST_TITLE" = "Logs Do Not Exist";
 "LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display";
@@ -57,8 +58,8 @@
 
 /* Dynamic NSMenu items */
 
-"USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
+"USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
 
 /* IRC Specific Settings */
@@ -66,6 +67,7 @@
 "IRC_IS_RECONNECTING" = "Reconnecting...";
 "IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";
 "IRC_USER_IS_AWAY" = "%1$@ is away (%2$@)";
+"IRC_USER_WAS_HIGHLIGHTED" = "From %@: %@";
 "IRC_IS_RETRYING_CONNECTION" = "Retrying...";
 "IRC_USER_WHOIS_CHANNELS" = "%1$@ is on %2$@";
 "IRC_CHANNEL_HAS_MODES" = "Mode is \002%@\002";
