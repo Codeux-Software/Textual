@@ -16,6 +16,8 @@
 #import "HostResolver.h"
 #import "FileLogger.h"
 #import "ChanBanSheet.h"
+#import "IRCMessage.h"
+#import "LogLine.h"
 
 @class IRCWorld;
 
@@ -184,4 +186,23 @@ typedef enum {
 
 - (void)unloadUserCreatedBundles;
 - (void)loadUserCreatedBundles;
+
+- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text;
+- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
+- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type text:(NSString*)text;
+- (BOOL)printAndLog:(LogLine*)line withHTML:(BOOL)rawHTML;
+- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
+- (void)printSystem:(id)channel text:(NSString*)text;
+- (void)printSystemBoth:(id)channel text:(NSString*)text;
+- (void)printReply:(IRCMessage*)m;
+- (void)printUnknownReply:(IRCMessage*)m;
+- (void)printErrorReply:(IRCMessage*)m;
+- (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
+- (void)printError:(NSString*)error;
+
+- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
+- (void)notifyEvent:(GrowlNotificationType)type;
+- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
+
+- (void)joinChannels:(NSArray*)chans;
 @end

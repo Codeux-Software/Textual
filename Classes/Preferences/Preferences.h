@@ -63,6 +63,7 @@ typedef enum {
 + (NSString*)IRCopAlertMatch;
 + (NSInteger)connectAutoJoinDelay;
 + (NSInteger)autojoinMaxChannelJoins;
++ (BOOL)logAllHighlightsToQuery;
 + (BOOL)clearAllOnlyOnActiveServer;
 + (BOOL)displayServerMOTD;
 + (BOOL)copyOnSelect;

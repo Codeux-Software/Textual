@@ -51,28 +51,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(NSInteger)port fileSize:(long long)size;
 - (void)receiveErrorNumericReply:(IRCMessage*)message;
 - (void)receiveNickCollisionError:(IRCMessage*)message;
+
 - (void)tryAnotherNick;
-
 - (void)changeStateOff;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
-- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type text:(NSString*)text;
-- (BOOL)printAndLog:(LogLine*)line;
-- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
-- (void)printSystem:(id)channel text:(NSString*)text;
-- (void)printSystemBoth:(id)channel text:(NSString*)text;
-- (void)printReply:(IRCMessage*)m;
-- (void)printUnknownReply:(IRCMessage*)m;
-- (void)printErrorReply:(IRCMessage*)m;
-- (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
-- (void)printError:(NSString*)error;
-
-- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
-- (void)notifyEvent:(GrowlNotificationType)type;
-- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
-
 - (void)performAutoJoin;
-- (void)joinChannels:(NSArray*)chans;
 
 - (void)addCommandToCommandQueue:(TimerCommand*)m;
 - (void)clearCommandQueue;
@@ -1615,10 +1597,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 			
 			if (c) {
-				if ([c isChannel]) {
-					[self send:PART, [c name], [config leavingComment], nil];
-				}
-				
 				[world destroyChannel:c];
 			}
 			
