@@ -25,14 +25,14 @@
 
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && !u.isConnected)
-#define LOGIN				(u && u.isLoggedIn)
-#define ACTIVE				(LOGIN && c && c.isActive)
-#define NOT_ACTIVE			(LOGIN && c && !c.isActive)
+#define LOGIN                   (u && u.isLoggedIn)
+#define ACTIVE                  (LOGIN && c && c.isActive)
+#define NOT_ACTIVE              (LOGIN && c && !c.isActive)
 #define ACTIVE_CHANNEL			(ACTIVE && c.isChannel)
 #define ACTIVE_CHANTALK			(ACTIVE && (c.isChannel || c.isTalk))
 #define LOGIN_CHANTALK			(LOGIN && (!c || c.isChannel || c.isTalk))
-#define IS_NOT_CHANNEL              (!c.isChannel)
-#define IS_NOT_CLIENT               (!c.isClient)
+#define IS_NOT_CHANNEL          (!c.isChannel)
+#define IS_NOT_CLIENT           (!c.isClient)
 
 @interface MenuController (Private)
 - (LogView*)currentWebView;

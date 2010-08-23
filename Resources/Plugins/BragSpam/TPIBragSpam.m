@@ -6,6 +6,8 @@
 				  message:(NSString*)messageString
 				  command:(NSString*)commandString
 {
+	if ([[[client world] selectedChannel] isChannel] == NO) return;
+	
 	NSInteger operCount = 0;
 	NSInteger chanOpCount = 0;
 	NSInteger chanHopCount = 0;
