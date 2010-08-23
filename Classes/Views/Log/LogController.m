@@ -51,6 +51,9 @@
 		maxLines = 300;
 		lines = [NSMutableArray new];
 		highlightedLineNumbers = [NSMutableArray new];
+		
+		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
+		[[WebPreferences standardPreferences] setUsesPageCache:NO];
 	}
 	return self;
 }
