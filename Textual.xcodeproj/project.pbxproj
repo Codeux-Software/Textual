@@ -25,6 +25,7 @@
 		4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008D12158D2100C6C894 /* FormattingColor_15.png */; };
 		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
+		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
@@ -33,6 +34,8 @@
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
+		4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */; };
+		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C982D16121F32430051543F /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C982D14121F32430051543F /* URLParser.h */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -336,6 +339,7 @@
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
+		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
 		4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Framework/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
@@ -347,6 +351,8 @@
 		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
 		4C80087012117C8100EB6DAF /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
 		4C81B9AC12187F83007E9EE2 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = Resources/Images/Colors/rainbow.png; sourceTree = "<group>"; };
+		4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputPromptDialog.h; sourceTree = "<group>"; };
+		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
@@ -687,6 +693,7 @@
 				4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerSheet.xib */,
 				4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */,
+				4C62C7581221D385002DCB9A /* InputPromptDialog.xib */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -819,6 +826,8 @@
 				7835FB911177341D005DC0B4 /* ListDialog.m */,
 				4CF1681711DC7B9200B60505 /* ChanBanSheet.h */,
 				4CF1681811DC7B9200B60505 /* ChanBanSheet.m */,
+				4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */,
+				4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */,
 			);
 			name = Dialogs;
 			path = Classes/Dialogs;
@@ -1168,6 +1177,7 @@
 				4C9E12A31209DF8C004E5032 /* IRCUser.h in Headers */,
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
 				4C982D16121F32430051543F /* URLParser.h in Headers */,
+				4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1264,6 +1274,7 @@
 				4C16009C12158D2100C6C894 /* FormattingColor_14.png in Resources */,
 				4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */,
 				4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */,
+				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1393,6 +1404,7 @@
 				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
 				4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */,
 				4C982D17121F32430051543F /* URLParser.m in Sources */,
+				4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1413,6 +1425,14 @@
 				4C33F97211AA81FF003EAB65 /* English */,
 			);
 			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+		4C62C7581221D385002DCB9A /* InputPromptDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C62C7551221D37B002DCB9A /* English */,
+			);
+			name = InputPromptDialog.xib;
 			sourceTree = "<group>";
 		};
 		4C8CCEA411952E1A001A07FF /* MainMenu.xib */ = {

@@ -35,6 +35,7 @@
 	NSString* pointedAddress;
 	NSString* pointedNick;
 	NSString* pointedChannelName;
+	NSString* currentSearchPhrase;
 	
 	PreferencesController* preferencesController;
 	NSMutableArray* ServerSheets;
@@ -59,6 +60,7 @@
 @property (nonatomic, retain) NSString* pointedAddress;
 @property (nonatomic, retain) NSString* pointedNick;
 @property (nonatomic, retain) NSString* pointedChannelName;
+@property (nonatomic, retain) NSString* currentSearchPhrase;
 @property (nonatomic, retain) NSMenuItem* closeWindowItem;
 @property (nonatomic, retain) PreferencesController* preferencesController;
 @property (nonatomic, retain) NSMutableArray* ServerSheets;
