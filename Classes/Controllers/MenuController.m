@@ -21,6 +21,7 @@
 #import "AboutPanel.h"
 #import "NSWindowHelper.h"
 #import "MasterController.h"
+#import "NSObject+DDExtensions.h"
 
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && !u.isConnected)
@@ -49,16 +50,19 @@
 @synthesize pointedAddress;
 @synthesize pointedNick;
 @synthesize pointedChannelName;
+@synthesize currentSearchPhrase;
 
 - (id)init
 {
 	if (self = [super init]) {
 		ServerSheets = [NSMutableArray new];
 		ChannelSheets = [NSMutableArray new];
+		
+		currentSearchPhrase = @"";
 	}
 	return self;
 }
-	
+
 - (void)dealloc
 {
 	[pointedUrl release];
@@ -69,6 +73,8 @@
 	[preferencesController release];
 	[ServerSheets release];
 	[ChannelSheets release];
+	
+	[currentSearchPhrase release];
 	
 	[nickSheet release];
 	[modeSheet release];
@@ -277,29 +283,39 @@
 	return YES;
 }
 
+- (void)_onWantFindPanel:(id)sender
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSString *newPhrase = promptForInput(TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE"), 
+										 TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE"), 
+										 TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON"), 
+										 nil, currentSearchPhrase);
+	
+	if (newPhrase == nil) {
+		[currentSearchPhrase release];
+		currentSearchPhrase = @"";
+	} else {
+		if ([newPhrase isNotEqualTo:currentSearchPhrase]) {
+			[currentSearchPhrase release];
+			currentSearchPhrase = [newPhrase retain];
+		}
+	}
+	
+	[[[self currentWebView] invokeOnMainThread] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+	
+	[pool release];
+}
+
 - (void)onWantFindPanel:(id)sender
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	NSString *searchPhrase = [ud stringForKey:@"LastSearchQuery"];
-	
-	if ((NSInteger)[sender tag] == 1 || searchPhrase == nil) {
-		searchPhrase = promptForInput(TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE"), 
-									  TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE"), 
-									  TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON"), 
-									  nil, searchPhrase);
-		
-		if (searchPhrase == nil) {
-			[ud removeObjectForKey:@"LastSearchQuery"];
-		} else {
-			[ud setObject:searchPhrase forKey:@"LastSearchQuery"];
-		
-			[[self currentWebView] searchFor:searchPhrase direction:YES caseSensitive:NO wrap:YES];
-		}
+	if ([sender tag] == 1 || currentSearchPhrase == nil) {
+		[self performSelectorInBackground:@selector(_onWantFindPanel:) withObject:sender];
 	} else {
-		if ((NSInteger)[sender tag] == 2) {
-			[[self currentWebView] searchFor:searchPhrase direction:YES caseSensitive:NO wrap:YES];
+		if ([sender tag] == 2) {
+			[[self currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 		} else {
-			[[self currentWebView] searchFor:searchPhrase direction:NO caseSensitive:NO wrap:YES];
+			[[self currentWebView] searchFor:currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
 		}
 	}
 }
@@ -907,7 +923,7 @@
 	for (IRCUser* m in [self selectedMembers:sender]) {
 		[nicks addObject:m.nick];
 	}
-
+	
 	NSMutableArray* channels = [NSMutableArray array];
 	for (IRCChannel* e in u.channels) {
 		if (c != e && e.isChannel) {
@@ -1073,9 +1089,9 @@
 {
 	for (IRCClient* u in [world clients]) {
 		NSArray *clientChannels = [[[[NSArray arrayWithArray:u.channels] sortedArrayUsingFunction:channelDataSort context:nil] mutableCopy] autorelease];
-			
+		
 		[u.channels removeAllObjects];
-			
+		
 		for (IRCChannel* c in clientChannels) {
 			[u.channels addObject:c];
 		}
@@ -1321,11 +1337,8 @@
 	[world createConnection:@"irc.wyldryde.org +6697" chan:@"#textual"];
 }
 
-- (void)onWantHostServVhostSet:(id)sender
+- (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString*)vhost
 {
-	NSString *vhost = promptForInput(TXTLS(@"SET_USER_VHOST_PROMPT_MESSAGE"), 
-									 TXTLS(@"SET_USER_VHOST_PROMPT_TITLE"), nil, nil, nil);
-	
 	if ([vhost length] >= 1 && vhost != nil) {
 		IRCClient* u = world.selectedClient;
 		IRCChannel* c = world.selectedChannel;
@@ -1345,7 +1358,24 @@
 		}
 	}
 	
-	pointedNick = nil;
+	pointedNick = nil;	
+}
+
+- (void)_onWantHostServVhostSet:(id)sender
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSString *vhost = promptForInput(TXTLS(@"SET_USER_VHOST_PROMPT_MESSAGE"), 
+									 TXTLS(@"SET_USER_VHOST_PROMPT_TITLE"), nil, nil, nil);
+	
+	[[self invokeOnMainThread] __onWantHostServVhostSet:sender andVhost:vhost];
+	
+	[pool release];
+}
+
+- (void)onWantHostServVhostSet:(id)sender
+{
+	[self performSelectorInBackground:@selector(_onWantHostServVhostSet:) withObject:sender];
 }
 
 - (void)onWantChannelBanList:(id)sender

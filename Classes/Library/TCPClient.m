@@ -11,7 +11,6 @@
 - (void)waitRead;
 @end
 
-
 @implementation TCPClient
 
 @synthesize delegate;

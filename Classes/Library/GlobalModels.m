@@ -4,6 +4,7 @@
 #import "GlobalModels.h"
 #import "Preferences.h"
 #import "NSDictionaryHelper.h"
+#import "InputPromptDialog.h"
 
 #define TIME_BUFFER_SIZE 256
 
@@ -72,25 +73,23 @@ extern NSString *promptForInput(NSString *whatFor,
 								NSString *altButton, 
 								NSString *defaultInput)
 {
-	NSAlert *alert = [NSAlert alertWithMessageText:((title == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : title)
-									 defaultButton:((defaultButton == nil) ? TXTLS(@"OK_BUTTON") : defaultButton)
-								   alternateButton:((altButton == nil) ? TXTLS(@"CANCEL_BUTTON") : altButton)
-									   otherButton:nil
-						 informativeTextWithFormat:whatFor];
+	InputPromptDialog *dialog = [[InputPromptDialog alloc] init];
 	
-	NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
+	[dialog alertWithMessageText:title 
+				   defaultButton:defaultButton 
+				 alternateButton:altButton 
+				 informativeText:whatFor
+				defaultUserInput:defaultInput];
 	
-	if (defaultInput != nil) {
-		[input setStringValue:defaultInput];
-	}
+	[dialog runModal];
 	
-	[alert setAccessoryView:input];
-	
-	NSInteger button = [alert runModal];
-	if (button == NSAlertDefaultReturn) {
-		NSString *result = [[input stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	if ([dialog buttonClicked] == NSAlertDefaultReturn) {
+		NSLog(@":(");
+		NSString *result = [dialog promptValue];
 		
-		[input release];
+		NSLog(@"%@", result);
+		
+		[dialog release];
 		
 		if ([result length] < 1) {
 			return nil;
@@ -98,7 +97,8 @@ extern NSString *promptForInput(NSString *whatFor,
 			return result;
 		}
 	} else {
-		[input release];
+		NSLog(@":()");
+		[dialog release];
 		
 		return nil;
 	}
