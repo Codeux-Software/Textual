@@ -57,7 +57,6 @@
 	NickCompletinStatus* completionStatus;
 	
 	BOOL terminating;
-	BOOL terminatingWithAuthority;
 }
 
 @property (nonatomic, retain) MainWindow* window;
@@ -92,7 +91,6 @@
 @property (nonatomic, retain) InputHistory* inputHistory;
 @property (nonatomic, retain) NickCompletinStatus* completionStatus;
 @property (nonatomic) BOOL terminating;
-@property (nonatomic) BOOL terminatingWithAuthority;
 
 - (IBAction)insertColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;

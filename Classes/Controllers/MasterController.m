@@ -296,11 +296,7 @@
 	[world terminate];
 	[menu terminate];
 	
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastSearchQuery"];
-	
-	if (terminatingWithAuthority == NO) {
-		[self saveWindowState];
-	}
+	[self saveWindowState];
 }
 
 #pragma mark -
@@ -1206,5 +1202,4 @@ typedef enum {
 @synthesize inputHistory;
 @synthesize completionStatus;
 @synthesize terminating;
-@synthesize terminatingWithAuthority;
 @end
