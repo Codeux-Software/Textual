@@ -3905,16 +3905,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 437:   // ERR_NICKTEMPUNAVAIL
 			[self receiveNickCollisionError:m];
 			break;
-		case 404:
-		case 402:
+		case 402:   // ERR_NOSUCHSERVER
+		{
+			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:1]];
+			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
+			return;
+			break;
+		}
+		case 404:	// ERR_CANNOTSENDMESSAGE
 		{
 			NSString* chname = [m paramAt:1];
 			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:2]];
 			
-			IRCChannel* c = [self findChannel:chname];
-			if (c) {
-				[self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:text];
-			}
+			[self printBoth:[self findChannel:chname] type:LINE_TYPE_REPLY text:text];
 			
 			return;
 			break;
