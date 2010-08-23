@@ -38,7 +38,6 @@
 	growl.delegate = self;
 	
 	if (!registered) {
-		// reset growl settings
 		growl.allNotifications = [NSArray array];
 		growl.defaultNotifications = growl.allNotifications;
 		[growl registerApplication];

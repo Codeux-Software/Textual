@@ -1,7 +1,7 @@
 // Created by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-// Directly NSAlert substitution 
+// Dirty NSAlert substitution 
 
 #import "InputPromptDialog.h"
 #import "NSObject+DDExtensions.h"
@@ -63,7 +63,6 @@
 	// <http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/TextLayout/Tasks/StringHeight.html>
 	
 	NSRect infoTextFrame = [informationalText frame];
-	NSSize infoTextSize = infoTextFrame.size;
 	
 	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithString:[informationalText stringValue]] autorelease];
 	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(298.0, FLT_MAX)] autorelease];
@@ -78,17 +77,14 @@
 	[layoutManager glyphRangeForTextContainer:textContainer];
 	
 	NSInteger newHeight = ([layoutManager usedRectForTextContainer:textContainer].size.height + 5);
-	NSInteger heightDiff = (infoTextSize.height - newHeight);
-	
-	infoTextFrame.size.height =  newHeight;
-	infoTextFrame.origin.y = (infoTextFrame.origin.y + heightDiff);
-	[informationalText setFrame:infoTextFrame];
+	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
 	
 	NSRect windowFrame = [dialogWindow frame];
-	windowFrame.size.height = (windowFrame.size.height - heightDiff);
+	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + 3);
 	[dialogWindow setFrame:windowFrame display:NO animate:NO];
 	
-	// ======================================================== //
+	infoTextFrame.size.height = (newHeight + 3);
+	[informationalText setFrame:infoTextFrame];
 	
 	[dialogWindow makeKeyAndOrderFront:nil];
 	
