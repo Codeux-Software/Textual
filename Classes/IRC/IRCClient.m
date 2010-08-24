@@ -2808,9 +2808,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			} else {
 				[self printBoth:nil type:type text:text];
 			}
-			
-			
-			
 		} else {
 			if ([ignoreChecks ignorePrivateMsg] == YES) {
 				return;
@@ -2823,9 +2820,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				newTalk = YES;
 			}
 			
-			BOOL keyword = [self printBoth:c type:type nick:anick text:text identified:identified];
-			
 			if (type == LINE_TYPE_NOTICE) {
+				if ([Preferences locationToSendNotices] == NOTICES_SENDTO_CURCHAN) {
+					c = [world selectedChannelOn:self];
+				}
+				
+				BOOL keyword = [self printBoth:c type:type nick:anick text:text identified:identified];
+				
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"]) {
 						if (config.nickPassword.length) {
@@ -2837,6 +2838,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:anick text:text];
 				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE] isMuted:world.soundMuted];
 			} else {
+				BOOL keyword = [self printBoth:c type:type nick:anick text:text identified:identified];
+				
 				id t = c ?: (id)self;
 				[self setUnreadState:t];
 				if (keyword) [self setKeywordState:t];

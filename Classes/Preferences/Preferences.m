@@ -496,6 +496,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud integerForKey:@"Preferences.General.user_doubleclick_action"];
 }
 
++ (NoticesSendToLocation)locationToSendNotices
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.General.notices_sendto_location"];
+}
+
 #pragma mark -
 #pragma mark Theme
 
@@ -1090,6 +1096,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
+	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
