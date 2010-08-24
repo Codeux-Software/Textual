@@ -368,14 +368,14 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (self.length == 0) return NO;
 	UniChar c = [self characterAtIndex:0];
-	return c == '#' || c == '&' || c == '+' || c == '!';
+	return c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?';
 }
 
 - (BOOL)isModeChannelName
 {
 	if (self.length == 0) return NO;
 	UniChar c = [self characterAtIndex:0];
-	return c == '#' || c == '&' || c == '!';
+	return c == '#' || c == '&' || c == '!' || c == '~' || c == '?';
 }
 
 - (NSString*)canonicalName
