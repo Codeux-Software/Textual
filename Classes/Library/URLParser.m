@@ -105,7 +105,7 @@ static NSString *urlAddrRegexComplex;
 + (NSArray*)bannedURLRegexLeftBufferChars
 {
 	return [NSArray arrayWithObjects:@"~", @"!", @"@", @"#", @"$", @"%", @"^", @"&", 
-			@"*", @"_", @"+", @"=", @"-", @"`", @":", @";", @"/", @".", @",", @"?", nil];
+			@"*", @"_", @"+", @"=", @"-", @"`", @";", @"/", @".", @",", @"?", nil];
 }
 
 + (NSArray*)bannedURLRegexRightBufferChars
