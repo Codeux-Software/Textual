@@ -28,6 +28,9 @@ elements to its library. Therefore, before compiling make sure that the
 BWToolkit.ibplugin file has been loaded into the Interface Builder application.
 This file can be found in the folder Frameworks/BWToolkit/.
 
+Note: Textual is not currently compatible with Xcode 4 because Xcode 4 does not
+yet provide support for the above mentioned plugin.
+
 --------------
 
 - License -
