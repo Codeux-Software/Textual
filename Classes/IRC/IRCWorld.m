@@ -736,7 +736,6 @@
 			sel = [tree itemAtRow:n];
 		}
 		if (sel && sel.isClient) {
-			// we don't want to change clients when closing a channel
 			n = i - 1;
 			if (0 <= n && n < [tree numberOfRows]) {
 				sel = [tree itemAtRow:n];
