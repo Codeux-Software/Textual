@@ -509,7 +509,6 @@
 		}
 		
 		line.body = [NSString stringWithFormat:TXTLS(@"IRC_USER_WAS_HIGHLIGHTED"), [channel name], line.body];
-		line.lineType = LINE_TYPE_PRIVMSG;
 		line.keywords = nil;
 		line.excludeWords = nil;
 		
