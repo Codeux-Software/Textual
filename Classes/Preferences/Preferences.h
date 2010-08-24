@@ -32,6 +32,11 @@ typedef enum {
 	USERDC_ACTION_QUERY = 200,
 } UserDoubleClickAction;
 
+typedef enum {
+	NOTICES_SENDTO_CONSOLE = 0,
+	NOTICES_SENDTO_CURCHAN = 1,
+} NoticesSendToLocation;
+
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
@@ -93,6 +98,7 @@ typedef enum {
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
++ (NoticesSendToLocation)locationToSendNotices;
 + (UserDoubleClickAction)userDoubleClickOption;
 
 + (NSString*)themeName;
