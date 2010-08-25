@@ -428,6 +428,7 @@
 			if ([c.mode titleString].length > 1) {
 				[title appendString:[NSString stringWithFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), [c.mode titleString]]];
 			}
+			
 			[[NSNotificationCenter defaultCenter] postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
 		} else {
 			[[NSNotificationCenter defaultCenter] postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
@@ -574,6 +575,8 @@
 	[self changeInputTextTheme];
 	[self changeTreeTheme];
 	[self changeMemberListTheme];
+	
+	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
 }
 
 - (void)changeInputTextTheme
