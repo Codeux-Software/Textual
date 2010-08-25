@@ -3542,7 +3542,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		case 338:	// RPL_WHOISCONNECTFROM
 		{
-			NSString* text = [NSString stringWithFormat:@"%@ %@", [m paramAt:2], [m paramAt:1]];
+			NSString* text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
