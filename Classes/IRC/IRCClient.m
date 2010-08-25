@@ -2825,7 +2825,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					c = [world selectedChannelOn:self];
 				}
 				
-				BOOL keyword = [self printBoth:c type:type nick:anick text:text identified:identified];
+				[self printBoth:c type:type nick:anick text:text identified:identified];
 				
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"]) {
@@ -3022,10 +3022,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
-	[c setIsModeInit:YES];
-	
-	[self send:MODE, c.name, nil];
-	[self send:WHO, c.name, nil, nil];
+	if ([c.name isChannelName]) {
+		[c setIsModeInit:YES];
+		
+		[self send:MODE, c.name, nil];
+		[self send:WHO, c.name, nil, nil];
+	}
 	
 	[pool drain];
 }
