@@ -1432,9 +1432,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			return YES;
 			break;
 		case 20: // Command: QUIT
-			[self quit:s];
+		{
+			NSString *reason = [s trim];
+			
+			if ([s length] < 1) {
+				reason = config.leavingComment;
+			}
+			
+			[self quit:reason];
 			return YES;
 			break;
+		}
 		case 21: // Command: TOPIC
 		case 61: // Command: T
 			if (selChannel && selChannel.isChannel && ![s isChannelName]) {
@@ -1850,7 +1858,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 						reason = TXTLS(@"KICK_REASON");
 					}
 					
-					[self send:MODE, c.name, @"+b", [user banMask], nil];
+					[self send:MODE, c.name, @"+b", host, nil];
 					[self send:KICK, c.name, user.nick, reason, nil];
 				}
 			}
@@ -3529,6 +3537,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			} else {		
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
 			}
+			
+			break;
+		}
+		case 338:	// RPL_WHOISCONNECTFROM
+		{
+			NSString* text = [NSString stringWithFormat:@"%@ %@", [m paramAt:2], [m paramAt:1]];
+			
+			if (whoisChannel) {
+				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
+			} else {		
+				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
+			}
+			
 			break;
 		}
 		case 311:	// RPL_WHOISUSER
