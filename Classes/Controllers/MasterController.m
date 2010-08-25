@@ -127,6 +127,8 @@
 	[window setAlphaValue:[Preferences themeTransparency]];
 	[self setColumnLayout];
 	
+	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
+	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 	
 	extrac = [[IRCExtras alloc] init];
