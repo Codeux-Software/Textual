@@ -338,7 +338,6 @@
 	if (returnCode == NSOKButton) {
 		NSString* path = [[panel filenames] safeObjectAtIndex:0];
 		
-		// create directory
 		NSFileManager* fm = [NSFileManager defaultManager];
 		BOOL isDir;
 		if (![fm fileExistsAtPath:path isDirectory:&isDir]) {

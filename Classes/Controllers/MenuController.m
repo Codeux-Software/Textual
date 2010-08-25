@@ -1445,6 +1445,12 @@
 	}
 }
 
+- (void)onWantThemeForceReloaded:(id)sender
+{
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+}
+
 @synthesize closeWindowItem;
 @synthesize preferencesController;
 @synthesize ServerSheets;

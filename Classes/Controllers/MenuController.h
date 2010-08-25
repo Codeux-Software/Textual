@@ -152,5 +152,7 @@
 
 - (void)openHelpMenuLinkItem:(id)sender;
 
+- (void)onWantThemeForceReloaded:(id)sender;
+
 - (void)processNavigationItem:(NSMenuItem *)sender;
 @end

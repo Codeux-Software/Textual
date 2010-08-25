@@ -128,16 +128,20 @@
 		
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TextualDeveloperEnvironment"]) {
 			[ary addObject:[NSMenuItem separatorItem]];
+			
 			for (NSMenuItem* item in defaultMenuItems) {
 				if ([[item title] isEqualToString:@"Inspect Element"]) {
 					[ary addObject:[[item copy] autorelease]];
 				}
 			}
 			
-			NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
-			[nickItem setTarget:menuController];
+			NSMenuItem* copyHTML = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
+			[copyHTML setTarget:menuController];
+			[ary addObject:copyHTML];
 			
-			[ary addObject:nickItem];
+			NSMenuItem* reloadTheme = [[[NSMenuItem alloc] initWithTitle:@"Force Reload Theme" action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
+			[reloadTheme setTarget:menuController];
+			[ary addObject:reloadTheme];
 		}
 		
 		return ary;
