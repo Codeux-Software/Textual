@@ -23,8 +23,8 @@
 - (void)populateData;
 {			
 	NSFileManager *fm = [NSFileManager defaultManager];
-
 	NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+	
 	for (NSString* file in resourceFiles) {
 		if ([file hasSuffix:@".scpt"]) {
 			[scripts addObject:[[file safeSubstringToIndex:([file length] - 5)] lowercaseString]];
@@ -32,8 +32,10 @@
 	}
 
 	for (NSString *cmd in world.bundlesForUserInput) {
+		cmd = [cmd lowercaseString];
+		
 		if (![scripts containsObject:cmd]) {
-			[scripts addObject:[cmd lowercaseString]];
+			[scripts addObject:cmd];
 		}
 	}
 	
