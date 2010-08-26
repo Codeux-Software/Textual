@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>6194</string>
+	<string>6262</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.5.5</string>
+	<string>1.0.5.6</string>
 	<key>LSArchitecturePriority</key>
 	<array>
 		<string>x86_64</string>
