@@ -84,7 +84,6 @@ extern NSString *promptForInput(NSString *whatFor,
 	[dialog runModal];
 	
 	if ([dialog buttonClicked] == NSAlertDefaultReturn) {
-		NSLog(@":(");
 		NSString *result = [dialog promptValue];
 		
 		NSLog(@"%@", result);
@@ -97,7 +96,6 @@ extern NSString *promptForInput(NSString *whatFor,
 			return result;
 		}
 	} else {
-		NSLog(@":()");
 		[dialog release];
 		
 		return nil;

@@ -310,7 +310,7 @@
 - (void)onWantFindPanel:(id)sender
 {
 	if ([sender tag] == 1 || currentSearchPhrase == nil) {
-		[self performSelectorInBackground:@selector(_onWantFindPanel:) withObject:sender];
+		[[self invokeInBackgroundThread] _onWantFindPanel:sender];
 	} else {
 		if ([sender tag] == 2) {
 			[[self currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
@@ -1375,7 +1375,7 @@
 
 - (void)onWantHostServVhostSet:(id)sender
 {
-	[self performSelectorInBackground:@selector(_onWantHostServVhostSet:) withObject:sender];
+	[[self invokeInBackgroundThread] _onWantHostServVhostSet:sender];
 }
 
 - (void)onWantChannelBanList:(id)sender

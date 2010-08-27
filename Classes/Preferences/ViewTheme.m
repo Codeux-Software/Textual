@@ -135,9 +135,13 @@
 
 + (void)createUserDirectory:(BOOL)force_reset
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	[self copyItemsFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath] whileForcing:force_reset];
 	[self copyItemsFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];
 	[self copyItemsFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath] whileForcing:force_reset];
+	
+	[pool release];
 }
 
 + (NSString*)buildResourceFileName:(NSString*)name

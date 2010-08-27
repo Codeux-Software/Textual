@@ -17,6 +17,7 @@
 #import "NSStringHelper.h"
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
+#import "NSObject+DDExtensions.h"
 #import <Sparkle/SUUpdater.h>
 
 #define KInternetEventClass	1196773964
@@ -59,11 +60,6 @@
 #pragma mark -
 #pragma mark NSApplication Delegate
 
-- (void)loadAllBundles
-{  
-	[NSBundle loadAllAvailableBundlesIntoMemory:world];
-}
-
 - (void)awakeFromNib
 {
 	[[SUUpdater sharedUpdater] setDelegate:self];
@@ -72,7 +68,7 @@
 	
 	[Preferences initPreferences];
 	
-	[ViewTheme createUserDirectory:NO];
+	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
@@ -189,7 +185,7 @@
 
 	[self registerKeyHandlers];
 	
-	[self performSelectorInBackground:@selector(loadAllBundles) withObject:nil];
+	[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note

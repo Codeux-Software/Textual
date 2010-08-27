@@ -72,6 +72,8 @@
 
 + (void)deallocAllAvailableBundlesFromMemory:(IRCWorld*)world
 {		
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	NSArray *allBundles = [world.allLoadedBundles copy];
 	
 	[world resetLoadedBundles];
@@ -83,6 +85,8 @@
 	}
 	
 	[allBundles release];
+	
+	[pool release];
 }
 
 + (void)loadAllAvailableBundlesIntoMemory:(IRCWorld*)world
