@@ -29,14 +29,45 @@
 
 - (id)invokeOnMainThread;
 {
-    return [self invokeOnMainThreadAndWaitUntilDone:NO];
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    return [grabber prepareWithInvocationTarget:self];
+}
+
++ (id)invokeOnMainThread;
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    return [grabber prepareWithInvocationTarget:self];
+}
+
+- (id)invokeInBackgroundThread
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+    [grabber setInvocationThreadType:INVOCATION_BACKGROUND_THREAD];
+    return [grabber prepareWithInvocationTarget:self];
+}
+
++ (id)invokeInBackgroundThread
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+    [grabber setInvocationThreadType:INVOCATION_BACKGROUND_THREAD];
+    return [grabber prepareWithInvocationTarget:self];
 }
 
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 {
-    DDInvocationGrabber * grabber = [DDInvocationGrabber invocationGrabber];
-    [grabber setForwardInvokesOnMainThread:YES];
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
     [grabber setWaitUntilDone:waitUntilDone];
+    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    return [grabber prepareWithInvocationTarget:self];
+}
+
++ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+    [grabber setWaitUntilDone:waitUntilDone];
+    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
     return [grabber prepareWithInvocationTarget:self];
 }
 

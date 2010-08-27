@@ -184,9 +184,6 @@ typedef enum {
 - (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString*)text ;
 - (BOOL)printRawHTMLToCurrentChannel:(NSString*)text withTimestamp:(BOOL)showTime;
 
-- (void)unloadUserCreatedBundles;
-- (void)loadUserCreatedBundles;
-
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text;
 - (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
 - (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type text:(NSString*)text;

@@ -21,7 +21,6 @@
 @property (nonatomic, readonly) CustomJSFile* js;
 
 - (void)reload;
-
 + (void)createUserDirectory:(BOOL)force_reset;
 
 + (NSString*)buildResourceFileName:(NSString*)name;

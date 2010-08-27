@@ -59,6 +59,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)addCommandToCommandQueue:(TimerCommand*)m;
 - (void)clearCommandQueue;
 
+- (void)processBundlesUserMessage:(NSArray*)info;
+
 - (AddressBook*)checkIgnore:(NSString *)hostmask 
 					  uname:(NSString *)username 
 					   name:(NSString *)nickname
@@ -992,7 +994,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	if ([[world bundlesForUserInput] objectForKey:command]) {
-		[self performSelectorInBackground:@selector(processBundlesUserMessage:) withObject:[NSArray arrayWithObjects:str, nil, nil]];
+		[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:str, nil, nil]];
 	}
 	
 	NSArray* lines = [str splitIntoLines];
@@ -1124,16 +1126,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[NSBundle sendUserInputDataToBundles:world message:message command:command client:self];
 	
 	[pool drain];
-}
-
-- (void)unloadUserCreatedBundles
-{
-	[NSBundle deallocAllAvailableBundlesFromMemory:world];
-}
-
-- (void)loadUserCreatedBundles
-{
-	[NSBundle loadAllAvailableBundlesIntoMemory:world];
 }
 
 - (void)processBundlesServerMessage:(IRCMessage*)msg
@@ -1908,7 +1900,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		}
 		case 90: // Command: RESETFILES
-			[ViewTheme createUserDirectory:YES];
+			[[ViewTheme invokeInBackgroundThread] createUserDirectory:YES];
 			
 			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"SOURCE_RESOURCES_FILES_RESET")];
 			
@@ -1935,17 +1927,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			return YES;
 			break;
 		case 76: // Command: UNLOAD_PLUGINS
-			[self performSelectorInBackground:@selector(unloadUserCreatedBundles) withObject:nil];
+			[[NSBundle invokeInBackgroundThread] deallocAllAvailableBundlesFromMemory:world];
 			return YES;
 			break;
 		case 91: // Command: LOAD_PLUGINS
-			[self performSelectorInBackground:@selector(loadUserCreatedBundles) withObject:self];
+			[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
 			return YES;
 			break;
 		default:
 		{
 			if ([[world bundlesForUserInput] objectForKey:cmd]) {
-				[self performSelectorInBackground:@selector(processBundlesUserMessage:) withObject:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
+				[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
 			} else {
 				NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
 				
@@ -4202,7 +4194,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	if ([[world bundlesForServerInput] objectForKey:cmd]) {
-		[self performSelectorInBackground:@selector(processBundlesServerMessage:) withObject:m];
+		[[self invokeInBackgroundThread] processBundlesServerMessage:m];
 	}
 }
 

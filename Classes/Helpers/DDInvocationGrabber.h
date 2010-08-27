@@ -24,12 +24,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+	INVOCATION_MAIN_THREAD,
+	INVOCATION_BACKGROUND_THREAD,
+} invocationThreadType;
+
 @interface DDInvocationGrabber : NSProxy
 {
 	id _target;
-	NSInvocation * _invocation;
-	BOOL _forwardInvokesOnMainThread;
 	BOOL _waitUntilDone;
+	NSInvocation *_invocation;
+	invocationThreadType _threadType;
 }
 
 + (id)invocationGrabber;
@@ -40,8 +45,8 @@
 - (NSInvocation *)invocation;
 - (void)setInvocation:(NSInvocation *)inInvocation;
 
-- (BOOL)forwardInvokesOnMainThread;
-- (void)setForwardInvokesOnMainThread:(BOOL)forwardInvokesOnMainThread;
+- (invocationThreadType)threadType;
+- (void)setInvocationThreadType:(invocationThreadType)threadType;
 
 - (BOOL)waitUntilDone;
 - (void)setWaitUntilDone:(BOOL)waitUntilDone;

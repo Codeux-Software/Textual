@@ -28,15 +28,15 @@
 
 + (id)invocationGrabber
 {
-    return([[[self alloc] init] autorelease]);
+    return [[[self alloc] init] autorelease];
 }
 
 - (id)init
 {
     _target = nil;
     _invocation = nil;
-    _forwardInvokesOnMainThread = NO;
     _waitUntilDone = NO;
+    _threadType = INVOCATION_BACKGROUND_THREAD;
     
     return self;
 }
@@ -45,7 +45,6 @@
 {
     [self setTarget:NULL];
     [self setInvocation:NULL];
-    //
     [super dealloc];
 }
 
@@ -79,14 +78,14 @@
 	}
 }
 
-- (BOOL)forwardInvokesOnMainThread;
+- (invocationThreadType)threadType
 {
-    return _forwardInvokesOnMainThread;
+	return _threadType;
 }
 
-- (void)setForwardInvokesOnMainThread:(BOOL)forwardInvokesOnMainThread;
+- (void)setInvocationThreadType:(invocationThreadType)threadType
 {
-    _forwardInvokesOnMainThread = forwardInvokesOnMainThread;
+	_threadType = threadType;
 }
 
 - (BOOL)waitUntilDone;
@@ -110,15 +109,22 @@
 {
     [ioInvocation setTarget:[self target]];
     [self setInvocation:ioInvocation];
-    if (_forwardInvokesOnMainThread)
+	
+	if (_waitUntilDone == NO) {
+		[_invocation retainArguments];
+	}
+	
+    if (_threadType == INVOCATION_MAIN_THREAD)
     {
-        if (!_waitUntilDone)
-            [_invocation retainArguments];
         [_invocation performSelectorOnMainThread:@selector(invoke)
                                       withObject:nil
                                    waitUntilDone:_waitUntilDone];
-    }
+    } else {
+        [_invocation performSelectorInBackground:@selector(invoke)
+                                      withObject:nil];
+	}
 }
+
 @end
 
 #pragma mark -
@@ -128,7 +134,7 @@
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
     [self setTarget:inTarget];
-    return(self);
+    return self;
 }
 
 @end

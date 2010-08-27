@@ -198,14 +198,13 @@
 - (void)setTopicWithDelay:(NSString *)topic
 {
 	[NSThread sleepForTimeInterval:2.0];
-	
-	[self performSelectorOnMainThread:@selector(setTopicWithoutDelay:) withObject:topic waitUntilDone:NO];
+	[[self invokeOnMainThread] setTopicWithoutDelay:topic];
 }
 
 - (void)setTopic:(NSString *)topic 
 {
 	if ([self setTopicWithoutDelay:topic] == NO) {
-		[self performSelectorInBackground:@selector(setTopicWithDelay:) withObject:topic];
+		[[self invokeInBackgroundThread] setTopicWithDelay:topic];
 	}
 }
 
