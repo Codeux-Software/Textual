@@ -571,14 +571,18 @@
 	}
 	
 	NSString* overrideStyle = nil;
-	NSString* name = [Preferences themeLogFontName];
-	double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
 	
 	NSMutableString* sf = [NSMutableString string];
-	[sf appendString:@"html, body, body[type], body {"];
-	[sf appendFormat:@"font-family:'%@';", name];
-	[sf appendFormat:@"font-size:%fpt;", size];
-	[sf appendString:@"}"];
+	
+	if ([Preferences themeOverrideLogFont]) {
+		NSString* name = [Preferences themeLogFontName];
+		double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
+		
+		[sf appendString:@"html, body, body[type], body {"];
+		[sf appendFormat:@"font-family:'%@';", name];
+		[sf appendFormat:@"font-size:%fpt;", size];
+		[sf appendString:@"}"];
+	}
 	
 	if ([Preferences indentOnHang] && ![Preferences rightToLeftFormatting]) {
 		NSFont *font = [NSFont fontWithName:[Preferences themeLogFontName] size:round([Preferences themeLogFontSize])];
