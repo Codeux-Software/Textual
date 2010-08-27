@@ -2253,8 +2253,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified
 {
-	BOOL result = [self printChannel:chan type:type nick:nick text:text identified:identified];
-	return result;
+	return [self printChannel:chan type:type nick:nick text:text identified:identified];
 }
 
 - (NSString*)formatNick:(NSString*)nick channel:(IRCChannel*)channel
@@ -2299,28 +2298,34 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if (numRange.location != NSNotFound && numRange.length > 0) {
 			NSString* numStr = [s substringWithRange:numRange];
 			NSInteger n = [numStr integerValue];
-			
 			NSString* formattedNick = nick;
+			
 			if (n >= 0) {
 				NSInteger pad = n - nick.length;
 				if (pad > 0) {
 					NSMutableString* ms = [NSMutableString stringWithString:nick];
+					
 					for (NSInteger i=0; i<pad; ++i) {
 						[ms appendString:@" "];
 					}
+					
 					formattedNick = ms;
 				}
 			} else {
 				NSInteger pad = -n - nick.length;
+				
 				if (pad > 0) {
 					NSMutableString* ms = [NSMutableString string];
+					
 					for (NSInteger i=0; i<pad; ++i) {
 						[ms appendString:@" "];
 					}
+					
 					[ms appendString:nick];
 					formattedNick = ms;
 				}
 			}
+			
 			s = [s stringByReplacingCharactersInRange:r withString:formattedNick];
 		} else {
 			s = [s stringByReplacingCharactersInRange:r withString:nick];

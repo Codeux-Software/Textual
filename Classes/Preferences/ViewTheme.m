@@ -85,15 +85,16 @@
 	[js reload];
 }
 
-+ (void)copyItemsFrom:(NSString *)location to:(NSString *)dest whileForcing:(BOOL)force_reset
++ (void)copyItemsUsingRecursionFrom:(NSString *)location 
+								 to:(NSString *)dest 
+					   whileForcing:(BOOL)force_reset
 {
-	BOOL isDir = NO;
-	
-	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
+	BOOL isDirectory = NO;
 	
 	NSFileManager* fm = [NSFileManager defaultManager];
+	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
 	
-	if (![fm fileExistsAtPath:dest isDirectory:&isDir]) {
+	if ([fm fileExistsAtPath:dest] == NO) {
 		[fm createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
@@ -102,6 +103,7 @@
 		NSString* source = [location stringByAppendingPathComponent:file];
 		NSString* sdest = [dest stringByAppendingPathComponent:file];
 		
+		[fm fileExistsAtPath:source isDirectory:&isDirectory];
 		[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 			 ofItemAtPath:source
 					error:NULL];
@@ -109,20 +111,32 @@
 		BOOL resetAttrInfo = NO;
 		
 		if ([fm fileExistsAtPath:sdest]) {
-			NSDictionary *attributes = [fm attributesOfItemAtPath:sdest error:nil];
-			
-			if (attributes) {
-				NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
-				NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
+			if (isDirectory == YES) {
+				resetAttrInfo = YES;
 				
-				if (creationDate == modificationDate || creationDate < 1) {
-					[fm removeItemAtPath:sdest error:NULL];
+				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
+			} else {
+				NSDictionary *attributes = [fm attributesOfItemAtPath:sdest error:nil];
+				
+				if (attributes) {
+					NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
+					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
 					
-					resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+					if (creationDate == modificationDate || creationDate < 1) {
+						[fm removeItemAtPath:sdest error:NULL];
+						
+						resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+					}
 				}
 			}
 		} else {
-			resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+			if (isDirectory) {
+				resetAttrInfo = YES;
+				
+				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
+			} else {
+				resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+			}
 		}
 		
 		if (resetAttrInfo == YES || force_reset == YES) {
@@ -137,9 +151,9 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	[self copyItemsFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath] whileForcing:force_reset];
-	[self copyItemsFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];
-	[self copyItemsFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath] whileForcing:force_reset];
+	[self copyItemsUsingRecursionFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath] whileForcing:force_reset];
+	[self copyItemsUsingRecursionFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];
+	[self copyItemsUsingRecursionFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath] whileForcing:force_reset];
 	
 	[pool release];
 }
