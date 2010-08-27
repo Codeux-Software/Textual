@@ -40,6 +40,10 @@
 		if (path.length > 1) {
 			return [NSString stringWithFormat:@"%@:iphone", url];
 		}
+	} else if ([host hasSuffix:@"cl.ly"]) {
+		if (path.length > 1) {
+			return [NSString stringWithFormat:@"%@/content", url];
+		}
 	} else if ([host hasSuffix:@"twitgoo.com"]) {
 		if (path.length > 1) {
 			NSString* s = [path safeSubstringFromIndex:1];

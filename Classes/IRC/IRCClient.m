@@ -2259,7 +2259,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (NSString*)formatNick:(NSString*)nick channel:(IRCChannel*)channel
 {
-	NSString* format = [Preferences themeNickFormat];
+	NSString* format = nil;
+	
+	if ([Preferences themeOverrideNickFormat]) {
+		format = [Preferences themeNickFormat];
+	}
 	
 	if ([format length] < 1) {
 		format = @"<%@%n>";

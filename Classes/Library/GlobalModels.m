@@ -140,7 +140,7 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 
 extern NSString *TXFormattedTimestamp(NSString *format) 
 {
-	if ([format length] < 1) {
+	if ([format length] < 1 || ![Preferences themeOverrideTimestampFormat]) {
 		format = @"[%m/%d/%Y -:- %I:%M:%S %p]";
 	}
 	
