@@ -30,6 +30,8 @@
 		NSMutableArray *trackedUsers = [NSMutableArray new];
 		
 		for (IRCChannel *ch in c.channels) {
+			if ([ch isActive] == NO || [ch isChannel] == NO) continue;
+			
 			IRCUser *myself = [ch findMember:c.myNick];
 			NSString *myselfLC = [myself.nick lowercaseString];
 			
