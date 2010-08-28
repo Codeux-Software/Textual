@@ -977,7 +977,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString*)message
 {
-	[self sendText:message command:PRIVMSG channel:[[self world] selectedChannel]];
+	[self sendText:message command:PRIVMSG channel:[[self world] selectedChannelOn:self]];
 }
 
 - (void)sendText:(NSString*)str command:(NSString*)command channel:(IRCChannel*)channel
@@ -2386,7 +2386,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (BOOL)printRawHTMLToCurrentChannel:(NSString*)text withTimestamp:(BOOL)showTime
 {
-	IRCChannel* channel = [world selectedChannel];
+	IRCChannel* channel = [world selectedChannelOn:self];
 	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	LogLineType type = LINE_TYPE_REPLY;
 	
@@ -3506,6 +3506,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* comment = [m paramAt:2];
 			
 			IRCChannel* c = [self findChannel:nick];
+			IRCChannel* sc = [world selectedChannelOn:self];
 			
 			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_IS_AWAY"), nick, comment];
 			
@@ -3516,8 +3517,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (whoisChannel && ![whoisChannel isEqualTo:c]) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
 			} else {		
-				if (![[world selectedChannel] isEqualTo:c]) {
-					[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
+				if (![sc isEqualTo:c]) {
+					[self printBoth:sc type:LINE_TYPE_REPLY text:text];
 				}
 			}
 			
