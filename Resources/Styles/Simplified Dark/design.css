@@ -15,6 +15,7 @@ body {
 	overflow: hidden;
 	overflow-y: visible;
 	background-color: #000;
+	font-family: "Lucida Grande";
 }
 
 body div#body_home {
