@@ -51,6 +51,10 @@
 @synthesize allLoadedBundles;
 @synthesize bundlesForUserInput;
 @synthesize bundlesForServerInput;
+@synthesize bandwidthIn;
+@synthesize bandwidthOut;
+@synthesize messagesSent;
+@synthesize messagesReceived;
 
 - (id)init
 {

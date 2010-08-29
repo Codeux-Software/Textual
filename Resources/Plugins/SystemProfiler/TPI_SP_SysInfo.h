@@ -1,10 +1,6 @@
 #import <Cocoa/Cocoa.h>
-
 #include "GlobalModels.h"
-
-typedef unsigned long long TXLongInt;
-
-/* Plugin Specific Class */
+#include "IRCWorld.h"
 
 @interface TPI_SP_SysInfo : NSObject 
 
@@ -22,5 +18,6 @@ typedef unsigned long long TXLongInt;
 + (NSString *)graphicsCardInfo;
 + (NSString *)applicationMemoryUsage;
 + (NSString *)applicationAndSystemUptime;
++ (NSString *)getBandwidthStats:(IRCWorld *)world;
 
 @end
