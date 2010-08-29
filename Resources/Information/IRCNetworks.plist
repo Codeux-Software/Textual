@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DALnet</key>
+	<string>irc.dal.net</string>
+	<key>Freenode</key>
+	<string>irc.freenode.net</string>
+	<key>GameSurge</key>
+	<string>irc.gamesurge.net</string>
+	<key>German Elite</key>
+	<string>irc.german-elite.net</string>
+	<key>IRCNet</key>
+	<string>ircnet.choopa.net</string>
+	<key>Mibbit</key>
+	<string>irc.mibbit.com</string>
+	<key>QuakeNet</key>
+	<string>irc.quakenet.org</string>
+	<key>Rizon</key>
+	<string>irc.rizon.net</string>
+	<key>Undernet</key>
+	<string>irc.undernet.org</string>
+	<key>WyldRyde</key>
+	<string>irc.wyldryde.org</string>
+</dict>
+</plist>

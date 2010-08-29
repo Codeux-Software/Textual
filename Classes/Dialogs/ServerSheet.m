@@ -35,6 +35,13 @@
 {
 	if (self = [super init]) {
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
+		
+		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"Documents/IRCNetworks.plist"];
+		serverList = [[NSDictionary alloc] initWithContentsOfFile:serverListPath];
+	
+		for (NSString* key in serverList) {
+			[hostCombo addItemWithObjectValue:key];
+		}
 	}
 	return self;
 }
@@ -48,7 +55,35 @@
 	[detailsView release];
 	[onloginView release];
 	[ignoresView release];
+	[serverList release];
 	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark Server List Factory
+
+- (NSString *)nameMatchesServerInList:(NSString *)name
+{
+	for (NSString *key in serverList) {
+		if ([[name lowercaseString] isEqualToString:[key lowercaseString]]) {
+			return key;
+		}
+	}
+	
+	return nil;
+}
+
+- (NSString *)hostFoundInServerList:(NSString *)hosto
+{
+	for (NSString *key in serverList) {
+		NSString *host = [serverList objectForKey:key];
+		
+		if ([[hosto lowercaseString] isEqualToString:[host lowercaseString]]) {
+			return key;
+		}
+	}
+	
+	return nil;
 }
 
 #pragma mark -
@@ -142,7 +177,9 @@
 	autoConnectCheck.state = config.autoConnect;
 	autoReconnectCheck.state = config.autoReconnect;
 	
-	hostCombo.stringValue = config.host;
+	NSString *realHost = [self hostFoundInServerList:config.host];
+	hostCombo.stringValue = ((realHost == nil) ? config.host : realHost);
+	
 	sslCheck.state = config.useSSL;
 	portText.intValue = config.port;
 
@@ -193,19 +230,26 @@
 
 - (void)save
 {
-	if ([nameText.stringValue length] < 1) {
-		config.name = TXTLS(@"UNTITLED_CONNECTION_NAME");
-	} else {
-		config.name = nameText.stringValue;
-	}
-	
 	config.autoConnect = autoConnectCheck.state;
 	config.autoReconnect = autoReconnectCheck.state;
+	
+	NSString *realHost = nil;
 	
 	if (hostCombo.stringValue.length < 1) {
 		config.host = @"unknown.host.com";
 	} else {
-		config.host = hostCombo.stringValue;
+		realHost = [self nameMatchesServerInList:hostCombo.stringValue];
+		config.host = ((realHost == nil) ? hostCombo.stringValue : [serverList objectForKey:realHost]);
+	}
+	
+	if ([nameText.stringValue length] < 1) {
+		if (realHost == nil) {
+			config.name = TXTLS(@"UNTITLED_CONNECTION_NAME");
+		} else {
+			config.name = realHost;
+		}
+	} else {
+		config.name = nameText.stringValue;
 	}
 	
 	config.useSSL = sslCheck.state;

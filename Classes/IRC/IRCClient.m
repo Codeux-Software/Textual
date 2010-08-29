@@ -985,6 +985,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (!str.length) return;
 	
 	LogLineType type;
+	
 	if ([command isEqualToString:NOTICE]) {
 		type = LINE_TYPE_NOTICE;
 	} else if ([command isEqualToString:ACTION]) {

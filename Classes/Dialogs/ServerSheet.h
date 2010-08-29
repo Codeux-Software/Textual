@@ -18,6 +18,8 @@
 	NSInteger initialTabTag;
 	NSView *initalView;
 	
+	NSDictionary *serverList;
+	
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *generalView;
 	IBOutlet NSView *detailsView;
@@ -30,7 +32,7 @@
 	IBOutlet NSButton* autoReconnectCheck;
 	IBOutlet NSButton* autoConnectCheck;
 	
-	IBOutlet NSTextField* hostCombo;
+	IBOutlet NSComboBox* hostCombo;
 	IBOutlet NSButton* sslCheck;
 	IBOutlet NSTextField* portText;
 	
@@ -85,7 +87,7 @@
 @property (nonatomic, retain) NSTextField* nameText;
 @property (nonatomic, retain) NSButton* autoReconnectCheck;
 @property (nonatomic, retain) NSButton* autoConnectCheck;
-@property (nonatomic, retain) NSTextField* hostCombo;
+@property (nonatomic, retain) NSComboBox* hostCombo;
 @property (nonatomic, retain) NSButton* sslCheck;
 @property (nonatomic, retain) NSTextField* portText;
 @property (nonatomic, retain) NSTextField* nickText;
