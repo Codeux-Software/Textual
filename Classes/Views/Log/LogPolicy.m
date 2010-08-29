@@ -122,17 +122,38 @@
 		return ary;
 	} else if (menu) {
 		NSMutableArray* ary = [NSMutableArray array];
+		
+		NSMenuItem *inspectElementItem = nil;
+		NSMenuItem *lookupInDictionaryItem = nil;
+		
+		for (NSMenuItem* item in defaultMenuItems) {
+			switch ([item tag]) {
+				case WebMenuItemTagLookUpInDictionary:
+					lookupInDictionaryItem = item;
+					break;
+				case 2024:
+					inspectElementItem = item;
+					break;
+				default:
+					break;
+			}
+		}
+		
 		for (NSMenuItem* item in [menu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
+			if ([item tag] == 2024) {
+				if (lookupInDictionaryItem) {
+					[ary addObject:[[lookupInDictionaryItem copy] autorelease]];
+				}
+			} else {
+				[ary addObject:[[item copy] autorelease]];
+			}
 		}
 		
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TextualDeveloperEnvironment"]) {
 			[ary addObject:[NSMenuItem separatorItem]];
 			
-			for (NSMenuItem* item in defaultMenuItems) {
-				if ([[item title] isEqualToString:@"Inspect Element"]) {
-					[ary addObject:[[item copy] autorelease]];
-				}
+			if (inspectElementItem) {
+				[ary addObject:[[inspectElementItem copy] autorelease]];
 			}
 			
 			NSMenuItem* copyHTML = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
