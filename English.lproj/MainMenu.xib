@@ -2,16 +2,20 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H525</string>
+		<string key="IBDocument.SystemVersion">10H531</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.34</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="374"/>
+			<integer value="963"/>
 			<integer value="1385"/>
+			<integer value="327"/>
+			<integer value="432"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2132,6 +2136,15 @@
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
 						<int key="NSTag">331</int>
+					</object>
+					<object class="NSMenuItem" id="345955604">
+						<reference key="NSMenu" ref="705667632"/>
+						<string key="NSTitle">Look Up in Dictionary</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="222848805"/>
+						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">2024</int>
 					</object>
 					<object class="NSMenuItem" id="506637178">
 						<reference key="NSMenu" ref="705667632"/>
@@ -4751,6 +4764,7 @@
 							<reference ref="530415046"/>
 							<reference ref="224753435"/>
 							<reference ref="62496604"/>
+							<reference ref="345955604"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">LogMenu</string>
@@ -5725,6 +5739,11 @@
 						<reference key="object" ref="686748612"/>
 						<reference key="parent" ref="403887256"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1676</int>
+						<reference key="object" ref="345955604"/>
+						<reference key="parent" ref="705667632"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -5773,7 +5792,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{845, 771}, {222, 103}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{1006, 747}, {222, 103}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5901,6 +5920,7 @@
 				<string key="1663.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1666.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1667.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1676.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="168.ImportedFromIB2"/>
 				<string key="169.IBEditorWindowLastContentRect">{{878, 724}, {204, 233}}</string>
@@ -5972,7 +5992,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{329, 874}, {577, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{490, 850}, {577, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6026,7 +6046,7 @@
 				<boolean value="YES" key="367.ImportedFromIB2"/>
 				<string key="369.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="369.ImportedFromIB2"/>
-				<string key="374.IBEditorWindowLastContentRect">{{1009, 710}, {226, 203}}</string>
+				<string key="374.IBEditorWindowLastContentRect">{{1009, 690}, {237, 223}}</string>
 				<string key="374.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="374.ImportedFromIB2"/>
 				<string key="377.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6158,7 +6178,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1668</int>
+			<int key="maxID">1676</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6797,6 +6817,7 @@
 						<string key="onWantMainWindowCentered:">id</string>
 						<string key="onWantMainWindowShown:">id</string>
 						<string key="onWantTextualConnnectToHelp:">id</string>
+						<string key="onWantThemeForceReloaded:">id</string>
 						<string key="onWantToReadChannelLogs:">id</string>
 						<string key="onWantToReadTextualLogs:">id</string>
 						<string key="openHelpMenuLinkItem:">id</string>
@@ -7049,6 +7070,10 @@
 						</object>
 						<object class="IBActionInfo" key="onWantTextualConnnectToHelp:">
 							<string key="name">onWantTextualConnnectToHelp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onWantThemeForceReloaded:">
+							<string key="name">onWantThemeForceReloaded:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onWantToReadChannelLogs:">
@@ -7878,7 +7903,7 @@
 						<string key="encodingCombo">NSPopUpButton</string>
 						<string key="fallbackEncodingCombo">NSPopUpButton</string>
 						<string key="generalView">NSView</string>
-						<string key="hostCombo">NSTextField</string>
+						<string key="hostCombo">NSComboBox</string>
 						<string key="ignoreTable">ListView</string>
 						<string key="ignoresView">NSView</string>
 						<string key="invisibleCheck">NSButton</string>
@@ -7896,6 +7921,7 @@
 						<string key="proxyPortText">NSTextField</string>
 						<string key="proxyUserText">NSTextField</string>
 						<string key="realNameText">NSTextField</string>
+						<string key="sleepQuitMessageText">NSTextField</string>
 						<string key="sslCheck">NSButton</string>
 						<string key="tabView">NSSegmentedControl</string>
 						<string key="userInfoText">NSTextField</string>
@@ -7964,7 +7990,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="hostCombo">
 							<string key="name">hostCombo</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">NSComboBox</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="ignoreTable">
 							<string key="name">ignoreTable</string>
@@ -8032,6 +8058,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="realNameText">
 							<string key="name">realNameText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sleepQuitMessageText">
+							<string key="name">sleepQuitMessageText</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="sslCheck">
@@ -8369,6 +8399,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSComboBox</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSComboBox.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -9093,7 +9131,7 @@
 			<string key="FormattingColor_9">{16, 16}</string>
 			<string key="NSMenuCheckmark">{9, 8}</string>
 			<string key="NSMenuMixedState">{7, 2}</string>
-			<string key="rainbow">{16, 16}</string>
+			<string key="rainbow">{3.84013, 3.84013}</string>
 		</dictionary>
 	</data>
 </archive>
