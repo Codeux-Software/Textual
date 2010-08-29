@@ -5,7 +5,7 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -22,6 +22,8 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
+			} else if ([commandString isEqualToString:@"NETSTATS"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getNetworkStats]];
 			}
 		}
 	}
