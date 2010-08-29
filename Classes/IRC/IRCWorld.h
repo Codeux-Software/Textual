@@ -20,6 +20,7 @@
 #import "GrowlController.h"
 #import "IconManager.h"
 #import "IRCExtras.h"
+#import "GlobalModels.h"
 
 @interface IRCWorld : NSObject 
 {
@@ -45,6 +46,11 @@
 	NSMenu* chanMenu;
 	NSMenu* memberMenu;
 	
+	NSInteger messagesSent;
+	NSInteger messagesReceived;
+	TXFSLongInt bandwidthIn;
+	TXFSLongInt bandwidthOut;
+	
 	LogController* dummyLog;
 	
 	IRCWorldConfig* config;
@@ -67,6 +73,10 @@
 @property (nonatomic, retain) NSMutableArray *allLoadedBundles;
 @property (nonatomic, retain) NSMutableDictionary *bundlesForUserInput;
 @property (nonatomic, retain) NSMutableDictionary *bundlesForServerInput;
+@property (nonatomic, assign) NSInteger messagesSent;
+@property (nonatomic, assign) NSInteger messagesReceived;
+@property (nonatomic, assign) TXFSLongInt bandwidthIn;
+@property (nonatomic, assign) TXFSLongInt bandwidthOut;
 @property (nonatomic, assign) IRCExtras* extrac;
 @property (nonatomic, assign) MainWindow* window;
 @property (nonatomic, assign) GrowlController* growl;

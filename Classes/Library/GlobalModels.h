@@ -5,6 +5,8 @@
 
 void TXCFSpecialRelease(CFTypeRef cf);
 
+typedef unsigned long long TXFSLongInt; // filesizes
+
 extern NSString *TXTLS(NSString *key);
 extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhole - Good for "variable not used" warnings. 
 extern NSInteger TXRandomThousandNumber(void);

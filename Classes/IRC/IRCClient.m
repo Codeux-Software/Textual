@@ -1971,8 +1971,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[conn sendLine:str];
 	
 	if (rawModeEnabled) {
-		NSLog(@" >> %@", str);
+		NSLog(@" << %@", str);
 	}
+	
+	world.messagesSent++;
+	world.bandwidthOut += [str length];
 }
 
 - (void)send:(NSString*)str, ...
@@ -4119,8 +4122,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if (!s) return;
 	}
 	
+	world.messagesReceived++;
+	world.bandwidthIn += [s length];
+	
 	if (rawModeEnabled) {
-		NSLog(@" << %@", s);
+		NSLog(@" >> %@", s);
 	}
 	
 	if ([Preferences removeAllFormatting]) {

@@ -122,7 +122,7 @@
 #pragma mark -
 #pragma mark Formatting/Processing 
 
-+ (NSString *)formattedDiskSize:(TXLongInt)size
++ (NSString *)formattedDiskSize:(TXFSLongInt)size
 {
 	if (size >= 1099511627776) {
 		return [NSString stringWithFormat:@"%.2f TB", (size / 1099511627776.0)];
@@ -158,7 +158,7 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:(TXLongInt)info.resident_size]];
+		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:(TXFSLongInt)info.resident_size]];
 	} 
 	
 	return nil;
@@ -199,8 +199,8 @@
 	NSDictionary *diskInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
-		TXLongInt totalSpace = [[diskInfo objectForKey:@"NSFileSystemSize"] longLongValue];
-		TXLongInt freeSpace = [[diskInfo objectForKey:@"NSFileSystemFreeSize"] longLongValue];
+		TXFSLongInt totalSpace = [[diskInfo objectForKey:@"NSFileSystemSize"] longLongValue];
+		TXFSLongInt freeSpace = [[diskInfo objectForKey:@"NSFileSystemFreeSize"] longLongValue];
 		
 		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 	} else {
@@ -271,7 +271,7 @@
 	size_t len = sizeof(size);
 	
 	if (sysctlbyname("hw.l2cachesize", &size, &len, NULL, 0) >= 0) {
-		return [self formattedDiskSize:(TXLongInt)size];
+		return [self formattedDiskSize:(TXFSLongInt)size];
 	} else {
 		return nil;
 	}
@@ -283,10 +283,16 @@
 	size_t len = sizeof(size);
 	
 	if (sysctlbyname("hw.l3cachesize", &size, &len, NULL, 0) >= 0) {
-		return [self formattedDiskSize:(TXLongInt)size];
+		return [self formattedDiskSize:(TXFSLongInt)size];
 	} else {
 		return nil;
 	}
+}
+
++ (NSString *)getBandwidthStats:(IRCWorld *)world
+{
+	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. This equals \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
+			world.messagesSent, world.messagesReceived, [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
 }
 
 + (NSString *)getNetworkStats
@@ -360,7 +366,7 @@
 	linesize = 0L;
 	
 	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		TXLongInt memtotal = (TXLongInt)linesize;
+		TXFSLongInt memtotal = (TXFSLongInt)linesize;
 		return [self formattedDiskSize:memtotal];
 	} else {
 		return nil;
