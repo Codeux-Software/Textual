@@ -34,10 +34,6 @@
 	log = nil;
 	
 	log = [[world createLogWithClient:u channel:c] retain];
-	
-	if (c) {
-		[log setTopic:c.topic];
-	}
 }
 
 - (IRCClient*)client

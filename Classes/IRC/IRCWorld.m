@@ -617,6 +617,7 @@
 {
 	for (IRCClient* u in clients) {
 		[u.log changeTextSize:bigger];
+		
 		for (IRCChannel* c in u.channels) {
 			[c.log changeTextSize:bigger];
 		}
@@ -633,6 +634,8 @@
 	if ([c.name isEqualToString:[[self selectedChannel] name]]) {
 		[self outlineViewSelectionDidChange:nil];
 	}
+	
+	[c.log setTopic:c.topic];
 }
 
 - (void)clearContentsOflient:(IRCClient*)u
