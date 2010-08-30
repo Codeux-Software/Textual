@@ -1046,7 +1046,7 @@ typedef enum {
 
 - (void)sendNotice:(NSEvent*)e
 {
-	[self sendText:NOTICE];
+	[self sendText:ACTION];
 }
 
 - (void)inputHistoryUp:(NSEvent*)e
