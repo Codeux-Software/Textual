@@ -4,6 +4,7 @@
 
 #import "IRCTreeItem.h"
 #import "IRCWorld.h"
+#import "InputHistory.h"
 
 @implementation IRCTreeItem
 
@@ -14,10 +15,16 @@
 @synthesize isNewTalk;
 @synthesize unreadCount;
 @synthesize keywordCount;
+@synthesize inputHistory;
 
 - (void)dealloc
 {
 	[log release];
+	
+	if ([Preferences inputHistoryIsChannelSpecific]) {
+		[inputHistory release];
+	}
+	
 	[super dealloc];
 }
 

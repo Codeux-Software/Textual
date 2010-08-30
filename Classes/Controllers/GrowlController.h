@@ -39,7 +39,7 @@ typedef enum {
 @property (nonatomic, retain) TinyGrowlClient* growl;
 @property (nonatomic, retain) id lastClickedContext;
 @property CFAbsoluteTime lastClickedTime;
-@property (nonatomic) BOOL registered;
+@property (nonatomic, assign) BOOL registered;
 
 - (void)registerToGrowl;
 - (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;

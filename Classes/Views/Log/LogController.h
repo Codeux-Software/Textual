@@ -71,18 +71,18 @@
 @property (nonatomic, retain) MarkedScroller* scroller;
 @property (nonatomic, retain) WebScriptObject* js;
 @property (nonatomic, retain) WebViewAutoScroll* autoScroller;
-@property (nonatomic) BOOL becameVisible;
-@property (nonatomic) BOOL bottom;
-@property (nonatomic) BOOL movingToBottom;
+@property (nonatomic, assign) BOOL becameVisible;
+@property (nonatomic, assign) BOOL bottom;
+@property (nonatomic, assign) BOOL movingToBottom;
 @property (nonatomic, retain) NSMutableArray* lines;
 @property (nonatomic) NSInteger lineNumber;
 @property (nonatomic) NSInteger count;
-@property (nonatomic) BOOL needsLimitNumberOfLines;
-@property (nonatomic) BOOL loaded;
+@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
+@property (nonatomic, assign) BOOL loaded;
 @property (nonatomic) NSInteger loadingImages;
 @property (nonatomic, retain) NSString* prevNickInfo;
 @property (nonatomic, retain) NSString* html;
-@property (nonatomic) BOOL scrollBottom;
+@property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic) NSInteger scrollTop;
 
 - (void)setUp;

@@ -547,6 +547,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud objectForKey:@"Preferences.Theme.nick_format"];
 }
 
++ (BOOL)inputHistoryIsChannelSpecific
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.Theme.inputhistory_per_channel"];
+}
+
 + (BOOL)themeOverrideLogFont
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1094,6 +1100,7 @@ static NSMutableArray* excludeWords;
 	[d setInt:1096 forKey:@"Preferences.DCC.first_port"];
 	[d setInt:1115 forKey:@"Preferences.DCC.last_port"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
+	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

@@ -5,9 +5,10 @@
 #import <Cocoa/Cocoa.h>
 #import "ScriptsWrapper.h"
 
-#define ThemeDidChangeNotification			@"ThemeDidChangeNotification"
-#define ThemeSelectedConsoleNotification	@"ThemeSelectedConsoleNotification"
-#define ThemeSelectedChannelNotification	@"ThemeSelectedChannelNotification"
+#define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
+#define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
+#define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
+#define InputHistoryGlobalSchemeNotification	@"InputHistoryGlobalSchemeNotification"
 
 @interface PreferencesController : NSWindowController
 {
@@ -92,6 +93,7 @@
 - (void)onOpenPathToThemes:(id)sender;
 - (void)onLayoutChanged:(id)sender;
 - (void)onTextDirectionChanged:(id)sender;
+- (void)onInputHistorySchemeChanged:(id)sender;
 
 - (void)firstPane:(NSView *)view;
 @end

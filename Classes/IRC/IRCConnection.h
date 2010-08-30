@@ -54,7 +54,7 @@
 @property (nonatomic, assign) BOOL loggedIn;
 @property (nonatomic, retain) TCPClient* conn;
 @property (nonatomic, retain) NSMutableArray* sendQueue;
-@property (nonatomic) BOOL sending;
+@property (nonatomic, assign) BOOL sending;
 
 - (void)open;
 - (void)close;

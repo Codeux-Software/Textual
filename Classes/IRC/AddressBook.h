@@ -33,7 +33,7 @@
 @property (nonatomic, assign) BOOL ignoreJPQE;
 @property (nonatomic, assign) BOOL notifyJoins;
 @property (nonatomic, retain) NSString* hostmaskRegex;
-@property (nonatomic) BOOL notifyWhoisJoins;
+@property (nonatomic, assign) BOOL notifyWhoisJoins;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSDictionary*)dictionaryValue;

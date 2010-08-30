@@ -106,7 +106,7 @@
 @property (nonatomic, retain) LogController* dummyLog;
 @property (nonatomic, retain) IRCWorldConfig* config;
 @property (nonatomic) NSInteger itemId;
-@property (nonatomic) BOOL reloadingTree;
+@property (nonatomic, assign) BOOL reloadingTree;
 @property (nonatomic) NSInteger previousSelectedClientId;
 @property (nonatomic) NSInteger previousSelectedChannelId;
 

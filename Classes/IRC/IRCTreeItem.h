@@ -7,6 +7,7 @@
 @class IRCWorld;
 @class IRCClient;
 @class IRCChannel;
+@class InputHistory;
 @class LogController;
 
 @interface IRCTreeItem : NSObject 
@@ -18,6 +19,7 @@
 	BOOL isNewTalk;
 	NSInteger keywordCount;
 	NSInteger unreadCount;
+	InputHistory *inputHistory;
 }
 
 @property (nonatomic, assign) NSInteger uid;
@@ -32,6 +34,7 @@
 @property (nonatomic, readonly) IRCClient* client;
 @property (nonatomic, readonly) NSString* label;
 @property (nonatomic, readonly) NSString* name;
+@property (nonatomic, retain) InputHistory *inputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;

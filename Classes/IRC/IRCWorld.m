@@ -11,6 +11,7 @@
 #import "IconManager.h"
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
+#import "InputHistory.h"
 
 #define AUTO_CONNECT_DELAY              1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8
@@ -653,6 +654,11 @@
 	IRCClient* c = [[IRCClient new] autorelease];
 	c.uid = ++itemId;
 	c.world = self;
+	
+	if ([Preferences inputHistoryIsChannelSpecific]) {
+		c.inputHistory = [InputHistory new];
+	}
+	
 	c.log = [self createLogWithClient:c channel:nil];
 	[c setup:seed];
 	
@@ -675,6 +681,11 @@
 	c = [[IRCChannel new] autorelease];
 	c.uid = ++itemId;
 	c.client = client;
+	
+	if ([Preferences inputHistoryIsChannelSpecific]) {
+		c.inputHistory = [InputHistory new];
+	}
+	
 	c.mode.isupport = client.isupport;
 	[c setup:seed];
 	c.log = [self createLogWithClient:client channel:c];
@@ -983,6 +994,10 @@
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
 	[selected.log.view clearSelection];
+	
+	if ([Preferences inputHistoryIsChannelSpecific]) {
+		menuController.master.inputHistory = selected.inputHistory;
+	}
 	
 	[self updateTitle];
 	[self reloadTree];
