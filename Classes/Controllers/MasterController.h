@@ -90,7 +90,7 @@
 @property (nonatomic, retain) ViewTheme* viewTheme;
 @property (nonatomic, retain) InputHistory* inputHistory;
 @property (nonatomic, retain) NickCompletinStatus* completionStatus;
-@property (nonatomic) BOOL terminating;
+@property (nonatomic, assign) BOOL terminating;
 
 - (IBAction)insertColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
@@ -99,16 +99,17 @@
 
 - (void)textEntered:(id)sender;
 
-- (void)selectPreviousChannel:(NSEvent*)e;
-- (void)selectNextChannel:(NSEvent*)e;
-- (void)selectPreviousUnreadChannel:(NSEvent*)e;
-- (void)selectNextUnreadChannel:(NSEvent*)e;
-- (void)selectPreviousActiveChannel:(NSEvent*)e;
-- (void)selectNextActiveChannel:(NSEvent*)e;
 - (void)selectNextServer:(NSEvent*)e;
-- (void)selectPreviousActiveServer:(NSEvent*)e;
-- (void)selectNextActiveServer:(NSEvent*)e;
-- (void)selectPreviousSelection:(NSEvent*)e;
-- (void)selectPreviousServer:(NSEvent*)e;
+- (void)selectNextChannel:(NSEvent*)e;
 - (void)selectNextSelection:(NSEvent*)e;
+- (void)selectPreviousServer:(NSEvent*)e;
+- (void)selectPreviousChannel:(NSEvent*)e;
+- (void)selectNextActiveServer:(NSEvent*)e;
+- (void)selectNextUnreadChannel:(NSEvent*)e;
+- (void)selectNextActiveChannel:(NSEvent*)e;
+- (void)selectPreviousSelection:(NSEvent*)e;
+- (void)selectPreviousActiveServer:(NSEvent*)e;
+- (void)selectPreviousUnreadChannel:(NSEvent*)e;
+- (void)selectPreviousActiveChannel:(NSEvent*)e;
+
 @end

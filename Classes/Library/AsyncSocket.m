@@ -207,7 +207,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 @property NSTimeInterval timeout;
 @property CFIndex readLength;
 @property (nonatomic, retain) NSData *term;
-@property (nonatomic) BOOL bufferOwner;
+@property (nonatomic, assign) BOOL bufferOwner;
 @property NSUInteger originalBufferLength;
 @property long tag;
 @end

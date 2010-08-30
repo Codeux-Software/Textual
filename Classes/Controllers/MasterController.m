@@ -52,8 +52,8 @@
 	[fieldEditor release];
 	[world release];
 	[viewTheme release];
-	[inputHistory release];
 	[completionStatus release];
+	[inputHistory release];
 	[super dealloc];
 }
 
@@ -74,6 +74,7 @@
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
+	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
 	NSNotificationCenter* wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
 	[wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
@@ -181,8 +182,10 @@
 	world.growl = growl;
 	[growl registerToGrowl];
 	
-	inputHistory = [InputHistory new];
-
+	if (![Preferences inputHistoryIsChannelSpecific]) {
+		inputHistory = [InputHistory new];
+	}
+	
 	[self registerKeyHandlers];
 	
 	[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
@@ -620,6 +623,40 @@
 	[world reloadTheme];
 	[self setColumnLayout];
 	[window setAlphaValue:[Preferences themeTransparency]];
+}
+
+- (void)inputHistorySchemeChanged:(NSNotification*)note
+{
+	if (inputHistory) {
+		[inputHistory release];
+		inputHistory = nil;
+	}
+	
+	for (IRCClient *c in world.clients) {
+		if (c.inputHistory) {
+			[c.inputHistory release];
+			c.inputHistory = nil;
+		}
+		
+		if ([Preferences inputHistoryIsChannelSpecific]) {
+			c.inputHistory = [InputHistory new];
+		}
+		
+		for (IRCChannel *u in c.channels) {
+			if (u.inputHistory) {
+				[u.inputHistory release];
+				u.inputHistory = nil;
+			}
+			
+			if ([Preferences inputHistoryIsChannelSpecific]) {
+				u.inputHistory = [InputHistory new];
+			}
+		}
+	}
+	
+	if (![Preferences inputHistoryIsChannelSpecific]) {
+		inputHistory = [InputHistory new];
+	}
 }
 
 #pragma mark -

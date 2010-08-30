@@ -514,6 +514,12 @@
 	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
 }
 
+- (void)onInputHistorySchemeChanged:(id)sender
+{
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:InputHistoryGlobalSchemeNotification object:nil userInfo:nil];
+}
+
 - (void)onLayoutChanged:(id)sender
 {
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];

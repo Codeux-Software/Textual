@@ -30,7 +30,7 @@
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld* world;
 @property (nonatomic, assign) NSWindow* mainWindow;
-@property (nonatomic) BOOL loaded;
+@property (nonatomic, assign) BOOL loaded;
 @property (nonatomic, retain) NSMutableArray* receivers;
 @property (nonatomic, retain) NSMutableArray* senders;
 @property (nonatomic, retain) Timer* timer;
