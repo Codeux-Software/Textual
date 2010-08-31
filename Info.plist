@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>6391</string>
+	<string>6401</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.5.7</string>
+	<string>1.0.5.8</string>
 	<key>LSArchitecturePriority</key>
 	<array>
 		<string>x86_64</string>
@@ -51,8 +51,6 @@
 		<key>x86_64</key>
 		<string>10.6.0</string>
 	</dict>
-	<key>NSAppleScriptEnabled</key>
-	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 Codeux Software</string>
 	<key>NSMainNibFile</key>

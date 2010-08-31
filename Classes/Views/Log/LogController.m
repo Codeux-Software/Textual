@@ -506,10 +506,7 @@
 	prevNickInfo = [line.nickInfo retain];
 	
 	if (key && [Preferences logAllHighlightsToQuery]) {
-		IRCChannel *hlc = [client findChannel:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE")];
-		if (!hlc) {
-			hlc = [world createTalk:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") client:client];
-		}
+		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
 		
 		line.body = [NSString stringWithFormat:TXTLS(@"IRC_USER_WAS_HIGHLIGHTED"), [channel name], line.body];
 		line.keywords = nil;
