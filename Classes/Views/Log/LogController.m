@@ -197,8 +197,12 @@
 
 - (void)setTopicWithDelay:(NSString *)topic
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	[NSThread sleepForTimeInterval:2.0];
 	[[self invokeOnMainThread] setTopicWithoutDelay:topic];
+	
+	[pool release];
 }
 
 - (void)setTopic:(NSString *)topic 

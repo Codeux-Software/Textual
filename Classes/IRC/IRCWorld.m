@@ -835,7 +835,7 @@
 
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel
 {
-	LogController* c = [[LogController new] autorelease];
+	LogController* c = [LogController new];
 	c.menu = logMenu;
 	c.urlMenu = urlMenu;
 	c.addrMenu = addrMenu;
