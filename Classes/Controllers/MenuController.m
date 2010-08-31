@@ -1384,6 +1384,12 @@
 	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
+- (void)onWantChannelBanExceptionList:(id)sender
+{
+	[world.selectedClient createChanBanExceptionListDialog];
+	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+e", nil];
+}
+
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	switch ([sender tag]) {
@@ -1395,6 +1401,18 @@
 			break;
 		case 103:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/text-formatting"]];
+			break;
+		case 104:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/command-reference"]];
+			break;
+		case 105:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/memory-management"]];
+			break;
+		case 106:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/styles"]];
+			break;
+		case 107:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/private/appcast/changelog.html"]];
 			break;
 		default:
 			break;

@@ -426,6 +426,43 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	chanBanListSheet = nil;
 }
 
+- (void)createChanBanExceptionListDialog
+{
+	if (!banExceptionSheet) {
+		IRCClient* u = world.selectedClient;
+		IRCChannel* c = world.selectedChannel;
+		if (!u || !c) return;
+		
+		banExceptionSheet = [ChanBanExceptionSheet new];
+		banExceptionSheet.delegate = self;
+		banExceptionSheet.window = world.window;
+	} else {
+		[banExceptionSheet ok:nil];
+		banExceptionSheet = nil;
+		[self createChanBanExceptionListDialog];
+		return;
+	}
+	
+	inChanBanList = YES;
+	
+	[banExceptionSheet show];
+}
+
+- (void)chanBanExceptionDialogOnUpdate:(ChanBanExceptionSheet*)sender
+{
+    [self send:MODE, [[world selectedChannel] name], @"+e", nil];
+}
+
+- (void)chanBanExceptionDialogWillClose:(ChanBanExceptionSheet*)sender
+{
+	if ([sender.modeString length] > 1) {
+		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", MODE, [[world selectedChannel] name], sender.modeString]];
+	}
+	
+	inChanBanList = NO;
+	banExceptionSheet = nil;
+}
+
 #pragma mark -
 #pragma mark ListDialog
 
@@ -1699,12 +1736,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					[world destroyChannel:c];
 				}
 			} else {
-				IRCChannel* c = [self findChannel:nick];
-				
-				if (!c) {
-					c = [world createTalk:nick client:self];
-				}
-				
+				IRCChannel* c = [self findChannelOrCreate:nick useTalk:YES];
 				[world select:c];
 			}
 			return YES;
@@ -2016,6 +2048,29 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	return nil;
+}
+
+- (IRCChannel*)findChannelOrCreate:(NSString*)name
+{
+	IRCChannel *c = [self findChannel:name];
+	
+	if (c == nil) {
+		return [self findChannelOrCreate:name useTalk:NO];
+	} else {
+		return c;
+	}
+}
+
+- (IRCChannel*)findChannelOrCreate:(NSString*)name useTalk:(BOOL)doTalk
+{
+	if (doTalk) {
+		return [world createTalk:name client:self];
+	} else {
+		IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+		seed.name = name;
+		
+		return [world createChannel:seed client:self reload:YES adjust:YES];
+	}
 }
 
 - (NSInteger)indexOfTalkChannel
@@ -2765,15 +2820,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							
 							// ===================================================== //
 							
-							IRCChannel* c = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
+							IRCChannel* c = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
 							ignoreChecks = [self checkIgnoreAgainstHostmask:host
 																withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 							
 							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
-							
-							if (!c && sendEvent) {
-								c = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
-							}
 							
 							if ([ignoreChecks notifyJoins] == YES) {
 								sendEvent = YES;
@@ -2801,11 +2852,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							if ([Preferences handleIRCopAlerts] && [text contains:[Preferences IRCopAlertMatch]]) {
 								[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_NOTICE text:text];
 							} else {
-								IRCChannel* c = [self findChannel:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")];
-								
-								if (!c) {
-									c = [world createTalk:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE") client:self];
-								}
+								IRCChannel* c = [self findChannelOrCreate:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE") useTalk:YES];
 								
 								c.isUnread = YES;
 								
@@ -3058,15 +3105,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		chname = [chname safeSubstringToIndex:chname.length - 2];
 	}
 	
-	IRCChannel* c = [self findChannel:chname];
+	IRCChannel* c = [self findChannelOrCreate:chname];
 	
 	if (myself) {
-		if (!c) {
-			IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
-			seed.name = chname;
-			c = [world createChannel:seed client:self reload:YES adjust:YES];
-			[world save];
-		}
 		[c activate];
 		[self reloadTree];
 		
@@ -3103,11 +3144,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (sendEvent) {
 				if (![trackedUsers containsObject:[NSNumber numberWithInteger:ignoreChecks.cid]]) {
-					IRCChannel* nsc = [self findChannel:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")];
-					
-					if (!nsc) {
-						nsc = [world createTalk:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") client:self];
-					}
+					IRCChannel* nsc = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
 					
 					if ([ignoreChecks notifyJoins] == YES) {
 						nsc.isUnread = YES;
@@ -3893,9 +3930,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		}
 	    case 368:
+		case 349:
 			inChanBanList = NO;
 			break;
-	    case 381:
+		case 348:
+		{
+			NSString* mask = [m paramAt:2];
+			NSString* owner = [m paramAt:3];
+			long long seton = [[m paramAt:4] longLongValue];
+			
+			if (inChanBanList && banExceptionSheet) {
+			    [banExceptionSheet addException:mask tset:[dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:seton]] setby:owner];
+			} else {
+			    [self printUnknownReply:m];
+			}
+			break;
+	    }
+		case 381:
 			hasIRCopAccess = YES;
 		    [self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_USER_HAS_GOOD_LIFE"), m.sender.nick]];
 		    break;
@@ -4262,6 +4313,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize logDate;
 @synthesize whoisChannel;
 @synthesize chanBanListSheet;
+@synthesize banExceptionSheet;
 @synthesize inChanBanList;
 @synthesize trackedUsers;
 @synthesize hasIRCopAccess;

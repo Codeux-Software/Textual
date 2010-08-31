@@ -148,6 +148,7 @@
 - (void)onWantHostServVhostSet:(id)sender;
 - (void)onWantFindPanel:(id)sender;
 - (void)onWantChannelBanList:(id)sender;
+- (void)onWantChannelBanExceptionList:(id)sender;
 - (void)onWantMainWindowCentered:(id)sender;
 
 - (void)openHelpMenuLinkItem:(id)sender;

@@ -265,6 +265,9 @@
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
 		4CB0E77A122AC2CF003E802C /* IRCNetworks.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB0E760122AC295003E802C /* IRCNetworks.plist */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
+		4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */; };
+		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
+		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 /* End PBXBuildFile section */
 
@@ -379,6 +382,9 @@
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
 		4CD1733B120EB20600F03B37 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualPluginItem.h; sourceTree = "<group>"; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
+		4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanExceptionSheet.h; sourceTree = "<group>"; };
+		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
+		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
 		4CF1681711DC7B9200B60505 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanSheet.h; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
 		4CF1682D11DC7CAA00B60505 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanSheet.xib; sourceTree = "<group>"; };
@@ -704,6 +710,7 @@
 				4C8CCEA411952E1A001A07FF /* MainMenu.xib */,
 				4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerSheet.xib */,
+				4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */,
 				4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */,
 				4C62C7581221D385002DCB9A /* InputPromptDialog.xib */,
 			);
@@ -839,6 +846,8 @@
 				7835FB911177341D005DC0B4 /* ListDialog.m */,
 				4CF1681711DC7B9200B60505 /* ChanBanSheet.h */,
 				4CF1681811DC7B9200B60505 /* ChanBanSheet.m */,
+				4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */,
+				4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */,
 				4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */,
 				4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */,
 			);
@@ -1191,6 +1200,7 @@
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
 				4C982D16121F32430051543F /* URLParser.h in Headers */,
 				4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */,
+				4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1289,6 +1299,7 @@
 				4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */,
 				4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */,
 				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
+				4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,6 +1430,7 @@
 				4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */,
 				4C982D17121F32430051543F /* URLParser.m in Sources */,
 				4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */,
+				4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,6 +1467,14 @@
 				4C8CCEA511952E1A001A07FF /* English */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CDC703D122C6C48004F8B35 /* English */,
+			);
+			name = ChanBanExceptionSheet.xib;
 			sourceTree = "<group>";
 		};
 		4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */ = {

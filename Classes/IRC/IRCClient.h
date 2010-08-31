@@ -16,6 +16,7 @@
 #import "HostResolver.h"
 #import "FileLogger.h"
 #import "ChanBanSheet.h"
+#import "ChanBanExceptionSheet.h"
 #import "IRCMessage.h"
 #import "LogLine.h"
 
@@ -76,6 +77,7 @@ typedef enum {
 
 	IRCChannel* lastSelectedChannel;
 
+	ChanBanExceptionSheet* banExceptionSheet;
 	ChanBanSheet* chanBanListSheet;
 	ListDialog* channelListDialog;
 	ServerSheet* propertyDialog;
@@ -127,6 +129,7 @@ typedef enum {
 @property (nonatomic, retain) Timer* autoJoinTimer;
 @property (nonatomic, retain) Timer* commandQueueTimer;
 @property (nonatomic, retain) NSMutableArray* commandQueue;
+@property (nonatomic, retain) ChanBanExceptionSheet* banExceptionSheet;
 @property (nonatomic, retain) ChanBanSheet* chanBanListSheet;
 @property (nonatomic, retain) ListDialog* channelListDialog;
 @property (nonatomic, retain) FileLogger* logFile;
@@ -164,6 +167,7 @@ typedef enum {
 - (void)sendCTCPPing:(NSString*)target;
 
 - (void)createChanBanListDialog;
+- (void)createChanBanExceptionListDialog;
 
 - (BOOL)inputText:(NSString*)s command:(NSString*)command;
 - (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;
@@ -173,8 +177,11 @@ typedef enum {
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;
 
-- (IRCChannel*)findChannel:(NSString*)name;
 - (NSInteger)indexOfTalkChannel;
+
+- (IRCChannel*)findChannel:(NSString*)name;
+- (IRCChannel*)findChannelOrCreate:(NSString*)name;
+- (IRCChannel*)findChannelOrCreate:(NSString*)name useTalk:(BOOL)doTalk;
 
 - (void)createChannelListDialog;
 
