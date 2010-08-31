@@ -2820,11 +2820,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							
 							// ===================================================== //
 							
-							IRCChannel* c = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
+							IRCChannel* c = nil;
 							ignoreChecks = [self checkIgnoreAgainstHostmask:host
 																withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 							
 							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
+							
+							if (sendEvent) {
+								c = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
+							}
 							
 							if ([ignoreChecks notifyJoins] == YES) {
 								sendEvent = YES;
