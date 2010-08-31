@@ -34,9 +34,9 @@
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
-		4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */; };
+		4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
-		4C982D16121F32430051543F /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C982D14121F32430051543F /* URLParser.h */; };
+		4C982D16121F32430051543F /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C982D14121F32430051543F /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E123E1209DF8C004E5032 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C211737F660044E7A1 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -265,7 +265,7 @@
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
 		4CB0E77A122AC2CF003E802C /* IRCNetworks.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB0E760122AC295003E802C /* IRCNetworks.plist */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
-		4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */; };
+		4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
@@ -1096,6 +1096,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */,
 				4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */,
 				4C9E123E1209DF8C004E5032 /* MasterController.h in Headers */,
 				4C9E123F1209DF8C004E5032 /* SheetBase.h in Headers */,
@@ -1200,7 +1201,6 @@
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
 				4C982D16121F32430051543F /* URLParser.h in Headers */,
 				4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */,
-				4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
