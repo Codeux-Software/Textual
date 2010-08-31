@@ -1414,6 +1414,9 @@
 		case 107:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/private/appcast/changelog.html"]];
 			break;
+		case 108:
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/feature-requests"]];
+			break;
 		default:
 			break;
 	}
