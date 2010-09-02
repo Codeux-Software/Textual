@@ -8,7 +8,8 @@
          </BuildableProductReference>
       </BuildableProductReferences>
    </BuildAction>
-   <TestAction>
+   <TestAction
+      failureAction = "0">
    </TestAction>
    <ArchiveAction>
       <ArchivingStrategy
