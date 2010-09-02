@@ -3,11 +3,45 @@
    <BuildAction
       buildConfiguration = "Debug">
    </BuildAction>
-   <TestAction>
+   <TestAction
+      failureAction = "0">
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB">
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      loadSymbolsForSpecifiedModules = "NO"
+      displayScaleIsEnabled = "NO"
+      displayScale = "1.00">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Project settings cannot be shared in Xcode 4 for where
+# builds should be placed after being compiled so let us
+# put them in the correct folder regardless of configuration.
+
+if [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then
+exit
+fi
+
+if [ $DEPLOYMENT_LOCATION == &quot;NO&quot; ]; then
+exit
+fi
+
+if [ ! -d $PROJECT_DIR/build ]; then
+mkdir $PROJECT_DIR/build
+fi
+
+if [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then
+mkdir $PROJECT_DIR/build/$CONFIGURATION
+fi
+
+rm -rf $PROJECT_DIR/build/$CONFIGURATION/\*
+cp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
       <BuildableProductRunnable>
          <BuildableProductReference
             BuildableProductIdentifier = "Textual.app">

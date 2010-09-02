@@ -14,7 +14,7 @@
 			NSUInteger m = [e modifierFlags];
 			BOOL cmd = ((m & NSCommandKeyMask) != 0);
 			BOOL ctrl = ((m & NSControlKeyMask) != 0);
-			BOOL shift = ((m && NSShiftKeyMask) != 0);
+			BOOL shift = ((m & NSShiftKeyMask) != 0);
 			BOOL alt = ((m & NSAlternateKeyMask) != 0);
 			
 			if (!shift && !ctrl && !alt && !cmd) {
