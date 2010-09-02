@@ -43,22 +43,6 @@
 {
 	[self endSheet];
 	
-	NSMutableString* str = [NSMutableString stringWithString:@"-"];
-	NSMutableString* trail = [NSMutableString string];
-	
-	NSIndexSet *indexes = [table selectedRowIndexes];
-	NSUInteger current_index = [indexes lastIndex];
-	
-	while (current_index != NSNotFound)
-	{
-		[str appendString:@"e"];
-		[trail appendFormat:@" %@", [[list safeObjectAtIndex:current_index] safeObjectAtIndex:0]];
-		
-		current_index = [indexes indexLessThanIndex:current_index];
-	}
-	
-	modeString = [str stringByAppendingString:trail];
-	
 	if ([delegate respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
 		[delegate chanBanExceptionDialogWillClose:self];
 	}
@@ -95,6 +79,22 @@
 
 - (void)onRemoveExceptions:(id)sender
 {
+	NSMutableString* str = [NSMutableString stringWithString:@"-"];
+	NSMutableString* trail = [NSMutableString string];
+	
+	NSIndexSet *indexes = [table selectedRowIndexes];
+	NSUInteger current_index = [indexes lastIndex];
+	
+	while (current_index != NSNotFound)
+	{
+		[str appendString:@"e"];
+		[trail appendFormat:@" %@", [[list safeObjectAtIndex:current_index] safeObjectAtIndex:0]];
+		
+		current_index = [indexes indexLessThanIndex:current_index];
+	}
+	
+	modeString = [str stringByAppendingString:trail];
+    
 	[self ok:sender];
 }
 
