@@ -1318,7 +1318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\nexec $PROJECT_DIR/Resources/ShellCommands/copyTextualDist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
