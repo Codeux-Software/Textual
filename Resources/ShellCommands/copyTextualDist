@@ -1,20 +1,37 @@
-# -----------------------------------------------------------
-# Work around for Xcode 4's new build scheme                #
-# -----------------------------------------------------------
+# ----------------------------------------------------------------------
+#																	   #
+# 	Xcode 4 comes packed with a new build system which makes  		   #
+# 	it more difficult to manage build locations. It does let  		   #
+# 	the eventual build location to be configured, but it      		   #
+# 	cannot be shared. It is user specific. This script is     		   #
+# 	designed to compensate for the new method.                		   #
+#																	   #
+# 	Copyright © 2010 Codeux Software (www.codeux.com)				   #
+#																	   #
+# 	This script can be used for other projects that wish to 		   #
+# 	use old build scheme while developing in Xcode 4. Modify  		   #
+# 	as needed and please retain original credit. 				       #
+#																	   #
+# 	Tested in: Xcode 4 Preview 3 (Build 4A153)						   #
+#																	   #
+# ----------------------------------------------------------------------
 
+# Are we on Xcode 4?
 if [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then
 exit
 fi
 
+# Is this build occurring on a distribution scheme?
 if [ $DEPLOYMENT_LOCATION == "NO" ]; then
 exit
 fi
 
+# Flush out any existing data files
 if [ -d $PROJECT_DIR/build/ ]; then 
-# flush out old directory
 rm -r $PROJECT_DIR/build/
 fi
 
+# Create new build location
 if [ ! -d $PROJECT_DIR/build ]; then
 mkdir $PROJECT_DIR/build
 fi
@@ -23,13 +40,21 @@ if [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then
 mkdir $PROJECT_DIR/build/$CONFIGURATION
 fi
 
+# Move built product to new location
 rm -rf $PROJECT_DIR/build/$CONFIGURATION/*
 cp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 
-# -----------------------------------------------------------
-# Compensate for script being run before Xcode              #
-# completed compiling by replicating final steps            #
-# -----------------------------------------------------------
+# ----------------------------------------------------------------------
+#																	   #
+#	At the time that this script was written it could not be  		   #
+# 	ran as a "post-action" script in a scheme because of an 		   #
+# 	existing bug in the Xcode 4 preview. Therefore, the       		   #
+# 	script was placed in target procedures. The following     		   #
+# 	commands were built into it to compensate for the script 		   #
+# 	being run before Xcode completed compiling by replicating 		   #
+# 	final steps of the compiling process.          					   #
+#																	   #
+# ----------------------------------------------------------------------
 
 /usr/bin/touch -c $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 $DEVELOPER_BIN_DIR/strip -S $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
@@ -37,10 +62,11 @@ $DEVELOPER_BIN_DIR/strip -S $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 /bin/chmod -RH u+w,go-w,a+rX $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 /usr/bin/codesign -f -s "$CODE_SIGN_IDENTITY" $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 
-
-# -----------------------------------------------------------
-# Comment out the code below to not package result          #
-# -----------------------------------------------------------
+# ----------------------------------------------------------------------
+#																	   #
+# 	Comment out the code below to not package result        		   #
+#																	   #
+# ----------------------------------------------------------------------
 
 cd $PROJECT_DIR/build/$CONFIGURATION
 
