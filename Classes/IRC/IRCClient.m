@@ -15,11 +15,8 @@
 #import "NSWindowHelper.h"
 #import "NSBundleHelper.h"
 
-#import <sys/sysctl.h>  
-
 #define PONG_INTERVAL		150
 #define MAX_BODY_LEN		480
-#define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
 
@@ -98,11 +95,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		nameResolver = [HostResolver new];
 		nameResolver.delegate = self;
 		
-		quitTimer = [Timer new];
-		quitTimer.delegate = self;
-		quitTimer.reqeat = NO;
-		quitTimer.selector = @selector(onQuitTimer:);
-		
 		reconnectTimer = [Timer new];
 		reconnectTimer.delegate = self;
 		reconnectTimer.reqeat = NO;
@@ -156,8 +148,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[pongTimer stop];
 	[pongTimer release];
-	[quitTimer stop];
-	[quitTimer release];
 	[reconnectTimer stop];
 	[reconnectTimer release];
 	[retryTimer stop];
@@ -519,23 +509,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 }
 
-- (void)startQuitTimer
-{
-	if (quitTimer.isActive) return;
-	
-	[quitTimer start:QUIT_INTERVAL];
-}
-
-- (void)stopQuitTimer
-{
-	[quitTimer stop];
-}
-
-- (void)onQuitTimer:(id)sender
-{
-	[self disconnect];
-}
-
 - (void)startReconnectTimer
 {
 	if (config.autoReconnect) {
@@ -683,7 +656,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	reconnectEnabled = NO;
 	[conn clearSendQueue];
 	[self send:QUIT, comment ?: config.leavingComment, nil];
-	[self startQuitTimer];
+	[self disconnect];
 }
 
 - (void)cancelReconnect
@@ -1911,7 +1884,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[config setHost:s];
 			}
 			
-			if (u.isConnected) [self quit];
+			if (isConnected) [self quit];
 			[self connect];
 			
 			return YES;
@@ -4077,7 +4050,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	conn = nil;
 	
 	[self clearCommandQueue];
-	[self stopQuitTimer];
 	[self stopRetryTimer];
 	
 	if (reconnectEnabled) {
@@ -4308,7 +4280,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize nameResolver;
 @synthesize joinMyAddress;
 @synthesize pongTimer;
-@synthesize quitTimer;
 @synthesize reconnectTimer;
 @synthesize retryTimer;
 @synthesize autoJoinTimer;

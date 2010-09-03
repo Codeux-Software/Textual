@@ -5,6 +5,7 @@
 #import "NSStringHelper.h"
 #import "UnicodeHelper.h"
 #import "Preferences.h"
+#import "LogRenderer.h"
 #import "URLParser.h"
 
 #define LF	0xa
@@ -299,6 +300,22 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSString* s = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
 	return [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+}
+
+- (id)attributedStringWithIRCFormatting
+{
+	if ([Preferences removeAllFormatting]) {
+		return [self stripEffects];
+	}
+	
+	return [LogRenderer renderBody:self
+						   nolinks:NO
+						  keywords:nil
+					  excludeWords:nil
+					exactWordMatch:NO
+					   highlighted:NULL
+						 URLRanges:NULL
+				  attributedString:YES];
 }
 
 - (NSString*)stripEffects

@@ -68,7 +68,6 @@ typedef enum {
 	NSString* myAddress;
 
 	Timer* pongTimer;
-	Timer* quitTimer;
 	Timer* reconnectTimer;
 	Timer* retryTimer;
 	Timer* autoJoinTimer;
@@ -123,7 +122,6 @@ typedef enum {
 @property (nonatomic, retain) HostResolver* nameResolver;
 @property (nonatomic, retain) NSString* joinMyAddress;
 @property (nonatomic, retain) Timer* pongTimer;
-@property (nonatomic, retain) Timer* quitTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
 @property (nonatomic, retain) Timer* autoJoinTimer;
