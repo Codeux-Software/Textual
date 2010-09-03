@@ -2493,15 +2493,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		memberType = MEMBER_TYPE_MYSELF;
 	}
 	
+	if ([chan isKindOfClass:[IRCChannel class]]) {
+		channel = chan;
+	} else if ([chan isKindOfClass:[NSString class]]) {
+		place = [NSString stringWithFormat:@"<%@> ", chan];
+	}
+	
 	if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
 		if (memberType != MEMBER_TYPE_MYSELF) {
-			keywords = [Preferences keywords];
-			excludeWords = [Preferences excludeWords];
-			
-			if ([Preferences keywordCurrentNick]) {
-				NSMutableArray* ary = [[keywords mutableCopy] autorelease];
-				[ary insertObject:myNick atIndex:0];
-				keywords = ary;
+			if (channel && [[channel config] highlights] == YES) {
+				keywords = [Preferences keywords];
+				excludeWords = [Preferences excludeWords];
+				
+				if ([Preferences keywordCurrentNick]) {
+					NSMutableArray* ary = [[keywords mutableCopy] autorelease];
+					[ary insertObject:myNick atIndex:0];
+					keywords = ary;
+				}
 			}
 		}
 	}
@@ -2514,12 +2522,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (time.length) {
 		time = [time stringByAppendingString:@" "];
-	}
-	
-	if ([chan isKindOfClass:[IRCChannel class]]) {
-		channel = chan;
-	} else if ([chan isKindOfClass:[NSString class]]) {
-		place = [NSString stringWithFormat:@"<%@> ", chan];
 	}
 	
 	if (nick.length > 0) {

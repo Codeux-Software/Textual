@@ -53,23 +53,25 @@
 - (void)load
 {
 	nameText.stringValue = config.name;
-	passwordText.stringValue = config.password;
 	modeText.stringValue = config.mode;
 	topicText.stringValue = config.topic;
+	passwordText.stringValue = config.password;
 	
-	autoJoinCheck.state = config.autoJoin;
 	growlCheck.state = config.growl;
+	autoJoinCheck.state = config.autoJoin;
+	highlights.state = ((config.highlights == YES) ? NSOffState : NSOnState);
 }
 
 - (void)save
 {
 	config.name = nameText.stringValue;
-	config.password = passwordText.stringValue;
 	config.mode = modeText.stringValue;
 	config.topic = topicText.stringValue;
-
-	config.autoJoin = autoJoinCheck.state;
+	config.password = passwordText.stringValue;
+    
 	config.growl = growlCheck.state;
+	config.autoJoin = autoJoinCheck.state;
+    config.highlights = ((highlights.state == NSOnState) ? NO : YES);
 	
 	if (![config.name isChannelName]) {
 		config.name = [@"#" stringByAppendingString:config.name];
@@ -129,4 +131,5 @@
 @synthesize topicText;
 @synthesize autoJoinCheck;
 @synthesize growlCheck;
+@synthesize highlights;
 @end

@@ -16,8 +16,9 @@ typedef enum {
 	NSString* name;
 	NSString* password;
 	
-	BOOL autoJoin;
 	BOOL growl;
+	BOOL autoJoin;
+    BOOL highlights;
 	
 	NSString* mode;
 	NSString* topic;
@@ -28,6 +29,7 @@ typedef enum {
 @property (nonatomic, retain) NSString* password;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL growl;
+@property (nonatomic, assign) BOOL highlights;
 @property (nonatomic, retain) NSString* mode;
 @property (nonatomic, retain) NSString* topic;
 

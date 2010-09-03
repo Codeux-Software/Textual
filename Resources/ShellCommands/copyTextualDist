@@ -17,9 +17,7 @@
 # ----------------------------------------------------------------------
 
 # Are we on Xcode 4?
-if [ $XCODE_VERSION_ACTUAL -lt 0400 ]; then
-exit
-fi
+if [ $XCODE_VERSION_ACTUAL -ge 0400 ]; then
 
 # Is this build occurring on a distribution scheme?
 if [ $DEPLOYMENT_LOCATION == "NO" ]; then
@@ -62,6 +60,8 @@ $DEVELOPER_BIN_DIR/strip -S $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 /bin/chmod -RH u+w,go-w,a+rX $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 /usr/bin/codesign -f -s "$CODE_SIGN_IDENTITY" $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 
+fi
+
 # ----------------------------------------------------------------------
 #																	   #
 # 	Comment out the code below to not package result        		   #
@@ -71,6 +71,9 @@ $DEVELOPER_BIN_DIR/strip -S $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME
 cd $PROJECT_DIR/build/$CONFIGURATION
 
 buildNumber=$(/usr/libexec/PlistBuddy -c "Print \"Build Number\"" Textual.app/Contents/Info.plist)
+
+rm -if *.zip
+rm -if *.txt
 
 zip -r $buildNumber.zip *  
 
