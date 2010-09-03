@@ -16,6 +16,7 @@
 	IBOutlet NSTextField* passwordText;
 	IBOutlet NSTextField* modeText;
 	IBOutlet NSTextField* topicText;
+    IBOutlet NSButton* highlights;
 	IBOutlet NSButton* autoJoinCheck;
 	IBOutlet NSButton* growlCheck;
 }
@@ -29,6 +30,7 @@
 @property (nonatomic, retain) NSTextField* topicText;
 @property (nonatomic, retain) NSButton* autoJoinCheck;
 @property (nonatomic, retain) NSButton* growlCheck;
+@property (nonatomic, retain) NSButton* highlights;
 
 - (void)start;
 - (void)show;

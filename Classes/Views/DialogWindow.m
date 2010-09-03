@@ -7,7 +7,7 @@
 
 - (void)sendEvent:(NSEvent *)e
 {
-	if ([e type] == NSKeyDown) {
+	/*if ([e type] == NSKeyDown) {
 		NSInputManager* im = [NSInputManager currentInputManager];
 		if (!im || !im.markedRange.length) {
 			NSInteger k = [e keyCode];
@@ -26,7 +26,7 @@
 				}
 			}
 		}
-	}
+	}*/
 	
 	[super sendEvent:e];
 }
