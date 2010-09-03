@@ -10,11 +10,20 @@ extern NSString* logEscape(NSString* s);
 
 + (void)setUp;
 + (NSString*)renderBody:(NSString*)body 
-		    nolinks:(BOOL)showLinks 
-		   keywords:(NSArray*)keywords 
-	     excludeWords:(NSArray*)excludeWords 
-	   exactWordMatch:(BOOL)exactWordMatch 
-		highlighted:(BOOL*)highlighted 
-		  URLRanges:(NSArray**)urlRanges;
+				nolinks:(BOOL)showLinks 
+			   keywords:(NSArray*)keywords 
+		   excludeWords:(NSArray*)excludeWords 
+		 exactWordMatch:(BOOL)exactWordMatch 
+			highlighted:(BOOL*)highlighted 
+			  URLRanges:(NSArray**)urlRanges;
+
++ (id)renderBody:(NSString*)body 
+		 nolinks:(BOOL)showLinks 
+		keywords:(NSArray*)keywords 
+	excludeWords:(NSArray*)excludeWords 
+  exactWordMatch:(BOOL)exactWordMatch 
+	 highlighted:(BOOL*)highlighted 
+	   URLRanges:(NSArray**)urlRanges
+attributedString:(BOOL)attributed;
 
 @end

@@ -68,7 +68,7 @@
 
 - (void)addChannel:(NSString*)channel count:(NSInteger)count topic:(NSString*)topic
 {
-	NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, nil];
+	NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], [topic attributedStringWithIRCFormatting], nil];
 	
 	NSString* filter = [filterText stringValue];
 	if (filter.length) {
@@ -192,7 +192,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 		NSMutableArray* ary = [NSMutableArray new];
 		for (NSArray* item in list) {
 			NSString* channel = [item safeObjectAtIndex:0];
-			NSString* topic = [item safeObjectAtIndex:2];
+			NSString* topic = [[item safeObjectAtIndex:2] string];
 			if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
 				|| [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
 				[ary addObject:item];

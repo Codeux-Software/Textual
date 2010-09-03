@@ -140,6 +140,8 @@
 		4C9E12A21209DF8C004E5032 /* LogScriptEventSink.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18B11737F660044E7A1 /* LogScriptEventSink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12A31209DF8C004E5032 /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C12411737F660044E7A1 /* IRCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18511737F660044E7A1 /* LogLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C9FEAC412312BDC00740B40 /* NSFontHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FEAC212312BDC00740B40 /* NSFontHelper.h */; };
+		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4CA9456211E1AFBA00D36367 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C119CD711AD74880004F157 /* application.icns */; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
@@ -372,6 +374,8 @@
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 1; };
+		4C9FEAC212312BDC00740B40 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFontHelper.h; sourceTree = "<group>"; };
+		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		4CB0E760122AC295003E802C /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = Resources/Information/IRCNetworks.plist; sourceTree = "<group>"; };
@@ -907,6 +911,8 @@
 				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
 				78A8C0F811737F660044E7A1 /* NSDataHelper.h */,
 				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
+				4C9FEAC212312BDC00740B40 /* NSFontHelper.h */,
+				4C9FEAC312312BDC00740B40 /* NSFontHelper.m */,
 				78A7B4F41174427C006B324A /* NSData+Kana.h */,
 				78A7B4F51174427C006B324A /* NSData+Kana.m */,
 				78A8C0F611737F660044E7A1 /* NSColorHelper.h */,
@@ -1212,6 +1218,7 @@
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
 				4C982D16121F32430051543F /* URLParser.h in Headers */,
 				4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */,
+				4C9FEAC412312BDC00740B40 /* NSFontHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,6 +1450,7 @@
 				4C982D17121F32430051543F /* URLParser.m in Sources */,
 				4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */,
 				4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */,
+				4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

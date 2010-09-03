@@ -4,6 +4,8 @@
 
 #import "LogRenderer.h"
 #import "NSStringHelper.h"
+#import "NSFontHelper.h"
+#import "NSColorHelper.h"
 #import "GTMNSString+HTML.h"
 #import "UnicodeHelper.h"
 #import "Preferences.h"
@@ -67,6 +69,54 @@ NSString* logEscape(NSString* s)
 	return [s stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
+NSColor* mapColor(NSInteger colorChar) 
+{
+	switch (colorChar) {
+		case 0: return [NSColor fromCSS:@"#fff"]; 
+		case 1: return [NSColor fromCSS:@"#000"]; 
+		case 2: return [NSColor fromCSS:@"#008"]; 
+		case 3: return [NSColor fromCSS:@"#080"]; 
+		case 4: return [NSColor fromCSS:@"#f00"]; 
+		case 5: return [NSColor fromCSS:@"#800"]; 
+		case 6: return [NSColor fromCSS:@"#808"]; 
+		case 7: return [NSColor fromCSS:@"#f80"]; 
+		case 8: return [NSColor fromCSS:@"#ff0"]; 
+		case 9: return [NSColor fromCSS:@"#0f0"]; 
+		case 10: return [NSColor fromCSS:@"#088"]; 
+		case 11: return [NSColor fromCSS:@"#0ff"]; 
+		case 12: return [NSColor fromCSS:@"#00f"]; 
+		case 13: return [NSColor fromCSS:@"#f0f"]; 
+		case 14: return [NSColor fromCSS:@"#888"]; 
+		case 15: return [NSColor fromCSS:@"#ccc"]; 
+	}
+	
+	return nil;
+}
+
+static NSMutableAttributedString* renderAttributedRange(NSMutableAttributedString* body, attr_t attr, NSInteger start, NSInteger len)
+{
+	NSRange r = NSMakeRange(start, len);
+	
+	if (attr & EFFECT_MASK) {
+		NSFontTraitMask traitMask = 0;
+		NSFontManager *fontManager = [NSFontManager sharedFontManager];
+		
+		if (attr & BOLD_ATTR) traitMask |= NSBoldFontMask;
+		
+		NSFont *boldItalic = [fontManager fontWithFamily:@"Lucida Grande" traits:traitMask weight:1.0 size:12];
+		
+		if (attr & ITALIC_ATTR) boldItalic = [boldItalic convertToItalics];
+		
+		[body addAttribute:NSFontAttributeName value:boldItalic range:r];
+		
+		if (attr & UNDERLINE_ATTR) [body addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
+		if (attr & TEXT_COLOR_ATTR) [body addAttribute:NSForegroundColorAttributeName value:mapColor(attr & TEXT_COLOR_MASK) range:r];
+		if (attr & BACKGROUND_COLOR_ATTR) [body addAttribute:NSBackgroundColorAttributeName value:mapColor((attr & BACKGROUND_COLOR_MASK) >> 4) range:r];
+	}
+	
+	return body;
+}
+
 static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInteger len)
 {
 	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
@@ -117,12 +167,31 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 }
 
 + (NSString*)renderBody:(NSString*)body 
-		    nolinks:(BOOL)showLinks 
-		   keywords:(NSArray*)keywords 
-	     excludeWords:(NSArray*)excludeWords 
-	   exactWordMatch:(BOOL)exactWordMatch 
-		highlighted:(BOOL*)highlighted 
-		  URLRanges:(NSArray**)urlRanges;
+				nolinks:(BOOL)showLinks 
+			   keywords:(NSArray*)keywords 
+		   excludeWords:(NSArray*)excludeWords 
+		 exactWordMatch:(BOOL)exactWordMatch 
+			highlighted:(BOOL*)highlighted 
+			  URLRanges:(NSArray**)urlRanges
+{
+	return [self renderBody:body
+					nolinks:showLinks
+				   keywords:keywords
+			   excludeWords:excludeWords
+			 exactWordMatch:exactWordMatch
+				highlighted:highlighted
+				  URLRanges:urlRanges
+		   attributedString:NO];
+}
+
++ (id)renderBody:(NSString*)body 
+		 nolinks:(BOOL)showLinks 
+		keywords:(NSArray*)keywords 
+	excludeWords:(NSArray*)excludeWords 
+  exactWordMatch:(BOOL)exactWordMatch 
+	 highlighted:(BOOL*)highlighted 
+	   URLRanges:(NSArray**)urlRanges
+attributedString:(BOOL)attributed
 {
 	NSInteger len = body.length;
 	attr_t attrBuf[len];
@@ -188,7 +257,7 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 						}
 						
 						currentAttr &= ~(TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR | 0xFF);
-
+						
 						if (backgroundColor >= 0) {
 							backgroundColor %= 16;
 							currentAttr |= BACKGROUND_COLOR_ATTR;
@@ -236,132 +305,144 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 	body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
 	len = n;
 	
-	NSMutableArray* urlAry = [NSMutableArray array];
-	start = 0;
-	
-	if (!showLinks) {
-		while (start < len) {
-			NSRange r = [body rangeOfUrlStart:start];
-			if (r.location == NSNotFound) {
-				break;
-			}
-			
-			if (r.length == 1000) {
-				start = r.location + 1;
-			} else {			
-				setFlag(attrBuf, URL_ATTR, r.location, r.length);
-				[urlAry addObject:[NSValue valueWithRange:r]];
-				start = NSMaxRange(r) + 1;
-			}
-		}
-	}
-	
-	if (urlAry.count) {
-		*urlRanges = urlAry;
-	}
-	
-	BOOL foundKeyword = NO;
-	NSMutableArray* excludeRanges = [NSMutableArray array];
-	if (!exactWordMatch) {
-		for (NSString* excludeWord in excludeWords) {
-			start = 0;
+	if (!attributed) {
+		NSMutableArray* urlAry = [NSMutableArray array];
+		start = 0;
+		
+		if (!showLinks) {
 			while (start < len) {
-				NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				NSRange r = [body rangeOfUrlStart:start];
 				if (r.location == NSNotFound) {
 					break;
 				}
-				[excludeRanges addObject:[NSValue valueWithRange:r]];
-				start = NSMaxRange(r) + 1;
-			}
-		}
-	}
-	
-	for (NSString* keyword in keywords) {
-		start = 0;
-		while (start < len) {
-			NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
-			if (r.location == NSNotFound) {
-				break;
-			}
-			
-			BOOL enabled = YES;
-			for (NSValue* e in excludeRanges) {
-				if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
-					enabled = NO;
-					break;
+				
+				if (r.length == 1000) {
+					start = r.location + 1;
+				} else {			
+					setFlag(attrBuf, URL_ATTR, r.location, r.length);
+					[urlAry addObject:[NSValue valueWithRange:r]];
+					start = NSMaxRange(r) + 1;
 				}
 			}
-			
-			if (exactWordMatch) {
-				if (enabled) {
-					UniChar c = [body characterAtIndex:r.location];
-					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-						NSInteger prev = r.location - 1;
-						if (0 <= prev && prev < len) {
-							UniChar c = [body characterAtIndex:prev];
-							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-								enabled = NO;
+		}
+		
+		if (urlAry.count && urlRanges != NULL) {
+			*urlRanges = urlAry;
+		}
+		
+		BOOL foundKeyword = NO;
+		NSMutableArray* excludeRanges = [NSMutableArray array];
+		if (!exactWordMatch) {
+			for (NSString* excludeWord in excludeWords) {
+				start = 0;
+				while (start < len) {
+					NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+					if (r.location == NSNotFound) {
+						break;
+					}
+					[excludeRanges addObject:[NSValue valueWithRange:r]];
+					start = NSMaxRange(r) + 1;
+				}
+			}
+		}
+		
+		for (NSString* keyword in keywords) {
+			start = 0;
+			while (start < len) {
+				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				if (r.location == NSNotFound) {
+					break;
+				}
+				
+				BOOL enabled = YES;
+				for (NSValue* e in excludeRanges) {
+					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+						enabled = NO;
+						break;
+					}
+				}
+				
+				if (exactWordMatch) {
+					if (enabled) {
+						UniChar c = [body characterAtIndex:r.location];
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							NSInteger prev = r.location - 1;
+							if (0 <= prev && prev < len) {
+								UniChar c = [body characterAtIndex:prev];
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									enabled = NO;
+								}
+							}
+						}
+					}
+					
+					if (enabled) {
+						UniChar c = [body characterAtIndex:NSMaxRange(r)-1];
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							NSInteger next = NSMaxRange(r);
+							if (next < len) {
+								UniChar c = [body characterAtIndex:next];
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									enabled = NO;
+								}
 							}
 						}
 					}
 				}
 				
 				if (enabled) {
-					UniChar c = [body characterAtIndex:NSMaxRange(r)-1];
-					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-						NSInteger next = NSMaxRange(r);
-						if (next < len) {
-							UniChar c = [body characterAtIndex:next];
-							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-								enabled = NO;
-							}
-						}
+					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+						foundKeyword = YES;
+						break;
 					}
 				}
+				
+				start = NSMaxRange(r) + 1;
 			}
 			
-			if (enabled) {
-				if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-					foundKeyword = YES;
-					break;
-				}
+			if (foundKeyword) break;
+		}
+		
+		start = 0;
+		while (start < len) {
+			NSRange r = [body rangeOfAddressStart:start];
+			if (r.location == NSNotFound) {
+				break;
+			}
+			
+			if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+				setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
 			}
 			
 			start = NSMaxRange(r) + 1;
 		}
 		
-		if (foundKeyword) break;
+		start = 0;
+		while (start < len) {
+			NSRange r = [body rangeOfChannelNameStart:start];
+			if (r.location == NSNotFound) {
+				break;
+			}
+			
+			if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+				setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
+			}
+			
+			start = NSMaxRange(r) + 1;
+		}
+		
+		if (highlighted != NULL) {
+			*highlighted = foundKeyword;
+		}
 	}
 	
-	start = 0;
-	while (start < len) {
-		NSRange r = [body rangeOfAddressStart:start];
-		if (r.location == NSNotFound) {
-			break;
-		}
-		
-		if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-			setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
-		}
-		
-		start = NSMaxRange(r) + 1;
-	}
+	id result = nil;
 	
-	start = 0;
-	while (start < len) {
-		NSRange r = [body rangeOfChannelNameStart:start];
-		if (r.location == NSNotFound) {
-			break;
-		}
-		
-		if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-			setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
-		}
-		
-		start = NSMaxRange(r) + 1;
+	if (attributed) {
+		result = [[[NSMutableAttributedString alloc] initWithString:body] autorelease];
+	} else {
+		result = [NSMutableString string];
 	}
-	
-	NSMutableString* result = [NSMutableString string];
 	
 	start = 0;
 	while (start < len) {
@@ -369,13 +450,17 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 		if (n <= 0) break;
 		
 		attr_t t = attrBuf[start];
-		NSString* s = renderRange(body, t, start, n);
-		[result appendString:s];
+		
+		if (attributed) {
+			result = renderAttributedRange(result, t, start, n);	
+		} else {
+			NSString* s = renderRange(body, t, start, n);
+			[result appendString:s];
+		}
 		
 		start += n;
 	}
 	
-	*highlighted = foundKeyword;
 	return result;
 }
 
