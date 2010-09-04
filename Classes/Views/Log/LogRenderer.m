@@ -231,22 +231,33 @@ attributedString:(BOOL)attributed
 							if (i+1 < len) {
 								c = source[i+1];
 								if (IsNumeric(c) && textColor < 2) {
-									++i;
-									textColor = textColor * 10 + c - '0';
+									NSInteger ci = c - '0';
+									
+									if ((textColor == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 
+										(textColor == 1 && ((ci >= 1 && ci <= 5) || ci == 0))) {
+										++i;
+										textColor = textColor * 10 + c - '0';
+									}
 								}
 								if (i+1 < len) {
 									c = source[i+1];
 									if (c == ',') {
-										if (i+2 < len) {
-											c = source[i+2];
+										++i;
+										if (i+1 < len) {
+											c = source[i+1];
 											if (IsNumeric(c)) {
-												i += 3;
+												++i;
 												backgroundColor = c - '0';
 												if (i+1 < len) {
 													c = source[i+1];
 													if (IsNumeric(c) && backgroundColor < 2) {
-														++i;
-														backgroundColor = backgroundColor * 10 + c - '0';
+														NSInteger ci = c - '0';
+														
+														if ((textColor == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 
+															(textColor == 1 && ((ci >= 1 && ci <= 5) || ci == 0))) {
+															++i;
+															backgroundColor = backgroundColor * 10 + c - '0';
+														}
 													}
 												}
 											}

@@ -4,8 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define IsNumeric(c)						('0' <= (c) && (c) <= '9')
 #define IsAlpha(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
+#define IsNumeric(c)						('0' <= (c) && (c) <= '9' && !IsAlpha(c)) 
 #define IsAlphaNum(c)						(IsAlpha(c) || IsNumeric(c))
 #define IsWordLetter(c)						(IsAlphaNum(c) || (c) == '_')
 #define IsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
