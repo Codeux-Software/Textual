@@ -230,7 +230,7 @@ attributedString:(BOOL)attributed
 							textColor = c - '0';
 							if (i+1 < len) {
 								c = source[i+1];
-								if (IsNumeric(c)) {
+								if (IsNumeric(c) && textColor < 2) {
 									++i;
 									textColor = textColor * 10 + c - '0';
 								}
@@ -244,7 +244,7 @@ attributedString:(BOOL)attributed
 												backgroundColor = c - '0';
 												if (i+1 < len) {
 													c = source[i+1];
-													if (IsNumeric(c)) {
+													if (IsNumeric(c) && backgroundColor < 2) {
 														++i;
 														backgroundColor = backgroundColor * 10 + c - '0';
 													}
