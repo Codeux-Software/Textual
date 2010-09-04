@@ -348,7 +348,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if (i+1 >= len) continue;
 					unichar e = src[i+1];
-					if (!isUnicharDigit(e) && e != ',') continue;
+					if (!IsIRCColor(e, (d - '0')) && e != ',') continue;
 					i++;
 					BOOL comma = (e == ',');
 					
@@ -366,7 +366,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if (i+1 >= len) continue;
 					unichar h = src[i+1];
-					if (!isUnicharDigit(h)) continue;
+					if (!IsIRCColor(h, (g - '0'))) continue;
 					i++;
 					break;
 				default:

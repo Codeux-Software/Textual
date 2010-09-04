@@ -230,14 +230,9 @@ attributedString:(BOOL)attributed
 							textColor = c - '0';
 							if (i+1 < len) {
 								c = source[i+1];
-								if (IsNumeric(c) && textColor < 2) {
-									NSInteger ci = c - '0';
-									
-									if ((textColor == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 
-										(textColor == 1 && ((ci >= 1 && ci <= 5) || ci == 0))) {
-										++i;
-										textColor = textColor * 10 + c - '0';
-									}
+								if (IsIRCColor(c, textColor)) {
+									++i;
+									textColor = textColor * 10 + c - '0';
 								}
 								if (i+1 < len) {
 									c = source[i+1];
@@ -250,14 +245,9 @@ attributedString:(BOOL)attributed
 												backgroundColor = c - '0';
 												if (i+1 < len) {
 													c = source[i+1];
-													if (IsNumeric(c) && backgroundColor < 2) {
-														NSInteger ci = c - '0';
-														
-														if ((textColor == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 
-															(textColor == 1 && ((ci >= 1 && ci <= 5) || ci == 0))) {
-															++i;
-															backgroundColor = backgroundColor * 10 + c - '0';
-														}
+													if (IsIRCColor(c, backgroundColor)) {
+														++i;
+														backgroundColor = backgroundColor * 10 + c - '0';
 													}
 												}
 											}
