@@ -59,7 +59,7 @@
 	
 	growlCheck.state = config.growl;
 	autoJoinCheck.state = config.autoJoin;
-	highlights.state = ((config.highlights == YES) ? NSOffState : NSOnState);
+	ihighlights.state = config.ihighlights;
 }
 
 - (void)save
@@ -71,7 +71,7 @@
     
 	config.growl = growlCheck.state;
 	config.autoJoin = autoJoinCheck.state;
-    config.highlights = ((highlights.state == NSOnState) ? NO : YES);
+    config.ihighlights = ihighlights.state;
 	
 	if (![config.name isChannelName]) {
 		config.name = [@"#" stringByAppendingString:config.name];
@@ -131,5 +131,5 @@
 @synthesize topicText;
 @synthesize autoJoinCheck;
 @synthesize growlCheck;
-@synthesize highlights;
+@synthesize ihighlights;
 @end

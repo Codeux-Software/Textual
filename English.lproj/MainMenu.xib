@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H531</string>
+		<string key="IBDocument.SystemVersion">10H535</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -11,8 +11,8 @@
 			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1385"/>
 			<integer value="963"/>
+			<integer value="1385"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1333,6 +1333,25 @@
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
 									<int key="NSTag">102</int>
+								</object>
+								<object class="NSMenuItem" id="170811889">
+									<reference key="NSMenu" ref="403887256"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="157985797">
+									<reference key="NSMenu" ref="403887256"/>
+									<string key="NSTitle">Donate</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">109</int>
 								</object>
 							</array>
 							<string key="NSName">_NSHelpMenu</string>
@@ -4265,6 +4284,14 @@
 					</object>
 					<int key="connectionID">1713</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openHelpMenuLinkItem:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="157985797"/>
+					</object>
+					<int key="connectionID">1716</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -5348,6 +5375,8 @@
 							<reference ref="244844556"/>
 							<reference ref="340845279"/>
 							<reference ref="949184879"/>
+							<reference ref="170811889"/>
+							<reference ref="157985797"/>
 						</array>
 						<reference key="parent" ref="758853065"/>
 					</object>
@@ -5980,6 +6009,16 @@
 						<reference key="object" ref="340845279"/>
 						<reference key="parent" ref="403887256"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1714</int>
+						<reference key="object" ref="157985797"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1715</int>
+						<reference key="object" ref="170811889"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6028,7 +6067,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{1006, 747}, {222, 103}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{1006, 717}, {222, 133}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6175,6 +6214,8 @@
 				<string key="1709.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1710.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1712.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1714.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1715.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="172.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="172.ImportedFromIB2"/>
 				<string key="173.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6427,7 +6468,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1713</int>
+			<int key="maxID">1716</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6633,6 +6674,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="autoJoinCheck">NSButton</string>
 						<string key="growlCheck">NSButton</string>
+						<string key="highlights">NSButton</string>
 						<string key="modeText">NSTextField</string>
 						<string key="nameText">NSTextField</string>
 						<string key="passwordText">NSTextField</string>
@@ -6645,6 +6687,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="growlCheck">
 							<string key="name">growlCheck</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="highlights">
+							<string key="name">highlights</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="modeText">

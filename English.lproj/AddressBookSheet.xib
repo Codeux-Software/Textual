@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H525</string>
+		<string key="IBDocument.SystemVersion">10H535</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.34</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="6"/>
 			<integer value="425"/>
 			<integer value="424"/>
-			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -306,7 +306,7 @@
 					<object class="NSTextField" id="414404645">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{23, 102}, {34, 14}}</string>
+						<string key="NSFrame">{{43, 102}, {34, 14}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="368550053">
@@ -326,13 +326,13 @@
 					<object class="NSTextField" id="1056718837">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{23, 74}, {324, 42}}</string>
+						<string key="NSFrame">{{43, 74}, {312, 42}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">          This feature will track Join/Quit activity of an user to determine when they have signed on or off if IRC Operator (IRCop) access is not gained upon connection to a server. </string>
+							<string key="NSContents">          This feature requires that the full nickname of a user be entered into the hostmask field (e.g. Robert12). Wildcard matching characters such as * will be ignored.</string>
 							<reference key="NSSupport" ref="570868298"/>
 							<reference key="NSControlView" ref="1056718837"/>
 							<reference key="NSBackgroundColor" ref="996912065"/>
@@ -1055,11 +1055,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="410707626"/>
 							<reference ref="583266023"/>
-							<reference ref="1056718837"/>
-							<reference ref="414404645"/>
 							<reference ref="86381240"/>
 							<reference ref="582643135"/>
 							<reference ref="848515587"/>
+							<reference ref="1056718837"/>
+							<reference ref="414404645"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Notification View</string>
@@ -1460,12 +1460,12 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBuAAAw7mAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAwuQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBuAAAw7mAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAwuQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{641, 374}, {369, 502}}</string>
@@ -1676,6 +1676,78 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">ChanBanExceptionSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>onRemoveExceptions:</string>
+							<string>onUpdate:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>onRemoveExceptions:</string>
+							<string>onUpdate:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">onRemoveExceptions:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onUpdate:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>table</string>
+							<string>updateButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ListView</string>
+							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>table</string>
+							<string>updateButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">table</string>
+								<string key="candidateClassName">ListView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">updateButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="184609191">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Dialogs/ChanBanExceptionSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">ChanBanSheet</string>
 					<string key="superclassName">SheetBase</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -1788,6 +1860,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>autoJoinCheck</string>
 							<string>growlCheck</string>
+							<string>highlights</string>
 							<string>modeText</string>
 							<string>nameText</string>
 							<string>passwordText</string>
@@ -1795,6 +1868,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -1809,6 +1883,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>autoJoinCheck</string>
 							<string>growlCheck</string>
+							<string>highlights</string>
 							<string>modeText</string>
 							<string>nameText</string>
 							<string>passwordText</string>
@@ -1822,6 +1897,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">growlCheck</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">highlights</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -2275,6 +2354,42 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="463967282"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chanBanExceptionDialogOnUpdate:</string>
+							<string>chanBanExceptionDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ChanBanExceptionSheet</string>
+							<string>ChanBanExceptionSheet</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chanBanExceptionDialogOnUpdate:</string>
+							<string>chanBanExceptionDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">chanBanExceptionDialogOnUpdate:</string>
+								<string key="candidateClassName">ChanBanExceptionSheet</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">chanBanExceptionDialogWillClose:</string>
+								<string key="candidateClassName">ChanBanExceptionSheet</string>
+							</object>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="184609191"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -2904,6 +3019,7 @@
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
 							<string>onHnagingTextChange:</string>
+							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -2930,6 +3046,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -2941,6 +3058,7 @@
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
 							<string>onHnagingTextChange:</string>
+							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -2971,6 +3089,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onHnagingTextChange:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onInputHistorySchemeChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -3327,6 +3449,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>sleepQuitMessageText</string>
 							<string>sslCheck</string>
 							<string>tabView</string>
 							<string>userInfoText</string>
@@ -3349,7 +3472,7 @@
 							<string>NSPopUpButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSView</string>
-							<string>NSTextField</string>
+							<string>NSComboBox</string>
 							<string>ListView</string>
 							<string>NSView</string>
 							<string>NSButton</string>
@@ -3362,6 +3485,7 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSPopUpButton</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -3410,6 +3534,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>sleepQuitMessageText</string>
 							<string>sslCheck</string>
 							<string>tabView</string>
 							<string>userInfoText</string>
@@ -3479,7 +3604,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">hostCombo</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">NSComboBox</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">ignoreTable</string>
@@ -3547,6 +3672,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">realNameText</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">sleepQuitMessageText</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -3920,6 +4049,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSComboBox</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSComboBox.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

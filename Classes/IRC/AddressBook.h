@@ -39,4 +39,5 @@
 - (NSDictionary*)dictionaryValue;
 - (BOOL)checkIgnore:(NSString*)thehost;
 - (void)processHostMaskRegex;
+- (NSString*)trackingNickname;
 @end

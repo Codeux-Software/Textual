@@ -61,6 +61,7 @@
 {
 	if (!hostmaskRegex && hostmask) {
 		NSString *new_hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
@@ -106,6 +107,15 @@
 	}
 	
 	return NO;
+}
+
+- (NSString*)trackingNickname
+{
+	if ([hostmask contains:@"!"]) {
+		return [hostmask safeSubstringToIndex:[hostmask stringPosition:@"!"]];
+	} else {
+		return hostmask;
+	}
 }
 
 @end
