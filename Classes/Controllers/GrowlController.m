@@ -70,7 +70,6 @@
 			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
 			priority = 1;
 			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH"), desc];
 			break;
 		case GROWL_HIGHLIGHT:
 			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
