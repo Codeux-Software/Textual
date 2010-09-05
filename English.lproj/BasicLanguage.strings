@@ -76,7 +76,6 @@
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
 "IRC_CONNECTED_TO_SERVER" = "Connected to host.";
-"IRC_USER_MATCHES_HOSTMASK" = "%@ has connected.";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRC_IS_CONNECTING" = "Connecting to %1$@ on port %2$i";
@@ -106,6 +105,8 @@
 "IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
+"IRC_USER_MATCHES_HOSTMASK" = "User with hostmask \"%1$@\" connected matching Address Book entry \"%2$@\"";
+"IRC_USER_MATCHES_NICKNAME" = "User with nickname \"%1$@\" connected matching Address Book entry \"%2$@\"";
 "IRC_RECIEVED_FILE_TRANSFER_REQUEST" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
