@@ -130,6 +130,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		isonTimer.reqeat = YES;
 		isonTimer.selector = @selector(onISONTimer:);
 		
+		trackedUsers = [NSMutableDictionary new];
 		commandQueue = [NSMutableArray new];
 	}
 	
@@ -289,6 +290,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
 {
 	if (!isLoggedIn) return;
+	if (hasIRCopAccess) return;
 	if (!trackedUsers) trackedUsers = [NSMutableDictionary new];
 	if (trackedUsers && [trackedUsers count] > 0) [trackedUsers removeAllObjects];
 	
@@ -373,6 +375,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (AddressBook*)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches
 {
+	host = [host lowercaseString];
+	
 	for (AddressBook* g in config.ignores) {
 		if ([g checkIgnore:host]) {
 			NSDictionary *ignoreDict = [g dictionaryValue];
@@ -2860,7 +2864,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							
 							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
 							
-							if (sendEvent) {
+							if (sendEvent == YES) {
+								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
+								[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
+								
 								c = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
 							}
 							
@@ -2878,11 +2885,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 								whoisChannel = c;
 								
 								[self sendWhois:snick];
-							}
-							
-							if (sendEvent == YES) {
-								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
-								[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
 							}
 						}
 					} else {
