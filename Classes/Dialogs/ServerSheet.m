@@ -509,14 +509,6 @@
 {
 	NSInteger sel = [ignoreTable selectedRow];
 	if (sel < 0) return;
-    
-    AddressBook *g = [config.ignores safeObjectAtIndex:sel];
-    
-    if (g.notifyJoins || g.notifyWhoisJoins) {
-        if ([client.trackedUsers containsObject:[NSNumber numberWithInteger:g.cid]]) {
-            [client.trackedUsers removeObject:[NSNumber numberWithInteger:g.cid]];
-        }
-    }
 	
 	[config.ignores safeRemoveObjectAtIndex:sel];
 	
@@ -530,15 +522,21 @@
 	}
 	
 	[self reloadIgnoreTable];
+	[client populateISONTrackedUsersList:config.ignores];
 }
 
 - (void)ignoreItemSheetOnOK:(AddressBookSheet*)sender
 {
+	NSString *hostmask = [sender.ignore.hostmask trim];
+	
 	if (sender.newItem) {
-		[config.ignores addObject:sender.ignore];
+		if ([hostmask length]  > 1) {
+			[config.ignores addObject:sender.ignore];
+		}
 	}
 	
 	[self reloadIgnoreTable];
+	[client populateISONTrackedUsersList:config.ignores];
 }
 
 - (void)ignoreItemSheetWillClose:(AddressBookSheet*)sender

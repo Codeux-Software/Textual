@@ -14,14 +14,14 @@
 @synthesize growl;
 @synthesize mode;
 @synthesize topic;
-@synthesize highlights;
+@synthesize ihighlights;
 
 - (id)init
 {
 	if (self = [super init]) {
 		type = CHANNEL_TYPE_CHANNEL;
 		
-        highlights = YES;
+        ihighlights = NO;
 		autoJoin = YES;
 		growl = YES;
 		
@@ -44,7 +44,7 @@
 	
 	growl = [dic boolForKey:@"growl"];
 	autoJoin = [dic boolForKey:@"auto_join"];
-    highlights = [dic boolForKey:@"process_highlights"];
+	ihighlights = [dic boolForKey:@"ignore_highlights"];
 	
 	mode = [[dic stringForKey:@"mode"] retain] ?: @"";
 	topic = [[dic stringForKey:@"topic"] retain] ?: @"";
@@ -74,7 +74,7 @@
 	
 	[dic setBool:growl forKey:@"growl"];
 	[dic setBool:autoJoin forKey:@"auto_join"];
-    [dic setBool:highlights forKey:@"process_highlights"];
+    [dic setBool:ihighlights forKey:@"ignore_highlights"];
 	
 	if (mode) [dic setObject:mode forKey:@"mode"];
 	if (topic) [dic setObject:topic forKey:@"topic"];

@@ -29,6 +29,8 @@
 - (NSArray*)splitIntoLines;
 - (NSString*)trim;
 
+- (NSInteger)stringPosition:(NSString*)needle;
+
 - (id)attributedStringWithIRCFormatting;
 
 - (BOOL)isAlphaNumOnly;

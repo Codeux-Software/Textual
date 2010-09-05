@@ -302,10 +302,17 @@ BOOL isUnicharDigit(unichar c)
 	return [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 }
 
+- (NSInteger)stringPosition:(NSString*)needle
+{
+	NSRange r = [self rangeOfString:needle];
+	if (r.location == NSNotFound) return -1;
+	return r.location;
+}
+
 - (id)attributedStringWithIRCFormatting
 {
 	if ([Preferences removeAllFormatting]) {
-		return [self stripEffects];
+		return [[[NSAttributedString alloc] initWithString:[self stripEffects]] autorelease];
 	}
 	
 	return [LogRenderer renderBody:self

@@ -59,7 +59,7 @@ typedef enum {
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	BOOL inChanBanList;
-	
+	BOOL inFirstISONRun;
 	BOOL hasIRCopAccess;
 
 	AddressDetectionType addressDetectionMethod;
@@ -70,6 +70,7 @@ typedef enum {
 	Timer* pongTimer;
 	Timer* reconnectTimer;
 	Timer* retryTimer;
+	Timer* isonTimer;
 	Timer* autoJoinTimer;
 	Timer* commandQueueTimer;
 	NSMutableArray* commandQueue;
@@ -86,7 +87,7 @@ typedef enum {
 
 	IRCChannel* whoisChannel;
 	
-	NSMutableArray* trackedUsers;
+	NSMutableDictionary* trackedUsers;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -94,7 +95,7 @@ typedef enum {
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) IRCISupportInfo* isupport;
 @property (nonatomic, readonly) NSMutableArray* channels;
-@property (nonatomic, retain) NSMutableArray* trackedUsers;
+@property (nonatomic, retain) NSMutableDictionary *trackedUsers;
 @property (nonatomic, readonly) BOOL isConnecting;
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly) BOOL isReconnecting;
@@ -118,12 +119,14 @@ typedef enum {
 @property (nonatomic, assign) BOOL inChanBanList;
 @property (nonatomic, assign) BOOL identifyMsg;
 @property (nonatomic, assign) BOOL identifyCTCP;
+@property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL hasIRCopAccess;
 @property (nonatomic, retain) HostResolver* nameResolver;
 @property (nonatomic, retain) NSString* joinMyAddress;
 @property (nonatomic, retain) Timer* pongTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
+@property (nonatomic, retain) Timer* isonTimer;
 @property (nonatomic, retain) Timer* autoJoinTimer;
 @property (nonatomic, retain) Timer* commandQueueTimer;
 @property (nonatomic, retain) NSMutableArray* commandQueue;
@@ -207,4 +210,6 @@ typedef enum {
 - (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
 
 - (void)joinChannels:(NSArray*)chans;
+
+- (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
 @end
