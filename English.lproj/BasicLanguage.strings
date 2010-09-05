@@ -105,9 +105,10 @@
 "IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"IRC_USER_MATCHES_HOSTMASK" = "User with hostmask \"%1$@\" connected matching Address Book entry \"%2$@\"";
-"IRC_USER_MATCHES_NICKNAME" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now online.";
 "IRC_RECIEVED_FILE_TRANSFER_REQUEST" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+"IRC_USER_MATCHES_HOSTMASK_IRCOP" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
+"IRC_USER_MATCHES_HOSTMASK" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" has become available.";
+"IRC_USER_MATCHES_NICKNAME" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" has become available.";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
 /* Dialog Settings */
@@ -194,7 +195,6 @@
 "GROWL_MSG_CHANNEL_MSG" = "Channel message received";
 "GROWL_MSG_CHANNEL_NOTICE" = "Channel notice received";
 "GROWL_MSG_CHANNEL_NOTICE_TITLE" = "Notice: %@";
-"GROWL_MSG_ADDRESS_BOOK_MATCH" = "%@ Connected";
 "GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Match";
 "GROWL_MSG_FILE_SEND_SUCCEEDED" = "File send succeeded";
 "GROWL_MSG_FILE_SEND_SUCCEEDED_DESC" = "To %1$@\n%2$@";

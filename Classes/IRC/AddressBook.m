@@ -82,7 +82,7 @@
 		
 		if (hostmask != nhostmask) {
 			[hostmask release];
-			hostmask = [[nhostmask lowercaseString] retain];
+			hostmask = [nhostmask retain];
 		}
 		
 		NSString *new_hostmask = hostmask;
