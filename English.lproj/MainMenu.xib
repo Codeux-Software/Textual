@@ -12,7 +12,8 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="963"/>
-			<integer value="1385"/>
+			<integer value="277"/>
+			<integer value="327"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2109,6 +2110,7 @@
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
 						<string key="NSAction">submenuAction:</string>
+						<int key="NSTag">42354</int>
 						<object class="NSMenu" key="NSSubmenu" id="784916333">
 							<string key="NSTitle">IRC Operator</string>
 							<array class="NSMutableArray" key="NSMenuItems">
@@ -6124,7 +6126,7 @@
 				<boolean value="YES" key="1520.ImportedFromIB2"/>
 				<string key="1524.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1543.IBEditorWindowLastContentRect">{{683, 780}, {203, 93}}</string>
+				<string key="1543.IBEditorWindowLastContentRect">{{844, 757}, {203, 93}}</string>
 				<string key="1543.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1545.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1546.IBEditorWindowLastContentRect">{{776, 780}, {243, 93}}</string>
@@ -6674,7 +6676,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="autoJoinCheck">NSButton</string>
 						<string key="growlCheck">NSButton</string>
-						<string key="highlights">NSButton</string>
+						<string key="ihighlights">NSButton</string>
 						<string key="modeText">NSTextField</string>
 						<string key="nameText">NSTextField</string>
 						<string key="passwordText">NSTextField</string>
@@ -6689,8 +6691,8 @@
 							<string key="name">growlCheck</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="highlights">
-							<string key="name">highlights</string>
+						<object class="IBToOneOutletInfo" key="ihighlights">
+							<string key="name">ihighlights</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="modeText">
