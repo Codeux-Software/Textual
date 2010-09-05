@@ -393,6 +393,49 @@
 	}
 }
 
+- (void)insertCrazyColorCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [[text currentEditor] selectedRange];
+	if (selectedTextRange.location == NSNotFound) return;
+	
+	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	
+	NSInteger charCountIndex = 0;
+	NSMutableArray *charRanges = [NSMutableArray new];
+	
+	while (1 == 1) {
+		if (charCountIndex >= [selectedText length]) break;
+		
+		NSRange charRange = NSMakeRange(charCountIndex, 1);
+		NSString *charValue = [selectedText substringWithRange:charRange];
+		
+		NSInteger firstColor = ((arc4random() % 15) + 1);
+		NSInteger secondColor = ((arc4random() % 15) + 1);
+		
+		if (firstColor % 2 == 0) {
+			charValue = [charValue lowercaseString];
+		} else {
+			charValue = [charValue uppercaseString];
+		}
+		
+		if (firstColor < 10) {
+			charValue = [NSString stringWithFormat:@"%c0%i,%i%@%c", (UniChar)0x03, firstColor, secondColor, charValue, (UniChar)0x03];
+		} else {
+			charValue = [NSString stringWithFormat:@"%c%i,%i%@%c", (UniChar)0x03, firstColor, secondColor, charValue, (UniChar)0x03];
+		}
+		
+		[charRanges addObject:charValue];
+		
+		charCountIndex++;
+	}
+	
+	selectedText = [charRanges componentsJoinedByString:nil];
+	[charRanges release];
+	
+	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	[text focus];
+}
+
 - (IBAction)insertColorCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
@@ -1131,6 +1174,8 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+	
+	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	
 	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
