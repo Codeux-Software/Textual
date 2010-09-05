@@ -39,9 +39,8 @@
 {
 	if ([self init]) {
 		cid = TXRandomThousandNumber();
-		
 		cid = [dic intForKey:@"cid"] ?: cid;
-		hostmask = [[dic objectForKey:@"hostmask"] retain];
+		
 		ignorePublicMsg = [dic boolForKey:@"ignorePublicMsg"];
 		ignorePrivateMsg = [dic boolForKey:@"ignorePrivateMsg"];
 		ignoreHighlights = [dic boolForKey:@"ignoreHighlights"];
@@ -51,6 +50,7 @@
 		ignoreJPQE = [dic boolForKey:@"ignoreJPQE"];
 		notifyJoins = [dic boolForKey:@"notifyJoins"];
 		notifyWhoisJoins = [dic boolForKey:@"notifyWhoisJoins"];
+		hostmask = [[[dic objectForKey:@"hostmask"] lowercaseString] retain];
 		
 		[self processHostMaskRegex];
 	}
@@ -60,8 +60,33 @@
 - (void)processHostMaskRegex
 {
 	if (!hostmaskRegex && hostmask) {
-		NSString *new_hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		NSString *nhostmask = hostmask;
 		
+		if (![nhostmask contains:@"@"]) {
+			nhostmask = [nhostmask stringByAppendingString:@"@*"];
+		} 
+		
+		NSRange atsrange = [nhostmask rangeOfString:@"@" options:NSBackwardsSearch];
+		
+		if ([nhostmask length] > 3) {
+			NSString *first = [nhostmask safeSubstringToIndex:(atsrange.location - 1)];
+			NSString *second = [nhostmask safeSubstringFromIndex:(atsrange.location + 1)];
+			
+			if (first) {
+				if (![first contains:@"!"]) {
+					nhostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
+				}
+			}
+		}
+		
+		if (hostmask != nhostmask) {
+			[hostmask release];
+			hostmask = [[nhostmask lowercaseString] retain];
+		}
+		
+		NSString *new_hostmask = hostmask;
+		
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
@@ -111,11 +136,7 @@
 
 - (NSString*)trackingNickname
 {
-	if ([hostmask contains:@"!"]) {
-		return [hostmask safeSubstringToIndex:[hostmask stringPosition:@"!"]];
-	} else {
-		return hostmask;
-	}
+	return [hostmask safeSubstringToIndex:[hostmask stringPosition:@"!"]];
 }
 
 @end
