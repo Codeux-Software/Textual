@@ -3,6 +3,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define BOOLReverseValue(b)		((b == YES) ? NO : YES)
+
 void TXCFSpecialRelease(CFTypeRef cf);
 
 typedef unsigned long long TXFSLongInt; // filesizes

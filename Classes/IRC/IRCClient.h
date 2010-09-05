@@ -162,6 +162,8 @@ typedef enum {
 - (void)quit:(NSString*)comment;
 - (void)cancelReconnect;
 
+- (BOOL)IRCopStatus;
+
 - (void)changeNick:(NSString*)newNick;
 - (void)joinChannel:(IRCChannel*)channel;
 - (void)joinChannel:(IRCChannel*)channel password:(NSString*)password;

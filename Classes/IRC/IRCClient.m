@@ -272,6 +272,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	return config.name;
 }
 
+- (BOOL)IRCopStatus
+{
+	return hasIRCopAccess;
+}
+
 - (BOOL)isNewTalk
 {
 	return NO;
@@ -4091,6 +4096,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		case 433:	// ERR_NICKNAMEINUSE
 		case 437:   // ERR_NICKTEMPUNAVAIL
+			if (n == 437 && isLoggedIn) break;
 			[self receiveNickCollisionError:m];
 			break;
 		case 402:   // ERR_NOSUCHSERVER
