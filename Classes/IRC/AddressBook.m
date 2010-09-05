@@ -41,6 +41,8 @@
 		cid = TXRandomThousandNumber();
 		cid = [dic intForKey:@"cid"] ?: cid;
 		
+		hostmask = [[dic objectForKey:@"hostmask"] retain];
+		
 		ignorePublicMsg = [dic boolForKey:@"ignorePublicMsg"];
 		ignorePrivateMsg = [dic boolForKey:@"ignorePrivateMsg"];
 		ignoreHighlights = [dic boolForKey:@"ignoreHighlights"];
@@ -50,7 +52,6 @@
 		ignoreJPQE = [dic boolForKey:@"ignoreJPQE"];
 		notifyJoins = [dic boolForKey:@"notifyJoins"];
 		notifyWhoisJoins = [dic boolForKey:@"notifyWhoisJoins"];
-		hostmask = [[[dic objectForKey:@"hostmask"] lowercaseString] retain];
 		
 		[self processHostMaskRegex];
 	}
@@ -59,7 +60,7 @@
 
 - (void)processHostMaskRegex
 {
-	if (!hostmaskRegex && hostmask) {
+	if (!hostmaskRegex) {
 		NSString *nhostmask = hostmask;
 		
 		if (![nhostmask contains:@"@"]) {
@@ -69,7 +70,7 @@
 		NSRange atsrange = [nhostmask rangeOfString:@"@" options:NSBackwardsSearch];
 		
 		if ([nhostmask length] > 3) {
-			NSString *first = [nhostmask safeSubstringToIndex:(atsrange.location - 1)];
+			NSString *first = [nhostmask safeSubstringToIndex:atsrange.location];
 			NSString *second = [nhostmask safeSubstringFromIndex:(atsrange.location + 1)];
 			
 			if (first) {
@@ -107,9 +108,9 @@
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 	
-	if (hostmask) [dic setObject:hostmask forKey:@"hostmask"];
-	
 	[dic setInt:cid forKey:@"cid"];
+	
+	[dic setObject:hostmask forKey:@"hostmask"];
 	[dic setBool:ignorePublicMsg forKey:@"ignorePublicMsg"];
 	[dic setBool:ignorePrivateMsg forKey:@"ignorePrivateMsg"];
 	[dic setBool:ignoreHighlights forKey:@"ignoreHighlights"];
@@ -126,7 +127,7 @@
 - (BOOL)checkIgnore:(NSString*)thehost
 {
 	if (hostmaskRegex) {
-		if ([thehost isMatchedByRegex:hostmaskRegex]) {
+		if ([thehost isMatchedByRegex:[hostmaskRegex lowercaseString]]) {
 			return YES;
 		}
 	}

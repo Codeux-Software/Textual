@@ -148,6 +148,13 @@ typedef enum {
 - (void)closeDialogs;
 - (void)preferencesChanged;
 
+- (AddressBook*)checkIgnore:(NSString *)hostmask 
+					  uname:(NSString *)username 
+					   name:(NSString *)nickname
+			   matchAgainst:(NSArray *)matches;
+
+- (AddressBook*)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+
 - (void)connect;
 - (void)connect:(ConnectMode)mode;
 - (void)disconnect;

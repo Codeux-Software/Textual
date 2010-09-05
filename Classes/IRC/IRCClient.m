@@ -63,12 +63,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)processBundlesUserMessage:(NSArray*)info;
 
-- (AddressBook*)checkIgnore:(NSString *)hostmask 
-					  uname:(NSString *)username 
-					   name:(NSString *)nickname
-			   matchAgainst:(NSArray *)matches;
-
-- (AddressBook*)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+- (void)handleUserTrackingNotification:(AddressBook*)ignoreItem 
+							  hostmask:(NSString *)host
+							  nickname:(NSString *)nick;
 
 - (void)startReconnectTimer;
 
@@ -285,7 +282,38 @@ static NSDateFormatter* dateTimeFormatter = nil;
 }
 
 #pragma mark -
-#pragma mark Utilities
+#pragma mark User Tracking
+
+- (void)handleUserTrackingNotification:(AddressBook*)ignoreItem 
+							  hostmask:(NSString *)host
+							  nickname:(NSString *)nick
+{
+	BOOL sendEvent = ([ignoreItem notifyJoins] == YES || [ignoreItem notifyWhoisJoins] == YES);
+	
+	if (sendEvent) {
+		IRCChannel* nsc = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
+		
+		if ([ignoreItem notifyJoins] == YES) {
+			nsc.isUnread = YES;
+			
+			if ([nick isEqualToString:host]) {
+				[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_NICKNAME"), nick, ignoreItem.hostmask]];
+			} else {
+				[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host, ignoreItem.hostmask]];
+			}
+		}
+		
+		if ([ignoreItem notifyWhoisJoins] == YES) {
+			nsc.isUnread = YES;
+			whoisChannel = nsc;
+			
+			[self sendWhois:nick];
+		}
+		
+		[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:nsc nick:nick text:host];
+		[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
+	}	
+}
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
 {
@@ -305,6 +333,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (isonTimer.isActive) [self stopISONTimer];
 	if (isonTimer.isActive == NO && [trackedUsers count] > 0) [self startISONTimer];
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (NSInteger)connectDelay
 {
@@ -2856,36 +2887,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							host = [host safeSubstringToIndex:([host length] - 1)];
 							host = [NSString stringWithFormat:@"%@!%@", snick, host];
 							
-							// ===================================================== //
-							
-							IRCChannel* c = nil;
 							ignoreChecks = [self checkIgnoreAgainstHostmask:host
 																withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 							
-							BOOL sendEvent = ([ignoreChecks notifyWhoisJoins] == YES || [ignoreChecks notifyJoins] == YES);
-							
-							if (sendEvent == YES) {
-								[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:c nick:snick text:host];
-								[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
-								
-								c = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
-							}
-							
-							if ([ignoreChecks notifyJoins] == YES) {
-								sendEvent = YES;
-								c.isUnread = YES;
-								
-								[self printBoth:c type:type text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), host]];
-							}
-							
-							if ([ignoreChecks notifyWhoisJoins] == YES) {
-								sendEvent = YES;
-								c.isUnread = YES;
-								
-								whoisChannel = c;
-								
-								[self sendWhois:snick];
-							}
+							[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:snick];
 						}
 					} else {
 						if ([Preferences handleServerNotices]) {
@@ -3177,8 +3182,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 												 name:m.sender.nick
 										 matchAgainst:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyWhoisJoins", @"notifyJoins", nil]];
 		
-		if ([ignoreChecks ignoreJPQE] == YES) {
+		if ([ignoreChecks ignoreJPQE] == YES && !myself) {
 			return;
+		}
+		
+		if (hasIRCopAccess == NO) {
+			if ([ignoreChecks notifyJoins] == YES || [ignoreChecks notifyWhoisJoins] == YES) {
+				NSString *tracker = [ignoreChecks trackingNickname];
+				NSInteger ison = [[trackedUsers objectForKey:tracker] integerValue];
+				
+				if (!ison) {					
+					NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
+					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick];
+					[trackedUsers setObject:@"1" forKey:tracker];
+				}
+			}
 		}
 		
 		NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_JOINED_CHANNEL"), nick, m.sender.user, m.sender.address];
@@ -3274,9 +3292,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		return;
 	}
 	
-	for (NSString *nickname in trackedUsers) {
-		if ([[nickname lowercaseString] isEqualToString:[m.sender.nick lowercaseString]]) {
-			[trackedUsers setObject:@"0" forKey:nickname];
+	if (hasIRCopAccess == NO) {
+		if ([ignoreChecks notifyJoins] == YES || [ignoreChecks notifyWhoisJoins] == YES) {
+			NSString *tracker = [ignoreChecks trackingNickname];
+			NSInteger ison = [[trackedUsers objectForKey:tracker] integerValue];
+			
+			if (ison) {					
+				[trackedUsers setObject:@"0" forKey:tracker];
+			}
 		}
 	}
 	
@@ -3771,41 +3794,25 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					NSInteger ison = [[trackedUsers objectForKey:name] integerValue];
 					
 					if (ison) {
-						if (![users containsObject:lcname]) {
+						if (![users containsObject:name]) {
 							[trackedUsers setObject:@"0" forKey:name];
 						}
 					} else {
-						if ([users containsObject:lcname]) {
+						if ([users containsObject:name]) {
 							[trackedUsers setObject:@"1" forKey:name];
 							
 							if (inFirstISONRun == NO) {
 								AddressBook *og = nil;
 								
 								for (AddressBook *g in config.ignores) {
-									if ([[g trackingNickname] isEqualToString:name]) {
+									NSString *trname = [[g trackingNickname] lowercaseString];
+									
+									if ([trname isEqualToString:lcname]) {
 										og = g;
 									}
 								}
 								
-								if (og) {
-									IRCChannel* nsc = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
-									
-									if ([og notifyJoins] == YES) {
-										nsc.isUnread = YES;
-										
-										[self printBoth:nsc type:LINE_TYPE_NOTICE text:[NSString stringWithFormat:TXTLS(@"IRC_USER_MATCHES_HOSTMASK"), name]];
-									}
-									
-									if ([og notifyWhoisJoins] == YES) {
-										nsc.isUnread = YES;
-										whoisChannel = nsc;
-										
-										[self sendWhois:name];
-									}
-									
-									[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:nsc nick:name text:name];
-									[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
-								}
+								[self handleUserTrackingNotification:og hostmask:name nickname:name];
 							}
 						}
 						
