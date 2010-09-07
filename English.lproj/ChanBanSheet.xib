@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H531</string>
+		<int key="IBDocument.SystemTarget">1060</int>
+		<string key="IBDocument.SystemVersion">10H535</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="36"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -69,6 +69,7 @@
 											<string key="NSFrameSize">{778, 247}</string>
 											<reference key="NSSuperview" ref="1032368448"/>
 											<reference key="NSNextKeyView" ref="480913022"/>
+											<int key="NSViewLayerContentsRedrawPolicy">2</int>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="905760757">
 												<reference key="NSNextResponder" ref="480913022"/>
@@ -76,6 +77,7 @@
 												<string key="NSFrameSize">{778, 17}</string>
 												<reference key="NSSuperview" ref="480913022"/>
 												<reference key="NSNextKeyView" ref="920888687"/>
+												<int key="NSViewLayerContentsRedrawPolicy">2</int>
 												<reference key="NSTableView" ref="415331954"/>
 											</object>
 											<object class="_NSCornerView" key="NSCornerView" id="920888687">
@@ -84,6 +86,7 @@
 												<string key="NSFrame">{{764, 0}, {16, 17}}</string>
 												<reference key="NSSuperview" ref="404099830"/>
 												<reference key="NSNextKeyView" ref="1032368448"/>
+												<int key="NSViewLayerContentsRedrawPolicy">2</int>
 											</object>
 											<object class="NSMutableArray" key="NSTableColumns">
 												<bool key="EncodedWithXMLCoder">YES</bool>
@@ -244,6 +247,7 @@
 									<string key="NSFrame">{{1, 17}, {778, 247}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
 									<reference key="NSNextKeyView" ref="415331954"/>
+									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 									<reference key="NSDocView" ref="415331954"/>
 									<reference key="NSBGColor" ref="603230879"/>
 									<int key="NScvFlags">4</int>
@@ -254,6 +258,7 @@
 									<string key="NSFrame">{{764, 17}, {15, 229.526}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
 									<reference key="NSNextKeyView" ref="486414944"/>
+									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 									<reference key="NSTarget" ref="404099830"/>
 									<string key="NSAction">_doScroller:</string>
 									<double key="NSPercent">0.99596774193548387</double>
@@ -264,6 +269,7 @@
 									<string key="NSFrame">{{1, 246.526}, {763, 15}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
 									<reference key="NSNextKeyView" ref="241616504"/>
+									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="404099830"/>
 									<string key="NSAction">_doScroller:</string>
@@ -279,6 +285,7 @@
 									<string key="NSFrame">{{1, 0}, {778, 17}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
 									<reference key="NSNextKeyView" ref="905760757"/>
+									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 									<reference key="NSDocView" ref="905760757"/>
 									<reference key="NSBGColor" ref="603230879"/>
 									<int key="NScvFlags">4</int>
@@ -288,6 +295,7 @@
 							<string key="NSFrame">{{-1, 42}, {780, 265}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSNextKeyView" ref="1032368448"/>
+							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<int key="NSsFlags">562</int>
 							<reference key="NSVScroller" ref="25596151"/>
 							<reference key="NSHScroller" ref="486414944"/>
@@ -685,6 +693,10 @@
 					<string>5.IBPluginDependency</string>
 					<string>6.CustomClassName</string>
 					<string>6.IBPluginDependency</string>
+					<string>6.IBViewIntegration.shadowBlurRadius</string>
+					<string>6.IBViewIntegration.shadowColor</string>
+					<string>6.IBViewIntegration.shadowOffsetHeight</string>
+					<string>6.IBViewIntegration.shadowOffsetWidth</string>
 					<string>8.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 				</object>
@@ -714,6 +726,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>ListView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<real value="0.0"/>
+					<reference ref="462119981"/>
+					<real value="0.0"/>
+					<real value="0.0"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
@@ -1092,6 +1108,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>autoJoinCheck</string>
 							<string>growlCheck</string>
+							<string>ihighlights</string>
 							<string>modeText</string>
 							<string>nameText</string>
 							<string>passwordText</string>
@@ -1099,6 +1116,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -1113,6 +1131,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>autoJoinCheck</string>
 							<string>growlCheck</string>
+							<string>ihighlights</string>
 							<string>modeText</string>
 							<string>nameText</string>
 							<string>passwordText</string>
@@ -1126,6 +1145,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">growlCheck</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ihighlights</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -3823,7 +3846,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

@@ -47,6 +47,7 @@
 	[generalView release];
 	[scriptsView release];
 	[identityView release];
+	[updatesView release];
 	[floodControlView release];
 	[IRCopServicesView release];
 	
@@ -116,15 +117,19 @@
 			[self firstPane:logView];
 			break;
 		case 7:
-			[self firstPane:floodControlView];
+			[self firstPane:updatesView];
 			break;
 		case 8:
+			[self firstPane:floodControlView];
+			break;
+		case 9:
 			[self firstPane:IRCopServicesView];
 			break;
-		case 10:
+		// 10 = divider
+		case 11:
 			[self firstPane:identityView];
 			break;
-		case 11:
+		case 12:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -531,6 +536,12 @@
 	[[NSWorkspace sharedWorkspace] openFile:[Preferences whereThemesPath]];
 }
 
+- (void)onSparkleUpdateTypeChanged:(id)sender
+{
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:SparkleFeedURLChangeNotification object:nil userInfo:nil];
+}
+
 #pragma mark -
 #pragma mark NSWindow Delegate
 
@@ -556,6 +567,7 @@
 @synthesize scriptsView;
 @synthesize identityView;
 @synthesize keywordsTable;
+@synthesize updatesView;
 @synthesize excludeWordsTable;
 @synthesize keywordsArrayController;
 @synthesize excludeWordsArrayController;
