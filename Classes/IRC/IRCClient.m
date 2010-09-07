@@ -4000,9 +4000,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (channelListDialog) {
 				[channelListDialog addChannel:chname count:[countStr integerValue] topic:topic];
-			} else {
-				NSString* text = [NSString stringWithFormat:@"%@ (%@) %@", chname, countStr, topic];
-				[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 			}
 			break;
 		}
