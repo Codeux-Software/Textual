@@ -6,6 +6,7 @@
 #import "ScriptsWrapper.h"
 
 #define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
+#define SparkleFeedURLChangeNotification		@"SparkleFeedURLChangeNotification"
 #define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
 #define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
 #define InputHistoryGlobalSchemeNotification	@"InputHistoryGlobalSchemeNotification"
@@ -24,6 +25,7 @@
 	IBOutlet NSView *generalView;
 	IBOutlet NSView *scriptsView;
 	IBOutlet NSView *identityView;
+	IBOutlet NSView *updatesView;
 	IBOutlet NSView *floodControlView;
 	IBOutlet NSView *IRCopServicesView;
 	
@@ -62,6 +64,7 @@
 @property (nonatomic, retain) NSView *generalView;
 @property (nonatomic, retain) NSView *scriptsView;
 @property (nonatomic, retain) NSView *identityView;
+@property (nonatomic, retain) NSView *updatesView;
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *IRCopServicesView;
 @property (nonatomic, retain) NSTableView* keywordsTable;
@@ -94,6 +97,7 @@
 - (void)onLayoutChanged:(id)sender;
 - (void)onTextDirectionChanged:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
+- (void)onSparkleUpdateTypeChanged:(id)sender;
 
 - (void)firstPane:(NSView *)view;
 @end

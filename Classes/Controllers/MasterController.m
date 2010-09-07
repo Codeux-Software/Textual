@@ -23,6 +23,9 @@
 #define KInternetEventClass	1196773964
 #define KAEGetURL			1196773964
 
+#define SPARKLE_NORMAL_UPDATE_FEED @"http://codeux.com/textual/private/appcast/sparkle.xml"
+#define SPARKLE_BETA_PROGRAM_FEED @"http://codeux.com/textual/private/appcast/sparkle_beta.xml"
+
 @interface NSTextView (NSTextViewCompatibility)
 - (void)setAutomaticSpellingCorrectionEnabled:(BOOL)v;
 - (BOOL)isAutomaticSpellingCorrectionEnabled;
@@ -39,6 +42,7 @@
 - (void)loadWindowState;
 - (void)saveWindowState;
 - (void)registerKeyHandlers;
+- (void)registerSparkleFeed:(NSNotification *)note;
 @end
 
 @implementation MasterController
@@ -68,10 +72,13 @@
 	
 	[Preferences initPreferences];
 	
+	[self registerSparkleFeed:nil];
+	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	[nc addObserver:self selector:@selector(registerSparkleFeed:) name:SparkleFeedURLChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
 	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
@@ -578,6 +585,15 @@
 	[leftTreeBase addSubview:treeScrollView];
 	if (treeSplitter.position < 1) treeSplitter.position = 130;
 	treeScrollView.frame = leftTreeBase.bounds;
+}
+
+- (void)registerSparkleFeed:(NSNotification *)note
+{
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUCheckBetaFeed"]) {
+		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:SPARKLE_BETA_PROGRAM_FEED]];
+	} else {
+		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:SPARKLE_NORMAL_UPDATE_FEED]];
+	}
 }
 
 #pragma mark -
