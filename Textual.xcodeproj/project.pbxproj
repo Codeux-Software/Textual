@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4CD5AD1112369256001AEED2 /* Distribution */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4CD5AD1712369268001AEED2 /* Build configuration list for PBXAggregateTarget "Distribution" */;
+			buildPhases = (
+				4CD5AD1012369256001AEED2 /* ShellScript */,
+			);
+			dependencies = (
+				4CD5AD151236925D001AEED2 /* PBXTargetDependency */,
+			);
+			name = Distribution;
+			productName = Distribution;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
@@ -267,7 +282,6 @@
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
 		4CB0E77A122AC2CF003E802C /* IRCNetworks.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB0E760122AC295003E802C /* IRCNetworks.plist */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
-		4CD2E8B41230AFD9005F78F6 /* copyTextualDist in Resources */ = {isa = PBXBuildFile; fileRef = 4CD2E8B31230AFD9005F78F6 /* copyTextualDist */; };
 		4CDC703A122C6B0F004F8B35 /* ChanBanExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
@@ -275,6 +289,16 @@
 		4CFC7DB71231F40C00FFC3B7 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CD5AD141236925D001AEED2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CA9456011E1AFBA00D36367 /* Textual */;
+			remoteInfo = Textual;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
@@ -389,7 +413,6 @@
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
 		4CD1733B120EB20600F03B37 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualPluginItem.h; sourceTree = "<group>"; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
-		4CD2E8B31230AFD9005F78F6 /* copyTextualDist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = copyTextualDist; path = Resources/ShellCommands/copyTextualDist; sourceTree = "<group>"; };
 		4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanExceptionSheet.h; sourceTree = "<group>"; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
@@ -655,7 +678,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CD2E8B21230AFA1005F78F6 /* Scripts */,
 				4CC33FCC11ADA2BD005ECD84 /* Images */,
 				4C1BBCB411954F7800D968BB /* Documents */,
 				4C1BBCB311954F7300D968BB /* Templates */,
@@ -788,14 +810,6 @@
 				4C119CD711AD74880004F157 /* application.icns */,
 			);
 			name = Images;
-			sourceTree = "<group>";
-		};
-		4CD2E8B21230AFA1005F78F6 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4CD2E8B31230AFD9005F78F6 /* copyTextualDist */,
-			);
-			name = Scripts;
 			sourceTree = "<group>";
 		};
 		4CFF3BD111CC714300FF2930 /* DDFoundation */ = {
@@ -1278,6 +1292,7 @@
 			projectRoot = "";
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
+				4CD5AD1112369256001AEED2 /* Distribution */,
 			);
 		};
 /* End PBXProject section */
@@ -1325,7 +1340,6 @@
 				4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */,
 				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
 				4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */,
-				4CD2E8B41230AFD9005F78F6 /* copyTextualDist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1344,7 +1358,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\nexec $PROJECT_DIR/Resources/ShellCommands/copyTextualDist";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+		};
+		4CD5AD1012369256001AEED2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# ----------------------------------------------------------------------\n#\t\t\t\t\t\t\t\t\t\t\t\n# \tXcode 4 comes packed with a new build system which makes  \n# \tit more difficult to manage build locations. It does let  \n# \tthe eventual build location to be configured, but it    \n# \tcannot be shared. It is user specific. This script is     \n# \tdesigned to compensate for the new method.        \n#\t\t\t\t\t\t\t\t\n# \tCopyright © 2010 Codeux Software (www.codeux.com)\t\n#\t\t\t\t\t\t\t\t\n# ----------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"Textual.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\n# Are we on Xcode 4?\nif [ $XCODE_VERSION_ACTUAL -ge 0400 ]; then\n\n# Is this build occurring on a distribution scheme?\nif [ $DEPLOYMENT_LOCATION == \"NO\" ]; then\nexit\nfi\n\n# Flush out any existing data files\nif [ -d $PROJECT_DIR/build/ ]; then \nrm -r $PROJECT_DIR/build/\nfi\n\n# Create new build location\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\n# Move built product to new location\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/*\ncp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME\nfi\n\n# ----------------------------------------------------------------------\n#\t\t\t\t\t\t\t\t\t\n# \tComment out the code below to not package result    \n#\t\t\t\t\t\t\t\t\t\n# ----------------------------------------------------------------------\n\n/usr/bin/codesign -f -s \"$CODE_SIGN_IDENTITY\" $PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH \n\ncd $PROJECT_DIR/build/$CONFIGURATION\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" $FULL_PRODUCT_NAME/Contents/Info.plist)\n\nrm -if *.zip\nrm -if *.txt\n\nzip -r $buildNumber.zip *  \n\nruby $PROJECT_DIR/Extra/Sparkle\\ Tools/Extras/Signing\\ Tools/sign_update.rb $buildNumber.zip $PROJECT_DIR/Extra/Sparkle\\ Tools/dsa_priv.pem > UPDATEKEY.txt   ";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1463,6 +1490,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CD5AD151236925D001AEED2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CA9456011E1AFBA00D36367 /* Textual */;
+			targetProxy = 4CD5AD141236925D001AEED2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */ = {
@@ -1607,7 +1642,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1651,7 +1686,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1695,6 +1730,29 @@
 			};
 			name = Release;
 		};
+		4CD5AD1212369256001AEED2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Distribution;
+			};
+			name = Debug;
+		};
+		4CD5AD1312369256001AEED2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Distribution;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1703,7 +1761,7 @@
 					i386,
 					ppc,
 				);
-				CODE_SIGN_IDENTITY = "Codeux Software";
+				CODE_SIGN_IDENTITY = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -1725,7 +1783,7 @@
 					i386,
 					ppc,
 				);
-				CODE_SIGN_IDENTITY = "Codeux Software";
+				CODE_SIGN_IDENTITY = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1746,6 +1804,15 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CD5AD1712369268001AEED2 /* Build configuration list for PBXAggregateTarget "Distribution" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CD5AD1212369256001AEED2 /* Debug */,
+				4CD5AD1312369256001AEED2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

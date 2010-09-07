@@ -2,6 +2,11 @@
 <Scheme>
    <BuildAction
       buildConfiguration = "Debug">
+      <BuildableProductReferences>
+         <BuildableProductReference
+            BuildableProductIdentifier = "Distribution">
+         </BuildableProductReference>
+      </BuildableProductReferences>
    </BuildAction>
    <TestAction
       failureAction = "0">
