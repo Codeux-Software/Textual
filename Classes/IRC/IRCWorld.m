@@ -12,6 +12,7 @@
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
 #import "InputHistory.h"
+#import "LanguagePreferences.h"
 
 #define AUTO_CONNECT_DELAY              1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8
@@ -582,6 +583,8 @@
 	[self changeMemberListTheme];
 	
 	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
+	
+	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 }
 
 - (void)changeInputTextTheme

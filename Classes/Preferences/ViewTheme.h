@@ -9,12 +9,14 @@
 
 @interface ViewTheme : NSObject
 {
+	NSString* path;
 	NSString* name;
 	LogTheme* log;
 	OtherTheme* other;
 	CustomJSFile* js;
 }
 
+@property (nonatomic, retain) NSString *path;
 @property (nonatomic, retain, getter=name, setter=setName:) NSString* name;
 @property (nonatomic, readonly) LogTheme* log;
 @property (nonatomic, readonly) OtherTheme* other;
