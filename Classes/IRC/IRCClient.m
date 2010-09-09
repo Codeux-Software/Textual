@@ -3680,13 +3680,22 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			break;
 		}
 		case 311:	// RPL_WHOISUSER
+		case 314:   // RPL_WHOWASUSER
 		{
 			NSString* nick = [m paramAt:1];
 			NSString* username = [m paramAt:2];
 			NSString* address = [m paramAt:3];
 			NSString* realname = [m paramAt:5];
 			
-			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_HOSTMASK"), nick, username, address, realname];
+			NSString* text = nil;
+			
+			inWhoWasRequest = ((m.numericReply == 314) ? YES : NO);
+			
+			if (inWhoWasRequest) {
+				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOWAS_HOSTMASK"), nick, username, address, realname];
+			} else {
+				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_HOSTMASK"), nick, username, address, realname];
+			}	
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
@@ -3701,7 +3710,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* server = [m paramAt:2];
 			NSString* serverInfo = [m paramAt:3];
 			
-			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_CONNECTED_FROM"), nick, server, serverInfo];
+			NSString* text = nil;
+			
+			if (inWhoWasRequest) {
+				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOWAS_CONNECTED_FROM"), nick, server, [dateTimeFormatter stringFromDate:[NSDate dateWithNaturalLanguageString:serverInfo]]];
+			} else {
+				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_CONNECTED_FROM"), nick, server, serverInfo];
+			}
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
@@ -3717,17 +3732,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* signOnStr = [m paramAt:3];
 			
 			NSString *idleTime = TXReadableTime((NSTimeInterval)([[NSDate date] timeIntervalSince1970] - [idleStr doubleValue]), YES);
-			
-			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-			
-			[dateFormatter setDateStyle:NSDateFormatterLongStyle];
-			[dateFormatter setTimeStyle:NSDateFormatterLongStyle];
-			
-			NSString *dateFromString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[signOnStr doubleValue]]];
+			NSString *dateFromString = [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[signOnStr doubleValue]]];
 			
 			NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_UPTIME"), nick, dateFromString, idleTime];
-			
-			[dateFormatter release];
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
@@ -4103,6 +4110,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			break;
 		}
+		case 369:
+			inWhoWasRequest = NO;
+			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:[m sequence]];
+			break;
 		default:
 			if ([world.bundlesForServerInput objectForKey:[NSString stringWithFormat:@"%i", m.numericReply]]) break;
 			
@@ -4425,8 +4436,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
 	dateTimeFormatter = [NSDateFormatter new];
-	[dateTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
-	[dateTimeFormatter setTimeStyle:NSDateFormatterMediumStyle];
+	[dateTimeFormatter setDateStyle:NSDateFormatterLongStyle];
+	[dateTimeFormatter setTimeStyle:NSDateFormatterLongStyle];
 	
 	[pool drain];
 }
@@ -4463,4 +4474,5 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize trackedUsers;
 @synthesize inFirstISONRun;
 @synthesize hasIRCopAccess;
+@synthesize inWhoWasRequest;
 @end

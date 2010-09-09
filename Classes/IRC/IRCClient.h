@@ -59,6 +59,7 @@ typedef enum {
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	BOOL inChanBanList;
+	BOOL inWhoWasRequest;
 	BOOL hasIRCopAccess;
 	BOOL inFirstISONRun;
 	
@@ -121,6 +122,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL identifyCTCP;
 @property (nonatomic, assign) BOOL hasIRCopAccess;
 @property (nonatomic, assign) BOOL inFirstISONRun;
+@property (nonatomic, assign) BOOL inWhoWasRequest;
 @property (nonatomic, retain) HostResolver* nameResolver;
 @property (nonatomic, retain) NSString* joinMyAddress;
 @property (nonatomic, retain) Timer* pongTimer;
