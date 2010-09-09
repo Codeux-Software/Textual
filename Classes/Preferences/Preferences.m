@@ -1102,7 +1102,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
-	[d setInt:86400 forKey:@"SUScheduledCheckInterval"];
+	[d setInt:86400 forKey:@"TSUScheduledCheckInterval"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
