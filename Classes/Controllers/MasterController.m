@@ -17,6 +17,7 @@
 #import "NSStringHelper.h"
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
+#import "LanguagePreferences.h"
 #import "NSObject+DDExtensions.h"
 #import <Sparkle/SUUpdater.h>
 
@@ -132,6 +133,7 @@
 	[self setColumnLayout];
 	
 	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
+	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 	

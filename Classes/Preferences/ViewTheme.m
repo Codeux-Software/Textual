@@ -15,6 +15,7 @@
 @synthesize name;
 @synthesize log;
 @synthesize other;
+@synthesize path;
 @synthesize js;
 
 - (id)init
@@ -33,6 +34,7 @@
 	[log release];
 	[other release];
 	[js release];
+	[path release];
 	[super dealloc];
 }
 
@@ -58,17 +60,16 @@
 		if (kindAndName) {
 			NSString* kind = [kindAndName safeObjectAtIndex:0];
 			NSString* fname = [kindAndName safeObjectAtIndex:1];
-			NSString* fullName = nil;
 			
 			if ([kind isEqualToString:@"resource"]) {
-				fullName = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
+				path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
 			} else {
-				fullName = [[Preferences whereThemesPath] stringByAppendingPathComponent:fname];
+				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:fname];
 			}
 			
-			log.fileName = [fullName stringByAppendingPathComponent:@"/design.css"];
-			js.fileName = [fullName stringByAppendingPathComponent:@"/scripts.js"];
-			other.fileName = [fullName stringByAppendingPathComponent:@"/userInterface.plist"];
+			log.fileName = [path stringByAppendingPathComponent:@"/design.css"];
+			js.fileName = [path stringByAppendingPathComponent:@"/scripts.js"];
+			other.fileName = [path stringByAppendingPathComponent:@"/userInterface.plist"];
 			return;
 		}
 	}

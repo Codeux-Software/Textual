@@ -3,8 +3,9 @@
 
 #import "GlobalModels.h"
 #import "Preferences.h"
-#import "NSDictionaryHelper.h"
 #import "InputPromptDialog.h"
+#import "NSDictionaryHelper.h"
+#import "LanguagePreferences.h"
 
 #define TIME_BUFFER_SIZE 256
 
@@ -32,7 +33,7 @@ extern NSTimeInterval IntervalSinceTextualStart(void)
 
 NSString *TXTLS(NSString *key)
 {
-	return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);;
+	return [LanguagePreferences localizedStringWithKey:key];
 }
 
 extern BOOL promptWithSuppression(NSString *whatFor,
