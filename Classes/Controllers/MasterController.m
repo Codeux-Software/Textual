@@ -582,10 +582,15 @@
 
 - (void)registerSparkleFeed:(NSNotification *)note
 {
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUCheckBetaFeed"]) {
-		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:SPARKLE_BETA_PROGRAM_FEED]];
+	SUUpdater *updater = [SUUpdater sharedUpdater];
+	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+	
+	if ([ud boolForKey:@"SUCheckBetaFeed"]) {
+		[updater setFeedURL:[NSURL URLWithString:SPARKLE_BETA_PROGRAM_FEED]];
+		[updater setUpdateCheckInterval:3600];
 	} else {
-		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:SPARKLE_NORMAL_UPDATE_FEED]];
+		[updater setFeedURL:[NSURL URLWithString:SPARKLE_NORMAL_UPDATE_FEED]];
+		[updater setUpdateCheckInterval:[ud integerForKey:@"TSUScheduledCheckInterval"]];
 	}
 }
 
