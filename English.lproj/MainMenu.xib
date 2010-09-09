@@ -11,8 +11,8 @@
 			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="1385"/>
 			<integer value="963"/>
-			<integer value="277"/>
 			<integer value="327"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -1228,6 +1228,15 @@
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="289013904">
+									<reference key="NSMenu" ref="403887256"/>
+									<string key="NSTitle">Forum</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">110</int>
 								</object>
 								<object class="NSMenuItem" id="244844556">
 									<reference key="NSMenu" ref="403887256"/>
@@ -4294,6 +4303,14 @@
 					</object>
 					<int key="connectionID">1716</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openHelpMenuLinkItem:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="289013904"/>
+					</object>
+					<int key="connectionID">1718</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -5379,6 +5396,7 @@
 							<reference ref="949184879"/>
 							<reference ref="170811889"/>
 							<reference ref="157985797"/>
+							<reference ref="289013904"/>
 						</array>
 						<reference key="parent" ref="758853065"/>
 					</object>
@@ -6021,6 +6039,11 @@
 						<reference key="object" ref="170811889"/>
 						<reference key="parent" ref="403887256"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1717</int>
+						<reference key="object" ref="289013904"/>
+						<reference key="parent" ref="403887256"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6069,7 +6092,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{1006, 717}, {222, 133}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{1006, 697}, {222, 153}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6218,6 +6241,7 @@
 				<string key="1712.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1714.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1715.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1717.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="172.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="172.ImportedFromIB2"/>
 				<string key="173.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6470,7 +6494,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1716</int>
+			<int key="maxID">1718</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7998,6 +8022,7 @@
 						<string key="onOverrideFontChanged:">id</string>
 						<string key="onPrefPaneSelected:">id</string>
 						<string key="onSelectFont:">id</string>
+						<string key="onSparkleUpdateTypeChanged:">id</string>
 						<string key="onTextDirectionChanged:">id</string>
 						<string key="onTimestampFormatChanged:">id</string>
 						<string key="onTranscriptFolderChanged:">id</string>
@@ -8048,6 +8073,10 @@
 							<string key="name">onSelectFont:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onSparkleUpdateTypeChanged:">
+							<string key="name">onSparkleUpdateTypeChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onTextDirectionChanged:">
 							<string key="name">onTextDirectionChanged:</string>
 							<string key="candidateClassName">id</string>
@@ -8088,6 +8117,7 @@
 						<string key="themeButton">NSPopUpButton</string>
 						<string key="transcriptFolderButton">NSPopUpButton</string>
 						<string key="transfersView">NSView</string>
+						<string key="updatesView">NSView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="IRCopServicesView">
@@ -8176,6 +8206,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="transfersView">
 							<string key="name">transfersView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="updatesView">
+							<string key="name">updatesView</string>
 							<string key="candidateClassName">NSView</string>
 						</object>
 					</dictionary>

@@ -425,11 +425,7 @@
 			charValue = [charValue uppercaseString];
 		}
 		
-		if (firstColor < 10) {
-			charValue = [NSString stringWithFormat:@"%c0%i,%i%@%c", (UniChar)0x03, firstColor, secondColor, charValue, (UniChar)0x03];
-		} else {
-			charValue = [NSString stringWithFormat:@"%c%i,%i%@%c", (UniChar)0x03, firstColor, secondColor, charValue, (UniChar)0x03];
-		}
+		charValue = [NSString stringWithFormat:@"▤%i,%i%@▤", firstColor, secondColor, charValue];
 		
 		[charRanges addObject:charValue];
 		
@@ -472,12 +468,7 @@
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
 			
 			NSInteger colorChar = [[colorCodes objectAtIndex:rainbowArrayIndex] integerValue];
-			
-			if (colorChar < 10) {
-				charValue = [NSString stringWithFormat:@"%c0%i%@%c", (UniChar)0x03, colorChar, charValue, (UniChar)0x03];
-			} else {
-				charValue = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, colorChar, charValue, (UniChar)0x03];
-			}
+			charValue = [NSString stringWithFormat:@"▤%i%@▤", colorChar, charValue];
 			
 			[rainbowRanges addObject:charValue];
 			
@@ -488,13 +479,7 @@
 		selectedText = [rainbowRanges componentsJoinedByString:nil];
 		[rainbowRanges release];
 	} else {
-		NSInteger colorChar = [sender tag];
-		
-		if (colorChar < 10) {
-			selectedText = [NSString stringWithFormat:@"%c0%i%@%c", (UniChar)0x03, colorChar, selectedText, (UniChar)0x03];
-		} else {
-			selectedText = [NSString stringWithFormat:@"%c%i%@%c", (UniChar)0x03, colorChar, selectedText, (UniChar)0x03];
-		}
+		selectedText = [NSString stringWithFormat:@"▤%i%@▤", [sender tag], selectedText];
 	}
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
@@ -507,7 +492,7 @@
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x02, selectedText, (UniChar)0x02];
+	selectedText = [NSString stringWithFormat:@"▥%@▥", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
 	[text focus];
@@ -519,7 +504,7 @@
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x16, selectedText, (UniChar)0x16];
+	selectedText = [NSString stringWithFormat:@"▧%@▧", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
 	[text focus];
@@ -531,7 +516,7 @@
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x1F, selectedText, (UniChar)0x1F];
+	selectedText = [NSString stringWithFormat:@"▨%@▨", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
 	[text focus];
@@ -557,12 +542,18 @@
 - (void)sendText:(NSString*)command
 {
 	NSString* s = [text stringValue];
+	NSString* os = s;
 	
 	[text setStringValue:@""];
 	
+	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithFormat:@"%c", (UniChar)0x03]]; // bold
+	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithFormat:@"%c", (UniChar)0x02]]; // color
+	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithFormat:@"%c", (UniChar)0x16]]; // italics
+	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithFormat:@"%c", (UniChar)0x1F]]; // underline
+	
 	if (s.length) {
 		if ([world inputText:s command:command]) {
-			[inputHistory add:s];
+			[inputHistory add:os];
 		}
 	}
 	

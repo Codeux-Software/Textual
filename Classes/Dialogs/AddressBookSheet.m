@@ -29,7 +29,8 @@
 	[super dealloc];
 }
 
-- (void)onMenuBarItemChanged:(id)sender {
+- (void)onMenuBarItemChanged:(id)sender 
+{
 	switch ([sender indexOfSelectedItem]) {
 		case 0:
 			[self firstPane:notificationView];
@@ -43,7 +44,8 @@
 	}
 } 
 
-- (void)firstPane:(NSView *)view {
+- (void)firstPane:(NSView *)view 
+{
 	NSRect windowFrame = [sheet frame];
 	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
 	windowFrame.size.width = [view frame].size.width;

@@ -89,7 +89,8 @@
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
-- (void)onMenuBarItemChanged:(id)sender {
+- (void)onMenuBarItemChanged:(id)sender 
+{
 	switch ([sender indexOfSelectedItem]) {
 		case 0:
 			[self firstPane:generalView];
@@ -109,7 +110,8 @@
 	}
 } 
 
-- (void)firstPane:(NSView *)view {
+- (void)firstPane:(NSView *)view 
+{
 	NSRect windowFrame = [sheet frame];
 	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
 	windowFrame.size.width = [view frame].size.width;
@@ -532,6 +534,10 @@
 	if (sender.newItem) {
 		if ([hostmask length]  > 1) {
 			[config.ignores addObject:sender.ignore];
+		}
+	} else {
+		if ([hostmask length] < 1) {
+			[config.ignores removeObject:sender.ignore];
 		}
 	}
 	
