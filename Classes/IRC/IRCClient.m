@@ -324,13 +324,35 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (!isLoggedIn) return;
 	if (hasIRCopAccess) return;
 	if (!trackedUsers) trackedUsers = [NSMutableDictionary new];
-	if (trackedUsers && [trackedUsers count] > 0) [trackedUsers removeAllObjects];
 	
-	inFirstISONRun = YES;
-	
-	for (AddressBook *g in ignores) {
-		if (g.notifyJoins || g.notifyWhoisJoins) {
-			[trackedUsers setObject:@"0" forKey:[g trackingNickname]];
+	if ([trackedUsers count] > 0) {
+		NSMutableDictionary *oldEntries = [NSMutableDictionary dictionary];
+		NSMutableDictionary *newEntries = [NSMutableDictionary dictionary];
+		
+		for (NSString *name in trackedUsers) {
+			[oldEntries setObject:name forKey:[name lowercaseString]];
+		}
+		
+		for (AddressBook *g in ignores) {
+			if (g.notifyJoins || g.notifyWhoisJoins) {
+				NSString *name = [g trackingNickname];
+				NSString *lcname = [name lowercaseString];
+				
+				if ([oldEntries objectForKey:lcname]) {
+					[newEntries setObject:[trackedUsers objectForKey:name] forKey:name];
+				} else {
+					[newEntries setObject:@"0" forKey:name];
+				}
+			}
+		}
+		
+		[trackedUsers release];
+		trackedUsers = [newEntries retain];
+	} else {
+		for (AddressBook *g in ignores) {
+			if (g.notifyJoins || g.notifyWhoisJoins) {
+				[trackedUsers setObject:@"0" forKey:[g trackingNickname]];
+			}
 		}
 	}
 	
@@ -2896,7 +2918,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							ignoreChecks = [self checkIgnoreAgainstHostmask:host
 																withMatches:[NSArray arrayWithObjects:@"notifyWhoisJoins", @"notifyJoins", nil]];
 							
-							[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:snick langitem:@"IRC_USER_MATCHES_HOSTMASK_IRCOP"];
+							[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:snick langitem:@"USER_TRACKING_HOSTMASK_CONNECTED"];
 						}
 					} else {
 						if ([Preferences handleServerNotices]) {
@@ -3199,7 +3221,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				if (!ison) {					
 					NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
-					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"IRC_USER_MATCHES_HOSTMASK"];
+					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
 					[trackedUsers setObject:@"1" forKey:tracker];
 				}
 			}
@@ -3305,6 +3327,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (ison) {					
 				[trackedUsers setObject:@"0" forKey:tracker];
+				NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
+				[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
 			}
 		}
 	}
@@ -3363,12 +3387,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if ([ignoreChecks notifyJoins] == YES || [ignoreChecks notifyWhoisJoins] == YES) {
 				NSString *tracker = [ignoreChecks trackingNickname];
 				NSInteger ison = [[trackedUsers objectForKey:tracker] integerValue];
+				NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
 				
 				if (ison) {					
+					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
 					[trackedUsers setObject:@"0" forKey:tracker];
 				} else {				
-					NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
-					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"IRC_USER_MATCHES_HOSTMASK"];
+					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
 					[trackedUsers setObject:@"1" forKey:tracker];
 				}
 			}
@@ -3525,6 +3550,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[self updateClientTitle];
 	[self reloadTree];
+	
+	inFirstISONRun = YES;
 	[self populateISONTrackedUsersList:config.ignores];
 }
 
@@ -3813,33 +3840,42 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				LOG(@"p3: %@", trackedUsers);
 				LOG(@"p4: %@", users);
 				
-				for (NSString *name in trackedUsers) {
+				NSDictionary *tracked = [trackedUsers copy];
+				for (NSString *name in tracked) {
+					NSString *langkey = nil;
 					NSString *lcname = [name lowercaseString];
 					NSInteger ison = [[trackedUsers objectForKey:name] integerValue];
 					
+					LOG(@"p5: %@", name);
+					
 					if (ison) {
 						if (![users containsObject:lcname]) {
+							if (inFirstISONRun == NO) {
+								langkey = @"USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE";
+							}
+							
 							[trackedUsers setObject:@"0" forKey:name];
 						}
 					} else {
 						if ([users containsObject:lcname]) {
+							langkey = ((inFirstISONRun) ? @"USER_TRACKING_NICKNAME_AVAILABLE" : @"USER_TRACKING_NICKNAME_NOW_AVAILABLE");
 							[trackedUsers setObject:@"1" forKey:name];
+						}
+					}
+					
+					if (langkey) {
+						for (AddressBook *g in config.ignores) {
+							NSString *trname = [[g trackingNickname] lowercaseString];
 							
-							if (inFirstISONRun == NO) {
-								for (AddressBook *g in config.ignores) {
-									NSString *trname = [[g trackingNickname] lowercaseString];
-									
-									LOG(@"p5: %@ — %@ — %@", lcname, trname, name);
-									
-									if ([trname isEqualToString:lcname]) {
-										[self handleUserTrackingNotification:g hostmask:name nickname:name langitem:@"IRC_USER_MATCHES_NICKNAME"];
-									}
-								}
+							LOG(@"p6: %@ — %@ — %@", lcname, trname, name);
+							
+							if ([trname isEqualToString:lcname]) {
+								[self handleUserTrackingNotification:g hostmask:name nickname:name langitem:langkey];
 							}
 						}
-						
 					}
 				}
+				[tracked release];
 				
 				if (inFirstISONRun) {
 					inFirstISONRun = NO;

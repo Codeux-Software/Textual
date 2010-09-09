@@ -89,11 +89,13 @@
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
-- (void)onWindowsWantsClosure:(id)sender {
+- (void)onWindowsWantsClosure:(id)sender 
+{
 	[self.window close];
 }
 
-- (void)onPrefPaneSelected:(id)sender {
+- (void)onPrefPaneSelected:(id)sender 
+{
 	switch ([sender indexOfSelectedItem]) {
 		case 0:
 			[self firstPane:generalView];
@@ -138,7 +140,8 @@
 	}
 } 
 
-- (void)firstPane:(NSView *)view {
+- (void)firstPane:(NSView *)view 
+{
 	[self.window setTitle:[NSString stringWithFormat:TXTLS(@"TEXTUAL_PREFERENCES_WINDOW_TITLE"),  [preferenceSelectButton titleOfSelectedItem]]];
 																				   
 	NSRect windowFrame = [self.window frame];
@@ -309,9 +312,6 @@
 		[ary addObject:e];
 		
 		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH];
 		[ary addObject:e];
 		
 		sounds = ary;

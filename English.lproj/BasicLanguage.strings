@@ -106,9 +106,6 @@
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "IRC_RECIEVED_FILE_TRANSFER_REQUEST" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
-"IRC_USER_MATCHES_HOSTMASK_IRCOP" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
-"IRC_USER_MATCHES_HOSTMASK" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" has become available.";
-"IRC_USER_MATCHES_NICKNAME" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" has become available.";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
 /* Dialog Settings */
@@ -118,6 +115,15 @@
 "INVITE_SHEET_TWO_PEOPLE" = "%1$@ and %2$@";
 "INVITE_SHEET_MULTIPLE_PEOPLE" = "%d users";
 "INVITE_SHEET_TARGET_DESC" = "Invite %@ to:";
+
+/* User Tracking */
+
+"USER_TRACKING_HOSTMASK_CONNECTED" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected."; // ircop 
+"USER_TRACKING_NICKNAME_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available."; // normal user 
+"USER_TRACKING_HOSTMASK_NOW_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
+"USER_TRACKING_NICKNAME_NOW_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
+"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
+"USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
 
 /* DCC Specific Settings */
 "DCC_DISCONNECTED" = "Disconnected";
