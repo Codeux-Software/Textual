@@ -551,6 +551,9 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
+	
+	[[view windowScriptObject] callWebScriptMethod:@"newMessagePostedToDisplay" 
+									 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
 }
 
 - (NSString*)initialDocument:(NSString *)topic
