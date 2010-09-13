@@ -477,7 +477,7 @@
 		if (imageUrl) {
 			showInlineImage = YES;
 			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %@px;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
+			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
 		}
 	}
 	
