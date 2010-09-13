@@ -24,6 +24,7 @@
 - (void)reloadChannelTable;
 - (void)updateIgnoresPage;
 - (void)reloadIgnoreTable;
+- (void)firstPane:(NSView *)view;
 @end
 
 @implementation ServerSheet

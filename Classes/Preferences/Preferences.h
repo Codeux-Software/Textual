@@ -102,6 +102,9 @@ typedef enum {
 + (NoticesSendToLocation)locationToSendNotices;
 + (UserDoubleClickAction)userDoubleClickOption;
 
++ (NSInteger)inlineImagesMaxWidth;
++ (void)setInlineImagesMaxWidth:(NSInteger)value;
+
 + (NSString*)themeName;
 + (void)setThemeName:(NSString*)value;
 + (NSString*)themeLogFontName;

@@ -29,7 +29,6 @@
 }
 
 - (void)onMenuBarItemChanged:(id)sender;
-- (void)firstPane:(NSView *)view;
 
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, retain) AddressBook* ignore;

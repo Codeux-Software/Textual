@@ -6,6 +6,7 @@
 @interface AddressBookSheet (Private)
 - (void)updateButtons;
 - (void)reloadChannelTable;
+- (void)firstPane:(NSView *)view;
 @end
 
 @implementation AddressBookSheet

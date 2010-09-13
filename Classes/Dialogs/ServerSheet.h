@@ -140,7 +140,6 @@
 - (void)deleteIgnore:(id)sender;
 
 - (void)onMenuBarItemChanged:(id)sender;
-- (void)firstPane:(NSView *)view;
 @end
 
 @interface NSObject (ServerSheetDelegate)

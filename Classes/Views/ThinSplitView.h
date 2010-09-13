@@ -5,6 +5,7 @@
 
 @interface ThinSplitView : NSSplitView
 {
+	NSColor *dividerColor;
 	NSInteger fixedViewIndex;
 	NSInteger myDividerThickness;
 	NSInteger position;
@@ -12,6 +13,7 @@
 	BOOL hidden;
 }
 
+@property (nonatomic, assign) NSColor *dividerColor;
 @property (nonatomic, assign, setter=setFixedViewIndex:, getter=fixedViewIndex) NSInteger fixedViewIndex;
 @property (nonatomic, assign, setter=setPosition:, getter=position) NSInteger position;
 @property (nonatomic, assign, setter=setInverted:, getter=inverted) BOOL inverted;

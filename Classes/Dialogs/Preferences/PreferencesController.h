@@ -98,8 +98,6 @@
 - (void)onTextDirectionChanged:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
 - (void)onSparkleUpdateTypeChanged:(id)sender;
-
-- (void)firstPane:(NSView *)view;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
