@@ -12,12 +12,16 @@
 #define LINES_MAX			5000
 #define PORT_MIN			1024
 #define PORT_MAX			65535
+#define INLINE_IMAGE_MAX	5000
+#define INLINE_IMAGE_MIN	40
 
 #define WINDOW_TOOLBAR_HEIGHT 56
 
 @interface PreferencesController (Private)
 - (void)updateTranscriptFolder;
 - (void)updateTheme;
+
+- (void)firstPane:(NSView *)view;
 @end
 
 @implementation PreferencesController
@@ -221,6 +225,16 @@
 	[Preferences setCompletionSuffix:value];
 }
 
+- (NSInteger)inlineImageMaxWidth
+{
+	return [Preferences inlineImagesMaxWidth];
+}
+
+- (void)setInlineImageMaxWidth:(NSInteger)value
+{
+	[Preferences setInlineImagesMaxWidth:value];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
@@ -243,6 +257,13 @@
 			*value = [NSNumber numberWithInteger:PORT_MIN];
 		} else if (PORT_MAX < n) {
 			*value = [NSNumber numberWithInteger:PORT_MAX];
+		}
+	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
+		NSInteger n = [*value integerValue];
+		if (n < INLINE_IMAGE_MIN) {
+			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MIN];
+		} else if (INLINE_IMAGE_MAX < n) {
+			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MAX];
 		}
 	}
 	return YES;

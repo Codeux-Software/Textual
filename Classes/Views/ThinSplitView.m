@@ -14,6 +14,7 @@
 @synthesize position;
 @synthesize inverted;
 @synthesize hidden;
+@synthesize dividerColor;
 
 - (void)setUp
 {
@@ -136,12 +137,13 @@
 - (void)drawDividerInRect:(NSRect)rect
 {
 	if (hidden) return;
+	if (!dividerColor) dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
 	
 	if ([self isVertical]) {
-		[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
+		[dividerColor set];
 		NSRectFill(rect);
 	} else {
-		[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
+		[dividerColor set];
 		NSPoint left, right;
 		
 		left = rect.origin;

@@ -620,6 +620,21 @@ static NSMutableDictionary *commandIndex;
 }
 
 #pragma mark -
+#pragma mark Inline Image Size
+
++ (NSInteger)inlineImagesMaxWidth
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.General.inline_image_width"];
+}
+
++ (void)setInlineImagesMaxWidth:(NSInteger)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.General.inline_image_width"];
+}
+
+#pragma mark -
 #pragma mark Max Log Lines
 
 + (NSInteger)maxLogLines
@@ -1102,6 +1117,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
+	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
 	[d setInt:86400 forKey:@"TSUScheduledCheckInterval"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

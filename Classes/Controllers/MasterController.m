@@ -133,6 +133,9 @@
 	[self setColumnLayout];
 	
 	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
+	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
