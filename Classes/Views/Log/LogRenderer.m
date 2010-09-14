@@ -316,14 +316,13 @@ attributedString:(BOOL)attributed
 				if (r.location == NSNotFound) {
 					break;
 				}
-				
-				if (r.length == 1000) {
-					start = r.location + 1;
-				} else {			
+						
+				if (r.length >= 1) {
 					setFlag(attrBuf, URL_ATTR, r.location, r.length);
 					[urlAry addObject:[NSValue valueWithRange:r]];
-					start = NSMaxRange(r) + 1;
 				}
+				
+				start = NSMaxRange(r) + 1;
 			}
 		}
 		
