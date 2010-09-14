@@ -15,7 +15,6 @@
 	if ([string length] <= start) return NSMakeRange(NSNotFound, 0);
 	
 	NSString *shortstring = [string safeSubstringFromIndex:start];
-	NSInteger sstring_length = [shortstring length];
 	
 	NSRange rs = [shortstring rangeOfRegex:[self complexURLRegularExpression]];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
@@ -24,20 +23,20 @@
 	NSString *leftchar = nil;
 	NSString *rightchar = nil;
 	
-	NSInteger rightcharLocal = (rs.location + rs.length);
+	NSInteger rightcharLocal = (r.location + r.length);
 	
-	if (rs.location > 0) {
-		leftchar = [shortstring substringWithRange:NSMakeRange((rs.location - 1), 1)];
+	if (r.location > 0) {
+		leftchar = [string substringWithRange:NSMakeRange((r.location - 1), 1)];
 	}
 	
-	if (rightcharLocal < sstring_length) {
-		rightchar = [shortstring substringWithRange:NSMakeRange(rightcharLocal, 1)];
+	if (rightcharLocal < [string length]) {
+		rightchar = [string substringWithRange:NSMakeRange(rightcharLocal, 1)];
 	}
 	
 	if ([[self bannedURLRegexLeftBufferChars] containsObject:leftchar] ||
 		[[self bannedURLRegexRightBufferChars] containsObject:rightchar]) {
 		
-		return NSMakeRange((r.location + r.length), 1000);
+		return NSMakeRange(rightcharLocal, 0);
 	}
 	
 	return r;
