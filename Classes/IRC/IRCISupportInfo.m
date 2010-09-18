@@ -230,7 +230,7 @@
 
 + (IRCModeInfo*)modeInfo
 {
-	return [[IRCModeInfo alloc] init];
+	return [[[IRCModeInfo alloc] init] autorelease];
 }
 
 - (void)dealloc
