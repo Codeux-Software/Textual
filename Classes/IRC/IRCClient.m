@@ -70,6 +70,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)startReconnectTimer;
 
+- (void)requestIPAddressFromInternet;
+- (void)setDCCIPAddress:(NSString*)host;
+
 @end
 
 @implementation IRCClient
@@ -94,9 +97,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		isupport = [IRCISupportInfo new];
 		
 		hasIRCopAccess = NO;
-		
-		nameResolver = [HostResolver new];
-		nameResolver.delegate = self;
 		
 		reconnectTimer = [Timer new];
 		reconnectTimer.delegate = self;
@@ -150,9 +150,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[serverHostname release];
 	[trackedUsers release];
 	
-	nameResolver.delegate = nil;
-	[nameResolver autorelease];
-	[joinMyAddress release];
 	[myAddress release];
 	
 	[pongTimer stop];
@@ -190,10 +187,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	addressDetectionMethod = [Preferences dccAddressDetectionMethod];
 	if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
-		NSString* host = [Preferences dccMyaddress];
-		if (host.length) {
-			[nameResolver resolve:host];
-		}
+		[self setDCCIPAddress:[Preferences dccMyaddress]];
 	}
 }
 
@@ -365,6 +359,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Utilities
 
+- (void)setDCCIPAddress:(NSString*)host
+{
+	if ([host isMatchedByRegex:@"([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})"]) {	
+		if (myAddress != host) {
+			[myAddress release];
+			myAddress = [host retain];
+		}
+	}
+}
+
 - (NSInteger)connectDelay
 {
 	return connectDelay;
@@ -409,14 +413,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		myAddress = nil;
 		
 		if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
-			NSString* host = [Preferences dccMyaddress];
-			if (host.length) {
-				[nameResolver resolve:host];
-			}
+			[self setDCCIPAddress:[Preferences dccMyaddress]];
 		} else {
-			if (joinMyAddress.length) {
-				[nameResolver resolve:joinMyAddress];
-			}
+			[self requestIPAddressFromInternet];
 		}
 	}
 	
@@ -1066,12 +1065,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	max -= config.username.length;
 	
-	if (joinMyAddress) {
-		max -= joinMyAddress.length;
-	} else {
-		max -= IRC_ADDRESS_LEN;
-	}
-	
 	if ([command isEqualToString:NOTICE]) {
 		max -= 18;
 	} else if ([command isEqualToString:ACTION]) {
@@ -1408,7 +1401,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 55: // Command: MSG
 		{
 			cmd = (([cmd isEqualToString:MSG]) ? PRIVMSG : cmd);
-			BOOL opMsg = (([cmd isEqualToString:OMSG] || [cmd isEqualToString:ONOTICE]) ? YES : NO);
+			BOOL opMsg = NO;
+
+			if ([cmd isEqualToString:OMSG]) {
+				opMsg = YES;
+				cmd = MSG;
+			} else if ([cmd isEqualToString:ONOTICE]) {
+				opMsg = YES;
+				cmd = NOTICE;
+			}
 			
 			if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE] || [cmd isEqualToString:ACTION]) {
 				if (opMsg) {
@@ -2746,23 +2747,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 }
 
 #pragma mark -
-#pragma mark HostResolver Delegate
-
-- (void)hostResolver:(HostResolver*)sender didResolve:(NSHost*)host
-{
-	NSArray* addresses = [host addresses];
-	if (addresses.count) {
-		NSString* address = [addresses safeObjectAtIndex:0];
-		[myAddress release];
-		myAddress = [address retain];
-	}
-}
-
-- (void)hostResolver:(HostResolver*)sender didNotResolve:(NSString*)hostname
-{
-}
-
-#pragma mark -
 #pragma mark Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m
@@ -3165,6 +3149,26 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[pool drain];
 }
 
+- (void)_requestIPAddressFromInternet
+{
+	NSURLRequest *chRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://myip.dnsomatic.com/"] 
+											   cachePolicy:NSURLRequestReloadIgnoringCacheData 
+										   timeoutInterval:10];
+	
+	NSData *response = [NSURLConnection sendSynchronousRequest:chRequest returningResponse:nil error:NULL]; 
+	
+	if (response) {
+		NSString *address = [[[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding] trim];
+		[self setDCCIPAddress:address];
+		[address release];
+	}
+}
+
+- (void)requestIPAddressFromInternet
+{
+	[[self invokeInBackgroundThread] _requestIPAddressFromInternet];
+}
+
 - (void)receiveJoin:(IRCMessage*)m
 {
 	NSString* nick = m.sender.nick;
@@ -3184,13 +3188,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[c activate];
 		[self reloadTree];
 		
-		if (!joinMyAddress) {
-			joinMyAddress = [m.sender.address retain];
-			if (addressDetectionMethod == ADDRESS_DETECT_JOIN) {
-				if (joinMyAddress.length) {
-					[nameResolver resolve:joinMyAddress];
-				}
-			}
+		if (!myAddress) {
+			[self requestIPAddressFromInternet];
 		}
 	}
 	
@@ -4240,8 +4239,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	sentNick = @"";
 	
 	tryingNickNumber = -1;
-	[joinMyAddress release];
-	joinMyAddress = nil;
 	
 	inList = NO;
 	identifyMsg = NO;
@@ -4455,8 +4452,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize inList;
 @synthesize identifyMsg;
 @synthesize identifyCTCP;
-@synthesize nameResolver;
-@synthesize joinMyAddress;
 @synthesize pongTimer;
 @synthesize reconnectTimer;
 @synthesize retryTimer;

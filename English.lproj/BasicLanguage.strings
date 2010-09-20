@@ -129,17 +129,17 @@
 
 /* DCC Specific Settings */
 "DCC_DISCONNECTED" = "Disconnected";
-"DCC_SENDING_ITEM_TO" = "To %@    ";
+"DCC_SENDING_ITEM_TO" = "To %@ — ";
 "DCC_LISTENING" = "%@  — Requesting";
 "DCC_CONNECTING" = "%@  — Connecting";
-"DCC_SENDING_ITEM_FROM" = "From %@    ";
+"DCC_SENDING_ITEM_FROM" = "From %@ — ";
 "DCC_TRANSFER_STATUS" = "%1$@ / %2$@ (%3$@/s)";
 "DCC_SEND_NO_PORTS" = "No available ports";
-"DCC_TRANSFER_COMPLETED" = "%@  — Complete";
-"DCC_TRANSFER_STOPPED" = "%1$@ / %2$@  — Stopped";
-"DCC_TRANSFER_HAS_ERROR" = "%1$@ / %2$@  — Error: %3$@";
+"DCC_TRANSFER_COMPLETED" = "%@ — Complete";
+"DCC_TRANSFER_STOPPED" = "%1$@ / %2$@ — Stopped";
+"DCC_TRANSFER_HAS_ERROR" = "%1$@ / %2$@ — Error: %3$@";
 "DCC_SEND_FILE_OPEN_FAIL" = "Could not open file";
-"DCC_TRANSFER_TIME_REMAINING" = "  — %@ remaining";
+"DCC_TRANSFER_TIME_REMAINING" = " — %@ remaining";
 "DCC_SEND_UNKNOWN_IP_ADDRESS" = "Cannot detect your IP address";
 
 /* Time Convert Prefixes */
