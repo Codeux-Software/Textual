@@ -173,6 +173,26 @@
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (BOOL)isIPAddress
+{
+	BOOL isValidatedIP = YES;
+	
+	NSArray *chunks = [self componentsSeparatedByString:@"."];
+	
+	if (chunks || [chunks count] != 4) {
+		for (NSString *quad in chunks) {
+			NSInteger q = [quad integerValue];
+			
+			if (!q) isValidatedIP = NO; 
+			if (q < 0 || q > 255) isValidatedIP = NO; 
+		}
+	} else {
+		isValidatedIP = NO; 
+	}
+	
+	return isValidatedIP;
+}
+
 - (BOOL)isNumericOnly
 {
 	NSUInteger len = self.length;
