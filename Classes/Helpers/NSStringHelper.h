@@ -18,6 +18,8 @@
 
 - (NSString*)fastChopEndWithChars:(NSArray*)chars;
 
+- (BOOL)isIPAddress;
+
 - (BOOL)isEqualNoCase:(NSString*)other;
 - (BOOL)isEmpty;
 - (BOOL)contains:(NSString*)str;

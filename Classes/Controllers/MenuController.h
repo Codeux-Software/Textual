@@ -80,6 +80,9 @@
 - (void)onPreferences:(id)sender;
 - (void)onDcc:(id)sender;
 
+- (NSArray*)selectedMembers:(NSMenuItem*)sender;
+- (void)deselectMembers:(NSMenuItem*)sender;
+
 - (void)onCloseWindow:(id)sender;
 
 - (void)onPaste:(id)sender;

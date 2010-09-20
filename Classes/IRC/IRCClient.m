@@ -361,7 +361,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)setDCCIPAddress:(NSString*)host
 {
-	if ([host isMatchedByRegex:@"([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})"]) {	
+	if ([host isIPAddress]) {	
 		if (myAddress != host) {
 			[myAddress release];
 			myAddress = [host retain];
@@ -882,27 +882,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* escapedFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
 	
-	NSArray *addrInfo = [myAddress componentsSeparatedByString:@"."];
-	
-	NSString* address;
-	if ([addrInfo count] < 3) {
-		address = myAddress;
-	} else {
-		NSInteger w = [[addrInfo safeObjectAtIndex:0] integerValue];
-		NSInteger x = [[addrInfo safeObjectAtIndex:1] integerValue];
-		NSInteger y = [[addrInfo safeObjectAtIndex:2] integerValue];
-		NSInteger z = [[addrInfo safeObjectAtIndex:3] integerValue];
-		
-		unsigned long long a = 0;
-		a |= w; a <<= 8;
-		a |= x; a <<= 8;
-		a |= y; a <<= 8;
-		a |= z;
-		
-		address = [NSString stringWithFormat:@"%qu", a];
-	}
-	
-	NSString* trail = [NSString stringWithFormat:@"%@ %@ %d %qi", escapedFileName, address, port, size];
+	NSString* trail = [NSString stringWithFormat:@"%@ %@ %d %i", escapedFileName, myAddress, port, size];
 	[self sendCTCPQuery:nick command:@"DCC SEND" text:trail];
 	
 	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_IS_TRYING_FILE_TRANSFER"), nick, fileName, size, myAddress, port];
@@ -3097,19 +3077,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		return;
 	}
 	
-	NSString* host;
-	if ([address isNumericOnly]) {
-		long long a = [address longLongValue];
-		NSInteger w = a & 0xff; a >>= 8;
-		NSInteger x = a & 0xff; a >>= 8;
-		NSInteger y = a & 0xff; a >>= 8;
-		NSInteger z = a & 0xff;
-		host = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
-	} else {
-		host = address;
-	}
+	if ([address isIPAddress] == NO) return;
 	
-	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_FILE_TRANSFER_REQUEST"), nick, fileName, size, host, port];
+	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_FILE_TRANSFER_REQUEST"), nick, fileName, size, address, port];
 	[self printBoth:nil type:LINE_TYPE_DCC_SEND_RECEIVE text:text];
 	
 	if ([Preferences dccAction] != DCC_IGNORE) {
@@ -3123,7 +3093,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				path = @"~/Desktop";
 			}
 			
-			[world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
+			[world.dcc addReceiverWithUID:uid nick:nick host:address port:port path:path fileName:fileName size:size];
 			
 			[self notifyEvent:GROWL_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
 			[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]isMuted:world.soundMuted];
@@ -3151,6 +3121,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)_requestIPAddressFromInternet
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	NSURLRequest *chRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://myip.dnsomatic.com/"] 
 											   cachePolicy:NSURLRequestReloadIgnoringCacheData 
 										   timeoutInterval:10];
@@ -3162,6 +3134,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self setDCCIPAddress:address];
 		[address release];
 	}
+	
+	[pool release];
 }
 
 - (void)requestIPAddressFromInternet
