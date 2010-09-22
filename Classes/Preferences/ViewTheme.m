@@ -67,6 +67,23 @@
 				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:fname];
 			}
 			
+			BOOL isDirectory = YES;
+			NSFileManager *fm = [NSFileManager defaultManager];
+			
+			if ([fm fileExistsAtPath:path isDirectory:&isDirectory]) {
+				if (isDirectory == NO && [kind isEqualToString:@"resource"]) {
+					[path release];
+					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
+				}
+			}
+			
+			if ([fm fileExistsAtPath:path isDirectory:&isDirectory]) {
+				if (isDirectory == NO) {
+					NSLog(@"Error: No path to local resources.");
+					exit(0);
+				}
+			}
+			
 			log.fileName = [path stringByAppendingPathComponent:@"/design.css"];
 			js.fileName = [path stringByAppendingPathComponent:@"/scripts.js"];
 			other.fileName = [path stringByAppendingPathComponent:@"/userInterface.plist"];
