@@ -137,7 +137,7 @@
 
 - (NSString*)trackingNickname
 {
-	return [hostmask safeSubstringToIndex:[hostmask stringPosition:@"!"]];
+	return [hostmask nicknameFromHostmask];
 }
 
 @end

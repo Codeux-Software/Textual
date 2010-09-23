@@ -20,6 +20,8 @@
 
 - (BOOL)isIPAddress;
 
+- (NSString*)nicknameFromHostmask;
+
 - (BOOL)isEqualNoCase:(NSString*)other;
 - (BOOL)isEmpty;
 - (BOOL)contains:(NSString*)str;

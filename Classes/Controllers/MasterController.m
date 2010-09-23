@@ -1141,7 +1141,7 @@ typedef enum {
 	}
 }
 
-- (void)sendNotice:(NSEvent*)e
+- (void)sendMsgAction:(NSEvent*)e
 {
 	[self sendText:ACTION];
 }
@@ -1186,8 +1186,8 @@ typedef enum {
 	
 	[self handler:@selector(tab:) code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
-	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
-	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
@@ -1260,7 +1260,11 @@ typedef enum {
 {
 	for (IRCClient *c in world.clients) {
 		if (c.isConnected) {
-			[c quit:TXTLS(@"UPDATING_APPLICATION_QUIT_MESSAGE")];
+			if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUCheckBetaFeed"]) {
+				[c quit];
+			} else {
+				[c quit:TXTLS(@"UPDATING_APPLICATION_QUIT_MESSAGE")];
+			}
 		}
 	}
 	
