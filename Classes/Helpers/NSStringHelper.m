@@ -580,6 +580,12 @@ BOOL isUnicharDigit(unichar c)
 	return [[[NSBundle mainBundle] infoDictionary] objectForKey:key];
 }
 
+- (NSString*)nicknameFromHostmask
+{
+	if (self.length < 2) return nil;
+	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
+}
+
 @end
 
 @implementation NSMutableString (NSMutableStringHelper)

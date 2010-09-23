@@ -57,7 +57,7 @@
 
 - (void)addException:(NSString*)host tset:(NSString*)time setby:(NSString*)owner
 {
-    [list addObject:[NSArray arrayWithObjects:host, owner, time, nil]];
+    [list addObject:[NSArray arrayWithObjects:host, [owner nicknameFromHostmask], time, nil]];
     
     [self reloadTable];
 }

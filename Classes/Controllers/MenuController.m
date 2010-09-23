@@ -34,6 +34,8 @@
 #define IS_NOT_CHANNEL          (!c.isChannel)
 #define IS_NOT_CLIENT           (!c.isClient)
 
+#define MAXIMUM_SETS_PER_MODE	10
+
 @interface MenuController (Private)
 - (LogView*)currentWebView;
 - (BOOL)checkSelectedMembers:(NSMenuItem*)item;
@@ -1141,13 +1143,24 @@
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, us.nick] completeTarget:YES target:c.name];
 		}
 	} else {
-		NSString *opString = [@"" autorelease];
+		NSString *opString = @"";
+		NSInteger currentIndex = 0;
 		
 		for (IRCUser* m in nicknames) {
 			opString = [opString stringByAppendingFormat:@"%@ ", m.nick];
+			
+			currentIndex++;
+			
+			if (currentIndex == MAXIMUM_SETS_PER_MODE) {
+				[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
+				currentIndex = 0;
+				opString = @"";
+			}
 		}
 		
-		[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
+		if (opString) {	
+			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
+		}
 		
 		[self deselectMembers:sender];
 	}
@@ -1477,6 +1490,28 @@
 {
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+}
+
+- (void)onWantChannelModerated:(id)sender
+{
+	if ([[world selectedChannel] isChannel] == NO) return;
+	
+	if ([sender tag] == 1) {
+		[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ -m", [[world selectedChannel] name]]];
+	} else {
+		[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ +m", [[world selectedChannel] name]]];
+	}
+}
+
+- (void)onWantChannelVoiceOnly:(id)sender
+{
+	if ([[world selectedChannel] isChannel] == NO) return;
+	
+	if ([sender tag] == 1) {
+		[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ -i", [[world selectedChannel] name]]];
+	} else {
+		[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ +i", [[world selectedChannel] name]]];
+	}
 }
 
 @synthesize closeWindowItem;

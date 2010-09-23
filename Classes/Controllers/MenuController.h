@@ -158,5 +158,8 @@
 
 - (void)onWantThemeForceReloaded:(id)sender;
 
+- (void)onWantChannelModerated:(id)sender;
+- (void)onWantChannelVoiceOnly:(id)sender;
+
 - (void)processNavigationItem:(NSMenuItem *)sender;
 @end
