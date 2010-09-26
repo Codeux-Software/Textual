@@ -4,6 +4,7 @@
 #include <mach/mach_host.h>
 #include <mach/host_info.h>
 
+#include <sys/mount.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <sys/socket.h>
@@ -13,6 +14,8 @@
 
 #import <OpenGL/OpenGL.h>
 #import <SystemConfiguration/SystemConfiguration.h>
+
+#define LOCAL_VOLUME_DICTIONARY @"/Volumes"
 
 @implementation TPI_SP_SysInfo
 
@@ -119,22 +122,140 @@
 	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime(IntervalSinceTextualStart(), YES)];
 }
 
+
++ (NSString *)getBandwidthStats:(IRCWorld *)world
+{
+	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. This equals \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
+			world.messagesSent, world.messagesReceived, [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
+}
+
++ (NSString *)getNetworkStats
+{
+	/* Based off the source code of the "top" command
+	 <http://src.gnu-darwin.org/DarwinSourceArchive/expanded/top/top-15/libtop.c> */
+	
+	NSMutableString *netstat = [NSMutableString stringWithString:@"Network Traffic:"];
+	
+	BOOL firstItemPassed = NO;
+	long net_ibytes, net_obytes;
+	struct ifaddrs *ifa_list = 0, *ifa;
+	
+	if (getifaddrs(&ifa_list) == -1) {
+		return nil;
+	}
+	
+	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
+		if (AF_LINK != ifa->ifa_addr->sa_family) continue;
+		if (!(ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING)) continue;
+		if (ifa->ifa_data == 0) continue;
+		
+		if (strncmp(ifa->ifa_name, "lo", 2)) {
+			struct if_data *if_data = (struct if_data *)ifa->ifa_data;
+			
+			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) continue;
+			
+			net_ibytes += if_data->ifi_ibytes;
+			net_obytes += if_data->ifi_obytes;
+			
+			if (firstItemPassed == NO) {
+				firstItemPassed = YES;
+				
+				[netstat appendFormat:@" [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
+				 [self formattedDiskSize:if_data->ifi_ibytes], 
+				 [self formattedDiskSize:if_data->ifi_obytes]];
+			} else {
+				[netstat appendFormat:@" — [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
+				 [self formattedDiskSize:if_data->ifi_ibytes], 
+				 [self formattedDiskSize:if_data->ifi_obytes]];
+			}
+		}
+	}
+	
+	if (ifa_list) {
+	    freeifaddrs(ifa_list);
+	}
+	
+	return netstat;
+}
+
++ (NSString *)getAllVolumesAndSizes
+{
+	// Based off the source code located at:
+	// <http://www.cocoabuilder.com/archive/cocoa/150006-detecting-volumes.html>
+	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	BOOL firstItemPassed = NO;
+	NSString *result = @"Mounted Drives: ";
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSArray *drives = [fm contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
+	
+	for (NSString *name in drives) {
+		NSString *fullpath = [LOCAL_VOLUME_DICTIONARY stringByAppendingPathComponent:name];
+		
+		FSRef fsRef;
+		struct statfs stat;
+		FSCatalogInfo catalogInfo;
+		const char *fsRep = [fullpath fileSystemRepresentation];
+		
+		if (FSPathMakeRef((const UInt8*)fsRep, &fsRef, NULL) != 0) {
+			continue;
+		}
+		
+		if (FSGetCatalogInfo(&fsRef, kFSCatInfoParentDirID, &catalogInfo, NULL, NULL, NULL) != 0) {
+			continue;
+		}
+		
+		BOOL isVolume = (catalogInfo.parentDirID == fsRtParID);
+		
+		if (isVolume) {
+			if (statfs(fsRep, &stat) == 0) {
+				NSString *fileSystemName = [fm stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
+				
+				if ([fileSystemName isEqualToString:@"hfs"]) {
+					NSDictionary *diskInfo = [fm attributesOfFileSystemForPath:fullpath error:NULL];
+					
+					if (diskInfo) {
+						TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
+						TXFSLongInt freeSpace = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+						
+						if (firstItemPassed == NO) {
+							firstItemPassed = YES;
+							result = [result stringByAppendingFormat:@"\002%@\002: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+						} else {
+							result = [result stringByAppendingFormat:@" — \002%@\002: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	if ([result length] < 20) {
+		return @"Error: Unable to find any mounted drives.";
+	} else {
+		return result;
+	}
+	
+	[pool release];
+}
+
 #pragma mark -
 #pragma mark Formatting/Processing 
 
 + (NSString *)formattedDiskSize:(TXFSLongInt)size
 {
-	if (size >= 1099511627776) {
-		return [NSString stringWithFormat:@"%.2f TB", (size / 1099511627776.0)];
+	if (size >= 1000000000000.0) {
+		return [NSString stringWithFormat:@"%.2f TB", (size / 1000000000000.0)];
 	} else {
-		if (size < 1073741824) {
-			if (size < 1048576) {
-				return [NSString stringWithFormat:@"%.2f KB", (size / 1024.0)];
+		if (size < 1000000000.0) {
+			if (size < 1000000.0) {
+				return [NSString stringWithFormat:@"%.2f KB", (size / 1000.0)];
 			} else {
-				return [NSString stringWithFormat:@"%.2f MB", (size / 1048576.0)];
+				return [NSString stringWithFormat:@"%.2f MB", (size / 1000000.0)];
 			}
 		} else {
-			return [NSString stringWithFormat:@"%.2f GB", (size / 1073741824.0)];
+			return [NSString stringWithFormat:@"%.2f GB", (size / 1000000000.0)];
 		}
 	}
 }
@@ -199,8 +320,8 @@
 	NSDictionary *diskInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
-		TXFSLongInt totalSpace = [[diskInfo objectForKey:@"NSFileSystemSize"] longLongValue];
-		TXFSLongInt freeSpace = [[diskInfo objectForKey:@"NSFileSystemFreeSize"] longLongValue];
+		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
+		TXFSLongInt freeSpace = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
 		
 		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 	} else {
@@ -287,61 +408,6 @@
 	} else {
 		return nil;
 	}
-}
-
-+ (NSString *)getBandwidthStats:(IRCWorld *)world
-{
-	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. This equals \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
-			world.messagesSent, world.messagesReceived, [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
-}
-
-+ (NSString *)getNetworkStats
-{
-	/* Based off the source code of the "top" command
-	 <http://src.gnu-darwin.org/DarwinSourceArchive/expanded/top/top-15/libtop.c> */
-	
-	NSMutableString *netstat = [NSMutableString stringWithString:@"Network Traffic:"];
-	
-	BOOL firstItemPassed = NO;
-	long net_ibytes, net_obytes;
-	struct ifaddrs *ifa_list = 0, *ifa;
-	
-	if (getifaddrs(&ifa_list) == -1) {
-		return nil;
-	}
-	
-	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
-		if (AF_LINK != ifa->ifa_addr->sa_family) continue;
-		if (!(ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING)) continue;
-		if (ifa->ifa_data == 0) continue;
-		
-		if (strncmp(ifa->ifa_name, "lo", 2)) {
-			struct if_data *if_data = (struct if_data *)ifa->ifa_data;
-			
-			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) continue;
-			
-			net_ibytes += if_data->ifi_ibytes;
-			net_obytes += if_data->ifi_obytes;
-			
-			if (firstItemPassed == NO) {
-				firstItemPassed = YES;
-				
-				[netstat appendFormat:@" [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
-				 [self formattedDiskSize:if_data->ifi_ibytes], 
-				 [self formattedDiskSize:if_data->ifi_obytes]];
-			} else {
-				[netstat appendFormat:@" — [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
-				 [self formattedDiskSize:if_data->ifi_ibytes], 
-				 [self formattedDiskSize:if_data->ifi_obytes]];
-			}
-		}
-	}
-	
-	if (ifa_list) {
-	    freeifaddrs(ifa_list);
-	}
-	
-	return netstat;
 }
 
 + (NSString *)processorClockSpeed

@@ -16,8 +16,12 @@
 + (NSString *)diskInfo;
 + (NSString *)getNetworkStats;
 + (NSString *)graphicsCardInfo;
++ (NSString *)getAllVolumesAndSizes;
 + (NSString *)applicationMemoryUsage;
 + (NSString *)applicationAndSystemUptime;
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
+
++ (NSString *)formattedDiskSize:(TXFSLongInt)size;
++ (NSString *)formattedCPUFrequency:(double)rate;
 
 @end

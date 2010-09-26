@@ -583,6 +583,7 @@ BOOL isUnicharDigit(unichar c)
 - (NSString*)nicknameFromHostmask
 {
 	if (self.length < 2) return nil;
+	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
 	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
 }
 

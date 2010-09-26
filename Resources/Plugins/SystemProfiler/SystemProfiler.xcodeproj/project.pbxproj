@@ -11,6 +11,7 @@
 		4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */; };
 		4C72E6F411BC466800B97E69 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */; };
 		4C832E2211DD098F007D32E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */; };
+		4CADD91B124BB69400B82983 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CADD91A124BB69400B82983 /* Info.plist */; };
 		4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */; };
 		4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBE211CB4D47002A6868 /* Cocoa.framework */; };
 		4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC17BA011F1870400A3E4F7 /* OpenGL.framework */; };
@@ -128,11 +129,11 @@
 		4C9E18751209E502004E5032 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTheme.h; path = /Applications/Textual.app/Contents/Headers/ViewTheme.h; sourceTree = "<absolute>"; };
 		4C9E18761209E502004E5032 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewAutoScroll.h; path = /Applications/Textual.app/Contents/Headers/WebViewAutoScroll.h; sourceTree = "<absolute>"; };
 		4C9E18771209E502004E5032 /* WelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeSheet.h; path = /Applications/Textual.app/Contents/Headers/WelcomeSheet.h; sourceTree = "<absolute>"; };
+		4CADD91A124BB69400B82983 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4CBDDBE211CB4D47002A6868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CC17BA011F1870400A3E4F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +166,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B7048680CD000E48DA /* Info.plist */,
+				4CADD91A124BB69400B82983 /* Info.plist */,
 				4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */,
 			);
 			name = Resources;
@@ -373,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */,
+				4CADD91B124BB69400B82983 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
