@@ -5,7 +5,7 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", @"msgcount", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", @"msgcount", @"diskspace", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -26,6 +26,8 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getNetworkStats]];
 			} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getBandwidthStats:[client world]]];
+			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllVolumesAndSizes]];
 			}
 		}
 	}
