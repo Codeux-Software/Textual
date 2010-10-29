@@ -1758,6 +1758,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				g.ignorePublicMsg = YES;
 				g.ignorePrivateMsg = YES;
 				g.ignoreHighlights = YES;
+				g.ignorePMHighlights = YES;
 				g.ignoreNotices = YES;
 				g.ignoreCTCP = YES;
 				g.ignoreDCC = YES;
@@ -2784,20 +2785,20 @@ static NSDateFormatter* dateTimeFormatter = nil;
 											uname:m.sender.user 
 											 name:m.sender.nick
 									 matchAgainst:[NSArray arrayWithObjects:@"ignoreHighlights", 
+												   @"ignorePMHighlights",
 												   @"ignoreNotices", 
 												   @"ignorePublicMsg", 
 												   @"ignorePrivateMsg", nil]];
 	
-	
-	if ([ignoreChecks ignoreHighlights] == YES) {
-		if (type == LINE_TYPE_ACTION) {
-			type = LINE_TYPE_ACTION_NH;
-		} else if (type == LINE_TYPE_PRIVMSG) {
-			type = LINE_TYPE_PRIVMSG_NH;
-		}
-	}
-	
 	if (target.isChannelName) {
+		if ([ignoreChecks ignoreHighlights] == YES) {
+			if (type == LINE_TYPE_ACTION) {
+				type = LINE_TYPE_ACTION_NH;
+			} else if (type == LINE_TYPE_PRIVMSG) {
+				type = LINE_TYPE_PRIVMSG_NH;
+			}
+		}
+		
 		if (type == LINE_TYPE_NOTICE) {
 			if ([ignoreChecks ignoreNotices] == YES) {
 				return;
@@ -2841,6 +2842,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 		}
 	} else if ([target isEqualNoCase:myNick]) {
+		if ([ignoreChecks ignorePMHighlights] == YES) {
+			if (type == LINE_TYPE_ACTION) {
+				type = LINE_TYPE_ACTION_NH;
+			} else if (type == LINE_TYPE_PRIVMSG) {
+				type = LINE_TYPE_PRIVMSG_NH;
+			}
+		}
+		
 		if (!anick.length) {
 			[self printBoth:nil type:type text:text];
 		} else if ([anick contains:@"."]) {
@@ -2905,10 +2914,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self printBoth:nil type:type text:text];
 			}
 		} else {
-			if ([ignoreChecks ignorePrivateMsg] == YES) {
-				return;
-			}
-			
 			IRCChannel* c = [self findChannel:anick];
 			BOOL newTalk = NO;
 			if (!c && type != LINE_TYPE_NOTICE) {
@@ -2917,6 +2922,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 			
 			if (type == LINE_TYPE_NOTICE) {
+				if ([ignoreChecks ignoreNotices] == YES) {
+					return;
+				}
+				
 				if ([Preferences locationToSendNotices] == NOTICES_SENDTO_CURCHAN) {
 					c = [world selectedChannelOn:self];
 				}
@@ -2934,6 +2943,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:anick text:text];
 				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE] isMuted:world.soundMuted];
 			} else {
+				if ([ignoreChecks ignorePrivateMsg] == YES) {
+					return;
+				}
+				
 				BOOL keyword = [self printBoth:c type:type nick:anick text:text identified:identified];
 				
 				id t = c ?: (id)self;
