@@ -103,11 +103,9 @@
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@) (%7$@)";
-"IRC_IS_TRYING_FILE_TRANSFER" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
 "IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"IRC_RECIEVED_FILE_TRANSFER_REQUEST" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
 /* Dialog Settings */
@@ -126,21 +124,6 @@
 "USER_TRACKING_NICKNAME_NOW_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
 "USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
 "USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
-
-/* DCC Specific Settings */
-"DCC_DISCONNECTED" = "Disconnected";
-"DCC_SENDING_ITEM_TO" = "To %@ — ";
-"DCC_LISTENING" = "%@  — Requesting";
-"DCC_CONNECTING" = "%@  — Connecting";
-"DCC_SENDING_ITEM_FROM" = "From %@ — ";
-"DCC_TRANSFER_STATUS" = "%1$@ / %2$@ (%3$@/s)";
-"DCC_SEND_NO_PORTS" = "No available ports";
-"DCC_TRANSFER_COMPLETED" = "%@ — Complete";
-"DCC_TRANSFER_STOPPED" = "%1$@ / %2$@ — Stopped";
-"DCC_TRANSFER_HAS_ERROR" = "%1$@ / %2$@ — Error: %3$@";
-"DCC_SEND_FILE_OPEN_FAIL" = "Could not open file";
-"DCC_TRANSFER_TIME_REMAINING" = " — %@ remaining";
-"DCC_SEND_UNKNOWN_IP_ADDRESS" = "Cannot detect your IP address";
 
 /* Time Convert Prefixes */
 
@@ -174,11 +157,6 @@
 "GROWL_KICKED" = "Kicked";
 
 /* Growl Alert Bubbles */
-"GROWL_FILE_RECEIVE_REQUEST" = "DCC file receive request";
-"GROWL_FILE_RECEIVE_SUCCESS" = "DCC file receive success";
-"GROWL_FILE_RECEIVE_ERROR" = "DCC file receive failure";
-"GROWL_FILE_SEND_SUCCESS" = "DCC file send success";
-"GROWL_FILE_SEND_ERROR" = "DCC file send failure";
 "GROWL_MSG_LOGIN" = "Connected";
 "GROWL_MSG_LOGIN_TITLE" = "Connected: %@";
 "GROWL_MSG_DISCONNECT" = "Disconnected";
@@ -193,9 +171,6 @@
 "GROWL_MSG_KICKED_DESC" = "%1$@ has kicked you out: %2$@";
 "GROWL_MSG_TALK_NOTICE" = "Private notice received";
 "GROWL_MSG_TALK_NOTICE_TITLE" = "Private Notice";
-"GROWL_NSG_FILE_SEND_FAILED" = "File send failed";
-"GROWL_MSG_FILE_SEND_FAILED_DESC" = "To %1$@\n%2$@";
-"GROWL_MSG_FILE_SEND_FAILED_TITLE" = "File send failed";
 "GROWL_MSG_HIGHLIGHT" = "Highlight message received";
 "GROWL_MSG_HIGHLIGHT_TITLE" = "Highlight: %@";
 "GROWL_MSG_NEW_TALK" = "New private message started";
@@ -204,18 +179,6 @@
 "GROWL_MSG_CHANNEL_NOTICE" = "Channel notice received";
 "GROWL_MSG_CHANNEL_NOTICE_TITLE" = "Notice: %@";
 "GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Match";
-"GROWL_MSG_FILE_SEND_SUCCEEDED" = "File send succeeded";
-"GROWL_MSG_FILE_SEND_SUCCEEDED_DESC" = "To %1$@\n%2$@";
-"GROWL_MSG_FILE_SEND_SUCCEEDED_TITLE" = "File send succeeded";
-"GROWL_MSG_FILE_RECEIVE_FAILED" = "File receive failed";
-"GROWL_MSG_FILE_RECIEVE_FAILED_DESC" = "From %1$@\n%2$@";
-"GROWL_MSG_FILE_RECIEVE_FAILED_TITLE" = "File receive failed";
-"GROWL_MSG_FILE_RECEIVE_REQUEST" = "File receive requested";
-"GROWL_MSG_FILE_RECIEVE_REQUEST_DESC" = "From %1$@\n%2$@";
-"GROWL_MSG_FILE_RECIEVE_REQUEST_TITLE" = "File receive request";
-"GROWL_MSG_FILE_RECEIVE_SUCCEEDED" = "File receive succeeded";
-"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_DESC" = "From %1$@\n%2$@";
-"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_TITLE" = "File receive succeeded";
 
 /* Valid Top Level Domains (TLD) for URL Matching */
 /* Included within this file to make future updates easier. */
