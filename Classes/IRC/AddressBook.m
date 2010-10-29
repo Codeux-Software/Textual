@@ -20,6 +20,7 @@
 @synthesize hostmaskRegex;
 @synthesize notifyJoins;
 @synthesize notifyWhoisJoins;
+@synthesize ignorePMHighlights;
 
 - (void)dealloc
 {
@@ -52,6 +53,7 @@
 		ignoreJPQE = [dic boolForKey:@"ignoreJPQE"];
 		notifyJoins = [dic boolForKey:@"notifyJoins"];
 		notifyWhoisJoins = [dic boolForKey:@"notifyWhoisJoins"];
+		ignorePMHighlights = [dic boolForKey:@"ignorePMHighlights"];
 		
 		[self processHostMaskRegex];
 	}
@@ -114,6 +116,7 @@
 	[dic setBool:ignorePublicMsg forKey:@"ignorePublicMsg"];
 	[dic setBool:ignorePrivateMsg forKey:@"ignorePrivateMsg"];
 	[dic setBool:ignoreHighlights forKey:@"ignoreHighlights"];
+	[dic setBool:ignorePMHighlights forKey:@"ignorePMHighlights"];
 	[dic setBool:ignoreNotices forKey:@"ignoreNotices"];
 	[dic setBool:ignoreCTCP forKey:@"ignoreCTCP"];
 	[dic setBool:ignoreDCC forKey:@"ignoreDCC"];

@@ -45,9 +45,6 @@
 	TopicSheet* topicSheet;
 	InviteSheet* inviteSheet;
 	AboutPanel* aboutPanel;
-	NSOpenPanel* fileSendPanel;
-	NSArray* fileSendTargets;
-	NSInteger fileSendUID;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -70,15 +67,11 @@
 @property (nonatomic, retain) TopicSheet* topicSheet;
 @property (nonatomic, retain) InviteSheet* inviteSheet;
 @property (nonatomic, retain) AboutPanel* aboutPanel;
-@property (nonatomic, retain) NSOpenPanel* fileSendPanel;
-@property (nonatomic, retain) NSArray* fileSendTargets;
-@property (nonatomic) NSInteger fileSendUID;
 
 - (void)terminate;
 - (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
-- (void)onDcc:(id)sender;
 
 - (NSArray*)selectedMembers:(NSMenuItem*)sender;
 - (void)deselectMembers:(NSMenuItem*)sender;
@@ -118,7 +111,7 @@
 - (void)onMemberWhois:(id)sender;
 - (void)onMemberTalk:(id)sender;
 - (void)onMemberInvite:(id)sender;
-- (void)onMemberSendFile:(id)sender;
+- (void)onMemberWantDCCChat:(id)sender;
 - (void)onMemberPing:(id)sender;
 - (void)onMemberTime:(id)sender;
 - (void)onMemberVersion:(id)sender;

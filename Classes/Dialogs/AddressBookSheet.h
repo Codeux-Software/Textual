@@ -19,6 +19,7 @@
 	IBOutlet NSButton *ignoreJPQE;
 	IBOutlet NSButton *notifyJoins;
 	IBOutlet NSButton *notifyWhoisJoins;
+	IBOutlet NSButton *ignorePMHighlights;
 	
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *notificationView;
@@ -42,6 +43,7 @@
 @property (nonatomic, retain) NSButton *ignoreJPQE;
 @property (nonatomic, retain) NSButton *notifyJoins;
 @property (nonatomic, retain) NSButton *notifyWhoisJoins;
+@property (nonatomic, retain) NSButton *ignorePMHighlights;
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *notificationView;
 @property (nonatomic, retain) NSView *ignoreItemView;

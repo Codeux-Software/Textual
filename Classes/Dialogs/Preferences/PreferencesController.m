@@ -117,25 +117,22 @@
 			[self firstPane:stylesView];
 			break;
 		case 5:
-			[self firstPane:transfersView];
-			break;
-		case 6:
 			[self firstPane:logView];
 			break;
-		case 7:
+		case 6:
 			[self firstPane:updatesView];
 			break;
-		case 8:
+		case 7:
 			[self firstPane:floodControlView];
 			break;
-		case 9:
+		case 8:
 			[self firstPane:IRCopServicesView];
 			break;
-		// 10 = divider
-		case 11:
+		// 9 = divider
+		case 10:
 			[self firstPane:identityView];
 			break;
-		case 12:
+		case 11:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -318,21 +315,6 @@
 		[ary addObject:e];
 		
 		e = [SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_REQUEST];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_SUCCESS];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_ERROR];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_SUCCESS];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
 		[ary addObject:e];
 		
 		sounds = ary;

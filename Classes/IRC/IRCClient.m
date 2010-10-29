@@ -15,6 +15,8 @@
 #import "NSWindowHelper.h"
 #import "NSBundleHelper.h"
 
+#include <arpa/inet.h>
+
 #define PONG_INTERVAL		150
 #define MAX_BODY_LEN		480
 #define RECONNECT_INTERVAL	20
@@ -46,7 +48,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)receiveText:(IRCMessage*)m command:(NSString*)cmd text:(NSString*)text identified:(BOOL)identified;
 - (void)receiveCTCPQuery:(IRCMessage*)message text:(NSString*)text;
 - (void)receiveCTCPReply:(IRCMessage*)message text:(NSString*)text;
-- (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(NSInteger)port fileSize:(long long)size;
 - (void)receiveErrorNumericReply:(IRCMessage*)message;
 - (void)receiveNickCollisionError:(IRCMessage*)message;
 
@@ -756,7 +757,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	[self stopPongTimer];
-	[self changeStateOff];
+}
+
+- (void)disconnectWithTimer
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	[NSThread sleepForTimeInterval:1.5];
+	[[self invokeOnMainThread] disconnect];
+	
+	[pool release];
 }
 
 - (void)quit
@@ -777,7 +787,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	reconnectEnabled = NO;
 	[conn clearSendQueue];
 	[self send:QUIT, comment ?: config.leavingComment, nil];
-	[self disconnect];
+	[[self invokeInBackgroundThread] disconnectWithTimer];
 }
 
 - (void)cancelReconnect
@@ -876,17 +886,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)kick:(IRCChannel*)channel target:(NSString*)nick
 {
 	[self send:KICK, channel.name, nick, TXTLS(@"KICK_REASON"), nil];
-}
-
-- (void)sendFile:(NSString*)nick port:(NSInteger)port fileName:(NSString*)fileName size:(long long)size
-{
-	NSString* escapedFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-	
-	NSString* trail = [NSString stringWithFormat:@"%@ %@ %d %i", escapedFileName, myAddress, port, size];
-	[self sendCTCPQuery:nick command:@"DCC SEND" text:trail];
-	
-	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_IS_TRYING_FILE_TRANSFER"), nick, fileName, size, myAddress, port];
-	[self printBoth:nil type:LINE_TYPE_DCC_SEND_SEND text:text];
 }
 
 - (void)quickJoin:(NSArray*)chans
@@ -1118,7 +1117,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString* cmd = command;
 			if (type == LINE_TYPE_ACTION) {
 				cmd = PRIVMSG;
-				t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
+				t = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, ACTION, t, (UniChar)0x01];
 			}
 			[self send:cmd, channel.name, t, nil];
 		}
@@ -1129,9 +1128,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* trail;
 	if (text.length) {
-		trail = [NSString stringWithFormat:@"\x01%@ %@\x01", command, text];
+		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
 	} else {
-		trail = [NSString stringWithFormat:@"\x01%@\x01", command];
+		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
 	}
 	[self send:PRIVMSG, target, trail, nil];
 }
@@ -1140,9 +1139,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* trail;
 	if (text.length) {
-		trail = [NSString stringWithFormat:@"\x01%@ %@\x01", command, text];
+		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
 	} else {
-		trail = [NSString stringWithFormat:@"\x01%@\x01", command];
+		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
 	}
 	[self send:NOTICE, target, trail, nil];
 }
@@ -2978,32 +2977,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	if ([command isEqualToString:DCC]) {
-		NSString* subCommand = [[s getToken] uppercaseString];
-		if ([subCommand isEqualToString:SEND]) {
-			NSString* fname;
-			if ([s hasPrefix:@"\""]) {
-				NSRange r = [s rangeOfString:@"\"" options:0 range:NSMakeRange(1, s.length - 1)];
-				if (r.location) {
-					fname = [s substringWithRange:NSMakeRange(1, r.location - 1)];
-					[s deleteCharactersInRange:NSMakeRange(0, r.location)];
-					[s getToken];
-				} else {
-					fname = [s getToken];
-				}
-			} else {
-				fname = [s getToken];
-			}
-			
-			NSString* addressStr = [s getToken];
-			NSInteger port = [[s getToken] integerValue];
-			long long size = [[s getToken] longLongValue];
-			
-			[self receiveDCCSend:m fileName:fname address:addressStr port:port fileSize:size];
-			return;
-		}
-		
-		NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_HAS_UNKNOWN_DCC"), subCommand, nick, s];
-		[self printBoth:nil type:LINE_TYPE_CTCP text:text];
+		return;
 	} else {
 		NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_REQUEST"), command, nick];
 		[self printBoth:nil type:LINE_TYPE_CTCP text:text];
@@ -3061,49 +3035,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 }
 
-- (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(NSInteger)port fileSize:(long long)size
-{
-	NSString* nick = m.sender.nick;
-	NSString* target = [m paramAt:0];
-	
-	if (![target isEqualToString:myNick]) return;
-	
-	AddressBook* ignoreChecks = [self checkIgnore:m.sender.address 
-											uname:m.sender.user 
-											 name:m.sender.nick
-									 matchAgainst:[NSArray arrayWithObjects:@"ignoreDCC", nil]];
-	
-	if ([ignoreChecks ignoreDCC] == YES) {
-		return;
-	}
-	
-	if ([address isIPAddress] == NO) return;
-	
-	NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_FILE_TRANSFER_REQUEST"), nick, fileName, size, address, port];
-	[self printBoth:nil type:LINE_TYPE_DCC_SEND_RECEIVE text:text];
-	
-	if ([Preferences dccAction] != DCC_IGNORE) {
-		if (port > 0 && size > 0) {
-			NSString* path = [@"~/Downloads" stringByExpandingTildeInPath];
-			NSFileManager* fm = [NSFileManager defaultManager];
-			BOOL isDir = NO;
-			if ([fm fileExistsAtPath:path isDirectory:&isDir]) {
-				path = @"~/Downloads";
-			} else {
-				path = @"~/Desktop";
-			}
-			
-			[world.dcc addReceiverWithUID:uid nick:nick host:address port:port path:path fileName:fileName size:size];
-			
-			[self notifyEvent:GROWL_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]isMuted:world.soundMuted];
-			
-			if (![NSApp isActive]) {
-				[NSApp requestUserAttention:NSInformationalRequest];
-			}
-		}
-	}
-}
 
 - (void)requestUserHosts:(IRCChannel*)c 
 {
@@ -3395,8 +3326,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self reloadTree];
 		[self updateChannelTitle:c];
 	}
-	
-	[world.dcc nickChanged:nick toNick:toNick client:self];
 }
 
 - (void)receiveMode:(IRCMessage*)m
@@ -4213,10 +4142,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	sentNick = @"";
 	
 	tryingNickNumber = -1;
-	
-	inList = NO;
-	identifyMsg = NO;
-	identifyCTCP = NO;
 	hasIRCopAccess = NO;
 	
 	for (IRCChannel* c in channels) {

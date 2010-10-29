@@ -16,7 +16,6 @@
 #import "MenuController.h"
 #import "ViewTheme.h"
 #import "IRCTreeItem.h"
-#import "DCCController.h"
 #import "GrowlController.h"
 #import "IconManager.h"
 #import "IRCExtras.h"
@@ -33,7 +32,6 @@
 	FieldEditorTextView* fieldEditor;
 	MemberListView* memberList;
 	MenuController* menuController;
-	DCCController* dcc;
 	ViewTheme* viewTheme;
 	IconManager *iconManager;
 	IRCExtras* extrac;
@@ -87,7 +85,6 @@
 @property (nonatomic, assign) FieldEditorTextView* fieldEditor;
 @property (nonatomic, assign) MemberListView* memberList;
 @property (nonatomic, assign) MenuController* menuController;
-@property (nonatomic, assign) DCCController* dcc;
 @property (nonatomic, assign) ViewTheme* viewTheme;
 @property (nonatomic, assign) NSMenu* treeMenu;
 @property (nonatomic, assign) NSMenu* logMenu;
