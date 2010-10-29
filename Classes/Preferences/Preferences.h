@@ -37,6 +37,13 @@ typedef enum {
 	NOTICES_SENDTO_CURCHAN = 1,
 } NoticesSendToLocation;
 
+typedef enum {
+	CMDWKEY_SHORTCUT_CLOSE = 0,
+	CMDWKEY_SHORTCUT_PARTC = 1,
+	CMDWKEY_SHORTCUT_DISCT = 2,
+	CMDWKEY_SHORTCUT_QUITA = 3,
+} CmdW_Shortcut_ResponseType;
+
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
@@ -99,6 +106,7 @@ typedef enum {
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
++ (CmdW_Shortcut_ResponseType)cmdWResponseType;
 + (NoticesSendToLocation)locationToSendNotices;
 + (UserDoubleClickAction)userDoubleClickOption;
 

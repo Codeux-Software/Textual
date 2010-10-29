@@ -49,9 +49,7 @@
 							  TXTLS(@"GROWL_MSG_TALK_MSG"), TXTLS(@"GROWL_MSG_HIGHLIGHT"), 
 							  TXTLS(@"GROWL_MSG_DISCONNECT"), TXTLS(@"GROWL_MSG_TALK_NOTICE"), 
 							  TXTLS(@"GROWL_MSG_CHANNEL_MSG"), TXTLS(@"GROWL_MSG_CHANNEL_NOTICE"), 
-							  TXTLS(@"GROWL_NSG_FILE_SEND_FAILED"), TXTLS(@"GROWL_MSG_FILE_RECEIVE_FAILED"), 
-							  TXTLS(@"GROWL_MSG_FILE_SEND_SUCCEEDED"), TXTLS(@"GROWL_MSG_FILE_RECEIVE_REQUEST"), 
-							  TXTLS(@"GROWL_MSG_FILE_RECEIVE_SUCCEEDED"), TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"),
+							  TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"),
 								nil];
 	growl.defaultNotifications = growl.allNotifications;
 	[growl registerApplication];
@@ -112,36 +110,6 @@
 			kind =  TXTLS(@"GROWL_MSG_DISCONNECT");
 			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_DISCONNECT_TITLE"), title];
 			break;
-		case GROWL_FILE_RECEIVE_REQUEST:
-			kind =  TXTLS(@"GROWL_MSG_FILE_RECEIVE_REQUEST");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_FILE_RECIEVE_REQUEST_DESC"), title, desc];
-			title = TXTLS(@"GROWL_MSG_FILE_RECIEVE_REQUEST_TITLE");
-			context = @"dcc";
-			break;
-		case GROWL_FILE_RECEIVE_SUCCESS:
-			kind =  TXTLS(@"GROWL_MSG_FILE_RECEIVE_SUCCEEDED");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_DESC"), title, desc];
-			title = TXTLS(@"GROWL_MSG_FILE_RECIEVE_SUCCEEDED_TITLE");
-			context = @"dcc";
-			break;
-		case GROWL_FILE_RECEIVE_ERROR:
-			kind =  TXTLS(@"GROWL_MSG_FILE_RECEIVE_FAILED");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_FILE_RECIEVE_FAILED_DESC"), title, desc];
-			title = TXTLS(@"GROWL_MSG_FILE_RECIEVE_FAILED_TITLE");
-			context = @"dcc";
-			break;
-		case GROWL_FILE_SEND_SUCCESS:
-			kind =  TXTLS(@"GROWL_MSG_FILE_SEND_SUCCEEDED");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_FILE_SEND_SUCCEEDED_DESC"), title, desc];
-			title = TXTLS(@"GROWL_MSG_FILE_SEND_SUCCEEDED_TITLE");
-			context = @"dcc";
-			break;
-		case GROWL_FILE_SEND_ERROR:
-			kind =  TXTLS(@"GROWL_NSG_FILE_SEND_FAILED");
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_FILE_SEND_FAILED_DESC"), title, desc];
-			title = TXTLS(@"GROWL_MSG_FILE_SEND_FAILED_TITLE");
-			context = @"dcc";
-			break;
 		default:
 			break;
 	}
@@ -171,9 +139,7 @@
 	[owner.window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
 	
-	if ([context isEqualToString:@"dcc"]) {
-		[owner.dcc show:YES];
-	} else if ([context isKindOfClass:[NSString class]]) {
+	if ([context isKindOfClass:[NSString class]]) {
 		NSString* s = context;
 		NSArray* ary = [s componentsSeparatedByString:@" "];
 		if (ary.count >= 2) {

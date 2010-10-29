@@ -29,7 +29,6 @@
 
 @implementation IRCWorld;
 
-@synthesize dcc;
 @synthesize window;
 @synthesize extrac;
 @synthesize growl;
@@ -1186,16 +1185,7 @@
 
 - (void)memberListViewDropFiles:(NSArray*)files row:(NSNumber*)row
 {
-	IRCClient* u = self.selectedClient;
-	IRCChannel* c = self.selectedChannel;
-	if (!u || !c) return;
-	
-	IRCUser* m = [c.members safeObjectAtIndex:[row integerValue]];
-	if (m) {
-		for (NSString* s in files) {
-			[dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];
-		}
-	}
+	return;
 }
 
 @synthesize iconManager;

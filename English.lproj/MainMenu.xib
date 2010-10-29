@@ -2,18 +2,19 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H542</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10H563</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="963"/>
+			<integer value="327"/>
+			<integer value="29"/>
 			<integer value="1732"/>
-			<integer value="1501"/>
+			<integer value="963"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -177,31 +178,6 @@
 								</object>
 							</array>
 							<string key="NSName">_NSAppleMenu</string>
-						</object>
-					</object>
-					<object class="NSMenuItem" id="273868659">
-						<reference key="NSMenu" ref="215217970"/>
-						<string key="NSTitle">File</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSKeyEquivModMask">1048576</int>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="222848805"/>
-						<reference key="NSMixedImage" ref="852898728"/>
-						<string key="NSAction">submenuAction:</string>
-						<object class="NSMenu" key="NSSubmenu" id="659585578">
-							<string key="NSTitle">File</string>
-							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="392013711">
-									<reference key="NSMenu" ref="659585578"/>
-									<string key="NSTitle">Close Window</string>
-									<string key="NSKeyEquiv">w</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="222848805"/>
-									<reference key="NSMixedImage" ref="852898728"/>
-									<int key="NSTag">203</int>
-								</object>
-							</array>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="568014952">
@@ -1210,20 +1186,10 @@
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
-								<object class="NSMenuItem" id="409038012">
-									<reference key="NSMenu" ref="272041888"/>
-									<string key="NSTitle">File Transfers</string>
-									<string key="NSKeyEquiv">2</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="222848805"/>
-									<reference key="NSMixedImage" ref="852898728"/>
-									<int key="NSTag">201</int>
-								</object>
 								<object class="NSMenuItem" id="996369234">
 									<reference key="NSMenu" ref="272041888"/>
 									<string key="NSTitle">Address Book</string>
-									<string key="NSKeyEquiv">3</string>
+									<string key="NSKeyEquiv">2</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -1232,7 +1198,7 @@
 								<object class="NSMenuItem" id="829662713">
 									<reference key="NSMenu" ref="272041888"/>
 									<string key="NSTitle">Ignore List</string>
-									<string key="NSKeyEquiv">4</string>
+									<string key="NSKeyEquiv">3</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -1241,7 +1207,7 @@
 								<object class="NSMenuItem" id="138370719">
 									<reference key="NSMenu" ref="272041888"/>
 									<string key="NSTitle">Textual Logs</string>
-									<string key="NSKeyEquiv">5</string>
+									<string key="NSKeyEquiv">4</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -1996,7 +1962,7 @@
 					</object>
 					<object class="NSMenuItem" id="478744909">
 						<reference key="NSMenu" ref="765356395"/>
-						<string key="NSTitle">Send File (DCC Send)...</string>
+						<string key="NSTitle">Direct Chat (DCC)</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -3489,14 +3455,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberSendFile:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="478744909"/>
-					</object>
-					<int key="connectionID">412</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onPreferences:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="89768667"/>
@@ -3609,14 +3567,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onDcc:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="409038012"/>
-					</object>
-					<int key="connectionID">479</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onChannelList:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="893665359"/>
@@ -3696,14 +3646,6 @@
 					<int key="connectionID">765</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">closeWindowItem</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="392013711"/>
-					</object>
-					<int key="connectionID">823</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">onClearMark:</string>
 						<reference key="source" ref="361464326"/>
@@ -3758,14 +3700,6 @@
 						<reference key="destination" ref="787257747"/>
 					</object>
 					<int key="connectionID">1004</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onCloseWindow:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="392013711"/>
-					</object>
-					<int key="connectionID">1012</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -4519,6 +4453,14 @@
 					</object>
 					<int key="connectionID">1744</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onMemberWantDCCChat:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="478744909"/>
+					</object>
+					<int key="connectionID">1745</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4556,7 +4498,6 @@
 							<reference ref="575385311"/>
 							<reference ref="22865942"/>
 							<reference ref="818320124"/>
-							<reference ref="273868659"/>
 							<reference ref="758853065"/>
 							<reference ref="689204340"/>
 						</array>
@@ -4579,7 +4520,6 @@
 							<reference ref="535537578"/>
 							<reference ref="453563958"/>
 							<reference ref="775558905"/>
-							<reference ref="409038012"/>
 							<reference ref="743173552"/>
 							<reference ref="427738398"/>
 							<reference ref="996369234"/>
@@ -4609,11 +4549,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">477</int>
 						<reference key="object" ref="775558905"/>
-						<reference key="parent" ref="272041888"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">478</int>
-						<reference key="object" ref="409038012"/>
 						<reference key="parent" ref="272041888"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -5022,27 +4957,6 @@
 						<int key="objectID">839</int>
 						<reference key="object" ref="84156800"/>
 						<reference key="parent" ref="1043433546"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">717</int>
-						<reference key="object" ref="273868659"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="659585578"/>
-						</array>
-						<reference key="parent" ref="215217970"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">718</int>
-						<reference key="object" ref="659585578"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="392013711"/>
-						</array>
-						<reference key="parent" ref="273868659"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">723</int>
-						<reference key="object" ref="392013711"/>
-						<reference key="parent" ref="659585578"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">196</int>
@@ -6404,7 +6318,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{1006, 697}, {222, 153}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{833, 750}, {222, 153}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6541,7 +6455,7 @@
 				<string key="1687.IBEditorWindowLastContentRect">{{1228, 687}, {199, 133}}</string>
 				<string key="1687.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1689.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="169.IBEditorWindowLastContentRect">{{878, 724}, {204, 233}}</string>
+				<string key="169.IBEditorWindowLastContentRect">{{442, 670}, {204, 233}}</string>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="169.ImportedFromIB2"/>
 				<string key="1691.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6613,7 +6527,7 @@
 				<string key="235.CustomClassName">ThinSplitView</string>
 				<string key="235.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="235.ImportedFromIB2"/>
-				<string key="24.IBEditorWindowLastContentRect">{{922, 610}, {218, 233}}</string>
+				<string key="24.IBEditorWindowLastContentRect">{{762, 690}, {218, 213}}</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="24.ImportedFromIB2"/>
 				<string key="257.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6638,7 +6552,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{317, 903}, {577, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{315, 903}, {535, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6752,8 +6666,6 @@
 				<boolean value="YES" key="474.ImportedFromIB2"/>
 				<string key="477.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="477.ImportedFromIB2"/>
-				<string key="478.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="478.ImportedFromIB2"/>
 				<string key="492.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="492.ImportedFromIB2"/>
 				<string key="493.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6787,13 +6699,6 @@
 				<boolean value="YES" key="57.ImportedFromIB2"/>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="58.ImportedFromIB2"/>
-				<string key="717.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="717.ImportedFromIB2"/>
-				<string key="718.IBEditorWindowLastContentRect">{{840, 929}, {172, 23}}</string>
-				<string key="718.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="718.ImportedFromIB2"/>
-				<string key="723.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="723.ImportedFromIB2"/>
 				<string key="764.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="764.ImportedFromIB2"/>
 				<string key="839.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6824,7 +6729,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1744</int>
+			<int key="maxID">1745</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6873,6 +6778,7 @@
 						<string key="ignoreItemView">NSView</string>
 						<string key="ignoreJPQE">NSButton</string>
 						<string key="ignoreNotices">NSButton</string>
+						<string key="ignorePMHighlights">NSButton</string>
 						<string key="ignorePrivateMsg">NSButton</string>
 						<string key="ignorePublicMsg">NSButton</string>
 						<string key="notificationView">NSView</string>
@@ -6910,6 +6816,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="ignoreNotices">
 							<string key="name">ignoreNotices</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="ignorePMHighlights">
+							<string key="name">ignorePMHighlights</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="ignorePrivateMsg">
@@ -7077,44 +6987,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Views/ChatBox.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">DCCReceiver</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="690046084">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/DCC/DCCReceiver.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">DCCSender</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="436283429">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/DCC/DCCSender.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7456,7 +7328,6 @@
 						<string key="onCopyLogAsHtml:">id</string>
 						<string key="onCopyServer:">id</string>
 						<string key="onCopyUrl:">id</string>
-						<string key="onDcc:">id</string>
 						<string key="onDeleteChannel:">id</string>
 						<string key="onDeleteServer:">id</string>
 						<string key="onDisconnect:">id</string>
@@ -7480,13 +7351,13 @@
 						<string key="onMemberKill:">id</string>
 						<string key="onMemberOp:">id</string>
 						<string key="onMemberPing:">id</string>
-						<string key="onMemberSendFile:">id</string>
 						<string key="onMemberShun:">id</string>
 						<string key="onMemberTalk:">id</string>
 						<string key="onMemberTime:">id</string>
 						<string key="onMemberUserInfo:">id</string>
 						<string key="onMemberVersion:">id</string>
 						<string key="onMemberVoice:">id</string>
+						<string key="onMemberWantDCCChat:">id</string>
 						<string key="onMemberWhois:">id</string>
 						<string key="onMode:">id</string>
 						<string key="onNick:">id</string>
@@ -7569,10 +7440,6 @@
 						</object>
 						<object class="IBActionInfo" key="onCopyUrl:">
 							<string key="name">onCopyUrl:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="onDcc:">
-							<string key="name">onDcc:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onDeleteChannel:">
@@ -7667,10 +7534,6 @@
 							<string key="name">onMemberPing:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="onMemberSendFile:">
-							<string key="name">onMemberSendFile:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="onMemberShun:">
 							<string key="name">onMemberShun:</string>
 							<string key="candidateClassName">id</string>
@@ -7693,6 +7556,10 @@
 						</object>
 						<object class="IBActionInfo" key="onMemberVoice:">
 							<string key="name">onMemberVoice:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onMemberWantDCCChat:">
+							<string key="name">onMemberWantDCCChat:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onMemberWhois:">
@@ -7975,67 +7842,6 @@
 						</object>
 					</dictionary>
 					<reference key="sourceIdentifier" ref="458028292"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="dccReceiveOnClose:">DCCReceiver</string>
-						<string key="dccReceiveOnComplete:">DCCReceiver</string>
-						<string key="dccReceiveOnError:">DCCReceiver</string>
-						<string key="dccReceiveOnOpen:">DCCReceiver</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="dccReceiveOnClose:">
-							<string key="name">dccReceiveOnClose:</string>
-							<string key="candidateClassName">DCCReceiver</string>
-						</object>
-						<object class="IBActionInfo" key="dccReceiveOnComplete:">
-							<string key="name">dccReceiveOnComplete:</string>
-							<string key="candidateClassName">DCCReceiver</string>
-						</object>
-						<object class="IBActionInfo" key="dccReceiveOnError:">
-							<string key="name">dccReceiveOnError:</string>
-							<string key="candidateClassName">DCCReceiver</string>
-						</object>
-						<object class="IBActionInfo" key="dccReceiveOnOpen:">
-							<string key="name">dccReceiveOnOpen:</string>
-							<string key="candidateClassName">DCCReceiver</string>
-						</object>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="690046084"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="dccSenderOnClose:">DCCSender</string>
-						<string key="dccSenderOnComplete:">DCCSender</string>
-						<string key="dccSenderOnConnect:">DCCSender</string>
-						<string key="dccSenderOnError:">DCCSender</string>
-						<string key="dccSenderOnListen:">DCCSender</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="dccSenderOnClose:">
-							<string key="name">dccSenderOnClose:</string>
-							<string key="candidateClassName">DCCSender</string>
-						</object>
-						<object class="IBActionInfo" key="dccSenderOnComplete:">
-							<string key="name">dccSenderOnComplete:</string>
-							<string key="candidateClassName">DCCSender</string>
-						</object>
-						<object class="IBActionInfo" key="dccSenderOnConnect:">
-							<string key="name">dccSenderOnConnect:</string>
-							<string key="candidateClassName">DCCSender</string>
-						</object>
-						<object class="IBActionInfo" key="dccSenderOnError:">
-							<string key="name">dccSenderOnError:</string>
-							<string key="candidateClassName">DCCSender</string>
-						</object>
-						<object class="IBActionInfo" key="dccSenderOnListen:">
-							<string key="name">dccSenderOnListen:</string>
-							<string key="candidateClassName">DCCSender</string>
-						</object>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="436283429"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>

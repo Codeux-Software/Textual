@@ -502,6 +502,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud integerForKey:@"Preferences.General.notices_sendto_location"];
 }
 
++ (CmdW_Shortcut_ResponseType)cmdWResponseType
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.General.keyboard_cmdw_response"];
+}
+
 #pragma mark -
 #pragma mark Theme
 
@@ -692,16 +698,6 @@ static NSMutableDictionary *commandIndex;
 			return TXTLS(@"GROWL_DISCONNECT");
 		case GROWL_ADDRESS_BOOK_MATCH:
 			return TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
-		case GROWL_FILE_RECEIVE_REQUEST:
-			return TXTLS(@"GROWL_FILE_RECEIVE_REQUEST");
-		case GROWL_FILE_RECEIVE_SUCCESS:
-			return TXTLS(@"GROWL_FILE_RECEIVE_SUCCESS");
-		case GROWL_FILE_RECEIVE_ERROR:
-			return TXTLS(@"GROWL_FILE_RECEIVE_ERROR");
-		case GROWL_FILE_SEND_SUCCESS:
-			return TXTLS(@"GROWL_FILE_SEND_SUCCESS");
-		case GROWL_FILE_SEND_ERROR:
-			return TXTLS(@"GROWL_FILE_SEND_ERROR");
 	}
 	
 	return nil;
@@ -732,16 +728,6 @@ static NSMutableDictionary *commandIndex;
 			return @"eventDisconnect";
 		case GROWL_ADDRESS_BOOK_MATCH:
 			return @"eventAddressBookMatch";
-		case GROWL_FILE_RECEIVE_REQUEST:
-			return @"eventFileReceiveRequest";
-		case GROWL_FILE_RECEIVE_SUCCESS:
-			return @"eventFileReceiveSuccess";
-		case GROWL_FILE_RECEIVE_ERROR:
-			return @"eventFileReceiveFailure";
-		case GROWL_FILE_SEND_SUCCESS:
-			return @"eventFileSendSuccess";
-		case GROWL_FILE_SEND_ERROR:
-			return @"eventFileSendFailure";
 	}
 	
 	return nil;
@@ -1122,6 +1108,7 @@ static NSMutableArray* excludeWords;
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
+	[d setInt:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud registerDefaults:d];

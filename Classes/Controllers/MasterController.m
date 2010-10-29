@@ -52,7 +52,6 @@
 {
 	[WelcomeSheetDisplay release];
 	[growl release];
-	[dcc release];
 	[extrac release];
 	[fieldEditor release];
 	[world release];
@@ -184,11 +183,6 @@
 	memberList.keyDelegate = world;
 	memberList.dropDelegate = world;
 	
-	dcc = [DCCController new];
-	dcc.world = world;
-	dcc.mainWindow = window;
-	world.dcc = dcc;
-	
 	growl = [GrowlController new];
 	growl.owner = world;
 	world.growl = growl;
@@ -304,7 +298,6 @@
 		[Preferences setTextReplacementEnabled:[fieldEditor isAutomaticTextReplacementEnabled]];
 	}
 	
-	[dcc terminate];
 	[world save];
 	[world terminate];
 	[menu terminate];
@@ -814,7 +807,7 @@
 		choices = [NSArray arrayWithObjects:
 				   @"away", @"error", @"invite", @"ison", @"join", @"kick", @"kill", @"list", @"mode", @"names", 
 				   @"nick", @"notice", @"part", @"pass", @"ping", @"pong", @"privmsg", @"quit", @"topic", @"user",
-				   @"who", @"whois", @"whowas", @"action", @"dcc", @"send", @"clientinfo", @"ctcp", @"ctcpreply", 
+				   @"who", @"whois", @"whowas", @"action", @"send", @"clientinfo", @"ctcp", @"ctcpreply", 
 				   @"time", @"userinfo", @"version", @"omsg", @"onotice", @"ban", @"clear", @"close", @"cycle", 
 				   @"dehalfop", @"deop", @"devoice", @"halfop", @"hop", @"ignore", @"j", @"leave", @"m", @"me", 
 				   @"msg", @"op", @"raw", @"rejoin", @"query", @"quote", @"t", @"timer", @"voice", @"unban", 
@@ -1164,6 +1157,46 @@ typedef enum {
 	}
 }
 
+- (void)commandWShortcutUsed:(NSEvent*)e
+{
+	NSWindow *currentWindow = [NSApp mainWindow];
+	
+	if ([currentWindow isEqualTo:window] == NO) {
+		[currentWindow close];
+	} else {
+		switch ([Preferences cmdWResponseType]) {
+			case CMDWKEY_SHORTCUT_CLOSE:
+				[window close];
+				break;
+			case CMDWKEY_SHORTCUT_PARTC:
+			{
+				IRCClient *u = [world selectedClient];
+				IRCChannel *c = [world selectedChannel];
+			
+				if (!u || !c) return;
+				
+				if (c.isChannel && c.isActive) {
+					[u partChannel:c];
+				} else {
+					if (c.isTalk) {
+						[world destroyChannel:c];
+					}
+				}
+				
+				break;
+			}
+			case CMDWKEY_SHORTCUT_DISCT:
+				[[world selectedClient] quit];
+				break;
+			case CMDWKEY_SHORTCUT_QUITA:
+				[NSApp terminate:nil];
+				break;
+		}
+	}
+	
+	return;
+}
+
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1191,6 +1224,8 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+	
+	[self handler:@selector(commandWShortcutUsed:) char:'w' mods:NSCommandKeyMask];
 	
 	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	
@@ -1296,7 +1331,6 @@ typedef enum {
 @synthesize extrac;
 @synthesize WelcomeSheetDisplay;
 @synthesize growl;
-@synthesize dcc;
 @synthesize fieldEditor;
 @synthesize world;
 @synthesize viewTheme;

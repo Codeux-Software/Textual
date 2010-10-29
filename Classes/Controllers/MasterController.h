@@ -16,7 +16,6 @@
 #import "MenuController.h"
 #import "ViewTheme.h"
 #import "NickCompletinStatus.h"
-#import "DCCController.h"
 #import "GrowlController.h"
 #import "WelcomeSheet.h"
 #import "IRCExtras.h"
@@ -49,7 +48,6 @@
 	IRCExtras* extrac;
 	WelcomeSheet* WelcomeSheetDisplay;
 	GrowlController* growl;
-	DCCController* dcc;
 	FieldEditorTextView* fieldEditor;
 	IRCWorld* world;
 	ViewTheme* viewTheme;
@@ -84,7 +82,6 @@
 @property (nonatomic, retain) IRCExtras* extrac;
 @property (nonatomic, retain) WelcomeSheet* WelcomeSheetDisplay;
 @property (nonatomic, retain) GrowlController* growl;
-@property (nonatomic, retain) DCCController* dcc;
 @property (nonatomic, retain) FieldEditorTextView* fieldEditor;
 @property (nonatomic, retain) IRCWorld* world;
 @property (nonatomic, retain) ViewTheme* viewTheme;

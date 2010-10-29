@@ -169,7 +169,6 @@ typedef enum {
 - (void)sendWhois:(NSString*)nick;
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)users mode:(char)mode value:(BOOL)value;
 - (void)kick:(IRCChannel*)channel target:(NSString*)nick;
-- (void)sendFile:(NSString*)nick port:(NSInteger)port fileName:(NSString*)fileName size:(long long)size;
 - (void)sendCTCPQuery:(NSString*)target command:(NSString*)command text:(NSString*)text;
 - (void)sendCTCPReply:(NSString*)target command:(NSString*)command text:(NSString*)text;
 - (void)sendCTCPPing:(NSString*)target;
