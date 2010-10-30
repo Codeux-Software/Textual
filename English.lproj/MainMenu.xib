@@ -180,6 +180,30 @@
 							<string key="NSName">_NSAppleMenu</string>
 						</object>
 					</object>
+					<object class="NSMenuItem" id="188852092">
+						<reference key="NSMenu" ref="215217970"/>
+						<string key="NSTitle">File</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="222848805"/>
+						<reference key="NSMixedImage" ref="852898728"/>
+						<string key="NSAction">submenuAction:</string>
+						<object class="NSMenu" key="NSSubmenu" id="412649683">
+							<string key="NSTitle">File</string>
+							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="965784219">
+									<reference key="NSMenu" ref="412649683"/>
+									<string key="NSTitle">Close Window</string>
+									<string key="NSKeyEquiv">w</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">9631</int>
+								</object>
+							</array>
+						</object>
+					</object>
 					<object class="NSMenuItem" id="568014952">
 						<reference key="NSMenu" ref="215217970"/>
 						<string key="NSTitle">Edit</string>
@@ -1920,6 +1944,15 @@
 			<object class="NSMenu" id="765356395">
 				<string key="NSTitle">Menu</string>
 				<array class="NSMutableArray" key="NSMenuItems">
+					<object class="NSMenuItem" id="787257747">
+						<reference key="NSMenu" ref="765356395"/>
+						<string key="NSTitle">Invite to...</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="222848805"/>
+						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">2005</int>
+					</object>
 					<object class="NSMenuItem" id="117915178">
 						<reference key="NSMenu" ref="765356395"/>
 						<string key="NSTitle">Get Info (Whois)</string>
@@ -1939,36 +1972,6 @@
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
 						<int key="NSTag">2002</int>
-					</object>
-					<object class="NSMenuItem" id="942283315">
-						<reference key="NSMenu" ref="765356395"/>
-						<bool key="NSIsDisabled">YES</bool>
-						<bool key="NSIsSeparator">YES</bool>
-						<string key="NSTitle"/>
-						<string key="NSKeyEquiv"/>
-						<int key="NSKeyEquivModMask">1048576</int>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="222848805"/>
-						<reference key="NSMixedImage" ref="852898728"/>
-					</object>
-					<object class="NSMenuItem" id="787257747">
-						<reference key="NSMenu" ref="765356395"/>
-						<string key="NSTitle">Invite to...</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="222848805"/>
-						<reference key="NSMixedImage" ref="852898728"/>
-						<int key="NSTag">2005</int>
-					</object>
-					<object class="NSMenuItem" id="478744909">
-						<reference key="NSMenu" ref="765356395"/>
-						<string key="NSTitle">Direct Chat (DCC)</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSKeyEquivModMask">1048576</int>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="222848805"/>
-						<reference key="NSMixedImage" ref="852898728"/>
-						<int key="NSTag">2011</int>
 					</object>
 					<object class="NSMenuItem" id="892049604">
 						<reference key="NSMenu" ref="765356395"/>
@@ -4455,11 +4458,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberWantDCCChat:</string>
+						<string key="label">commandWShortcutUsed:</string>
 						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="478744909"/>
+						<reference key="destination" ref="965784219"/>
 					</object>
-					<int key="connectionID">1745</int>
+					<int key="connectionID">1771</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4500,6 +4503,7 @@
 							<reference ref="818320124"/>
 							<reference ref="758853065"/>
 							<reference ref="689204340"/>
+							<reference ref="188852092"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">MainMenu</string>
@@ -4977,12 +4981,9 @@
 							<reference ref="117915178"/>
 							<reference ref="892049604"/>
 							<reference ref="454991127"/>
-							<reference ref="787257747"/>
-							<reference ref="942283315"/>
 							<reference ref="636280688"/>
 							<reference ref="297207291"/>
 							<reference ref="49999229"/>
-							<reference ref="478744909"/>
 							<reference ref="582565168"/>
 							<reference ref="514173876"/>
 							<reference ref="1041968715"/>
@@ -4993,6 +4994,7 @@
 							<reference ref="590917589"/>
 							<reference ref="925899411"/>
 							<reference ref="208034414"/>
+							<reference ref="787257747"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">MemberMenu</string>
@@ -5010,11 +5012,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">331</int>
 						<reference key="object" ref="892049604"/>
-						<reference key="parent" ref="765356395"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">411</int>
-						<reference key="object" ref="478744909"/>
 						<reference key="parent" ref="765356395"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -5392,11 +5389,6 @@
 						<int key="objectID">1310</int>
 						<reference key="object" ref="996369234"/>
 						<reference key="parent" ref="272041888"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1314</int>
-						<reference key="object" ref="942283315"/>
-						<reference key="parent" ref="765356395"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1315</int>
@@ -6270,6 +6262,27 @@
 						<reference key="object" ref="844410475"/>
 						<reference key="parent" ref="526444877"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1746</int>
+						<reference key="object" ref="188852092"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="412649683"/>
+						</array>
+						<reference key="parent" ref="215217970"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1747</int>
+						<reference key="object" ref="412649683"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="965784219"/>
+						</array>
+						<reference key="parent" ref="188852092"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1770</int>
+						<reference key="object" ref="965784219"/>
+						<reference key="parent" ref="412649683"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6289,8 +6302,6 @@
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="131.ImportedFromIB2"/>
 				<string key="1310.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1314.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="1314.ImportedFromIB2"/>
 				<string key="1315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1315.ImportedFromIB2"/>
 				<string key="1316.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6492,6 +6503,10 @@
 				<string key="1739.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="174.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="174.ImportedFromIB2"/>
+				<string key="1746.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1747.IBEditorWindowLastContentRect">{{399, 880}, {172, 23}}</string>
+				<string key="1747.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="184.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="184.ImportedFromIB2"/>
 				<string key="185.IBEditorWindowLastContentRect">{{1089, 711}, {257, 63}}</string>
@@ -6552,7 +6567,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{315, 903}, {535, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{315, 904}, {577, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6592,7 +6607,7 @@
 				<boolean value="YES" key="319.ImportedFromIB2"/>
 				<string key="320.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="320.ImportedFromIB2"/>
-				<string key="327.IBEditorWindowLastContentRect">{{612, 651}, {267, 343}}</string>
+				<string key="327.IBEditorWindowLastContentRect">{{612, 681}, {267, 313}}</string>
 				<string key="327.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="327.ImportedFromIB2"/>
 				<string key="328.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6625,8 +6640,6 @@
 				<boolean value="YES" key="402.ImportedFromIB2"/>
 				<string key="406.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="406.ImportedFromIB2"/>
-				<string key="411.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="411.ImportedFromIB2"/>
 				<string key="415.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="415.ImportedFromIB2"/>
 				<string key="426.IBEditorWindowLastContentRect">{{713, 871}, {131, 23}}</string>
@@ -6694,7 +6707,7 @@
 				<boolean value="YES" key="539.ImportedFromIB2"/>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="56.ImportedFromIB2"/>
-				<string key="57.IBEditorWindowLastContentRect">{{768, 749}, {229, 203}}</string>
+				<string key="57.IBEditorWindowLastContentRect">{{327, 700}, {229, 203}}</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="57.ImportedFromIB2"/>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6729,7 +6742,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1745</int>
+			<int key="maxID">1771</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7314,6 +7327,7 @@
 					<string key="className">MenuController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="commandWShortcutUsed:">id</string>
 						<string key="deselectMembers:">NSMenuItem</string>
 						<string key="memberListDoubleClicked:">id</string>
 						<string key="onAddChannel:">id</string>
@@ -7386,6 +7400,10 @@
 						<string key="processNavigationItem:">NSMenuItem</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="commandWShortcutUsed:">
+							<string key="name">commandWShortcutUsed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="deselectMembers:">
 							<string key="name">deselectMembers:</string>
 							<string key="candidateClassName">NSMenuItem</string>

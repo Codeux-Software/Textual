@@ -275,6 +275,54 @@
 				return NO;
 			}
 			break;
+		case 9631: // close window
+		{
+			if ([window isKeyWindow]) {
+				IRCClient *u = [world selectedClient];
+				IRCChannel *c = [world selectedChannel];
+				
+				if (!u) return NO;
+				
+				switch ([Preferences cmdWResponseType]) {
+					case CMDWKEY_SHORTCUT_CLOSE:
+						[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_CLOSE_WINDOW")];
+						break;
+					case CMDWKEY_SHORTCUT_PARTC:
+					{
+						if (c.isChannel == NO && c.isTalk == NO) {
+							[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_CLOSE_WINDOW")];
+							return NO;
+						} else {
+							if (c.isChannel) {
+								[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_PART_CHANNEL")];
+								
+								if (c.isActive == NO) {
+									return NO;
+								}
+							} else {
+								[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_LEAVE_QUERY")];
+							}
+						}
+						
+						break;
+					}
+					case CMDWKEY_SHORTCUT_DISCT:
+					{
+						NSString *textc = ((u.config.server == nil) ? u.config.name : u.config.server);
+						[item setTitle:[NSString stringWithFormat:TXTLS(@"CMDWKEY_SHORTCUT_DISCONNECT"), textc]];
+						if (u.isConnected == NO) return NO;
+						break;
+					}
+					case CMDWKEY_SHORTCUT_QUITA:
+						[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_QUIT_APPLICATION")];
+						break;
+				}
+			} else {
+				[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_CLOSE_WINDOW")];
+			}
+			
+			return YES;
+		}
 		default:
 			return YES;
 			break;
@@ -378,6 +426,44 @@
 
 #pragma mark -
 #pragma mark Menu Items
+
+- (void)commandWShortcutUsed:(id)sender
+{
+	NSWindow *currentWindow = [NSApp keyWindow];
+	
+	if ([window isKeyWindow]) {
+		switch ([Preferences cmdWResponseType]) {
+			case CMDWKEY_SHORTCUT_CLOSE:
+				[window close];
+				break;
+			case CMDWKEY_SHORTCUT_PARTC:
+			{
+				IRCClient *u = [world selectedClient];
+				IRCChannel *c = [world selectedChannel];
+				
+				if (!u || !c) return;
+				
+				if (c.isChannel && c.isActive) {
+					[u partChannel:c];
+				} else {
+					if (c.isTalk) {
+						[world destroyChannel:c];
+					}
+				}
+				
+				break;
+			}
+			case CMDWKEY_SHORTCUT_DISCT:
+				[[world selectedClient] quit];
+				break;
+			case CMDWKEY_SHORTCUT_QUITA:
+				[NSApp terminate:nil];
+				break;
+		}
+	} else {
+		[currentWindow performClose:nil];
+	}
+}
 
 - (void)onPreferences:(id)sender
 {

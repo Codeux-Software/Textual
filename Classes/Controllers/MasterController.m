@@ -1157,46 +1157,6 @@ typedef enum {
 	}
 }
 
-- (void)commandWShortcutUsed:(NSEvent*)e
-{
-	NSWindow *currentWindow = [NSApp mainWindow];
-	
-	if ([currentWindow isEqualTo:window] == NO) {
-		[currentWindow close];
-	} else {
-		switch ([Preferences cmdWResponseType]) {
-			case CMDWKEY_SHORTCUT_CLOSE:
-				[window close];
-				break;
-			case CMDWKEY_SHORTCUT_PARTC:
-			{
-				IRCClient *u = [world selectedClient];
-				IRCChannel *c = [world selectedChannel];
-			
-				if (!u || !c) return;
-				
-				if (c.isChannel && c.isActive) {
-					[u partChannel:c];
-				} else {
-					if (c.isTalk) {
-						[world destroyChannel:c];
-					}
-				}
-				
-				break;
-			}
-			case CMDWKEY_SHORTCUT_DISCT:
-				[[world selectedClient] quit];
-				break;
-			case CMDWKEY_SHORTCUT_QUITA:
-				[NSApp terminate:nil];
-				break;
-		}
-	}
-	
-	return;
-}
-
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1224,8 +1184,6 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
-	
-	[self handler:@selector(commandWShortcutUsed:) char:'w' mods:NSCommandKeyMask];
 	
 	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	

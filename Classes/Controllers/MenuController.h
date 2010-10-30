@@ -154,5 +154,7 @@
 - (void)onWantChannelModerated:(id)sender;
 - (void)onWantChannelVoiceOnly:(id)sender;
 
+- (void)commandWShortcutUsed:(id)sender;
+
 - (void)processNavigationItem:(NSMenuItem *)sender;
 @end

@@ -156,6 +156,14 @@
 "GROWL_LOGIN" = "Connected";
 "GROWL_KICKED" = "Kicked";
 
+/* Command+W Menu Item Variations */
+
+"CMDWKEY_SHORTCUT_LEAVE_QUERY" = "Close Query";
+"CMDWKEY_SHORTCUT_CLOSE_WINDOW" = "Close Window";
+"CMDWKEY_SHORTCUT_PART_CHANNEL" = "Leave Channel";
+"CMDWKEY_SHORTCUT_DISCONNECT" = "Disconnect from %@";
+"CMDWKEY_SHORTCUT_QUIT_APPLICATION" = "Quit Textual & IRC";
+
 /* Growl Alert Bubbles */
 "GROWL_MSG_LOGIN" = "Connected";
 "GROWL_MSG_LOGIN_TITLE" = "Connected: %@";
