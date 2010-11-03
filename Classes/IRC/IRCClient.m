@@ -757,6 +757,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	[self stopPongTimer];
+	[self changeStateOff];
 }
 
 - (void)disconnectWithTimer
@@ -4135,6 +4136,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)changeStateOff
 {
+	if (!isLoggedIn) return;
+	
 	BOOL prevConnected = isConnected;
 	
 	[conn autorelease];
