@@ -3422,6 +3422,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[world expandClient:self];
 	
+	isConnecting = NO;
 	isLoggedIn = YES;
 	conn.loggedIn = YES;
 	tryingNickNumber = -1;
@@ -4136,7 +4137,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)changeStateOff
 {
-	if (!isLoggedIn) return;
+	if (!isLoggedIn && !isConnecting) return;
 	
 	BOOL prevConnected = isConnected;
 	
@@ -4184,7 +4185,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[self printSystemBoth:nil text:TXTLS(@"IRC_CONNECTED_TO_SERVER")];
 	
-	isConnecting = isLoggedIn = NO;
+	isLoggedIn = NO;
 	isConnected = reconnectEnabled = YES;
 	encoding = config.encoding;
 	
