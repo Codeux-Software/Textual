@@ -357,6 +357,7 @@
 {
 	needsLimitNumberOfLines = NO;
 	
+	// guess how many lines need to be removed based on our internal counter
 	NSInteger n = count - maxLines;
 	if (!loaded || n <= 0 || count <= 0) return;
 	
@@ -365,6 +366,8 @@
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMNodeList* nodeList = [body childNodes];
 	
+	// determine exactly how many lines need to be removed via the DOM
+	n = nodeList.length - maxLines;
 	for (NSInteger i=n-1; i>=0; --i) {
 		[body removeChild:[nodeList item:i]];
 	}
