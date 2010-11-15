@@ -1199,15 +1199,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			NSString *finalResult = [result stringValue];
 			finalResult = [finalResult stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			
-			if ([finalResult length] >= 1) {
-				if ([[finalResult safeSubstringToIndex:1] isEqualToString:@"/"]) {
-					finalResult = [finalResult safeSubstringFromIndex:1];
-					finalResult = [finalResult stringByReplacingOccurrencesOfString:@"%c" withString:[details objectForKey:@"channel"]];
-				} else {
-					finalResult = [NSString stringWithFormat:@"MSG %@ %@", [details objectForKey:@"channel"], finalResult];
-				}
+			NSArray *resultItems = [finalResult componentsSeparatedByString:@"\n"];
+			for (NSInteger i=0; i < resultItems.count; i++) {
+				NSString *lineOfResult = [resultItems objectAtIndex:i];
+				if ([lineOfResult length] >= 1) {
+					if ([[lineOfResult safeSubstringToIndex:1] isEqualToString:@"/"]) {
+						lineOfResult = [lineOfResult safeSubstringFromIndex:1];
+						lineOfResult = [lineOfResult stringByReplacingOccurrencesOfString:@"%c" withString:[details objectForKey:@"channel"]];
+					} else {
+						lineOfResult = [NSString stringWithFormat:@"MSG %@ %@", [details objectForKey:@"channel"], lineOfResult];
+					}
 				
-				[[self invokeOnMainThread] sendCommand:finalResult completeTarget:[[details objectForKey:@"completeTarget"] boolValue] target:[details objectForKey:@"target"]];
+					[[self invokeOnMainThread] sendCommand:lineOfResult completeTarget:[[details objectForKey:@"completeTarget"] boolValue] target:[details objectForKey:@"target"]];
+				}
 			}
 		}
 	} else {
