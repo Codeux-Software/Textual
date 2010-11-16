@@ -81,17 +81,21 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
-- (NSString*)keychainServiceID
+- (NSString*)keychainServiceID:(NSInteger)type
 {
-	return [NSString stringWithFormat:@"textual.clients.cuid.%i", cuid];
+	if (type == 1) {
+		return [NSString stringWithFormat:@"textual.client.server.cuid.%i", cuid];
+	} else {
+		return [NSString stringWithFormat:@"textual.client.nicksrv.cuid.%i", cuid];
+	}
 }
 
 - (NSString*)keychainServiceName:(NSInteger)type
 {
 	if (type == 1) {
-		return @"Textual Keychain (Server Password)";
+		return @"Textual (server password)";
 	} else {
-		return @"Textual Keychain (NickServ)";
+		return @"Textual (NickServ)";
 	}
 }
 
@@ -100,12 +104,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
 					  withItemKind:@"application password"
 						forUsername:nil
-					   serviceName:[self keychainServiceID]];
+					   serviceName:[self keychainServiceID:1]];
 	
 	[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:[self keychainServiceID]];
+					   serviceName:[self keychainServiceID:2]];
 }
 
 - (void)verifyKeychainsExistsOrAdd
@@ -113,23 +117,23 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if ([AGKeychain checkForExistanceOfKeychainItem:[self keychainServiceName:1]
 									   withItemKind:@"application password" 
 										forUsername:nil
-										serviceName:[self keychainServiceID]] == NO) {
+										serviceName:[self keychainServiceID:1]] == NO) {
 		[AGKeychain addKeychainItem:[self keychainServiceName:1]
 					   withItemKind:@"application password"
 						forUsername:nil
 					   withPassword:@""
-						serviceName:[self keychainServiceID]];
+						serviceName:[self keychainServiceID:1]];
 	} 
 	
 	if ([AGKeychain checkForExistanceOfKeychainItem:[self keychainServiceName:2]
 									   withItemKind:@"application password" 
 										forUsername:nil
-										serviceName:[self keychainServiceID]] == NO) {
+										serviceName:[self keychainServiceID:2]] == NO) {
 		[AGKeychain addKeychainItem:[self keychainServiceName:2]
 					   withItemKind:@"application password"
 						forUsername:nil
 					   withPassword:@""
-						serviceName:[self keychainServiceID]];
+						serviceName:[self keychainServiceID:2]];
 	}
 }
 
@@ -159,12 +163,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	password = [[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
 										   withItemKind:@"application password" 
 											forUsername:nil
-											serviceName:[self keychainServiceID]] retain];
+											serviceName:[self keychainServiceID:1]] retain];
 	
 	nickPassword = [[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
 											   withItemKind:@"application password" 
 												forUsername:nil 
-												serviceName:[self keychainServiceID]] retain];
+												serviceName:[self keychainServiceID:2]] retain];
 	
 	// * =================================== * //
 	
@@ -260,13 +264,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 				withItemKind:@"application password"
 				 forUsername:nil
 			   withNewPassword:password
-				 serviceName:[self keychainServiceID]];
+				 serviceName:[self keychainServiceID:1]];
 	
 	[AGKeychain modifyKeychainItem:[self keychainServiceName:2]
 				withItemKind:@"application password"
 				 forUsername:nil
 			   withNewPassword:nickPassword
-				 serviceName:[self keychainServiceID]];
+				 serviceName:[self keychainServiceID:2]];
 	
 	// * =================================== * //
 	
