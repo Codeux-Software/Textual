@@ -41,7 +41,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [keychainItemName length];
+	attributes[3].length = [service length];
 
 	list.count = 4;
 	list.attr = attributes;
@@ -88,7 +88,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [keychainItemName length];
+	attributes[3].length = [service length];
 
 	list.count = 4;
 	list.attr = attributes;
@@ -142,7 +142,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [keychainItemName length];
+	attributes[3].length = [service length];
 
 	list.count = 4;
 	list.attr = attributes;
@@ -153,10 +153,14 @@
 		// Cool
 	}
 	
-	SecKeychainSearchCopyNext (search, &item);
-	status = SecKeychainItemModifyContent(item, &list, [newPassword length], [newPassword UTF8String]);
+	result = SecKeychainSearchCopyNext (search, &item);
+	if (result == errSecItemNotFound) {
+		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], [newPassword UTF8String], NULL,NULL, &item);
+	} else {
+		status = SecKeychainItemModifyContent(item, &list, [newPassword length], [newPassword UTF8String]);
+		TXCFSpecialRelease(item);
+	}
 
-	TXCFSpecialRelease(item);
 	TXCFSpecialRelease(search);
 	
 	return !status;
@@ -187,7 +191,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [keychainItemName length];
+	attributes[3].length = [service length];
 	
 	list.count = 4;
 	list.attr = attributes;
@@ -222,7 +226,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [keychainItemName length];
+	attributes[3].length = [service length];
 
 	list.count = 4;
 	list.attr = attributes;
