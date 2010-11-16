@@ -58,6 +58,11 @@
 	return [root outerHTML];
 }
 
+- (WebScriptObject*)js_api
+{
+	return [[self windowScriptObject] evaluateWebScript:@"Textual"];
+}
+
 - (void)clearSelection
 {
 	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];

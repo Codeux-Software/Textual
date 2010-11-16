@@ -455,7 +455,7 @@
 	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
-		[s appendFormat:@"<span class=\"sender\" oncontextmenu=\"on_nick()\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
+		[s appendFormat:@"<span class=\"sender\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
 		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
@@ -552,8 +552,8 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
-	
-	[[view windowScriptObject] callWebScriptMethod:@"newMessagePostedToDisplay" 
+	// WebScriptObject* textual = [[view windowScriptObject] evaluateWebScript:@"Textual"];
+	[[view js_api] callWebScriptMethod:@"newMessagePostedToDisplay" 
 									 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
 }
 
@@ -618,7 +618,8 @@
 	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
 	 ];
 	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme log] fileName], [[theme log] content]];
-	[s appendFormat:@"<script type=\"text/javascript\">\n/* JSF: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
+	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
+	[s appendFormat:@"<script type=\"text/javascript\">\n/* JS: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
 	if (overrideStyle) [s appendFormat:@"<style type=\"text/css\">%@</style>", overrideStyle];
 	[s appendString:@"</head>"];
 	[s appendFormat:@"<body %@>", bodyAttrs];

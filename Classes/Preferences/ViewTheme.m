@@ -17,6 +17,7 @@
 @synthesize other;
 @synthesize path;
 @synthesize js;
+@synthesize core_js;
 
 - (id)init
 {
@@ -24,6 +25,9 @@
 		log = [LogTheme new];
 		other = [OtherTheme new];
 		js = [CustomJSFile new];
+		core_js = [CustomJSFile new];
+		NSString * applicationPath = [[NSBundle mainBundle] bundlePath];
+		core_js.fileName = [applicationPath stringByAppendingPathComponent:@"/Contents/Resources/core.js"];
 	}
 	return self;
 }
@@ -34,6 +38,7 @@
 	[log release];
 	[other release];
 	[js release];
+	[core_js release];
 	[path release];
 	[super dealloc];
 }
