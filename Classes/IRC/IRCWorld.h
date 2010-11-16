@@ -120,7 +120,7 @@
 - (IRCChannel*)selectedChannelOn:(IRCClient*)c;
 
 - (void)onTimer;
-- (void)autoConnect:(BOOL)afterWakeUp;
+- (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)terminate;
 - (void)prepareForSleep;
 
