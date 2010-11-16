@@ -14,6 +14,7 @@
 @property (nonatomic, assign) id resizeDelegate;
 
 - (NSString*)contentString;
+- (WebScriptObject*)js_api;
 
 - (void)clearSelection;
 - (BOOL)hasSelection;

@@ -14,6 +14,7 @@
 	LogTheme* log;
 	OtherTheme* other;
 	CustomJSFile* js;
+	CustomJSFile* core_js;
 }
 
 @property (nonatomic, retain) NSString *path;
@@ -21,6 +22,7 @@
 @property (nonatomic, readonly) LogTheme* log;
 @property (nonatomic, readonly) OtherTheme* other;
 @property (nonatomic, readonly) CustomJSFile* js;
+@property (nonatomic, readonly) CustomJSFile* core_js;
 
 - (void)reload;
 + (void)createUserDirectory:(BOOL)force_reset;
