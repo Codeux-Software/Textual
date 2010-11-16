@@ -364,7 +364,8 @@
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMNodeList* nodeList = [body childNodes];
-	
+    
+    n = nodeList.length - maxLines;
 	for (NSInteger i=n-1; i>=0; --i) {
 		[body removeChild:[nodeList item:i]];
 	}

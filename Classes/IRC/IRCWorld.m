@@ -206,7 +206,7 @@
 	}
 }
 
-- (void)autoConnect:(BOOL)afterWakeUp
+- (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
 {
 	NSInteger delay = 0;
 	if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;

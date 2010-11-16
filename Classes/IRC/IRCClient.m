@@ -1200,14 +1200,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			finalResult = [finalResult stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			
 			if ([finalResult length] >= 1) {
-				if ([[finalResult safeSubstringToIndex:1] isEqualToString:@"/"]) {
-					finalResult = [finalResult safeSubstringFromIndex:1];
-					finalResult = [finalResult stringByReplacingOccurrencesOfString:@"%c" withString:[details objectForKey:@"channel"]];
-				} else {
-					finalResult = [NSString stringWithFormat:@"MSG %@ %@", [details objectForKey:@"channel"], finalResult];
-				}
-				
-				[[self invokeOnMainThread] sendCommand:finalResult completeTarget:[[details objectForKey:@"completeTarget"] boolValue] target:[details objectForKey:@"target"]];
+				[[world invokeOnMainThread] inputText:finalResult command:PRIVMSG];
 			}
 		}
 	} else {
