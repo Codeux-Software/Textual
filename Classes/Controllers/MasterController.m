@@ -208,7 +208,7 @@
 		WelcomeSheetDisplay.window = window;
 		[WelcomeSheetDisplay show];
 	} else {
-		[world autoConnect:NO];	
+		[world autoConnectAfterWakeup:NO];	
 	}
 }
 
@@ -360,7 +360,7 @@
 
 - (void)computerDidWakeUp:(NSNotification*)note
 {
-	[world autoConnect:YES];
+	[world autoConnectAfterWakeup:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification*)note
