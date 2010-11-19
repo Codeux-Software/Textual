@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4CEB677F1296AA4D00274034 /* App Store Distribution */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4CEB67871296AA6200274034 /* Build configuration list for PBXAggregateTarget "App Store Distribution" */;
+			buildPhases = (
+				4CEB677E1296AA4D00274034 /* ShellScript */,
+			);
+			dependencies = (
+				4CEB680C1296ACDE00274034 /* PBXTargetDependency */,
+			);
+			name = "App Store Distribution";
+			productName = "App Store Distribution";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
@@ -263,6 +278,16 @@
 		4CFC7DB71231F40C00FFC3B7 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CEB680B1296ACDE00274034 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CA9456011E1AFBA00D36367 /* Textual */;
+			remoteInfo = Textual;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
@@ -1222,6 +1247,7 @@
 			projectRoot = "";
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
+				4CEB677F1296AA4D00274034 /* App Store Distribution */,
 			);
 		};
 /* End PBXProject section */
@@ -1287,6 +1313,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+		};
+		4CEB677E1296AA4D00274034 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# --------------------------------------------------------------------------------------\n# \n# Look for a file named \"CERTIFICATE\" for code signing. If file exists, then we\n# will take the content of it to use for the name during code signing. \n# \n# Do this so those who are not compiling for app store do not require the certificate\n# to compile their own custom build of Textual.\n# \n# --------------------------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"$PRODUCT_NAME.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\necho \"$PROJECT_DIR/CERTIFICATE\"\n\nif [ -f \"$PROJECT_DIR/CERTIFICATE\" ]\nthen\nexport CODE_SIGNING_IDENTITY=`cat $PROJECT_DIR/CERTIFICATE`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" $PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH \nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1401,6 +1440,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CEB680C1296ACDE00274034 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CA9456011E1AFBA00D36367 /* Textual */;
+			targetProxy = 4CEB680B1296ACDE00274034 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */ = {
@@ -1541,7 +1588,7 @@
 					x86_64,
 					i386,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1591,7 +1638,7 @@
 					x86_64,
 					i386,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1633,6 +1680,31 @@
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		4CEB67801296AA4D00274034 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "App Store Distribution";
+			};
+			name = Debug;
+		};
+		4CEB67811296AA4D00274034 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "App Store Distribution";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1690,6 +1762,15 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CEB67871296AA6200274034 /* Build configuration list for PBXAggregateTarget "App Store Distribution" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CEB67801296AA4D00274034 /* Debug */,
+				4CEB67811296AA4D00274034 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
