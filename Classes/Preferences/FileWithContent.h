@@ -4,14 +4,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CustomJSFile : NSObject
+@interface FileWithContent : NSObject
 {
 	NSString* fileName;
 	NSString* content;
+	NSURL* baseUrl;
 }
 
 @property (nonatomic, retain, getter=fileName, setter=setFileName:) NSString* fileName;
 @property (nonatomic, readonly) NSString* content;
+@property (nonatomic, readonly) NSURL* baseUrl;
 
 - (void)reload;
 
