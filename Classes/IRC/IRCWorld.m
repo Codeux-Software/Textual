@@ -853,7 +853,7 @@
 	
 	[c.view setHostWindow:window];
 	
-	return c;
+	return [c autorelease];
 }
 
 #pragma mark -
