@@ -1446,9 +1446,6 @@
 		case 101:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/"]];
 			break;
-		case 102: 
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://github.com/mikemac11/Textual"]];
-			break;
 		case 103:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/text-formatting"]];
 			break;
@@ -1460,9 +1457,6 @@
 			break;
 		case 106:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/styles"]];
-			break;
-		case 107:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/private/appcast/changelog.html"]];
 			break;
 		case 108:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/feature-requests"]];

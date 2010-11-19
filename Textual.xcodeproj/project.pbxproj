@@ -38,7 +38,6 @@
 		4C16009B12158D2100C6C894 /* FormattingColor_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008B12158D2100C6C894 /* FormattingColor_13.png */; };
 		4C16009C12158D2100C6C894 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008C12158D2100C6C894 /* FormattingColor_14.png */; };
 		4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008D12158D2100C6C894 /* FormattingColor_15.png */; };
-		4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4C34851D11F96CEA005D91D6 /* dsa_pub.pem */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E301238A655005BDA9D /* LanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C400E2E1238A655005BDA9D /* LanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
@@ -47,9 +46,7 @@
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
-		4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
-		4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80087012117C8100EB6DAF /* Sparkle.framework */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
 		4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
@@ -323,7 +320,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */,
-				4C8008BD12117C9100EB6DAF /* Sparkle.framework in Copy Files */,
 				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */,
 			);
 			name = "Copy Files";
@@ -367,7 +363,6 @@
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		4C33F97211AA81FF003EAB65 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
-		4C34851D11F96CEA005D91D6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = "Extra/Sparkle Tools/dsa_pub.pem"; sourceTree = "<group>"; };
 		4C3761E512095DD700E02C1A /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptsWrapper.h; sourceTree = "<group>"; };
 		4C3761E612095DD700E02C1A /* ScriptsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptsWrapper.m; sourceTree = "<group>"; };
 		4C400E2E1238A655005BDA9D /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguagePreferences.h; sourceTree = "<group>"; };
@@ -387,7 +382,6 @@
 		4C7E561211B0386200B5DE98 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPanel.h; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
 		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
-		4C80087012117C8100EB6DAF /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Framework/Sparkle.framework; sourceTree = "<group>"; };
 		4C81B9AC12187F83007E9EE2 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = Resources/Images/Colors/rainbow.png; sourceTree = "<group>"; };
 		4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputPromptDialog.h; sourceTree = "<group>"; };
 		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
@@ -620,7 +614,6 @@
 				4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
 				4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */,
-				4C80087212117C8100EB6DAF /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,7 +669,6 @@
 			isa = PBXGroup;
 			children = (
 				4C80086F12117C8100EB6DAF /* RegexKit.framework */,
-				4C80087012117C8100EB6DAF /* Sparkle.framework */,
 				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -740,7 +732,6 @@
 			children = (
 				4C49192611FF723D0065E5D5 /* README */,
 				4C0C42931197423600578ABB /* Info.plist */,
-				4C34851D11F96CEA005D91D6 /* dsa_pub.pem */,
 				4CB0E760122AC295003E802C /* IRCNetworks.plist */,
 				4C33F97111AA81FF003EAB65 /* BasicLanguage.strings */,
 			);
@@ -1287,7 +1278,6 @@
 				4CA9457111E1AFBA00D36367 /* BasicLanguage.strings in Resources */,
 				4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */,
 				4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */,
-				4C34851E11F96CEA005D91D6 /* dsa_pub.pem in Resources */,
 				4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */,
 				4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */,
 				4C16009012158D2100C6C894 /* FormattingColor_2.png in Resources */,
@@ -1598,8 +1588,13 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -1622,6 +1617,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1642,8 +1638,13 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -1659,13 +1660,14 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
+				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
@@ -1689,7 +1691,7 @@
 		4CD5AD1212369256001AEED2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1700,7 +1702,7 @@
 		4CD5AD1312369256001AEED2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Textual IRC Client";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -1718,6 +1720,7 @@
 					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -1740,6 +1743,7 @@
 					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
