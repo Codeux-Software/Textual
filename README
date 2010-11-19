@@ -9,17 +9,9 @@ based off AppleScript is also supported.
 
 --------------
 
-- Compiling -
+- Compiling Requirements -
 
-Textual requires the code signing certificate located in the folder
-"Extra/Code Signing/" to be loaded into the keychain of the machine
-that will be doing the compiling. This certificate must also be set
-to be trusted for code signing. This can be accomplished by right 
-clicking the certificate in the "Keychain Access" application and
-selecting "Get Info" — From the panel that pops up trust options can
-be modified to meet the needs of the compiler. 
-
-Also, Textual uses the BWToolkit plugin in order to add new user interface 
+Textual uses the BWToolkit plugin in order to add new user interface 
 elements to its library. Therefore, before compiling make sure that the 
 "BWToolkit.ibplugin" file has been loaded into the Interface Builder 
 application. This file can be found in the folder "Frameworks/BWToolkit/"
