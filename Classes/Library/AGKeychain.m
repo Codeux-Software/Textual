@@ -107,15 +107,15 @@
 		if (SecKeychainItemDelete(item)) {
 			status = YES;
 		}
+		TXCFSpecialRelease(item);
 	}
 
-	TXCFSpecialRelease(item);
 	TXCFSpecialRelease(search);
 	
 	return status;
 }
 
-+ (BOOL)modifyKeychainItem:(NSString *)keychainItemName 
++ (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName 
 		  withItemKind:(NSString *)keychainItemKind 
 		   forUsername:(NSString *)username 
 	     withNewPassword:(NSString *)newPassword

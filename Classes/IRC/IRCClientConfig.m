@@ -81,12 +81,64 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
+- (NSString*)nickPassword
+{
+	nickPassword=[[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
+								withItemKind:@"application password" 
+								 forUsername:nil 
+								 serviceName:[self keychainServiceID:2]] retain];
+	return nickPassword;
+}
+
+- (void)setNickPassword:(NSString *)pass
+{
+	if ([pass isEqual:@""]) {
+		[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[self keychainServiceID:2]];
+		
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:2]
+						  withItemKind:@"application password"
+						   forUsername:nil
+					   withNewPassword:pass
+						   serviceName:[self keychainServiceID:2]];
+	}
+}
+
+- (NSString*)password
+{
+	password=[[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
+									   withItemKind:@"application password" 
+										forUsername:nil 
+										  serviceName:[self keychainServiceID:1]] retain];
+	return password;
+}
+
+- (void)setPassword:(NSString *)pass
+{
+	if ([pass isEqual:@""]) {
+		[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[self keychainServiceID:1]];		
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:1]
+						  withItemKind:@"application password"
+						   forUsername:nil
+					   withNewPassword:pass
+						   serviceName:[self keychainServiceID:1]];			
+	}
+
+}
+
 - (NSString*)keychainServiceID:(NSInteger)type
 {
 	if (type == 1) {
-		return [NSString stringWithFormat:@"textual.client.server.cuid.%i", cuid];
+		return [NSString stringWithFormat:@"textual.server.%i", cuid];
 	} else {
-		return [NSString stringWithFormat:@"textual.client.nicksrv.cuid.%i", cuid];
+		return [NSString stringWithFormat:@"textual.nickserv.%i", cuid];
 	}
 }
 
@@ -112,30 +164,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 					   serviceName:[self keychainServiceID:2]];
 }
 
-- (void)verifyKeychainsExistsOrAdd
-{
-	if ([AGKeychain checkForExistanceOfKeychainItem:[self keychainServiceName:1]
-									   withItemKind:@"application password" 
-										forUsername:nil
-										serviceName:[self keychainServiceID:1]] == NO) {
-		[AGKeychain addKeychainItem:[self keychainServiceName:1]
-					   withItemKind:@"application password"
-						forUsername:nil
-					   withPassword:@""
-						serviceName:[self keychainServiceID:1]];
-	} 
-	
-	if ([AGKeychain checkForExistanceOfKeychainItem:[self keychainServiceName:2]
-									   withItemKind:@"application password" 
-										forUsername:nil
-										serviceName:[self keychainServiceID:2]] == NO) {
-		[AGKeychain addKeychainItem:[self keychainServiceName:2]
-					   withItemKind:@"application password"
-						forUsername:nil
-					   withPassword:@""
-						serviceName:[self keychainServiceID:2]];
-	}
-}
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
@@ -155,21 +183,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[nick release];
 		nick = [[dic stringForKey:@"nick"] retain];
 	}
-	
-	// * =================================== * //
-	
-	[self verifyKeychainsExistsOrAdd];
-	
-	password = [[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
-										   withItemKind:@"application password" 
-											forUsername:nil
-											serviceName:[self keychainServiceID:1]] retain];
-	
-	nickPassword = [[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
-											   withItemKind:@"application password" 
-												forUsername:nil 
-												serviceName:[self keychainServiceID:2]] retain];
-	
+		
 	// * =================================== * //
 	
 	useSSL = [dic boolForKey:@"ssl"];
@@ -255,23 +269,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (NSMutableDictionary*)dictionaryValue
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-	
-	// * =================================== * //
-	
-	[self verifyKeychainsExistsOrAdd];
-	
-	[AGKeychain modifyKeychainItem:[self keychainServiceName:1]
-				withItemKind:@"application password"
-				 forUsername:nil
-			   withNewPassword:password
-				 serviceName:[self keychainServiceID:1]];
-	
-	[AGKeychain modifyKeychainItem:[self keychainServiceName:2]
-				withItemKind:@"application password"
-				 forUsername:nil
-			   withNewPassword:nickPassword
-				 serviceName:[self keychainServiceID:2]];
-	
+		
 	// * =================================== * //
 	
 	[dic setInt:cuid forKey:@"cuid"];
