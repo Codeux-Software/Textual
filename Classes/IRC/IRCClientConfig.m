@@ -105,6 +105,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 						  withItemKind:@"application password"
 						   forUsername:nil
 					   withNewPassword:pass
+						   withComment:host
 						   serviceName:[self keychainServiceID:2]];
 	}
 }
@@ -130,6 +131,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 						  withItemKind:@"application password"
 						   forUsername:nil
 					   withNewPassword:pass
+						   withComment:host
 						   serviceName:[self keychainServiceID:1]];			
 	}
 

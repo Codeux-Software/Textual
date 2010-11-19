@@ -119,9 +119,10 @@
 		  withItemKind:(NSString *)keychainItemKind 
 		   forUsername:(NSString *)username 
 	     withNewPassword:(NSString *)newPassword
+			withComment:(NSString *)comment
 		   serviceName:(NSString *)service
 {
-	SecKeychainAttribute attributes[4];
+	SecKeychainAttribute attributes[5];
 	SecKeychainAttributeList list;
 	SecKeychainItemRef item;
 	SecKeychainSearchRef search;
@@ -143,6 +144,11 @@
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
 	attributes[3].length = [service length];
+	
+	attributes[4].tag = kSecCommentItemAttr;
+	attributes[4].data = (void *)[comment UTF8String];
+	attributes[4].length = [comment length];
+	
 
 	list.count = 4;
 	list.attr = attributes;
@@ -154,6 +160,7 @@
 	}
 	
 	result = SecKeychainSearchCopyNext (search, &item);
+	list.count = 5;
 	if (result == errSecItemNotFound) {
 		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], [newPassword UTF8String], NULL,NULL, &item);
 	} else {
