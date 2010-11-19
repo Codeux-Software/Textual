@@ -141,7 +141,7 @@
 	view.keyDelegate = self;
 	view.resizeDelegate = self;
 	view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.log.baseUrl];
+	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.css.baseUrl];
 }
 
 - (void)notifyDidBecomeVisible
@@ -323,7 +323,7 @@
 	scrollBottom = [self viewingBottom];
 	scrollTop = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.log.baseUrl];
+	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.css.baseUrl];
 	[scroller setNeedsDisplay];
 }
 
@@ -336,7 +336,7 @@
 	loaded = NO;
 	count = 0;
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.log.baseUrl];
+	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.css.baseUrl];
 	[scroller setNeedsDisplay];
 }
 
@@ -617,7 +617,7 @@
 	 @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
 	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
 	 ];
-	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme log] fileName], [[theme log] content]];
+	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme css] fileName], [[theme css] content]];
 	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
 	[s appendFormat:@"<script type=\"text/javascript\">\n/* JS: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
 	if (overrideStyle) [s appendFormat:@"<style type=\"text/css\">%@</style>", overrideStyle];

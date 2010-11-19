@@ -3,26 +3,25 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import <Cocoa/Cocoa.h>
-#import "LogTheme.h"
 #import "OtherTheme.h"
-#import "CustomJSFile.h"
+#import "FileWithContent.h"
 
 @interface ViewTheme : NSObject
 {
 	NSString* path;
 	NSString* name;
-	LogTheme* log;
+	FileWithContent* css;
 	OtherTheme* other;
-	CustomJSFile* js;
-	CustomJSFile* core_js;
+	FileWithContent* js;
+	FileWithContent* core_js;
 }
 
 @property (nonatomic, retain) NSString *path;
 @property (nonatomic, retain, getter=name, setter=setName:) NSString* name;
-@property (nonatomic, readonly) LogTheme* log;
+@property (nonatomic, readonly) FileWithContent* css;
 @property (nonatomic, readonly) OtherTheme* other;
-@property (nonatomic, readonly) CustomJSFile* js;
-@property (nonatomic, readonly) CustomJSFile* core_js;
+@property (nonatomic, readonly) FileWithContent* js;
+@property (nonatomic, readonly) FileWithContent* core_js;
 
 - (void)reload;
 + (void)createUserDirectory:(BOOL)force_reset;

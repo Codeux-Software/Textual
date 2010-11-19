@@ -13,7 +13,7 @@
 @implementation ViewTheme
 
 @synthesize name;
-@synthesize log;
+@synthesize css;
 @synthesize other;
 @synthesize path;
 @synthesize js;
@@ -22,10 +22,10 @@
 - (id)init
 {
 	if (self = [super init]) {
-		log = [LogTheme new];
+		css = [FileWithContent new];
 		other = [OtherTheme new];
-		js = [CustomJSFile new];
-		core_js = [CustomJSFile new];
+		js = [FileWithContent new];
+		core_js = [FileWithContent new];
 		NSString * applicationPath = [[NSBundle mainBundle] bundlePath];
 		core_js.fileName = [applicationPath stringByAppendingPathComponent:@"/Contents/Resources/core.js"];
 	}
@@ -35,7 +35,7 @@
 - (void)dealloc
 {
 	[name release];
-	[log release];
+	[css release];
 	[other release];
 	[js release];
 	[core_js release];
@@ -86,21 +86,21 @@
 				exit(0);
 			}
 			
-			log.fileName = [path stringByAppendingPathComponent:@"/design.css"];
+			css.fileName = [path stringByAppendingPathComponent:@"/design.css"];
 			js.fileName = [path stringByAppendingPathComponent:@"/scripts.js"];
 			other.fileName = [path stringByAppendingPathComponent:@"/userInterface.plist"];
 			return;
 		}
 	}
 	
-	log.fileName = nil;
+	css.fileName = nil;
 	js.fileName = nil;
 	other.fileName = nil;
 }
 
 - (void)reload
 {
-	[log reload];
+	[css reload];
 	[other reload];
 	[js reload];
 }
