@@ -21,7 +21,7 @@
 		  withItemKind:(NSString *)keychainItemKind 
 		   forUsername:(NSString *)username
 		   serviceName:(NSString *)service;
-+ (BOOL)modifyKeychainItem:(NSString *)keychainItemName 
++ (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName 
 		  withItemKind:(NSString *)keychainItemKind 
 		   forUsername:(NSString *)username 
 	     withNewPassword:(NSString *)newPassword
