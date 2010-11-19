@@ -575,6 +575,14 @@ BOOL isUnicharDigit(unichar c)
 	return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
++ (NSString*) stringWithUUID {
+	CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
+	//get the string representation of the UUID
+	NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+	CFRelease(uuidObj);
+	return [uuidString autorelease];
+}
+
 + (NSString*)bundleString:(NSString*)key
 {
 	return [[[NSBundle mainBundle] infoDictionary] objectForKey:key];

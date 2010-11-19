@@ -64,6 +64,7 @@
 - (BOOL)isModeChannelName;
 - (NSString*)canonicalName;
 
++ (NSString*)stringWithUUID;
 + (NSString*)bundleString:(NSString*)key;
 @end
 

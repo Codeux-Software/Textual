@@ -678,9 +678,7 @@
 	
 	IRCClientConfig* config = u.storedConfig;
 	config.name = [config.name stringByAppendingString:@"_"];
-	config.cuid = TXRandomThousandNumber();
-	
-	[config verifyKeychainsExistsOrAdd];
+	config.guid = [NSString stringWithUUID];
 	
 	IRCClient* n = [world createClient:config reload:YES];
 	[world expandClient:n];
