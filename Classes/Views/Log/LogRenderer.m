@@ -134,16 +134,16 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 		
 		content = logEscape(content);		
 		if (metacontent == nil) {
-			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url()\">%@</a>", link, content];
+			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, content];
 		} else {
-			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url()\">%@</a>%@", link, content, metacontent];
+			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>%@", link, content, metacontent];
 		}
 	} else if (attr & ADDRESS_ATTR) {
 		content = logEscape(content);
-		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"on_addr()\">%@</span>", content];
+		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", content];
 	} else if (attr & CHANNEL_NAME_ATTR) {
 		content = logEscape(content);
-		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"on_chname()\">%@</span>", content];
+		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", content];
 	} else if (attr & EFFECT_MASK) {
 		content = logEscape(content);
 		NSMutableString* s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
