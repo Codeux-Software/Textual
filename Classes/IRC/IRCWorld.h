@@ -21,7 +21,7 @@
 #import "IRCExtras.h"
 #import "GlobalModels.h"
 
-@interface IRCWorld : NSObject 
+@interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	MainWindow* window;
 	GrowlController* growl;

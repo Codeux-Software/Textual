@@ -10,7 +10,7 @@
 @class InputHistory;
 @class LogController;
 
-@interface IRCTreeItem : NSObject 
+@interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 {
 	NSInteger uid;
 	LogController* log;
