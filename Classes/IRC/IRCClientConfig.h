@@ -16,7 +16,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 {
-	NSInteger cuid;
+	NSString* guid;
 	NSString* name;
 	
 	// connection
@@ -55,7 +55,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSMutableArray* ignores;
 }
 
-@property (nonatomic, assign) NSInteger cuid;
+@property (nonatomic, assign) NSString* guid;
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) NSInteger port;

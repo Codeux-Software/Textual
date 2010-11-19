@@ -17,7 +17,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @implementation IRCClientConfig
 
-@synthesize cuid;
+@synthesize guid;
 @synthesize name;
 @synthesize host;
 @synthesize port;
@@ -50,7 +50,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (id)init
 {
 	if (self = [super init]) {
-		cuid = TXRandomThousandNumber();
+		
+		guid = [[NSString stringWithUUID] retain];
+		
 		altNicks = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
 		channels = [NSMutableArray new];
@@ -136,9 +138,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (NSString*)keychainServiceID:(NSInteger)type
 {
 	if (type == 1) {
-		return [NSString stringWithFormat:@"textual.server.%i", cuid];
+		return [NSString stringWithFormat:@"textual.server.%@", guid];
 	} else {
-		return [NSString stringWithFormat:@"textual.nickserv.%i", cuid];
+		return [NSString stringWithFormat:@"textual.nickserv.%@", guid];
 	}
 }
 
@@ -169,7 +171,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	[self init];	
 	
-	cuid = [dic intForKey:@"cuid"] ?: cuid;
+	guid = [dic stringForKey:@"guid"] ?: guid;
 	
 	if ([dic stringForKey:@"name"]) {
 		[name release];
@@ -272,7 +274,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 	// * =================================== * //
 	
-	[dic setInt:cuid forKey:@"cuid"];
+	if (guid) [dic setObject:guid forKey:@"guid"];
 	if (name) [dic setObject:name forKey:@"name"];
 	
 	if (host) [dic setObject:host forKey:@"host"];
