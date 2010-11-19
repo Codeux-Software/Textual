@@ -383,6 +383,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					x86_64,
+					i386,
+				);
 				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
@@ -390,7 +394,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = BragSpam;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;

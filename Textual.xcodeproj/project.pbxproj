@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		4CD5AD1112369256001AEED2 /* Distribution */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4CD5AD1712369268001AEED2 /* Build configuration list for PBXAggregateTarget "Distribution" */;
-			buildPhases = (
-				4CD5AD1012369256001AEED2 /* ShellScript */,
-			);
-			dependencies = (
-				4CD5AD151236925D001AEED2 /* PBXTargetDependency */,
-			);
-			name = Distribution;
-			productName = Distribution;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
@@ -278,16 +263,6 @@
 		4CFC7DB71231F40C00FFC3B7 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4CD5AD141236925D001AEED2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CA9456011E1AFBA00D36367;
-			remoteInfo = Textual;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
@@ -1247,7 +1222,6 @@
 			projectRoot = "";
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
-				4CD5AD1112369256001AEED2 /* Distribution */,
 			);
 		};
 /* End PBXProject section */
@@ -1313,19 +1287,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
-		};
-		4CD5AD1012369256001AEED2 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# ----------------------------------------------------------------------\n#\t\t\t\t\t\t\t\t\t\t\t\n# \tXcode 4 comes packed with a new build system which makes  \n# \tit more difficult to manage build locations. It does let  \n# \tthe eventual build location to be configured, but it    \n# \tcannot be shared. It is user specific. This script is     \n# \tdesigned to compensate for the new method.        \n#\t\t\t\t\t\t\t\t\n# \tCopyright © 2010 Codeux Software (www.codeux.com)\t\n#\t\t\t\t\t\t\t\t\n# ----------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"Textual.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\n# Are we on Xcode 4?\nif [ $XCODE_VERSION_ACTUAL -ge 0400 ]; then\n\n# Is this build occurring on a distribution scheme?\nif [ $DEPLOYMENT_LOCATION == \"NO\" ]; then\nexit\nfi\n\n# Flush out any existing data files\nif [ -d $PROJECT_DIR/build/ ]; then \nrm -r $PROJECT_DIR/build/\nfi\n\n# Create new build location\nif [ ! -d $PROJECT_DIR/build ]; then\nmkdir $PROJECT_DIR/build\nfi\n\nif [ ! -d $PROJECT_DIR/build/$CONFIGURATION ]; then\nmkdir $PROJECT_DIR/build/$CONFIGURATION\nfi\n\n# Move built product to new location\nrm -rf $PROJECT_DIR/build/$CONFIGURATION/*\ncp -r $DSTROOT/$FULL_PRODUCT_NAME $PROJECT_DIR/build/$CONFIGURATION/$FULL_PRODUCT_NAME\nfi\n\n# ----------------------------------------------------------------------\n#\t\t\t\t\t\t\t\t\t\n# \tComment out the code below to not package result    \n#\t\t\t\t\t\t\t\t\t\n# ----------------------------------------------------------------------\n\n/usr/bin/codesign -f -s \"$CODE_SIGN_IDENTITY\" $PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH \n\ncd $PROJECT_DIR/build/$CONFIGURATION\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" $FULL_PRODUCT_NAME/Contents/Info.plist)\n\nrm -if *.zip\nrm -if *.txt\n\nzip -r $buildNumber.zip *  \n\nruby $PROJECT_DIR/Extra/Sparkle\\ Tools/Extras/Signing\\ Tools/sign_update.rb $buildNumber.zip $PROJECT_DIR/Extra/Sparkle\\ Tools/dsa_priv.pem > UPDATEKEY.txt   ";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1440,14 +1401,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4CD5AD151236925D001AEED2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4CA9456011E1AFBA00D36367 /* Textual */;
-			targetProxy = 4CD5AD141236925D001AEED2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */ = {
@@ -1650,7 +1603,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
-					"\"$(SRCROOT)/../../../Downloads\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1667,6 +1619,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1675,34 +1628,11 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		4CD5AD1212369256001AEED2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = Distribution;
-			};
-			name = Debug;
-		};
-		4CD5AD1312369256001AEED2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = Distribution;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1760,15 +1690,6 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CD5AD1712369268001AEED2 /* Build configuration list for PBXAggregateTarget "Distribution" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CD5AD1212369256001AEED2 /* Debug */,
-				4CD5AD1312369256001AEED2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

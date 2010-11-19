@@ -430,7 +430,6 @@
 				ARCHS = (
 					x86_64,
 					i386,
-					ppc,
 				);
 				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -441,12 +440,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = SystemProfiler;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
