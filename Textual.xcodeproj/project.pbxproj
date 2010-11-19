@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
 		4C16009012158D2100C6C894 /* FormattingColor_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008012158D2100C6C894 /* FormattingColor_2.png */; };
@@ -82,7 +83,6 @@
 		4C9E125A1209DF8C004E5032 /* ServerTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C19811737F660044E7A1 /* ServerTreeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E125B1209DF8C004E5032 /* PluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBDDC0111CB4E28002A6868 /* PluginProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E125C1209DF8C004E5032 /* IRCTreeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C12211737F660044E7A1 /* IRCTreeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C9E125D1209DF8C004E5032 /* LogTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C16811737F660044E7A1 /* LogTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E125E1209DF8C004E5032 /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 780C685C118230EE00CB739F /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E125F1209DF8C004E5032 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C14511737F660044E7A1 /* Timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12601209DF8C004E5032 /* NSPasteboardHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0FE11737F660044E7A1 /* NSPasteboardHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -140,7 +140,7 @@
 		4C9E12981209DF8C004E5032 /* IRCClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11411737F660044E7A1 /* IRCClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12991209DF8C004E5032 /* SoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10611737F660044E7A1 /* SoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E129A1209DF8C004E5032 /* IRCWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C12811737F660044E7A1 /* IRCWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C9E129B1209DF8C004E5032 /* CustomJSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 780FF69D11813BC3003C7648 /* CustomJSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C9E129B1209DF8C004E5032 /* FileWithContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 780FF69D11813BC3003C7648 /* FileWithContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E129C1209DF8C004E5032 /* ModeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0D611737F660044E7A1 /* ModeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E129D1209DF8C004E5032 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10D11737F660044E7A1 /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E129E1209DF8C004E5032 /* IRCChannelConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11011737F660044E7A1 /* IRCChannelConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -222,7 +222,6 @@
 		4CA945AE11E1AFBA00D36367 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
 		4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
 		4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
-		4CA945B111E1AFBA00D36367 /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16911737F660044E7A1 /* LogTheme.m */; };
 		4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
 		4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
 		4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
@@ -250,7 +249,7 @@
 		4CA945CB11E1AFBA00D36367 /* NSData+Kana.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B4F51174427C006B324A /* NSData+Kana.m */; };
 		4CA945CC11E1AFBA00D36367 /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
 		4CA945CD11E1AFBA00D36367 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
-		4CA945CE11E1AFBA00D36367 /* CustomJSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* CustomJSFile.m */; };
+		4CA945CE11E1AFBA00D36367 /* FileWithContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* FileWithContent.m */; };
 		4CA945CF11E1AFBA00D36367 /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
 		4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
 		4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* AddressBook.m */; };
@@ -339,6 +338,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2993785B1291F7FC00591A22 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/core.js; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C0C42931197423600578ABB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -419,8 +419,8 @@
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
 		780C685C118230EE00CB739F /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewAutoScroll.h; sourceTree = "<group>"; };
 		780C685D118230EE00CB739F /* WebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewAutoScroll.m; sourceTree = "<group>"; };
-		780FF69D11813BC3003C7648 /* CustomJSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomJSFile.h; sourceTree = "<group>"; };
-		780FF69E11813BC3003C7648 /* CustomJSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomJSFile.m; sourceTree = "<group>"; };
+		780FF69D11813BC3003C7648 /* FileWithContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWithContent.h; sourceTree = "<group>"; };
+		780FF69E11813BC3003C7648 /* FileWithContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWithContent.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelSheet.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TopicSheet.xib; sourceTree = "<group>"; };
@@ -551,8 +551,6 @@
 		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		78A8C14711737F660044E7A1 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinyGrowlClient.h; sourceTree = "<group>"; };
 		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
-		78A8C16811737F660044E7A1 /* LogTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogTheme.h; sourceTree = "<group>"; };
-		78A8C16911737F660044E7A1 /* LogTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogTheme.m; sourceTree = "<group>"; };
 		78A8C16A11737F660044E7A1 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherTheme.h; sourceTree = "<group>"; };
 		78A8C16C11737F660044E7A1 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; wrapsLines = 1; };
@@ -741,6 +739,7 @@
 		4C1BBCB511954F8B00D968BB /* Styles & Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2993785B1291F7FC00591A22 /* core.js */,
 				4C82A68A11DBB1C600C01FBD /* Extensions */,
 				4C942E3511A017F9002DAC1C /* Scripts */,
 				78287EA90D742DAA008D5656 /* Styles */,
@@ -1005,12 +1004,10 @@
 				78A8C16D11737F660044E7A1 /* Preferences.m */,
 				78A8C16E11737F660044E7A1 /* ViewTheme.h */,
 				78A8C16F11737F660044E7A1 /* ViewTheme.m */,
-				78A8C16811737F660044E7A1 /* LogTheme.h */,
-				78A8C16911737F660044E7A1 /* LogTheme.m */,
 				78A8C16A11737F660044E7A1 /* OtherTheme.h */,
 				4CA999D011FCF7180040D8E7 /* OtherTheme.m */,
-				780FF69D11813BC3003C7648 /* CustomJSFile.h */,
-				780FF69E11813BC3003C7648 /* CustomJSFile.m */,
+				780FF69D11813BC3003C7648 /* FileWithContent.h */,
+				780FF69E11813BC3003C7648 /* FileWithContent.m */,
 			);
 			name = Preferences;
 			path = Classes/Preferences;
@@ -1130,7 +1127,6 @@
 				4C9E125A1209DF8C004E5032 /* ServerTreeView.h in Headers */,
 				4C9E125B1209DF8C004E5032 /* PluginProtocol.h in Headers */,
 				4C9E125C1209DF8C004E5032 /* IRCTreeItem.h in Headers */,
-				4C9E125D1209DF8C004E5032 /* LogTheme.h in Headers */,
 				4C9E125E1209DF8C004E5032 /* WebViewAutoScroll.h in Headers */,
 				4C9E125F1209DF8C004E5032 /* Timer.h in Headers */,
 				4C9E12601209DF8C004E5032 /* NSPasteboardHelper.h in Headers */,
@@ -1187,7 +1183,7 @@
 				4C9E12981209DF8C004E5032 /* IRCClient.h in Headers */,
 				4C9E12991209DF8C004E5032 /* SoundPlayer.h in Headers */,
 				4C9E129A1209DF8C004E5032 /* IRCWorld.h in Headers */,
-				4C9E129B1209DF8C004E5032 /* CustomJSFile.h in Headers */,
+				4C9E129B1209DF8C004E5032 /* FileWithContent.h in Headers */,
 				4C9E129C1209DF8C004E5032 /* ModeSheet.h in Headers */,
 				4C9E129D1209DF8C004E5032 /* IRC.h in Headers */,
 				4C9E129E1209DF8C004E5032 /* IRCChannelConfig.h in Headers */,
@@ -1261,6 +1257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2993785D1291F8FE00591A22 /* core.js in Resources */,
 				4CA9456211E1AFBA00D36367 /* application.icns in Resources */,
 				4CA9456311E1AFBA00D36367 /* Scripts in Resources */,
 				4CA9456411E1AFBA00D36367 /* Styles in Resources */,
@@ -1389,7 +1386,6 @@
 				4CA945AE11E1AFBA00D36367 /* TCPServer.m in Sources */,
 				4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */,
 				4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */,
-				4CA945B111E1AFBA00D36367 /* LogTheme.m in Sources */,
 				4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */,
 				4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */,
 				4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */,
@@ -1417,7 +1413,7 @@
 				4CA945CB11E1AFBA00D36367 /* NSData+Kana.m in Sources */,
 				4CA945CC11E1AFBA00D36367 /* InviteSheet.m in Sources */,
 				4CA945CD11E1AFBA00D36367 /* ListDialog.m in Sources */,
-				4CA945CE11E1AFBA00D36367 /* CustomJSFile.m in Sources */,
+				4CA945CE11E1AFBA00D36367 /* FileWithContent.m in Sources */,
 				4CA945CF11E1AFBA00D36367 /* ImageURLParser.m in Sources */,
 				4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */,
 				4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */,

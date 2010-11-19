@@ -1,12 +1,22 @@
-function newMessagePostedToDisplay(lineNumber)
-{
-	// Do Something With New Message
-	
-	//var newLine = document.getElementById("line" + lineNumber);
-}
+// to pull in additional javascript or CSS from the theme folder
 
-/* The following function calls are required. Add additonal code above it. */
-function on_url() { app.setUrl(event.target.innerHTML); }
-function on_addr() { app.setAddr(event.target.innerHTML); }
-function on_chname() { app.setChan(event.target.innerHTML); }
-function on_nick() { app.setNick(event.target.parentNode.parentNode.getAttribute('nick')); }
+// Textual.include_js("jquery.min.js");
+// Textual.include_css("more_theme.css");
+
+
+// to take some specific action when new messages are received
+
+// Textual.newMessagePostedToDisplay=function(lineNumber)
+// {
+//	 var newLine = document.getElementById("line" + lineNumber);
+// }
+
+
+// to overwrite any of the existing contextual right click actions
+// you don't want to change these unless you know what you are doing
+// and they are SAFE TO REMOVE completely
+
+// Textual.on_url=function() { app.setUrl(event.target.innerHTML); }
+// Textual.on_addr=function() { app.setAddr(event.target.innerHTML); }
+// Textual.on_chname=function() { app.setChan(event.target.innerHTML); }
+// Textual.on_nick=function() { app.setNick(event.target.parentNode.parentNode.getAttribute('nick')); }
