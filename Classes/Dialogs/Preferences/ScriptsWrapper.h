@@ -3,7 +3,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ScriptsWrapper : NSObject 
+@interface ScriptsWrapper : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 {
 	IRCWorld *world;
 	NSMutableArray *scripts;
