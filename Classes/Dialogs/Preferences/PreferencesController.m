@@ -120,19 +120,16 @@
 			[self firstPane:logView];
 			break;
 		case 6:
-			[self firstPane:updatesView];
-			break;
-		case 7:
 			[self firstPane:floodControlView];
 			break;
-		case 8:
+		case 7:
 			[self firstPane:IRCopServicesView];
 			break;
-		// 9 = divider
-		case 10:
+		// 8 = divider
+		case 9:
 			[self firstPane:identityView];
 			break;
-		case 11:
+		case 10:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -537,12 +534,6 @@
 - (void)onOpenPathToThemes:(id)sender;
 {
 	[[NSWorkspace sharedWorkspace] openFile:[Preferences whereThemesPath]];
-}
-
-- (void)onSparkleUpdateTypeChanged:(id)sender
-{
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-	[nc postNotificationName:SparkleFeedURLChangeNotification object:nil userInfo:nil];
 }
 
 #pragma mark -

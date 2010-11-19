@@ -19,13 +19,9 @@
 #import "NSBundleHelper.h"
 #import "LanguagePreferences.h"
 #import "NSObject+DDExtensions.h"
-#import <Sparkle/SUUpdater.h>
 
 #define KInternetEventClass	1196773964
 #define KAEGetURL			1196773964
-
-#define SPARKLE_NORMAL_UPDATE_FEED @"http://codeux.com/textual/private/appcast/sparkle.xml"
-#define SPARKLE_BETA_PROGRAM_FEED @"http://codeux.com/textual/private/appcast/sparkle_beta.xml"
 
 @interface NSTextView (NSTextViewCompatibility)
 - (void)setAutomaticSpellingCorrectionEnabled:(BOOL)v;
@@ -66,19 +62,14 @@
 
 - (void)awakeFromNib
 {
-	[[SUUpdater sharedUpdater] setDelegate:self];
-	
 	[window makeMainWindow];
 	
 	[Preferences initPreferences];
-	
-	[self registerSparkleFeed:nil];
 	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
-	[nc addObserver:self selector:@selector(registerSparkleFeed:) name:SparkleFeedURLChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
 	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
@@ -574,20 +565,6 @@
 	[leftTreeBase addSubview:treeScrollView];
 	if (treeSplitter.position < 1) treeSplitter.position = 130;
 	treeScrollView.frame = leftTreeBase.bounds;
-}
-
-- (void)registerSparkleFeed:(NSNotification *)note
-{
-	SUUpdater *updater = [SUUpdater sharedUpdater];
-	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-	
-	if ([ud boolForKey:@"SUCheckBetaFeed"]) {
-		[updater setFeedURL:[NSURL URLWithString:SPARKLE_BETA_PROGRAM_FEED]];
-		[updater setUpdateCheckInterval:3600];
-	} else {
-		[updater setFeedURL:[NSURL URLWithString:SPARKLE_NORMAL_UPDATE_FEED]];
-		[updater setUpdateCheckInterval:[ud integerForKey:@"TSUScheduledCheckInterval"]];
-	}
 }
 
 #pragma mark -
@@ -1244,24 +1221,6 @@ typedef enum {
 {
 	[WelcomeSheetDisplay autorelease];
 	WelcomeSheetDisplay = nil;
-}
-
-#pragma mark -
-#pragma mark Sparkle Delegate
-
-- (void)updater:(SUUpdater *)updater willInstallUpdate:(SUAppcastItem *)update;
-{
-	for (IRCClient *c in world.clients) {
-		if (c.isConnected) {
-			if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUCheckBetaFeed"]) {
-				[c quit];
-			} else {
-				[c quit:TXTLS(@"UPDATING_APPLICATION_QUIT_MESSAGE")];
-			}
-		}
-	}
-	
-	terminating = YES;
 }
 
 @synthesize window;

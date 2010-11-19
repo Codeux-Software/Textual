@@ -97,7 +97,6 @@
 - (void)onLayoutChanged:(id)sender;
 - (void)onTextDirectionChanged:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
-- (void)onSparkleUpdateTypeChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
