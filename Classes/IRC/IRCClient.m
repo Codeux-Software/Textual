@@ -1117,6 +1117,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (type == LINE_TYPE_ACTION) {
 				cmd = PRIVMSG;
 				t = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, ACTION, t, (UniChar)0x01];
+			} else if (type == LINE_TYPE_PRIVMSG) {
+				[channel detectOutgoingConversation:t];
 			}
 			[self send:cmd, channel.name, t, nil];
 		}
