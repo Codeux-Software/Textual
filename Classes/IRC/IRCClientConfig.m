@@ -83,18 +83,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
-- (NSString*)nickPassword
-{
-	nickPassword=[[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
-								withItemKind:@"application password" 
-								 forUsername:nil 
-								 serviceName:[self keychainServiceID:2]] retain];
-	return nickPassword;
-}
-
 - (void)setNickPassword:(NSString *)pass
 {
-	if ([pass isEqual:@""]) {
+	if (pass == nil) {
 		[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
 						  withItemKind:@"application password"
 						   forUsername:nil
@@ -110,18 +101,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 }
 
-- (NSString*)password
-{
-	password=[[AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
-									   withItemKind:@"application password" 
-										forUsername:nil 
-										  serviceName:[self keychainServiceID:1]] retain];
-	return password;
-}
-
 - (void)setPassword:(NSString *)pass
 {
-	if ([pass isEqual:@""]) {
+	if (pass == nil) {
 		[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
 						  withItemKind:@"application password"
 						   forUsername:nil
@@ -149,7 +131,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (NSString*)keychainServiceName:(NSInteger)type
 {
 	if (type == 1) {
-		return @"Textual (server password)";
+		return @"Textual (Server Password)";
 	} else {
 		return @"Textual (NickServ)";
 	}
@@ -168,18 +150,34 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 					   serviceName:[self keychainServiceID:2]];
 }
 
-
 - (id)initWithDictionary:(NSDictionary*)dic
 {
 	[self init];	
 	
-	guid = [dic stringForKey:@"guid"] ?: guid;
+	if ([dic stringForKey:@"guid"]) {
+		[guid release];
+		guid = [[dic stringForKey:@"guid"] retain];
+	}
 	
 	if ([dic stringForKey:@"name"]) {
 		[name release];
 		name = [[dic stringForKey:@"name"] retain];
 	}
 	
+	NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
+											  withItemKind:@"application password" 
+											   forUsername:nil 
+											   serviceName:[self keychainServiceID:2]];
+	
+	if (knickPassword) nickPassword = [knickPassword retain];
+	
+	NSString *kpassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
+											withItemKind:@"application password" 
+											forUsername:nil 
+											serviceName:[self keychainServiceID:1]];
+	
+	if (kpassword) password = [kpassword retain];
+		
 	host = [[dic stringForKey:@"host"] retain] ?: @"";
 	port = [dic intForKey:@"port"] ?: 6667;
 	

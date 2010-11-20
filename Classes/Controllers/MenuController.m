@@ -775,10 +775,6 @@
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
 	if (NO_CLIENT_OR_CHANNEL) return;
-	if (topicSheet) {
-		[topicSheet show];
-		return;
-	}
 	
 	TopicSheet* t = [TopicSheet new];
 	t.delegate = self;
@@ -805,11 +801,6 @@
 
 - (void)onMode:(id)sender
 {
-	if (modeSheet) {
-		[modeSheet show];
-		return;
-	}
-	
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
 	if (NO_CLIENT_OR_CHANNEL) return;

@@ -254,8 +254,9 @@
 		}	
 		
 		TXCFSpecialRelease(item);
-		TXCFSpecialRelease(search);
 	}
+	
+	TXCFSpecialRelease(search);
 	
 	return password;
 }
@@ -267,7 +268,7 @@
 	OSStatus status;
 	NSString *fpass = @"";
 	
-	status = SecKeychainItemCopyContent (item, NULL, NULL, &length, 
+	status = SecKeychainItemCopyContent(item, NULL, NULL, &length, 
 						     (void **)&password);
 
 	if (status == noErr) {
