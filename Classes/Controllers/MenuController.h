@@ -9,6 +9,8 @@
 #import "MemberListView.h"
 #import "PreferencesController.h"
 #import "NickSheet.h"
+#import "ServerSheet.h"
+#import "ChannelSheet.h"
 #import "ModeSheet.h"
 #import "TopicSheet.h"
 #import "InviteSheet.h"
@@ -38,8 +40,8 @@
 	NSString* currentSearchPhrase;
 	
 	PreferencesController* preferencesController;
-	NSMutableArray* ServerSheets;
-	NSMutableArray* ChannelSheets;
+	ServerSheet* serverSheet;
+	ChannelSheet* channelSheet;
 	NickSheet* nickSheet;
 	ModeSheet* modeSheet;
 	TopicSheet* topicSheet;
@@ -60,11 +62,11 @@
 @property (nonatomic, retain) NSString* currentSearchPhrase;
 @property (nonatomic, retain) NSMenuItem* closeWindowItem;
 @property (nonatomic, retain) PreferencesController* preferencesController;
-@property (nonatomic, retain) NSMutableArray* ServerSheets;
-@property (nonatomic, retain) NSMutableArray* ChannelSheets;
+@property (nonatomic, retain) ChannelSheet* channelSheet;
 @property (nonatomic, retain) NickSheet* nickSheet;
 @property (nonatomic, retain) ModeSheet* modeSheet;
 @property (nonatomic, retain) TopicSheet* topicSheet;
+@property (nonatomic, retain) ServerSheet* serverSheet;
 @property (nonatomic, retain) InviteSheet* inviteSheet;
 @property (nonatomic, retain) AboutPanel* aboutPanel;
 

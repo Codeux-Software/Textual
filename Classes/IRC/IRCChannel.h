@@ -32,7 +32,6 @@
 	FileLogger* logFile;
 	NSString* logDate;
 	
-	ChannelSheet* propertyDialog;
 }
 
 @property (nonatomic, assign) IRCClient* client;
@@ -52,7 +51,6 @@
 @property (nonatomic, assign) BOOL isWhoInit;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
-@property (nonatomic, retain) ChannelSheet* propertyDialog;
 @property (nonatomic, retain) FileLogger* logFile;
 @property (nonatomic, retain) NSString* logDate;
 
