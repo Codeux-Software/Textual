@@ -88,7 +88,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize myNick;
 @synthesize myAddress;
 @synthesize lastSelectedChannel;
-@synthesize propertyDialog;
 
 - (id)init
 {
@@ -169,7 +168,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[lastSelectedChannel release];
 	[channelListDialog release];
-	[propertyDialog release];
 	[chanBanListSheet release];
 	
 	[logFile release];

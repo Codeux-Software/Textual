@@ -57,9 +57,6 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		ServerSheets = [NSMutableArray new];
-		ChannelSheets = [NSMutableArray new];
-		
 		currentSearchPhrase = @"";
 	}
 	return self;
@@ -73,11 +70,12 @@
 	[pointedChannelName release];
 	
 	[preferencesController release];
-	[ServerSheets release];
-	[ChannelSheets release];
+	
 	
 	[currentSearchPhrase release];
 	
+	[channelSheet release];
+	[serverSheet release];
 	[nickSheet release];
 	[modeSheet release];
 	[aboutPanel release];
@@ -89,12 +87,10 @@
 
 - (void)terminate
 {
-	for (ServerSheet* d in ServerSheets) {
-		[d close];
-	}
-	for (ChannelSheet* d in ChannelSheets) {
-		[d close];
-	}
+	if (serverSheet)
+		[serverSheet close];
+	if (channelSheet)
+		[channelSheet close];
 	if (preferencesController) {
 		[preferencesController close];
 	}
@@ -653,8 +649,7 @@
 
 - (void)nickSheetWillClose:(NickSheet*)sender
 {
-	[nickSheet release];
-	nickSheet = nil;
+	self.nickSheet = nil;
 }
 
 - (void)onChannelList:(id)sender
@@ -662,18 +657,23 @@
 	IRCClient* u = world.selectedClient;
 	if (!u) return;
 	[u createChannelListDialog];
-	[world.selectedClient send:LIST, nil];
+	[u send:LIST, nil];
 }
 
 - (void)onAddServer:(id)sender
 {
+	if (serverSheet) {
+		[serverSheet show];
+		return;
+	}	
+	
 	ServerSheet* d = [[ServerSheet new] autorelease];
 	d.delegate = self;
 	d.window = window;
 	d.config = [[IRCClientConfig new] autorelease];
 	d.uid = -1;
-	[ServerSheets addObject:d];
 	[d startWithIgnoreTab:NO];
+	self.serverSheet=d;
 }
 
 - (void)onCopyServer:(id)sender
@@ -713,8 +713,8 @@
 {
 	if (!u) return;
 	
-	if (u.propertyDialog) {
-		[u.propertyDialog show];
+	if (serverSheet) {
+		[serverSheet show];
 		return;
 	}
 	
@@ -724,8 +724,8 @@
 	d.config = u.storedConfig;
 	d.uid = u.uid;
 	d.client = u;
-	[ServerSheets addObject:d];
 	[d startWithIgnoreTab:ignore];
+	self.serverSheet=d;
 }
 
 - (void)onServerProperties:(id)sender
@@ -747,11 +747,7 @@
 
 - (void)ServerSheetWillClose:(ServerSheet*)sender
 {
-	[ServerSheets removeObjectIdenticalTo:sender];
-	
-	IRCClient* u = world.selectedClient;
-	if (!u) return;
-	u.propertyDialog = nil;
+	self.serverSheet=nil;
 }
 
 - (void)onJoin:(id)sender
@@ -832,7 +828,7 @@
 		[u sendLine:line];
 	}
 	
-	modeSheet = nil;
+	self.modeSheet = nil;
 }
 
 - (void)modeSheetWillClose:(ModeSheet*)sender
@@ -845,6 +841,10 @@
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
 	if (!u) return;
+	if (channelSheet){
+		[channelSheet show];
+		return;
+	}
 	
 	IRCChannelConfig* config;
 	if (c && c.isChannel) {
@@ -860,8 +860,8 @@
 	d.config = config;
 	d.uid = u.uid;
 	d.cid = -1;
-	[ChannelSheets addObject:d];
 	[d start];
+	self.channelSheet=d;
 }
 
 - (void)onDeleteChannel:(id)sender
@@ -889,8 +889,8 @@
 	IRCChannel* c = world.selectedChannel;
 	if (!u || !c) return;
 	
-	if (c.propertyDialog) {
-		[c.propertyDialog show];
+	if (channelSheet){
+		[channelSheet show];
 		return;
 	}
 	
@@ -900,8 +900,9 @@
 	d.config = [[c.config mutableCopy] autorelease];
 	d.uid = u.uid;
 	d.cid = c.uid;
-	[ChannelSheets addObject:d];
 	[d start];
+	self.channelSheet=d;
+
 }
 
 - (void)ChannelSheetOnOK:(ChannelSheet*)sender
@@ -923,12 +924,7 @@
 
 - (void)ChannelSheetWillClose:(ChannelSheet*)sender
 {
-	if (sender.cid >= 0) {
-		IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
-		c.propertyDialog = nil;
-	}
-	
-	[ChannelSheets removeObjectIdenticalTo:sender];
+	self.channelSheet=nil;
 }
 
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
@@ -1549,8 +1545,8 @@
 
 @synthesize closeWindowItem;
 @synthesize preferencesController;
-@synthesize ServerSheets;
-@synthesize ChannelSheets;
+@synthesize serverSheet;
+@synthesize channelSheet;
 @synthesize nickSheet;
 @synthesize modeSheet;
 @synthesize topicSheet;

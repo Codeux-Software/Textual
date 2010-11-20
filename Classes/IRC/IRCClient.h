@@ -79,7 +79,6 @@ typedef enum {
 	ChanBanExceptionSheet* banExceptionSheet;
 	ChanBanSheet* chanBanListSheet;
 	ListDialog* channelListDialog;
-	ServerSheet* propertyDialog;
 
 	FileLogger* logFile;
 	NSString* logDate;
@@ -102,7 +101,6 @@ typedef enum {
 @property (nonatomic, readonly) NSString* myNick;
 @property (nonatomic, readonly) NSString* myAddress;
 @property (nonatomic, retain) IRCChannel* lastSelectedChannel;
-@property (nonatomic, retain) ServerSheet* propertyDialog;
 @property (nonatomic, retain) IRCConnection* conn;
 @property (nonatomic, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL reconnectEnabled;

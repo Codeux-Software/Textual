@@ -27,7 +27,6 @@
 @synthesize isModeInit;
 @synthesize isNamesInit;
 @synthesize isWhoInit;
-@synthesize propertyDialog;
 
 - (id)init
 {
@@ -49,7 +48,6 @@
 	[logFile release];
 	[logDate release];
 	
-	[propertyDialog release];
 	[super dealloc];
 }
 
