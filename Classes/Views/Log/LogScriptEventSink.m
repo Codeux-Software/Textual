@@ -16,7 +16,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		x = -10000;
 		y = -10000;
 	}

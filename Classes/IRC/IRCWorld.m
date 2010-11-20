@@ -59,7 +59,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		clients = [NSMutableArray new];
 		iconManager = [IconManager alloc];
 	}

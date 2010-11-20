@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
 {\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fmodern\fcharset0 Courier;}
 {\colortbl;\red255\green255\blue255;\red83\green85\blue0;\red0\green0\blue118;\red10\green121\blue0;
 }
@@ -46,11 +46,7 @@ AppleScript files please see the {\field{\*\fldinst{HYPERLINK "http://developer.
 \
 The return value for scripts can be any command defined that is \
 native to Textual. If no command is presented, then Textual will \
-send the return to the channel that is currently selected. Use the\
-token 
-\b %c
-\b0  to indicate current channel when using command replies.\
-General commands like /me or /msg do not require this.\
+send the return to the channel that is currently selected. \
 \
 --------\
 \
@@ -93,6 +89,8 @@ Command: /example does this thing work?\
 \pard\intbl\itap1\pardeftab720\ql\qnatural
 
 \f0 \cf0 This example takes in the "does this thing work?" input from the user \
-and returns it right back to them. The Textual command only accepts \
+and returns it right back to them. The 
+\f1 textualcmd
+\f0  ethod only accepts \
 one parameter and it is the input information itself.\cell \lastrow\row
 }

@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(NSRect)rect
 {
-	if (self = [super initWithFrame:rect]) {
+	if (((self = [super initWithFrame:rect]))) {
 		[self setUp];
 	}
 	return self;
@@ -21,7 +21,7 @@
 
 - (id)initWithCoder:(NSCoder*)coder
 {
-	if (self = [super initWithCoder:coder]) {
+	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
 	}
 	return self;

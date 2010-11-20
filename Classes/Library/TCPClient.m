@@ -33,7 +33,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		buffer = [NSMutableData new];
 	}
 	return self;

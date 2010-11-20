@@ -18,7 +18,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		type = CHANNEL_TYPE_CHANNEL;
 		
         ihighlights = NO;

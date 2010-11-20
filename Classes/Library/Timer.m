@@ -11,7 +11,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		reqeat = YES;
 		selector = @selector(timerOnTimer:);
 	}

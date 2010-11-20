@@ -21,7 +21,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		css = [FileWithContent new];
 		other = [OtherTheme new];
 		js = [FileWithContent new];

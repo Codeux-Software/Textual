@@ -12,7 +12,7 @@
 
 - (id)initWithCommand:(NSString*)aCommand
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		command = [[aCommand uppercaseString] retain];
 		completeColon = YES;
 		params = [NSMutableArray new];

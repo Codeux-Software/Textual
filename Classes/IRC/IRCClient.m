@@ -92,7 +92,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		tryingNickNumber = -1;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];

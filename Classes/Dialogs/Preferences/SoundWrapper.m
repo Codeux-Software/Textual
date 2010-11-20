@@ -9,7 +9,7 @@
 
 - (id)initWithEventType:(GrowlNotificationType)aEventType
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		eventType = aEventType;
 	}
 	return self;

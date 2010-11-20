@@ -49,7 +49,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		
 		guid = [[NSString stringWithUUID] retain];
 		
