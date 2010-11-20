@@ -7,12 +7,16 @@
 @implementation AboutPanel
 
 @synthesize delegate;
+@synthesize versionInfo;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AboutPanel" owner:self];
 	}
+	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
+								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"],
+								 [[Preferences textualInfoPlist] objectForKey:@"Build Number"]]];	
 	return self;
 }
 
@@ -22,21 +26,9 @@
 }
 
 - (void)show
-{
-	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
-								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"],
-								 [[Preferences textualInfoPlist] objectForKey:@"Build Number"]]];
-	
-	if (![self.window isVisible]) {
-		[self.window center];
-	}
-	
+{	
+	[self.window center];
 	[self.window makeKeyAndOrderFront:nil];
-}
-
-- (void)close
-{
-	[self.window close];
 }
 
 - (void)windowWillClose:(NSNotification*)note
@@ -46,5 +38,4 @@
 	}
 }
 
-@synthesize versionInfo;
 @end
