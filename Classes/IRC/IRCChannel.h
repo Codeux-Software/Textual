@@ -64,6 +64,7 @@
 
 - (void)activate;
 - (void)deactivate;
+- (void)detectOutgoingConversation:(NSString*)text;
 
 - (BOOL)print:(LogLine*)line;
 - (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML;
