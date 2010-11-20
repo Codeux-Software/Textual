@@ -23,6 +23,7 @@
 #import "MasterController.h"
 #import "NSObject+DDExtensions.h"
 
+#define	NO_CLIENT_OR_CHANNEL	(!u || !c)
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && !u.isConnected)
 #define LOGIN                   (u && u.isLoggedIn)
@@ -442,7 +443,7 @@
 				IRCClient *u = [world selectedClient];
 				IRCChannel *c = [world selectedChannel];
 				
-				if (!u || !c) return;
+				if (NO_CLIENT_OR_CHANNEL) return;
 				
 				if (c.isChannel && c.isActive) {
 					[u partChannel:c];
@@ -773,8 +774,11 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c) return;
-	if (topicSheet) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
+	if (topicSheet) {
+		[topicSheet show];
+		return;
+	}
 	
 	TopicSheet* t = [TopicSheet new];
 	t.delegate = self;
@@ -789,22 +793,26 @@
 {
 	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient* u = c.client;
-	if (!u || !c) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
 	
 	[u send:TOPIC, c.name, topic, nil];
 }
 
 - (void)topicSheetWillClose:(TopicSheet*)sender
 {
-	topicSheet = nil;
+	self.topicSheet = nil;
 }
 
 - (void)onMode:(id)sender
 {
+	if (modeSheet) {
+		[modeSheet show];
+		return;
+	}
+	
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c) return;
-	if (modeSheet) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
 	
 	modeSheet = [ModeSheet new];
 	modeSheet.delegate = self;
@@ -820,20 +828,18 @@
 {
 	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient* u = c.client;
-	if (!u || !c) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
 	
 	NSString* changeStr = [c.mode getChangeCommand:sender.mode];
 	if (changeStr.length) {
 		NSString* line = [NSString stringWithFormat:@"%@ %@ %@", MODE, c.name, changeStr];
 		[u sendLine:line];
 	}
-	
-	self.modeSheet = nil;
 }
 
 - (void)modeSheetWillClose:(ModeSheet*)sender
 {
-	modeSheet = nil;
+	self.modeSheet = nil;
 }
 
 - (void)onAddChannel:(id)sender
@@ -893,7 +899,7 @@
 	
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
 	
 	ChannelSheet* d = [[ChannelSheet new] autorelease];
 	d.delegate = self;
@@ -1152,6 +1158,10 @@
 
 - (void)onWantAboutWindowShown:(id)sender
 {
+	if (aboutPanel){
+		[aboutPanel show];
+		return;
+	}
 	aboutPanel = [AboutPanel new];
 	aboutPanel.delegate = self;
 	[aboutPanel show];
@@ -1159,8 +1169,7 @@
 
 - (void)aboutPanelWillClose:(AboutPanel*)sender
 {
-	[aboutPanel release];
-	aboutPanel = nil;
+	self.aboutPanel=nil;
 }
 
 - (void)processModeChange:(id)sender mode:(NSString *)tmode 
@@ -1370,7 +1379,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c) return;
+	if (NO_CLIENT_OR_CHANNEL) return;
 	
 	NSString* path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", u.name, ((c.isTalk) ? @"Queries" : @"Channels"), c.name]];
