@@ -1,20 +1,20 @@
 // Created by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "IconManager.h"
+#import "DockIcon.h"
 #import "Preferences.h"
 
-@implementation IconManager
+@implementation DockIcon
 
 /* The math is messy but it gets the job done. =) */
 
-- (void)drawBlankApplicationIcon
++ (void)drawWithoutCounts
 {
 	[NSApp setApplicationIconImage:[NSImage imageNamed:@"NSApplicationIcon"]];
 }
 
-- (void)drawApplicationIcon:(NSInteger)hlcount 
-				   msgcount:(NSInteger)pmcount 
++ (void)drawWithHilightCount:(NSInteger)highlight_count 
+				   messageCount:(NSInteger)message_count 
 {
 	NSScreen *scaleCheck = [NSScreen alloc];
 	
@@ -30,38 +30,38 @@
 		[attrs setObject:font forKey:NSFontAttributeName];
 		[attrs setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 		
-		hlcount = ((hlcount > 9999) ? 9999 : hlcount);
-		pmcount = ((pmcount > 9999) ? 9999 : pmcount);
+		highlight_count = ((highlight_count > 9999) ? 9999 : highlight_count);
+		message_count = ((message_count > 9999) ? 9999 : message_count);
 		
 		NSImage *appIcon = [[NSImage imageNamed:@"NSApplicationIcon"] copy];
-		NSImage *redBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Red/%@", [self badgeFilename:pmcount]]]];
-		NSImage *greenBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Green/%@", [self badgeFilename:hlcount]]]];
+		NSImage *redBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Red/%@", [self badgeFilename:message_count]]]];
+		NSImage *greenBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Green/%@", [self badgeFilename:highlight_count]]]];
 		
 		[appIcon lockFocus];
 		
-		if (pmcount >= 1) {
+		if (message_count >= 1) {
 			[redBadge compositeToPoint:NSMakePoint((appIcon.size.width - redBadge.size.width), (appIcon.size.height - redBadge.size.height)) operation:NSCompositeSourceOver];
 			
-			iconRep = [NSString stringWithFormat:@"%i", pmcount];
+			iconRep = [NSString stringWithFormat:@"%i", message_count];
 			
 			textSize = [iconRep sizeWithAttributes:attrs];
 			textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];
 			[textString drawAtPoint:NSMakePoint((appIcon.size.width - redBadge.size.width + ((redBadge.size.width - textSize.width) / 2)), (appIcon.size.height - redBadge.size.height + ((redBadge.size.height - textSize.height) / 2) + 1))];
 			
-			if (hlcount >= 1) {
+			if (highlight_count >= 1) {
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), (appIcon.size.height - greenBadge.size.height - (redBadge.size.height - 5))) operation:NSCompositeSourceOver];
 				
-				iconRep = [NSString stringWithFormat:@"%i", hlcount];
+				iconRep = [NSString stringWithFormat:@"%i", highlight_count];
 				
 				textSize = [iconRep sizeWithAttributes:attrs];
 				textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];
 				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)), (appIcon.size.height - greenBadge.size.height + ((greenBadge.size.height - textSize.height) / 2) - (redBadge.size.height - 6)))];
 			}
 		} else {
-			if (hlcount >= 1) {
+			if (highlight_count >= 1) {
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), (appIcon.size.height - greenBadge.size.height)) operation:NSCompositeSourceOver];
 				
-				iconRep = [NSString stringWithFormat:@"%i", hlcount];
+				iconRep = [NSString stringWithFormat:@"%i", highlight_count];
 				
 				textSize = [iconRep sizeWithAttributes:attrs];
 				textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];
@@ -83,7 +83,7 @@
 	[scaleCheck release];
 }
 
-- (NSString*)badgeFilename:(NSInteger)count
++ (NSString*)badgeFilename:(NSInteger)count
 {
 	switch (count) {
 		case 1 ... 99:

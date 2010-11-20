@@ -8,7 +8,7 @@
 #import "IRCClientConfig.h"
 #import "Preferences.h"
 #import "NSStringHelper.h"
-#import "IconManager.h"
+#import "DockIcon.h"
 #import "IRCExtras.h"
 #import "NSBundleHelper.h"
 #import "InputHistory.h"
@@ -61,7 +61,6 @@
 {
 	if ((self = [super init])) {
 		clients = [NSMutableArray new];
-		iconManager = [IconManager alloc];
 	}
 	return self;
 }
@@ -77,7 +76,6 @@
 	[extrac release];
 	[clients release];
 	[selected release];
-	[iconManager release];
 	[allLoadedBundles release];
 	[bundlesForUserInput release];
 	[bundlesForServerInput release];
@@ -266,15 +264,10 @@
 	}
 }
 
-- (void)updateAppIcon:(NSInteger)hlcount msgcount:(NSInteger)pmcount
-{
-	[iconManager drawApplicationIcon:hlcount msgcount:pmcount];
-}
-
 - (void)updateIcon
 {
 	if ([Preferences displayDockBadge]) {
-		NSInteger newTalkCount = 0;
+		NSInteger pmCount = 0;
 		NSInteger highlightCount = 0;
 		
 		for (IRCClient* u in clients) {
@@ -282,16 +275,16 @@
 				if (![c.name isEqualToString:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")] && 
 				    ![c.name isEqualToString:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE")] &&
 					![c.name isEqualToString:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE")]) {
-					newTalkCount = (newTalkCount + [c unreadCount]);
+					pmCount = (pmCount + [c unreadCount]);
 					highlightCount = (highlightCount + [c keywordCount]);
 				}
 			}
 		}
 		
-		if (newTalkCount == 0 && highlightCount == 0) {
-			[iconManager drawBlankApplicationIcon];
+		if (pmCount == 0 && highlightCount == 0) {
+			[DockIcon drawWithoutCounts];
 		} else {
-			[self updateAppIcon:highlightCount msgcount:newTalkCount];
+			[DockIcon drawWithHilightCount:highlightCount messageCount:pmCount];
 		}
 	}
 }
@@ -1188,7 +1181,6 @@
 	return;
 }
 
-@synthesize iconManager;
 @synthesize serverMenu;
 @synthesize channelMenu;
 @synthesize dummyLog;
