@@ -493,9 +493,8 @@
 
 - (void)onCloseCurrentPanel:(id)sender
 {
-	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (u && c) {
+	if (c) {
 		[world destroyChannel:c];
 		[world save];
 	}
@@ -777,18 +776,19 @@
 	if (!u || !c) return;
 	if (topicSheet) return;
 	
-	topicSheet = [TopicSheet new];
-	topicSheet.delegate = self;
-	topicSheet.window = window;
-	topicSheet.uid = u.uid;
-	topicSheet.cid = c.uid;
-	[topicSheet start:c.topic];
+	TopicSheet* t = [TopicSheet new];
+	t.delegate = self;
+	t.window = window;
+	t.uid = u.uid;
+	t.cid = c.uid;
+	[t start:c.topic];
+	self.topicSheet=t;
 }
 
 - (void)topicSheet:(TopicSheet*)sender onOK:(NSString*)topic
 {
-	IRCClient* u = [world findClientById:sender.uid];
 	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	IRCClient* u = c.client;
 	if (!u || !c) return;
 	
 	[u send:TOPIC, c.name, topic, nil];
@@ -818,8 +818,8 @@
 
 - (void)modeSheetOnOK:(ModeSheet*)sender
 {
-	IRCClient* u = [world findClientById:sender.uid];
 	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	IRCClient* u = c.client;
 	if (!u || !c) return;
 	
 	NSString* changeStr = [c.mode getChangeCommand:sender.mode];
@@ -838,14 +838,15 @@
 
 - (void)onAddChannel:(id)sender
 {
-	IRCClient* u = world.selectedClient;
-	IRCChannel* c = world.selectedChannel;
-	if (!u) return;
 	if (channelSheet){
 		[channelSheet show];
 		return;
 	}
 	
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+
+	IRCChannel* c = world.selectedChannel;
 	IRCChannelConfig* config;
 	if (c && c.isChannel) {
 		config = [[c.config mutableCopy] autorelease];
@@ -885,14 +886,14 @@
 
 - (void)onChannelProperties:(id)sender
 {
-	IRCClient* u = world.selectedClient;
-	IRCChannel* c = world.selectedChannel;
-	if (!u || !c) return;
-	
 	if (channelSheet){
 		[channelSheet show];
 		return;
 	}
+	
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c) return;
 	
 	ChannelSheet* d = [[ChannelSheet new] autorelease];
 	d.delegate = self;
@@ -1034,7 +1035,7 @@
 
 - (void)inviteSheetWillClose:(InviteSheet*)sender
 {
-	inviteSheet = nil;
+	self.inviteSheet = nil;
 }
 
 - (void)onMemberWantDCCChat:(id)sender
