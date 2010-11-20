@@ -20,7 +20,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ChannelSheet" owner:self];
 	}
 	return self;

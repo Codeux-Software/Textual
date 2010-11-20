@@ -10,7 +10,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AboutPanel" owner:self];
 	}
 	return self;

@@ -30,7 +30,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 	}
 	return self;

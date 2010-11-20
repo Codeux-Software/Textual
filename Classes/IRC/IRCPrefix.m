@@ -13,7 +13,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		raw = @"";
 		nick = @"";
 		user = @"";

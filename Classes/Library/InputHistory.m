@@ -8,7 +8,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		buf = [NSMutableArray new];
 	}
 	return self;

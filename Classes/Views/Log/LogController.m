@@ -46,7 +46,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		bottom = YES;
 		maxLines = 300;
 		lines = [NSMutableArray new];

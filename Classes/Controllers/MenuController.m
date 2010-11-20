@@ -56,7 +56,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		ServerSheets = [NSMutableArray new];
 		ChannelSheets = [NSMutableArray new];
 		
@@ -190,13 +190,18 @@
 		case 541:	// server property
 			return u != nil;
 			break;
-		case 542:	// channel logs
-			return ([Preferences logTranscript] && c.isChannel);
-			break;
 		case 592:	// textual logs
 			return [Preferences logTranscript];
 			break;
 		case 601:	// join
+			// validate channel logs menu item when we also
+			// do the join validation in order to compensate 
+			// for bug with submenu validation. Dirty fix. 
+			
+			[[[[[item menu] itemWithTag:5422] submenu] itemWithTag:542] setEnabled:([Preferences logTranscript] && c.isChannel)];
+			
+			// Validate actual join menu item
+			
 			if (c.isTalk) {
 				[item setHidden:YES];
 				

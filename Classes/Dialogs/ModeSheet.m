@@ -17,7 +17,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ModeSheet" owner:self];
 	}
 	return self;

@@ -14,7 +14,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		allModes = [NSMutableArray new];
 		modeIndexes = [NSMutableDictionary new];
 	}

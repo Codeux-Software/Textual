@@ -19,7 +19,7 @@
 
 - (id)init
 {
-    if (self = [super init]) {
+    if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ChanBanExceptionSheet" owner:self];
 		
 		list = [NSMutableArray new];

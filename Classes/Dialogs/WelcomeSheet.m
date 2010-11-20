@@ -16,7 +16,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"WelcomeSheet" owner:self];
 		
 		channels = [NSMutableArray new];

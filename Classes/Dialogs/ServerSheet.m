@@ -34,7 +34,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
 		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"Documents/IRCNetworks.plist"];

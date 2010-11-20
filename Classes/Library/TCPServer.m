@@ -16,7 +16,7 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		clients = [NSMutableArray new];
 	}
 	return self;
