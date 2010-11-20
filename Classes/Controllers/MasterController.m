@@ -114,8 +114,7 @@
 	viewTheme.name = [Preferences themeName];
 	tree.theme = viewTheme.other;
 	memberList.theme = viewTheme.other;
-	MemberListViewCell* cell = [[MemberListViewCell new] autorelease];
-	[cell setup:viewTheme.other];
+	MemberListViewCell* cell = [MemberListViewCell initWithTheme:viewTheme.other];
 	[[[memberList tableColumns] safeObjectAtIndex:0] setDataCell:cell];
 	
 	[self loadWindowState];
