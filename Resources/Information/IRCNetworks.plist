@@ -20,6 +20,8 @@
 	<string>irc.quakenet.org</string>
 	<key>Rizon</key>
 	<string>irc.rizon.net</string>
+	<key>Technoid-IRC</key>
+	<string>irc.technoid-irc.net</string>
 	<key>Undernet</key>
 	<string>irc.undernet.org</string>
 	<key>WyldRyde</key>
