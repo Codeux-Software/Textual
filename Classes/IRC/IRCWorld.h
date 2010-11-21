@@ -17,7 +17,7 @@
 #import "ViewTheme.h"
 #import "IRCTreeItem.h"
 #import "GrowlController.h"
-#import "IconManager.h"
+#import "DockIcon.h"
 #import "IRCExtras.h"
 #import "GlobalModels.h"
 
@@ -33,7 +33,6 @@
 	MemberListView* memberList;
 	MenuController* menuController;
 	ViewTheme* viewTheme;
-	IconManager *iconManager;
 	IRCExtras* extrac;
 	NSMenu* serverMenu;
 	NSMenu* channelMenu;
@@ -97,7 +96,6 @@
 @property (nonatomic, retain) IRCTreeItem* selected;
 @property (nonatomic, readonly) IRCClient* selectedClient;
 @property (nonatomic, readonly) IRCChannel* selectedChannel;
-@property (nonatomic, retain) IconManager *iconManager;
 @property (nonatomic, retain) NSMenu* serverMenu;
 @property (nonatomic, retain) NSMenu* channelMenu;
 @property (nonatomic, retain) LogController* dummyLog;
@@ -140,7 +138,6 @@
 - (void)markAllScrollbacks;
 
 - (void)updateIcon;
-- (void)updateAppIcon:(NSInteger)hlcount msgcount:(NSInteger)pmcount;
 
 - (void)reloadTree;
 - (void)adjustSelection;
