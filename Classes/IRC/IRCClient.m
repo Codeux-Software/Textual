@@ -183,7 +183,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	[config autorelease];
 	config = [seed mutableCopy];
-	[config loadPasswordsFromKeychain];
 	
 	addressDetectionMethod = [Preferences dccAddressDetectionMethod];
 	if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {

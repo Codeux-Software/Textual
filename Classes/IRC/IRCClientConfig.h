@@ -86,7 +86,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, retain) NSString* network;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
-- (void) loadPasswordsFromKeychain;
 - (NSMutableDictionary*)dictionaryValue;
 
 - (void)destroyKeychains;
