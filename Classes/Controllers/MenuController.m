@@ -775,7 +775,7 @@
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
 	if (NO_CLIENT_OR_CHANNEL) return;
-	
+		
 	TopicSheet* t = [TopicSheet new];
 	t.delegate = self;
 	t.window = window;
