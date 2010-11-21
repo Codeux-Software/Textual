@@ -68,7 +68,7 @@
 
 - (void)addChannel:(NSString*)channel count:(NSInteger)count topic:(NSString*)topic
 {
-	NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], [topic attributedStringWithIRCFormatting], nil];
+	NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
 	
 	NSString* filter = [filterText stringValue];
 	if (filter.length) {
@@ -226,7 +226,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 	} else if ([col isEqualToString:@"count"]) {
 		return [item safeObjectAtIndex:1];
 	} else {
-		return [item safeObjectAtIndex:2];
+		return [item safeObjectAtIndex:3];
 	}
 }
 
