@@ -26,6 +26,8 @@
 - (void)reload;
 + (void)createUserDirectory:(BOOL)force_reset;
 
+- (void)validateFilePathExistanceAndReload:(BOOL)reload;
+
 + (NSString*)buildResourceFileName:(NSString*)name;
 + (NSString*)buildUserFileName:(NSString*)name;
 + (NSArray*)extractFileName:(NSString*)source;
