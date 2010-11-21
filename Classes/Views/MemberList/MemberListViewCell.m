@@ -1,9 +1,8 @@
 #import "MemberListViewCell.h"
 
-#define LEFT_MARGIN			2
+#define MARK_LEFT_MARGIN			2
 #define MARK_RIGHT_MARGIN	2
 
-static OtherTheme* theme;
 static NSInteger markWidth;
 static NSMutableParagraphStyle* markStyle;
 static NSMutableParagraphStyle* nickStyle;
@@ -11,11 +10,19 @@ static NSMutableParagraphStyle* nickStyle;
 @implementation MemberListViewCell
 
 @synthesize member;
+@synthesize theme;
 
 - (id)init
 {
 	if ((self = [super init])) {
 	}
+	
+	markStyle = [NSMutableParagraphStyle new];
+	[markStyle setAlignment:NSCenterTextAlignment];
+
+	nickStyle = [NSMutableParagraphStyle new];
+	[nickStyle setAlignment:NSLeftTextAlignment];
+	[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	return self;
 }
 
@@ -49,21 +56,11 @@ static NSMutableParagraphStyle* nickStyle;
 	}
 }
 
-- (void)setup:(id)aTheme
++ (MemberListViewCell*)initWithTheme:(id)aTheme
 {
-	[theme autorelease];
-	theme = [aTheme retain];
-
-	if (!markStyle) {
-		markStyle = [NSMutableParagraphStyle new];
-		[markStyle setAlignment:NSCenterTextAlignment];
-	}
-	
-	if (!nickStyle) {
-		nickStyle = [NSMutableParagraphStyle new];
-		[nickStyle setAlignment:NSLeftTextAlignment];
-		[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
-	}
+	MemberListViewCell* cell=[[MemberListViewCell alloc]init];
+	cell.theme=aTheme;
+	return [cell autorelease];
 }
 
 - (void)themeChanged
@@ -94,7 +91,7 @@ static NSMutableParagraphStyle* nickStyle;
 	[style setObject:color forKey:NSForegroundColorAttributeName];
 	
 	NSRect rect = frame;
-	rect.origin.x += LEFT_MARGIN;
+	rect.origin.x += MARK_LEFT_MARGIN;
 	rect.size.width = markWidth;
 	
 	char mark = [member mark];
@@ -105,7 +102,7 @@ static NSMutableParagraphStyle* nickStyle;
 	
 	[style setObject:nickStyle forKey:NSParagraphStyleAttributeName];
 	
-	NSInteger offset = LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN;
+	NSInteger offset = MARK_LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN;
 	
 	rect = frame;
 	rect.origin.x += offset;

@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		29847DE41297B41900D495D5 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 29847DE21297B41900D495D5 /* DockIcon.h */; };
+		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
@@ -88,7 +90,6 @@
 		4C9E12601209DF8C004E5032 /* NSPasteboardHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0FE11737F660044E7A1 /* NSPasteboardHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12611209DF8C004E5032 /* PreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0DD11737F660044E7A1 /* PreferencesController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12621209DF8C004E5032 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0EE11737F660044E7A1 /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C9E12631209DF8C004E5032 /* IconManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7832F211AE4AF100D8928D /* IconManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12641209DF8C004E5032 /* LogPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18711737F660044E7A1 /* LogPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12651209DF8C004E5032 /* AddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 789ED3F11193EF4400CFC0B2 /* AddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9E12661209DF8C004E5032 /* ChatBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C17111737F660044E7A1 /* ChatBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -255,7 +256,6 @@
 		4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* AddressBook.m */; };
 		4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */; };
 		4CA945D411E1AFBA00D36367 /* TextualApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC80119C92790046BC5C /* TextualApplication.m */; };
-		4CA945D511E1AFBA00D36367 /* IconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7832F311AE4AF100D8928D /* IconManager.m */; };
 		4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7E561311B0386200B5DE98 /* AboutPanel.m */; };
 		4CA945D711E1AFBA00D36367 /* IRCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E801E11B3753800BACBA7 /* IRCExtras.m */; };
 		4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD0F8711BAE7E900758B81 /* GlobalModels.m */; };
@@ -338,6 +338,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29847DE21297B41900D495D5 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockIcon.h; sourceTree = "<group>"; };
+		29847DE31297B41900D495D5 /* DockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockIcon.m; sourceTree = "<group>"; };
 		2993785B1291F7FC00591A22 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/core.js; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -376,8 +378,6 @@
 		4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Framework/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
-		4C7832F211AE4AF100D8928D /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
-		4C7832F311AE4AF100D8928D /* IconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconManager.m; sourceTree = "<group>"; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561211B0386200B5DE98 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPanel.h; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
@@ -1018,10 +1018,10 @@
 			children = (
 				78A8C18211737F660044E7A1 /* Log */,
 				78A8C19311737F660044E7A1 /* MemberList */,
-				4C7832F211AE4AF100D8928D /* IconManager.h */,
-				4C7832F311AE4AF100D8928D /* IconManager.m */,
 				78A8C17111737F660044E7A1 /* ChatBox.h */,
 				78A8C17211737F660044E7A1 /* ChatBox.m */,
+				29847DE21297B41900D495D5 /* DockIcon.h */,
+				29847DE31297B41900D495D5 /* DockIcon.m */,
 				78A8C17311737F660044E7A1 /* DialogWindow.h */,
 				78A8C17411737F660044E7A1 /* DialogWindow.m */,
 				78A8C17511737F660044E7A1 /* FieldEditorTextView.h */,
@@ -1132,7 +1132,6 @@
 				4C9E12601209DF8C004E5032 /* NSPasteboardHelper.h in Headers */,
 				4C9E12611209DF8C004E5032 /* PreferencesController.h in Headers */,
 				4C9E12621209DF8C004E5032 /* GTMDefines.h in Headers */,
-				4C9E12631209DF8C004E5032 /* IconManager.h in Headers */,
 				4C9E12641209DF8C004E5032 /* LogPolicy.h in Headers */,
 				4C9E12651209DF8C004E5032 /* AddressBook.h in Headers */,
 				4C9E12661209DF8C004E5032 /* ChatBox.h in Headers */,
@@ -1195,6 +1194,7 @@
 				4C9E12A41209DF8C004E5032 /* LogLine.h in Headers */,
 				4C982D16121F32430051543F /* URLParser.h in Headers */,
 				4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */,
+				29847DE41297B41900D495D5 /* DockIcon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,7 +1419,6 @@
 				4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */,
 				4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */,
 				4CA945D411E1AFBA00D36367 /* TextualApplication.m in Sources */,
-				4CA945D511E1AFBA00D36367 /* IconManager.m in Sources */,
 				4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */,
 				4CA945D711E1AFBA00D36367 /* IRCExtras.m in Sources */,
 				4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */,
@@ -1436,6 +1435,7 @@
 				4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */,
 				4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */,
 				4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */,
+				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,10 +3,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface IconManager : NSObject
+@interface DockIcon : NSObject
 
-- (void)drawBlankApplicationIcon;
-- (NSString*)badgeFilename:(NSInteger)count;
-- (void)drawApplicationIcon:(NSInteger)hlcount msgcount:(NSInteger)pmcount;
++ (void)drawWithoutCounts;
++ (NSString*)badgeFilename:(NSInteger)count;
++ (void)drawWithHilightCount:(NSInteger)hilight_count messageCount:(NSInteger)message_count;
 
 @end

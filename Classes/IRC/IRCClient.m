@@ -1964,8 +1964,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (![s contains:@" "]) return NO;
 			
 			NSArray *data = [s componentsSeparatedByString:@" "];
-			
-			[world updateAppIcon:[[data safeObjectAtIndex:0] integerValue] msgcount:[[data safeObjectAtIndex:1] integerValue]];
+	
+			[DockIcon drawWithHilightCount:[[data safeObjectAtIndex:0] integerValue] messageCount:[[data safeObjectAtIndex:1] integerValue]];
 			
 			return YES;
 			break;
