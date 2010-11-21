@@ -150,6 +150,23 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 					   serviceName:[self keychainServiceID:2]];
 }
 
+- (void) loadPasswordsFromKeychain
+{
+	NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
+														 withItemKind:@"application password" 
+														  forUsername:nil 
+														  serviceName:[self keychainServiceID:2]];
+	
+	if (knickPassword) nickPassword = [knickPassword retain];
+	
+	NSString *kpassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
+													 withItemKind:@"application password" 
+													  forUsername:nil 
+													  serviceName:[self keychainServiceID:1]];
+	
+	if (kpassword) password = [kpassword retain];	
+}
+
 - (id)initWithDictionary:(NSDictionary*)dic
 {
 	[self init];	
@@ -163,21 +180,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[name release];
 		name = [[dic stringForKey:@"name"] retain];
 	}
-	
-	NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
-											  withItemKind:@"application password" 
-											   forUsername:nil 
-											   serviceName:[self keychainServiceID:2]];
-	
-	if (knickPassword) nickPassword = [knickPassword retain];
-	
-	NSString *kpassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
-											withItemKind:@"application password" 
-											forUsername:nil 
-											serviceName:[self keychainServiceID:1]];
-	
-	if (kpassword) password = [kpassword retain];
-		
+			
 	host = [[dic stringForKey:@"host"] retain] ?: @"";
 	port = [dic intForKey:@"port"] ?: 6667;
 	
