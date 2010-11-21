@@ -10,7 +10,14 @@ Textual = {
 	
 	include_js: function(jsFile)
 	{
-	  document.write('<script type="text/javascript" src="' + jsFile + '"></scr' + 'ipt>'); 
+	  if (/loaded|complete/.test(document.readyState)) {
+		var js = document.createElement("script");
+		js.src=jsFile;
+		js.type="text/javascript";
+		document.getElementsByTagName("HEAD")[0].appendChild(js);
+	  }
+      else
+	    document.write('<script type="text/javascript" src="' + jsFile + '"></scr' + 'ipt>'); 
 	},
 	include_css: function(cssFile)
 	{
