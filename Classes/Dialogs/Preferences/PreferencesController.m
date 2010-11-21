@@ -268,11 +268,34 @@
 
 - (NSArray*)availableSounds
 {
-	static NSArray* ary;
-	if (!ary) {
-		ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
+	NSError *err=nil;
+	NSArray *directoryContents = [[NSFileManager defaultManager]
+								  contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:&err];
+
+	NSMutableArray* sound_list = [[NSMutableArray alloc]initWithCapacity:15];
+	[sound_list addObject:@"-"];
+
+	if (!err) {
+		for (NSString* s in directoryContents) {	
+			NSArray* parts=[s split:@"."];
+			[sound_list addObject:[parts objectAtIndex:0]];
+		}
 	}
-	return ary;
+	
+	err=nil;
+	NSString *home_sounds=[NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Sounds"];
+	NSArray *homeDirectoryContents = [[NSFileManager defaultManager]
+									  contentsOfDirectoryAtPath:home_sounds error:&err];
+	
+	if (!err) {
+		[sound_list addObject:@"-"];
+		for (NSString* s in homeDirectoryContents) {	
+			NSArray* parts=[s split:@"."];
+			[sound_list addObject:[parts objectAtIndex:0]];
+		}		
+	}
+		
+	return [sound_list autorelease];
 }
 
 - (NSMutableArray*)sounds
