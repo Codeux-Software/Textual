@@ -185,6 +185,8 @@
 	[self registerKeyHandlers];
 	
 	[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
+	
+	[viewTheme validateFilePathExistanceAndReload:YES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note

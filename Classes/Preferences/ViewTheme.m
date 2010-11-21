@@ -58,7 +58,7 @@
 	[self load];
 }
 
-- (void)load
+- (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
 	if (name) {
 		NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
@@ -78,6 +78,8 @@
 				if ([kind isEqualToString:@"resource"]) {
 					[path release];
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
+					
+					if (reload) [self reload];
 				}
 			}
 			
@@ -96,6 +98,12 @@
 	css.fileName = nil;
 	js.fileName = nil;
 	other.fileName = nil;
+		
+}
+
+- (void)load
+{
+	[self validateFilePathExistanceAndReload:NO];
 }
 
 - (void)reload
