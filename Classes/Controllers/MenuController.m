@@ -71,8 +71,6 @@
 	[pointedChannelName release];
 	
 	[preferencesController release];
-	
-	
 	[currentSearchPhrase release];
 	
 	[channelSheet release];
@@ -88,36 +86,30 @@
 
 - (void)terminate
 {
-	if (serverSheet)
-		[serverSheet close];
-	if (channelSheet)
-		[channelSheet close];
-	if (preferencesController) {
-		[preferencesController close];
-	}
+	if (serverSheet) [serverSheet close];
+	if (channelSheet) [channelSheet close];
+	if (preferencesController) [preferencesController close];
 }
 
-- (BOOL)isNickMenu:(NSMenuItem*)item
+- (void)validateChannelMenuSubmenus:(NSMenuItem*)item
 {
-	if (!item) return NO;
-	NSInteger tag = item.tag;
-	return 2500 <= tag && tag < 3000;
-}
-
-- (void)processChannelBarDivider:(NSMenuItem*)item chan:(BOOL)ischan
-{
-	NSMenu *menu = [item menu];
-	NSInteger nextid = ([[item menu] indexOfItem:item] + 1);
+	IRCChannel* c = world.selectedChannel;
 	
-	if (ischan) {
-		if (![[menu itemAtIndex:nextid] isSeparatorItem]) {
-			[menu insertItem:[NSMenuItem separatorItem] atIndex:nextid];
-		}
+	if (c.isClient == NO && c.isTalk == NO && c.isChannel == YES) {
+		[[[item menu] itemWithTag:936] setHidden:NO];
+		[[[item menu] itemWithTag:937] setHidden:NO];
+		
+		[[[item menu] itemWithTag:5422] setHidden:NO];
+		[[[item menu] itemWithTag:5422] setEnabled:YES];
+		
+		[[[[[item menu] itemWithTag:5422] submenu] itemWithTag:542] setEnabled:(c.isChannel && [Preferences logTranscript])];
 	} else {
-		if ([[menu itemAtIndex:nextid] isSeparatorItem]) {
-			[menu removeItemAtIndex:nextid];
-		}
-	}
+		[[[item menu] itemWithTag:936] setHidden:!c.isTalk];
+		[[[item menu] itemWithTag:937] setHidden:!c.isTalk];
+		
+		[[[item menu] itemWithTag:5422] setEnabled:NO]; 
+		[[[item menu] itemWithTag:5422] setHidden:YES]; 
+	}	
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
@@ -130,26 +122,31 @@
 	switch (tag) {
 		case 313:	// paste
 		{
-			if (![[NSPasteboard generalPasteboard] hasStringContent]) {
+			if ([[NSPasteboard generalPasteboard] hasStringContent] == NO) {
 				return NO;
 			}
+			
 			NSWindow* win = [NSApp keyWindow];
 			if (!win) return NO;
 			id t = [win firstResponder];
 			if (!t) return NO;
+			
 			if (win == window) {
 				return YES;
-			}
-			else if ([t respondsToSelector:@selector(paste:)]) {
+			} else if ([t respondsToSelector:@selector(paste:)]) {
 				if ([t respondsToSelector:@selector(validateMenuItem:)]) {
 					return [t validateMenuItem:item];
 				}
+				
 				return YES;
 			}
+			
 			break;
 		}
 		case 331:	// search in google
 		{
+			[self validateChannelMenuSubmenus:item];
+			
 			LogView* web = [self currentWebView];
 			if (!web) return NO;
 			return [web hasSelection];
@@ -169,10 +166,10 @@
 			return NOT_CONNECTED;
 			break;
 		case 502:	// disconnect
-			return u && (u.isConnected || u.isConnecting);
+			return (u && (u.isConnected || u.isConnecting));
 			break;
 		case 503:	// cancel isReconnecting
-			return u && u.isReconnecting;
+			return (u && u.isReconnecting);
 			break;
 		case 511:	// nick
 		case 519:	// channel list
@@ -191,13 +188,7 @@
 			return [Preferences logTranscript];
 			break;
 		case 601:	// join
-			// validate channel logs menu item when we also
-			// do the join validation in order to compensate 
-			// for bug with submenu validation. Dirty fix. 
-			
-			[[[[[item menu] itemWithTag:5422] submenu] itemWithTag:542] setEnabled:([Preferences logTranscript] && c.isChannel)];
-			
-			// Validate actual join menu item
+			[self validateChannelMenuSubmenus:item];
 			
 			if (c.isTalk) {
 				[item setHidden:YES];
@@ -212,12 +203,10 @@
 		case 602:	// leave
 			if (c.isTalk) {
 				[item setHidden:YES];
-				[[[item menu] itemWithTag:935] setHidden:YES];
 				
 				return NO;
 			} else {
 				[item setHidden:NO];
-				[[[item menu] itemWithTag:935] setHidden:NO];
 				
 				return ACTIVE;
 			}
@@ -227,9 +216,6 @@
 			break;
 		case 612:	// topic
 			return ACTIVE_CHANNEL;
-			break;
-		case 691:	// add channel - server menu
-			return u != nil;
 			break;
 		case 651:	// add channel
 			if (c.isTalk) {
@@ -253,27 +239,35 @@
 				return c.isChannel;
 			}
 			break;
+		case 691:	// add channel - server menu
+			return u != nil;
+			break;
 		case 2005:	// invite
 		{
 			if (!LOGIN || ![self checkSelectedMembers:item]) return NO;
+			
 			NSInteger count = 0;
 			for (IRCChannel* e in u.channels) {
 				if (e != c && e.isChannel) {
 					++count;
 				}
 			}
-			return count > 0;
+			
+			return (count > 0);
 			break;
 		}
 		case 5421: // query logs
 			if (c.isTalk) {
 				[item setHidden:NO];
-				[[[item menu] itemWithTag:5422] setHidden:YES];
+				
+				[[[item menu] itemWithTag:935] setHidden:YES]; // Divider
+				
 				return ([Preferences logTranscript] && c.isTalk);
 			} else {
-				[[[item menu] itemWithTag:5422] setHidden:NO];
-				[[[item menu] itemWithTag:5422] setEnabled:c.isChannel];
 				[item setHidden:YES];
+				
+				[[[item menu] itemWithTag:935] setHidden:NO]; // Divider
+				
 				return NO;
 			}
 			break;
@@ -380,27 +374,18 @@
 
 - (BOOL)checkSelectedMembers:(NSMenuItem*)item
 {
-	if ([self isNickMenu:item]) {
-		return pointedNick != nil;
-	} else {
-		return [memberList countSelectedRows] > 0;
-	}
+	return ([memberList countSelectedRows] > 0);
 }
 
 - (NSArray*)selectedMembers:(NSMenuItem*)sender
 {
 	IRCChannel* c = world.selectedChannel;
 	if (!c) {
-		if ([self isNickMenu:sender]) {
-			IRCUser* m = [[IRCUser new] autorelease];
-			m.nick = pointedNick;
-			return [NSArray arrayWithObject:m];
-		} else {
-			return [NSArray array];
-		}
+		return [NSArray array];
 	} else {
 		NSMutableArray* ary = [NSMutableArray array];
 		NSIndexSet* indexes = [memberList selectedRowIndexes];
+		
 		for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 			IRCUser* m = [c memberAtIndex:i];
 			[ary addObject:m];
@@ -408,6 +393,7 @@
 		
 		if ([ary isEqualToArray:[NSMutableArray array]]) {
 			IRCUser* m = [c findMember:pointedNick];
+			
 			if (m) {
 				return [NSArray arrayWithObject:m];
 			} else {
@@ -421,9 +407,7 @@
 
 - (void)deselectMembers:(NSMenuItem*)sender
 {
-	if (![self isNickMenu:sender]) {
-		[memberList deselectAll:nil];
-	}
+	[memberList deselectAll:nil];
 }
 
 #pragma mark -
