@@ -316,9 +316,9 @@
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	
-	// we need to give the theme a chance to do any cleanup before we try and get the
-	// body_html tag in the next statement
-	[[view js_api]callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
+	// we need to give the theme a chance to do any cleanup 
+	// before we try and get the body_html tag in the next statement
+	[[view js_api] callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
 		
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	if (!body) return;
@@ -461,9 +461,7 @@
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
 		[s appendFormat:@"<span class=\"sender\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
-		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
 		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
-		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
 		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
 	}
 	
@@ -619,8 +617,6 @@
 	[s appendString:
 	 @"<head>"
 	 @"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-	 @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
-	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
 	 ];
 	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme css] fileName], [[theme css] content]];
 	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
@@ -724,16 +720,20 @@
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* e = (DOMHTMLElement*)[body firstChild];
+	
 	while (e) {
 		DOMHTMLElement* next = (DOMHTMLElement*)[e nextSibling];
+		
 		if (![e isKindOfClass:[DOMHTMLDivElement class]] && ![e isKindOfClass:[DOMHTMLHRElement class]]) {
 			[body removeChild:e];
 		}
+		
 		e = next;
 	}
+	
 	// we need to give the theme a chance to do any special change theme housekeeping
-	[[view js_api]callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
-}
+	[[view js_api] callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
+} 
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
 {
