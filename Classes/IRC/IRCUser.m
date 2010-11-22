@@ -23,6 +23,7 @@
 @synthesize isMyself;
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
+@synthesize nick;
 
 - (id)init
 {
@@ -39,19 +40,6 @@
 	[username release];
 	[address release];
 	[super dealloc];
-}
-
-- (NSString*)nick
-{
-	return nick;
-}
-
-- (void)setNick:(NSString *)value
-{
-	if (nick != value) {
-		[nick release];
-		nick = [value retain];
-	}
 }
 
 - (NSString *)banMask
@@ -107,7 +95,7 @@
 	return NO;
 }
 
-- (CGFloat)weight
+- (CGFloat)totalWeight
 {
 	[self decayConversation];
 	return incomingWeight + outgoingWeight;
@@ -181,8 +169,8 @@
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser*)other
 {
-	CGFloat mine = self.weight;
-	CGFloat others = other.weight;
+	CGFloat mine = self.totalWeight;
+	CGFloat others = other.totalWeight;
 
 	if (mine > others) return NSOrderedAscending;
 	if (mine < others) return NSOrderedDescending;
