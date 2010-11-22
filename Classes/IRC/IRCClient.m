@@ -1840,8 +1840,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
 				
 				for (IRCUser* m in c.members) {
-					if (m.weight > 0) {
-						NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_WEIGHTS_COMMAND_RESULT"), m.nick, m.incomingWeight, m.outgoingWeight, m.weight];
+					if (m.totalWeight > 0) {
+						NSString* text = [NSString stringWithFormat:TXTLS(@"IRC_WEIGHTS_COMMAND_RESULT"), m.nick, m.incomingWeight, m.outgoingWeight, m.totalWeight];
 						[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
 					}
 				}
