@@ -268,34 +268,30 @@
 
 - (NSArray*)availableSounds
 {
-	NSError *err=nil;
-	NSArray *directoryContents = [[NSFileManager defaultManager]
-								  contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:&err];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSMutableArray* sound_list = [NSMutableArray array];
+	NSArray *directoryContents = [fm contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
 
-	NSMutableArray* sound_list = [[NSMutableArray alloc]initWithCapacity:15];
 	[sound_list addObject:@"-"];
-
-	if (!err) {
+	
+	if (directoryContents && [directoryContents count] > 0) {
 		for (NSString* s in directoryContents) {	
-			NSArray* parts=[s split:@"."];
-			[sound_list addObject:[parts objectAtIndex:0]];
+			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 		}
 	}
 	
-	err=nil;
-	NSString *home_sounds=[NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Sounds"];
-	NSArray *homeDirectoryContents = [[NSFileManager defaultManager]
-									  contentsOfDirectoryAtPath:home_sounds error:&err];
+	NSString *home_sounds = [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Sounds"];
+	NSArray *homeDirectoryContents = [fm contentsOfDirectoryAtPath:home_sounds error:NULL];
 	
-	if (!err) {
+	if (homeDirectoryContents && [homeDirectoryContents count] > 0) {
 		[sound_list addObject:@"-"];
+		
 		for (NSString* s in homeDirectoryContents) {	
-			NSArray* parts=[s split:@"."];
-			[sound_list addObject:[parts objectAtIndex:0]];
+			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 		}		
 	}
 		
-	return [sound_list autorelease];
+	return sound_list;
 }
 
 - (NSMutableArray*)sounds
