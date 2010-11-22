@@ -284,7 +284,7 @@
 	if (!doc) return;
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
 	if (e) {
-		[(DOMHTMLElement *)[self body:doc] removeChild:e];
+		[(DOMHTMLElement *)[e parentNode] removeChild:e];
 		--count;
 	}
 }
