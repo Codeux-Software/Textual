@@ -315,6 +315,11 @@
 	
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
+	
+	// we need to give the theme a chance to do any cleanup before we try and get the
+	// body_html tag in the next statement
+	[[view js_api]callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
+		
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	if (!body) return;
 	
@@ -726,6 +731,8 @@
 		}
 		e = next;
 	}
+	// we need to give the theme a chance to do any special change theme housekeeping
+	[[view js_api]callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
 }
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
