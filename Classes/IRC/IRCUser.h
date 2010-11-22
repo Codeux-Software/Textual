@@ -23,7 +23,7 @@
 	CFAbsoluteTime lastFadedWeights;
 }
 
-@property (nonatomic, retain, setter=setNick:, getter=nick) NSString* nick;
+@property (nonatomic, retain) NSString* nick;
 @property (nonatomic, retain) NSString* username;
 @property (nonatomic, retain) NSString* address;
 @property (nonatomic, assign) BOOL q;
@@ -36,7 +36,7 @@
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) BOOL isHalfOp; 
 @property (nonatomic, readonly) NSInteger colorNumber;
-@property (nonatomic, readonly) CGFloat weight;
+@property (nonatomic, readonly) CGFloat totalWeight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
 @property (nonatomic) CFAbsoluteTime lastFadedWeights;
