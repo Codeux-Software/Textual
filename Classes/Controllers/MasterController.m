@@ -70,6 +70,7 @@
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	[nc addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
 	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
@@ -653,6 +654,11 @@
 {
 	[world reloadTheme];
 	[self setColumnLayout];
+	[window setAlphaValue:[Preferences themeTransparency]];
+}
+
+- (void)transparencyDidChange:(NSNotification*)note
+{
 	[window setAlphaValue:[Preferences themeTransparency]];
 }
 

@@ -140,7 +140,7 @@
 
 - (void)firstPane:(NSView *)view 
 {
-	[self.window setTitle:[NSString stringWithFormat:TXTLS(@"TEXTUAL_PREFERENCES_WINDOW_TITLE"),  [preferenceSelectButton titleOfSelectedItem]]];
+	[self.window setTitle:[preferenceSelectButton titleOfSelectedItem]];
 																				   
 	NSRect windowFrame = [self.window frame];
 	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
@@ -498,7 +498,8 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	[self onLayoutChanged:nil];
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:TransparencyDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onTimestampFormatChanged:(id)sender
@@ -550,10 +551,16 @@
 	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
-- (void)onOpenPathToThemes:(id)sender;
+- (void)onOpenPathToThemes:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openFile:[Preferences whereThemesPath]];
 }
+
+- (void)onOpenPathToScripts:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openFile:[Preferences whereScriptsPath]];
+}
+
 
 #pragma mark -
 #pragma mark NSWindow Delegate

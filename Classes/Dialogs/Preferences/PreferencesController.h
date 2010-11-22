@@ -5,6 +5,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ScriptsWrapper.h"
 
+#define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
 #define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
 #define SparkleFeedURLChangeNotification		@"SparkleFeedURLChangeNotification"
 #define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
@@ -94,6 +95,7 @@
 - (void)onPrefPaneSelected:(id)sender;
 - (void)onWindowsWantsClosure:(id)sender;
 - (void)onOpenPathToThemes:(id)sender;
+- (void)onOpenPathToScripts:(id)sender;
 - (void)onLayoutChanged:(id)sender;
 - (void)onTextDirectionChanged:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
