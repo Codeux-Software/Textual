@@ -83,6 +83,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
+- (NSString *)nickPassword
+{
+	if([nickPassword isEqual:@""]) {
+		NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
+															 withItemKind:@"application password" 
+															  forUsername:nil 
+															  serviceName:[self keychainServiceID:2]];
+		if (knickPassword) nickPassword = [knickPassword retain];			
+	}
+	return nickPassword;
+}
+
 - (void)setNickPassword:(NSString *)pass
 {
 	if (pass == nil) {
@@ -99,6 +111,21 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 						   withComment:host
 						   serviceName:[self keychainServiceID:2]];
 	}
+	[nickPassword autorelease];
+	nickPassword=[pass retain];
+
+}
+
+- (NSString*)password
+{
+	if([password isEqual:@""]) {
+		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
+															 withItemKind:@"application password" 
+															  forUsername:nil 
+															  serviceName:[self keychainServiceID:1]];
+	if (kPassword) password = [kPassword retain];
+	}
+return password;
 }
 
 - (void)setPassword:(NSString *)pass
@@ -116,6 +143,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 						   withComment:host
 						   serviceName:[self keychainServiceID:1]];			
 	}
+	[password autorelease];
+	password=[pass retain];
 
 }
 
@@ -163,21 +192,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[name release];
 		name = [[dic stringForKey:@"name"] retain];
 	}
-	
-	NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
-											  withItemKind:@"application password" 
-											   forUsername:nil 
-											   serviceName:[self keychainServiceID:2]];
-	
-	if (knickPassword) nickPassword = [knickPassword retain];
-	
-	NSString *kpassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
-											withItemKind:@"application password" 
-											forUsername:nil 
-											serviceName:[self keychainServiceID:1]];
-	
-	if (kpassword) password = [kpassword retain];
-		
+			
 	host = [[dic stringForKey:@"host"] retain] ?: @"";
 	port = [dic intForKey:@"port"] ?: 6667;
 	
