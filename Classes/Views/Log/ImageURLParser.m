@@ -13,7 +13,10 @@
 	if ([lowerUrl hasSuffix:@".jpg"]
 		|| [lowerUrl hasSuffix:@".jpeg"]
 		|| [lowerUrl hasSuffix:@".png"]
-		|| [lowerUrl hasSuffix:@".gif"]) {
+		|| [lowerUrl hasSuffix:@".gif"]
+		|| [lowerUrl hasSuffix:@".tif"]
+		|| [lowerUrl hasSuffix:@".tiff"]
+		|| [lowerUrl hasSuffix:@".bmp"]) {
 		return url;
 	}
 	
