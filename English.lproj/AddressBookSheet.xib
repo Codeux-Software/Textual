@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H563</string>
+		<string key="IBDocument.SystemVersion">10J521</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="425"/>
 			<integer value="424"/>
+			<integer value="425"/>
 			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -326,7 +326,7 @@
 					<object class="NSTextField" id="1056718837">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{43, 75}, {312, 42}}</string>
+						<string key="NSFrame">{{43, 74}, {312, 42}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="169079955">
@@ -410,7 +410,7 @@
 					<object class="NSButton" id="583266023">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 157}, {316, 18}}</string>
+						<string key="NSFrame">{{18, 158}, {316, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="421622405">
@@ -437,7 +437,7 @@
 					<object class="NSButton" id="410707626">
 						<reference key="NSNextResponder" ref="37769083"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 129}, {351, 18}}</string>
+						<string key="NSFrame">{{18, 127}, {351, 18}}</string>
 						<reference key="NSSuperview" ref="37769083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="494906863">
@@ -1056,10 +1056,10 @@
 							<reference ref="86381240"/>
 							<reference ref="1056718837"/>
 							<reference ref="414404645"/>
-							<reference ref="583266023"/>
-							<reference ref="410707626"/>
 							<reference ref="582643135"/>
 							<reference ref="848515587"/>
+							<reference ref="410707626"/>
+							<reference ref="583266023"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Notification View</string>
@@ -1449,12 +1449,12 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwxkAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwy0AAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwxAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwwsAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1462,9 +1462,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{461, 728}, {372, 194}}</string>
+					<string>{{768, 730}, {372, 194}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{384, 684}, {371, 296}}</string>
+					<string>{{591, 684}, {371, 296}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
@@ -2107,6 +2107,7 @@
 							<string>channelCount</string>
 							<string>delegate</string>
 							<string>filterText</string>
+							<string>networkName</string>
 							<string>table</string>
 							<string>updateButton</string>
 						</object>
@@ -2115,6 +2116,7 @@
 							<string>NSTextField</string>
 							<string>id</string>
 							<string>NSSearchField</string>
+							<string>NSTextField</string>
 							<string>ListView</string>
 							<string>NSButton</string>
 						</object>
@@ -2126,6 +2128,7 @@
 							<string>channelCount</string>
 							<string>delegate</string>
 							<string>filterText</string>
+							<string>networkName</string>
 							<string>table</string>
 							<string>updateButton</string>
 						</object>
@@ -2142,6 +2145,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">filterText</string>
 								<string key="candidateClassName">NSSearchField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">networkName</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">table</string>
@@ -2923,11 +2930,12 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
 							<string>onPrefPaneSelected:</string>
 							<string>onSelectFont:</string>
-							<string>onSparkleUpdateTypeChanged:</string>
+							<string>onStyleChanged:</string>
 							<string>onTextDirectionChanged:</string>
 							<string>onTimestampFormatChanged:</string>
 							<string>onTranscriptFolderChanged:</string>
@@ -2935,6 +2943,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2964,11 +2973,12 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
 							<string>onPrefPaneSelected:</string>
 							<string>onSelectFont:</string>
-							<string>onSparkleUpdateTypeChanged:</string>
+							<string>onStyleChanged:</string>
 							<string>onTextDirectionChanged:</string>
 							<string>onTimestampFormatChanged:</string>
 							<string>onTranscriptFolderChanged:</string>
@@ -3005,6 +3015,10 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">onOpenPathToScripts:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">onOpenPathToThemes:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -3021,7 +3035,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">onSparkleUpdateTypeChanged:</string>
+								<string key="name">onStyleChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -4262,20 +4276,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">Sparkle.framework/Headers/SUAppcast.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">Sparkle.framework/Headers/SUUpdater.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">WebKit.framework/Headers/WebDownload.h</string>
 					</object>
 				</object>
@@ -4525,7 +4525,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

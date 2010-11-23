@@ -17,6 +17,7 @@
 	IBOutlet NSSearchField* filterText;
 	IBOutlet NSButton* updateButton;
 	IBOutlet NSTextField* channelCount;
+	IBOutlet NSTextField* networkName;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -28,6 +29,7 @@
 @property (nonatomic, retain) NSSearchField* filterText;
 @property (nonatomic, retain) NSButton* updateButton;
 @property (nonatomic, retain) NSTextField* channelCount;
+@property (nonatomic, retain) NSTextField* networkName;
 
 - (void)start;
 - (void)show;

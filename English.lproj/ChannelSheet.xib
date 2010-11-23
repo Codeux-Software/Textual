@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10J521</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -324,7 +324,15 @@
 								</object>
 								<reference key="NSControlView" ref="242778001"/>
 								<reference key="NSBackgroundColor" ref="360518997"/>
-								<reference key="NSTextColor" ref="962927987"/>
+								<object class="NSColor" key="NSTextColor">
+									<int key="NSColorSpace">6</int>
+									<string key="NSCatalogName">System</string>
+									<string key="NSColorName">controlShadowColor</string>
+									<object class="NSColor" key="NSColor" id="910154649">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+									</object>
+								</object>
 							</object>
 						</object>
 						<object class="NSBox" id="337755552">
@@ -393,10 +401,7 @@
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
 									<string key="NSColorName">disabledControlTextColor</string>
-									<object class="NSColor" key="NSColor">
-										<int key="NSColorSpace">3</int>
-										<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
-									</object>
+									<reference key="NSColor" ref="910154649"/>
 								</object>
 							</object>
 						</object>
@@ -1013,9 +1018,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{512, 222}, {325, 426}}</string>
+					<string>{{591, 222}, {325, 426}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{512, 222}, {325, 426}}</string>
+					<string>{{591, 222}, {325, 426}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -1661,6 +1666,7 @@
 							<string>channelCount</string>
 							<string>delegate</string>
 							<string>filterText</string>
+							<string>networkName</string>
 							<string>table</string>
 							<string>updateButton</string>
 						</object>
@@ -1669,6 +1675,7 @@
 							<string>NSTextField</string>
 							<string>id</string>
 							<string>NSSearchField</string>
+							<string>NSTextField</string>
 							<string>ListView</string>
 							<string>NSButton</string>
 						</object>
@@ -1680,6 +1687,7 @@
 							<string>channelCount</string>
 							<string>delegate</string>
 							<string>filterText</string>
+							<string>networkName</string>
 							<string>table</string>
 							<string>updateButton</string>
 						</object>
@@ -1696,6 +1704,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">filterText</string>
 								<string key="candidateClassName">NSSearchField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">networkName</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">table</string>
@@ -2474,6 +2486,7 @@
 							<string>onOverrideFontChanged:</string>
 							<string>onPrefPaneSelected:</string>
 							<string>onSelectFont:</string>
+							<string>onStyleChanged:</string>
 							<string>onTextDirectionChanged:</string>
 							<string>onTimestampFormatChanged:</string>
 							<string>onTranscriptFolderChanged:</string>
@@ -2481,6 +2494,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2515,6 +2529,7 @@
 							<string>onOverrideFontChanged:</string>
 							<string>onPrefPaneSelected:</string>
 							<string>onSelectFont:</string>
+							<string>onStyleChanged:</string>
 							<string>onTextDirectionChanged:</string>
 							<string>onTimestampFormatChanged:</string>
 							<string>onTranscriptFolderChanged:</string>
@@ -2568,6 +2583,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onSelectFont:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onStyleChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
