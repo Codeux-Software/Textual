@@ -32,6 +32,7 @@
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
+		scriptsController = [[ScriptsWrapper alloc] init];
 	}
 	return self;
 }
@@ -65,7 +66,6 @@
 
 - (void)show
 {
-	scriptsController = [[ScriptsWrapper alloc] init];
 	installedScriptsTable.dataSource = scriptsController;
 	
 	scriptsController.world = world;
