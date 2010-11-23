@@ -4,6 +4,7 @@
 
 #import "ListDialog.h"
 #import "Preferences.h"
+#import "IRCClient.h"
 #import "NSDictionaryHelper.h"
 
 @interface ListDialog (Private)
@@ -16,6 +17,7 @@
 @synthesize delegate;
 @synthesize sortKey;
 @synthesize sortOrder;
+@synthesize networkName;
 
 - (id)init
 {
@@ -48,6 +50,8 @@
 	if (![self.window isVisible]) {
 		[self.window center];
 	}
+	
+	[networkName setStringValue:[NSString stringWithFormat:TXTLS(@"CHANNEL_LIST_NETWORK_NAME"), [(IRCClient*)delegate config].network]];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
