@@ -464,12 +464,18 @@
 - (void)onChangedTheme:(id)sender
 {
 	NSMenuItem* item = [themeButton selectedItem];
+	NSString* newThemeName;
 	NSString* name = [item title];
 	if (item.tag == 0) {
-		[Preferences setThemeName:[ViewTheme buildResourceFileName:name]];
+		newThemeName = [ViewTheme buildResourceFileName:name];
 	} else {
-		[Preferences setThemeName:[ViewTheme buildUserFileName:name]];
+		newThemeName = [ViewTheme buildUserFileName:name];
 	}
+	// if we have just selected the already chosen theme then do nothing
+	if ([[Preferences themeName] isEqual:newThemeName])
+		return;
+	
+	[Preferences setThemeName:newThemeName];
 	[self onLayoutChanged:nil];
 }
 
