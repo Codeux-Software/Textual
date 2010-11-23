@@ -534,12 +534,9 @@
 	NSString* s = [text stringValue];
 	NSString* os = s;
 	
-	[text setStringValue:@""];
+	s = [s stringWithASCIIFormatting];
 	
-	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithFormat:@"%c", (UniChar)0x03]]; // bold
-	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithFormat:@"%c", (UniChar)0x02]]; // color
-	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithFormat:@"%c", (UniChar)0x16]]; // italics
-	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithFormat:@"%c", (UniChar)0x1F]]; // underline
+	[text setStringValue:@""];
 	
 	if (s.length) {
 		if ([world inputText:s command:command]) {

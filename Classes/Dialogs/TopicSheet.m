@@ -26,14 +26,14 @@
 
 - (void)start:(NSString*)topic
 {
-	[text setStringValue:topic ?: @""];
+	[text setStringValue:[topic stringWithInputIRCFormatting] ?: @""];
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
 	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-		[delegate topicSheet:self onOK:[text stringValue]];
+		[delegate topicSheet:self onOK:[[text stringValue] stringWithASCIIFormatting]];
 	}
 	
 	[super ok:nil];
