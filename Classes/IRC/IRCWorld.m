@@ -574,7 +574,7 @@
 	[self changeTreeTheme];
 	[self changeMemberListTheme];
 	
-	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
+	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];	
 	
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 }

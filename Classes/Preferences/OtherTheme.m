@@ -123,6 +123,9 @@
 
 - (void)reload 
 {	
+	[underlyingWindowColor release];
+	underlyingWindowColor = nil;
+	
 	[inputTextFont release];
 	inputTextFont = nil;
 	[inputTextBgColor release];

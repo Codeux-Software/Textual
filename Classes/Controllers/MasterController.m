@@ -654,7 +654,9 @@
 {
 	[world reloadTheme];
 	[self setColumnLayout];
-	[window setAlphaValue:[Preferences themeTransparency]];
+	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];	
 }
 
 - (void)transparencyDidChange:(NSNotification*)note
