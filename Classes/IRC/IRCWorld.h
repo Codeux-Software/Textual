@@ -151,6 +151,7 @@
 
 - (void)preferencesChanged;
 - (void)reloadTheme;
+- (void)updateThemeStyle;
 - (void)changeTextSize:(BOOL)bigger;
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;

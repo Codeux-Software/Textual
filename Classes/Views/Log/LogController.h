@@ -97,6 +97,7 @@
 - (void)unmark;
 - (void)goToMark;
 - (void)reloadTheme;
+- (void) applyOverrideStyle;
 - (void)clear;
 - (void)changeTextSize:(BOOL)bigger;
 
