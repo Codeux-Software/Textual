@@ -2,13 +2,8 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-<<<<<<< HEAD
 		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-=======
-		<string key="IBDocument.SystemVersion">10J521</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
->>>>>>> mike/master
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -26,7 +21,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-<<<<<<< HEAD
 			<integer value="5425"/>
 			<integer value="5153"/>
 			<integer value="4790"/>
@@ -34,11 +28,6 @@
 			<integer value="4789"/>
 			<integer value="4791"/>
 			<integer value="4788"/>
-=======
-			<integer value="4789"/>
-			<integer value="5556"/>
-			<integer value="4792"/>
->>>>>>> mike/master
 			<integer value="4929"/>
 			<integer value="4793"/>
 		</object>
@@ -4258,11 +4247,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSTextFieldCell" key="NSCell" id="354644805">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-<<<<<<< HEAD
 							<string key="NSContents">If a notice contains information typical to IRC Operators it will forward to the console window. All other notices will be placed in a special "Server Notices" window to make finding important info easier.</string>
-=======
-							<string key="NSContents">When Textual automatically sorts server notices it takes each new notice that it has received and looks at the content of it. If a notice contains connection information that is typical to IRC Operators, then it will simply forward it to the console window. All other notices will be placed in a special "Server Notices" window to make sorting through important information easier.</string>
->>>>>>> mike/master
 							<reference key="NSSupport" ref="756028785"/>
 							<reference key="NSControlView" ref="55343765"/>
 							<reference key="NSBackgroundColor" ref="326222776"/>
@@ -10727,11 +10712,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AUGrh6hDmXS0A</bytes>
 					</object>
-<<<<<<< HEAD
 					<string>{{391, 268}, {518, 426}}</string>
-=======
-					<string>{{653, 520}, {513, 543}}</string>
->>>>>>> mike/master
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AUMvAABClgAAA</bytes>
