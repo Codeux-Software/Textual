@@ -1,24 +1,27 @@
 Textual = {
 	newMessagePostedToDisplay: function(ln) {
-		// support the most important function of the old API with no changes
-		// necessary to themes
+		// support the most important function of the 
+		// old API with no changes necessary to themes
+		
 		if (window.newMessagePostedToDisplay != undefined) {
 			window.newMessagePostedToDisplay(ln)
-			}
-			//var newLine = document.getElementById("line" + lineNumber);
+		}
+		
+		//var newLine = document.getElementById("line" + lineNumber);
 	},
 	
 	include_js: function(jsFile)
 	{
-	  if (/loaded|complete/.test(document.readyState)) {
-		var js = document.createElement("script");
-		js.src=jsFile;
-		js.type="text/javascript";
-		document.getElementsByTagName("HEAD")[0].appendChild(js);
-	  }
-      else
-	    document.write('<script type="text/javascript" src="' + jsFile + '"></scr' + 'ipt>'); 
+		if (/loaded|complete/.test(document.readyState)) {
+			var js = document.createElement("script");
+			js.src = jsFile;
+			js.type = "text/javascript";
+			document.getElementsByTagName("HEAD")[0].appendChild(js);
+		} else {
+			document.write('<script type="text/javascript" src="' + jsFile + '"></scr' + 'ipt>'); 
+		}
 	},
+	
 	include_css: function(cssFile)
 	{
 		document.write('<link href="' + cssFile + '" media="screen" rel="stylesheet" type="text/css" />'); 
@@ -33,12 +36,12 @@ Textual = {
 		} else { return false }
 	},
 	
-	// should be overridden by your class to do any clean up logic prior
-	// to themes changing
+	// should be overridden by your class to do 
+	// any clean up logic prior to themes changing
 	willDoThemeChange:function(){},
 	
-	// should be overridden by your class to do any clean up logic needed
-	// after the theme has been changed
+	// should be overridden by your class to do any clean 
+	// up logic needed after the theme has been changed
 	doneThemeChange:function(){},
 	
 	/* The following function calls are required. */

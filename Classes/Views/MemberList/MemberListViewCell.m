@@ -58,8 +58,8 @@ static NSMutableParagraphStyle* nickStyle;
 
 + (MemberListViewCell*)initWithTheme:(id)aTheme
 {
-	MemberListViewCell* cell=[[MemberListViewCell alloc]init];
-	cell.theme=aTheme;
+	MemberListViewCell* cell = [[MemberListViewCell alloc] init];
+	cell.theme = aTheme;
 	return [cell autorelease];
 }
 
