@@ -7,6 +7,7 @@
 
 #define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
 #define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
+#define ThemeStyleDidChangeNotification			@"ThemeStyleDidChangeNotification"
 #define SparkleFeedURLChangeNotification		@"SparkleFeedURLChangeNotification"
 #define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
 #define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
@@ -87,6 +88,7 @@
 
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onChangedTheme:(id)sender;
+- (void)onStyleChanged:(id)sender;
 - (void)onSelectFont:(id)sender;
 - (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;

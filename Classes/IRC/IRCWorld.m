@@ -553,6 +553,22 @@
 #pragma mark -
 #pragma mark Theme
 
+- (void)updateThemeStyle
+{
+	NSMutableArray* logs = [NSMutableArray array];
+	
+	for (IRCClient* u in clients) {
+		[logs addObject:u.log];
+		for (IRCChannel* c in u.channels) {
+			[logs addObject:c.log];
+		}
+	}
+	
+	for (LogController* log in logs) {
+		[log applyOverrideStyle];
+	}
+}
+
 - (void)reloadTheme
 {
 	viewTheme.name = [Preferences themeName];

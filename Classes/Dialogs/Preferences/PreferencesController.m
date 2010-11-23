@@ -494,12 +494,12 @@
 	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
 	[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
 	
-	[self onLayoutChanged:nil];
+	[self onStyleChanged:nil];
 }
 
 - (void)onOverrideFontChanged:(id)sender
 {
-	[self onLayoutChanged:nil];
+	[self onStyleChanged:nil];
 }
 
 - (void)onChangedTransparency:(id)sender
@@ -510,12 +510,12 @@
 
 - (void)onTimestampFormatChanged:(id)sender
 {
-	[self onLayoutChanged:nil];
+	[self onStyleChanged:nil];
 }
 
 - (void)onHnagingTextChange:(id)sender 
 {
-	[self onLayoutChanged:nil];
+	[self onStyleChanged:nil];
 }
 
 - (void)onTextDirectionChanged:(id)sender
@@ -556,6 +556,13 @@
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
+
+- (void)onStyleChanged:(id)sender
+{
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
+}
+
 
 - (void)onOpenPathToThemes:(id)sender
 {

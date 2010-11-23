@@ -70,6 +70,7 @@
 	
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	[nc addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
@@ -657,6 +658,11 @@
 	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];	
+}
+
+- (void)themeStyleDidChange:(NSNotification*)note
+{
+	[world updateThemeStyle];
 }
 
 - (void)transparencyDidChange:(NSNotification*)note

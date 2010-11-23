@@ -26,6 +26,7 @@
 - (NSArray*)buildBody:(LogLine*)line;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument:(NSString*)topic;
+- (NSString*)generateOverrideStyle;
 @end
 
 @implementation LogController
@@ -150,6 +151,14 @@
 		becameVisible = YES;
 		[self moveToBottom];
 	}
+}
+
+- (struct DOMHTMLElement *)html_head
+{
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMNodeList* nodes = [doc getElementsByTagName:@"head"];
+	DOMHTMLElement* head = (DOMHTMLElement*)[nodes item:0];
+	return (struct DOMHTMLElement *)head;
 }
 
 - (struct DOMHTMLElement *)body:(DOMHTMLDocument *)doc 
@@ -578,8 +587,60 @@
 		[bodyAttrs appendString:@" dir=\"rtl\""];
 	}
 	
-	NSString* overrideStyle = nil;
+	NSMutableString* s = [NSMutableString string];
+	NSString* override_style = [self generateOverrideStyle];
 	
+	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
+	[s appendFormat:@"<html %@>", bodyAttrs];
+	[s appendString:
+	 @"<head>"
+	 @"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+	 @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
+	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
+	 ];
+	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme css] fileName], [[theme css] content]];
+	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
+	[s appendFormat:@"<script type=\"text/javascript\">\n/* JS: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
+	if (override_style) [s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
+	[s appendString:@"</head>"];
+	[s appendFormat:@"<body %@>", bodyAttrs];
+	[s appendString:@"<div id=\"body_home\"></div>"];
+	if ([topic length] >= 1) {
+		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
+	} else {
+		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"NO_TOPIC_DEFAULT_TOPIC")];
+	}
+	[s appendString:@"</html>"];
+	
+	return s;
+}
+
+- (void)applyOverrideStyle
+{
+	NSString* os = [self generateOverrideStyle];
+
+	// remove our previous style overrides
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"textual_override_style"];
+	if (e) {
+		[(DOMHTMLElement *)[e parentNode] removeChild:e];
+	}
+		
+	// apply new style overrides
+	if (os) {
+		DOMHTMLElement* head=(DOMHTMLElement*)[self html_head];
+		if (head) {
+			DOMHTMLElement* style=(DOMHTMLElement*)[doc createElement:@"style"];
+			[style setAttribute:@"id" value:@"textual_override_style"];
+			[style setAttribute:@"type" value:@"text/css"];
+			[style setInnerHTML:os];
+			[head appendChild:style];
+		}
+	}
+}
+
+- (NSString*)generateOverrideStyle
+{
 	NSMutableString* sf = [NSMutableString string];
 	
 	if ([Preferences themeOverrideLogFont]) {
@@ -610,33 +671,7 @@
 		}
 	}
 	
-	overrideStyle = sf;
-	
-	NSMutableString* s = [NSMutableString string];
-	
-	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
-	[s appendFormat:@"<html %@>", bodyAttrs];
-	[s appendString:
-	 @"<head>"
-	 @"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-	 @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
-	 @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
-	 ];
-	[s appendFormat:@"<style type=\"text/css\">\n/* TF: %@ */\n\n%@\n</style>", [[theme css] fileName], [[theme css] content]];
-	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
-	[s appendFormat:@"<script type=\"text/javascript\">\n/* JS: %@ */\n\n%@\n</script>", [[theme js] fileName], [[theme js] content]];
-	if (overrideStyle) [s appendFormat:@"<style type=\"text/css\">%@</style>", overrideStyle];
-	[s appendString:@"</head>"];
-	[s appendFormat:@"<body %@>", bodyAttrs];
-	[s appendString:@"<div id=\"body_home\"></div>"];
-	if ([topic length] >= 1) {
-		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
-	} else {
-		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"NO_TOPIC_DEFAULT_TOPIC")];
-	}
-	[s appendString:@"</html>"];
-	
-	return s;
+	return sf;
 }
 
 - (void)setUpScroller
