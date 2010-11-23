@@ -66,6 +66,9 @@
 
 + (NSString*)stringWithUUID;
 + (NSString*)bundleString:(NSString*)key;
+
+- (NSString*)stringWithInputIRCFormatting;
+- (NSString*)stringWithASCIIFormatting;
 @end
 
 @interface NSMutableString (NSMutableStringHelper)
