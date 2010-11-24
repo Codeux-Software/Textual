@@ -47,9 +47,7 @@
 
 - (NSString*)contentString
 {
-	WebFrame* frame = [self mainFrame];
-	if (!frame) return @"";
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[frame DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[self mainFrameDocument];
 	if (!doc) return @"";
 	DOMElement* body = [doc body];
 	if (!body) return @"";
