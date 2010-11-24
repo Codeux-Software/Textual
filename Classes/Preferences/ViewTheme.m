@@ -12,19 +12,16 @@
 
 @implementation ViewTheme
 
+@synthesize baseUrl;
 @synthesize name;
-@synthesize css;
 @synthesize other;
 @synthesize path;
-@synthesize js;
 @synthesize core_js;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		css = [FileWithContent new];
 		other = [OtherTheme new];
-		js = [FileWithContent new];
 		core_js = [FileWithContent new];
 		NSString * applicationPath = [[NSBundle mainBundle] bundlePath];
 		core_js.fileName = [applicationPath stringByAppendingPathComponent:@"/Contents/Resources/core.js"];
@@ -35,9 +32,7 @@
 - (void)dealloc
 {
 	[name release];
-	[css release];
 	[other release];
-	[js release];
 	[core_js release];
 	[path release];
 	[super dealloc];
@@ -88,15 +83,13 @@
 				exit(0);
 			}
 			
-			css.fileName = [path stringByAppendingPathComponent:@"/design.css"];
-			js.fileName = [path stringByAppendingPathComponent:@"/scripts.js"];
+			self.baseUrl = [NSURL fileURLWithPath:path];
+			
 			other.fileName = [path stringByAppendingPathComponent:@"/userInterface.plist"];
 			return;
 		}
 	}
 	
-	css.fileName = nil;
-	js.fileName = nil;
 	other.fileName = nil;
 		
 }
@@ -108,9 +101,7 @@
 
 - (void)reload
 {
-	[css reload];
 	[other reload];
-	[js reload];
 }
 
 + (void)copyItemsUsingRecursionFrom:(NSString *)location 
