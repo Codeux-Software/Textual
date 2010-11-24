@@ -199,7 +199,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 		NSMutableArray* ary = [NSMutableArray new];
 		for (NSArray* item in list) {
 			NSString* channel = [item safeObjectAtIndex:0];
-			NSString* topic = [[item safeObjectAtIndex:2] string];
+			NSString* topic = [item safeObjectAtIndex:2];
 			if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
 				|| [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
 				[ary addObject:item];
