@@ -331,8 +331,7 @@
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	if (!body) return;
 	
-	[html release];
-	html = [[body innerHTML] retain];
+	self.html = [body innerHTML];
 	scrollBottom = [self viewingBottom];
 	scrollTop = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
@@ -343,9 +342,8 @@
 - (void)clear
 {
 	if (!loaded) return;
-	
-	[html release];
-	html = nil;
+
+	self.html = nil;
 	loaded = NO;
 	count = 0;
 	
@@ -561,7 +559,6 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
-	// WebScriptObject* textual = [[view windowScriptObject] evaluateWebScript:@"Textual"];
 	[[view js_api] callWebScriptMethod:@"newMessagePostedToDisplay" 
 									 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
 }
@@ -591,9 +588,13 @@
 	 @"<head>"
 	 @"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
 	 ];
-	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css\" />"];
+	
+	// used to ensure our js and css is always current because WebView likes
+	// to cache it even though we tell it not to
+	NSTimeInterval ti = [NSDate timeIntervalSinceReferenceDate];
+	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?%d\" />", ti];
 	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
-	[s appendFormat:@"<script src=\"scripts.js\" type=\"text/javascript\"></script>"];
+	[s appendFormat:@"<script src=\"scripts.js?%d\" type=\"text/javascript\"></script>",ti];
 	if (override_style) [s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
 	[s appendString:@"</head>"];
 	[s appendFormat:@"<body %@>", bodyAttrs];
@@ -724,12 +725,11 @@
 	autoScroller.webFrame = view.mainFrame.frameView;
 	
 	if (html) {
-		DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
+		DOMHTMLDocument* doc = (DOMHTMLDocument*)[frame DOMDocument];
 		if (doc) {
 			DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 			[body setInnerHTML:html];
-			[html release];
-			html = nil;
+			self.html = nil;
 			
 			if (scrollBottom) {
 				[self moveToBottom];
@@ -748,7 +748,7 @@
 	}
 	[lines removeAllObjects];
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[frame DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* e = (DOMHTMLElement*)[body firstChild];
