@@ -11,7 +11,6 @@
 
 @synthesize fileName;
 @synthesize content;
-@synthesize baseUrl;
 
 - (id)init
 {
@@ -37,13 +36,6 @@
 	if (fileName != value) {
 		[fileName release];
 		fileName = [value retain];
-	}
-	
-	[baseUrl release];
-	baseUrl = nil;
-	
-	if (fileName) {
-		baseUrl = [[NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent]] retain];
 	}
 	
 	[self reload];
