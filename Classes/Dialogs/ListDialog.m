@@ -51,7 +51,10 @@
 		[self.window center];
 	}
 	
-	[networkName setStringValue:[NSString stringWithFormat:TXTLS(@"CHANNEL_LIST_NETWORK_NAME"), [(IRCClient*)delegate config].network]];
+	NSString *network = [(IRCClient*)delegate config].network;
+	if (network == nil) network = [[(IRCClient*)delegate config] name];
+	
+	[networkName setStringValue:[NSString stringWithFormat:TXTLS(@"CHANNEL_LIST_NETWORK_NAME"), network]];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
