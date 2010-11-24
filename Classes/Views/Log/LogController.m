@@ -23,7 +23,6 @@
 - (void)savePosition;
 - (void)restorePosition;
 - (void)setNeedsLimitNumberOfLines;
-- (NSArray*)buildBody:(LogLine*)line;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument:(NSString*)topic;
 - (NSString*)generateOverrideStyle;
@@ -403,8 +402,6 @@
 		} else {
 			[highlightedLineNumbers removeAllObjects];
 		}
-	} else {
-		[highlightedLineNumbers removeAllObjects];
 	}
 	
 	count -= n;
