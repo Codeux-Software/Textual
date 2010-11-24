@@ -155,7 +155,7 @@
 
 - (struct DOMHTMLElement *)html_head
 {
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	DOMNodeList* nodes = [doc getElementsByTagName:@"head"];
 	DOMHTMLElement* head = (DOMHTMLElement*)[nodes item:0];
 	return (struct DOMHTMLElement *)head;
@@ -173,7 +173,7 @@
 
 - (NSString *)topicValue
 {
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return @"";
 	return [(DOMHTMLElement *)[self topic:doc] innerHTML];
 }
@@ -191,7 +191,7 @@
 									 highlighted:NULL
 									   URLRanges:NULL];
 		
-		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+		DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 		if (!doc) return NO;
 		DOMHTMLElement* topic_body = (DOMHTMLElement*)[self topic:doc];
 		if (!topic_body) return NO;
@@ -222,7 +222,7 @@
 - (void)moveToTop
 {
 	if (!loaded) return;
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	[body setValue:[NSNumber numberWithInteger:0] forKey:@"scrollTop"];
@@ -233,7 +233,7 @@
 	movingToBottom = NO;
 	
 	if (!loaded) return;
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
@@ -244,7 +244,7 @@
 	if (!loaded) return YES;
 	if (movingToBottom) return YES;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return YES;
 	DOMHTMLElement* body = [doc body];
 	NSInteger viewHeight = view.frame.size.height;
@@ -274,7 +274,7 @@
 	[self savePosition];
 	[self unmark];
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc createElement:@"div"];
@@ -289,7 +289,7 @@
 {
 	if (!loaded) return;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
 	if (e) {
@@ -302,7 +302,7 @@
 {
 	if (!loaded) return;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
 	if (e) {
@@ -322,7 +322,7 @@
 {
 	if (!loaded) return;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	
 	// we need to give the theme a chance to do any cleanup 
@@ -374,7 +374,7 @@
 	NSInteger n = count - maxLines;
 	if (!loaded || n <= 0 || count <= 0) return;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMNodeList* nodeList = [body childNodes];
@@ -539,7 +539,7 @@
 	++lineNumber;
 	++count;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
@@ -616,7 +616,7 @@
 	NSString* os = [self generateOverrideStyle];
 
 	// remove our previous style overrides
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"textual_override_style"];
 	if (e) {
 		[(DOMHTMLElement *)[e parentNode] removeChild:e];
@@ -727,7 +727,7 @@
 	autoScroller.webFrame = view.mainFrame.frameView;
 	
 	if (html) {
-		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+		DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 		if (doc) {
 			DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 			[body setInnerHTML:html];
@@ -751,7 +751,7 @@
 	}
 	[lines removeAllObjects];
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* e = (DOMHTMLElement*)[body firstChild];
@@ -825,7 +825,7 @@
 {
 	NSMutableArray* result = [NSMutableArray array];
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
 	if (doc) {
 		for (NSNumber* n in highlightedLineNumbers) {
 			NSString* key = [NSString stringWithFormat:@"line%d", [n integerValue]];
