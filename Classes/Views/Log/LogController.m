@@ -534,7 +534,7 @@
 	++lineNumber;
 	++count;
 	
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[view mainFrameDocument];
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
