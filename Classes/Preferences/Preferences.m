@@ -460,6 +460,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (BOOL)countPublicMessagesInIconBadge
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.dockbadge_countpub"];
+}
+
 + (TabActionType)tabAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1078,7 +1084,6 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO forKey:@"Preferences.General.open_browser_in_background"];
 	[d setBool:NO forKey:@"Preferences.General.show_inline_images"];
-	[d setBool:YES forKey:@"PrefWebKitDeveloperExtraserences.General.show_join_leave"];
 	[d setBool:YES forKey:@"Preferences.General.use_growl"];
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
@@ -1104,6 +1109,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
+	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
