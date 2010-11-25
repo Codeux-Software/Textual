@@ -103,6 +103,7 @@ typedef enum {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
++ (BOOL)countPublicMessagesInIconBadge;
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;

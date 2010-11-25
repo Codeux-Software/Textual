@@ -2358,11 +2358,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)setUnreadState:(id)t
 {
 	if ([t isKindOfClass:[IRCChannel class]]) {
-		if ([t isTalk] == YES) {
+		if ([Preferences countPublicMessagesInIconBadge] == NO) {
+			if ([t isTalk] == YES && [t isClient] == NO) {
+				if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
+					[t setUnreadCount:([t unreadCount] + 1)];
+					[world updateIcon];
+				}
+			}
+		} else {
 			if (world.selected != t || ![[NSApp mainWindow] isOnCurrentWorkspace]) {
 				[t setUnreadCount:([t unreadCount] + 1)];
 				[world updateIcon];
-			}
+			}	
 		}
 	}
 	
