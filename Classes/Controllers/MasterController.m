@@ -867,7 +867,10 @@
 	} else {
 		t = [currentChoices safeObjectAtIndex:0];
 	}
-	
+
+	// ignore the spelling for whatever we just tab completed so it isn't flagged as an error
+	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
+
 	if ((commandMode || channelMode) || !head) {
 		t = [t stringByAppendingString:@" "];
 	} else {
