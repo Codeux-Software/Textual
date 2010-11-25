@@ -21,12 +21,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="4788"/>
-			<integer value="4789"/>
 			<integer value="5556"/>
-			<integer value="4791"/>
 			<integer value="4790"/>
+			<integer value="4788"/>
+			<integer value="5776"/>
 			<integer value="4778"/>
+			<integer value="4789"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2809,7 +2809,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSTextFieldCell" key="NSCell" id="619701837">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">272630784</int>
-												<string key="NSContents">20%</string>
+												<string key="NSContents">80%</string>
 												<object class="NSFont" key="NSSupport" id="24">
 													<string key="NSName">LucidaGrande</string>
 													<double key="NSSize">10</double>
@@ -2830,7 +2830,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSTextFieldCell" key="NSCell" id="542259032">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">272630784</int>
-												<string key="NSContents">100%</string>
+												<string key="NSContents">0%</string>
 												<reference key="NSSupport" ref="24"/>
 												<reference key="NSControlView" ref="403991162"/>
 												<reference key="NSBackgroundColor" ref="326222776"/>
