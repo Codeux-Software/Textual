@@ -540,6 +540,12 @@
 	
 	[text setStringValue:@""];
 	
+	if ([Preferences inputHistoryIsChannelSpecific]) {
+		if (world.selected.currentInputHistory && [world.selected.currentInputHistory length] > 0) {
+			world.selected.currentInputHistory = nil;
+		}
+	}
+			 
 	if (s.length) {
 		if ([world inputText:s command:command]) {
 			[inputHistory add:os];
@@ -651,7 +657,9 @@
 - (void)themeDidChange:(NSNotification*)note
 {
 	[world reloadTheme];
+	
 	[self setColumnLayout];
+	
 	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];	
@@ -680,8 +688,14 @@
 			c.inputHistory = nil;
 		}
 		
+		if (c.currentInputHistory) {
+			[c.currentInputHistory release];
+			c.currentInputHistory = nil;
+		}
+		
 		if ([Preferences inputHistoryIsChannelSpecific]) {
 			c.inputHistory = [InputHistory new];
+			c.currentInputHistory = nil;
 		}
 		
 		for (IRCChannel *u in c.channels) {
@@ -690,8 +704,14 @@
 				u.inputHistory = nil;
 			}
 			
+			if (u.currentInputHistory) {
+				[u.currentInputHistory release];
+				u.currentInputHistory = nil;
+			}
+			
 			if ([Preferences inputHistoryIsChannelSpecific]) {
 				u.inputHistory = [InputHistory new];
+				u.currentInputHistory = nil;
 			}
 		}
 	}

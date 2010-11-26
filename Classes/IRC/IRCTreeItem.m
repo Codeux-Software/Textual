@@ -16,6 +16,7 @@
 @synthesize unreadCount;
 @synthesize keywordCount;
 @synthesize inputHistory;
+@synthesize currentInputHistory;
 
 - (void)dealloc
 {
@@ -23,6 +24,7 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		[inputHistory release];
+		[currentInputHistory release];
 	}
 	
 	[super dealloc];

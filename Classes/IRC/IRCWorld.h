@@ -131,6 +131,8 @@
 - (void)selectClientAt:(NSInteger)n;
 - (void)selectPreviousItem;
 
+- (IRCTreeItem*)previouslySelectedItem;
+
 - (void)focusInputText;
 - (BOOL)inputText:(NSString*)s command:(NSString*)command;
 

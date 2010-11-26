@@ -329,9 +329,9 @@
 	}
 }
 
-- (void)selectPreviousItem
+- (IRCTreeItem*)previouslySelectedItem
 {
-	if (!previousSelectedClientId && !previousSelectedClientId) return;
+	if (!previousSelectedClientId && !previousSelectedClientId) return nil;
 	
 	NSInteger uid = previousSelectedClientId;
 	NSInteger cid = previousSelectedChannelId;
@@ -343,6 +343,13 @@
 	} else {		
 		item = [self findClientById:uid];
 	}
+	
+	return item;
+}
+
+- (void)selectPreviousItem
+{
+	IRCTreeItem *item = [self previouslySelectedItem];
 	
 	if (item) {
 		[self select:item];
@@ -671,6 +678,7 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [InputHistory new];
+		c.currentInputHistory = nil;
 	}
 	
 	c.log = [self createLogWithClient:c channel:nil];
@@ -698,6 +706,7 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [InputHistory new];
+		c.currentInputHistory = nil;
 	}
 	
 	c.mode.isupport = client.isupport;
@@ -1011,6 +1020,24 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		menuController.master.inputHistory = selected.inputHistory;
+		
+		NSString *inputValue = [text stringValue];
+		IRCTreeItem *previous = [self previouslySelectedItem];
+		
+		if ([inputValue length] > 0) {
+			if (previous.currentInputHistory) {
+				[previous.currentInputHistory release];
+				previous.currentInputHistory = nil;
+			}
+			
+			previous.currentInputHistory = [inputValue retain];
+		}
+		
+		[text setStringValue:@""];
+		
+		if (selected.currentInputHistory && [selected.currentInputHistory length] > 0) {
+			[text setStringValue:selected.currentInputHistory];
+		}
 	}
 	
 	// clear the ignore list from the spell checker each time we change channels
