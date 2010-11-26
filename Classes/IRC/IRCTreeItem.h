@@ -20,6 +20,7 @@
 	NSInteger keywordCount;
 	NSInteger unreadCount;
 	InputHistory *inputHistory;
+	NSString *currentInputHistory;
 }
 
 @property (nonatomic, assign) NSInteger uid;
@@ -35,6 +36,7 @@
 @property (nonatomic, readonly) NSString* label;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, retain) InputHistory *inputHistory;
+@property (nonatomic, retain) NSString *currentInputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;
