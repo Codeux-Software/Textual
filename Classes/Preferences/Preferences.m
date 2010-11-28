@@ -262,6 +262,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud integerForKey:@"Preferences.General.autojoin_delay"];
 }
 
++ (NSString*)defaultKickMessage
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.General.kick_message"];
+}
+
 + (NSString*)IRCopDefaultKillMessage
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -338,6 +344,12 @@ static NSMutableDictionary *commandIndex;
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	return [ud objectForKey:@"Preferences.General.completion_suffix"];
+}
+
++ (HostmaskBanFormat)banFormat
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.banformat"];
 }
 
 + (BOOL)displayDockBadge
@@ -955,8 +967,10 @@ static NSMutableArray* excludeWords;
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	NSArray* ary = [ud objectForKey:@"keywords"];
+	
 	for (NSDictionary* e in ary) {
 		NSString* s = [e objectForKey:@"string"];
+		
 		if (s) [keywords addObject:s];
 	}
 }
@@ -971,8 +985,10 @@ static NSMutableArray* excludeWords;
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	NSArray* ary = [ud objectForKey:@"excludeWords"];
+	
 	for (NSDictionary* e in ary) {
 		NSString* s = [e objectForKey:@"string"];
+		
 		if (s) [excludeWords addObject:s];
 	}
 }
@@ -983,8 +999,10 @@ static NSMutableArray* excludeWords;
 	NSArray* src = [ud objectForKey:key];
 	
 	NSMutableArray* ary = [NSMutableArray array];
+	
 	for (NSDictionary* e in src) {
 		NSString* s = [e objectForKey:@"string"];
+		
 		if (s.length) {
 			[ary addObject:s];
 		}
@@ -993,11 +1011,14 @@ static NSMutableArray* excludeWords;
 	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	NSMutableArray* saveAry = [NSMutableArray array];
+	
 	for (NSString* s in ary) {
 		NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+		
 		[dic setObject:s forKey:@"string"];
 		[saveAry addObject:dic];
 	}
+	
 	[ud setObject:saveAry forKey:key];
 	[ud synchronize];
 }
@@ -1038,6 +1059,7 @@ static NSMutableArray* excludeWords;
 	startUpTime = (long)[[NSDate date] timeIntervalSince1970];
 	
 	NSString* nick = NSUserName();
+	
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
 	nick = [nick stringByMatching:@"[^a-zA-Z0-9-_]" replace:RKReplaceAll withReferenceString:@""];
 
@@ -1046,6 +1068,7 @@ static NSMutableArray* excludeWords;
 	}
 	
 	NSMutableDictionary* d = [NSMutableDictionary dictionary];
+	
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
 	[d setInt:DCC_SHOW_DIALOG forKey:@"Preferences.DCC.action"];
 	[d setInt:ADDRESS_DETECT_JOIN forKey:@"Preferences.DCC.address_detection_method"];
@@ -1076,6 +1099,7 @@ static NSMutableArray* excludeWords;
 	[d setObject:TXTLS(@"SHUN_REASON") forKey:@"Preferences.General.ircop_shun_message"];
 	[d setObject:TXTLS(@"KILL_REASON") forKey:@"Preferences.General.ircop_kill_message"];
 	[d setObject:TXTLS(@"GLINE_REASON") forKey:@"Preferences.General.ircop_gline_message"];
+	[d setObject:TXTLS(@"KICK_REASON") forKey:@"Preferences.General.kick_message"];
 	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
 	[d setBool:NO forKey:@"Preferences.General.connect_on_doubleclick"];
 	[d setBool:NO forKey:@"Preferences.General.disconnect_on_doubleclick"];
@@ -1111,17 +1135,22 @@ static NSMutableArray* excludeWords;
 	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
+	[d setInt:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
 	[d setInt:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
 	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	
 	[ud registerDefaults:d];
+	
 	[ud addObserver:(NSObject*)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:(NSObject*)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-	if( !systemVersionPlist ) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+	if(!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+	if(!systemVersionPlist) exit(10);
+	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
 	
 	[self loadKeywords];

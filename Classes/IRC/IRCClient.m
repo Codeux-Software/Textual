@@ -884,7 +884,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)kick:(IRCChannel*)channel target:(NSString*)nick
 {
-	[self send:KICK, channel.name, nick, TXTLS(@"KICK_REASON"), nil];
+	[self send:KICK, channel.name, nick, [Preferences defaultKickMessage], nil];
 }
 
 - (void)quickJoin:(NSArray*)chans
@@ -1322,7 +1322,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				NSString* reason = [s trim];
 				
 				if ([reason length] < 1) {
-					reason = TXTLS(@"KICK_REASON");
+					reason = [Preferences defaultKickMessage];
 				}
 				
 				[self send:cmd, targetChannelName, peer, reason, nil];
@@ -1950,7 +1950,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					}
 					
 					if ([reason length] < 1) {
-						reason = TXTLS(@"KICK_REASON");
+						reason = [Preferences defaultKickMessage];
 					}
 					
 					[self send:MODE, c.name, @"+b", host, nil];
