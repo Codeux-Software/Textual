@@ -1588,7 +1588,7 @@
 					x86_64,
 					i386,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1638,7 +1638,7 @@
 					x86_64,
 					i386,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
