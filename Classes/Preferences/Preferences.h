@@ -44,6 +44,13 @@ typedef enum {
 	CMDWKEY_SHORTCUT_QUITA = 3,
 } CmdW_Shortcut_ResponseType;
 
+typedef enum {
+	HMBAN_FORMAT_WHNIN = 0, // With Hostmask, No Username/Nickname
+	HMBAN_FORMAT_WHAINN = 1, // With Hostmask and Username, No Nickname
+	HMBAN_FORMAT_WHANNI = 2, // With Hostmask and Nickname, No Username
+	HMBAN_FORMAT_EXACT = 4, // Exact Match
+} HostmaskBanFormat;
+
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
@@ -75,6 +82,7 @@ typedef enum {
 + (NSString*)IRCopAlertMatch;
 + (NSInteger)connectAutoJoinDelay;
 + (NSInteger)autojoinMaxChannelJoins;
++ (NSString*)defaultKickMessage;
 + (BOOL)inputHistoryIsChannelSpecific;
 + (BOOL)logAllHighlightsToQuery;
 + (BOOL)clearAllOnlyOnActiveServer;
@@ -106,6 +114,7 @@ typedef enum {
 + (BOOL)countPublicMessagesInIconBadge;
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;
++ (HostmaskBanFormat)banFormat;
 + (KeywordMatchType)keywordMatchingMethod;
 + (CmdW_Shortcut_ResponseType)cmdWResponseType;
 + (NoticesSendToLocation)locationToSendNotices;

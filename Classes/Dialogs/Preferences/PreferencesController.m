@@ -55,6 +55,7 @@
 	[updatesView release];
 	[floodControlView release];
 	[IRCopServicesView release];
+	[channelManagementView release];
 	
 	[scriptsController release];
 	
@@ -125,11 +126,14 @@
 		case 7:
 			[self firstPane:IRCopServicesView];
 			break;
-		// 8 = divider
-		case 9:
+		case 8: 
+			[self firstPane:channelManagementView];
+			break;
+		// 9 = divider
+		case 10:
 			[self firstPane:identityView];
 			break;
-		case 10:
+		case 11:
 			[self firstPane:scriptsView];
 			break;
 		default:
@@ -615,4 +619,5 @@
 @synthesize world;
 @synthesize installedScriptsTable;
 @synthesize scriptsController;
+@synthesize channelManagementView;
 @end

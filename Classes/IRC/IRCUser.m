@@ -47,12 +47,27 @@
 	if ([address length] < 1) {
 		return [NSString stringWithFormat:@"%@!*@*", nick];
 	} else {
-		if ([username length] < 1) {
-			return [NSString stringWithFormat:@"*!*@%@", address];	
-		} else {
-			return [NSString stringWithFormat:@"*!%@@%@", username, address];
+		NSString *ident = (([username length] < 1) ? @"*" : username);
+		
+		switch ([Preferences banFormat]) {
+			case HMBAN_FORMAT_WHNIN:
+				return [NSString stringWithFormat:@"*!*@%@", address];	
+				break;
+			case HMBAN_FORMAT_WHAINN:
+				return [NSString stringWithFormat:@"*!%@@%@", ident, address];
+				break;
+			case HMBAN_FORMAT_WHANNI:
+				return [NSString stringWithFormat:@"%@!*%@", nick, address];
+				break;
+			case HMBAN_FORMAT_EXACT:
+				return [NSString stringWithFormat:@"%@!%@@%@", nick, ident, address];
+				break;
+			default:
+				break;
 		}
 	}
+	
+	return nil;
 }
 
 - (char)mark

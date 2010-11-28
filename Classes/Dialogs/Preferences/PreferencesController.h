@@ -30,6 +30,7 @@
 	IBOutlet NSView *updatesView;
 	IBOutlet NSView *floodControlView;
 	IBOutlet NSView *IRCopServicesView;
+	IBOutlet NSView *channelManagementView;
 	
 	IBOutlet NSTableView* keywordsTable;
 	IBOutlet NSTableView* excludeWordsTable;
@@ -69,6 +70,7 @@
 @property (nonatomic, retain) NSView *updatesView;
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *IRCopServicesView;
+@property (nonatomic, retain) NSView *channelManagementView;
 @property (nonatomic, retain) NSTableView* keywordsTable;
 @property (nonatomic, retain) NSTableView* excludeWordsTable;
 @property (nonatomic, retain) NSTableView* installedScriptsTable;

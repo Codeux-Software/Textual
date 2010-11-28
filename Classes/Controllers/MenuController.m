@@ -1260,11 +1260,11 @@
 		IRCUser *us = [c findMember:pointedNick];
 		
 		if (us) {
-			[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", us.nick, TXTLS(@"KICK_REASON")] completeTarget:YES target:c.name];
+			[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", us.nick, [Preferences defaultKickMessage]] completeTarget:YES target:c.name];
 		}
 	} else {
 		for (IRCUser* m in nicknames) {
-			[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, TXTLS(@"KICK_REASON")] completeTarget:YES target:c.name];
+			[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, [Preferences defaultKickMessage]] completeTarget:YES target:c.name];
 		}
 		
 		[self deselectMembers:sender];
