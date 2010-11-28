@@ -27,7 +27,11 @@
 	
 	for (NSString* file in resourceFiles) {
 		if ([file hasSuffix:@".scpt"]) {
-			[scripts addObject:[[file safeSubstringToIndex:([file length] - 5)] lowercaseString]];
+			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
+			
+			if (![scripts containsObject:script]) {
+				[scripts addObject:script];
+			}
 		}
 	}
 
