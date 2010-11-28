@@ -264,6 +264,7 @@
 			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MAX];
 		}
 	}
+	
 	return YES;
 }
 
@@ -339,6 +340,7 @@
 		
 		sounds = ary;
 	}
+	
 	return sounds;
 }
 
@@ -352,9 +354,11 @@
 	NSString* dirName = [path lastPathComponent];
 	
 	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
+	
 	[icon setSize:NSMakeSize(16, 16)];
 	
 	NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
+	
 	[item setTitle:dirName];
 	[item setImage:icon];
 }
@@ -367,12 +371,15 @@
 		NSString* path = [[panel filenames] safeObjectAtIndex:0];
 		
 		NSFileManager* fm = [NSFileManager defaultManager];
+		
 		BOOL isDir;
+		
 		if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
 			[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
 		}
 		
 		[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+		
 		[self updateTranscriptFolder];
 	}
 		
@@ -414,6 +421,7 @@
 	for (NSString* path in ary) {
 		NSMutableSet* set = [NSMutableSet set];
 		NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
+		
 		for (NSString* file in files) {
 			if ([path isEqualToString:[Preferences whereThemesLocalPath]]) {
 				if ([fm fileExistsAtPath:[[Preferences whereThemesPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
@@ -423,17 +431,22 @@
 			
 			if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
 				NSString* baseName = [file stringByDeletingPathExtension];
+				
 				[set addObject:baseName];
 			}
 		}
 		
 		files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+		
 		if (files.count) {
 			NSInteger i = 0;
+			
 			for (NSString* f in files) {
 				NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
+				
 				[item setTag:tag];
 				[themeButton.menu addItem:item];
+				
 				++i;
 			}
 		}
@@ -442,6 +455,7 @@
 	}
 	
 	NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+	
 	if (!kindAndName) {
 		[themeButton selectItemAtIndex:0];
 		return;
@@ -451,13 +465,16 @@
 	NSString* name = [kindAndName safeObjectAtIndex:1];
 	
 	NSInteger targetTag = 0;
+	
 	if (![kind isEqualToString:@"resource"]) {
 		targetTag = 1;
 	}
 	
 	NSInteger count = [themeButton numberOfItems];
+	
 	for (NSInteger i=0; i<count; i++) {
 		NSMenuItem* item = [themeButton itemAtIndex:i];
+		
 		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
 			[themeButton selectItemAtIndex:i];
 			break;
@@ -468,16 +485,18 @@
 - (void)onChangedTheme:(id)sender
 {
 	NSMenuItem* item = [themeButton selectedItem];
+	
 	NSString* newThemeName;
 	NSString* name = [item title];
+	
 	if (item.tag == 0) {
 		newThemeName = [ViewTheme buildResourceFileName:name];
 	} else {
 		newThemeName = [ViewTheme buildUserFileName:name];
 	}
+	
 	// if we have just selected the already chosen theme then do nothing
-	if ([[Preferences themeName] isEqual:newThemeName])
-		return;
+	if ([[Preferences themeName] isEqual:newThemeName]) return;
 	
 	[Preferences setThemeName:newThemeName];
 	[self onLayoutChanged:nil];
