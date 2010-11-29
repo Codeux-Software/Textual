@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		4CEB677F1296AA4D00274034 /* App Store Distribution */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4CEB67871296AA6200274034 /* Build configuration list for PBXAggregateTarget "App Store Distribution" */;
-			buildPhases = (
-				4CEB677E1296AA4D00274034 /* ShellScript */,
-			);
-			dependencies = (
-				4CEB680C1296ACDE00274034 /* PBXTargetDependency */,
-			);
-			name = "App Store Distribution";
-			productName = "App Store Distribution";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		29847DE41297B41900D495D5 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 29847DE21297B41900D495D5 /* DockIcon.h */; };
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
@@ -41,6 +26,8 @@
 		4C16009B12158D2100C6C894 /* FormattingColor_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008B12158D2100C6C894 /* FormattingColor_13.png */; };
 		4C16009C12158D2100C6C894 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008C12158D2100C6C894 /* FormattingColor_14.png */; };
 		4C16009D12158D2100C6C894 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008D12158D2100C6C894 /* FormattingColor_15.png */; };
+		4C25674F12A368610068FADB /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C25674512A368260068FADB /* IOKit.framework */; };
+		4C25681412A368940068FADB /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C25672612A367B60068FADB /* ValidateReceipt.h */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E301238A655005BDA9D /* LanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C400E2E1238A655005BDA9D /* LanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
@@ -53,6 +40,8 @@
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
 		4C8A729C1221E98C00FD9773 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
+		4C8D6F7012A36BA700738B2C /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25672712A367B60068FADB /* ValidateReceipt.m */; };
+		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C982D16121F32430051543F /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C982D14121F32430051543F /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9E123D1209DF8C004E5032 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -279,16 +268,6 @@
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4CEB680B1296ACDE00274034 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CA9456011E1AFBA00D36367;
-			remoteInfo = Textual;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -361,6 +340,9 @@
 		4C16008B12158D2100C6C894 /* FormattingColor_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_13.png; path = Resources/Images/Colors/FormattingColor_13.png; sourceTree = "<group>"; };
 		4C16008C12158D2100C6C894 /* FormattingColor_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_14.png; path = Resources/Images/Colors/FormattingColor_14.png; sourceTree = "<group>"; };
 		4C16008D12158D2100C6C894 /* FormattingColor_15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_15.png; path = Resources/Images/Colors/FormattingColor_15.png; sourceTree = "<group>"; };
+		4C25672612A367B60068FADB /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateReceipt.h; sourceTree = "<group>"; };
+		4C25672712A367B60068FADB /* ValidateReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateReceipt.m; sourceTree = "<group>"; };
+		4C25674512A368260068FADB /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C2BEE4811CC3E30002F65F7 /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleHelper.h; sourceTree = "<group>"; };
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -386,6 +368,7 @@
 		4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputPromptDialog.h; sourceTree = "<group>"; };
 		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 1; };
@@ -605,6 +588,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */,
+				4C25674F12A368610068FADB /* IOKit.framework in Frameworks */,
 				4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */,
 				4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */,
 				4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */,
@@ -666,6 +651,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
 				4C80086F12117C8100EB6DAF /* RegexKit.framework */,
 				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
@@ -675,6 +661,7 @@
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
 				4C59393011D0E6CF0094B049 /* Security.framework */,
+				4C25674512A368260068FADB /* IOKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -801,6 +788,8 @@
 		783E6AD51173802100261552 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				4C25672612A367B60068FADB /* ValidateReceipt.h */,
+				4C25672712A367B60068FADB /* ValidateReceipt.m */,
 				783E6AD61173802100261552 /* Textual_Prefix.pch */,
 				783E6AD91173802100261552 /* main.m */,
 			);
@@ -1092,6 +1081,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C25681412A368940068FADB /* ValidateReceipt.h in Headers */,
 				4C400E301238A655005BDA9D /* LanguagePreferences.h in Headers */,
 				4CFC7DB71231F40C00FFC3B7 /* NSNumberHelper.h in Headers */,
 				4C9E12891209DF8C004E5032 /* NSStringHelper.h in Headers */,
@@ -1247,7 +1237,6 @@
 			projectRoot = "";
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
-				4CEB677F1296AA4D00274034 /* App Store Distribution */,
 			);
 		};
 /* End PBXProject section */
@@ -1314,19 +1303,6 @@
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
 		};
-		4CEB677E1296AA4D00274034 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# --------------------------------------------------------------------------------------\n# \n# Look for a file named \"CERTIFICATE\" for code signing. If file exists, then we\n# will take the content of it to use for the name during code signing. \n# \n# Do this so those who are not compiling for app store do not require the certificate\n# to compile their own custom build of Textual.\n# \n# --------------------------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"$PRODUCT_NAME.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\necho \"$PROJECT_DIR/CERTIFICATE\"\n\nif [ -f \"$PROJECT_DIR/CERTIFICATE\" ]\nthen\nexport CODE_SIGNING_IDENTITY=`cat $PROJECT_DIR/CERTIFICATE`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" $PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH \nfi";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1334,6 +1310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8D6F7012A36BA700738B2C /* ValidateReceipt.m in Sources */,
 				4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */,
 				4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */,
 				4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */,
@@ -1440,14 +1417,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4CEB680C1296ACDE00274034 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4CA9456011E1AFBA00D36367 /* Textual */;
-			targetProxy = 4CEB680B1296ACDE00274034 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */ = {
@@ -1581,6 +1550,83 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4C8D707C12A36FDB00738B2C /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc,
+				);
+				CODE_SIGN_IDENTITY = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "App Store Release";
+		};
+		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
+					"\"$(SRCROOT)/Framework\"",
+					"\"$(SRCROOT)/Framework/BWToolkit\"",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_PKGINFO_FILE = YES;
+				GENERATE_PROFILING_CODE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = "$(USER)";
+				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Textual;
+				SDKROOT = macosx10.6;
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = all;
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "App Store Release";
+		};
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1612,6 +1658,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"VALIDATE_APPSTORE_RECEIPT=0",
+					DEBUG,
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -1659,6 +1709,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
@@ -1680,31 +1731,6 @@
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		4CEB67801296AA4D00274034 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "App Store Distribution";
-			};
-			name = Debug;
-		};
-		4CEB67811296AA4D00274034 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = "App Store Distribution";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1762,15 +1788,7 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CEB67871296AA6200274034 /* Build configuration list for PBXAggregateTarget "App Store Distribution" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CEB67801296AA4D00274034 /* Debug */,
-				4CEB67811296AA4D00274034 /* Release */,
+				4C8D707D12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1780,6 +1798,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				4C8D707C12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

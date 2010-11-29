@@ -14,9 +14,11 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AboutPanel" owner:self];
 	}
+	
 	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
 								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"],
 								 [[Preferences textualInfoPlist] objectForKey:@"Build Number"]]];	
+	
 	return self;
 }
 
