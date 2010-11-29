@@ -16,6 +16,12 @@ elements to its library. Therefore, before compiling make sure that the
 "BWToolkit.ibplugin" file has been loaded into the Interface Builder 
 application. This file can be found in the folder "Framework/BWToolkit/"
 
+IMPORTANT: Xcode 4 users when compiling Textual be sure to set Xcode to 
+build the product to the location defined by the targets. This setting 
+can be changed by going to the File menu and then Project Settings. If 
+this is not done, then the plugins will not be compiled in correct 
+location for Textual to copy over. 
+
 --------------
 
 - License -
