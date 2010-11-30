@@ -9,7 +9,7 @@ extern NSString *kReceiptVersion;
 extern NSString *kReceiptOpaqueValue;
 extern NSString *kReceiptHash;
 
-#define USE_SAMPLE_RECEIPT 1
+#define USE_SAMPLE_RECEIPT 0
 
 CFDataRef copy_mac_address(void);
 BOOL validateReceiptAtPath(NSString *path);
