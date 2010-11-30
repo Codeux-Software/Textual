@@ -332,7 +332,7 @@ CFDataRef copy_mac_address(void)
     return macAddress;
 }
 
-BOOL validateReceiptAtPath(NSString * path)
+BOOL validateReceiptAtPath(NSString *path)
 {
 	NSDictionary *receipt = dictionaryWithAppStoreReceipt(path);
 	
@@ -342,7 +342,7 @@ BOOL validateReceiptAtPath(NSString * path)
 	NSString *bundleVersion = nil;
 	NSString *bundleIdentifer = nil;
 	
-#ifndef USE_SAMPLE_RECEIPT
+#if USE_SAMPLE_RECEIPT == 0
 	guidData = (NSData*)copy_mac_address();
 	[guidData autorelease];
 
