@@ -65,8 +65,6 @@
 #define UMODE		@"UMODE"
 #define VERSION		@"VERSION"
 #define WEIGHTS		@"WEIGHTS"
-#define UPTIME		@"UPTIME"
-#define SYSINFO		@"SYSINFO"
 #define ECHOCMD		@"ECHO"
 #define DEBUGCMD		@"DEBUG"
 #define AMSG		@"AMSG"
