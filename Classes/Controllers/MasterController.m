@@ -810,10 +810,11 @@
 	NSString* lowerCurrent = [current lowercaseString];
 	
 	NSArray* lowerChoices;
-	NSArray* choices;
+	NSMutableArray* choices;
+	NSArray* plugin_commands;
 	
 	if (commandMode) {
-		choices = [NSArray arrayWithObjects:
+		choices = [NSMutableArray arrayWithObjects:
 				   @"away", @"error", @"invite", @"ison", @"join", @"kick", @"kill", @"list", @"mode", @"names", 
 				   @"nick", @"notice", @"part", @"pass", @"ping", @"pong", @"privmsg", @"quit", @"topic", @"user",
 				   @"who", @"whois", @"whowas", @"action", @"send", @"clientinfo", @"ctcp", @"ctcpreply", 
@@ -824,6 +825,11 @@
 				   @"ame", @"remove", @"kb", @"kickban", @"icbadge",  @"server", @"conn", @"myversion", 
                    @"sysinfo", @"memory", @"resetfiles", @"mute", @"unmute",
 				   nil];
+		plugin_commands = [[world bundlesForUserInput] allKeys];
+		for (NSString* command in plugin_commands) {
+			[choices addObject:[command lowercaseString]];
+		}
+		
 		lowerChoices = choices;
 	} else if (channelMode) {
 		NSMutableArray* channels = [NSMutableArray array];
