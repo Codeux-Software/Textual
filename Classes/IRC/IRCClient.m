@@ -3014,8 +3014,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self sendCTCPReply:nick command:command text:text];
 		} else if ([command isEqualToString:USERINFO]) {
 			[self sendCTCPReply:nick command:command text:config.userInfo ?: @""];
-		} else if ([command isEqualToString:UPTIME]) {
-			[self sendCTCPReply:nick command:command text:TXReadableTime((NSTimeInterval)[Preferences startTime], YES)];
 		} else if ([command isEqualToString:CLIENTINFO]) {
 			[self sendCTCPReply:nick command:command text:TXTLS(@"DCC VERSION CLIENTINFO USERINFO PING TIME")];
 		}

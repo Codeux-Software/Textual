@@ -823,7 +823,7 @@
 				   @"msg", @"op", @"raw", @"rejoin", @"query", @"quote", @"t", @"timer", @"voice", @"unban", 
 				   @"unignore", @"umode", @"version", @"weights", @"echo", @"debug", @"clearall", @"amsg", 
 				   @"ame", @"remove", @"kb", @"kickban", @"icbadge",  @"server", @"conn", @"myversion", 
-                   @"sysinfo", @"memory", @"resetfiles", @"mute", @"unmute",
+				   @"resetfiles", @"mute", @"unmute",
 				   nil];
 		plugin_commands = [[world bundlesForUserInput] allKeys];
 		for (NSString* command in plugin_commands) {
