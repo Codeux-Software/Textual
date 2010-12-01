@@ -57,6 +57,7 @@
 {
 	if (name) {
 		NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+		
 		if (kindAndName) {
 			NSString* kind = [kindAndName safeObjectAtIndex:0];
 			NSString* fname = [kindAndName safeObjectAtIndex:1];
@@ -70,7 +71,7 @@
 			NSFileManager *fm = [NSFileManager defaultManager];
 			
 			if ([fm fileExistsAtPath:path] == NO) {
-				if ([kind isEqualToString:@"resource"]) {
+				if ([kind isEqualToString:@"resource"] == NO) {
 					[path release];
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
 					
