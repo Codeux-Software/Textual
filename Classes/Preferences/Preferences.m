@@ -54,6 +54,11 @@ static NSString *processor = @"Unknown Architecture";
 
 static NSMutableDictionary *commandIndex;
 
++ (NSDictionary*)commandIndexList
+{
+	return commandIndex;
+}
+
 + (void)populateCommandIndex
 {
 	commandIndex = [[NSMutableDictionary alloc] init];

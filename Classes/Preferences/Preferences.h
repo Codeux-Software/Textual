@@ -62,6 +62,7 @@ typedef enum {
 + (NSString*)whereScriptsPath;
 + (NSString*)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
++ (NSDictionary*)commandIndexList;
 + (NSString*)whereThemesPath;
 + (NSString*)whereScriptsLocalPath;
 + (NSString*)whereThemesLocalPath;
