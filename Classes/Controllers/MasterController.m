@@ -811,22 +811,15 @@
 	
 	NSArray* lowerChoices;
 	NSMutableArray* choices;
-	NSArray* plugin_commands;
 	
 	if (commandMode) {
-		choices = [NSMutableArray arrayWithObjects:
-				   @"away", @"error", @"invite", @"ison", @"join", @"kick", @"kill", @"list", @"mode", @"names", 
-				   @"nick", @"notice", @"part", @"pass", @"ping", @"pong", @"privmsg", @"quit", @"topic", @"user",
-				   @"who", @"whois", @"whowas", @"action", @"send", @"clientinfo", @"ctcp", @"ctcpreply", 
-				   @"time", @"userinfo", @"version", @"omsg", @"onotice", @"ban", @"clear", @"close", @"cycle", 
-				   @"dehalfop", @"deop", @"devoice", @"halfop", @"hop", @"ignore", @"j", @"leave", @"m", @"me", 
-				   @"msg", @"op", @"raw", @"rejoin", @"query", @"quote", @"t", @"timer", @"voice", @"unban", 
-				   @"unignore", @"umode", @"version", @"weights", @"echo", @"debug", @"clearall", @"amsg", 
-				   @"ame", @"remove", @"kb", @"kickban", @"icbadge",  @"server", @"conn", @"myversion", 
-				   @"resetfiles", @"mute", @"unmute",
-				   nil];
-		plugin_commands = [[world bundlesForUserInput] allKeys];
-		for (NSString* command in plugin_commands) {
+		choices = [NSMutableArray array];
+		
+		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
+			[choices addObject:[command lowercaseString]];
+		}
+		
+		for (NSString* command in [[world bundlesForUserInput] allKeys]) {
 			[choices addObject:[command lowercaseString]];
 		}
 		
