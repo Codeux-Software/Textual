@@ -3074,9 +3074,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSData *response = [NSURLConnection sendSynchronousRequest:chRequest returningResponse:nil error:NULL]; 
 	
 	if (response) {
-		NSString *address = [[[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding] trim];
-		[self setDCCIPAddress:address];
-		[address release];
+		NSString *address = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
+		[address autorelease];
+		[self setDCCIPAddress:[address trim]];
 	}
 	
 	[pool release];

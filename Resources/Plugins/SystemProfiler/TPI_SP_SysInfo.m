@@ -137,7 +137,10 @@
 	NSMutableString *netstat = [NSMutableString stringWithString:@"Network Traffic:"];
 	
 	BOOL firstItemPassed = NO;
-	long net_ibytes, net_obytes;
+	
+	long net_ibytes = 0;
+	long net_obytes = 0;
+	
 	struct ifaddrs *ifa_list = 0, *ifa;
 	
 	if (getifaddrs(&ifa_list) == -1) {
@@ -154,8 +157,8 @@
 			
 			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) continue;
 			
-			net_ibytes += if_data->ifi_ibytes;
 			net_obytes += if_data->ifi_obytes;
+			net_ibytes += if_data->ifi_ibytes;
 			
 			if (firstItemPassed == NO) {
 				firstItemPassed = YES;
@@ -184,6 +187,8 @@
 	// <http://www.cocoabuilder.com/archive/cocoa/150006-detecting-volumes.html>
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	TXDevNullDestroyObject(pool); // Fix warning with analyzer saying pool value is never called
 	
 	BOOL firstItemPassed = NO;
 	NSString *result = @"Mounted Drives: ";
