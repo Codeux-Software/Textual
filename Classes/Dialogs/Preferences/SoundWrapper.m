@@ -50,6 +50,7 @@
 	if (value.length) {
 		[SoundPlayer play:value isMuted:NO];
 	}
+	
 	[Preferences setSound:value forEvent:eventType];
 }
 
@@ -71,6 +72,16 @@
 - (void)setGrowlSticky:(BOOL)value
 {
 	[Preferences setGrowlSticky:value forEvent:eventType];
+}
+
+- (BOOL)disableWhileAway
+{
+	return [Preferences disableWhileAwayForEvent:eventType];
+}
+
+- (void)setDisableWhileAway:(BOOL)value
+{
+	[Preferences setDisableWhileAway:value forEvent:eventType];
 }
 
 @end

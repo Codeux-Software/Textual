@@ -798,6 +798,20 @@ static NSMutableDictionary *commandIndex;
 	[ud setBool:value forKey:key];
 }
 
++ (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
+{
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:key];
+}
+
++ (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
+{
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:key];
+}
+
 #pragma mark -
 #pragma mark World
 

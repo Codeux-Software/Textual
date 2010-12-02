@@ -96,6 +96,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
 		
+		isAway = NO;
 		hasIRCopAccess = NO;
 		
 		reconnectTimer = [Timer new];
@@ -308,7 +309,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		
 		[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH target:nsc nick:nick text:text];
-		[SoundPlayer play:[Preferences soundForEvent:GROWL_ADDRESS_BOOK_MATCH] isMuted:world.soundMuted];
 	}	
 }
 
@@ -1276,6 +1276,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				[self send:cmd, s, nil];
 			}
+			
 			return YES;
 			break;
 		case 5: // Command: INVITE
@@ -2239,6 +2240,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
 	if (![Preferences growlEnabledForEvent:type]) return;
+	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return;
 	
 	IRCChannel* channel = nil;
 	NSString* chname = nil;
@@ -2267,6 +2269,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 }
 
 - (void)notifyEvent:(GrowlNotificationType)type
@@ -2278,6 +2281,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
 	if (![Preferences growlEnabledForEvent:type]) return;
+	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return;
 	
 	IRCChannel* channel = nil;
 	if (target) {
@@ -2322,6 +2326,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 }
 
 #pragma mark -
@@ -2815,7 +2820,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		
 		if (type == LINE_TYPE_NOTICE) {
 			[self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:anick text:text];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_CHANNEL_NOTICE] isMuted:world.soundMuted];
 		} else {
 			id t = c ?: (id)self;
 			[self setUnreadState:t];
@@ -2823,7 +2827,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : GROWL_CHANNEL_MSG;
 			[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
-			[SoundPlayer play:[Preferences soundForEvent:kind] isMuted:world.soundMuted];
 			
 			if (c) {
 				IRCUser* sender = [c findMember:anick];
@@ -2942,7 +2945,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				}
 				
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:anick text:text];
-				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE] isMuted:world.soundMuted];
 			} else {
 				if ([ignoreChecks ignorePrivateMsg] == YES) {
 					return;
@@ -2957,7 +2959,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
 				[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
-				[SoundPlayer play:[Preferences soundForEvent:kind] isMuted:world.soundMuted];
 				
 				[c.log setTopic:[NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address]];
 			}
@@ -3200,7 +3201,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[c deactivate];
 			[self reloadTree];
 			[self notifyEvent:GROWL_KICKED target:c nick:nick text:comment];
-			[SoundPlayer play:[Preferences soundForEvent:GROWL_KICKED] isMuted:world.soundMuted];
 		}
 		
 		[c removeMember:target];
@@ -3392,7 +3392,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 	
 	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_INVITED] isMuted:world.soundMuted];
 	
 	if ([Preferences autoJoinOnInvite]) {
 		[self send:JOIN, chname, nil, nil];
@@ -3420,10 +3419,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[world expandClient:self];
 	
+	isAway = NO;
 	isConnecting = NO;
 	isLoggedIn = YES;
 	conn.loggedIn = YES;
 	tryingNickNumber = -1;
+	hasIRCopAccess = NO;
 	
 	inList = NO;
 	
@@ -3433,7 +3434,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	myNick = [[m paramAt:0] retain];
 	
 	[self notifyEvent:GROWL_LOGIN];
-	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN] isMuted:world.soundMuted];
 	
 	if (config.nickPassword.length) {
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
@@ -3564,6 +3564,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			break;
 		}
+		case 305: 
+			isAway = NO;
+			[self printUnknownReply:m];
+			break;
+		case 306: 
+			isAway = YES;
+			[self printUnknownReply:m];
+			break;
 		case 307: // RPL_WHOISGENERAL
 		case 310: // RPL_WHOISGENERAL
 		case 313: // RPL_WHOISGENERAL
@@ -4173,8 +4181,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (prevConnected) {
 		[self notifyEvent:GROWL_DISCONNECT];
-		[SoundPlayer play:[Preferences soundForEvent:GROWL_DISCONNECT] isMuted:world.soundMuted]; 
 	}
+	
+	isAway = NO;
 }
 
 - (void)ircConnectionDidConnect:(IRCConnection*)sender
@@ -4384,4 +4393,5 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize inFirstISONRun;
 @synthesize hasIRCopAccess;
 @synthesize inWhoWasRequest;
+@synthesize isAway;
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSString* sound;
 @property (nonatomic, assign) BOOL growl;
 @property (nonatomic, assign) BOOL growlSticky;
+@property (nonatomic, assign) BOOL disableWhileAway;
 
 + (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType;
 
