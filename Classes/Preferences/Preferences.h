@@ -155,6 +155,8 @@ typedef enum {
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
 + (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
++ (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event;
++ (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event;
 
 + (void)setCompletionSuffix:(NSString*)value;
 

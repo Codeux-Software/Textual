@@ -277,8 +277,8 @@
 	NSMutableArray* sound_list = [NSMutableArray array];
 	NSArray *directoryContents = [fm contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
 
-	[sound_list addObject:@"-"];
-	
+	[sound_list addObject:EMPTY_SOUND];
+	 
 	if (directoryContents && [directoryContents count] > 0) {
 		for (NSString* s in directoryContents) {	
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
@@ -289,7 +289,7 @@
 	NSArray *homeDirectoryContents = [fm contentsOfDirectoryAtPath:home_sounds error:NULL];
 	
 	if (homeDirectoryContents && [homeDirectoryContents count] > 0) {
-		[sound_list addObject:@"-"];
+		[sound_list addObject:EMPTY_SOUND];
 		
 		for (NSString* s in homeDirectoryContents) {	
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];

@@ -63,6 +63,8 @@ typedef enum {
 	BOOL hasIRCopAccess;
 	BOOL inFirstISONRun;
 	
+	BOOL isAway;
+	
 	AddressDetectionType addressDetectionMethod;
 	NSString* myAddress;
 
@@ -119,6 +121,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL hasIRCopAccess;
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
+@property (nonatomic, assign) BOOL isAway;
 @property (nonatomic, retain) Timer* pongTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
