@@ -5,7 +5,7 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", @"msgcount", @"diskspace", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", @"msgcount", @"diskspace", @"theme", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -28,6 +28,8 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getBandwidthStats:[client world]]];
 			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllVolumesAndSizes]];
+			} else if ([commandString isEqualToString:@"THEME"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getCurrentThemeInUse:[client world]]];
 			}
 		}
 	}

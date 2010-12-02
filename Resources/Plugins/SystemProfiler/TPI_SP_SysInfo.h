@@ -20,6 +20,7 @@
 + (NSString *)applicationMemoryUsage;
 + (NSString *)applicationAndSystemUptime;
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
++ (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
 
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
 + (NSString *)formattedCPUFrequency:(double)rate;
