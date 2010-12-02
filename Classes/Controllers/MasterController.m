@@ -131,7 +131,7 @@
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 	
-	extrac = [[IRCExtras alloc] init];
+	extrac = [IRCExtras new];
 	
 	world = [IRCWorld new];
 	world.window = window;
