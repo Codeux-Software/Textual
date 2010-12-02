@@ -28,21 +28,21 @@ NSData *appleRootCert()
 	status = SecKeychainOpen("/System/Library/Keychains/SystemRootCertificates.keychain", &keychain);
 	
 	if (status) {
-		if (keychain) TXCFSpecialRelease(keychain);
+		if (keychain) CFRelease(keychain);
 		
 		return nil;
 	}
 	
 	CFArrayRef searchList = CFArrayCreate(kCFAllocatorDefault, (const void**)&keychain, 1, &kCFTypeArrayCallBacks);
 
-	if (keychain) TXCFSpecialRelease(keychain);
+	if (keychain) CFRelease(keychain);
 	
 	SecKeychainSearchRef searchRef = nil;
 	status = SecKeychainSearchCreateFromAttributes(searchList, kSecCertificateItemClass, NULL, &searchRef);
 	
 	if (status) {
-		if (searchRef) TXCFSpecialRelease(searchRef);
-		if (searchList) TXCFSpecialRelease(searchList);
+		if (searchRef) CFRelease(searchRef);
+		if (searchList) CFRelease(searchList);
 		
 		return nil;
 	}
@@ -69,21 +69,21 @@ NSData *appleRootCert()
 			status = SecCertificateGetData((SecCertificateRef)itemRef, &certData);
 			
 			if (status) {
-				if (itemRef) TXCFSpecialRelease(itemRef);
+				if (itemRef) CFRelease(itemRef);
 			}
 						
 			resultData = [NSData dataWithBytes:certData.Data length:certData.Length];
 			
 			SecKeychainItemFreeContent(&list, NULL);
 			
-			if (itemRef) TXCFSpecialRelease(itemRef);
+			if (itemRef) CFRelease(itemRef);
 		}
 		
         [name release];
 	}
 	
-	TXCFSpecialRelease(searchList);
-	TXCFSpecialRelease(searchRef);
+	CFRelease(searchList);
+	CFRelease(searchRef);
 	
 	return resultData;
 }
@@ -317,7 +317,7 @@ CFDataRef copy_mac_address(void)
         kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService);
 		
         if (kernResult == KERN_SUCCESS)  {
-            if (macAddress) TXCFSpecialRelease(macAddress);
+            if (macAddress) CFRelease(macAddress);
 			
             macAddress = IORegistryEntryCreateCFProperty(parentService, CFSTR("IOMACAddress"), kCFAllocatorDefault, 0);
 			
