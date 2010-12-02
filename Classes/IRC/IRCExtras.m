@@ -20,7 +20,6 @@
 
 - (void)dealloc
 {
-	[world release];
 	[super dealloc];
 }
 
