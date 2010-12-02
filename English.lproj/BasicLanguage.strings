@@ -26,13 +26,12 @@
 
 "SOURCE_RESOURCES_FILES_RESET" = "Files reset. Please restart Textual to apply changes.";
 
+"SOUND_IS_NOT_MUTED" = "Sound is not muted.";
 "SOUND_HAS_BEEN_MUTED" = "Sound has been muted.";
 "SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
-"SOUND_IS_NOT_MUTED" = "Sound is not muted.";
 
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
-"UPDATING_APPLICATION_QUIT_MESSAGE" = "Updating Textual - http://www.codeux.com/textual/ — :-)";
 
 "OK_BUTTON" = "OK";
 "QUIT_BUTTON" = "Quit";
@@ -53,11 +52,6 @@
 
 "WANT_CHANNEL_DELETE_TITLE" = "Do you want to delete the selection?";
 "WANT_CHANNEL_DELETE_MESSAGE" = "There is no undo and all data related to this channel will be erased.";
-
-"ABOUT_WINDOW_BUILD_NUMBER" = "Version %1$@ (Build #%2$@)";
-"TEXTUAL_PREFERENCES_WINDOW_TITLE" = "Textual Preferences: %@";
-
-"CHANNEL_LIST_NETWORK_NAME" = "%@ Channel List";
 
 /* Dynamic NSMenu items */
 
@@ -117,6 +111,10 @@
 "INVITE_SHEET_TWO_PEOPLE" = "%1$@ and %2$@";
 "INVITE_SHEET_MULTIPLE_PEOPLE" = "%d users";
 "INVITE_SHEET_TARGET_DESC" = "Invite %@ to:";
+
+"ABOUT_WINDOW_BUILD_NUMBER" = "Version %1$@ (Build #%2$@)";
+
+"CHANNEL_LIST_NETWORK_NAME" = "%@ Channel List";
 
 /* User Tracking */
 
