@@ -600,8 +600,8 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSString *s = self;
 	
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x03] withString:@"▤"]; // bold
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x02] withString:@"▥"]; // color
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x03] withString:@"▤"]; // color
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x02] withString:@"▥"]; // bold
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x16] withString:@"▧"]; // italics
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x1F] withString:@"▨"]; // underline
 	
@@ -612,8 +612,8 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSString *s = self;
 	
-	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithFormat:@"%c", (UniChar)0x03]]; // bold
-	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithFormat:@"%c", (UniChar)0x02]]; // color
+	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithFormat:@"%c", (UniChar)0x03]]; // color
+	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithFormat:@"%c", (UniChar)0x02]]; // bold
 	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithFormat:@"%c", (UniChar)0x16]]; // italics
 	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithFormat:@"%c", (UniChar)0x1F]]; // underline
 	
