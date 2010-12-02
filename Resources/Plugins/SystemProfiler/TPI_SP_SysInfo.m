@@ -15,6 +15,9 @@
 #import <OpenGL/OpenGL.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
+#include "Preferences.h"
+#include "NSArrayHelper.h"
+
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
 
 @implementation TPI_SP_SysInfo
@@ -122,6 +125,20 @@
 	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime(IntervalSinceTextualStart(), YES)];
 }
 
++ (NSString *)getCurrentThemeInUse:(IRCWorld *)world
+{
+    NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+    
+    if (kindAndName) {
+        NSString* fname = [kindAndName safeObjectAtIndex:1];
+        
+        if (fname) {
+            return [NSString stringWithFormat:@"Current Theme: %@", fname];
+        }
+    }
+    
+    return @"Current Theme: Unknown";
+}
 
 + (NSString *)getBandwidthStats:(IRCWorld *)world
 {
