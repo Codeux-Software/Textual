@@ -26,7 +26,7 @@ static NSDictionary *themeLocalizations = nil;
 	} else {
 		NSString *localstring = [themeLocalizations objectForKey:key];
 		
-		if (localstring) return localstring;
+		if (localstring) return [localstring stringWithASCIIFormatting];
 		
 		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);;
 	}
