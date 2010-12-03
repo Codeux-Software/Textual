@@ -114,23 +114,23 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 	NSUInteger val = 0.;
 	NSString *retval = nil;
 	
-	if( secs < 0 ) secs *= -1;
+	if ( secs < 0 ) secs *= -1;
 	
 	breaks = [[[desc allKeys] mutableCopy] autorelease];
 	[breaks sortUsingSelector:@selector( compare: )];
 	
 	while( i < [breaks count] && secs >= [[breaks safeObjectAtIndex:i] doubleValue] ) i++;
-	if( i > 0 ) i--;
+	if ( i > 0 ) i--;
 	stop = [[breaks safeObjectAtIndex:i] unsignedIntegerValue];
 	
 	val = (NSUInteger) ( secs / (CGFloat) stop );
 	use = ( val > 1 ? plural : desc );
 	retval = [NSString stringWithFormat:@"%u%@", val, [use objectForKey:[NSNumber numberWithUnsignedLong:stop]]];
-	if( longFormat && i > 0 ) {
+	if ( longFormat && i > 0 ) {
 		NSUInteger rest = (NSUInteger) ( (NSUInteger) secs % stop );
 		stop = [[breaks safeObjectAtIndex:--i] unsignedIntegerValue];
 		rest = (NSUInteger) ( rest / (CGFloat) stop );
-		if( rest > 0 ) {
+		if ( rest > 0 ) {
 			use = ( rest > 1 ? plural : desc );
 			retval = [retval stringByAppendingFormat:@" %u%@", rest, [use objectForKey:[breaks safeObjectAtIndex:i]]];
 		}

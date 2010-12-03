@@ -23,12 +23,12 @@
 
 - (void)setWebFrame:(WebFrameView*)aWebFrame
 {
-	if(aWebFrame == webFrame)
+	if (aWebFrame == webFrame)
 		return;
 	
 	webFrame = aWebFrame;
 	
-	if(webFrame)
+	if (webFrame)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
@@ -46,7 +46,7 @@
 - (void)webViewDidChangeBounds:(NSNotification*)aNotification
 {
 	NSClipView* clipView = [[[webFrame documentView] enclosingScrollView] contentView];
-	if(clipView != [aNotification object])
+	if (clipView != [aNotification object])
 		return;
 	
 	lastVisibleRect = [[clipView documentView] visibleRect];
@@ -55,12 +55,12 @@
 - (void)webViewDidChangeFrame:(NSNotification*)aNotification
 {
 	NSView* view = [aNotification object];
-	if(view != webFrame && view != [webFrame documentView])
+	if (view != webFrame && view != [webFrame documentView])
 		return;
 	
-	if(view == [webFrame documentView])
+	if (view == [webFrame documentView])
 	{
-		if(NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
+		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
 		{
 			[self scrollViewToBottom:view];
 			lastVisibleRect = [view visibleRect];
@@ -68,9 +68,9 @@
 		lastFrame = [view frame];
 	}
 	
-	if(view == webFrame)
+	if (view == webFrame)
 	{
-		if(NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
+		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
 		{
 			[self scrollViewToBottom:[webFrame documentView]];
 		}

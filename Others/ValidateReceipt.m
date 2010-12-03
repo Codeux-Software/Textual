@@ -142,22 +142,6 @@ NSDictionary *dictionaryWithAppStoreReceipt(NSString *path)
 				BIO_free(payload);
 			}
 
-#if 0
-			unsigned long err = ERR_get_error();
-
-			if (err) {
-				printf("%lu: %s\n",err,ERR_error_string(err,NULL));
-			} else {
-				STACK_OF(X509) *stack = PKCS7_get0_signers(p7, NULL, 0);
-				
-				for(NSUInteger i = 0; i < sk_num(stack); i++) {
-					const X509 *signer = (X509*)sk_value(stack, i);
-					
-					NSLog(@"name = %s", signer->name);
-				}
-			}
-#endif
-
 			X509_free(appleCA);
 		}
 		
@@ -342,7 +326,6 @@ BOOL validateReceiptAtPath(NSString *path)
 	NSString *bundleVersion = nil;
 	NSString *bundleIdentifer = nil;
 	
-#if USE_SAMPLE_RECEIPT == 0
 	guidData = (NSData*)copy_mac_address();
 	[guidData autorelease];
 
@@ -350,12 +333,6 @@ BOOL validateReceiptAtPath(NSString *path)
 	
 	bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	bundleIdentifer = [[NSBundle mainBundle] bundleIdentifier];
-#else
-	unsigned char guid[] = { 0x00, 0x17, 0xf2, 0xc4, 0xbc, 0xc0 };		
-	guidData = [NSData dataWithBytes:guid length:sizeof(guid)];
-	bundleVersion = @"1.0.2";
-	bundleIdentifer = @"com.example.SampleApp";
-#endif
 	
 	NSMutableData *input = [NSMutableData data];
 	

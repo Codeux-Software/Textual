@@ -249,7 +249,7 @@
 	if (SecKeychainSearchCopyNext (search, &item) == noErr) {
 		password = [self getPasswordFromSecKeychainItemRef:item];
 	
-		if(!password) {
+		if (!password) {
 			password = @"";
 		}	
 		

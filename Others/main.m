@@ -11,14 +11,18 @@ int main(int argc, const char* argv[])
 #ifdef VALIDATE_APPSTORE_RECEIPT
 #if VALIDATE_APPSTORE_RECEIPT == 1
 	
-	if (USE_SAMPLE_RECEIPT) {
-		if (validateReceiptAtPath(@"~/Documents/AppStoreReceipt") == NO) {
-			exit(173);
-		}
+    NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:receipt] == NO) {
+		exit(173);
 	} else {
-		//if (validateReceiptAtPath([[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"]) == NO) {
-		//	exit(173);
-		//}
+		BOOL validRec = validateReceiptAtPath(receipt);
+		
+		if (validRec == NO) {
+			exit(173);
+		} else {
+			NSLog(@"Valid app store receipt located. Launching.");
+		}
 	}
 	
 #endif

@@ -1167,8 +1167,8 @@ static NSMutableArray* excludeWords;
 	[ud addObserver:(NSObject*)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-	if(!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-	if(!systemVersionPlist) exit(10);
+	if (!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+	if (!systemVersionPlist) exit(10);
 	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
 	
