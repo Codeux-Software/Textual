@@ -111,7 +111,8 @@
 	NSMutableString* s = [NSMutableString string];
 	
 	NSInteger count = params.count;
-	for (NSInteger i=index; i<count; i++) {
+	
+	for (NSInteger i = index; i < count; i++) {
 		NSString* e = [params safeObjectAtIndex:i];
 		if (i != index) [s appendString:@" "];
 		[s appendString:e];

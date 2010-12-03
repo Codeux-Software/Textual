@@ -61,7 +61,7 @@
 	NSInteger from = characterRange.location;
 	NSInteger to = NSMaxRange(characterRange);
 	
-	for (NSInteger i=from; i<to; ++i) {
+	for (NSInteger i = from; i < to; ++i) {
 		NSNumber* charKey = [NSNumber numberWithInteger:i];
 		[map setObject:NSStringFromSelector(selector) forKey:charKey];
 	}

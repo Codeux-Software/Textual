@@ -25,10 +25,12 @@ typedef enum {
 	
 	KanaEncoding enc = ENC_OTHER;
 	
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		unsigned char c = src[i];
+		
 		if (c == ESC) {
 			BOOL seq = NO;
+			
 			if (i+2 < len) {
 				unsigned char d = src[i+1];
 				unsigned char e = src[i+2];

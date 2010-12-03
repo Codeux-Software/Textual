@@ -53,7 +53,7 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 {
 	attr_t target = attrBuf[start];
 	
-	for (NSInteger i=start; i<len; ++i) {
+	for (NSInteger i = start; i < len; ++i) {
 		attr_t t = attrBuf[i];
 		if (t != target) {
 			return i - start;
@@ -206,7 +206,7 @@ attributedString:(BOOL)attributed
 	UniChar dest[len];
 	NSInteger n = 0;
 	
-	for (NSInteger i=0; i<len; i++) {
+	for (NSInteger i = 0; i < len; i++) {
 		UniChar c = source[i];
 		if (c < 0x20) {
 			switch (c) {

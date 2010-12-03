@@ -58,9 +58,11 @@
 		[d appendString:command];
 		
 		NSInteger count = [params count];
+		
 		if (count > 0) {
-			for (NSInteger i=0; i<count-1; ++i) {
+			for (NSInteger i = 0; i < count-1; ++i) {
 				NSString* s = [params safeObjectAtIndex:i];
+				
 				[d appendString:@" "];
 				[d appendString:s];
 			}

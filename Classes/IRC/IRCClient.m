@@ -867,7 +867,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSMutableString* s = [NSMutableString string];
 		[s appendFormat:@"%@ %@ %c", MODE, channel.name, value ? '+' : '-'];
 		
-		for (NSInteger i=ary.count-1; i>=0; --i) {
+		for (NSInteger i = (ary.count - 1); i >= 0; --i) {
 			[s appendFormat:@"%c", mode];
 		}
 		
@@ -1655,7 +1655,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					NSMutableString* ms = [NSMutableString stringWithString:sign];
 					NSString* modeCharStr = [[cmd safeSubstringToIndex:1] lowercaseString];
 					
-					for (NSInteger i=params.count-1; i>=0; --i) {
+					for (NSInteger i = (params.count - 1); i >= 0; --i) {
 						[ms appendString:modeCharStr];
 					}
 					
@@ -1780,7 +1780,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				} else {
 					NSMutableArray* ignores = config.ignores;
 					
-					for (NSInteger i=ignores.count-1; i>=0; --i) {
+					for (NSInteger i = (ignores.count - 1); i >= 0; --i) {
 						AddressBook* e = [ignores safeObjectAtIndex:i];
 						
 						if ([g.hostmask isEqualToString:e.hostmask]) {
@@ -2096,12 +2096,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSMutableString* s = [NSMutableString stringWithString:str];
 	
 	NSInteger count = ary.count;
-	for (NSInteger i=0; i<count; i++) {
+	for (NSInteger i = 0; i < count; i++) {
 		NSString* e = [ary safeObjectAtIndex:i];
+		
 		[s appendString:@" "];
+		
 		if (i == count-1 && (e.length == 0 || [e hasPrefix:@":"] || [e contains:@" "])) {
 			[s appendString:@":"];
 		}
+		
 		[s appendString:e];
 	}
 	
@@ -2446,7 +2449,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				if (pad > 0) {
 					NSMutableString* ms = [NSMutableString stringWithString:nick];
 					
-					for (NSInteger i=0; i<pad; ++i) {
+					for (NSInteger i = 0; i < pad; ++i) {
 						[ms appendString:@" "];
 					}
 					
@@ -2458,7 +2461,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				if (pad > 0) {
 					NSMutableString* ms = [NSMutableString string];
 					
-					for (NSInteger i=0; i<pad; ++i) {
+					for (NSInteger i = 0; i < pad; ++i) {
 						[ms appendString:@" "];
 					}
 					
@@ -4111,17 +4114,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSString* nick = [sentNick safeSubstringToIndex:isupport.nickLen];
 		BOOL found = NO;
 		
-		for (NSInteger i=nick.length-1; i>=0; --i) {
+		for (NSInteger i = (nick.length - 1); i >= 0; --i) {
 			UniChar c = [nick characterAtIndex:i];
 			if (c != '_') {
 				found = YES;
+				
 				NSString* head = [nick safeSubstringToIndex:i];
 				NSMutableString* s = [[head mutableCopy] autorelease];
-				for (NSInteger i=isupport.nickLen - s.length; i>0; --i) {
+				
+				for (NSInteger i = (isupport.nickLen - s.length); i > 0; --i) {
 					[s appendString:@"_"];
 				}
+				
 				[sentNick release];
 				sentNick = [s retain];
+				
 				break;
 			}
 		}

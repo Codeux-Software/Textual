@@ -147,7 +147,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 		}
 	}
 	
-	for (NSInteger i=left; i<right; ++i) {
+	for (NSInteger i = left; i < right; ++i) {
 		if (compareItems([ary safeObjectAtIndex:i], item, self) == NSOrderedDescending) {
 			[ary insertObject:item atIndex:i];
 			return;

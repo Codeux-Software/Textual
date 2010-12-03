@@ -209,6 +209,7 @@
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
 	id sel = world.selected;
+    
 	if (sel) {
 		[sel resetState];
 		[world updateIcon];
@@ -758,8 +759,9 @@
 	NSString* pre = [s safeSubstringToIndex:selectedRange.location];
 	NSString* sel = [s substringWithRange:selectedRange];
 
-	for (NSInteger i=pre.length-1; i>=0; --i) {
+	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
 		UniChar c = [pre characterAtIndex:i];
+		
 		if (c != ' ') {
 			;
 		} else {
@@ -794,8 +796,9 @@
 	NSString* current = [pre stringByAppendingString:sel];
 	
 	NSInteger len = current.length;
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = [current characterAtIndex:i];
+		
 		if (c != ' ' && c != ':') {
 			;
 		} else {

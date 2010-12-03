@@ -105,27 +105,28 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 	} else {
 		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:2]
-						  withItemKind:@"application password"
-						   forUsername:nil
-					   withNewPassword:pass
-						   withComment:host
-						   serviceName:[self keychainServiceID:2]];
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								withComment:host
+								serviceName:[self keychainServiceID:2]];
 	}
+	
 	[nickPassword autorelease];
-	nickPassword=[pass retain];
-
+	nickPassword = [pass retain];
 }
 
 - (NSString*)password
 {
 	if([password isEqual:@""]) {
 		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
-															 withItemKind:@"application password" 
-															  forUsername:nil 
-															  serviceName:[self keychainServiceID:1]];
-	if (kPassword) password = [kPassword retain];
+														 withItemKind:@"application password" 
+														  forUsername:nil 
+														  serviceName:[self keychainServiceID:1]];
+		if (kPassword) password = [kPassword retain];
 	}
-return password;
+	
+	return password;
 }
 
 - (void)setPassword:(NSString *)pass
@@ -137,15 +138,15 @@ return password;
 						   serviceName:[self keychainServiceID:1]];		
 	} else {
 		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:1]
-						  withItemKind:@"application password"
-						   forUsername:nil
-					   withNewPassword:pass
-						   withComment:host
-						   serviceName:[self keychainServiceID:1]];			
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								withComment:host
+								serviceName:[self keychainServiceID:1]];			
 	}
+	
 	[password autorelease];
-	password=[pass retain];
-
+	password = [pass retain];
 }
 
 - (NSString*)keychainServiceID:(NSInteger)type
@@ -170,7 +171,7 @@ return password;
 {
 	[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
 					  withItemKind:@"application password"
-						forUsername:nil
+					   forUsername:nil
 					   serviceName:[self keychainServiceID:1]];
 	
 	[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
@@ -192,7 +193,7 @@ return password;
 		[name release];
 		name = [[dic stringForKey:@"name"] retain];
 	}
-			
+	
 	host = [[dic stringForKey:@"host"] retain] ?: @"";
 	port = [dic intForKey:@"port"] ?: 6667;
 	
@@ -200,7 +201,7 @@ return password;
 		[nick release];
 		nick = [[dic stringForKey:@"nick"] retain];
 	}
-		
+	
 	// * =================================== * //
 	
 	useSSL = [dic boolForKey:@"ssl"];
@@ -286,7 +287,7 @@ return password;
 - (NSMutableDictionary*)dictionaryValue
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-		
+	
 	// * =================================== * //
 	
 	if (guid) [dic setObject:guid forKey:@"guid"];

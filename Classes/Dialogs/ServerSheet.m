@@ -346,8 +346,10 @@
 	[self save];
 	
 	NSMutableArray* ignores = config.ignores;
-	for (NSInteger i=ignores.count-1; i>=0; --i) {
+	
+	for (NSInteger i = (ignores.count - 1); i >= 0; --i) {
 		AddressBook* g = [ignores safeObjectAtIndex:i];
+		
 		if ([g.hostmask length] < 1) {
 			[ignores safeRemoveObjectAtIndex:i];
 		}
