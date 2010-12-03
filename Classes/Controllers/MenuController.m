@@ -789,13 +789,14 @@
 	IRCChannel* c = world.selectedChannel;
 	if (NO_CLIENT_OR_CHANNEL) return;
 	
-	modeSheet = [ModeSheet new];
-	modeSheet.delegate = self;
-	modeSheet.window = window;
-	modeSheet.uid = u.uid;
-	modeSheet.cid = c.uid;
-	modeSheet.mode = [[c.mode mutableCopy] autorelease];
-	modeSheet.channelName = c.name;
+	ModeSheet *m = [ModeSheet new];
+	m.delegate = self;
+	m.window = window;
+	m.uid = u.uid;
+	m.cid = c.uid;
+	m.mode = [[c.mode mutableCopy] autorelease];
+	m.channelName = c.name;
+	self.modeSheet=m;
 	[modeSheet start];
 }
 
