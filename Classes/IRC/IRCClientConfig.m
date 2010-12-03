@@ -85,7 +85,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (NSString *)nickPassword
 {
-	if([nickPassword isEqual:@""]) {
+	if ([nickPassword isEqual:@""]) {
 		NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
 															 withItemKind:@"application password" 
 															  forUsername:nil 
@@ -118,7 +118,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (NSString*)password
 {
-	if([password isEqual:@""]) {
+	if ([password isEqual:@""]) {
 		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
 														 withItemKind:@"application password" 
 														  forUsername:nil 

@@ -37,7 +37,7 @@ typedef enum {
 				
 				switch (d) {
 					case '$':
-						switch (e){
+						switch (e) {
 							case 'B':
 							case 'b':
 							case '@':
@@ -103,7 +103,7 @@ typedef enum {
 				
 				switch (d) {
 					case '$':
-						switch (e){
+						switch (e) {
 							case 'B':
 							case 'b':
 							case '@':

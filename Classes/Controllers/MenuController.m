@@ -820,7 +820,7 @@
 
 - (void)onAddChannel:(id)sender
 {
-	if (channelSheet){
+	if (channelSheet) {
 		[channelSheet show];
 		return;
 	}
@@ -868,7 +868,7 @@
 
 - (void)onChannelProperties:(id)sender
 {
-	if (channelSheet){
+	if (channelSheet) {
 		[channelSheet show];
 		return;
 	}
@@ -1134,7 +1134,7 @@
 
 - (void)onWantAboutWindowShown:(id)sender
 {
-	if (aboutPanel){
+	if (aboutPanel) {
 		[aboutPanel show];
 		return;
 	}

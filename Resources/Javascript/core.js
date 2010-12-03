@@ -38,11 +38,11 @@ Textual = {
 	
 	// should be overridden by your class to do 
 	// any clean up logic prior to themes changing
-	willDoThemeChange:function(){},
+	willDoThemeChange:function() {},
 	
 	// should be overridden by your class to do any clean 
 	// up logic needed after the theme has been changed
-	doneThemeChange:function(){},
+	doneThemeChange:function() {},
 	
 	/* The following function calls are required. */
 	on_url: function() { Textual.old_api("on_url") || app.setUrl(event.target.innerHTML); },

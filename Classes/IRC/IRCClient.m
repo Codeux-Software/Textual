@@ -1502,7 +1502,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 						t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
 					}
 					
-					[self send:localCmd, [targets componentsJoinedByString:@","], t, nil];
+					[self send:localCmd, [targetsResult componentsJoinedByString:@","], t, nil];
 				}
 			} 
 			
