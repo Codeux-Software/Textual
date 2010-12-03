@@ -161,10 +161,11 @@
 // sensative auto-complete ordering
 - (void)detectOutgoingConversation:(NSString*)text
 {
-	NSArray* pieces = [text split:@":"];
-	if ([pieces count]>1){
-		NSString* nick=[pieces objectAtIndex:0];
-		IRCUser* talker=[self findMember:nick];
+	NSArray* pieces = [text split:[Preferences completionSuffix]];
+	if ([pieces count] > 1){
+		NSString* nick = [pieces objectAtIndex:0];
+		IRCUser* talker = [self findMember:nick];
+		
 		if (talker) {
 			[talker incomingConversation];
 		}
@@ -215,12 +216,14 @@
 - (void)sortedInsert:(IRCUser*)item
 {
 	const NSInteger LINEAR_SEARCH_THRESHOLD = 5;
+	
 	NSInteger left = 0;
 	NSInteger right = members.count;
 	
 	while (right - left > LINEAR_SEARCH_THRESHOLD) {
 		NSInteger i = (left + right) / 2;
 		IRCUser* t = [members safeObjectAtIndex:i];
+		
 		if ([t compare:item] == NSOrderedAscending) {
 			left = i + 1;
 		} else {
@@ -228,8 +231,9 @@
 		}
 	}
 	
-	for (NSInteger i=left; i<right; ++i) {
+	for (NSInteger i = left; i < right; ++i) {
 		IRCUser* t = [members safeObjectAtIndex:i];
+		
 		if ([t compare:item] == NSOrderedDescending) {
 			[members insertObject:item atIndex:i];
 			return;

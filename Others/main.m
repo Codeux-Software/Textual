@@ -16,9 +16,9 @@ int main(int argc, const char* argv[])
 			exit(173);
 		}
 	} else {
-		if (validateReceiptAtPath([[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"]) == NO) {
-			exit(173);
-		}
+		//if (validateReceiptAtPath([[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"]) == NO) {
+		//	exit(173);
+		//}
 	}
 	
 #endif

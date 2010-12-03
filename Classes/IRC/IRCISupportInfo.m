@@ -71,6 +71,7 @@
 	
 	for (NSString* s in ary) {
 		NSRange r = [s rangeOfString:@"="];
+		
 		if (r.location != NSNotFound) {
 			NSString* key = [[s safeSubstringToIndex:r.location] uppercaseString];
 			NSString* value = [s safeSubstringFromIndex:NSMaxRange(r)];
@@ -106,8 +107,10 @@
 			token = [token safeSubstringFromIndex:1];
 			
 			NSInteger len = token.length;
-			for (NSInteger i=0; i<len; i++) {
+			
+			for (NSInteger i = 0; i < len; i++) {
 				c = [token characterAtIndex:i];
+				
 				switch (c) {
 					case '-':
 						plus = NO;
@@ -163,7 +166,8 @@
 			str = [str substringWithRange:NSMakeRange(1, r.location - 1)];
 			
 			NSInteger len = str.length;
-			for (NSInteger i=0; i<len; i++) {
+			
+			for (NSInteger i = 0; i < len; i++) {
 				UniChar c = [str characterAtIndex:i];
 				[self setValue:OP_VALUE forMode:c];
 			}
@@ -176,10 +180,12 @@
 	NSArray* ary = [str split:@","];
 	
 	NSInteger count = ary.count;
-	for (NSInteger i=0; i<count; i++) {
+	
+	for (NSInteger i = 0; i < count; i++) {
 		NSString* s = [ary safeObjectAtIndex:i];
 		NSInteger len = s.length;
-		for (NSInteger j=0; j<len; j++) {
+		
+		for (NSInteger j = 0; j < len; j++) {
 			UniChar c = [s characterAtIndex:j];
 			[self setValue:i+1 forMode:c];
 		}

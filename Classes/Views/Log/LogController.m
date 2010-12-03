@@ -377,7 +377,7 @@
 	DOMNodeList* nodeList = [body childNodes];
 	
 	n = nodeList.length - maxLines;
-	for (NSInteger i=n-1; i>=0; --i) {
+	for (NSInteger i = (n - 1); i >= 0; --i) {
 		[body removeChild:[nodeList item:i]];
 	}
 	
@@ -622,12 +622,15 @@
 		
 	// apply new style overrides
 	if (os) {
-		DOMHTMLElement* head=(DOMHTMLElement*)[self html_head];
+		DOMHTMLElement* head = (DOMHTMLElement*)[self html_head];
+		
 		if (head) {
-			DOMHTMLElement* style=(DOMHTMLElement*)[doc createElement:@"style"];
+			DOMHTMLElement* style = (DOMHTMLElement*)[doc createElement:@"style"];
+			
 			[style setAttribute:@"id" value:@"textual_override_style"];
 			[style setAttribute:@"type" value:@"text/css"];
 			[style setInnerHTML:os];
+			
 			[head appendChild:style];
 		}
 	}

@@ -14,7 +14,7 @@
 	NSInteger code = 0;
 	NSRange range;
 	
-	for (NSInteger i=0; i<len; i++) {
+	for (NSInteger i = 0; i < len; i++) {
 		unsigned char c = bytes[i];
 		
 		if (rest <= 0) {
@@ -70,7 +70,7 @@
 	NSInteger code = 0;
 	NSRange range;
 	
-	for (NSInteger i=0; i<len; i++) {
+	for (NSInteger i = 0; i < len; i++) {
 		unsigned char c = bytes[i];
 		
 		if (rest <= 0) {

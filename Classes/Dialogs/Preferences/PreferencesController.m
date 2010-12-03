@@ -472,7 +472,7 @@
 	
 	NSInteger count = [themeButton numberOfItems];
 	
-	for (NSInteger i=0; i<count; i++) {
+	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem* item = [themeButton itemAtIndex:i];
 		
 		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {

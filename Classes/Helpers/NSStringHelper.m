@@ -142,7 +142,7 @@
 	NSMutableArray* lines = [NSMutableArray array];
 	NSInteger start = 0;
 	
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
 		if (c == LF || c == CR) {
 			NSInteger pos = i;
@@ -201,7 +201,7 @@
 	const UniChar* buffer = [self getCharactersBuffer];
 	if (!buffer) return NO;
 	
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		if (!(IsNumeric(c))) {
 			return NO;
@@ -218,8 +218,9 @@
 	const UniChar* buffer = [self getCharactersBuffer];
 	if (!buffer) return NO;
 	
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
+		
 		if (!(IsAlphaNum(c))) {
 			return NO;
 		}
@@ -304,8 +305,9 @@ BOOL isUnicharDigit(unichar c)
 	UniChar dest[len];
 	NSInteger n = 0;
 	
-	for (NSInteger i=0; i<len; i++) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
+		
 		if (IsWordLetter(c)) {
 			dest[n++] = c;
 		} else {
@@ -358,8 +360,9 @@ BOOL isUnicharDigit(unichar c)
 	unichar* buf = alloca(buflen);
 	NSInteger pos = 0;
 	
-	for (NSInteger i=0; i<len; i++) {
+	for (NSInteger i = 0; i < len; ++i) {
 		unichar c = src[i];
+		
 		if (c < 0x20) {
 			switch (c) {
 				case 0x2:
@@ -518,12 +521,12 @@ BOOL isUnicharDigit(unichar c)
 	char buf[len*4];
 	char* dest = buf;
 	
-	for (NSInteger i=len-1; i>=0; --i) {
+	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
+		
 		if (IsWordLetter(c) || c == '-' || c == '.' || c == '~') {
 			*dest++ = c;
-		}
-		else {
+		} else {
 			*dest++ = '%';
 			*dest++ = characters[c / 16];
 			*dest++ = characters[c % 16];
@@ -546,8 +549,9 @@ BOOL isUnicharDigit(unichar c)
 	char buf[len*4];
 	char* dest = buf;
 	
-	for (NSInteger i=len-1; i>=0; --i) {
+	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
+		
 		if (IsWordLetter(c)
 			|| c == '#'
 			|| c == '%'
@@ -656,7 +660,7 @@ BOOL isUnicharDigit(unichar c)
 	BOOL escaped = NO;
 	
 	NSInteger len = [self length];
-	for (NSInteger i=0; i<len; ++i) {
+	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (i == 0) {
@@ -685,8 +689,10 @@ BOOL isUnicharDigit(unichar c)
 			NSString* result = [self safeSubstringToIndex:i];
 			
 			NSInteger right;
-			for (right=i+1; right<len; ++right) {
+			
+			for (right = (i + 1); right < len; ++right) {
 				UniChar c = [self characterAtIndex:right];
+				
 				if (c != ' ') {
 					break;
 				}

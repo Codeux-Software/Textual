@@ -386,7 +386,7 @@
 		NSMutableArray* ary = [NSMutableArray array];
 		NSIndexSet* indexes = [memberList selectedRowIndexes];
 		
-		for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
+		for (NSUInteger i = [indexes firstIndex]; i != NSNotFound; i = [indexes indexGreaterThanIndex:i]) {
 			IRCUser* m = [c memberAtIndex:i];
 			[ary addObject:m];
 		}
@@ -657,7 +657,7 @@
 	d.config = [[IRCClientConfig new] autorelease];
 	d.uid = -1;
 	[d startWithIgnoreTab:NO];
-	self.serverSheet=d;
+	self.serverSheet = d;
 }
 
 - (void)onCopyServer:(id)sender
@@ -709,7 +709,7 @@
 	d.uid = u.uid;
 	d.client = u;
 	[d startWithIgnoreTab:ignore];
-	self.serverSheet=d;
+	self.serverSheet = d;
 }
 
 - (void)onServerProperties:(id)sender
@@ -731,7 +731,7 @@
 
 - (void)ServerSheetWillClose:(ServerSheet*)sender
 {
-	self.serverSheet=nil;
+	self.serverSheet = nil;
 }
 
 - (void)onJoin:(id)sender
@@ -766,7 +766,7 @@
 	t.uid = u.uid;
 	t.cid = c.uid;
 	[t start:c.topic];
-	self.topicSheet=t;
+	self.topicSheet = t;
 }
 
 - (void)topicSheet:(TopicSheet*)sender onOK:(NSString*)topic
@@ -796,7 +796,7 @@
 	m.cid = c.uid;
 	m.mode = [[c.mode mutableCopy] autorelease];
 	m.channelName = c.name;
-	self.modeSheet=m;
+	self.modeSheet = m;
 	[modeSheet start];
 }
 
@@ -844,7 +844,7 @@
 	d.uid = u.uid;
 	d.cid = -1;
 	[d start];
-	self.channelSheet=d;
+	self.channelSheet = d;
 }
 
 - (void)onDeleteChannel:(id)sender
@@ -884,7 +884,7 @@
 	d.uid = u.uid;
 	d.cid = c.uid;
 	[d start];
-	self.channelSheet=d;
+	self.channelSheet = d;
 
 }
 
@@ -907,7 +907,7 @@
 
 - (void)ChannelSheetWillClose:(ChannelSheet*)sender
 {
-	self.channelSheet=nil;
+	self.channelSheet = nil;
 }
 
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
@@ -1145,7 +1145,7 @@
 
 - (void)aboutPanelWillClose:(AboutPanel*)sender
 {
-	self.aboutPanel=nil;
+	self.aboutPanel = nil;
 }
 
 - (void)processModeChange:(id)sender mode:(NSString *)tmode 
