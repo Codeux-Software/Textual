@@ -129,6 +129,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		isonTimer.reqeat = YES;
 		isonTimer.selector = @selector(onISONTimer:);
 		
+		if (IS_TRIAL_BINARY) {	
+			trialPeriodTimer = [Timer new];
+			trialPeriodTimer.delegate = self;
+			trialPeriodTimer.reqeat = NO;
+			trialPeriodTimer.selector = @selector(onTrialPeriodTimer:);
+		}
+		
 		trackedUsers = [NSMutableDictionary new];
 		commandQueue = [NSMutableArray new];
 	}
@@ -166,6 +173,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[commandQueueTimer stop];
 	[commandQueueTimer release];
 	[commandQueue release];
+	
+	if (IS_TRIAL_BINARY) {
+		[trialPeriodTimer stop];
+		[trialPeriodTimer release];
+	}
 	
 	[lastSelectedChannel release];
 	[channelListDialog release];
@@ -575,6 +587,27 @@ static NSDateFormatter* dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Timers
 
+- (void)startTrialPeriodTimer
+{
+	if (trialPeriodTimer.isActive) return;
+	
+	[trialPeriodTimer start:1800];
+}
+
+- (void)stopTrialPeriodTimer
+{
+	[trialPeriodTimer stop];
+}
+
+- (void)onTrialPeriodTimer:(id)sender
+{
+	if (isLoggedIn) {
+		connectionTime = -999;
+				
+		[self quit];
+	}
+}
+
 - (void)startISONTimer
 {
 	if (isonTimer.isActive) return;
@@ -623,19 +656,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (isLoggedIn) {
 		if (serverHostname.length) {
 			[self send:PONG, serverHostname, nil];
-		}
-		
-		if (IS_TRIAL_BINARY) {
-			// Why waste time with a trial timer when we can 
-			// just check the connection time during a ping?
-		
-			NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
-			
-			if ((currentTime - connectionTime) > 1800) { // 1800 seconds = 30 minutes
-				connectionTime = -999;
-				
-				[self quit];
-			}
 		}
 	} else {
 		[self stopPongTimer];
@@ -3479,7 +3499,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	connectionTime = [[NSDate date] timeIntervalSince1970];
+	if (IS_TRIAL_BINARY) {
+		[self startTrialPeriodTimer];
+	}
 	
 	[self updateClientTitle];
 	[self reloadTree];
@@ -4198,7 +4220,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	connectionTime = 0;
+	if (IS_TRIAL_BINARY) {
+		[self stopTrialPeriodTimer];
+	}
 	
 	[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
 	
@@ -4421,4 +4445,5 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize inWhoWasRequest;
 @synthesize isAway;
 @synthesize connectionTime;
+@synthesize trialPeriodTimer;
 @end

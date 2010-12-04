@@ -55,6 +55,8 @@ typedef enum {
 	NSInteger tryingNickNumber;
 
 	NSString* serverHostname;
+	
+	BOOL isAway;
 	BOOL inList;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
@@ -63,17 +65,17 @@ typedef enum {
 	BOOL hasIRCopAccess;
 	BOOL inFirstISONRun;
 	
-	BOOL isAway;
-	
 	AddressDetectionType addressDetectionMethod;
 	NSString* myAddress;
 
 	Timer* pongTimer;
-	Timer* reconnectTimer;
 	Timer* retryTimer;
 	Timer* isonTimer;
 	Timer* autoJoinTimer;
+	Timer* reconnectTimer;
+	Timer* trialPeriodTimer;
 	Timer* commandQueueTimer;
+	
 	NSMutableArray* commandQueue;
 
 	IRCChannel* lastSelectedChannel;
@@ -131,6 +133,7 @@ typedef enum {
 @property (nonatomic, retain) Timer* isonTimer;
 @property (nonatomic, retain) Timer* autoJoinTimer;
 @property (nonatomic, retain) Timer* commandQueueTimer;
+@property (nonatomic, retain) Timer* trialPeriodTimer;
 @property (nonatomic, retain) NSMutableArray* commandQueue;
 @property (nonatomic, retain) ChanBanExceptionSheet* banExceptionSheet;
 @property (nonatomic, retain) ChanBanSheet* chanBanListSheet;
