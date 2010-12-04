@@ -191,6 +191,11 @@
 	[viewTheme validateFilePathExistanceAndReload:YES];
 }
 
+- (void)emptyNSAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	// Do Nothing 
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
 	[window makeFirstResponder:text];
@@ -201,6 +206,20 @@
 		WelcomeSheetDisplay.delegate = self;
 		WelcomeSheetDisplay.window = window;
 		[WelcomeSheetDisplay show];
+		
+		if (IS_TRIAL_BINARY) {
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
+			[alert addButtonWithTitle:TXTLS(@"CANCEL_BUTTON")];
+			[alert setMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")];
+			[alert setInformativeText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
+			[alert setAlertStyle:NSInformationalAlertStyle];
+			[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
+			
+			[alert runModal];
+			[alert release];
+		}
 	} else {
 		[world autoConnectAfterWakeup:NO];	
 	}
@@ -631,7 +650,7 @@
 		}
 		
 		infoSplitter.position = 250;
-		treeSplitter.position = 130;
+		treeSplitter.position = 140;
 	}
 }
 

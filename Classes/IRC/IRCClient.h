@@ -81,6 +81,8 @@ typedef enum {
 	ChanBanExceptionSheet* banExceptionSheet;
 	ChanBanSheet* chanBanListSheet;
 	ListDialog* channelListDialog;
+	
+	NSInteger connectionTime;
 
 	FileLogger* logFile;
 	NSString* logDate;
@@ -122,6 +124,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
 @property (nonatomic, assign) BOOL isAway;
+@property (nonatomic, assign) NSInteger connectionTime;
 @property (nonatomic, retain) Timer* pongTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
