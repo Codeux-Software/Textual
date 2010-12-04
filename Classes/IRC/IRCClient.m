@@ -17,12 +17,13 @@
 
 #include <arpa/inet.h>
 
-#define PONG_INTERVAL		150
-#define MAX_BODY_LEN		480
-#define RECONNECT_INTERVAL	20
-#define RETRY_INTERVAL		240
-#define ISON_CHECK_INTERVAL 30
-
+#define PONG_INTERVAL			150
+#define MAX_BODY_LEN			480
+#define RECONNECT_INTERVAL		20
+#define RETRY_INTERVAL			240
+#define ISON_CHECK_INTERVAL		30
+#define TRIAL_PERIOD_INTERVAL	1800
+ 
 static NSDateFormatter* dateTimeFormatter = nil;
 
 @interface IRCClient (Private)
@@ -591,7 +592,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	if (trialPeriodTimer.isActive) return;
 	
-	[trialPeriodTimer start:1800];
+	[trialPeriodTimer start:TRIAL_PERIOD_INTERVAL];
 }
 
 - (void)stopTrialPeriodTimer
@@ -602,7 +603,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)onTrialPeriodTimer:(id)sender
 {
 	if (isLoggedIn) {
-		connectionTime = -999;
+		disconnectType = -999;
 				
 		[self quit];
 	}
@@ -4211,7 +4212,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	tryingNickNumber = -1;
 	hasIRCopAccess = NO;
 	
-	NSString *disconnectTXTLString = ((connectionTime == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
+	NSString *disconnectTXTLString = ((disconnectType == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
 	
 	for (IRCChannel* c in channels) {
 		if (c.isActive) {
@@ -4444,6 +4445,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize hasIRCopAccess;
 @synthesize inWhoWasRequest;
 @synthesize isAway;
-@synthesize connectionTime;
+@synthesize disconnectType;
 @synthesize trialPeriodTimer;
 @end
