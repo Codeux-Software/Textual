@@ -161,13 +161,16 @@
 // sensative auto-complete ordering
 - (void)detectOutgoingConversation:(NSString*)text
 {
-	NSArray* pieces = [text split:[Preferences completionSuffix]];
-	if ([pieces count] > 1) {
-		NSString* nick = [pieces objectAtIndex:0];
-		IRCUser* talker = [self findMember:nick];
-		
-		if (talker) {
-			[talker incomingConversation];
+	if ([[Preferences completionSuffix] length] > 0) {
+		NSArray* pieces = [text split:[Preferences completionSuffix]];
+	 
+		if ([pieces count] > 1) {
+			NSString* nick = [pieces objectAtIndex:0];
+			IRCUser* talker = [self findMember:nick];
+			
+			if (talker) {
+				[talker incomingConversation];
+			}
 		}
 	}
 }

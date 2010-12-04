@@ -7,6 +7,8 @@ int main(int argc, const char* argv[])
 	// VALIDATE_APPSTORE_RECEIPT is only defined when the "App Store Release"
 	// target is built during compiling. Normal releases ignore this defintiion. 
 		
+	/* Disable check until latest dev seed is fixed.
+	 
 #ifndef DEBUG 
 #ifdef VALIDATE_APPSTORE_RECEIPT
 #if VALIDATE_APPSTORE_RECEIPT == 1 && IS_TRIAL_BINARY == 0
@@ -28,6 +30,8 @@ int main(int argc, const char* argv[])
 #endif
 #endif
 #endif
+	 
+	 */
 	
     NSApplicationMain(argc, argv);
 	[pool release];
