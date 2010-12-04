@@ -465,7 +465,7 @@
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
 		[s appendFormat:@"<span class=\"sender\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
-		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
+		if (line.memberType == MEMBER_TYPE_NORMAL && [Preferences disableNicknameColors] == NO) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
 	}
 	

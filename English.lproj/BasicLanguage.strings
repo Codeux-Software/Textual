@@ -7,7 +7,7 @@
 "GLINE_REASON" = "35d Your behavior is not conducive to the desired environment.";
 
 "DEFAULT_QPS_MESSAGE" = "Leaving...";
-"NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";  
+"NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";
 "HIGHLIGHTS_LOG_WINDOW_TITLE" = "Highlights";
 "SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
 "UNTITLED_CONNECTION_NAME" = "Untitled Connection";
@@ -52,6 +52,12 @@
 
 "WANT_CHANNEL_DELETE_TITLE" = "Do you want to delete the selection?";
 "WANT_CHANNEL_DELETE_MESSAGE" = "There is no undo and all data related to this channel will be erased.";
+
+/* Trial Localizations */
+
+"TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
+"TRIAL_BUILD_INTRO_DIALOG_TITLE" = "Welcome to the Textual IRC Client!";
+"TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC networks that you are connected to every thirty minutes. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
 
 /* Dynamic NSMenu items */
 

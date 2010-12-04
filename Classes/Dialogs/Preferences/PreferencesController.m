@@ -546,6 +546,11 @@
 	[self onLayoutChanged:nil];
 }
 
+- (void)onNicknameColorsDisabled:(id)sender
+{
+	[self onLayoutChanged:nil];
+}
+
 #pragma mark -
 #pragma mark Actions
 

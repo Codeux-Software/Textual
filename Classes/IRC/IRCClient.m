@@ -624,6 +624,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if (serverHostname.length) {
 			[self send:PONG, serverHostname, nil];
 		}
+		
+		if (IS_TRIAL_BINARY) {
+			// Why waste time with a trial timer when we can 
+			// just check the connection time during a ping?
+		
+			NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+			
+			if ((currentTime - connectionTime) > 1800) { // 1800 seconds = 30 minutes
+				connectionTime = -999;
+				
+				[self quit];
+			}
+		}
 	} else {
 		[self stopPongTimer];
 	}
@@ -3466,6 +3479,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
+	connectionTime = [[NSDate date] timeIntervalSince1970];
+	
 	[self updateClientTitle];
 	[self reloadTree];
 	
@@ -4174,14 +4189,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	tryingNickNumber = -1;
 	hasIRCopAccess = NO;
 	
+	NSString *disconnectTXTLString = ((connectionTime == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
+	
 	for (IRCChannel* c in channels) {
 		if (c.isActive) {
 			[c deactivate];
-			[self printSystem:c text:TXTLS(@"IRC_DISCONNECTED_FROM_SERVER")];
+			[self printSystem:c text:TXTLS(disconnectTXTLString)];
 		}
 	}
 	
-	[self printSystemBoth:nil text:TXTLS(@"IRC_DISCONNECTED_FROM_SERVER")];
+	connectionTime = 0;
+	
+	[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
 	
 	[self updateClientTitle];
 	[self reloadTree];
@@ -4401,4 +4420,5 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize hasIRCopAccess;
 @synthesize inWhoWasRequest;
 @synthesize isAway;
+@synthesize connectionTime;
 @end

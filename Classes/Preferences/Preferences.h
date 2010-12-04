@@ -112,6 +112,7 @@ typedef enum {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
++ (BOOL)disableNicknameColors;
 + (BOOL)countPublicMessagesInIconBadge;
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;

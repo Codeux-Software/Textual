@@ -333,6 +333,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud boolForKey:@"Preferences.General.strip_formatting"];
 }
 
++ (BOOL)disableNicknameColors
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.disable_nickname_colors"];
+}
+
 + (BOOL)rightToLeftFormatting
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -1153,6 +1159,7 @@ static NSMutableArray* excludeWords;
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
+	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

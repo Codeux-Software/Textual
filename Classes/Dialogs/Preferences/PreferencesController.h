@@ -102,6 +102,7 @@
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onLayoutChanged:(id)sender;
 - (void)onTextDirectionChanged:(id)sender;
+- (void)onNicknameColorsDisabled:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
 @end
 
