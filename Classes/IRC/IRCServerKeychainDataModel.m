@@ -10,21 +10,23 @@
 					   andCUID:(NSInteger)cuid
 {
 	if ([currentPassword isEmpty]) {
-		NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
+		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 															 withItemKind:@"application password" 
 															  forUsername:nil 
 															  serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]
 														withLegacySupport:NO];
 		
-		if ([knickPassword isEmpty]) { 
-			knickPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
-													   withItemKind:@"application password" 
-														forUsername:nil 
-														serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
-												  withLegacySupport:YES];
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			if ([kPassword isEmpty]) { 
+				kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
+														   withItemKind:@"application password" 
+															forUsername:nil 
+															serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
+													  withLegacySupport:YES];
+			}
 		}
 		
-		if (knickPassword) currentPassword = knickPassword;		
+		if (kPassword) currentPassword = kPassword;		
 	}
 	
 	return currentPassword;
@@ -61,12 +63,14 @@
 														  serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
 													withLegacySupport:NO];
 		
-		if ([kPassword isEmpty]) {
-			kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
-												   withItemKind:@"application password" 
-													forUsername:nil
-													serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
-											  withLegacySupport:YES];
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			if ([kPassword isEmpty]) {
+				kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
+													   withItemKind:@"application password" 
+														forUsername:nil
+														serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
+												  withLegacySupport:YES];
+			}
 		}
 		
 		if (kPassword) currentPassword = kPassword;

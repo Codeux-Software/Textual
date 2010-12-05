@@ -97,6 +97,15 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	nickPassword = [kPassword retain];
 	
+	// Remove key and save keychain once upgrade of keychain complete
+	
+	if ([Preferences isUpgradedFromVersion100] == YES) {
+		[self setPassword:password];
+		[self setNickPassword:nickPassword];
+		
+		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SUHasLaunchedBefore"];
+	}
+	
 	return nickPassword;
 }
 
