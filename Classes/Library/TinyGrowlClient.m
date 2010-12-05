@@ -17,6 +17,8 @@
 @synthesize allNotifications;
 @synthesize defaultNotifications;
 @synthesize appIcon;
+@synthesize clickedNotificationName;
+@synthesize timedOutNotificationName;
 
 - (id)init
 {
@@ -162,6 +164,4 @@
 	}
 }
 
-@synthesize clickedNotificationName;
-@synthesize timedOutNotificationName;
 @end

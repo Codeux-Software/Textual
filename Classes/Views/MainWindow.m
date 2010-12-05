@@ -5,6 +5,8 @@
 
 @implementation MainWindow
 
+@synthesize keyHandler;
+
 - (BOOL)canBecomeMainWindow
 {
 	return YES;
@@ -50,5 +52,4 @@
 	[super sendEvent:e];
 }
 
-@synthesize keyHandler;
 @end

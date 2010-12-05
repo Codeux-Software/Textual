@@ -14,11 +14,9 @@
 @implementation TCPClient
 
 @synthesize delegate;
-
 @synthesize host;
 @synthesize port;
 @synthesize useSSL;
-
 @synthesize useSystemSocks;
 @synthesize useSocks;
 @synthesize socksVersion;
@@ -27,9 +25,11 @@
 @synthesize proxyUser;
 @synthesize proxyPassword;
 @synthesize sendQueueSize;
-
 @synthesize active;
 @synthesize connecting;
+@synthesize conn;
+@synthesize buffer;
+@synthesize tag;
 
 - (id)init
 {
@@ -241,7 +241,4 @@
 	[conn readDataWithTimeout:-1 tag:0];
 }
 
-@synthesize conn;
-@synthesize buffer;
-@synthesize tag;
 @end

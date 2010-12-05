@@ -43,6 +43,24 @@
 @synthesize maxLines;
 @synthesize initialBackgroundColor;
 @synthesize highlightedLineNumbers;
+@synthesize policy;
+@synthesize sink;
+@synthesize scroller;
+@synthesize js;
+@synthesize autoScroller;
+@synthesize becameVisible;
+@synthesize bottom;
+@synthesize movingToBottom;
+@synthesize lines;
+@synthesize lineNumber;
+@synthesize count;
+@synthesize needsLimitNumberOfLines;
+@synthesize loaded;
+@synthesize loadingImages;
+@synthesize prevNickInfo;
+@synthesize html;
+@synthesize scrollBottom;
+@synthesize scrollTop;
 
 - (id)init
 {
@@ -845,22 +863,4 @@
 	return [NSColor redColor];
 }
 
-@synthesize policy;
-@synthesize sink;
-@synthesize scroller;
-@synthesize js;
-@synthesize autoScroller;
-@synthesize becameVisible;
-@synthesize bottom;
-@synthesize movingToBottom;
-@synthesize lines;
-@synthesize lineNumber;
-@synthesize count;
-@synthesize needsLimitNumberOfLines;
-@synthesize loaded;
-@synthesize loadingImages;
-@synthesize prevNickInfo;
-@synthesize html;
-@synthesize scrollBottom;
-@synthesize scrollTop;
 @end

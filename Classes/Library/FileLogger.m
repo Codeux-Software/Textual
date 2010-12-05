@@ -16,6 +16,8 @@
 
 @synthesize client;
 @synthesize channel;
+@synthesize fileName;
+@synthesize file;
 
 - (id)init
 {
@@ -115,6 +117,4 @@
 	return nil;
 }
 
-@synthesize fileName;
-@synthesize file;
 @end

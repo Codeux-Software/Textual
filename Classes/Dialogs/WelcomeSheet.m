@@ -14,6 +14,14 @@
 
 @implementation WelcomeSheet
 
+@synthesize channels;
+@synthesize nickText;
+@synthesize hostCombo;
+@synthesize channelTable;
+@synthesize autoConnectCheck;
+@synthesize addChannelButton;
+@synthesize deleteChannelButton;
+
 - (id)init
 {
 	if ((self = [super init])) {
@@ -163,11 +171,4 @@
 	}
 }
 
-@synthesize channels;
-@synthesize nickText;
-@synthesize hostCombo;
-@synthesize channelTable;
-@synthesize autoConnectCheck;
-@synthesize addChannelButton;
-@synthesize deleteChannelButton;
 @end

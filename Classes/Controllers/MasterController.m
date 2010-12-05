@@ -44,6 +44,38 @@
 
 @implementation MasterController
 
+@synthesize window;
+@synthesize tree;
+@synthesize logBase;
+@synthesize memberList;
+@synthesize text;
+@synthesize chatBox;
+@synthesize treeScrollView;
+@synthesize leftTreeBase;
+@synthesize rightTreeBase;
+@synthesize rootSplitter;
+@synthesize infoSplitter;
+@synthesize treeSplitter;
+@synthesize menu;
+@synthesize serverMenu;
+@synthesize channelMenu;
+@synthesize memberMenu;
+@synthesize treeMenu;
+@synthesize logMenu;
+@synthesize urlMenu;
+@synthesize addrMenu;
+@synthesize chanMenu;
+@synthesize formattingMenu;
+@synthesize extrac;
+@synthesize WelcomeSheetDisplay;
+@synthesize growl;
+@synthesize fieldEditor;
+@synthesize world;
+@synthesize viewTheme;
+@synthesize inputHistory;
+@synthesize completionStatus;
+@synthesize terminating;
+
 - (void)dealloc
 {
 	[WelcomeSheetDisplay release];
@@ -1280,35 +1312,4 @@ typedef enum {
 	WelcomeSheetDisplay = nil;
 }
 
-@synthesize window;
-@synthesize tree;
-@synthesize logBase;
-@synthesize memberList;
-@synthesize text;
-@synthesize chatBox;
-@synthesize treeScrollView;
-@synthesize leftTreeBase;
-@synthesize rightTreeBase;
-@synthesize rootSplitter;
-@synthesize infoSplitter;
-@synthesize treeSplitter;
-@synthesize menu;
-@synthesize serverMenu;
-@synthesize channelMenu;
-@synthesize memberMenu;
-@synthesize treeMenu;
-@synthesize logMenu;
-@synthesize urlMenu;
-@synthesize addrMenu;
-@synthesize chanMenu;
-@synthesize formattingMenu;
-@synthesize extrac;
-@synthesize WelcomeSheetDisplay;
-@synthesize growl;
-@synthesize fieldEditor;
-@synthesize world;
-@synthesize viewTheme;
-@synthesize inputHistory;
-@synthesize completionStatus;
-@synthesize terminating;
 @end

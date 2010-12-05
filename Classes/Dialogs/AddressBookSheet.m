@@ -13,6 +13,20 @@
 
 @synthesize ignore;
 @synthesize newItem;
+@synthesize hostmask;
+@synthesize ignorePublicMsg;
+@synthesize ignorePrivateMsg;
+@synthesize ignoreHighlights;
+@synthesize ignoreNotices;
+@synthesize ignoreCTCP;
+@synthesize ignoreDCC;
+@synthesize ignoreJPQE;
+@synthesize notifyJoins;
+@synthesize notifyWhoisJoins;
+@synthesize contentView;
+@synthesize notificationView;
+@synthesize ignoreItemView;
+@synthesize ignorePMHighlights;
 
 #define WINDOW_TOOLBAR_HEIGHT 163
 
@@ -124,18 +138,4 @@
 	}
 }
 
-@synthesize hostmask;
-@synthesize ignorePublicMsg;
-@synthesize ignorePrivateMsg;
-@synthesize ignoreHighlights;
-@synthesize ignoreNotices;
-@synthesize ignoreCTCP;
-@synthesize ignoreDCC;
-@synthesize ignoreJPQE;
-@synthesize notifyJoins;
-@synthesize notifyWhoisJoins;
-@synthesize contentView;
-@synthesize notificationView;
-@synthesize ignoreItemView;
-@synthesize ignorePMHighlights;
 @end

@@ -54,6 +54,16 @@
 @synthesize pointedNick;
 @synthesize pointedChannelName;
 @synthesize currentSearchPhrase;
+@synthesize closeWindowItem;
+@synthesize preferencesController;
+@synthesize serverSheet;
+@synthesize channelSheet;
+@synthesize nickSheet;
+@synthesize modeSheet;
+@synthesize topicSheet;
+@synthesize inviteSheet;
+@synthesize aboutPanel;
+@synthesize master;
 
 - (id)init
 {
@@ -1529,14 +1539,4 @@
 	}
 }
 
-@synthesize closeWindowItem;
-@synthesize preferencesController;
-@synthesize serverSheet;
-@synthesize channelSheet;
-@synthesize nickSheet;
-@synthesize modeSheet;
-@synthesize topicSheet;
-@synthesize inviteSheet;
-@synthesize aboutPanel;
-@synthesize master;
 @end

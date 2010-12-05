@@ -7,6 +7,10 @@
 
 @synthesize responderDelegate;
 @synthesize theme;
+@synthesize bgColor;
+@synthesize topLineColor;
+@synthesize bottomLineColor;
+@synthesize gradient;
 
 - (void)setUp
 {
@@ -103,8 +107,4 @@
 	NSRectFill(rect);
 }
 
-@synthesize bgColor;
-@synthesize topLineColor;
-@synthesize bottomLineColor;
-@synthesize gradient;
 @end

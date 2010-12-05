@@ -7,6 +7,8 @@
 @implementation NickSheet
 
 @synthesize uid;
+@synthesize currentText;
+@synthesize newText;
 
 - (id)init
 {
@@ -49,6 +51,4 @@
 	}
 }
 
-@synthesize currentText;
-@synthesize newText;
 @end

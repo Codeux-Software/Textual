@@ -13,6 +13,7 @@
 @synthesize isActive;
 @synthesize port;
 @synthesize clients;
+@synthesize conn;
 
 - (id)init
 {
@@ -113,5 +114,4 @@
 	}
 }
 
-@synthesize conn;
 @end

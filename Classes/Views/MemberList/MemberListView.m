@@ -5,6 +5,10 @@
 
 @synthesize dropDelegate;
 @synthesize theme;
+@synthesize bgColor;
+@synthesize topLineColor;
+@synthesize bottomLineColor;
+@synthesize gradient;
 
 - (void)setUp
 {
@@ -210,8 +214,4 @@
 {
 }
 
-@synthesize bgColor;
-@synthesize topLineColor;
-@synthesize bottomLineColor;
-@synthesize gradient;
 @end

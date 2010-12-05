@@ -28,16 +28,13 @@
 	
 	webFrame = aWebFrame;
 	
-	if (webFrame)
-	{
+	if (webFrame) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
 		lastFrame = [[webFrame documentView] frame];
 		lastVisibleRect = [[webFrame documentView] visibleRect];
-	}
-	else
-	{
+	} else {
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
 	}
@@ -58,20 +55,16 @@
 	if (view != webFrame && view != [webFrame documentView])
 		return;
 	
-	if (view == [webFrame documentView])
-	{
-		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
-		{
+	if (view == [webFrame documentView]) {
+		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame)) {
 			[self scrollViewToBottom:view];
 			lastVisibleRect = [view visibleRect];
 		}
 		lastFrame = [view frame];
 	}
 	
-	if (view == webFrame)
-	{
-		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
-		{
+	if (view == webFrame) {
+		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame)) {
 			[self scrollViewToBottom:[webFrame documentView]];
 		}
 	}

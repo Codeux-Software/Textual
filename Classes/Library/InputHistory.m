@@ -6,6 +6,9 @@
 
 @implementation InputHistory
 
+@synthesize buf;
+@synthesize pos;
+
 - (id)init
 {
 	if ((self = [super init])) {
@@ -88,6 +91,4 @@
 	}
 }
 
-@synthesize buf;
-@synthesize pos;
 @end
