@@ -15,6 +15,7 @@
 @synthesize inverted;
 @synthesize hidden;
 @synthesize dividerColor;
+@synthesize myDividerThickness;
 
 - (void)setUp
 {
@@ -241,5 +242,4 @@
 	position = [self isVertical] ? size.width : size.height;
 }
 
-@synthesize myDividerThickness;
 @end

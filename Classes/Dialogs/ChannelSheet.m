@@ -17,6 +17,13 @@
 @synthesize uid;
 @synthesize cid;
 @synthesize config;
+@synthesize nameText;
+@synthesize passwordText;
+@synthesize modeText;
+@synthesize topicText;
+@synthesize autoJoinCheck;
+@synthesize growlCheck;
+@synthesize ihighlights;
 
 - (id)init
 {
@@ -125,11 +132,4 @@
 	}
 }
 
-@synthesize nameText;
-@synthesize passwordText;
-@synthesize modeText;
-@synthesize topicText;
-@synthesize autoJoinCheck;
-@synthesize growlCheck;
-@synthesize ihighlights;
 @end

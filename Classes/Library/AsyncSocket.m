@@ -214,6 +214,17 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 @implementation AsyncReadPacket
 
+@synthesize buffer;
+@synthesize startOffset;
+@synthesize bytesDone;
+@synthesize maxLength;
+@synthesize timeout;
+@synthesize readLength;
+@synthesize term;
+@synthesize bufferOwner;
+@synthesize originalBufferLength;
+@synthesize tag;
+
 - (id)initWithData:(NSMutableData *)d
        startOffset:(CFIndex)s
          maxLength:(CFIndex)m
@@ -451,16 +462,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	[super dealloc];
 }
 
-@synthesize buffer;
-@synthesize startOffset;
-@synthesize bytesDone;
-@synthesize maxLength;
-@synthesize timeout;
-@synthesize readLength;
-@synthesize term;
-@synthesize bufferOwner;
-@synthesize originalBufferLength;
-@synthesize tag;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,6 +488,11 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 @implementation AsyncWritePacket
 
+@synthesize buffer;
+@synthesize bytesDone;
+@synthesize tag;
+@synthesize timeout;
+
 - (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
 {
 	if ((self = [super init]))
@@ -505,10 +511,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	[super dealloc];
 }
 
-@synthesize buffer;
-@synthesize bytesDone;
-@synthesize tag;
-@synthesize timeout;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -530,6 +532,8 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 @implementation AsyncSpecialPacket
 
+@synthesize tlsSettings;
+
 - (id)initWithTLSSettings:(NSDictionary *)settings
 {
 	if ((self = [super init]))
@@ -545,7 +549,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	[super dealloc];
 }
 
-@synthesize tlsSettings;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,6 +556,26 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation AsyncSocket
+
+@synthesize theNativeSocket4;
+@synthesize theNativeSocket6;
+@synthesize theSocket4;
+@synthesize theSocket6;
+@synthesize theReadStream;
+@synthesize theWriteStream;
+@synthesize theSource4;
+@synthesize theSource6;
+@synthesize theRunLoop;
+@synthesize theRunLoopModes;
+@synthesize theConnectTimer;
+@synthesize theReadQueue;
+@synthesize theCurrentRead;
+@synthesize theReadTimer;
+@synthesize partialReadBuffer;
+@synthesize theWriteQueue;
+@synthesize theCurrentWrite;
+@synthesize theWriteTimer;
+@synthesize theFlags;
 
 - (id)init
 {
@@ -3918,23 +3941,4 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 	return [NSData dataWithBytes:"" length:1];
 }
 
-@synthesize theNativeSocket4;
-@synthesize theNativeSocket6;
-@synthesize theSocket4;
-@synthesize theSocket6;
-@synthesize theReadStream;
-@synthesize theWriteStream;
-@synthesize theSource4;
-@synthesize theSource6;
-@synthesize theRunLoop;
-@synthesize theRunLoopModes;
-@synthesize theConnectTimer;
-@synthesize theReadQueue;
-@synthesize theCurrentRead;
-@synthesize theReadTimer;
-@synthesize partialReadBuffer;
-@synthesize theWriteQueue;
-@synthesize theCurrentWrite;
-@synthesize theWriteTimer;
-@synthesize theFlags;
 @end

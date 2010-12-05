@@ -24,6 +24,7 @@
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
 @synthesize nick;
+@synthesize lastFadedWeights;
 
 - (id)init
 {
@@ -197,5 +198,4 @@
 	return [NSString stringWithFormat:@"<IRCUser %c%@>", self.mark, nick];
 }
 
-@synthesize lastFadedWeights;
 @end

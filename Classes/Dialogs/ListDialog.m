@@ -18,6 +18,12 @@
 @synthesize sortKey;
 @synthesize sortOrder;
 @synthesize networkName;
+@synthesize list;
+@synthesize filteredList;
+@synthesize table;
+@synthesize filterText;
+@synthesize updateButton;
+@synthesize channelCount;
 
 - (id)init
 {
@@ -275,10 +281,4 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 	}
 }
 
-@synthesize list;
-@synthesize filteredList;
-@synthesize table;
-@synthesize filterText;
-@synthesize updateButton;
-@synthesize channelCount;
 @end

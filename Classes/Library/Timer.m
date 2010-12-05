@@ -8,6 +8,7 @@
 @synthesize delegate;
 @synthesize reqeat;
 @synthesize selector;
+@synthesize timer;
 
 - (id)init
 {
@@ -57,5 +58,4 @@
 	}
 }
 
-@synthesize timer;
 @end

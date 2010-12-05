@@ -14,6 +14,10 @@
 @implementation GrowlController
 
 @synthesize owner;
+@synthesize growl;
+@synthesize lastClickedContext;
+@synthesize lastClickedTime;
+@synthesize registered;
 
 - (id)init
 {
@@ -173,8 +177,4 @@
 	}
 }
 
-@synthesize growl;
-@synthesize lastClickedContext;
-@synthesize lastClickedTime;
-@synthesize registered;
 @end

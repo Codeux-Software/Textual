@@ -6,6 +6,7 @@
 @implementation FieldEditorTextView
 
 @synthesize pasteDelegate;
+@synthesize keyHandler;
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer
 {
@@ -57,5 +58,4 @@
 	[super keyDown:e];
 }
 
-@synthesize keyHandler;
 @end

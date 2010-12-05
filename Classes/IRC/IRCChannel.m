@@ -27,6 +27,8 @@
 @synthesize isModeInit;
 @synthesize isNamesInit;
 @synthesize isWhoInit;
+@synthesize logFile;
+@synthesize logDate;
 
 - (id)init
 {
@@ -424,6 +426,4 @@
 	cell.member = [members safeObjectAtIndex:row];
 }
 
-@synthesize logFile;
-@synthesize logDate;
 @end

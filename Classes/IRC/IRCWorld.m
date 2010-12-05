@@ -56,6 +56,14 @@
 @synthesize bandwidthOut;
 @synthesize messagesSent;
 @synthesize messagesReceived;
+@synthesize serverMenu;
+@synthesize channelMenu;
+@synthesize dummyLog;
+@synthesize config;
+@synthesize itemId;
+@synthesize reloadingTree;
+@synthesize previousSelectedClientId;
+@synthesize previousSelectedChannelId;
 
 - (id)init
 {
@@ -1227,12 +1235,4 @@
 	return;
 }
 
-@synthesize serverMenu;
-@synthesize channelMenu;
-@synthesize dummyLog;
-@synthesize config;
-@synthesize itemId;
-@synthesize reloadingTree;
-@synthesize previousSelectedClientId;
-@synthesize previousSelectedChannelId;
 @end

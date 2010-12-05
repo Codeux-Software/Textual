@@ -27,6 +27,33 @@
 @implementation PreferencesController
 
 @synthesize delegate;
+@synthesize contentView;
+@synthesize highlightView;
+@synthesize interfaceView;
+@synthesize alertsView;
+@synthesize stylesView;
+@synthesize transfersView;
+@synthesize logView;
+@synthesize generalView;
+@synthesize scriptsView;
+@synthesize identityView;
+@synthesize keywordsTable;
+@synthesize updatesView;
+@synthesize excludeWordsTable;
+@synthesize keywordsArrayController;
+@synthesize excludeWordsArrayController;
+@synthesize transcriptFolderButton;
+@synthesize themeButton;
+@synthesize scriptLocationField;
+@synthesize preferenceSelectButton;
+@synthesize transcriptFolderOpenPanel;
+@synthesize logFont;
+@synthesize floodControlView;
+@synthesize IRCopServicesView;
+@synthesize world;
+@synthesize installedScriptsTable;
+@synthesize scriptsController;
+@synthesize channelManagementView;
 
 - (id)init
 {
@@ -617,31 +644,4 @@
 	}
 }
 
-@synthesize contentView;
-@synthesize highlightView;
-@synthesize interfaceView;
-@synthesize alertsView;
-@synthesize stylesView;
-@synthesize transfersView;
-@synthesize logView;
-@synthesize generalView;
-@synthesize scriptsView;
-@synthesize identityView;
-@synthesize keywordsTable;
-@synthesize updatesView;
-@synthesize excludeWordsTable;
-@synthesize keywordsArrayController;
-@synthesize excludeWordsArrayController;
-@synthesize transcriptFolderButton;
-@synthesize themeButton;
-@synthesize scriptLocationField;
-@synthesize preferenceSelectButton;
-@synthesize transcriptFolderOpenPanel;
-@synthesize logFont;
-@synthesize floodControlView;
-@synthesize IRCopServicesView;
-@synthesize world;
-@synthesize installedScriptsTable;
-@synthesize scriptsController;
-@synthesize channelManagementView;
 @end

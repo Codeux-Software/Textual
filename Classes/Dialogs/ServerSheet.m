@@ -31,6 +31,49 @@
 
 @synthesize uid;
 @synthesize config;
+@synthesize initialTabTag;
+@synthesize initalView;
+@synthesize contentView;
+@synthesize generalView;
+@synthesize detailsView;
+@synthesize onloginView;
+@synthesize ignoresView;
+@synthesize tabView;
+@synthesize nameText;
+@synthesize autoReconnectCheck;
+@synthesize autoConnectCheck;
+@synthesize hostCombo;
+@synthesize sslCheck;
+@synthesize portText;
+@synthesize nickText;
+@synthesize passwordText;
+@synthesize usernameText;
+@synthesize realNameText;
+@synthesize nickPasswordText;
+@synthesize altNicksText;
+@synthesize sleepQuitMessageText;
+@synthesize leavingCommentText;
+@synthesize userInfoText;
+@synthesize encodingCombo;
+@synthesize fallbackEncodingCombo;
+@synthesize proxyCombo;
+@synthesize proxyHostText;
+@synthesize proxyPortText;
+@synthesize proxyUserText;
+@synthesize proxyPasswordText;
+@synthesize channelTable;
+@synthesize addChannelButton;
+@synthesize editChannelButton;
+@synthesize deleteChannelButton;
+@synthesize loginCommandsText;
+@synthesize invisibleCheck;
+@synthesize ignoreTable;
+@synthesize addIgnoreButton;
+@synthesize editIgnoreButton;
+@synthesize deleteIgnoreButton;
+@synthesize channelSheet;
+@synthesize ignoreSheet;
+@synthesize client;
 
 - (id)init
 {
@@ -698,47 +741,4 @@
 	}
 }
 
-@synthesize initialTabTag;
-@synthesize initalView;
-@synthesize contentView;
-@synthesize generalView;
-@synthesize detailsView;
-@synthesize onloginView;
-@synthesize ignoresView;
-@synthesize tabView;
-@synthesize nameText;
-@synthesize autoReconnectCheck;
-@synthesize autoConnectCheck;
-@synthesize hostCombo;
-@synthesize sslCheck;
-@synthesize portText;
-@synthesize nickText;
-@synthesize passwordText;
-@synthesize usernameText;
-@synthesize realNameText;
-@synthesize nickPasswordText;
-@synthesize altNicksText;
-@synthesize sleepQuitMessageText;
-@synthesize leavingCommentText;
-@synthesize userInfoText;
-@synthesize encodingCombo;
-@synthesize fallbackEncodingCombo;
-@synthesize proxyCombo;
-@synthesize proxyHostText;
-@synthesize proxyPortText;
-@synthesize proxyUserText;
-@synthesize proxyPasswordText;
-@synthesize channelTable;
-@synthesize addChannelButton;
-@synthesize editChannelButton;
-@synthesize deleteChannelButton;
-@synthesize loginCommandsText;
-@synthesize invisibleCheck;
-@synthesize ignoreTable;
-@synthesize addIgnoreButton;
-@synthesize editIgnoreButton;
-@synthesize deleteIgnoreButton;
-@synthesize channelSheet;
-@synthesize ignoreSheet;
-@synthesize client;
 @end

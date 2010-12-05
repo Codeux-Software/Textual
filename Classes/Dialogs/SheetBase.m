@@ -7,6 +7,9 @@
 
 @synthesize delegate;
 @synthesize window;
+@synthesize sheet;
+@synthesize okButton;
+@synthesize cancelButton;
 
 - (id)init
 {
@@ -46,7 +49,4 @@
 	[self endSheet];
 }
 
-@synthesize sheet;
-@synthesize okButton;
-@synthesize cancelButton;
 @end

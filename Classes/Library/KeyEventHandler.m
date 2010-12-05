@@ -6,6 +6,8 @@
 @implementation KeyEventHandler
 
 @synthesize target;
+@synthesize codeHandlerMap;
+@synthesize characterHandlerMap;
 
 - (id)init
 {
@@ -104,6 +106,4 @@
 	return NO;
 }
 
-@synthesize codeHandlerMap;
-@synthesize characterHandlerMap;
 @end

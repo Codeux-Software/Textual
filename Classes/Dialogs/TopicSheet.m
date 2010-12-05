@@ -10,6 +10,7 @@
 
 @synthesize uid;
 @synthesize cid;
+@synthesize text;
 
 - (id)init
 {
@@ -49,5 +50,4 @@
 	}
 }
 
-@synthesize text;
 @end
