@@ -16,6 +16,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 {
+	NSInteger cuid;
 	NSString* guid;
 	NSString* name;
 	
@@ -55,7 +56,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSMutableArray* ignores;
 }
 
-@property (nonatomic, assign) NSString* guid;
+@property (nonatomic, assign) NSInteger cuid;
+@property (nonatomic, retain) NSString* guid;
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) NSInteger port;
@@ -90,6 +92,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)destroyKeychains;
 
-- (NSString*)keychainServiceID:(NSInteger)type;
-- (NSString*)keychainServiceName:(NSInteger)type;
+- (NSString*)keychainServiceID:(NSInteger)type withLegacySupport:(BOOL)legacy;
+- (NSString*)keychainServiceName:(NSInteger)type withLegacySupport:(BOOL)legacy;
 @end
