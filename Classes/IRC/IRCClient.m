@@ -22,7 +22,7 @@
 #define RECONNECT_INTERVAL		20
 #define RETRY_INTERVAL			240
 #define ISON_CHECK_INTERVAL		30
-#define TRIAL_PERIOD_INTERVAL	18
+#define TRIAL_PERIOD_INTERVAL	1800
  
 static NSDateFormatter* dateTimeFormatter = nil;
 
