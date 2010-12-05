@@ -14,6 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4CA9456011E1AFBA00D36367"
+               BuildableName = "Textual.app"
+               BlueprintName = "Textual"
                ReferencedContainer = "container:Textual.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -37,6 +39,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4CA9456011E1AFBA00D36367"
+            BuildableName = "Textual.app"
+            BlueprintName = "Textual"
             ReferencedContainer = "container:Textual.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -54,6 +58,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4CA9456011E1AFBA00D36367"
+            BuildableName = "Textual.app"
+            BlueprintName = "Textual"
             ReferencedContainer = "container:Textual.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

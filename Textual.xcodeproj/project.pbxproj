@@ -134,6 +134,9 @@
 		4C25674F12A368610068FADB /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C25674512A368260068FADB /* IOKit.framework */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
+		4C5CC57212ABC04200D3219E /* IconManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CC57112ABC04200D3219E /* IconManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5CC57712ABC08700D3219E /* IRCServerKeychainDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CC57512ABC08700D3219E /* IRCServerKeychainDataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5CC57812ABC08700D3219E /* IRCServerKeychainDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CC57612ABC08700D3219E /* IRCServerKeychainDataModel.m */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
@@ -389,6 +392,9 @@
 		4C5938E411D0E0790094B049 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGKeychain.h; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4C5CC57112ABC04200D3219E /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
+		4C5CC57512ABC08700D3219E /* IRCServerKeychainDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCServerKeychainDataModel.h; sourceTree = "<group>"; };
+		4C5CC57612ABC08700D3219E /* IRCServerKeychainDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCServerKeychainDataModel.m; sourceTree = "<group>"; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
 		4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Framework/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
@@ -794,6 +800,14 @@
 			name = "Keychain Control";
 			sourceTree = "<group>";
 		};
+		4C5CC56E12ABC03400D3219E /* Legacy Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C5CC57112ABC04200D3219E /* IconManager.h */,
+			);
+			name = "Legacy Headers";
+			sourceTree = "<group>";
+		};
 		4C82A68A11DBB1C600C01FBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,6 +855,7 @@
 		783E6AD51173802100261552 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				4C5CC56E12ABC03400D3219E /* Legacy Headers */,
 				4C25672612A367B60068FADB /* ValidateReceipt.h */,
 				4C25672712A367B60068FADB /* ValidateReceipt.m */,
 				783E6AD61173802100261552 /* Textual_Prefix.pch */,
@@ -980,6 +995,8 @@
 				78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */,
 				78A8C11611737F660044E7A1 /* IRCClientConfig.h */,
 				78A8C11711737F660044E7A1 /* IRCClientConfig.m */,
+				4C5CC57512ABC08700D3219E /* IRCServerKeychainDataModel.h */,
+				4C5CC57612ABC08700D3219E /* IRCServerKeychainDataModel.m */,
 				78A8C11011737F660044E7A1 /* IRCChannelConfig.h */,
 				78A8C11111737F660044E7A1 /* IRCChannelConfig.m */,
 				78A8C11811737F660044E7A1 /* IRCConnection.h */,
@@ -1134,6 +1151,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5CC57712ABC08700D3219E /* IRCServerKeychainDataModel.h in Headers */,
+				4C5CC57212ABC04200D3219E /* IconManager.h in Headers */,
 				4C01C3E412A3958000C61E4B /* IRCChannelMode.h in Headers */,
 				4C01C3E512A3958000C61E4B /* TextualPluginItem.h in Headers */,
 				4C01C3E612A3958000C61E4B /* MasterController.h in Headers */,
@@ -1512,6 +1531,7 @@
 				4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */,
 				4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */,
 				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
+				4C5CC57812ABC08700D3219E /* IRCServerKeychainDataModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
