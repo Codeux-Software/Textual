@@ -22,7 +22,7 @@
 #define RECONNECT_INTERVAL		20
 #define RETRY_INTERVAL			240
 #define ISON_CHECK_INTERVAL		30
-#define TRIAL_PERIOD_INTERVAL	1800
+#define TRIAL_PERIOD_INTERVAL	18
  
 static NSDateFormatter* dateTimeFormatter = nil;
 
@@ -129,13 +129,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		isonTimer.delegate = self;
 		isonTimer.reqeat = YES;
 		isonTimer.selector = @selector(onISONTimer:);
-		
-		if (IS_TRIAL_BINARY) {	
-			trialPeriodTimer = [Timer new];
-			trialPeriodTimer.delegate = self;
-			trialPeriodTimer.reqeat = NO;
-			trialPeriodTimer.selector = @selector(onTrialPeriodTimer:);
-		}
+
+#ifdef IS_TRIAL_BINARY
+		trialPeriodTimer = [Timer new];
+		trialPeriodTimer.delegate = self;
+		trialPeriodTimer.reqeat = NO;
+		trialPeriodTimer.selector = @selector(onTrialPeriodTimer:);	
+#endif
 		
 		trackedUsers = [NSMutableDictionary new];
 		commandQueue = [NSMutableArray new];
@@ -175,10 +175,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[commandQueueTimer release];
 	[commandQueue release];
 	
-	if (IS_TRIAL_BINARY) {
-		[trialPeriodTimer stop];
-		[trialPeriodTimer release];
-	}
+#ifdef IS_TRIAL_BINARY
+	[trialPeriodTimer stop];
+	[trialPeriodTimer release];
+#endif
 	
 	[lastSelectedChannel release];
 	[channelListDialog release];
@@ -199,6 +199,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	config = [seed mutableCopy];
 	
 	addressDetectionMethod = [Preferences dccAddressDetectionMethod];
+	
 	if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
 		[self setDCCIPAddress:[Preferences dccMyaddress]];
 	}
@@ -587,27 +588,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 #pragma mark -
 #pragma mark Timers
-
-- (void)startTrialPeriodTimer
-{
-	if (trialPeriodTimer.isActive) return;
-	
-	[trialPeriodTimer start:TRIAL_PERIOD_INTERVAL];
-}
-
-- (void)stopTrialPeriodTimer
-{
-	[trialPeriodTimer stop];
-}
-
-- (void)onTrialPeriodTimer:(id)sender
-{
-	if (isLoggedIn) {
-		disconnectType = -999;
-				
-		[self quit];
-	}
-}
 
 - (void)startISONTimer
 {
@@ -1015,6 +995,34 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self quickJoin:ary];
 	}
 }
+
+#pragma mark -
+#pragma mark Trial Period Handlers
+
+#ifdef IS_TRIAL_BINARY
+
+- (void)startTrialPeriodTimer
+{
+	if (trialPeriodTimer.isActive) return;
+	
+	[trialPeriodTimer start:TRIAL_PERIOD_INTERVAL];
+}
+
+- (void)stopTrialPeriodTimer
+{
+	[trialPeriodTimer stop];
+}
+
+- (void)onTrialPeriodTimer:(id)sender
+{
+	if (isLoggedIn) {
+		disconnectType = -999;
+		
+		[self quit];
+	}
+}
+
+#endif
 
 #pragma mark -
 #pragma mark Sending Text
@@ -3500,9 +3508,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	if (IS_TRIAL_BINARY) {
-		[self startTrialPeriodTimer];
-	}
+#ifdef IS_TRIAL_BINARY
+	[self startTrialPeriodTimer];
+#endif
 	
 	[self updateClientTitle];
 	[self reloadTree];
@@ -4212,7 +4220,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	tryingNickNumber = -1;
 	hasIRCopAccess = NO;
 	
-	NSString *disconnectTXTLString = ((disconnectType == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
+	NSString *disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER";
+	
+#ifdef IS_TRIAL_BINARY
+	disconnectTXTLString = ((disconnectType == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
+#endif 
 	
 	for (IRCChannel* c in channels) {
 		if (c.isActive) {
@@ -4221,9 +4233,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	if (IS_TRIAL_BINARY) {
-		[self stopTrialPeriodTimer];
-	}
+#ifdef IS_TRIAL_BINARY
+	[self stopTrialPeriodTimer];
+#endif
 	
 	[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
 	
@@ -4435,6 +4447,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize channelListDialog;
 @synthesize logFile;
 @synthesize logDate;
+@synthesize isAway;
 @synthesize isonTimer;
 @synthesize whoisChannel;
 @synthesize chanBanListSheet;
@@ -4444,7 +4457,4 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize inFirstISONRun;
 @synthesize hasIRCopAccess;
 @synthesize inWhoWasRequest;
-@synthesize isAway;
-@synthesize disconnectType;
-@synthesize trialPeriodTimer;
 @end

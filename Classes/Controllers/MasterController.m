@@ -207,19 +207,20 @@
 		WelcomeSheetDisplay.window = window;
 		[WelcomeSheetDisplay show];
 		
-		if (IS_TRIAL_BINARY) {
-			NSAlert *alert = [[NSAlert alloc] init];
-			
-			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
-			[alert addButtonWithTitle:TXTLS(@"CANCEL_BUTTON")];
-			[alert setMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")];
-			[alert setInformativeText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
-			[alert setAlertStyle:NSInformationalAlertStyle];
-			[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-			
-			[alert runModal];
-			[alert release];
-		}
+#ifdef IS_TRIAL_BINARY
+		NSAlert *alert = [[NSAlert alloc] init];
+		
+		[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
+		[alert addButtonWithTitle:TXTLS(@"CANCEL_BUTTON")];
+		[alert setMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")];
+		[alert setInformativeText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
+		[alert setAlertStyle:NSInformationalAlertStyle];
+		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
+		
+		[alert runModal];
+		[alert release];
+#endif
+		
 	} else {
 		[world autoConnectAfterWakeup:NO];	
 	}

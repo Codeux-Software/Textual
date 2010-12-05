@@ -1259,6 +1259,7 @@
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4C9E12371209DF42004E5032 /* Headers */,
 				4CA945EA11E1AFBA00D36367 /* Run Script */,
+				4CEE709A12AB8AE40083F30F /* Code Sign */,
 			);
 			buildRules = (
 			);
@@ -1386,6 +1387,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+		};
+		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# --------------------------------------------------------------------------------------\n# \n# Look for a file named \"CERTIFICATE\" for code signing. If file exists, then we\n# will take the content of it to use for the name during code signing. \n# \n# Do this so those who are not compiling for app store do not require the certificate\n# to compile their own custom build of Textual.\n# \n# --------------------------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"$PRODUCT_NAME.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\nif [ -f \"$PROJECT_DIR/CERTIFICATE\" ]\nthen\nexport CODE_SIGNING_IDENTITY=`cat \"$PROJECT_DIR/CERTIFICATE\"`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" \"$PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH\" \nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1677,7 +1692,7 @@
 					x86_64,
 					i386,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: BestTechie Holdings, Inc.";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1832,6 +1847,85 @@
 			};
 			name = Release;
 		};
+		4CEE702212AB8A690083F30F /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc,
+				);
+				CODE_SIGN_IDENTITY = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "Release (Trial)";
+		};
+		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
+					"\"$(SRCROOT)/Framework\"",
+					"\"$(SRCROOT)/Framework/BWToolkit\"",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					IS_TRIAL_BINARY,
+					"VALIDATE_APPSTORE_RECEIPT=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_PKGINFO_FILE = YES;
+				GENERATE_PROFILING_CODE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = "$(USER)";
+				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Textual;
+				SDKROOT = macosx10.6;
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = all;
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "Release (Trial)";
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1885,6 +1979,7 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
+				4CEE702312AB8A690083F30F /* Release (Trial) */,
 				4C8D707D12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1895,6 +1990,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				4CEE702212AB8A690083F30F /* Release (Trial) */,
 				4C8D707C12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
