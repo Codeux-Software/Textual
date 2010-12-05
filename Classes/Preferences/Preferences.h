@@ -113,6 +113,7 @@ typedef enum {
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
 + (BOOL)disableNicknameColors;
++ (BOOL)isUpgradedFromVersion100;
 + (BOOL)countPublicMessagesInIconBadge;
 + (TabActionType)tabAction;
 + (BOOL)keywordCurrentNick;

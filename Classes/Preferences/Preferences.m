@@ -339,6 +339,12 @@ static NSMutableDictionary *commandIndex;
 	return [ud boolForKey:@"Preferences.General.disable_nickname_colors"];
 }
 
++ (BOOL)isUpgradedFromVersion100
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"SUHasLaunchedBefore"];
+}
+
 + (BOOL)rightToLeftFormatting
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
