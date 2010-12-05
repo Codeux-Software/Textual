@@ -73,7 +73,6 @@ typedef enum {
 	Timer* isonTimer;
 	Timer* autoJoinTimer;
 	Timer* reconnectTimer;
-	Timer* trialPeriodTimer;
 	Timer* commandQueueTimer;
 	
 	NSMutableArray* commandQueue;
@@ -84,8 +83,11 @@ typedef enum {
 	ChanBanSheet* chanBanListSheet;
 	ListDialog* channelListDialog;
 	
+#ifdef IS_TRIAL_BINARY
+	Timer* trialPeriodTimer;
 	NSInteger disconnectType;
-
+#endif
+	
 	FileLogger* logFile;
 	NSString* logDate;
 
@@ -126,14 +128,12 @@ typedef enum {
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign) NSInteger disconnectType;
 @property (nonatomic, retain) Timer* pongTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
 @property (nonatomic, retain) Timer* isonTimer;
 @property (nonatomic, retain) Timer* autoJoinTimer;
 @property (nonatomic, retain) Timer* commandQueueTimer;
-@property (nonatomic, retain) Timer* trialPeriodTimer;
 @property (nonatomic, retain) NSMutableArray* commandQueue;
 @property (nonatomic, retain) ChanBanExceptionSheet* banExceptionSheet;
 @property (nonatomic, retain) ChanBanSheet* chanBanListSheet;
