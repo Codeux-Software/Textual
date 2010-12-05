@@ -17,6 +17,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @implementation IRCClientConfig
 
+@synthesize cuid;
 @synthesize guid;
 @synthesize name;
 @synthesize host;
@@ -50,7 +51,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (id)init
 {
 	if ((self = [super init])) {
-		
+		cuid = TXRandomThousandNumber();
 		guid = [[NSString stringWithUUID] retain];
 		
 		altNicks = [NSMutableArray new];
@@ -83,33 +84,47 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
+#pragma mark -
+#pragma mark Keychain Management
+
 - (NSString *)nickPassword
 {
-	if ([nickPassword isEqual:@""]) {
-		NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2]
+	if ([nickPassword isEmpty]) {
+		NSString *knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2 withLegacySupport:NO]
 															 withItemKind:@"application password" 
 															  forUsername:nil 
-															  serviceName:[self keychainServiceID:2]];
+															  serviceName:[self keychainServiceID:2 withLegacySupport:NO]
+														withLegacySupport:NO];
+		
+		if ([knickPassword isEmpty]) {
+			knickPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:2 withLegacySupport:YES]
+													   withItemKind:@"application password" 
+														forUsername:nil 
+														serviceName:[self keychainServiceID:2 withLegacySupport:YES]
+												  withLegacySupport:YES];
+		}
+		
 		if (knickPassword) nickPassword = [knickPassword retain];			
 	}
+	
 	return nickPassword;
 }
 
 - (void)setNickPassword:(NSString *)pass
 {
-	if (pass == nil) {
-		[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
+	if ([pass isEmpty]) {
+		[AGKeychain deleteKeychainItem:[self keychainServiceName:2 withLegacySupport:NO]
 						  withItemKind:@"application password"
 						   forUsername:nil
-						   serviceName:[self keychainServiceID:2]];
+						   serviceName:[self keychainServiceID:2 withLegacySupport:NO]];
 		
 	} else {
-		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:2]
+		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:2 withLegacySupport:NO]
 							   withItemKind:@"application password"
 								forUsername:nil
 							withNewPassword:pass
 								withComment:host
-								serviceName:[self keychainServiceID:2]];
+								serviceName:[self keychainServiceID:2 withLegacySupport:NO]];
 	}
 	
 	[nickPassword autorelease];
@@ -118,11 +133,21 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (NSString*)password
 {
-	if ([password isEqual:@""]) {
-		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1]
+	if ([password isEmpty]) {
+		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1 withLegacySupport:NO]
 														 withItemKind:@"application password" 
 														  forUsername:nil 
-														  serviceName:[self keychainServiceID:1]];
+														  serviceName:[self keychainServiceID:1 withLegacySupport:NO]
+													withLegacySupport:NO];
+		
+		if ([kPassword isEmpty]) {
+			kPassword = [AGKeychain getPasswordFromKeychainItem:[self keychainServiceName:1 withLegacySupport:YES]
+												   withItemKind:@"application password" 
+													forUsername:nil
+													serviceName:[self keychainServiceID:1 withLegacySupport:YES]
+											  withLegacySupport:YES];
+		}
+		
 		if (kPassword) password = [kPassword retain];
 	}
 	
@@ -131,58 +156,65 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)setPassword:(NSString *)pass
 {
-	if (pass == nil) {
-		[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
+	if ([pass isEmpty]) {
+		[AGKeychain deleteKeychainItem:[self keychainServiceName:1 withLegacySupport:NO]
 						  withItemKind:@"application password"
 						   forUsername:nil
-						   serviceName:[self keychainServiceID:1]];		
+						   serviceName:[self keychainServiceID:1 withLegacySupport:NO]];		
 	} else {
-		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:1]
+		[AGKeychain modifyOrAddKeychainItem:[self keychainServiceName:1 withLegacySupport:NO]
 							   withItemKind:@"application password"
 								forUsername:nil
 							withNewPassword:pass
 								withComment:host
-								serviceName:[self keychainServiceID:1]];			
+								serviceName:[self keychainServiceID:1 withLegacySupport:NO]];			
 	}
 	
 	[password autorelease];
 	password = [pass retain];
 }
 
-- (NSString*)keychainServiceID:(NSInteger)type
+- (NSString*)keychainServiceID:(NSInteger)type withLegacySupport:(BOOL)legacy
 {
-	if (type == 1) {
-		return [NSString stringWithFormat:@"textual.server.%@", guid];
+	if (legacy) {
+		return [NSString stringWithFormat:@"textual.clients.cuid.%i", cuid];
 	} else {
-		return [NSString stringWithFormat:@"textual.nickserv.%@", guid];
+		return [NSString stringWithFormat:@"textual.%@.%@", ((type == 1) ? @"server" : @"nickserv"), guid];
 	}
 }
 
-- (NSString*)keychainServiceName:(NSInteger)type
+- (NSString*)keychainServiceName:(NSInteger)type withLegacySupport:(BOOL)legacy
 {
-	if (type == 1) {
-		return @"Textual (Server Password)";
+	if (legacy) {
+		return ((type == 1) ? @"Textual Keychain (Server Password)" : @"Textual Keychain (NickServ)");
 	} else {
-		return @"Textual (NickServ)";
+		return ((type == 1) ? @"Textual (Server Password)" : @"Textual (NickServ)");
 	}
 }
 
 - (void)destroyKeychains
 {
-	[AGKeychain deleteKeychainItem:[self keychainServiceName:1]
+	[AGKeychain deleteKeychainItem:[self keychainServiceName:1 withLegacySupport:NO]
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:[self keychainServiceID:1]];
+					   serviceName:[self keychainServiceID:1 withLegacySupport:NO]];
 	
-	[AGKeychain deleteKeychainItem:[self keychainServiceName:2]
+	[AGKeychain deleteKeychainItem:[self keychainServiceName:2 withLegacySupport:NO]
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:[self keychainServiceID:2]];
+					   serviceName:[self keychainServiceID:2 withLegacySupport:NO]];
 }
+
+#pragma mark -
+#pragma mark Server Configuration
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
 	[self init];	
+	
+	cuid = [dic intForKey:@"cuid"] ?: cuid;
+	
+	// * =================================== * //
 	
 	if ([dic stringForKey:@"guid"]) {
 		[guid release];
@@ -259,6 +291,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)dealloc
 {
+	[guid release];
 	[name release];
 	
 	[host release];
@@ -290,6 +323,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	// * =================================== * //
 	
+	if (cuid) [dic setInt:cuid forKey:@"cuid"];
 	if (guid) [dic setObject:guid forKey:@"guid"];
 	if (name) [dic setObject:name forKey:@"name"];
 	

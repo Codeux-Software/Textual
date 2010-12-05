@@ -363,8 +363,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	LOG(@"p1: %@", trackedUsers);
-	
 	if (isonTimer.isActive) [self stopISONTimer];
 	if (isonTimer.isActive == NO && [trackedUsers count] > 0) [self startISONTimer];
 }
@@ -613,8 +611,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		for (NSString *name in trackedUsers) {
 			[userstr appendFormat:@" %@", name];
 		}
-		
-		LOG(@"p2: %@", userstr);
 		
 		[self send:ISON, userstr, nil];
 	}
@@ -3816,16 +3812,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					[users addObject:[name lowercaseString]];
 				}
 				
-				LOG(@"p3: %@", trackedUsers);
-				LOG(@"p4: %@", users);
-				
 				NSDictionary *tracked = [trackedUsers copy];
+				
 				for (NSString *name in tracked) {
 					NSString *langkey = nil;
 					NSString *lcname = [name lowercaseString];
 					NSInteger ison = [[trackedUsers objectForKey:name] integerValue];
-					
-					LOG(@"p5: %@", name);
 					
 					if (ison) {
 						if (![users containsObject:lcname]) {
@@ -3845,8 +3837,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					if (langkey) {
 						for (AddressBook *g in config.ignores) {
 							NSString *trname = [[g trackingNickname] lowercaseString];
-							
-							LOG(@"p6: %@ — %@ — %@", lcname, trname, name);
 							
 							if ([trname isEqualToString:lcname]) {
 								[self handleUserTrackingNotification:g hostmask:name nickname:name langitem:langkey];
