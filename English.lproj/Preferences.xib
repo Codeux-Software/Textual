@@ -22,12 +22,12 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="4788"/>
-			<integer value="5153"/>
-			<integer value="6147"/>
-			<integer value="4791"/>
-			<integer value="4929"/>
-			<integer value="4778"/>
 			<integer value="5556"/>
+			<integer value="4791"/>
+			<integer value="6147"/>
+			<integer value="4929"/>
+			<integer value="5153"/>
+			<integer value="4778"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1302,7 +1302,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="NSButton" id="458929348">
 						<reference key="NSNextResponder" ref="337861947"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{37, 11}, {23, 23}}</string>
+						<string key="NSFrame">{{37, 22}, {23, 23}}</string>
 						<reference key="NSSuperview" ref="337861947"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="266042877">
@@ -2622,6 +2622,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								</object>
 								<string key="NSFrame">{{1, 17}, {475, 266}}</string>
 								<reference key="NSSuperview" ref="546051593"/>
+								<reference key="NSNextKeyView" ref="623827910"/>
 								<reference key="NSDocView" ref="623827910"/>
 								<reference key="NSBGColor" ref="78123678"/>
 								<int key="NScvFlags">4</int>
@@ -2654,6 +2655,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								</object>
 								<string key="NSFrame">{{1, 0}, {475, 17}}</string>
 								<reference key="NSSuperview" ref="546051593"/>
+								<reference key="NSNextKeyView" ref="740212662"/>
 								<reference key="NSDocView" ref="740212662"/>
 								<reference key="NSBGColor" ref="78123678"/>
 								<int key="NScvFlags">4</int>
@@ -2662,6 +2664,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 						<string key="NSFrame">{{20, 81}, {477, 284}}</string>
 						<reference key="NSSuperview" ref="919569091"/>
+						<reference key="NSNextKeyView" ref="511802985"/>
 						<int key="NSsFlags">562</int>
 						<reference key="NSVScroller" ref="9013435"/>
 						<reference key="NSHScroller" ref="675056068"/>
@@ -7284,7 +7287,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="337861947"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="458929348"/>
 							<reference ref="96606492"/>
 							<reference ref="462703084"/>
 							<reference ref="967645754"/>
@@ -7296,6 +7298,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="801399144"/>
 							<reference ref="948792539"/>
 							<reference ref="724744333"/>
+							<reference ref="458929348"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Highlight Settings</string>
