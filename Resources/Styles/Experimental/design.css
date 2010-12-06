@@ -170,14 +170,13 @@ body div[type=notice] {
 
 body div[type=notice] .sender {
 	color: #f00;
-	padding-left: 3px;
-	margin-right: -165px;
+	margin-right: -158px;
 }
 
 body div[type=notice] span.message,
 body div[type=ctcp] span.message,
 body div[type=wallops] span.message {
-	padding-left: 15px;
+	padding-left: 16px;
 }
 
 /* PRIVMSG */
@@ -270,8 +269,19 @@ body div[type=debug_receive] {
 	border-top: 1px solid #444;
 	border-bottom: 1px solid #444;
 	padding: 2px;
-	padding-left: 15px;
 	margin-left: 0px;
+}
+
+body div[type=invite] span.time,
+body div[type=reply] span.time,
+body div[type=system] span.time,
+body div[type=error] span.time,
+body div[type=error_reply] span.time,
+body div[type=dcc_send_send] span.time,
+body div[type=dcc_send_receive] span.time,
+body div[type=debug_send] span.time,
+body div[type=debug_receive] span.time {
+	padding-right: 16px;
 }
 
 /* GENERAL EVENT */
@@ -281,8 +291,8 @@ body div[type=part],
 body div[type=kick],
 body div[type=quit],
 body div[type=kill],
-body div[type=nick],
 body div[type=mode],
+body div[type=nick],
 body div[type=website],
 body div[type=topic] {
     color: #666;
