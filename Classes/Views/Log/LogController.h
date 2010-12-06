@@ -10,6 +10,7 @@
 #import "MarkedScroller.h"
 #import "ViewTheme.h"
 #import "WebViewAutoScroll.h"
+#import "OtherTheme.h"
 
 @class IRCWorld;
 @class IRCClient;

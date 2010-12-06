@@ -2474,8 +2474,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* format = nil;
 	
-	if ([Preferences themeOverrideNickFormat]) {
-		format = [Preferences themeNickFormat];
+	if (world.viewTheme.other.nicknameFormat) {
+		format = world.viewTheme.other.nicknameFormat;
+	} else {
+		if ([Preferences themeOverrideNickFormat]) {
+			format = [Preferences themeNickFormat];
+		}
 	}
 	
 	if ([format length] < 1) {
@@ -2607,7 +2611,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	LogLine* c = [[LogLine new] autorelease];
 	
 	if (showTime) {
-		NSString* time = TXFormattedTimestamp([Preferences themeTimestampFormat]);
+		NSString* time = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
 		
 		if (time.length) {
 			time = [time stringByAppendingString:@" "];
@@ -2633,7 +2637,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified
 {
-	NSString* time = TXFormattedTimestamp([Preferences themeTimestampFormat]);
+	NSString* time = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
 	IRCChannel* channel = nil;
 	NSString* place = nil;
 	NSString* nickStr = nil;

@@ -86,12 +86,12 @@
 			
 			self.baseUrl = [NSURL fileURLWithPath:path];
 			
-			other.fileName = [path stringByAppendingPathComponent:@"/userInterface.plist"];
+			other.path = path;
 			return;
 		}
 	}
 	
-	other.fileName = nil;
+	other.path = nil;
 		
 }
 

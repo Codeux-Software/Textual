@@ -14,6 +14,7 @@ extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhol
 extern NSInteger TXRandomThousandNumber(void);
 extern NSTimeInterval IntervalSinceTextualStart(void);
 extern NSString *TXFormattedTimestamp(NSString *format);
+extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
 extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
 extern NSString *promptForInput(NSString *whatFor, 
 								NSString *title, 

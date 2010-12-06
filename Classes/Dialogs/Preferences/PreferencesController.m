@@ -522,7 +522,6 @@
 		newThemeName = [ViewTheme buildUserFileName:name];
 	}
 	
-	// if we have just selected the already chosen theme then do nothing
 	if ([[Preferences themeName] isEqual:newThemeName]) return;
 	
 	[Preferences setThemeName:newThemeName];

@@ -122,13 +122,13 @@
 	fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
 	[fieldEditor setFieldEditor:YES];
 	fieldEditor.pasteDelegate = self;
-
+	
 	[fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
 	[fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
 	[fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
 	[fieldEditor setAutomaticQuoteSubstitutionEnabled:[Preferences quoteSubstitutionEnabled]];
 	[fieldEditor setAutomaticLinkDetectionEnabled:[Preferences linkDetectionEnabled]];
-
+	
 	if ([fieldEditor respondsToSelector:@selector(setAutomaticSpellingCorrectionEnabled:)]) {
 		[fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
 	}
@@ -188,7 +188,7 @@
 	[world setup:seed];
 	
 	extrac.world = world;
-
+	
 	tree.dataSource = world;
 	tree.delegate = world;
 	tree.responderDelegate = world;
@@ -249,7 +249,6 @@
 		[alert setAlertStyle:NSInformationalAlertStyle];
 		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
 		
-		[alert runModal];
 		[alert release];
 #endif
 		
@@ -393,7 +392,7 @@
 			server = [chunks safeObjectAtIndex:0];
 			port = [[chunks safeObjectAtIndex:1] integerValue];
 		}
-	
+		
 		[world createConnection:[NSString stringWithFormat:@"%@ %i", server, port] chan:channel];
 	}
 	
@@ -423,7 +422,7 @@
 	
 	return YES;
 }
-	
+
 #pragma mark -
 #pragma mark NSWindow Delegate
 
@@ -435,7 +434,7 @@
 		if ([fMenu indexOfItem:formattingMenu] < 1) {
 			[fMenu addItem:[NSMenuItem separatorItem]];
 			[fMenu addItem:formattingMenu];
- 		
+			
 			[fieldEditor setMenu:fMenu];
 		}
 		
@@ -500,7 +499,7 @@
 		
 		while (1 == 1) {
 			if (charCountIndex >= [selectedText length]) break;
-				
+			
 			NSRange charRange = NSMakeRange(charCountIndex, 1);
 			NSString *charValue = [selectedText substringWithRange:charRange];
 			
@@ -598,7 +597,7 @@
 			world.selected.currentInputHistory = nil;
 		}
 	}
-			 
+	
 	if (s.length) {
 		if ([world inputText:s command:command]) {
 			[inputHistory add:os];
@@ -707,6 +706,11 @@
 	[Preferences sync];
 }
 
+- (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{	
+	[[NSUserDefaults standardUserDefaults] setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+}
+
 - (void)themeDidChange:(NSNotification*)note
 {
 	[world reloadTheme];
@@ -715,7 +719,51 @@
 	
 	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];	
+	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	
+	// ====================================================== //
+	
+	NSMutableString *sf = [NSMutableString string];
+	
+	if (viewTheme.other.nicknameFormat) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
+		[sf appendString:@"\n"];
+	}
+	
+	if (viewTheme.other.timestampFormat) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT")];
+		[sf appendString:@"\n"];
+	}
+	
+	if (viewTheme.other.overrideChannelFont) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT")];
+		[sf appendString:@"\n"];
+	}
+	
+	if (viewTheme.other.overrideMessageIndentWrap) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED")];
+		[sf appendString:@"\n"];
+	}
+	
+	sf = (NSMutableString*)[sf trim];
+	
+	if ([sf length] > 0) {		
+		BOOL suppCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"Preferences.prompts.theme_override_info"];
+		
+		if (suppCheck == NO) {
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
+			[alert setMessageText:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")];
+			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), sf]];
+			[alert setShowsSuppressionButton:YES];
+			[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
+			[alert setAlertStyle:NSInformationalAlertStyle];
+			[alert beginSheetModalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
+			
+			[alert release];
+		}
+	}
 }
 
 - (void)themeStyleDidChange:(NSNotification*)note
@@ -810,7 +858,7 @@
 	BOOL head = YES;
 	NSString* pre = [s safeSubstringToIndex:selectedRange.location];
 	NSString* sel = [s substringWithRange:selectedRange];
-
+	
 	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
 		UniChar c = [pre characterAtIndex:i];
 		
@@ -858,7 +906,7 @@
 			break;
 		}
 	}
-
+	
 	if (!current.length) return;
 	
 	NSString* lowerPre = [pre lowercaseString];
@@ -907,7 +955,7 @@
 		choices = nicks;
 		lowerChoices = lowerNicks;
 	}
-
+	
 	NSMutableArray* currentChoices = [NSMutableArray array];
 	NSMutableArray* currentLowerChoices = [NSMutableArray array];
 	
@@ -921,7 +969,7 @@
 	}
 	
 	if (!currentChoices.count) return;
-		
+	
 	NSString* t;
 	NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
 	if (index != NSNotFound) {
@@ -941,10 +989,10 @@
 	} else {
 		t = [currentChoices safeObjectAtIndex:0];
 	}
-
+	
 	// ignore the spelling for whatever we just tab completed so it isn't flagged as an error
 	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
-
+	
 	if ((commandMode || channelMode) || !head) {
 		t = [t stringByAppendingString:@" "];
 	} else {

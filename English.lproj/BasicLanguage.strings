@@ -34,6 +34,8 @@
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "OK_BUTTON" = "OK";
+"NO_BUTTON" = "NO";
+"YES_BUTTON" = "YES";
 "QUIT_BUTTON" = "Quit";
 "CANCEL_BUTTON" = "Cancel";
 "DELETE_BUTTON" = "Delete";
@@ -64,6 +66,15 @@
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
 "USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
+
+/* Theme Change Override Prompt */
+
+"THEME_CHANGE_OVERRIDE_PROMPT_TITLE" = "Theme Overrides";
+"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE" = "The newly selected theme overrides the following preferences:\n\n%@";
+"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT" = "• Channel Font";
+"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT" = "• Nickname Format";
+"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT" = "• Timetamp Format";
+"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED" = "• Indent Wrapped Text";
 
 /* IRC Specific Settings */
 

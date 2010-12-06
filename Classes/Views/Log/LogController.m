@@ -658,30 +658,43 @@
 {
 	NSMutableString* sf = [NSMutableString string];
 	
-	if ([Preferences themeOverrideLogFont]) {
-		NSString* name = [Preferences themeLogFontName];
-		double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
-		
-		[sf appendString:@"html, body, body[type], body {"];
-		[sf appendFormat:@"font-family:'%@';", name];
-		[sf appendFormat:@"font-size:%fpt;", size];
-		[sf appendString:@"}"];
-	}
+	OtherTheme *other = world.viewTheme.other;
 	
-	if ([Preferences indentOnHang] && ![Preferences rightToLeftFormatting]) {
-		NSFont *font = [NSFont fontWithName:[Preferences themeLogFontName] size:round([Preferences themeLogFontSize])];
-		NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
-		NSSize textSize = [TXFormattedTimestamp([Preferences themeTimestampFormat]) sizeWithAttributes:attributes]; 
-		textSize.width += 6;
+	NSString* name = [Preferences themeLogFontName];
+	NSInteger rsize = [Preferences themeLogFontSize];
+	double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
+	
+	if (other.overrideChannelFont) {
+		NSFont *channelFont = other.overrideChannelFont;
 		
-		if (textSize.width >= 1) {
+		name = [channelFont fontName];
+		rsize = [channelFont pointSize];
+		size = ([channelFont pointSize] * (72.0 / 96.0));
+	} 
+	
+	[sf appendString:@"html, body, body[type], body {"];
+	[sf appendFormat:@"font-family:'%@';", name];
+	[sf appendFormat:@"font-size:%fpt;", size];
+	[sf appendString:@"}"];
+	
+	// ====================================================== //
+	
+	if ([Preferences rightToLeftFormatting] == NO) {
+		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) return sf;
+		
+		if ([Preferences indentOnHang]) {
+			NSFont *font = [NSFont fontWithName:name size:round(rsize)];
+			NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
+			NSSize textSize = [TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat) sizeWithAttributes:attributes]; 
+			NSInteger textWidth = (textSize.width + (6 + other.nicknameFormatFixedWidth));
+				
 			[sf appendString:@"body div#body_home p {"];
-			[sf appendFormat:@"margin-left: %fpx;", textSize.width];
-			[sf appendFormat:@"text-indent: -%fpx;", textSize.width];  
+			[sf appendFormat:@"margin-left: %ipx;", textWidth];
+			[sf appendFormat:@"text-indent: -%ipx;", textWidth];  
 			[sf appendString:@"}"];
 			
 			[sf appendString:@"body .time {"];
-			[sf appendFormat:@"width: %fpx;", textSize.width];
+			[sf appendFormat:@"width: %fpx;", (textSize.width + 6)];
 			[sf appendString:@"}"];
 		}
 	}

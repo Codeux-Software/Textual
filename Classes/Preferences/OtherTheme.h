@@ -6,7 +6,7 @@
 
 @interface OtherTheme : NSObject
 {	
-	NSString *fileName;
+	NSString *path;
 	
 	NSColor *underlyingWindowColor;
 	
@@ -40,9 +40,19 @@
 	NSColor* memberListSelBottomLineColor;
 	NSColor* memberListSelTopColor;
 	NSColor* memberListSelBottomColor;
+	
+	NSString *nicknameFormat;
+	NSString *timestampFormat;
+	
+	NSFont *overrideChannelFont;
+	
+	BOOL indentWrappedMessages;
+	BOOL overrideMessageIndentWrap;
+	
+	NSInteger nicknameFormatFixedWidth;
 }
 
-@property (nonatomic, retain, getter=fileName, setter=setFileName:) NSString* fileName;
+@property (nonatomic, retain, getter=path, setter=setPath:) NSString* path;
 @property (nonatomic, retain) NSFont* inputTextFont;
 @property (nonatomic, retain) NSColor* underlyingWindowColor;
 @property (nonatomic, retain) NSColor* inputTextBgColor;
@@ -69,6 +79,12 @@
 @property (nonatomic, retain) NSColor* memberListSelBottomLineColor;
 @property (nonatomic, retain) NSColor* memberListSelTopColor;
 @property (nonatomic, retain) NSColor* memberListSelBottomColor;
+@property (nonatomic, retain) NSString *nicknameFormat;
+@property (nonatomic, retain) NSString *timestampFormat;
+@property (nonatomic, retain) NSFont *overrideChannelFont;
+@property (nonatomic, assign) BOOL indentWrappedMessages;
+@property (nonatomic, assign) BOOL overrideMessageIndentWrap;
+@property (nonatomic, assign) NSInteger nicknameFormatFixedWidth;
 
 - (void)reload;
 
