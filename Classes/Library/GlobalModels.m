@@ -87,8 +87,6 @@ extern NSString *promptForInput(NSString *whatFor,
 	if ([dialog buttonClicked] == NSAlertDefaultReturn) {
 		NSString *result = [dialog promptValue];
 		
-		NSLog(@"%@", result);
-		
 		[dialog release];
 		
 		if ([result length] < 1) {
@@ -114,24 +112,26 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 	NSUInteger val = 0.;
 	NSString *retval = nil;
 	
-	if ( secs < 0 ) secs *= -1;
+	if (secs < 0) secs *= -1;
 	
 	breaks = [[[desc allKeys] mutableCopy] autorelease];
-	[breaks sortUsingSelector:@selector( compare: )];
+	[breaks sortUsingSelector:@selector(compare:)];
 	
-	while( i < [breaks count] && secs >= [[breaks safeObjectAtIndex:i] doubleValue] ) i++;
-	if ( i > 0 ) i--;
+	while(i < [breaks count] && secs >= [[breaks safeObjectAtIndex:i] doubleValue]) i++;
+	if (i > 0) i--;
 	stop = [[breaks safeObjectAtIndex:i] unsignedIntegerValue];
 	
-	val = (NSUInteger) ( secs / (CGFloat) stop );
-	use = ( val > 1 ? plural : desc );
+	val = (NSUInteger)(secs / (CGFloat)stop);
+	use = ((val > 1) ? plural : desc);
 	retval = [NSString stringWithFormat:@"%u%@", val, [use objectForKey:[NSNumber numberWithUnsignedLong:stop]]];
+	
 	if ( longFormat && i > 0 ) {
-		NSUInteger rest = (NSUInteger) ( (NSUInteger) secs % stop );
+		NSUInteger rest = (NSUInteger)((NSUInteger) secs % stop);
 		stop = [[breaks safeObjectAtIndex:--i] unsignedIntegerValue];
-		rest = (NSUInteger) ( rest / (CGFloat) stop );
-		if ( rest > 0 ) {
-			use = ( rest > 1 ? plural : desc );
+		rest = (NSUInteger)(rest / (CGFloat)stop);
+		
+		if (rest > 0) {
+			use = ((rest > 1) ? plural : desc);
 			retval = [retval stringByAppendingFormat:@" %u%@", rest, [use objectForKey:[breaks safeObjectAtIndex:i]]];
 		}
 	}
@@ -139,11 +139,10 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 	return retval;
 }
 
-extern NSString *TXFormattedTimestamp(NSString *format) 
+extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
-	if ([format length] < 1 || ![Preferences themeOverrideTimestampFormat]) {
-		format = @"[%m/%d/%Y -:- %I:%M:%S %p]";
-	}
+	if ([format length] < 1 || ![Preferences themeOverrideTimestampFormat]) format = @"[%m/%d/%Y -:- %I:%M:%S %p]";
+	if (override) format = override;
 	
 	time_t global = time(NULL);
 	struct tm* local = localtime(&global);
@@ -152,4 +151,9 @@ extern NSString *TXFormattedTimestamp(NSString *format)
 	buf[TIME_BUFFER_SIZE] = 0;
 	NSString* result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
 	return result;
+}
+
+extern NSString *TXFormattedTimestamp(NSString *format) 
+{
+	return TXFormattedTimestampWithOverride(format, nil);
 }

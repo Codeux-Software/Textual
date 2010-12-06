@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C9CB1D212AD54BC00F107FC /* Build configuration list for PBXAggregateTarget "Clean Up Resources " */;
+			buildPhases = (
+				4C9CB1CC12AD549E00F107FC /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Clean Up Resources ";
+			productName = "Clean Up Resources ";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
@@ -1324,6 +1338,7 @@
 			projectRoot = "";
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
+				4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */,
 			);
 		};
 /* End PBXProject section */
@@ -1393,6 +1408,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C9CB1CC12AD549E00F107FC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -R \"$PROJECT_DIR/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\"";
+		};
 		4CA945EA11E1AFBA00D36367 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -1759,6 +1787,41 @@
 			};
 			name = "App Store Release";
 		};
+		4C9CB1CE12AD549E00F107FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Clean Up Resources ";
+			};
+			name = Debug;
+		};
+		4C9CB1CF12AD549E00F107FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Clean Up Resources ";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		4C9CB1D012AD549E00F107FC /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Clean Up Resources ";
+			};
+			name = "Release (Trial)";
+		};
+		4C9CB1D112AD549E00F107FC /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Clean Up Resources ";
+			};
+			name = "App Store Release";
+		};
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1994,6 +2057,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4C9CB1D212AD54BC00F107FC /* Build configuration list for PBXAggregateTarget "Clean Up Resources " */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C9CB1CE12AD549E00F107FC /* Debug */,
+				4C9CB1CF12AD549E00F107FC /* Release */,
+				4C9CB1D012AD549E00F107FC /* Release (Trial) */,
+				4C9CB1D112AD549E00F107FC /* App Store Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

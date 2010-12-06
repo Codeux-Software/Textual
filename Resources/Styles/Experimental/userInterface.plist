@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Underlying Window Color</key>
+	<string>#525252</string>
+	<key>Server List</key>
+	<dict>
+		<key>Text Font Style</key>
+		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
+		<key>Background Color</key>
+		<string>#333</string>
+		<key>Highlight Color</key>
+		<string>#007f00</string>
+		<key>New Private Message Color</key>
+		<string>#699fcf</string>
+		<key>Unread Color</key>
+		<string>#699fcf</string>
+		<key>Active Color</key>
+		<string>#fff</string>
+		<key>Inactive Color</key>
+		<string>#aaa</string>
+		<key>Active Color (Selected)</key>
+		<string>#fff</string>
+		<key>Inactive Color (Selected)</key>
+		<string>#ccc</string>
+		<key>Gradient</key>
+		<dict>
+			<key>Top Color</key>
+			<string>#699fcf</string>
+			<key>Bottom Color</key>
+			<string>#699fcf</string>
+			<key>Top Line Color</key>
+			<string>#699fcf</string>
+			<key>Bottom Line Color</key>
+			<string>#699fcf</string>
+		</dict>
+	</dict>
+	<key>Member List</key>
+	<dict>
+		<key>Text Font Style</key>
+		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
+		<key>Background Color</key>
+		<string>#333</string>
+		<key>Text Color</key>
+		<string>#ccc</string>
+		<key>Op Text Color</key>
+		<string>#dedede</string>
+		<key>Text Color (Selected)</key>
+		<string>#cfbc99</string>
+		<key>Gradient</key>
+		<dict>
+			<key>Top Color</key>
+			<string>#699fcf</string>
+			<key>Bottom Color</key>
+			<string>#699fcf</string>
+			<key>Top Line Color</key>
+			<string>#699fcf</string>
+			<key>Bottom Line Color</key>
+			<string>#699fcf</string>
+		</dict>
+	</dict>
+	<key>Input Box</key>
+	<dict>
+		<key>Text Font Style</key>
+		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
+		<key>Background Color</key>
+		<string>#000</string>
+		<key>Text Color</key>
+		<string>#FFF</string>
+	</dict>
+</dict>
+</plist>
