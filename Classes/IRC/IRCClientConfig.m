@@ -103,7 +103,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[self setPassword:password];
 		[self setNickPassword:nickPassword];
 		
-		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SUHasLaunchedBefore"];
+		[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
 	}
 	
 	return nickPassword;

@@ -636,7 +636,7 @@
 {
 	[Preferences cleanUpWords];
 	
-	[[NSUserDefaults standardUserDefaults] synchronize];
+	[TXNSUserDefaultsPointer() synchronize];
 	
 	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[delegate preferencesDialogWillClose:self];

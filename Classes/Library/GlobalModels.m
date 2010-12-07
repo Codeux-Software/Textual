@@ -9,6 +9,14 @@
 
 #define TIME_BUFFER_SIZE 256
 
+static NSUserDefaults *TXNSUserDefaultsPNTR = nil;
+
+extern NSUserDefaults *TXNSUserDefaultsPointer(void) 
+{
+	if (TXNSUserDefaultsPNTR == nil) TXNSUserDefaultsPNTR = [NSUserDefaults standardUserDefaults];
+	return TXNSUserDefaultsPNTR;
+}
+
 extern void TXDevNullDestroyObject(void* objt)
 {
 	return;
@@ -43,7 +51,7 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 								  NSString *suppressionKey,
 								  NSString *suppressionText)
 {
-	BOOL suppCheck = [[NSUserDefaults standardUserDefaults] boolForKey:suppressionKey];
+	BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:suppressionKey];
 	
 	if (suppCheck == YES) {
 		return YES;
@@ -59,7 +67,7 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 		
 		NSInteger button = [alert runModal];
 		if (button == NSAlertDefaultReturn) {
-			[[NSUserDefaults standardUserDefaults] setBool:[[alert suppressionButton] state] forKey:suppressionKey];
+			[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
 			
 			return YES;
 		} else {

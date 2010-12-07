@@ -13,6 +13,7 @@ extern NSString *TXTLS(NSString *key);
 extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhole - Good for "variable not used" warnings. 
 extern NSInteger TXRandomThousandNumber(void);
 extern NSTimeInterval IntervalSinceTextualStart(void);
+extern NSUserDefaults *TXNSUserDefaultsPointer(void);
 extern NSString *TXFormattedTimestamp(NSString *format);
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
 extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
