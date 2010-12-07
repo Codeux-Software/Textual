@@ -34,8 +34,8 @@
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "OK_BUTTON" = "OK";
-"NO_BUTTON" = "NO";
-"YES_BUTTON" = "YES";
+"NO_BUTTON" = "No";
+"YES_BUTTON" = "Yes";
 "QUIT_BUTTON" = "Quit";
 "CANCEL_BUTTON" = "Cancel";
 "DELETE_BUTTON" = "Delete";
@@ -54,6 +54,9 @@
 
 "WANT_CHANNEL_DELETE_TITLE" = "Do you want to delete the selection?";
 "WANT_CHANNEL_DELETE_MESSAGE" = "There is no undo and all data related to this channel will be erased.";
+
+"DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
+"DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is currently not set as the default IRC client for this copy of Mac OS X. Set it?";
 
 /* Trial Localizations */
 

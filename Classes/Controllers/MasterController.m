@@ -708,7 +708,7 @@
 
 - (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {	
-	[[NSUserDefaults standardUserDefaults] setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+	[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
 }
 
 - (void)themeDidChange:(NSNotification*)note
@@ -748,7 +748,7 @@
 	sf = (NSMutableString*)[sf trim];
 	
 	if ([sf length] > 0) {		
-		BOOL suppCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"Preferences.prompts.theme_override_info"];
+		BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.theme_override_info"];
 		
 		if (suppCheck == NO) {
 			NSAlert *alert = [[NSAlert alloc] init];

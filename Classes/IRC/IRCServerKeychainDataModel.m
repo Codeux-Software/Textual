@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCServerKeychainDataModel.h"
+#import "NSStringHelper.h"
 
 @implementation IRCServerKeychainDataModel
 
