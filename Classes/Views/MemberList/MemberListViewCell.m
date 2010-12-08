@@ -11,6 +11,8 @@ static NSInteger markWidth;
 @synthesize theme;
 @synthesize nickStyle;
 @synthesize markStyle;
+@synthesize rawHostmask;
+@synthesize hostmask;
 
 - (id)init
 {
@@ -30,6 +32,8 @@ static NSInteger markWidth;
 	[nickStyle release];
 	[markStyle release];
 	[member release];
+	[rawHostmask release];
+	[hostmask release];
 	[super dealloc];
 }
 
@@ -69,10 +73,43 @@ static NSInteger markWidth;
 	[self calculateMarkWidth];
 }
 
-- (NSString *)tooltipValue
+- (NSAttributedString *)tooltipValue
 {
 	if (member.address && member.username) {
-		return [NSString stringWithFormat:@"!%@@%@", member.username, member.address];
+		NSString *fullhost = [NSString stringWithFormat:@"%@%@\n%@%@\n%@%@", TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME"), member.nick, 
+																			 TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME"), member.username, 
+																			 TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address];
+		
+		if (hostmask) {
+			if ([fullhost isEqualToString:rawHostmask]) {
+				return hostmask;
+			} else {
+				[hostmask release];
+				hostmask = nil;
+			}
+		}
+		
+		if (rawHostmask) {
+			[rawHostmask release];
+			rawHostmask = nil;
+		}
+		
+		rawHostmask = [fullhost retain];
+		
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:12], NSFontAttributeName, 
+							   [NSColor whiteColor], NSForegroundColorAttributeName, nil];
+		
+		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:12];
+		
+		NSMutableAttributedString *atrsTooltip = [[NSMutableAttributedString alloc] initWithString:fullhost attributes:attrs];
+		
+		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME")]];
+		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME")]];
+		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK")]];
+			
+		hostmask = atrsTooltip;
+		
+		return hostmask;
 	}
 	
 	return nil;
@@ -80,26 +117,19 @@ static NSInteger markWidth;
 
 - (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-	NSString *tooltip = [self tooltipValue];
+	NSAttributedString *tooltip = [self tooltipValue];
 	
 	if (tooltip) {
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+		NSSize hostTextSize = [tooltip size];
 		
-		NSSize hostTextSize = [tooltip sizeWithAttributes:attrs];
-		NSSize nickTextSize = [[NSString stringWithFormat:@"%C%@", [member mark], [member nick]] sizeWithAttributes:attrs];
-		
-		float width = 25.0;
-		
-		width += nickTextSize.width;
-		width += hostTextSize.width;
-		
-		if (width < cellFrame.size.width){
+		if (hostTextSize.width < cellFrame.size.width){
 			return NSZeroRect;
 		}
 		
 		return NSMakeRect((cellFrame.origin.x + 5), 
 						  (cellFrame.origin.y + 5), 
-						  width, cellFrame.size.height);	
+						  (hostTextSize.width + 35), 
+						  (hostTextSize.height + 16));	
 	} else {
 		return NSZeroRect;
 	}
@@ -107,28 +137,33 @@ static NSInteger markWidth;
 
 - (void)drawWithExpansionFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-	NSString *tooltip = [self tooltipValue];
+	NSAttributedString *tooltip = [self tooltipValue];
 	
-	if (tooltip) {
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
-		NSSize nickTextSize = [[NSString stringWithFormat:@"%C%@", [member mark], [member nick]] sizeWithAttributes:attrs];
+	if (tooltip) {  
+		NSSize hostTextSize = [tooltip size];
+					 
+		[[NSColor blackColor] setStroke];
+		[[NSColor darkGrayColor] setFill];
 		
-		float rightJustify = 6.0;
+		NSRect rect = NSMakeRect(cellFrame.origin.x, 
+								 cellFrame.origin.y, 
+								 (hostTextSize.width + 35), 
+								 (hostTextSize.height + 16));
 		
-		if ([member mark] == ' ') {
-			rightJustify = 11.0;
-		}
+		NSBezierPath* path = [NSBezierPath bezierPath];
+		[path appendBezierPathWithRect:rect];
 		
-		[tooltip drawAtPoint:NSMakePoint(((cellFrame.origin.x + nickTextSize.width) + rightJustify), 
-										 cellFrame.origin.y) withAttributes:attrs];
+		[path stroke];
+		[path fill];
 		
-		[self drawWithFrame:cellFrame inView:view];
+		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 5), 
+											 (cellFrame.origin.y + 6))];
 	} else {
 		[super drawWithExpansionFrame:cellFrame inView:view];
 	}
 }
 
-- (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
+- (void)drawWithFrame:(NSRect)frame inView:(NSView*)view
 {
 	NSWindow* window = view.window;
 	NSColor* color = nil;

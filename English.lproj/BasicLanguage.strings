@@ -57,6 +57,10 @@
 
 "DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
 "DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is currently not set as the default IRC client for this copy of Mac OS X. Set it?";
+ 
+"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME" = " • Nickname: ";
+"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME" = " • Username: ";
+"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK" = " • Hostmask: ";
 
 /* Trial Localizations */
 
