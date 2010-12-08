@@ -119,7 +119,7 @@
 
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return [NSColor fromCSS:((value == nil || ([value length] != 6 && [value length] != 3)) ? defaultv : value)];
+	return [NSColor fromCSS:(([value length] == 7 || [value length] == 4) ? value : defaultv)];
 }
 
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv
