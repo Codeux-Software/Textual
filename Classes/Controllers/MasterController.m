@@ -661,7 +661,7 @@
 		
 		id spellCheckingValue = [dic objectForKey:@"SpellChecking"];
 		
-		[window setFrame:NSMakeRect(x, y, w, h) display:YES];
+		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
 		
 		infoSplitter.position = [dic intForKey:@"info"];
 		treeSplitter.position = [dic intForKey:@"tree"];
@@ -678,7 +678,7 @@
 			NSInteger w = 1024;
 			NSInteger h = 768;
 			rect = NSMakeRect(p.x - w/2, p.y - h/2, w, h);
-			[window setFrame:rect display:YES];
+			[window setFrame:rect display:YES animate:menu.isInFullScreenMode];
 		}
 		
 		infoSplitter.position = 250;
@@ -689,6 +689,10 @@
 - (void)saveWindowState
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	
+	if (menu.isInFullScreenMode) {
+		[self loadWindowState];
+	}
 	
 	NSRect rect = window.frame;
 	

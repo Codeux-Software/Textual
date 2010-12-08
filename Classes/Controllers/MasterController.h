@@ -89,6 +89,8 @@
 @property (nonatomic, retain) NickCompletinStatus* completionStatus;
 @property (nonatomic, assign) BOOL terminating;
 
+- (void)loadWindowState;
+
 - (IBAction)insertColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
 - (IBAction)insertItalicCharIntoTextBox:(id)sender;
