@@ -47,6 +47,8 @@
 	TopicSheet* topicSheet;
 	InviteSheet* inviteSheet;
 	AboutPanel* aboutPanel;
+	
+	BOOL isInFullScreenMode;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -69,6 +71,7 @@
 @property (nonatomic, retain) ServerSheet* serverSheet;
 @property (nonatomic, retain) InviteSheet* inviteSheet;
 @property (nonatomic, retain) AboutPanel* aboutPanel;
+@property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
 - (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
@@ -157,6 +160,8 @@
 - (void)onWantChannelVoiceOnly:(id)sender;
 
 - (void)commandWShortcutUsed:(id)sender;
+
+- (void)wantsFullScreenModeToggled:(id)sender;
 
 - (void)processNavigationItem:(NSMenuItem *)sender;
 @end

@@ -64,6 +64,7 @@
 @synthesize inviteSheet;
 @synthesize aboutPanel;
 @synthesize master;
+@synthesize isInFullScreenMode;
 
 - (id)init
 {
@@ -1140,6 +1141,25 @@
 - (void)onWantIgnoreListShown:(id)sender
 {
 	[self showServerPropertyDialog:world.selectedClient ignore:YES];
+}
+
+- (void)wantsFullScreenModeToggled:(id)sender
+{
+	if (isInFullScreenMode == NO) {
+		[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
+		[[window standardWindowButton:NSWindowZoomButton] setHidden:YES];
+		[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
+		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
+		[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
+	} else {
+		[NSApp setPresentationOptions:NSApplicationPresentationDefault];
+		[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
+		[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
+		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
+		[master loadWindowState];
+	}
+	
+	isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
 }
 
 - (void)onWantAboutWindowShown:(id)sender

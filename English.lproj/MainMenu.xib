@@ -2,20 +2,20 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J521</string>
+		<string key="IBDocument.SystemVersion">10J537</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="21"/>
 			<integer value="1732"/>
 			<integer value="327"/>
-			<integer value="29"/>
+			<integer value="24"/>
 			<integer value="963"/>
+			<integer value="21"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1179,6 +1179,15 @@
 									<reference key="NSMenu" ref="272041888"/>
 									<string key="NSTitle">Center Main Window</string>
 									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="696501640">
+									<reference key="NSMenu" ref="272041888"/>
+									<string key="NSTitle">Toggle Fullscreen</string>
+									<string key="NSKeyEquiv">f</string>
+									<int key="NSKeyEquivModMask">262144</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
@@ -4403,6 +4412,14 @@
 					</object>
 					<int key="connectionID">1771</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">wantsFullScreenModeToggled:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="696501640"/>
+					</object>
+					<int key="connectionID">1773</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4471,6 +4488,7 @@
 							<reference ref="138370719"/>
 							<reference ref="829662713"/>
 							<reference ref="323632593"/>
+							<reference ref="696501640"/>
 						</array>
 						<reference key="parent" ref="158979937"/>
 					</object>
@@ -6193,6 +6211,11 @@
 						<reference key="object" ref="965784219"/>
 						<reference key="parent" ref="412649683"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1772</int>
+						<reference key="object" ref="696501640"/>
+						<reference key="parent" ref="272041888"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6239,7 +6262,7 @@
 				<boolean value="YES" key="1364.ImportedFromIB2"/>
 				<string key="1378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1385.IBEditorWindowLastContentRect">{{830, 802}, {222, 103}}</string>
+				<string key="1385.IBEditorWindowLastContentRect">{{1039, 806}, {222, 103}}</string>
 				<string key="1385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1392.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6413,6 +6436,7 @@
 				<string key="1747.IBEditorWindowLastContentRect">{{399, 880}, {172, 23}}</string>
 				<string key="1747.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1772.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="184.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="184.ImportedFromIB2"/>
 				<string key="185.IBEditorWindowLastContentRect">{{1089, 711}, {257, 63}}</string>
@@ -6448,7 +6472,7 @@
 				<string key="235.CustomClassName">ThinSplitView</string>
 				<string key="235.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="235.ImportedFromIB2"/>
-				<string key="24.IBEditorWindowLastContentRect">{{762, 690}, {218, 213}}</string>
+				<string key="24.IBEditorWindowLastContentRect">{{968, 676}, {218, 233}}</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="24.ImportedFromIB2"/>
 				<string key="257.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6473,7 +6497,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{314, 905}, {577, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{523, 909}, {577, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6651,7 +6675,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1771</int>
+			<int key="maxID">1773</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7002,6 +7026,7 @@
 						<string key="channelCount">NSTextField</string>
 						<string key="delegate">id</string>
 						<string key="filterText">NSSearchField</string>
+						<string key="networkName">NSTextField</string>
 						<string key="table">ListView</string>
 						<string key="updateButton">NSButton</string>
 					</dictionary>
@@ -7017,6 +7042,10 @@
 						<object class="IBToOneOutletInfo" key="filterText">
 							<string key="name">filterText</string>
 							<string key="candidateClassName">NSSearchField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="networkName">
+							<string key="name">networkName</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="table">
 							<string key="name">table</string>
@@ -7307,6 +7336,7 @@
 						<string key="onWantToReadTextualLogs:">id</string>
 						<string key="openHelpMenuLinkItem:">id</string>
 						<string key="processNavigationItem:">NSMenuItem</string>
+						<string key="wantsFullScreenModeToggled:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="commandWShortcutUsed:">
@@ -7592,6 +7622,10 @@
 						<object class="IBActionInfo" key="processNavigationItem:">
 							<string key="name">processNavigationItem:</string>
 							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBActionInfo" key="wantsFullScreenModeToggled:">
+							<string key="name">wantsFullScreenModeToggled:</string>
+							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
@@ -8096,10 +8130,13 @@
 						<string key="onHnagingTextChange:">id</string>
 						<string key="onInputHistorySchemeChanged:">id</string>
 						<string key="onLayoutChanged:">id</string>
+						<string key="onNicknameColorsDisabled:">id</string>
+						<string key="onOpenPathToScripts:">id</string>
 						<string key="onOpenPathToThemes:">id</string>
 						<string key="onOverrideFontChanged:">id</string>
 						<string key="onPrefPaneSelected:">id</string>
 						<string key="onSelectFont:">id</string>
+						<string key="onStyleChanged:">id</string>
 						<string key="onTextDirectionChanged:">id</string>
 						<string key="onTimestampFormatChanged:">id</string>
 						<string key="onTranscriptFolderChanged:">id</string>
@@ -8134,6 +8171,14 @@
 							<string key="name">onLayoutChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onNicknameColorsDisabled:">
+							<string key="name">onNicknameColorsDisabled:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onOpenPathToScripts:">
+							<string key="name">onOpenPathToScripts:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onOpenPathToThemes:">
 							<string key="name">onOpenPathToThemes:</string>
 							<string key="candidateClassName">id</string>
@@ -8148,6 +8193,10 @@
 						</object>
 						<object class="IBActionInfo" key="onSelectFont:">
 							<string key="name">onSelectFont:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onStyleChanged:">
+							<string key="name">onStyleChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onTextDirectionChanged:">
@@ -8170,6 +8219,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="IRCopServicesView">NSView</string>
 						<string key="alertsView">NSView</string>
+						<string key="channelManagementView">NSView</string>
 						<string key="contentView">NSView</string>
 						<string key="delegate">id</string>
 						<string key="excludeWordsArrayController">NSArrayController</string>
@@ -8199,6 +8249,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="alertsView">
 							<string key="name">alertsView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="channelManagementView">
+							<string key="name">channelManagementView</string>
 							<string key="candidateClassName">NSView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="contentView">
