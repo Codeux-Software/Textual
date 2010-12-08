@@ -128,8 +128,8 @@ static NSInteger markWidth;
 		
 		return NSMakeRect((cellFrame.origin.x + 5), 
 						  (cellFrame.origin.y + 5), 
-						  (hostTextSize.width + 35), 
-						  (hostTextSize.height + 16));	
+						  (hostTextSize.width + 31), 
+						  (hostTextSize.height + 12));	
 	} else {
 		return NSZeroRect;
 	}
@@ -139,25 +139,28 @@ static NSInteger markWidth;
 {
 	NSAttributedString *tooltip = [self tooltipValue];
 	
-	if (tooltip) {  
+	if (tooltip) {   
+		[[NSColor clearColor] set];
+		NSRectFill([view frame]);
+		
 		NSSize hostTextSize = [tooltip size];
 					 
 		[[NSColor blackColor] setStroke];
 		[[NSColor darkGrayColor] setFill];
 		
-		NSRect rect = NSMakeRect(cellFrame.origin.x, 
-								 cellFrame.origin.y, 
-								 (hostTextSize.width + 35), 
-								 (hostTextSize.height + 16));
+		NSRect rect = NSMakeRect((cellFrame.origin.x + 1), 
+								 (cellFrame.origin.y + 1), 
+								 (hostTextSize.width + 30), 
+								 (hostTextSize.height + 10));
 		
 		NSBezierPath* path = [NSBezierPath bezierPath];
-		[path appendBezierPathWithRect:rect];
-		
+		[path appendBezierPathWithRoundedRect:rect xRadius:10 yRadius:10];
+		[path setLineWidth:2];
 		[path stroke];
 		[path fill];
 		
 		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 5), 
-											 (cellFrame.origin.y + 6))];
+											 (cellFrame.origin.y + 5))];
 	} else {
 		[super drawWithExpansionFrame:cellFrame inView:view];
 	}
