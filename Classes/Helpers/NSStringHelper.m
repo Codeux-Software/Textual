@@ -75,7 +75,7 @@
 - (BOOL)isEmpty
 {
 	if (!self || self == nil) return YES;
-	return ([self length] == 0);
+	return ([[self trim] length] == 0);
 }
 
 - (BOOL)contains:(NSString*)str
