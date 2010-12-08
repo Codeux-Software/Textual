@@ -10,7 +10,7 @@
 					  withGUID:(NSString *)guid 
 					   andCUID:(NSInteger)cuid
 {
-	if ([currentPassword isEmpty]) {
+	if ([currentPassword length] < 1) {
 		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 															 withItemKind:@"application password" 
 															  forUsername:nil 
@@ -18,7 +18,7 @@
 														withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if ([kPassword isEmpty]) { 
+			if ([kPassword length] < 1) { 
 				kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
 														   withItemKind:@"application password" 
 															forUsername:nil 
@@ -37,7 +37,7 @@
 				   withHost:(NSString *)host 
 					andGUID:(NSString *)guid 
 {
-	if ([password isEmpty]) {
+	if ([password length] < 1) {
 		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 						  withItemKind:@"application password"
 						   forUsername:nil
@@ -57,7 +57,7 @@
 				   withGUID:(NSString *)guid 
 					andCUID:(NSInteger)cuid
 {
-	if ([currentPassword isEmpty]) {
+	if ([currentPassword length] < 1) {
 		NSString *kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 														 withItemKind:@"application password" 
 														  forUsername:nil 
@@ -65,7 +65,7 @@
 													withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if ([kPassword isEmpty]) {
+			if ([kPassword length] < 1) {
 				kPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
 													   withItemKind:@"application password" 
 														forUsername:nil
@@ -84,7 +84,7 @@
 				 withHost:(NSString *)host
 				  andGUID:(NSString *)guid 
 {
-	if ([password isEmpty]) {
+	if ([password length] < 1) {
 		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 						  withItemKind:@"application password"
 						   forUsername:nil

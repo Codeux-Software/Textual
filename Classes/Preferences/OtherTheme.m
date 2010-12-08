@@ -119,12 +119,12 @@
 
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return [NSColor fromCSS:((value == nil || [value isEmpty] || ([value length] != 6 && [value length] != 3)) ? defaultv : value)];
+	return [NSColor fromCSS:((value == nil || ([value length] != 6 && [value length] != 3)) ? defaultv : value)];
 }
 
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return (([value isEmpty]) ? defaultv : value);
+	return (([value length]) ? value : defaultv);
 }
 
 - (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv
@@ -136,7 +136,7 @@
 				   font_size:(NSInteger)style_size
 						 def:(NSFont *)defaultv
 {
-	return ((style_size < 1 || (style_value == nil || [[style_value trim] isEmpty])) ? defaultv : [NSFont fontWithName:style_value size:style_size]);
+	return ((style_size < 1 || style_value == nil) ? defaultv : [NSFont fontWithName:style_value size:style_size]);
 }
 
 - (void)reload 

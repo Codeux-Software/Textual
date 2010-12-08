@@ -91,7 +91,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kPassword = [IRCServerKeychainDataModel nicknamePassword:nickPassword withGUID:guid andCUID:cuid];
 	
-	if (kPassword && [nickPassword isEmpty] == NO) {
+	if (kPassword && [nickPassword length] > 0) {
 		[nickPassword release];
 	}
 	
@@ -121,7 +121,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kPassword = [IRCServerKeychainDataModel serverPassword:password withGUID:guid andCUID:cuid];
 	
-	if (kPassword && [password isEmpty] == NO) {
+	if (kPassword && [password length] > 0) {
 		[password release];
 	}
 	
