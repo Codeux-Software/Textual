@@ -1152,11 +1152,11 @@
 		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
 		[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
 	} else {
-		[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
 		[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
 		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
 		[master loadWindowState];
+		[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 	}
 	
 	isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
