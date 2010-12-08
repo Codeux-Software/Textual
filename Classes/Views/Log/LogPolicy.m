@@ -83,6 +83,7 @@
 		for (NSMenuItem* item in [urlMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
+		
 		return ary;
 	} else if (addr) {
 		menuController.pointedAddress = addr;
@@ -93,12 +94,10 @@
 		for (NSMenuItem* item in [addrMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
+		
 		return ary;
 	} else if (nick) {
 		NSMutableArray* ary = [NSMutableArray array];
-		NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:TXTLS(@"USER_OPTIONS_MENU_ITEM"), nick] action:nil keyEquivalent:@""] autorelease];
-		[ary addObject:nickItem];
-		[ary addObject:[NSMenuItem separatorItem]];
 		
 		menuController.pointedNick = nick;
 		[nick autorelease];
@@ -109,6 +108,7 @@
 			[self modifyMemberMenuItem:item];
 			[ary addObject:item];
 		}
+		
 		return ary;
 	} else if (chan) {
 		menuController.pointedChannelName = chan;
@@ -119,6 +119,7 @@
 		for (NSMenuItem* item in [chanMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
+		
 		return ary;
 	} else if (menu) {
 		NSMutableArray* ary = [NSMutableArray array];

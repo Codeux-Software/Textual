@@ -1,33 +1,34 @@
 #import "MemberListViewCell.h"
 
-#define MARK_LEFT_MARGIN			2
+#define MARK_LEFT_MARGIN	2
 #define MARK_RIGHT_MARGIN	2
 
 static NSInteger markWidth;
-static NSMutableParagraphStyle* markStyle;
-static NSMutableParagraphStyle* nickStyle;
 
 @implementation MemberListViewCell
 
 @synthesize member;
 @synthesize theme;
+@synthesize nickStyle;
+@synthesize markStyle;
 
 - (id)init
 {
 	if ((self = [super init])) {
+		markStyle = [NSMutableParagraphStyle new];
+		[markStyle setAlignment:NSCenterTextAlignment];
+		
+		nickStyle = [NSMutableParagraphStyle new];
+		[nickStyle setAlignment:NSLeftTextAlignment];
+		[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	}
-	
-	markStyle = [NSMutableParagraphStyle new];
-	[markStyle setAlignment:NSCenterTextAlignment];
-
-	nickStyle = [NSMutableParagraphStyle new];
-	[nickStyle setAlignment:NSLeftTextAlignment];
-	[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	return self;
 }
 
 - (void)dealloc
 {
+	[nickStyle release];
+	[markStyle release];
 	[member release];
 	[super dealloc];
 }
@@ -68,6 +69,65 @@ static NSMutableParagraphStyle* nickStyle;
 	[self calculateMarkWidth];
 }
 
+- (NSString *)tooltipValue
+{
+	if (member.address && member.username) {
+		return [NSString stringWithFormat:@"!%@@%@", member.username, member.address];
+	}
+	
+	return nil;
+}
+
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+	NSString *tooltip = [self tooltipValue];
+	
+	if (tooltip) {
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+		
+		NSSize hostTextSize = [tooltip sizeWithAttributes:attrs];
+		NSSize nickTextSize = [[NSString stringWithFormat:@"%C%@", [member mark], [member nick]] sizeWithAttributes:attrs];
+		
+		float width = 25.0;
+		
+		width += nickTextSize.width;
+		width += hostTextSize.width;
+		
+		if (width < cellFrame.size.width){
+			return NSZeroRect;
+		}
+		
+		return NSMakeRect((cellFrame.origin.x + 5), 
+						  (cellFrame.origin.y + 5), 
+						  width, cellFrame.size.height);	
+	} else {
+		return NSZeroRect;
+	}
+}
+
+- (void)drawWithExpansionFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+	NSString *tooltip = [self tooltipValue];
+	
+	if (tooltip) {
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+		NSSize nickTextSize = [[NSString stringWithFormat:@"%C%@", [member mark], [member nick]] sizeWithAttributes:attrs];
+		
+		float rightJustify = 6.0;
+		
+		if ([member mark] == ' ') {
+			rightJustify = 11.0;
+		}
+		
+		[tooltip drawAtPoint:NSMakePoint(((cellFrame.origin.x + nickTextSize.width) + rightJustify), 
+										 cellFrame.origin.y) withAttributes:attrs];
+		
+		[self drawWithFrame:cellFrame inView:view];
+	} else {
+		[super drawWithExpansionFrame:cellFrame inView:view];
+	}
+}
+
 - (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
 {
 	NSWindow* window = view.window;
@@ -88,7 +148,10 @@ static NSMutableParagraphStyle* nickStyle;
 	NSMutableDictionary* style = [NSMutableDictionary dictionary];
 	[style setObject:markStyle forKey:NSParagraphStyleAttributeName];
 	[style setObject:self.font forKey:NSFontAttributeName];
-	[style setObject:color forKey:NSForegroundColorAttributeName];
+	
+	if (color) {
+		[style setObject:color forKey:NSForegroundColorAttributeName];
+	}
 	
 	NSRect rect = frame;
 	rect.origin.x += MARK_LEFT_MARGIN;
