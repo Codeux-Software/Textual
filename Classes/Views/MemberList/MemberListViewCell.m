@@ -105,10 +105,10 @@ static NSInteger markWidth;
 		
 		rawHostmask = [fullhost retain];
 		
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:11], NSFontAttributeName, 
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:13], NSFontAttributeName, 
 							   [NSColor whiteColor], NSForegroundColorAttributeName, nil];
 		
-		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:11];
+		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:13];
 		
 		NSMutableAttributedString *atrsTooltip = [[NSMutableAttributedString alloc] initWithString:fullhost attributes:attrs];
 		
@@ -139,7 +139,7 @@ static NSInteger markWidth;
 		return NSMakeRect((cellFrame.origin.x + 5), 
 						  (cellFrame.origin.y + 5), 
 						  (hostTextSize.width + 31), 
-						  (hostTextSize.height + 12));	
+						  (hostTextSize.height + 18));	
 	} else {
 		return NSZeroRect;
 	}
@@ -161,7 +161,7 @@ static NSInteger markWidth;
 		NSRect rect = NSMakeRect((cellFrame.origin.x + 1), 
 								 (cellFrame.origin.y + 1), 
 								 (hostTextSize.width + 30), 
-								 (hostTextSize.height + 10));
+								 (hostTextSize.height + 16));
 		
 		NSBezierPath* path = [NSBezierPath bezierPath];
 		[path appendBezierPathWithRoundedRect:rect xRadius:10 yRadius:10];
@@ -171,8 +171,8 @@ static NSInteger markWidth;
 		
 		[view setAlphaValue:0.5];
 		
-		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 5), 
-											 (cellFrame.origin.y + 5))];
+		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 11), 
+											 (cellFrame.origin.y + 7))];
 	} else {
 		[super drawWithExpansionFrame:cellFrame inView:view];
 	}
