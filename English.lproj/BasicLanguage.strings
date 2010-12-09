@@ -58,9 +58,19 @@
 "DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
 "DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is currently not set as the default IRC client for this copy of Mac OS X. Set it?";
  
+/* User information tooltip */
+ 
 "USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME" = " • Nickname: ";
 "USER_HOSTMASK_HOVER_TOOLTIP_USERNAME" = " • Username: ";
 "USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK" = " • Hostmask: ";
+"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES" = " • Privileges: ";
+
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_NA" = "No Privileges";
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_V" = "Voice";
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_H" = "Half-op";
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_O" = "Operator";
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_A" = "Super Admin";
+"USER_HOSTMASK_HOVER_TOOLTIP_MODE_Q" = "Channel Onwer";
 
 /* Trial Localizations */
 
