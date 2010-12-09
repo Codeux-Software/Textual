@@ -76,9 +76,18 @@ static NSInteger markWidth;
 - (NSAttributedString *)tooltipValue
 {
 	if (member.address && member.username) {
-		NSString *fullhost = [NSString stringWithFormat:@"%@%@\n%@%@\n%@%@", TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME"), member.nick, 
-																			 TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME"), member.username, 
-																			 TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address];
+		NSString *permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_NA";
+		
+		if (member.v) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_V";
+		if (member.h) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_H";
+		if (member.o) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_O";
+		if (member.a) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_A";
+		if (member.q) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_Q";
+		
+		NSString *fullhost = [NSString stringWithFormat:@"%@%@\n%@%@\n%@%@\n%@%@", TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME"), member.nick, 
+																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME"), member.username, 
+																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address,
+																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES"), TXTLS(permission)];
 		
 		if (hostmask) {
 			if ([fullhost isEqualToString:rawHostmask]) {
@@ -96,16 +105,17 @@ static NSInteger markWidth;
 		
 		rawHostmask = [fullhost retain];
 		
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:12], NSFontAttributeName, 
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:11], NSFontAttributeName, 
 							   [NSColor whiteColor], NSForegroundColorAttributeName, nil];
 		
-		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:12];
+		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:11];
 		
 		NSMutableAttributedString *atrsTooltip = [[NSMutableAttributedString alloc] initWithString:fullhost attributes:attrs];
 		
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK")]];
+		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES")]];
 			
 		hostmask = atrsTooltip;
 		
@@ -144,9 +154,9 @@ static NSInteger markWidth;
 		NSRectFill([view frame]);
 		
 		NSSize hostTextSize = [tooltip size];
-					 
-		[[NSColor blackColor] setStroke];
-		[[NSColor darkGrayColor] setFill];
+		
+		[[NSColor colorWithCalibratedWhite:0.7 alpha:0.8] setStroke];
+		[[NSColor colorWithCalibratedWhite:0.1 alpha:0.8] setFill];
 		
 		NSRect rect = NSMakeRect((cellFrame.origin.x + 1), 
 								 (cellFrame.origin.y + 1), 
@@ -158,6 +168,8 @@ static NSInteger markWidth;
 		[path setLineWidth:2];
 		[path stroke];
 		[path fill];
+		
+		[view setAlphaValue:0.5];
 		
 		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 5), 
 											 (cellFrame.origin.y + 5))];
