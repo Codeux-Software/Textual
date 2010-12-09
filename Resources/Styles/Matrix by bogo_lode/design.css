@@ -60,20 +60,6 @@ a:hover {
   border-color: #40A0FF;
 }
 
-/* Topic Bar */
-/*top: 0;
-left: 0;
-right: 0;
-color: #00ff00;
-z-index: 400;
-position: fixed;
-background: #003300;
-background: -webkit-gradient(linear, left top, left bottom, from(#003300), to(#003300));
-padding: 1px 1px 1px;
-border-bottom: 0px solid #000;
--webkit-box-shadow: 0 1px 8px #00ff00;
-font: 9px Monaco !important; */
-
 #topic_bar {
   top: 0;
   left: 0;
@@ -134,21 +120,6 @@ body div[type=action] .sender[type=myself] {
 }
 
 body .sender[type=normal] { color: #FFFFFF; }
-/* body .sender[type=normal][colornumber='1'] { color: #636aff; }
-body .sender[type=normal][colornumber='2'] { color: #00BA00; }
-body .sender[type=normal][colornumber='3'] { color: #C083F2; }
-body .sender[type=normal][colornumber='4'] { color: #4DEDF0; }
-body .sender[type=normal][colornumber='5'] { color: #E422B2; }
-body .sender[type=normal][colornumber='6'] { color: #EAE87E; }
-body .sender[type=normal][colornumber='7'] { color: #B8DFFF; }
-body .sender[type=normal][colornumber='8'] { color: #75A1FB; }
-body .sender[type=normal][colornumber='9'] { color: #97C74B; }
-body .sender[type=normal][colornumber='10'] { color: #A5EAC4; }
-body .sender[type=normal][colornumber='11'] { color: #FFA6A0; }
-body .sender[type=normal][colornumber='12'] { color: #8E67E7; }
-body .sender[type=normal][colornumber='13'] { color: #FFBB58; }
-body .sender[type=normal][colornumber='14'] { color: #EDD7AD; }
-body .sender[type=normal][colornumber='15'] { color: #FF1676; } */
 
 /* NOTICE/CTCP/WALLOPS */
 
@@ -210,11 +181,6 @@ body div[type=action] .sender {
 	font-weight: normal;
 }
 
-/* body div[type=action] p[type=myself] .sender,
-body div[type=action] p[type=myself] .message {
-	color: #B52CF6;
-} */
-
 body div[type=action] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
@@ -253,7 +219,8 @@ body div[type=kick],
 body div[type=quit],
 body div[type=kill],
 body div[type=nick],
-body div[type=mode] {
+body div[type=mode],
+body div[type=website] {
 	padding: 3px 5px 3px 5px;
     color: #666;
 	font-weight: normal;
