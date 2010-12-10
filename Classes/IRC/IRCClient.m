@@ -2068,7 +2068,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
 							  [Preferences systemProcessor]];
 			
-			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
+			[self sendPrivmsgToSelectedChannel:text];
 			
 			return YES;
 			break;
