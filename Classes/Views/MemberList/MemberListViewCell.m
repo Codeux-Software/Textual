@@ -11,8 +11,6 @@ static NSInteger markWidth;
 @synthesize theme;
 @synthesize nickStyle;
 @synthesize markStyle;
-@synthesize rawHostmask;
-@synthesize hostmask;
 
 - (id)init
 {
@@ -32,8 +30,6 @@ static NSInteger markWidth;
 	[nickStyle release];
 	[markStyle release];
 	[member release];
-	[rawHostmask release];
-	[hostmask release];
 	[super dealloc];
 }
 
@@ -89,22 +85,6 @@ static NSInteger markWidth;
 																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address,
 																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES"), TXTLS(permission)];
 		
-		if (hostmask) {
-			if ([fullhost isEqualToString:rawHostmask]) {
-				return hostmask;
-			} else {
-				[hostmask release];
-				hostmask = nil;
-			}
-		}
-		
-		if (rawHostmask) {
-			[rawHostmask release];
-			rawHostmask = nil;
-		}
-		
-		rawHostmask = [fullhost retain];
-		
 		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:13], NSFontAttributeName, 
 							   [NSColor whiteColor], NSForegroundColorAttributeName, nil];
 		
@@ -116,10 +96,8 @@ static NSInteger markWidth;
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES")]];
-			
-		hostmask = atrsTooltip;
 		
-		return hostmask;
+		return atrsTooltip;
 	}
 	
 	return nil;
