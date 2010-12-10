@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J521</string>
+		<string key="IBDocument.SystemVersion">10J537</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -414,7 +414,7 @@
 						</object>
 						<object class="NSTextField" id="729303262">
 							<reference key="NSNextResponder" ref="797869287"/>
-							<int key="NSvFlags">292</int>
+							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{16, 453}, {403.444, 17}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<bool key="NSEnabled">YES</bool>
@@ -2253,6 +2253,7 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onNicknameColorsDisabled:</string>
 							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -2283,6 +2284,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -2296,6 +2298,7 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onNicknameColorsDisabled:</string>
 							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -2335,6 +2338,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onLayoutChanged:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onNicknameColorsDisabled:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2385,6 +2392,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>IRCopServicesView</string>
 							<string>alertsView</string>
+							<string>channelManagementView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
@@ -2409,6 +2417,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
@@ -2440,6 +2449,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>IRCopServicesView</string>
 							<string>alertsView</string>
+							<string>channelManagementView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
@@ -2470,6 +2480,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">alertsView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">channelManagementView</string>
 								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
