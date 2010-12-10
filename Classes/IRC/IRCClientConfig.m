@@ -91,19 +91,16 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kPassword = [IRCServerKeychainDataModel nicknamePassword:nickPassword withGUID:guid andCUID:cuid];
 	
-	if (kPassword && [nickPassword length] > 0) {
-		[nickPassword release];
-	}
+	if (kPassword) {
+		nickPassword = nil;
+		nickPassword = [kPassword retain];
 	
-	nickPassword = [kPassword retain];
-	
-	// Remove key and save keychain once upgrade of keychain complete
-	
-	if ([Preferences isUpgradedFromVersion100] == YES) {
-		[self setPassword:password];
-		[self setNickPassword:nickPassword];
-		
-		[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			[self setPassword:password];
+			[self setNickPassword:nickPassword];
+			
+			[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
+		}
 	}
 	
 	return nickPassword;
@@ -121,12 +118,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kPassword = [IRCServerKeychainDataModel serverPassword:password withGUID:guid andCUID:cuid];
 	
-	if (kPassword && [password length] > 0) {
-		[password release];
+	if (kPassword) {
+		password = nil;
+		password = [kPassword retain];
 	}
 	
-	password = [kPassword retain];
-
 	return password;
 }
 
