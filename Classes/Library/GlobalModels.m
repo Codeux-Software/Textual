@@ -1,4 +1,4 @@
-// Created by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "GlobalModels.h"
@@ -9,17 +9,21 @@
 
 #define TIME_BUFFER_SIZE 256
 
-static NSUserDefaults *TXNSUserDefaultsPNTR = nil;
+#pragma mark -
+#pragma mark Variable Distruction 
 
+extern void TXDevNullDestroyObject(void* objt) { return; }
+extern void TXDevNullDestroyBOOLObject(BOOL objt) { return; }
+
+#pragma mark -
+#pragma mark Miscellaneous Special Functions
+
+static NSUserDefaults *TXNSUserDefaultsPNTR = nil;
 extern NSUserDefaults *TXNSUserDefaultsPointer(void) 
 {
 	if (TXNSUserDefaultsPNTR == nil) TXNSUserDefaultsPNTR = [NSUserDefaults standardUserDefaults];
+	
 	return TXNSUserDefaultsPNTR;
-}
-
-extern void TXDevNullDestroyObject(void* objt)
-{
-	return;
 }
 
 extern NSInteger TXRandomThousandNumber(void)
@@ -43,6 +47,9 @@ NSString *TXTLS(NSString *key)
 {
 	return [LanguagePreferences localizedStringWithKey:key];
 }
+
+#pragma mark -
+#pragma mark Input/Confirmation Prompts
 
 extern BOOL promptWithSuppression(NSString *whatFor,
 								  NSString *title,
@@ -108,6 +115,9 @@ extern NSString *promptForInput(NSString *whatFor,
 		return nil;
 	}
 }
+
+#pragma mark -
+#pragma mark Time/Date Handling
 
 extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat) 
 {

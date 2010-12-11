@@ -1,5 +1,5 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "MenuController.h"
@@ -737,6 +737,7 @@
 		if (!u) return;
 		[u updateConfig:sender.config];
 	}
+	
 	[world save];
 }
 
@@ -1459,25 +1460,22 @@
 {
 	switch ([sender tag]) {
 		case 101:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
 			break;
 		case 103:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/text-formatting"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
 			break;
 		case 104:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/command-reference"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
 			break;
 		case 105:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/memory-management"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
 			break;
 		case 106:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/styles"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
 			break;
 		case 108:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wiki.github.com/mikemac11/Textual/feature-requests"]];
-			break;
-		case 109:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://pledgie.com/campaigns/12011"]];
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
 			break;
 		case 110:
 			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];

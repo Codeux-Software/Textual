@@ -53,11 +53,11 @@
 	}
 	
 	while (SecKeychainSearchCopyNext (search, &item) == noErr) {
-		TXCFSpecialRelease (item);
+		CFRelease (item);
 		numberOfItemsFound++;
 	}
 	
-	TXCFSpecialRelease(search);
+	CFRelease(search);
 	return numberOfItemsFound;
 }
 
@@ -107,10 +107,11 @@
 		if (SecKeychainItemDelete(item)) {
 			status = YES;
 		}
-		TXCFSpecialRelease(item);
+		
+		CFRelease(item);
 	}
 	
-	TXCFSpecialRelease(search);
+	CFRelease(search);
 	
 	return status;
 }
@@ -164,10 +165,10 @@
 		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], [newPassword UTF8String], NULL,NULL, &item);
 	} else {
 		status = SecKeychainItemModifyContent(item, &list, [newPassword length], [newPassword UTF8String]);
-		TXCFSpecialRelease(item);
+		CFRelease(item);
 	}
 	
-	TXCFSpecialRelease(search);
+	CFRelease(search);
 	
 	return !status;
 }
@@ -257,10 +258,10 @@
 			password = @"";
 		}	
 		
-		TXCFSpecialRelease(item);
+		CFRelease(item);
 	}
 	
-	TXCFSpecialRelease(search);
+	CFRelease(search);
 	
 	return password;
 }

@@ -1,5 +1,5 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCChannelMode.h"
@@ -114,11 +114,7 @@
 {
 	NSString *objk = [modeIndexes objectForKey:mode];
 	
-	if (objk == nil) {
-		return NO;
-	} else {
-		return YES;
-	}
+	return BOOLReverseValue((objk == nil));
 }
 
 - (IRCModeInfo*)modeInfoFor:(NSString*)mode

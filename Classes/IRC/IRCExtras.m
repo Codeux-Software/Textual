@@ -1,4 +1,4 @@
-// Created by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCExtras.h"
@@ -153,7 +153,7 @@
 	IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:nsconfig] autorelease];
 
 	if ([password length] >= 1) {
-		c.password = password;
+		//c.password = password;
 	}	
 	
 	IRCClient* u = [world createClient:c reload:YES];

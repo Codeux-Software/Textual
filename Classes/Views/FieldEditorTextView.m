@@ -26,6 +26,7 @@
 {
 	if (pasteDelegate) {
 		BOOL result = [pasteDelegate fieldEditorTextViewPaste:self];
+		
 		if (result) {
 			return;
 		}
