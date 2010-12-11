@@ -97,7 +97,7 @@ static NSInteger markWidth;
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES")]];
 		
-		return atrsTooltip;
+		return [atrsTooltip autorelease];
 	}
 	
 	return nil;

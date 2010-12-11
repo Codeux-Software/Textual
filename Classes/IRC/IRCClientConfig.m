@@ -1,5 +1,5 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCClientConfig.h"
@@ -61,8 +61,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 		host = @"";
 		port = 6667;
-		password = @"";
-		nickPassword = @"";
+		password = [@"" retain];
+		nickPassword = [@"" retain];
 		
 		proxyHost = @"";
 		proxyPort = 1080;
@@ -89,12 +89,34 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (NSString *)nickPassword
 {
-	NSString *kPassword = [IRCServerKeychainDataModel nicknamePassword:nickPassword withGUID:guid andCUID:cuid];
+	NSString *kcPassword = nil;
 	
-	if (kPassword) {
-		nickPassword = nil;
-		nickPassword = [kPassword retain];
+	if ([nickPassword isEmpty]) {
+		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
+												withItemKind:@"application password" 
+												 forUsername:nil 
+												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]
+										   withLegacySupport:NO];
+		
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			if ([kcPassword isEmpty]) { 
+				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
+														withItemKind:@"application password" 
+														 forUsername:nil 
+														 serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
+												   withLegacySupport:YES];
+			}
+		}
+	}
 	
+	if (kcPassword) {
+		if ([kcPassword isEqualToString:nickPassword] == NO) {
+			[nickPassword release];
+			nickPassword = nil;
+			
+			nickPassword = [kcPassword retain];
+		}
+		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
 			[self setPassword:password];
 			[self setNickPassword:nickPassword];
@@ -108,19 +130,58 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)setNickPassword:(NSString *)pass
 {
-	[IRCServerKeychainDataModel setNicknamePassword:pass withHost:host andGUID:guid];
-	
-	[nickPassword autorelease];
-	nickPassword = [pass retain];
+	if ([nickPassword isEqualToString:pass] == NO) {	
+		if ([pass isEmpty]) {
+			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
+			
+		} else {
+			[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
+								   withItemKind:@"application password"
+									forUsername:nil
+								withNewPassword:pass
+									withComment:host
+									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
+		}
+		
+		[nickPassword release];
+		nickPassword = nil;
+		
+		nickPassword = [pass retain];
+	}
 }
 
 - (NSString*)password
 {
-	NSString *kPassword = [IRCServerKeychainDataModel serverPassword:password withGUID:guid andCUID:cuid];
+	NSString *kcPassword = nil;
 	
-	if (kPassword) {
-		password = nil;
-		password = [kPassword retain];
+	if ([password isEmpty]) {
+		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
+														  withItemKind:@"application password" 
+														   forUsername:nil 
+														   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
+													 withLegacySupport:NO];
+		
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			if ([kcPassword isEmpty]) { 
+				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
+														withItemKind:@"application password" 
+														 forUsername:nil
+														 serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
+												   withLegacySupport:YES];
+			}
+		}
+	}
+	
+	if (kcPassword) {
+		if ([kcPassword isEqualToString:password] == NO) {
+			[password release];
+			password = nil;
+			
+			password = [kcPassword retain];
+		}
 	}
 	
 	return password;
@@ -128,15 +189,39 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)setPassword:(NSString *)pass
 {
-	[IRCServerKeychainDataModel setServerPassword:pass withHost:host andGUID:guid];
-	
-	[password autorelease];
-	password = [pass retain];
+	if ([password isEqualToString:pass] == NO) {
+		if ([pass isEmpty]) {
+			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];		
+		} else {
+			[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
+								   withItemKind:@"application password"
+									forUsername:nil
+								withNewPassword:pass
+									withComment:host
+									serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];			
+		}
+		
+		[password release];
+		password = nil;
+		
+		password = [pass retain];
+	}
 }
 
 - (void)destroyKeychains
-{
-	[IRCServerKeychainDataModel destroyKeychains:guid];
+{	
+	[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];
+	
+	[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
 }
 
 #pragma mark -

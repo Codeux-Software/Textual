@@ -6,6 +6,7 @@ static NSDictionary *themeLocalizations = nil;
 
 + (void)setThemeForLocalization:(NSString *)path
 {
+	[themeLocalizations release];
 	themeLocalizations = nil;
 	
 	NSString *filepath = [path stringByAppendingPathComponent:@"/BasicLanguage.plist"];

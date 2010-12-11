@@ -1,5 +1,5 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Michael Morris <mikey AT codeux DOT com> <http://github.com/mikemac11/Textual>
+// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCClient.h"
@@ -239,7 +239,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)updateConfig:(IRCClientConfig*)seed
 {
-	[config autorelease];
+	[config release];
+	config = nil;
+	
 	config = [seed mutableCopy];
 	
 	NSArray* chans = config.channels;
@@ -248,6 +250,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	for (IRCChannelConfig* i in chans) {
 		IRCChannel* c = [self findChannel:i.name];
+		
 		if (c) {
 			[c updateConfig:i];
 			[ary addObject:c];
