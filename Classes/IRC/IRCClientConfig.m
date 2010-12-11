@@ -314,6 +314,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[name release];
 	
 	[host release];
+	[server release];
+	[network release];
 	
 	[nick release];
 	[password release];
@@ -329,6 +331,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[leavingComment release];
 	[sleepQuitMessage release];
 	[userInfo release];
+	
 	[loginCommands release];
 	[channels release];
 	[ignores release];

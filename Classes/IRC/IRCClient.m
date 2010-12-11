@@ -240,8 +240,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)updateConfig:(IRCClientConfig*)seed
 {
 	[config release];
-	config = nil;
-	
+	config=nil;
 	config = [seed mutableCopy];
 	
 	NSArray* chans = config.channels;
