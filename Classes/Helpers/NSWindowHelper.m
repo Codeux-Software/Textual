@@ -43,7 +43,7 @@
 	}	
 }
 
-- (id)isOnCurrentWorkspace
+- (BOOL)isOnCurrentWorkspace
 {
 	return [self isOnActiveSpace];
 }
