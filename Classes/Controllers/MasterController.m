@@ -223,10 +223,30 @@
 	[viewTheme validateFilePathExistanceAndReload:YES];
 }
 
-- (void)emptyNSAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+#ifdef IS_TRIAL_BINARY
+
+- (void)showTrialPeroidIntroDialog
 {
-	// Do Nothing 
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.trial_period_info"];
+	
+	if (suppCheck == NO) {
+		NSAlert *alert = [NSAlert alertWithMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
+										 defaultButton:TXTLS(@"OK_BUTTON")
+									   alternateButton:nil
+										   otherButton:nil
+							 informativeTextWithFormat:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
+		
+		[alert runModal];
+		
+		[TXNSUserDefaultsPointer() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
+	}
+	
+	[pool release];
 }
+
+#endif
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
@@ -238,23 +258,14 @@
 		WelcomeSheetDisplay.delegate = self;
 		WelcomeSheetDisplay.window = window;
 		[WelcomeSheetDisplay show];
-		
-#ifdef IS_TRIAL_BINARY
-		NSAlert *alert = [[NSAlert alloc] init];
-		
-		[alert autorelease];
-		
-		[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
-		[alert addButtonWithTitle:TXTLS(@"CANCEL_BUTTON")];
-		[alert setMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")];
-		[alert setInformativeText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
-		[alert setAlertStyle:NSInformationalAlertStyle];
-		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-#endif
-		
 	} else {
 		[world autoConnectAfterWakeup:NO];	
 	}
+	
+#ifdef IS_TRIAL_BINARY
+	[[self invokeInBackgroundThread] showTrialPeroidIntroDialog];
+#endif
+	
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -347,6 +358,10 @@
 	[world save];
 	[world terminate];
 	[menu terminate];
+	
+	if ([Preferences isUpgradedFromVersion100] == YES) {
+		[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
+	}
 	
 	[self saveWindowState];
 }

@@ -235,7 +235,7 @@
 		nickText.stringValue = config.nick;
 	}
 	
-	//passwordText.stringValue = config.password;
+	passwordText.stringValue = config.password;
 	
 	if ([config.username length] < 1) {
 		usernameText.stringValue = [Preferences defaultUsername];
@@ -249,7 +249,7 @@
 		realNameText.stringValue = config.realName;
 	}
 	
-	//nickPasswordText.stringValue = config.nickPassword;
+	nickPasswordText.stringValue = config.nickPassword;
 	
 	if (config.altNicks.count) {
 		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];

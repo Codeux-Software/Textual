@@ -110,18 +110,15 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:nickPassword] == NO) {
-			[nickPassword release];
-			nickPassword = nil;
-			
-			nickPassword = [kcPassword retain];
-		}
-		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			[self setPassword:password];
-			[self setNickPassword:nickPassword];
-			
-			[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
+			[self setNickPassword:kcPassword];
+		} else {
+			if ([kcPassword isEqualToString:nickPassword] == NO) {
+				[nickPassword release];
+				nickPassword = nil;
+				
+				nickPassword = [kcPassword retain];
+			}
 		}
 	}
 	
@@ -159,10 +156,10 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if ([password isEmpty]) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
-														  withItemKind:@"application password" 
-														   forUsername:nil 
-														   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
-													 withLegacySupport:NO];
+												withItemKind:@"application password" 
+												 forUsername:nil 
+												 serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
+										   withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
 			if ([kcPassword isEmpty]) { 
@@ -176,11 +173,15 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:password] == NO) {
-			[password release];
-			password = nil;
-			
-			password = [kcPassword retain];
+		if ([Preferences isUpgradedFromVersion100] == YES) {
+			[self setPassword:kcPassword];
+		} else {
+			if ([kcPassword isEqualToString:password] == NO) {
+				[password release];
+				password = nil;
+				
+				password = [kcPassword retain];
+			}
 		}
 	}
 	
