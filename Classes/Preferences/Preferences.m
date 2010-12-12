@@ -1001,6 +1001,8 @@ static NSMutableArray* excludeWords;
 			if (suppCheck == NO) {
 				NSAlert *alert = [[NSAlert alloc] init];
 				
+				[alert autorelease];
+				
 				[alert addButtonWithTitle:TXTLS(@"YES_BUTTON")];
 				[alert addButtonWithTitle:TXTLS(@"NO_BUTTON")];
 				[alert setMessageText:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_TITLE")];
@@ -1009,8 +1011,6 @@ static NSMutableArray* excludeWords;
 				[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
 				[alert setAlertStyle:NSInformationalAlertStyle];
 				[alert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(defaultIRCClientSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-				 
-				[alert release];
 			}
 		}
 	}
