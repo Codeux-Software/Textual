@@ -242,14 +242,14 @@
 #ifdef IS_TRIAL_BINARY
 		NSAlert *alert = [[NSAlert alloc] init];
 		
+		[alert autorelease];
+		
 		[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
 		[alert addButtonWithTitle:TXTLS(@"CANCEL_BUTTON")];
 		[alert setMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")];
 		[alert setInformativeText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
 		[alert setAlertStyle:NSInformationalAlertStyle];
 		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:@selector(emptyNSAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-		
-		[alert release];
 #endif
 		
 	} else {
@@ -757,6 +757,8 @@
 		if (suppCheck == NO) {
 			NSAlert *alert = [[NSAlert alloc] init];
 			
+			[alert autorelease];
+			
 			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
 			[alert setMessageText:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")];
 			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), sf]];
@@ -764,8 +766,6 @@
 			[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
 			[alert setAlertStyle:NSInformationalAlertStyle];
 			[alert beginSheetModalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-			
-			[alert release];
 		}
 	}
 }
