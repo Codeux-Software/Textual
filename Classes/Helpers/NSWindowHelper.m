@@ -45,11 +45,7 @@
 
 - (id)isOnCurrentWorkspace
 {
-	if ([self respondsToSelector:@selector(isOnActiveSpace)]) {
-		return [self performSelector:@selector(isOnActiveSpace)];
-	}
-	
-	return (id)YES;
+	return [self isOnActiveSpace];
 }
 
 @end
