@@ -19,7 +19,7 @@
 
 - (NSRange)rangeOfRegex:(NSString *)aRegex
 {
-	return [self rangeOfRegularExpressionString:[aRegex copy]];
+	return [self rangeOfRegularExpressionString:aRegex];
 }
 
 - (NSString *)stringByMatching:(NSString *)aRegex replace:(int)options withReferenceString:(NSString *) replacement
