@@ -14,7 +14,9 @@
 	#import "NSStringHelper.h"
 	#import "NSArrayHelper.h"
 
-	#import <RegexKit/RegexKit.h>
+//	#import <RegexKit/RegexKit.h>
+	#import <OgreKit/OgreKit.h>
+	#import "NSStringRegexKitWrapper.h"
 #endif
 
 #ifdef DEBUG
