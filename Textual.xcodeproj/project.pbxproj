@@ -26,8 +26,8 @@
 		29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */; };
 		4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
 		4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
-		4C1391E912B62C4F0014752A /* OgreKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
-		4C1391EA12B62C4F0014752A /* IOKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C25674512A368260068FADB /* IOKit.framework */; };
+		4C1391F912B62D0E0014752A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
+		4C1391FA12B62D0E0014752A /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
 		4C16009012158D2100C6C894 /* FormattingColor_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008012158D2100C6C894 /* FormattingColor_2.png */; };
@@ -316,6 +316,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4C1391FD12B62D100014752A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C1391F912B62D0E0014752A /* OgreKit.framework in CopyFiles */,
+				4C1391FA12B62D0E0014752A /* BWToolkitFramework.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4CA9457511E1AFBA00D36367 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,18 +347,6 @@
 				4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */,
 				4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CA945E711E1AFBA00D36367 /* Copy Files */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C1391E912B62C4F0014752A /* OgreKit.framework in Copy Files */,
-				4C1391EA12B62C4F0014752A /* IOKit.framework in Copy Files */,
-			);
-			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CB0E77F122AC2DF003E802C /* CopyFiles */ = {
@@ -1271,7 +1270,7 @@
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4CA9457511E1AFBA00D36367 /* Copy Files */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
-				4CA945E711E1AFBA00D36367 /* Copy Files */,
+				4C1391FD12B62D100014752A /* CopyFiles */,
 				4CB0E77F122AC2DF003E802C /* CopyFiles */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
@@ -1734,10 +1733,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"\"$(SRCROOT)/Framework\"",
-					"\"$(SRCROOT)/Framework/BWToolkit\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1825,11 +1822,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"\"$(SRCROOT)/Framework\"",
-					"\"$(SRCROOT)/Framework/BWToolkit\"",
-					"\"$(SRCROOT)/../../../Downloads\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1881,10 +1875,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"\"$(SRCROOT)/Framework\"",
-					"\"$(SRCROOT)/Framework/BWToolkit\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1959,10 +1951,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"\"$(SRCROOT)/Framework\"",
-					"\"$(SRCROOT)/Framework/BWToolkit\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
