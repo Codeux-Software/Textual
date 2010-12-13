@@ -21,8 +21,8 @@
 	if ((self = [super init])) {
 		other = [OtherTheme new];
 		core_js = [FileWithContent new];
-		NSString * applicationPath = [[NSBundle mainBundle] bundlePath];
-		core_js.fileName = [applicationPath stringByAppendingPathComponent:@"/Contents/Resources/core.js"];
+		NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
+		core_js.fileName = [resourcePath stringByAppendingPathComponent:@"/core.js"];
 	}
 	return self;
 }

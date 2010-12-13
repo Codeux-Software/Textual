@@ -4,6 +4,10 @@
 
 #import "FileWithContent.h"
 
+@interface FileWithContent (Private)
+- (void)reload;
+@end
+
 @implementation FileWithContent
 
 @synthesize fileName;
@@ -21,11 +25,6 @@
 	[fileName release];
 	[content release];
 	[super dealloc];
-}
-
-- (NSString*)fileName
-{
-	return fileName;
 }
 
 - (void)setFileName:(NSString *)value
