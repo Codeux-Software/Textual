@@ -990,8 +990,8 @@ static NSMutableArray* excludeWords;
 	if (status == noErr) {
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:(NSURL *)ircAppURL];
-		
-		if ([defaultClientBundle isEqual:mainBundle] == NO) {	
+				
+		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {	
 			BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.default_irc_client"];
 			
 			if (suppCheck == NO) {
