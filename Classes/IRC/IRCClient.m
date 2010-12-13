@@ -3565,7 +3565,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 1:
 		{
 			NSString *capture0 = nil;
-			BOOL match = [[m sequence:1] getCapturesWithRegexAndReferences:@"Welcome to the (.*) (.*)", @"${1}", &capture0, nil];
+			BOOL match = [[m sequence:1] getCapturesWithRegexAndReferences:@"Welcome to the (.*) (.*)", @"\\1", &capture0, nil];
 			
 			if (match) {
 				[config setNetwork:capture0];
