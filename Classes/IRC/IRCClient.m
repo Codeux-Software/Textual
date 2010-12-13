@@ -3554,10 +3554,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	switch (n) {
 		case 1:
 		{
-			NSArray *matches = [[m sequence:1] componentsSeparatedByRegex:@"Welcome to the (.*) (.*)"];
+			NSString *matche = [[m sequence:1] stringByMatching:@"Welcome to the (.*) (.*)" capture:1];
 			
-			if (matches) {
-				[config setNetwork:[matches objectAtIndex:0]];
+			if (matche) {
+				[config setNetwork:matche];
 				[world updateTitle];
 			}
 			
