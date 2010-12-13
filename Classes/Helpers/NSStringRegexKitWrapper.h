@@ -8,9 +8,9 @@
 
 @interface NSString (NSStringRegexKitWrapper) 
 
-- (BOOL)isMatchedByRegex:(NSString *)aRegex;
 - (NSRange)rangeOfRegex:(NSString *)aRegex;
+- (BOOL)isMatchedByRegex:(NSString *)aRegex;
+- (BOOL)getCapturesWithRegexAndReferences:(NSString *)aRegex, ...;
 - (NSString *)stringByMatching:(NSString *)aRegex replace:(int)options withReferenceString:(NSString *) replacement;
-- (BOOL) getCapturesWithRegexAndReferences:(NSString *)aRegex, ...;
 
 @end

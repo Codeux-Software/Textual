@@ -25,7 +25,7 @@
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
 		29C4B96212B56A0800BB7ECA /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C4B96112B56A0800BB7ECA /* OgreKit.framework */; };
 		29C4B97F12B56A4300BB7ECA /* OgreKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 29C4B96112B56A0800BB7ECA /* OgreKit.framework */; };
-		29C4BA8412B56BA800BB7ECA /* NSStringRegexKitWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */; };
+		29C4BA8412B56BA800BB7ECA /* NSStringRegexKitWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */; };
 		4C01C3E412A3958000C61E4B /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11211737F660044E7A1 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C01C3E512A3958000C61E4B /* TextualPluginItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD1733B120EB20600F03B37 /* TextualPluginItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -157,8 +157,6 @@
 		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
-		4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
-		4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C80086F12117C8100EB6DAF /* RegexKit.framework */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D6F7012A36BA700738B2C /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25672712A367B60068FADB /* ValidateReceipt.m */; };
@@ -350,7 +348,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				29C4B97F12B56A4300BB7ECA /* OgreKit.framework in Copy Files */,
-				4C8008BC12117C9100EB6DAF /* RegexKit.framework in Copy Files */,
 				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */,
 			);
 			name = "Copy Files";
@@ -422,7 +419,6 @@
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561211B0386200B5DE98 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPanel.h; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
-		4C80086F12117C8100EB6DAF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Framework/RegexKit.framework; sourceTree = "<group>"; };
 		4C81B9AC12187F83007E9EE2 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = Resources/Images/Colors/rainbow.png; sourceTree = "<group>"; };
 		4C8A729A1221E98C00FD9773 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputPromptDialog.h; sourceTree = "<group>"; };
 		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
@@ -656,7 +652,6 @@
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
 				4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
-				4C80087112117C8100EB6DAF /* RegexKit.framework in Frameworks */,
 				29C4B96212B56A0800BB7ECA /* OgreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -713,7 +708,6 @@
 			isa = PBXGroup;
 			children = (
 				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
-				4C80086F12117C8100EB6DAF /* RegexKit.framework */,
 				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -961,6 +955,8 @@
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				78A8C10211737F660044E7A1 /* NSStringHelper.h */,
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
+				29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */,
+				29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */,
 				4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */,
 				4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */,
 				78A8C0FA11737F660044E7A1 /* NSDictionaryHelper.h */,
@@ -969,8 +965,6 @@
 				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
 				78A8C0F811737F660044E7A1 /* NSDataHelper.h */,
 				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
-				29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */,
-				29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */,
 				4C9FEAC212312BDC00740B40 /* NSFontHelper.h */,
 				4C9FEAC312312BDC00740B40 /* NSFontHelper.m */,
 				78A7B4F41174427C006B324A /* NSData+Kana.h */,
@@ -1173,6 +1167,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29C4BA8412B56BA800BB7ECA /* NSStringRegexKitWrapper.h in Headers */,
 				4C5CC57212ABC04200D3219E /* IconManager.h in Headers */,
 				4C01C3E412A3958000C61E4B /* IRCChannelMode.h in Headers */,
 				4C01C3E512A3958000C61E4B /* TextualPluginItem.h in Headers */,
@@ -1280,7 +1275,6 @@
 				4C01C44B12A3958000C61E4B /* LogScriptEventSink.h in Headers */,
 				4C01C44C12A3958000C61E4B /* IRCUser.h in Headers */,
 				4C01C44D12A3958000C61E4B /* LogLine.h in Headers */,
-				29C4BA8412B56BA800BB7ECA /* NSStringRegexKitWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
