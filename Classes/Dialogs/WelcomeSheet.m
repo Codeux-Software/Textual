@@ -3,9 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "WelcomeSheet.h"
-#import "ServerSheet.h"
-#import "Preferences.h"
-#import "NSStringHelper.h"
 
 @interface WelcomeSheet (Private)
 - (void)updateOKButton;

@@ -23,7 +23,6 @@
  */
 
 #import "NSObject+DDExtensions.h"
-#import "DDInvocationGrabber.h"
 
 @implementation NSObject (DDExtensions)
 

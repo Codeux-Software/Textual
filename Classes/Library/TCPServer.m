@@ -2,10 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "TCPServer.h"
-#import "AsyncSocket.h"
-
-@interface TCPServer (Private)
-@end
 
 @implementation TCPServer
 

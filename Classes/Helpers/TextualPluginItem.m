@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "TextualPluginItem.h"
-#import "PluginProtocol.h"
 
 @implementation TextualPluginItem
 

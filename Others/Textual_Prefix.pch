@@ -2,19 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-	#import <Foundation/Foundation.h>
-	#import <Carbon/Carbon.h>
-
-	#import "GlobalModels.h"
-	#import "Preferences.h"
-	#import "NSObject+DDExtensions.h"
-
-	#import "NSArrayHelper.h"
-	#import "NSStringHelper.h"
-	#import "NSStringRegexKitWrapper.h"
-#endif
+#import "TextualApplication.h"
 
 #ifdef DEBUG
 	#define LOG(...) NSLog(__VA_ARGS__);

@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Foundation/Foundation.h>
-
 #define MODES_SIZE	52
 
 @interface IRCModeInfo : NSObject

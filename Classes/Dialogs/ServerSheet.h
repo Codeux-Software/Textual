@@ -2,13 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Foundation/Foundation.h>
-#import "IRCClientConfig.h"
-#import "ListView.h"
-#import "ChannelSheet.h"
-#import "AddressBookSheet.h"
-#import "SheetBase.h"
-
 @interface ServerSheet : SheetBase
 {
 	NSInteger uid;

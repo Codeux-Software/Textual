@@ -1,7 +1,3 @@
-#import <Cocoa/Cocoa.h>
-#import "ListView.h"
-#import "OtherTheme.h"
-
 @interface MemberListView : ListView
 {
 	id dropDelegate;

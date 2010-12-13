@@ -2,9 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "ChanBanExceptionSheet.h"
-#import "Preferences.h"
-#import "NSDictionaryHelper.h"
-#import "SheetBase.h"
 
 @interface ChanBanExceptionSheet (Private)
 - (void)reloadTable;

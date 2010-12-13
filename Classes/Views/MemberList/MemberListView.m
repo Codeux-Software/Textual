@@ -1,5 +1,4 @@
 #import "MemberListView.h"
-#import "KeyEventHandler.h"
 
 @implementation MemberListView
 

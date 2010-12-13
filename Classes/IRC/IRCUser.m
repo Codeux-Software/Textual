@@ -3,7 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCUser.h"
-#import "NSStringHelper.h"
 
 #define COLOR_NUMBER_MAX	16
 

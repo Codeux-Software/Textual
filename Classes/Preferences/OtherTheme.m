@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "OtherTheme.h"
-#import "NSColorHelper.h"
-#import "NSDictionaryHelper.h"
 
 @interface OtherTheme (Private)
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;

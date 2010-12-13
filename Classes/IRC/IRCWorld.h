@@ -2,24 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "MainWindow.h"
-#import "ServerTreeView.h"
-#import "InputTextField.h"
-#import "ChatBox.h"
-#import "FieldEditorTextView.h"
-#import "MemberListView.h"
-#import "LogController.h"
-#import "IRCWorldConfig.h"
-#import "IRCClientConfig.h"
-#import "IRCChannelConfig.h"
-#import "MenuController.h"
-#import "ViewTheme.h"
-#import "IRCTreeItem.h"
-#import "GrowlController.h"
-#import "DockIcon.h"
-#import "IRCExtras.h"
-#import "GlobalModels.h"
+@class IRCClient, IRCChannel, IRCChannelConfig, IRCClientConfig;
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {

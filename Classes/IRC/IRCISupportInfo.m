@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCISupportInfo.h"
-#import "NSStringHelper.h"
-#import "NSDictionaryHelper.h"
 
 #define ISUPPORT_SUFFIX	@" are supported by this server"
 #define OP_VALUE		100

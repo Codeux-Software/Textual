@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "ViewTheme.h"
-#import "OtherTheme.h"
-#import "Preferences.h"
 
 @interface ViewTheme (Private)
 - (void)load;

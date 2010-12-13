@@ -3,14 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "LogController.h"
-#import "Preferences.h"
-#import "LogRenderer.h"
-#import "IRCWorld.h"
-#import "IRCClient.h"
-#import "IRCChannel.h"
-#import "ImageURLParser.h"
-#import "URLParser.h"
-#import "NSObject+DDExtensions.h"
 
 #define BOTTOM_EPSILON	0
 #define TIME_BUFFER_SIZE	256

@@ -3,10 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "FileLogger.h"
-#import "Preferences.h"
-#import "IRCClient.h"
-#import "IRCChannel.h"
-#import "NSStringHelper.h"
 
 @interface FileLogger (Private)
 - (NSString*)buildFileName;

@@ -1,6 +1,4 @@
-#import <Cocoa/Cocoa.h>
-#import "OtherTheme.h"
-#import "IRCUser.h"
+@class IRCUser;
 
 @interface MemberListViewCell : NSCell
 {

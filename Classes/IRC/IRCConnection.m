@@ -4,13 +4,6 @@
 
 #import "IRCConnection.h"
 
-#import "IRC.h"
-#import "Timer.h"
-#import "NSData+Kana.h"
-#import "Preferences.h"
-
-#include <SystemConfiguration/SystemConfiguration.h>
-
 @interface IRCConnection (Private)
 - (void)updateTimer;
 - (BOOL)tryToSend;

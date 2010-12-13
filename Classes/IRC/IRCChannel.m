@@ -3,11 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCChannel.h"
-#import "IRCClient.h"
-#import "IRCWorld.h"
-#import "Preferences.h"
-#import "MemberListViewCell.h"
-#import "NSStringHelper.h"
 
 @interface IRCChannel (Private)
 - (void)closeLogFile;

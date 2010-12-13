@@ -3,12 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "ServerSheet.h"
-#import "NSWindowHelper.h"
-#import "IRCChannelConfig.h"
-#import "AddressBook.h"
-#import "Preferences.h"
-#import "IRC.h"
-#import "IRCClient.h"
 
 #define IGNORE_TAB_INDEX	3
 #define WINDOW_TOOLBAR_HEIGHT 30

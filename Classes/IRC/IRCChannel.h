@@ -2,15 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "IRCTreeItem.h"
-#import "IRCChannelConfig.h"
-#import "LogController.h"
-#import "IRCUser.h"
-#import "IRCChannelMode.h"
-#import "ChannelSheet.h"
-#import "FileLogger.h"
-
 @class IRCClient;
 
 @interface IRCChannel : IRCTreeItem

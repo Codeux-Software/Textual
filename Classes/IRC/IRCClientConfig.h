@@ -2,9 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "IRCChannel.h"
-
 typedef enum {
 	PROXY_NONE = 0,
 	PROXY_SOCKS_SYSTEM = 1,

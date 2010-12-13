@@ -4,9 +4,6 @@
 
 #import "InviteSheet.h"
 
-@interface InviteSheet (Private)
-@end
-
 @implementation InviteSheet
 
 @synthesize nicks;

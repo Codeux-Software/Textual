@@ -2,8 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "SoundWrapper.h"
-#import "SoundPlayer.h"
-#import "Preferences.h"
 
 @implementation SoundWrapper
 

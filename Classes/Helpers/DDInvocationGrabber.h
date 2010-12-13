@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-
 typedef enum {
 	INVOCATION_MAIN_THREAD,
 	INVOCATION_BACKGROUND_THREAD,

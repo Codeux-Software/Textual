@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "ChannelSheet.h"
-#import "NSWindowHelper.h"
-#import "NSStringHelper.h"
 
 @interface ChannelSheet (Private)
 - (void)load;

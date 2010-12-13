@@ -4,9 +4,6 @@
 #import "ValidateReceipt.h"
 
 #import <IOKit/IOKitLib.h>
-#import <Foundation/Foundation.h>
-
-#import <Security/Security.h>
 
 #include <openssl/pkcs7.h>
 #include <openssl/objects.h>

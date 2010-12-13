@@ -5,7 +5,6 @@
 
 @interface ThinSplitView (Private)
 - (void)updatePosition;
-
 @end
 
 @implementation ThinSplitView

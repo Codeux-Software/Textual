@@ -5,8 +5,8 @@
 // with better methods or direct calls into OrgeKit
 
 #import "NSStringRegexKitWrapper.h"
-#import <OgreKit/NSString_OgreKitAdditions.h>
 #import <OgreKit/OGRegularExpressionMatch.h>
+#import <OgreKit/NSString_OgreKitAdditions.h>
 
 @implementation NSString (NSStringRegexKitWrapper) 
 

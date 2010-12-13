@@ -2,10 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Foundation/Foundation.h>
-#import "NSNumberHelper.h"
-#import "NSStringRegexKitWrapper.h"
-
 #define IsAlpha(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define IsNumeric(c)						('0' <= (c) && (c) <= '9' && !IsAlpha(c)) 
 #define IsAlphaNum(c)						(IsAlpha(c) || IsNumeric(c))

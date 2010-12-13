@@ -2,24 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "IRCTreeItem.h"
-#import "IRCClientConfig.h"
-#import "IRCChannel.h"
-#import "IRCConnection.h"
-#import "IRCISupportInfo.h"
-#import "Preferences.h"
-#import "LogController.h"
-#import "ServerSheet.h"
-#import "ListDialog.h"
-#import "Timer.h"
-#import "HostResolver.h"
-#import "FileLogger.h"
-#import "ChanBanSheet.h"
-#import "ChanBanExceptionSheet.h"
-#import "IRCMessage.h"
-#import "LogLine.h"
-
 @class IRCWorld;
 
 typedef enum {

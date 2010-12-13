@@ -3,16 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCWorld.h"
-#import "IRCClient.h"
-#import "IRCChannel.h"
-#import "IRCClientConfig.h"
-#import "Preferences.h"
-#import "NSStringHelper.h"
-#import "DockIcon.h"
-#import "IRCExtras.h"
-#import "NSBundleHelper.h"
-#import "InputHistory.h"
-#import "LanguagePreferences.h"
 
 #define AUTO_CONNECT_DELAY              1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8

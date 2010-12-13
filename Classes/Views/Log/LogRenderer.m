@@ -3,13 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "LogRenderer.h"
-#import "NSStringHelper.h"
-#import "NSFontHelper.h"
-#import "NSColorHelper.h"
-#import "GTMNSString+HTML.h"
-#import "UnicodeHelper.h"
-#import "Preferences.h"
-#import "URLParser.h"
 
 #define URL_ATTR				(1 << 31)
 #define ADDRESS_ATTR			(1 << 30)

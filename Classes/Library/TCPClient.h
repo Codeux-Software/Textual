@@ -1,9 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "AsyncSocket.h"
-
 @interface TCPClient : NSObject
 {
 	id delegate;
@@ -33,7 +30,6 @@
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
-
 @property (nonatomic, assign) BOOL useSystemSocks;
 @property (nonatomic, assign) BOOL useSocks;
 @property (nonatomic, assign) NSInteger socksVersion;
@@ -42,7 +38,6 @@
 @property (nonatomic, retain) NSString* proxyUser;
 @property (nonatomic, retain) NSString* proxyPassword;
 @property (nonatomic, readonly) NSInteger sendQueueSize;
-
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;

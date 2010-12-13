@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCChannelMode.h"
-#import "NSStringHelper.h"
-#import "IRCISupportInfo.h"
 
 @implementation IRCChannelMode
 

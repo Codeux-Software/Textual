@@ -3,13 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCClientConfig.h"
-#import "IRCChannelConfig.h"
-#import "IRCChannel.h"
-#import "AddressBook.h"
-#import "NSDictionaryHelper.h"
-#import "Preferences.h"
-#import "IRCWorld.h"
-#import "AGKeychain.h"
 
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context) {
 	return [[s1.name lowercaseString] compare:[s2.name lowercaseString]];

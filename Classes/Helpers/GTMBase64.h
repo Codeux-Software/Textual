@@ -15,9 +15,6 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
-#import <Foundation/Foundation.h>
-#import "GTMDefines.h"
-
 // GTMBase64
 //
 /// Helper for handling Base64 and WebSafeBase64 encodings

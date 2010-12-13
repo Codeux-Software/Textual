@@ -1,8 +1,4 @@
-#import <Cocoa/Cocoa.h>
-
-#include "IRCClient.h"
-#include "IRCWorld.h"
-#include "NSObject+DDExtensions.h"
+#import "TextualApplication.h"
 
 @interface TPIBragSpam : NSObject 
 
