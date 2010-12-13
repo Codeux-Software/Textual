@@ -49,7 +49,6 @@
 @synthesize needsLimitNumberOfLines;
 @synthesize loaded;
 @synthesize loadingImages;
-@synthesize prevNickInfo;
 @synthesize html;
 @synthesize scrollBottom;
 @synthesize scrollTop;
@@ -90,7 +89,6 @@
 	
 	[lines release];
 	
-	[prevNickInfo release];
 	[html release];
 	[super dealloc];
 }
@@ -516,9 +514,6 @@
 	}
 	
 	[self writeLine:s attributes:attrs];
-	
-	[prevNickInfo autorelease];
-	prevNickInfo = [line.nickInfo retain];
 	
 	if (key && [Preferences logAllHighlightsToQuery]) {
 		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];

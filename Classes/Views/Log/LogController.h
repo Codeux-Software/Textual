@@ -37,7 +37,6 @@
 	BOOL needsLimitNumberOfLines;
 	BOOL loaded;
 	NSInteger loadingImages;
-	NSString* prevNickInfo;
 	NSString* html;
 	BOOL scrollBottom;
 	NSInteger scrollTop;
@@ -71,7 +70,6 @@
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) BOOL loaded;
 @property (nonatomic) NSInteger loadingImages;
-@property (nonatomic, retain) NSString* prevNickInfo;
 @property (nonatomic, retain) NSString* html;
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic) NSInteger scrollTop;
