@@ -26,6 +26,8 @@
 		29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */; };
 		4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
 		4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
+		4C1391E912B62C4F0014752A /* OgreKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
+		4C1391EA12B62C4F0014752A /* IOKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C25674512A368260068FADB /* IOKit.framework */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
 		4C16009012158D2100C6C894 /* FormattingColor_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008012158D2100C6C894 /* FormattingColor_2.png */; };
@@ -342,6 +344,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4C1391E912B62C4F0014752A /* OgreKit.framework in Copy Files */,
+				4C1391EA12B62C4F0014752A /* IOKit.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
