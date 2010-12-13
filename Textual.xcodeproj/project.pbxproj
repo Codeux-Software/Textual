@@ -23,10 +23,7 @@
 /* Begin PBXBuildFile section */
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
-		29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */; };
 		4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
-		4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
-		4C1391F912B62D0E0014752A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
 		4C1391FA12B62D0E0014752A /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
@@ -112,7 +109,6 @@
 		4C31AD0312B5E74700088C31 /* ScriptsWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3761E512095DD700E02C1A /* ScriptsWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD0412B5E74700088C31 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C19E11737F660044E7A1 /* TextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD0512B5E74700088C31 /* GrowlController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C411737F660044E7A1 /* GrowlController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31AD0612B5E74700088C31 /* NSStringRegexKitWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD0712B5E74700088C31 /* ListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18011737F660044E7A1 /* ListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD0812B5E74700088C31 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C14311737F660044E7A1 /* TCPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD0912B5E74700088C31 /* WelcomeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E711737F660044E7A1 /* WelcomeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -159,6 +155,9 @@
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D6F7012A36BA700738B2C /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25672712A367B60068FADB /* ValidateReceipt.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
+		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
+		4C90F3BF12B637B000CAEB7B /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C90F3BD12B637B000CAEB7B /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
@@ -322,7 +321,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C1391F912B62D0E0014752A /* OgreKit.framework in CopyFiles */,
 				4C1391FA12B62D0E0014752A /* BWToolkitFramework.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,12 +366,9 @@
 		2993785B1291F7FC00591A22 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/core.js; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringRegexKitWrapper.h; sourceTree = "<group>"; };
-		29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringRegexKitWrapper.m; sourceTree = "<group>"; };
 		4C0B5D4512B41C8F00E782E7 /* CONTRIBUTORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONTRIBUTORS; sourceTree = "<group>"; };
 		4C119CD711AD74880004F157 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/application.icns; sourceTree = "<group>"; };
 		4C1390E212B62B510014752A /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Frameworks/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
-		4C13911412B62B5C0014752A /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = Frameworks/OgreKit.framework; sourceTree = "<group>"; };
 		4C16007E12158D2100C6C894 /* FormattingColor_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_0.png; path = Resources/Images/Colors/FormattingColor_0.png; sourceTree = "<group>"; };
 		4C16007F12158D2100C6C894 /* FormattingColor_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_1.png; path = Resources/Images/Colors/FormattingColor_1.png; sourceTree = "<group>"; };
 		4C16008012158D2100C6C894 /* FormattingColor_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_2.png; path = Resources/Images/Colors/FormattingColor_2.png; sourceTree = "<group>"; };
@@ -419,6 +414,9 @@
 		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		4C90F3BD12B637B000CAEB7B /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 1; };
@@ -646,7 +644,7 @@
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
 				4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */,
-				4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */,
+				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,8 +699,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C90F3B212B6375F00CAEB7B /* libicucore.dylib */,
 				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
-				4C13911412B62B5C0014752A /* OgreKit.framework */,
 				4C1390E212B62B510014752A /* BWToolkitFramework.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -939,8 +937,6 @@
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				78A8C10211737F660044E7A1 /* NSStringHelper.h */,
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
-				29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */,
-				29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */,
 				4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */,
 				4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */,
 				78A8C0FA11737F660044E7A1 /* NSDictionaryHelper.h */,
@@ -1051,6 +1047,8 @@
 				4C982D15121F32430051543F /* URLParser.m */,
 				4C400E2E1238A655005BDA9D /* LanguagePreferences.h */,
 				4C400E2F1238A655005BDA9D /* LanguagePreferences.m */,
+				4C90F3BD12B637B000CAEB7B /* RegexKitLite.h */,
+				4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1151,6 +1149,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C90F3BF12B637B000CAEB7B /* RegexKitLite.h in Headers */,
 				4C31ACC312B5E74700088C31 /* IRCChannelMode.h in Headers */,
 				4C31ACC412B5E74700088C31 /* TextualPluginItem.h in Headers */,
 				4C31ACC512B5E74700088C31 /* MasterController.h in Headers */,
@@ -1218,7 +1217,6 @@
 				4C31AD0312B5E74700088C31 /* ScriptsWrapper.h in Headers */,
 				4C31AD0412B5E74700088C31 /* TextField.h in Headers */,
 				4C31AD0512B5E74700088C31 /* GrowlController.h in Headers */,
-				4C31AD0612B5E74700088C31 /* NSStringRegexKitWrapper.h in Headers */,
 				4C31AD0712B5E74700088C31 /* ListView.h in Headers */,
 				4C31AD0812B5E74700088C31 /* TCPServer.h in Headers */,
 				4C31AD0912B5E74700088C31 /* WelcomeSheet.h in Headers */,
@@ -1542,7 +1540,7 @@
 				4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */,
 				4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */,
 				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
-				29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */,
+				4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,6 +1709,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -1754,6 +1753,7 @@
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
+					"-licucore",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -1929,6 +1929,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -2009,6 +2010,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -2031,6 +2033,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};

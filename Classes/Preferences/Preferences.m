@@ -1031,7 +1031,7 @@ static NSMutableArray* excludeWords;
 	NSString* nick = NSUserName();
 	
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-	nick = [nick stringByMatching:@"[^a-zA-Z0-9-_]" replace:RKReplaceAll withReferenceString:@""];
+	nick = [nick stringByReplacingOccurrencesOfRegex:@"[^a-zA-Z0-9-_]" withString:@""];
 
 	if (nick == nil) {
 		nick = @"User";

@@ -16,6 +16,7 @@
  before they are required by another header file. Please be careful when 
  changing order. */
 
+#import "RegexKitLite.h"
 #import "AsyncSocket.h"
 #import "TinyGrowlClient.h"
 #import "GrowlController.h"
@@ -77,7 +78,6 @@
 #import "DDInvocationGrabber.h"
 #import "GTMGarbageCollection.h"
 #import "NSObject+DDExtensions.h"
-#import "NSStringRegexKitWrapper.h"
 #import "GTMNSString+URLArguments.h"
 #import "IRC.h"
 #import "IRCUser.h"
