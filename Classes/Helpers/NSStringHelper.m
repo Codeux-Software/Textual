@@ -3,10 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "NSStringHelper.h"
-#import "UnicodeHelper.h"
-#import "Preferences.h"
-#import "LogRenderer.h"
-#import "URLParser.h"
 
 #define LF	0xa
 #define CR	0xd

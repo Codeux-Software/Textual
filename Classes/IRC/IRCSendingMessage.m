@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCSendingMessage.h"
-#import "IRC.h"
 
 @implementation IRCSendingMessage
 
@@ -37,19 +36,19 @@
 	if (!string) {
 		BOOL forceCompleteColon = NO;
 		
-		if ([command isEqualToString:PRIVMSG] ||[command isEqualToString:NOTICE]) {
+		if ([command isEqualToString:IRCCI_PRIVMSG] ||[command isEqualToString:IRCCI_NOTICE]) {
 			forceCompleteColon = YES;
-		} else if ([command isEqualToString:NICK]
-				 || [command isEqualToString:MODE]
-				 || [command isEqualToString:JOIN]
-				 || [command isEqualToString:NAMES]
-				 || [command isEqualToString:WHO]
-				 || [command isEqualToString:LIST]
-				 || [command isEqualToString:INVITE]
-				 || [command isEqualToString:WHOIS]
-				 || [command isEqualToString:WHOWAS]
-				 || [command isEqualToString:ISON]
-				 || [command isEqualToString:USER]) {
+		} else if ([command isEqualToString:IRCCI_NICK]
+				 || [command isEqualToString:IRCCI_MODE]
+				 || [command isEqualToString:IRCCI_JOIN]
+				 || [command isEqualToString:IRCCI_NAMES]
+				 || [command isEqualToString:IRCCI_WHO]
+				 || [command isEqualToString:IRCCI_LIST]
+				 || [command isEqualToString:IRCCI_INVITE]
+				 || [command isEqualToString:IRCCI_WHOIS]
+				 || [command isEqualToString:IRCCI_WHOWAS]
+				 || [command isEqualToString:IRCCI_ISON]
+				 || [command isEqualToString:IRCCI_USER]) {
 			completeColon = NO;
 		}
 		

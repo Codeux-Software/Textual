@@ -4,7 +4,6 @@
 // Dirty NSAlert substitution 
 
 #import "InputPromptDialog.h"
-#import "NSObject+DDExtensions.h"
 
 @implementation InputPromptDialog
 

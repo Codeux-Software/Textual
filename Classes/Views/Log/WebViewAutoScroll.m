@@ -1,4 +1,5 @@
 // Created by Allan Odgaard.
+
 #import "WebViewAutoScroll.h"
 
 @implementation WebViewAutoScroll

@@ -10,9 +10,6 @@
 
 #import "AGKeychain.h"
 
-#import <Security/Security.h>
-#import <CoreFoundation/CoreFoundation.h>
-
 @implementation AGKeychain
 
 + (BOOL)checkForExistanceOfKeychainItem:(NSString *)keychainItemName 

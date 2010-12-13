@@ -3,9 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "ListDialog.h"
-#import "Preferences.h"
-#import "IRCClient.h"
-#import "NSDictionaryHelper.h"
 
 @interface ListDialog (Private)
 - (void)sortedInsert:(NSArray*)item inArray:(NSMutableArray*)ary;

@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-
 @interface NSObject (DDExtensions)
 - (id)invokeOnMainThread;
 + (id)invokeOnMainThread;

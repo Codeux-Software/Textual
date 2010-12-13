@@ -15,8 +15,6 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
-#import <Foundation/Foundation.h>
-
 /// Utilities for encoding and decoding URL arguments.
 @interface NSString (GTMNSStringURLArgumentsAdditions)
 

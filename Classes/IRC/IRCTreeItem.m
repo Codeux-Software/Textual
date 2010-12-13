@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCTreeItem.h"
-#import "IRCWorld.h"
-#import "InputHistory.h"
 
 @implementation IRCTreeItem
 

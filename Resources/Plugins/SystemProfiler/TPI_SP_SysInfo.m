@@ -13,10 +13,6 @@
 #include <net/if.h>
 
 #import <OpenGL/OpenGL.h>
-#import <SystemConfiguration/SystemConfiguration.h>
-
-#include "Preferences.h"
-#include "NSArrayHelper.h"
 
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
 

@@ -16,9 +16,6 @@
 //  the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "GTMDefines.h"
-
 // This allows us to easily move our code from GC to non GC.
 // They are no-ops unless we are require Leopard or above.
 // See 

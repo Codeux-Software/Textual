@@ -2,9 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCWorldConfig.h"
-#import "IRCClientConfig.h"
-#import "NSDictionaryHelper.h"
-#import "AGKeychain.h"
 
 @implementation IRCWorldConfig
 

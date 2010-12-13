@@ -2,10 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCExtras.h"
-#import "IRCClient.h"
-#import "IRCClientConfig.h"
-#import "IRCWorld.h"
-#import "NSStringHelper.h"
 
 @implementation IRCExtras
 

@@ -13,7 +13,6 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <netdb.h>
-#import <SystemConfiguration/SystemConfiguration.h>
 
 #if TARGET_OS_IPHONE
 // Note: You may need to add the CFNetwork Framework to your project

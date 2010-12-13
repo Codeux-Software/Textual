@@ -3,10 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "PreferencesController.h"
-#import "Preferences.h"
-#import "ViewTheme.h"
-#import "SoundWrapper.h"
-#import "ScriptsWrapper.h"
 
 #define LINES_MIN			100
 #define LINES_MAX			5000

@@ -2,10 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "LogScriptEventSink.h"
-#import "GTMNSString+HTML.h"
-#import "LogController.h"
-#import "LogPolicy.h"
-#import <HIToolbox/Events.h>
 
 #define DOUBLE_CLICK_RADIUS	3
 

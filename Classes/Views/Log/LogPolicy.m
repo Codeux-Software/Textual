@@ -3,13 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "LogPolicy.h"
-#import <WebKit/WebKit.h>
-#import "URLOpener.h"
-#import "MenuController.h"
-#import "NSPasteboardHelper.h"
-#import "Preferences.h"
-#import "NSDictionaryHelper.h"
-#import <AppKit/NSResponder.h>
 
 @interface LogPolicy (Private)
 - (void)modifyMemberMenu:(NSMenu*)menu;

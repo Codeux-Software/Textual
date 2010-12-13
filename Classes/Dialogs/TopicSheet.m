@@ -3,9 +3,6 @@
 
 #import "TopicSheet.h"
 
-@interface TopicSheet (Private)
-@end
-
 @implementation TopicSheet
 
 @synthesize uid;

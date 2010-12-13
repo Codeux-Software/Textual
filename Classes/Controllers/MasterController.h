@@ -2,24 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <Cocoa/Cocoa.h>
-#import "MainWindow.h"
-#import "ServerTreeView.h"
-#import "MemberListView.h"
-#import "InputTextField.h"
-#import "ChatBox.h"
-#import "ThinSplitView.h"
-#import "FieldEditorTextView.h"
-#import "IRCWorld.h"
-#import "IRC.h"
-#import "InputHistory.h"
-#import "MenuController.h"
-#import "ViewTheme.h"
-#import "NickCompletinStatus.h"
-#import "GrowlController.h"
-#import "WelcomeSheet.h"
-#import "IRCExtras.h"
-
 @interface MasterController : NSObject
 {
 	IBOutlet MainWindow* window;

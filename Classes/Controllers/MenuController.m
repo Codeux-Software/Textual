@@ -3,25 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "MenuController.h"
-#import <WebKit/WebKit.h>
-#import "Preferences.h"
-#import "IRC.h"
-#import "IRCWorld.h"
-#import "IRCClient.h"
-#import "IRCChannel.h"
-#import "MemberListView.h"
-#import "ServerSheet.h"
-#import "ChannelSheet.h"
-#import "URLOpener.h"
-#import "GTMNSString+URLArguments.h"
-#import "NSStringHelper.h"
-#import "NSDictionaryHelper.h"
-#import "IRCClientConfig.h"
-#import "NSPasteboardHelper.h"
-#import "AboutPanel.h"
-#import "NSWindowHelper.h"
-#import "MasterController.h"
-#import "NSObject+DDExtensions.h"
 
 #define	NO_CLIENT_OR_CHANNEL	(!u || !c)
 #define CONNECTED				(u && u.isConnected)
@@ -652,7 +633,7 @@
 	IRCClient* u = world.selectedClient;
 	if (!u) return;
 	[u createChannelListDialog];
-	[u send:LIST, nil];
+	[u send:IRCCI_LIST, nil];
 }
 
 - (void)onAddServer:(id)sender
@@ -787,7 +768,7 @@
 	IRCClient* u = c.client;
 	if (NO_CLIENT_OR_CHANNEL) return;
 	
-	[u send:TOPIC, c.name, topic, nil];
+	[u send:IRCCI_TOPIC, c.name, topic, nil];
 }
 
 - (void)topicSheetWillClose:(TopicSheet*)sender
@@ -820,7 +801,7 @@
 	
 	NSString* changeStr = [c.mode getChangeCommand:sender.mode];
 	if (changeStr.length) {
-		NSString* line = [NSString stringWithFormat:@"%@ %@ %@", MODE, c.name, changeStr];
+		NSString* line = [NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, c.name, changeStr];
 		[u sendLine:line];
 	}
 }
@@ -1023,7 +1004,7 @@
 	if (!u) return;
 	
 	for (NSString* nick in sender.nicks) {
-		[u send:INVITE, nick, channelName, nil];
+		[u send:IRCCI_INVITE, nick, channelName, nil];
 	}
 }
 
@@ -1054,7 +1035,7 @@
 	if (!u) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:TIME text:nil];
+		[u sendCTCPQuery:m.nick command:IRCCI_TIME text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1066,7 +1047,7 @@
 	if (!u) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:VERSION text:nil];
+		[u sendCTCPQuery:m.nick command:IRCCI_VERSION text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1078,7 +1059,7 @@
 	if (!u) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:USERINFO text:nil];
+		[u sendCTCPQuery:m.nick command:IRCCI_USERINFO text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1090,7 +1071,7 @@
 	if (!u) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:CLIENTINFO text:nil];
+		[u sendCTCPQuery:m.nick command:IRCCI_CLIENTINFO text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1108,7 +1089,7 @@
 	if (!pointedChannelName) return;
 	IRCClient* u = world.selectedClient;
 	if (!u || !u.isLoggedIn) return;
-	[u send:JOIN, pointedChannelName, nil];
+	[u send:IRCCI_JOIN, pointedChannelName, nil];
 }
 
 - (void)onCopyAddress:(id)sender
@@ -1447,13 +1428,13 @@
 - (void)onWantChannelBanList:(id)sender
 {
 	[world.selectedClient createChanBanListDialog];
-	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+b", nil];
+	[world.selectedClient send:IRCCI_MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
 - (void)onWantChannelBanExceptionList:(id)sender
 {
 	[world.selectedClient createChanBanExceptionListDialog];
-	[world.selectedClient send:MODE, [[world selectedChannel] name], @"+e", nil];
+	[world.selectedClient send:IRCCI_MODE, [[world selectedChannel] name], @"+e", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender

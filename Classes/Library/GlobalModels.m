@@ -2,10 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "GlobalModels.h"
-#import "Preferences.h"
-#import "InputPromptDialog.h"
-#import "NSDictionaryHelper.h"
-#import "LanguagePreferences.h"
 
 #define TIME_BUFFER_SIZE 256
 

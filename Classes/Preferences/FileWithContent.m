@@ -4,9 +4,6 @@
 
 #import "FileWithContent.h"
 
-@interface FileWithContent (Private)
-@end
-
 @implementation FileWithContent
 
 @synthesize fileName;

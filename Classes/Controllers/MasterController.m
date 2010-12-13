@@ -3,22 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "MasterController.h"
-#import <Carbon/Carbon.h>
-#import <objc/runtime.h>
-#import "Preferences.h"
-#import "IRCTreeItem.h"
-#import "NSDictionaryHelper.h"
-#import "IRC.h"
-#import "IRCWorld.h"
-#import "IRCClient.h"
-#import "ViewTheme.h" 
-#import "MemberListViewCell.h"
-#import "NSPasteboardHelper.h"
-#import "NSStringHelper.h"
-#import "IRCExtras.h"
-#import "NSBundleHelper.h"
-#import "LanguagePreferences.h"
-#import "NSObject+DDExtensions.h"
 
 #define KInternetEventClass	1196773964
 #define KAEGetURL			1196773964
@@ -628,7 +612,7 @@
 
 - (void)textEntered:(id)sender
 {
-	[self sendText:PRIVMSG];
+	[self sendText:IRCCI_PRIVMSG];
 }
 
 - (void)setColumnLayout
@@ -1269,7 +1253,7 @@ typedef enum {
 
 - (void)sendMsgAction:(NSEvent*)e
 {
-	[self sendText:ACTION];
+	[self sendText:IRCCI_ACTION];
 }
 
 - (void)inputHistoryUp:(NSEvent*)e

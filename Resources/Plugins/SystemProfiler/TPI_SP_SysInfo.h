@@ -1,7 +1,3 @@
-#import <Cocoa/Cocoa.h>
-#include "GlobalModels.h"
-#include "IRCWorld.h"
-
 @interface TPI_SP_SysInfo : NSObject 
 
 + (NSString *)compiledOutput;

@@ -8,8 +8,6 @@
 // agerson@mac.com
 //
 
-#import <Cocoa/Cocoa.h>
-
 @interface AGKeychain : NSObject
 + (NSString *)getPasswordFromSecKeychainItemRef:(SecKeychainItemRef)item;
 

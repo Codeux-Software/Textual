@@ -2,12 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "NSBundleHelper.h"
-#import "IRCWorld.h"
-#import "IRCMessage.h"
-#import "IRCClient.h"
-#import "Preferences.h"
-#import "PluginProtocol.h"
-#import "TextualPluginItem.h"
 
 @implementation NSBundle (NSBundleHelper)
 

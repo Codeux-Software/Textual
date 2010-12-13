@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "NSDictionaryHelper.h"
-#import "NSStringHelper.h"
 
 @implementation NSDictionary (NSDictionaryHelper)
 
