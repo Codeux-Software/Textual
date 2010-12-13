@@ -404,7 +404,7 @@
 }
 
 #pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark NSTableView Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
