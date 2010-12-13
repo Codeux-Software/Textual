@@ -77,7 +77,9 @@
 		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"Documents/IRCNetworks.plist"];
 		serverList = [[NSDictionary alloc] initWithContentsOfFile:serverListPath];
 	
-		for (NSString* key in serverList) {
+		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+		
+		for (NSString* key in sortedKeys) {
 			[hostCombo addItemWithObjectValue:key];
 		}
 	}
