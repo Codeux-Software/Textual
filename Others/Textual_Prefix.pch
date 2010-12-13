@@ -11,11 +11,8 @@
 	#import "Preferences.h"
 	#import "NSObject+DDExtensions.h"
 
-	#import "NSStringHelper.h"
 	#import "NSArrayHelper.h"
-
-//	#import <RegexKit/RegexKit.h>
-	#import <OgreKit/OgreKit.h>
+	#import "NSStringHelper.h"
 	#import "NSStringRegexKitWrapper.h"
 #endif
 

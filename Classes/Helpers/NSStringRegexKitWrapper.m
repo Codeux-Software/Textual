@@ -13,47 +13,53 @@
 {
 	OGRegularExpression *regex = [OGRegularExpression regularExpressionWithString:aRegex];
 	OGRegularExpressionMatch *match = [regex matchInString:self];
-	return (match ? YES : NO);
+	
+	return ((match) ? YES : NO);
 }
 
 - (NSRange)rangeOfRegex:(NSString *)aRegex
 {
-	// HACK why is copy needed
 	return [self rangeOfRegularExpressionString:[aRegex copy]];
 }
 
 - (NSString *)stringByMatching:(NSString *)aRegex replace:(int)options withReferenceString:(NSString *) replacement
 {
 	OGRegularExpression *regex = [OGRegularExpression regularExpressionWithString:aRegex];
+	
 	return [regex replaceString:self 
-			  withString:replacement
-				 options:OgreNoneOption
-				   range:NSMakeRange(0, [self length])
-			  replaceAll:(options==RKReplaceAll)];
+					 withString:replacement
+						options:OgreNoneOption
+						  range:NSMakeRange(0, [self length])
+					 replaceAll:(options == RKReplaceAll)];
 }
 
-- (BOOL) getCapturesWithRegexAndReferences:(NSString *)aRegex, ...
+- (BOOL)getCapturesWithRegexAndReferences:(NSString *)aRegex, ...
 {
 	va_list argumentList;
 	NSString * pattern;
 	void ** ref;
+	
 	OGRegularExpression *regex = [OGRegularExpression regularExpressionWithString:aRegex];
 	OGRegularExpressionMatch *match = [regex matchInString:self];
-	if (match == nil) {
-		return NO;
-	}
+	
+	if (match == nil) return NO;
+	
 	unsigned replaced = 0;
 	va_start(argumentList, aRegex);
+	
 	while ((pattern = va_arg(argumentList, NSString *))) {
 		ref = va_arg(argumentList, void **);
+		
 		*ref = [regex replaceString:self 
-				  withString:pattern
-					 options:OgreNoneOption
-					   range:NSMakeRange(0, [self length])
-				  replaceAll:YES
-		 numberOfReplacement:&replaced];
+						 withString:pattern
+							options:OgreNoneOption
+							  range:NSMakeRange(0, [self length])
+						 replaceAll:YES
+				numberOfReplacement:&replaced];
 	}		
+	
 	va_end(argumentList);
+	
 	return YES;
 }
 
