@@ -6,6 +6,7 @@
 
 #import "NSStringRegexKitWrapper.h"
 #import <OgreKit/NSString_OgreKitAdditions.h>
+#import <OgreKit/OGRegularExpressionMatch.h>
 
 @implementation NSString (NSStringRegexKitWrapper) 
 
@@ -50,7 +51,7 @@
 	while ((pattern = va_arg(argumentList, NSString *))) {
 		ref = va_arg(argumentList, void **);
 		
-		*ref = [regex replaceString:self 
+		*ref = [regex replaceString:[match matchedString]
 						 withString:pattern
 							options:OgreNoneOption
 							  range:NSMakeRange(0, [self length])
