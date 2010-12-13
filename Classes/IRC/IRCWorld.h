@@ -151,7 +151,7 @@
 
 - (void)createConnection:(NSString*)str chan:(NSString*)channel;
 
-- (void)clearContentsOflient:(IRCClient*)u;
+- (void)clearContentsOfClient:(IRCClient*)u;
 - (void)clearContentsOfChannel:(IRCChannel*)c inClient:(IRCClient*)u;
 
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel;

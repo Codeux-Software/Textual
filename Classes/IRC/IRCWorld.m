@@ -654,7 +654,7 @@
 	[c.log setTopic:c.topic];
 }
 
-- (void)clearContentsOflient:(IRCClient*)u
+- (void)clearContentsOfClient:(IRCClient*)u
 {
 	[u resetLogView:self withChannel:nil andClient:u];
 	
