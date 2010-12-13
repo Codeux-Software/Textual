@@ -508,7 +508,6 @@
 	NSString* klass = isText ? @"line text" : @"line event";
 	
 	NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
-	[attrs setObject:(lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
 	[attrs setObject:klass forKey:@"class"];
 	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
 	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
