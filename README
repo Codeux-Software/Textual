@@ -14,7 +14,7 @@ based off AppleScript is also supported.
 Textual uses the BWToolkit plugin in order to add new user interface 
 elements to its library. Therefore, before compiling make sure that the 
 "BWToolkit.ibplugin" file has been loaded into the Interface Builder 
-application. This file can be found in the folder "Framework/BWToolkit/"
+application. This file can be found in the folder "Frameworks/BWToolkit/"
 
 IMPORTANT: Xcode 4 users when compiling Textual be sure to set Xcode to 
 build the product to the location defined by the targets. This setting 

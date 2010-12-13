@@ -23,9 +23,9 @@
 /* Begin PBXBuildFile section */
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
-		29C4B96212B56A0800BB7ECA /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C4B96112B56A0800BB7ECA /* OgreKit.framework */; };
-		29C4B97F12B56A4300BB7ECA /* OgreKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 29C4B96112B56A0800BB7ECA /* OgreKit.framework */; };
 		29C4BA8512B56BA800BB7ECA /* NSStringRegexKitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */; };
+		4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1390E212B62B510014752A /* BWToolkitFramework.framework */; };
+		4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C13911412B62B5C0014752A /* OgreKit.framework */; };
 		4C16008E12158D2100C6C894 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007E12158D2100C6C894 /* FormattingColor_0.png */; };
 		4C16008F12158D2100C6C894 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16007F12158D2100C6C894 /* FormattingColor_1.png */; };
 		4C16009012158D2100C6C894 /* FormattingColor_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C16008012158D2100C6C894 /* FormattingColor_2.png */; };
@@ -152,8 +152,6 @@
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
-		4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
-		4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
@@ -344,8 +342,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				29C4B97F12B56A4300BB7ECA /* OgreKit.framework in Copy Files */,
-				4C6D6F6F11FE2E130023E898 /* BWToolkitFramework.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,11 +365,12 @@
 		2993785B1291F7FC00591A22 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/core.js; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		29C4B96112B56A0800BB7ECA /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = Framework/OgreKit.framework; sourceTree = "<group>"; };
 		29C4BA8212B56BA800BB7ECA /* NSStringRegexKitWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringRegexKitWrapper.h; sourceTree = "<group>"; };
 		29C4BA8312B56BA800BB7ECA /* NSStringRegexKitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringRegexKitWrapper.m; sourceTree = "<group>"; };
 		4C0B5D4512B41C8F00E782E7 /* CONTRIBUTORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONTRIBUTORS; sourceTree = "<group>"; };
 		4C119CD711AD74880004F157 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/application.icns; sourceTree = "<group>"; };
+		4C1390E212B62B510014752A /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Frameworks/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
+		4C13911412B62B5C0014752A /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = Frameworks/OgreKit.framework; sourceTree = "<group>"; };
 		4C16007E12158D2100C6C894 /* FormattingColor_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_0.png; path = Resources/Images/Colors/FormattingColor_0.png; sourceTree = "<group>"; };
 		4C16007F12158D2100C6C894 /* FormattingColor_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_1.png; path = Resources/Images/Colors/FormattingColor_1.png; sourceTree = "<group>"; };
 		4C16008012158D2100C6C894 /* FormattingColor_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_2.png; path = Resources/Images/Colors/FormattingColor_2.png; sourceTree = "<group>"; };
@@ -409,7 +406,6 @@
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
-		4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Framework/BWToolkit/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
@@ -645,9 +641,9 @@
 				4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */,
 				4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */,
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
-				4C6D6F7011FE2E240023E898 /* BWToolkitFramework.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
-				29C4B96212B56A0800BB7ECA /* OgreKit.framework in Frameworks */,
+				4C1390E312B62B510014752A /* BWToolkitFramework.framework in Frameworks */,
+				4C13911512B62B5C0014752A /* OgreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,7 +699,8 @@
 			isa = PBXGroup;
 			children = (
 				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
-				4C6D6F6D11FE2DF20023E898 /* BWToolkitFramework.framework */,
+				4C13911412B62B5C0014752A /* OgreKit.framework */,
+				4C1390E212B62B510014752A /* BWToolkitFramework.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
@@ -712,7 +709,6 @@
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
 				4C59393011D0E6CF0094B049 /* Security.framework */,
 				4C25674512A368260068FADB /* IOKit.framework */,
-				29C4B96112B56A0800BB7ECA /* OgreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1736,6 +1732,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1826,6 +1824,8 @@
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
 					"\"$(SRCROOT)/../../../Downloads\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1879,6 +1879,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -1955,6 +1957,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Framework\"",
 					"\"$(SRCROOT)/Framework/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
