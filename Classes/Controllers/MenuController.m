@@ -465,7 +465,7 @@
 
 - (void)onWantMainWindowCentered:(id)sender;
 {
-	[[NSApp mainWindow] centerWindow];
+	[[NSApp mainWindow] exactlyCenterWindow];
 }
 
 - (void)onCloseCurrentPanel:(id)sender

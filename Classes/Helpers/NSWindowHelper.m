@@ -28,7 +28,8 @@
 	[self setFrameOrigin:p];
 }
 
-- (void)centerWindow
+// NSWindow#center does this, but it places it higher vertically
+- (void)exactlyCenterWindow
 {
 	NSScreen* screen = [NSScreen mainScreen];
 	
