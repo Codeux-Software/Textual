@@ -46,8 +46,8 @@
 	}
 	
 	NSString *_cpu_model = [self processor];
-	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@""];
-	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "];
+	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
+	_cpu_model = [[_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "] trim];
 	
 	NSNumber *_cpu_count = [self processorCount];
 	NSString *_cpu_speed = [self processorClockSpeed]; 
