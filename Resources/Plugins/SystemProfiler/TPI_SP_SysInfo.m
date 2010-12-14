@@ -45,17 +45,9 @@
 		[_all_models release];
 	}
 	
-#if defined(__ppc__)
-	NSString *_cpu_model = @"PowerPC 32-bit";
-#elif defined(__ppc64__)
-	NSString *_cpu_model = @"PowerPC 64-bit";
-#elif defined(__i386__) 
-	NSString *_cpu_model = @"Intel 32-bit";
-#elif defined(__x86_64__)
-	NSString *_cpu_model = @"Intel 64-bit";
-#else
-	NSString *_cpu_model = @"Unknown Architecture";
-#endif
+	NSString *_cpu_model = [self processor];
+	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@""];
+	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "];
 	
 	NSNumber *_cpu_count = [self processorCount];
 	NSString *_cpu_speed = [self processorClockSpeed]; 
@@ -377,6 +369,19 @@
 	}
 	
 	return nil;
+}
+
++ (NSString *)processor
+{
+	char buffer[256];
+	size_t sz = sizeof(buffer);
+	
+	if (0 == sysctlbyname("machdep.cpu.brand_string", buffer, &sz, NULL, 0)) {
+		buffer[sizeof(buffer) - 1] = 0;
+		return [NSString stringWithUTF8String:buffer];
+	} else {
+		return nil;
+	}	
 }
 
 + (NSString *)model

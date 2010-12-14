@@ -2,6 +2,7 @@
 
 + (NSString *)compiledOutput;
 + (NSString *)model;
++ (NSString *)processor;
 + (NSNumber *)processorCount;
 + (NSString *)processorL2CacheSize;
 + (NSString *)processorL3CacheSize;
