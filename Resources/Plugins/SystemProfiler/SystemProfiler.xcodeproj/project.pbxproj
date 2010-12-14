@@ -21,113 +21,116 @@
 		4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
 		4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_SP_SysInfo.m; sourceTree = "<group>"; };
 		4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
+		4C4C027212B7AC5000E56A20 /* IRCChannelMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelMode.h; path = ../../../Classes/IRC/IRCChannelMode.h; sourceTree = SOURCE_ROOT; };
+		4C4C027312B7AC5000E56A20 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualPluginItem.h; path = ../../../Classes/Helpers/TextualPluginItem.h; sourceTree = SOURCE_ROOT; };
+		4C4C027412B7AC5000E56A20 /* MasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterController.h; path = ../../../Classes/Controllers/MasterController.h; sourceTree = SOURCE_ROOT; };
+		4C4C027512B7AC5000E56A20 /* SheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SheetBase.h; path = ../../../Classes/Dialogs/SheetBase.h; sourceTree = SOURCE_ROOT; };
+		4C4C027612B7AC5000E56A20 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayHelper.h; path = ../../../Classes/Helpers/NSArrayHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C027712B7AC5000E56A20 /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldConfig.h; path = ../../../Classes/IRC/IRCWorldConfig.h; sourceTree = SOURCE_ROOT; };
+		4C4C027812B7AC5000E56A20 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTheme.h; path = ../../../Classes/Preferences/ViewTheme.h; sourceTree = SOURCE_ROOT; };
+		4C4C027912B7AC5000E56A20 /* NickSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickSheet.h; path = ../../../Classes/Dialogs/NickSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C027A12B7AC5000E56A20 /* AddressBookSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookSheet.h; path = ../../../Classes/Dialogs/AddressBookSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C027B12B7AC5000E56A20 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuController.h; path = ../../../Classes/Controllers/MenuController.h; sourceTree = SOURCE_ROOT; };
+		4C4C027C12B7AC5000E56A20 /* TimerCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimerCommand.h; path = ../../../Classes/IRC/TimerCommand.h; sourceTree = SOURCE_ROOT; };
+		4C4C027D12B7AC5000E56A20 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListView.h; path = ../../../Classes/Views/MemberList/MemberListView.h; sourceTree = SOURCE_ROOT; };
+		4C4C027E12B7AC5000E56A20 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGKeychain.h; path = ../../../Classes/Library/AGKeychain.h; sourceTree = SOURCE_ROOT; };
+		4C4C027F12B7AC5000E56A20 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSRectHelper.h; path = ../../../Classes/Helpers/NSRectHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C028012B7AC5000E56A20 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = ../../../Classes/Library/TinyGrowlClient.h; sourceTree = SOURCE_ROOT; };
+		4C4C028112B7AC5000E56A20 /* ServerSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSheet.h; path = ../../../Classes/Dialogs/ServerSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C028212B7AC5000E56A20 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEventHandler.h; path = ../../../Classes/Library/KeyEventHandler.h; sourceTree = SOURCE_ROOT; };
+		4C4C028312B7AC5000E56A20 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = ../../../Classes/Helpers/GTMGarbageCollection.h; sourceTree = SOURCE_ROOT; };
+		4C4C028412B7AC5000E56A20 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = ../../../Classes/Views/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		4C4C028512B7AC5000E56A20 /* IRCPrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCPrefix.h; path = ../../../Classes/IRC/IRCPrefix.h; sourceTree = SOURCE_ROOT; };
+		4C4C028612B7AC5000E56A20 /* NSData+Kana.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Kana.h"; path = "../../../Classes/Helpers/NSData+Kana.h"; sourceTree = SOURCE_ROOT; };
+		4C4C028712B7AC5000E56A20 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputTextField.h; path = ../../../Classes/Views/InputTextField.h; sourceTree = SOURCE_ROOT; };
+		4C4C028812B7AC5000E56A20 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtherTheme.h; path = ../../../Classes/Preferences/OtherTheme.h; sourceTree = SOURCE_ROOT; };
+		4C4C028912B7AC5000E56A20 /* SoundWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundWrapper.h; path = ../../../Classes/Dialogs/Preferences/SoundWrapper.h; sourceTree = SOURCE_ROOT; };
+		4C4C028A12B7AC5000E56A20 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = ../../../Classes/Views/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
+		4C4C028B12B7AC5000E56A20 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDictionaryHelper.h; path = ../../../Classes/Helpers/NSDictionaryHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C028C12B7AC5000E56A20 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputPromptDialog.h; path = ../../../Classes/Dialogs/InputPromptDialog.h; sourceTree = SOURCE_ROOT; };
+		4C4C028D12B7AC5000E56A20 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "../../../Classes/Helpers/GTMNSString+HTML.h"; sourceTree = SOURCE_ROOT; };
+		4C4C028E12B7AC5000E56A20 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDataHelper.h; path = ../../../Classes/Helpers/NSDataHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C028F12B7AC5000E56A20 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerTreeView.h; path = ../../../Classes/Views/ServerTreeView.h; sourceTree = SOURCE_ROOT; };
+		4C4C029012B7AC5000E56A20 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginProtocol.h; path = ../../../Classes/Helpers/PluginProtocol.h; sourceTree = SOURCE_ROOT; };
+		4C4C029112B7AC5000E56A20 /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItem.h; path = ../../../Classes/IRC/IRCTreeItem.h; sourceTree = SOURCE_ROOT; };
+		4C4C029212B7AC5000E56A20 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewAutoScroll.h; path = ../../../Classes/Views/Log/WebViewAutoScroll.h; sourceTree = SOURCE_ROOT; };
+		4C4C029312B7AC5000E56A20 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = ../../../Classes/Library/Timer.h; sourceTree = SOURCE_ROOT; };
+		4C4C029412B7AC5000E56A20 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPasteboardHelper.h; path = ../../../Classes/Helpers/NSPasteboardHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C029512B7AC5000E56A20 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesController.h; path = ../../../Classes/Dialogs/Preferences/PreferencesController.h; sourceTree = SOURCE_ROOT; };
+		4C4C029612B7AC5000E56A20 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = ../../../Classes/Views/DockIcon.h; sourceTree = SOURCE_ROOT; };
+		4C4C029712B7AC5000E56A20 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = ../../../Classes/Helpers/GTMDefines.h; sourceTree = SOURCE_ROOT; };
+		4C4C029812B7AC5000E56A20 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogPolicy.h; path = ../../../Classes/Views/Log/LogPolicy.h; sourceTree = SOURCE_ROOT; };
+		4C4C029912B7AC5000E56A20 /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBook.h; path = ../../../Classes/IRC/AddressBook.h; sourceTree = SOURCE_ROOT; };
+		4C4C029A12B7AC5000E56A20 /* ChatBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatBox.h; path = ../../../Classes/Views/ChatBox.h; sourceTree = SOURCE_ROOT; };
+		4C4C029B12B7AC5000E56A20 /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLParser.h; path = ../../../Classes/Library/URLParser.h; sourceTree = SOURCE_ROOT; };
+		4C4C029C12B7AC5000E56A20 /* TopicSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopicSheet.h; path = ../../../Classes/Dialogs/TopicSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C029D12B7AC5000E56A20 /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = ../../../Classes/Helpers/NSBundleHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C029E12B7AC5000E56A20 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldEditorTextView.h; path = ../../../Classes/Views/FieldEditorTextView.h; sourceTree = SOURCE_ROOT; };
+		4C4C029F12B7AC5000E56A20 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = ../../../Classes/Preferences/Preferences.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A012B7AC5000E56A20 /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogRenderer.h; path = ../../../Classes/Views/Log/LogRenderer.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A112B7AC5000E56A20 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanSheet.h; path = ../../../Classes/Dialogs/ChanBanSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A212B7AC5000E56A20 /* MarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkedScroller.h; path = ../../../Classes/Views/MarkedScroller.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A312B7AC5000E56A20 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = ../../../Classes/Library/TCPClient.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A412B7AC5000E56A20 /* TableProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableProgressIndicator.h; path = ../../../Classes/Views/TableProgressIndicator.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A512B7AC5000E56A20 /* IRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCMessage.h; path = ../../../Classes/IRC/IRCMessage.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A612B7AC5000E56A20 /* FileWithContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileWithContent.h; path = ../../../Classes/Preferences/FileWithContent.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A712B7AC5000E56A20 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DDExtensions.h"; path = "../../../Classes/Helpers/NSObject+DDExtensions.h"; sourceTree = SOURCE_ROOT; };
+		4C4C02A812B7AC5000E56A20 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../../../Classes/Library/TextualApplication.h; sourceTree = SOURCE_ROOT; };
+		4C4C02A912B7AC5000E56A20 /* DialogWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialogWindow.h; path = ../../../Classes/Views/DialogWindow.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AA12B7AC5000E56A20 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutPanel.h; path = ../../../Classes/Dialogs/AboutPanel.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AB12B7AC5000E56A20 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = ../../../Classes/Library/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AC12B7AC5000E56A20 /* InviteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteSheet.h; path = ../../../Classes/Dialogs/InviteSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AD12B7AC5000E56A20 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldWithDisabledState.h; path = ../../../Classes/Views/TextFieldWithDisabledState.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AE12B7AC5000E56A20 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = ../../../Classes/Helpers/NSColorHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02AF12B7AC5000E56A20 /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogView.h; path = ../../../Classes/Views/Log/LogView.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B012B7AC5000E56A20 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMBase64.h; path = ../../../Classes/Helpers/GTMBase64.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B112B7AC5000E56A20 /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListViewCell.h; path = ../../../Classes/Views/MemberList/MemberListViewCell.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B212B7AC5000E56A20 /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScriptsWrapper.h; path = ../../../Classes/Dialogs/Preferences/ScriptsWrapper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B312B7AC5000E56A20 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = ../../../Classes/Views/TextField.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B412B7AC5000E56A20 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrowlController.h; path = ../../../Classes/Controllers/GrowlController.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B512B7AC5000E56A20 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = ../../../Classes/Library/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B612B7AC5000E56A20 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListView.h; path = ../../../Classes/Views/ListView.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B712B7AC5000E56A20 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = ../../../Classes/Library/TCPServer.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B812B7AC5000E56A20 /* WelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeSheet.h; path = ../../../Classes/Dialogs/WelcomeSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02B912B7AC5000E56A20 /* ChannelSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelSheet.h; path = ../../../Classes/Dialogs/ChannelSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BA12B7AC5000E56A20 /* ChanBanExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanExceptionSheet.h; path = ../../../Classes/Dialogs/ChanBanExceptionSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BB12B7AC5000E56A20 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLogger.h; path = ../../../Classes/Library/FileLogger.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BC12B7AC5000E56A20 /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnection.h; path = ../../../Classes/IRC/IRCConnection.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BD12B7AC5000E56A20 /* IRCISupportInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfo.h; path = ../../../Classes/IRC/IRCISupportInfo.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BE12B7AC5000E56A20 /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringHelper.h; path = ../../../Classes/Helpers/NSStringHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02BF12B7AC5000E56A20 /* NSNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSNumberHelper.h; path = ../../../Classes/Helpers/NSNumberHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C012B7AC5000E56A20 /* ListDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDialog.h; path = ../../../Classes/Dialogs/ListDialog.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C112B7AC5000E56A20 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = ../../../Classes/Helpers/DDInvocationGrabber.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C212B7AC5000E56A20 /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfig.h; path = ../../../Classes/IRC/IRCClientConfig.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C312B7AC5000E56A20 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnicodeHelper.h; path = ../../../Classes/Helpers/UnicodeHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C412B7AC5000E56A20 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletinStatus.h; path = ../../../Classes/Controllers/NickCompletinStatus.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C512B7AC5000E56A20 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputHistory.h; path = ../../../Classes/Library/InputHistory.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C612B7AC5000E56A20 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = ../../../Classes/Library/HostResolver.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C712B7AC5000E56A20 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = ../../../Classes/Helpers/NSWindowHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02C812B7AC5000E56A20 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "../../../Classes/Helpers/GTMNSString+URLArguments.h"; sourceTree = SOURCE_ROOT; };
+		4C4C02C912B7AC5000E56A20 /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageURLParser.h; path = ../../../Classes/Views/Log/ImageURLParser.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CA12B7AC5000E56A20 /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguagePreferences.h; path = ../../../Classes/Library/LanguagePreferences.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CB12B7AC5000E56A20 /* AsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocketExtensions.h; path = ../../../Classes/Library/AsyncSocketExtensions.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CC12B7AC5000E56A20 /* IRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannel.h; path = ../../../Classes/IRC/IRCChannel.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CD12B7AC5000E56A20 /* URLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLOpener.h; path = ../../../Classes/Helpers/URLOpener.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CE12B7AC5000E56A20 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogController.h; path = ../../../Classes/Views/Log/LogController.h; sourceTree = SOURCE_ROOT; };
+		4C4C02CF12B7AC5000E56A20 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalModels.h; path = ../../../Classes/Library/GlobalModels.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D012B7AC5000E56A20 /* IRCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClient.h; path = ../../../Classes/IRC/IRCClient.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D112B7AC5000E56A20 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundPlayer.h; path = ../../../Classes/Helpers/SoundPlayer.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D212B7AC5000E56A20 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSFontHelper.h; path = ../../../Classes/Helpers/NSFontHelper.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D312B7AC5000E56A20 /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorld.h; path = ../../../Classes/IRC/IRCWorld.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D412B7AC5000E56A20 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeSheet.h; path = ../../../Classes/Dialogs/ModeSheet.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D512B7AC5000E56A20 /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRC.h; path = ../../../Classes/IRC/IRC.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D612B7AC5000E56A20 /* IRCChannelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfig.h; path = ../../../Classes/IRC/IRCChannelConfig.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D712B7AC5000E56A20 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExtras.h; path = ../../../Classes/IRC/IRCExtras.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D812B7AC5000E56A20 /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCSendingMessage.h; path = ../../../Classes/IRC/IRCSendingMessage.h; sourceTree = SOURCE_ROOT; };
+		4C4C02D912B7AC5000E56A20 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView.h; path = ../../../Classes/Views/TreeView.h; sourceTree = SOURCE_ROOT; };
+		4C4C02DA12B7AC5000E56A20 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = ../../../Classes/Views/Log/LogScriptEventSink.h; sourceTree = SOURCE_ROOT; };
+		4C4C02DB12B7AC5000E56A20 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../Classes/IRC/IRCUser.h; sourceTree = SOURCE_ROOT; };
+		4C4C02DC12B7AC5000E56A20 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = ../../../Classes/Views/Log/LogLine.h; sourceTree = SOURCE_ROOT; };
 		4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
 		4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
 		4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4C9E18101209E502004E5032 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutPanel.h; path = /Applications/Textual.app/Contents/Headers/AboutPanel.h; sourceTree = "<absolute>"; };
-		4C9E18111209E502004E5032 /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBook.h; path = /Applications/Textual.app/Contents/Headers/AddressBook.h; sourceTree = "<absolute>"; };
-		4C9E18121209E502004E5032 /* AddressBookSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookSheet.h; path = /Applications/Textual.app/Contents/Headers/AddressBookSheet.h; sourceTree = "<absolute>"; };
-		4C9E18131209E502004E5032 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGKeychain.h; path = /Applications/Textual.app/Contents/Headers/AGKeychain.h; sourceTree = "<absolute>"; };
-		4C9E18141209E502004E5032 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = /Applications/Textual.app/Contents/Headers/AsyncSocket.h; sourceTree = "<absolute>"; };
-		4C9E18151209E502004E5032 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanSheet.h; path = /Applications/Textual.app/Contents/Headers/ChanBanSheet.h; sourceTree = "<absolute>"; };
-		4C9E18161209E502004E5032 /* ChannelSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelSheet.h; path = /Applications/Textual.app/Contents/Headers/ChannelSheet.h; sourceTree = "<absolute>"; };
-		4C9E18171209E502004E5032 /* ChatBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatBox.h; path = /Applications/Textual.app/Contents/Headers/ChatBox.h; sourceTree = "<absolute>"; };
-		4C9E18181209E502004E5032 /* CustomJSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomJSFile.h; path = /Applications/Textual.app/Contents/Headers/CustomJSFile.h; sourceTree = "<absolute>"; };
-		4C9E18191209E502004E5032 /* DCCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCController.h; path = /Applications/Textual.app/Contents/Headers/DCCController.h; sourceTree = "<absolute>"; };
-		4C9E181A1209E502004E5032 /* DCCFileTransferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCFileTransferCell.h; path = /Applications/Textual.app/Contents/Headers/DCCFileTransferCell.h; sourceTree = "<absolute>"; };
-		4C9E181B1209E502004E5032 /* DCCReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCReceiver.h; path = /Applications/Textual.app/Contents/Headers/DCCReceiver.h; sourceTree = "<absolute>"; };
-		4C9E181C1209E502004E5032 /* DCCSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCSender.h; path = /Applications/Textual.app/Contents/Headers/DCCSender.h; sourceTree = "<absolute>"; };
-		4C9E181D1209E502004E5032 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = /Applications/Textual.app/Contents/Headers/DDInvocationGrabber.h; sourceTree = "<absolute>"; };
-		4C9E181E1209E502004E5032 /* DialogWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialogWindow.h; path = /Applications/Textual.app/Contents/Headers/DialogWindow.h; sourceTree = "<absolute>"; };
-		4C9E181F1209E502004E5032 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldEditorTextView.h; path = /Applications/Textual.app/Contents/Headers/FieldEditorTextView.h; sourceTree = "<absolute>"; };
-		4C9E18201209E502004E5032 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLogger.h; path = /Applications/Textual.app/Contents/Headers/FileLogger.h; sourceTree = "<absolute>"; };
-		4C9E18211209E502004E5032 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalModels.h; path = /Applications/Textual.app/Contents/Headers/GlobalModels.h; sourceTree = "<absolute>"; };
-		4C9E18221209E502004E5032 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrowlController.h; path = /Applications/Textual.app/Contents/Headers/GrowlController.h; sourceTree = "<absolute>"; };
-		4C9E18231209E502004E5032 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMBase64.h; path = /Applications/Textual.app/Contents/Headers/GTMBase64.h; sourceTree = "<absolute>"; };
-		4C9E18241209E502004E5032 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = /Applications/Textual.app/Contents/Headers/GTMDefines.h; sourceTree = "<absolute>"; };
-		4C9E18251209E502004E5032 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = /Applications/Textual.app/Contents/Headers/GTMGarbageCollection.h; sourceTree = "<absolute>"; };
-		4C9E18261209E502004E5032 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "/Applications/Textual.app/Contents/Headers/GTMNSString+HTML.h"; sourceTree = "<absolute>"; };
-		4C9E18271209E502004E5032 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "/Applications/Textual.app/Contents/Headers/GTMNSString+URLArguments.h"; sourceTree = "<absolute>"; };
-		4C9E18281209E502004E5032 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = /Applications/Textual.app/Contents/Headers/HostResolver.h; sourceTree = "<absolute>"; };
-		4C9E18291209E502004E5032 /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IconManager.h; path = /Applications/Textual.app/Contents/Headers/IconManager.h; sourceTree = "<absolute>"; };
-		4C9E182A1209E502004E5032 /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageURLParser.h; path = /Applications/Textual.app/Contents/Headers/ImageURLParser.h; sourceTree = "<absolute>"; };
-		4C9E182B1209E502004E5032 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputHistory.h; path = /Applications/Textual.app/Contents/Headers/InputHistory.h; sourceTree = "<absolute>"; };
-		4C9E182C1209E502004E5032 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputTextField.h; path = /Applications/Textual.app/Contents/Headers/InputTextField.h; sourceTree = "<absolute>"; };
-		4C9E182D1209E502004E5032 /* InviteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteSheet.h; path = /Applications/Textual.app/Contents/Headers/InviteSheet.h; sourceTree = "<absolute>"; };
-		4C9E182E1209E502004E5032 /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRC.h; path = /Applications/Textual.app/Contents/Headers/IRC.h; sourceTree = "<absolute>"; };
-		4C9E182F1209E502004E5032 /* IRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannel.h; path = /Applications/Textual.app/Contents/Headers/IRCChannel.h; sourceTree = "<absolute>"; };
-		4C9E18301209E502004E5032 /* IRCChannelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfig.h; path = /Applications/Textual.app/Contents/Headers/IRCChannelConfig.h; sourceTree = "<absolute>"; };
-		4C9E18311209E502004E5032 /* IRCChannelMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelMode.h; path = /Applications/Textual.app/Contents/Headers/IRCChannelMode.h; sourceTree = "<absolute>"; };
-		4C9E18321209E502004E5032 /* IRCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClient.h; path = /Applications/Textual.app/Contents/Headers/IRCClient.h; sourceTree = "<absolute>"; };
-		4C9E18331209E502004E5032 /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfig.h; path = /Applications/Textual.app/Contents/Headers/IRCClientConfig.h; sourceTree = "<absolute>"; };
-		4C9E18341209E502004E5032 /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnection.h; path = /Applications/Textual.app/Contents/Headers/IRCConnection.h; sourceTree = "<absolute>"; };
-		4C9E18351209E502004E5032 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExtras.h; path = /Applications/Textual.app/Contents/Headers/IRCExtras.h; sourceTree = "<absolute>"; };
-		4C9E18361209E502004E5032 /* IRCISupportInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfo.h; path = /Applications/Textual.app/Contents/Headers/IRCISupportInfo.h; sourceTree = "<absolute>"; };
-		4C9E18371209E502004E5032 /* IRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCMessage.h; path = /Applications/Textual.app/Contents/Headers/IRCMessage.h; sourceTree = "<absolute>"; };
-		4C9E18381209E502004E5032 /* IRCPrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCPrefix.h; path = /Applications/Textual.app/Contents/Headers/IRCPrefix.h; sourceTree = "<absolute>"; };
-		4C9E18391209E502004E5032 /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCSendingMessage.h; path = /Applications/Textual.app/Contents/Headers/IRCSendingMessage.h; sourceTree = "<absolute>"; };
-		4C9E183A1209E502004E5032 /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItem.h; path = /Applications/Textual.app/Contents/Headers/IRCTreeItem.h; sourceTree = "<absolute>"; };
-		4C9E183B1209E502004E5032 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = /Applications/Textual.app/Contents/Headers/IRCUser.h; sourceTree = "<absolute>"; };
-		4C9E183C1209E502004E5032 /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorld.h; path = /Applications/Textual.app/Contents/Headers/IRCWorld.h; sourceTree = "<absolute>"; };
-		4C9E183D1209E502004E5032 /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldConfig.h; path = /Applications/Textual.app/Contents/Headers/IRCWorldConfig.h; sourceTree = "<absolute>"; };
-		4C9E183E1209E502004E5032 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEventHandler.h; path = /Applications/Textual.app/Contents/Headers/KeyEventHandler.h; sourceTree = "<absolute>"; };
-		4C9E183F1209E502004E5032 /* ListDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDialog.h; path = /Applications/Textual.app/Contents/Headers/ListDialog.h; sourceTree = "<absolute>"; };
-		4C9E18401209E502004E5032 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListView.h; path = /Applications/Textual.app/Contents/Headers/ListView.h; sourceTree = "<absolute>"; };
-		4C9E18411209E502004E5032 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogController.h; path = /Applications/Textual.app/Contents/Headers/LogController.h; sourceTree = "<absolute>"; };
-		4C9E18421209E502004E5032 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = /Applications/Textual.app/Contents/Headers/LogLine.h; sourceTree = "<absolute>"; };
-		4C9E18431209E502004E5032 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogPolicy.h; path = /Applications/Textual.app/Contents/Headers/LogPolicy.h; sourceTree = "<absolute>"; };
-		4C9E18441209E502004E5032 /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogRenderer.h; path = /Applications/Textual.app/Contents/Headers/LogRenderer.h; sourceTree = "<absolute>"; };
-		4C9E18451209E502004E5032 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = /Applications/Textual.app/Contents/Headers/LogScriptEventSink.h; sourceTree = "<absolute>"; };
-		4C9E18461209E502004E5032 /* LogTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogTheme.h; path = /Applications/Textual.app/Contents/Headers/LogTheme.h; sourceTree = "<absolute>"; };
-		4C9E18471209E502004E5032 /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogView.h; path = /Applications/Textual.app/Contents/Headers/LogView.h; sourceTree = "<absolute>"; };
-		4C9E18481209E502004E5032 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = /Applications/Textual.app/Contents/Headers/MainWindow.h; sourceTree = "<absolute>"; };
-		4C9E18491209E502004E5032 /* MarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkedScroller.h; path = /Applications/Textual.app/Contents/Headers/MarkedScroller.h; sourceTree = "<absolute>"; };
-		4C9E184A1209E502004E5032 /* MasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterController.h; path = /Applications/Textual.app/Contents/Headers/MasterController.h; sourceTree = "<absolute>"; };
-		4C9E184B1209E502004E5032 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListView.h; path = /Applications/Textual.app/Contents/Headers/MemberListView.h; sourceTree = "<absolute>"; };
-		4C9E184C1209E502004E5032 /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListViewCell.h; path = /Applications/Textual.app/Contents/Headers/MemberListViewCell.h; sourceTree = "<absolute>"; };
-		4C9E184D1209E502004E5032 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuController.h; path = /Applications/Textual.app/Contents/Headers/MenuController.h; sourceTree = "<absolute>"; };
-		4C9E184E1209E502004E5032 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeSheet.h; path = /Applications/Textual.app/Contents/Headers/ModeSheet.h; sourceTree = "<absolute>"; };
-		4C9E184F1209E502004E5032 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletinStatus.h; path = /Applications/Textual.app/Contents/Headers/NickCompletinStatus.h; sourceTree = "<absolute>"; };
-		4C9E18501209E502004E5032 /* NickSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickSheet.h; path = /Applications/Textual.app/Contents/Headers/NickSheet.h; sourceTree = "<absolute>"; };
-		4C9E18511209E502004E5032 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayHelper.h; path = /Applications/Textual.app/Contents/Headers/NSArrayHelper.h; sourceTree = "<absolute>"; };
-		4C9E18521209E502004E5032 /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = /Applications/Textual.app/Contents/Headers/NSBundleHelper.h; sourceTree = "<absolute>"; };
-		4C9E18531209E502004E5032 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = /Applications/Textual.app/Contents/Headers/NSColorHelper.h; sourceTree = "<absolute>"; };
-		4C9E18541209E502004E5032 /* NSData+Kana.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Kana.h"; path = "/Applications/Textual.app/Contents/Headers/NSData+Kana.h"; sourceTree = "<absolute>"; };
-		4C9E18551209E502004E5032 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDataHelper.h; path = /Applications/Textual.app/Contents/Headers/NSDataHelper.h; sourceTree = "<absolute>"; };
-		4C9E18561209E502004E5032 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDictionaryHelper.h; path = /Applications/Textual.app/Contents/Headers/NSDictionaryHelper.h; sourceTree = "<absolute>"; };
-		4C9E18571209E502004E5032 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DDExtensions.h"; path = "/Applications/Textual.app/Contents/Headers/NSObject+DDExtensions.h"; sourceTree = "<absolute>"; };
-		4C9E18581209E502004E5032 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPasteboardHelper.h; path = /Applications/Textual.app/Contents/Headers/NSPasteboardHelper.h; sourceTree = "<absolute>"; };
-		4C9E18591209E502004E5032 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSRectHelper.h; path = /Applications/Textual.app/Contents/Headers/NSRectHelper.h; sourceTree = "<absolute>"; };
-		4C9E185A1209E502004E5032 /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringHelper.h; path = /Applications/Textual.app/Contents/Headers/NSStringHelper.h; sourceTree = "<absolute>"; };
-		4C9E185B1209E502004E5032 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = /Applications/Textual.app/Contents/Headers/NSWindowHelper.h; sourceTree = "<absolute>"; };
-		4C9E185C1209E502004E5032 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtherTheme.h; path = /Applications/Textual.app/Contents/Headers/OtherTheme.h; sourceTree = "<absolute>"; };
-		4C9E185D1209E502004E5032 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginProtocol.h; path = /Applications/Textual.app/Contents/Headers/PluginProtocol.h; sourceTree = "<absolute>"; };
-		4C9E185E1209E502004E5032 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = /Applications/Textual.app/Contents/Headers/Preferences.h; sourceTree = "<absolute>"; };
-		4C9E185F1209E502004E5032 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesController.h; path = /Applications/Textual.app/Contents/Headers/PreferencesController.h; sourceTree = "<absolute>"; };
-		4C9E18601209E502004E5032 /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScriptsWrapper.h; path = /Applications/Textual.app/Contents/Headers/ScriptsWrapper.h; sourceTree = "<absolute>"; };
-		4C9E18611209E502004E5032 /* ServerSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSheet.h; path = /Applications/Textual.app/Contents/Headers/ServerSheet.h; sourceTree = "<absolute>"; };
-		4C9E18621209E502004E5032 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerTreeView.h; path = /Applications/Textual.app/Contents/Headers/ServerTreeView.h; sourceTree = "<absolute>"; };
-		4C9E18631209E502004E5032 /* SheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SheetBase.h; path = /Applications/Textual.app/Contents/Headers/SheetBase.h; sourceTree = "<absolute>"; };
-		4C9E18641209E502004E5032 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundPlayer.h; path = /Applications/Textual.app/Contents/Headers/SoundPlayer.h; sourceTree = "<absolute>"; };
-		4C9E18651209E502004E5032 /* SoundWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundWrapper.h; path = /Applications/Textual.app/Contents/Headers/SoundWrapper.h; sourceTree = "<absolute>"; };
-		4C9E18661209E502004E5032 /* TableProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableProgressIndicator.h; path = /Applications/Textual.app/Contents/Headers/TableProgressIndicator.h; sourceTree = "<absolute>"; };
-		4C9E18671209E502004E5032 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = /Applications/Textual.app/Contents/Headers/TCPClient.h; sourceTree = "<absolute>"; };
-		4C9E18681209E502004E5032 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = /Applications/Textual.app/Contents/Headers/TCPServer.h; sourceTree = "<absolute>"; };
-		4C9E18691209E502004E5032 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = /Applications/Textual.app/Contents/Headers/TextField.h; sourceTree = "<absolute>"; };
-		4C9E186A1209E502004E5032 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldWithDisabledState.h; path = /Applications/Textual.app/Contents/Headers/TextFieldWithDisabledState.h; sourceTree = "<absolute>"; };
-		4C9E186B1209E502004E5032 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = /Applications/Textual.app/Contents/Headers/TextualApplication.h; sourceTree = "<absolute>"; };
-		4C9E186C1209E502004E5032 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualPluginItem.h; path = /Applications/Textual.app/Contents/Headers/TextualPluginItem.h; sourceTree = "<absolute>"; };
-		4C9E186D1209E502004E5032 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = /Applications/Textual.app/Contents/Headers/ThinSplitView.h; sourceTree = "<absolute>"; };
-		4C9E186E1209E502004E5032 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = /Applications/Textual.app/Contents/Headers/Timer.h; sourceTree = "<absolute>"; };
-		4C9E186F1209E502004E5032 /* TimerCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimerCommand.h; path = /Applications/Textual.app/Contents/Headers/TimerCommand.h; sourceTree = "<absolute>"; };
-		4C9E18701209E502004E5032 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = /Applications/Textual.app/Contents/Headers/TinyGrowlClient.h; sourceTree = "<absolute>"; };
-		4C9E18711209E502004E5032 /* TopicSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopicSheet.h; path = /Applications/Textual.app/Contents/Headers/TopicSheet.h; sourceTree = "<absolute>"; };
-		4C9E18721209E502004E5032 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView.h; path = /Applications/Textual.app/Contents/Headers/TreeView.h; sourceTree = "<absolute>"; };
-		4C9E18731209E502004E5032 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnicodeHelper.h; path = /Applications/Textual.app/Contents/Headers/UnicodeHelper.h; sourceTree = "<absolute>"; };
-		4C9E18741209E502004E5032 /* URLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLOpener.h; path = /Applications/Textual.app/Contents/Headers/URLOpener.h; sourceTree = "<absolute>"; };
-		4C9E18751209E502004E5032 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTheme.h; path = /Applications/Textual.app/Contents/Headers/ViewTheme.h; sourceTree = "<absolute>"; };
-		4C9E18761209E502004E5032 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewAutoScroll.h; path = /Applications/Textual.app/Contents/Headers/WebViewAutoScroll.h; sourceTree = "<absolute>"; };
-		4C9E18771209E502004E5032 /* WelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeSheet.h; path = /Applications/Textual.app/Contents/Headers/WelcomeSheet.h; sourceTree = "<absolute>"; };
 		4CADD91A124BB69400B82983 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4CBDDBE211CB4D47002A6868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -202,110 +205,113 @@
 		4C9E180F1209E502004E5032 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				4C9E18101209E502004E5032 /* AboutPanel.h */,
-				4C9E18111209E502004E5032 /* AddressBook.h */,
-				4C9E18121209E502004E5032 /* AddressBookSheet.h */,
-				4C9E18131209E502004E5032 /* AGKeychain.h */,
-				4C9E18141209E502004E5032 /* AsyncSocket.h */,
-				4C9E18151209E502004E5032 /* ChanBanSheet.h */,
-				4C9E18161209E502004E5032 /* ChannelSheet.h */,
-				4C9E18171209E502004E5032 /* ChatBox.h */,
-				4C9E18181209E502004E5032 /* CustomJSFile.h */,
-				4C9E18191209E502004E5032 /* DCCController.h */,
-				4C9E181A1209E502004E5032 /* DCCFileTransferCell.h */,
-				4C9E181B1209E502004E5032 /* DCCReceiver.h */,
-				4C9E181C1209E502004E5032 /* DCCSender.h */,
-				4C9E181D1209E502004E5032 /* DDInvocationGrabber.h */,
-				4C9E181E1209E502004E5032 /* DialogWindow.h */,
-				4C9E181F1209E502004E5032 /* FieldEditorTextView.h */,
-				4C9E18201209E502004E5032 /* FileLogger.h */,
-				4C9E18211209E502004E5032 /* GlobalModels.h */,
-				4C9E18221209E502004E5032 /* GrowlController.h */,
-				4C9E18231209E502004E5032 /* GTMBase64.h */,
-				4C9E18241209E502004E5032 /* GTMDefines.h */,
-				4C9E18251209E502004E5032 /* GTMGarbageCollection.h */,
-				4C9E18261209E502004E5032 /* GTMNSString+HTML.h */,
-				4C9E18271209E502004E5032 /* GTMNSString+URLArguments.h */,
-				4C9E18281209E502004E5032 /* HostResolver.h */,
-				4C9E18291209E502004E5032 /* IconManager.h */,
-				4C9E182A1209E502004E5032 /* ImageURLParser.h */,
-				4C9E182B1209E502004E5032 /* InputHistory.h */,
-				4C9E182C1209E502004E5032 /* InputTextField.h */,
-				4C9E182D1209E502004E5032 /* InviteSheet.h */,
-				4C9E182E1209E502004E5032 /* IRC.h */,
-				4C9E182F1209E502004E5032 /* IRCChannel.h */,
-				4C9E18301209E502004E5032 /* IRCChannelConfig.h */,
-				4C9E18311209E502004E5032 /* IRCChannelMode.h */,
-				4C9E18321209E502004E5032 /* IRCClient.h */,
-				4C9E18331209E502004E5032 /* IRCClientConfig.h */,
-				4C9E18341209E502004E5032 /* IRCConnection.h */,
-				4C9E18351209E502004E5032 /* IRCExtras.h */,
-				4C9E18361209E502004E5032 /* IRCISupportInfo.h */,
-				4C9E18371209E502004E5032 /* IRCMessage.h */,
-				4C9E18381209E502004E5032 /* IRCPrefix.h */,
-				4C9E18391209E502004E5032 /* IRCSendingMessage.h */,
-				4C9E183A1209E502004E5032 /* IRCTreeItem.h */,
-				4C9E183B1209E502004E5032 /* IRCUser.h */,
-				4C9E183C1209E502004E5032 /* IRCWorld.h */,
-				4C9E183D1209E502004E5032 /* IRCWorldConfig.h */,
-				4C9E183E1209E502004E5032 /* KeyEventHandler.h */,
-				4C9E183F1209E502004E5032 /* ListDialog.h */,
-				4C9E18401209E502004E5032 /* ListView.h */,
-				4C9E18411209E502004E5032 /* LogController.h */,
-				4C9E18421209E502004E5032 /* LogLine.h */,
-				4C9E18431209E502004E5032 /* LogPolicy.h */,
-				4C9E18441209E502004E5032 /* LogRenderer.h */,
-				4C9E18451209E502004E5032 /* LogScriptEventSink.h */,
-				4C9E18461209E502004E5032 /* LogTheme.h */,
-				4C9E18471209E502004E5032 /* LogView.h */,
-				4C9E18481209E502004E5032 /* MainWindow.h */,
-				4C9E18491209E502004E5032 /* MarkedScroller.h */,
-				4C9E184A1209E502004E5032 /* MasterController.h */,
-				4C9E184B1209E502004E5032 /* MemberListView.h */,
-				4C9E184C1209E502004E5032 /* MemberListViewCell.h */,
-				4C9E184D1209E502004E5032 /* MenuController.h */,
-				4C9E184E1209E502004E5032 /* ModeSheet.h */,
-				4C9E184F1209E502004E5032 /* NickCompletinStatus.h */,
-				4C9E18501209E502004E5032 /* NickSheet.h */,
-				4C9E18511209E502004E5032 /* NSArrayHelper.h */,
-				4C9E18521209E502004E5032 /* NSBundleHelper.h */,
-				4C9E18531209E502004E5032 /* NSColorHelper.h */,
-				4C9E18541209E502004E5032 /* NSData+Kana.h */,
-				4C9E18551209E502004E5032 /* NSDataHelper.h */,
-				4C9E18561209E502004E5032 /* NSDictionaryHelper.h */,
-				4C9E18571209E502004E5032 /* NSObject+DDExtensions.h */,
-				4C9E18581209E502004E5032 /* NSPasteboardHelper.h */,
-				4C9E18591209E502004E5032 /* NSRectHelper.h */,
-				4C9E185A1209E502004E5032 /* NSStringHelper.h */,
-				4C9E185B1209E502004E5032 /* NSWindowHelper.h */,
-				4C9E185C1209E502004E5032 /* OtherTheme.h */,
-				4C9E185D1209E502004E5032 /* PluginProtocol.h */,
-				4C9E185E1209E502004E5032 /* Preferences.h */,
-				4C9E185F1209E502004E5032 /* PreferencesController.h */,
-				4C9E18601209E502004E5032 /* ScriptsWrapper.h */,
-				4C9E18611209E502004E5032 /* ServerSheet.h */,
-				4C9E18621209E502004E5032 /* ServerTreeView.h */,
-				4C9E18631209E502004E5032 /* SheetBase.h */,
-				4C9E18641209E502004E5032 /* SoundPlayer.h */,
-				4C9E18651209E502004E5032 /* SoundWrapper.h */,
-				4C9E18661209E502004E5032 /* TableProgressIndicator.h */,
-				4C9E18671209E502004E5032 /* TCPClient.h */,
-				4C9E18681209E502004E5032 /* TCPServer.h */,
-				4C9E18691209E502004E5032 /* TextField.h */,
-				4C9E186A1209E502004E5032 /* TextFieldWithDisabledState.h */,
-				4C9E186B1209E502004E5032 /* TextualApplication.h */,
-				4C9E186C1209E502004E5032 /* TextualPluginItem.h */,
-				4C9E186D1209E502004E5032 /* ThinSplitView.h */,
-				4C9E186E1209E502004E5032 /* Timer.h */,
-				4C9E186F1209E502004E5032 /* TimerCommand.h */,
-				4C9E18701209E502004E5032 /* TinyGrowlClient.h */,
-				4C9E18711209E502004E5032 /* TopicSheet.h */,
-				4C9E18721209E502004E5032 /* TreeView.h */,
-				4C9E18731209E502004E5032 /* UnicodeHelper.h */,
-				4C9E18741209E502004E5032 /* URLOpener.h */,
-				4C9E18751209E502004E5032 /* ViewTheme.h */,
-				4C9E18761209E502004E5032 /* WebViewAutoScroll.h */,
-				4C9E18771209E502004E5032 /* WelcomeSheet.h */,
+				4C4C027212B7AC5000E56A20 /* IRCChannelMode.h */,
+				4C4C027312B7AC5000E56A20 /* TextualPluginItem.h */,
+				4C4C027412B7AC5000E56A20 /* MasterController.h */,
+				4C4C027512B7AC5000E56A20 /* SheetBase.h */,
+				4C4C027612B7AC5000E56A20 /* NSArrayHelper.h */,
+				4C4C027712B7AC5000E56A20 /* IRCWorldConfig.h */,
+				4C4C027812B7AC5000E56A20 /* ViewTheme.h */,
+				4C4C027912B7AC5000E56A20 /* NickSheet.h */,
+				4C4C027A12B7AC5000E56A20 /* AddressBookSheet.h */,
+				4C4C027B12B7AC5000E56A20 /* MenuController.h */,
+				4C4C027C12B7AC5000E56A20 /* TimerCommand.h */,
+				4C4C027D12B7AC5000E56A20 /* MemberListView.h */,
+				4C4C027E12B7AC5000E56A20 /* AGKeychain.h */,
+				4C4C027F12B7AC5000E56A20 /* NSRectHelper.h */,
+				4C4C028012B7AC5000E56A20 /* TinyGrowlClient.h */,
+				4C4C028112B7AC5000E56A20 /* ServerSheet.h */,
+				4C4C028212B7AC5000E56A20 /* KeyEventHandler.h */,
+				4C4C028312B7AC5000E56A20 /* GTMGarbageCollection.h */,
+				4C4C028412B7AC5000E56A20 /* MainWindow.h */,
+				4C4C028512B7AC5000E56A20 /* IRCPrefix.h */,
+				4C4C028612B7AC5000E56A20 /* NSData+Kana.h */,
+				4C4C028712B7AC5000E56A20 /* InputTextField.h */,
+				4C4C028812B7AC5000E56A20 /* OtherTheme.h */,
+				4C4C028912B7AC5000E56A20 /* SoundWrapper.h */,
+				4C4C028A12B7AC5000E56A20 /* ThinSplitView.h */,
+				4C4C028B12B7AC5000E56A20 /* NSDictionaryHelper.h */,
+				4C4C028C12B7AC5000E56A20 /* InputPromptDialog.h */,
+				4C4C028D12B7AC5000E56A20 /* GTMNSString+HTML.h */,
+				4C4C028E12B7AC5000E56A20 /* NSDataHelper.h */,
+				4C4C028F12B7AC5000E56A20 /* ServerTreeView.h */,
+				4C4C029012B7AC5000E56A20 /* PluginProtocol.h */,
+				4C4C029112B7AC5000E56A20 /* IRCTreeItem.h */,
+				4C4C029212B7AC5000E56A20 /* WebViewAutoScroll.h */,
+				4C4C029312B7AC5000E56A20 /* Timer.h */,
+				4C4C029412B7AC5000E56A20 /* NSPasteboardHelper.h */,
+				4C4C029512B7AC5000E56A20 /* PreferencesController.h */,
+				4C4C029612B7AC5000E56A20 /* DockIcon.h */,
+				4C4C029712B7AC5000E56A20 /* GTMDefines.h */,
+				4C4C029812B7AC5000E56A20 /* LogPolicy.h */,
+				4C4C029912B7AC5000E56A20 /* AddressBook.h */,
+				4C4C029A12B7AC5000E56A20 /* ChatBox.h */,
+				4C4C029B12B7AC5000E56A20 /* URLParser.h */,
+				4C4C029C12B7AC5000E56A20 /* TopicSheet.h */,
+				4C4C029D12B7AC5000E56A20 /* NSBundleHelper.h */,
+				4C4C029E12B7AC5000E56A20 /* FieldEditorTextView.h */,
+				4C4C029F12B7AC5000E56A20 /* Preferences.h */,
+				4C4C02A012B7AC5000E56A20 /* LogRenderer.h */,
+				4C4C02A112B7AC5000E56A20 /* ChanBanSheet.h */,
+				4C4C02A212B7AC5000E56A20 /* MarkedScroller.h */,
+				4C4C02A312B7AC5000E56A20 /* TCPClient.h */,
+				4C4C02A412B7AC5000E56A20 /* TableProgressIndicator.h */,
+				4C4C02A512B7AC5000E56A20 /* IRCMessage.h */,
+				4C4C02A612B7AC5000E56A20 /* FileWithContent.h */,
+				4C4C02A712B7AC5000E56A20 /* NSObject+DDExtensions.h */,
+				4C4C02A812B7AC5000E56A20 /* TextualApplication.h */,
+				4C4C02A912B7AC5000E56A20 /* DialogWindow.h */,
+				4C4C02AA12B7AC5000E56A20 /* AboutPanel.h */,
+				4C4C02AB12B7AC5000E56A20 /* AsyncSocket.h */,
+				4C4C02AC12B7AC5000E56A20 /* InviteSheet.h */,
+				4C4C02AD12B7AC5000E56A20 /* TextFieldWithDisabledState.h */,
+				4C4C02AE12B7AC5000E56A20 /* NSColorHelper.h */,
+				4C4C02AF12B7AC5000E56A20 /* LogView.h */,
+				4C4C02B012B7AC5000E56A20 /* GTMBase64.h */,
+				4C4C02B112B7AC5000E56A20 /* MemberListViewCell.h */,
+				4C4C02B212B7AC5000E56A20 /* ScriptsWrapper.h */,
+				4C4C02B312B7AC5000E56A20 /* TextField.h */,
+				4C4C02B412B7AC5000E56A20 /* GrowlController.h */,
+				4C4C02B512B7AC5000E56A20 /* RegexKitLite.h */,
+				4C4C02B612B7AC5000E56A20 /* ListView.h */,
+				4C4C02B712B7AC5000E56A20 /* TCPServer.h */,
+				4C4C02B812B7AC5000E56A20 /* WelcomeSheet.h */,
+				4C4C02B912B7AC5000E56A20 /* ChannelSheet.h */,
+				4C4C02BA12B7AC5000E56A20 /* ChanBanExceptionSheet.h */,
+				4C4C02BB12B7AC5000E56A20 /* FileLogger.h */,
+				4C4C02BC12B7AC5000E56A20 /* IRCConnection.h */,
+				4C4C02BD12B7AC5000E56A20 /* IRCISupportInfo.h */,
+				4C4C02BE12B7AC5000E56A20 /* NSStringHelper.h */,
+				4C4C02BF12B7AC5000E56A20 /* NSNumberHelper.h */,
+				4C4C02C012B7AC5000E56A20 /* ListDialog.h */,
+				4C4C02C112B7AC5000E56A20 /* DDInvocationGrabber.h */,
+				4C4C02C212B7AC5000E56A20 /* IRCClientConfig.h */,
+				4C4C02C312B7AC5000E56A20 /* UnicodeHelper.h */,
+				4C4C02C412B7AC5000E56A20 /* NickCompletinStatus.h */,
+				4C4C02C512B7AC5000E56A20 /* InputHistory.h */,
+				4C4C02C612B7AC5000E56A20 /* HostResolver.h */,
+				4C4C02C712B7AC5000E56A20 /* NSWindowHelper.h */,
+				4C4C02C812B7AC5000E56A20 /* GTMNSString+URLArguments.h */,
+				4C4C02C912B7AC5000E56A20 /* ImageURLParser.h */,
+				4C4C02CA12B7AC5000E56A20 /* LanguagePreferences.h */,
+				4C4C02CB12B7AC5000E56A20 /* AsyncSocketExtensions.h */,
+				4C4C02CC12B7AC5000E56A20 /* IRCChannel.h */,
+				4C4C02CD12B7AC5000E56A20 /* URLOpener.h */,
+				4C4C02CE12B7AC5000E56A20 /* LogController.h */,
+				4C4C02CF12B7AC5000E56A20 /* GlobalModels.h */,
+				4C4C02D012B7AC5000E56A20 /* IRCClient.h */,
+				4C4C02D112B7AC5000E56A20 /* SoundPlayer.h */,
+				4C4C02D212B7AC5000E56A20 /* NSFontHelper.h */,
+				4C4C02D312B7AC5000E56A20 /* IRCWorld.h */,
+				4C4C02D412B7AC5000E56A20 /* ModeSheet.h */,
+				4C4C02D512B7AC5000E56A20 /* IRC.h */,
+				4C4C02D612B7AC5000E56A20 /* IRCChannelConfig.h */,
+				4C4C02D712B7AC5000E56A20 /* IRCExtras.h */,
+				4C4C02D812B7AC5000E56A20 /* IRCSendingMessage.h */,
+				4C4C02D912B7AC5000E56A20 /* TreeView.h */,
+				4C4C02DA12B7AC5000E56A20 /* LogScriptEventSink.h */,
+				4C4C02DB12B7AC5000E56A20 /* IRCUser.h */,
+				4C4C02DC12B7AC5000E56A20 /* LogLine.h */,
 			);
 			name = Headers;
 			path = /Applications/Textual.app/Contents/Headers;
