@@ -9,5 +9,6 @@
 - (void)useSSL;
 - (void)useSystemSocksProxy;
 - (void)useSocksProxyVersion:(NSInteger)version host:(NSString*)host port:(NSInteger)port user:(NSString*)user password:(NSString*)password;
++ (NSString*)posixErrorStringFromErrno:(NSInteger)code;
 
 @end

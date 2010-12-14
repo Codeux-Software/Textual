@@ -49,5 +49,16 @@
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
 }
 
++ (NSString*)posixErrorStringFromErrno:(NSInteger)code
+{
+	const char* error = strerror(code);
+	if (error) {
+		return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
+	}
+	else {
+		return nil;
+	}
+}
+
 
 @end
