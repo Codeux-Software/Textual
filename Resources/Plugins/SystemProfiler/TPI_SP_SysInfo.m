@@ -455,7 +455,7 @@
 	linesize = 0L;
 	
 	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		TXFSLongInt memtotal = (TXFSLongInt)linesize;
+		TXFSLongInt memtotal = (TXFSLongInt)linesize/1.073741824;
 		return [self formattedDiskSize:memtotal];
 	} else {
 		return nil;
