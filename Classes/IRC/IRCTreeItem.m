@@ -30,6 +30,8 @@
 
 - (void)resetLogView:(IRCWorld*)world withChannel:(IRCChannel*)c andClient:(IRCClient*)u
 {
+	[[log view] close];
+	 
 	[log release];
 	log = nil;
 	
