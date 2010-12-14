@@ -974,10 +974,6 @@
 
 - (void)outlineViewSelectionIsChanging:(NSNotification *)note
 {	
-	LogController* log = [selected log];
-	logBase.contentView = [log view];
-	[log notifyDidBecomeHidden];
-	
 	[self storePreviousSelection];
 }
 
