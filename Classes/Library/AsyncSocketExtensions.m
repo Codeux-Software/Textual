@@ -3,12 +3,11 @@
 
 #import "AsyncSocketExtensions.h"
 
-
 @implementation AsyncSocket (AsyncSocketExtensions) 
 
 - (void)useSSL
 {
-	NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
+	NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
 							  (NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
 							  kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
 							  kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
@@ -34,8 +33,7 @@
 	
 	if (version == 4) {
 		[settings setObject:(NSString*)kCFStreamSocketSOCKSVersion4 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
-	}
-	else {
+	} else {
 		[settings setObject:(NSString*)kCFStreamSocketSOCKSVersion5 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
 	}
 	
@@ -52,13 +50,12 @@
 + (NSString*)posixErrorStringFromErrno:(NSInteger)code
 {
 	const char* error = strerror(code);
+	
 	if (error) {
 		return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
-	}
-	else {
+	} else {
 		return nil;
 	}
 }
-
 
 @end

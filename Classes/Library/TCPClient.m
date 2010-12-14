@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "TCPClient.h"
-#import "AsyncSocketExtensions.h"
 
 #define LF	0xa
 #define CR	0xd
@@ -65,6 +64,7 @@
 		[conn disconnect];
 		[conn autorelease];
 	}
+	
 	[buffer release];
 	
 	[super dealloc];
@@ -126,8 +126,7 @@
 	++p;
 	if (p < bytes + len) {
 		buffer = [[NSMutableData alloc] initWithBytes:p length:bytes + len - p];
-	}
-	else {
+	} else {
 		buffer = [NSMutableData new];
 	}
 	
@@ -156,13 +155,12 @@
 {
 	if (useSystemSocks) {
 		[conn useSystemSocksProxy];
-	}
-	else if (useSocks) {
+	} else if (useSocks) {
 		[conn useSocksProxyVersion:socksVersion host:proxyHost port:proxyPort user:proxyUser password:proxyPassword];
-	}
-	else if (useSSL) {
+	} else if (useSSL) {
 		[conn useSSL];
 	}
+	
 	return YES;
 }
 

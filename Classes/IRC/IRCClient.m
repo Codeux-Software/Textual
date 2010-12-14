@@ -2907,8 +2907,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					NSString* trimmedMyNick = [myNick stringByTrimmingCharactersInSet:underlineSet];
 					if ([text rangeOfString:trimmedMyNick options:NSCaseInsensitiveSearch].location != NSNotFound) {
 						[sender outgoingConversation];
-					}
-					else {
+					} else {
 						[sender conversation];
 					}
 				}
@@ -3604,8 +3603,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if ([kind isEqualToString:@"identify-msg"]) {
 				identifyMsg = YES;
-			}
-			else if ([kind isEqualToString:@"identify-ctcp"]) {
+			} else if ([kind isEqualToString:@"identify-ctcp"]) {
 				identifyCTCP = YES;
 			}
 			
