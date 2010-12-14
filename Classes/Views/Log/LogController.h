@@ -76,7 +76,6 @@
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
-- (void)notifyDidBecomeHidden;
 
 - (void)moveToTop;
 - (void)moveToBottom;

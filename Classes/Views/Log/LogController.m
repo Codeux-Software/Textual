@@ -142,9 +142,6 @@
 	if ([view respondsToSelector:@selector(setBackgroundColor:)]) {
 		[(id)view setBackgroundColor:initialBackgroundColor];
 	}
-	[view setShouldUpdateWhileOffscreen:NO];
-	[view setHidden:YES];
-	
 	view.frameLoadDelegate = self;
 	view.UIDelegate = policy;
 	view.policyDelegate = policy;
@@ -155,14 +152,8 @@
 	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.baseUrl];
 }
 
-- (void)notifyDidBecomeHidden
-{
-	[view setHidden:YES];
-}
-
 - (void)notifyDidBecomeVisible
 {
-	[view setHidden:NO];
 	if (!becameVisible) {
 		becameVisible = YES;
 		[self moveToBottom];
