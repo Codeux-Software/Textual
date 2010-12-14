@@ -561,7 +561,7 @@
 	
 	[body appendChild:div];
 	
-	if (maxLines > 0 && (count + 10) > maxLines) {
+	if (maxLines > 0 && (count - 10) > maxLines) {
 		[self setNeedsLimitNumberOfLines];
 	}
 	
