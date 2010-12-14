@@ -206,8 +206,7 @@ attributedString:(BOOL)attributed
 				case 0x02:
 					if (currentAttr & BOLD_ATTR) {
 						currentAttr &= ~BOLD_ATTR;
-					}
-					else {
+					} else {
 						currentAttr |= BOLD_ATTR;
 					}
 					continue;
@@ -276,16 +275,14 @@ attributedString:(BOOL)attributed
 				case 0x16:
 					if (currentAttr & ITALIC_ATTR) {
 						currentAttr &= ~ITALIC_ATTR;
-					}
-					else {
+					} else {
 						currentAttr |= ITALIC_ATTR;
 					}
 					continue;
 				case 0x1F:
 					if (currentAttr & UNDERLINE_ATTR) {
 						currentAttr &= ~UNDERLINE_ATTR;
-					}
-					else {
+					} else {
 						currentAttr |= UNDERLINE_ATTR;
 					}
 					continue;

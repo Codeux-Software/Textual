@@ -1113,8 +1113,7 @@ typedef enum {
 						[world select:i];
 						break;
 					}
-				}
-				else if (target == MOVE_UNREAD) {
+				} else if (target == MOVE_UNREAD) {
 					if ([i isUnread]) {
 						[world select:i];
 						break;

@@ -565,8 +565,7 @@ BOOL isUnicharDigit(unichar c)
 			|| c == '@'
 			|| c == '~') {
 			*dest++ = c;
-		}
-		else {
+		} else {
 			*dest++ = '%';
 			*dest++ = characters[c / 16];
 			*dest++ = characters[c % 16];
@@ -665,8 +664,7 @@ BOOL isUnicharDigit(unichar c)
 				useAnchor = YES;
 				anchor = '/';
 				continue;
-			}
-			else if (c == '"') {
+			} else if (c == '"') {
 				useAnchor = YES;
 				anchor = '"';
 				continue;
@@ -675,11 +673,9 @@ BOOL isUnicharDigit(unichar c)
 		
 		if (escaped) {
 			escaped = NO;
-		}
-		else if (c == '\\') {
+		} else if (c == '\\') {
 			escaped = YES;
-		}
-		else if (useAnchor && c == anchor || !useAnchor && c == ' ') {
+		} else if (useAnchor && c == anchor || !useAnchor && c == ' ') {
 			if (useAnchor) {
 				++i;
 			}

@@ -152,8 +152,7 @@
 			IRCChannel* c = [owner findChannelByClientId:uid channelId:cid];
 			if (c) {
 				[owner select:c];
-			}
-			else if (u) {
+			} else if (u) {
 				[owner select:u];
 			}
 		} else if (ary.count == 1) {

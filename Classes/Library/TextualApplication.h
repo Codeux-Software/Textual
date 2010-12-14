@@ -18,6 +18,7 @@
 
 #import "RegexKitLite.h"
 #import "AsyncSocket.h"
+#import "AsyncSocketExtensions.h"
 #import "TinyGrowlClient.h"
 #import "GrowlController.h"
 #import "Preferences.h"

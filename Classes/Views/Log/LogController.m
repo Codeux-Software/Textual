@@ -753,8 +753,7 @@
 			
 			if (scrollBottom) {
 				[self moveToBottom];
-			}
-			else if (scrollTop) {
+			} else if (scrollTop) {
 				[body setValue:[NSNumber numberWithInteger:scrollTop] forKey:@"scrollTop"];
 			}
 		}
