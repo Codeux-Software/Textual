@@ -7,13 +7,23 @@
 
 - (void)useSSL
 {
-	NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
-							  (NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
-							  kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
-							  kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
-							  kCFNull, kCFStreamSSLPeerName,
-							  kCFBooleanFalse, kCFStreamSSLIsServer,
-							  nil];
+	IRCClient *client = (IRCClient *)[[theDelegate delegate] delegate];
+	
+	NSDictionary *settings = nil;
+	
+	if (client.config.isTrustedConnection) {
+		settings = [NSDictionary dictionaryWithObjectsAndKeys:
+					(NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
+					kCFNull, kCFStreamSSLPeerName,
+					kCFBooleanFalse, kCFStreamSSLIsServer,
+					kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
+					kCFBooleanTrue, kCFStreamSSLAllowsExpiredRoots,
+					kCFBooleanTrue, kCFStreamSSLAllowsExpiredCertificates,
+					kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
+					nil];
+	} else {
+		settings = [NSDictionary dictionaryWithObjectsAndKeys:(NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,  nil];
+	}
 	
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);

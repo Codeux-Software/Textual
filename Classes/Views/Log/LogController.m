@@ -431,6 +431,8 @@
 
 - (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML
 {
+	if ([line.body length] < 1) return NO;
+	
 	BOOL key = NO;
 	NSString* body = nil;
 	NSArray* urlRanges = nil;

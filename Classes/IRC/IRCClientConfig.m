@@ -40,6 +40,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize server;
 @synthesize network;
 @synthesize sleepQuitMessage;
+@synthesize isTrustedConnection;
 
 - (id)init
 {
@@ -287,6 +288,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
 	invisibleMode = [dic boolForKey:@"invisible"];
 	
+	isTrustedConnection = [dic boolForKey:@"trustedConnection"];
+	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
 	
 	for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
@@ -366,6 +369,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if (sleepQuitMessage) [dic setObject:sleepQuitMessage forKey:@"sleep_quit_message"];
 	if (userInfo) [dic setObject:userInfo forKey:@"userinfo"];
 	[dic setBool:invisibleMode forKey:@"invisible"];
+	
+	[dic setBool:isTrustedConnection forKey:@"trustedConnection"];
 	
 	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
 	

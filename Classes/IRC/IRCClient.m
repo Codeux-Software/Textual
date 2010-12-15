@@ -3,7 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "IRCClient.h"
-#import "IRC.h"
 
 #include <arpa/inet.h>
 
@@ -13,7 +12,7 @@
 #define RETRY_INTERVAL			240
 #define ISON_CHECK_INTERVAL		30
 #define TRIAL_PERIOD_INTERVAL	1800
- 
+
 static NSDateFormatter* dateTimeFormatter = nil;
 
 @interface IRCClient (Private)
@@ -111,6 +110,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize inFirstISONRun;
 @synthesize hasIRCopAccess;
 @synthesize inWhoWasRequest;
+@synthesize disconnectType;
+@synthesize connectType;
 
 - (id)init
 {
@@ -151,7 +152,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		isonTimer.delegate = self;
 		isonTimer.reqeat = YES;
 		isonTimer.selector = @selector(onISONTimer:);
-
+		
 #ifdef IS_TRIAL_BINARY
 		trialPeriodTimer = [Timer new];
 		trialPeriodTimer.delegate = self;
@@ -728,6 +729,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	[self stopReconnectTimer];
 	
+	connectType = mode;
+	disconnectType = DISCONNECT_NORMAL;
+	
 	if (conn) {
 		[conn close];
 		[conn autorelease];
@@ -751,6 +755,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case CONNECT_RETRY:
 			[self printSystemBoth:nil text:TXTLS(@"IRC_IS_RETRYING_CONNECTION")];
 			[self printSystemBoth:nil text:[NSString stringWithFormat:TXTLS(@"IRC_IS_CONNECTING"), host, config.port]];
+			break;
+		default:
 			break;
 	}
 	
@@ -1036,7 +1042,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)onTrialPeriodTimer:(id)sender
 {
 	if (isLoggedIn) {
-		disconnectType = -999;
+		disconnectType = DISCONNECT_TRIAL_PERIOD;
 		
 		[self quit];
 	}
@@ -1438,7 +1444,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		{
 			cmd = (([cmd isEqualToString:IRCCI_MSG]) ? IRCCI_PRIVMSG : cmd);
 			BOOL opMsg = NO;
-
+			
 			if ([cmd isEqualToString:IRCCI_OMSG]) {
 				opMsg = YES;
 				cmd = IRCCI_MSG;
@@ -2027,7 +2033,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			if (![s contains:@" "]) return NO;
 			
 			NSArray *data = [s componentsSeparatedByString:@" "];
-	
+			
 			[DockIcon drawWithHilightCount:[[data safeObjectAtIndex:0] integerValue] messageCount:[[data safeObjectAtIndex:1] integerValue]];
 			
 			return YES;
@@ -4235,30 +4241,43 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	tryingNickNumber = -1;
 	hasIRCopAccess = NO;
 	
-	NSString *disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER";
+	NSString *disconnectTXTLString = nil;
 	
-#ifdef IS_TRIAL_BINARY
-	disconnectTXTLString = ((disconnectType == -999) ? @"TRIAL_BUILD_NETWORK_DISCONNECTED" : @"IRC_DISCONNECTED_FROM_SERVER");
-#endif 
+	switch (disconnectType) {
+		case DISCONNECT_NORMAL:
+			disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER";
+			break;
+		case DISCONNECT_TRIAL_PERIOD:
+			disconnectTXTLString = @"TRIAL_BUILD_NETWORK_DISCONNECTED";
+			break;
+		default:
+			break;
+	}
 	
-	for (IRCChannel* c in channels) {
-		if (c.isActive) {
-			[c deactivate];
-			[self printSystem:c text:TXTLS(disconnectTXTLString)];
+	if (disconnectTXTLString) {
+		for (IRCChannel* c in channels) {
+			if (c.isActive) {
+				[c deactivate];
+				[self printSystem:c text:TXTLS(disconnectTXTLString)];
+			}
 		}
+		
+		[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
 	}
 	
 #ifdef IS_TRIAL_BINARY
 	[self stopTrialPeriodTimer];
 #endif
 	
-	[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
-	
 	[self updateClientTitle];
 	[self reloadTree];
 	
 	if (prevConnected) {
-		[self notifyEvent:GROWL_DISCONNECT];
+		if (disconnectType == DISCONNECT_NORMAL ||
+			disconnectType == DISCONNECT_TRIAL_PERIOD) {
+			
+			[self notifyEvent:GROWL_DISCONNECT];
+		}
 	}
 	
 	isAway = NO;
@@ -4268,7 +4287,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	[self startRetryTimer];
 	
-	[self printSystemBoth:nil text:TXTLS(@"IRC_CONNECTED_TO_SERVER")];
+	if (connectType != CONNECT_BADSSL_CRT_RECONNECT) {
+		[self printSystemBoth:nil text:TXTLS(@"IRC_CONNECTED_TO_SERVER")];
+	}
 	
 	isLoggedIn = NO;
 	isConnected = reconnectEnabled = YES;
@@ -4307,7 +4328,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)ircConnectionDidError:(NSString*)error
 {
-	[self printError:error];
+	if (disconnectType == DISCONNECT_BAD_SSL_CERT) {
+		[self connect:CONNECT_BADSSL_CRT_RECONNECT];
+	} else {
+		[self printError:error];
+	}
 }
 
 - (void)ircConnectionDidReceive:(NSData*)data
