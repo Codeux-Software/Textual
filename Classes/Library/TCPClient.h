@@ -1,6 +1,8 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
+@class IRCClient;
+
 @interface TCPClient : NSObject
 {
 	id delegate;
@@ -24,6 +26,8 @@
 	NSInteger tag;
 	BOOL active;
 	BOOL connecting;
+	
+	NSArray* socketBadSSLCertErrorCodes;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -43,6 +47,7 @@
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, retain) AsyncSocket* conn;
 @property (nonatomic, retain) NSMutableData* buffer;
+@property (nonatomic, retain) NSArray* socketBadSSLCertErrorCodes;
 @property (nonatomic) NSInteger tag;
 
 - (id)initWithExistingConnection:(AsyncSocket*)socket;

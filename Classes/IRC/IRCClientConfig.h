@@ -42,6 +42,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	// others
 	BOOL autoConnect;
 	BOOL autoReconnect;
+	BOOL isTrustedConnection;
 	NSStringEncoding encoding;
 	NSStringEncoding fallbackEncoding;
 	NSString* leavingComment;
@@ -72,6 +73,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, retain) NSString* proxyPassword;
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
+@property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, assign) NSStringEncoding fallbackEncoding;
 @property (nonatomic, retain) NSString* leavingComment;

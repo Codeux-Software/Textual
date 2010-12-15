@@ -6,6 +6,8 @@
 #define LF	0xa
 #define CR	0xd
 
+#define txCFStreamErrorDomainSSL @"kCFStreamErrorDomainSSL"
+
 @interface TCPClient (Private)
 - (BOOL)checkTag:(AsyncSocket*)sock;
 - (void)waitRead;
@@ -30,11 +32,26 @@
 @synthesize conn;
 @synthesize buffer;
 @synthesize tag;
+@synthesize socketBadSSLCertErrorCodes;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		buffer = [NSMutableData new];
+		
+		socketBadSSLCertErrorCodes = [[NSArray alloc] initWithObjects:
+									  [NSNumber numberWithInteger:errSSLBadCert], 
+									  [NSNumber numberWithInteger:errSSLNoRootCert], 
+									  [NSNumber numberWithInteger:errSSLCertExpired],  
+									  [NSNumber numberWithInteger:errSSLPeerBadCert], 
+									  [NSNumber numberWithInteger:errSSLPeerCertRevoked], 
+									  [NSNumber numberWithInteger:errSSLPeerCertExpired], 
+									  [NSNumber numberWithInteger:errSSLPeerCertUnknown], 
+									  [NSNumber numberWithInteger:errSSLUnknownRootCert], 
+									  [NSNumber numberWithInteger:errSSLCertNotYetValid],
+									  [NSNumber numberWithInteger:errSSLXCertChainInvalid], 
+									  [NSNumber numberWithInteger:errSSLPeerUnsupportedCert], 
+									  [NSNumber numberWithInteger:errSSLPeerUnknownCA], nil];
 	}
 	return self;
 }
@@ -58,6 +75,8 @@
 	[proxyHost release];
 	[proxyUser release];
 	[proxyPassword release];
+	
+	[socketBadSSLCertErrorCodes release];
 	
 	if (conn) {
 		conn.delegate = nil;
@@ -184,6 +203,36 @@
 	
 	if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
 		msg = [AsyncSocket posixErrorStringFromErrno:[error code]];
+	} else {
+		if ([[error domain] isEqualToString:txCFStreamErrorDomainSSL]) {
+			if ([socketBadSSLCertErrorCodes containsObject:[NSNumber numberWithInteger:[error code]]]) {
+				IRCClient *client = (IRCClient *)[delegate delegate];
+				
+				NSString *suppKey = [NSString stringWithFormat:@"Preferences.prompts.cert_trust_error.%@", client.config.guid];
+				BOOL suppValue = [TXNSUserDefaultsPointer() boolForKey:suppKey];
+				
+				if ((client.config.isTrustedConnection == NO && suppValue == NO) ||
+					(client.config.isTrustedConnection == NO && suppValue == YES)) {
+					
+					BOOL status = promptWithSuppression(TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE"), 
+														TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE"), 
+														TXTLS(@"TRUST_BUTTON"), 
+														TXTLS(@"CANCEL_BUTTON"), suppKey, nil);
+					
+					client.config.isTrustedConnection = status;
+					client.disconnectType = ((status == YES) ? DISCONNECT_BAD_SSL_CERT : DISCONNECT_NORMAL);
+					
+					// If we trust this connection and want to connect to it, then 
+					// let us override our prompt suppressor to hide every time.
+					
+					[TXNSUserDefaultsPointer() setBool:status forKey:suppKey];
+					
+					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+						[delegate tcpClient:self error:nil];
+					}
+				}
+			}
+		}
 	}
 	
 	if (!msg) {
@@ -215,7 +264,7 @@
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
 		[delegate tcpClientDidReceiveData:self];
 	}
-
+	
 	[self waitRead];
 }
 

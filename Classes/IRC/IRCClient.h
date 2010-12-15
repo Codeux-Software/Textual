@@ -6,9 +6,16 @@
 
 typedef enum {
 	CONNECT_NORMAL,
-	CONNECT_RECONNECT,
 	CONNECT_RETRY,
+	CONNECT_RECONNECT,
+	CONNECT_BADSSL_CRT_RECONNECT,
 } ConnectMode;
+
+typedef enum {
+	DISCONNECT_NORMAL,
+	DISCONNECT_TRIAL_PERIOD,
+	DISCONNECT_BAD_SSL_CERT,
+} DisconnectType;
 
 @interface IRCClient : IRCTreeItem
 {
@@ -60,6 +67,9 @@ typedef enum {
 	NSMutableArray* commandQueue;
 
 	IRCChannel* lastSelectedChannel;
+	
+	ConnectMode connectType;
+	DisconnectType disconnectType;
 
 	ChanBanExceptionSheet* banExceptionSheet;
 	ChanBanSheet* chanBanListSheet;
@@ -67,7 +77,6 @@ typedef enum {
 	
 #ifdef IS_TRIAL_BINARY
 	Timer* trialPeriodTimer;
-	NSInteger disconnectType;
 #endif
 	
 	FileLogger* logFile;
@@ -110,6 +119,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
 @property (nonatomic, assign) BOOL isAway;
+@property (nonatomic, assign) ConnectMode connectType;
+@property (nonatomic, assign) DisconnectType disconnectType;
 @property (nonatomic, retain) Timer* pongTimer;
 @property (nonatomic, retain) Timer* reconnectTimer;
 @property (nonatomic, retain) Timer* retryTimer;
