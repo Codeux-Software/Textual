@@ -1324,7 +1324,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	switch ([Preferences commandUIndex:cmd]) {
 		case 3: // Command: AWAY
 			if (!s.length && !cutColon) {
-				s = ((isAway == NO) ? TXTLS(@"IRC_AWAY_COMMAND_DEFAULT_REASON") : nil);;
+				s = ((isAway == NO) ? (NSMutableString*)TXTLS(@"IRC_AWAY_COMMAND_DEFAULT_REASON") : nil);
 			}
 			
 			if ([Preferences awayAllConnections]) {
