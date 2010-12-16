@@ -70,7 +70,6 @@
 			
 			if ([fm fileExistsAtPath:path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
-					[path release];
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
 					
 					if (reload) [self reload];
