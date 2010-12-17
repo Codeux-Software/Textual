@@ -1273,6 +1273,16 @@ typedef enum {
 	}
 }
 
+- (void)goToEndOfInputField:(NSEvent*)e
+{
+	[[text currentEditor] setSelectedRange:NSMakeRange([[text stringValue] length], 0)];
+}
+
+- (void)goToStartOfInputField:(NSEvent*)e
+{
+	[[text currentEditor] setSelectedRange:NSMakeRange(0, 0)];
+}
+
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1297,6 +1307,9 @@ typedef enum {
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
+	
+	[self handler:@selector(goToStartOfInputField:) code:KEY_HOME mods:0];
+	[self handler:@selector(goToEndOfInputField:) code:KEY_END mods:0];
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
