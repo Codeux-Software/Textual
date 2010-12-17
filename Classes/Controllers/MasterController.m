@@ -1308,16 +1308,13 @@ typedef enum {
 	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
 	
-	[self handler:@selector(goToStartOfInputField:) code:KEY_HOME mods:0];
-	[self handler:@selector(goToEndOfInputField:) code:KEY_END mods:0];
-	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
 	
 	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	
-	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
-	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
+	[self inputHandler:@selector(goToStartOfInputField:) code:KEY_HOME mods:0];
+	[self inputHandler:@selector(goToEndOfInputField:) code:KEY_END mods:0];
 	[self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];
 	[self inputHandler:@selector(inputScrollPageDown:) code:KEY_PAGE_DOWN mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
