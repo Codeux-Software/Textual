@@ -73,6 +73,8 @@
 	[sheet setFrame:windowFrame display:YES animate:YES];
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
+	
+	[sheet recalculateKeyViewLoop];
 }
 
 - (void)start

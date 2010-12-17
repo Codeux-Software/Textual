@@ -181,6 +181,8 @@
 	[self.window setFrame:windowFrame display:YES animate:YES];
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
+	
+	[self.window recalculateKeyViewLoop];
 }
 
 #pragma mark -
