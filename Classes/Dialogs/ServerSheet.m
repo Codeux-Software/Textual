@@ -164,6 +164,8 @@
 	[sheet setFrame:windowFrame display:YES animate:YES];
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
+	
+	[sheet recalculateKeyViewLoop];
 }
 
 #pragma mark -
@@ -203,7 +205,6 @@
 {
 	[self startSheet];
 	[self firstPane:initalView];
-	[sheet recalculateKeyViewLoop];
 	[tabView setSelectedSegment:initialTabTag];
 }
 
