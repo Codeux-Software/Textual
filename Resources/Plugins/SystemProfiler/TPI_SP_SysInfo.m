@@ -289,7 +289,7 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:(TXFSLongInt)info.resident_size]];
+		return [NSString stringWithFormat:@"Textual is currently using %@ of memory. — Information about memory use: http://is.gd/j0a9s", [self formattedDiskSize:(TXFSLongInt)info.resident_size]];
 	} 
 	
 	return nil;
