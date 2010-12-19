@@ -1217,7 +1217,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendCTCPPing:(NSString *)target
 {
-	[self sendCTCPQuery:target command:IRCCI_PING text:[NSString stringWithFormat:@"%f", CFAbsoluteTimeGetCurrent()]];
+	[self sendCTCPQuery:target command:IRCCI_PING text:[NSString stringWithFloat:CFAbsoluteTimeGetCurrent()]];
 }
 
 - (BOOL)sendCommand:(NSString *)s
@@ -2336,7 +2336,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (channel) {
 		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
 	} else {
-		context = [NSString stringWithFormat:@"%d", uid];
+		context = [NSString stringWithDouble:uid];
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
@@ -2393,7 +2393,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (channel) {
 		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
 	} else {
-		context = [NSString stringWithFormat:@"%d", uid];
+		context = [NSString stringWithDouble:uid];
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
@@ -2489,8 +2489,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([s contains:@"%@"]) {
 		if (channel && !channel.isClient && channel.isChannel) {
 			IRCUser *m = [channel findMember:nick];
+			
 			if (m) {
-				NSString *mark = [NSString stringWithFormat:@"%c", (char)m.mark];
+				NSString *mark = [NSString stringWithChar:m.mark];
 				
 				if ([mark isEqualToString:@" "] || [mark length] < 1) {
 					s = [s stringByReplacingOccurrencesOfString:@"%@" withString:@""];
@@ -4108,7 +4109,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:[m sequence]];
 			break;
 		default:
-			if ([world.bundlesForServerInput objectForKey:[NSString stringWithFormat:@"%i", m.numericReply]]) break;
+			if ([world.bundlesForServerInput objectForKey:[NSString stringWithInteger:m.numericReply]]) break;
 			
 			[self printUnknownReply:m];
 			break;
@@ -4316,7 +4317,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (config.password.length) [self send:IRCCI_PASS, config.password, nil];
 	[self send:IRCCI_NICK, sentNick, nil];
-	[self send:IRCCI_USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
+	[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", realName, nil];
 	
 	[self updateClientTitle];
 }

@@ -17,7 +17,7 @@
 {
 	NSScreen *scaleCheck = [NSScreen alloc];
 	
-	if ([[NSString stringWithFormat:@"%f", [scaleCheck userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
+	if ([[NSString stringWithFloat:[scaleCheck userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 		NSSize textSize;
@@ -41,7 +41,7 @@
 		if (message_count >= 1) {
 			[redBadge compositeToPoint:NSMakePoint((appIcon.size.width - redBadge.size.width), (appIcon.size.height - redBadge.size.height)) operation:NSCompositeSourceOver];
 			
-			iconRep = [NSString stringWithFormat:@"%i", message_count];
+			iconRep = [NSString stringWithInteger:message_count];
 			
 			textSize = [iconRep sizeWithAttributes:attrs];
 			textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];
@@ -50,7 +50,7 @@
 			if (highlight_count >= 1) {
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), (appIcon.size.height - greenBadge.size.height - (redBadge.size.height - 5))) operation:NSCompositeSourceOver];
 				
-				iconRep = [NSString stringWithFormat:@"%i", highlight_count];
+				iconRep = [NSString stringWithInteger:highlight_count];
 				
 				textSize = [iconRep sizeWithAttributes:attrs];
 				textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];
@@ -60,7 +60,7 @@
 			if (highlight_count >= 1) {
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), (appIcon.size.height - greenBadge.size.height)) operation:NSCompositeSourceOver];
 				
-				iconRep = [NSString stringWithFormat:@"%i", highlight_count];
+				iconRep = [NSString stringWithInteger:highlight_count];
 				
 				textSize = [iconRep sizeWithAttributes:attrs];
 				textString = [[[NSMutableAttributedString alloc] initWithString:iconRep attributes:attrs] autorelease];

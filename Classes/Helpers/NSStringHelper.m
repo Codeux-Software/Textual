@@ -600,10 +600,10 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSString *s = self;
 	
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x03] withString:@"▤"]; // color
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x02] withString:@"▥"]; // bold
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x16] withString:@"▧"]; // italics
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%c", (UniChar)0x1F] withString:@"▨"]; // underline
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x03] withString:@"▤"]; // color
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x02] withString:@"▥"]; // bold
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x16] withString:@"▧"]; // italics
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x1F] withString:@"▨"]; // underline
 	
 	return s;
 }
@@ -612,10 +612,10 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSString *s = self;
 	
-	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithFormat:@"%c", (UniChar)0x03]]; // color
-	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithFormat:@"%c", (UniChar)0x02]]; // bold
-	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithFormat:@"%c", (UniChar)0x16]]; // italics
-	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithFormat:@"%c", (UniChar)0x1F]]; // underline
+	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithUniChar:(UniChar)0x03]]; // color
+	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithUniChar:(UniChar)0x02]]; // bold
+	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithUniChar:(UniChar)0x16]]; // italics
+	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithUniChar:(UniChar)0x1F]]; // underline
 	
 	return s;
 }
@@ -625,6 +625,31 @@ BOOL isUnicharDigit(unichar c)
 	NSInteger stringPos = [self stringPosition:@":"];
 	return [((stringPos > 0) ? [self safeSubstringToIndex:stringPos] : self) trim];
 }
+
+@end
+
+@implementation NSString (NSStringNumberHelper)
+
++ (NSString *)stringWithChar:(char)value { return [NSString stringWithFormat:@"%c", value]; }
++ (NSString *)stringWithUniChar:(UniChar)value  { return [NSString stringWithFormat:@"%C", value]; }
++ (NSString *)stringWithUnsignedChar:(unsigned char)value  { return [NSString stringWithFormat:@"%c", value]; }
+
++ (NSString *)stringWithShort:(short)value  { return [NSString stringWithFormat:@"%hi", value]; }
++ (NSString *)stringWithUnsignedShort:(unsigned short)value  { return [NSString stringWithFormat:@"%hu", value]; }
+
++ (NSString *)stringWithInt:(int)value  { return [NSString stringWithFormat:@"%i", value]; }
++ (NSString *)stringWithInteger:(NSInteger)value  { return [NSString stringWithFormat:@"%i", value]; }
++ (NSString *)stringWithUnsignedInt:(unsigned int)value  { return [NSString stringWithFormat:@"%u", value]; }
++ (NSString *)stringWithUnsignedInteger:(NSUInteger)value  { return [NSString stringWithFormat:@"%u", value]; }
+
++ (NSString *)stringWithLong:(long)value  { return [NSString stringWithFormat:@"%ld", value]; }
++ (NSString *)stringWithUnsignedLong:(unsigned long)value  { return [NSString stringWithFormat:@"%lu", value]; }
+
++ (NSString *)stringWithLongLong:(long long)value  { return [NSString stringWithFormat:@"%qi", value]; }
++ (NSString *)stringWithUnsignedLongLong:(unsigned long long)value  { return [NSString stringWithFormat:@"%qu", value]; }
+
++ (NSString *)stringWithFloat:(float)value  { return [NSString stringWithFormat:@"%f", value]; }
++ (NSString *)stringWithDouble:(double)value  { return [NSString stringWithFormat:@"%d", value]; }
 
 @end
 
