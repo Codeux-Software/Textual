@@ -9,7 +9,7 @@
 @synthesize params;
 @synthesize completeColon;
 
-- (id)initWithCommand:(NSString*)aCommand
+- (id)initWithCommand:(NSString *)aCommand
 {
 	if ((self = [super init])) {
 		command = [[aCommand uppercaseString] retain];
@@ -26,12 +26,12 @@
 	[super dealloc];
 }
 
-- (void)addParameter:(NSString*)parameter
+- (void)addParameter:(NSString *)parameter
 {
 	[params addObject:parameter];
 }
 
-- (NSString*)string
+- (NSString *)string
 {
 	if (!string) {
 		BOOL forceCompleteColon = NO;
@@ -52,7 +52,7 @@
 			completeColon = NO;
 		}
 		
-		NSMutableString* d = [NSMutableString new];
+		NSMutableString *d = [NSMutableString new];
 		
 		[d appendString:command];
 		
@@ -60,14 +60,14 @@
 		
 		if (count > 0) {
 			for (NSInteger i = 0; i < count-1; ++i) {
-				NSString* s = [params safeObjectAtIndex:i];
+				NSString *s = [params safeObjectAtIndex:i];
 				
 				[d appendString:@" "];
 				[d appendString:s];
 			}
 			
 			[d appendString:@" "];
-			NSString* s = [params safeObjectAtIndex:count-1];
+			NSString *s = [params safeObjectAtIndex:count-1];
 			NSInteger len = s.length;
 			BOOL firstColonOrSpace = NO;
 			if (len > 0) {

@@ -6,7 +6,7 @@
 
 @implementation NSWindow (NSWindowHelper)
 
-- (void)centerOfWindow:(NSWindow*)window
+- (void)centerOfWindow:(NSWindow *)window
 {
 	NSPoint p = NSRectCenter(window.frame);
 	NSRect frame = self.frame;
@@ -14,7 +14,7 @@
 	p.x -= size.width/2;
 	p.y -= size.height/2;
 	
-	NSScreen* screen = window.screen;
+	NSScreen *screen = window.screen;
 	if (screen) {
 		NSRect screenFrame = [screen visibleFrame];
 		NSRect r = frame;
@@ -31,7 +31,7 @@
 // NSWindow#center does this, but it places it higher vertically
 - (void)exactlyCenterWindow
 {
-	NSScreen* screen = [NSScreen mainScreen];
+	NSScreen *screen = [NSScreen mainScreen];
 	
 	if (screen) {
 		NSRect rect = [screen visibleFrame];

@@ -9,7 +9,7 @@
 #define txCFStreamErrorDomainSSL @"kCFStreamErrorDomainSSL"
 
 @interface TCPClient (Private)
-- (BOOL)checkTag:(AsyncSocket*)sock;
+- (BOOL)checkTag:(AsyncSocket *)sock;
 - (void)waitRead;
 @end
 
@@ -56,7 +56,7 @@
 	return self;
 }
 
-- (id)initWithExistingConnection:(AsyncSocket*)socket
+- (id)initWithExistingConnection:(AsyncSocket *)socket
 {
 	[self init];
 	
@@ -116,14 +116,14 @@
 	sendQueueSize = 0;
 }
 
-- (NSData*)read
+- (NSData *)read
 {
-	NSData* result = [buffer autorelease];
+	NSData *result = [buffer autorelease];
 	buffer = [NSMutableData new];
 	return result;
 }
 
-- (NSData*)readLine
+- (NSData *)readLine
 {
 	NSInteger len = [buffer length];
 	if (!len) return nil;
@@ -140,7 +140,7 @@
 		}
 	}
 	
-	NSMutableData* result = [buffer autorelease];
+	NSMutableData *result = [buffer autorelease];
 	
 	++p;
 	if (p < bytes + len) {
@@ -153,7 +153,7 @@
 	return result;
 }
 
-- (void)write:(NSData*)data
+- (void)write:(NSData *)data
 {
 	if (![self connected]) return;
 	
@@ -170,7 +170,7 @@
 	return [conn isConnected];
 }
 
-- (BOOL)onSocketWillConnect:(AsyncSocket*)sender
+- (BOOL)onSocketWillConnect:(AsyncSocket *)sender
 {
 	if (useSystemSocks) {
 		[conn useSystemSocksProxy];
@@ -194,12 +194,12 @@
 	}
 }
 
-- (void)onSocket:(AsyncSocket*)sender willDisconnectWithError:(NSError*)error
+- (void)onSocket:(AsyncSocket *)sender willDisconnectWithError:(NSError *)error
 {
 	if (![self checkTag:sender]) return;
 	if (!error) return;
 	
-	NSString* msg = nil;
+	NSString *msg = nil;
 	
 	if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
 		msg = [AsyncSocket posixErrorStringFromErrno:[error code]];
@@ -244,7 +244,7 @@
 	}
 }
 
-- (void)onSocketDidDisconnect:(AsyncSocket*)sender
+- (void)onSocketDidDisconnect:(AsyncSocket *)sender
 {
 	if (![self checkTag:sender]) return;
 	
@@ -268,7 +268,7 @@
 	[self waitRead];
 }
 
-- (void)onSocket:(AsyncSocket*)sender didWriteDataWithTag:(long)aTag
+- (void)onSocket:(AsyncSocket *)sender didWriteDataWithTag:(long)aTag
 {
 	if (![self checkTag:sender]) return;
 	
@@ -279,7 +279,7 @@
 	}
 }
 
-- (BOOL)checkTag:(AsyncSocket*)sock
+- (BOOL)checkTag:(AsyncSocket *)sock
 {
 	return tag == [sock userData];
 }

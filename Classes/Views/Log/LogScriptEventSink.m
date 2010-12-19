@@ -42,9 +42,9 @@
 	return YES;
 }
 
-+ (NSString*)webScriptNameForSelector:(SEL)sel
++ (NSString *)webScriptNameForSelector:(SEL)sel
 {
-	NSString* s = NSStringFromSelector(sel);
+	NSString *s = NSStringFromSelector(sel);
 	if ([s hasSuffix:@":"]) {
 		return [s safeSubstringToIndex:s.length - 1];
 	}
@@ -89,27 +89,27 @@
 	return res;
 }
 
-- (void)setUrl:(NSString*)s
+- (void)setUrl:(NSString *)s
 {
 	[policy setUrl:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)setAddr:(NSString*)s
+- (void)setAddr:(NSString *)s
 {
 	[policy setAddr:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)setNick:(NSString*)s
+- (void)setNick:(NSString *)s
 {
 	[policy setNick:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)setChan:(NSString*)s
+- (void)setChan:(NSString *)s
 {
 	[policy setChan:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)print:(NSString*)s
+- (void)print:(NSString *)s
 {
 }
 

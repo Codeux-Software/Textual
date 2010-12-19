@@ -121,5 +121,5 @@
 #import "NSBundleHelper.h"
 #import "TextualPluginItem.h"
 #import "MenuController.h"
-#import "NickCompletinStatus.h"
+#import "NickCompletionStatus.h"
 #import "MasterController.h"

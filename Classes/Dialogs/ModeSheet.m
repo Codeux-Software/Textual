@@ -128,7 +128,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
 		[delegate modeSheetWillClose:self];

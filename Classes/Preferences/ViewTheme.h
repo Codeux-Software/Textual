@@ -4,26 +4,26 @@
 
 @interface ViewTheme : NSObject
 {
-	NSURL* baseUrl;
-	NSString* path;
-	NSString* name;
-	OtherTheme* other;
-	FileWithContent* core_js;
+	NSURL *baseUrl;
+	NSString *path;
+	NSString *name;
+	OtherTheme *other;
+	FileWithContent *core_js;
 }
 
 @property (nonatomic, retain) NSURL *baseUrl;
 @property (nonatomic, retain) NSString *path;
-@property (nonatomic, retain, getter=name, setter=setName:) NSString* name;
-@property (nonatomic, readonly) OtherTheme* other;
-@property (nonatomic, readonly) FileWithContent* core_js;
+@property (nonatomic, retain, getter=name, setter=setName:) NSString *name;
+@property (nonatomic, readonly) OtherTheme *other;
+@property (nonatomic, readonly) FileWithContent *core_js;
 
 - (void)reload;
 + (void)createUserDirectory:(BOOL)force_reset;
 
 - (void)validateFilePathExistanceAndReload:(BOOL)reload;
 
-+ (NSString*)buildResourceFileName:(NSString*)name;
-+ (NSString*)buildUserFileName:(NSString*)name;
-+ (NSArray*)extractFileName:(NSString*)source;
++ (NSString *)buildResourceFileName:(NSString *)name;
++ (NSString *)buildUserFileName:(NSString *)name;
++ (NSArray *)extractFileName:(NSString *)source;
 
 @end

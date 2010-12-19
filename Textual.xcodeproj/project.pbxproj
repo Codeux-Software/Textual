@@ -125,7 +125,7 @@
 		4C31AD1212B5E74700088C31 /* DDInvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFF3BD411CC715A00FF2930 /* DDInvocationGrabber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1312B5E74700088C31 /* IRCClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11611737F660044E7A1 /* IRCClientConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1412B5E74700088C31 /* UnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10811737F660044E7A1 /* UnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31AD1512B5E74700088C31 /* NickCompletinStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C31AD1512B5E74700088C31 /* NickCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C811737F660044E7A1 /* NickCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1612B5E74700088C31 /* InputHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C13B11737F660044E7A1 /* InputHistory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1712B5E74700088C31 /* HostResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C13511737F660044E7A1 /* HostResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1812B5E74700088C31 /* NSWindowHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10411737F660044E7A1 /* NSWindowHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -151,6 +151,7 @@
 		4C31AD2C12B5E74700088C31 /* LogLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C18511737F660044E7A1 /* LogLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
+		4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C81B9AC12187F83007E9EE2 /* rainbow.png */; };
@@ -184,7 +185,6 @@
 		4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* MasterController.m */; };
 		4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
 		4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
-		4CA9457D11E1AFBA00D36367 /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */; };
 		4CA9457E11E1AFBA00D36367 /* ChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelSheet.m */; };
 		4CA9458311E1AFBA00D36367 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D711737F660044E7A1 /* ModeSheet.m */; };
 		4CA9458411E1AFBA00D36367 /* NickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D911737F660044E7A1 /* NickSheet.m */; };
@@ -487,8 +487,8 @@
 		78A8C0C511737F660044E7A1 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
 		78A8C0C611737F660044E7A1 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
 		78A8C0C711737F660044E7A1 /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
-		78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickCompletinStatus.h; sourceTree = "<group>"; };
-		78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickCompletinStatus.m; sourceTree = "<group>"; };
+		78A8C0C811737F660044E7A1 /* NickCompletionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickCompletionStatus.h; sourceTree = "<group>"; };
+		78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickCompletionStatus.m; sourceTree = "<group>"; };
 		78A8C0CB11737F660044E7A1 /* ChannelSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelSheet.h; sourceTree = "<group>"; };
 		78A8C0CC11737F660044E7A1 /* ChannelSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelSheet.m; sourceTree = "<group>"; };
 		78A8C0D611737F660044E7A1 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeSheet.h; sourceTree = "<group>"; };
@@ -876,8 +876,8 @@
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
 				78A8C0C411737F660044E7A1 /* GrowlController.h */,
 				78A8C0C511737F660044E7A1 /* GrowlController.m */,
-				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
-				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
+				78A8C0C811737F660044E7A1 /* NickCompletionStatus.h */,
+				78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */,
 				4CC5AC7F119C92790046BC5C /* TextualApplication.h */,
 			);
 			name = Controllers;
@@ -1237,7 +1237,7 @@
 				4C31AD1212B5E74700088C31 /* DDInvocationGrabber.h in Headers */,
 				4C31AD1312B5E74700088C31 /* IRCClientConfig.h in Headers */,
 				4C31AD1412B5E74700088C31 /* UnicodeHelper.h in Headers */,
-				4C31AD1512B5E74700088C31 /* NickCompletinStatus.h in Headers */,
+				4C31AD1512B5E74700088C31 /* NickCompletionStatus.h in Headers */,
 				4C31AD1612B5E74700088C31 /* InputHistory.h in Headers */,
 				4C31AD1712B5E74700088C31 /* HostResolver.h in Headers */,
 				4C31AD1812B5E74700088C31 /* NSWindowHelper.h in Headers */,
@@ -1445,12 +1445,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */,
 				4C8D6F7012A36BA700738B2C /* ValidateReceipt.m in Sources */,
 				4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */,
 				4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */,
 				4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */,
 				4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */,
-				4CA9457D11E1AFBA00D36367 /* NickCompletinStatus.m in Sources */,
 				4CA9457E11E1AFBA00D36367 /* ChannelSheet.m in Sources */,
 				4CA9458311E1AFBA00D36367 /* ModeSheet.m in Sources */,
 				4CA9458411E1AFBA00D36367 /* NickSheet.m in Sources */,

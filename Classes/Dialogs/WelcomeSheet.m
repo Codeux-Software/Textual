@@ -53,10 +53,10 @@
 
 - (void)onOK:(id)sender
 {
-	NSMutableSet* set = [NSMutableSet set];
-	NSMutableArray* chans = [NSMutableArray array];
+	NSMutableSet *set = [NSMutableSet set];
+	NSMutableArray *chans = [NSMutableArray array];
 	
-	for (NSString* s in channels) {
+	for (NSString *s in channels) {
 		if (s.length > 0) {
 			if (![s isChannelName]) {
 				s = [@"#" stringByAppendingString:s];
@@ -69,9 +69,9 @@
 		}
 	}
 	
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	[dic setObject:nickText.stringValue forKey:@"nick"];
-	[dic setObject:hostCombo.stringValue forKey:@"host"];
+	[dic setObject:[hostCombo.stringValue cleanedServerHostmask] forKey:@"host"];
 	[dic setObject:chans forKey:@"channels"];
 	[dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
 	
@@ -111,7 +111,7 @@
 	}
 }
 
-- (void)controlTextDidChange:(NSNotification*)note
+- (void)controlTextDidChange:(NSNotification *)note
 {
 	[self updateOKButton];
 }
@@ -123,19 +123,19 @@
 
 - (void)updateOKButton
 {
-	NSString* nick = nickText.stringValue;
-	NSString* host = hostCombo.stringValue;
+	NSString *nick = nickText.stringValue;
+	NSString *host = hostCombo.stringValue;
 	[okButton setEnabled:nick.length > 0 && host.length > 0];
 }
 
 #pragma mark -
 #pragma mark NSTableViwe Delegate
 
-- (void)textDidEndEditing:(NSNotification*)note
+- (void)textDidEndEditing:(NSNotification *)note
 {
 	NSInteger n = [channelTable editedRow];
 	if (n >= 0) {
-		NSString* s = [[[[[note object] textStorage] string] copy] autorelease];
+		NSString *s = [[[[[note object] textStorage] string] copy] autorelease];
 		[channels replaceObjectAtIndex:n withObject:s];
 		[channelTable reloadData];
 		[channelTable selectItemAtIndex:n];
@@ -161,7 +161,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(WelcomeSheetWillClose:)]) {
 		[delegate WelcomeSheetWillClose:self];

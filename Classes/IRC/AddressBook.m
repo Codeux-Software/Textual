@@ -33,7 +33,7 @@
 	return self;
 }
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ([self init]) {
 		cid = TXRandomThousandNumber();
@@ -103,9 +103,9 @@
 	}
 }
 
-- (NSDictionary*)dictionaryValue
+- (NSDictionary *)dictionaryValue
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setInt:cid forKey:@"cid"];
 	
@@ -124,7 +124,7 @@
 	return dic;
 }
 
-- (BOOL)checkIgnore:(NSString*)thehost
+- (BOOL)checkIgnore:(NSString *)thehost
 {
 	if (hostmaskRegex) {
 		if ([thehost isMatchedByRegex:[hostmaskRegex lowercaseString]]) {
@@ -135,7 +135,7 @@
 	return NO;
 }
 
-- (NSString*)trackingNickname
+- (NSString *)trackingNickname
 {
 	return [hostmask nicknameFromHostmask];
 }

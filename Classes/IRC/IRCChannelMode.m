@@ -19,7 +19,7 @@
 	return self;
 }
 
-- (id)initWithChannelMode:(IRCChannelMode*)other
+- (id)initWithChannelMode:(IRCChannelMode *)other
 {
 	isupport = [other.isupport retain];
 	modeIndexes = other.modeIndexes;
@@ -48,12 +48,12 @@
 	[modeIndexes removeAllObjects];
 }
 
-- (NSArray*)update:(NSString*)str
+- (NSArray *)update:(NSString *)str
 {
-	NSArray* ary = [isupport parseMode:str];
-	NSArray* badObjects = [NSArray arrayWithObjects:@"q", @"a", @"o", @"h", @"v", @"b", @"e", nil];
+	NSArray *ary = [isupport parseMode:str];
+	NSArray *badObjects = [NSArray arrayWithObjects:@"q", @"a", @"o", @"h", @"v", @"b", @"e", nil];
 	
-	for (IRCModeInfo* h in ary) {
+	for (IRCModeInfo *h in ary) {
 		if (h.op) continue;
 		    
 		NSString *modec = [NSString stringWithFormat:@"%c", h.mode];
@@ -76,10 +76,10 @@
 	return ary;
 }
 
-- (NSString*)getChangeCommand:(IRCChannelMode*)mode
+- (NSString *)getChangeCommand:(IRCChannelMode *)mode
 {
-	NSMutableString* str = [NSMutableString string];
-	NSMutableString* trail = [NSMutableString string];
+	NSMutableString *str = [NSMutableString string];
+	NSMutableString *trail = [NSMutableString string];
 	
 	for (IRCModeInfo *h in mode.allModes) {
 		if (h.plus == YES) {
@@ -108,14 +108,14 @@
 	return [[str stringByAppendingString:trail] trim];
 }
 
-- (BOOL)modeIsDefined:(NSString*)mode
+- (BOOL)modeIsDefined:(NSString *)mode
 {
 	NSString *objk = [modeIndexes objectForKey:mode];
 	
 	return BOOLReverseValue((objk == nil));
 }
 
-- (IRCModeInfo*)modeInfoFor:(NSString*)mode
+- (IRCModeInfo *)modeInfoFor:(NSString *)mode
 {
 	BOOL objk = [self modeIsDefined:mode];
 	
@@ -129,10 +129,10 @@
 	return [allModes safeObjectAtIndex:[[modeIndexes objectForKey:mode] integerValue]];
 }
 
-- (NSString*)format:(BOOL)maskK
+- (NSString *)format:(BOOL)maskK
 {
-	NSMutableString* str = [NSMutableString string];
-	NSMutableString* trail = [NSMutableString string];
+	NSMutableString *str = [NSMutableString string];
+	NSMutableString *trail = [NSMutableString string];
 	
 	[str appendString:@"+"];
 	
@@ -153,12 +153,12 @@
 	return [[str stringByAppendingString:trail] trim];
 }
 
-- (NSString*)string
+- (NSString *)string
 {
 	return [self format:NO];
 }
 
-- (NSString*)titleString
+- (NSString *)titleString
 {
 	return [self format:YES];
 }

@@ -20,19 +20,19 @@ typedef enum {
 
 @interface GrowlController : NSObject
 {
-	IRCWorld* owner;
-	TinyGrowlClient* growl;
+	IRCWorld *owner;
+	TinyGrowlClient *growl;
 	id lastClickedContext;
 	CFAbsoluteTime lastClickedTime;
 	BOOL registered;
 }
 
-@property (nonatomic, assign) IRCWorld* owner;
-@property (nonatomic, retain) TinyGrowlClient* growl;
+@property (nonatomic, assign) IRCWorld *owner;
+@property (nonatomic, retain) TinyGrowlClient *growl;
 @property (nonatomic, retain) id lastClickedContext;
 @property CFAbsoluteTime lastClickedTime;
 @property (nonatomic, assign) BOOL registered;
 
 - (void)registerToGrowl;
-- (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
+- (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
 @end

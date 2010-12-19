@@ -21,9 +21,9 @@
 - (void)populateData;
 {			
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+	NSArray *resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 	
-	for (NSString* file in resourceFiles) {
+	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".scpt"]) {
 			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
 			

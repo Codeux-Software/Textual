@@ -11,7 +11,7 @@
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 {
 	NSInteger uid;
-	LogController* log;
+	LogController *log;
 	BOOL isKeyword;
 	BOOL isUnread;
 	BOOL isNewTalk;
@@ -22,7 +22,7 @@
 }
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) LogController* log;
+@property (nonatomic, retain) LogController *log;
 @property (nonatomic, assign) BOOL isKeyword;
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, assign) BOOL isNewTalk;
@@ -30,16 +30,16 @@
 @property (nonatomic, assign) NSInteger unreadCount;
 @property (nonatomic, readonly) BOOL isActive;
 @property (nonatomic, readonly) BOOL isClient;
-@property (nonatomic, readonly) IRCClient* client;
-@property (nonatomic, readonly) NSString* label;
-@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) IRCClient *client;
+@property (nonatomic, readonly) NSString *label;
+@property (nonatomic, readonly) NSString *name;
 @property (nonatomic, retain) InputHistory *inputHistory;
 @property (nonatomic, retain) NSString *currentInputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;
-- (IRCTreeItem*)childAtIndex:(NSInteger)index;
+- (IRCTreeItem *)childAtIndex:(NSInteger)index;
 
-- (void)resetLogView:(IRCWorld*)world withChannel:(IRCChannel*)c andClient:(IRCClient*)u;
+- (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u;
 
 @end

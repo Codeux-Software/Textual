@@ -6,8 +6,8 @@
 
 @interface LogScriptEventSink : NSObject
 {
-	LogController* owner;
-	LogPolicy* policy;
+	LogController *owner;
+	LogPolicy *policy;
 	
 	NSInteger x;
 	NSInteger y;

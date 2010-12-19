@@ -29,7 +29,7 @@
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder *)coder
 {
 	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
@@ -101,8 +101,8 @@
 	if (inverted == value) return;
 	inverted = value;
 	
-	NSView* a = [[[[self subviews] safeObjectAtIndex:0] retain] autorelease];
-	NSView* b = [[[[self subviews] safeObjectAtIndex:1] retain] autorelease];
+	NSView *a = [[[[self subviews] safeObjectAtIndex:0] retain] autorelease];
+	NSView *b = [[[[self subviews] safeObjectAtIndex:1] retain] autorelease];
 	
 	[a removeFromSuperviewWithoutNeedingDisplay];
 	[b removeFromSuperviewWithoutNeedingDisplay];
@@ -162,7 +162,7 @@
 	}
 }
 
-- (void)mouseDown:(NSEvent*)e
+- (void)mouseDown:(NSEvent *)e
 {
 	[super mouseDown:e];
 	[self updatePosition];
@@ -185,8 +185,8 @@
 	NSInteger height = size.height;
 	NSInteger w = myDividerThickness;
 	
-	NSView* fixedView = [[self subviews] safeObjectAtIndex:fixedViewIndex];
-	NSView* flyingView = [[self subviews] safeObjectAtIndex:fixedViewIndex ? 0 : 1];
+	NSView *fixedView = [[self subviews] safeObjectAtIndex:fixedViewIndex];
+	NSView *flyingView = [[self subviews] safeObjectAtIndex:fixedViewIndex ? 0 : 1];
 	NSRect fixedFrame = fixedView.frame;
 	NSRect flyingFrame = flyingView.frame;
 
@@ -236,7 +236,7 @@
 
 - (void)updatePosition
 {
-	NSView* view =  [[self subviews] safeObjectAtIndex:fixedViewIndex];
+	NSView *view =  [[self subviews] safeObjectAtIndex:fixedViewIndex];
 	NSSize size = view.frame.size;
 	position = [self isVertical] ? size.width : size.height;
 }

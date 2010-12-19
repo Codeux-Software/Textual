@@ -4,23 +4,23 @@
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
 {
-	IRCISupportInfo* isupport;
+	IRCISupportInfo *isupport;
 	NSMutableArray *allModes;
 	NSMutableDictionary *modeIndexes;
 }
 
-@property (nonatomic, retain) IRCISupportInfo* isupport;
+@property (nonatomic, retain) IRCISupportInfo *isupport;
 @property (nonatomic, readonly) NSMutableArray *allModes;
 @property (nonatomic, readonly) NSMutableDictionary *modeIndexes;
 
 - (void)clear;
-- (NSArray*)update:(NSString*)str;
+- (NSArray *)update:(NSString *)str;
 
-- (NSString*)getChangeCommand:(IRCChannelMode*)mode;
+- (NSString *)getChangeCommand:(IRCChannelMode *)mode;
 
-- (NSString*)string;
-- (NSString*)titleString;
+- (NSString *)string;
+- (NSString *)titleString;
 
-- (BOOL)modeIsDefined:(NSString*)mode;
-- (IRCModeInfo*)modeInfoFor:(NSString*)mode;
+- (BOOL)modeIsDefined:(NSString *)mode;
+- (IRCModeInfo *)modeInfoFor:(NSString *)mode;
 @end

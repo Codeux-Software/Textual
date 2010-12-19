@@ -19,15 +19,15 @@
 	[self scrollRowToVisible:index];
 }
 
-- (void)selectRows:(NSArray*)indices
+- (void)selectRows:(NSArray *)indices
 {
 	[self selectRows:indices extendSelection:NO];
 }
 
-- (void)selectRows:(NSArray*)indices extendSelection:(BOOL)extend
+- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend
 {
-	NSMutableIndexSet* set = [NSMutableIndexSet indexSet];
-	for (NSNumber* n in indices) {
+	NSMutableIndexSet *set = [NSMutableIndexSet indexSet];
+	for (NSNumber *n in indices) {
 		[set addIndex:[n integerValue]];
 	}
 	
@@ -47,9 +47,9 @@
 	[super rightMouseDown:e];
 }
 
-- (void)setFont:(NSFont*)font
+- (void)setFont:(NSFont *)font
 {
-	for (NSTableColumn* column in [self tableColumns]) {
+	for (NSTableColumn *column in [self tableColumns]) {
 		[[column dataCell] setFont:font];
 	}
 	
@@ -60,7 +60,7 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (NSFont*)font
+- (NSFont *)font
 {
 	return [[[[self tableColumns] safeObjectAtIndex:0] dataCell] font];
 }
@@ -80,7 +80,7 @@
 				break;
 			case 126:	// up
 			{
-				NSIndexSet* set = [self selectedRowIndexes];
+				NSIndexSet *set = [self selectedRowIndexes];
 				if ([set count] > 0 && [set containsIndex:0]) {
 					if ([keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
 						[keyDelegate listViewMoveUp];
@@ -104,7 +104,7 @@
 	[super keyDown:e];
 }
 
-- (void)textDidEndEditing:(NSNotification*)note
+- (void)textDidEndEditing:(NSNotification *)note
 {
 	if ([textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
 		[textDelegate textDidEndEditing:note];

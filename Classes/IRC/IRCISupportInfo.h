@@ -10,16 +10,16 @@
 	BOOL plus;
 	BOOL op;
 	BOOL simpleMode;
-	NSString* param;
+	NSString *param;
 }
 
 @property (nonatomic, assign) unsigned char mode;
 @property (nonatomic, assign) BOOL plus;
 @property (nonatomic, assign) BOOL op;
 @property (nonatomic, assign) BOOL simpleMode;
-@property (nonatomic, retain) NSString* param;
+@property (nonatomic, retain) NSString *param;
 
-+ (IRCModeInfo*)modeInfo;
++ (IRCModeInfo *)modeInfo;
 @end
 
 @interface IRCISupportInfo : NSObject
@@ -34,7 +34,7 @@
 @property (nonatomic, readonly) NSInteger modesCount;
 
 - (void)reset;
-- (BOOL)update:(NSString*)s;
-- (NSArray*)parseMode:(NSString*)s;
-- (IRCModeInfo*)createMode:(NSString*)mode;
+- (BOOL)update:(NSString *)s;
+- (NSArray *)parseMode:(NSString *)s;
+- (IRCModeInfo *)createMode:(NSString *)mode;
 @end

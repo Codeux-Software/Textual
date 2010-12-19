@@ -22,7 +22,7 @@
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder *)coder
 {
 	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
@@ -83,8 +83,8 @@
 	topLineColor = [theme.memberListSelTopLineColor retain];
 	bottomLineColor = [theme.memberListSelBottomLineColor retain];
 	
-	NSColor* start = theme.memberListSelTopColor;
-	NSColor* end = theme.memberListSelBottomColor;
+	NSColor *start = theme.memberListSelTopColor;
+	NSColor *end = theme.memberListSelBottomColor;
 	if (start && end) {
 		gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 	} else {
@@ -92,7 +92,7 @@
 	}
 }
 
-- (NSColor*)_highlightColorForCell:(NSCell*)cell
+- (NSColor *)_highlightColorForCell:(NSCell *)cell
 {
 	return nil;
 }
@@ -153,7 +153,7 @@
 	}
 }
 
-- (NSArray*)draggedFiles:(id <NSDraggingInfo>)sender
+- (NSArray *)draggedFiles:(id <NSDraggingInfo>)sender
 {
 	return [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
 }
@@ -165,7 +165,7 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-	NSArray* files = [self draggedFiles:sender];
+	NSArray *files = [self draggedFiles:sender];
 	if ([files count] > 0 && [self draggedRow:sender] >= 0) {
 		[self drawDraggingPoisition:sender on:YES];
 		return NSDragOperationCopy;
@@ -187,13 +187,13 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSArray* files = [self draggedFiles:sender];
+	NSArray *files = [self draggedFiles:sender];
 	return [files count] > 0 && [self draggedRow:sender] >= 0;
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSArray* files = [self draggedFiles:sender];
+	NSArray *files = [self draggedFiles:sender];
 	if ([files count] > 0) {
 		NSInteger row = [self draggedRow:sender];
 		if (row >= 0) {

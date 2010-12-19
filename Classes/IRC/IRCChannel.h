@@ -6,13 +6,13 @@
 
 @interface IRCChannel : IRCTreeItem
 {
-	IRCClient* client;
-	IRCChannelConfig* config;
+	IRCClient *client;
+	IRCChannelConfig *config;
 	
-	IRCChannelMode* mode;
-	NSMutableArray* members;
-	NSString* topic;
-	NSString* storedTopic;
+	IRCChannelMode *mode;
+	NSMutableArray *members;
+	NSString *topic;
+	NSString *storedTopic;
 	BOOL isActive;
 	BOOL isOp;
 	BOOL isHalfOp;
@@ -20,20 +20,20 @@
 	BOOL isNamesInit;
 	BOOL isWhoInit;
 	
-	FileLogger* logFile;
-	NSString* logDate;
+	FileLogger *logFile;
+	NSString *logDate;
 	
 }
 
-@property (nonatomic, assign) IRCClient* client;
-@property (nonatomic, readonly) IRCChannelConfig* config;
-@property (nonatomic, assign) NSString* name;
-@property (nonatomic, readonly) NSString* password;
-@property (nonatomic, readonly) IRCChannelMode* mode;
-@property (nonatomic, readonly) NSMutableArray* members;
-@property (nonatomic, readonly) NSString* channelTypeString;
-@property (nonatomic, retain) NSString* topic;
-@property (nonatomic, retain) NSString* storedTopic;
+@property (nonatomic, assign) IRCClient *client;
+@property (nonatomic, readonly) IRCChannelConfig *config;
+@property (nonatomic, assign) NSString *name;
+@property (nonatomic, readonly) NSString *password;
+@property (nonatomic, readonly) IRCChannelMode *mode;
+@property (nonatomic, readonly) NSMutableArray *members;
+@property (nonatomic, readonly) NSString *channelTypeString;
+@property (nonatomic, retain) NSString *topic;
+@property (nonatomic, retain) NSString *storedTopic;
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL isOp;
 @property (nonatomic, assign) BOOL isHalfOp;
@@ -42,12 +42,12 @@
 @property (nonatomic, assign) BOOL isWhoInit;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
-@property (nonatomic, retain) FileLogger* logFile;
-@property (nonatomic, retain) NSString* logDate;
+@property (nonatomic, retain) FileLogger *logFile;
+@property (nonatomic, retain) NSString *logDate;
 
-- (void)setup:(IRCChannelConfig*)seed;
-- (void)updateConfig:(IRCChannelConfig*)seed;
-- (NSMutableDictionary*)dictionaryValue;
+- (void)setup:(IRCChannelConfig *)seed;
+- (void)updateConfig:(IRCChannelConfig *)seed;
+- (NSMutableDictionary *)dictionaryValue;
 
 - (void)terminate;
 - (void)closeDialogs;
@@ -55,22 +55,22 @@
 
 - (void)activate;
 - (void)deactivate;
-- (void)detectOutgoingConversation:(NSString*)text;
+- (void)detectOutgoingConversation:(NSString *)text;
 
-- (BOOL)print:(LogLine*)line;
-- (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML;
+- (BOOL)print:(LogLine *)line;
+- (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML;
 
-- (void)addMember:(IRCUser*)user;
-- (void)addMember:(IRCUser*)user reload:(BOOL)reload;
-- (void)removeMember:(NSString*)nick;
-- (void)removeMember:(NSString*)nick reload:(BOOL)reload;
-- (void)renameMember:(NSString*)fromNick to:(NSString*)toNick;
-- (void)updateOrAddMember:(IRCUser*)user;
-- (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value;
+- (void)addMember:(IRCUser *)user;
+- (void)addMember:(IRCUser *)user reload:(BOOL)reload;
+- (void)removeMember:(NSString *)nick;
+- (void)removeMember:(NSString *)nick reload:(BOOL)reload;
+- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick;
+- (void)updateOrAddMember:(IRCUser *)user;
+- (void)changeMember:(NSString *)nick mode:(char)mode value:(BOOL)value;
 - (void)clearMembers;
-- (NSInteger)indexOfMember:(NSString*)nick;
-- (IRCUser*)memberAtIndex:(NSInteger)index;
-- (IRCUser*)findMember:(NSString*)nick;
+- (NSInteger)indexOfMember:(NSString *)nick;
+- (IRCUser *)memberAtIndex:(NSInteger)index;
+- (IRCUser *)findMember:(NSString *)nick;
 - (NSInteger)numberOfMembers;
 - (void)reloadMemberList;
 @end

@@ -4,23 +4,23 @@
 
 @interface InviteSheet : SheetBase
 {
-	NSArray* nicks;
+	NSArray *nicks;
 	NSInteger uid;
 	
-	IBOutlet NSTextField* titleLabel;
-	IBOutlet NSPopUpButton* channelPopup;
+	IBOutlet NSTextField *titleLabel;
+	IBOutlet NSPopUpButton *channelPopup;
 }
 
-@property (nonatomic, retain) NSArray* nicks;
+@property (nonatomic, retain) NSArray *nicks;
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) NSTextField* titleLabel;
-@property (nonatomic, retain) NSPopUpButton* channelPopup;
+@property (nonatomic, retain) NSTextField *titleLabel;
+@property (nonatomic, retain) NSPopUpButton *channelPopup;
 
-- (void)startWithChannels:(NSArray*)channels;
+- (void)startWithChannels:(NSArray *)channels;
 - (void)invite:(id)sender;
 @end
 
 @interface NSObject (InviteSheetDelegate)
-- (void)inviteSheet:(InviteSheet*)sender onSelectChannel:(NSString*)channelName;
-- (void)inviteSheetWillClose:(InviteSheet*)sender;
+- (void)inviteSheet:(InviteSheet *)sender onSelectChannel:(NSString *)channelName;
+- (void)inviteSheetWillClose:(InviteSheet *)sender;
 @end

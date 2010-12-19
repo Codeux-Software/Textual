@@ -2,5 +2,5 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface ImageURLParser : NSObject
-+ (NSString*)imageURLForURL:(NSString*)url;
++ (NSString *)imageURLForURL:(NSString *)url;
 @end

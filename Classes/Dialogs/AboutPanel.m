@@ -31,7 +31,7 @@
 	[self.window makeKeyAndOrderFront:nil];
 }
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
 		[delegate aboutPanelWillClose:self];

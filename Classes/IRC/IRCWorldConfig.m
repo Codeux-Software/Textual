@@ -15,14 +15,14 @@
 	return self;
 }
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)initWithDictionary:(NSDictionary *)dic
 {
 	[self init];
 	
-	NSArray* ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
+	NSArray *ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
 	
-	for (NSDictionary* e in ary) {
-		IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
+	for (NSDictionary *e in ary) {
+		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
 		[clients addObject:c];
 	}
 	
@@ -35,12 +35,12 @@
 	[super dealloc];
 }
 
-- (NSMutableDictionary*)dictionaryValue
+- (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	NSMutableArray* clientAry = [NSMutableArray array];
-	for (IRCClientConfig* e in clients) {
+	NSMutableArray *clientAry = [NSMutableArray array];
+	for (IRCClientConfig *e in clients) {
 		[clientAry addObject:[e dictionaryValue]];
 	}
 	[dic setObject:clientAry forKey:@"clients"];

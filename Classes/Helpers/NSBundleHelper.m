@@ -5,10 +5,10 @@
 
 @implementation NSBundle (NSBundleHelper)
 
-+ (void)sendUserInputDataToBundles:(IRCWorld*)world
-						   message:(NSString*)message
-						   command:(NSString*)command
-							client:(IRCClient*)client
++ (void)sendUserInputDataToBundles:(IRCWorld *)world
+						   message:(NSString *)message
+						   command:(NSString *)command
+							client:(IRCClient *)client
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -25,9 +25,9 @@
 	[pool drain];
 }
 
-+ (void)sendServerInputDataToBundles:(IRCWorld*)world
-							  client:(IRCClient*)client
-							 message:(IRCMessage*)msg
++ (void)sendServerInputDataToBundles:(IRCWorld *)world
+							  client:(IRCClient *)client
+							 message:(IRCMessage *)msg
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -58,13 +58,13 @@
 	[pool drain];
 }
 
-+ (void)reloadAllAvailableBundles:(IRCWorld*)world
++ (void)reloadAllAvailableBundles:(IRCWorld *)world
 {
 	[self deallocAllAvailableBundlesFromMemory:world];
 	[self loadAllAvailableBundlesIntoMemory:world];
 }
 
-+ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld*)world
++ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld *)world
 {		
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -83,7 +83,7 @@
 	[pool release];
 }
 
-+ (void)loadAllAvailableBundlesIntoMemory:(IRCWorld*)world
++ (void)loadAllAvailableBundlesIntoMemory:(IRCWorld *)world
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -97,9 +97,9 @@
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
-	NSArray* resourceFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+	NSArray *resourceFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
 	
-	for (NSString* file in resourceFiles) {
+	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 

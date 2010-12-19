@@ -4,20 +4,20 @@
 @interface ServerTreeView : TreeView
 {
 	id responderDelegate;
-	OtherTheme* theme;
+	OtherTheme *theme;
 	
-	NSColor* bgColor;
-	NSColor* topLineColor;
-	NSColor* bottomLineColor;
-	NSGradient* gradient;
+	NSColor *bgColor;
+	NSColor *topLineColor;
+	NSColor *bottomLineColor;
+	NSGradient *gradient;
 }
 
 @property (nonatomic, assign) id responderDelegate;
-@property (nonatomic, retain) OtherTheme* theme;
-@property (nonatomic, retain) NSColor* bgColor;
-@property (nonatomic, retain) NSColor* topLineColor;
-@property (nonatomic, retain) NSColor* bottomLineColor;
-@property (nonatomic, retain) NSGradient* gradient;
+@property (nonatomic, retain) OtherTheme *theme;
+@property (nonatomic, retain) NSColor *bgColor;
+@property (nonatomic, retain) NSColor *topLineColor;
+@property (nonatomic, retain) NSColor *bottomLineColor;
+@property (nonatomic, retain) NSGradient *gradient;
 
 - (void)themeChanged;
 @end

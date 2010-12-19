@@ -5,8 +5,8 @@
 #import "LogPolicy.h"
 
 @interface LogPolicy (Private)
-- (void)modifyMemberMenu:(NSMenu*)menu;
-- (void)modifyMemberMenuItem:(NSMenuItem*)item;
+- (void)modifyMemberMenu:(NSMenu *)menu;
+- (void)modifyMemberMenuItem:(NSMenuItem *)item;
 @end
 
 @implementation LogPolicy
@@ -49,7 +49,7 @@
 		if (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) return;
 		
 		if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
-			DOMRange* range = [sender selectedDOMRange];
+			DOMRange *range = [sender selectedDOMRange];
 			
 			if (!range) return;
 			if ([[range toString] length] < 1) return;
@@ -60,7 +60,7 @@
 	}
 }
 
-- (NSUInteger)webView:(WebView*)sender dragDestinationActionMaskForDraggingInfo:(id)draggingInfo
+- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id)draggingInfo
 {
 	return WebDragDestinationActionNone;
 }
@@ -72,8 +72,8 @@
 		[url autorelease];
 		url = nil;
 		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [urlMenu itemArray]) {
+		NSMutableArray *ary = [NSMutableArray array];
+		for (NSMenuItem *item in [urlMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
 		
@@ -83,20 +83,20 @@
 		[addr autorelease];
 		addr = nil;
 		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [addrMenu itemArray]) {
+		NSMutableArray *ary = [NSMutableArray array];
+		for (NSMenuItem *item in [addrMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
 	} else if (nick) {
-		NSMutableArray* ary = [NSMutableArray array];
+		NSMutableArray *ary = [NSMutableArray array];
 		
 		menuController.pointedNick = nick;
 		[nick autorelease];
 		nick = nil;
 		
-		for (NSMenuItem* item in [memberMenu itemArray]) {
+		for (NSMenuItem *item in [memberMenu itemArray]) {
 			item = [[item copy] autorelease];
 			[self modifyMemberMenuItem:item];
 			[ary addObject:item];
@@ -108,19 +108,19 @@
 		[chan autorelease];
 		chan = nil;
 		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [chanMenu itemArray]) {
+		NSMutableArray *ary = [NSMutableArray array];
+		for (NSMenuItem *item in [chanMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
 	} else if (menu) {
-		NSMutableArray* ary = [NSMutableArray array];
+		NSMutableArray *ary = [NSMutableArray array];
 		
 		NSMenuItem *inspectElementItem = nil;
 		NSMenuItem *lookupInDictionaryItem = nil;
 		
-		for (NSMenuItem* item in defaultMenuItems) {
+		for (NSMenuItem *item in defaultMenuItems) {
 			switch ([item tag]) {
 				case WebMenuItemTagLookUpInDictionary:
 					lookupInDictionaryItem = item;
@@ -133,7 +133,7 @@
 			}
 		}
 		
-		for (NSMenuItem* item in [menu itemArray]) {
+		for (NSMenuItem *item in [menu itemArray]) {
 			if ([item tag] == 2024) {
 				if (lookupInDictionaryItem) {
 					[ary addObject:[[lookupInDictionaryItem copy] autorelease]];
@@ -150,11 +150,11 @@
 				[ary addObject:[[inspectElementItem copy] autorelease]];
 			}
 			
-			NSMenuItem* copyHTML = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
+			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
 			[copyHTML setTarget:menuController];
 			[ary addObject:copyHTML];
 			
-			NSMenuItem* reloadTheme = [[[NSMenuItem alloc] initWithTitle:@"Force Reload Theme" action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
+			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:@"Force Reload Theme" action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
 			[reloadTheme setTarget:menuController];
 			[ary addObject:reloadTheme];
 		}
@@ -167,14 +167,14 @@
 	return defaultMenuItems;
 }
 
-- (void)modifyMemberMenu:(NSMenu*)submenu
+- (void)modifyMemberMenu:(NSMenu *)submenu
 {
-	for (NSMenuItem* item in [submenu itemArray]) {
+	for (NSMenuItem *item in [submenu itemArray]) {
 		[self modifyMemberMenuItem:item];
 	}
 }
 
-- (void)modifyMemberMenuItem:(NSMenuItem*)item
+- (void)modifyMemberMenuItem:(NSMenuItem *)item
 {
 	item.tag += 500;
 	if ([item hasSubmenu]) [self modifyMemberMenu:item.submenu];

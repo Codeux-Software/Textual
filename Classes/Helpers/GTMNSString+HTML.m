@@ -370,7 +370,7 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 
 @implementation NSString (GTMNSStringHTMLAdditions)
 
-- (NSString *)gtm_stringByEscapingHTMLUsingTable:(HTMLEscapeMap*)table 
+- (NSString *)gtm_stringByEscapingHTMLUsingTable:(HTMLEscapeMap *)table 
                                           ofSize:(NSUInteger)size 
                                  escapingUnicode:(BOOL)escapeUnicode {  
 	NSUInteger length = [self length];

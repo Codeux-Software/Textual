@@ -3,20 +3,20 @@
 
 @interface IRCMessage : NSObject
 {
-	IRCPrefix* sender;
-	NSString* command;
+	IRCPrefix *sender;
+	NSString *command;
 	NSInteger numericReply;
-	NSMutableArray* params;
+	NSMutableArray *params;
 }
 
-@property (nonatomic, retain) IRCPrefix* sender;
-@property (nonatomic, retain) NSString* command;
+@property (nonatomic, retain) IRCPrefix *sender;
+@property (nonatomic, retain) NSString *command;
 @property (nonatomic, assign) NSInteger numericReply;
-@property (nonatomic, retain) NSMutableArray* params;
+@property (nonatomic, retain) NSMutableArray *params;
 
-- (id)initWithLine:(NSString*)line;
+- (id)initWithLine:(NSString *)line;
 
-- (NSString*)paramAt:(NSInteger)index;
-- (NSString*)sequence;
-- (NSString*)sequence:(NSInteger)index;
+- (NSString *)paramAt:(NSInteger)index;
+- (NSString *)sequence;
+- (NSString *)sequence:(NSInteger)index;
 @end

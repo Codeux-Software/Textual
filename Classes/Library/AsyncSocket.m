@@ -1384,7 +1384,7 @@ Failed:
 #pragma mark Connecting
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)connectToHost:(NSString*)hostname onPort:(UInt16)port error:(NSError **)errPtr
+- (BOOL)connectToHost:(NSString *)hostname onPort:(UInt16)port error:(NSError **)errPtr
 {
 	return [self connectToHost:hostname onPort:port withTimeout:-1 error:errPtr];
 }

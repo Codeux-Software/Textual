@@ -3,12 +3,12 @@
 
 @interface IRCWorldConfig : NSObject <NSMutableCopying>
 {
-	NSMutableArray* clients;
+	NSMutableArray *clients;
 }
 
-@property (nonatomic, readonly) NSMutableArray* clients;
+@property (nonatomic, readonly) NSMutableArray *clients;
 
-- (id)initWithDictionary:(NSDictionary*)dic;
-- (NSMutableDictionary*)dictionaryValue;
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSMutableDictionary *)dictionaryValue;
 
 @end

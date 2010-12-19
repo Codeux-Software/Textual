@@ -56,7 +56,7 @@
 	return self;
 }
 
-- (NSString*)path
+- (NSString *)path
 {
 	return path;
 }

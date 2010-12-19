@@ -2,6 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface NSData (Kana)
-- (NSData*)convertKanaFromISO2022ToNative;
-- (NSData*)convertKanaFromNativeToISO2022;
+- (NSData *)convertKanaFromISO2022ToNative;
+- (NSData *)convertKanaFromNativeToISO2022;
 @end

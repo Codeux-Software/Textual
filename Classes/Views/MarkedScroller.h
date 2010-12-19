@@ -10,6 +10,6 @@
 @end
 
 @interface NSObject (MarkedScrollerDataSource)
-- (NSArray*)markedScrollerPositions:(MarkedScroller*)sender;
-- (NSColor*)markedScrollerColor:(MarkedScroller*)sender;
+- (NSArray *)markedScrollerPositions:(MarkedScroller *)sender;
+- (NSColor *)markedScrollerColor:(MarkedScroller *)sender;
 @end

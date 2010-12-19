@@ -5,7 +5,7 @@
 
 @implementation NSColor (NSColorHelper)
 
-+ (NSColor*)fromCSS:(NSString*)s
++ (NSColor *)fromCSS:(NSString *)s
 {
 	if ([s hasPrefix:@"#"]) {
 		s = [s safeSubstringFromIndex:1];
@@ -26,7 +26,7 @@
 		}
 	}
 	
-	static NSDictionary* nameMap = nil;
+	static NSDictionary *nameMap = nil;
 	if (!nameMap) {
 		nameMap = [[NSDictionary dictionaryWithObjectsAndKeys:
 				   DEVICE_RGB(0, 0, 0), @"black",

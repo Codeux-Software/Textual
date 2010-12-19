@@ -41,7 +41,7 @@
 {
 	[content release];
 	
-	NSData* data = [NSData dataWithContentsOfFile:fileName];
+	NSData *data = [NSData dataWithContentsOfFile:fileName];
 	content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 

@@ -32,7 +32,7 @@
 	return self;
 }
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)initWithDictionary:(NSDictionary *)dic
 {
 	[self init];
 	
@@ -62,9 +62,9 @@
 	[super dealloc];
 }
 
-- (NSMutableDictionary*)dictionaryValue
+- (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setInt:type forKey:@"type"];
 	

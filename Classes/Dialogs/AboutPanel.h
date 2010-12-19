@@ -15,5 +15,5 @@
 @end
 
 @interface NSObject (AboutPanelDelegate)
-- (void)aboutPanelWillClose:(AboutPanel*)sender;
+- (void)aboutPanelWillClose:(AboutPanel *)sender;
 @end

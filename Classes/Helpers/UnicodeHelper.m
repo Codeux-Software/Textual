@@ -446,7 +446,7 @@ static NSUInteger OTHERS_TABLE[] = {
 
 + (BOOL)isAlphabeticalCodePoint:(NSInteger)c
 {
-	NSUInteger* T = 0;
+	NSUInteger *T = 0;
 	
 	if (c <= 0x7f) {
 		return 0x41 <= c && c <= 0x5a || 0x61 <= c && c <= 0x7a;

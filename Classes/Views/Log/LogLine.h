@@ -36,34 +36,34 @@ typedef enum {
 
 @interface LogLine : NSObject
 {
-	NSString* time;
-	NSString* place;
-	NSString* nick;
-	NSString* body;
+	NSString *time;
+	NSString *place;
+	NSString *nick;
+	NSString *body;
 	LogLineType lineType;
 	LogMemberType memberType;
-	NSString* nickInfo;
-	NSString* clickInfo;
+	NSString *nickInfo;
+	NSString *clickInfo;
 	BOOL identified;
 	NSInteger nickColorNumber;
-	NSArray* keywords;
-	NSArray* excludeWords;
+	NSArray *keywords;
+	NSArray *excludeWords;
 }
 
-@property (nonatomic, retain) NSString* time;
-@property (nonatomic, retain) NSString* place;
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, retain) NSString* body;
+@property (nonatomic, retain) NSString *time;
+@property (nonatomic, retain) NSString *place;
+@property (nonatomic, retain) NSString *nick;
+@property (nonatomic, retain) NSString *body;
 @property (nonatomic, assign) LogLineType lineType;
 @property (nonatomic, assign) LogMemberType memberType;
-@property (nonatomic, retain) NSString* nickInfo;
-@property (nonatomic, retain) NSString* clickInfo;
+@property (nonatomic, retain) NSString *nickInfo;
+@property (nonatomic, retain) NSString *clickInfo;
 @property (nonatomic, assign) BOOL identified;
 @property (nonatomic, assign) NSInteger nickColorNumber;
-@property (nonatomic, retain) NSArray* keywords;
-@property (nonatomic, retain) NSArray* excludeWords;
+@property (nonatomic, retain) NSArray *keywords;
+@property (nonatomic, retain) NSArray *excludeWords;
 
-+ (NSString*)lineTypeString:(LogLineType)type;
-+ (NSString*)memberTypeString:(LogMemberType)type;
++ (NSString *)lineTypeString:(LogLineType)type;
++ (NSString *)memberTypeString:(LogMemberType)type;
 
 @end

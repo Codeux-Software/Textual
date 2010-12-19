@@ -8,12 +8,12 @@
 	GrowlNotificationType eventType;
 }
 
-@property (nonatomic, readonly) NSString* displayName;
-@property (nonatomic, assign) NSString* sound;
+@property (nonatomic, readonly) NSString *displayName;
+@property (nonatomic, assign) NSString *sound;
 @property (nonatomic, assign) BOOL growl;
 @property (nonatomic, assign) BOOL growlSticky;
 @property (nonatomic, assign) BOOL disableWhileAway;
 
-+ (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType;
++ (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType;
 
 @end

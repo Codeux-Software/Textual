@@ -15,15 +15,15 @@
 	if (![dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
 	if (![dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
 	
-	NSScrollView* scrollView = (NSScrollView*)[self superview];
+	NSScrollView *scrollView = (NSScrollView *)[self superview];
 	NSInteger contentHeight = [[scrollView contentView] documentRect].size.height;
-	NSArray* ary = [dataSource markedScrollerPositions:self];
+	NSArray *ary = [dataSource markedScrollerPositions:self];
 	if (!ary || !ary.count) return;
 	
 	//
 	// prepare transform
 	//
-	NSAffineTransform* transform = [NSAffineTransform transform];
+	NSAffineTransform *transform = [NSAffineTransform transform];
 	NSInteger width = [MarkedScroller scrollerWidth];
 	CGFloat scale = [self rectForPart:NSScrollerKnobSlot].size.height / (CGFloat)contentHeight;
 	NSInteger offset = [self rectForPart:NSScrollerKnobSlot].origin.y;
@@ -33,10 +33,10 @@
 	//
 	// make lines
 	//
-	NSMutableArray* lines = [NSMutableArray array];
+	NSMutableArray *lines = [NSMutableArray array];
 	NSPoint prev = NSMakePoint(-1, -1);
 	
-	for (NSNumber* e in ary) {
+	for (NSNumber *e in ary) {
 		NSInteger i = [e integerValue];
 		NSPoint pt = NSMakePoint(0, i);
 		pt = [transform transformPoint:pt];
@@ -44,7 +44,7 @@
 		pt.y = ceil(pt.y) + 0.5;
 		if (pt.x == prev.x && pt.y == prev.y) continue;
 		prev = pt;
-		NSBezierPath* line = [NSBezierPath bezierPath];
+		NSBezierPath *line = [NSBezierPath bezierPath];
 		[line setLineWidth:1];
 		[line moveToPoint:pt];
 		[line relativeLineToPoint:NSMakePoint(width, 0)];
@@ -55,10 +55,10 @@
 	// draw lines
 	//
 	NSRectClip(NSInsetRect([self rectForPart:NSScrollerKnobSlot], 3, 4));
-	NSColor* color = [dataSource markedScrollerColor:self];
+	NSColor *color = [dataSource markedScrollerColor:self];
 	[color set];
 	
-	for (NSBezierPath* e in lines) {
+	for (NSBezierPath *e in lines) {
 		[e stroke];
 	}
 	

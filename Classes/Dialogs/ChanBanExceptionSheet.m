@@ -52,7 +52,7 @@
     [self reloadTable];
 }
 
-- (void)addException:(NSString*)host tset:(NSString*)time setby:(NSString*)owner
+- (void)addException:(NSString *)host tset:(NSString *)time setby:(NSString *)owner
 {
     [list addObject:[NSArray arrayWithObjects:host, [owner nicknameFromHostmask], time, nil]];
     
@@ -76,8 +76,8 @@
 
 - (void)onRemoveExceptions:(id)sender
 {
-	NSMutableString* str = [NSMutableString stringWithString:@"-"];
-	NSMutableString* trail = [NSMutableString string];
+	NSMutableString *str = [NSMutableString stringWithString:@"-"];
+	NSMutableString *trail = [NSMutableString string];
 	
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	NSUInteger current_index = [indexes lastIndex];
@@ -105,8 +105,8 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray* item = [list safeObjectAtIndex:row];
-    NSString* col = [column identifier];
+    NSArray *item = [list safeObjectAtIndex:row];
+    NSString *col = [column identifier];
     
     if ([col isEqualToString:@"mask"]) {
 		return [item safeObjectAtIndex:0];

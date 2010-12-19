@@ -4,9 +4,9 @@
 
 @interface IRCUser : NSObject
 {
-	NSString* nick;
-	NSString* username;
-	NSString* address;
+	NSString *nick;
+	NSString *username;
+	NSString *address;
 	BOOL q;
 	BOOL a;
 	BOOL o;
@@ -21,9 +21,9 @@
 	CFAbsoluteTime lastFadedWeights;
 }
 
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, retain) NSString* username;
-@property (nonatomic, retain) NSString* address;
+@property (nonatomic, retain) NSString *nick;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *address;
 @property (nonatomic, assign) BOOL q;
 @property (nonatomic, assign) BOOL a;
 @property (nonatomic, assign) BOOL o;
@@ -46,5 +46,5 @@
 - (void)incomingConversation;
 - (void)conversation;
 
-- (NSComparisonResult)compare:(IRCUser*)other;
+- (NSComparisonResult)compare:(IRCUser *)other;
 @end

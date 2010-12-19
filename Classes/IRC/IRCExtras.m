@@ -19,16 +19,16 @@
 	[super dealloc];
 }
 
-- (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString*)channel
+- (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel
 {	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
 	
 	BOOL useSSL = NO;
 	
-	NSArray* chunks;
+	NSArray *chunks;
 	NSInteger port = 6667;
-	NSString* server = @"";
-	NSString* password = @"";
+	NSString *server = @"";
+	NSString *password = @"";
 	
 	if (![s contains:@" "]) {
 		if ([s contains:@":"]) {
@@ -120,7 +120,7 @@
 		}
 	}
 	
-	NSMutableDictionary* nsconfig = [NSMutableDictionary dictionary];
+	NSMutableDictionary *nsconfig = [NSMutableDictionary dictionary];
 	
 	[nsconfig setObject:server forKey:@"host"];
 	[nsconfig setObject:server forKey:@"name"];
@@ -134,7 +134,7 @@
 	[nsconfig setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
 	
 	if ([channel length] >= 2) {
-		NSMutableArray* nschannels = [NSMutableArray array];
+		NSMutableArray *nschannels = [NSMutableArray array];
 		
 		[nschannels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 							   channel, @"name",
@@ -146,13 +146,13 @@
 		[nsconfig setObject:nschannels forKey:@"channels"];
 	}
 	
-	IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:nsconfig] autorelease];
+	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:nsconfig] autorelease];
 
 	if ([password length] >= 1) {
 		//c.password = password;
 	}	
 	
-	IRCClient* u = [world createClient:c reload:YES];
+	IRCClient *u = [world createClient:c reload:YES];
 	[world save];
 	[u connect];
 	

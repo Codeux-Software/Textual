@@ -163,7 +163,7 @@ extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *ov
 	char buf[TIME_BUFFER_SIZE+1];
 	strftime(buf, TIME_BUFFER_SIZE, [format UTF8String], local);
 	buf[TIME_BUFFER_SIZE] = 0;
-	NSString* result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
+	NSString *result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
 	return result;
 }
 

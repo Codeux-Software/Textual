@@ -92,11 +92,11 @@
 		[nameText setDrawsBackground:NO];
 	}
 	
-	NSString* s = nameText.stringValue;
+	NSString *s = nameText.stringValue;
 	[okButton setEnabled:s.length > 0];
 }
 
-- (void)controlTextDidChange:(NSNotification*)note
+- (void)controlTextDidChange:(NSNotification *)note
 {
 	[self update];
 }
@@ -123,7 +123,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(ChannelSheetWillClose:)]) {
 		[delegate ChannelSheetWillClose:self];

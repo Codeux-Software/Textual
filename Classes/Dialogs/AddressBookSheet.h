@@ -21,13 +21,13 @@
 	IBOutlet NSView *ignoreItemView;
 	
 	BOOL newItem;
-	AddressBook* ignore;
+	AddressBook *ignore;
 }
 
 - (void)onMenuBarItemChanged:(id)sender;
 
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, retain) AddressBook* ignore;
+@property (nonatomic, retain) AddressBook *ignore;
 @property (nonatomic, retain) NSTextField *hostmask;
 @property (nonatomic, retain) NSButton *ignorePublicMsg;
 @property (nonatomic, retain) NSButton *ignorePrivateMsg;
@@ -47,6 +47,6 @@
 @end
 
 @interface NSObject (IgnoreItemSheetDelegate)
-- (void)ignoreItemSheetOnOK:(AddressBookSheet*)sender;
-- (void)ignoreItemSheetWillClose:(AddressBookSheet*)sender;
+- (void)ignoreItemSheetOnOK:(AddressBookSheet *)sender;
+- (void)ignoreItemSheetWillClose:(AddressBookSheet *)sender;
 @end

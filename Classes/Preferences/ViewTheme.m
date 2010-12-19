@@ -21,7 +21,7 @@
 	if ((self = [super init])) {
 		other = [OtherTheme new];
 		core_js = [FileWithContent new];
-		NSString * resourcePath = [[NSBundle mainBundle] resourcePath];
+		NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
 		core_js.fileName = [resourcePath stringByAppendingPathComponent:@"/core.js"];
 	}
 	return self;
@@ -36,7 +36,7 @@
 	[super dealloc];
 }
 
-- (NSString*)name
+- (NSString *)name
 {
 	return name;
 }
@@ -54,11 +54,11 @@
 - (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
 	if (name) {
-		NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+		NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
 		
 		if (kindAndName) {
-			NSString* kind = [kindAndName safeObjectAtIndex:0];
-			NSString* fname = [kindAndName safeObjectAtIndex:1];
+			NSString *kind = [kindAndName safeObjectAtIndex:0];
+			NSString *fname = [kindAndName safeObjectAtIndex:1];
 			
 			if ([kind isEqualToString:@"resource"]) {
 				path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
@@ -108,17 +108,17 @@
 {
 	BOOL isDirectory = NO;
 	
-	NSFileManager* fm = [NSFileManager defaultManager];
+	NSFileManager *fm = [NSFileManager defaultManager];
 	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
 	
 	if ([fm fileExistsAtPath:dest] == NO) {
 		[fm createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:location error:NULL];
-	for (NSString* file in resourceFiles) {
-		NSString* source = [location stringByAppendingPathComponent:file];
-		NSString* sdest = [dest stringByAppendingPathComponent:file];
+	NSArray *resourceFiles = [fm contentsOfDirectoryAtPath:location error:NULL];
+	for (NSString *file in resourceFiles) {
+		NSString *source = [location stringByAppendingPathComponent:file];
+		NSString *sdest = [dest stringByAppendingPathComponent:file];
 		
 		[fm fileExistsAtPath:source isDirectory:&isDirectory];
 		[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
@@ -175,19 +175,19 @@
 	[pool release];
 }
 
-+ (NSString*)buildResourceFileName:(NSString*)name
++ (NSString *)buildResourceFileName:(NSString *)name
 {
 	return [NSString stringWithFormat:@"resource:%@", name];
 }
 
-+ (NSString*)buildUserFileName:(NSString*)name
++ (NSString *)buildUserFileName:(NSString *)name
 {
 	return [NSString stringWithFormat:@"user:%@", name];
 }
 
-+ (NSArray*)extractFileName:(NSString*)source
++ (NSArray *)extractFileName:(NSString *)source
 {
-	NSArray* ary = [source componentsSeparatedByString:@":"];
+	NSArray *ary = [source componentsSeparatedByString:@":"];
 	if (ary.count != 2) return nil;
 	return ary;
 }

@@ -323,7 +323,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	NSString *bundleVersion = nil;
 	NSString *bundleIdentifer = nil;
 	
-	guidData = (NSData*)copy_mac_address();
+	guidData = (NSData *)copy_mac_address();
 	[guidData autorelease];
 
 	if (!guidData) return NO;

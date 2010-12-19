@@ -4,18 +4,18 @@
 @interface SheetBase : NSObject
 {
 	id delegate;
-	NSWindow* window;
+	NSWindow *window;
 
-	IBOutlet NSWindow* sheet;
-	IBOutlet NSButton* okButton;
-	IBOutlet NSButton* cancelButton;
+	IBOutlet NSWindow *sheet;
+	IBOutlet NSButton *okButton;
+	IBOutlet NSButton *cancelButton;
 }
 
 @property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) NSWindow* window;
-@property (nonatomic, retain) NSWindow* sheet;
-@property (nonatomic, retain) NSButton* okButton;
-@property (nonatomic, retain) NSButton* cancelButton;
+@property (nonatomic, assign) NSWindow *window;
+@property (nonatomic, retain) NSWindow *sheet;
+@property (nonatomic, retain) NSButton *okButton;
+@property (nonatomic, retain) NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)endSheet;

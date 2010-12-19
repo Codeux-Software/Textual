@@ -23,7 +23,7 @@
 	[super dealloc];
 }
 
-- (void)add:(NSString*)s
+- (void)add:(NSString *)s
 {
 	pos = buf.count;
 	if (s.length == 0) return;
@@ -37,10 +37,10 @@
 	pos = buf.count;
 }
 
-- (NSString*)up:(NSString*)s
+- (NSString *)up:(NSString *)s
 {
 	if (s && s.length > 0) {
-		NSString* cur = nil;
+		NSString *cur = nil;
 		if (0 <= pos && pos < buf.count) {
 			cur = [buf safeObjectAtIndex:pos];
 		}
@@ -66,14 +66,14 @@
 	}
 }
 
-- (NSString*)down:(NSString*)s
+- (NSString *)down:(NSString *)s
 {
 	if (!s || s.length == 0) {
 		pos = buf.count;
 		return nil;
 	}
 	
-	NSString* cur = nil;
+	NSString *cur = nil;
 	if (0 <= pos && pos < buf.count) {
 		cur = [buf safeObjectAtIndex:pos];
 	}

@@ -5,7 +5,7 @@
 #import "FileLogger.h"
 
 @interface FileLogger (Private)
-- (NSString*)buildFileName;
+- (NSString *)buildFileName;
 @end
 
 @implementation FileLogger
@@ -38,14 +38,14 @@
 	}
 }
 
-- (void)writeLine:(NSString*)s
+- (void)writeLine:(NSString *)s
 {
 	[self open];
 	
 	if (file) {
 		s = [s stringByAppendingString:@"\n"];
 		
-		NSData* data = [s dataUsingEncoding:NSUTF8StringEncoding];
+		NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];
 		if (!data) {
 			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 		}
@@ -70,9 +70,9 @@
 	[fileName release];
 	fileName = [[self buildFileName] retain];
 	
-	NSString* dir = [fileName stringByDeletingLastPathComponent];
+	NSString *dir = [fileName stringByDeletingLastPathComponent];
 	
-	NSFileManager* fm = [NSFileManager defaultManager];
+	NSFileManager *fm = [NSFileManager defaultManager];
 	BOOL isDir = NO;
 	if (![fm fileExistsAtPath:dir isDirectory:&isDir]) {
 		[fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -89,18 +89,18 @@
 	}
 }
 
-- (NSString*)buildFileName
+- (NSString *)buildFileName
 {
-	NSString* base = [Preferences transcriptFolder];
+	NSString *base = [Preferences transcriptFolder];
 	base = [base stringByExpandingTildeInPath];
 	
-	static NSDateFormatter* format = nil;
+	static NSDateFormatter *format = nil;
 	if (!format) {
 		format = [NSDateFormatter new];
 		[format setDateFormat:@"YYYY-MM-dd"];
 	}
-	NSString* date = [format stringFromDate:[NSDate date]];
-	NSString* name = [[client name] safeFileName];
+	NSString *date = [format stringFromDate:[NSDate date]];
+	NSString *name = [[client name] safeFileName];
 	
 	if (!channel) {
 		return [base stringByAppendingFormat:@"/%@/Console/%@.txt", name, date];

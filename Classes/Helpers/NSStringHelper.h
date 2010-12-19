@@ -13,24 +13,28 @@
 - (NSString *)safeSubstringFromIndex:(NSUInteger)anIndex;
 - (NSString *)safeSubstringToIndex:(NSUInteger)anIndex;
 
-- (NSString*)fastChopEndWithChars:(NSArray*)chars;
+- (NSString *)fastChopEndWithChars:(NSArray *)chars;
 
 - (BOOL)isIPAddress;
 
-- (NSString*)nicknameFromHostmask;
+- (NSString *)nicknameFromHostmask;
+- (NSString *)cleanedServerHostmask;
 
-- (BOOL)isEqualNoCase:(NSString*)other;
+- (BOOL)isEqualNoCase:(NSString *)other;
+
 - (BOOL)isEmpty;
-- (BOOL)contains:(NSString*)str;
-- (BOOL)containsIgnoringCase:(NSString*)str;
+- (BOOL)contains:(NSString *)str;
+- (BOOL)containsIgnoringCase:(NSString *)str;
+
 - (NSInteger)findCharacter:(UniChar)c;
 - (NSInteger)findCharacter:(UniChar)c start:(NSInteger)start;
-- (NSInteger)findString:(NSString*)str;
-- (NSArray*)split:(NSString*)delimiter;
-- (NSArray*)splitIntoLines;
-- (NSString*)trim;
+- (NSInteger)findString:(NSString *)str;
+- (NSInteger)stringPosition:(NSString *)needle;
 
-- (NSInteger)stringPosition:(NSString*)needle;
+- (NSArray *)split:(NSString *)delimiter;
+- (NSArray *)splitIntoLines;
+
+- (NSString *)trim;
 
 - (id)attributedStringWithIRCFormatting;
 
@@ -40,10 +44,10 @@
 - (NSInteger)firstCharCodePoint;
 - (NSInteger)lastCharCodePoint;
 
-- (NSString*)safeUsername;
-- (NSString*)safeFileName;
+- (NSString *)safeUsername;
+- (NSString *)safeFileName;
 
-- (NSString*)stripEffects;
+- (NSString *)stripEffects;
 
 - (NSRange)rangeOfUrl;
 - (NSRange)rangeOfUrlStart:(NSInteger)start;
@@ -54,21 +58,21 @@
 - (NSRange)rangeOfChannelName;
 - (NSRange)rangeOfChannelNameStart:(NSInteger)start;
 
-- (NSString*)encodeURIComponent;
-- (NSString*)encodeURIFragment;
+- (NSString *)encodeURIComponent;
+- (NSString *)encodeURIFragment;
 
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
-- (NSString*)canonicalName;
+- (NSString *)canonicalName;
 
-+ (NSString*)stringWithUUID;
-+ (NSString*)bundleString:(NSString*)key;
++ (NSString *)stringWithUUID;
++ (NSString *)bundleString:(NSString *)key;
 
-- (NSString*)stringWithInputIRCFormatting;
-- (NSString*)stringWithASCIIFormatting;
+- (NSString *)stringWithInputIRCFormatting;
+- (NSString *)stringWithASCIIFormatting;
 @end
 
 @interface NSMutableString (NSMutableStringHelper)
-- (NSString*)getToken;
-- (NSString*)getIgnoreToken;
+- (NSString *)getToken;
+- (NSString *)getIgnoreToken;
 @end
