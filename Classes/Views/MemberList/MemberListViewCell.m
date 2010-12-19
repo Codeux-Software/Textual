@@ -187,7 +187,7 @@ static NSInteger markWidth;
 	
 	char mark = [member mark];
 	if (mark != ' ') {
-		NSString *markStr = [NSString stringWithFormat:@"%C", mark];
+		NSString *markStr = [NSString stringWithChar:mark];
 		[markStr drawInRect:rect withAttributes:style];
 	}
 	

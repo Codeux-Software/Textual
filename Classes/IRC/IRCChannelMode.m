@@ -56,7 +56,7 @@
 	for (IRCModeInfo *h in ary) {
 		if (h.op) continue;
 		    
-		NSString *modec = [NSString stringWithFormat:@"%c", h.mode];
+		NSString *modec = [NSString stringWithChar:h.mode];
 		
 		if ([badObjects containsObject:modec]) continue;
 		

@@ -72,6 +72,24 @@
 - (NSString *)stringWithASCIIFormatting;
 @end
 
+@interface NSString (NSStringNumberHelper)
++ (NSString *)stringWithChar:(char)value;
++ (NSString *)stringWithUniChar:(UniChar)value;
++ (NSString *)stringWithUnsignedChar:(unsigned char)value;
++ (NSString *)stringWithShort:(short)value;
++ (NSString *)stringWithUnsignedShort:(unsigned short)value;
++ (NSString *)stringWithInt:(int)value;
++ (NSString *)stringWithUnsignedInt:(unsigned int)value;
++ (NSString *)stringWithLong:(long)value;
++ (NSString *)stringWithUnsignedLong:(unsigned long)value;
++ (NSString *)stringWithLongLong:(long long)value;
++ (NSString *)stringWithUnsignedLongLong:(unsigned long long)value;
++ (NSString *)stringWithFloat:(float)value;
++ (NSString *)stringWithDouble:(double)value;
++ (NSString *)stringWithInteger:(NSInteger)value;
++ (NSString *)stringWithUnsignedInteger:(NSUInteger)value;
+@end
+
 @interface NSMutableString (NSMutableStringHelper)
 - (NSString *)getToken;
 - (NSString *)getIgnoreToken;

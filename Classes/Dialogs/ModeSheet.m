@@ -67,7 +67,7 @@
 		[lCheck setState:NSOnState];
 	}
 	
-	[lText setStringValue:[NSString stringWithFormat:@"%d", lCount]];
+	[lText setStringValue:[NSString stringWithDouble:lCount]];
 	
 	[self updateTextFields];
 	[self startSheet];
