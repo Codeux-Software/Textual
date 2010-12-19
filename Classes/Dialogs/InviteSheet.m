@@ -25,21 +25,21 @@
 	[super dealloc];
 }
 
-- (void)startWithChannels:(NSArray*)channels
+- (void)startWithChannels:(NSArray *)channels
 {
-	NSString* target;
+	NSString *target;
 	if (nicks.count == 1) {
 		target = [nicks safeObjectAtIndex:0];
 	} else if (nicks.count == 2) {
-		NSString* first = [nicks safeObjectAtIndex:0];
-		NSString* second = [nicks safeObjectAtIndex:1];
+		NSString *first = [nicks safeObjectAtIndex:0];
+		NSString *second = [nicks safeObjectAtIndex:1];
 		target = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_TWO_PEOPLE"), first, second];
 	} else {
 		target = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_MULTIPLE_PEOPLE"), nicks.count];
 	}
 	titleLabel.stringValue = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_TARGET_DESC"), target];
 	
-	for (NSString* s in channels) {
+	for (NSString *s in channels) {
 		[channelPopup addItemWithTitle:s];
 	}
 	
@@ -48,7 +48,7 @@
 
 - (void)invite:(id)sender
 {
-	NSString* channelName = [[channelPopup selectedItem] title];
+	NSString *channelName = [[channelPopup selectedItem] title];
 	
 	if ([delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
 		[delegate inviteSheet:self onSelectChannel:channelName];
@@ -60,7 +60,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
 		[delegate inviteSheetWillClose:self];

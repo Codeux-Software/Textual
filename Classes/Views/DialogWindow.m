@@ -8,7 +8,7 @@
 - (void)sendEvent:(NSEvent *)e
 {
 	/*if ([e type] == NSKeyDown) {
-		NSInputManager* im = [NSInputManager currentInputManager];
+		NSInputManager *im = [NSInputManager currentInputManager];
 		if (!im || !im.markedRange.length) {
 			NSInteger k = [e keyCode];
 			NSUInteger m = [e modifierFlags];

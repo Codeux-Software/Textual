@@ -79,7 +79,7 @@
 	
 		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		
-		for (NSString* key in sortedKeys) {
+		for (NSString *key in sortedKeys) {
 			[hostCombo addItemWithObjectValue:key];
 		}
 	}
@@ -277,12 +277,13 @@
 	config.autoReconnect = autoReconnectCheck.state;
 	
 	NSString *realHost = nil;
+	NSString *hostname = [hostCombo.stringValue cleanedServerHostmask];
 	
-	if (hostCombo.stringValue.length < 1) {
+	if (hostname.length < 1) {
 		config.host = @"unknown.host.com";
 	} else {
-		realHost = [self nameMatchesServerInList:hostCombo.stringValue];
-		config.host = ((realHost == nil) ? hostCombo.stringValue : [serverList objectForKey:realHost]);
+		realHost = [self nameMatchesServerInList:hostname];
+		config.host = ((realHost == nil) ? hostname : [serverList objectForKey:realHost]);
 	}
 	
 	if ([nameText.stringValue length] < 1) {
@@ -309,9 +310,9 @@
 	config.realName = realNameText.stringValue;
 	config.nickPassword = nickPasswordText.stringValue;
 	
-	NSArray* nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
+	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
 	[config.altNicks removeAllObjects];
-	for (NSString* s in nicks) {
+	for (NSString *s in nicks) {
 		if (s.length) {
 			[config.altNicks addObject:s];
 		}
@@ -330,9 +331,9 @@
 	config.proxyUser = proxyUserText.stringValue;
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
-	NSArray* commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
+	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
 	[config.loginCommands removeAllObjects];
-	for (NSString* s in commands) {
+	for (NSString *s in commands) {
 		if (s.length) {
 			[config.loginCommands addObject:s];
 		}
@@ -343,10 +344,10 @@
 
 - (void)updateConnectionPage
 {
-	NSString* name = [nameText stringValue];
-	NSString* host = [hostCombo stringValue];
+	NSString *name = [nameText stringValue];
+	NSString *host = [hostCombo stringValue];
 	NSInteger port = [portText integerValue];
-	NSString* nick = [nickText stringValue];
+	NSString *nick = [nickText stringValue];
 	
 	BOOL enabled = name.length > 0 && host.length > 0 && ![host isEqualToString:@"-"] && port > 0 && nick.length > 0;
 	[okButton setEnabled:enabled];
@@ -385,10 +386,10 @@
 {
 	[self save];
 	
-	NSMutableArray* ignores = config.ignores;
+	NSMutableArray *ignores = config.ignores;
 	
 	for (NSInteger i = (ignores.count - 1); i >= 0; --i) {
-		AddressBook* g = [ignores safeObjectAtIndex:i];
+		AddressBook *g = [ignores safeObjectAtIndex:i];
 		
 		if ([g.hostmask length] < 1) {
 			[ignores safeRemoveObjectAtIndex:i];
@@ -407,7 +408,7 @@
 	[self endSheet];
 }
 
-- (void)controlTextDidChange:(NSNotification*)note
+- (void)controlTextDidChange:(NSNotification *)note
 {
 	[self updateConnectionPage];
 }
@@ -439,11 +440,11 @@
 - (void)addChannel:(id)sender
 {
 	NSInteger sel = [channelTable selectedRow];
-	IRCChannelConfig* conf;
+	IRCChannelConfig *conf;
 	if (sel < 0) {
 		conf = [[IRCChannelConfig new] autorelease];
 	} else {
-		IRCChannelConfig* c = [config.channels safeObjectAtIndex:sel];
+		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
 		conf = [[c mutableCopy] autorelease];
 		conf.name = @"";
 	}
@@ -462,7 +463,7 @@
 {
 	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
-	IRCChannelConfig* c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
+	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
 	
 	[channelSheet release];
 	channelSheet = [ChannelSheet new];
@@ -474,14 +475,14 @@
 	[channelSheet show];
 }
 
-- (void)ChannelSheetOnOK:(ChannelSheet*)sender
+- (void)ChannelSheetOnOK:(ChannelSheet *)sender
 {
-	IRCChannelConfig* conf = sender.config;
-	NSString* name = conf.name;
+	IRCChannelConfig *conf = sender.config;
+	NSString *name = conf.name;
 	
 	NSInteger n = -1;
 	NSInteger i = 0;
-	for (IRCChannelConfig* c in config.channels) {
+	for (IRCChannelConfig *c in config.channels) {
 		if ([c.name isEqualToString:name]) {
 			n = i;
 			break;
@@ -498,7 +499,7 @@
 	[self reloadChannelTable];
 }
 
-- (void)ChannelSheetWillClose:(ChannelSheet*)sender
+- (void)ChannelSheetWillClose:(ChannelSheet *)sender
 {
 	[channelSheet autorelease];
 	channelSheet = nil;
@@ -570,7 +571,7 @@
 	[client populateISONTrackedUsersList:config.ignores];
 }
 
-- (void)ignoreItemSheetOnOK:(AddressBookSheet*)sender
+- (void)ignoreItemSheetOnOK:(AddressBookSheet *)sender
 {
 	NSString *hostmask = [sender.ignore.hostmask trim];
 	
@@ -588,7 +589,7 @@
 	[client populateISONTrackedUsersList:config.ignores];
 }
 
-- (void)ignoreItemSheetWillClose:(AddressBookSheet*)sender
+- (void)ignoreItemSheetWillClose:(AddressBookSheet *)sender
 {
 	[ignoreSheet autorelease];
 	ignoreSheet = nil;
@@ -609,8 +610,8 @@
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	if (sender == channelTable) {
-		IRCChannelConfig* c = [config.channels safeObjectAtIndex:row];
-		NSString* columnId = [column identifier];
+		IRCChannelConfig *c = [config.channels safeObjectAtIndex:row];
+		NSString *columnId = [column identifier];
 		
 		if ([columnId isEqualToString:@"name"]) {
 			return c.name;
@@ -620,7 +621,7 @@
 			return [NSNumber numberWithBool:c.autoJoin];
 		}
 	} else {
-		AddressBook* g = [config.ignores safeObjectAtIndex:row];
+		AddressBook *g = [config.ignores safeObjectAtIndex:row];
 		return g.hostmask;
 	}
 	
@@ -630,8 +631,8 @@
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	if (sender == channelTable) {
-		IRCChannelConfig* c = [config.channels safeObjectAtIndex:row];
-		NSString* columnId = [column identifier];
+		IRCChannelConfig *c = [config.channels safeObjectAtIndex:row];
+		NSString *columnId = [column identifier];
 		
 		if ([columnId isEqualToString:@"join"]) {
 			c.autoJoin = [obj integerValue] != 0;
@@ -664,7 +665,7 @@
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
 	if (sender == channelTable) {
-		NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInteger:[rows firstIndex]]];
+		NSArray *ary = [NSArray arrayWithObject:[NSNumber numberWithInteger:[rows firstIndex]]];
 		[pboard declareTypes:TABLE_ROW_TYPES owner:self];
 		[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
 	} else {
@@ -676,7 +677,7 @@
 - (NSDragOperation)tableView:(NSTableView *)sender validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
 	if (sender == channelTable) {
-		NSPasteboard* pboard = [info draggingPasteboard];
+		NSPasteboard *pboard = [info draggingPasteboard];
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
 			return NSDragOperationGeneric;
 		} else {
@@ -690,17 +691,17 @@
 - (BOOL)tableView:(NSTableView *)sender acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)op
 {
 	if (sender == channelTable) {
-		NSPasteboard* pboard = [info draggingPasteboard];
+		NSPasteboard *pboard = [info draggingPasteboard];
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
-			NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
+			NSArray *selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
 			NSInteger sel = [[selectedRows safeObjectAtIndex:0] integerValue];
 			
-			NSMutableArray* ary = config.channels;
-			IRCChannelConfig* target = [ary safeObjectAtIndex:sel];
+			NSMutableArray *ary = config.channels;
+			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			[[target retain] autorelease];
 
-			NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
-			NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
+			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
+			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
 			
 			[low removeObjectIdenticalTo:target];
 			[high removeObjectIdenticalTo:target];
@@ -729,7 +730,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	[channelTable unregisterDraggedTypes];
 	

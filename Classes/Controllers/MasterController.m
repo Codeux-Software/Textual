@@ -84,7 +84,7 @@
 	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
 	[nc addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
@@ -92,12 +92,12 @@
 	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
 	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
-	NSNotificationCenter* wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
 	[wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
-	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
+	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
 	rootSplitter.fixedViewIndex = 1;
@@ -132,7 +132,7 @@
 	viewTheme.name = [Preferences themeName];
 	tree.theme = viewTheme.other;
 	memberList.theme = viewTheme.other;
-	MemberListViewCell* cell = [MemberListViewCell initWithTheme:viewTheme.other];
+	MemberListViewCell *cell = [MemberListViewCell initWithTheme:viewTheme.other];
 	[[[memberList tableColumns] safeObjectAtIndex:0] setDataCell:cell];
 	
 	[self loadWindowState];
@@ -145,7 +145,7 @@
 	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
-	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
+	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 	
 	extrac = [IRCExtras new];
 	
@@ -269,7 +269,7 @@
 	[tree setNeedsDisplay];
 }
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication*)sender hasVisibleWindows:(BOOL)flag
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
 	[window makeKeyAndOrderFront:nil];
 	[text focus];
@@ -317,7 +317,7 @@
 
 - (void)applicationWillTerminate:(NSNotification *)note
 {
-	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
+	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
 	[Preferences setSpellCheckEnabled:[fieldEditor isContinuousSpellCheckingEnabled]];
@@ -353,19 +353,19 @@
 #pragma mark -
 #pragma mark NSWorkspace Notifications
 
-- (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent
+- (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
 	
-	NSString* url = [[event descriptorAtIndex:1] stringValue];
+	NSString *url = [[event descriptorAtIndex:1] stringValue];
 	
 	if ([url hasPrefix:@"irc://"]) {
 		url = [url safeSubstringFromIndex:6];
 		
-		NSArray* chunks;
-		NSString* server;
+		NSArray *chunks;
+		NSString *server;
 		NSInteger port = 6667;
-		NSString* channel = nil;
+		NSString *channel = nil;
 		
 		if ([url contains:@"/"]) {
 			chunks = [url componentsSeparatedByString:@"/"];
@@ -398,17 +398,17 @@
 	[pool drain];
 }
 
-- (void)computerWillSleep:(NSNotification*)note
+- (void)computerWillSleep:(NSNotification *)note
 {
 	[world prepareForSleep];
 }
 
-- (void)computerDidWakeUp:(NSNotification*)note
+- (void)computerDidWakeUp:(NSNotification *)note
 {
 	[world autoConnectAfterWakeup:YES];
 }
 
-- (void)computerWillPowerOff:(NSNotification*)note
+- (void)computerWillPowerOff:(NSNotification *)note
 {
 	terminating = YES;
 	[NSApp terminate:nil];
@@ -570,7 +570,7 @@
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender;
 {
-	NSString* s = [[NSPasteboard generalPasteboard] stringContent];
+	NSString *s = [[NSPasteboard generalPasteboard] stringContent];
 	if (!s.length) return NO;
 	
 	if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
@@ -582,10 +582,10 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)sendText:(NSString*)command
+- (void)sendText:(NSString *)command
 {
-	NSString* s = [text stringValue];
-	NSString* os = s;
+	NSString *s = [text stringValue];
+	NSString *os = s;
 	
 	s = [s stringWithASCIIFormatting];
 	
@@ -648,7 +648,7 @@
 
 - (void)loadWindowState
 {
-	NSDictionary* dic = [Preferences loadWindowStateWithName:@"MainWindow"];
+	NSDictionary *dic = [Preferences loadWindowStateWithName:@"MainWindow"];
 	
 	rootSplitter.position = 130;
 	
@@ -669,7 +669,7 @@
 			[fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
 		}
 	} else {
-		NSScreen* screen = [NSScreen mainScreen];
+		NSScreen *screen = [NSScreen mainScreen];
 		
 		if (screen) {
 			NSRect rect = [screen visibleFrame];
@@ -687,7 +687,7 @@
 
 - (void)saveWindowState
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	if (menu.isInFullScreenMode) {
 		[self loadWindowState];
@@ -714,7 +714,7 @@
 	[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
 }
 
-- (void)themeDidChange:(NSNotification*)note
+- (void)themeDidChange:(NSNotification *)note
 {
 	[world reloadTheme];
 	
@@ -748,7 +748,7 @@
 		[sf appendString:@"\n"];
 	}
 	
-	sf = (NSMutableString*)[sf trim];
+	sf = (NSMutableString *)[sf trim];
 	
 	if ([sf length] > 0) {		
 		BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.theme_override_info"];
@@ -769,17 +769,17 @@
 	}
 }
 
-- (void)themeStyleDidChange:(NSNotification*)note
+- (void)themeStyleDidChange:(NSNotification *)note
 {
 	[world updateThemeStyle];
 }
 
-- (void)transparencyDidChange:(NSNotification*)note
+- (void)transparencyDidChange:(NSNotification *)note
 {
 	[window setAlphaValue:[Preferences themeTransparency]];
 }
 
-- (void)inputHistorySchemeChanged:(NSNotification*)note
+- (void)inputHistorySchemeChanged:(NSNotification *)note
 {
 	if (inputHistory) {
 		[inputHistory release];
@@ -830,26 +830,26 @@
 
 - (void)completeNick:(BOOL)forward
 {
-	IRCClient* client = world.selectedClient;
-	IRCChannel* channel = world.selectedChannel;
+	IRCClient *client = world.selectedClient;
+	IRCChannel *channel = world.selectedChannel;
 	if (!client) return;
 	
 	if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
 		[world focusInputText];
 	}
 	
-	NSText* fe = [window fieldEditor:YES forObject:text];
+	NSText *fe = [window fieldEditor:YES forObject:text];
 	if (!fe) return;
 	
 	NSRange selectedRange = [fe selectedRange];
 	if (selectedRange.location == NSNotFound) return;
 	
 	if (!completionStatus) {
-		completionStatus = [NickCompletinStatus new];
+		completionStatus = [NickCompletionStatus new];
 	}
 	
-	NickCompletinStatus* status = completionStatus;
-	NSString* s = text.stringValue;
+	NickCompletionStatus *status = completionStatus;
+	NSString *s = text.stringValue;
 	
 	if ([status.text isEqualToString:s]
 		&& status.range.location != NSNotFound
@@ -859,8 +859,8 @@
 	}
 	
 	BOOL head = YES;
-	NSString* pre = [s safeSubstringToIndex:selectedRange.location];
-	NSString* sel = [s substringWithRange:selectedRange];
+	NSString *pre = [s safeSubstringToIndex:selectedRange.location];
+	NSString *sel = [s substringWithRange:selectedRange];
 	
 	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
 		UniChar c = [pre characterAtIndex:i];
@@ -896,7 +896,7 @@
 		if (!pre.length) return;
 	}
 	
-	NSString* current = [pre stringByAppendingString:sel];
+	NSString *current = [pre stringByAppendingString:sel];
 	
 	NSInteger len = current.length;
 	for (NSInteger i = 0; i < len; ++i) {
@@ -912,11 +912,11 @@
 	
 	if (!current.length) return;
 	
-	NSString* lowerPre = [pre lowercaseString];
-	NSString* lowerCurrent = [current lowercaseString];
+	NSString *lowerPre = [pre lowercaseString];
+	NSString *lowerCurrent = [current lowercaseString];
 	
-	NSArray* lowerChoices;
-	NSMutableArray* choices;
+	NSArray *lowerChoices;
+	NSMutableArray *choices;
 	
 	if (commandMode) {
 		choices = [NSMutableArray array];
@@ -925,18 +925,18 @@
 			[choices addObject:[command lowercaseString]];
 		}
 		
-		for (NSString* command in [[world bundlesForUserInput] allKeys]) {
+		for (NSString *command in [[world bundlesForUserInput] allKeys]) {
 			[choices addObject:[command lowercaseString]];
 		}
 		
 		lowerChoices = choices;
 	} else if (channelMode) {
-		NSMutableArray* channels = [NSMutableArray array];
-		NSMutableArray* lowerChannels = [NSMutableArray array];
+		NSMutableArray *channels = [NSMutableArray array];
+		NSMutableArray *lowerChannels = [NSMutableArray array];
 		
-		IRCClient* u = world.selectedClient;
+		IRCClient *u = world.selectedClient;
 		
-		for (IRCChannel* c in u.channels) {
+		for (IRCChannel *c in u.channels) {
 			[channels addObject:c.name];
 			[lowerChannels addObject:[c.name lowercaseString]];
 		}
@@ -944,13 +944,13 @@
 		choices = channels;
 		lowerChoices = lowerChannels;
 	} else {
-		NSMutableArray* users = [[channel.members mutableCopy] autorelease];
+		NSMutableArray *users = [[channel.members mutableCopy] autorelease];
 		[users sortUsingSelector:@selector(compareUsingWeights:)];
 		
-		NSMutableArray* nicks = [NSMutableArray array];
-		NSMutableArray* lowerNicks = [NSMutableArray array];
+		NSMutableArray *nicks = [NSMutableArray array];
+		NSMutableArray *lowerNicks = [NSMutableArray array];
 		
-		for (IRCUser* m in users) {
+		for (IRCUser *m in users) {
 			[nicks addObject:m.nick];
 			[lowerNicks addObject:[m.nick lowercaseString]];
 		}
@@ -959,11 +959,11 @@
 		lowerChoices = lowerNicks;
 	}
 	
-	NSMutableArray* currentChoices = [NSMutableArray array];
-	NSMutableArray* currentLowerChoices = [NSMutableArray array];
+	NSMutableArray *currentChoices = [NSMutableArray array];
+	NSMutableArray *currentLowerChoices = [NSMutableArray array];
 	
 	NSInteger i = 0;
-	for (NSString* s in lowerChoices) {
+	for (NSString *s in lowerChoices) {
 		if ([s hasPrefix:lowerPre]) {
 			[currentChoices addObject:[choices safeObjectAtIndex:i]];
 			[currentLowerChoices addObject:s];
@@ -973,7 +973,7 @@
 	
 	if (!currentChoices.count) return;
 	
-	NSString* t;
+	NSString *t;
 	NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
 	if (index != NSNotFound) {
 		if (forward) {
@@ -1034,10 +1034,10 @@ typedef enum {
 
 - (void)scroll:(ScrollKind)op
 {
-	IRCTreeItem* sel = world.selected;
+	IRCTreeItem *sel = world.selected;
 	if (sel) {
-		LogController* log = [sel log];
-		LogView* view = log.view;
+		LogController *log = [sel log];
+		LogView *view = log.view;
 		switch (op) {
 			case SCROLL_TOP:
 				[log moveToTop];
@@ -1055,22 +1055,22 @@ typedef enum {
 	}
 }
 
-- (void)inputScrollToTop:(NSEvent*)e
+- (void)inputScrollToTop:(NSEvent *)e
 {
 	[self scroll:SCROLL_TOP];
 }
 
-- (void)inputScrollToBottom:(NSEvent*)e
+- (void)inputScrollToBottom:(NSEvent *)e
 {
 	[self scroll:SCROLL_BOTTOM];
 }
 
-- (void)inputScrollPageUp:(NSEvent*)e
+- (void)inputScrollPageUp:(NSEvent *)e
 {
 	[self scroll:SCROLL_PAGE_UP];
 }
 
-- (void)inputScrollPageDown:(NSEvent*)e
+- (void)inputScrollPageDown:(NSEvent *)e
 {
 	[self scroll:SCROLL_PAGE_DOWN];
 }
@@ -1125,7 +1125,7 @@ typedef enum {
 			}
 		}
 	} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-		IRCClient* client = world.selectedClient;
+		IRCClient *client = world.selectedClient;
 		if (!client) return;
 		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
 		if (pos == NSNotFound) return;
@@ -1162,67 +1162,67 @@ typedef enum {
 	}
 }
 
-- (void)selectPreviousChannel:(NSEvent*)e
+- (void)selectPreviousChannel:(NSEvent *)e
 {
 	[self move:MOVE_UP target:MOVE_ALL];
 }
 
-- (void)selectNextChannel:(NSEvent*)e
+- (void)selectNextChannel:(NSEvent *)e
 {
 	[self move:MOVE_DOWN target:MOVE_ALL];
 }
 
-- (void)selectPreviousUnreadChannel:(NSEvent*)e
+- (void)selectPreviousUnreadChannel:(NSEvent *)e
 {
 	[self move:MOVE_UP target:MOVE_UNREAD];
 }
 
-- (void)selectNextUnreadChannel:(NSEvent*)e
+- (void)selectNextUnreadChannel:(NSEvent *)e
 {
 	[self move:MOVE_DOWN target:MOVE_UNREAD];
 }
 
-- (void)selectPreviousActiveChannel:(NSEvent*)e
+- (void)selectPreviousActiveChannel:(NSEvent *)e
 {
 	[self move:MOVE_UP target:MOVE_ACTIVE];
 }
 
-- (void)selectNextActiveChannel:(NSEvent*)e
+- (void)selectNextActiveChannel:(NSEvent *)e
 {
 	[self move:MOVE_DOWN target:MOVE_ACTIVE];
 }
 
-- (void)selectPreviousServer:(NSEvent*)e
+- (void)selectPreviousServer:(NSEvent *)e
 {
 	[self move:MOVE_LEFT target:MOVE_ALL];
 }
 
-- (void)selectNextServer:(NSEvent*)e
+- (void)selectNextServer:(NSEvent *)e
 {
 	[self move:MOVE_RIGHT target:MOVE_ALL];
 }
 
-- (void)selectPreviousActiveServer:(NSEvent*)e
+- (void)selectPreviousActiveServer:(NSEvent *)e
 {
 	[self move:MOVE_LEFT target:MOVE_ACTIVE];
 }
 
-- (void)selectNextActiveServer:(NSEvent*)e
+- (void)selectNextActiveServer:(NSEvent *)e
 {
 	[self move:MOVE_RIGHT target:MOVE_ACTIVE];
 }
 
-- (void)selectPreviousSelection:(NSEvent*)e
+- (void)selectPreviousSelection:(NSEvent *)e
 {
 	[world selectPreviousItem];
 }
 
-- (void)selectNextSelection:(NSEvent*)e
+- (void)selectNextSelection:(NSEvent *)e
 {
 	[self move:MOVE_DOWN target:MOVE_ALL];
 }
 
-- (void)tab:(NSEvent*)e
+- (void)tab:(NSEvent *)e
 {
 	switch ([Preferences tabAction]) {
 		case TAB_COMPLETE_NICK:
@@ -1236,7 +1236,7 @@ typedef enum {
 	}
 }
 
-- (void)shiftTab:(NSEvent*)e
+- (void)shiftTab:(NSEvent *)e
 {
 	switch ([Preferences tabAction]) {
 		case TAB_COMPLETE_NICK:
@@ -1250,35 +1250,35 @@ typedef enum {
 	}
 }
 
-- (void)sendMsgAction:(NSEvent*)e
+- (void)sendMsgAction:(NSEvent *)e
 {
 	[self sendText:IRCCI_ACTION];
 }
 
-- (void)inputHistoryUp:(NSEvent*)e
+- (void)inputHistoryUp:(NSEvent *)e
 {
-	NSString* s = [inputHistory up:[text stringValue]];
+	NSString *s = [inputHistory up:[text stringValue]];
 	if (s) {
 		[text setStringValue:s];
 		[world focusInputText];
 	}
 }
 
-- (void)inputHistoryDown:(NSEvent*)e
+- (void)inputHistoryDown:(NSEvent *)e
 {
-	NSString* s = [inputHistory down:[text stringValue]];
+	NSString *s = [inputHistory down:[text stringValue]];
 	if (s) {
 		[text setStringValue:s];
 		[world focusInputText];
 	}
 }
 
-- (void)goToEndOfInputField:(NSEvent*)e
+- (void)goToEndOfInputField:(NSEvent *)e
 {
 	[[text currentEditor] setSelectedRange:NSMakeRange([[text stringValue] length], 0)];
 }
 
-- (void)goToStartOfInputField:(NSEvent*)e
+- (void)goToStartOfInputField:(NSEvent *)e
 {
 	[[text currentEditor] setSelectedRange:NSMakeRange(0, 0)];
 }
@@ -1326,17 +1326,17 @@ typedef enum {
 #pragma mark -
 #pragma mark WelcomeSheet Delegate
 
-- (void)WelcomeSheet:(WelcomeSheet*)sender onOK:(NSDictionary*)config
+- (void)WelcomeSheet:(WelcomeSheet *)sender onOK:(NSDictionary *)config
 {
-	NSString* host = [config objectForKey:@"host"];
-	NSString* name = host;
+	NSString *host = [config objectForKey:@"host"];
+	NSString *name = host;
 	
-	NSString* nick = [config objectForKey:@"nick"];
-	NSString* user = [[nick lowercaseString] safeUsername];
-	NSString* realName = nick;
+	NSString *nick = [config objectForKey:@"nick"];
+	NSString *user = [[nick lowercaseString] safeUsername];
+	NSString *realName = nick;
 	
-	NSMutableArray* channels = [NSMutableArray array];
-	for (NSString* s in [config objectForKey:@"channels"]) {
+	NSMutableArray *channels = [NSMutableArray array];
+	for (NSString *s in [config objectForKey:@"channels"]) {
 		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 							 s, @"name",
 							 [NSNumber numberWithBool:YES], @"auto_join",
@@ -1345,7 +1345,7 @@ typedef enum {
 							 nil]];
 	}
 	
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	[dic setObject:host forKey:@"host"];
 	[dic setObject:name forKey:@"name"];
 	[dic setObject:nick forKey:@"nick"];
@@ -1357,8 +1357,8 @@ typedef enum {
 	
 	[window makeKeyAndOrderFront:nil];
 	
-	IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
-	IRCClient* u = [world createClient:c reload:YES];
+	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClient *u = [world createClient:c reload:YES];
 	[world save];
 	
 	if (c.autoConnect) {
@@ -1366,7 +1366,7 @@ typedef enum {
 	}
 }
 
-- (void)WelcomeSheetWillClose:(WelcomeSheet*)sender
+- (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
 {
 	[WelcomeSheetDisplay autorelease];
 	WelcomeSheetDisplay = nil;

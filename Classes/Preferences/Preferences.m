@@ -31,17 +31,17 @@ static NSString *processor = @"Intel 64-bit";
 static NSString *processor = @"Unknown Architecture";
 #endif
 
-+ (NSDictionary*)textualInfoPlist
++ (NSDictionary *)textualInfoPlist
 {
 	return textualPlist;
 }
 
-+ (NSDictionary*)systemInfoPlist 
++ (NSDictionary *)systemInfoPlist 
 {
 	return systemVersionPlist;
 }
 
-+ (NSString*)systemProcessor
++ (NSString *)systemProcessor
 {
 	return processor;
 }
@@ -51,7 +51,7 @@ static NSString *processor = @"Unknown Architecture";
 
 static NSMutableDictionary *commandIndex;
 
-+ (NSDictionary*)commandIndexList
++ (NSDictionary *)commandIndexList
 {
 	return commandIndex;
 }
@@ -154,42 +154,42 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Path Index
 
-+ (NSString*)whereApplicationSupportPath
++ (NSString *)whereApplicationSupportPath
 {
 	return [@"~/Library/Application Support/Textual/" stringByExpandingTildeInPath];
 }
 
-+ (NSString*)whereScriptsPath
++ (NSString *)whereScriptsPath
 {
 	return [@"~/Library/Application Support/Textual/Scripts" stringByExpandingTildeInPath];
 }
 
-+ (NSString*)whereThemesPath
++ (NSString *)whereThemesPath
 {
 	return [@"~/Library/Application Support/Textual/Styles" stringByExpandingTildeInPath];
 }
 
-+ (NSString*)wherePluginsPath
++ (NSString *)wherePluginsPath
 {
 	return [@"~/Library/Application Support/Textual/Extensions" stringByExpandingTildeInPath];
 }
 
-+ (NSString*)whereScriptsLocalPath
++ (NSString *)whereScriptsLocalPath
 {
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Scripts"];
 }
 
-+ (NSString*)whereThemesLocalPath
++ (NSString *)whereThemesLocalPath
 {
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Styles"];	
 }
 
-+ (NSString*)wherePluginsLocalPath
++ (NSString *)wherePluginsLocalPath
 {
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Extensions"];	
 }
 
-+ (NSString*)whereResourcePath 
++ (NSString *)whereResourcePath 
 {
 	return [[NSBundle mainBundle] resourcePath];
 }
@@ -215,17 +215,17 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Default Identity
 
-+ (NSString*)defaultNickname
++ (NSString *)defaultNickname
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.nickname"];
 }
 
-+ (NSString*)defaultUsername
++ (NSString *)defaultUsername
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.username"];
 }
 
-+ (NSString*)defaultRealname
++ (NSString *)defaultRealname
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.realname"];
 }
@@ -253,27 +253,27 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.autojoin_delay"];
 }
 
-+ (NSString*)defaultKickMessage
++ (NSString *)defaultKickMessage
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.kick_message"];
 }
 
-+ (NSString*)IRCopDefaultKillMessage
++ (NSString *)IRCopDefaultKillMessage
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_kill_message"];
 }
 
-+ (NSString*)IRCopDefaultGlineMessage
++ (NSString *)IRCopDefaultGlineMessage
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_gline_message"];
 }
 
-+ (NSString*)IRCopDefaultShunMessage
++ (NSString *)IRCopDefaultShunMessage
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_shun_message"];
 }
 
-+ (NSString*)IRCopAlertMatch
++ (NSString *)IRCopAlertMatch
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_alert_match"];
 }
@@ -323,12 +323,12 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.rtl_formatting"];
 }
 
-+ (NSString*)dccMyaddress
++ (NSString *)dccMyaddress
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.DCC.myaddress"];
 }
 
-+ (NSString*)completionSuffix
++ (NSString *)completionSuffix
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.completion_suffix"];
 }
@@ -453,7 +453,7 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Keyword.current_nick"];
 }
 
-+ (NSArray*)keywordDislikeWords
++ (NSArray *)keywordDislikeWords
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Keyword.dislike_words"];
 }
@@ -463,7 +463,7 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.Keyword.matching_method"];
 }
 
-+ (NSArray*)keywordWords
++ (NSArray *)keywordWords
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Keyword.words"];
 }
@@ -486,22 +486,22 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Theme
 
-+ (NSString*)themeName
++ (NSString *)themeName
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.name"];
 }
 
-+ (void)setThemeName:(NSString*)value
++ (void)setThemeName:(NSString *)value
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.Theme.name"];
 }
 
-+ (NSString*)themeLogFontName
++ (NSString *)themeLogFontName
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.log_font_name"];
 }
 
-+ (void)setThemeLogFontName:(NSString*)value
++ (void)setThemeLogFontName:(NSString *)value
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.Theme.log_font_name"];
 }
@@ -516,7 +516,7 @@ static NSMutableDictionary *commandIndex;
 	[TXNSUserDefaultsPointer() setDouble:value forKey:@"Preferences.Theme.log_font_size"];
 }
 
-+ (NSString*)themeNickFormat
++ (NSString *)themeNickFormat
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.nick_format"];
 }
@@ -541,7 +541,7 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.override_timestamp_format"];
 }
 
-+ (NSString*)themeTimestampFormat
++ (NSString *)themeTimestampFormat
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.timestamp_format"];
 }
@@ -554,7 +554,7 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Completion Suffix
 
-+ (void)setCompletionSuffix:(NSString*)value
++ (void)setCompletionSuffix:(NSString *)value
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.General.completion_suffix"];
 }
@@ -611,12 +611,12 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Transcript Folder
 
-+ (NSString*)transcriptFolder
++ (NSString *)transcriptFolder
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.transcript_folder"];
 }
 
-+ (void)setTranscriptFolder:(NSString*)value
++ (void)setTranscriptFolder:(NSString *)value
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.General.transcript_folder"];
 }
@@ -624,7 +624,7 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Events
 
-+ (NSString*)titleForEvent:(GrowlNotificationType)event
++ (NSString *)titleForEvent:(GrowlNotificationType)event
 {
 	switch (event) {
 		case GROWL_HIGHLIGHT:
@@ -654,7 +654,7 @@ static NSMutableDictionary *commandIndex;
 	return nil;
 }
 
-+ (NSString*)keyForEvent:(GrowlNotificationType)event
++ (NSString *)keyForEvent:(GrowlNotificationType)event
 {
 	switch (event) {
 		case GROWL_HIGHLIGHT:
@@ -684,51 +684,51 @@ static NSMutableDictionary *commandIndex;
 	return nil;
 }
 
-+ (NSString*)soundForEvent:(GrowlNotificationType)event
++ (NSString *)soundForEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
 	return [TXNSUserDefaultsPointer() objectForKey:key];
 }
 
-+ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event
++ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
 	[TXNSUserDefaultsPointer() setObject:value forKey:key];
 }
 
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
 	return [TXNSUserDefaultsPointer() boolForKey:key];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
 	[TXNSUserDefaultsPointer() setBool:value forKey:key];
 }
 
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
 	return [TXNSUserDefaultsPointer() boolForKey:key];
 }
 
 + (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
 	[TXNSUserDefaultsPointer() setBool:value forKey:key];
 }
 
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
 	return [TXNSUserDefaultsPointer() boolForKey:key];
 }
 
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
 	[TXNSUserDefaultsPointer() setBool:value forKey:key];
 }
 
@@ -843,12 +843,12 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark World
 
-+ (NSDictionary*)loadWorld
++ (NSDictionary *)loadWorld
 {
 	return [TXNSUserDefaultsPointer() objectForKey:@"world"];
 }
 
-+ (void)saveWorld:(NSDictionary*)value
++ (void)saveWorld:(NSDictionary *)value
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:@"world"];
 }
@@ -856,12 +856,12 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Window
 
-+ (NSDictionary*)loadWindowStateWithName:(NSString*)name
++ (NSDictionary *)loadWindowStateWithName:(NSString *)name
 {
 	return [TXNSUserDefaultsPointer() objectForKey:name];
 }
 
-+ (void)saveWindowState:(NSDictionary*)value name:(NSString*)name
++ (void)saveWindowState:(NSDictionary *)value name:(NSString *)name
 {
 	[TXNSUserDefaultsPointer() setObject:value forKey:name];
 }
@@ -869,8 +869,8 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray* keywords;
-static NSMutableArray* excludeWords;
+static NSMutableArray *keywords;
+static NSMutableArray *excludeWords;
 
 + (void)loadKeywords
 {
@@ -880,10 +880,10 @@ static NSMutableArray* excludeWords;
 		keywords = [NSMutableArray new];
 	}
 	
-	NSArray* ary = [TXNSUserDefaultsPointer() objectForKey:@"keywords"];
+	NSArray *ary = [TXNSUserDefaultsPointer() objectForKey:@"keywords"];
 	
-	for (NSDictionary* e in ary) {
-		NSString* s = [e objectForKey:@"string"];
+	for (NSDictionary *e in ary) {
+		NSString *s = [e objectForKey:@"string"];
 		
 		if (s) [keywords addObject:s];
 	}
@@ -897,23 +897,23 @@ static NSMutableArray* excludeWords;
 		excludeWords = [NSMutableArray new];
 	}
 	
-	NSArray* ary = [TXNSUserDefaultsPointer() objectForKey:@"excludeWords"];
+	NSArray *ary = [TXNSUserDefaultsPointer() objectForKey:@"excludeWords"];
 	
-	for (NSDictionary* e in ary) {
-		NSString* s = [e objectForKey:@"string"];
+	for (NSDictionary *e in ary) {
+		NSString *s = [e objectForKey:@"string"];
 		
 		if (s) [excludeWords addObject:s];
 	}
 }
 
-+ (void)cleanUpWords:(NSString*)key
++ (void)cleanUpWords:(NSString *)key
 {
-	NSArray* src = [TXNSUserDefaultsPointer() objectForKey:key];
+	NSArray *src = [TXNSUserDefaultsPointer() objectForKey:key];
 	
-	NSMutableArray* ary = [NSMutableArray array];
+	NSMutableArray *ary = [NSMutableArray array];
 	
-	for (NSDictionary* e in src) {
-		NSString* s = [e objectForKey:@"string"];
+	for (NSDictionary *e in src) {
+		NSString *s = [e objectForKey:@"string"];
 		
 		if (s.length) {
 			[ary addObject:s];
@@ -922,10 +922,10 @@ static NSMutableArray* excludeWords;
 	
 	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
 	
-	NSMutableArray* saveAry = [NSMutableArray array];
+	NSMutableArray *saveAry = [NSMutableArray array];
 	
-	for (NSString* s in ary) {
-		NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	for (NSString *s in ary) {
+		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 		
 		[dic setObject:s forKey:@"string"];
 		[saveAry addObject:dic];
@@ -941,12 +941,12 @@ static NSMutableArray* excludeWords;
 	[self cleanUpWords:@"excludeWords"];
 }
 
-+ (NSArray*)keywords
++ (NSArray *)keywords
 {
 	return keywords;
 }
 
-+ (NSArray*)excludeWords
++ (NSArray *)excludeWords
 {
 	return excludeWords;
 }
@@ -954,7 +954,7 @@ static NSMutableArray* excludeWords;
 #pragma mark -
 #pragma mark KVO
 
-+ (void)observeValueForKeyPath:(NSString*)key
++ (void)observeValueForKeyPath:(NSString *)key
 					  ofObject:(id)object
 						change:(NSDictionary *)change
 					   context:(void *)context
@@ -1028,7 +1028,7 @@ static NSMutableArray* excludeWords;
 	
 	startUpTime = (long)[[NSDate date] timeIntervalSince1970];
 	
-	NSString* nick = NSUserName();
+	NSString *nick = NSUserName();
 	
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
 	nick = [nick stringByReplacingOccurrencesOfRegex:@"[^a-zA-Z0-9-_]" withString:@""];
@@ -1039,7 +1039,7 @@ static NSMutableArray* excludeWords;
 	
 	// ====================================================== //
 	
-	NSMutableDictionary* d = [NSMutableDictionary dictionary];
+	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
 	[d setInt:DCC_SHOW_DIALOG forKey:@"Preferences.DCC.action"];
@@ -1115,8 +1115,8 @@ static NSMutableArray* excludeWords;
 	
 	[TXNSUserDefaultsPointer() registerDefaults:d];
 	
-	[TXNSUserDefaultsPointer() addObserver:(NSObject*)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
-	[TXNSUserDefaultsPointer() addObserver:(NSObject*)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
+	[TXNSUserDefaultsPointer() addObserver:(NSObject *)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
+	[TXNSUserDefaultsPointer() addObserver:(NSObject *)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
 	if (!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];

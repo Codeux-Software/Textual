@@ -51,19 +51,19 @@
 #pragma mark -
 #pragma mark Init
 
-- (void)setup:(IRCChannelConfig*)seed
+- (void)setup:(IRCChannelConfig *)seed
 {
 	[config autorelease];
 	config = [seed mutableCopy];
 }
 
-- (void)updateConfig:(IRCChannelConfig*)seed
+- (void)updateConfig:(IRCChannelConfig *)seed
 {
 	[config autorelease];
 	config = [seed mutableCopy];
 }
 
-- (NSMutableDictionary*)dictionaryValue
+- (NSMutableDictionary *)dictionaryValue
 {
 	return [config dictionaryValue];
 }
@@ -71,7 +71,7 @@
 #pragma mark -
 #pragma mark Properties
 
-- (NSString*)name
+- (NSString *)name
 {
 	return config.name;
 }
@@ -81,7 +81,7 @@
 	config.name = value;
 }
 
-- (NSString*)password
+- (NSString *)password
 {
 	return config.password ?: @"";
 }
@@ -96,7 +96,7 @@
 	return config.type == CHANNEL_TYPE_TALK;
 }
 
-- (NSString*)channelTypeString
+- (NSString *)channelTypeString
 {
 	switch (config.type) {
 		case CHANNEL_TYPE_CHANNEL: return @"channel";
@@ -156,14 +156,14 @@
 
 // used to detect who we are talking with for the conversation
 // sensative auto-complete ordering
-- (void)detectOutgoingConversation:(NSString*)text
+- (void)detectOutgoingConversation:(NSString *)text
 {
 	if ([[Preferences completionSuffix] length] > 0) {
-		NSArray* pieces = [text split:[Preferences completionSuffix]];
+		NSArray *pieces = [text split:[Preferences completionSuffix]];
 	 
 		if ([pieces count] > 1) {
-			NSString* nick = [pieces objectAtIndex:0];
-			IRCUser* talker = [self findMember:nick];
+			NSString *nick = [pieces objectAtIndex:0];
+			IRCUser *talker = [self findMember:nick];
 			
 			if (talker) {
 				[talker incomingConversation];
@@ -172,12 +172,12 @@
 	}
 }
 
-- (BOOL)print:(LogLine*)line
+- (BOOL)print:(LogLine *)line
 {
 	return [self print:line withHTML:NO];
 }
 
-- (BOOL)print:(LogLine*)line withHTML:(BOOL)rawHTML
+- (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML
 {
 	BOOL result = [log print:line withHTML:rawHTML];
 	
@@ -188,7 +188,7 @@
 			logFile.channel = self;
 		}
 		
-		NSString* comp = [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
+		NSString *comp = [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
 		if (logDate) {
 			if (![logDate isEqualToString:comp]) {
 				[logDate release];
@@ -199,11 +199,11 @@
 			logDate = [comp retain];
 		}
 		
-		NSString* nickStr = @"";
+		NSString *nickStr = @"";
 		if (line.nick) {
 			nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
 		}
-		NSString* s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
+		NSString *s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
 		[logFile writeLine:s];
 	}
 	
@@ -213,7 +213,7 @@
 #pragma mark -
 #pragma mark Member List
 
-- (void)sortedInsert:(IRCUser*)item
+- (void)sortedInsert:(IRCUser *)item
 {
 	const NSInteger LINEAR_SEARCH_THRESHOLD = 5;
 	
@@ -222,7 +222,7 @@
 	
 	while (right - left > LINEAR_SEARCH_THRESHOLD) {
 		NSInteger i = (left + right) / 2;
-		IRCUser* t = [members safeObjectAtIndex:i];
+		IRCUser *t = [members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedAscending) {
 			left = i + 1;
@@ -232,7 +232,7 @@
 	}
 	
 	for (NSInteger i = left; i < right; ++i) {
-		IRCUser* t = [members safeObjectAtIndex:i];
+		IRCUser *t = [members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedDescending) {
 			[members insertObject:item atIndex:i];
@@ -243,12 +243,12 @@
 	[members addObject:item];
 }
 
-- (void)addMember:(IRCUser*)user
+- (void)addMember:(IRCUser *)user
 {
 	[self addMember:user reload:YES];
 }
 
-- (void)addMember:(IRCUser*)user reload:(BOOL)reload
+- (void)addMember:(IRCUser *)user reload:(BOOL)reload
 {
 	NSInteger n = [self indexOfMember:user.nick];
 	if (n >= 0) {
@@ -261,12 +261,12 @@
 	if (reload) [self reloadMemberList];
 }
 
-- (void)removeMember:(NSString*)nick
+- (void)removeMember:(NSString *)nick
 {
 	[self removeMember:nick reload:YES];
 }
 
-- (void)removeMember:(NSString*)nick reload:(BOOL)reload
+- (void)removeMember:(NSString *)nick reload:(BOOL)reload
 {
 	NSInteger n = [self indexOfMember:nick];
 	if (n >= 0) {
@@ -277,12 +277,12 @@
 	if (reload) [self reloadMemberList];
 }
 
-- (void)renameMember:(NSString*)fromNick to:(NSString*)toNick
+- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick
 {
 	NSInteger n = [self indexOfMember:fromNick];
 	if (n < 0) return;
 	
-	IRCUser* m = [members safeObjectAtIndex:n];
+	IRCUser *m = [members safeObjectAtIndex:n];
 	[[m retain] autorelease];
 	[self removeMember:toNick reload:NO];
 	
@@ -295,7 +295,7 @@
 	[self reloadMemberList];
 }
 
-- (void)updateOrAddMember:(IRCUser*)user
+- (void)updateOrAddMember:(IRCUser *)user
 {
 	NSInteger n = [self indexOfMember:user.nick];
 	if (n >= 0) {
@@ -306,12 +306,12 @@
 	[self sortedInsert:user];
 }
 
-- (void)changeMember:(NSString*)nick mode:(char)modeChar value:(BOOL)value
+- (void)changeMember:(NSString *)nick mode:(char)modeChar value:(BOOL)value
 {
 	NSInteger n = [self indexOfMember:nick];
 	if (n < 0) return;
 	
-	IRCUser* m = [members safeObjectAtIndex:n];
+	IRCUser *m = [members safeObjectAtIndex:n];
 	
 	switch (modeChar) {
 		case 'q': m.q = value; break;
@@ -334,11 +334,11 @@
 	[self reloadMemberList];
 }
 
-- (NSInteger)indexOfMember:(NSString*)nick
+- (NSInteger)indexOfMember:(NSString *)nick
 {
 	NSInteger i = -1;
 	
-	for (IRCUser* m in members) {
+	for (IRCUser *m in members) {
 		i++;
 		
 		if ([m.nick isEqualToString:nick]) {
@@ -349,12 +349,12 @@
 	return -1;
 }
 
-- (IRCUser*)memberAtIndex:(NSInteger)index
+- (IRCUser *)memberAtIndex:(NSInteger)index
 {
 	return [members safeObjectAtIndex:index];
 }
 
-- (IRCUser*)findMember:(NSString*)nick
+- (IRCUser *)findMember:(NSString *)nick
 {
 	NSInteger n = [self indexOfMember:nick];
 	if (n < 0) return nil;
@@ -398,7 +398,7 @@
 	return nil;
 }
 
-- (NSString*)label
+- (NSString *)label
 {
 	return config.name;
 }
@@ -416,7 +416,7 @@
 	return @"";
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	cell.member = [members safeObjectAtIndex:row];
 }

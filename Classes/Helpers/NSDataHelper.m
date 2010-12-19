@@ -50,12 +50,12 @@
 	return YES;
 }
 
-- (NSString*)validateUTF8
+- (NSString *)validateUTF8
 {
 	return [self validateUTF8WithCharacter:0x3F];
 }
 
-- (NSString*)validateUTF8WithCharacter:(UniChar)malformChar
+- (NSString *)validateUTF8WithCharacter:(UniChar)malformChar
 {
 	NSInteger len = [self length];
 	const unsigned char* bytes = [self bytes];

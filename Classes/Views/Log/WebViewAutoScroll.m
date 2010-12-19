@@ -4,7 +4,7 @@
 
 @implementation WebViewAutoScroll
 
-- (void)scrollViewToBottom:(NSView*)aView
+- (void)scrollViewToBottom:(NSView *)aView
 {
 	NSRect visibleRect = [aView visibleRect];
 	visibleRect.origin.y = NSHeight([aView frame]) - NSHeight(visibleRect);
@@ -17,12 +17,12 @@
 	[super dealloc];
 }
 
-- (WebFrameView*)webFrame
+- (WebFrameView *)webFrame
 {
 	return webFrame;
 }
 
-- (void)setWebFrame:(WebFrameView*)aWebFrame
+- (void)setWebFrame:(WebFrameView *)aWebFrame
 {
 	if (aWebFrame == webFrame)
 		return;
@@ -41,18 +41,18 @@
 	}
 }
 
-- (void)webViewDidChangeBounds:(NSNotification*)aNotification
+- (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSClipView* clipView = [[[webFrame documentView] enclosingScrollView] contentView];
+	NSClipView *clipView = [[[webFrame documentView] enclosingScrollView] contentView];
 	if (clipView != [aNotification object])
 		return;
 	
 	lastVisibleRect = [[clipView documentView] visibleRect];
 }
 
-- (void)webViewDidChangeFrame:(NSNotification*)aNotification
+- (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
-	NSView* view = [aNotification object];
+	NSView *view = [aNotification object];
 	if (view != webFrame && view != [webFrame documentView])
 		return;
 	

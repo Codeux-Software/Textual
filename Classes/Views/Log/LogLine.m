@@ -39,7 +39,7 @@
 	[super dealloc];
 }
 
-+ (NSString*)lineTypeString:(LogLineType)type
++ (NSString *)lineTypeString:(LogLineType)type
 {
 	switch (type) {
 		case LINE_TYPE_SYSTEM: return @"system";
@@ -70,7 +70,7 @@
 	return @"";
 }
 
-+ (NSString*)memberTypeString:(LogMemberType)type
++ (NSString *)memberTypeString:(LogMemberType)type
 {
 	switch (type) {
 		case MEMBER_TYPE_NORMAL: return @"normal";

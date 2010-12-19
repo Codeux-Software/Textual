@@ -10,16 +10,16 @@
 @property (nonatomic, assign) id keyDelegate;
 @property (nonatomic, assign) id resizeDelegate;
 
-- (NSString*)contentString;
-- (WebScriptObject*)js_api;
+- (NSString *)contentString;
+- (WebScriptObject *)js_api;
 
 - (void)clearSelection;
 - (BOOL)hasSelection;
-- (NSString*)selection;
+- (NSString *)selection;
 @end
 
 @interface NSObject (LogViewDelegate)
-- (void)logViewKeyDown:(NSEvent*)e;
+- (void)logViewKeyDown:(NSEvent *)e;
 - (void)logViewWillResize;
 - (void)logViewDidResize;
 @end

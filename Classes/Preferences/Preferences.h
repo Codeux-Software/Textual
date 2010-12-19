@@ -51,36 +51,36 @@ typedef enum {
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
-+ (NSDictionary*)textualInfoPlist;
-+ (NSDictionary*)systemInfoPlist;
-+ (NSString*)systemProcessor;
++ (NSDictionary *)textualInfoPlist;
++ (NSDictionary *)systemInfoPlist;
++ (NSString *)systemProcessor;
 + (DCCActionType)dccAction;
 + (AddressDetectionType)dccAddressDetectionMethod;
-+ (NSString*)whereScriptsPath;
-+ (NSString*)whereApplicationSupportPath;
++ (NSString *)whereScriptsPath;
++ (NSString *)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
-+ (NSDictionary*)commandIndexList;
-+ (NSString*)whereThemesPath;
-+ (NSString*)whereScriptsLocalPath;
-+ (NSString*)whereThemesLocalPath;
-+ (NSString*)whereResourcePath;
-+ (NSString*)wherePluginsPath;
-+ (NSString*)wherePluginsLocalPath;
-+ (NSString*)dccMyaddress;
-+ (NSString*)completionSuffix;
-+ (NSString*)defaultRealname;
-+ (NSString*)defaultUsername;
-+ (NSString*)defaultNickname;
-+ (NSString*)IRCopDefaultKillMessage;
-+ (NSString*)IRCopDefaultGlineMessage;
-+ (NSString*)IRCopDefaultShunMessage;
++ (NSDictionary *)commandIndexList;
++ (NSString *)whereThemesPath;
++ (NSString *)whereScriptsLocalPath;
++ (NSString *)whereThemesLocalPath;
++ (NSString *)whereResourcePath;
++ (NSString *)wherePluginsPath;
++ (NSString *)wherePluginsLocalPath;
++ (NSString *)dccMyaddress;
++ (NSString *)completionSuffix;
++ (NSString *)defaultRealname;
++ (NSString *)defaultUsername;
++ (NSString *)defaultNickname;
++ (NSString *)IRCopDefaultKillMessage;
++ (NSString *)IRCopDefaultGlineMessage;
++ (NSString *)IRCopDefaultShunMessage;
 + (BOOL)floodControlIsEnabled;
 + (NSInteger)floodControlDelayTimer;
 + (NSInteger)floodControlMaxMessages;
-+ (NSString*)IRCopAlertMatch;
++ (NSString *)IRCopAlertMatch;
 + (NSInteger)connectAutoJoinDelay;
 + (NSInteger)autojoinMaxChannelJoins;
-+ (NSString*)defaultKickMessage;
++ (NSString *)defaultKickMessage;
 + (BOOL)inputHistoryIsChannelSpecific;
 + (BOOL)logAllHighlightsToQuery;
 + (BOOL)clearAllOnlyOnActiveServer;
@@ -123,17 +123,17 @@ typedef enum {
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 
-+ (NSString*)themeName;
-+ (void)setThemeName:(NSString*)value;
-+ (NSString*)themeLogFontName;
-+ (void)setThemeLogFontName:(NSString*)value;
++ (NSString *)themeName;
++ (void)setThemeName:(NSString *)value;
++ (NSString *)themeLogFontName;
++ (void)setThemeLogFontName:(NSString *)value;
 + (double)themeLogFontSize;
 + (void)setThemeLogFontSize:(double)value;
-+ (NSString*)themeNickFormat;
++ (NSString *)themeNickFormat;
 + (BOOL)themeOverrideLogFont;
 + (BOOL)themeOverrideNickFormat;
 + (BOOL)themeOverrideTimestampFormat;
-+ (NSString*)themeTimestampFormat;
++ (NSString *)themeTimestampFormat;
 + (double)themeTransparency;
 
 + (NSInteger)dccFirstPort;
@@ -144,12 +144,12 @@ typedef enum {
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;
 
-+ (NSString*)transcriptFolder;
-+ (void)setTranscriptFolder:(NSString*)value;
++ (NSString *)transcriptFolder;
++ (void)setTranscriptFolder:(NSString *)value;
 
-+ (NSString*)titleForEvent:(GrowlNotificationType)event;
-+ (NSString*)soundForEvent:(GrowlNotificationType)event;
-+ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event;
++ (NSString *)titleForEvent:(GrowlNotificationType)event;
++ (NSString *)soundForEvent:(GrowlNotificationType)event;
++ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event;
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event;
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
@@ -157,7 +157,7 @@ typedef enum {
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event;
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event;
 
-+ (void)setCompletionSuffix:(NSString*)value;
++ (void)setCompletionSuffix:(NSString *)value;
 
 + (BOOL)spellCheckEnabled;
 + (void)setSpellCheckEnabled:(BOOL)value;
@@ -181,14 +181,14 @@ typedef enum {
 + (BOOL)registeredToGrowl;
 + (void)setRegisteredToGrowl:(BOOL)value;
 
-+ (NSDictionary*)loadWorld;
-+ (void)saveWorld:(NSDictionary*)value;
++ (NSDictionary *)loadWorld;
++ (void)saveWorld:(NSDictionary *)value;
 
-+ (NSDictionary*)loadWindowStateWithName:(NSString*)name;
-+ (void)saveWindowState:(NSDictionary*)value name:(NSString*)name;
++ (NSDictionary *)loadWindowStateWithName:(NSString *)name;
++ (void)saveWindowState:(NSDictionary *)value name:(NSString *)name;
 
-+ (NSArray*)keywords;
-+ (NSArray*)excludeWords;
++ (NSArray *)keywords;
++ (NSArray *)excludeWords;
 + (void)cleanUpWords;
 
 + (void)initPreferences;

@@ -2,18 +2,18 @@
 
 @interface MemberListViewCell : NSCell
 {
-	IRCUser* member;
-	OtherTheme* theme;
+	IRCUser *member;
+	OtherTheme *theme;
 	
-	NSMutableParagraphStyle* markStyle;
-	NSMutableParagraphStyle* nickStyle;
+	NSMutableParagraphStyle *markStyle;
+	NSMutableParagraphStyle *nickStyle;
 }
 
-@property (nonatomic, retain) IRCUser* member;
-@property (nonatomic, retain) OtherTheme* theme;
-@property (nonatomic, retain) NSMutableParagraphStyle* markStyle;
-@property (nonatomic, retain) NSMutableParagraphStyle* nickStyle;
+@property (nonatomic, retain) IRCUser *member;
+@property (nonatomic, retain) OtherTheme *theme;
+@property (nonatomic, retain) NSMutableParagraphStyle *markStyle;
+@property (nonatomic, retain) NSMutableParagraphStyle *nickStyle;
 
-+ (MemberListViewCell*)initWithTheme:(OtherTheme*)theme;
++ (MemberListViewCell *)initWithTheme:(OtherTheme *)theme;
 - (void)themeChanged;
 @end

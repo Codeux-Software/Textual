@@ -23,7 +23,7 @@
 	[super dealloc];
 }
 
-- (void)start:(NSString*)nick
+- (void)start:(NSString *)nick
 {
 	[currentText setStringValue:nick];
 	[newText setStringValue:nick];
@@ -44,7 +44,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
 		[delegate nickSheetWillClose:self];

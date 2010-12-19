@@ -28,7 +28,7 @@
 	[super dealloc];
 }
 
-- (void)resetLogView:(IRCWorld*)world withChannel:(IRCChannel*)c andClient:(IRCClient*)u
+- (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u
 {
 	[[log view] close];
 	 
@@ -38,7 +38,7 @@
 	log = [[world createLogWithClient:u channel:c] retain];
 }
 
-- (IRCClient*)client
+- (IRCClient *)client
 {
 	return nil;
 }
@@ -64,17 +64,17 @@
 	return 0;
 }
 
-- (IRCTreeItem*)childAtIndex:(NSInteger)index
+- (IRCTreeItem *)childAtIndex:(NSInteger)index
 {
 	return nil;
 }
 
-- (NSString*)label
+- (NSString *)label
 {
 	return @"";
 }
 
-- (NSString*)name
+- (NSString *)name
 {
 	return @"";
 }

@@ -29,7 +29,7 @@
 
 - (void)dealloc
 {
-	NSDistributedNotificationCenter* dnc = [NSDistributedNotificationCenter defaultCenter];
+	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
 	[dnc removeObserver:self name:GROWL_IS_READY object:nil];
 	[dnc removeObserver:self name:clickedNotificationName object:nil];
 	[dnc removeObserver:self name:timedOutNotificationName object:nil];
@@ -45,39 +45,39 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)notifyWithType:(NSString*)type
-				 title:(NSString*)title
-		   description:(NSString*)desc
+- (void)notifyWithType:(NSString *)type
+				 title:(NSString *)title
+		   description:(NSString *)desc
 {
 	[self notifyWithType:type title:title description:desc clickContext:nil sticky:NO priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString*)type
-				 title:(NSString*)title
-		   description:(NSString*)desc
+- (void)notifyWithType:(NSString *)type
+				 title:(NSString *)title
+		   description:(NSString *)desc
 		  clickContext:(id)context
 {
 	[self notifyWithType:type title:title description:desc clickContext:context sticky:NO priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString*)type
-				 title:(NSString*)title
-		   description:(NSString*)desc
+- (void)notifyWithType:(NSString *)type
+				 title:(NSString *)title
+		   description:(NSString *)desc
 		  clickContext:(id)context
 				sticky:(BOOL)sticky
 {
 	[self notifyWithType:type title:title description:desc clickContext:context sticky:sticky priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString*)type
-				 title:(NSString*)title
-		   description:(NSString*)desc
+- (void)notifyWithType:(NSString *)type
+				 title:(NSString *)title
+		   description:(NSString *)desc
 		  clickContext:(id)context
 				sticky:(BOOL)sticky
 			  priority:(NSInteger)priority
-				  icon:(NSImage*)icon
+				  icon:(NSImage *)icon
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 								appName, @"ApplicationName",
 								[NSNumber numberWithInteger:[[NSProcessInfo processInfo] processIdentifier]], @"ApplicationPID",
 								type, @"NotificationName",
@@ -98,7 +98,7 @@
 		[dic setObject:context forKey:@"NotificationClickContext"];
 	}
 	
-	NSDistributedNotificationCenter* dnc = [NSDistributedNotificationCenter defaultCenter];
+	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
 	[dnc postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
 }
 
@@ -121,14 +121,14 @@
 	clickedNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_CLICKED] retain];
 	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_TIMED_OUT] retain];
 	
-	NSDistributedNotificationCenter* dnc = [NSDistributedNotificationCenter defaultCenter];
+	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
 	[dnc addObserver:self selector:@selector(onReady:) name:GROWL_IS_READY object:nil];
 	[dnc addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
 	[dnc addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
 	
-	NSImage* icon = appIcon ?: [NSApp applicationIconImage];
+	NSImage *icon = appIcon ?: [NSApp applicationIconImage];
 	
-	NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
+	NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
 						 appName, @"ApplicationName",
 						 allNotifications, @"AllNotifications",
 						 defaultNotifications, @"DefaultNotifications",
@@ -141,12 +141,12 @@
 #pragma mark -
 #pragma mark Growl Delegate
 
-- (void)onReady:(NSNotification*)note
+- (void)onReady:(NSNotification *)note
 {
 	[self registerApplication];
 }
 
-- (void)onClicked:(NSNotification*)note
+- (void)onClicked:(NSNotification *)note
 {
 	id context = [[note userInfo] objectForKey:GROWL_CONTEXT_KEY];
 
@@ -155,7 +155,7 @@
 	}
 }
 
-- (void)onTimeout:(NSNotification*)note
+- (void)onTimeout:(NSNotification *)note
 {
 	id context = [[note userInfo] objectForKey:GROWL_CONTEXT_KEY];
 	

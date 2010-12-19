@@ -34,7 +34,7 @@
 	[NSApp endSheet:sheet];
 }
 
-- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
+- (void)sheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	[sheet close];
 }

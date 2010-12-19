@@ -6,6 +6,6 @@
 @interface AsyncSocket (AsyncSocketExtensions) 
 - (void)useSSL;
 - (void)useSystemSocksProxy;
-+ (NSString*)posixErrorStringFromErrno:(NSInteger)code;
-- (void)useSocksProxyVersion:(NSInteger)version host:(NSString*)host port:(NSInteger)port user:(NSString*)user password:(NSString*)password;
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
+- (void)useSocksProxyVersion:(NSInteger)version host:(NSString *)host port:(NSInteger)port user:(NSString *)user password:(NSString *)password;
 @end

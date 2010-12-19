@@ -11,8 +11,8 @@
 - (void)setValue:(NSInteger)value forMode:(unsigned char)m;
 - (NSInteger)valueForMode:(unsigned char)m;
 - (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus;
-- (void)parsePrefix:(NSString*)s;
-- (void)parseChanmodes:(NSString*)s;
+- (void)parsePrefix:(NSString *)s;
+- (void)parseChanmodes:(NSString *)s;
 @end
 
 @implementation IRCISupportInfo
@@ -59,20 +59,20 @@
 	[self setValue:4 forMode:'r'];
 }
 
-- (BOOL)update:(NSString*)str
+- (BOOL)update:(NSString *)str
 {
 	if ([str hasSuffix:ISUPPORT_SUFFIX]) {
 		str = [str safeSubstringToIndex:str.length - [ISUPPORT_SUFFIX length]];
 	}
 	
-	NSArray* ary = [str split:@" "];
+	NSArray *ary = [str split:@" "];
 	
-	for (NSString* s in ary) {
+	for (NSString *s in ary) {
 		NSRange r = [s rangeOfString:@"="];
 		
 		if (r.location != NSNotFound) {
-			NSString* key = [[s safeSubstringToIndex:r.location] uppercaseString];
-			NSString* value = [s safeSubstringFromIndex:NSMaxRange(r)];
+			NSString *key = [[s safeSubstringToIndex:r.location] uppercaseString];
+			NSString *value = [s safeSubstringFromIndex:NSMaxRange(r)];
 			
 			if ([key isEqualToString:@"PREFIX"]) {
 				[self parsePrefix:value];
@@ -89,14 +89,14 @@
 	return NO;
 }
 
-- (NSArray*)parseMode:(NSString*)str
+- (NSArray *)parseMode:(NSString *)str
 {
-	NSMutableArray* ary = [NSMutableArray array];
-	NSMutableString* s = [[str mutableCopy] autorelease];
+	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableString *s = [[str mutableCopy] autorelease];
 	BOOL plus = NO;
 	
 	while (!s.isEmpty) {
-		NSString* token = [s getToken];
+		NSString *token = [s getToken];
 		if (token.isEmpty) break;
 		UniChar c = [token characterAtIndex:0];
 		
@@ -121,14 +121,14 @@
 						NSInteger v = [self valueForMode:c];
 						if ([self hasParamForMode:c plus:plus]) {
 							// 1 param
-							IRCModeInfo* m = [IRCModeInfo modeInfo];
+							IRCModeInfo *m = [IRCModeInfo modeInfo];
 							m.mode = c;
 							m.plus = plus;
 							m.param = [s getToken];
 							[ary addObject:m];
 						} else {
 							// simple mode
-							IRCModeInfo* m = [IRCModeInfo modeInfo];
+							IRCModeInfo *m = [IRCModeInfo modeInfo];
 							m.mode = c;
 							m.plus = plus;
 							m.simpleMode = (v == 4);
@@ -156,7 +156,7 @@
 	}
 }
 
-- (void)parsePrefix:(NSString*)str
+- (void)parsePrefix:(NSString *)str
 {
 	if ([str hasPrefix:@"("]) {
 		NSRange r = [str rangeOfString:@")"];
@@ -173,14 +173,14 @@
 	}
 }
 
-- (void)parseChanmodes:(NSString*)str
+- (void)parseChanmodes:(NSString *)str
 {
-	NSArray* ary = [str split:@","];
+	NSArray *ary = [str split:@","];
 	
 	NSInteger count = ary.count;
 	
 	for (NSInteger i = 0; i < count; i++) {
-		NSString* s = [ary safeObjectAtIndex:i];
+		NSString *s = [ary safeObjectAtIndex:i];
 		NSInteger len = s.length;
 		
 		for (NSInteger j = 0; j < len; j++) {
@@ -213,9 +213,9 @@
 	return 0;
 }
 
-- (IRCModeInfo*)createMode:(NSString*)mode
+- (IRCModeInfo *)createMode:(NSString *)mode
 {
-	IRCModeInfo* m = [IRCModeInfo modeInfo];
+	IRCModeInfo *m = [IRCModeInfo modeInfo];
 	m.mode = [mode characterAtIndex:0];
 	m.plus = NO;
 	m.param = @"";
@@ -232,7 +232,7 @@
 @synthesize simpleMode;
 @synthesize param;
 
-+ (IRCModeInfo*)modeInfo
++ (IRCModeInfo *)modeInfo
 {
 	return [[[IRCModeInfo alloc] init] autorelease];
 }

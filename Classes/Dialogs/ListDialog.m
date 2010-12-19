@@ -5,7 +5,7 @@
 #import "ListDialog.h"
 
 @interface ListDialog (Private)
-- (void)sortedInsert:(NSArray*)item inArray:(NSMutableArray*)ary;
+- (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary;
 - (void)reloadTable;
 @end
 
@@ -54,8 +54,8 @@
 		[self.window center];
 	}
 	
-	NSString *network = [(IRCClient*)delegate config].network;
-	if (network == nil) network = [[(IRCClient*)delegate config] name];
+	NSString *network = [(IRCClient *)delegate config].network;
+	if (network == nil) network = [[(IRCClient *)delegate config] name];
 	
 	[networkName setStringValue:[NSString stringWithFormat:TXTLS(@"CHANNEL_LIST_NETWORK_NAME"), network]];
 	
@@ -76,11 +76,11 @@
 	[self reloadTable];
 }
 
-- (void)addChannel:(NSString*)channel count:(NSInteger)count topic:(NSString*)topic
+- (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
-	NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
+	NSArray *item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
 	
-	NSString* filter = [filterText stringValue];
+	NSString *filter = [filterText stringValue];
 	if (filter.length) {
 		if (!filteredList) {
 			filteredList = [NSMutableArray new];
@@ -107,14 +107,14 @@
 	[table reloadData];
 }
 
-static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
+static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 {
-	ListDialog* dialog = (ListDialog*)context;
+	ListDialog *dialog = (ListDialog *)context;
 	NSInteger key = dialog.sortKey;
 	NSComparisonResult order = dialog.sortOrder;
 	
-	NSString* mine = [self safeObjectAtIndex:key];
-	NSString* others = [other safeObjectAtIndex:key];
+	NSString *mine = [self safeObjectAtIndex:key];
+	NSString *others = [other safeObjectAtIndex:key];
 	
 	NSComparisonResult result;
 	if (key == 1) {
@@ -135,7 +135,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 	[list sortUsingFunction:compareItems context:self];
 }
 
-- (void)sortedInsert:(NSArray*)item inArray:(NSMutableArray*)ary
+- (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary
 {
 	const NSInteger THRESHOLD = 5;
 	NSInteger left = 0;
@@ -177,15 +177,15 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
 - (void)onJoin:(id)sender
 {
-	NSArray* ary = list;
-	NSString* filter = [filterText stringValue];
+	NSArray *ary = list;
+	NSString *filter = [filterText stringValue];
 	if (filter.length) {
 		ary = filteredList;
 	}
 	
-	NSIndexSet* indexes = [table selectedRowIndexes];
+	NSIndexSet *indexes = [table selectedRowIndexes];
 	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-		NSArray* item = [ary safeObjectAtIndex:i];
+		NSArray *item = [ary safeObjectAtIndex:i];
 		if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
 			[delegate listDialogOnJoin:self channel:[item safeObjectAtIndex:0]];
 		}
@@ -197,12 +197,12 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 	[filteredList release];
 	filteredList = nil;
 
-	NSString* filter = [filterText stringValue];
+	NSString *filter = [filterText stringValue];
 	if (filter.length) {
-		NSMutableArray* ary = [NSMutableArray new];
-		for (NSArray* item in list) {
-			NSString* channel = [item safeObjectAtIndex:0];
-			NSString* topic = [item safeObjectAtIndex:2];
+		NSMutableArray *ary = [NSMutableArray new];
+		for (NSArray *item in list) {
+			NSString *channel = [item safeObjectAtIndex:0];
+			NSString *topic = [item safeObjectAtIndex:2];
 			if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
 				|| [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
 				[ary addObject:item];
@@ -227,9 +227,9 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray* ary = filteredList ?: list;
-	NSArray* item = [ary safeObjectAtIndex:row];
-	NSString* col = [column identifier];
+	NSArray *ary = filteredList ?: list;
+	NSArray *item = [ary safeObjectAtIndex:row];
+	NSString *col = [column identifier];
 	
 	if ([col isEqualToString:@"chname"]) {
 		return [item safeObjectAtIndex:0];
@@ -243,7 +243,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 - (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)column
 {
 	NSInteger i;
-	NSString* col = [column identifier];
+	NSString *col = [column identifier];
 	if ([col isEqualToString:@"chname"]) {
 		i = 0;
 	} else if ([col isEqualToString:@"count"]) {
@@ -271,7 +271,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(listDialogWillClose:)]) {
 		[delegate listDialogWillClose:self];

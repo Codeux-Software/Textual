@@ -6,18 +6,18 @@
 {
 	NSInteger uid;
 	
-	IBOutlet NSTextField* currentText;
-	IBOutlet NSTextField* newText;
+	IBOutlet NSTextField *currentText;
+	IBOutlet NSTextField *newText;
 }
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) NSTextField* currentText;
-@property (nonatomic, retain) NSTextField* newText;
+@property (nonatomic, retain) NSTextField *currentText;
+@property (nonatomic, retain) NSTextField *newText;
 
-- (void)start:(NSString*)nick;
+- (void)start:(NSString *)nick;
 @end
 
 @interface NSObject (NickSheetDelegate)
-- (void)nickSheet:(NickSheet*)sender didInputNick:(NSString*)nick;
-- (void)nickSheetWillClose:(NickSheet*)sender;
+- (void)nickSheet:(NickSheet *)sender didInputNick:(NSString *)nick;
+- (void)nickSheetWillClose:(NickSheet *)sender;
 @end

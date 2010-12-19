@@ -7,7 +7,7 @@
 	NSMutableArray *scripts;
 }
 
-@property (nonatomic, assign) IRCWorld* world;
+@property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, retain) NSMutableArray *scripts;
 
 - (void)populateData;

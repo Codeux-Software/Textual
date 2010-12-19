@@ -249,24 +249,24 @@ RKL_STATIC_INLINE BOOL NSRangeInsideRange(NSRange cin, NSRange win) { return((((
 #pragma mark -
 #pragma mark Exported NSString symbols for exception names, error domains, error keys, etc
 
-NSString * const RKLICURegexException                  = @"RKLICURegexException";
+NSString *const RKLICURegexException                  = @"RKLICURegexException";
 
-NSString * const RKLICURegexErrorDomain                = @"RKLICURegexErrorDomain";
+NSString *const RKLICURegexErrorDomain                = @"RKLICURegexErrorDomain";
 
-NSString * const RKLICURegexEnumerationOptionsErrorKey = @"RKLICURegexEnumerationOptions";
-NSString * const RKLICURegexErrorCodeErrorKey          = @"RKLICURegexErrorCode";
-NSString * const RKLICURegexErrorNameErrorKey          = @"RKLICURegexErrorName";
-NSString * const RKLICURegexLineErrorKey               = @"RKLICURegexLine";
-NSString * const RKLICURegexOffsetErrorKey             = @"RKLICURegexOffset";
-NSString * const RKLICURegexPreContextErrorKey         = @"RKLICURegexPreContext";
-NSString * const RKLICURegexPostContextErrorKey        = @"RKLICURegexPostContext";
-NSString * const RKLICURegexRegexErrorKey              = @"RKLICURegexRegex";
-NSString * const RKLICURegexRegexOptionsErrorKey       = @"RKLICURegexRegexOptions";
-NSString * const RKLICURegexReplacedCountErrorKey      = @"RKLICURegexReplacedCount";
-NSString * const RKLICURegexReplacedStringErrorKey     = @"RKLICURegexReplacedString";
-NSString * const RKLICURegexReplacementStringErrorKey  = @"RKLICURegexReplacementString";
-NSString * const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRange";
-NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
+NSString *const RKLICURegexEnumerationOptionsErrorKey = @"RKLICURegexEnumerationOptions";
+NSString *const RKLICURegexErrorCodeErrorKey          = @"RKLICURegexErrorCode";
+NSString *const RKLICURegexErrorNameErrorKey          = @"RKLICURegexErrorName";
+NSString *const RKLICURegexLineErrorKey               = @"RKLICURegexLine";
+NSString *const RKLICURegexOffsetErrorKey             = @"RKLICURegexOffset";
+NSString *const RKLICURegexPreContextErrorKey         = @"RKLICURegexPreContext";
+NSString *const RKLICURegexPostContextErrorKey        = @"RKLICURegexPostContext";
+NSString *const RKLICURegexRegexErrorKey              = @"RKLICURegexRegex";
+NSString *const RKLICURegexRegexOptionsErrorKey       = @"RKLICURegexRegexOptions";
+NSString *const RKLICURegexReplacedCountErrorKey      = @"RKLICURegexReplacedCount";
+NSString *const RKLICURegexReplacedStringErrorKey     = @"RKLICURegexReplacedString";
+NSString *const RKLICURegexReplacementStringErrorKey  = @"RKLICURegexReplacementString";
+NSString *const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRange";
+NSString *const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
 
 // Used internally by rkl_userInfoDictionary to specify which arguments should be set in the NSError userInfo dictionary.
 enum {
@@ -1720,7 +1720,7 @@ static NSDictionary *rkl_userInfoDictionary(RKLUserInfoOptions userInfoOptions, 
   id objects[64], keys[64];
   NSUInteger count = 0UL;
   
-  NSString * RKL_GC_VOLATILE errorNameString = [NSString stringWithUTF8String:RKL_ICU_FUNCTION_APPEND(u_errorName)(status)];
+  NSString *RKL_GC_VOLATILE errorNameString = [NSString stringWithUTF8String:RKL_ICU_FUNCTION_APPEND(u_errorName)(status)];
   
   addKeyAndObject(objects, keys, count, RKLICURegexRegexErrorKey,        regexString);
   addKeyAndObject(objects, keys, count, RKLICURegexRegexOptionsErrorKey, [NSNumber numberWithUnsignedInt:options]);
@@ -1765,16 +1765,16 @@ static NSException *rkl_NSExceptionForRegex(NSString *regexString, RKLRegexOptio
 static NSDictionary *rkl_makeAssertDictionary(const char *function, const char *file, int line, NSString *format, ...) {
   va_list varArgsList;
   va_start(varArgsList, format);
-  NSString * RKL_GC_VOLATILE formatString   = [[[NSString alloc] initWithFormat:format arguments:varArgsList] autorelease];
+  NSString *RKL_GC_VOLATILE formatString   = [[[NSString alloc] initWithFormat:format arguments:varArgsList] autorelease];
   va_end(varArgsList);
-  NSString * RKL_GC_VOLATILE functionString = [NSString stringWithUTF8String:function], *fileString = [NSString stringWithUTF8String:file];
+  NSString *RKL_GC_VOLATILE functionString = [NSString stringWithUTF8String:function], *fileString = [NSString stringWithUTF8String:file];
   return([NSDictionary dictionaryWithObjectsAndKeys:formatString, @"description", functionString, @"function", fileString, @"file", [NSNumber numberWithInt:line], @"line", NSInternalInconsistencyException, @"exceptionName", NULL]);
 }
 
 static NSString *rkl_stringFromClassAndMethod(id object, SEL selector, NSString *format, ...) {
   va_list varArgsList;
   va_start(varArgsList, format);
-  NSString * RKL_GC_VOLATILE formatString = [[[NSString alloc] initWithFormat:format arguments:varArgsList] autorelease];
+  NSString *RKL_GC_VOLATILE formatString = [[[NSString alloc] initWithFormat:format arguments:varArgsList] autorelease];
   va_end(varArgsList);
   Class objectsClass = (object == NULL) ? NULL : [object class];
   return([NSString stringWithFormat:@"*** %c[%@ %@]: %@", (object == objectsClass) ? '+' : '-', (objectsClass == NULL) ? @"<NULL>" : NSStringFromClass(objectsClass), (selector == NULL) ? @":NULL:" : NSStringFromSelector(selector), formatString]);
@@ -1796,8 +1796,8 @@ static id rkl_performEnumerationUsingBlock(id self, SEL _cmd,
                                            RKLBlockEnumerationOp blockEnumerationOp, RKLRegexEnumerationOptions enumerationOptions,
                                            NSInteger *replacedCountPtr, NSUInteger *errorFreePtr,
                                            NSError **error,
-                                           void (^stringsAndRangesBlock)(NSInteger capturedCount, NSString * const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop),
-                                           NSString *(^replaceStringsAndRangesBlock)(NSInteger capturedCount, NSString * const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop)
+                                           void (^stringsAndRangesBlock)(NSInteger capturedCount, NSString *const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop),
+                                           NSString *(^replaceStringsAndRangesBlock)(NSInteger capturedCount, NSString *const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop)
                                            ) RKL_NONNULL_ARGS(1,2,4,6);
 
 // This is an object meant for internal use only.  It wraps and abstracts various functionality to simplify ^Blocks support.
@@ -1977,8 +1977,8 @@ static id rkl_performEnumerationUsingBlock(id self, SEL _cmd,
                                            RKLBlockEnumerationOp blockEnumerationOp, RKLRegexEnumerationOptions enumerationOptions,
                                            NSInteger *replacedCountPtr, NSUInteger *errorFreePtr,
                                            NSError **error,
-                                           void (^stringsAndRangesBlock)(NSInteger capturedCount, NSString * const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop),
-                                           NSString *(^replaceStringsAndRangesBlock)(NSInteger capturedCount, NSString * const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop)) {
+                                           void (^stringsAndRangesBlock)(NSInteger capturedCount, NSString *const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop),
+                                           NSString *(^replaceStringsAndRangesBlock)(NSInteger capturedCount, NSString *const capturedStrings[capturedCount], const NSRange capturedStringRanges[capturedCount], volatile BOOL * const stop)) {
   NSMutableArray            * RKL_GC_VOLATILE autoreleaseArray              = NULL;
   RKLBlockEnumerationHelper * RKL_GC_VOLATILE blockEnumerationHelper        = NULL;
   NSMutableString           * RKL_GC_VOLATILE mutableReplacementString      = NULL;
@@ -2536,14 +2536,14 @@ exitNow2:
 
 #pragma mark -enumerateStringsMatchedByRegex:usingBlock:
 
-- (BOOL)RKL_METHOD_PREPEND(enumerateStringsMatchedByRegex):(NSString *)regex usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)RKL_METHOD_PREPEND(enumerateStringsMatchedByRegex):(NSString *)regex usingBlock:(void (^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree = NO;
   rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLCapturesArrayOp, regex, (RKLRegexOptions)RKLNoOptions, self, NSMaxiumRange, (RKLBlockEnumerationOp)RKLBlockEnumerationMatchOp, 0UL,                NULL, &errorFree, NULL,  block, NULL);
   return(errorFree == NO ? NO : YES);
 }
 
-- (BOOL)RKL_METHOD_PREPEND(enumerateStringsMatchedByRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)RKL_METHOD_PREPEND(enumerateStringsMatchedByRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree = NO;
   rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLCapturesArrayOp, regex, options,                       self, range,         (RKLBlockEnumerationOp)RKLBlockEnumerationMatchOp, enumerationOptions, NULL, &errorFree, error, block, NULL);
@@ -2552,14 +2552,14 @@ exitNow2:
 
 #pragma mark -enumerateStringsSeparatedByRegex:usingBlock:
 
-- (BOOL)RKL_METHOD_PREPEND(enumerateStringsSeparatedByRegex):(NSString *)regex usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)RKL_METHOD_PREPEND(enumerateStringsSeparatedByRegex):(NSString *)regex usingBlock:(void (^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree = NO;
   rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLSplitOp,         regex, (RKLRegexOptions)RKLNoOptions, self, NSMaxiumRange, (RKLBlockEnumerationOp)RKLBlockEnumerationMatchOp, 0UL,                NULL, &errorFree, NULL,  block, NULL);
   return(errorFree == NO ? NO : YES);
 }
 
-- (BOOL)RKL_METHOD_PREPEND(enumerateStringsSeparatedByRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)RKL_METHOD_PREPEND(enumerateStringsSeparatedByRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree = NO;
   rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLSplitOp,         regex, options,                       self, range,         (RKLBlockEnumerationOp)RKLBlockEnumerationMatchOp, enumerationOptions, NULL, &errorFree, error, block, NULL);
@@ -2568,12 +2568,12 @@ exitNow2:
 
 #pragma mark -stringByReplacingOccurrencesOfRegex:usingBlock:
 
-- (NSString *)RKL_METHOD_PREPEND(stringByReplacingOccurrencesOfRegex):(NSString *)regex usingBlock:(NSString *(^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSString *)RKL_METHOD_PREPEND(stringByReplacingOccurrencesOfRegex):(NSString *)regex usingBlock:(NSString *(^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   return(rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLCapturesArrayOp, regex, (RKLRegexOptions)RKLNoOptions, self, NSMaxiumRange, (RKLBlockEnumerationOp)RKLBlockEnumerationReplaceOp, 0UL,                NULL, NULL, NULL,  NULL, block));
 }
 
-- (NSString *)RKL_METHOD_PREPEND(stringByReplacingOccurrencesOfRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(NSString *(^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSString *)RKL_METHOD_PREPEND(stringByReplacingOccurrencesOfRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(NSString *(^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   return(rkl_performEnumerationUsingBlock(self, _cmd, (RKLRegexOp)RKLCapturesArrayOp, regex, options,                       self, range,         (RKLBlockEnumerationOp)RKLBlockEnumerationReplaceOp, enumerationOptions, NULL, NULL, error, NULL, block));
 }
@@ -2618,7 +2618,7 @@ exitNow2:
 
 #pragma mark -replaceOccurrencesOfRegex:usingBlock:
 
-- (NSInteger)RKL_METHOD_PREPEND(replaceOccurrencesOfRegex):(NSString *)regex usingBlock:(NSString *(^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSInteger)RKL_METHOD_PREPEND(replaceOccurrencesOfRegex):(NSString *)regex usingBlock:(NSString *(^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree     = 0UL;
   NSInteger replacedCount  = -1L;
@@ -2627,7 +2627,7 @@ exitNow2:
   return(replacedCount);
 }
 
-- (NSInteger)RKL_METHOD_PREPEND(replaceOccurrencesOfRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(NSString *(^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSInteger)RKL_METHOD_PREPEND(replaceOccurrencesOfRegex):(NSString *)regex options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error enumerationOptions:(RKLRegexEnumerationOptions)enumerationOptions usingBlock:(NSString *(^)(NSInteger captureCount, NSString *const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
   NSUInteger errorFree     = 0UL;
   NSInteger replacedCount  = -1L;

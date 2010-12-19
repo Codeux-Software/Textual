@@ -99,7 +99,6 @@
 		4C4C024812B7AC2F00E56A20 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = ../../../Classes/Helpers/DDInvocationGrabber.h; sourceTree = SOURCE_ROOT; };
 		4C4C024912B7AC2F00E56A20 /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfig.h; path = ../../../Classes/IRC/IRCClientConfig.h; sourceTree = SOURCE_ROOT; };
 		4C4C024A12B7AC2F00E56A20 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnicodeHelper.h; path = ../../../Classes/Helpers/UnicodeHelper.h; sourceTree = SOURCE_ROOT; };
-		4C4C024B12B7AC2F00E56A20 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletinStatus.h; path = ../../../Classes/Controllers/NickCompletinStatus.h; sourceTree = SOURCE_ROOT; };
 		4C4C024C12B7AC2F00E56A20 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputHistory.h; path = ../../../Classes/Library/InputHistory.h; sourceTree = SOURCE_ROOT; };
 		4C4C024D12B7AC2F00E56A20 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = ../../../Classes/Library/HostResolver.h; sourceTree = SOURCE_ROOT; };
 		4C4C024E12B7AC2F00E56A20 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = ../../../Classes/Helpers/NSWindowHelper.h; sourceTree = SOURCE_ROOT; };
@@ -124,6 +123,7 @@
 		4C4C026112B7AC2F00E56A20 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = ../../../Classes/Views/Log/LogScriptEventSink.h; sourceTree = SOURCE_ROOT; };
 		4C4C026212B7AC2F00E56A20 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../Classes/IRC/IRCUser.h; sourceTree = SOURCE_ROOT; };
 		4C4C026312B7AC2F00E56A20 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = ../../../Classes/Views/Log/LogLine.h; sourceTree = SOURCE_ROOT; };
+		4CE2805812BDFB01008C47B5 /* NickCompletionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletionStatus.h; path = ../../../Classes/Controllers/NickCompletionStatus.h; sourceTree = SOURCE_ROOT; };
 		8D576316048677EA00EA77CD /* BragSpam.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BragSpam.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +190,7 @@
 		4C393AB8121AE285004C66F4 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4CE2805812BDFB01008C47B5 /* NickCompletionStatus.h */,
 				4C4C01F912B7AC2F00E56A20 /* IRCChannelMode.h */,
 				4C4C01FA12B7AC2F00E56A20 /* TextualPluginItem.h */,
 				4C4C01FB12B7AC2F00E56A20 /* MasterController.h */,
@@ -272,7 +273,6 @@
 				4C4C024812B7AC2F00E56A20 /* DDInvocationGrabber.h */,
 				4C4C024912B7AC2F00E56A20 /* IRCClientConfig.h */,
 				4C4C024A12B7AC2F00E56A20 /* UnicodeHelper.h */,
-				4C4C024B12B7AC2F00E56A20 /* NickCompletinStatus.h */,
 				4C4C024C12B7AC2F00E56A20 /* InputHistory.h */,
 				4C4C024D12B7AC2F00E56A20 /* HostResolver.h */,
 				4C4C024E12B7AC2F00E56A20 /* NSWindowHelper.h */,

@@ -22,7 +22,7 @@
 	[super dealloc];
 }
 
-- (void)start:(NSString*)topic
+- (void)start:(NSString *)topic
 {
 	[text setStringValue:[topic stringWithInputIRCFormatting] ?: @""];
 	[self startSheet];
@@ -40,7 +40,7 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
-- (void)windowWillClose:(NSNotification*)note
+- (void)windowWillClose:(NSNotification *)note
 {
 	if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
 		[delegate topicSheetWillClose:self];

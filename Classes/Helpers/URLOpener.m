@@ -5,9 +5,9 @@
 
 @implementation URLOpener
 
-+ (void)open:(NSURL*)url
++ (void)open:(NSURL *)url
 {
-	NSWorkspace* ws = [NSWorkspace sharedWorkspace];
+	NSWorkspace *ws = [NSWorkspace sharedWorkspace];
 	
 	if ([Preferences openBrowserInBackground]) {
 		[ws openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:nil options:NSWorkspaceLaunchWithoutActivation additionalEventParamDescriptor:nil launchIdentifiers:nil];
@@ -16,7 +16,7 @@
 	}
 }
 
-+ (void)openAndActivate:(NSURL*)url
++ (void)openAndActivate:(NSURL *)url
 {
 	[[NSWorkspace sharedWorkspace] openURL:url];
 }

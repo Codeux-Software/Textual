@@ -4,11 +4,11 @@
 @interface FieldEditorTextView : NSTextView
 {
 	id pasteDelegate;
-	KeyEventHandler* keyHandler;
+	KeyEventHandler *keyHandler;
 }
 
 @property (nonatomic, assign) id pasteDelegate;
-@property (nonatomic, retain) KeyEventHandler* keyHandler;
+@property (nonatomic, retain) KeyEventHandler *keyHandler;
 
 - (void)paste:(id)sender;
 

@@ -20,17 +20,17 @@
 @interface KeyEventHandler : NSObject
 {
 	id target;
-	NSMutableDictionary* codeHandlerMap;
-	NSMutableDictionary* characterHandlerMap;
+	NSMutableDictionary *codeHandlerMap;
+	NSMutableDictionary *characterHandlerMap;
 }
 
 @property (nonatomic, assign) id target;
-@property (nonatomic, retain) NSMutableDictionary* codeHandlerMap;
-@property (nonatomic, retain) NSMutableDictionary* characterHandlerMap;
+@property (nonatomic, retain) NSMutableDictionary *codeHandlerMap;
+@property (nonatomic, retain) NSMutableDictionary *characterHandlerMap;
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods;
 
-- (BOOL)processKeyEvent:(NSEvent*)e;
+- (BOOL)processKeyEvent:(NSEvent *)e;
 @end

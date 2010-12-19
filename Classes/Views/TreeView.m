@@ -18,7 +18,7 @@
 	[self scrollRowToVisible:index];
 }
 
-- (NSMenu*)menuForEvent:(NSEvent *)e
+- (NSMenu *)menuForEvent:(NSEvent *)e
 {
 	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
 	NSInteger i = [self rowAtPoint:p];
@@ -30,7 +30,7 @@
 
 - (void)setFont:(NSFont *)font
 {
-	for (NSTableColumn* column in [self tableColumns]) {
+	for (NSTableColumn *column in [self tableColumns]) {
 		[[column dataCell] setFont:font];
 	}
 	
@@ -41,7 +41,7 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (NSFont*)font
+- (NSFont *)font
 {
 	return [[[[self tableColumns] safeObjectAtIndex:0] dataCell] font];
 }

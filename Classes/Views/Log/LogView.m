@@ -45,18 +45,18 @@
 	return YES;
 }
 
-- (NSString*)contentString
+- (NSString *)contentString
 {
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[self mainFrameDocument];
+	DOMHTMLDocument *doc = (DOMHTMLDocument *)[self mainFrameDocument];
 	if (!doc) return @"";
-	DOMElement* body = [doc body];
+	DOMElement *body = [doc body];
 	if (!body) return @"";
-	DOMHTMLElement* root = (DOMHTMLElement*)[body parentNode];
+	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
 	if (!root) return @"";
 	return [root outerHTML];
 }
 
-- (WebScriptObject*)js_api
+- (WebScriptObject *)js_api
 {
 	return [[self windowScriptObject] evaluateWebScript:@"Textual"];
 }
@@ -71,9 +71,9 @@
 	return [self selection].length > 0;
 }
 
-- (NSString*)selection
+- (NSString *)selection
 {
-	DOMRange* range = [self selectedDOMRange];
+	DOMRange *range = [self selectedDOMRange];
 	if (!range) return nil;
 	return [range toString];
 }

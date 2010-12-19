@@ -188,12 +188,12 @@
 #pragma mark -
 #pragma mark KVC Properties
 
-- (void)setFontDisplayName:(NSString*)value
+- (void)setFontDisplayName:(NSString *)value
 {
 	[Preferences setThemeLogFontName:value];
 }
 
-- (NSString*)fontDisplayName
+- (NSString *)fontDisplayName
 {
 	return [Preferences themeLogFontName];
 }
@@ -296,16 +296,16 @@
 #pragma mark -
 #pragma mark Sounds
 
-- (NSArray*)availableSounds
+- (NSArray *)availableSounds
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSMutableArray* sound_list = [NSMutableArray array];
+	NSMutableArray *sound_list = [NSMutableArray array];
 	NSArray *directoryContents = [fm contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
 
 	[sound_list addObject:EMPTY_SOUND];
 	 
 	if (directoryContents && [directoryContents count] > 0) {
-		for (NSString* s in directoryContents) {	
+		for (NSString *s in directoryContents) {	
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 		}
 	}
@@ -316,7 +316,7 @@
 	if (homeDirectoryContents && [homeDirectoryContents count] > 0) {
 		[sound_list addObject:EMPTY_SOUND];
 		
-		for (NSString* s in homeDirectoryContents) {	
+		for (NSString *s in homeDirectoryContents) {	
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 		}		
 	}
@@ -324,11 +324,11 @@
 	return sound_list;
 }
 
-- (NSMutableArray*)sounds
+- (NSMutableArray *)sounds
 {
 	if (!sounds) {
-		NSMutableArray* ary = [NSMutableArray new];
-		SoundWrapper* e;
+		NSMutableArray *ary = [NSMutableArray new];
+		SoundWrapper *e;
 		
 		e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
 		[ary addObject:e];
@@ -374,15 +374,15 @@
 
 - (void)updateTranscriptFolder
 {
-	NSString* path = [Preferences transcriptFolder];
+	NSString *path = [Preferences transcriptFolder];
 	path = [path stringByExpandingTildeInPath];
-	NSString* dirName = [path lastPathComponent];
+	NSString *dirName = [path lastPathComponent];
 	
-	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
+	NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
 	
 	[icon setSize:NSMakeSize(16, 16)];
 	
-	NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
+	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
 	
 	[item setTitle:dirName];
 	[item setImage:icon];
@@ -393,9 +393,9 @@
 	[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
 	
 	if (returnCode == NSOKButton) {
-		NSString* path = [[panel filenames] safeObjectAtIndex:0];
+		NSString *path = [[panel filenames] safeObjectAtIndex:0];
 		
-		NSFileManager* fm = [NSFileManager defaultManager];
+		NSFileManager *fm = [NSFileManager defaultManager];
 		
 		BOOL isDir;
 		
@@ -416,11 +416,11 @@
 {
 	if ([transcriptFolderButton selectedTag] != 2) return;
 	
-	NSString* path = [Preferences transcriptFolder];
+	NSString *path = [Preferences transcriptFolder];
 	path = [path stringByExpandingTildeInPath];
-	NSString* parentPath = [path stringByDeletingLastPathComponent];
+	NSString *parentPath = [path stringByDeletingLastPathComponent];
 	
-	NSOpenPanel* d = [NSOpenPanel openPanel];
+	NSOpenPanel *d = [NSOpenPanel openPanel];
 	[d setCanChooseFiles:NO];
 	[d setCanChooseDirectories:YES];
 	[d setResolvesAliases:YES];
@@ -439,15 +439,15 @@
 {
 	[themeButton removeAllItems];
 	
-	NSFileManager* fm = [NSFileManager defaultManager];
-	NSArray* ary = [NSArray arrayWithObjects:[Preferences whereThemesLocalPath], [Preferences whereThemesPath], nil];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSArray *ary = [NSArray arrayWithObjects:[Preferences whereThemesLocalPath], [Preferences whereThemesPath], nil];
 	NSInteger tag = 0;
 	
-	for (NSString* path in ary) {
-		NSMutableSet* set = [NSMutableSet set];
-		NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
+	for (NSString *path in ary) {
+		NSMutableSet *set = [NSMutableSet set];
+		NSArray *files = [fm contentsOfDirectoryAtPath:path error:NULL];
 		
-		for (NSString* file in files) {
+		for (NSString *file in files) {
 			if ([path isEqualToString:[Preferences whereThemesLocalPath]]) {
 				if ([fm fileExistsAtPath:[[Preferences whereThemesPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
 					continue;
@@ -455,7 +455,7 @@
 			}
 			
 			if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
-				NSString* baseName = [file stringByDeletingPathExtension];
+				NSString *baseName = [file stringByDeletingPathExtension];
 				
 				[set addObject:baseName];
 			}
@@ -466,8 +466,8 @@
 		if (files.count) {
 			NSInteger i = 0;
 			
-			for (NSString* f in files) {
-				NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
+			for (NSString *f in files) {
+				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
 				
 				[item setTag:tag];
 				[themeButton.menu addItem:item];
@@ -479,15 +479,15 @@
 		++tag;
 	}
 	
-	NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+	NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
 	
 	if (!kindAndName) {
 		[themeButton selectItemAtIndex:0];
 		return;
 	}
 	
-	NSString* kind = [kindAndName safeObjectAtIndex:0];
-	NSString* name = [kindAndName safeObjectAtIndex:1];
+	NSString *kind = [kindAndName safeObjectAtIndex:0];
+	NSString *name = [kindAndName safeObjectAtIndex:1];
 	
 	NSInteger targetTag = 0;
 	
@@ -498,7 +498,7 @@
 	NSInteger count = [themeButton numberOfItems];
 	
 	for (NSInteger i = 0; i < count; i++) {
-		NSMenuItem* item = [themeButton itemAtIndex:i];
+		NSMenuItem *item = [themeButton itemAtIndex:i];
 		
 		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
 			[themeButton selectItemAtIndex:i];
@@ -509,10 +509,10 @@
 
 - (void)onChangedTheme:(id)sender
 {
-	NSMenuItem* item = [themeButton selectedItem];
+	NSMenuItem *item = [themeButton selectedItem];
 	
-	NSString* newThemeName;
-	NSString* name = [item title];
+	NSString *newThemeName;
+	NSString *name = [item title];
 	
 	if (item.tag == 0) {
 		newThemeName = [ViewTheme buildResourceFileName:name];
@@ -528,7 +528,7 @@
 
 - (void)onSelectFont:(id)sender
 {
-	NSFontManager* fm = [NSFontManager sharedFontManager];
+	NSFontManager *fm = [NSFontManager sharedFontManager];
 	[fm setSelectedFont:logFont isMultiple:NO];
 	[fm orderFrontFontPanel:self];
 }
@@ -551,7 +551,7 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:TransparencyDidChangeNotification object:nil userInfo:nil];
 }
 
@@ -578,7 +578,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void)editTable:(NSTableView*)table
+- (void)editTable:(NSTableView *)table
 {
 	NSInteger row = [table numberOfRows] - 1;
 	[table scrollRowToVisible:row];
@@ -599,19 +599,19 @@
 
 - (void)onInputHistorySchemeChanged:(id)sender
 {
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:InputHistoryGlobalSchemeNotification object:nil userInfo:nil];
 }
 
 - (void)onLayoutChanged:(id)sender
 {
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onStyleChanged:(id)sender
 {
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
 }
 

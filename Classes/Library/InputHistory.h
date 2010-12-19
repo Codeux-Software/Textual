@@ -3,14 +3,14 @@
 
 @interface InputHistory : NSObject
 {
-	NSMutableArray* buf;
+	NSMutableArray *buf;
 	NSInteger pos;
 }
 
-@property (nonatomic, retain) NSMutableArray* buf;
+@property (nonatomic, retain) NSMutableArray *buf;
 @property (nonatomic) NSInteger pos;
 
-- (void)add:(NSString*)s;
-- (NSString*)up:(NSString*)s;
-- (NSString*)down:(NSString*)s;
+- (void)add:(NSString *)s;
+- (NSString *)up:(NSString *)s;
+- (NSString *)down:(NSString *)s;
 @end

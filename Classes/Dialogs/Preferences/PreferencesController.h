@@ -29,31 +29,31 @@
 	IBOutlet NSView *IRCopServicesView;
 	IBOutlet NSView *channelManagementView;
 	
-	IBOutlet NSTableView* keywordsTable;
-	IBOutlet NSTableView* excludeWordsTable;
-	IBOutlet NSTableView* installedScriptsTable;
-	IBOutlet NSArrayController* keywordsArrayController;
-	IBOutlet NSArrayController* excludeWordsArrayController;
-	IBOutlet NSPopUpButton* transcriptFolderButton;
-	IBOutlet NSPopUpButton* themeButton;
-	IBOutlet NSTextField* scriptLocationField;
-	IBOutlet NSPopUpButton* preferenceSelectButton;
+	IBOutlet NSTableView *keywordsTable;
+	IBOutlet NSTableView *excludeWordsTable;
+	IBOutlet NSTableView *installedScriptsTable;
+	IBOutlet NSArrayController *keywordsArrayController;
+	IBOutlet NSArrayController *excludeWordsArrayController;
+	IBOutlet NSPopUpButton *transcriptFolderButton;
+	IBOutlet NSPopUpButton *themeButton;
+	IBOutlet NSTextField *scriptLocationField;
+	IBOutlet NSPopUpButton *preferenceSelectButton;
 	
 	ScriptsWrapper *scriptsController;
 	
-	NSFont* logFont;
+	NSFont *logFont;
 	IRCWorld *world;
-	NSMutableArray* sounds;
-	NSOpenPanel* transcriptFolderOpenPanel;
+	NSMutableArray *sounds;
+	NSOpenPanel *transcriptFolderOpenPanel;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, retain) ScriptsWrapper *scriptsController;
-@property (nonatomic, assign) NSString* fontDisplayName;
+@property (nonatomic, assign) NSString *fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
-@property (nonatomic, readonly) NSArray* availableSounds;
-@property (nonatomic, readonly) NSMutableArray* sounds;
+@property (nonatomic, readonly) NSArray *availableSounds;
+@property (nonatomic, readonly) NSMutableArray *sounds;
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *highlightView;
 @property (nonatomic, retain) NSView *interfaceView;
@@ -68,17 +68,17 @@
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *IRCopServicesView;
 @property (nonatomic, retain) NSView *channelManagementView;
-@property (nonatomic, retain) NSTableView* keywordsTable;
-@property (nonatomic, retain) NSTableView* excludeWordsTable;
-@property (nonatomic, retain) NSTableView* installedScriptsTable;
-@property (nonatomic, retain) NSArrayController* keywordsArrayController;
-@property (nonatomic, retain) NSArrayController* excludeWordsArrayController;
-@property (nonatomic, retain) NSPopUpButton* transcriptFolderButton;
-@property (nonatomic, retain) NSPopUpButton* themeButton;
-@property (nonatomic, retain) NSTextField* scriptLocationField;
-@property (nonatomic, retain) NSPopUpButton* preferenceSelectButton;
-@property (nonatomic, retain) NSOpenPanel* transcriptFolderOpenPanel;
-@property (nonatomic, retain) NSFont* logFont;
+@property (nonatomic, retain) NSTableView *keywordsTable;
+@property (nonatomic, retain) NSTableView *excludeWordsTable;
+@property (nonatomic, retain) NSTableView *installedScriptsTable;
+@property (nonatomic, retain) NSArrayController *keywordsArrayController;
+@property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
+@property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, retain) NSPopUpButton *themeButton;
+@property (nonatomic, retain) NSTextField *scriptLocationField;
+@property (nonatomic, retain) NSPopUpButton *preferenceSelectButton;
+@property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
+@property (nonatomic, retain) NSFont *logFont;
 
 - (void)show;
 
@@ -104,5 +104,5 @@
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
-- (void)preferencesDialogWillClose:(PreferencesController*)sender;
+- (void)preferencesDialogWillClose:(PreferencesController *)sender;
 @end

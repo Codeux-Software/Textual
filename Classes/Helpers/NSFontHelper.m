@@ -5,7 +5,7 @@
 
 @implementation NSFont (NSFontHelper)
 
-- (NSFont*)convertToItalics
+- (NSFont *)convertToItalics
 { 
 	// The following code to make a font have italics with an extra fallback is from:
 	// <http://www.answerspice.com/c119/1619181/how-do-i-get-lucida-grande-italic-into-my-application>

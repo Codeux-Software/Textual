@@ -57,13 +57,13 @@
 	[growl registerApplication];
 }
 
-- (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
+- (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
 	if (![Preferences growlEnabledForEvent:type]) return;
 	
 	NSInteger priority = 0;
 	BOOL sticky = [Preferences growlStickyForEvent:type];
-	NSString* kind = nil;
+	NSString *kind = nil;
 	
 	switch (type) {
 		case GROWL_ADDRESS_BOOK_MATCH:
@@ -119,7 +119,7 @@
 	[growl notifyWithType:kind title:title description:desc clickContext:context sticky:sticky priority:priority icon:nil];
 }
 
-- (void)tinyGrowlClient:(TinyGrowlClient*)sender didClick:(id)context
+- (void)tinyGrowlClient:(TinyGrowlClient *)sender didClick:(id)context
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
@@ -142,14 +142,14 @@
 	[NSApp activateIgnoringOtherApps:YES];
 	
 	if ([context isKindOfClass:[NSString class]]) {
-		NSString* s = context;
-		NSArray* ary = [s componentsSeparatedByString:@" "];
+		NSString *s = context;
+		NSArray *ary = [s componentsSeparatedByString:@" "];
 		if (ary.count >= 2) {
 			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
 			NSInteger cid = [[ary safeObjectAtIndex:1] integerValue];
 			
-			IRCClient* u = [owner findClientById:uid];
-			IRCChannel* c = [owner findChannelByClientId:uid channelId:cid];
+			IRCClient *u = [owner findClientById:uid];
+			IRCChannel *c = [owner findChannelByClientId:uid channelId:cid];
 			if (c) {
 				[owner select:c];
 			} else if (u) {
@@ -158,7 +158,7 @@
 		} else if (ary.count == 1) {
 			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
 			
-			IRCClient* u = [owner findClientById:uid];
+			IRCClient *u = [owner findClientById:uid];
 			if (u) {
 				[owner select:u];
 			}
@@ -166,7 +166,7 @@
 	}
 }
 
-- (void)tinyGrowlClient:(TinyGrowlClient*)sender didTimeOut:(id)context
+- (void)tinyGrowlClient:(TinyGrowlClient *)sender didTimeOut:(id)context
 {
 	if (!registered) {
 		registered = YES;

@@ -4,7 +4,7 @@
 #import "IRCMessage.h"
 
 @interface IRCMessage (Private)
-- (void)parseLine:(NSString*)line;
+- (void)parseLine:(NSString *)line;
 @end
 
 @implementation IRCMessage
@@ -22,7 +22,7 @@
 	return self;
 }
 
-- (id)initWithLine:(NSString*)line
+- (id)initWithLine:(NSString *)line
 {
 	if ((self = [super init])) {
 		[self parseLine:line];
@@ -38,7 +38,7 @@
 	[super dealloc];
 }
 
-- (void)parseLine:(NSString*)line
+- (void)parseLine:(NSString *)line
 {
 	[sender release];
 	[command release];
@@ -48,10 +48,10 @@
 	command = @"";
 	params = [NSMutableArray new];
 	
-	NSMutableString* s = [line mutableCopy];
+	NSMutableString *s = [line mutableCopy];
 	
 	if ([s hasPrefix:@":"]) {
-		NSString* t = [s getToken];
+		NSString *t = [s getToken];
 		t = [t safeSubstringFromIndex:1];
 		sender.raw = t;
 		
@@ -86,7 +86,7 @@
 	[s release];
 }
 
-- (NSString*)paramAt:(NSInteger)index
+- (NSString *)paramAt:(NSInteger)index
 {
 	if (index < params.count) {
 		return [params safeObjectAtIndex:index];
@@ -95,7 +95,7 @@
 	}
 }
 
-- (NSString*)sequence
+- (NSString *)sequence
 {
 	if ([params count] < 2) {
 		return [self sequence:0];
@@ -104,14 +104,14 @@
 	}
 }
 
-- (NSString*)sequence:(NSInteger)index
+- (NSString *)sequence:(NSInteger)index
 {
-	NSMutableString* s = [NSMutableString string];
+	NSMutableString *s = [NSMutableString string];
 	
 	NSInteger count = params.count;
 	
 	for (NSInteger i = index; i < count; i++) {
-		NSString* e = [params safeObjectAtIndex:i];
+		NSString *e = [params safeObjectAtIndex:i];
 		if (i != index) [s appendString:@" "];
 		[s appendString:e];
 	}
@@ -119,12 +119,12 @@
 	return s;
 }
 
-- (NSString*)description
+- (NSString *)description
 {
-	NSMutableString* ms = [NSMutableString string];
+	NSMutableString *ms = [NSMutableString string];
 	[ms appendString:@"<IRCMessage "];
 	[ms appendString:command];
-	for (NSString* s in params) {
+	for (NSString *s in params) {
 		[ms appendString:@" "];
 		[ms appendString:s];
 	}

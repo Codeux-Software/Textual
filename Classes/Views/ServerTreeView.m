@@ -18,8 +18,8 @@
 	topLineColor = [[NSColor colorWithCalibratedRed:173/255.0 green:187/255.0 blue:208/255.0 alpha:1] retain];
 	bottomLineColor = [[NSColor colorWithCalibratedRed:140/255.0 green:152/255.0 blue:176/255.0 alpha:1] retain];
 	
-	NSColor* start = [NSColor colorWithCalibratedRed:173/255.0 green:187/255.0 blue:208/255.0 alpha:1];
-	NSColor* end = [NSColor colorWithCalibratedRed:152/255.0 green:170/255.0 blue:196/255.0 alpha:1];
+	NSColor *start = [NSColor colorWithCalibratedRed:173/255.0 green:187/255.0 blue:208/255.0 alpha:1];
+	NSColor *end = [NSColor colorWithCalibratedRed:152/255.0 green:170/255.0 blue:196/255.0 alpha:1];
 	gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 }
 
@@ -31,7 +31,7 @@
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder *)coder
 {
 	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
@@ -69,12 +69,12 @@
 	topLineColor = [theme.treeSelTopLineColor retain];
 	bottomLineColor = [theme.treeSelBottomLineColor retain];
 	
-	NSColor* start = theme.treeSelTopColor;
-	NSColor* end = theme.treeSelBottomColor;
+	NSColor *start = theme.treeSelTopColor;
+	NSColor *end = theme.treeSelBottomColor;
 	gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 }
 
-- (NSColor*)_highlightColorForCell:(NSCell*)cell
+- (NSColor *)_highlightColorForCell:(NSCell *)cell
 {
 	return nil;
 }

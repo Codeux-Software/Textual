@@ -5,10 +5,10 @@
 {
 	CFAbsoluteTime time;
 	NSInteger cid;
-	NSString* input;
+	NSString *input;
 }
 
 @property (nonatomic, assign) CFAbsoluteTime time;
 @property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, copy) NSString* input;
+@property (nonatomic, copy) NSString *input;
 @end

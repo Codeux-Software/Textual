@@ -144,7 +144,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 }
 
-- (NSString*)password
+- (NSString *)password
 {
 	NSString *kcPassword = nil;
 	
@@ -222,7 +222,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 #pragma mark -
 #pragma mark Server Configuration
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)initWithDictionary:(NSDictionary *)dic
 {
 	[self init];	
 	
@@ -292,13 +292,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
 	
-	for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
-		IRCChannelConfig* c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
+	for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
+		IRCChannelConfig *c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
 		[channels addObject:c];
 	}
 	
-	for (NSDictionary* e in [dic arrayForKey:@"ignores"]) {
-		AddressBook* ignore = [[[AddressBook alloc] initWithDictionary:e] autorelease];
+	for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
+		AddressBook *ignore = [[[AddressBook alloc] initWithDictionary:e] autorelease];
 		[ignores addObject:ignore];
 	}
 	
@@ -336,9 +336,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[super dealloc];
 }
 
-- (NSMutableDictionary*)dictionaryValue
+- (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	// * =================================== * //
 	
@@ -374,14 +374,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
 	
-	NSMutableArray* channelAry = [NSMutableArray array];
-	for (IRCChannelConfig* e in channels) {
+	NSMutableArray *channelAry = [NSMutableArray array];
+	for (IRCChannelConfig *e in channels) {
 		[channelAry addObject:[e dictionaryValue]];
 	}
 	[dic setObject:channelAry forKey:@"channels"];
 	
-	NSMutableArray* ignoreAry = [NSMutableArray array];
-	for (AddressBook* e in ignores) {
+	NSMutableArray *ignoreAry = [NSMutableArray array];
+	for (AddressBook *e in ignores) {
 		[ignoreAry addObject:[e dictionaryValue]];
 	}
 	[dic setObject:ignoreAry forKey:@"ignores"];

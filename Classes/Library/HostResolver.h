@@ -9,10 +9,10 @@
 @property (nonatomic, assign) id delegate;
 
 - (id)initWithDelegate:(id)aDelegate;
-- (void)resolve:(NSString*)hostname;
+- (void)resolve:(NSString *)hostname;
 @end
 
 @interface NSObject (HostResolverDelegate)
-- (void)hostResolver:(HostResolver*)sender didResolve:(NSHost*)host;
-- (void)hostResolver:(HostResolver*)sender didNotResolve:(NSString*)hostname;
+- (void)hostResolver:(HostResolver *)sender didResolve:(NSHost *)host;
+- (void)hostResolver:(HostResolver *)sender didNotResolve:(NSString *)hostname;
 @end

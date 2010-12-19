@@ -56,13 +56,13 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 	return len - start;
 }
 
-NSString* logEscape(NSString* s)
+NSString *logEscape(NSString *s)
 {
 	s = [s gtm_stringByEscapingForHTML];
 	return [s stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
-NSColor* mapColor(NSInteger colorChar) 
+NSColor *mapColor(NSInteger colorChar) 
 {
 	switch (colorChar) {
 		case 0: return [NSColor fromCSS:@"#fff"]; 
@@ -86,7 +86,7 @@ NSColor* mapColor(NSInteger colorChar)
 	return nil;
 }
 
-static NSMutableAttributedString* renderAttributedRange(NSMutableAttributedString* body, attr_t attr, NSInteger start, NSInteger len)
+static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len)
 {
 	NSRange r = NSMakeRange(start, len);
 	
@@ -110,9 +110,9 @@ static NSMutableAttributedString* renderAttributedRange(NSMutableAttributedStrin
 	return body;
 }
 
-static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInteger len)
+static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len)
 {
-	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
+	NSString *content = [body substringWithRange:NSMakeRange(start, len)];
 	
 	if (attr & URL_ATTR) {
 		NSArray *parsedURL = [URLParser fastChopURL:content];
@@ -139,7 +139,7 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", content];
 	} else if (attr & EFFECT_MASK) {
 		content = logEscape(content);
-		NSMutableString* s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
+		NSMutableString *s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
 		if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
 		if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
 		if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
@@ -159,12 +159,12 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 {
 }
 
-+ (NSString*)renderBody:(NSString*)body 
++ (NSString *)renderBody:(NSString *)body 
 				nolinks:(BOOL)showLinks 
-			   keywords:(NSArray*)keywords 
-		   excludeWords:(NSArray*)excludeWords 
+			   keywords:(NSArray *)keywords 
+		   excludeWords:(NSArray *)excludeWords 
 		 exactWordMatch:(BOOL)exactWordMatch 
-			highlighted:(BOOL*)highlighted 
+			highlighted:(BOOL *)highlighted 
 			  URLRanges:(NSArray**)urlRanges
 {
 	return [self renderBody:body
@@ -177,12 +177,12 @@ static NSString* renderRange(NSString* body, attr_t attr, NSInteger start, NSInt
 		   attributedString:NO];
 }
 
-+ (id)renderBody:(NSString*)body 
++ (id)renderBody:(NSString *)body 
 		 nolinks:(BOOL)showLinks 
-		keywords:(NSArray*)keywords 
-	excludeWords:(NSArray*)excludeWords 
+		keywords:(NSArray *)keywords 
+	excludeWords:(NSArray *)excludeWords 
   exactWordMatch:(BOOL)exactWordMatch 
-	 highlighted:(BOOL*)highlighted 
+	 highlighted:(BOOL *)highlighted 
 	   URLRanges:(NSArray**)urlRanges
 attributedString:(BOOL)attributed
 {
@@ -297,7 +297,7 @@ attributedString:(BOOL)attributed
 	len = n;
 	
 	if (!attributed) {
-		NSMutableArray* urlAry = [NSMutableArray array];
+		NSMutableArray *urlAry = [NSMutableArray array];
 		start = 0;
 		
 		if (!showLinks) {
@@ -321,9 +321,9 @@ attributedString:(BOOL)attributed
 		}
 		
 		BOOL foundKeyword = NO;
-		NSMutableArray* excludeRanges = [NSMutableArray array];
+		NSMutableArray *excludeRanges = [NSMutableArray array];
 		if (!exactWordMatch) {
-			for (NSString* excludeWord in excludeWords) {
+			for (NSString *excludeWord in excludeWords) {
 				start = 0;
 				while (start < len) {
 					NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
@@ -336,7 +336,7 @@ attributedString:(BOOL)attributed
 			}
 		}
 		
-		for (NSString* keyword in keywords) {
+		for (NSString *keyword in keywords) {
 			start = 0;
 			while (start < len) {
 				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
@@ -345,7 +345,7 @@ attributedString:(BOOL)attributed
 				}
 				
 				BOOL enabled = YES;
-				for (NSValue* e in excludeRanges) {
+				for (NSValue *e in excludeRanges) {
 					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
 						enabled = NO;
 						break;
@@ -444,7 +444,7 @@ attributedString:(BOOL)attributed
 		if (attributed) {
 			result = renderAttributedRange(result, t, start, n);	
 		} else {
-			NSString* s = renderRange(body, t, start, n);
+			NSString *s = renderRange(body, t, start, n);
 			[result appendString:s];
 		}
 		

@@ -18,11 +18,11 @@
 	NSScreen *scaleCheck = [NSScreen alloc];
 	
 	if ([[NSString stringWithFormat:@"%f", [scaleCheck userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
-		NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 		NSSize textSize;
 		NSString *iconRep;
-		NSMutableAttributedString* textString;
+		NSMutableAttributedString *textString;
 		NSFont *font = [NSFont fontWithName:@"Helvetica" size:22.0];
 		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
@@ -82,7 +82,7 @@
 	[scaleCheck release];
 }
 
-+ (NSString*)badgeFilename:(NSInteger)count
++ (NSString *)badgeFilename:(NSInteger)count
 {
 	switch (count) {
 		case 1 ... 99:

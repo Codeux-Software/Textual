@@ -157,10 +157,10 @@ GTM_EXTERN void _GTMUnitTestDevLog(NSString *format, ...);
       for (element in collection)
   #else
     #define GTM_FOREACH_OBJECT(element, collection) \
-      for (NSEnumerator * _ ## element ## _enum = [collection objectEnumerator]; \
+      for (NSEnumerator *_ ## element ## _enum = [collection objectEnumerator]; \
            (element = [_ ## element ## _enum nextObject]) != nil; )
     #define GTM_FOREACH_KEY(element, collection) \
-      for (NSEnumerator * _ ## element ## _enum = [collection keyEnumerator]; \
+      for (NSEnumerator *_ ## element ## _enum = [collection keyEnumerator]; \
            (element = [_ ## element ## _enum nextObject]) != nil; )
   #endif
 #endif

@@ -71,7 +71,7 @@
 	
 	if (useSystemSocks) {
 		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
-		NSNumber* num = (NSNumber*)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
+		NSNumber *num = (NSNumber *)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
 		BOOL systemSocksEnabled = [num integerValue] != 0;
 		CFRelease(proxyDic);
 		
@@ -125,16 +125,16 @@
 	[self updateTimer];
 }
 
-- (void)sendLine:(NSString*)line
+- (void)sendLine:(NSString *)line
 {
 	[sendQueue addObject:line];
 	[self tryToSend];
 	[self updateTimer];
 }
 
-- (NSData*)convertToCommonEncoding:(NSString*)s
+- (NSData *)convertToCommonEncoding:(NSString *)s
 {
-	NSData* data = [s dataUsingEncoding:encoding];
+	NSData *data = [s dataUsingEncoding:encoding];
 	if (!data) {
 		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
 		if (!data) {
@@ -157,11 +157,11 @@
 	if (sending) return NO;
 	if (maxMsgCount > [Preferences floodControlMaxMessages]) return NO;
 	
-	NSString* s = [sendQueue safeObjectAtIndex:0];
+	NSString *s = [sendQueue safeObjectAtIndex:0];
 	s = [s stringByAppendingString:@"\r\n"];
 	[sendQueue safeRemoveObjectAtIndex:0];
 	
-	NSData* data = [self convertToCommonEncoding:s];
+	NSData *data = [self convertToCommonEncoding:s];
 	
 	if (data) {
 		sending = YES;
@@ -212,7 +212,7 @@
 	}
 }
 
-- (void)tcpClientDidConnect:(TCPClient*)sender
+- (void)tcpClientDidConnect:(TCPClient *)sender
 {
 	[sendQueue removeAllObjects];
 	
@@ -221,7 +221,7 @@
 	}
 }
 
-- (void)tcpClient:(TCPClient*)sender error:(NSString*)error
+- (void)tcpClient:(TCPClient *)sender error:(NSString *)error
 {
 	[timer stop];
 	[sendQueue removeAllObjects];
@@ -231,7 +231,7 @@
 	}
 }
 
-- (void)tcpClientDidDisconnect:(TCPClient*)sender
+- (void)tcpClientDidDisconnect:(TCPClient *)sender
 {
 	[timer stop];
 	[sendQueue removeAllObjects];
@@ -241,10 +241,10 @@
 	}
 }
 
-- (void)tcpClientDidReceiveData:(TCPClient*)sender
+- (void)tcpClientDidReceiveData:(TCPClient *)sender
 {
 	while (1) {
-		NSData* data = [conn readLine];
+		NSData *data = [conn readLine];
 		if (!data) break;
 		
 		if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
@@ -253,7 +253,7 @@
 	}
 }
 
-- (void)tcpClientDidSendData:(TCPClient*)sender
+- (void)tcpClientDidSendData:(TCPClient *)sender
 {
 	sending = NO;
 	[self tryToSend];

@@ -35,7 +35,7 @@ static NSInteger markWidth;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	MemberListViewCell* c = [[MemberListViewCell allocWithZone:zone] init];
+	MemberListViewCell *c = [[MemberListViewCell allocWithZone:zone] init];
 	c.font = self.font;
 	c.member = member;
 	return c;
@@ -45,10 +45,10 @@ static NSInteger markWidth;
 {
 	markWidth = 0;
 	
-	NSDictionary* style = [NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
-	NSArray* marks = [NSArray arrayWithObjects:@"~", @"&", @"@", @"%", @"+", @"!", nil];
+	NSDictionary *style = [NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
+	NSArray *marks = [NSArray arrayWithObjects:@"~", @"&", @"@", @"%", @"+", @"!", nil];
 	
-	for (NSString* s in marks) {
+	for (NSString *s in marks) {
 		NSSize size = [s sizeWithAttributes:style];
 		NSInteger width = ceil(size.width);
 		if (markWidth < width) {
@@ -57,9 +57,9 @@ static NSInteger markWidth;
 	}
 }
 
-+ (MemberListViewCell*)initWithTheme:(id)aTheme
++ (MemberListViewCell *)initWithTheme:(id)aTheme
 {
-	MemberListViewCell* cell = [[MemberListViewCell alloc] init];
+	MemberListViewCell *cell = [[MemberListViewCell alloc] init];
 	cell.theme = aTheme;
 	return [cell autorelease];
 }
@@ -141,7 +141,7 @@ static NSInteger markWidth;
 								 (hostTextSize.width + 30), 
 								 (hostTextSize.height + 16));
 		
-		NSBezierPath* path = [NSBezierPath bezierPath];
+		NSBezierPath *path = [NSBezierPath bezierPath];
 		[path appendBezierPathWithRoundedRect:rect xRadius:10 yRadius:10];
 		[path setLineWidth:2];
 		[path stroke];
@@ -156,10 +156,10 @@ static NSInteger markWidth;
 	}
 }
 
-- (void)drawWithFrame:(NSRect)frame inView:(NSView*)view
+- (void)drawWithFrame:(NSRect)frame inView:(NSView *)view
 {
-	NSWindow* window = view.window;
-	NSColor* color = nil;
+	NSWindow *window = view.window;
+	NSColor *color = nil;
 	
 	if ([self isHighlighted]) {
 		if (window && [window isMainWindow] && [window firstResponder] == view) {
@@ -173,7 +173,7 @@ static NSInteger markWidth;
 		color = [theme memberListColor];
 	}
 	
-	NSMutableDictionary* style = [NSMutableDictionary dictionary];
+	NSMutableDictionary *style = [NSMutableDictionary dictionary];
 	[style setObject:markStyle forKey:NSParagraphStyleAttributeName];
 	[style setObject:self.font forKey:NSFontAttributeName];
 	
@@ -187,7 +187,7 @@ static NSInteger markWidth;
 	
 	char mark = [member mark];
 	if (mark != ' ') {
-		NSString* markStr = [NSString stringWithFormat:@"%C", mark];
+		NSString *markStr = [NSString stringWithFormat:@"%C", mark];
 		[markStr drawInRect:rect withAttributes:style];
 	}
 	
@@ -199,7 +199,7 @@ static NSInteger markWidth;
 	rect.origin.x += offset;
 	rect.size.width -= offset;
 	
-	NSString* nick = [member nick];
+	NSString *nick = [member nick];
 	[nick drawInRect:rect withAttributes:style];
 }
 

@@ -15,10 +15,10 @@ typedef enum {
 
 @implementation NSData (Kana)
 
-- (NSData*)convertKanaFromISO2022ToNative
+- (NSData *)convertKanaFromISO2022ToNative
 {
 	NSInteger len = self.length;
-	NSMutableData* dest = [NSMutableData dataWithLength:len];
+	NSMutableData *dest = [NSMutableData dataWithLength:len];
 	const unsigned char* src = [self bytes];
 	unsigned char* buf = [dest mutableBytes];
 	NSInteger n = 0;
@@ -83,10 +83,10 @@ typedef enum {
 	return dest;
 }
 
-- (NSData*)convertKanaFromNativeToISO2022
+- (NSData *)convertKanaFromNativeToISO2022
 {
 	NSInteger len = self.length;
-	NSMutableData* dest = [NSMutableData dataWithLength:len];
+	NSMutableData *dest = [NSMutableData dataWithLength:len];
 	const unsigned char* src = [self bytes];
 	unsigned char* buf = [dest mutableBytes];
 	NSInteger n = 0;

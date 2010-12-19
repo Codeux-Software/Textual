@@ -13,7 +13,7 @@
 	return self;
 }
 
-+ (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType
++ (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType
 {
 	return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
 }
@@ -23,14 +23,14 @@
 	[super dealloc];
 }
 
-- (NSString*)displayName
+- (NSString *)displayName
 {
 	return [Preferences titleForEvent:eventType];
 }
 
-- (NSString*)sound
+- (NSString *)sound
 {
-	NSString* sound = [Preferences soundForEvent:eventType];
+	NSString *sound = [Preferences soundForEvent:eventType];
 	
 	if (sound.length == 0) {
 		return EMPTY_SOUND;

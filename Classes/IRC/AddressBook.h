@@ -5,7 +5,7 @@
 {
 	NSInteger cid;
 	 
-	NSString* hostmask;
+	NSString *hostmask;
 	
 	BOOL ignorePublicMsg;
 	BOOL ignorePrivateMsg;
@@ -18,11 +18,11 @@
 	BOOL notifyWhoisJoins;
 	BOOL ignorePMHighlights;
 	
-	NSString* hostmaskRegex;
+	NSString *hostmaskRegex;
 }
 
 @property (nonatomic) NSInteger cid;
-@property (nonatomic, retain) NSString* hostmask;
+@property (nonatomic, retain) NSString *hostmask;
 @property (nonatomic, assign) BOOL ignorePublicMsg;
 @property (nonatomic, assign) BOOL ignorePrivateMsg;
 @property (nonatomic, assign) BOOL ignoreHighlights;
@@ -31,13 +31,13 @@
 @property (nonatomic, assign) BOOL ignoreDCC;
 @property (nonatomic, assign) BOOL ignoreJPQE;
 @property (nonatomic, assign) BOOL notifyJoins;
-@property (nonatomic, retain) NSString* hostmaskRegex;
+@property (nonatomic, retain) NSString *hostmaskRegex;
 @property (nonatomic, assign) BOOL ignorePMHighlights;
 @property (nonatomic, assign) BOOL notifyWhoisJoins;
 
-- (id)initWithDictionary:(NSDictionary*)dic;
-- (NSDictionary*)dictionaryValue;
-- (BOOL)checkIgnore:(NSString*)thehost;
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSDictionary *)dictionaryValue;
+- (BOOL)checkIgnore:(NSString *)thehost;
 - (void)processHostMaskRegex;
-- (NSString*)trackingNickname;
+- (NSString *)trackingNickname;
 @end

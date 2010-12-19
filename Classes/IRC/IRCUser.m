@@ -153,11 +153,11 @@
 - (BOOL)isEqual:(id)other
 {
 	if (![other isKindOfClass:[IRCUser class]]) return NO;
-	IRCUser* u = other;
+	IRCUser *u = other;
 	return [nick caseInsensitiveCompare:u.nick] == NSOrderedSame;
 }
 
-- (NSComparisonResult)compare:(IRCUser*)other
+- (NSComparisonResult)compare:(IRCUser *)other
 {
 	if (q != other.q) {
 		return q ? NSOrderedAscending : NSOrderedDescending;
@@ -182,7 +182,7 @@
 	}
 }
 
-- (NSComparisonResult)compareUsingWeights:(IRCUser*)other
+- (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
 	CGFloat mine = self.totalWeight;
 	CGFloat others = other.totalWeight;
@@ -193,7 +193,7 @@
 	return [[nick lowercaseString] compare:[other.nick lowercaseString]];
 }
 
-- (NSString*)description
+- (NSString *)description
 {
 	return [NSString stringWithFormat:@"<IRCUser %c%@>", self.mark, nick];
 }

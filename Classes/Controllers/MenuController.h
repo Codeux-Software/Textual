@@ -6,62 +6,62 @@
 
 @interface MenuController : NSObject
 {
-	IBOutlet NSMenuItem* closeWindowItem;
+	IBOutlet NSMenuItem *closeWindowItem;
 	
-	IRCWorld* world;
-	MainWindow* window;
-	InputTextField* text;
-	ServerTreeView* tree;
-	MasterController* master;
-	MemberListView* memberList;
+	IRCWorld *world;
+	MainWindow *window;
+	InputTextField *text;
+	ServerTreeView *tree;
+	MasterController *master;
+	MemberListView *memberList;
 	
-	NSString* pointedUrl;
-	NSString* pointedAddress;
-	NSString* pointedNick;
-	NSString* pointedChannelName;
-	NSString* currentSearchPhrase;
+	NSString *pointedUrl;
+	NSString *pointedAddress;
+	NSString *pointedNick;
+	NSString *pointedChannelName;
+	NSString *currentSearchPhrase;
 	
-	PreferencesController* preferencesController;
-	ServerSheet* serverSheet;
-	ChannelSheet* channelSheet;
-	NickSheet* nickSheet;
-	ModeSheet* modeSheet;
-	TopicSheet* topicSheet;
-	InviteSheet* inviteSheet;
-	AboutPanel* aboutPanel;
+	PreferencesController *preferencesController;
+	ServerSheet *serverSheet;
+	ChannelSheet *channelSheet;
+	NickSheet *nickSheet;
+	ModeSheet *modeSheet;
+	TopicSheet *topicSheet;
+	InviteSheet *inviteSheet;
+	AboutPanel *aboutPanel;
 	
 	BOOL isInFullScreenMode;
 }
 
-@property (nonatomic, assign) IRCWorld* world;
-@property (nonatomic, assign) MainWindow* window;
-@property (nonatomic, assign) InputTextField* text;
-@property (nonatomic, assign) ServerTreeView* tree;
-@property (nonatomic, assign) MasterController* master;
-@property (nonatomic, assign) MemberListView* memberList;
-@property (nonatomic, retain) NSString* pointedUrl;
-@property (nonatomic, retain) NSString* pointedAddress;
-@property (nonatomic, retain) NSString* pointedNick;
-@property (nonatomic, retain) NSString* pointedChannelName;
-@property (nonatomic, retain) NSString* currentSearchPhrase;
-@property (nonatomic, retain) NSMenuItem* closeWindowItem;
-@property (nonatomic, retain) PreferencesController* preferencesController;
-@property (nonatomic, retain) ChannelSheet* channelSheet;
-@property (nonatomic, retain) NickSheet* nickSheet;
-@property (nonatomic, retain) ModeSheet* modeSheet;
-@property (nonatomic, retain) TopicSheet* topicSheet;
-@property (nonatomic, retain) ServerSheet* serverSheet;
-@property (nonatomic, retain) InviteSheet* inviteSheet;
-@property (nonatomic, retain) AboutPanel* aboutPanel;
+@property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, assign) MainWindow *window;
+@property (nonatomic, assign) InputTextField *text;
+@property (nonatomic, assign) ServerTreeView *tree;
+@property (nonatomic, assign) MasterController *master;
+@property (nonatomic, assign) MemberListView *memberList;
+@property (nonatomic, retain) NSString *pointedUrl;
+@property (nonatomic, retain) NSString *pointedAddress;
+@property (nonatomic, retain) NSString *pointedNick;
+@property (nonatomic, retain) NSString *pointedChannelName;
+@property (nonatomic, retain) NSString *currentSearchPhrase;
+@property (nonatomic, retain) NSMenuItem *closeWindowItem;
+@property (nonatomic, retain) PreferencesController *preferencesController;
+@property (nonatomic, retain) ChannelSheet *channelSheet;
+@property (nonatomic, retain) NickSheet *nickSheet;
+@property (nonatomic, retain) ModeSheet *modeSheet;
+@property (nonatomic, retain) TopicSheet *topicSheet;
+@property (nonatomic, retain) ServerSheet *serverSheet;
+@property (nonatomic, retain) InviteSheet *inviteSheet;
+@property (nonatomic, retain) AboutPanel *aboutPanel;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
-- (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
+- (void)showServerPropertyDialog:(IRCClient *)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
 
-- (NSArray*)selectedMembers:(NSMenuItem*)sender;
-- (void)deselectMembers:(NSMenuItem*)sender;
+- (NSArray *)selectedMembers:(NSMenuItem *)sender;
+- (void)deselectMembers:(NSMenuItem *)sender;
 
 - (void)onCloseWindow:(id)sender;
 

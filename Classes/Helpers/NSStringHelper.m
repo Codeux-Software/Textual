@@ -23,7 +23,7 @@
 	return [self substringToIndex:anIndex];
 }
 
-- (NSString*)fastChopEndWithChars:(NSArray*)chars
+- (NSString *)fastChopEndWithChars:(NSArray *)chars
 {
 	NSInteger chopMnt = 0;
 	NSInteger slnt = [self length];
@@ -54,7 +54,7 @@
 	NSUInteger len = self.length;
 	const UniChar* buffer = CFStringGetCharactersPtr((CFStringRef)self);
 	if (!buffer) {
-		NSMutableData* data = [NSMutableData dataWithLength:len * sizeof(UniChar)];
+		NSMutableData *data = [NSMutableData dataWithLength:len * sizeof(UniChar)];
 		if (!data) return NULL;
 		[self getCharacters:[data mutableBytes]];
 		buffer = [data bytes];
@@ -63,7 +63,7 @@
 	return buffer;
 }
 
-- (BOOL)isEqualNoCase:(NSString*)other
+- (BOOL)isEqualNoCase:(NSString *)other
 {
 	return [self caseInsensitiveCompare:other] == NSOrderedSame;
 }
@@ -74,13 +74,13 @@
 	return ([[self trim] length] == 0);
 }
 
-- (BOOL)contains:(NSString*)str
+- (BOOL)contains:(NSString *)str
 {
 	NSRange r = [self rangeOfString:str];
 	return r.location != NSNotFound;
 }
 
-- (BOOL)containsIgnoringCase:(NSString*)str
+- (BOOL)containsIgnoringCase:(NSString *)str
 {
 	NSRange r = [self rangeOfString:str options:NSCaseInsensitiveSearch];
 	return r.location != NSNotFound;
@@ -101,7 +101,7 @@
 	}
 }
 
-- (NSInteger)findString:(NSString*)str
+- (NSInteger)findString:(NSString *)str
 {
 	NSRange r = [self rangeOfString:str];
 	if (r.location != NSNotFound) {
@@ -111,9 +111,9 @@
 	}
 }
 
-- (NSArray*)split:(NSString*)delimiter
+- (NSArray *)split:(NSString *)delimiter
 {
-	NSMutableArray* ary = [NSMutableArray array];
+	NSMutableArray *ary = [NSMutableArray array];
 	NSInteger start = 0;
 	
 	while (start < self.length) {
@@ -130,13 +130,13 @@
 	return ary;
 }
 
-- (NSArray*)splitIntoLines
+- (NSArray *)splitIntoLines
 {
 	NSInteger len = self.length;
 	UniChar buf[len];
 	[self getCharacters:buf range:NSMakeRange(0, len)];
 	
-	NSMutableArray* lines = [NSMutableArray array];
+	NSMutableArray *lines = [NSMutableArray array];
 	NSInteger start = 0;
 	
 	for (NSInteger i = 0; i < len; ++i) {
@@ -150,7 +150,7 @@
 				}
 			}
 			
-			NSString* s = [[NSString alloc] initWithCharacters:buf+start length:pos - start];
+			NSString *s = [[NSString alloc] initWithCharacters:buf+start length:pos - start];
 			[lines addObject:s];
 			[s release];
 			
@@ -158,14 +158,14 @@
 		}
 	}
 	
-	NSString* s = [[NSString alloc] initWithCharacters:buf+start length:len - start];
+	NSString *s = [[NSString alloc] initWithCharacters:buf+start length:len - start];
 	[lines addObject:s];
 	[s release];
 	
 	return lines;
 }
 
-- (NSString*)trim
+- (NSString *)trim
 {
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
@@ -294,7 +294,7 @@ BOOL isUnicharDigit(unichar c)
 	return '0' <= c && c <= '9';
 }
 
-- (NSString*)safeUsername
+- (NSString *)safeUsername
 {
 	NSInteger len = self.length;
 	const UniChar* buf = [self getCharactersBuffer];
@@ -315,13 +315,13 @@ BOOL isUnicharDigit(unichar c)
 	return [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
 }
 
-- (NSString*)safeFileName
+- (NSString *)safeFileName
 {
-	NSString* s = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	NSString *s = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
 	return [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 }
 
-- (NSInteger)stringPosition:(NSString*)needle
+- (NSInteger)stringPosition:(NSString *)needle
 {
 	NSRange r = [self rangeOfString:needle];
 	if (r.location == NSNotFound) return -1;
@@ -344,7 +344,7 @@ BOOL isUnicharDigit(unichar c)
 				  attributedString:YES];
 }
 
-- (NSString*)stripEffects
+- (NSString *)stripEffects
 {
 	NSInteger len = self.length;
 	if (len == 0) return self;
@@ -422,7 +422,7 @@ BOOL isUnicharDigit(unichar c)
 	return c == '#' || c == '&' || c == '!' || c == '~' || c == '?';
 }
 
-- (NSString*)canonicalName
+- (NSString *)canonicalName
 {
 	return [self lowercaseString];
 }
@@ -505,7 +505,7 @@ BOOL isUnicharDigit(unichar c)
 	return r;
 }
 
-- (NSString*)encodeURIComponent
+- (NSString *)encodeURIComponent
 {
 	if (!self.length) return @"";
 	
@@ -533,7 +533,7 @@ BOOL isUnicharDigit(unichar c)
 	return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
-- (NSString*)encodeURIFragment
+- (NSString *)encodeURIFragment
 {
 	if (!self.length) return @"";
 	
@@ -575,28 +575,28 @@ BOOL isUnicharDigit(unichar c)
 	return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
-+ (NSString*)stringWithUUID 
++ (NSString *)stringWithUUID 
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-	NSString *uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+	NSString *uuidString = (NSString *)CFUUIDCreateString(nil, uuidObj);
 	[uuidString autorelease];
 	CFRelease(uuidObj);
 	return uuidString;
 }
 
-+ (NSString*)bundleString:(NSString*)key
++ (NSString *)bundleString:(NSString *)key
 {
 	return [[[NSBundle mainBundle] infoDictionary] objectForKey:key];
 }
 
-- (NSString*)nicknameFromHostmask
+- (NSString *)nicknameFromHostmask
 {
 	if (self.length < 2) return nil;
 	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
 	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
 }
 
-- (NSString*)stringWithInputIRCFormatting
+- (NSString *)stringWithInputIRCFormatting
 {
 	NSString *s = self;
 	
@@ -608,7 +608,7 @@ BOOL isUnicharDigit(unichar c)
 	return s;
 }
 
-- (NSString*)stringWithASCIIFormatting
+- (NSString *)stringWithASCIIFormatting
 {
 	NSString *s = self;
 	
@@ -620,21 +620,26 @@ BOOL isUnicharDigit(unichar c)
 	return s;
 }
 
+- (NSString *)cleanedServerHostmask
+{
+	NSInteger stringPos = [self stringPosition:@":"];
+	return [((stringPos > 0) ? [self safeSubstringToIndex:stringPos] : self) trim];
+}
 
 @end
 
 @implementation NSMutableString (NSMutableStringHelper)
 
-- (NSString*)getToken
+- (NSString *)getToken
 {
-	static NSCharacterSet* spaceSet = nil;
+	static NSCharacterSet *spaceSet = nil;
 	if (!spaceSet) {
 		spaceSet = [[NSCharacterSet characterSetWithCharactersInString:@" "] retain];
 	}
 	
 	NSRange r = [self rangeOfCharacterFromSet:spaceSet];
 	if (r.location != NSNotFound) {
-		NSString* result = [self safeSubstringToIndex:r.location];
+		NSString *result = [self safeSubstringToIndex:r.location];
 		NSInteger len = [self length];
 		NSInteger pos = r.location + 1;
 		while (pos < len && [self characterAtIndex:pos] == ' ') {
@@ -644,12 +649,12 @@ BOOL isUnicharDigit(unichar c)
 		return result;
 	}
 	
-	NSString* result = [[self copy] autorelease];
+	NSString *result = [[self copy] autorelease];
 	[self setString:@""];
 	return result;
 }
 
-- (NSString*)getIgnoreToken
+- (NSString *)getIgnoreToken
 {
 	BOOL useAnchor = NO;
 	UniChar anchor;
@@ -679,7 +684,7 @@ BOOL isUnicharDigit(unichar c)
 			if (useAnchor) {
 				++i;
 			}
-			NSString* result = [self safeSubstringToIndex:i];
+			NSString *result = [self safeSubstringToIndex:i];
 			
 			NSInteger right;
 			
@@ -700,7 +705,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	NSString* result = [[self copy] autorelease];
+	NSString *result = [[self copy] autorelease];
 	[self setString:@""];
 	return result;
 }

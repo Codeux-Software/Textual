@@ -13,5 +13,5 @@
 @end
 
 @interface NSObject (TreeViewDelegate)
-- (void)treeViewKeyDown:(NSEvent*)e;
+- (void)treeViewKeyDown:(NSEvent *)e;
 @end

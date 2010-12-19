@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface NSWindow (NSWindowHelper)
-- (void)centerOfWindow:(NSWindow*)window;
+- (void)centerOfWindow:(NSWindow *)window;
 - (BOOL)isOnCurrentWorkspace;
 - (void)exactlyCenterWindow;
 @end
