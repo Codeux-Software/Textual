@@ -1,4 +1,4 @@
-- Introduction -
+#### Introduction ####
 
 Textual is a highly modified version of the open source project known 
 as LimeChat. The user interface is tailored towards users that have 
@@ -7,24 +7,25 @@ client is mostly based around the open standard of WebKit which means
 it can be themed using CSS and JavaScript. Support for IRC commands 
 based off AppleScript is also supported.
 
---------------
-
-- Compiling Requirements -
+#### Compiling Requirements ####
 
 Textual uses the BWToolkit plugin in order to add new user interface 
 elements to its library. Therefore, before compiling make sure that the 
 "BWToolkit.ibplugin" file has been loaded into the Interface Builder 
 application. This file can be found in the folder "Frameworks/BWToolkit/"
 
-IMPORTANT: Xcode 4 users when compiling Textual be sure to set Xcode to 
-build the product to the location defined by the targets. This setting 
-can be changed by going to the File menu and then Project Settings. If 
-this is not done, then the plugins will not be compiled in correct 
-location for Textual to copy over. 
+Developers that chose to compile the Textual source code using version 
+4.0 of Xcode and later are asked to set Xcode to place the build 
+product of each compile in the location specified by the targets. 
+This setting can be changed by going to the File menu and then Project Settings. If this is not done, then the plugins will not be compiled in correct location for Textual to copy over. 
 
---------------
+#### Friendly Request ####
 
-- License -
+It is asked that those with knowledge of compiling Textual does not 
+abuse it to distribute binaries to large groups of users during the
+time period that it is exclusive to the Apple Mac App Store. 
+
+#### License ####
 
 The New BSD License
 
