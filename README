@@ -17,7 +17,9 @@ application. This file can be found in the folder "Frameworks/BWToolkit/"
 Developers that chose to compile the Textual source code using version 
 4.0 of Xcode and later are asked to set Xcode to place the build 
 product of each compile in the location specified by the targets. 
-This setting can be changed by going to the File menu and then Project Settings. If this is not done, then the plugins will not be compiled in correct location for Textual to copy over. 
+This setting can be changed by going to the File menu and then 
+Project Settings. If this is not done, then the plugins will not 
+be compiled in correct location for Textual to copy over. 
 
 #### Friendly Request ####
 
