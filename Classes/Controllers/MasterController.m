@@ -1026,56 +1026,6 @@
 #pragma mark Keyboard Navigation
 
 typedef enum {
-	SCROLL_TOP,
-	SCROLL_BOTTOM,
-	SCROLL_PAGE_UP,
-	SCROLL_PAGE_DOWN,
-} ScrollKind;
-
-- (void)scroll:(ScrollKind)op
-{
-	IRCTreeItem *sel = world.selected;
-	if (sel) {
-		LogController *log = [sel log];
-		LogView *view = log.view;
-		switch (op) {
-			case SCROLL_TOP:
-				[log moveToTop];
-				break;
-			case SCROLL_BOTTOM:
-				[log moveToBottom];
-				break;
-			case SCROLL_PAGE_UP:
-				[view scrollPageUp:nil];
-				break;
-			case SCROLL_PAGE_DOWN:
-				[view scrollPageDown:nil];
-				break;
-		}
-	}
-}
-
-- (void)inputScrollToTop:(NSEvent *)e
-{
-	[self scroll:SCROLL_TOP];
-}
-
-- (void)inputScrollToBottom:(NSEvent *)e
-{
-	[self scroll:SCROLL_BOTTOM];
-}
-
-- (void)inputScrollPageUp:(NSEvent *)e
-{
-	[self scroll:SCROLL_PAGE_UP];
-}
-
-- (void)inputScrollPageDown:(NSEvent *)e
-{
-	[self scroll:SCROLL_PAGE_DOWN];
-}
-
-typedef enum {
 	MOVE_UP,
 	MOVE_DOWN,
 	MOVE_LEFT,
@@ -1315,8 +1265,6 @@ typedef enum {
 	
 	[self inputHandler:@selector(goToStartOfInputField:) code:KEY_HOME mods:0];
 	[self inputHandler:@selector(goToEndOfInputField:) code:KEY_END mods:0];
-	[self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];
-	[self inputHandler:@selector(inputScrollPageDown:) code:KEY_PAGE_DOWN mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
