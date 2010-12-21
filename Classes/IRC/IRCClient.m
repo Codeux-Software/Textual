@@ -3035,7 +3035,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
 				[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
 				
-				[c.log setTopic:[NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address]];
+				NSString *hostTopic = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
+				
+				if ([hostTopic isEqualNoCase:c.topic] == NO) {
+					[c setTopic:hostTopic];
+					[c.log setTopic:hostTopic];
+				}
 			}
 		}
 	} else {
@@ -3111,15 +3116,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return;
 	}
 	
+	IRCChannel *c = nil;
+	
+	if ([Preferences locationToSendNotices] == NOTICES_SENDTO_CURCHAN) {
+		c = [world selectedChannelOn:self];
+	}
+	
 	if ([command isEqualToString:IRCCI_PING]) {
 		double time = [s doubleValue];
 		double delta = CFAbsoluteTimeGetCurrent() - time;
 		
 		NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_PING_REPLY"), nick, command, delta];
-		[self printBoth:nil type:LINE_TYPE_CTCP text:text];
+		[self printBoth:c type:LINE_TYPE_CTCP text:text];
 	} else {
 		NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_REPLY"), nick, command, s];
-		[self printBoth:nil type:LINE_TYPE_CTCP text:text];
+		[self printBoth:c type:LINE_TYPE_CTCP text:text];
 	}
 }
 
