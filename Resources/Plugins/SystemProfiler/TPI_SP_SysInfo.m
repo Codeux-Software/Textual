@@ -99,7 +99,7 @@
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Textual:\002 %1$@ (Build #%2$@) (Running for %3$@)",
 			   [textualInfoPlist objectForKey:@"CFBundleVersion"], 
 			   [textualInfoPlist objectForKey:@"Build Number"],
-			   TXReadableTime(IntervalSinceTextualStart(), YES)];
+			   TXReadableTime([Preferences startTime], YES)];
 	
 	[systemVersionPlist release];
 	
@@ -110,7 +110,7 @@
 
 + (NSString *)applicationAndSystemUptime
 {
-	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime(IntervalSinceTextualStart(), YES)];
+	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime([Preferences startTime], YES)];
 }
 
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world

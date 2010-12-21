@@ -1011,7 +1011,7 @@ static NSMutableArray *excludeWords;
 		}
 	}
 	
-	if (ircAppURL) TXCFSpecialRelease(ircAppURL);
+	if (ircAppURL) CFRelease(ircAppURL);
 	
 	[pool release];
 }
