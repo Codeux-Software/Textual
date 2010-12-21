@@ -3,8 +3,6 @@
 
 #define BOOLReverseValue(b)		((b == YES) ? NO : YES)
 
-void TXCFSpecialRelease(CFTypeRef cf);
-
 typedef unsigned long long TXFSLongInt; // filesizes
 
 extern NSString *TXTLS(NSString *key);
@@ -13,7 +11,6 @@ extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhol
 extern void TXDevNullDestroyBOOLObject(BOOL objt);
 
 extern NSInteger TXRandomThousandNumber(void);
-extern NSTimeInterval IntervalSinceTextualStart(void);
 extern NSUserDefaults *TXNSUserDefaultsPointer(void);
 
 extern NSString *TXFormattedTimestamp(NSString *format);

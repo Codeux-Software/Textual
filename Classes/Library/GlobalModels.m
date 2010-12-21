@@ -27,18 +27,6 @@ extern NSInteger TXRandomThousandNumber(void)
 	return (1 + arc4random() % (9999 + 1));
 }
 
-void TXCFSpecialRelease(CFTypeRef cf)
-{
-	if (!cf || cf == NULL || cf == nil) return;
-	
-	CFRelease(cf);
-}
-
-extern NSTimeInterval IntervalSinceTextualStart(void)
-{
-	return (NSTimeInterval)[Preferences startTime];
-}
-
 NSString *TXTLS(NSString *key)
 {
 	return [LanguagePreferences localizedStringWithKey:key];
