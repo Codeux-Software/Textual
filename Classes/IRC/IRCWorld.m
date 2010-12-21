@@ -1090,7 +1090,7 @@
 	IRCTreeItem *i = [items safeObjectAtIndex:0];
 	if (i.isClient) {
 		IRCClient *u = (IRCClient *)i;
-		s = [NSString stringWithDouble:u.uid];
+		s = [NSString stringWithInteger:u.uid];
 	} else {		
 		IRCChannel *c = (IRCChannel *)i;
 		s = [NSString stringWithFormat:@"%d-%d", c.client.uid, c.uid];
