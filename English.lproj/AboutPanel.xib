@@ -196,7 +196,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
-							<string key="BWHBUrlString">https://github.com/codeux/Textual/blob/master/CONTRIBUTORS</string>
+							<string key="BWHBUrlString">&lt;Defined In Source Code&gt;</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{250, 313}</string>
@@ -224,6 +224,14 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">12</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sourceCodeLinkButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="675210202"/>
+					</object>
+					<int key="connectionID">17</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -410,7 +418,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">17</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -423,11 +431,13 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>delegate</string>
+							<string>sourceCodeLinkButton</string>
 							<string>versionInfo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
+							<string>BWHyperlinkButton</string>
 							<string>NSTextField</string>
 						</object>
 					</object>
@@ -436,6 +446,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>delegate</string>
+							<string>sourceCodeLinkButton</string>
 							<string>versionInfo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -443,6 +454,10 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">delegate</string>
 								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">sourceCodeLinkButton</string>
+								<string key="candidateClassName">BWHyperlinkButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">versionInfo</string>
@@ -596,6 +611,22 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">BWHyperlinkButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Helpers/BWHyperlinkButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">BWHyperlinkButtonCell</string>
+					<string key="superclassName">NSButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Helpers/BWHyperlinkButtonCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1584,13 +1615,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/AsyncSocket.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Library/HostResolver.h</string>
 					</object>
 				</object>
@@ -1941,6 +1965,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 							<string>scriptsView</string>
 							<string>stylesView</string>
 							<string>themeButton</string>
+							<string>timestampSymbolsLinkButton</string>
 							<string>transcriptFolderButton</string>
 							<string>transfersView</string>
 							<string>updatesView</string>
@@ -1968,6 +1993,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSPopUpButton</string>
+							<string>BWHyperlinkButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSView</string>
 							<string>NSView</string>
@@ -1998,6 +2024,7 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 							<string>scriptsView</string>
 							<string>stylesView</string>
 							<string>themeButton</string>
+							<string>timestampSymbolsLinkButton</string>
 							<string>transcriptFolderButton</string>
 							<string>transfersView</string>
 							<string>updatesView</string>
@@ -2087,6 +2114,10 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">themeButton</string>
 								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">timestampSymbolsLinkButton</string>
+								<string key="candidateClassName">BWHyperlinkButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">transcriptFolderButton</string>
@@ -2751,22 +2782,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">BWHyperlinkButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/BWHyperlinkButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">BWHyperlinkButtonCell</string>
-					<string key="superclassName">NSButtonCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/BWHyperlinkButtonCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSActionCell</string>
 					<string key="superclassName">NSCell</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -2815,13 +2830,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSUserInterfaceItemSearching.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSApplication</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSApplication+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3160,13 +3168,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">RegexKit.framework/Headers/NSObject.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">WebKit.framework/Headers/WebDownload.h</string>
 					</object>
 				</object>
@@ -3344,13 +3345,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<reference key="sourceIdentifier" ref="194302100"/>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSView+BWAdditions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -3370,13 +3364,6 @@ dG9ycyBhcyBub3RlZCBpbiAgICAgICAgICAgICAgICAgICAgLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSWindow+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

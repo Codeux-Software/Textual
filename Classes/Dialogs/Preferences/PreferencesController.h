@@ -39,6 +39,8 @@
 	IBOutlet NSTextField *scriptLocationField;
 	IBOutlet NSPopUpButton *preferenceSelectButton;
 	
+	IBOutlet BWHyperlinkButton *timestampSymbolsLinkButton;
+	
 	ScriptsWrapper *scriptsController;
 	
 	NSFont *logFont;
@@ -79,6 +81,7 @@
 @property (nonatomic, retain) NSPopUpButton *preferenceSelectButton;
 @property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
 @property (nonatomic, retain) NSFont *logFont;
+@property (nonatomic, retain) BWHyperlinkButton *timestampSymbolsLinkButton;
 
 - (void)show;
 
