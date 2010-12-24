@@ -127,6 +127,8 @@
 		4C4C02DA12B7AC5000E56A20 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = ../../../Classes/Views/Log/LogScriptEventSink.h; sourceTree = SOURCE_ROOT; };
 		4C4C02DB12B7AC5000E56A20 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../Classes/IRC/IRCUser.h; sourceTree = SOURCE_ROOT; };
 		4C4C02DC12B7AC5000E56A20 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = ../../../Classes/Views/Log/LogLine.h; sourceTree = SOURCE_ROOT; };
+		4C5F7D0F12C4D48F0088AD4E /* BWHyperlinkButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BWHyperlinkButtonCell.h; path = ../../../Classes/Helpers/BWHyperlinkButtonCell.h; sourceTree = SOURCE_ROOT; };
+		4C5F7D1012C4D4920088AD4E /* BWHyperlinkButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BWHyperlinkButton.h; path = ../../../Classes/Helpers/BWHyperlinkButton.h; sourceTree = SOURCE_ROOT; };
 		4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
 		4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
 		4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -205,6 +207,8 @@
 		4C9E180F1209E502004E5032 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4C5F7D1012C4D4920088AD4E /* BWHyperlinkButton.h */,
+				4C5F7D0F12C4D48F0088AD4E /* BWHyperlinkButtonCell.h */,
 				4CE2804F12BDFAF1008C47B5 /* NickCompletionStatus.h */,
 				4C4C027212B7AC5000E56A20 /* IRCChannelMode.h */,
 				4C4C027312B7AC5000E56A20 /* TextualPluginItem.h */,

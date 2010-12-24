@@ -1,5 +1,5 @@
 //
-//  BWUnanchoredButton.h
+//  BWHyperlinkButton.h
 //  BWToolkit
 //
 //  Created by Brandon Walkin (www.brandonwalkin.com)
@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface BWUnanchoredButton : NSButton 
+@interface BWHyperlinkButton : NSButton 
 {
-	NSPoint topAndLeftInset;
+	NSString *urlString;
 }
+
+@property (copy, nonatomic) NSString *urlString;
 
 @end

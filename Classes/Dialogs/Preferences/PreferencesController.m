@@ -50,6 +50,7 @@
 @synthesize installedScriptsTable;
 @synthesize scriptsController;
 @synthesize channelManagementView;
+@synthesize timestampSymbolsLinkButton;
 
 - (id)init
 {
@@ -109,6 +110,8 @@
 	}
 	
 	[preferenceSelectButton selectItemAtIndex:0];
+	
+	timestampSymbolsLinkButton.urlString = @"http://opengroup.org/onlinepubs/007908799/xsh/strftime.html";
 	
 	[self.window makeKeyAndOrderFront:nil];
 	[self firstPane:generalView];

@@ -16,6 +16,7 @@
  before they are required by another header file. Please be careful when 
  changing order. */
 
+#import "BWHyperlinkButton.h"
 #import "RegexKitLite.h"
 #import "AsyncSocket.h"
 #import "AsyncSocketExtensions.h"

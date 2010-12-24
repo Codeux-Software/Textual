@@ -123,6 +123,8 @@
 		4C4C026112B7AC2F00E56A20 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = ../../../Classes/Views/Log/LogScriptEventSink.h; sourceTree = SOURCE_ROOT; };
 		4C4C026212B7AC2F00E56A20 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../Classes/IRC/IRCUser.h; sourceTree = SOURCE_ROOT; };
 		4C4C026312B7AC2F00E56A20 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = ../../../Classes/Views/Log/LogLine.h; sourceTree = SOURCE_ROOT; };
+		4C5F7D0C12C4D47C0088AD4E /* BWHyperlinkButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BWHyperlinkButtonCell.h; path = ../../../Classes/Helpers/BWHyperlinkButtonCell.h; sourceTree = SOURCE_ROOT; };
+		4C5F7D0D12C4D47C0088AD4E /* BWHyperlinkButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BWHyperlinkButton.h; path = ../../../Classes/Helpers/BWHyperlinkButton.h; sourceTree = SOURCE_ROOT; };
 		4CE2805812BDFB01008C47B5 /* NickCompletionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletionStatus.h; path = ../../../Classes/Controllers/NickCompletionStatus.h; sourceTree = SOURCE_ROOT; };
 		8D576316048677EA00EA77CD /* BragSpam.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BragSpam.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -190,6 +192,8 @@
 		4C393AB8121AE285004C66F4 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4C5F7D0C12C4D47C0088AD4E /* BWHyperlinkButtonCell.h */,
+				4C5F7D0D12C4D47C0088AD4E /* BWHyperlinkButton.h */,
 				4CE2805812BDFB01008C47B5 /* NickCompletionStatus.h */,
 				4C4C01F912B7AC2F00E56A20 /* IRCChannelMode.h */,
 				4C4C01FA12B7AC2F00E56A20 /* TextualPluginItem.h */,
