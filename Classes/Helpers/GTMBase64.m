@@ -213,24 +213,24 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 
 @interface GTMBase64 (PrivateMethods)
 
-+(NSData *)baseEncode:(const void *)bytes
++ (NSData *)baseEncode:(const void *)bytes
                length:(NSUInteger)length
               charset:(const char *)charset
                padded:(BOOL)padded;
 
-+(NSData *)baseDecode:(const void *)bytes
++ (NSData *)baseDecode:(const void *)bytes
                length:(NSUInteger)length
               charset:(const char*)charset
        requirePadding:(BOOL)requirePadding;
 
-+(NSUInteger)baseEncode:(const char *)srcBytes
++ (NSUInteger)baseEncode:(const char *)srcBytes
                  srcLen:(NSUInteger)srcLen
               destBytes:(char *)destBytes
                 destLen:(NSUInteger)destLen
                 charset:(const char *)charset
                  padded:(BOOL)padded;
 
-+(NSUInteger)baseDecode:(const char *)srcBytes
++ (NSUInteger)baseDecode:(const char *)srcBytes
                  srcLen:(NSUInteger)srcLen
               destBytes:(char *)destBytes
                 destLen:(NSUInteger)destLen
@@ -245,35 +245,35 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // Standard Base64 (RFC) handling
 //
 
-+(NSData *)encodeData:(NSData *)data {
++ (NSData *)encodeData:(NSData *)data {
   return [self baseEncode:[data bytes]
                    length:[data length]
                   charset:kBase64EncodeChars
                    padded:YES];
 }
 
-+(NSData *)decodeData:(NSData *)data {
++ (NSData *)decodeData:(NSData *)data {
   return [self baseDecode:[data bytes]
                    length:[data length]
                   charset:kBase64DecodeChars
            requirePadding:YES];
 }
 
-+(NSData *)encodeBytes:(const void *)bytes length:(NSUInteger)length {
++ (NSData *)encodeBytes:(const void *)bytes length:(NSUInteger)length {
   return [self baseEncode:bytes
                    length:length
                   charset:kBase64EncodeChars
                    padded:YES];
 }
 
-+(NSData *)decodeBytes:(const void *)bytes length:(NSUInteger)length {
++ (NSData *)decodeBytes:(const void *)bytes length:(NSUInteger)length {
   return [self baseDecode:bytes
                    length:length
                   charset:kBase64DecodeChars
            requirePadding:YES];
 }
 
-+(NSString *)stringByEncodingData:(NSData *)data {
++ (NSString *)stringByEncodingData:(NSData *)data {
   NSString *result = nil;
   NSData *converted = [self baseEncode:[data bytes]
                                 length:[data length]
@@ -286,7 +286,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
   return result;
 }
 
-+(NSString *)stringByEncodingBytes:(const void *)bytes length:(NSUInteger)length {
++ (NSString *)stringByEncodingBytes:(const void *)bytes length:(NSUInteger)length {
   NSString *result = nil;
   NSData *converted = [self baseEncode:bytes
                                 length:length
@@ -299,7 +299,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
   return result;
 }
 
-+(NSData *)decodeString:(NSString *)string {
++ (NSData *)decodeString:(NSString *)string {
   NSData *result = nil;
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   if (data) {
@@ -320,7 +320,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // RFC versions.
 //
 
-+(NSData *)webSafeEncodeData:(NSData *)data
++ (NSData *)webSafeEncodeData:(NSData *)data
                       padded:(BOOL)padded {
   return [self baseEncode:[data bytes]
                    length:[data length]
@@ -328,14 +328,14 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                    padded:padded];
 }
 
-+(NSData *)webSafeDecodeData:(NSData *)data {
++ (NSData *)webSafeDecodeData:(NSData *)data {
   return [self baseDecode:[data bytes]
                    length:[data length]
                   charset:kWebSafeBase64DecodeChars
            requirePadding:NO];
 }
 
-+(NSData *)webSafeEncodeBytes:(const void *)bytes
++ (NSData *)webSafeEncodeBytes:(const void *)bytes
                        length:(NSUInteger)length
                        padded:(BOOL)padded {
   return [self baseEncode:bytes
@@ -344,14 +344,14 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                    padded:padded];
 }
 
-+(NSData *)webSafeDecodeBytes:(const void *)bytes length:(NSUInteger)length {
++ (NSData *)webSafeDecodeBytes:(const void *)bytes length:(NSUInteger)length {
   return [self baseDecode:bytes
                    length:length
                   charset:kWebSafeBase64DecodeChars
            requirePadding:NO];
 }
 
-+(NSString *)stringByWebSafeEncodingData:(NSData *)data
++ (NSString *)stringByWebSafeEncodingData:(NSData *)data
                                   padded:(BOOL)padded {
   NSString *result = nil;
   NSData *converted = [self baseEncode:[data bytes]
@@ -365,7 +365,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
   return result;
 }
 
-+(NSString *)stringByWebSafeEncodingBytes:(const void *)bytes
++ (NSString *)stringByWebSafeEncodingBytes:(const void *)bytes
                                    length:(NSUInteger)length
                                    padded:(BOOL)padded {
   NSString *result = nil;
@@ -380,7 +380,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
   return result;
 }
 
-+(NSData *)webSafeDecodeString:(NSString *)string {
++ (NSData *)webSafeDecodeString:(NSString *)string {
   NSData *result = nil;
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   if (data) {
@@ -406,7 +406,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // Returns:
 //   an autorelease NSData with the encoded data, nil if any error.
 //
-+(NSData *)baseEncode:(const void *)bytes
++ (NSData *)baseEncode:(const void *)bytes
                length:(NSUInteger)length
               charset:(const char *)charset
                padded:(BOOL)padded {
@@ -442,7 +442,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 //   an autorelease NSData with the decoded data, nil if any error.
 //
 //
-+(NSData *)baseDecode:(const void *)bytes
++ (NSData *)baseDecode:(const void *)bytes
                length:(NSUInteger)length
               charset:(const char *)charset
        requirePadding:(BOOL)requirePadding {
@@ -481,7 +481,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // Returns:
 //   the length of the encoded data.  zero if any error.
 //
-+(NSUInteger)baseEncode:(const char *)srcBytes
++ (NSUInteger)baseEncode:(const char *)srcBytes
                  srcLen:(NSUInteger)srcLen
               destBytes:(char *)destBytes
                 destLen:(NSUInteger)destLen
@@ -560,7 +560,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // Returns:
 //   the length of the encoded data.  zero if any error.
 //
-+(NSUInteger)baseDecode:(const char *)srcBytes
++ (NSUInteger)baseDecode:(const char *)srcBytes
                  srcLen:(NSUInteger)srcLen
               destBytes:(char *)destBytes
                 destLen:(NSUInteger)destLen

@@ -143,7 +143,7 @@
 			}
 		}
 		
-		if ([TXNSUserDefaultsPointer() boolForKey:@"TextualDeveloperEnvironment"]) {
+		if ([TXNSUserDefaults() boolForKey:@"TextualDeveloperEnvironment"]) {
 			[ary addObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {

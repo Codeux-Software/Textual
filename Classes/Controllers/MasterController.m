@@ -84,15 +84,14 @@
 	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
-	[nc addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
-	[nc addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
-	[nc addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
-	[nc addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
-	[nc addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
+	[TXNSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
-	NSNotificationCenter *wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *wsnc = [TXNSWorkspace() notificationCenter];
 	[wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
@@ -213,7 +212,7 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.trial_period_info"];
+	BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.trial_period_info"];
 	
 	if (suppCheck == NO) {
 		NSAlert *alert = [NSAlert alertWithMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
@@ -224,7 +223,7 @@
 		
 		[alert runModal];
 		
-		[TXNSUserDefaultsPointer() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
+		[TXNSUserDefaults() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
 	}
 	
 	[pool release];
@@ -344,7 +343,7 @@
 	[menu terminate];
 	
 	if ([Preferences isUpgradedFromVersion100] == YES) {
-		[TXNSUserDefaultsPointer() removeObjectForKey:@"SUHasLaunchedBefore"];
+		[TXNSUserDefaults() removeObjectForKey:@"SUHasLaunchedBefore"];
 	}
 	
 	[self saveWindowState];
@@ -711,7 +710,7 @@
 
 - (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {	
-	[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+	[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
 }
 
 - (void)themeDidChange:(NSNotification *)note
@@ -751,7 +750,7 @@
 	sf = (NSMutableString *)[sf trim];
 	
 	if ([sf length] > 0) {		
-		BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.theme_override_info"];
+		BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.theme_override_info"];
 		
 		if (suppCheck == NO) {
 			NSAlert *alert = [[NSAlert alloc] init];

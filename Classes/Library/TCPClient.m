@@ -209,7 +209,7 @@
 				IRCClient *client = (IRCClient *)[delegate delegate];
 				
 				NSString *suppKey = [NSString stringWithFormat:@"Preferences.prompts.cert_trust_error.%@", client.config.guid];
-				BOOL suppValue = [TXNSUserDefaultsPointer() boolForKey:suppKey];
+				BOOL suppValue = [TXNSUserDefaults() boolForKey:suppKey];
 				
 				if ((client.config.isTrustedConnection == NO && suppValue == NO) ||
 					(client.config.isTrustedConnection == NO && suppValue == YES)) {
@@ -225,7 +225,7 @@
 					// If we trust this connection and want to connect to it, then 
 					// let us override our prompt suppressor to hide every time.
 					
-					[TXNSUserDefaultsPointer() setBool:status forKey:suppKey];
+					[TXNSUserDefaults() setBool:status forKey:suppKey];
 					
 					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
 						[delegate tcpClient:self error:nil];

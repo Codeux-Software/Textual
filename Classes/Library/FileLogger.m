@@ -72,18 +72,19 @@
 	
 	NSString *dir = [fileName stringByDeletingLastPathComponent];
 	
-	NSFileManager *fm = [NSFileManager defaultManager];
 	BOOL isDir = NO;
-	if (![fm fileExistsAtPath:dir isDirectory:&isDir]) {
-		[fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+	
+	if (![TXNSFileManager() fileExistsAtPath:dir isDirectory:&isDir]) {
+		[TXNSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	if (![fm fileExistsAtPath:fileName]) {
-		[fm createFileAtPath:fileName contents:[NSData data] attributes:nil];
+	if (![TXNSFileManager() fileExistsAtPath:fileName]) {
+		[TXNSFileManager() createFileAtPath:fileName contents:[NSData data] attributes:nil];
 	}
 	
 	[file release];
 	file = [[NSFileHandle fileHandleForUpdatingAtPath:fileName] retain];
+	
 	if (file) {
 		[file seekToEndOfFile];
 	}

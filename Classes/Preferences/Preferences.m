@@ -199,17 +199,17 @@ static NSMutableDictionary *commandIndex;
 
 + (BOOL)floodControlIsEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.FloodControl.enabled"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.FloodControl.enabled"];
 }
 
 + (NSInteger)floodControlMaxMessages
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.FloodControl.maxmsg"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.FloodControl.maxmsg"];
 }
 
 + (NSInteger)floodControlDelayTimer
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.FloodControl.timer"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.FloodControl.timer"];
 }
 
 #pragma mark -
@@ -217,17 +217,17 @@ static NSMutableDictionary *commandIndex;
 
 + (NSString *)defaultNickname
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.nickname"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Identity.nickname"];
 }
 
 + (NSString *)defaultUsername
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.username"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Identity.username"];
 }
 
 + (NSString *)defaultRealname
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Identity.realname"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Identity.realname"];
 }
 
 #pragma mark - 
@@ -235,252 +235,252 @@ static NSMutableDictionary *commandIndex;
 
 + (DCCActionType)dccAction
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.DCC.action"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.action"];
 }
 
 + (AddressDetectionType)dccAddressDetectionMethod
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.DCC.address_detection_method"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.address_detection_method"];
 }
 
 + (NSInteger)autojoinMaxChannelJoins
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.autojoin_maxchans"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.autojoin_maxchans"];
 }
 
 + (NSInteger)connectAutoJoinDelay
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.autojoin_delay"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.autojoin_delay"];
 }
 
 + (NSString *)defaultKickMessage
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.kick_message"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.kick_message"];
 }
 
 + (NSString *)IRCopDefaultKillMessage
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_kill_message"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_kill_message"];
 }
 
 + (NSString *)IRCopDefaultGlineMessage
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_gline_message"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_gline_message"];
 }
 
 + (NSString *)IRCopDefaultShunMessage
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_shun_message"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_shun_message"];
 }
 
 + (NSString *)IRCopAlertMatch
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.ircop_alert_match"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_alert_match"];
 }
 
 + (BOOL)logAllHighlightsToQuery
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.log_highlights"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.log_highlights"];
 }
 
 + (BOOL)clearAllOnlyOnActiveServer
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.clear_only_active"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.clear_only_active"];
 }
 
 + (BOOL)displayServerMOTD
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.display_servmotd"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.display_servmotd"];
 }
 
 + (BOOL)copyOnSelect
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.copyonselect"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.copyonselect"];
 }
 
 + (BOOL)autoAddScrollbackMark
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.autoadd_scrollbackmark"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.autoadd_scrollbackmark"];
 }
 
 + (BOOL)removeAllFormatting
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.strip_formatting"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.strip_formatting"];
 }
 
 + (BOOL)disableNicknameColors
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.disable_nickname_colors"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.disable_nickname_colors"];
 }
 
 + (BOOL)isUpgradedFromVersion100
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"SUHasLaunchedBefore"];
+	return [TXNSUserDefaults() boolForKey:@"SUHasLaunchedBefore"];
 }
 
 + (BOOL)rightToLeftFormatting
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.rtl_formatting"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.rtl_formatting"];
 }
 
 + (NSString *)dccMyaddress
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.DCC.myaddress"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.DCC.myaddress"];
 }
 
 + (NSString *)completionSuffix
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.completion_suffix"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.completion_suffix"];
 }
 
 + (HostmaskBanFormat)banFormat
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.banformat"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.banformat"];
 }
 
 + (BOOL)displayDockBadge
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.dockbadges"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.dockbadges"];
 }
 
 + (BOOL)handleIRCopAlerts
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.handle_operalerts"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.handle_operalerts"];
 }
 
 + (BOOL)handleServerNotices
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.handle_server_notices"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.handle_server_notices"];
 }
 
 + (BOOL)amsgAllConnections
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.amsg_allconnections"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.amsg_allconnections"];
 }
 
 + (BOOL)awayAllConnections
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.away_allconnections"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.away_allconnections"];
 }
 
 + (BOOL)nickAllConnections
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.nick_allconnections"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.nick_allconnections"];
 }
 
 + (BOOL)indentOnHang
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.indent_onwordwrap"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.indent_onwordwrap"];
 }
 
 + (BOOL)confirmQuit
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.confirm_quit"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.confirm_quit"];
 }
 
 + (BOOL)processChannelModes
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.process_channel_modes"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.process_channel_modes"];
 }
 
 + (BOOL)rejoinOnKick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.rejoin_onkick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.rejoin_onkick"];
 }
 
 + (BOOL)autoJoinOnInvite
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.autojoin_oninvite"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.autojoin_oninvite"];
 }
 
 + (BOOL)connectOnDoubleclick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.connect_on_doubleclick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.connect_on_doubleclick"];
 }
 
 + (BOOL)disconnectOnDoubleclick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.disconnect_on_doubleclick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.disconnect_on_doubleclick"];
 }
 
 + (BOOL)joinOnDoubleclick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.join_on_doubleclick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.join_on_doubleclick"];
 }
 
 + (BOOL)leaveOnDoubleclick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.leave_on_doubleclick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.leave_on_doubleclick"];
 }
 
 + (BOOL)logTranscript
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.log_transcript"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.log_transcript"];
 }
 
 + (BOOL)openBrowserInBackground
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.open_browser_in_background"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.open_browser_in_background"];
 }
 
 + (BOOL)showInlineImages
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.show_inline_images"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.show_inline_images"];
 }
 
 + (BOOL)showJoinLeave
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.show_join_leave"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.show_join_leave"];
 }
 
 + (BOOL)stopGrowlOnActive
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.stop_growl_on_active"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
 + (BOOL)countPublicMessagesInIconBadge
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.General.dockbadge_countpub"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
 }
 
 + (TabActionType)tabAction
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.tab_action"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.tab_action"];
 }
 
 + (BOOL)keywordCurrentNick
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Keyword.current_nick"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Keyword.current_nick"];
 }
 
 + (NSArray *)keywordDislikeWords
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Keyword.dislike_words"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Keyword.dislike_words"];
 }
 
 + (KeywordMatchType)keywordMatchingMethod
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.Keyword.matching_method"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.Keyword.matching_method"];
 }
 
 + (NSArray *)keywordWords
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Keyword.words"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Keyword.words"];
 }
 
 + (UserDoubleClickAction)userDoubleClickOption
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.user_doubleclick_action"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.user_doubleclick_action"];
 }
 
 + (NoticesSendToLocation)locationToSendNotices
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.notices_sendto_location"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.notices_sendto_location"];
 }
 
 + (CmdW_Shortcut_ResponseType)cmdWResponseType
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
 }
 
 #pragma mark -
@@ -488,67 +488,67 @@ static NSMutableDictionary *commandIndex;
 
 + (NSString *)themeName
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.name"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Theme.name"];
 }
 
 + (void)setThemeName:(NSString *)value
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.Theme.name"];
+	[TXNSUserDefaults() setObject:value forKey:@"Preferences.Theme.name"];
 }
 
 + (NSString *)themeLogFontName
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.log_font_name"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Theme.log_font_name"];
 }
 
 + (void)setThemeLogFontName:(NSString *)value
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.Theme.log_font_name"];
+	[TXNSUserDefaults() setObject:value forKey:@"Preferences.Theme.log_font_name"];
 }
 
 + (double)themeLogFontSize
 {
-	return [TXNSUserDefaultsPointer() doubleForKey:@"Preferences.Theme.log_font_size"];
+	return [TXNSUserDefaults() doubleForKey:@"Preferences.Theme.log_font_size"];
 }
 
 + (void)setThemeLogFontSize:(double)value
 {
-	[TXNSUserDefaultsPointer() setDouble:value forKey:@"Preferences.Theme.log_font_size"];
+	[TXNSUserDefaults() setDouble:value forKey:@"Preferences.Theme.log_font_size"];
 }
 
 + (NSString *)themeNickFormat
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.nick_format"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Theme.nick_format"];
 }
 
 + (BOOL)inputHistoryIsChannelSpecific
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.inputhistory_per_channel"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.inputhistory_per_channel"];
 }
 
 + (BOOL)themeOverrideLogFont
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.override_log_font"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_log_font"];
 }
 
 + (BOOL)themeOverrideNickFormat
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.override_nick_format"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_nick_format"];
 }
 
 + (BOOL)themeOverrideTimestampFormat
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"Preferences.Theme.override_timestamp_format"];
+	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_timestamp_format"];
 }
 
 + (NSString *)themeTimestampFormat
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.Theme.timestamp_format"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.Theme.timestamp_format"];
 }
 
 + (double)themeTransparency
 {
-	return [TXNSUserDefaultsPointer() doubleForKey:@"Preferences.Theme.transparency"];
+	return [TXNSUserDefaults() doubleForKey:@"Preferences.Theme.transparency"];
 }
 
 #pragma mark -
@@ -556,7 +556,7 @@ static NSMutableDictionary *commandIndex;
 
 + (void)setCompletionSuffix:(NSString *)value
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.General.completion_suffix"];
+	[TXNSUserDefaults() setObject:value forKey:@"Preferences.General.completion_suffix"];
 }
 
 #pragma mark -
@@ -564,22 +564,22 @@ static NSMutableDictionary *commandIndex;
 
 + (NSInteger)dccFirstPort
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.DCC.first_port"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.first_port"];
 }
 
 + (void)setDccFirstPort:(NSInteger)value
 {
-	[TXNSUserDefaultsPointer() setInteger:value forKey:@"Preferences.DCC.first_port"];
+	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.DCC.first_port"];
 }
 
 + (NSInteger)dccLastPort
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.DCC.last_port"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.last_port"];
 }
 
 + (void)setDccLastPort:(NSInteger)value
 {
-	[TXNSUserDefaultsPointer() setInteger:value forKey:@"Preferences.DCC.last_port"];
+	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.DCC.last_port"];
 }
 
 #pragma mark -
@@ -587,12 +587,12 @@ static NSMutableDictionary *commandIndex;
 
 + (NSInteger)inlineImagesMaxWidth
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.inline_image_width"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.inline_image_width"];
 }
 
 + (void)setInlineImagesMaxWidth:(NSInteger)value
 {
-	[TXNSUserDefaultsPointer() setInteger:value forKey:@"Preferences.General.inline_image_width"];
+	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.General.inline_image_width"];
 }
 
 #pragma mark -
@@ -600,12 +600,12 @@ static NSMutableDictionary *commandIndex;
 
 + (NSInteger)maxLogLines
 {
-	return [TXNSUserDefaultsPointer() integerForKey:@"Preferences.General.max_log_lines"];
+	return [TXNSUserDefaults() integerForKey:@"Preferences.General.max_log_lines"];
 }
 
 + (void)setMaxLogLines:(NSInteger)value
 {
-	[TXNSUserDefaultsPointer() setInteger:value forKey:@"Preferences.General.max_log_lines"];
+	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.General.max_log_lines"];
 }
 
 #pragma mark -
@@ -613,12 +613,12 @@ static NSMutableDictionary *commandIndex;
 
 + (NSString *)transcriptFolder
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"Preferences.General.transcript_folder"];
+	return [TXNSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
 }
 
 + (void)setTranscriptFolder:(NSString *)value
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:@"Preferences.General.transcript_folder"];
+	[TXNSUserDefaults() setObject:value forKey:@"Preferences.General.transcript_folder"];
 }
 
 #pragma mark -
@@ -687,49 +687,49 @@ static NSMutableDictionary *commandIndex;
 + (NSString *)soundForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
-	return [TXNSUserDefaultsPointer() objectForKey:key];
+	return [TXNSUserDefaults() objectForKey:key];
 }
 
 + (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
-	[TXNSUserDefaultsPointer() setObject:value forKey:key];
+	[TXNSUserDefaults() setObject:value forKey:key];
 }
 
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
-	return [TXNSUserDefaultsPointer() boolForKey:key];
+	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
-	[TXNSUserDefaultsPointer() setBool:value forKey:key];
+	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
-	return [TXNSUserDefaultsPointer() boolForKey:key];
+	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
-	[TXNSUserDefaultsPointer() setBool:value forKey:key];
+	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
-	return [TXNSUserDefaultsPointer() boolForKey:key];
+	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
-	[TXNSUserDefaultsPointer() setBool:value forKey:key];
+	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
 #pragma mark -
@@ -737,94 +737,94 @@ static NSMutableDictionary *commandIndex;
 
 + (BOOL)spellCheckEnabled
 {
-	if (![TXNSUserDefaultsPointer() objectForKey:@"spellCheck2"]) return YES;
-	return [TXNSUserDefaultsPointer() boolForKey:@"spellCheck2"];
+	if (![TXNSUserDefaults() objectForKey:@"spellCheck2"]) return YES;
+	return [TXNSUserDefaults() boolForKey:@"spellCheck2"];
 }
 
 + (void)setSpellCheckEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"spellCheck2"];
+	[TXNSUserDefaults() setBool:value forKey:@"spellCheck2"];
 }
 
 + (BOOL)grammarCheckEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"grammarCheck"];
+	return [TXNSUserDefaults() boolForKey:@"grammarCheck"];
 }
 
 + (void)setGrammarCheckEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"grammarCheck"];
+	[TXNSUserDefaults() setBool:value forKey:@"grammarCheck"];
 }
 
 + (BOOL)spellingCorrectionEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"spellingCorrection"];
+	return [TXNSUserDefaults() boolForKey:@"spellingCorrection"];
 }
 
 + (void)setSpellingCorrectionEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"spellingCorrection"];
+	[TXNSUserDefaults() setBool:value forKey:@"spellingCorrection"];
 }
 
 + (BOOL)smartInsertDeleteEnabled
 {
-	if (![TXNSUserDefaultsPointer() objectForKey:@"smartInsertDelete"]) return YES;
-	return [TXNSUserDefaultsPointer() boolForKey:@"smartInsertDelete"];
+	if (![TXNSUserDefaults() objectForKey:@"smartInsertDelete"]) return YES;
+	return [TXNSUserDefaults() boolForKey:@"smartInsertDelete"];
 }
 
 + (void)setSmartInsertDeleteEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"smartInsertDelete"];
+	[TXNSUserDefaults() setBool:value forKey:@"smartInsertDelete"];
 }
 
 + (BOOL)quoteSubstitutionEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"quoteSubstitution"];
+	return [TXNSUserDefaults() boolForKey:@"quoteSubstitution"];
 }
 
 + (void)setQuoteSubstitutionEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"quoteSubstitution"];
+	[TXNSUserDefaults() setBool:value forKey:@"quoteSubstitution"];
 }
 
 + (BOOL)dashSubstitutionEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"dashSubstitution"];
+	return [TXNSUserDefaults() boolForKey:@"dashSubstitution"];
 }
 
 + (void)setDashSubstitutionEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"dashSubstitution"];
+	[TXNSUserDefaults() setBool:value forKey:@"dashSubstitution"];
 }
 
 + (BOOL)linkDetectionEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"linkDetection"];
+	return [TXNSUserDefaults() boolForKey:@"linkDetection"];
 }
 
 + (void)setLinkDetectionEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"linkDetection"];
+	[TXNSUserDefaults() setBool:value forKey:@"linkDetection"];
 }
 
 + (BOOL)dataDetectionEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"dataDetection"];
+	return [TXNSUserDefaults() boolForKey:@"dataDetection"];
 }
 
 + (void)setDataDetectionEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"dataDetection"];
+	[TXNSUserDefaults() setBool:value forKey:@"dataDetection"];
 }
 
 + (BOOL)textReplacementEnabled
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"textReplacement"];
+	return [TXNSUserDefaults() boolForKey:@"textReplacement"];
 }
 
 + (void)setTextReplacementEnabled:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"textReplacement"];
+	[TXNSUserDefaults() setBool:value forKey:@"textReplacement"];
 }
 
 #pragma mark -
@@ -832,12 +832,12 @@ static NSMutableDictionary *commandIndex;
 
 + (BOOL)registeredToGrowl
 {
-	return [TXNSUserDefaultsPointer() boolForKey:@"registeredToGrowl"];
+	return [TXNSUserDefaults() boolForKey:@"registeredToGrowl"];
 }
 
 + (void)setRegisteredToGrowl:(BOOL)value
 {
-	[TXNSUserDefaultsPointer() setBool:value forKey:@"registeredToGrowl"];
+	[TXNSUserDefaults() setBool:value forKey:@"registeredToGrowl"];
 }
 
 #pragma mark -
@@ -845,12 +845,12 @@ static NSMutableDictionary *commandIndex;
 
 + (NSDictionary *)loadWorld
 {
-	return [TXNSUserDefaultsPointer() objectForKey:@"world"];
+	return [TXNSUserDefaults() objectForKey:@"world"];
 }
 
 + (void)saveWorld:(NSDictionary *)value
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:@"world"];
+	[TXNSUserDefaults() setObject:value forKey:@"world"];
 }
 
 #pragma mark -
@@ -858,12 +858,12 @@ static NSMutableDictionary *commandIndex;
 
 + (NSDictionary *)loadWindowStateWithName:(NSString *)name
 {
-	return [TXNSUserDefaultsPointer() objectForKey:name];
+	return [TXNSUserDefaults() objectForKey:name];
 }
 
 + (void)saveWindowState:(NSDictionary *)value name:(NSString *)name
 {
-	[TXNSUserDefaultsPointer() setObject:value forKey:name];
+	[TXNSUserDefaults() setObject:value forKey:name];
 }
 
 #pragma mark -
@@ -880,7 +880,7 @@ static NSMutableArray *excludeWords;
 		keywords = [NSMutableArray new];
 	}
 	
-	NSArray *ary = [TXNSUserDefaultsPointer() objectForKey:@"keywords"];
+	NSArray *ary = [TXNSUserDefaults() objectForKey:@"keywords"];
 	
 	for (NSDictionary *e in ary) {
 		NSString *s = [e objectForKey:@"string"];
@@ -897,7 +897,7 @@ static NSMutableArray *excludeWords;
 		excludeWords = [NSMutableArray new];
 	}
 	
-	NSArray *ary = [TXNSUserDefaultsPointer() objectForKey:@"excludeWords"];
+	NSArray *ary = [TXNSUserDefaults() objectForKey:@"excludeWords"];
 	
 	for (NSDictionary *e in ary) {
 		NSString *s = [e objectForKey:@"string"];
@@ -908,7 +908,7 @@ static NSMutableArray *excludeWords;
 
 + (void)cleanUpWords:(NSString *)key
 {
-	NSArray *src = [TXNSUserDefaultsPointer() objectForKey:key];
+	NSArray *src = [TXNSUserDefaults() objectForKey:key];
 	
 	NSMutableArray *ary = [NSMutableArray array];
 	
@@ -931,8 +931,8 @@ static NSMutableArray *excludeWords;
 		[saveAry addObject:dic];
 	}
 	
-	[TXNSUserDefaultsPointer() setObject:saveAry forKey:key];
-	[TXNSUserDefaultsPointer() synchronize];
+	[TXNSUserDefaults() setObject:saveAry forKey:key];
+	[TXNSUserDefaults() synchronize];
 }
 
 + (void)cleanUpWords
@@ -968,7 +968,7 @@ static NSMutableArray *excludeWords;
 
 + (void)defaultIRCClientSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {	
-	[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.default_irc_client"];
+	[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.default_irc_client"];
 	
 	if (returnCode == NSAlertFirstButtonReturn) {
 		NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
@@ -992,7 +992,7 @@ static NSMutableArray *excludeWords;
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:(NSURL *)ircAppURL];
 				
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {	
-			BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:@"Preferences.prompts.default_irc_client"];
+			BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.default_irc_client"];
 			
 			if (suppCheck == NO) {
 				NSAlert *alert = [[NSAlert alloc] init];
@@ -1018,10 +1018,10 @@ static NSMutableArray *excludeWords;
 
 + (void)initPreferences
 {
-	if ([TXNSUserDefaultsPointer() boolForKey:@"TXTNotFirstRun"] == YES) {
+	if ([TXNSUserDefaults() boolForKey:@"TXTNotFirstRun"] == YES) {
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
 	} else {
-		[TXNSUserDefaultsPointer() setBool:YES forKey:@"TXTNotFirstRun"];
+		[TXNSUserDefaults() setBool:YES forKey:@"TXTNotFirstRun"];
 	}
 	
 	// ====================================================== //
@@ -1113,10 +1113,10 @@ static NSMutableArray *excludeWords;
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
 	[d setInt:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
 	
-	[TXNSUserDefaultsPointer() registerDefaults:d];
+	[TXNSUserDefaults() registerDefaults:d];
 	
-	[TXNSUserDefaultsPointer() addObserver:(NSObject *)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
-	[TXNSUserDefaultsPointer() addObserver:(NSObject *)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
+	[TXNSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
+	[TXNSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
 	if (!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
@@ -1131,7 +1131,7 @@ static NSMutableArray *excludeWords;
 
 + (void)sync
 {
-	[TXNSUserDefaultsPointer() synchronize];
+	[TXNSUserDefaults() synchronize];
 }
 
 @end

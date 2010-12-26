@@ -7,6 +7,7 @@
 	NSString *nick;
 	NSString *username;
 	NSString *address;
+	
 	BOOL q;
 	BOOL a;
 	BOOL o;
@@ -14,6 +15,7 @@
 	BOOL v;
 	
 	BOOL isMyself;
+	
 	NSInteger colorNumber;
 	
 	CGFloat incomingWeight;

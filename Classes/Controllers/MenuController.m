@@ -1356,8 +1356,8 @@
 {	
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:path]];
+	if ([TXNSFileManager() fileExistsAtPath:path]) {
+		[TXNSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		NSRunAlertPanel(TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE"), TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE"), TXTLS(@"OK_BUTTON"), nil, nil);	
 	}
@@ -1372,8 +1372,8 @@
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", u.name, ((c.isTalk) ? @"Queries" : @"Channels"), c.name]];
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:path]];
+	if ([TXNSFileManager() fileExistsAtPath:path]) {
+		[TXNSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		NSRunAlertPanel(TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE"), TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE"), TXTLS(@"OK_BUTTON"), nil, nil);	
 	}
@@ -1441,25 +1441,25 @@
 {
 	switch ([sender tag]) {
 		case 101:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
 			break;
 		case 103:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
 			break;
 		case 104:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
 			break;
 		case 105:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
 			break;
 		case 106:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
 			break;
 		case 108:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
 			break;
 		case 110:
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
+			[TXNSWorkspace() openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
 			break;
 		default:
 			break;
@@ -1512,8 +1512,7 @@
 
 - (void)onWantThemeForceReloaded:(id)sender
 {
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+	[TXNSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onWantChannelModerated:(id)sender

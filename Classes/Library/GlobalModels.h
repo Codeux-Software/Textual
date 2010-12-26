@@ -11,7 +11,11 @@ extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhol
 extern void TXDevNullDestroyBOOLObject(BOOL objt);
 
 extern NSInteger TXRandomThousandNumber(void);
-extern NSUserDefaults *TXNSUserDefaultsPointer(void);
+
+extern NSWorkspace *TXNSWorkspace(void);
+extern NSFileManager *TXNSFileManager(void); 
+extern NSUserDefaults *TXNSUserDefaults(void);
+extern NSNotificationCenter *TXNSNotificationCenter(void); 
 
 extern NSString *TXFormattedTimestamp(NSString *format);
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);

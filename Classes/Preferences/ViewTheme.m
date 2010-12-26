@@ -66,9 +66,7 @@
 				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:fname];
 			}
 			
-			NSFileManager *fm = [NSFileManager defaultManager];
-			
-			if ([fm fileExistsAtPath:path] == NO) {
+			if ([TXNSFileManager() fileExistsAtPath:path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
 					
@@ -76,7 +74,7 @@
 				}
 			}
 			
-			if ([fm fileExistsAtPath:path] == NO) {
+			if ([TXNSFileManager() fileExistsAtPath:path] == NO) {
 				NSLog(@"Error: No path to local resources.");
 				exit(0);
 			}
@@ -108,41 +106,40 @@
 {
 	BOOL isDirectory = NO;
 	
-	NSFileManager *fm = [NSFileManager defaultManager];
 	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
 	
-	if ([fm fileExistsAtPath:dest] == NO) {
-		[fm createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([TXNSFileManager() fileExistsAtPath:dest] == NO) {
+		[TXNSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	NSArray *resourceFiles = [fm contentsOfDirectoryAtPath:location error:NULL];
+	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:location error:NULL];
 	for (NSString *file in resourceFiles) {
 		NSString *source = [location stringByAppendingPathComponent:file];
 		NSString *sdest = [dest stringByAppendingPathComponent:file];
 		
-		[fm fileExistsAtPath:source isDirectory:&isDirectory];
-		[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+		[TXNSFileManager() fileExistsAtPath:source isDirectory:&isDirectory];
+		[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 			 ofItemAtPath:source
 					error:NULL];
 		
 		BOOL resetAttrInfo = NO;
 		
-		if ([fm fileExistsAtPath:sdest]) {
+		if ([TXNSFileManager() fileExistsAtPath:sdest]) {
 			if (isDirectory == YES) {
 				resetAttrInfo = YES;
 				
 				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
 			} else {
-				NSDictionary *attributes = [fm attributesOfItemAtPath:sdest error:nil];
+				NSDictionary *attributes = [TXNSFileManager() attributesOfItemAtPath:sdest error:nil];
 				
 				if (attributes) {
 					NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
 					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
 					
 					if (creationDate == modificationDate || creationDate < 1) {
-						[fm removeItemAtPath:sdest error:NULL];
+						[TXNSFileManager() removeItemAtPath:sdest error:NULL];
 						
-						resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+						resetAttrInfo = [TXNSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
 					}
 				}
 			}
@@ -152,12 +149,12 @@
 				
 				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
 			} else {
-				resetAttrInfo = [fm copyItemAtPath:source toPath:sdest error:NULL];
+				resetAttrInfo = [TXNSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
 			}
 		}
 		
 		if (resetAttrInfo == YES || force_reset == YES) {
-			[fm setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+			[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 				 ofItemAtPath:sdest 
 						error:NULL];
 		}
