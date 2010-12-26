@@ -4,10 +4,7 @@
 
 #import "GrowlController.h"
 
-#define CLICK_INTERVAL						2
-
-@interface GrowlController (Private)
-@end
+#define CLICK_INTERVAL	2
 
 @implementation GrowlController
 

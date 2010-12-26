@@ -97,7 +97,7 @@
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
-	NSArray *resourceFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {

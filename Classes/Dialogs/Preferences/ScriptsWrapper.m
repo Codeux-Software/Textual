@@ -20,8 +20,7 @@
 
 - (void)populateData;
 {			
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSArray *resourceFiles = [fm contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".scpt"]) {

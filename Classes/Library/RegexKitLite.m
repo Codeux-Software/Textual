@@ -616,9 +616,9 @@ static BOOL  rkl_CFStringIsMutable_first (CFStringRef str)                { if((
 
 static void rkl_RegisterForLowMemoryNotifications(void) RKL_ATTRIBUTES(used);
 
-@interface      RKLLowMemoryWarningObserver : NSObject +(void)lowMemoryWarning:(id)notification; @end
+@interface      RKLLowMemoryWarningObserver : NSObject + (void)lowMemoryWarning:(id)notification; @end
 @implementation RKLLowMemoryWarningObserver
-+(void)lowMemoryWarning:(id)notification {
++ (void)lowMemoryWarning:(id)notification {
   if(OSSpinLockTry(&rkl_cacheSpinLock)) { rkl_clearStringCache(); OSSpinLockUnlock(&rkl_cacheSpinLock); }
   else { [[RKLLowMemoryWarningObserver class] performSelector:@selector(lowMemoryWarning:) withObject:notification afterDelay:(NSTimeInterval)0.1]; }
 }
@@ -633,7 +633,7 @@ __attribute__((constructor)) static void rkl_RegisterForLowMemoryNotifications(v
   while((rkl_HaveRegisteredForLowMemoryNotifications == 0) && ((didSwap = OSAtomicCompareAndSwapIntBarrier(0, 1, &rkl_HaveRegisteredForLowMemoryNotifications)) == false)) { /* Allows for spurious CAS failures. */ }
   if(didSwap == true) {
     if((memoryWarningNotification = (void **)dlsym(RTLD_DEFAULT, "UIApplicationDidReceiveMemoryWarningNotification")) != NULL) {
-      [[NSNotificationCenter defaultCenter] addObserver:[RKLLowMemoryWarningObserver class] selector:@selector(lowMemoryWarning:) name:(NSString *)*memoryWarningNotification object:NULL];
+      [TXNSNotificationCenter() addObserver:[RKLLowMemoryWarningObserver class] selector:@selector(lowMemoryWarning:) name:(NSString *)*memoryWarningNotification object:NULL];
     }
   }
 }

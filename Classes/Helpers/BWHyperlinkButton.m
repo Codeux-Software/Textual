@@ -7,7 +7,6 @@
 //
 
 #import "BWHyperlinkButton.h"
-#import "BWHyperlinkButtonCell.h"
 
 @implementation BWHyperlinkButton
 
@@ -21,7 +20,7 @@
 
 - (void)openURLInBrowser:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:self.urlString]];
+	[TXNSWorkspace() openURL:[NSURL URLWithString:self.urlString]];
 }
 
 - (void)resetCursorRects 

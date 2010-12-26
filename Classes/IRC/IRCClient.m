@@ -2113,7 +2113,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			} else {
 				NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
 				
-				if ([[NSFileManager defaultManager] fileExistsAtPath:scriptPath]) {
+				if ([TXNSFileManager() fileExistsAtPath:scriptPath]) {
 					NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", 
 											   [NSNumber numberWithBool:completeTarget], @"completeTarget", targetChannelName, @"target", nil];
 					[NSThread detachNewThreadSelector:@selector(executeTextualCmdScript:) toTarget:self withObject:[[inputInfo mutableCopy] autorelease]];

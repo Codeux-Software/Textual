@@ -13,7 +13,7 @@ int main(int argc, const char* argv[])
 	
     NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:receipt] == NO) {
+    if ([TXNSFileManager() fileExistsAtPath:receipt] == NO) {
 		exit(173);
 	} else {
 		BOOL validRec = validateReceiptAtPath(receipt);

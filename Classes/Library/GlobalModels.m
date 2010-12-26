@@ -14,14 +14,6 @@ extern void TXDevNullDestroyBOOLObject(BOOL objt) { return; }
 #pragma mark -
 #pragma mark Miscellaneous Special Functions
 
-static NSUserDefaults *TXNSUserDefaultsPNTR = nil;
-extern NSUserDefaults *TXNSUserDefaultsPointer(void) 
-{
-	if (TXNSUserDefaultsPNTR == nil) TXNSUserDefaultsPNTR = [NSUserDefaults standardUserDefaults];
-	
-	return TXNSUserDefaultsPNTR;
-}
-
 extern NSInteger TXRandomThousandNumber(void)
 {
 	return (1 + arc4random() % (9999 + 1));
@@ -42,7 +34,7 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 								  NSString *suppressionKey,
 								  NSString *suppressionText)
 {
-	BOOL suppCheck = [TXNSUserDefaultsPointer() boolForKey:suppressionKey];
+	BOOL suppCheck = [TXNSUserDefaults() boolForKey:suppressionKey];
 	
 	if (suppCheck == YES) {
 		return YES;
@@ -58,7 +50,7 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 		
 		NSInteger button = [alert runModal];
 		if (button == NSAlertDefaultReturn) {
-			[TXNSUserDefaultsPointer() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
+			[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
 			
 			return YES;
 		} else {
@@ -158,4 +150,40 @@ extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *ov
 extern NSString *TXFormattedTimestamp(NSString *format) 
 {
 	return TXFormattedTimestampWithOverride(format, nil);
+}
+
+#pragma mark -
+#pragma mark Establish Common Pointers
+
+static NSWorkspace *TXNSWorkspacePNTR = nil;
+static NSFileManager *TXNSFileManagerPNTR = nil;
+static NSUserDefaults *TXNSUserDefaultsPNTR = nil;
+static NSNotificationCenter *TXNSNotificationCenterPNTR = nil;
+
+extern NSUserDefaults *TXNSUserDefaults(void) 
+{
+	if (TXNSUserDefaultsPNTR == nil) TXNSUserDefaultsPNTR = [NSUserDefaults standardUserDefaults];
+	
+	return TXNSUserDefaultsPNTR;
+}
+
+extern NSFileManager *TXNSFileManager(void) 
+{
+	if (TXNSFileManagerPNTR == nil) TXNSFileManagerPNTR = [NSFileManager defaultManager];
+	
+	return TXNSFileManagerPNTR;
+}
+
+extern NSWorkspace *TXNSWorkspace(void) 
+{
+	if (TXNSWorkspacePNTR == nil) TXNSWorkspacePNTR = [NSWorkspace sharedWorkspace];
+	
+	return TXNSWorkspacePNTR;
+}
+
+extern NSNotificationCenter *TXNSNotificationCenter(void) 
+{
+	if (TXNSNotificationCenterPNTR == nil) TXNSNotificationCenterPNTR = [NSNotificationCenter defaultCenter];
+	
+	return TXNSNotificationCenterPNTR;
 }

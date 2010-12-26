@@ -404,7 +404,7 @@
 		}
 		
 		[window setTitle:title];
-		[[NSNotificationCenter defaultCenter] postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
+		[TXNSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 	} else {		
 		IRCClient *u = sel.client;
 		IRCChannel *c = (IRCChannel *)sel;
@@ -432,9 +432,9 @@
 				[title appendString:[NSString stringWithFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), [c.mode titleString]]];
 			}
 			
-			[[NSNotificationCenter defaultCenter] postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
+			[TXNSNotificationCenter() postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
 		} else {
-			[[NSNotificationCenter defaultCenter] postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
+			[TXNSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 		}
 		
 		[window setTitle:title];

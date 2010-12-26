@@ -4,28 +4,34 @@
 
 @interface MasterController : NSObject
 {
-	IBOutlet MainWindow *window;
-	IBOutlet ServerTreeView *tree;
-	IBOutlet NSBox *logBase;
-	IBOutlet MemberListView *memberList;
-	IBOutlet InputTextField *text;
 	IBOutlet ChatBox *chatBox;
+	IBOutlet MainWindow *window;
+	IBOutlet MenuController *menu;
+	IBOutlet InputTextField *text;
+	IBOutlet ServerTreeView *tree;
+	IBOutlet MemberListView *memberList;
+	
+	IBOutlet NSBox *logBase;
+	
 	IBOutlet NSScrollView *treeScrollView;
+	
 	IBOutlet NSView *leftTreeBase;
 	IBOutlet NSView *rightTreeBase;
+	
 	IBOutlet ThinSplitView *rootSplitter;
 	IBOutlet ThinSplitView *infoSplitter;
 	IBOutlet ThinSplitView *treeSplitter;
-	IBOutlet MenuController *menu;
-	IBOutlet NSMenuItem *formattingMenu;
+	
 	IBOutlet NSMenuItem *serverMenu;
 	IBOutlet NSMenuItem *channelMenu;
-	IBOutlet NSMenu *memberMenu;
-	IBOutlet NSMenu *treeMenu;
+	IBOutlet NSMenuItem *formattingMenu;
+	
 	IBOutlet NSMenu *logMenu;
 	IBOutlet NSMenu *urlMenu;
+	IBOutlet NSMenu *treeMenu;
 	IBOutlet NSMenu *addrMenu;
 	IBOutlet NSMenu *chanMenu;
+	IBOutlet NSMenu *memberMenu;
 	
 	IRCExtras *extrac;
 	WelcomeSheet *WelcomeSheetDisplay;

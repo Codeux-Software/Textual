@@ -16,6 +16,8 @@
  before they are required by another header file. Please be careful when 
  changing order. */
 
+#import "GlobalModels.h"
+#import "BWHyperlinkButtonCell.h"
 #import "BWHyperlinkButton.h"
 #import "RegexKitLite.h"
 #import "AsyncSocket.h"
@@ -56,8 +58,6 @@
 #import "URLParser.h"
 #import "AGKeychain.h"
 #import "FileLogger.h"
-#import "HostResolver.h"
-#import "GlobalModels.h"
 #import "InputHistory.h"
 #import "LanguagePreferences.h"
 #import "GTMBase64.h"

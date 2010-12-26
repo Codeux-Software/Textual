@@ -125,7 +125,6 @@
 		4C31AD1412B5E74700088C31 /* UnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10811737F660044E7A1 /* UnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1512B5E74700088C31 /* NickCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0C811737F660044E7A1 /* NickCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1612B5E74700088C31 /* InputHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C13B11737F660044E7A1 /* InputHistory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31AD1712B5E74700088C31 /* HostResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C13511737F660044E7A1 /* HostResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1812B5E74700088C31 /* NSWindowHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10411737F660044E7A1 /* NSWindowHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1912B5E74700088C31 /* GTMNSString+URLArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0F211737F660044E7A1 /* GTMNSString+URLArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31AD1A12B5E74700088C31 /* ImageURLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 780C67C611822AFF00CB739F /* ImageURLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -227,7 +226,6 @@
 		4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
 		4CA945A811E1AFBA00D36367 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* AsyncSocket.m */; };
 		4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
-		4CA945AA11E1AFBA00D36367 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13611737F660044E7A1 /* HostResolver.m */; };
 		4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
 		4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
 		4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
@@ -567,8 +565,6 @@
 		78A8C13011737F660044E7A1 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		78A8C13111737F660044E7A1 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLogger.h; sourceTree = "<group>"; };
 		78A8C13211737F660044E7A1 /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
-		78A8C13511737F660044E7A1 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostResolver.h; sourceTree = "<group>"; };
-		78A8C13611737F660044E7A1 /* HostResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostResolver.m; sourceTree = "<group>"; };
 		78A8C13B11737F660044E7A1 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputHistory.h; sourceTree = "<group>"; };
 		78A8C13C11737F660044E7A1 /* InputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHistory.m; sourceTree = "<group>"; };
 		78A8C13D11737F660044E7A1 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEventHandler.h; sourceTree = "<group>"; };
@@ -1038,8 +1034,6 @@
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
 				78A8C13111737F660044E7A1 /* FileLogger.h */,
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
-				78A8C13511737F660044E7A1 /* HostResolver.h */,
-				78A8C13611737F660044E7A1 /* HostResolver.m */,
 				78A8C13B11737F660044E7A1 /* InputHistory.h */,
 				78A8C13C11737F660044E7A1 /* InputHistory.m */,
 				78A8C13D11737F660044E7A1 /* KeyEventHandler.h */,
@@ -1246,7 +1240,6 @@
 				4C31AD1412B5E74700088C31 /* UnicodeHelper.h in Headers */,
 				4C31AD1512B5E74700088C31 /* NickCompletionStatus.h in Headers */,
 				4C31AD1612B5E74700088C31 /* InputHistory.h in Headers */,
-				4C31AD1712B5E74700088C31 /* HostResolver.h in Headers */,
 				4C31AD1812B5E74700088C31 /* NSWindowHelper.h in Headers */,
 				4C31AD1912B5E74700088C31 /* GTMNSString+URLArguments.h in Headers */,
 				4C31AD1A12B5E74700088C31 /* ImageURLParser.h in Headers */,
@@ -1497,7 +1490,6 @@
 				4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */,
 				4CA945A811E1AFBA00D36367 /* AsyncSocket.m in Sources */,
 				4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */,
-				4CA945AA11E1AFBA00D36367 /* HostResolver.m in Sources */,
 				4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */,
 				4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */,
 				4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */,
