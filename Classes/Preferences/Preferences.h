@@ -3,17 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 typedef enum {
-	ADDRESS_DETECT_SPECIFY = 0,
-	ADDRESS_DETECT_JOIN = 2,
-} AddressDetectionType;
-
-typedef enum {
-	DCC_AUTO_ACCEPT = 0,
-	DCC_SHOW_DIALOG,
-	DCC_IGNORE,
-} DCCActionType;
-
-typedef enum {
 	KEYWORD_MATCH_PARTIAL = 0,
 	KEYWORD_MATCH_EXACT,
 } KeywordMatchType;
@@ -54,8 +43,6 @@ typedef enum {
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
 + (NSString *)systemProcessor;
-+ (DCCActionType)dccAction;
-+ (AddressDetectionType)dccAddressDetectionMethod;
 + (NSString *)whereScriptsPath;
 + (NSString *)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
@@ -66,7 +53,6 @@ typedef enum {
 + (NSString *)whereResourcePath;
 + (NSString *)wherePluginsPath;
 + (NSString *)wherePluginsLocalPath;
-+ (NSString *)dccMyaddress;
 + (NSString *)completionSuffix;
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
@@ -135,11 +121,6 @@ typedef enum {
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString *)themeTimestampFormat;
 + (double)themeTransparency;
-
-+ (NSInteger)dccFirstPort;
-+ (void)setDccFirstPort:(NSInteger)value;
-+ (NSInteger)dccLastPort;
-+ (void)setDccLastPort:(NSInteger)value;
 
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;

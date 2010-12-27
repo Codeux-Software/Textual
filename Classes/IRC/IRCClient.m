@@ -61,9 +61,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)startReconnectTimer;
 
-- (void)requestIPAddressFromInternet;
-- (void)setDCCIPAddress:(NSString *)host;
-
 @end
 
 @implementation IRCClient
@@ -76,7 +73,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize isConnected;
 @synthesize isLoggedIn;
 @synthesize myNick;
-@synthesize myAddress;
 @synthesize lastSelectedChannel;
 @synthesize conn;
 @synthesize reconnectEnabled;
@@ -182,8 +178,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[serverHostname release];
 	[trackedUsers release];
 	
-	[myAddress release];
-	
 	[pongTimer stop];
 	[pongTimer release];
 	[reconnectTimer stop];
@@ -220,12 +214,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[config autorelease];
 	config = [seed mutableCopy];
-	
-	addressDetectionMethod = [Preferences dccAddressDetectionMethod];
-	
-	if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
-		[self setDCCIPAddress:[Preferences dccMyaddress]];
-	}
 }
 
 - (void)updateConfig:(IRCClientConfig *)seed
@@ -395,16 +383,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Utilities
 
-- (void)setDCCIPAddress:(NSString *)host
-{
-	if ([host isIPAddress]) {	
-		if (myAddress != host) {
-			[myAddress release];
-			myAddress = [host retain];
-		}
-	}
-}
-
 - (NSInteger)connectDelay
 {
 	return connectDelay;
@@ -441,19 +419,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)preferencesChanged
 {
 	log.maxLines = [Preferences maxLogLines];
-	
-	if (addressDetectionMethod != [Preferences dccAddressDetectionMethod]) {
-		addressDetectionMethod = [Preferences dccAddressDetectionMethod];
-		
-		[myAddress release];
-		myAddress = nil;
-		
-		if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
-			[self setDCCIPAddress:[Preferences dccMyaddress]];
-		} else {
-			[self requestIPAddressFromInternet];
-		}
-	}
 	
 	for (IRCChannel *c in channels) {
 		[c preferencesChanged];
@@ -1824,7 +1789,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				g.ignorePMHighlights = YES;
 				g.ignoreNotices = YES;
 				g.ignoreCTCP = YES;
-				g.ignoreDCC = YES;
 				g.ignoreJPQE = YES;
 				g.notifyJoins = NO;
 				g.notifyWhoisJoins = NO;
@@ -3096,7 +3060,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		} else if ([command isEqualToString:IRCCI_USERINFO]) {
 			[self sendCTCPReply:nick command:command text:config.userInfo ?: @""];
 		} else if ([command isEqualToString:IRCCI_CLIENTINFO]) {
-			[self sendCTCPReply:nick command:command text:TXTLS(@"DCC VERSION CLIENTINFO USERINFO PING TIME")];
+			[self sendCTCPReply:nick command:command text:TXTLS(@"IRC_CTCP_CLIENT_INFO")];
 		}
 	}
 }
@@ -3149,30 +3113,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[pool drain];
 }
 
-- (void)_requestIPAddressFromInternet
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	NSURLRequest *chRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://myip.dnsomatic.com/"] 
-											   cachePolicy:NSURLRequestReloadIgnoringCacheData 
-										   timeoutInterval:10];
-	
-	NSData *response = [NSURLConnection sendSynchronousRequest:chRequest returningResponse:nil error:NULL]; 
-	
-	if (response) {
-		NSString *address = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
-		[address autorelease];
-		[self setDCCIPAddress:[address trim]];
-	}
-	
-	[pool release];
-}
-
-- (void)requestIPAddressFromInternet
-{
-	[[self invokeInBackgroundThread] _requestIPAddressFromInternet];
-}
-
 - (void)receiveJoin:(IRCMessage *)m
 {
 	NSString *nick = m.sender.nick;
@@ -3191,10 +3131,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (myself) {
 		[c activate];
 		[self reloadTree];
-		
-		if (!myAddress) {
-			[self requestIPAddressFromInternet];
-		}
 	}
 	
 	if (c && ![c findMember:nick]) {

@@ -66,7 +66,6 @@
 - (void)onCloseWindow:(id)sender;
 
 - (void)onPaste:(id)sender;
-- (void)onPasteMyAddress:(id)sender;
 - (void)onSearchWeb:(id)sender;
 - (void)onCopyLogAsHtml:(id)sender;
 
@@ -98,7 +97,6 @@
 - (void)onMemberWhois:(id)sender;
 - (void)onMemberTalk:(id)sender;
 - (void)onMemberInvite:(id)sender;
-- (void)onMemberWantDCCChat:(id)sender;
 - (void)onMemberPing:(id)sender;
 - (void)onMemberTime:(id)sender;
 - (void)onMemberVersion:(id)sender;

@@ -28,8 +28,6 @@
 	<string>-%1$@ CTCP- %2$@ (%3$1.5f sec)</string>
 	<key>IRC_USER_JOINED_CHANNEL</key>
 	<string>%1$@ (%2$@@%3$@) joined the channel.</string>
-	<key>IRC_HAS_UNKNOWN_DCC</key>
-	<string>-CTCP- unknown (DCC %1$@) from %2$@ : %3$@</string>
 	<key>IRC_CHANNEL_TOPIC_CHANGED</key>
 	<string>%1$@ changed the topic to %2$@</string>
 	<key>IRC_USER_KICKED_FROM_CHANNEL</key>

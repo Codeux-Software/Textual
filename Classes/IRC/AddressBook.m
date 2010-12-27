@@ -12,7 +12,6 @@
 @synthesize ignoreHighlights;
 @synthesize ignoreNotices;
 @synthesize ignoreCTCP;
-@synthesize ignoreDCC;
 @synthesize ignoreJPQE;
 @synthesize hostmaskRegex;
 @synthesize notifyJoins;
@@ -46,7 +45,6 @@
 		ignoreHighlights = [dic boolForKey:@"ignoreHighlights"];
 		ignoreNotices = [dic boolForKey:@"ignoreNotices"];
 		ignoreCTCP = [dic boolForKey:@"ignoreCTCP"];
-		ignoreDCC = [dic boolForKey:@"ignoreDCC"];
 		ignoreJPQE = [dic boolForKey:@"ignoreJPQE"];
 		notifyJoins = [dic boolForKey:@"notifyJoins"];
 		notifyWhoisJoins = [dic boolForKey:@"notifyWhoisJoins"];
@@ -116,7 +114,6 @@
 	[dic setBool:ignorePMHighlights forKey:@"ignorePMHighlights"];
 	[dic setBool:ignoreNotices forKey:@"ignoreNotices"];
 	[dic setBool:ignoreCTCP forKey:@"ignoreCTCP"];
-	[dic setBool:ignoreDCC forKey:@"ignoreDCC"];
 	[dic setBool:ignoreJPQE forKey:@"ignoreJPQE"];
 	[dic setBool:notifyJoins forKey:@"notifyJoins"];
 	[dic setBool:notifyWhoisJoins forKey:@"notifyWhoisJoins"];

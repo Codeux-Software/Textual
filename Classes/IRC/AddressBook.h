@@ -12,7 +12,6 @@
 	BOOL ignoreHighlights;
 	BOOL ignoreNotices;
 	BOOL ignoreCTCP;
-	BOOL ignoreDCC;
 	BOOL ignoreJPQE;
 	BOOL notifyJoins;
 	BOOL notifyWhoisJoins;
@@ -28,7 +27,6 @@
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreNotices;
 @property (nonatomic, assign) BOOL ignoreCTCP;
-@property (nonatomic, assign) BOOL ignoreDCC;
 @property (nonatomic, assign) BOOL ignoreJPQE;
 @property (nonatomic, assign) BOOL notifyJoins;
 @property (nonatomic, retain) NSString *hostmaskRegex;
