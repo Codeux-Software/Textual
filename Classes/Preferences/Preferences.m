@@ -13,11 +13,7 @@ static NSDictionary *textualPlist;
 static NSDictionary *systemVersionPlist;
 static NSMutableDictionary *commandIndex;
 
-#if defined(__ppc__)
-static NSString *processor = @"PowerPC 32-bit";
-#elif defined(__ppc64__)
-static NSString *processor = @"PowerPC 64-bit";
-#elif defined(__i386__) 
+#if defined(__i386__) 
 static NSString *processor = @"Intel 32-bit";
 #elif defined(__x86_64__)
 static NSString *processor = @"Intel 64-bit";
