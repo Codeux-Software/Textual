@@ -134,8 +134,7 @@
 "IRC_RECIEVED_CTCP_PING_REPLY" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "IRC_USER_JOINED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) joined the channel.";
 "IRC_USER_WHOIS_HOSTMASK" = "%1$@ has userhost %2$@@%3$@ and realname %4$@";
-"IRC_CTCP_CLIENT_INFO" = "DCC VERSION CLIENTINFO USERINFO PING TIME UPTIME";
-"IRC_HAS_UNKNOWN_DCC" = "\002-CTCP-\002 unknown (DCC %1$@) from %2$@ : %3$@";
+"IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME UPTIME";
 "IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and realname %4$@";
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";

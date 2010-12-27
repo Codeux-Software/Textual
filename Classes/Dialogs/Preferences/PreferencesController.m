@@ -6,8 +6,6 @@
 
 #define LINES_MIN			100
 #define LINES_MAX			5000
-#define PORT_MIN			1024
-#define PORT_MAX			65535
 #define INLINE_IMAGE_MAX	5000
 #define INLINE_IMAGE_MIN	40
 
@@ -211,26 +209,6 @@
 	return [Preferences themeLogFontSize];
 }
 
-- (NSInteger)dccFirstPort
-{
-	return [Preferences dccFirstPort];
-}
-
-- (void)setDccFirstPort:(NSInteger)value
-{
-	[Preferences setDccFirstPort:value];
-}
-
-- (NSInteger)dccLastPort
-{
-	return [Preferences dccLastPort];
-}
-
-- (void)setDccLastPort:(NSInteger)value
-{
-	[Preferences setDccLastPort:value];
-}
-
 - (NSInteger)maxLogLines
 {
 	return [Preferences maxLogLines];
@@ -269,20 +247,6 @@
 			*value = [NSNumber numberWithInteger:LINES_MIN];
 		} else if (n > LINES_MAX) {
 			*value = [NSNumber numberWithInteger:LINES_MAX];
-		}
-	} else if ([key isEqualToString:@"dccFirstPort"]) {
-		NSInteger n = [*value integerValue];
-		if (n < PORT_MIN) {
-			*value = [NSNumber numberWithInteger:PORT_MIN];
-		} else if (PORT_MAX < n) {
-			*value = [NSNumber numberWithInteger:PORT_MAX];
-		}
-	} else if ([key isEqualToString:@"dccLastPort"]) {
-		NSInteger n = [*value integerValue];
-		if (n < PORT_MIN) {
-			*value = [NSNumber numberWithInteger:PORT_MIN];
-		} else if (PORT_MAX < n) {
-			*value = [NSNumber numberWithInteger:PORT_MAX];
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];

@@ -6,18 +6,12 @@
 
 @implementation Preferences
 
-static NSInteger startUpTime;
-
-+ (NSInteger)startTime
-{
-	return startUpTime;
-}
-
 #pragma mark -
 #pragma mark Version Dictonaries
 
 static NSDictionary *textualPlist;
 static NSDictionary *systemVersionPlist;
+static NSMutableDictionary *commandIndex;
 
 #if defined(__ppc__)
 static NSString *processor = @"PowerPC 32-bit";
@@ -48,8 +42,6 @@ static NSString *processor = @"Unknown Architecture";
 
 #pragma mark -
 #pragma mark Command Index
-
-static NSMutableDictionary *commandIndex;
 
 + (NSDictionary *)commandIndexList
 {
@@ -233,16 +225,6 @@ static NSMutableDictionary *commandIndex;
 #pragma mark - 
 #pragma mark General Preferences
 
-+ (DCCActionType)dccAction
-{
-	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.action"];
-}
-
-+ (AddressDetectionType)dccAddressDetectionMethod
-{
-	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.address_detection_method"];
-}
-
 + (NSInteger)autojoinMaxChannelJoins
 {
 	return [TXNSUserDefaults() integerForKey:@"Preferences.General.autojoin_maxchans"];
@@ -321,11 +303,6 @@ static NSMutableDictionary *commandIndex;
 + (BOOL)rightToLeftFormatting
 {
 	return [TXNSUserDefaults() boolForKey:@"Preferences.General.rtl_formatting"];
-}
-
-+ (NSString *)dccMyaddress
-{
-	return [TXNSUserDefaults() objectForKey:@"Preferences.DCC.myaddress"];
 }
 
 + (NSString *)completionSuffix
@@ -557,29 +534,6 @@ static NSMutableDictionary *commandIndex;
 + (void)setCompletionSuffix:(NSString *)value
 {
 	[TXNSUserDefaults() setObject:value forKey:@"Preferences.General.completion_suffix"];
-}
-
-#pragma mark -
-#pragma mark DCC Ports
-
-+ (NSInteger)dccFirstPort
-{
-	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.first_port"];
-}
-
-+ (void)setDccFirstPort:(NSInteger)value
-{
-	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.DCC.first_port"];
-}
-
-+ (NSInteger)dccLastPort
-{
-	return [TXNSUserDefaults() integerForKey:@"Preferences.DCC.last_port"];
-}
-
-+ (void)setDccLastPort:(NSInteger)value
-{
-	[TXNSUserDefaults() setInteger:value forKey:@"Preferences.DCC.last_port"];
 }
 
 #pragma mark -
@@ -954,6 +908,13 @@ static NSMutableArray *excludeWords;
 #pragma mark -
 #pragma mark KVO
 
+static NSInteger startUpTime;
+
++ (NSInteger)startTime
+{
+	return startUpTime;
+}
+
 + (void)observeValueForKeyPath:(NSString *)key
 					  ofObject:(id)object
 						change:(NSDictionary *)change
@@ -1042,9 +1003,6 @@ static NSMutableArray *excludeWords;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
-	[d setInt:DCC_SHOW_DIALOG forKey:@"Preferences.DCC.action"];
-	[d setInt:ADDRESS_DETECT_JOIN forKey:@"Preferences.DCC.address_detection_method"];
-	[d setObject:@"" forKey:@"Preferences.DCC.myaddress"];
 	[d setObject:nick forKey:@"Preferences.Identity.nickname"];
 	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
@@ -1099,8 +1057,6 @@ static NSMutableArray *excludeWords;
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setBool:NO forKey:@"Preferences.General.log_highlights"];
 	[d setInt:1 forKey:@"Preferences.General.autojoin_delay"];
-	[d setInt:1096 forKey:@"Preferences.DCC.first_port"];
-	[d setInt:1115 forKey:@"Preferences.DCC.last_port"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];

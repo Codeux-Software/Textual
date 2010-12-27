@@ -53,9 +53,6 @@ typedef enum {
 	BOOL inWhoWasRequest;
 	BOOL hasIRCopAccess;
 	BOOL inFirstISONRun;
-	
-	AddressDetectionType addressDetectionMethod;
-	NSString *myAddress;
 
 	Timer *pongTimer;
 	Timer *retryTimer;
@@ -98,7 +95,6 @@ typedef enum {
 @property (nonatomic, readonly) BOOL isReconnecting;
 @property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic, readonly) NSString *myNick;
-@property (nonatomic, readonly) NSString *myAddress;
 @property (nonatomic, retain) IRCChannel *lastSelectedChannel;
 @property (nonatomic, retain) IRCConnection *conn;
 @property (nonatomic, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;

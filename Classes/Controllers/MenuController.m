@@ -144,16 +144,6 @@
 			return [web hasSelection];
 			break;
 		}
-		case 332:	// paste my address
-		{
-			if (![window isKeyWindow]) return NO;
-			id t = [window firstResponder];
-			if (!t) return NO;
-			IRCClient *u = world.selectedClient;
-			if (!u || !u.myAddress) return NO;
-			return YES;
-			break;
-		}
 		case 501:	// connect
 			return NOT_CONNECTED;
 			break;
@@ -507,24 +497,6 @@
 			}
 		}
 	}
-}
-
-- (void)onPasteMyAddress:(id)sender
-{
-	if (![window isKeyWindow]) return;
-	
-	id t = [window firstResponder];
-	if (!t) return;
-	
-	IRCClient *u = world.selectedClient;
-	if (!u || !u.myAddress) return;
-	
-	if (![t isKindOfClass:[NSTextView class]]) {
-		[world focusInputText];
-	}
-	NSText *fe = [window fieldEditor:NO forObject:text];
-	[fe replaceCharactersInRange:[fe selectedRange] withString:u.myAddress];
-	[fe scrollRangeToVisible:[fe selectedRange]];
 }
 
 - (void)onSearchWeb:(id)sender
@@ -1011,10 +983,6 @@
 - (void)inviteSheetWillClose:(InviteSheet *)sender
 {
 	self.inviteSheet = nil;
-}
-
-- (void)onMemberWantDCCChat:(id)sender
-{
 }
 
 - (void)onMemberPing:(id)sender

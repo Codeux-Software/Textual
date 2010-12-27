@@ -251,15 +251,13 @@ body div[type=action] .sender:after {
 	content: "";
 }
 
-/* REPLY/SYSTEM/ERROR/DCC/DEBUG/INVITE */
+/* REPLY/SYSTEM/ERROR/DEBUG/INVITE */
 
 body div[type=invite],
 body div[type=reply],
 body div[type=system],
 body div[type=error],
 body div[type=error_reply],
-body div[type=dcc_send_send],
-body div[type=dcc_send_receive],
 body div[type=debug_send],
 body div[type=debug_receive] {
 	color: #777;
@@ -277,8 +275,6 @@ body div[type=reply] span.time,
 body div[type=system] span.time,
 body div[type=error] span.time,
 body div[type=error_reply] span.time,
-body div[type=dcc_send_send] span.time,
-body div[type=dcc_send_receive] span.time,
 body div[type=debug_send] span.time,
 body div[type=debug_receive] span.time {
 	padding-right: 16px;

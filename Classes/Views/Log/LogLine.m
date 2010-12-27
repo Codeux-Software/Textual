@@ -47,8 +47,6 @@
 		case LINE_TYPE_REPLY: return @"reply";
 		case LINE_TYPE_CTCP: return @"ctcp";
 		case LINE_TYPE_ERROR_REPLY: return @"error_reply";
-		case LINE_TYPE_DCC_SEND_SEND: return @"dcc_send_send";
-		case LINE_TYPE_DCC_SEND_RECEIVE: return @"dcc_send_receive";
 		case LINE_TYPE_PRIVMSG: return @"privmsg";
 		case LINE_TYPE_PRIVMSG_NH: return @"privmsg";
 		case LINE_TYPE_NOTICE: return @"notice";

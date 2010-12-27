@@ -19,7 +19,6 @@
 @synthesize ignoreHighlights;
 @synthesize ignoreNotices;
 @synthesize ignoreCTCP;
-@synthesize ignoreDCC;
 @synthesize ignoreJPQE;
 @synthesize notifyJoins;
 @synthesize notifyWhoisJoins;
@@ -86,7 +85,6 @@
 		[ignoreHighlights setState:ignore.ignoreHighlights];
 		[ignoreNotices setState:ignore.ignoreNotices];
 		[ignoreCTCP setState:ignore.ignoreCTCP];
-		//[ignoreDCC setState:ignore.ignoreDCC];
 		[ignoreJPQE setState:ignore.ignoreJPQE];
 		[notifyJoins setState:ignore.notifyJoins];
 		[notifyWhoisJoins setState:ignore.notifyWhoisJoins];
@@ -112,7 +110,6 @@
 	ignore.ignoreHighlights = [ignoreHighlights state];
 	ignore.ignoreNotices = [ignoreNotices state];
 	ignore.ignoreCTCP = [ignoreCTCP state];
-	//ignore.ignoreDCC = [ignoreDCC state];
 	ignore.ignoreJPQE = [ignoreJPQE state];
 	ignore.notifyJoins = [notifyJoins state];
 	ignore.notifyWhoisJoins = [notifyWhoisJoins state];
