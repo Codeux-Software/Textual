@@ -20,7 +20,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="964196710">
 			<object class="NSCustomObject" id="575698531">
-				<string key="NSClassName">TextualApplication</string>
+				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomObject" id="83013244">
 				<string key="NSClassName">FirstResponder</string>
@@ -2700,6 +2700,7 @@
 															</array>
 															<string key="NSFrameSize">{180, 328}</string>
 															<reference key="NSSuperview" ref="665902286"/>
+															<reference key="NSNextKeyView" ref="88410196"/>
 															<reference key="NSDocView" ref="88410196"/>
 															<reference key="NSBGColor" ref="375145136"/>
 															<int key="NScvFlags">4</int>
@@ -2726,6 +2727,7 @@
 													</array>
 													<string key="NSFrameSize">{180, 328}</string>
 													<reference key="NSSuperview" ref="1006686548"/>
+													<reference key="NSNextKeyView" ref="972199680"/>
 													<int key="NSsFlags">528</int>
 													<reference key="NSVScroller" ref="40277675"/>
 													<reference key="NSHScroller" ref="43410202"/>
@@ -2810,6 +2812,7 @@
 																			</array>
 																			<string key="NSFrameSize">{180, 164}</string>
 																			<reference key="NSSuperview" ref="1046264392"/>
+																			<reference key="NSNextKeyView" ref="605736511"/>
 																			<reference key="NSDocView" ref="605736511"/>
 																			<object class="NSColor" key="NSBGColor">
 																				<int key="NSColorSpace">1</int>
@@ -2839,6 +2842,7 @@
 																	</array>
 																	<string key="NSFrameSize">{180, 164}</string>
 																	<reference key="NSSuperview" ref="18418633"/>
+																	<reference key="NSNextKeyView" ref="123026376"/>
 																	<int key="NSsFlags">560</int>
 																	<reference key="NSVScroller" ref="896108245"/>
 																	<reference key="NSHScroller" ref="752818090"/>
