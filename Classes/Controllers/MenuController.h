@@ -59,10 +59,6 @@
 - (void)showServerPropertyDialog:(IRCClient *)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
-
-- (NSArray *)selectedMembers:(NSMenuItem *)sender;
-- (void)deselectMembers:(NSMenuItem *)sender;
-
 - (void)onCloseWindow:(id)sender;
 
 - (void)onPaste:(id)sender;
