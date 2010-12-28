@@ -13,14 +13,6 @@ static NSDictionary *textualPlist;
 static NSDictionary *systemVersionPlist;
 static NSMutableDictionary *commandIndex;
 
-#if defined(__i386__) 
-static NSString *processor = @"Intel 32-bit";
-#elif defined(__x86_64__)
-static NSString *processor = @"Intel 64-bit";
-#else
-static NSString *processor = @"Unknown Architecture";
-#endif
-
 + (NSDictionary *)textualInfoPlist
 {
 	return textualPlist;
@@ -31,9 +23,15 @@ static NSString *processor = @"Unknown Architecture";
 	return systemVersionPlist;
 }
 
-+ (NSString *)systemProcessor
++ (NSString *)runningArchitecture
 {
-	return processor;
+#if defined(__i386__) 
+	return @"32-bit Mode";
+#elif defined(__x86_64__)
+	return @"64-bit Mode";
+#else
+	return @"Unknown Architecture";
+#endif
 }
 
 #pragma mark -

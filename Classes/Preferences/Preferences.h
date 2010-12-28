@@ -42,7 +42,7 @@ typedef enum {
 + (NSInteger)startTime;
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
-+ (NSString *)systemProcessor;
++ (NSString *)runningArchitecture;
 + (NSString *)whereScriptsPath;
 + (NSString *)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
