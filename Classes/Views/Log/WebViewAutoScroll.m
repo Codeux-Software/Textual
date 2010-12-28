@@ -1,7 +1,5 @@
 // Created by Allan Odgaard.
 
-
-
 @implementation WebViewAutoScroll
 
 - (void)scrollViewToBottom:(NSView *)aView

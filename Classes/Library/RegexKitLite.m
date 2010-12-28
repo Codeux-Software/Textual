@@ -69,8 +69,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-
 // If the gcc flag -mmacosx-version-min is used with, for example, '=10.2', give a warning that the libicucore.dylib is only available on >= 10.3.
 // If you are reading this comment because of this warning, this is to let you know that linking to /usr/lib/libicucore.dylib will cause your executable to fail on < 10.3.
 // You will need to build your own version of the ICU library and link to that in order for RegexKitLite to work successfully on < 10.3.  This is not simple.
