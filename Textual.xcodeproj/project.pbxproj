@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		29361C5012B79F1000F84FE9 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 29361C4E12B79F1000F84FE9 /* AsyncSocketExtensions.h */; };
+		29361C5012B79F1000F84FE9 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 29361C4E12B79F1000F84FE9 /* AsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */; };
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		2993785D1291F8FE00591A22 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 2993785B1291F7FC00591A22 /* core.js */; };
