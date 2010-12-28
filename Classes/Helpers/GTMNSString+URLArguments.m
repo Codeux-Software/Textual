@@ -15,10 +15,6 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
-
-#import "GTMNSString+URLArguments.h"
-#import "GTMGarbageCollection.h"
-
 @implementation NSString (GTMNSStringURLArgumentsAdditions)
 
 - (NSString *)gtm_stringByEscapingForURLArgument {

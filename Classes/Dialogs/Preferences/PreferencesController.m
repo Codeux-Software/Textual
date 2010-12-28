@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "PreferencesController.h"
-
 #define LINES_MIN			100
 #define LINES_MAX			5000
 #define INLINE_IMAGE_MAX	5000

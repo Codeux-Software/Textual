@@ -1,8 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "NSBundleHelper.h"
-
 @implementation NSBundle (NSBundleHelper)
 
 + (void)sendUserInputDataToBundles:(IRCWorld *)world

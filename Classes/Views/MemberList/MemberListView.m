@@ -1,5 +1,3 @@
-#import "MemberListView.h"
-
 @implementation MemberListView
 
 @synthesize dropDelegate;

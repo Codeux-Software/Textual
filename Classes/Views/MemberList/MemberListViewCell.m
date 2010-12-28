@@ -1,5 +1,3 @@
-#import "MemberListViewCell.h"
-
 #define MARK_LEFT_MARGIN	2
 #define MARK_RIGHT_MARGIN	2
 

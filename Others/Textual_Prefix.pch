@@ -1,19 +1,1 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-
 #import "TextualApplication.h"
-
-#ifdef DEBUG
-	#define LOG(...) NSLog(__VA_ARGS__);
-	#define LOG_METHOD NSLog(@"%s", __func__);
-	#define APPLOG(...) NSLog(__VA_ARGS__);
-	#define START_WATCH			CFAbsoluteTime start_time__ = CFAbsoluteTimeGetCurrent();
-	#define END_WATCH			LOG(@"### time elapsed: %f", CFAbsoluteTimeGetCurrent() - start_time__);
-#else
-	#define LOG(...) ;
-	#define LOG_METHOD ;
-	#define APPLOG(...) { if (NSAppEnableApplicationLog) NSLog(__VA_ARGS__); }
-	#define START_WATCH	;
-	#define END_WATCH ;
-#endif

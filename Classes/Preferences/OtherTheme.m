@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "OtherTheme.h"
-
 @interface OtherTheme (Private)
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv;

@@ -6,8 +6,6 @@
 //  All code is provided under the New BSD license.
 //
 
-#import "BWHyperlinkButton.h"
-
 @implementation BWHyperlinkButton
 
 @synthesize urlString;
