@@ -56,7 +56,7 @@
 		<string>10.6.0</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010 Codeux Software</string>
+	<string>Copyright © 2010, 2011 Codeux Software</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
