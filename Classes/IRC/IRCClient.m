@@ -2028,7 +2028,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
-							  [Preferences systemProcessor]];
+							  [Preferences runningArchitecture]];
 			
 			[self sendPrivmsgToSelectedChannel:text];
 			
@@ -3054,7 +3054,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
-							  [Preferences systemProcessor]];
+							  [Preferences runningArchitecture]];
 			
 			[self sendCTCPReply:nick command:command text:text];
 		} else if ([command isEqualToString:IRCCI_USERINFO]) {
