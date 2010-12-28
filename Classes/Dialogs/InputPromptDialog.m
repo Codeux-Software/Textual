@@ -3,8 +3,6 @@
 
 // Dirty NSAlert substitution 
 
-
-
 @implementation InputPromptDialog
 
 @synthesize finalModalValue;

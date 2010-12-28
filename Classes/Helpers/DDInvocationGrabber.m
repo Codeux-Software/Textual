@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-
-
 @implementation DDInvocationGrabber
 
 + (id)invocationGrabber

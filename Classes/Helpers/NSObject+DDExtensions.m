@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-
-
 @implementation NSObject (DDExtensions)
 
 - (id)invokeOnMainThread;
