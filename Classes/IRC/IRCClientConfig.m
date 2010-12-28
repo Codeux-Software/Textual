@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "IRCClientConfig.h"
-
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context) {
 	return [[s1.name lowercaseString] compare:[s2.name lowercaseString]];
 }

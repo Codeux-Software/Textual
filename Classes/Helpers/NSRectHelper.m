@@ -1,8 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "NSRectHelper.h"
-
 NSPoint NSRectCenter(NSRect rect)
 {
 	return NSMakePoint(rect.origin.x + rect.size.width/2, rect.origin.y + rect.size.height/2);

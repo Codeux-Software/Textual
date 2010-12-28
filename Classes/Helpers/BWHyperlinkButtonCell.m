@@ -6,8 +6,6 @@
 //  All code is provided under the New BSD license.
 //
 
-#import "BWHyperlinkButtonCell.h"
-
 @interface NSCell (BWPrivate)
 - (NSDictionary *)_textAttributes;
 @end

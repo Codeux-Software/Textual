@@ -3,7 +3,7 @@
 
 // Dirty NSAlert substitution 
 
-#import "InputPromptDialog.h"
+
 
 @implementation InputPromptDialog
 

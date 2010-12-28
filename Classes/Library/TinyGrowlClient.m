@@ -1,8 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "TinyGrowlClient.h"
-
 #define GROWL_REGISTER			@"GrowlApplicationRegistrationNotification"
 #define GROWL_NOTIFICATION		@"GrowlNotification"
 #define GROWL_IS_READY			@"GrowlReady!"

@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "IRCWorld.h"
-
 #define AUTO_CONNECT_DELAY              1
 #define RECONNECT_AFTER_WAKE_UP_DELAY	8
 

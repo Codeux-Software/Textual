@@ -2,8 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "LogRenderer.h"
-
 #define URL_ATTR				(1 << 31)
 #define ADDRESS_ATTR			(1 << 30)
 #define CHANNEL_NAME_ATTR		(1 << 29)
