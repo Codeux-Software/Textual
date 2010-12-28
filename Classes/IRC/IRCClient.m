@@ -1317,7 +1317,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				s = nil;
 			}
 			
-			[self send:cmd, targetChannelName, s, nil];
+			[self send:cmd, [targetChannelName trim], [s trim], nil];
 			return YES;
 			break;
 		case 51: // Command: J

@@ -971,11 +971,12 @@ static NSInteger startUpTime;
 
 + (void)initPreferences
 {
-	if ([TXNSUserDefaults() boolForKey:@"TXTNotFirstRun"] == YES) {
+	NSInteger numberOfRuns = [TXNSUserDefaults() integerForKey:@"TXRunCount"];
+	[TXNSUserDefaults() setInteger:(numberOfRuns + 1) forKey:@"TXRunCount"];
+	
+	if (numberOfRuns > 0) {
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
-	} else {
-		[TXNSUserDefaults() setBool:YES forKey:@"TXTNotFirstRun"];
-	}
+	} 
 	
 	// ====================================================== //
 	
