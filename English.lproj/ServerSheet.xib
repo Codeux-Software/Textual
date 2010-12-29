@@ -2,20 +2,20 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J521</string>
+		<string key="IBDocument.SystemVersion">10J537</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1121"/>
 			<integer value="1123"/>
-			<integer value="1122"/>
 			<integer value="1124"/>
+			<integer value="1121"/>
+			<integer value="1122"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1496,6 +1496,17 @@
 										<string key="NSAction">_popUpItemAction:</string>
 										<reference key="NSTarget" ref="833081647"/>
 									</object>
+									<object class="NSMenuItem" id="996971557">
+										<reference key="NSMenu" ref="208702158"/>
+										<string key="NSTitle">KOI8-R (Cyrillic)</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="548830559"/>
+										<reference key="NSMixedImage" ref="92799546"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<int key="NSTag">-2147481086</int>
+										<reference key="NSTarget" ref="833081647"/>
+									</object>
 									<object class="NSMenuItem" id="239175731">
 										<reference key="NSMenu" ref="208702158"/>
 										<string key="NSTitle">CP1251 (Cyrillic)</string>
@@ -1771,6 +1782,17 @@
 										<reference key="NSOnImage" ref="548830559"/>
 										<reference key="NSMixedImage" ref="92799546"/>
 										<string key="NSAction">_popUpItemAction:</string>
+										<reference key="NSTarget" ref="624421364"/>
+									</object>
+									<object class="NSMenuItem" id="904872949">
+										<reference key="NSMenu" ref="934677886"/>
+										<string key="NSTitle">KOI8-R (Cyrillic)</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="548830559"/>
+										<reference key="NSMixedImage" ref="92799546"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<int key="NSTag">-2147481086</int>
 										<reference key="NSTarget" ref="624421364"/>
 									</object>
 									<object class="NSMenuItem" id="930240157">
@@ -4059,6 +4081,7 @@
 							<reference ref="185798458"/>
 							<reference ref="1047514183"/>
 							<reference ref="1027605821"/>
+							<reference ref="996971557"/>
 						</object>
 						<reference key="parent" ref="833081647"/>
 					</object>
@@ -4196,6 +4219,7 @@
 							<reference ref="674172310"/>
 							<reference ref="308219615"/>
 							<reference ref="370095985"/>
+							<reference ref="904872949"/>
 						</object>
 						<reference key="parent" ref="624421364"/>
 					</object>
@@ -4815,6 +4839,16 @@
 						<reference key="object" ref="601024430"/>
 						<reference key="parent" ref="245356780"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1434</int>
+						<reference key="object" ref="904872949"/>
+						<reference key="parent" ref="934677886"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1435</int>
+						<reference key="object" ref="996971557"/>
+						<reference key="parent" ref="208702158"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -5208,6 +5242,10 @@
 					<string>1429.IBViewBoundsToFrameTransform</string>
 					<string>1431.IBPluginDependency</string>
 					<string>1432.IBPluginDependency</string>
+					<string>1434.IBPluginDependency</string>
+					<string>1434.ImportedFromIB2</string>
+					<string>1435.IBPluginDependency</string>
+					<string>1435.ImportedFromIB2</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
@@ -5504,7 +5542,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{809, 419}, {243, 353}}</string>
+					<string>{{809, 399}, {243, 373}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5545,7 +5583,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{866, 471}, {212, 373}}</string>
+					<string>{{809, 426}, {243, 393}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5726,6 +5764,10 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
 					<string>{{691, 290}, {344, 538}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{691, 290}, {344, 538}}</string>
@@ -5752,7 +5794,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1433</int>
+			<int key="maxID">1435</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5765,11 +5807,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>delegate</string>
+							<string>sourceCodeLinkButton</string>
 							<string>versionInfo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
+							<string>BWHyperlinkButton</string>
 							<string>NSTextField</string>
 						</object>
 					</object>
@@ -5778,6 +5822,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>delegate</string>
+							<string>sourceCodeLinkButton</string>
 							<string>versionInfo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -5785,6 +5830,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">delegate</string>
 								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">sourceCodeLinkButton</string>
+								<string key="candidateClassName">BWHyperlinkButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">versionInfo</string>
@@ -5818,7 +5867,6 @@
 							<string>contentView</string>
 							<string>hostmask</string>
 							<string>ignoreCTCP</string>
-							<string>ignoreDCC</string>
 							<string>ignoreHighlights</string>
 							<string>ignoreItemView</string>
 							<string>ignoreJPQE</string>
@@ -5834,7 +5882,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSView</string>
 							<string>NSTextField</string>
-							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSView</string>
@@ -5855,7 +5902,6 @@
 							<string>contentView</string>
 							<string>hostmask</string>
 							<string>ignoreCTCP</string>
-							<string>ignoreDCC</string>
 							<string>ignoreHighlights</string>
 							<string>ignoreItemView</string>
 							<string>ignoreJPQE</string>
@@ -5879,10 +5925,6 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">ignoreCTCP</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ignoreDCC</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -5938,6 +5980,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">BWHyperlinkButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Helpers/BWHyperlinkButton.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6940,20 +6990,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/AsyncSocket.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/HostResolver.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -7148,6 +7184,7 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onNicknameColorsDisabled:</string>
 							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -7178,6 +7215,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -7191,6 +7229,7 @@
 							<string>onHnagingTextChange:</string>
 							<string>onInputHistorySchemeChanged:</string>
 							<string>onLayoutChanged:</string>
+							<string>onNicknameColorsDisabled:</string>
 							<string>onOpenPathToScripts:</string>
 							<string>onOpenPathToThemes:</string>
 							<string>onOverrideFontChanged:</string>
@@ -7230,6 +7269,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onLayoutChanged:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onNicknameColorsDisabled:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -7280,6 +7323,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>IRCopServicesView</string>
 							<string>alertsView</string>
+							<string>channelManagementView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
@@ -7298,12 +7342,14 @@
 							<string>scriptsView</string>
 							<string>stylesView</string>
 							<string>themeButton</string>
+							<string>timestampSymbolsLinkButton</string>
 							<string>transcriptFolderButton</string>
 							<string>transfersView</string>
 							<string>updatesView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSView</string>
@@ -7324,6 +7370,7 @@
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSPopUpButton</string>
+							<string>BWHyperlinkButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSView</string>
 							<string>NSView</string>
@@ -7335,6 +7382,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>IRCopServicesView</string>
 							<string>alertsView</string>
+							<string>channelManagementView</string>
 							<string>contentView</string>
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
@@ -7353,6 +7401,7 @@
 							<string>scriptsView</string>
 							<string>stylesView</string>
 							<string>themeButton</string>
+							<string>timestampSymbolsLinkButton</string>
 							<string>transcriptFolderButton</string>
 							<string>transfersView</string>
 							<string>updatesView</string>
@@ -7365,6 +7414,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">alertsView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">channelManagementView</string>
 								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -7438,6 +7491,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">themeButton</string>
 								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">timestampSymbolsLinkButton</string>
+								<string key="candidateClassName">BWHyperlinkButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">transcriptFolderButton</string>
@@ -8153,13 +8210,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSApplication</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSApplication+BWAdditions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSArrayController</string>
 					<string key="superclassName">NSObjectController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -8511,13 +8561,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">RegexKit.framework/Headers/NSObject.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">WebKit.framework/Headers/WebDownload.h</string>
 					</object>
 				</object>
@@ -8753,13 +8796,6 @@
 					<reference key="sourceIdentifier" ref="185102454"/>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSView+BWAdditions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -8779,13 +8815,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">BWToolkitFramework.framework/Headers/NSWindow+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
