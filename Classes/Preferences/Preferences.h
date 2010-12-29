@@ -40,9 +40,10 @@ typedef enum {
 @interface Preferences : NSObject
 
 + (NSInteger)startTime;
++ (void)validateStoreReceipt;
++ (BOOL)validStoreReceiptFound;
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
-+ (NSString *)runningArchitecture;
 + (NSString *)whereScriptsPath;
 + (NSString *)whereApplicationSupportPath;
 + (NSInteger)commandUIndex:(NSString *)command;
