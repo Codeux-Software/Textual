@@ -2999,7 +2999,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
 				[self notifyText:kind target:(c ?: (id)target) nick:anick text:text];
 				
-				NSString *hostTopic = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
+				NSString *hostTopic = m.sender.raw;
 				
 				if ([hostTopic isEqualNoCase:c.topic] == NO) {
 					[c setTopic:hostTopic];
@@ -3161,8 +3161,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSInteger ison = [[trackedUsers objectForKey:tracker] integerValue];
 				
 				if (!ison) {					
-					NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
-					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
+					[self handleUserTrackingNotification:ignoreChecks hostmask:m.sender.raw nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
 					[trackedUsers setObject:@"1" forKey:tracker];
 				}
 			}
@@ -3267,8 +3266,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (ison) {					
 				[trackedUsers setObject:@"0" forKey:tracker];
-				NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
-				[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
+				[self handleUserTrackingNotification:ignoreChecks hostmask:m.sender.raw nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
 			}
 		}
 	}
@@ -3327,7 +3325,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([ignoreChecks notifyJoins] == YES || [ignoreChecks notifyWhoisJoins] == YES) {
 				NSString *tracker = [ignoreChecks trackingNickname];
 				NSInteger ison = [[trackedUsers objectForKey:tracker] integerValue];
-				NSString *host = [NSString stringWithFormat:@"%@!%@@%@", m.sender.nick, m.sender.user, m.sender.address];
+				NSString *host = m.sender.raw;
 				
 				if (ison) {					
 					[self handleUserTrackingNotification:ignoreChecks hostmask:host nickname:m.sender.nick langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];

@@ -30,10 +30,6 @@ static BOOL receiptValidated = NO;
 
 + (void)validateStoreReceipt
 {
-#if !defined(DEBUG) && !defined(IS_TRIAL_BINARY)
-#ifdef VALIDATE_APPSTORE_RECEIPT
-#if VALIDATE_APPSTORE_RECEIPT == 1
-	
 	NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
 	
 	if (validateReceiptAtPath(receipt) == NO) {
@@ -43,10 +39,6 @@ static BOOL receiptValidated = NO;
 		
 		receiptValidated = YES;
 	}
-	
-#endif
-#endif
-#endif
 }
 
 + (BOOL)validStoreReceiptFound
