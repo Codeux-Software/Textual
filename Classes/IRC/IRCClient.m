@@ -454,9 +454,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 }
 
 - (AddressBook *)checkIgnore:(NSString *)hostmask 
-					  uname:(NSString *)username 
-					   name:(NSString *)nickname
-			   matchAgainst:(NSArray *)matches
+					   uname:(NSString *)username 
+						name:(NSString *)nickname
+				matchAgainst:(NSArray *)matches
 {
 	if ([nickname contains:@"."]) return nil;
 	
@@ -2019,14 +2019,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		case 84: // Command: MYVERSION
 		{
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_INFO"), 
-							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
-							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
-							  [[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
-							  [Preferences runningArchitecture]];
+			NSString *text = nil;
+			NSString *langkey = (([Preferences validStoreReceiptFound]) ? @"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" : @"IRC_CTCP_VERSION_INFO");
+			
+			text = [NSString stringWithFormat:TXTLS(langkey), 
+					[[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
+					[[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
+					[[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 			
 			[self sendPrivmsgToSelectedChannel:text];
 			
@@ -3045,14 +3047,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *text = [[NSDate date] description];
 			[self sendCTCPReply:nick command:command text:text];
 		} else if ([command isEqualToString:IRCCI_VERSION]) {
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_INFO"), 
-							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
-							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
-							  [[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
-							  [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"],
-							  [Preferences runningArchitecture]];
+			NSString *text = nil;
+			NSString *langkey = (([Preferences validStoreReceiptFound]) ? @"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" : @"IRC_CTCP_VERSION_INFO");
+			
+			text = [NSString stringWithFormat:TXTLS(langkey), 
+					[[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
+					[[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
+					[[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
+					[[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 			
 			[self sendCTCPReply:nick command:command text:text];
 		} else if ([command isEqualToString:IRCCI_USERINFO]) {

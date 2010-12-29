@@ -138,11 +138,13 @@
 "IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and realname %4$@";
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
-"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@) (%7$@)";
 "IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
+
+"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@)";
+"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@) — Receipt Verified";
 
 /* Dialog Settings */
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";

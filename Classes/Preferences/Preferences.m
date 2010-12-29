@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#import "ValidateReceipt.h"
+
 @implementation Preferences
 
 #pragma mark -
@@ -21,15 +23,35 @@ static NSMutableDictionary *commandIndex;
 	return systemVersionPlist;
 }
 
-+ (NSString *)runningArchitecture
+#pragma mark -
+#pragma mark App Store Receipt Validation
+
+static BOOL receiptValidated = NO;
+
++ (void)validateStoreReceipt
 {
-#if defined(__i386__) 
-	return @"32-bit Mode";
-#elif defined(__x86_64__)
-	return @"64-bit Mode";
-#else
-	return @"Unknown Architecture";
+#if !defined(DEBUG) && !defined(IS_TRIAL_BINARY)
+#ifdef VALIDATE_APPSTORE_RECEIPT
+#if VALIDATE_APPSTORE_RECEIPT == 1
+	
+	NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+	
+	if (validateReceiptAtPath(receipt) == NO) {
+		exit(173);
+	} else {
+		NSLog(@"Valid app store receipt located. Launching.");
+		
+		receiptValidated = YES;
+	}
+	
 #endif
+#endif
+#endif
+}
+
++ (BOOL)validStoreReceiptFound
+{
+	return receiptValidated;
 }
 
 #pragma mark -
