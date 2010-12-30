@@ -2436,17 +2436,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	NSString *format = nil;
 	
-	if (world.viewTheme.other.nicknameFormat) {
-		format = world.viewTheme.other.nicknameFormat;
-	} else {
-		if ([Preferences themeOverrideNickFormat]) {
-			format = [Preferences themeNickFormat];
-		}
+	if ([Preferences themeOverrideNickFormat]) {
+		format = [Preferences themeNickFormat];
 	}
-	
-	if ([format length] < 1) {
+	else if (world.viewTheme.other.nicknameFormat)
+	{
+		format = world.viewTheme.other.nicknameFormat;
+	}
+	else {
 		format = @"<%@%n>";
 	}
+	
 	
 	NSString *s = format;
 	
