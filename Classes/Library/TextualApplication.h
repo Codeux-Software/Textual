@@ -6,7 +6,6 @@
 	#include <Carbon/Carbon.h>
 	#include <WebKit/WebKit.h>
 	#include <Security/Security.h>
-	#include <Foundation/Foundation.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
 	
 	#define BOOLReverseValue(b)		((b == YES) ? NO : YES)

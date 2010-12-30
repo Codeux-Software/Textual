@@ -29,7 +29,7 @@
 	NSString *slchar = @"";
 	NSString *strChopper = self;
 	
-	for (NSInteger i = 1; i < 4; i++) {
+	for (NSInteger i = 1; i < slnt; i++) {
 		slchar = [strChopper safeSubstringFromIndex:([strChopper length] - 1)];
 		strChopper = [strChopper safeSubstringToIndex:([strChopper length] - 1)];
 		
