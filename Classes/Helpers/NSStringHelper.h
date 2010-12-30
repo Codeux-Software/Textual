@@ -49,9 +49,6 @@
 
 - (NSString *)stripEffects;
 
-- (NSRange)rangeOfUrl;
-- (NSRange)rangeOfUrlStart:(NSInteger)start;
-
 - (NSRange)rangeOfAddress;
 - (NSRange)rangeOfAddressStart:(NSInteger)start;
 

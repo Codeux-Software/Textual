@@ -425,16 +425,6 @@ BOOL isUnicharDigit(unichar c)
 	return [self lowercaseString];
 }
 
-- (NSRange)rangeOfUrl
-{
-	return [self rangeOfUrlStart:0];
-}
-
-- (NSRange)rangeOfUrlStart:(NSInteger)start
-{
-	return [URLParser rangeOfUrlStart:start withString:self];
-}
-
 - (NSRange)rangeOfAddress
 {
 	return [self rangeOfAddressStart:0];

@@ -2,12 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface URLParser : NSObject
-+ (NSRange)rangeOfUrlStart:(NSInteger)start withString:(NSString *)string;
-+ (NSArray *)fastChopURL:(NSString *)url;
-+ (NSString *)complexURLRegularExpression;
-+ (NSDictionary *)URLRegexSpecialCharactersMapping;
-+ (NSArray *)bannedURLRegexEndChars;
-+ (NSArray *)bannedURLRegexLeftBufferChars;
-+ (NSArray *)bannedURLRegexRightBufferChars;
++ (NSArray *)locatedLinksForString:(NSString *)body;
 + (NSArray *)bannedURLRegexLineTypes;
 @end
