@@ -465,10 +465,6 @@
 		[s appendFormat:@"<p>"];
 	}
 	
-	if ([line.time length] < 1 && rawHTML == NO) {
-		return NO;
-	}
-	
 	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
