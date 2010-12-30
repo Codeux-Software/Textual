@@ -16,6 +16,7 @@
 #define EFFECT_MASK				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR)
 
 typedef uint32_t attr_t;
+
 static void setFlag(attr_t* attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
 	attr_t* target = attrBuf + start;
@@ -56,8 +57,7 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 
 NSString *logEscape(NSString *s)
 {
-	s = [s gtm_stringByEscapingForHTML];
-	return [s stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
+	return [[s gtm_stringByEscapingForHTML] stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
 NSColor *mapColor(NSInteger colorChar) 
@@ -113,22 +113,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	NSString *content = [body substringWithRange:NSMakeRange(start, len)];
 	
 	if (attr & URL_ATTR) {
-		NSArray *parsedURL = [URLParser fastChopURL:content];
+		NSString *link = content;
 		
-		content = [parsedURL objectAtIndex:0];
-		NSString *link = [parsedURL objectAtIndex:1];
-		
-		NSString *metacontent = nil;
-		if ([parsedURL count] > 2) {
-			metacontent = [parsedURL objectAtIndex:2];
+		if ([link contains:@"://"] == NO) {
+			link = [NSString stringWithFormat:@"http://%@", link];
 		}
 		
 		content = logEscape(content);		
-		if (metacontent == nil) {
-			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, content];
-		} else {
-			return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>%@", link, content, metacontent];
-		}
+		
+		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, content];
 	} else if (attr & ADDRESS_ATTR) {
 		content = logEscape(content);
 		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", content];
@@ -158,7 +151,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 }
 
 + (NSString *)renderBody:(NSString *)body 
-				nolinks:(BOOL)showLinks 
+				nolinks:(BOOL)hideLinks
 			   keywords:(NSArray *)keywords 
 		   excludeWords:(NSArray *)excludeWords 
 		 exactWordMatch:(BOOL)exactWordMatch 
@@ -166,7 +159,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			  URLRanges:(NSArray**)urlRanges
 {
 	return [self renderBody:body
-					nolinks:showLinks
+					nolinks:hideLinks
 				   keywords:keywords
 			   excludeWords:excludeWords
 			 exactWordMatch:exactWordMatch
@@ -176,7 +169,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 }
 
 + (id)renderBody:(NSString *)body 
-		 nolinks:(BOOL)showLinks 
+		 nolinks:(BOOL)hideLinks
 		keywords:(NSArray *)keywords 
 	excludeWords:(NSArray *)excludeWords 
   exactWordMatch:(BOOL)exactWordMatch 
@@ -294,28 +287,25 @@ attributedString:(BOOL)attributed
 	body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
 	len = n;
 	
-	if (!attributed) {
-		NSMutableArray *urlAry = [NSMutableArray array];
-		start = 0;
-		
-		if (!showLinks) {
-			while (start < len) {
-				NSRange r = [body rangeOfUrlStart:start];
-				if (r.location == NSNotFound) {
-					break;
+	if (attributed == NO) {
+		if (hideLinks == NO) {
+			NSMutableArray *urlAry = [NSMutableArray array];
+			NSArray *urlAryRanges = [URLParser locatedLinksForString:body];
+			
+			if ([urlAryRanges count] > 0) {
+				for (NSString *rn in urlAryRanges) {
+					NSRange r = NSRangeFromString(rn);
+					
+					if (r.length >= 1) {
+						setFlag(attrBuf, URL_ATTR, r.location, r.length);
+						[urlAry addObject:[NSValue valueWithRange:r]];
+					}
 				}
-						
-				if (r.length >= 1) {
-					setFlag(attrBuf, URL_ATTR, r.location, r.length);
-					[urlAry addObject:[NSValue valueWithRange:r]];
-				}
-				
-				start = NSMaxRange(r) + 1;
 			}
-		}
-		
-		if (urlAry.count && urlRanges != NULL) {
-			*urlRanges = urlAry;
+			
+			if (urlAry.count && urlRanges != NULL) {
+				*urlRanges = urlAry;
+			}
 		}
 		
 		BOOL foundKeyword = NO;
