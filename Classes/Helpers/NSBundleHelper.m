@@ -33,18 +33,19 @@
 	
 	if ([cmdPlugins count] >= 1) {
 		NSDictionary *senderData = [NSDictionary dictionaryWithObjectsAndKeys:
-								msg.sender.raw, @"senderHostmask",
-								msg.sender.nick, @"senderNickname",
-								msg.sender.user, @"senderUsername",
-								msg.sender.address, @"senderDNSMask", 
-								[NSNumber numberWithBool:msg.sender.isServer], @"senderIsServer", nil];
+									msg.sender.raw, @"senderHostmask",
+									msg.sender.nick, @"senderNickname",
+									msg.sender.user, @"senderUsername",
+									msg.sender.address, @"senderDNSMask", 
+									[NSNumber numberWithBool:msg.sender.isServer], @"senderIsServer", nil];
 		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
-								[[client config] server], @"messageServer",
-								[[client config] network], @"messageNetwork",
-								[msg sequence], @"messageSequence",
-								[msg params], @"messageParamaters",
-								[NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
-								[msg command], @"messageCommand", nil];
+									 [[client config] server], @"messageServer",
+									 [[client config] network], @"messageNetwork",
+									 [msg sequence], @"messageSequence",
+									 [msg params], @"messageParamaters",
+									 [msg params], @"messageParameters",
+									 [NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
+									 [msg command], @"messageCommand", nil];
 		
 		for (TextualPluginItem *plugin in cmdPlugins) {
 			PluginProtocol *bundle = [plugin pluginPrimaryClass];
@@ -101,7 +102,7 @@
 		if ([file hasSuffix:@".bundle"]) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
-				
+			
 			TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
 			
 			[plugin initWithPluginClass:[currBundle principalClass] 
