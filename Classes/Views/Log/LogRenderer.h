@@ -8,7 +8,7 @@ extern NSString *logEscape(NSString *s);
 
 + (void)setUp;
 + (NSString *)renderBody:(NSString *)body 
-				nolinks:(BOOL)showLinks 
+				nolinks:(BOOL)hideLinks
 			   keywords:(NSArray *)keywords 
 		   excludeWords:(NSArray *)excludeWords 
 		 exactWordMatch:(BOOL)exactWordMatch 
@@ -16,7 +16,7 @@ extern NSString *logEscape(NSString *s);
 			  URLRanges:(NSArray**)urlRanges;
 
 + (id)renderBody:(NSString *)body 
-		 nolinks:(BOOL)showLinks 
+		 nolinks:(BOOL)hideLinks
 		keywords:(NSArray *)keywords 
 	excludeWords:(NSArray *)excludeWords 
   exactWordMatch:(BOOL)exactWordMatch 
