@@ -14,6 +14,7 @@
 			<integer value="5556"/>
 			<integer value="5153"/>
 			<integer value="6147"/>
+			<integer value="4929"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5029,9 +5030,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSToolbarItemPaletteLabel">Advanced</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSPopUpButton" key="NSToolbarItemView" id="107994567">
-								<nil key="NSNextResponder"/>
+								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{14, 14}, {32, 32}}</string>
+								<reference key="NSSuperview"/>
+								<reference key="NSWindow"/>
 								<int key="NSTag">11</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSPopUpButtonCell" key="NSCell" id="823953462">
@@ -5041,10 +5044,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="1067065613">
-										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">TB_Advanced</string>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -5055,7 +5054,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="1067065613"/>
+										<object class="NSCustomResource" key="NSImage" id="787717159">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">TB_Advanced</string>
+										</object>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5135,7 +5137,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="1067065613"/>
+							<reference key="NSToolbarItemImage" ref="787717159"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -5150,8 +5152,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<object class="NSMutableString" key="NSToolbarItemIdentifier">
 								<characters key="NS.bytes">F57E32CC-7364-4DCF-95D1-71A0A33E3FC4</characters>
 							</object>
-							<string key="NSToolbarItemLabel">Highlights</string>
-							<string key="NSToolbarItemPaletteLabel">Highlights</string>
+							<string key="NSToolbarItemLabel">Mentions</string>
+							<string key="NSToolbarItemPaletteLabel">Mentions</string>
 							<string key="NSToolbarItemToolTip"/>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
@@ -5279,7 +5281,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="620616621">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="942342318">
@@ -5291,6 +5293,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 					</array>
 					<string key="NSFrameSize">{534, 270}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -10313,9 +10316,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="NSAffineTransform" key="4921.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">AUIBw9RDdOlpA</bytes>
 				</object>
-				<string key="4929.IBEditorWindowLastContentRect">{{585, 663}, {534, 270}}</string>
+				<string key="4929.IBEditorWindowLastContentRect">{{585, 665}, {534, 270}}</string>
 				<string key="4929.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="4929.IBWindowTemplateEditedContentRect">{{585, 663}, {534, 270}}</string>
+				<string key="4929.IBWindowTemplateEditedContentRect">{{585, 665}, {534, 270}}</string>
 				<boolean value="YES" key="4929.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="4930.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4931.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
