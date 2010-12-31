@@ -578,7 +578,7 @@
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[TXNSWorkspace() openFile:[Preferences whereScriptsPath]];
+	[TXNSWorkspace() openFile:[Preferences whereApplicationSupportPath]];
 }
 
 
