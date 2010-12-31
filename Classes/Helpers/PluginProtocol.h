@@ -17,4 +17,7 @@
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world;
 - (void)pluginUnloadedFromMemory;
 
+- (NSString *)pluginProvidesPreferencesWithName;
+- (void)userRequestedPreferencesDialog;
+
 @end
