@@ -38,6 +38,7 @@
 @synthesize clients;
 @synthesize soundMuted;
 @synthesize allLoadedBundles;
+@synthesize bundlesWithPreferences;
 @synthesize bundlesForUserInput;
 @synthesize bundlesForServerInput;
 @synthesize bandwidthIn;
@@ -75,6 +76,7 @@
 	[allLoadedBundles release];
 	[bundlesForUserInput release];
 	[bundlesForServerInput release];
+	[bundlesWithPreferences release];
 	
 	[super dealloc];
 }
@@ -187,8 +189,10 @@
 	[allLoadedBundles release];
 	[bundlesForUserInput release];
 	[bundlesForServerInput release];
+	[bundlesWithPreferences release];
 	
 	allLoadedBundles = [NSMutableArray new];
+	bundlesWithPreferences = [NSMutableArray new];
 	bundlesForUserInput = [NSMutableDictionary new];
 	bundlesForServerInput = [NSMutableDictionary new];
 }

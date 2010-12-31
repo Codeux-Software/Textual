@@ -46,11 +46,13 @@
 	NSInteger previousSelectedChannelId;
 	
 	NSMutableArray *allLoadedBundles;
+	NSMutableArray *bundlesWithPreferences;
 	NSMutableDictionary *bundlesForUserInput;
 	NSMutableDictionary *bundlesForServerInput;
 }
 
 @property (nonatomic, retain) NSMutableArray *allLoadedBundles;
+@property (nonatomic, retain) NSMutableArray *bundlesWithPreferences;
 @property (nonatomic, retain) NSMutableDictionary *bundlesForUserInput;
 @property (nonatomic, retain) NSMutableDictionary *bundlesForServerInput;
 @property (nonatomic, assign) NSInteger messagesSent;
