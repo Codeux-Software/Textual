@@ -12,6 +12,7 @@
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="5556"/>
+			<integer value="5153"/>
 			<integer value="6147"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -3395,7 +3396,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="818672693">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="216013233">
@@ -3443,7 +3444,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSTextFieldCell" key="NSCell" id="225172894">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Script Folder:</string>
+							<string key="NSContents">Storage Location:</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">13</double>
@@ -3457,13 +3458,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="NSTextField" id="1053075921">
 						<reference key="NSNextResponder" ref="818672693"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{29, 54}, {476, 64}}</string>
+						<string key="NSFrame">{{29, 69}, {476, 48}}</string>
 						<reference key="NSSuperview" ref="818672693"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="410591155">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4194304</int>
-							<string key="NSContents">Scripts are executed like any other IRC command. Type the forward slash (/) followed by your script name, plus any required parameters. Textual will execute your script and output the result to the current channel.</string>
+							<string key="NSContents">The above mentioned addons are executed like any other IRC command. Write a forward slash (/) followed by the name plus any required parameters. Textual will perform the necessary actions and output the results accordingly.</string>
 							<reference key="NSSupport" ref="90392730"/>
 							<reference key="NSControlView" ref="1053075921"/>
 							<reference key="NSBackgroundColor" ref="326222776"/>
@@ -3479,7 +3480,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSTextFieldCell" key="NSCell" id="998270068">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">The following scripts are installed:</string>
+							<string key="NSContents">The following addons are installed:</string>
 							<reference key="NSSupport" ref="781760258"/>
 							<reference key="NSControlView" ref="411244955"/>
 							<reference key="NSBackgroundColor" ref="326222776"/>
@@ -3497,21 +3498,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<object class="NSTableView" id="22198671">
 										<reference key="NSNextResponder" ref="745250019"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrameSize">{468, 190}</string>
+										<string key="NSFrameSize">{468, 206}</string>
 										<reference key="NSSuperview" ref="745250019"/>
 										<bool key="NSEnabled">YES</bool>
-										<object class="NSTableHeaderView" key="NSHeaderView" id="417667710">
-											<reference key="NSNextResponder" ref="763902870"/>
-											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{468, 17}</string>
-											<reference key="NSSuperview" ref="763902870"/>
-											<reference key="NSTableView" ref="22198671"/>
-										</object>
-										<object class="_NSCornerView" key="NSCornerView" id="774465724">
-											<reference key="NSNextResponder" ref="325135008"/>
+										<object class="_NSCornerView" key="NSCornerView">
+											<nil key="NSNextResponder"/>
 											<int key="NSvFlags">-2147483392</int>
-											<string key="NSFrame">{{454.621, 0}, {16, 17}}</string>
-											<reference key="NSSuperview" ref="325135008"/>
+											<string key="NSFrame">{{454, 0}, {16, 17}}</string>
 										</object>
 										<array class="NSMutableArray" key="NSTableColumns">
 											<object class="NSTableColumn" id="465974168">
@@ -3531,15 +3524,15 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 													<reference key="NSTextColor" ref="14595990"/>
 												</object>
 												<object class="NSTextFieldCell" key="NSDataCell" id="603942036">
-													<int key="NSCellFlags">337772096</int>
-													<int key="NSCellFlags2">2048</int>
+													<int key="NSCellFlags">67239488</int>
+													<int key="NSCellFlags2">6144</int>
 													<string key="NSContents">Text Cell</string>
 													<reference key="NSSupport" ref="325354301"/>
 													<reference key="NSControlView" ref="22198671"/>
 													<reference key="NSBackgroundColor" ref="78123678"/>
 													<reference key="NSTextColor" ref="263221525"/>
 												</object>
-												<int key="NSResizingMask">3</int>
+												<int key="NSResizingMask">1</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<bool key="NSIsEditable">YES</bool>
 												<reference key="NSTableView" ref="22198671"/>
@@ -3550,7 +3543,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<reference key="NSBackgroundColor" ref="78123678"/>
 										<reference key="NSGridColor" ref="339947293"/>
 										<double key="NSRowHeight">17</double>
-										<int key="NSTvFlags">-692060160</int>
+										<int key="NSTvFlags">-2034237440</int>
 										<reference key="NSDelegate"/>
 										<reference key="NSDataSource"/>
 										<int key="NSColumnAutoresizingStyle">4</int>
@@ -3560,7 +3553,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<int key="NSTableViewDraggingDestinationStyle">0</int>
 									</object>
 								</array>
-								<string key="NSFrame">{{1, 17}, {468, 190}}</string>
+								<string key="NSFrame">{{1, 1}, {468, 206}}</string>
 								<reference key="NSSuperview" ref="325135008"/>
 								<reference key="NSNextKeyView" ref="22198671"/>
 								<reference key="NSDocView" ref="22198671"/>
@@ -3570,36 +3563,22 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<object class="NSScroller" id="120057621">
 								<reference key="NSNextResponder" ref="325135008"/>
 								<int key="NSvFlags">-2147483392</int>
-								<string key="NSFrame">{{454.621, 17}, {15, 175}}</string>
+								<string key="NSFrame">{{454, 17}, {15, 175}}</string>
 								<reference key="NSSuperview" ref="325135008"/>
 								<reference key="NSTarget" ref="325135008"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.92105263157894735</double>
+								<double key="NSPercent">0.99516908212560384</double>
 							</object>
 							<object class="NSScroller" id="365628671">
 								<reference key="NSNextResponder" ref="325135008"/>
 								<int key="NSvFlags">-2147483392</int>
-								<string key="NSFrame">{{1, 192}, {453.621, 15}}</string>
+								<string key="NSFrame">{{1, 192}, {468, 15}}</string>
 								<reference key="NSSuperview" ref="325135008"/>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="325135008"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.99368421052631584</double>
+								<double key="NSPercent">0.99786780383795304</double>
 							</object>
-							<object class="NSClipView" id="763902870">
-								<reference key="NSNextResponder" ref="325135008"/>
-								<int key="NSvFlags">2304</int>
-								<array class="NSMutableArray" key="NSSubviews">
-									<reference ref="417667710"/>
-								</array>
-								<string key="NSFrame">{{1, 0}, {468, 17}}</string>
-								<reference key="NSSuperview" ref="325135008"/>
-								<reference key="NSNextKeyView" ref="417667710"/>
-								<reference key="NSDocView" ref="417667710"/>
-								<reference key="NSBGColor" ref="78123678"/>
-								<int key="NScvFlags">4</int>
-							</object>
-							<reference ref="774465724"/>
 						</array>
 						<string key="NSFrame">{{32, 132}, {470, 208}}</string>
 						<reference key="NSSuperview" ref="818672693"/>
@@ -3608,12 +3587,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="NSVScroller" ref="120057621"/>
 						<reference key="NSHScroller" ref="365628671"/>
 						<reference key="NSContentView" ref="745250019"/>
-						<reference key="NSHeaderClipView" ref="763902870"/>
-						<reference key="NSCornerView" ref="774465724"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{534, 392}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1027187129">
@@ -5063,7 +5041,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="719164783">
+									<object class="NSCustomResource" key="NSNormalImage" id="1067065613">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">TB_Advanced</string>
 									</object>
@@ -5077,7 +5055,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="719164783"/>
+										<reference key="NSImage" ref="1067065613"/>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5157,7 +5135,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="719164783"/>
+							<reference key="NSToolbarItemImage" ref="1067065613"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -7987,11 +7965,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="818672693"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="325135008"/>
+							<reference ref="411244955"/>
 							<reference ref="1053075921"/>
-							<reference ref="216013233"/>
 							<reference ref="569308306"/>
 							<reference ref="159271535"/>
-							<reference ref="411244955"/>
+							<reference ref="216013233"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Installed Scripts</string>
@@ -8003,7 +7981,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="120057621"/>
 							<reference ref="365628671"/>
 							<reference ref="22198671"/>
-							<reference ref="417667710"/>
 						</array>
 						<reference key="parent" ref="818672693"/>
 					</object>
@@ -8023,11 +8000,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="465974168"/>
 						</array>
-						<reference key="parent" ref="325135008"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">5175</int>
-						<reference key="object" ref="417667710"/>
 						<reference key="parent" ref="325135008"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -10395,7 +10367,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<bytes key="NSTransformStruct">P4AAAL+AAABChAAAw6cAAA</bytes>
 				</object>
 				<string key="5143.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="5153.IBEditorWindowLastContentRect">{{768, 295}, {534, 392}}</string>
+				<string key="5153.IBEditorWindowLastContentRect">{{767, 296}, {534, 392}}</string>
 				<string key="5153.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="5153.IBUserGuides">
 					<object class="IBUserGuide">
@@ -10405,18 +10377,17 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBUserGuide">
 						<reference key="view" ref="818672693"/>
-						<double key="location">502.3787841796875</double>
+						<double key="location">502</double>
 						<int key="affinity">0</int>
 					</object>
 				</array>
 				<string key="5171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5171.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAw6kAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABCAAAAw6kAAA</bytes>
 				</object>
 				<string key="5172.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5173.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5174.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="5175.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5176.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5179.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5190.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10445,22 +10416,22 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<boolean value="YES" key="52.ImportedFromIB2"/>
 				<string key="5313.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5313.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABByAAAw7kAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAw7kAAA</bytes>
 				</object>
 				<string key="5314.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5315.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwugAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAwuYAAA</bytes>
 				</object>
 				<string key="5316.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5321.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5321.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwlgAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAwlgAAA</bytes>
 				</object>
 				<string key="5322.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5324.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5324.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABByAAAwgwAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABCFAAAwgwAAA</bytes>
 				</object>
 				<string key="5325.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5343.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10980,7 +10951,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<bytes key="NSTransformStruct">P4AAAL+AAABCRAAAw7aAAA</bytes>
 				</object>
 				<object class="NSAffineTransform" key="6075.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABCRAAAw6SAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABCTAAAw6SAAA</bytes>
 				</object>
 				<object class="NSAffineTransform" key="6076.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">P4AAAL+AAABCAAAAw4sAAA</bytes>
@@ -11210,7 +11181,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">6351</int>
+			<int key="maxID">6363</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
