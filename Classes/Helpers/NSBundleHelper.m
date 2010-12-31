@@ -93,6 +93,7 @@
 	}
 	
 	NSMutableArray *completeBundleIndex = [NSMutableArray new];
+	NSMutableArray *preferencesBundlesIndex = [NSMutableArray new];
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
@@ -113,6 +114,16 @@
 				  withUserInputDictRefs:&userInputBundles 
 				withServerInputDictRefs:&serverInputBundles];
 			
+			if ([plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesMenuItemName)] && 
+				[plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesView)]) {
+				
+				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
+				
+				if ([itemName isEmpty] == NO) {
+					[preferencesBundlesIndex addObject:plugin];
+				}
+			}
+			
 			[completeBundleIndex addObject:currBundle];
 			
 			[plugin autorelease];
@@ -122,10 +133,12 @@
 	[world setAllLoadedBundles:completeBundleIndex];
 	[world setBundlesForUserInput:userInputBundles];
 	[world setBundlesForServerInput:serverInputBundles];
+	[world setBundlesWithPreferences:preferencesBundlesIndex];
 	
 	[userInputBundles release];
 	[serverInputBundles release];
 	[completeBundleIndex release];
+	[preferencesBundlesIndex release];
 	
 	[pool release];
 }
