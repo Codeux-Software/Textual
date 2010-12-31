@@ -149,6 +149,16 @@
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
 		4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
+		4C533F8312CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7A12CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png */; };
+		4C533F8412CD7D5500B8EFE9 /* TB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7B12CD7D5500B8EFE9 /* TB_ChannelManagement.png */; };
+		4C533F8512CD7D5500B8EFE9 /* TB_FloodControl.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7C12CD7D5500B8EFE9 /* TB_FloodControl.png */; };
+		4C533F8612CD7D5500B8EFE9 /* TB_Highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7D12CD7D5500B8EFE9 /* TB_Highlights.png */; };
+		4C533F8712CD7D5500B8EFE9 /* TB_InstalledScripts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7E12CD7D5500B8EFE9 /* TB_InstalledScripts.png */; };
+		4C533F8812CD7D5500B8EFE9 /* TB_Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F7F12CD7D5500B8EFE9 /* TB_Interface.png */; };
+		4C533F8912CD7D5500B8EFE9 /* TB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F8012CD7D5500B8EFE9 /* TB_IRCopServices.png */; };
+		4C533F8A12CD7D5500B8EFE9 /* TB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F8112CD7D5500B8EFE9 /* TB_Logs.png */; };
+		4C533F8B12CD7D5500B8EFE9 /* TB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C533F8212CD7D5500B8EFE9 /* TB_Styles.png */; };
+		4C53400B12CD98B700B8EFE9 /* TB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C53400A12CD98B700B8EFE9 /* TB_Advanced.png */; };
 		4C5F7CC812C4D1220088AD4E /* BWHyperlinkButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F7CC412C4D1220088AD4E /* BWHyperlinkButtonCell.m */; };
 		4C5F7CC912C4D1220088AD4E /* BWHyperlinkButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5F7CC512C4D1220088AD4E /* BWHyperlinkButtonCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5F7CCA12C4D1220088AD4E /* BWHyperlinkButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F7CC612C4D1220088AD4E /* BWHyperlinkButton.m */; };
@@ -392,6 +402,16 @@
 		4C400E2E1238A655005BDA9D /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguagePreferences.h; sourceTree = "<group>"; };
 		4C400E2F1238A655005BDA9D /* LanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagePreferences.m; sourceTree = "<group>"; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		4C533F7A12CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TB_Alerts-GrowlIcon.png"; path = "Resources/Images/Toolbar Icons/TB_Alerts-GrowlIcon.png"; sourceTree = "<group>"; };
+		4C533F7B12CD7D5500B8EFE9 /* TB_ChannelManagement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_ChannelManagement.png; path = "Resources/Images/Toolbar Icons/TB_ChannelManagement.png"; sourceTree = "<group>"; };
+		4C533F7C12CD7D5500B8EFE9 /* TB_FloodControl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_FloodControl.png; path = "Resources/Images/Toolbar Icons/TB_FloodControl.png"; sourceTree = "<group>"; };
+		4C533F7D12CD7D5500B8EFE9 /* TB_Highlights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_Highlights.png; path = "Resources/Images/Toolbar Icons/TB_Highlights.png"; sourceTree = "<group>"; };
+		4C533F7E12CD7D5500B8EFE9 /* TB_InstalledScripts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_InstalledScripts.png; path = "Resources/Images/Toolbar Icons/TB_InstalledScripts.png"; sourceTree = "<group>"; };
+		4C533F7F12CD7D5500B8EFE9 /* TB_Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_Interface.png; path = "Resources/Images/Toolbar Icons/TB_Interface.png"; sourceTree = "<group>"; };
+		4C533F8012CD7D5500B8EFE9 /* TB_IRCopServices.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_IRCopServices.png; path = "Resources/Images/Toolbar Icons/TB_IRCopServices.png"; sourceTree = "<group>"; };
+		4C533F8112CD7D5500B8EFE9 /* TB_Logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_Logs.png; path = "Resources/Images/Toolbar Icons/TB_Logs.png"; sourceTree = "<group>"; };
+		4C533F8212CD7D5500B8EFE9 /* TB_Styles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_Styles.png; path = "Resources/Images/Toolbar Icons/TB_Styles.png"; sourceTree = "<group>"; };
+		4C53400A12CD98B700B8EFE9 /* TB_Advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TB_Advanced.png; path = "Resources/Images/Toolbar Icons/TB_Advanced.png"; sourceTree = "<group>"; };
 		4C5938E411D0E0790094B049 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGKeychain.h; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -823,6 +843,23 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		4C928B3812CD5B2300AE276D /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				4C53400A12CD98B700B8EFE9 /* TB_Advanced.png */,
+				4C533F7A12CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png */,
+				4C533F7B12CD7D5500B8EFE9 /* TB_ChannelManagement.png */,
+				4C533F7C12CD7D5500B8EFE9 /* TB_FloodControl.png */,
+				4C533F7D12CD7D5500B8EFE9 /* TB_Highlights.png */,
+				4C533F7E12CD7D5500B8EFE9 /* TB_InstalledScripts.png */,
+				4C533F7F12CD7D5500B8EFE9 /* TB_Interface.png */,
+				4C533F8012CD7D5500B8EFE9 /* TB_IRCopServices.png */,
+				4C533F8112CD7D5500B8EFE9 /* TB_Logs.png */,
+				4C533F8212CD7D5500B8EFE9 /* TB_Styles.png */,
+			);
+			name = Toolbar;
+			sourceTree = "<group>";
+		};
 		4CB34D0011CCB4C90023206B /* Plug-In Architecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -838,6 +875,7 @@
 		4CC33FCC11ADA2BD005ECD84 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4C928B3812CD5B2300AE276D /* Toolbar */,
 				4C16007C12158CFA00C6C894 /* Colors */,
 				4CC33FD011ADA2CE005ECD84 /* Badges */,
 				4C119CD711AD74880004F157 /* application.icns */,
@@ -1390,6 +1428,16 @@
 				4C81B9AD12187F83007E9EE2 /* rainbow.png in Resources */,
 				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
 				4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */,
+				4C533F8312CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png in Resources */,
+				4C533F8412CD7D5500B8EFE9 /* TB_ChannelManagement.png in Resources */,
+				4C533F8512CD7D5500B8EFE9 /* TB_FloodControl.png in Resources */,
+				4C533F8612CD7D5500B8EFE9 /* TB_Highlights.png in Resources */,
+				4C533F8712CD7D5500B8EFE9 /* TB_InstalledScripts.png in Resources */,
+				4C533F8812CD7D5500B8EFE9 /* TB_Interface.png in Resources */,
+				4C533F8912CD7D5500B8EFE9 /* TB_IRCopServices.png in Resources */,
+				4C533F8A12CD7D5500B8EFE9 /* TB_Logs.png in Resources */,
+				4C533F8B12CD7D5500B8EFE9 /* TB_Styles.png in Resources */,
+				4C53400B12CD98B700B8EFE9 /* TB_Advanced.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
