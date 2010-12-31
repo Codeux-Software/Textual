@@ -5,14 +5,11 @@
 
 @synthesize delegate;
 @synthesize versionInfo;
-@synthesize sourceCodeLinkButton;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AboutPanel" owner:self];
-		
-		sourceCodeLinkButton.urlString = @"https://github.com/Codeux/Textual/blob/master/CONTRIBUTORS";
 	}
 	return self;
 }

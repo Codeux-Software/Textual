@@ -6,12 +6,10 @@
 	id delegate;
 	
 	IBOutlet NSTextField *versionInfo;
-	IBOutlet BWHyperlinkButton *sourceCodeLinkButton;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) NSTextField *versionInfo;
-@property (nonatomic, retain) BWHyperlinkButton *sourceCodeLinkButton;
 
 - (void)show;
 @end

@@ -7,13 +7,13 @@
 #define INLINE_IMAGE_MAX	5000
 #define INLINE_IMAGE_MIN	40
 
-#define WINDOW_TOOLBAR_HEIGHT 56
+#define WINDOW_TOOLBAR_HEIGHT 82
 
 @interface PreferencesController (Private)
 - (void)updateTranscriptFolder;
 - (void)updateTheme;
 
-- (void)firstPane:(NSView *)view;
+- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
 @end
 
 @implementation PreferencesController
@@ -37,7 +37,7 @@
 @synthesize transcriptFolderButton;
 @synthesize themeButton;
 @synthesize scriptLocationField;
-@synthesize preferenceSelectButton;
+@synthesize preferenceSelectToolbar;
 @synthesize transcriptFolderOpenPanel;
 @synthesize logFont;
 @synthesize floodControlView;
@@ -105,12 +105,11 @@
 		[self.window center];
 	}
 	
-	[preferenceSelectButton selectItemAtIndex:0];
-	
 	timestampSymbolsLinkButton.urlString = @"http://opengroup.org/onlinepubs/007908799/xsh/strftime.html";
 	
 	[self.window makeKeyAndOrderFront:nil];
-	[self firstPane:generalView];
+	
+	[self firstPane:generalView selectedItem:0];
 }
 
 #pragma mark -
@@ -123,51 +122,49 @@
 
 - (void)onPrefPaneSelected:(id)sender 
 {
-	switch ([sender indexOfSelectedItem]) {
+	switch ([sender tag]) {
 		case 0:
-			[self firstPane:generalView];
+			[self firstPane:generalView selectedItem:0];
 			break;
 		case 1:
-			[self firstPane:highlightView];
+			[self firstPane:highlightView selectedItem:1];
 			break;
 		case 2:
-			[self firstPane:interfaceView];
+			[self firstPane:interfaceView selectedItem:2];
 			break;
 		case 3:
-			[self firstPane:alertsView];
+			[self firstPane:alertsView selectedItem:3];
 			break;
 		case 4:
-			[self firstPane:stylesView];
+			[self firstPane:stylesView selectedItem:4];
 			break;
 		case 5:
-			[self firstPane:logView];
+			[self firstPane:logView selectedItem:5];
 			break;
 		case 6:
-			[self firstPane:floodControlView];
+			[self firstPane:floodControlView selectedItem:11];
 			break;
 		case 7:
-			[self firstPane:IRCopServicesView];
+			[self firstPane:IRCopServicesView selectedItem:11];
 			break;
 		case 8: 
-			[self firstPane:channelManagementView];
+			[self firstPane:channelManagementView selectedItem:11];
 			break;
-		// 9 = divider
+		case 9:
+			[self firstPane:identityView selectedItem:9];
+			break;
 		case 10:
-			[self firstPane:identityView];
-			break;
-		case 11:
-			[self firstPane:scriptsView];
+			[self firstPane:scriptsView selectedItem:10];
 			break;
 		default:
-			[self firstPane:generalView];
+			[self firstPane:generalView selectedItem:0];
 			break;
 	}
+	
 } 
 
-- (void)firstPane:(NSView *)view 
-{
-	[self.window setTitle:[preferenceSelectButton titleOfSelectedItem]];
-																				   
+- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
+{							   
 	NSRect windowFrame = [self.window frame];
 	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
 	windowFrame.size.width = [view frame].size.width;
@@ -182,6 +179,8 @@
 	[contentView addSubview:view];	
 	
 	[self.window recalculateKeyViewLoop];
+	
+	[preferenceSelectToolbar setSelectedItemIdentifier:[NSString stringWithInteger:key]];
 }
 
 #pragma mark -

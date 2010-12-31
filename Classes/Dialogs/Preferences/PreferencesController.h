@@ -37,7 +37,7 @@
 	IBOutlet NSPopUpButton *transcriptFolderButton;
 	IBOutlet NSPopUpButton *themeButton;
 	IBOutlet NSTextField *scriptLocationField;
-	IBOutlet NSPopUpButton *preferenceSelectButton;
+	IBOutlet NSToolbar *preferenceSelectToolbar;
 	
 	IBOutlet BWHyperlinkButton *timestampSymbolsLinkButton;
 	
@@ -78,7 +78,7 @@
 @property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, retain) NSPopUpButton *themeButton;
 @property (nonatomic, retain) NSTextField *scriptLocationField;
-@property (nonatomic, retain) NSPopUpButton *preferenceSelectButton;
+@property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
 @property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
 @property (nonatomic, retain) NSFont *logFont;
 @property (nonatomic, retain) BWHyperlinkButton *timestampSymbolsLinkButton;
