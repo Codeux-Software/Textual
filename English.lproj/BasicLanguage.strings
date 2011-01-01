@@ -6,15 +6,14 @@
 "KICK_REASON" = "Your behavior is not conducive to the desired environment.";
 "GLINE_REASON" = "35d Your behavior is not conducive to the desired environment.";
 
-"DEFAULT_QPS_MESSAGE" = "Leaving...";
 "NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";
 "HIGHLIGHTS_LOG_WINDOW_TITLE" = "Highlights";
+"NOTIFICATION_WINDOW_TITLE" = "Notifications";
 "SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
 "UNTITLED_CONNECTION_NAME" = "Untitled Connection";
-"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE" = "Notifications";
 
 "LOG_PATH_DOESNT_EXIST_TITLE" = "Logs Do Not Exist";
-"LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display";
+"LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display.";
 
 "INPUT_REQUIRED_TO_CONTINUE" = "Input Required to Continue";
 
@@ -31,6 +30,7 @@
 "SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 
+"DEFAULT_QPS_MESSAGE" = "Leaving...";
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "OK_BUTTON" = "OK";
@@ -124,22 +124,23 @@
 "IRC_USER_DISCONNECTED" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "IRC_SCRIPT_EXECUTION_FAILURE" = "Script Execution Failure: %@";
 "IRC_USER_CHANGED_NICKNAME" = "%1$@ is now known as \002%2$@\002";
-"IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC_USER_WHOIS_CONNECTED_FROM" = "%1$@ is connected on %2$@ (%3$@)";
 "IRC_WEIGHTS_COMMAND_RESULT" = "%@ - sent: %f receive: %f total: %f";
+"IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC_HAS_IGNORED_CTCP" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
+"IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME UPTIME";
 "IRC_USER_WHOWAS_CONNECTED_FROM" = "%1$@ was connected to %2$@ on %3$@";
 "IRC_USER_PARTED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) left the channel.";
-"IRC_TIMER_REQUIRES_REALINT" = "Timer command needs interval as a number";
 "IRC_RECIEVED_CTCP_PING_REPLY" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
+"IRC_TIMER_REQUIRES_REALINT" = "Timer command needs interval as a number.";
 "IRC_USER_JOINED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) joined the channel.";
 "IRC_USER_WHOIS_HOSTMASK" = "%1$@ has userhost %2$@@%3$@ and realname %4$@";
-"IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME UPTIME";
 "IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and realname %4$@";
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
+
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 

@@ -317,7 +317,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL sendEvent = ([ignoreItem notifyJoins] == YES || [ignoreItem notifyWhoisJoins] == YES);
 	
 	if (sendEvent) {
-		IRCChannel *nsc = [self findChannelOrCreate:TXTLS(@"IRCOP_SERVICES_NOTIFICATION_WINDOW_TITLE") useTalk:YES];
+		IRCChannel *nsc = [self findChannelOrCreate:TXTLS(@"NOTIFICATION_WINDOW_TITLE") useTalk:YES];
 		NSString *text = [NSString stringWithFormat:TXTLS(localKey), host, ignoreItem.hostmask];
 		
 		if ([ignoreItem notifyJoins] == YES) {
