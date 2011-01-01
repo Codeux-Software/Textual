@@ -976,8 +976,8 @@
 			isa = PBXGroup;
 			children = (
 				4C5F7CC312C4D10E0088AD4E /* BWToolkit */,
-				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
+				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
 				78A8C10211737F660044E7A1 /* NSStringHelper.h */,
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
 				4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */,
