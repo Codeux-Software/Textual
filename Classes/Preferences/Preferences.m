@@ -509,21 +509,6 @@ static BOOL receiptValidated = NO;
 	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.inputhistory_per_channel"];
 }
 
-+ (BOOL)themeOverrideLogFont
-{
-	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_log_font"];
-}
-
-+ (BOOL)themeOverrideNickFormat
-{
-	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_nick_format"];
-}
-
-+ (BOOL)themeOverrideTimestampFormat
-{
-	return [TXNSUserDefaults() boolForKey:@"Preferences.Theme.override_timestamp_format"];
-}
-
 + (NSString *)themeTimestampFormat
 {
 	return [TXNSUserDefaults() objectForKey:@"Preferences.Theme.timestamp_format"];
@@ -1056,10 +1041,7 @@ static NSInteger startUpTime;
 	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
 	[d setObject:@"<%@%n>" forKey:@"Preferences.Theme.nick_format"];
-	[d setBool:NO forKey:@"Preferences.Theme.override_log_font"];
-	[d setBool:NO forKey:@"Preferences.Theme.override_nick_format"];
 	[d setBool:YES forKey:@"Preferences.Theme.indent_onwordwrap"];
-	[d setBool:NO forKey:@"Preferences.Theme.override_timestamp_format"];
 	[d setObject:@"[%m/%d/%Y -:- %I:%M:%S %p]" forKey:@"Preferences.Theme.timestamp_format"];
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setBool:NO forKey:@"Preferences.General.log_highlights"];

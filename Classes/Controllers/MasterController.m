@@ -751,13 +751,16 @@
 		BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.theme_override_info"];
 		
 		if (suppCheck == NO) {
+			NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+			NSString *fname = [kindAndName safeObjectAtIndex:1];
+				
 			NSAlert *alert = [[NSAlert alloc] init];
 			
 			[alert autorelease];
 			
 			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
 			[alert setMessageText:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")];
-			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), sf]];
+			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), fname, sf]];
 			[alert setShowsSuppressionButton:YES];
 			[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
 			[alert setAlertStyle:NSInformationalAlertStyle];

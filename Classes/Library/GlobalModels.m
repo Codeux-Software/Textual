@@ -133,7 +133,7 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
-	if ([format length] < 1 || ![Preferences themeOverrideTimestampFormat]) format = @"[%m/%d/%Y -:- %I:%M:%S %p]";
+	if ([format length] < 1) format = @"[%m/%d/%Y -:- %I:%M:%S %p]";
 	if (override) format = override;
 	
 	time_t global = time(NULL);

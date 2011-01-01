@@ -85,7 +85,6 @@
 	}
 	
 	other.path = nil;
-		
 }
 
 - (void)load

@@ -218,6 +218,15 @@
 	
 	// ====================================================== //
 	
+	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+	
+	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.nicknameFormat == nil)] forKey:@"Preferences.Theme.tpoce_nick_format"];
+	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.timestampFormat == nil)] forKey:@"Preferences.Theme.tpoce_timestamp_format"];
+	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.overrideChannelFont == nil)] forKey:@"Preferences.Theme.tpoce_channel_font"];
+	[[defaultsController values] setValue:[NSNumber numberWithBool:BOOLReverseValue(self.overrideMessageIndentWrap)] forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
+	
+	// ====================================================== //
+	
 	inputTextFormat = nil;
 	memberListFormat = nil;
 	prefOChannelFont = nil;

@@ -2439,9 +2439,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (world.viewTheme.other.nicknameFormat) {
 		format = world.viewTheme.other.nicknameFormat;
 	} else {
-		if ([Preferences themeOverrideNickFormat]) {
-			format = [Preferences themeNickFormat];
-		}
+		format = [Preferences themeNickFormat];
 	}
 	
 	if ([format length] < 1) {
