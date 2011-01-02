@@ -291,6 +291,7 @@
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
 		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
+		4CF45D3E12D03E7900064E0C /* TB_InstalledScripts-DropDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF45D3D12D03E7900064E0C /* TB_InstalledScripts-DropDown.png */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
@@ -456,6 +457,7 @@
 		4CF1681711DC7B9200B60505 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanSheet.h; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
 		4CF1682D11DC7CAA00B60505 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanSheet.xib; sourceTree = "<group>"; };
+		4CF45D3D12D03E7900064E0C /* TB_InstalledScripts-DropDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TB_InstalledScripts-DropDown.png"; path = "Resources/Images/Toolbar Icons/TB_InstalledScripts-DropDown.png"; sourceTree = "<group>"; };
 		4CFC7DB51231F40C00FFC3B7 /* NSNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberHelper.h; sourceTree = "<group>"; };
 		4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
 		4CFF3BD411CC715A00FF2930 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInvocationGrabber.h; sourceTree = "<group>"; };
@@ -846,6 +848,7 @@
 		4C928B3812CD5B2300AE276D /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
+				4CF45D3D12D03E7900064E0C /* TB_InstalledScripts-DropDown.png */,
 				4C53400A12CD98B700B8EFE9 /* TB_Advanced.png */,
 				4C533F7A12CD7D5500B8EFE9 /* TB_Alerts-GrowlIcon.png */,
 				4C533F7B12CD7D5500B8EFE9 /* TB_ChannelManagement.png */,
@@ -1438,6 +1441,7 @@
 				4C533F8A12CD7D5500B8EFE9 /* TB_Logs.png in Resources */,
 				4C533F8B12CD7D5500B8EFE9 /* TB_Styles.png in Resources */,
 				4C53400B12CD98B700B8EFE9 /* TB_Advanced.png in Resources */,
+				4CF45D3E12D03E7900064E0C /* TB_InstalledScripts-DropDown.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

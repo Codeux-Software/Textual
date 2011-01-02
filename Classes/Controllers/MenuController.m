@@ -437,9 +437,10 @@
 - (void)onPreferences:(id)sender
 {
 	if (!preferencesController) {
-		preferencesController = [PreferencesController new];
+		preferencesController = [PreferencesController alloc];
 		preferencesController.delegate = self;
 		preferencesController.world = world;
+		[preferencesController init];
 	}
 	[preferencesController show];
 }

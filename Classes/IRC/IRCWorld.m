@@ -191,10 +191,10 @@
 	[bundlesForServerInput release];
 	[bundlesWithPreferences release];
 	
-	allLoadedBundles = [NSMutableArray new];
-	bundlesWithPreferences = [NSMutableArray new];
-	bundlesForUserInput = [NSMutableDictionary new];
-	bundlesForServerInput = [NSMutableDictionary new];
+	allLoadedBundles = [NSArray new];
+	bundlesWithPreferences = [NSArray new];
+	bundlesForUserInput = [NSDictionary new];
+	bundlesForServerInput = [NSDictionary new];
 }
 
 - (void)onTimer

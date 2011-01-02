@@ -67,6 +67,16 @@
 {		
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	PreferencesController *prefController = world.menuController.preferencesController;
+	
+	if (prefController) {
+		if ([world.bundlesWithPreferences count] > 0) {
+			if ([prefController isWindowLoaded]) {
+				[prefController.window close];
+			}
+		}
+	}
+	
 	NSArray *allBundles = [world.allLoadedBundles copy];
 	
 	[world resetLoadedBundles];
@@ -117,9 +127,10 @@
 			if ([plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesMenuItemName)] && 
 				[plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesView)]) {
 				
+				NSView *itemView = [plugin.pluginPrimaryClass preferencesView];
 				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
 				
-				if ([itemName isEmpty] == NO) {
+				if ([itemName isEmpty] == NO && itemView) {
 					[preferencesBundlesIndex addObject:plugin];
 				}
 			}

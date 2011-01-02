@@ -45,16 +45,16 @@
 	NSInteger previousSelectedClientId;
 	NSInteger previousSelectedChannelId;
 	
-	NSMutableArray *allLoadedBundles;
-	NSMutableArray *bundlesWithPreferences;
-	NSMutableDictionary *bundlesForUserInput;
-	NSMutableDictionary *bundlesForServerInput;
+	NSArray *allLoadedBundles;
+	NSArray *bundlesWithPreferences;
+	NSDictionary *bundlesForUserInput;
+	NSDictionary *bundlesForServerInput;
 }
 
-@property (nonatomic, retain) NSMutableArray *allLoadedBundles;
-@property (nonatomic, retain) NSMutableArray *bundlesWithPreferences;
-@property (nonatomic, retain) NSMutableDictionary *bundlesForUserInput;
-@property (nonatomic, retain) NSMutableDictionary *bundlesForServerInput;
+@property (nonatomic, retain) NSArray *allLoadedBundles;
+@property (nonatomic, retain) NSArray *bundlesWithPreferences;
+@property (nonatomic, retain) NSDictionary *bundlesForUserInput;
+@property (nonatomic, retain) NSDictionary *bundlesForServerInput;
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXFSLongInt bandwidthIn;
