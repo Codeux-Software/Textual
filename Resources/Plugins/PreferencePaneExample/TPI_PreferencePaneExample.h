@@ -3,6 +3,12 @@
 
 #import "TextualApplication.h"
 
-@interface TPI_CustomMenus : NSObject
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
+@interface TPI_PreferencePaneExample : NSObject 
+{
+	IBOutlet NSView *ourView;
+} 
+
+- (NSView *)preferencesView;
+- (NSString *)preferencesMenuItemName;
+
 @end

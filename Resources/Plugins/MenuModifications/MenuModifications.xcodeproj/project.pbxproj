@@ -25,11 +25,6 @@
 		4C767094124802B0005DBC12 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanSheet.h; path = /Applications/Textual.app/Contents/Headers/ChanBanSheet.h; sourceTree = "<absolute>"; };
 		4C767095124802B0005DBC12 /* ChannelSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelSheet.h; path = /Applications/Textual.app/Contents/Headers/ChannelSheet.h; sourceTree = "<absolute>"; };
 		4C767096124802B0005DBC12 /* ChatBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatBox.h; path = /Applications/Textual.app/Contents/Headers/ChatBox.h; sourceTree = "<absolute>"; };
-		4C767097124802B0005DBC12 /* CustomJSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomJSFile.h; path = /Applications/Textual.app/Contents/Headers/CustomJSFile.h; sourceTree = "<absolute>"; };
-		4C767098124802B0005DBC12 /* DCCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCController.h; path = /Applications/Textual.app/Contents/Headers/DCCController.h; sourceTree = "<absolute>"; };
-		4C767099124802B0005DBC12 /* DCCFileTransferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCFileTransferCell.h; path = /Applications/Textual.app/Contents/Headers/DCCFileTransferCell.h; sourceTree = "<absolute>"; };
-		4C76709A124802B0005DBC12 /* DCCReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCReceiver.h; path = /Applications/Textual.app/Contents/Headers/DCCReceiver.h; sourceTree = "<absolute>"; };
-		4C76709B124802B0005DBC12 /* DCCSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCCSender.h; path = /Applications/Textual.app/Contents/Headers/DCCSender.h; sourceTree = "<absolute>"; };
 		4C76709C124802B0005DBC12 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = /Applications/Textual.app/Contents/Headers/DDInvocationGrabber.h; sourceTree = "<absolute>"; };
 		4C76709D124802B0005DBC12 /* DialogWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialogWindow.h; path = /Applications/Textual.app/Contents/Headers/DialogWindow.h; sourceTree = "<absolute>"; };
 		4C76709E124802B0005DBC12 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldEditorTextView.h; path = /Applications/Textual.app/Contents/Headers/FieldEditorTextView.h; sourceTree = "<absolute>"; };
@@ -41,8 +36,6 @@
 		4C7670A4124802B0005DBC12 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = /Applications/Textual.app/Contents/Headers/GTMGarbageCollection.h; sourceTree = "<absolute>"; };
 		4C7670A5124802B0005DBC12 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "/Applications/Textual.app/Contents/Headers/GTMNSString+HTML.h"; sourceTree = "<absolute>"; };
 		4C7670A6124802B0005DBC12 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "/Applications/Textual.app/Contents/Headers/GTMNSString+URLArguments.h"; sourceTree = "<absolute>"; };
-		4C7670A7124802B0005DBC12 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = /Applications/Textual.app/Contents/Headers/HostResolver.h; sourceTree = "<absolute>"; };
-		4C7670A8124802B0005DBC12 /* IconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IconManager.h; path = /Applications/Textual.app/Contents/Headers/IconManager.h; sourceTree = "<absolute>"; };
 		4C7670A9124802B0005DBC12 /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageURLParser.h; path = /Applications/Textual.app/Contents/Headers/ImageURLParser.h; sourceTree = "<absolute>"; };
 		4C7670AA124802B0005DBC12 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputHistory.h; path = /Applications/Textual.app/Contents/Headers/InputHistory.h; sourceTree = "<absolute>"; };
 		4C7670AB124802B0005DBC12 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputPromptDialog.h; path = /Applications/Textual.app/Contents/Headers/InputPromptDialog.h; sourceTree = "<absolute>"; };
@@ -82,7 +75,6 @@
 		4C7670CD124802B0005DBC12 /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListViewCell.h; path = /Applications/Textual.app/Contents/Headers/MemberListViewCell.h; sourceTree = "<absolute>"; };
 		4C7670CE124802B0005DBC12 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuController.h; path = /Applications/Textual.app/Contents/Headers/MenuController.h; sourceTree = "<absolute>"; };
 		4C7670CF124802B0005DBC12 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeSheet.h; path = /Applications/Textual.app/Contents/Headers/ModeSheet.h; sourceTree = "<absolute>"; };
-		4C7670D0124802B0005DBC12 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletinStatus.h; path = /Applications/Textual.app/Contents/Headers/NickCompletinStatus.h; sourceTree = "<absolute>"; };
 		4C7670D1124802B0005DBC12 /* NickSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickSheet.h; path = /Applications/Textual.app/Contents/Headers/NickSheet.h; sourceTree = "<absolute>"; };
 		4C7670D2124802B0005DBC12 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayHelper.h; path = /Applications/Textual.app/Contents/Headers/NSArrayHelper.h; sourceTree = "<absolute>"; };
 		4C7670D3124802B0005DBC12 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = /Applications/Textual.app/Contents/Headers/NSColorHelper.h; sourceTree = "<absolute>"; };
@@ -205,11 +197,6 @@
 				4C767094124802B0005DBC12 /* ChanBanSheet.h */,
 				4C767095124802B0005DBC12 /* ChannelSheet.h */,
 				4C767096124802B0005DBC12 /* ChatBox.h */,
-				4C767097124802B0005DBC12 /* CustomJSFile.h */,
-				4C767098124802B0005DBC12 /* DCCController.h */,
-				4C767099124802B0005DBC12 /* DCCFileTransferCell.h */,
-				4C76709A124802B0005DBC12 /* DCCReceiver.h */,
-				4C76709B124802B0005DBC12 /* DCCSender.h */,
 				4C76709C124802B0005DBC12 /* DDInvocationGrabber.h */,
 				4C76709D124802B0005DBC12 /* DialogWindow.h */,
 				4C76709E124802B0005DBC12 /* FieldEditorTextView.h */,
@@ -221,8 +208,6 @@
 				4C7670A4124802B0005DBC12 /* GTMGarbageCollection.h */,
 				4C7670A5124802B0005DBC12 /* GTMNSString+HTML.h */,
 				4C7670A6124802B0005DBC12 /* GTMNSString+URLArguments.h */,
-				4C7670A7124802B0005DBC12 /* HostResolver.h */,
-				4C7670A8124802B0005DBC12 /* IconManager.h */,
 				4C7670A9124802B0005DBC12 /* ImageURLParser.h */,
 				4C7670AA124802B0005DBC12 /* InputHistory.h */,
 				4C7670AB124802B0005DBC12 /* InputPromptDialog.h */,
@@ -262,7 +247,6 @@
 				4C7670CD124802B0005DBC12 /* MemberListViewCell.h */,
 				4C7670CE124802B0005DBC12 /* MenuController.h */,
 				4C7670CF124802B0005DBC12 /* ModeSheet.h */,
-				4C7670D0124802B0005DBC12 /* NickCompletinStatus.h */,
 				4C7670D1124802B0005DBC12 /* NickSheet.h */,
 				4C7670D2124802B0005DBC12 /* NSArrayHelper.h */,
 				4C7670D3124802B0005DBC12 /* NSColorHelper.h */,
@@ -381,6 +365,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;

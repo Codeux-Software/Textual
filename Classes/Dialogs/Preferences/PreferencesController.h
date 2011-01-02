@@ -38,6 +38,7 @@
 	IBOutlet NSPopUpButton *themeButton;
 	IBOutlet NSTextField *scriptLocationField;
 	IBOutlet NSToolbar *preferenceSelectToolbar;
+	IBOutlet NSMenu *installedScriptsMenu;
 	
 	IBOutlet BWHyperlinkButton *timestampSymbolsLinkButton;
 	
@@ -51,6 +52,7 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, retain) NSFont *logFont;
 @property (nonatomic, retain) ScriptsWrapper *scriptsController;
 @property (nonatomic, assign) NSString *fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
@@ -77,10 +79,10 @@
 @property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
 @property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, retain) NSPopUpButton *themeButton;
+@property (nonatomic, retain) NSMenu *installedScriptsMenu;
 @property (nonatomic, retain) NSTextField *scriptLocationField;
 @property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
 @property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
-@property (nonatomic, retain) NSFont *logFont;
 @property (nonatomic, retain) BWHyperlinkButton *timestampSymbolsLinkButton;
 
 - (void)show;

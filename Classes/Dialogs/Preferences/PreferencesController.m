@@ -7,11 +7,14 @@
 #define INLINE_IMAGE_MAX	5000
 #define INLINE_IMAGE_MIN	40
 
-#define WINDOW_TOOLBAR_HEIGHT 82
+#define WINDOW_TOOLBAR_HEIGHT		82
+#define ADDONS_TOOLBAR_ITEM_INDEX	8
 
 @interface PreferencesController (Private)
 - (void)updateTranscriptFolder;
 - (void)updateTheme;
+
+- (void)setUpToolbarItemsAndMenus;
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
 @end
@@ -19,6 +22,8 @@
 @implementation PreferencesController
 
 @synthesize delegate;
+@synthesize world;
+@synthesize logFont;
 @synthesize contentView;
 @synthesize highlightView;
 @synthesize interfaceView;
@@ -39,11 +44,10 @@
 @synthesize scriptLocationField;
 @synthesize preferenceSelectToolbar;
 @synthesize transcriptFolderOpenPanel;
-@synthesize logFont;
 @synthesize floodControlView;
 @synthesize IRCopServicesView;
-@synthesize world;
 @synthesize installedScriptsTable;
+@synthesize installedScriptsMenu;
 @synthesize scriptsController;
 @synthesize channelManagementView;
 @synthesize timestampSymbolsLinkButton;
@@ -107,17 +111,39 @@
 	
 	timestampSymbolsLinkButton.urlString = @"http://opengroup.org/onlinepubs/007908799/xsh/strftime.html";
 	
+	[self setUpToolbarItemsAndMenus];
 	[self.window makeKeyAndOrderFront:nil];
-	
 	[self firstPane:generalView selectedItem:0];
+}
+
+- (void)onWindowsWantsClosure:(id)sender 
+{
+	[self.window close];
 }
 
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
-- (void)onWindowsWantsClosure:(id)sender 
+- (void)setUpToolbarItemsAndMenus
 {
-	[self.window close];
+	[[self.window toolbar] removeItemAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+	
+	if ([world.bundlesWithPreferences count] > 0) {
+		[[self.window toolbar] insertItemWithItemIdentifier:@"13" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+		
+		for (TextualPluginItem *plugin in world.bundlesWithPreferences) {
+			NSInteger tagIndex = [world.bundlesWithPreferences indexOfObject:plugin];
+			NSString *menuItemTitle = [plugin.pluginPrimaryClass preferencesMenuItemName];
+			
+			NSMenuItem *pluginMenu = [[NSMenuItem alloc] initWithTitle:menuItemTitle action:@selector(onPrefPaneSelected:) keyEquivalent:@""];
+			[pluginMenu setTag:(tagIndex + 20)];
+			[pluginMenu autorelease];
+			
+			[installedScriptsMenu addItem:pluginMenu];
+		}
+	} else {
+		[[self.window toolbar] insertItemWithItemIdentifier:@"10" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+	}
 }
 
 - (void)onPrefPaneSelected:(id)sender 
@@ -157,10 +183,22 @@
 			[self firstPane:scriptsView selectedItem:10];
 			break;
 		default:
-			[self firstPane:generalView selectedItem:0];
+		{
+			TextualPluginItem *plugin = [world.bundlesWithPreferences objectAtIndex:([sender tag] - 20)];
+			
+			if (plugin) {
+				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];
+				
+				if (prefsView) {
+					[self firstPane:prefsView selectedItem:13];
+				}
+			} else {
+				[self firstPane:generalView selectedItem:0];
+			}
+			
 			break;
+		}
 	}
-	
 } 
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
@@ -264,9 +302,9 @@
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
 	NSArray *directoryContents = [TXNSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
-
+	
 	[sound_list addObject:EMPTY_SOUND];
-	 
+	
 	if (directoryContents && [directoryContents count] > 0) {
 		for (NSString *s in directoryContents) {	
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
@@ -283,7 +321,7 @@
 			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 		}		
 	}
-		
+	
 	return sound_list;
 }
 
@@ -368,7 +406,7 @@
 		
 		[self updateTranscriptFolder];
 	}
-		
+	
 	[transcriptFolderOpenPanel autorelease];
 	transcriptFolderOpenPanel = nil;
 }	
