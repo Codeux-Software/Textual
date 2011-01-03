@@ -78,6 +78,7 @@
 @property (nonatomic, assign) BOOL terminating;
 
 - (void)loadWindowState;
+- (void)saveWindowState;
 
 - (IBAction)insertColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
