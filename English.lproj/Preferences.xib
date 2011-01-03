@@ -11,9 +11,9 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4791"/>
-			<integer value="4788"/>
 			<integer value="4929"/>
+			<integer value="4788"/>
+			<integer value="4791"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4951,10 +4951,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="562293133">
-										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -4965,7 +4961,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="562293133"/>
+										<object class="NSCustomResource" key="NSImage" id="866972130">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
+										</object>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5006,7 +5005,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="562293133"/>
+							<reference key="NSToolbarItemImage" ref="866972130"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -5125,10 +5124,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="26411372">
-										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">TPWTB_Advanced</string>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -5139,7 +5134,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="26411372"/>
+										<object class="NSCustomResource" key="NSImage" id="500609455">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">TPWTB_Advanced</string>
+										</object>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5155,12 +5153,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<string key="NSTitle"> Logs</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSOnImage" id="125415945">
+												<object class="NSCustomResource" key="NSOnImage" id="698348166">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">TB_Logs</string>
+													<string key="NSResourceName">TPWTB_Logs</string>
 												</object>
-												<reference key="NSOffImage" ref="125415945"/>
-												<reference key="NSMixedImage" ref="125415945"/>
+												<reference key="NSOffImage" ref="698348166"/>
+												<reference key="NSMixedImage" ref="698348166"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">5</int>
 												<reference key="NSTarget" ref="823953462"/>
@@ -5170,12 +5168,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<string key="NSTitle"> Flood Control</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSOnImage" id="73818669">
+												<object class="NSCustomResource" key="NSOnImage" id="505097910">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">TB_FloodControl</string>
+													<string key="NSResourceName">TPWTB_FloodControl</string>
 												</object>
-												<reference key="NSOffImage" ref="73818669"/>
-												<reference key="NSMixedImage" ref="73818669"/>
+												<reference key="NSOffImage" ref="505097910"/>
+												<reference key="NSMixedImage" ref="505097910"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">6</int>
 												<reference key="NSTarget" ref="823953462"/>
@@ -5185,12 +5183,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<string key="NSTitle"> IRCop Services</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSOnImage" id="93358187">
+												<object class="NSCustomResource" key="NSOnImage" id="774944171">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">TB_IRCopServices</string>
+													<string key="NSResourceName">TPWTB_IRCopServices</string>
 												</object>
-												<reference key="NSOffImage" ref="93358187"/>
-												<reference key="NSMixedImage" ref="93358187"/>
+												<reference key="NSOffImage" ref="774944171"/>
+												<reference key="NSMixedImage" ref="774944171"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">7</int>
 												<reference key="NSTarget" ref="823953462"/>
@@ -5200,12 +5198,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<string key="NSTitle"> Channel Management</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSOnImage" id="1060692326">
+												<object class="NSCustomResource" key="NSOnImage" id="952902834">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">TB_ChannelManagement</string>
+													<string key="NSResourceName">TPWTB_ChannelManagement</string>
 												</object>
-												<reference key="NSOffImage" ref="1060692326"/>
-												<reference key="NSMixedImage" ref="1060692326"/>
+												<reference key="NSOffImage" ref="952902834"/>
+												<reference key="NSMixedImage" ref="952902834"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">8</int>
 												<reference key="NSTarget" ref="823953462"/>
@@ -5219,7 +5217,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="26411372"/>
+							<reference key="NSToolbarItemImage" ref="500609455"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -5356,7 +5354,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference ref="270022756"/>
 						<reference ref="379746417"/>
 						<reference ref="952141386"/>
-						<reference ref="1056647580"/>
 						<reference ref="557992596"/>
 						<reference ref="658835779"/>
 					</array>
@@ -10465,9 +10462,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="NSAffineTransform" key="4921.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">AUH7h6hDc+lpA</bytes>
 				</object>
-				<string key="4929.IBEditorWindowLastContentRect">{{579, 671}, {534, 270}}</string>
+				<string key="4929.IBEditorWindowLastContentRect">{{578, 671}, {534, 270}}</string>
 				<string key="4929.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="4929.IBWindowTemplateEditedContentRect">{{579, 671}, {534, 270}}</string>
+				<string key="4929.IBWindowTemplateEditedContentRect">{{578, 671}, {534, 270}}</string>
 				<boolean value="YES" key="4929.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="4930.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4931.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11193,7 +11190,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<bytes key="NSTransformStruct">P4AAAL+AAABDcQAAwlQAAA</bytes>
 				</object>
 				<string key="6244.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="6282.IBEditorWindowLastContentRect">{{538, 941}, {616, 0}}</string>
+				<string key="6282.IBEditorWindowLastContentRect">{{537, 941}, {616, 0}}</string>
 				<string key="6282.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6285.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11221,7 +11218,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="6308.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6312.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="6313.IBEditorWindowLastContentRect">{{689, 618}, {204, 213}}</string>
+				<string key="6313.IBEditorWindowLastContentRect">{{688, 715}, {204, 117}}</string>
 				<string key="6313.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6317.designableToolbarItemIdentifier">11</string>
 				<boolean value="YES" key="6317.toolbarItem.selectable"/>
@@ -13633,16 +13630,16 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<string key="NSRemoveTemplate">{8, 8}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="NSUser">{32, 32}</string>
-			<string key="TB_ChannelManagement">{128, 128}</string>
-			<string key="TB_FloodControl">{128, 128}</string>
-			<string key="TB_IRCopServices">{128, 128}</string>
-			<string key="TB_Logs">{128, 128}</string>
 			<string key="TPWTB_Advanced">{32, 32}</string>
 			<string key="TPWTB_Alerts-GrowlIcon">{32, 32}</string>
+			<string key="TPWTB_ChannelManagement">{16, 16}</string>
+			<string key="TPWTB_FloodControl">{16, 16}</string>
 			<string key="TPWTB_Highlights">{32, 32}</string>
+			<string key="TPWTB_IRCopServices">{16, 16}</string>
 			<string key="TPWTB_InstalledScripts">{32, 32}</string>
 			<string key="TPWTB_InstalledScripts-DropDown">{37, 30}</string>
 			<string key="TPWTB_Interface">{32, 32}</string>
+			<string key="TPWTB_Logs">{16, 16}</string>
 			<string key="TPWTB_Styles">{32, 32}</string>
 			<string key="application">{512, 512}</string>
 		</dictionary>
