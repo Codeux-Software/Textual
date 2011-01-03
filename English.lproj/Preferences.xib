@@ -11,9 +11,9 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4929"/>
 			<integer value="4791"/>
 			<integer value="4788"/>
+			<integer value="4929"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4939,11 +4939,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSToolbarItemPaletteLabel">Addons</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSPopUpButton" key="NSToolbarItemView" id="67646161">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{8, 14}, {32, 32}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
 								<int key="NSTag">13</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSPopUpButtonCell" key="NSCell" id="412569455">
@@ -5115,11 +5113,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSToolbarItemPaletteLabel">Advanced</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSPopUpButton" key="NSToolbarItemView" id="107994567">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{14, 14}, {32, 32}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
 								<int key="NSTag">11</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSPopUpButtonCell" key="NSCell" id="823953462">
@@ -5354,8 +5350,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</array>
 					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<reference ref="90947148"/>
-						<reference ref="205954028"/>
 						<reference ref="1056647580"/>
+						<reference ref="205954028"/>
 						<reference ref="432591396"/>
 						<reference ref="270022756"/>
 						<reference ref="379746417"/>
@@ -11197,7 +11193,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<bytes key="NSTransformStruct">P4AAAL+AAABDcQAAwlQAAA</bytes>
 				</object>
 				<string key="6244.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="6282.IBEditorWindowLastContentRect">{{538, 940}, {616, 0}}</string>
+				<string key="6282.IBEditorWindowLastContentRect">{{538, 941}, {616, 0}}</string>
 				<string key="6282.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6285.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -13641,13 +13637,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<string key="TB_FloodControl">{128, 128}</string>
 			<string key="TB_IRCopServices">{128, 128}</string>
 			<string key="TB_Logs">{128, 128}</string>
-			<string key="TPWTB_Advanced">{128, 128}</string>
-			<string key="TPWTB_Alerts-GrowlIcon">{128, 128}</string>
-			<string key="TPWTB_Highlights">{128, 128}</string>
-			<string key="TPWTB_InstalledScripts">{128, 128}</string>
-			<string key="TPWTB_InstalledScripts-DropDown">{128, 128}</string>
-			<string key="TPWTB_Interface">{128, 128}</string>
-			<string key="TPWTB_Styles">{128, 128}</string>
+			<string key="TPWTB_Advanced">{32, 32}</string>
+			<string key="TPWTB_Alerts-GrowlIcon">{32, 32}</string>
+			<string key="TPWTB_Highlights">{32, 32}</string>
+			<string key="TPWTB_InstalledScripts">{32, 32}</string>
+			<string key="TPWTB_InstalledScripts-DropDown">{37, 30}</string>
+			<string key="TPWTB_Interface">{32, 32}</string>
+			<string key="TPWTB_Styles">{32, 32}</string>
 			<string key="application">{512, 512}</string>
 		</dictionary>
 	</data>
