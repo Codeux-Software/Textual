@@ -72,7 +72,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
-		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"Documents/IRCNetworks.plist"];
+		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"];
 		serverList = [[NSDictionary alloc] initWithContentsOfFile:serverListPath];
 	
 		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];

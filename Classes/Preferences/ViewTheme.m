@@ -19,8 +19,7 @@
 	if ((self = [super init])) {
 		other = [OtherTheme new];
 		core_js = [FileWithContent new];
-		NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-		core_js.fileName = [resourcePath stringByAppendingPathComponent:@"/core.js"];
+		core_js.fileName = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
 	return self;
 }

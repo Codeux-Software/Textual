@@ -4919,7 +4919,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">TB_InstalledScripts</string>
+								<string key="NSResourceName">TPWTB_InstalledScripts</string>
 							</object>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
@@ -4953,6 +4953,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
+									<object class="NSCustomResource" key="NSNormalImage" id="562293133">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
+									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -4963,10 +4967,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage" id="110356866">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">TB_InstalledScripts-DropDown</string>
-										</object>
+										<reference key="NSImage" ref="562293133"/>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5007,7 +5008,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="110356866"/>
+							<reference key="NSToolbarItemImage" ref="562293133"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -5028,7 +5029,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">TB_Styles</string>
+								<string key="NSResourceName">TPWTB_Styles</string>
 							</object>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
@@ -5050,7 +5051,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">TB_Interface</string>
+								<string key="NSResourceName">TPWTB_Interface</string>
 							</object>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
@@ -5072,7 +5073,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">TB_Alerts-GrowlIcon</string>
+								<string key="NSResourceName">TPWTB_Alerts-GrowlIcon</string>
 							</object>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
@@ -5128,6 +5129,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
+									<object class="NSCustomResource" key="NSNormalImage" id="26411372">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">TPWTB_Advanced</string>
+									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -5138,10 +5143,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage" id="269065454">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">TB_Advanced</string>
-										</object>
+										<reference key="NSImage" ref="26411372"/>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5221,7 +5223,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="269065454"/>
+							<reference key="NSToolbarItemImage" ref="26411372"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -5242,7 +5244,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<nil key="NSToolbarItemView"/>
 							<object class="NSCustomResource" key="NSToolbarItemImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">TB_Highlights</string>
+								<string key="NSResourceName">TPWTB_Highlights</string>
 							</object>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
@@ -5352,8 +5354,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</array>
 					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<reference ref="90947148"/>
-						<reference ref="1056647580"/>
 						<reference ref="205954028"/>
+						<reference ref="1056647580"/>
 						<reference ref="432591396"/>
 						<reference ref="270022756"/>
 						<reference ref="379746417"/>
@@ -10467,9 +10469,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="NSAffineTransform" key="4921.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">AUH7h6hDc+lpA</bytes>
 				</object>
-				<string key="4929.IBEditorWindowLastContentRect">{{579, 670}, {534, 270}}</string>
+				<string key="4929.IBEditorWindowLastContentRect">{{579, 671}, {534, 270}}</string>
 				<string key="4929.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="4929.IBWindowTemplateEditedContentRect">{{579, 670}, {534, 270}}</string>
+				<string key="4929.IBWindowTemplateEditedContentRect">{{579, 671}, {534, 270}}</string>
 				<boolean value="YES" key="4929.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="4930.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4931.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11223,7 +11225,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="6308.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6312.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="6313.IBEditorWindowLastContentRect">{{695, 707}, {204, 117}}</string>
+				<string key="6313.IBEditorWindowLastContentRect">{{689, 618}, {204, 213}}</string>
 				<string key="6313.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6317.designableToolbarItemIdentifier">11</string>
 				<boolean value="YES" key="6317.toolbarItem.selectable"/>
@@ -13635,17 +13637,17 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<string key="NSRemoveTemplate">{8, 8}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="NSUser">{32, 32}</string>
-			<string key="TB_Advanced">{32, 32}</string>
-			<string key="TB_Alerts-GrowlIcon">{32, 32}</string>
-			<string key="TB_ChannelManagement">{16, 16}</string>
-			<string key="TB_FloodControl">{16, 16}</string>
-			<string key="TB_Highlights">{32, 32}</string>
-			<string key="TB_IRCopServices">{16, 16}</string>
-			<string key="TB_InstalledScripts">{32, 32}</string>
-			<string key="TB_InstalledScripts-DropDown">{37, 30}</string>
-			<string key="TB_Interface">{32, 32}</string>
-			<string key="TB_Logs">{16, 16}</string>
-			<string key="TB_Styles">{32, 32}</string>
+			<string key="TB_ChannelManagement">{128, 128}</string>
+			<string key="TB_FloodControl">{128, 128}</string>
+			<string key="TB_IRCopServices">{128, 128}</string>
+			<string key="TB_Logs">{128, 128}</string>
+			<string key="TPWTB_Advanced">{128, 128}</string>
+			<string key="TPWTB_Alerts-GrowlIcon">{128, 128}</string>
+			<string key="TPWTB_Highlights">{128, 128}</string>
+			<string key="TPWTB_InstalledScripts">{128, 128}</string>
+			<string key="TPWTB_InstalledScripts-DropDown">{128, 128}</string>
+			<string key="TPWTB_Interface">{128, 128}</string>
+			<string key="TPWTB_Styles">{128, 128}</string>
 			<string key="application">{512, 512}</string>
 		</dictionary>
 	</data>
