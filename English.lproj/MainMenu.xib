@@ -11,8 +11,8 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="374"/>
 			<integer value="1687"/>
+			<integer value="374"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1683,12 +1683,12 @@
 										<string key="NSTitle"> Rainbow</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSOnImage" id="281281900">
+										<object class="NSCustomResource" key="NSOnImage" id="621858661">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">rainbow</string>
+											<string key="NSResourceName">FormattingColor_Rainbow</string>
 										</object>
-										<reference key="NSOffImage" ref="281281900"/>
-										<reference key="NSMixedImage" ref="281281900"/>
+										<reference key="NSOffImage" ref="621858661"/>
+										<reference key="NSMixedImage" ref="621858661"/>
 										<int key="NSTag">100</int>
 										<object class="NSAttributedString" key="NSAttributedTitle">
 											<string key="NSString"> Rainbow</string>
@@ -9438,9 +9438,9 @@
 			<string key="FormattingColor_7">{16, 16}</string>
 			<string key="FormattingColor_8">{16, 16}</string>
 			<string key="FormattingColor_9">{16, 16}</string>
+			<string key="FormattingColor_Rainbow">{16, 16}</string>
 			<string key="NSMenuCheckmark">{9, 8}</string>
 			<string key="NSMenuMixedState">{7, 2}</string>
-			<string key="rainbow">{16, 16}</string>
 		</dictionary>
 	</data>
 </archive>

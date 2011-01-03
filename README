@@ -27,9 +27,7 @@ It is asked that those with knowledge of compiling Textual do not
 abuse it to distribute binaries to large groups of users during the
 time period that it is exclusive to the Apple Mac App Store. 
 
-#### License ####
-
-The New BSD License
+#### Copyright ####
 
 Based on work by Satoshi Nakagawa <psychs AT limechat DOT net>
 Copyright (c) 2008-2010 All rights reserved.
@@ -37,6 +35,13 @@ Copyright (c) 2008-2010 All rights reserved.
 
 Modifications done by Codeux Software <support AT codeux DOT com>
 Copyright (c) 2010, 2011 <https://github.com/codeux/Textual>
+
+A full list of acknowledgements and contributors can be found in the
+folder: [Project Root] -> Resources -> Documents -> Exported Documents 
+
+#### License ####
+
+The New BSD License
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions

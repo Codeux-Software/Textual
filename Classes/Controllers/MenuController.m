@@ -471,7 +471,7 @@
 
 - (void)onShowAcknowledgments:(id)sender
 {
-	[TXNSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"/Documents/Acknowledgments.pdf"]]];
+	[TXNSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
 }
 
 - (void)onPaste:(id)sender

@@ -31,8 +31,8 @@
 		message_count = ((message_count > 9999) ? 9999 : message_count);
 		
 		NSImage *appIcon = [[NSImage imageNamed:@"NSApplicationIcon"] copy];
-		NSImage *redBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Red/%@", [self badgeFilename:message_count]]]];
-		NSImage *greenBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Images/Badges/Green/%@", [self badgeFilename:highlight_count]]]];
+		NSImage *redBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"DIbadge_Red_%@", [self badgeFilename:message_count]]]];
+		NSImage *greenBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"DIbadge_Green_%@", [self badgeFilename:highlight_count]]]];
 		
 		[appIcon lockFocus];
 		
@@ -84,16 +84,16 @@
 {
 	switch (count) {
 		case 1 ... 99:
-			return @"badge1&2.tiff";
+			return @"1&2.tiff";
 			break;
 		case 100 ... 999:
-			return @"badge3.tiff";
+			return @"3.tiff";
 			break;
 		case 1000 ... 9999:
-			return @"badge4.tiff";
+			return @"4.tiff";
 			break;
 		default:
-			return @"badge4.tiff";
+			return @"4.tiff";
 			break;
 	}
 }
