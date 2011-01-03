@@ -1103,6 +1103,7 @@
 - (void)wantsFullScreenModeToggled:(id)sender
 {
 	if (isInFullScreenMode == NO) {
+		[master saveWindowState];
 		[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
 		[[window standardWindowButton:NSWindowZoomButton] setHidden:YES];
 		[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
