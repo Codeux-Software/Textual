@@ -53,6 +53,8 @@ typedef enum {
 	BOOL inWhoWasRequest;
 	BOOL hasIRCopAccess;
 	BOOL inFirstISONRun;
+	BOOL serverHasNickServ;
+	BOOL autojoinInitialized;
 
 	Timer *pongTimer;
 	Timer *retryTimer;
@@ -108,13 +110,15 @@ typedef enum {
 @property (nonatomic) NSInteger tryingNickNumber;
 @property (nonatomic, retain) NSString *serverHostname;
 @property (nonatomic, assign) BOOL inList;
+@property (nonatomic, assign) BOOL isAway;
 @property (nonatomic, assign) BOOL inChanBanList;
 @property (nonatomic, assign) BOOL identifyMsg;
 @property (nonatomic, assign) BOOL identifyCTCP;
 @property (nonatomic, assign) BOOL hasIRCopAccess;
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
-@property (nonatomic, assign) BOOL isAway;
+@property (nonatomic, assign) BOOL serverHasNickServ;
+@property (nonatomic, assign) BOOL autojoinInitialized;
 @property (nonatomic, assign) ConnectMode connectType;
 @property (nonatomic, assign) DisconnectType disconnectType;
 @property (nonatomic, retain) Timer *pongTimer;
