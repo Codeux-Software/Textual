@@ -96,7 +96,7 @@
 	static NSDateFormatter *format = nil;
 	if (!format) {
 		format = [NSDateFormatter new];
-		[format setDateFormat:@"YYYY-MM-dd"];
+		[format setDateFormat:@"yyyy-MM-dd"];
 	}
 	NSString *date = [format stringFromDate:[NSDate date]];
 	NSString *name = [[client name] safeFileName];

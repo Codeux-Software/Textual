@@ -236,11 +236,6 @@ static BOOL receiptValidated = NO;
 	return [TXNSUserDefaults() integerForKey:@"Preferences.General.autojoin_maxchans"];
 }
 
-+ (NSInteger)connectAutoJoinDelay
-{
-	return [TXNSUserDefaults() integerForKey:@"Preferences.General.autojoin_delay"];
-}
-
 + (NSString *)defaultKickMessage
 {
 	return [TXNSUserDefaults() objectForKey:@"Preferences.General.kick_message"];
@@ -264,6 +259,11 @@ static BOOL receiptValidated = NO;
 + (NSString *)IRCopAlertMatch
 {
 	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_alert_match"];
+}
+
++ (BOOL)autojoinWaitForNickServ
+{
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.nickserv_delay_autojoin"];
 }
 
 + (BOOL)logAllHighlightsToQuery
@@ -1045,7 +1045,7 @@ static NSInteger startUpTime;
 	[d setObject:@"[%H:%M:%S]" forKey:@"Preferences.Theme.timestamp_format"];
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setBool:NO forKey:@"Preferences.General.log_highlights"];
-	[d setInt:2 forKey:@"Preferences.General.autojoin_delay"];
+	[d setBool:NO forKey:@"Preferences.General.nickserv_delay_autojoin"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];

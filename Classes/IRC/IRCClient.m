@@ -4,12 +4,13 @@
 
 #include <arpa/inet.h>
 
-#define PONG_INTERVAL			150
-#define MAX_BODY_LEN			480
-#define RECONNECT_INTERVAL		20
-#define RETRY_INTERVAL			240
-#define ISON_CHECK_INTERVAL		30
-#define TRIAL_PERIOD_INTERVAL	1800
+#define PONG_INTERVAL				150
+#define MAX_BODY_LEN				480
+#define RECONNECT_INTERVAL			20
+#define RETRY_INTERVAL				240
+#define ISON_CHECK_INTERVAL			30
+#define TRIAL_PERIOD_INTERVAL		1800
+#define AUTOJOIN_DELAY_INTERVAL		2
 
 static NSDateFormatter *dateTimeFormatter = nil;
 
@@ -106,6 +107,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize inWhoWasRequest;
 @synthesize disconnectType;
 @synthesize connectType;
+@synthesize serverHasNickServ;
+@synthesize autojoinInitialized;
 
 - (id)init
 {
@@ -129,7 +132,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		autoJoinTimer = [Timer new];
 		autoJoinTimer.delegate = self;
-		autoJoinTimer.reqeat = NO;
+		autoJoinTimer.reqeat = YES;
 		autoJoinTimer.selector = @selector(onAutoJoinTimer:);
 		
 		commandQueueTimer = [Timer new];
@@ -667,7 +670,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)startAutoJoinTimer
 {
 	[autoJoinTimer stop];
-	[autoJoinTimer start:[Preferences connectAutoJoinDelay]];
+	[autoJoinTimer start:AUTOJOIN_DELAY_INTERVAL];
 }
 
 - (void)stopAutoJoinTimer
@@ -677,7 +680,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)onAutoJoinTimer:(id)sender
 {
-	[self performAutoJoin];
+	if ([Preferences autojoinWaitForNickServ] == NO) {
+		[self performAutoJoin];
+	} else {
+		if (serverHasNickServ) {
+			if (autojoinInitialized) {
+				[self performAutoJoin];
+			}
+		} else {
+			[self performAutoJoin];
+		}
+	}
+	
+	[autoJoinTimer stop];
 }
 
 #pragma mark -
@@ -941,8 +956,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)performAutoJoin
 {
-	[self stopAutoJoinTimer];
-	
 	NSMutableArray *ary = [NSMutableArray array];
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
@@ -2976,7 +2989,24 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"]) {
 						if (config.nickPassword.length) {
+							serverHasNickServ = YES;
+							
 							[self send:IRCCI_PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+						}
+					} else {
+						if ([Preferences autojoinWaitForNickServ]) {
+							if ([text hasPrefix:@"You are now identified"] ||
+								[text hasPrefix:@"You are already identified"] ||
+								[text hasSuffix:@"you are now recognized."]) {
+								
+								if (autojoinInitialized == NO && serverHasNickServ) {
+									autojoinInitialized = YES;
+									
+									[self performAutoJoin];
+								}
+							}
+						} else {
+							autojoinInitialized = YES;
 						}
 					}
 				}
@@ -3459,8 +3489,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self send:IRCCI_PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
 	}
 	
-	[self startAutoJoinTimer];
-	
 	for (NSString *s in config.loginCommands) {
 		if ([s hasPrefix:@"/"]) {
 			s = [s safeSubstringFromIndex:1];
@@ -3532,6 +3560,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([Preferences displayServerMOTD]) {
 				[self printReply:m];
 			}
+			
+			[self startAutoJoinTimer];
 			break;
 		}
 		case 5:	// RPL_ISUPPORT
@@ -4186,6 +4216,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	tryingNickNumber = -1;
 	hasIRCopAccess = NO;
+	
+	autojoinInitialized = NO;
+	serverHasNickServ = NO;
 	
 	NSString *disconnectTXTLString = nil;
 	
