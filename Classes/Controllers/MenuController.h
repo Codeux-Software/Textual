@@ -115,6 +115,9 @@
 - (void)onJoinChannel:(id)sender;
 - (void)onCopyAddress:(id)sender;
 
+- (void)onWantChannelModerated:(id)sender;
+- (void)onWantChannelVoiceOnly:(id)sender;
+
 - (void)onWantChannelListSorted:(id)sender;
 - (void)onWantMainWindowShown:(id)sender;
 - (void)onWantIgnoreListShown:(id)sender;
@@ -128,16 +131,12 @@
 - (void)onWantChannelBanExceptionList:(id)sender;
 - (void)onWantMainWindowCentered:(id)sender;
 
+- (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
+- (void)onShowAcknowledgments:(id)sender;
+- (void)wantsFullScreenModeToggled:(id)sender;
+- (void)processNavigationItem:(NSMenuItem *)sender;
 
 - (void)onWantThemeForceReloaded:(id)sender;
 
-- (void)onWantChannelModerated:(id)sender;
-- (void)onWantChannelVoiceOnly:(id)sender;
-
-- (void)commandWShortcutUsed:(id)sender;
-
-- (void)wantsFullScreenModeToggled:(id)sender;
-
-- (void)processNavigationItem:(NSMenuItem *)sender;
 @end
