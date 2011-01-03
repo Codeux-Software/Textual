@@ -469,6 +469,11 @@
 	}
 }
 
+- (void)onShowAcknowledgments:(id)sender
+{
+	[TXNSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"/Documents/Acknowledgments.pdf"]]];
+}
+
 - (void)onPaste:(id)sender
 {
 	NSPasteboard *pb = [NSPasteboard generalPasteboard];
