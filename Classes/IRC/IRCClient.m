@@ -1529,7 +1529,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							&& ![lowerChname isEqualToString:@"chanserv"]) {
 							
 							if (type == LINE_TYPE_NOTICE) {
-								c = self;
+								c = (id)self;
 							} else {
 								c = [world createTalk:chname client:self];
 							}
