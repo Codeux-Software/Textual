@@ -361,7 +361,7 @@ attributedString:(BOOL)attributed
 								UniChar c = [body characterAtIndex:next];
 								
 								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-									cleanMatch = YES;
+									cleanMatch = NO;
 								}
 							}
 						}
