@@ -680,7 +680,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)onAutoJoinTimer:(id)sender
 {
-	if ([Preferences autojoinWaitForNickServ] == NO) {
+	if ([Preferences autojoinWaitForNickServ] == NO || config.nickPassword.length < 1) {
 		[self performAutoJoin];
 	} else {
 		if (serverHasNickServ) {
@@ -1441,6 +1441,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 			} else if ([cmd isEqualToString:IRCCI_ME] || [cmd isEqualToString:IRCCI_M]) {
 				cmd = IRCCI_ACTION;
+				
 				if (selChannel) {
 					targetChannelName = selChannel.name;
 				} else {
@@ -1526,7 +1527,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							&& ![chname isChannelName]
 							&& ![lowerChname isEqualToString:@"nickserv"]
 							&& ![lowerChname isEqualToString:@"chanserv"]) {
-							c = [world createTalk:chname client:self];
+							
+							if (type == LINE_TYPE_NOTICE) {
+								c = self;
+							} else {
+								c = [world createTalk:chname client:self];
+							}
 						}
 						
 						[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
@@ -2914,6 +2920,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						[text hasPrefix:@"*** You are connected to"] || 
 						[text hasPrefix:@"Forbidding Q-lined nick"] || 
 						[text hasPrefix:@"Exiting ssl client"]) {
+						
 						[self printBoth:nil type:type text:text];	
 						
 						BOOL processData = NO;
@@ -3560,12 +3567,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([Preferences displayServerMOTD]) {
 				[self printReply:m];
 			}
-			
-			[self startAutoJoinTimer];
 			break;
 		}
 		case 5:	// RPL_ISUPPORT
 			[isupport update:[m sequence:1]];
+			
+			[self startAutoJoinTimer];
 			break;
 		case 221:	// RPL_UMODEIS
 		{
