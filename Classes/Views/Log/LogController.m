@@ -523,8 +523,8 @@
 		line.excludeWords = nil;
 		
 		[hlc print:line];
-		
 		[hlc setIsUnread:YES];
+		
 		[world reloadTree];
 	}
 	
@@ -563,6 +563,7 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
+	
 	[[view js_api] callWebScriptMethod:@"newMessagePostedToDisplay" 
 									 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
 }
