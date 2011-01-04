@@ -10,6 +10,8 @@
 #define ITALIC_ATTR				(1 << 26)
 #define TEXT_COLOR_ATTR			(1 << 25)
 #define BACKGROUND_COLOR_ATTR	(1 << 24)
+#define CONVERSATION_TRKR_ATTR	(1 << 23)
+
 #define BACKGROUND_COLOR_MASK	(0xF0)
 #define TEXT_COLOR_MASK			(0x0F)
 
@@ -47,6 +49,7 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 	
 	for (NSInteger i = start; i < len; ++i) {
 		attr_t t = attrBuf[i];
+		
 		if (t != target) {
 			return i - start;
 		}
@@ -108,11 +111,21 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 	return body;
 }
 
-static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len)
+static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len, LogController *log)
 {
 	NSString *content = [body substringWithRange:NSMakeRange(start, len)];
 	
-	if (attr & URL_ATTR) {
+	if (attr & CONVERSATION_TRKR_ATTR) {
+		content = logEscape(content);
+		
+		IRCUser *user = [[log channel] findMember:content];
+		
+		if (user) {
+			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
+		} 
+		
+		return content;
+	} else if (attr & URL_ATTR) {
 		NSString *link = content;
 		
 		if ([link contains:@"://"] == NO) {
@@ -151,14 +164,16 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 }
 
 + (NSString *)renderBody:(NSString *)body 
-				nolinks:(BOOL)hideLinks
-			   keywords:(NSArray *)keywords 
-		   excludeWords:(NSArray *)excludeWords 
-		 exactWordMatch:(BOOL)exactWordMatch 
-			highlighted:(BOOL *)highlighted 
-			  URLRanges:(NSArray**)urlRanges
+			  controller:(LogController *)log
+				 nolinks:(BOOL)hideLinks
+				keywords:(NSArray *)keywords 
+			excludeWords:(NSArray *)excludeWords 
+		  exactWordMatch:(BOOL)exactWordMatch 
+			 highlighted:(BOOL *)highlighted 
+			   URLRanges:(NSArray**)urlRanges
 {
 	return [self renderBody:body
+				 controller:log
 					nolinks:hideLinks
 				   keywords:keywords
 			   excludeWords:excludeWords
@@ -169,6 +184,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 }
 
 + (id)renderBody:(NSString *)body 
+	  controller:(LogController *)log
 		 nolinks:(BOOL)hideLinks
 		keywords:(NSArray *)keywords 
 	excludeWords:(NSArray *)excludeWords 
@@ -308,31 +324,91 @@ attributedString:(BOOL)attributed
 			}
 		}
 		
-		BOOL foundKeyword = NO;
-		NSMutableArray *excludeRanges = [NSMutableArray array];
-		if (!exactWordMatch) {
-			for (NSString *excludeWord in excludeWords) {
+		if ([Preferences trackConversations] && log) {
+			for (IRCUser *user in log.channel.members) {
 				start = 0;
+				
 				while (start < len) {
-					NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+					NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+					
 					if (r.location == NSNotFound) {
 						break;
 					}
+					
+					BOOL cleanMatch = YES;
+					
+					UniChar c = [body characterAtIndex:r.location];
+					
+					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+						NSInteger prev = (r.location - 1);
+						
+						if (0 <= prev && prev < len) {
+							UniChar c = [body characterAtIndex:prev];
+							
+							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+								cleanMatch = NO;
+							}
+						}
+					}
+					
+					if (cleanMatch) {
+						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+						
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							NSInteger next = NSMaxRange(r);
+							
+							if (next < len) {
+								UniChar c = [body characterAtIndex:next];
+								
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									cleanMatch = YES;
+								}
+							}
+						}
+					}
+					
+					if (cleanMatch) {
+						setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
+					}
+					
+					start = (NSMaxRange(r) + 1);
+				}
+			}
+		}
+		
+		BOOL foundKeyword = NO;
+		
+		NSMutableArray *excludeRanges = [NSMutableArray array];
+		
+		if (!exactWordMatch) {
+			for (NSString *excludeWord in excludeWords) {
+				start = 0;
+				
+				while (start < len) {
+					NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+					
+					if (r.location == NSNotFound) {
+						break;
+					}
+					
 					[excludeRanges addObject:[NSValue valueWithRange:r]];
-					start = NSMaxRange(r) + 1;
+					start = (NSMaxRange(r) + 1);
 				}
 			}
 		}
 		
 		for (NSString *keyword in keywords) {
 			start = 0;
+			
 			while (start < len) {
-				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+				
 				if (r.location == NSNotFound) {
 					break;
 				}
 				
 				BOOL enabled = YES;
+				
 				for (NSValue *e in excludeRanges) {
 					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
 						enabled = NO;
@@ -343,10 +419,13 @@ attributedString:(BOOL)attributed
 				if (exactWordMatch) {
 					if (enabled) {
 						UniChar c = [body characterAtIndex:r.location];
+						
 						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							NSInteger prev = r.location - 1;
+							NSInteger prev = (r.location - 1);
+							
 							if (0 <= prev && prev < len) {
 								UniChar c = [body characterAtIndex:prev];
+								
 								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
 									enabled = NO;
 								}
@@ -355,11 +434,14 @@ attributedString:(BOOL)attributed
 					}
 					
 					if (enabled) {
-						UniChar c = [body characterAtIndex:NSMaxRange(r)-1];
+						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+						
 						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
 							NSInteger next = NSMaxRange(r);
+							
 							if (next < len) {
 								UniChar c = [body characterAtIndex:next];
+								
 								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
 									enabled = NO;
 								}
@@ -375,15 +457,17 @@ attributedString:(BOOL)attributed
 					}
 				}
 				
-				start = NSMaxRange(r) + 1;
+				start = (NSMaxRange(r) + 1);
 			}
 			
 			if (foundKeyword) break;
 		}
 		
 		start = 0;
+		
 		while (start < len) {
 			NSRange r = [body rangeOfAddressStart:start];
+			
 			if (r.location == NSNotFound) {
 				break;
 			}
@@ -392,12 +476,14 @@ attributedString:(BOOL)attributed
 				setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
 			}
 			
-			start = NSMaxRange(r) + 1;
+			start = (NSMaxRange(r) + 1);
 		}
 		
 		start = 0;
+		
 		while (start < len) {
 			NSRange r = [body rangeOfChannelNameStart:start];
+			
 			if (r.location == NSNotFound) {
 				break;
 			}
@@ -406,7 +492,7 @@ attributedString:(BOOL)attributed
 				setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
 			}
 			
-			start = NSMaxRange(r) + 1;
+			start = (NSMaxRange(r) + 1);
 		}
 		
 		if (highlighted != NULL) {
@@ -423,6 +509,7 @@ attributedString:(BOOL)attributed
 	}
 	
 	start = 0;
+	
 	while (start < len) {
 		NSInteger n = getNextAttributeRange(attrBuf, start, len);
 		if (n <= 0) break;
@@ -432,8 +519,7 @@ attributedString:(BOOL)attributed
 		if (attributed) {
 			result = renderAttributedRange(result, t, start, n);	
 		} else {
-			NSString *s = renderRange(body, t, start, n);
-			[result appendString:s];
+			[result appendString:renderRange(body, t, start, n, log)];
 		}
 		
 		start += n;

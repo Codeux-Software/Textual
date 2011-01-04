@@ -67,6 +67,7 @@ typedef enum {
 + (NSString *)IRCopAlertMatch;
 + (NSInteger)autojoinMaxChannelJoins;
 + (NSString *)defaultKickMessage;
++ (BOOL)trackConversations;
 + (BOOL)autojoinWaitForNickServ;
 + (BOOL)inputHistoryIsChannelSpecific;
 + (BOOL)logAllHighlightsToQuery;

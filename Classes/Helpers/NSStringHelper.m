@@ -333,6 +333,7 @@ BOOL isUnicharDigit(unichar c)
 	}
 	
 	return [LogRenderer renderBody:self
+						controller:nil
 						   nolinks:NO
 						  keywords:nil
 					  excludeWords:nil
