@@ -261,6 +261,11 @@ static BOOL receiptValidated = NO;
 	return [TXNSUserDefaults() objectForKey:@"Preferences.General.ircop_alert_match"];
 }
 
++ (BOOL)trackConversations
+{
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.track_conversations"];
+}
+
 + (BOOL)autojoinWaitForNickServ
 {
 	return [TXNSUserDefaults() boolForKey:@"Preferences.General.nickserv_delay_autojoin"];
@@ -1052,6 +1057,7 @@ static NSInteger startUpTime;
 	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
+	[d setBool:NO forKey:@"Preferences.General.track_conversations"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

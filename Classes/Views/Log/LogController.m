@@ -188,13 +188,7 @@
 	if ([topic length] >= 1) {
 		if ([[self topicValue] isEqualToString:topic]) return YES;
 		
-		NSString *body = [LogRenderer renderBody:topic
-										 nolinks:NO
-										keywords:nil
-									excludeWords:nil
-								  exactWordMatch:NO
-									 highlighted:NULL
-									   URLRanges:NULL];
+		NSString *body = [LogRenderer renderBody:topic controller:self  nolinks:NO keywords:nil excludeWords:nil exactWordMatch:NO  highlighted:NULL URLRanges:NULL];
 		
 		DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
 		if (!doc) return NO;
@@ -442,12 +436,11 @@
 	
 	if (rawHTML == NO) {
 		body = [LogRenderer renderBody:line.body
+							controller:((isText) ? self : nil)
 							   nolinks:[[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]
-							  keywords:line.keywords
-						  excludeWords:line.excludeWords
+							  keywords:line.keywords excludeWords:line.excludeWords
 						exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)
-						   highlighted:&key
-							 URLRanges:&urlRanges];
+						   highlighted:&key URLRanges:&urlRanges];
 	} else {
 		body = line.body;
 	}

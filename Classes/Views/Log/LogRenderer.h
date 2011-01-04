@@ -2,20 +2,25 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+@class LogController;
+
 extern NSString *logEscape(NSString *s);
 
 @interface LogRenderer : NSObject
 
 + (void)setUp;
+
 + (NSString *)renderBody:(NSString *)body 
-				nolinks:(BOOL)hideLinks
-			   keywords:(NSArray *)keywords 
-		   excludeWords:(NSArray *)excludeWords 
-		 exactWordMatch:(BOOL)exactWordMatch 
-			highlighted:(BOOL *)highlighted 
-			  URLRanges:(NSArray**)urlRanges;
+			  controller:(LogController *)log
+				 nolinks:(BOOL)hideLinks
+				keywords:(NSArray *)keywords 
+			excludeWords:(NSArray *)excludeWords 
+		  exactWordMatch:(BOOL)exactWordMatch 
+			 highlighted:(BOOL *)highlighted 
+			   URLRanges:(NSArray**)urlRanges;
 
 + (id)renderBody:(NSString *)body 
+	  controller:(LogController *)log
 		 nolinks:(BOOL)hideLinks
 		keywords:(NSArray *)keywords 
 	excludeWords:(NSArray *)excludeWords 
