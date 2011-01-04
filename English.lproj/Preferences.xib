@@ -11,10 +11,10 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4778"/>
-			<integer value="4791"/>
-			<integer value="4929"/>
 			<integer value="4788"/>
+			<integer value="4929"/>
+			<integer value="5776"/>
+			<integer value="4778"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2498,14 +2498,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<object class="NSButton" id="149204880">
 											<reference key="NSNextResponder" ref="528704917"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{83, 19}, {218, 18}}</string>
+											<string key="NSFrame">{{83, 19}, {232, 18}}</string>
 											<reference key="NSSuperview" ref="528704917"/>
 											<int key="NSViewLayerContentsRedrawPolicy">2</int>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="508999174">
 												<int key="NSCellFlags">-2080244224</int>
 												<int key="NSCellFlags2">0</int>
-												<string key="NSContents">Show channel join/part activity</string>
+												<string key="NSContents">Show channel join/part/quit activity</string>
 												<reference key="NSSupport" ref="90392730"/>
 												<reference key="NSControlView" ref="149204880"/>
 												<int key="NSButtonFlags">1211912703</int>
@@ -4906,6 +4906,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
+									<object class="NSCustomResource" key="NSNormalImage" id="543840679">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
+									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -4916,10 +4920,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage" id="1053064946">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
-										</object>
+										<reference key="NSImage" ref="543840679"/>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -4960,7 +4961,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="1053064946"/>
+							<reference key="NSToolbarItemImage" ref="543840679"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
