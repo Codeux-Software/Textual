@@ -68,9 +68,11 @@
 - (void)updateOrAddMember:(IRCUser *)user;
 - (void)changeMember:(NSString *)nick mode:(char)mode value:(BOOL)value;
 - (void)clearMembers;
-- (NSInteger)indexOfMember:(NSString *)nick;
 - (IRCUser *)memberAtIndex:(NSInteger)index;
 - (IRCUser *)findMember:(NSString *)nick;
+- (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask;
+- (NSInteger)indexOfMember:(NSString *)nick;
+- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask;
 - (NSInteger)numberOfMembers;
 - (void)reloadMemberList;
 @end
