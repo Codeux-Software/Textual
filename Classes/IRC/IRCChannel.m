@@ -334,13 +334,24 @@
 
 - (NSInteger)indexOfMember:(NSString *)nick
 {
+	return [self indexOfMember:nick options:0];
+}
+
+- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask
+{
 	NSInteger i = -1;
 	
 	for (IRCUser *m in members) {
 		i++;
 		
-		if ([m.nick isEqualToString:nick]) {
-			return i;
+		if (mask & NSCaseInsensitiveSearch) {
+			if ([nick isEqualNoCase:m.nick]) {
+				return i;
+			}
+		} else {
+			if ([m.nick isEqualToString:nick]) {
+				return i;
+			}
 		}
 	}
 	
@@ -354,7 +365,12 @@
 
 - (IRCUser *)findMember:(NSString *)nick
 {
-	NSInteger n = [self indexOfMember:nick];
+	return [self findMember:nick options:0];
+}
+
+- (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask
+{
+	NSInteger n = [self indexOfMember:nick options:mask];
 	if (n < 0) return nil;
 	return [members safeObjectAtIndex:n];
 }

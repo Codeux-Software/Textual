@@ -432,11 +432,11 @@
 	BOOL showInlineImage = NO;
 	LogLineType type = line.lineType;
 	NSString *lineTypeString = [LogLine lineTypeString:type];
-	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
+	BOOL isText = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
 	
 	if (rawHTML == NO) {
 		body = [LogRenderer renderBody:line.body
-							controller:((isText) ? self : nil)
+							controller:((type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) ? self : nil)
 							   nolinks:[[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]
 							  keywords:line.keywords excludeWords:line.excludeWords
 						exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)

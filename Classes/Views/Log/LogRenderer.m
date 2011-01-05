@@ -119,7 +119,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	if (attr & CONVERSATION_TRKR_ATTR) {
 		content = logEscape(content);
 		
-		IRCUser *user = [log.channel findMember:content];
+		IRCUser *user = [log.channel findMember:content options:NSCaseInsensitiveSearch];
 		
 		if (user) {
 			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
