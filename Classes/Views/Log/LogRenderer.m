@@ -445,58 +445,68 @@ attributedString:(BOOL)attributed
 			*highlighted = foundKeyword;
 		}
 		
-		if ([Preferences trackConversations] && log) {
-			for (IRCUser *user in log.channel.members) {
-				start = 0;
+		if ([Preferences trackConversations]) {
+			if (log) {
+				IRCChannel *log_channel = log.channel;
 				
-				while (start < len) {
-					NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+				if (log_channel) {
+					NSArray *channel_members = log_channel.members;
 					
-					if (r.location == NSNotFound) {
-						break;
-					}
-					
-					BOOL cleanMatch = YES;
-					
-					UniChar c = [body characterAtIndex:r.location];
-					
-					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-						NSInteger prev = (r.location - 1);
-						
-						if (0 <= prev && prev < len) {
-							UniChar c = [body characterAtIndex:prev];
+					if (channel_members) {
+						for (IRCUser *user in channel_members) {
+							start = 0;
 							
-							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-								cleanMatch = NO;
-							}
-						}
-					}
-					
-					if (cleanMatch) {
-						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-						
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							NSInteger next = NSMaxRange(r);
-							
-							if (next < len) {
-								UniChar c = [body characterAtIndex:next];
+							while (start < len) {
+								NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+								
+								if (r.location == NSNotFound) {
+									break;
+								}
+								
+								BOOL cleanMatch = YES;
+								
+								UniChar c = [body characterAtIndex:r.location];
 								
 								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-									cleanMatch = NO;
+									NSInteger prev = (r.location - 1);
+									
+									if (0 <= prev && prev < len) {
+										UniChar c = [body characterAtIndex:prev];
+										
+										if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+											cleanMatch = NO;
+										}
+									}
 								}
+								
+								if (cleanMatch) {
+									UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+									
+									if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+										NSInteger next = NSMaxRange(r);
+										
+										if (next < len) {
+											UniChar c = [body characterAtIndex:next];
+											
+											if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+												cleanMatch = NO;
+											}
+										}
+									}
+								}
+								
+								if (cleanMatch) {
+									if (isClear(attrBuf, URL_ATTR, r.location, r.length) && 
+										isClear(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length)) {
+										
+										setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
+									}
+								}
+								
+								start = (NSMaxRange(r) + 1);
 							}
 						}
 					}
-					
-					if (cleanMatch) {
-						if (isClear(attrBuf, URL_ATTR, r.location, r.length) && 
-							isClear(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length)) {
-							
-							setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
-						}
-					}
-					
-					start = (NSMaxRange(r) + 1);
 				}
 			}
 		}
