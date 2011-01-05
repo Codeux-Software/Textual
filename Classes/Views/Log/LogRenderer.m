@@ -160,10 +160,6 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 
 @implementation LogRenderer
 
-+ (void)setUp
-{
-}
-
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(LogController *)log
 				 nolinks:(BOOL)hideLinks

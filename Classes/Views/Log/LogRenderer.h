@@ -8,8 +8,6 @@ extern NSString *logEscape(NSString *s);
 
 @interface LogRenderer : NSObject
 
-+ (void)setUp;
-
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(LogController *)log
 				 nolinks:(BOOL)hideLinks

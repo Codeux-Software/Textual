@@ -103,7 +103,7 @@
 - (NSString *)nameMatchesServerInList:(NSString *)name
 {
 	for (NSString *key in serverList) {
-		if ([[name lowercaseString] isEqualToString:[key lowercaseString]]) {
+		if ([name isEqualNoCase:key]) {
 			return key;
 		}
 	}
