@@ -133,8 +133,8 @@
 
 + (NSString *)getBandwidthStats:(IRCWorld *)world
 {
-	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. This equals \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
-			world.messagesSent, world.messagesReceived, [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
+	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. That equals roughly \002%.2f\002 messages a second. Combined this comes to around \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
+			world.messagesSent, world.messagesReceived, (world.messagesReceived / ([[NSDate date] timeIntervalSince1970] - [Preferences startTime])), [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
 }
 
 + (NSString *)getNetworkStats
