@@ -368,7 +368,9 @@ attributedString:(BOOL)attributed
 					}
 					
 					if (cleanMatch) {
-						setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
+						if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+							setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
+						}
 					}
 					
 					start = (NSMaxRange(r) + 1);
