@@ -11,6 +11,7 @@
 #define TEXT_COLOR_ATTR			(1 << 25)
 #define BACKGROUND_COLOR_ATTR	(1 << 24)
 #define CONVERSATION_TRKR_ATTR	(1 << 23)
+#define HIGHLIGHT_KEYWORD_ATTR	(1 << 22)
 
 #define BACKGROUND_COLOR_MASK	(0xF0)
 #define TEXT_COLOR_MASK			(0x0F)
@@ -118,7 +119,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	if (attr & CONVERSATION_TRKR_ATTR) {
 		content = logEscape(content);
 		
-		IRCUser *user = [[log channel] findMember:content];
+		IRCUser *user = [log.channel findMember:content];
 		
 		if (user) {
 			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
@@ -324,60 +325,6 @@ attributedString:(BOOL)attributed
 			}
 		}
 		
-		if ([Preferences trackConversations] && log) {
-			for (IRCUser *user in log.channel.members) {
-				start = 0;
-				
-				while (start < len) {
-					NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
-					
-					if (r.location == NSNotFound) {
-						break;
-					}
-					
-					BOOL cleanMatch = YES;
-					
-					UniChar c = [body characterAtIndex:r.location];
-					
-					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-						NSInteger prev = (r.location - 1);
-						
-						if (0 <= prev && prev < len) {
-							UniChar c = [body characterAtIndex:prev];
-							
-							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-								cleanMatch = NO;
-							}
-						}
-					}
-					
-					if (cleanMatch) {
-						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-						
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							NSInteger next = NSMaxRange(r);
-							
-							if (next < len) {
-								UniChar c = [body characterAtIndex:next];
-								
-								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-									cleanMatch = NO;
-								}
-							}
-						}
-					}
-					
-					if (cleanMatch) {
-						if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-							setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
-						}
-					}
-					
-					start = (NSMaxRange(r) + 1);
-				}
-			}
-		}
-		
 		BOOL foundKeyword = NO;
 		
 		NSMutableArray *excludeRanges = [NSMutableArray array];
@@ -454,6 +401,7 @@ attributedString:(BOOL)attributed
 				
 				if (enabled) {
 					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+						setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
 						foundKeyword = YES;
 						break;
 					}
@@ -499,6 +447,62 @@ attributedString:(BOOL)attributed
 		
 		if (highlighted != NULL) {
 			*highlighted = foundKeyword;
+		}
+		
+		if ([Preferences trackConversations] && log) {
+			for (IRCUser *user in log.channel.members) {
+				start = 0;
+				
+				while (start < len) {
+					NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+					
+					if (r.location == NSNotFound) {
+						break;
+					}
+					
+					BOOL cleanMatch = YES;
+					
+					UniChar c = [body characterAtIndex:r.location];
+					
+					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+						NSInteger prev = (r.location - 1);
+						
+						if (0 <= prev && prev < len) {
+							UniChar c = [body characterAtIndex:prev];
+							
+							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+								cleanMatch = NO;
+							}
+						}
+					}
+					
+					if (cleanMatch) {
+						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+						
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							NSInteger next = NSMaxRange(r);
+							
+							if (next < len) {
+								UniChar c = [body characterAtIndex:next];
+								
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									cleanMatch = NO;
+								}
+							}
+						}
+					}
+					
+					if (cleanMatch) {
+						if (isClear(attrBuf, URL_ATTR, r.location, r.length) && 
+							isClear(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length)) {
+							
+							setFlag(attrBuf, CONVERSATION_TRKR_ATTR, r.location, r.length);
+						}
+					}
+					
+					start = (NSMaxRange(r) + 1);
+				}
+			}
 		}
 	}
 	
