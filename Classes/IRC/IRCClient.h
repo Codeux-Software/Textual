@@ -21,28 +21,28 @@ typedef enum {
 {
 	IRCWorld *world;
 	IRCClientConfig *config;
-
+	
 	NSMutableArray *channels;
 	IRCISupportInfo *isupport;
-
+	
 	IRCConnection *conn;
 	NSInteger connectDelay;
 	BOOL reconnectEnabled;
 	BOOL retryEnabled;
-
+	
 	BOOL rawModeEnabled;
-
+	
 	BOOL isConnecting;
 	BOOL isConnected;
 	BOOL isLoggedIn;
 	BOOL isQuitting;
 	NSStringEncoding encoding;
-
+	
 	NSString *inputNick;
 	NSString *sentNick;
 	NSString *myNick;
 	NSInteger tryingNickNumber;
-
+	
 	NSString *serverHostname;
 	
 	BOOL isAway;
@@ -55,7 +55,7 @@ typedef enum {
 	BOOL inFirstISONRun;
 	BOOL serverHasNickServ;
 	BOOL autojoinInitialized;
-
+	
 	Timer *pongTimer;
 	Timer *retryTimer;
 	Timer *isonTimer;
@@ -64,12 +64,12 @@ typedef enum {
 	Timer *commandQueueTimer;
 	
 	NSMutableArray *commandQueue;
-
+	
 	IRCChannel *lastSelectedChannel;
 	
 	ConnectMode connectType;
 	DisconnectType disconnectType;
-
+	
 	ChanBanExceptionSheet *banExceptionSheet;
 	ChanBanSheet *chanBanListSheet;
 	ListDialog *channelListDialog;
@@ -80,7 +80,7 @@ typedef enum {
 	
 	FileLogger *logFile;
 	NSString *logDate;
-
+	
 	IRCChannel *whoisChannel;
 	
 	NSMutableDictionary *trackedUsers;
@@ -147,9 +147,9 @@ typedef enum {
 - (void)preferencesChanged;
 
 - (AddressBook *)checkIgnore:(NSString *)hostmask 
-					  uname:(NSString *)username 
-					   name:(NSString *)nickname
-			   matchAgainst:(NSArray *)matches;
+					   uname:(NSString *)username 
+						name:(NSString *)nickname
+				matchAgainst:(NSArray *)matches;
 
 - (AddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
