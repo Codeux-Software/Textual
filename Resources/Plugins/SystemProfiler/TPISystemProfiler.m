@@ -15,11 +15,6 @@
 				  message:(NSString*)messageString
 				  command:(NSString*)commandString
 {
-	[[client invokeOnMainThread] sendCommand:@"/me lol"
-							  completeTarget:YES
-									  target:@"#testchannel"];
-	
-	
 	if ([client isConnected]) {
 		NSString *channelName = [[[client world] selectedChannel] name];
 		
