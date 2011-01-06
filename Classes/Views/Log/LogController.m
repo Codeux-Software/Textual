@@ -188,7 +188,7 @@
 	if ([topic length] >= 1) {
 		if ([[self topicValue] isEqualToString:topic]) return YES;
 		
-		NSString *body = [LogRenderer renderBody:topic controller:self  nolinks:NO keywords:nil excludeWords:nil exactWordMatch:NO  highlighted:NULL URLRanges:NULL];
+		NSString *body = [LogRenderer renderBody:topic controller:nil nolinks:NO keywords:nil excludeWords:nil exactWordMatch:NO  highlighted:NULL URLRanges:NULL];
 		
 		DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
 		if (!doc) return NO;
