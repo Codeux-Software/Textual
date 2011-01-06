@@ -2091,26 +2091,40 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		default:
 		{
-			if ([[world bundlesForUserInput] objectForKey:cmd]) {
-				[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
+			NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
+			
+			BOOL scriptFound = [TXNSFileManager() fileExistsAtPath:scriptPath];
+			BOOL pluginFound = (BOOL)[[world bundlesForUserInput] objectForKey:cmd];
+			
+			if (pluginFound && scriptFound) {
+				NSLog(@"Command %@ shared by both a script and plugin. Sending to server because of inability to determine priority.", cmd);
 			} else {
-				NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
-				
-				if ([TXNSFileManager() fileExistsAtPath:scriptPath]) {
-					NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", 
-											   [NSNumber numberWithBool:completeTarget], @"completeTarget", targetChannelName, @"target", nil];
-					[NSThread detachNewThreadSelector:@selector(executeTextualCmdScript:) toTarget:self withObject:[[inputInfo mutableCopy] autorelease]];
+				if (pluginFound) {
+					[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
+					
+					return YES;
 				} else {
-					if (cutColon) {
-						[s insertString:@":" atIndex:0];
+					if (scriptFound) {
+						if ([TXNSFileManager() fileExistsAtPath:scriptPath]) {
+							NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", 
+													   [NSNumber numberWithBool:completeTarget], @"completeTarget", targetChannelName, @"target", nil];
+							
+							[NSThread detachNewThreadSelector:@selector(executeTextualCmdScript:) toTarget:self withObject:[[inputInfo mutableCopy] autorelease]];
+							
+							return YES;
+						} 
 					}
-					
-					[s insertString:@" " atIndex:0];
-					[s insertString:cmd atIndex:0];
-					
-					[self sendLine:s];
 				}
 			}
+			
+			if (cutColon) {
+				[s insertString:@":" atIndex:0];
+			}
+			
+			[s insertString:@" " atIndex:0];
+			[s insertString:cmd atIndex:0];
+			
+			[self sendLine:s];
 			
 			return YES;
 			break;

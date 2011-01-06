@@ -921,12 +921,28 @@
 	if (commandMode) {
 		choices = [NSMutableArray array];
 		
+		NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+		
 		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
 			[choices addObject:[command lowercaseString]];
 		}
 		
 		for (NSString *command in [[world bundlesForUserInput] allKeys]) {
-			[choices addObject:[command lowercaseString]];
+			NSString *cmdl = [command lowercaseString];
+			
+			if (![choices containsObject:cmdl]) {
+				[choices addObject:cmdl];
+			}
+		}
+		
+		for (NSString *file in resourceFiles) {
+			if ([file hasSuffix:@".scpt"]) {
+				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
+				
+				if (![choices containsObject:cmdl]) {
+					[choices addObject:cmdl];
+				}
+			}
 		}
 		
 		lowerChoices = choices;
