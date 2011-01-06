@@ -2306,6 +2306,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text
 {
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
+	
 	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
 	if (![Preferences growlEnabledForEvent:type]) return;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return;
@@ -2337,7 +2339,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
-	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 }
 
 - (void)notifyEvent:(GrowlNotificationType)type
@@ -2347,6 +2348,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text
 {
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
+	
 	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
 	if (![Preferences growlEnabledForEvent:type]) return;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return;
@@ -2394,7 +2397,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc context:context];
-	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 }
 
 #pragma mark -
