@@ -121,7 +121,7 @@
 
 - (BOOL)checkIgnore:(NSString *)thehost
 {
-	if (hostmaskRegex) {
+	if (hostmaskRegex && thehost) {
 		if ([thehost isMatchedByRegex:[hostmaskRegex lowercaseString]]) {
 			return YES;
 		}

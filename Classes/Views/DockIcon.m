@@ -13,9 +13,7 @@
 + (void)drawWithHilightCount:(NSInteger)highlight_count 
 				   messageCount:(NSInteger)message_count 
 {
-	NSScreen *scaleCheck = [NSScreen alloc];
-	
-	if ([[NSString stringWithFloat:[scaleCheck userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
+	if ([[NSString stringWithFloat:[[NSScreen mainScreen] userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 		NSSize textSize;
@@ -76,8 +74,6 @@
 		
 		[pool drain];
 	}
-	
-	[scaleCheck release];
 }
 
 + (NSString *)badgeFilename:(NSInteger)count

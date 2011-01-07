@@ -111,6 +111,35 @@
 	return sysinfo;
 }
 
++ (NSString *)getAllScreenResolutions 
+{
+	NSArray *screens = [NSScreen screens];
+	
+	if ([screens count] < 1) return @"Error -109";
+	
+	if ([screens count] == 1) {
+		NSScreen *maiScreen = [screens objectAtIndex:0];
+		
+		return [NSString stringWithFormat:@"\002Screen Resolution:\002 %.0f x %.0f", maiScreen.frame.size.width, maiScreen.frame.size.height];
+	} else {
+		BOOL firstRun = YES;
+		
+		NSMutableString *result = [NSMutableString string];
+		
+		for (NSScreen *screen in screens) {
+			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
+			
+			if (firstRun) {
+				[result appendFormat:@"\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
+			} else {
+				[result appendFormat:@"; Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
+			}
+		}
+		
+		return result;
+	}
+}
+
 + (NSString *)applicationAndSystemUptime
 {
 	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime([Preferences startTime], YES)];
