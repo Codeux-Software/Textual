@@ -8,7 +8,8 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", @"msgcount", @"diskspace", @"theme", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime",
+			@"netstats", @"msgcount", @"diskspace", @"theme", @"screens", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -33,6 +34,8 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllVolumesAndSizes]];
 			} else if ([commandString isEqualToString:@"THEME"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getCurrentThemeInUse:[client world]]];
+			} else if ([commandString isEqualToString:@"SCREENS"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllScreenResolutions]];
 			}
 		}
 	}

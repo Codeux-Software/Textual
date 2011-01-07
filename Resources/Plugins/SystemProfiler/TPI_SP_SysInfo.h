@@ -18,6 +18,7 @@
 + (NSString *)graphicsCardInfo;
 + (NSString *)getAllVolumesAndSizes;
 + (NSString *)applicationMemoryUsage;
++ (NSString *)getAllScreenResolutions;
 + (NSString *)applicationAndSystemUptime;
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
