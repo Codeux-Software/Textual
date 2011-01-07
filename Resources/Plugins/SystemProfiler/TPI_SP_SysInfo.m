@@ -130,6 +130,8 @@
 			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
 			
 			if (firstRun) {
+				firstRun = NO;
+				
 				[result appendFormat:@"\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
 			} else {
 				[result appendFormat:@"; Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
