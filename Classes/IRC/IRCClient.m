@@ -64,6 +64,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 @implementation IRCClient
 
+@synthesize conn;
 @synthesize world;
 @synthesize config;
 @synthesize channels;
@@ -71,9 +72,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize isConnecting;
 @synthesize isConnected;
 @synthesize isLoggedIn;
-@synthesize myNick;
 @synthesize lastSelectedChannel;
-@synthesize conn;
 @synthesize reconnectEnabled;
 @synthesize retryEnabled;
 @synthesize rawModeEnabled;
@@ -81,6 +80,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize encoding;
 @synthesize inputNick;
 @synthesize sentNick;
+@synthesize myNick;
+@synthesize myHost;
 @synthesize tryingNickNumber;
 @synthesize serverHostname;
 @synthesize inList;
@@ -468,19 +469,31 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return [self checkIgnoreAgainstHostmask:real_host withMatches:matches];
 }
 
-- (NSString *)truncateTextForIRC:(NSMutableString **)string 
+- (NSString *)truncateTextForIRC:(NSMutableString **)string lineType:(LogLineType)type channel:(NSString *)chan 
 {
 	NSMutableString *base = *string;
 	NSString *new = (NSString *)[base copy];
 	
-	if (new.length > IRC_BODY_LEN) {
-		new = [new substringToIndex:IRC_BODY_LEN];
+	NSInteger stringl = new.length;
+	NSInteger baseMath = ((chan.length + myHost.length) + 4); 
+	
+	switch (type) {
+		case LINE_TYPE_PRIVMSG: baseMath += 9; break;
+		case LINE_TYPE_ACTION: baseMath += 18; break;
+		case LINE_TYPE_NOTICE: baseMath += 8; break;
+		default: break;
+	}
+	
+	if ((stringl + baseMath) > IRC_BODY_LEN) {
+		stringl = (IRC_BODY_LEN - baseMath);
+		 
+		new = [new substringToIndex:stringl];
 		
-		NSRange currentRange = NSMakeRange(0, IRC_BODY_LEN);
+		NSRange currentRange = NSMakeRange(0, stringl);
 		NSRange spaceRange = [new rangeOfString:@" " options:NSBackwardsSearch];
 		
 		if (spaceRange.location != NSNotFound) {
-			currentRange.length = (IRC_BODY_LEN - ((spaceRange.location - IRC_BODY_LEN) * -1));
+			currentRange.length = (stringl - (stringl - spaceRange.location));
 		}
 		
 		[base deleteCharactersInRange:currentRange];
@@ -1128,7 +1141,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		NSMutableString *str = [line mutableCopy];
 		
 		while (str.length) {
-			NSString *newstr = [self truncateTextForIRC:&str];
+			NSString *newstr = [self truncateTextForIRC:&str lineType:type channel:channel.name];
 			
 			[self printBoth:channel type:type nick:myNick text:newstr identified:YES];
 			
@@ -1490,7 +1503,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				while (s.length) {
-					NSString *t = [self truncateTextForIRC:&s];
+					NSString *t = [self truncateTextForIRC:&s lineType:type channel:targetChannelName];
+					
 					NSMutableArray *targetsResult = [NSMutableArray array];
 					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 					
@@ -3168,6 +3182,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (myself) {
 		[c activate];
 		[self reloadTree];
+
+		if (myHost) [myHost release];
+		myHost = [m.sender.raw retain];
 	}
 	
 	if (c && ![c findMember:nick]) {
