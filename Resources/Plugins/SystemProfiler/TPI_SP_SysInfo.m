@@ -26,15 +26,24 @@
 
 + (NSString *)compiledOutput
 {
-	NSBundle *parentBundle = [NSBundle bundleWithIdentifier:@"com.codeux.irc.textual"];
-	
-	NSDictionary *systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-	if (!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-	NSDictionary *textualInfoPlist = [parentBundle infoDictionary];
-	
 	NSString *sysinfo = @"System Information:";
 	
 	NSString *_model = [self model];
+	
+	NSString *_cpu_model = [self processor];
+	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
+	_cpu_model = [[_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "] trim];
+	
+	NSNumber *_cpu_count = [self processorCount];
+	NSString *_cpu_speed = [self processorClockSpeed]; 
+	NSInteger _cpu_count_int = [_cpu_count integerValue];
+	
+	NSString *_cpu_l2 = [self processorL2CacheSize];
+	NSString *_cpu_l3 = [self processorL3CacheSize];
+	NSString *_memory = [self physicalMemorySize];
+	NSString *_loadavg = [self loadAverages];
+	NSString *_gpu_model = [self graphicsCardInfo];
+	
 	if ([_model length] > 0) {
 		NSDictionary *_all_models = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"MacintoshModels" ofType:@"plist"]];
 		NSString *_exact_model = [_all_models objectForKey:_model];
@@ -48,14 +57,6 @@
 		[_all_models release];
 	}
 	
-	NSString *_cpu_model = [self processor];
-	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
-	_cpu_model = [[_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "] trim];
-	
-	NSNumber *_cpu_count = [self processorCount];
-	NSString *_cpu_speed = [self processorClockSpeed]; 
-	NSInteger _cpu_count_int = [_cpu_count integerValue];
-	
 	if (_cpu_count_int >= 1 && [_cpu_speed length] > 0) {
 		if (_cpu_count_int == 1) {
 			sysinfo = [sysinfo stringByAppendingFormat:@" \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002", _cpu_model, _cpu_count, _cpu_speed];
@@ -63,9 +64,6 @@
 			sysinfo = [sysinfo stringByAppendingFormat:@" \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002", _cpu_model, _cpu_count, _cpu_speed];
 		}
 	}
-	
-	NSString *_cpu_l2 = [self processorL2CacheSize];
-	NSString *_cpu_l3 = [self processorL3CacheSize];
 	
 	if (_cpu_l2) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002L%1$i:\002 %2$@ \002•\002", 2, _cpu_l2];
@@ -75,38 +73,29 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002L%1$i:\002 %2$@ \002•\002", 3, _cpu_l3];
 	}
 	
-	NSString *_memory = [self physicalMemorySize];
 	if (_memory) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Memory:\002 %@ \002•\002", _memory];
 	}
 	
-	NSString *_loadavg = [self loadAverages];
 	if ([_loadavg length] > 0) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@ \002•\002", _loadavg];
 	}
 	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
-	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
-	NSString *_gpu_model = [self graphicsCardInfo];
 	if ([_gpu_model length] > 0) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics:\002 %@ \002•\002", _gpu_model];
 	}
 	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@) \002•\002",
-			   [systemVersionPlist objectForKey:@"ProductName"], 
-			   [systemVersionPlist objectForKey:@"ProductVersion"], 
-			   [systemVersionPlist objectForKey:@"ProductBuildVersion"]];
+			   [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
+			   [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
+			   [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Textual:\002 %1$@ (Build #%2$@) (Running for %3$@)",
-			   [textualInfoPlist objectForKey:@"CFBundleVersion"], 
-			   [textualInfoPlist objectForKey:@"Build Number"],
-			   TXReadableTime([Preferences startTime], YES)];
-	
-	[systemVersionPlist release];
-	
-	[self getNetworkStats];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002Textual:\002 %1$@ (Build #%2$@)",
+			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
+			   [[Preferences textualInfoPlist] objectForKey:@"Build Number"]];
 	
 	return sysinfo;
 }
@@ -155,11 +144,11 @@
         NSString* fname = [kindAndName safeObjectAtIndex:1];
         
         if (fname) {
-            return [NSString stringWithFormat:@"Current Theme: %@", fname];
+            return [NSString stringWithFormat:@"\002Current Theme:\002 %@", fname];
         }
     }
     
-    return @"Current Theme: Unknown";
+    return @"\002Current Theme:\002 Unknown";
 }
 
 + (NSString *)getBandwidthStats:(IRCWorld *)world
@@ -173,7 +162,7 @@
 	/* Based off the source code of the "top" command
 	 <http://src.gnu-darwin.org/DarwinSourceArchive/expanded/top/top-15/libtop.c> */
 	
-	NSMutableString *netstat = [NSMutableString stringWithString:@"Network Traffic:"];
+	NSMutableString *netstat = [NSMutableString stringWithString:@"\002Network Traffic:\002"];
 	
 	BOOL firstItemPassed = NO;
 	
@@ -225,14 +214,10 @@
 	// Based off the source code located at:
 	// <http://www.cocoabuilder.com/archive/cocoa/150006-detecting-volumes.html>
 	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	TXDevNullDestroyObject(pool); // Fix warning with analyzer saying pool value is never called
-	
 	BOOL firstItemPassed = NO;
-	NSString *result = @"Mounted Drives: ";
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSArray *drives = [fm contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
+	
+	NSString *result = @"\002Mounted Drives:\002 ";
+	NSArray *drives = [TXNSFileManager() contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
 	
 	for (NSString *name in drives) {
 		NSString *fullpath = [LOCAL_VOLUME_DICTIONARY stringByAppendingPathComponent:name];
@@ -254,10 +239,10 @@
 		
 		if (isVolume) {
 			if (statfs(fsRep, &stat) == 0) {
-				NSString *fileSystemName = [fm stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
+				NSString *fileSystemName = [TXNSFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
 				
 				if ([fileSystemName isEqualToString:@"hfs"]) {
-					NSDictionary *diskInfo = [fm attributesOfFileSystemForPath:fullpath error:NULL];
+					NSDictionary *diskInfo = [TXNSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 					
 					if (diskInfo) {
 						TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
@@ -265,9 +250,10 @@
 						
 						if (firstItemPassed == NO) {
 							firstItemPassed = YES;
-							result = [result stringByAppendingFormat:@"\002%@\002: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+							
+							result = [result stringByAppendingFormat:@"%@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 						} else {
-							result = [result stringByAppendingFormat:@" — \002%@\002: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+							result = [result stringByAppendingFormat:@" — %@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 						}
 					}
 				}
@@ -280,8 +266,6 @@
 	} else {
 		return result;
 	}
-	
-	[pool release];
 }
 
 #pragma mark -
@@ -323,7 +307,7 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		return [NSString stringWithFormat:@"Textual is currently using %@ of memory. — Information about memory use: http://is.gd/j0a9s", [self formattedDiskSize:(TXFSLongInt)info.resident_size]];
+		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.\n\nInformation about memory use: http://is.gd/j0a9s", [self formattedDiskSize:(TXFSLongInt)info.resident_size]];
 	} 
 	
 	return nil;
