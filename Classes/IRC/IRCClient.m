@@ -176,6 +176,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[inputNick release];
 	[sentNick release];
 	[myNick release];
+	[myHost release];
 	
 	[serverHostname release];
 	[trackedUsers release];
