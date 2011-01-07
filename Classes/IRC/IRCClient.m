@@ -468,30 +468,30 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return [self checkIgnoreAgainstHostmask:real_host withMatches:matches];
 }
 
-- (NSString *)truncateTextForIRC:(NSMutableString **)string
+- (NSString *)truncateTextForIRC:(NSMutableString **)string 
 {
-	NSString *newString = (NSString *)*string;
-	NSMutableString *oldString = (NSMutableString *)*string;
+	NSMutableString *base = *string;
+	NSString *new = (NSString *)[base copy];
 	
-	if (newString.length > IRC_BODY_LEN) {
-		newString = [newString substringToIndex:IRC_BODY_LEN];
+	if (new.length > IRC_BODY_LEN) {
+		new = [new substringToIndex:IRC_BODY_LEN];
 		
 		NSRange currentRange = NSMakeRange(0, IRC_BODY_LEN);
-		NSRange spaceRange = [newString rangeOfString:@" " options:NSBackwardsSearch];
+		NSRange spaceRange = [new rangeOfString:@" " options:NSBackwardsSearch];
 		
 		if (spaceRange.location != NSNotFound) {
 			currentRange.length = (IRC_BODY_LEN - ((spaceRange.location - IRC_BODY_LEN) * -1));
 		}
 		
-		[oldString deleteCharactersInRange:currentRange];
-		return [newString substringWithRange:currentRange];
+		[base deleteCharactersInRange:currentRange];
+		return [new substringWithRange:currentRange];
 	} else {
-		[oldString deleteCharactersInRange:NSMakeRange(0, newString.length)];
+		[base deleteCharactersInRange:NSMakeRange(0, new.length)];
 	}
 	
-	*string = oldString;
+	*string = base;
 	
-	return newString;
+	return [new autorelease];
 }
 
 #pragma mark -
@@ -1129,9 +1129,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		while (str.length) {
 			NSString *newstr = [self truncateTextForIRC:&str];
-		
+			
 			[self printBoth:channel type:type nick:myNick text:newstr identified:YES];
-		
+			
 			NSString *cmd = command;
 			
 			if (type == LINE_TYPE_ACTION) {
@@ -1530,6 +1530,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 					
 					NSString *localCmd = cmd;
+					
 					if ([localCmd isEqualToString:IRCCI_ACTION]) {
 						localCmd = IRCCI_PRIVMSG;
 						t = [NSString stringWithFormat:@"\x01%@ %@\x01", IRCCI_ACTION, t];
