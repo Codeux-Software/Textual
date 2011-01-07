@@ -468,6 +468,32 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return [self checkIgnoreAgainstHostmask:real_host withMatches:matches];
 }
 
+- (NSString *)truncateTextForIRC:(NSMutableString **)string
+{
+	NSString *newString = (NSString *)*string;
+	NSMutableString *oldString = (NSMutableString *)*string;
+	
+	if (newString.length > IRC_BODY_LEN) {
+		newString = [newString substringToIndex:IRC_BODY_LEN];
+		
+		NSRange currentRange = NSMakeRange(0, IRC_BODY_LEN);
+		NSRange spaceRange = [newString rangeOfString:@" " options:NSBackwardsSearch];
+		
+		if (spaceRange.location != NSNotFound) {
+			currentRange.length = (IRC_BODY_LEN - ((spaceRange.location - IRC_BODY_LEN) * -1));
+		}
+		
+		[oldString deleteCharactersInRange:currentRange];
+		return [newString substringWithRange:currentRange];
+	} else {
+		[oldString deleteCharactersInRange:NSMakeRange(0, newString.length)];
+	}
+	
+	*string = oldString;
+	
+	return newString;
+}
+
 #pragma mark -
 #pragma mark ChanBanDialog
 
@@ -1041,85 +1067,34 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (!sel) return NO;
 	
 	NSArray *lines = [str splitIntoLines];
+	
 	for (NSString *s in lines) {
 		if (s.length == 0) continue;
 		
 		if ([sel isClient]) {
-			// server
 			if ([s hasPrefix:@"/"]) {
 				s = [s safeSubstringFromIndex:1];
 			}
+			
 			[self sendCommand:s];
 		} else {
-			// channel
 			IRCChannel *channel = (IRCChannel *)sel;
 			
 			if ([s hasPrefix:@"/"] && ![s hasPrefix:@"//"]) {
-				// command
 				s = [s safeSubstringFromIndex:1];
+				
 				[self sendCommand:s];
 			} else {
-				// text
 				if ([s hasPrefix:@"/"]) {
 					s = [s safeSubstringFromIndex:1];
 				}
+				
 				[self sendText:s command:command channel:channel];
 			}
 		}
 	}
 	
 	return YES;
-}
-
-- (NSString *)truncateText:(NSMutableString *)str command:(NSString *)command channelName:(NSString *)chname
-{
-	NSInteger max = IRC_BODY_LEN;
-	
-	if (chname) {
-		max -= [conn convertToCommonEncoding:chname].length;
-	}
-	
-	if (myNick.length) {
-		max -= myNick.length;
-	} else {
-		max -= isupport.nickLen;
-	}
-	
-	max -= config.username.length;
-	
-	if ([command isEqualToString:IRCCI_NOTICE]) {
-		max -= 18;
-	} else if ([command isEqualToString:IRCCI_ACTION]) {
-		max -= 28;
-	} else {
-		max -= 19;
-	}
-	
-	if (max <= 0) {
-		return nil;
-	}
-	
-	NSString *s = str;
-	if (s.length > max) {
-		s = [s safeSubstringToIndex:max];
-	} else {
-		s = [[s copy] autorelease];
-	}
-	
-	while (1) {
-		NSInteger len = [conn convertToCommonEncoding:s].length;
-		NSInteger delta = len - max;
-		if (delta <= 0) break;
-		
-		if (delta < 5) {
-			s = [s safeSubstringToIndex:s.length - 1];
-		} else {
-			s = [s safeSubstringToIndex:s.length - (delta / 3)];
-		}
-	}
-	
-	[str deleteCharactersInRange:NSMakeRange(0, s.length)];
-	return s;
 }
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
@@ -1146,48 +1121,56 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	NSArray *lines = [str splitIntoLines];
+	
 	for (NSString *line in lines) {
 		if (!line.length) continue;
 		
-		NSMutableString *s = [[line mutableCopy] autorelease];
+		NSMutableString *str = [line mutableCopy];
 		
-		while (s.length > 0) {
-			NSString *t = [self truncateText:s command:command channelName:channel.name];
-			if (!t.length) break;
-			
-			[self printBoth:channel type:type nick:myNick text:t identified:YES];
-			
+		while (str.length) {
+			NSString *newstr = [self truncateTextForIRC:&str];
+		
+			[self printBoth:channel type:type nick:myNick text:newstr identified:YES];
+		
 			NSString *cmd = command;
+			
 			if (type == LINE_TYPE_ACTION) {
 				cmd = IRCCI_PRIVMSG;
-				t = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, IRCCI_ACTION, t, (UniChar)0x01];
+				newstr = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, IRCCI_ACTION, newstr, (UniChar)0x01];
 			} else if (type == LINE_TYPE_PRIVMSG) {
-				[channel detectOutgoingConversation:t];
+				[channel detectOutgoingConversation:newstr];
 			}
-			[self send:cmd, channel.name, t, nil];
+			
+			[self send:cmd, channel.name, newstr, nil];
 		}
+		
+		[str release];
 	}
 }
 
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text
 {
 	NSString *trail;
+	
 	if (text.length) {
 		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
 	} else {
 		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
 	}
+	
 	[self send:IRCCI_PRIVMSG, target, trail, nil];
 }
 
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text
 {
 	NSString *trail;
+	
 	if (text.length) {
 		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
 	} else {
 		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
 	}
+	
 	[self send:IRCCI_NOTICE, target, trail, nil];
 }
 
@@ -1497,6 +1480,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if (!s.length) return NO;
 				
 				LogLineType type;
+				
 				if ([cmd isEqualToString:IRCCI_NOTICE]) {
 					type = LINE_TYPE_NOTICE;
 				} else if ([cmd isEqualToString:IRCCI_ACTION]) {
@@ -1506,11 +1490,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				while (s.length) {
-					NSString *t = [self truncateText:s command:cmd channelName:targetChannelName];
-					if (!t.length) break;
-					
+					NSString *t = [self truncateTextForIRC:&s];
 					NSMutableArray *targetsResult = [NSMutableArray array];
 					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
+					
 					for (NSString *chname in targets) {
 						if (!chname.length) continue;
 						
