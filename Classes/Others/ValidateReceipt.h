@@ -7,8 +7,5 @@ extern NSString *kReceiptVersion;
 extern NSString *kReceiptOpaqueValue;
 extern NSString *kReceiptHash;
 
-#define USE_SAMPLE_RECEIPT 0
-
-CFDataRef copy_mac_address(void);
 BOOL validateReceiptAtPath(NSString *path);
-NSDictionary *dictionaryWithAppStoreReceipt(NSString *path);
+BOOL validateBinarySignature(NSString *authority);
