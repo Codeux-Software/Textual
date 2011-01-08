@@ -495,6 +495,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (spaceRange.location != NSNotFound) {
 			currentRange.length = (stringl - (stringl - spaceRange.location));
+			
+			if ((stringl - currentRange.length) < (stringl - 20)) {
+				currentRange.length = stringl;
+			}
 		}
 		
 		[base deleteCharactersInRange:currentRange];
