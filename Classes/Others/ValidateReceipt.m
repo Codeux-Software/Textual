@@ -5,6 +5,9 @@
 
 #import <IOKit/IOKitLib.h>
 
+#import <Security/SecStaticCode.h>
+#import <Security/SecRequirement.h>
+
 #include <openssl/pkcs7.h>
 #include <openssl/objects.h>
 #include <openssl/sha.h>
@@ -16,6 +19,8 @@ NSString *kReceiptBundleIdentiferData = @"BundleIdentifierData";
 NSString *kReceiptVersion = @"Version";
 NSString *kReceiptOpaqueValue = @"OpaqueValue";
 NSString *kReceiptHash = @"Hash";
+
+#define BASE_BUNDLE_ID @"com.codeux.irc.textual"
 
 NSData *appleRootCert()
 {
@@ -313,8 +318,29 @@ CFDataRef copy_mac_address(void)
     return macAddress;
 }
 
+BOOL validateBinarySignature(NSString *authority)
+{
+	SecStaticCodeRef staticCode = NULL;
+	SecRequirementRef req = NULL;
+	
+	NSString *requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", authority];
+	
+	OSStatus status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
+	status = SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &req);
+	status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, req);
+	
+	if (status == noErr) {
+		return YES;
+	}
+	
+	return NO;
+}
+
 BOOL validateReceiptAtPath(NSString *path)
 {
+	// This validation process is actually very pointless considering
+	// Textual is open source, but some security is better than none.
+	
 	NSDictionary *receipt = dictionaryWithAppStoreReceipt(path);
 	
 	if (!receipt) return NO;
@@ -341,10 +367,20 @@ BOOL validateReceiptAtPath(NSString *path)
 	SHA1([input bytes], [input length], [hash mutableBytes]);
 
 	if ([bundleIdentifer isEqualToString:[receipt objectForKey:kReceiptBundleIdentifer]] &&
-		 [bundleVersion isEqualToString:[receipt objectForKey:kReceiptVersion]] &&
-		 [hash isEqualToData:[receipt objectForKey:kReceiptHash]]) {
+		[bundleVersion isEqualToString:[receipt objectForKey:kReceiptVersion]] &&
+		[hash isEqualToData:[receipt objectForKey:kReceiptHash]]) {
 		
-		return YES;
+		if ([bundleIdentifer contains:@"codeux"] == NO || [bundleIdentifer contains:@"irc"] == NO || 
+			[bundleIdentifer contains:@"textual"] == NO || [bundleIdentifer isEqualToString:BASE_BUNDLE_ID] == NO) {
+			
+			return NO;
+		}
+		
+		if (validateBinarySignature(@"Apple Mac OS Application Signing") == YES) {
+			return YES;
+		} else {
+			return validateBinarySignature(@"3rd Party Mac Developer Application: BestTechie Holdings, Inc.");
+		}
 	}
 
 	return NO;
