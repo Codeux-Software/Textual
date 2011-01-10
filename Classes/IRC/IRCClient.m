@@ -1415,7 +1415,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 27: // Command: ACTION
 		case 38: // Command: OMSG
 		case 39: // Command: ONOTICE
-		case 53: // Command: M
 		case 54: // Command: ME
 		case 55: // Command: MSG
 		{
@@ -1440,7 +1439,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				} else {
 					targetChannelName = [s getToken];
 				}
-			} else if ([cmd isEqualToString:IRCCI_ME] || [cmd isEqualToString:IRCCI_M]) {
+			} else if ([cmd isEqualToString:IRCCI_ME]) {
 				cmd = IRCCI_ACTION;
 				
 				if (selChannel) {
@@ -1677,6 +1676,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 56: // Command: OP
 		case 63: // Command: VOICE
 		case 66: // Command: UMODE
+		case 53: // Command: M
+			if ([cmd isEqualToString:IRCCI_M]) {
+				cmd = IRCCI_MODE;
+			}
+			
 			if ([cmd isEqualToString:IRCCI_MODE]) {
 				if (selChannel && selChannel.isChannel && ![s isModeChannelName]) {
 					targetChannelName = selChannel.name;
