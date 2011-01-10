@@ -18,6 +18,29 @@
 			name = "Clean Up Resources ";
 			productName = "Clean Up Resources ";
 		};
+		4CBC373D12DB04B200B211E0 /* Updating Version Data */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4CBC375512DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Updating Version Data" */;
+			buildPhases = (
+				4CBC373C12DB04B200B211E0 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Updating Version Data";
+			productName = "Standard Build";
+		};
+		4CBC374712DB050200B211E0 /* Standard Build */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4CBC375612DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Standard Build" */;
+			buildPhases = (
+			);
+			dependencies = (
+				4CBC374D12DB051000B211E0 /* PBXTargetDependency */,
+				4CBC374F12DB051400B211E0 /* PBXTargetDependency */,
+			);
+			name = "Standard Build";
+			productName = "Standard Build";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -335,6 +358,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = SystemProfiler;
+		};
+		4CBC374C12DB051000B211E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CBC373D12DB04B200B211E0 /* Updating Version Data */;
+			remoteInfo = "Updating Version Data";
+		};
+		4CBC374E12DB051400B211E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CA9456011E1AFBA00D36367 /* Textual */;
+			remoteInfo = Textual;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1503,8 +1540,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				4CA9456011E1AFBA00D36367 /* Textual */,
+				4CBC374712DB050200B211E0 /* Standard Build */,
 				4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */,
+				4CBC373D12DB04B200B211E0 /* Updating Version Data */,
+				4CA9456011E1AFBA00D36367 /* Textual */,
 			);
 		};
 /* End PBXProject section */
@@ -1621,6 +1660,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd Resources/Miscellaneous/\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbuildReference=`git describe`\n\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildReference\" Info.plist\n";
+		};
+		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd Resources/Miscellaneous/\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbuildReference=`git describe`\n\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildReference\" Info.plist";
 		};
 		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1763,6 +1815,16 @@
 			isa = PBXTargetDependency;
 			name = SystemProfiler;
 			targetProxy = 4C282AD012A3AA0B00F44108 /* PBXContainerItemProxy */;
+		};
+		4CBC374D12DB051000B211E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CBC373D12DB04B200B211E0 /* Updating Version Data */;
+			targetProxy = 4CBC374C12DB051000B211E0 /* PBXContainerItemProxy */;
+		};
+		4CBC374F12DB051400B211E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CA9456011E1AFBA00D36367 /* Textual */;
+			targetProxy = 4CBC374E12DB051400B211E0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2120,6 +2182,76 @@
 			};
 			name = Release;
 		};
+		4CBC373E12DB04B200B211E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = Debug;
+		};
+		4CBC373F12DB04B200B211E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Standard Build";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		4CBC374012DB04B200B211E0 /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = "Release (Trial)";
+		};
+		4CBC374112DB04B200B211E0 /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = "App Store Release";
+		};
+		4CBC374812DB050300B211E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = Debug;
+		};
+		4CBC374912DB050300B211E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Standard Build";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		4CBC374A12DB050300B211E0 /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = "Release (Trial)";
+		};
+		4CBC374B12DB050300B211E0 /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Standard Build";
+			};
+			name = "App Store Release";
+		};
 		4CEE702212AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2271,6 +2403,28 @@
 				4CA945ED11E1AFBA00D36367 /* Release */,
 				4CEE702312AB8A690083F30F /* Release (Trial) */,
 				4C8D707D12A36FDB00738B2C /* App Store Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CBC375512DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Updating Version Data" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CBC373E12DB04B200B211E0 /* Debug */,
+				4CBC373F12DB04B200B211E0 /* Release */,
+				4CBC374012DB04B200B211E0 /* Release (Trial) */,
+				4CBC374112DB04B200B211E0 /* App Store Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CBC375612DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Standard Build" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CBC374812DB050300B211E0 /* Debug */,
+				4CBC374912DB050300B211E0 /* Release */,
+				4CBC374A12DB050300B211E0 /* Release (Trial) */,
+				4CBC374B12DB050300B211E0 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
