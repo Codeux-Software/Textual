@@ -320,13 +320,19 @@ CFDataRef copy_mac_address(void)
 
 BOOL validateBinarySignature(NSString *authority)
 {
+	OSStatus status = noErr;
+	
 	SecStaticCodeRef staticCode = NULL;
 	SecRequirementRef req = NULL;
 	
 	NSString *requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", authority];
 	
-	OSStatus status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
+	status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
+	TXDevNullDestroyOSStatusObject(status);
+	
 	status = SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &req);
+	TXDevNullDestroyOSStatusObject(status);
+	
 	status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, req);
 	
 	if (status == noErr) {

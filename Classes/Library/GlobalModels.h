@@ -5,6 +5,7 @@ extern NSString *TXTLS(NSString *key);
 
 extern void TXDevNullDestroyObject(void* objt); // Send any object into blackhole - Good for "variable not used" warnings. 
 extern void TXDevNullDestroyBOOLObject(BOOL objt);
+extern void TXDevNullDestroyOSStatusObject(OSStatus objt);
 
 extern NSInteger TXRandomThousandNumber(void);
 

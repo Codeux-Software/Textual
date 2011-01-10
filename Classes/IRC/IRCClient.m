@@ -473,7 +473,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (NSString *)truncateTextForIRC:(NSMutableString **)string lineType:(LogLineType)type channel:(NSString *)chan 
 {
 	NSMutableString *base = *string;
-	NSString *new = (NSString *)[base copy];
+	NSString *new = [[base copy] autorelease];
 	
 	NSInteger stringl = new.length;
 	NSInteger baseMath = ((chan.length + myHost.length) + 4); 
@@ -509,7 +509,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	*string = base;
 	
-	return [new autorelease];
+	return new;
 }
 
 #pragma mark -

@@ -8,6 +8,7 @@
 
 extern void TXDevNullDestroyObject(void* objt) { return; }
 extern void TXDevNullDestroyBOOLObject(BOOL objt) { return; }
+extern void TXDevNullDestroyOSStatusObject(OSStatus objt) { return; }
 
 #pragma mark -
 #pragma mark Miscellaneous Special Functions
