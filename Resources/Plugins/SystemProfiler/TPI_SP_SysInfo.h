@@ -11,7 +11,7 @@
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
 + (NSString *)physicalMemorySize;
-+ (NSString *)loadAverages;
++ (NSString *)loadAveragesWithCores:(NSInteger)cores;
 + (NSString *)systemUptime;
 + (NSString *)diskInfo;
 + (NSString *)getNetworkStats;
