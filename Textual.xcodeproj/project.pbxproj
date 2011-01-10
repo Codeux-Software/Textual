@@ -363,14 +363,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4CBC373D12DB04B200B211E0 /* Updating Version Data */;
+			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
 			remoteInfo = "Updating Version Data";
 		};
 		4CBC374E12DB051400B211E0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4CA9456011E1AFBA00D36367 /* Textual */;
+			remoteGlobalIDString = 4CA9456011E1AFBA00D36367;
 			remoteInfo = Textual;
 		};
 /* End PBXContainerItemProxy section */
@@ -1488,7 +1488,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
-				4CA945EA11E1AFBA00D36367 /* Run Script */,
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
 				4C5AF37912D1BB5700D6B18C /* CopyFiles */,
@@ -1646,20 +1645,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "rm -R \"$PROJECT_DIR/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\"";
-		};
-		4CA945EA11E1AFBA00D36367 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd Resources/Miscellaneous/\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbuildReference=`git describe`\n\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildReference\" Info.plist\n";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

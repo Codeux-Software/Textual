@@ -26,8 +26,6 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark App Store Receipt Validation
 
-static BOOL receiptValidated = NO;
-
 + (void)validateStoreReceipt
 {
 	NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
@@ -36,14 +34,7 @@ static BOOL receiptValidated = NO;
 		exit(173);
 	} else {
 		NSLog(@"Valid app store receipt located. Launching.");
-		
-		receiptValidated = YES;
 	}
-}
-
-+ (BOOL)validStoreReceiptFound
-{
-	return receiptValidated;
 }
 
 #pragma mark -
@@ -947,7 +938,7 @@ static NSInteger startUpTime;
 	if (status == noErr) {
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:(NSURL *)ircAppURL];
-				
+		
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {	
 			BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.default_irc_client"];
 			
@@ -990,7 +981,7 @@ static NSInteger startUpTime;
 	
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
 	nick = [nick stringByReplacingOccurrencesOfRegex:@"[^a-zA-Z0-9-_]" withString:@""];
-
+	
 	if (nick == nil) {
 		nick = @"User";
 	}
