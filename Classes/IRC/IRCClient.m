@@ -487,7 +487,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if ((stringl + baseMath) > IRC_BODY_LEN) {
 		stringl = (IRC_BODY_LEN - baseMath);
-		 
+		
 		new = [new substringToIndex:stringl];
 		
 		NSRange currentRange = NSMakeRange(0, stringl);
@@ -1417,17 +1417,27 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 39: // Command: ONOTICE
 		case 54: // Command: ME
 		case 55: // Command: MSG
+		case 92: // Command: SME
+		case 93: // Command: SMSG
 		{
 			cmd = (([cmd isEqualToString:IRCCI_MSG]) ? IRCCI_PRIVMSG : cmd);
+			
 			BOOL opMsg = NO;
+			BOOL secretMsg = NO;
 			
 			if ([cmd isEqualToString:IRCCI_OMSG]) {
 				opMsg = YES;
-				cmd = IRCCI_MSG;
+				cmd = IRCCI_PRIVMSG;
 			} else if ([cmd isEqualToString:IRCCI_ONOTICE]) {
 				opMsg = YES;
 				cmd = IRCCI_NOTICE;
-			}
+			} else if ([cmd isEqualToString:IRCII_SME]) {
+				secretMsg = YES;
+				cmd = IRCCI_ME;
+			} else if ([cmd isEqualToString:IRCII_SMSG]) {
+				secretMsg = YES;
+				cmd = IRCCI_PRIVMSG;
+			} 
 			
 			if ([cmd isEqualToString:IRCCI_PRIVMSG] || [cmd isEqualToString:IRCCI_NOTICE] || [cmd isEqualToString:IRCCI_ACTION]) {
 				if (opMsg) {
@@ -1512,40 +1522,44 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					NSMutableArray *targetsResult = [NSMutableArray array];
 					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 					
-					for (NSString *chname in targets) {
-						if (!chname.length) continue;
-						
-						BOOL opPrefix = NO;
-						if ([chname hasPrefix:@"@"]) {
-							opPrefix = YES;
-							chname = [chname safeSubstringFromIndex:1];
-						}
-						
-						NSString *lowerChname = [chname lowercaseString];
-						IRCChannel *c = [self findChannel:chname];
-						
-						if (!c
-							&& ![chname isChannelName]
-							&& ![lowerChname isEqualToString:@"nickserv"]
-							&& ![lowerChname isEqualToString:@"chanserv"]) {
+						for (NSString *chname in targets) {
+							if (!chname.length) continue;
 							
-							if (type == LINE_TYPE_NOTICE) {
-								c = (id)self;
-							} else {
-								c = [world createTalk:chname client:self];
+							BOOL opPrefix = NO;
+							if ([chname hasPrefix:@"@"]) {
+								opPrefix = YES;
+								chname = [chname safeSubstringFromIndex:1];
 							}
-						}
-						
-						[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
-						
-						if ([chname isChannelName]) {
-							if (opMsg || opPrefix) {
-								chname = [@"@" stringByAppendingString:chname];
+							
+							NSString *lowerChname = [chname lowercaseString];
+							IRCChannel *c = [self findChannel:chname];
+							
+							if (!c
+								&& ![chname isChannelName]
+								&& ![lowerChname isEqualToString:@"nickserv"]
+								&& ![lowerChname isEqualToString:@"chanserv"]) {
+								
+								if (secretMsg == NO) {
+									if (type == LINE_TYPE_NOTICE) {
+										c = (id)self;
+									} else {
+										c = [world createTalk:chname client:self];
+									}
+								}
 							}
+							
+							if (c) {
+								[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
+							}
+							
+							if ([chname isChannelName]) {
+								if (opMsg || opPrefix) {
+									chname = [@"@" stringByAppendingString:chname];
+								}
+							}
+							
+							[targetsResult addObject:chname];
 						}
-						
-						[targetsResult addObject:chname];
-					}
 					
 					NSString *localCmd = cmd;
 					
@@ -3097,7 +3111,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return;
 	} else {
 		NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_REQUEST"), command, nick];
-		[self printBoth:nil type:LINE_TYPE_CTCP text:text];
+		[self printBoth:(([Preferences locationToSendNotices] == NOTICES_SENDTO_CURCHAN) ? [world selectedChannelOn:self] : nil) type:LINE_TYPE_CTCP text:text];
 		
 		if ([command isEqualToString:IRCCI_PING]) {
 			[self sendCTCPReply:nick command:command text:s];
@@ -3185,9 +3199,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (myself) {
 		[c activate];
 		[self reloadTree];
-
+		
 		if (myHost) [myHost release];
 		myHost = [m.sender.raw retain];
+		
+		if ([autoJoinTimer isActive] == NO) {
+			[world select:c];
+		}
 	}
 	
 	if (c && ![c findMember:nick]) {
