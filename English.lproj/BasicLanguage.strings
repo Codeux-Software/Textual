@@ -144,8 +144,9 @@
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
-"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@)";
-"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" = "%1$@ %2$@ (Build #%3$@) - %4$@ %5$@ (Build %6$@) — Receipt Verified";
+"IRC_CTCP_VERSION_TITLE" = "\002Current Version:\002 %@";
+"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference %3$@) - %4$@ %5$@ (Build %6$@)";
+"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" = "%1$@ %2$@ (Git Reference %3$@) - %4$@ %5$@ (Build %6$@) — Receipt Verified";
 
 /* Dialog Settings */
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
@@ -155,7 +156,7 @@
 "INVITE_SHEET_MULTIPLE_PEOPLE" = "%d users";
 "INVITE_SHEET_TARGET_DESC" = "Invite %@ to:";
 
-"ABOUT_WINDOW_BUILD_NUMBER" = "Version %1$@ (Build #%2$@)";
+"ABOUT_WINDOW_BUILD_NUMBER" = "Version %@";
 
 "CHANNEL_LIST_NETWORK_NAME" = "%@ Channel List";
 

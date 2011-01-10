@@ -1620,7 +1620,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd Resources/Miscellaneous/\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist";
+			shellScript = "cd Resources/Miscellaneous/\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbuildReference=`git describe`\n\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildReference\" Info.plist\n";
 		};
 		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
 			isa = PBXShellScriptBuildPhase;

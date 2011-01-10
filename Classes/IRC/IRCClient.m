@@ -2047,12 +2047,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			text = [NSString stringWithFormat:TXTLS(langkey), 
 					[[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
 					[[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
-					[[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
+					[[Preferences textualInfoPlist] objectForKey:@"Build Reference"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 			
-			[self sendPrivmsgToSelectedChannel:text];
+			if (c.isChannel == NO && c.isTalk == NO) {
+				[self printBoth:self type:LINE_TYPE_DEBUG_RECEIVE text:text];
+			} else {
+				text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_TITLE"), text];
+				
+				[self sendPrivmsgToSelectedChannel:text];
+			}
 			
 			return YES;
 			break;
@@ -3107,7 +3113,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			text = [NSString stringWithFormat:TXTLS(langkey), 
 					[[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
 					[[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
-					[[Preferences textualInfoPlist] objectForKey:@"Build Number"], 
+					[[Preferences textualInfoPlist] objectForKey:@"Build Reference"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 					[[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];

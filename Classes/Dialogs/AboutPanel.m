@@ -22,8 +22,7 @@
 - (void)show
 {	
 	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
-								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"],
-								 [[Preferences textualInfoPlist] objectForKey:@"Build Number"]]];	
+								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"]]];	
 	
 	[self.window center];
 	[self.window makeKeyAndOrderFront:nil];
