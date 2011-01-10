@@ -41,8 +41,8 @@
 	NSString *_cpu_l2 = [self processorL2CacheSize];
 	NSString *_cpu_l3 = [self processorL3CacheSize];
 	NSString *_memory = [self physicalMemorySize];
-	NSString *_loadavg = [self loadAverages];
 	NSString *_gpu_model = [self graphicsCardInfo];
+	NSString *_loadavg = [self loadAveragesWithCores:_cpu_count_int];
 	
 	if ([_model length] > 0) {
 		NSDictionary *_all_models = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"MacintoshModels" ofType:@"plist"]];
@@ -378,13 +378,13 @@
 	return formattedString;
 }
 
-+ (NSString *)loadAverages
++ (NSString *)loadAveragesWithCores:(NSInteger *)cores
 {
 	double load_ave[3];
 	int loads = getloadavg(load_ave, 3);
 	
 	if (loads == 3) {
-		return [NSString stringWithFormat:@"%.0f", ((CGFloat)load_ave[0] * 100)];
+		return [NSString stringWithFormat:@"%.0f", (((CGFloat)load_ave[0] * 100) / cores)];
 		
 		/*return [NSString stringWithFormat:@"%.2f %.2f %.2f",
 				(CGFloat)load_ave[0],
