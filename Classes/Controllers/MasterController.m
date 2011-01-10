@@ -1239,16 +1239,6 @@ typedef enum {
 	}
 }
 
-- (void)goToEndOfInputField:(NSEvent *)e
-{
-	[[text currentEditor] setSelectedRange:NSMakeRange([[text stringValue] length], 0)];
-}
-
-- (void)goToStartOfInputField:(NSEvent *)e
-{
-	[[text currentEditor] setSelectedRange:NSMakeRange(0, 0)];
-}
-
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1279,8 +1269,6 @@ typedef enum {
 	
 	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	
-	[self inputHandler:@selector(goToStartOfInputField:) code:KEY_HOME mods:0];
-	[self inputHandler:@selector(goToEndOfInputField:) code:KEY_END mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
