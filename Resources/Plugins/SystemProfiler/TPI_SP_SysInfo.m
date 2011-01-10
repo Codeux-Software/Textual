@@ -93,7 +93,7 @@
 	}
 	
 	if ([_loadavg length] > 0) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@ \002•\002", _loadavg];
+		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@%% \002•\002", _loadavg];
 	}
 	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@)",
@@ -384,10 +384,12 @@
 	int loads = getloadavg(load_ave, 3);
 	
 	if (loads == 3) {
-		return [NSString stringWithFormat:@"%.2f %.2f %.2f",
+		return [NSString stringWithFormat:@"%.0f", ((CGFloat)load_ave[0] * 100)];
+		
+		/*return [NSString stringWithFormat:@"%.2f %.2f %.2f",
 				(CGFloat)load_ave[0],
 				(CGFloat)load_ave[1],
-				(CGFloat)load_ave[2]];
+				(CGFloat)load_ave[2]];*/
 	}
 	
 	return nil;
