@@ -378,7 +378,7 @@
 	return formattedString;
 }
 
-+ (NSString *)loadAveragesWithCores:(NSInteger *)cores
++ (NSString *)loadAveragesWithCores:(NSInteger)cores
 {
 	double load_ave[3];
 	int loads = getloadavg(load_ave, 3);
