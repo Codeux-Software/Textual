@@ -77,10 +77,6 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Memory:\002 %@ \002•\002", _memory];
 	}
 	
-	if ([_loadavg length] > 0) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@ \002•\002", _loadavg];
-	}
-	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
@@ -88,14 +84,22 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics:\002 %@ \002•\002", _gpu_model];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@) \002•\002",
+	NSArray *allScreens = [NSScreen screens];
+	
+	if ([allScreens count] >= 1) {		
+		NSScreen *maiScreen = [allScreens objectAtIndex:0];
+		
+		sysinfo = [sysinfo stringByAppendingFormat:@" \002Screen Resolution:\002 %.0f x %.0f \002•\002", maiScreen.frame.size.width, maiScreen.frame.size.height];
+	}
+	
+	if ([_loadavg length] > 0) {
+		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@ \002•\002", _loadavg];
+	}
+	
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@)",
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
-	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002%1$@:\002 %2$@",
-			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"],
-			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"]];
 	
 	return sysinfo;
 }
@@ -104,7 +108,7 @@
 {
 	NSArray *screens = [NSScreen screens];
 	
-	if ([screens count] < 1) return @"Error -109";
+	if ([screens count] < 1) return @"Error: Unable to determine screen resolution.";
 	
 	if ([screens count] == 1) {
 		NSScreen *maiScreen = [screens objectAtIndex:0];
