@@ -133,6 +133,8 @@ static NSMutableDictionary *commandIndex;
 	[commandIndex setObject:@"89" forKey:IRCCI_ADCHAT]; 
 	[commandIndex setObject:@"90" forKey:IRCCI_RESETFILES];
 	[commandIndex setObject:@"91" forKey:IRCCI_LOAD_PLUGINS];
+	[commandIndex setObject:@"92" forKey:IRCII_SME];
+	[commandIndex setObject:@"93" forKey:IRCII_SMSG];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 
