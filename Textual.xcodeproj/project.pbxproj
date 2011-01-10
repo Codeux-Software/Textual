@@ -1451,13 +1451,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
+				4CA945EA11E1AFBA00D36367 /* Run Script */,
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
 				4C5AF37912D1BB5700D6B18C /* CopyFiles */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4C9E12371209DF42004E5032 /* Headers */,
-				4CA945EA11E1AFBA00D36367 /* Run Script */,
 				4CEE709A12AB8AE40083F30F /* Code Sign */,
 			);
 			buildRules = (
