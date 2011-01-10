@@ -145,8 +145,7 @@
 "IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
 "IRC_CTCP_VERSION_TITLE" = "\002Current Version:\002 %@";
-"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference %3$@) - %4$@ %5$@ (Build %6$@)";
-"IRC_CTCP_VERSION_INFO_WITH_RECEIPT" = "%1$@ %2$@ (Git Reference %3$@) - %4$@ %5$@ (Build %6$@) — Receipt Verified";
+"IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference: %3$@)"; 
 
 /* Dialog Settings */
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";

@@ -93,9 +93,9 @@
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Textual:\002 %1$@ (Build #%2$@)",
-			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
-			   [[Preferences textualInfoPlist] objectForKey:@"Build Number"]];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002%1$@:\002 %2$@",
+			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"],
+			   [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"]];
 	
 	return sysinfo;
 }

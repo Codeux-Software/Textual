@@ -41,7 +41,6 @@ typedef enum {
 
 + (NSInteger)startTime;
 + (void)validateStoreReceipt;
-+ (BOOL)validStoreReceiptFound;
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
 + (NSString *)whereScriptsPath;
