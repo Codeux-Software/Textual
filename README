@@ -4,8 +4,8 @@ Textual is a highly modified version of the open source project known
 as LimeChat. The user interface is tailored towards users that have 
 used darker themes of the Windows IRC client mIRC. The design of the 
 client is mostly based around the open standard of WebKit which means 
-it can be themed using CSS and JavaScript. Support for IRC commands 
-based off AppleScript is also supported.
+it can be themed using CSS and JavaScript. Support for plugins written 
+in Objective-C and scripts written in AppleScript is also provided.
 
 #### Compiling Requirements ####
 
