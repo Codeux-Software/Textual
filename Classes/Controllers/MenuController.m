@@ -148,21 +148,21 @@
 		case 501:	// connect
 		{
 			BOOL condition = NOT_CONNECTED;
-			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			[item setHidden:BOOLReverseValue(condition)];
 			return condition;
 			break;
 		}
 		case 502:	// disconnect
 		{
 			BOOL condition = (u && (u.isConnected || u.isConnecting));
-			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			[item setHidden:BOOLReverseValue(condition)];
 			return condition;
 			break;
 		}
 		case 503:	// cancel isReconnecting
 		{
 			BOOL condition = (u && u.isReconnecting);
-			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			[item setHidden:BOOLReverseValue(condition)];
 			return condition;
 			break;
 		}
@@ -190,9 +190,15 @@
 				
 				return NO;
 			} else {
-				[item setHidden:NO];
+				BOOL condition = (LOGIN && NOT_ACTIVE && c.isChannel);
 				
-				return LOGIN && NOT_ACTIVE && c.isChannel;
+				if (LOGIN) {
+					[item setHidden:BOOLReverseValue(condition)];
+				} else {
+					[item setHidden:NO];
+				}
+				
+				return condition;
 			}
 			break;
 		case 602:	// leave
@@ -201,9 +207,9 @@
 				
 				return NO;
 			} else {
-				[item setHidden:NO];
-				
-				return ACTIVE;
+				BOOL condition = ACTIVE;
+				[item setHidden:BOOLReverseValue(condition)];
+				return condition;
 			}
 			break;
 		case 611:	// mode

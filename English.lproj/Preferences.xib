@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4791"/>
+			<integer value="4778"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -75,7 +75,7 @@
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
 			<object class="NSCustomView" id="1043655468">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="7327274">
@@ -591,6 +591,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{534, 411}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="126249021">
@@ -2368,7 +2369,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1013255469">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTabView" id="650179267">
@@ -3333,7 +3334,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{541, 395}</string>
-				<reference key="NSSuperview"/>
 				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -7338,6 +7338,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<int key="connectionID">6479</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="604998845"/>
+						<reference key="destination" ref="537212567"/>
+					</object>
+					<int key="connectionID">6484</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -10248,7 +10256,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<bytes key="NSTransformStruct">P4AAAL+AAABB8AAAw7QAAA</bytes>
 				</object>
 				<boolean value="YES" key="46.ImportedFromIB2"/>
-				<string key="4778.IBEditorWindowLastContentRect">{{783, 316}, {534, 411}}</string>
+				<dictionary class="NSMutableDictionary" key="4778.IBAttributePlaceholdersKey"/>
+				<string key="4778.IBEditorWindowLastContentRect">{{781, 317}, {534, 411}}</string>
 				<string key="4778.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="4778.IBUserGuides">
 					<object class="IBUserGuide">
@@ -10801,13 +10810,15 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<boolean value="YES" key="5699.ImportedFromIB2"/>
 				<string key="5700.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="5703.IBAttributePlaceholdersKey"/>
 				<string key="5703.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5703.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABDZwAAwvIAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABDZwAAwnQAAA</bytes>
 				</object>
 				<string key="5704.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5705.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5706.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="5707.IBAttributePlaceholdersKey"/>
 				<string key="5707.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="5707.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">P4AAAL+AAABB+AAAwvIAAA</bytes>
@@ -11317,7 +11328,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">6479</int>
+			<int key="maxID">6484</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
