@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="539"/>
+			<integer value="233"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6402,23 +6402,16 @@
 				<boolean value="YES" key="196.ImportedFromIB2"/>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="2.ImportedFromIB2"/>
-				<string key="21.IBEditorWindowLastContentRect">{{590, 521}, {632, 501}}</string>
+				<string key="21.IBEditorWindowLastContentRect">{{755, 522}, {632, 501}}</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="21.IBWindowTemplateEditedContentRect">{{590, 521}, {632, 501}}</string>
+				<string key="21.IBWindowTemplateEditedContentRect">{{755, 522}, {632, 501}}</string>
 				<boolean value="YES" key="21.ImportedFromIB2"/>
 				<boolean value="YES" key="21.windowTemplate.hasMinSize"/>
 				<string key="21.windowTemplate.minSize">{213, 107}</string>
 				<string key="218.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="218.ImportedFromIB2"/>
 				<string key="222.CustomClassName">InputTextField</string>
-				<object class="NSMutableDictionary" key="222.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">AccessibilityDescription</string>
-					<object class="IBAccessibilityAttribute" key="NS.object.0">
-						<string key="name">AccessibilityDescription</string>
-						<reference key="object" ref="757177457"/>
-						<string key="accessibilityValue">Send text to server</string>
-					</object>
-				</object>
+				<dictionary class="NSMutableDictionary" key="222.IBAttributePlaceholdersKey"/>
 				<string key="222.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="222.ImportedFromIB2"/>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6449,7 +6442,7 @@
 					<object class="IBAccessibilityAttribute" key="NS.object.0">
 						<string key="name">AccessibilityDescription</string>
 						<reference key="object" ref="88410196"/>
-						<string key="accessibilityValue">Channel user list</string>
+						<string key="accessibilityValue">Channel member list</string>
 					</object>
 				</object>
 				<string key="258.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

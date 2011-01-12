@@ -427,7 +427,8 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	return @"";
+	IRCUser *user = [members safeObjectAtIndex:row];
+	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), [user nick], [config.name safeSubstringFromIndex:1]];
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row

@@ -186,6 +186,10 @@
 "TIME_CONVERT_MONTH_PLURAL" = "months";
 "TIME_CONVERT_YEAR_PLURAL" = "years";
 
+/* Dynamic accessibility descriptions */
+
+"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION" = "User %@ selected in member list of channel pound %@.";
+
 /* Growl Alert Types */
 "GROWL_ADDRESS_BOOK_MATCH" = "Address Book Match";
 "GROWL_CHANNEL_NOTICE" = "Channel Notice";
