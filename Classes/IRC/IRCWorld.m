@@ -1040,7 +1040,6 @@
 		}
 	}
 	
-	// clear the ignore list from the spell checker each time we change channels
 	[[NSSpellChecker sharedSpellChecker] closeSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
 	
 	[self updateTitle];
