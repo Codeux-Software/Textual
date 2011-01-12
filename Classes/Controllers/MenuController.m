@@ -146,8 +146,12 @@
 			break;
 		}
 		case 501:	// connect
-			return NOT_CONNECTED;
+		{
+			BOOL condition = NOT_CONNECTED;
+			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			return condition;
 			break;
+		}
 		case 502:	// disconnect
 		{
 			BOOL condition = (u && (u.isConnected || u.isConnecting));
