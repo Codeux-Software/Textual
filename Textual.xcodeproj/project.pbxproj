@@ -188,10 +188,6 @@
 		4C5AF34812D1B8C000D6B18C /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AF34712D1B8C000D6B18C /* IRCNetworks.plist */; };
 		4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5AF36F12D1BA9800D6B18C /* IOKit.framework */; };
 		4C5AF37612D1BB3900D6B18C /* core.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
-		4C5F7CC812C4D1220088AD4E /* BWHyperlinkButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F7CC412C4D1220088AD4E /* BWHyperlinkButtonCell.m */; };
-		4C5F7CC912C4D1220088AD4E /* BWHyperlinkButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5F7CC512C4D1220088AD4E /* BWHyperlinkButtonCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5F7CCA12C4D1220088AD4E /* BWHyperlinkButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F7CC612C4D1220088AD4E /* BWHyperlinkButton.m */; };
-		4C5F7CCB12C4D1220088AD4E /* BWHyperlinkButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5F7CC712C4D1220088AD4E /* BWHyperlinkButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
@@ -452,10 +448,6 @@
 		4C5AF36F12D1BA9800D6B18C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C5AF38612D1BBC500D6B18C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Miscellaneous/Info.plist; sourceTree = "<group>"; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
-		4C5F7CC412C4D1220088AD4E /* BWHyperlinkButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHyperlinkButtonCell.m; sourceTree = "<group>"; };
-		4C5F7CC512C4D1220088AD4E /* BWHyperlinkButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHyperlinkButtonCell.h; sourceTree = "<group>"; };
-		4C5F7CC612C4D1220088AD4E /* BWHyperlinkButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHyperlinkButton.m; sourceTree = "<group>"; };
-		4C5F7CC712C4D1220088AD4E /* BWHyperlinkButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHyperlinkButton.h; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
@@ -1017,17 +1009,6 @@
 			name = "System Libraries";
 			sourceTree = "<group>";
 		};
-		4C5F7CC312C4D10E0088AD4E /* BWToolkit */ = {
-			isa = PBXGroup;
-			children = (
-				4C5F7CC412C4D1220088AD4E /* BWHyperlinkButtonCell.m */,
-				4C5F7CC512C4D1220088AD4E /* BWHyperlinkButtonCell.h */,
-				4C5F7CC612C4D1220088AD4E /* BWHyperlinkButton.m */,
-				4C5F7CC712C4D1220088AD4E /* BWHyperlinkButton.h */,
-			);
-			name = BWToolkit;
-			sourceTree = "<group>";
-		};
 		4C82A68A11DBB1C600C01FBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1132,7 +1113,6 @@
 		78A8C0EB11737F660044E7A1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				4C5F7CC312C4D10E0088AD4E /* BWToolkit */,
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
 				78A8C10211737F660044E7A1 /* NSStringHelper.h */,
@@ -1349,8 +1329,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C5F7CC912C4D1220088AD4E /* BWHyperlinkButtonCell.h in Headers */,
-				4C5F7CCB12C4D1220088AD4E /* BWHyperlinkButton.h in Headers */,
 				4C90F3BF12B637B000CAEB7B /* RegexKitLite.h in Headers */,
 				4C31ACC312B5E74700088C31 /* IRCChannelMode.h in Headers */,
 				4C31ACC412B5E74700088C31 /* TextualPluginItem.h in Headers */,
@@ -1762,8 +1740,6 @@
 				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
 				4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */,
 				29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */,
-				4C5F7CC812C4D1220088AD4E /* BWHyperlinkButtonCell.m in Sources */,
-				4C5F7CCA12C4D1220088AD4E /* BWHyperlinkButton.m in Sources */,
 				4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */,
 				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
 			);
