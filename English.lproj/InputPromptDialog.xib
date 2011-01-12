@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H529</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -91,7 +91,7 @@
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="381070043">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">69336577</int>
 								<int key="NSCellFlags2">272629760</int>
 								<string key="NSContents">#infoTitle</string>
 								<object class="NSFont" key="NSSupport">
@@ -127,7 +127,7 @@
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="277422688">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">69336577</int>
 								<int key="NSCellFlags2">272629760</int>
 								<string key="NSContents">#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText#infoText</string>
 								<object class="NSFont" key="NSSupport">
@@ -485,7 +485,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC0gAAwxMAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC0gAAwxIAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>

@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="21"/>
+			<integer value="539"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6411,6 +6411,14 @@
 				<string key="218.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="218.ImportedFromIB2"/>
 				<string key="222.CustomClassName">InputTextField</string>
+				<object class="NSMutableDictionary" key="222.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">AccessibilityDescription</string>
+					<object class="IBAccessibilityAttribute" key="NS.object.0">
+						<string key="name">AccessibilityDescription</string>
+						<reference key="object" ref="757177457"/>
+						<string key="accessibilityValue">Send text to server</string>
+					</object>
+				</object>
 				<string key="222.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="222.ImportedFromIB2"/>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6445,6 +6453,7 @@
 					</object>
 				</object>
 				<string key="258.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="258.IBViewBoundsToFrameTransform"/>
 				<boolean value="YES" key="258.ImportedFromIB2"/>
 				<string key="260.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="260.ImportedFromIB2"/>
@@ -6618,8 +6627,10 @@
 				<string key="964.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="964.ImportedFromIB2"/>
 				<string key="990.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="991.IBAttributePlaceholdersKey"/>
 				<string key="991.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="991.IBShouldRemoveOnLegacySave"/>
+				<dictionary class="NSMutableDictionary" key="992.IBAttributePlaceholdersKey"/>
 				<string key="992.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="992.IBShouldRemoveOnLegacySave"/>
 				<string key="993.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

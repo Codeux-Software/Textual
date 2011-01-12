@@ -45,7 +45,7 @@
 
 "FIND_SEARCH_PRHASE_PROMPT_TITLE" = "Search for Message";
 "FIND_SEARCH_PHRASE_PROMPT_BUTTON" = "Search";
-"FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to next result and the combination ⇧⌘G to return to previous.";
+"FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⇧⌘G to return to the previous.";
 
 "WANT_QUIT_TITLE" = "Do you want to quit Textual?";
 "WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";

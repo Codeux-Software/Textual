@@ -27,8 +27,6 @@
 	typedef unsigned long long TXFSLongInt; // filesizes
 
 	#import "GlobalModels.h"
-	#import "BWHyperlinkButtonCell.h"
-	#import "BWHyperlinkButton.h"
 	#import "RegexKitLite.h"
 	#import "AsyncSocket.h"
 	#import "AsyncSocketExtensions.h"
