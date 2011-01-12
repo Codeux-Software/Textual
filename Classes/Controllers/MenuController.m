@@ -149,11 +149,19 @@
 			return NOT_CONNECTED;
 			break;
 		case 502:	// disconnect
-			return (u && (u.isConnected || u.isConnecting));
+		{
+			BOOL condition = (u && (u.isConnected || u.isConnecting));
+			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			return condition;
 			break;
+		}
 		case 503:	// cancel isReconnecting
-			return (u && u.isReconnecting);
+		{
+			BOOL condition = (u && u.isReconnecting);
+			[[[item menu] itemWithTag:tag] setHidden:BOOLReverseValue(condition)];
+			return condition;
 			break;
+		}
 		case 511:	// nick
 		case 519:	// channel list
 			return LOGIN;
