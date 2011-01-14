@@ -489,11 +489,13 @@
 	
 	NSInteger n = -1;
 	NSInteger i = 0;
+	
 	for (IRCChannelConfig *c in config.channels) {
 		if ([c.name isEqualToString:name]) {
 			n = i;
 			break;
 		}
+		
 		++i;
 	}
 	

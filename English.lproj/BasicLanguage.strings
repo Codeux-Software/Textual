@@ -88,8 +88,13 @@
 "THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT" = "• Timestamp Format";
 "THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED" = "• Indent Wrapped Text";
 
+"BLOWFISH_ENCRYPTION_STARTED" = "Encryption started.";
+"BLOWFISH_ENCRYPTION_STOPPED" = "Encryption stopped.";
+"BLOWFISH_ENCRYPTION_KEY" = "Current Encryption Key: %@";
+"BLOWFISH_ENCRYPTION_NO_KEY" = "No encryption key is set.";
 "BLOWFISH_ENCRYPT_FAILED" = "Encryption of message failed. Not sending to server.";
-"BLOWFISH_DECRYPT_FAILED" = "Decryption of message failed. Outputting plain text message.";
+"BLOWFISH_ENCRYPTION_KEY_CHANGED" = "Encryption key changed. Adjusting accordingly.";
+"BLOWFISH_ENCRYPTION_STARTED_QUERY" = "Encryption started in query. If this query is closed, then the key must be set again.";
 
 "IRC_IS_RECONNECTING" = "Reconnecting...";
 "IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";
