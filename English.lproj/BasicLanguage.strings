@@ -99,6 +99,11 @@
 "THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT" = "• Timestamp Format";
 "THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED" = "• Indent Wrapped Text";
 
+/* Blowfish encryption */
+
+"BLOWFISH_ENCRYPT_FAILED" = "Encryption of message failed. Not sending to server.";
+"BLOWFISH_DECRYPT_FAILED" = "Decryption of message failed. Outputting plain text message.";
+
 /* IRC Specific Settings */
 
 "IRC_IS_RECONNECTING" = "Reconnecting...";

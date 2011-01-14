@@ -12,6 +12,7 @@
 @synthesize mode;
 @synthesize topic;
 @synthesize ihighlights;
+@synthesize encryptionKey;
 
 - (id)init
 {
@@ -26,6 +27,7 @@
 		mode = @"";
 		topic = @"";
 		password = @"";
+		encryptionKey = @"";
 	}
 	return self;
 }
@@ -45,6 +47,7 @@
 	
 	mode = [[dic stringForKey:@"mode"] retain] ?: @"";
 	topic = [[dic stringForKey:@"topic"] retain] ?: @"";
+	encryptionKey = [[dic stringForKey:@"encryptionKey"] retain] ?: @"";
 	
 	return self;
 }
@@ -56,6 +59,7 @@
 	
 	[mode release];
 	[topic release];
+	[encryptionKey release];
 	
 	[super dealloc];
 }
@@ -75,6 +79,7 @@
 	
 	if (mode) [dic setObject:mode forKey:@"mode"];
 	if (topic) [dic setObject:topic forKey:@"topic"];
+	if (encryptionKey) [dic setObject:encryptionKey forKey:@"encryptionKey"];
 	
 	return dic;
 }

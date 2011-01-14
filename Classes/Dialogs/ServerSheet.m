@@ -2,11 +2,11 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define IGNORE_TAB_INDEX	3
-#define WINDOW_TOOLBAR_HEIGHT 30
+#define IGNORE_TAB_INDEX		3
+#define WINDOW_TOOLBAR_HEIGHT	30
 
-#define TABLE_ROW_TYPE		@"row"
-#define TABLE_ROW_TYPES		[NSArray arrayWithObject:TABLE_ROW_TYPE]
+#define TABLE_ROW_TYPE			@"row"
+#define TABLE_ROW_TYPES			[NSArray arrayWithObject:TABLE_ROW_TYPE]
 
 @interface ServerSheet (Private)
 - (void)load;

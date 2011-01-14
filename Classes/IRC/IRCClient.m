@@ -4,6 +4,8 @@
 
 #include <arpa/inet.h>
 
+#import <BlowfishEncryption/Encryption.h>
+
 #define PONG_INTERVAL				150
 #define MAX_BODY_LEN				480
 #define RECONNECT_INTERVAL			20
@@ -1071,6 +1073,41 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #endif
 
 #pragma mark -
+#pragma mark Encryption and Decryption Handling
+
+- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan
+{
+	if (chan && *message) {
+		if (chan.config.encryptionKey) {
+			NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
+			
+			if ([newstr length] < 5) {
+				[self printBoth:chan type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPT_FAILED")];
+				
+				return NO;
+			} else {
+				*message = newstr;
+			}
+		}
+	}
+	
+	return YES;
+}
+
+- (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan
+{
+	if (chan && *message) {
+		if (chan.config.encryptionKey) {
+			NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey];
+			
+			if ([[newstr trim] length] > 0) {
+				*message = newstr;
+			}
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Sending Text
 
 - (BOOL)inputText:(NSString *)str command:(NSString *)command
@@ -1149,6 +1186,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *newstr = [self truncateTextForIRC:&str lineType:type channel:channel.name];
 			
 			[self printBoth:channel type:type nick:myNick text:newstr identified:YES];
+			
+			if ([self encryptOutgoingMessage:&newstr channel:channel] == NO) {
+				continue;
+			}
 			
 			NSString *cmd = command;
 			
@@ -1517,58 +1558,58 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				while (s.length) {
+					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 					NSString *t = [self truncateTextForIRC:&s lineType:type channel:targetChannelName];
 					
-					NSMutableArray *targetsResult = [NSMutableArray array];
-					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
-					
-						for (NSString *chname in targets) {
-							if (!chname.length) continue;
-							
-							BOOL opPrefix = NO;
-							if ([chname hasPrefix:@"@"]) {
-								opPrefix = YES;
-								chname = [chname safeSubstringFromIndex:1];
-							}
-							
-							NSString *lowerChname = [chname lowercaseString];
-							IRCChannel *c = [self findChannel:chname];
-							
-							if (!c
-								&& ![chname isChannelName]
-								&& ![lowerChname isEqualToString:@"nickserv"]
-								&& ![lowerChname isEqualToString:@"chanserv"]) {
-								
-								if (secretMsg == NO) {
-									if (type == LINE_TYPE_NOTICE) {
-										c = (id)self;
-									} else {
-										c = [world createTalk:chname client:self];
-									}
-								}
-							}
-							
-							if (c) {
-								[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
-							}
-							
-							if ([chname isChannelName]) {
-								if (opMsg || opPrefix) {
-									chname = [@"@" stringByAppendingString:chname];
-								}
-							}
-							
-							[targetsResult addObject:chname];
+					for (NSString *chname in targets) {
+						if (!chname.length) continue;
+						
+						BOOL opPrefix = NO;
+						if ([chname hasPrefix:@"@"]) {
+							opPrefix = YES;
+							chname = [chname safeSubstringFromIndex:1];
 						}
-					
-					NSString *localCmd = cmd;
-					
-					if ([localCmd isEqualToString:IRCCI_ACTION]) {
-						localCmd = IRCCI_PRIVMSG;
-						t = [NSString stringWithFormat:@"\x01%@ %@\x01", IRCCI_ACTION, t];
+						
+						NSString *lowerChname = [chname lowercaseString];
+						IRCChannel *c = [self findChannel:chname];
+						
+						if (!c
+							&& ![chname isChannelName]
+							&& ![lowerChname isEqualToString:@"nickserv"]
+							&& ![lowerChname isEqualToString:@"chanserv"]) {
+							
+							if (secretMsg == NO) {
+								if (type == LINE_TYPE_NOTICE) {
+									c = (id)self;
+								} else {
+									c = [world createTalk:chname client:self];
+								}
+							}
+						}
+						
+						if (c) {
+							[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
+							
+							if ([self encryptOutgoingMessage:&t channel:c] == NO) {
+								continue;
+							}
+						}
+						
+						if ([chname isChannelName]) {
+							if (opMsg || opPrefix) {
+								chname = [@"@" stringByAppendingString:chname];
+							}
+						}
+						
+						NSString *localCmd = cmd;
+						
+						if ([localCmd isEqualToString:IRCCI_ACTION]) {
+							localCmd = IRCCI_PRIVMSG;
+							t = [NSString stringWithFormat:@"\x01%@ %@\x01", IRCCI_ACTION, t];
+						}
+						
+						[self send:localCmd, chname, t, nil];
 					}
-					
-					[self send:localCmd, [targetsResult componentsJoinedByString:@","], t, nil];
 				}
 			} 
 			
@@ -1622,7 +1663,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					s = nil;
 				}
 				
-				[self send:IRCCI_TOPIC, targetChannelName, s, nil];
+				IRCChannel *c = [self findChannel:targetChannelName];
+				
+				if ([self encryptOutgoingMessage:&s channel:c] == YES) {
+					[self send:IRCCI_TOPIC, targetChannelName, s, nil];
+				}
 			}
 			return YES;
 			break;
@@ -2910,6 +2955,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		
 		IRCChannel *c = [self findChannel:target];
+		
+		[self decryptIncomingMessage:&text channel:c];
+		
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:anick text:text identified:identified];
 		
 		if (type == LINE_TYPE_NOTICE) {
@@ -3468,6 +3516,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *topic = [m paramAt:1];
 	
 	IRCChannel *c = [self findChannel:chname];
+	
+	[self decryptIncomingMessage:&topic channel:c];
+	
 	if (c) {
 		c.topic = topic;
 		[self updateChannelTitle:c];
@@ -3810,6 +3861,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *topic = [m paramAt:2];
 			
 			IRCChannel *c = [self findChannel:chname];
+			
+			[self decryptIncomingMessage:&topic channel:c];
+			
 			if (c && c.isActive) {
 				c.topic = topic;
 				[self updateChannelTitle:c];
@@ -4010,7 +4064,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					if (!topic.length) {
 						topic = c.config.topic;
 					}
-					if (topic.length) {
+					
+					if ([self encryptOutgoingMessage:&topic channel:c] == YES) {
 						[self send:IRCCI_TOPIC, chname, topic, nil];
 					}
 				}
@@ -4048,6 +4103,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (!inList) {
 				inList = YES;
+				
 				if (channelListDialog) {
 					[channelListDialog clear];
 				} else {

@@ -765,7 +765,9 @@
 	IRCClient *u = c.client;
 	if (NO_CLIENT_OR_CHANNEL) return;
 	
-	[u send:IRCCI_TOPIC, c.name, topic, nil];
+	if ([u encryptOutgoingMessage:&topic channel:c] == YES) {
+		[u send:IRCCI_TOPIC, c.name, topic, nil];
+	}
 }
 
 - (void)topicSheetWillClose:(TopicSheet *)sender
