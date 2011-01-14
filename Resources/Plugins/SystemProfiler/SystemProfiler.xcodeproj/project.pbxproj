@@ -496,6 +496,100 @@
 			};
 			name = Release;
 		};
+		4CAA3B3A12E0EC6700FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "App Store Release";
+		};
+		4CAA3B3B12E0EC6700FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks\"",
+				);
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				SDKROOT = macosx10.6;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "App Store Release";
+		};
+		4CAA3B3C12E0EC6700FB83EB /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "Release (Trial)";
+		};
+		4CAA3B3D12E0EC6700FB83EB /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks\"",
+				);
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				SDKROOT = macosx10.6;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Release (Trial)";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -504,6 +598,8 @@
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,
 				1DEB913C08733D840010E9CD /* Release */,
+				4CAA3B3B12E0EC6700FB83EB /* App Store Release */,
+				4CAA3B3D12E0EC6700FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -513,6 +609,8 @@
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
 				1DEB914008733D840010E9CD /* Release */,
+				4CAA3B3A12E0EC6700FB83EB /* App Store Release */,
+				4CAA3B3C12E0EC6700FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

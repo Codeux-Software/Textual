@@ -454,6 +454,84 @@
 			};
 			name = Release;
 		};
+		4CAA3B4B12E0EC7C00FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "App Store Release";
+		};
+		4CAA3B4C12E0EC7C00FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = BragSpam;
+				SDKROOT = macosx10.6;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "App Store Release";
+		};
+		4CAA3B4D12E0EC7C00FB83EB /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "Release (Trial)";
+		};
+		4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = BragSpam;
+				SDKROOT = macosx10.6;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Release (Trial)";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -462,6 +540,8 @@
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
 				1DEB911C08733D790010E9CD /* Release */,
+				4CAA3B4C12E0EC7C00FB83EB /* App Store Release */,
+				4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -471,6 +551,8 @@
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,
 				1DEB912008733D790010E9CD /* Release */,
+				4CAA3B4B12E0EC7C00FB83EB /* App Store Release */,
+				4CAA3B4D12E0EC7C00FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
