@@ -24,6 +24,7 @@
 	IBOutlet NSTextField *nameText;
 	IBOutlet NSButton *autoReconnectCheck;
 	IBOutlet NSButton *autoConnectCheck;
+	IBOutlet NSButton *bouncerModeCheck;
 	
 	IBOutlet NSComboBox *hostCombo;
 	IBOutlet NSButton *sslCheck;
@@ -123,6 +124,7 @@
 
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
+- (void)bouncerModeChanged:(id)sender;
 
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;

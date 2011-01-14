@@ -217,6 +217,7 @@
 	nameText.stringValue = config.name;
 	autoConnectCheck.state = config.autoConnect;
 	autoReconnectCheck.state = config.autoReconnect;
+	bouncerModeCheck.state = config.bouncerMode;
 	
 	NSString *realHost = [self hostFoundInServerList:config.host];
 	hostCombo.stringValue = ((realHost == nil) ? config.host : realHost);
@@ -273,6 +274,7 @@
 {
 	config.autoConnect = autoConnectCheck.state;
 	config.autoReconnect = autoReconnectCheck.state;
+	config.bouncerMode = bouncerModeCheck.state;
 	
 	NSString *realHost = nil;
 	NSString *hostname = [hostCombo.stringValue cleanedServerHostmask];
@@ -354,7 +356,8 @@
 - (void)updateChannelsPage
 {
 	NSInteger i = [channelTable selectedRow];
-	BOOL enabled = (i >= 0);
+	BOOL enabled = (i >= 0) && ![bouncerModeCheck state];
+	[addChannelButton setEnabled:![bouncerModeCheck state]];
 	[editChannelButton setEnabled:enabled];
 	[deleteChannelButton setEnabled:enabled];
 }
@@ -362,6 +365,7 @@
 - (void)reloadChannelTable
 {
 	[channelTable reloadData];
+	[channelTable setEnabled:![bouncerModeCheck state]];
 }
 
 - (void)updateIgnoresPage
@@ -430,6 +434,11 @@
 	[proxyPortText setEnabled:enabled];
 	[proxyUserText setEnabled:enabled];
 	[proxyPasswordText setEnabled:enabled];
+}
+
+- (void)bouncerModeChanged:(id)sender
+{
+	[channelTable setEnabled:![bouncerModeCheck state]];
 }
 
 #pragma mark -
