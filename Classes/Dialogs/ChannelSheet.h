@@ -8,10 +8,18 @@
 	NSInteger cid;
 	IRCChannelConfig *config;
 	
+	IBOutlet NSView *contentView;
+	IBOutlet NSView *generalView;
+	IBOutlet NSView *encryptView;
+ 	
 	IBOutlet NSTextField *nameText;
 	IBOutlet NSTextField *passwordText;
 	IBOutlet NSTextField *modeText;
 	IBOutlet NSTextField *topicText;
+	IBOutlet NSTextField *encryptKeyText;
+	
+	IBOutlet NSSegmentedControl *tabView;
+	
     IBOutlet NSButton *ihighlights;
 	IBOutlet NSButton *autoJoinCheck;
 	IBOutlet NSButton *growlCheck;
@@ -19,11 +27,16 @@
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, retain) NSView *contentView;
+@property (nonatomic, retain) NSView *generalView;
+@property (nonatomic, retain) NSView *encryptView;
 @property (nonatomic, retain) IRCChannelConfig *config;
 @property (nonatomic, retain) NSTextField *nameText;
 @property (nonatomic, retain) NSTextField *passwordText;
 @property (nonatomic, retain) NSTextField *modeText;
 @property (nonatomic, retain) NSTextField *topicText;
+@property (nonatomic, retain) NSTextField *encryptKeyText;
+@property (nonatomic, retain) NSSegmentedControl *tabView;
 @property (nonatomic, retain) NSButton *autoJoinCheck;
 @property (nonatomic, retain) NSButton *ihighlights;
 @property (nonatomic, retain) NSButton *growlCheck;
@@ -34,6 +47,8 @@
 
 - (void)ok:(id)sender;
 - (void)cancel:(id)sender;
+
+- (void)onMenuBarItemChanged:(id)sender;
 @end
 
 @interface NSObject (ChannelSheetDelegate)

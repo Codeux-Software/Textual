@@ -20,6 +20,7 @@ typedef enum {
 	
 	NSString *mode;
 	NSString *topic;
+	NSString *encryptionKey;
 }
 
 @property (nonatomic, assign) ChannelType type;
@@ -30,6 +31,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL ihighlights;
 @property (nonatomic, retain) NSString *mode;
 @property (nonatomic, retain) NSString *topic;
+@property (nonatomic, retain) NSString *encryptionKey;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;

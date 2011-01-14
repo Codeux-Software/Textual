@@ -155,6 +155,9 @@ typedef enum {
 
 - (AddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
+- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan;
+- (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan;
+
 - (void)connect;
 - (void)connect:(ConnectMode)mode;
 - (void)disconnect;

@@ -189,6 +189,8 @@
 		4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5AF36F12D1BA9800D6B18C /* IOKit.framework */; };
 		4C5AF37612D1BB3900D6B18C /* core.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
+		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
+		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
@@ -363,6 +365,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4C66E89512DF6A4D00446250 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4CA9457711E1AFBA00D36367 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -449,6 +461,7 @@
 		4C5AF38612D1BBC500D6B18C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Miscellaneous/Info.plist; sourceTree = "<group>"; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
+		4C66E88412DF69E500446250 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C6E801D11B3753800BACBA7 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
@@ -681,6 +694,7 @@
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
 				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
 				4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */,
+				4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,6 +751,7 @@
 			children = (
 				4C5AF05112D1B77100D6B18C /* System Libraries */,
 				4C5AF05012D1B76A00D6B18C /* System Frameworks */,
+				4C66E86912DF694A00446250 /* External Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1007,6 +1022,14 @@
 				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
 			);
 			name = "System Libraries";
+			sourceTree = "<group>";
+		};
+		4C66E86912DF694A00446250 /* External Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C66E88412DF69E500446250 /* BlowfishEncryption.framework */,
+			);
+			name = "External Frameworks";
 			sourceTree = "<group>";
 		};
 		4C82A68A11DBB1C600C01FBD /* Extensions */ = {
@@ -1450,6 +1473,7 @@
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4CA9457711E1AFBA00D36367 /* CopyFiles */,
 				4C5AF37912D1BB5700D6B18C /* CopyFiles */,
+				4C66E89512DF6A4D00446250 /* CopyFiles */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4C9E12371209DF42004E5032 /* Headers */,
@@ -1941,6 +1965,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2031,6 +2056,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2084,6 +2110,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2197,6 +2224,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
+					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";

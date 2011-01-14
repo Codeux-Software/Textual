@@ -2,10 +2,14 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define WINDOW_TOOLBAR_HEIGHT	25
+
 @interface ChannelSheet (Private)
 - (void)load;
 - (void)save;
 - (void)update;
+
+- (void)firstPane:(NSView *)view;
 @end
 
 @implementation ChannelSheet
@@ -13,13 +17,18 @@
 @synthesize uid;
 @synthesize cid;
 @synthesize config;
+@synthesize tabView;
 @synthesize nameText;
+@synthesize encryptKeyText;
 @synthesize passwordText;
 @synthesize modeText;
 @synthesize topicText;
 @synthesize autoJoinCheck;
 @synthesize growlCheck;
 @synthesize ihighlights;
+@synthesize contentView;
+@synthesize generalView;
+@synthesize encryptView;
 
 - (id)init
 {
@@ -32,14 +41,57 @@
 - (void)dealloc
 {
 	[config release];
+	[generalView release];
+	[encryptView release];
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark NSToolbar Delegates
+
+- (void)onMenuBarItemChanged:(id)sender 
+{
+	switch ([sender indexOfSelectedItem]) {
+		case 0:
+			[self firstPane:generalView];
+			break;
+		case 1:
+			[self firstPane:encryptView];
+			break;
+		default:
+			[self firstPane:generalView];
+			break;
+	}
+} 
+
+- (void)firstPane:(NSView *)view 
+{
+	NSRect windowFrame = [sheet frame];
+	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
+	windowFrame.size.width = [view frame].size.width;
+	windowFrame.origin.y = NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	
+	if ([[contentView subviews] count] != 0) {
+		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
+	}
+	
+	[sheet setFrame:windowFrame display:YES animate:YES];
+	[contentView setFrame:[view frame]];
+	[contentView addSubview:view];	
+	
+	[sheet recalculateKeyViewLoop];
+}
+
+#pragma mark -
+#pragma mark Initalization Handler
 
 - (void)start
 {
 	[self load];
 	[self update];
 	[self startSheet];
+	[self firstPane:generalView];
+	[tabView setSelectedSegment:0];
 }
 
 - (void)show
@@ -59,6 +111,7 @@
 	modeText.stringValue = config.mode;
 	topicText.stringValue = config.topic;
 	passwordText.stringValue = config.password;
+	encryptKeyText.stringValue = config.encryptionKey;
 	
 	growlCheck.state = config.growl;
 	autoJoinCheck.state = config.autoJoin;
@@ -71,6 +124,7 @@
 	config.mode = modeText.stringValue;
 	config.topic = topicText.stringValue;
 	config.password = passwordText.stringValue;
+	config.encryptionKey = encryptKeyText.stringValue;
     
 	config.growl = growlCheck.state;
 	config.autoJoin = autoJoinCheck.state;
@@ -85,9 +139,6 @@
 {
 	if (cid > 0) {
 		[nameText setEditable:NO];
-		[nameText setSelectable:NO];
-		[nameText setBezeled:NO];
-		[nameText setDrawsBackground:NO];
 	}
 	
 	NSString *s = nameText.stringValue;
