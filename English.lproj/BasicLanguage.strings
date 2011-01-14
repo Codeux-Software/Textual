@@ -1,6 +1,5 @@
 /* Copyright © 2010, 2011 Codeux Software. */
 
-/* General Language Settings */
 "SHUN_REASON" = "1d Shunned.";
 "KILL_REASON" = "Your behavior is not conducive to the desired environment.";
 "KICK_REASON" = "Your behavior is not conducive to the desired environment.";
@@ -59,8 +58,6 @@
 "DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
 "DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is currently not set as the default IRC client for this copy of Mac OS X. Set it?";
  
-/* User information tooltip */
- 
 "USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME" = " Nickname:   ";
 "USER_HOSTMASK_HOVER_TOOLTIP_USERNAME" = " Username:   ";
 "USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK" = " Hostmask:   ";
@@ -73,24 +70,16 @@
 "USER_HOSTMASK_HOVER_TOOLTIP_MODE_A" = "Super Admin";
 "USER_HOSTMASK_HOVER_TOOLTIP_MODE_Q" = "Channel Owner";
 
-/* Trial Localizations */
-
 "TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
 "TRIAL_BUILD_INTRO_DIALOG_TITLE" = "Welcome to the Textual IRC Client!";
 "TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC networks that you are connected to every thirty minutes. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
-
-/* Dynamic NSMenu items */
 
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
 "USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
 
-/* SSL Socket Validation */
-
 "SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE" = "Untrusted Connection";
 "SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE" = "The server that you are connecting to has an SSL certificate that has either expired or is not trusted. Would you like to connect to the server regardless?";
-
-/* Theme Change Override Prompt */
 
 "THEME_CHANGE_OVERRIDE_PROMPT_TITLE" = "Preferred Selection";
 "THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE" = "The newly selected style \"%@\" has chosen to override the following preferences with ones that it prefers for best viewing:\n\n%@";
@@ -99,12 +88,8 @@
 "THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT" = "• Timestamp Format";
 "THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED" = "• Indent Wrapped Text";
 
-/* Blowfish encryption */
-
 "BLOWFISH_ENCRYPT_FAILED" = "Encryption of message failed. Not sending to server.";
 "BLOWFISH_DECRYPT_FAILED" = "Decryption of message failed. Outputting plain text message.";
-
-/* IRC Specific Settings */
 
 "IRC_IS_RECONNECTING" = "Reconnecting...";
 "IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";
@@ -152,7 +137,6 @@
 "IRC_CTCP_VERSION_TITLE" = "\002Current Version:\002 %@";
 "IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference: %3$@)"; 
 
-/* Dialog Settings */
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
 "LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";
 
@@ -164,16 +148,12 @@
 
 "CHANNEL_LIST_NETWORK_NAME" = "%@ Channel List";
 
-/* User Tracking */
-
 "USER_TRACKING_HOSTMASK_CONNECTED" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected."; // ircop 
 "USER_TRACKING_NICKNAME_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available."; // normal user 
 "USER_TRACKING_HOSTMASK_NOW_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
 "USER_TRACKING_NICKNAME_NOW_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
 "USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
 "USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
-
-/* Time Convert Prefixes */
 
 "TIME_CONVERT_SECOND" = "sec";
 "TIME_CONVERT_MINUTE" = "min";
@@ -191,11 +171,8 @@
 "TIME_CONVERT_MONTH_PLURAL" = "months";
 "TIME_CONVERT_YEAR_PLURAL" = "years";
 
-/* Dynamic accessibility descriptions */
-
 "ACCESSIBILITY_MEMBER_LIST_DESCRIPTION" = "User %@ selected in member list of channel pound %@.";
 
-/* Growl Alert Types */
 "GROWL_ADDRESS_BOOK_MATCH" = "Address Book Match";
 "GROWL_CHANNEL_NOTICE" = "Channel Notice";
 "GROWL_NEW_TALK" = "New Private Message";
@@ -208,15 +185,12 @@
 "GROWL_LOGIN" = "Connected";
 "GROWL_KICKED" = "Kicked";
 
-/* Command+W Menu Item Variations */
-
 "CMDWKEY_SHORTCUT_LEAVE_QUERY" = "Close Query";
 "CMDWKEY_SHORTCUT_CLOSE_WINDOW" = "Close Window";
 "CMDWKEY_SHORTCUT_PART_CHANNEL" = "Leave Channel";
 "CMDWKEY_SHORTCUT_DISCONNECT" = "Disconnect from %@";
 "CMDWKEY_SHORTCUT_QUIT_APPLICATION" = "Quit Textual & IRC";
 
-/* Growl Alert Bubbles */
 "GROWL_MSG_LOGIN" = "Connected";
 "GROWL_MSG_LOGIN_TITLE" = "Connected: %@";
 "GROWL_MSG_DISCONNECT" = "Disconnected";
@@ -239,10 +213,5 @@
 "GROWL_MSG_CHANNEL_NOTICE" = "Channel notice received";
 "GROWL_MSG_CHANNEL_NOTICE_TITLE" = "Notice: %@";
 "GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Match";
-
-/* Valid Top Level Domains (TLD) for URL Matching */
-/* Included within this file to make future updates easier. */
-/* These are in a regular expression format so should be treated as such. */
-/* This expression is very large but tests show average execution of 0.000036 seconds. */
 
 "ALL_DOMAIN_EXTENSIONS" = "(?:ac|ad|aero|ae|af|ag|ai|al|am|an|ao|aq|arpa|ar|asia|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|biz|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|cat|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|coop|com|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|info|int|in|io|iq|ir|is|it|je|jm|jobs|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mil|mk|ml|mm|mn|mobi|mo|mp|mq|mr|ms|mt|museum|mu|mv|mw|mx|my|mz|name|na|nc|net|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pro|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tel|tf|tg|th|tj|tk|tl|tm|tn|to|tp|travel|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|xn--0zwm56d|xn--11b5bs3a9aj6g|xn--80akhbyknj4f|xn--9t4b11yi5a|xn--deba0ad|xn--g6w251d|xn--hgbk6aj7f53bba|xn--hlcj6aya9esc7a|xn--jxalpdlp|xn--kgbechtv|xn--zckzah|ye|yt|yu|za|zm|zw)";
