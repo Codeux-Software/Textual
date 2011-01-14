@@ -27,6 +27,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize proxyPassword;
 @synthesize autoConnect;
 @synthesize autoReconnect;
+@synthesize bouncerMode;
 @synthesize encoding;
 @synthesize fallbackEncoding;
 @synthesize leavingComment;
@@ -270,6 +271,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	autoConnect = [dic boolForKey:@"auto_connect"];
 	autoReconnect = [dic boolForKey:@"auto_reconnect"];
+	bouncerMode = [dic boolForKey:@"bouncer_mode"];
 	encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
 	fallbackEncoding = [dic intForKey:@"fallback_encoding"] ?: NSISOLatin1StringEncoding;
 	
@@ -361,6 +363,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	[dic setBool:autoConnect forKey:@"auto_connect"];
 	[dic setBool:autoReconnect forKey:@"auto_reconnect"];
+	[dic setBool:bouncerMode forKey:@"bouncer_mode"];
 	[dic setInt:encoding forKey:@"encoding"];
 	[dic setInt:fallbackEncoding forKey:@"fallback_encoding"];
 	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];

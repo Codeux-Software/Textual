@@ -1002,6 +1002,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)performAutoJoin
 {
+	if (config.bouncerMode)
+		return;
+	
 	NSMutableArray *ary = [NSMutableArray array];
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
