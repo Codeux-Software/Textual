@@ -1078,7 +1078,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan
 {
 	if (chan && *message) {
-		if (chan.config.encryptionKey) {
+		if ([chan.config.encryptionKey length] > 0) {
 			NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
 			
 			if ([newstr length] < 5) {
@@ -1097,7 +1097,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan
 {
 	if (chan && *message) {
-		if (chan.config.encryptionKey) {
+		if ([chan.config.encryptionKey length] > 0) {
 			NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey];
 			
 			if ([[newstr trim] length] > 0) {
