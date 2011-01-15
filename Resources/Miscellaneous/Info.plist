@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>8501</string>
+	<string>8504</string>
 	<key>Build Reference</key>
-	<string>v2.0.3-8-g025b3dd</string>
+	<string>v2.0.3-9-g46041a4</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.2</string>
+	<string>2.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>TXTL</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.2</string>
+	<string>2.0.3</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSArchitecturePriority</key>
@@ -46,17 +46,6 @@
 	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.0</string>
-	<key>LSMinimumSystemVersionByArchitecture</key>
-	<dict>
-		<key>i386</key>
-		<string>10.5.0</string>
-		<key>ppc</key>
-		<string>10.5.0</string>
-		<key>ppc64</key>
-		<string>10.5.0</string>
-		<key>x86_64</key>
-		<string>10.6.0</string>
-	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010, 2011 Codeux Software</string>
 	<key>NSMainNibFile</key>
