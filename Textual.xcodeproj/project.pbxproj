@@ -704,12 +704,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */,
+				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
 				4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */,
 				4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */,
 				4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */,
 				4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */,
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
-				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
 				4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */,
 				4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */,
 			);
@@ -1665,7 +1665,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -R \"$PROJECT_DIR/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\"\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\"";
+			shellScript = "rm -R \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

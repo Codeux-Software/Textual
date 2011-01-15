@@ -1056,7 +1056,7 @@ static NSInteger startUpTime;
 	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
 	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
 	[d setInt:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
-	
+    
 	[TXNSUserDefaults() registerDefaults:d];
 	
 	[TXNSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
@@ -1067,6 +1067,16 @@ static NSInteger startUpTime;
 	if (!systemVersionPlist) exit(10);
 	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
+	
+    if ([textualPlist objectForKey:@"Bundle Reference"] == nil) {
+        NSMutableDictionary *newDict = [textualPlist mutableCopy];
+        
+        [newDict setObject:@"Unknown" forKey:@"Bundle Reference"];
+        
+        textualPlist = newDict;
+        
+        [newDict release];
+    }
 	
 	[self loadKeywords];
 	[self loadExcludeWords];

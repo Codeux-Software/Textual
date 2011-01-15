@@ -2,30 +2,28 @@
 
 Textual is a highly modified version of the open source project known 
 as LimeChat. The user interface is tailored towards users that have 
-used darker themes of the Windows IRC client mIRC. The design of the 
-client is mostly based around the open standard of WebKit which means 
-it can be themed using CSS and JavaScript. Support for plugins written 
-in Objective-C and scripts written in AppleScript is also provided.
+used darker themes of the Windows IRC client mIRC, but lighter styles 
+are also available if necessary. The design of the client is mostly 
+based around the open standard of WebKit which means it can be easily 
+themed using CSS and JavaScript. Plugins written in Objective-C and 
+scripts written in AppleScript are also supported.
 
 #### Compiling Requirements ####
 
-Textual uses the BWToolkit plugin in order to add new user interface 
-elements to its library. Therefore, before compiling make sure that the 
-"BWToolkit.ibplugin" file has been loaded into the Interface Builder 
-application. This file can be found in the folder "Frameworks/BWToolkit/"
-
-Developers that chose to compile the Textual source code using version 
-4.0 of Xcode and later are asked to set Xcode to place the build 
-product of each compile in the location specified by the targets. 
-This setting can be changed by going to the File menu and then 
-Project Settings. If this is not done, then the plugins will not 
-be compiled in correct location for Textual to copy over. 
+Developers compiling the Textual source code using version 4.0 of 
+Xcode and later are asked to set Xcode to place the build product 
+of each compile in the location specified by the targets. This 
+setting can be changed by going to the "File" menu and then 
+"Project Settings" Ñ If this is not done, then the plugins will 
+not be compiled in correct location for Textual to copy over. 
 
 #### Friendly Request ####
 
 It is asked that those with knowledge of compiling Textual do not 
-abuse it to distribute binaries to large groups of users during the
-time period that it is exclusive to the Apple Mac App Store. 
+abuse it to distribute binaries to large groups of individuals during 
+the time period that it is exclusive to the Apple Mac App Store. 
+We are simply asking to not abuse the BSD license too much so we do
+not have to lock down the software with more obscure licenses. 
 
 #### Copyright ####
 
