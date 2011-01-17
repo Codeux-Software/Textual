@@ -60,8 +60,7 @@
 		case LINE_TYPE_TOPIC: return @"topic";
 		case LINE_TYPE_INVITE: return @"invite";
 		case LINE_TYPE_WEBSITE: return @"website";
-		case LINE_TYPE_DEBUG_SEND: return @"debug_send";
-		case LINE_TYPE_DEBUG_RECEIVE: return @"debug_receive";
+		case LINE_TYPE_DEBUG: return @"debug_send";
 	}
 	return @"";
 }

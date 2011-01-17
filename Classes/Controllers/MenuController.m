@@ -893,12 +893,12 @@
 		if (!c) return;
 		
 		if (c.config.encryptionKey.length < 1 && sender.config.encryptionKey.length > 0) {
-			[c.client printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
+			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
 		} else if (c.config.encryptionKey.length > 0 && sender.config.encryptionKey.length < 1) {
-			[c.client printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
+			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 		} else if (c.config.encryptionKey.length > 0 && sender.config.encryptionKey.length > 0) {
 			if ([c.config.encryptionKey isEqualToString:sender.config.encryptionKey] == NO) {
-				[c.client printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
+				[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
 			}
 		}
 		
