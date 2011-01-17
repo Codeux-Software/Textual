@@ -1067,17 +1067,7 @@ static NSInteger startUpTime;
 	if (!systemVersionPlist) exit(10);
 	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
-	/*
-    if ([textualPlist objectForKey:@"Bundle Reference"] == nil) {
-        NSMutableDictionary *newDict = [textualPlist mutableCopy];
-        
-        [newDict setObject:@"Unknown" forKey:@"Bundle Reference"];
-        
-        textualPlist = newDict;
-        
-        [newDict release];
-    }
-	*/
+	
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
