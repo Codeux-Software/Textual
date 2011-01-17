@@ -430,7 +430,7 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	return ([client.world.viewTheme.other.memberListFont pointSize] + 4.0); // Long callback
+	return ([client.world.viewTheme.other.memberListFont pointSize] + 3.0); // Long callback
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
