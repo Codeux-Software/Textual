@@ -2959,7 +2959,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		IRCChannel *c = [self findChannel:target];
 		
-		NSLog(@"%@: %@", c.name, text);
 		[self decryptIncomingMessage:&text channel:c];
 		
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:anick text:text identified:identified];
@@ -3065,6 +3064,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		} else {
 			IRCChannel *c = [self findChannel:anick];
+			
+			[self decryptIncomingMessage:&text channel:c];
+			
 			BOOL newTalk = NO;
 			if (!c && type != LINE_TYPE_NOTICE) {
 				c = [world createTalk:anick client:self];
