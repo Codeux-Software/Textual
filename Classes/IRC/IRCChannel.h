@@ -20,6 +20,8 @@
 	BOOL isNamesInit;
 	BOOL isWhoInit;
 	
+	BOOL errLastJoin;
+	
 	FileLogger *logFile;
 	NSString *logDate;
 	
@@ -40,6 +42,7 @@
 @property (nonatomic, assign) BOOL isModeInit;
 @property (nonatomic, assign) BOOL isNamesInit;
 @property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, assign) BOOL errLastJoin;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, retain) FileLogger *logFile;
