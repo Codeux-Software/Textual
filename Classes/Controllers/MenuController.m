@@ -748,7 +748,7 @@
 {
 	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 		
 	TopicSheet *t = [TopicSheet new];
 	t.delegate = self;
@@ -763,7 +763,7 @@
 {
 	IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient *u = c.client;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	if ([u encryptOutgoingMessage:&topic channel:c] == YES) {
 		[u send:IRCCI_TOPIC, c.name, topic, nil];
@@ -779,7 +779,7 @@
 {
 	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	ModeSheet *m = [ModeSheet new];
 	m.delegate = self;
@@ -796,7 +796,7 @@
 {
 	IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient *u = c.client;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	NSString *changeStr = [c.mode getChangeCommand:sender.mode];
 	if (changeStr.length) {
@@ -867,7 +867,7 @@
 	
 	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	ChannelSheet *d = [[ChannelSheet new] autorelease];
 	d.delegate = self;
@@ -1374,7 +1374,7 @@
 {
 	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
-	if (NO_CLIENT_OR_CHANNEL) return;
+	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", u.name, ((c.isTalk) ? @"Queries" : @"Channels"), c.name]];
