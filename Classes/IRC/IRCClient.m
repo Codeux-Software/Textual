@@ -1084,7 +1084,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
 			
 			if ([newstr length] < 5) {
-				[self printBoth:chan type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPT_FAILED")];
+				[self printBoth:chan type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPT_FAILED")];
 				
 				return NO;
 			} else {
@@ -2113,7 +2113,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							  ((ref == nil) ? @"Unknown" : ref)];
 			
 			if (c.isChannel == NO && c.isTalk == NO) {
-				[self printBoth:self type:LINE_TYPE_DEBUG_RECEIVE text:text];
+				[self printBoth:self type:LINE_TYPE_DEBUG text:text];
 			} else {
 				text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_TITLE"), text];
 				
@@ -3260,6 +3260,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if ([autoJoinTimer isActive] == NO) {
 			[world select:c];
+		}
+		
+		if ([c.config.encryptionKey length] > 0) {
+			[self printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
 		}
 	}
 	

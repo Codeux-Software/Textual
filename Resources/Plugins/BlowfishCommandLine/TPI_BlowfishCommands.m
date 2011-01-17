@@ -22,17 +22,17 @@
 			if ([messageString length] < 1) {
 				c.config.encryptionKey = nil;
 				
-				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
+				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 			} else {
 				if ([c.config.encryptionKey length] > 0) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
-						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
+						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
 					}
 				} else {
 					if (c.isTalk) {
-						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED_QUERY")];
+						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED_QUERY")];
 					} else {
-						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
+						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
 					}
 				}
 				
@@ -40,12 +40,12 @@
 			}
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			c.config.encryptionKey = nil;
-			[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
+			[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if ([c.config.encryptionKey length] > 1) {
-				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:[NSString stringWithFormat:TXTLS(@"BLOWFISH_ENCRYPTION_KEY"), c.config.encryptionKey]];
+				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:[NSString stringWithFormat:TXTLS(@"BLOWFISH_ENCRYPTION_KEY"), c.config.encryptionKey]];
 			} else {	
-				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG_RECEIVE text:TXTLS(@"BLOWFISH_ENCRYPTION_NO_KEY")];
+				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_NO_KEY")];
 			}
 		}
 	}
