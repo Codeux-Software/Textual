@@ -181,11 +181,17 @@ static NSInteger markWidth;
 	
 	NSRect rect = frame;
 	rect.origin.x += MARK_LEFT_MARGIN;
+	rect.origin.y -= 1;
 	rect.size.width = markWidth;
 	
 	char mark = [member mark];
 	if (mark != ' ') {
 		NSString *markStr = [NSString stringWithChar:mark];
+		
+		if (mark == '+' || mark == '%') {
+			rect.origin.y += 1;
+		}
+		
 		[markStr drawInRect:rect withAttributes:style];
 	}
 	

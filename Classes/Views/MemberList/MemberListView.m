@@ -100,9 +100,6 @@
 {
 	NSRect frame = [self rectOfRow:row];
 	
-	NSInteger baseHeight = ([self.font pointSize] + 5);
-	if (frame.size.height > baseHeight) frame.size.height = baseHeight;
-	
 	if (topLineColor && bottomLineColor && gradient) {
 		NSRect rect = frame;
 		rect.origin.y += 1;
