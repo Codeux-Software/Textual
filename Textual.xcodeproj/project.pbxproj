@@ -2007,7 +2007,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
