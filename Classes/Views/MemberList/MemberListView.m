@@ -83,6 +83,7 @@
 	
 	NSColor *start = theme.memberListSelTopColor;
 	NSColor *end = theme.memberListSelBottomColor;
+	
 	if (start && end) {
 		gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 	} else {
@@ -98,6 +99,9 @@
 - (void)_highlightRow:(NSInteger)row clipRect:(NSRect)clipRect
 {
 	NSRect frame = [self rectOfRow:row];
+	
+	NSInteger baseHeight = ([self.font pointSize] + 5);
+	if (frame.size.height > baseHeight) frame.size.height = baseHeight;
 	
 	if (topLineColor && bottomLineColor && gradient) {
 		NSRect rect = frame;
