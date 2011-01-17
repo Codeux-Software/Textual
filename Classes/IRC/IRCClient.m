@@ -2959,6 +2959,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		IRCChannel *c = [self findChannel:target];
 		
+		NSLog(@"%@: %@", c.name, text);
 		[self decryptIncomingMessage:&text channel:c];
 		
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:anick text:text identified:identified];
