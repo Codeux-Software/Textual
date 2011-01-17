@@ -3,16 +3,17 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4788"/>
 			<integer value="4778"/>
+			<integer value="4788"/>
+			<integer value="4791"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -32,10 +33,6 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1032655829">
-				<array class="NSMutableArray" key="NSDeclaredKeys">
-					<string>Preferences.General.wait_for_nickserv</string>
-					<string>Preferences.General.nickserv_delay_autojoin</string>
-				</array>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSArrayController" id="737951276">
@@ -2422,7 +2419,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1013255469">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTabView" id="650179267">
@@ -3578,6 +3575,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{541, 397}</string>
+				<reference key="NSSuperview"/>
 				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -5427,10 +5425,6 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="282945789">
-										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">TPWTB_Advanced</string>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -5441,7 +5435,10 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="282945789"/>
+										<object class="NSCustomResource" key="NSImage" id="422399029">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">TPWTB_Advanced</string>
+										</object>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5521,7 +5518,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="282945789"/>
+							<reference key="NSToolbarItemImage" ref="422399029"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -7605,14 +7602,6 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 						<reference key="destination" ref="2310081"/>
 					</object>
 					<int key="connectionID">6466</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onNicknameColorsDisabled:</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="15146849"/>
-					</object>
-					<int key="connectionID">6478</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
