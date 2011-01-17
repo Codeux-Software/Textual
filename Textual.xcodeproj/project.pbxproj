@@ -1677,8 +1677,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd Resources/Miscellaneous/\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbuildReference=`git describe`\n\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildReference\" Info.plist\n\nif [ ! -f \"/Applications/Textual.app/Contents/MacOS/Textual\" ]\nthen\necho \"WARNING: \\\"/Applications/Textual.app/Contents/MacOS/Textual\\\" does not exist. Xcode needs this file to link plugin headers properly.\"\nfi";
+			shellPath = /bin/bash;
+			shellScript = "cd Resources/Miscellaneous/\n\n# Handle Build Number\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# Handle Build Reference\n\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleVersion\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nrefBranch=`${gitBundle} branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`\nbuildRef=\"${bundleVersion}-${refInfo}-${refBranch}\"\n\nif [ ${#refInfo} -gt 10 ] && [ ${#refBranch} -gt 0 ]\nthen\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi\n\n# Generic Checks\n\nif [ ! -f \"/Applications/Textual.app/Contents/MacOS/Textual\" ]\nthen\necho \"WARNING: \\\"/Applications/Textual.app/Contents/MacOS/Textual\\\" does not exist. Xcode needs this file to link plugin headers properly.\"\nfi";
 		};
 		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -1002,13 +1002,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)performAutoJoin
 {
-	if (config.bouncerMode)
-		return;
-	
 	NSMutableArray *ary = [NSMutableArray array];
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
-			[ary addObject:c];
+			if (c.errLastJoin == NO && c.isActive == NO) {
+				[ary addObject:c];
+			}
 		}
 	}
 	
@@ -4234,6 +4233,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return;
 			break;
+		}
+		case 405:	// ERR_GENERICJOINERROR
+		case 471:
+		case 473:
+		case 474:
+		case 475:
+		case 477:
+		case 485:
+		{
+			NSString *chan = [m paramAt:1];
+			IRCChannel *c = [self findChannel:chan];
+			
+			if (c) {
+				c.errLastJoin = YES;
+			}
 		}
 	}
 	

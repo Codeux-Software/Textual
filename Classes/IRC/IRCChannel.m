@@ -20,6 +20,7 @@
 @synthesize isModeInit;
 @synthesize isNamesInit;
 @synthesize isWhoInit;
+@synthesize errLastJoin;
 @synthesize logFile;
 @synthesize logDate;
 
@@ -140,6 +141,7 @@
 	isModeInit = NO;
 	isNamesInit = NO;
 	isWhoInit = NO;
+	errLastJoin = NO;
 	[self reloadMemberList];
 }
 
@@ -149,6 +151,7 @@
 	[members removeAllObjects];
 	isOp = NO;
 	isHalfOp = NO;
+	errLastJoin = NO;
 	[self reloadMemberList];
 }
 
