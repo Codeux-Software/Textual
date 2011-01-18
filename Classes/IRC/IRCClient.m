@@ -967,8 +967,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[pass appendString:c.password];
 		}
 		
-		NSData *targetData = [target dataUsingEncoding:conn.encoding];
-		NSData *passData = [pass dataUsingEncoding:conn.encoding];
+		NSStringEncoding enc = conn.encoding;
+	
+		if (enc == 0x0000) enc = NSUTF8StringEncoding;
+		
+		NSData *targetData = [target dataUsingEncoding:enc];
+		NSData *passData = [pass dataUsingEncoding:enc];
 		
 		if (targetData.length + passData.length > MAX_BODY_LEN) {
 			if (!prevTarget.isEmpty) {
@@ -3773,6 +3777,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			inWhoWasRequest = ((m.numericReply == 314) ? YES : NO);
 			
+			if ([realname hasPrefix:@":"]) {
+				realname = [realname safeSubstringFromIndex:1];
+			}
+			
 			if (inWhoWasRequest) {
 				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOWAS_HOSTMASK"), nick, username, address, realname];
 			} else {
@@ -4422,7 +4430,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (config.password.length) [self send:IRCCI_PASS, config.password, nil];
 	[self send:IRCCI_NICK, sentNick, nil];
-	[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", realName, nil];
+	
+	if (config.bouncerMode) { // Fuck psybnc — use ZNC
+		[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", [@":" stringByAppendingString:realName], nil];
+	} else {
+		[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", realName, nil];
+	}
 	
 	[self updateClientTitle];
 }
@@ -4444,6 +4457,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)ircConnectionDidReceive:(NSData *)data
 {
 	NSStringEncoding enc = encoding;
+	
 	if (encoding == NSUTF8StringEncoding && config.fallbackEncoding != NSUTF8StringEncoding && ![data isValidUTF8]) {
 		enc = config.fallbackEncoding;
 	}
@@ -4451,6 +4465,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (encoding == NSISO2022JPStringEncoding) {
 		data = [data convertKanaFromNativeToISO2022];
 	}
+	
+	if (enc == 0x0000) enc = NSUTF8StringEncoding;
 	
 	NSString *s = [[[NSString alloc] initWithData:data encoding:enc] autorelease];
 	if (!s) {
