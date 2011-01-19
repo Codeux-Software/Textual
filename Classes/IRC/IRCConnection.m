@@ -132,9 +132,13 @@
 
 - (NSData *)convertToCommonEncoding:(NSString *)s
 {
+	if (encoding == 0x0000) encoding = NSUTF8StringEncoding;
+		
 	NSData *data = [s dataUsingEncoding:encoding];
+	
 	if (!data) {
 		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
+		
 		if (!data) {
 			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 		}
