@@ -66,7 +66,7 @@ static NSInteger markWidth;
 {
 	[self calculateMarkWidth];
 }
-/*
+
 - (NSAttributedString *)tooltipValue
 {
 	if (member.address && member.username) {
@@ -152,7 +152,7 @@ static NSInteger markWidth;
 	} else {
 		[super drawWithExpansionFrame:cellFrame inView:view];
 	}
-}*/
+}
 
 - (void)drawWithFrame:(NSRect)frame inView:(NSView *)view
 {
