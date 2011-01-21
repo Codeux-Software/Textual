@@ -9,7 +9,7 @@
 - (NSArray*)pluginSupportsUserInputCommands
 {
 	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime",
-			@"netstats", @"msgcount", @"diskspace", @"theme", @"screens", nil];
+			@"netstats", @"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -36,6 +36,10 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getCurrentThemeInUse:[client world]]];
 			} else if ([commandString isEqualToString:@"SCREENS"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllScreenResolutions]];
+			} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getTextualRunCount]];
+			} else if ([commandString isEqualToString:@"LOADAVG"]) {
+				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getSystemLoadAverage]];
 			}
 		}
 	}

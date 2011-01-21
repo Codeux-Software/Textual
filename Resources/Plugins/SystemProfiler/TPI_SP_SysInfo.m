@@ -161,6 +161,16 @@
 			world.messagesSent, world.messagesReceived, (world.messagesReceived / ([[NSDate date] timeIntervalSince1970] - [Preferences startTime])), [self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
 }
 
++ (NSString *)getSystemLoadAverage
+{
+	return [NSString stringWithFormat:@"\002Load Average:\002 %@", [self loadAveragesWithCores:0]];
+}
+
++ (NSString *)getTextualRunCount
+{
+	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times.", [TXNSUserDefaults() integerForKey:@"TXRunCount"]];
+}
+
 + (NSString *)getNetworkStats
 {
 	/* Based off the source code of the "top" command
@@ -384,12 +394,14 @@
 	int loads = getloadavg(load_ave, 3);
 	
 	if (loads == 3) {
-		return [NSString stringWithFormat:@"%.0f", (((CGFloat)load_ave[0] * 100) / cores)];
-		
-		/*return [NSString stringWithFormat:@"%.2f %.2f %.2f",
-				(CGFloat)load_ave[0],
-				(CGFloat)load_ave[1],
-				(CGFloat)load_ave[2]];*/
+		if (cores > 0) {
+			return [NSString stringWithFormat:@"%.0f", (((CGFloat)load_ave[0] * 100) / cores)];
+		} else {
+			return [NSString stringWithFormat:@"%.2f %.2f %.2f",
+					(CGFloat)load_ave[0],
+					(CGFloat)load_ave[1],
+					(CGFloat)load_ave[2]];
+		}
 	}
 	
 	return nil;
