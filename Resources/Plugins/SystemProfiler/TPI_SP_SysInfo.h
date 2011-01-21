@@ -20,6 +20,8 @@
 + (NSString *)applicationMemoryUsage;
 + (NSString *)getAllScreenResolutions;
 + (NSString *)applicationAndSystemUptime;
++ (NSString *)getSystemLoadAverage;
++ (NSString *)getTextualRunCount;
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
 
