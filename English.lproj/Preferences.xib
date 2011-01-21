@@ -3,16 +3,16 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">851</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="4778"/>
 			<integer value="4788"/>
+			<integer value="4778"/>
 			<integer value="4791"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -769,7 +769,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSButtonCell" key="NSCell" id="130149511">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Log highlights to seprate window</string>
+							<string key="NSContents">Log highlights to separate window</string>
 							<reference key="NSSupport" ref="90392730"/>
 							<reference key="NSControlView" ref="96606492"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -5425,6 +5425,10 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 									<reference key="NSControlView" ref="107994567"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
+									<object class="NSCustomResource" key="NSNormalImage" id="771830984">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">TPWTB_Advanced</string>
+									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -5435,10 +5439,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage" id="422399029">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">TPWTB_Advanced</string>
-										</object>
+										<reference key="NSImage" ref="771830984"/>
 										<reference key="NSOnImage" ref="920349119"/>
 										<reference key="NSMixedImage" ref="213762554"/>
 										<string key="NSAction">_popUpItemAction:</string>
@@ -5518,7 +5519,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="422399029"/>
+							<reference key="NSToolbarItemImage" ref="771830984"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -10718,7 +10719,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 				</object>
 				<boolean value="YES" key="46.ImportedFromIB2"/>
 				<dictionary class="NSMutableDictionary" key="4778.IBAttributePlaceholdersKey"/>
-				<string key="4778.IBEditorWindowLastContentRect">{{820, 440}, {534, 407}}</string>
+				<string key="4778.IBEditorWindowLastContentRect">{{900, 775}, {534, 407}}</string>
 				<string key="4778.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="4778.IBUserGuides">
 					<object class="IBUserGuide">
@@ -10799,7 +10800,7 @@ ZW4gc2V0IHVzaW5nIHRoZSAvYXdheSBjb21tYW5kLg</bytes>
 						<int key="affinity">1</int>
 					</object>
 				</array>
-				<string key="4791.IBEditorWindowLastContentRect">{{922, 318}, {541, 397}}</string>
+				<string key="4791.IBEditorWindowLastContentRect">{{1464, 405}, {541, 397}}</string>
 				<string key="4791.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="4791.IBUserGuides">
 					<object class="IBUserGuide">
