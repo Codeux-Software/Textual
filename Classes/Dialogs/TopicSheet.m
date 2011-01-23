@@ -22,7 +22,7 @@
 
 - (void)start:(NSString *)topic
 {
-	[text setStringValue:[topic stringWithInputIRCFormatting] ?: @""];
+	[text setStringValue:(([topic stringWithInputIRCFormatting]) ?: @"")];
 	[self startSheet];
 }
 

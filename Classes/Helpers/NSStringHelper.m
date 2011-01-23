@@ -63,13 +63,7 @@
 
 - (BOOL)isEqualNoCase:(NSString *)other
 {
-	return [self caseInsensitiveCompare:other] == NSOrderedSame;
-}
-
-- (BOOL)isEmpty
-{
-	if (!self || self == nil) return YES;
-	return ([[self trim] length] == 0);
+	return ([self caseInsensitiveCompare:other] == NSOrderedSame);
 }
 
 - (BOOL)contains:(NSString *)str
@@ -225,17 +219,17 @@
 
 BOOL isSurrogate(UniChar c)
 {
-	return 0xd800 <= c && c <= 0xdfff;
+	return (0xd800 <= c && c <= 0xdfff);
 }
 
 BOOL isHighSurrogate(UniChar c)
 {
-	return 0xd800 <= c && c <= 0xdbff;
+	return (0xd800 <= c && c <= 0xdbff);
 }
 
 BOOL isLowSurrogate(UniChar c)
 {
-	return 0xdc00 <= c && c <= 0xdfff;
+	return (0xdc00 <= c && c <= 0xdfff);
 }
 
 - (NSInteger)firstCharCodePoint
@@ -289,7 +283,7 @@ NSInteger ctoi(unsigned char c)
 
 BOOL isUnicharDigit(unichar c)
 {
-	return '0' <= c && c <= '9';
+	return ('0' <= c && c <= '9');
 }
 
 - (NSString *)safeUsername
@@ -411,14 +405,14 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (self.length == 0) return NO;
 	UniChar c = [self characterAtIndex:0];
-	return c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?';
+	return (c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?');
 }
 
 - (BOOL)isModeChannelName
 {
 	if (self.length == 0) return NO;
 	UniChar c = [self characterAtIndex:0];
-	return c == '#' || c == '&' || c == '!' || c == '~' || c == '?';
+	return (c == '#' || c == '&' || c == '!' || c == '~' || c == '?');
 }
 
 - (NSString *)canonicalName
@@ -496,7 +490,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIComponent
 {
-	if (!self.length) return @"";
+	if (NSStringIsEmpty(self)) return @"";
 	
 	static const char* characters = "0123456789ABCDEF";
 	
@@ -524,7 +518,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIFragment
 {
-	if (!self.length) return @"";
+	if (NSStringIsEmpty(self)) return @"";
 	
 	static const char* characters = "0123456789ABCDEF";
 	

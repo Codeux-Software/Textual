@@ -251,7 +251,7 @@
 	NSInteger top = [[body valueForKey:@"scrollTop"] integerValue];
 	
 	if (viewHeight == 0) return YES;
-	return top + viewHeight >= height - BOTTOM_EPSILON;
+	return (top + viewHeight >= height - BOTTOM_EPSILON);
 }
 
 - (void)savePosition
@@ -496,12 +496,12 @@
 	
 	[s appendFormat:@"</p>"];
 	
-	NSString *klass = isText ? @"line text" : @"line event";
+	NSString *klass = ((isText) ? @"line text" : @"line event");
 	
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 	[attrs setObject:klass forKey:@"class"];
 	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
-	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
+	[attrs setObject:((key) ? @"true" : @"false") forKey:@"highlight"];
 	if (line.nickInfo) {
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}

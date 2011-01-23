@@ -34,7 +34,7 @@
 {
 	if ([self init]) {
 		cid = TXRandomThousandNumber();
-		cid = [dic intForKey:@"cid"] ?: cid;
+		cid = (([dic intForKey:@"cid"]) ?: cid);
 		
 		hostmask = [[dic objectForKey:@"hostmask"] retain];
 		

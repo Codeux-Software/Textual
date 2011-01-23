@@ -152,29 +152,29 @@
 {
 	if (![other isKindOfClass:[IRCUser class]]) return NO;
 	IRCUser *u = other;
-	return [nick caseInsensitiveCompare:u.nick] == NSOrderedSame;
+	return ([nick caseInsensitiveCompare:u.nick] == NSOrderedSame);
 }
 
 - (NSComparisonResult)compare:(IRCUser *)other
 {
 	if (q != other.q) {
-		return q ? NSOrderedAscending : NSOrderedDescending;
+		return ((q) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (q) {
 		return [nick caseInsensitiveCompare:other.nick];
 	} else if (a != other.a) {
-		return a ? NSOrderedAscending : NSOrderedDescending;
+		return ((a) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (a) {
 		return [nick caseInsensitiveCompare:other.nick];
 	} else if (o != other.o) {
-		return o ? NSOrderedAscending : NSOrderedDescending;
+		return ((o) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (o) {
 		return [nick caseInsensitiveCompare:other.nick];
 	} else if (h != other.h) {
-		return h ? NSOrderedAscending : NSOrderedDescending;
+		return ((h) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (h) {
 		return [nick caseInsensitiveCompare:other.nick];
 	} else if (v != other.v) {
-		return v ? NSOrderedAscending : NSOrderedDescending;
+		return ((v) ? NSOrderedAscending : NSOrderedDescending);
 	} else {
 		return [nick caseInsensitiveCompare:other.nick];
 	}

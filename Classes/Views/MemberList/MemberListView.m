@@ -187,7 +187,7 @@
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
 	NSArray *files = [self draggedFiles:sender];
-	return [files count] > 0 && [self draggedRow:sender] >= 0;
+	return ([files count] > 0 && [self draggedRow:sender] >= 0);
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender

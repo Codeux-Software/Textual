@@ -364,7 +364,7 @@ static NSUInteger OTHERS_TABLE[] = {
 	 if (0xE000 <= c && c <= 0xF8FF) return CK_PRIVATE_USE_AREA;
 	 */
 	
-	return 0xe000 <= c && c <= 0xf8ff;
+	return (0xe000 <= c && c <= 0xf8ff);
 }
 
 + (BOOL)isIdeographic:(UniChar)c
@@ -447,7 +447,7 @@ static NSUInteger OTHERS_TABLE[] = {
 	NSUInteger *T = 0;
 	
 	if (c <= 0x7f) {
-		return 0x41 <= c && c <= 0x5a || 0x61 <= c && c <= 0x7a;
+		return (0x41 <= c && c <= 0x5a || 0x61 <= c && c <= 0x7a);
 	}
 	
 	if (0xaa <= c && c <= 0x2ee) {

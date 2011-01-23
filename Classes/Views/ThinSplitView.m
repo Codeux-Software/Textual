@@ -37,7 +37,7 @@
 
 - (void)awakeFromNib
 {
-	myDividerThickness = [self isVertical] ? 1 : 5;
+	myDividerThickness = (([self isVertical]) ? 1 : 5);
 	[self updatePosition];
 }
 
@@ -61,7 +61,7 @@
 	if (fixedViewIndex != value) {
 		fixedViewIndex = value;
 		if (inverted) {
-			fixedViewIndex = fixedViewIndex ? 0 : 1;
+			fixedViewIndex = ((fixedViewIndex) ? 0 : 1);
 		}
 	}
 }
@@ -107,7 +107,7 @@
 	[self addSubview:b];
 	[self addSubview:a];
 	
-	fixedViewIndex = fixedViewIndex ? 0 : 1;
+	fixedViewIndex = ((fixedViewIndex) ? 0 : 1);
 	
 	[self adjustSubviews];
 }
@@ -116,7 +116,7 @@
 {
 	[super setVertical:value];
 	
-	myDividerThickness = value ? 1 : 5;
+	myDividerThickness = ((value) ? 1 : 5);
 	[self adjustSubviews];
 }
 
@@ -184,7 +184,7 @@
 	NSInteger w = myDividerThickness;
 	
 	NSView *fixedView = [[self subviews] safeObjectAtIndex:fixedViewIndex];
-	NSView *flyingView = [[self subviews] safeObjectAtIndex:fixedViewIndex ? 0 : 1];
+	NSView *flyingView = [[self subviews] safeObjectAtIndex:((fixedViewIndex) ? 0 : 1)];
 	NSRect fixedFrame = fixedView.frame;
 	NSRect flyingFrame = flyingView.frame;
 
@@ -202,26 +202,26 @@
 		if ([self isVertical]) {
 			flyingFrame.size.width = width - w - position;
 			flyingFrame.size.height = height;
-			flyingFrame.origin.x = fixedViewIndex ? 0 : position + w;
+			flyingFrame.origin.x = ((fixedViewIndex) ? 0 : position + w);
 			flyingFrame.origin.y = 0;
 			if (flyingFrame.size.width < 0) flyingFrame.size.width = 0;
 			
 			fixedFrame.size.width = position;
 			fixedFrame.size.height = height;
-			fixedFrame.origin.x = fixedViewIndex ? flyingFrame.size.width + w : 0;
+			fixedFrame.origin.x = ((fixedViewIndex) ? flyingFrame.size.width + w : 0);
 			fixedFrame.origin.y = 0;
 			if (fixedFrame.size.width > width - w) fixedFrame.size.width = width - w;
 		} else {
 			flyingFrame.size.width = width;
 			flyingFrame.size.height = height - w - position;
 			flyingFrame.origin.x = 0;
-			flyingFrame.origin.y = fixedViewIndex ? 0 : position + w;
+			flyingFrame.origin.y = ((fixedViewIndex) ? 0 : position + w);
 			if (flyingFrame.size.height < 0) flyingFrame.size.height = 0;
 			
 			fixedFrame.size.width = width;
 			fixedFrame.size.height = position;
 			fixedFrame.origin.x = 0;
-			fixedFrame.origin.y = fixedViewIndex ? flyingFrame.size.height + w : 0;
+			fixedFrame.origin.y = ((fixedViewIndex) ? flyingFrame.size.height + w : 0);
 			if (fixedFrame.size.height > height - w) fixedFrame.size.height = height - w;
 		}
 	}
@@ -236,7 +236,7 @@
 {
 	NSView *view =  [[self subviews] safeObjectAtIndex:fixedViewIndex];
 	NSSize size = view.frame.size;
-	position = [self isVertical] ? size.width : size.height;
+	position = (([self isVertical]) ? size.width : size.height);
 }
 
 @end

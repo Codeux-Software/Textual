@@ -6,41 +6,46 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
+	ChatBox *chatBox;
 	MainWindow *window;
-	GrowlController *growl;
+	ViewTheme *viewTheme;
 	ServerTreeView *tree;
 	InputTextField *text;
-	NSBox *logBase;
-	ChatBox *chatBox;
-	FieldEditorTextView *fieldEditor;
+	GrowlController *growl;
+	LogController *dummyLog;
 	MemberListView *memberList;
 	MenuController *menuController;
-	ViewTheme *viewTheme;
-	IRCExtras *extrac;
-	NSMenu *serverMenu;
-	NSMenu *channelMenu;
-	NSMenu *treeMenu;
+	FieldEditorTextView *fieldEditor;
+	
+	NSBox *logBase;
+	
 	NSMenu *logMenu;
 	NSMenu *urlMenu;
 	NSMenu *addrMenu;
 	NSMenu *chanMenu;
+	NSMenu *treeMenu;
 	NSMenu *memberMenu;
+	NSMenu *serverMenu;
+	NSMenu *channelMenu;
 	
 	NSInteger messagesSent;
 	NSInteger messagesReceived;
+	
 	TXFSLongInt bandwidthIn;
 	TXFSLongInt bandwidthOut;
 	
-	LogController *dummyLog;
-	
 	IRCWorldConfig *config;
+	
 	NSMutableArray *clients;
 	
 	NSInteger itemId;
-	BOOL reloadingTree;
-	IRCTreeItem *selected;
 	
 	BOOL soundMuted;
+	BOOL reloadingTree;
+	
+	IRCExtras *extrac;
+	
+	IRCTreeItem *selected;
 	
 	NSInteger previousSelectedClientId;
 	NSInteger previousSelectedChannelId;
@@ -51,44 +56,42 @@
 	NSDictionary *bundlesForServerInput;
 }
 
-@property (nonatomic, retain) NSArray *allLoadedBundles;
-@property (nonatomic, retain) NSArray *bundlesWithPreferences;
-@property (nonatomic, retain) NSDictionary *bundlesForUserInput;
-@property (nonatomic, retain) NSDictionary *bundlesForServerInput;
-@property (nonatomic, assign) NSInteger messagesSent;
-@property (nonatomic, assign) NSInteger messagesReceived;
-@property (nonatomic, assign) TXFSLongInt bandwidthIn;
-@property (nonatomic, assign) TXFSLongInt bandwidthOut;
-@property (nonatomic, assign) IRCExtras *extrac;
+@property (nonatomic, assign) ChatBox *chatBox;
 @property (nonatomic, assign) MainWindow *window;
-@property (nonatomic, assign) GrowlController *growl;
+@property (nonatomic, assign) ViewTheme *viewTheme;
 @property (nonatomic, assign) ServerTreeView *tree;
 @property (nonatomic, assign) InputTextField *text;
-@property (nonatomic, assign) NSBox*logBase;
-@property (nonatomic, assign) ChatBox *chatBox;
-@property (nonatomic, assign) FieldEditorTextView *fieldEditor;
+@property (nonatomic, assign) GrowlController *growl;
+@property (nonatomic, retain) LogController *dummyLog;
 @property (nonatomic, assign) MemberListView *memberList;
 @property (nonatomic, assign) MenuController *menuController;
-@property (nonatomic, assign) ViewTheme *viewTheme;
-@property (nonatomic, assign) NSMenu *treeMenu;
+@property (nonatomic, assign) FieldEditorTextView *fieldEditor;
+@property (nonatomic, assign) NSBox *logBase;
 @property (nonatomic, assign) NSMenu *logMenu;
 @property (nonatomic, assign) NSMenu *urlMenu;
 @property (nonatomic, assign) NSMenu *addrMenu;
 @property (nonatomic, assign) NSMenu *chanMenu;
+@property (nonatomic, assign) NSMenu *treeMenu;
 @property (nonatomic, assign) NSMenu *memberMenu;
-@property (nonatomic, readonly) NSMutableArray *clients;
-@property (nonatomic, assign) BOOL soundMuted;
-@property (nonatomic, retain) IRCTreeItem *selected;
-@property (nonatomic, readonly) IRCClient *selectedClient;
-@property (nonatomic, readonly) IRCChannel *selectedChannel;
 @property (nonatomic, retain) NSMenu *serverMenu;
 @property (nonatomic, retain) NSMenu *channelMenu;
-@property (nonatomic, retain) LogController *dummyLog;
+@property (nonatomic, assign) NSInteger messagesSent;
+@property (nonatomic, assign) NSInteger messagesReceived;
+@property (nonatomic, assign) TXFSLongInt bandwidthIn;
+@property (nonatomic, assign) TXFSLongInt bandwidthOut;
 @property (nonatomic, retain) IRCWorldConfig *config;
-@property (nonatomic) NSInteger itemId;
+@property (nonatomic, assign) NSMutableArray *clients;
+@property (nonatomic, assign) NSInteger itemId;
+@property (nonatomic, assign) BOOL soundMuted;
 @property (nonatomic, assign) BOOL reloadingTree;
-@property (nonatomic) NSInteger previousSelectedClientId;
-@property (nonatomic) NSInteger previousSelectedChannelId;
+@property (nonatomic, assign) IRCExtras *extrac;
+@property (nonatomic, retain) IRCTreeItem *selected;
+@property (nonatomic, assign) NSInteger previousSelectedClientId;
+@property (nonatomic, assign) NSInteger previousSelectedChannelId;
+@property (nonatomic, retain) NSArray *allLoadedBundles;
+@property (nonatomic, retain) NSArray *bundlesWithPreferences;
+@property (nonatomic, retain) NSDictionary *bundlesForUserInput;
+@property (nonatomic, retain) NSDictionary *bundlesForServerInput;
 
 - (void)setup:(IRCWorldConfig *)seed;
 - (void)setupTree;
@@ -100,9 +103,6 @@
 
 - (void)resetLoadedBundles;
 
-- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
-
-- (void)onTimer;
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)terminate;
 - (void)prepareForSleep;
@@ -115,6 +115,10 @@
 - (void)selectChannelAt:(NSInteger)n;
 - (void)selectClientAt:(NSInteger)n;
 - (void)selectPreviousItem;
+
+- (IRCClient *)selectedClient;
+- (IRCChannel *)selectedChannel;
+- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
 
 - (IRCTreeItem *)previouslySelectedItem;
 
@@ -157,4 +161,5 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
 - (LogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
+
 @end

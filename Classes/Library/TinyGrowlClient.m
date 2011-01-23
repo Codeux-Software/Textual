@@ -124,7 +124,7 @@
 	[dnc addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
 	[dnc addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
 	
-	NSImage *icon = appIcon ?: [NSApp applicationIconImage];
+	NSImage *icon = ((appIcon) ?: [NSApp applicationIconImage]);
 	
 	NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
 						 appName, @"ApplicationName",
