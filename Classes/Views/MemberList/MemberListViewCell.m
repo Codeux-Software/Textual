@@ -161,9 +161,9 @@ static NSInteger markWidth;
 	
 	if ([self isHighlighted]) {
 		if (window && [window isMainWindow] && [window firstResponder] == view) {
-			color = [theme memberListSelColor] ?: [NSColor alternateSelectedControlTextColor];
+			color = (([theme memberListSelColor]) ?: [NSColor alternateSelectedControlTextColor]);
 		} else {
-			color = [theme memberListSelColor] ?: [NSColor selectedControlTextColor];
+			color = (([theme memberListSelColor]) ?: [NSColor selectedControlTextColor]);
 		}
 	} else if ([member isOp]) {
 		color = [theme memberListOpColor];

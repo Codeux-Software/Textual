@@ -10,19 +10,19 @@
 
 @synthesize client;
 @synthesize config;
-@synthesize mode;
-@synthesize members;
-@synthesize topic;
-@synthesize storedTopic;
+@synthesize errLastJoin;
 @synthesize isActive;
-@synthesize isOp;
 @synthesize isHalfOp;
 @synthesize isModeInit;
 @synthesize isNamesInit;
+@synthesize isOp;
 @synthesize isWhoInit;
-@synthesize errLastJoin;
-@synthesize logFile;
 @synthesize logDate;
+@synthesize logFile;
+@synthesize members;
+@synthesize mode;
+@synthesize storedTopic;
+@synthesize topic;
 
 - (id)init
 {
@@ -30,19 +30,19 @@
 		mode = [IRCChannelMode new];
 		members = [NSMutableArray new];
 	}
+	
 	return self;
 }
 
 - (void)dealloc
 {
 	[config release];
-	[mode release];
-	[members release];
-	[topic release];
-	[storedTopic release];
-	
-	[logFile release];
 	[logDate release];
+	[logFile release];
+	[members release];
+	[mode release];
+	[storedTopic release];
+	[topic release];	
 	
 	[super dealloc];
 }
@@ -82,17 +82,17 @@
 
 - (NSString *)password
 {
-	return config.password ?: @"";
+	return ((config.password) ?: @"");
 }
 
 - (BOOL)isChannel
 {
-	return config.type == CHANNEL_TYPE_CHANNEL;
+	return (config.type == CHANNEL_TYPE_CHANNEL);
 }
 
 - (BOOL)isTalk
 {
-	return config.type == CHANNEL_TYPE_TALK;
+	return (config.type == CHANNEL_TYPE_TALK);
 }
 
 - (NSString *)channelTypeString
@@ -101,6 +101,7 @@
 		case CHANNEL_TYPE_CHANNEL: return @"channel";
 		case CHANNEL_TYPE_TALK: return @"talk";
 	}
+	
 	return nil;
 }
 
@@ -115,6 +116,7 @@
 
 - (void)closeDialogs
 {
+	// do nothing
 }
 
 - (void)preferencesChanged
@@ -133,33 +135,39 @@
 - (void)activate
 {
 	isActive = YES;
+	
 	[members removeAllObjects];
 	[mode clear];
+	
 	isOp = NO;
 	isHalfOp = NO;
+	
 	self.topic = nil;
+	
 	isModeInit = NO;
 	isNamesInit = NO;
 	isWhoInit = NO;
 	errLastJoin = NO;
+	
 	[self reloadMemberList];
 }
 
 - (void)deactivate
 {
 	isActive = NO;
+	
 	[members removeAllObjects];
+	
 	isOp = NO;
 	isHalfOp = NO;
 	errLastJoin = NO;
+	
 	[self reloadMemberList];
 }
 
-// used to detect who we are talking with for the conversation
-// sensative auto-complete ordering
 - (void)detectOutgoingConversation:(NSString *)text
 {
-	if ([[Preferences completionSuffix] length] > 0) {
+	if (NSStringIsEmpty([Preferences completionSuffix]) == NO) {
 		NSArray *pieces = [text split:[Preferences completionSuffix]];
 	 
 		if ([pieces count] > 1) {
@@ -190,8 +198,9 @@
 		}
 		
 		NSString *comp = [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
+		
 		if (logDate) {
-			if (![logDate isEqualToString:comp]) {
+			if ([logDate isEqualToString:comp] == NO) {
 				[logDate release];
 				logDate = [comp retain];
 				[logFile reopenIfNeeded];
@@ -201,10 +210,13 @@
 		}
 		
 		NSString *nickStr = @"";
+		
 		if (line.nick) {
 			nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
 		}
+		
 		NSString *s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
+		
 		[logFile writeLine:s];
 	}
 	
@@ -222,13 +234,14 @@
 	NSInteger right = members.count;
 	
 	while (right - left > LINEAR_SEARCH_THRESHOLD) {
-		NSInteger i = (left + right) / 2;
+		NSInteger i = ((left + right) / 2);
+		
 		IRCUser *t = [members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedAscending) {
-			left = i + 1;
+			left = (i + 1);
 		} else {
-			right = i + 1;
+			right = (i + 1);
 		}
 	}
 	
@@ -252,8 +265,10 @@
 - (void)addMember:(IRCUser *)user reload:(BOOL)reload
 {
 	NSInteger n = [self indexOfMember:user.nick];
+	
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
+		
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -270,8 +285,10 @@
 - (void)removeMember:(NSString *)nick reload:(BOOL)reload
 {
 	NSInteger n = [self indexOfMember:nick];
+	
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
+		
 		[members safeRemoveObjectAtIndex:n];
 	}
 
@@ -284,12 +301,15 @@
 	if (n < 0) return;
 	
 	IRCUser *m = [members safeObjectAtIndex:n];
+	
 	[[m retain] autorelease];
+	
 	[self removeMember:toNick reload:NO];
 	
 	m.nick = toNick;
 	
 	[[[members safeObjectAtIndex:n] retain] autorelease];
+	
 	[members safeRemoveObjectAtIndex:n];
 	
 	[self sortedInsert:m];
@@ -299,8 +319,10 @@
 - (void)updateOrAddMember:(IRCUser *)user
 {
 	NSInteger n = [self indexOfMember:user.nick];
+	
 	if (n >= 0) {
 		[[[members safeObjectAtIndex:n] retain] autorelease];
+		
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -323,6 +345,7 @@
 	}
 	
 	[[[members safeObjectAtIndex:n] retain] autorelease];
+	
 	[members safeRemoveObjectAtIndex:n];
 	
 	[self sortedInsert:m];
@@ -332,6 +355,7 @@
 - (void)clearMembers
 {
 	[members removeAllObjects];
+	
 	[self reloadMemberList];
 }
 
@@ -375,6 +399,7 @@
 {
 	NSInteger n = [self indexOfMember:nick options:mask];
 	if (n < 0) return nil;
+	
 	return [members safeObjectAtIndex:n];
 }
 
@@ -436,7 +461,9 @@
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	IRCUser *user = [members safeObjectAtIndex:row];
-	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), [user nick], [config.name safeSubstringFromIndex:1]];
+	
+	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), 
+			[user nick], [config.name safeSubstringFromIndex:1]];
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row

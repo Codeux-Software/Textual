@@ -130,7 +130,7 @@
 				NSView *itemView = [plugin.pluginPrimaryClass preferencesView];
 				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
 				
-				if ([itemName isEmpty] == NO && itemView) {
+				if (NSStringIsEmpty(itemName) == NO && itemView) {
 					[preferencesBundlesIndex addObject:plugin];
 				}
 			}

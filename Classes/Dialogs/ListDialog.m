@@ -225,7 +225,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *ary = filteredList ?: list;
+	NSArray *ary = ((filteredList) ?: list);
 	NSArray *item = [ary safeObjectAtIndex:row];
 	NSString *col = [column identifier];
 	

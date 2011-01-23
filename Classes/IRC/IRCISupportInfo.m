@@ -93,13 +93,13 @@
 	NSMutableString *s = [[str mutableCopy] autorelease];
 	BOOL plus = NO;
 	
-	while (!s.isEmpty) {
+	while (!NSStringIsEmpty(s)) {
 		NSString *token = [s getToken];
-		if (token.isEmpty) break;
+		if (NSStringIsEmpty(token)) break;
 		UniChar c = [token characterAtIndex:0];
 		
 		if (c == '+' || c == '-') {
-			plus = c == '+';
+			plus = (c == '+');
 			token = [token safeSubstringFromIndex:1];
 			
 			NSInteger len = token.length;

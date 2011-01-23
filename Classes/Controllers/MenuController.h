@@ -21,14 +21,14 @@
 	NSString *pointedChannelName;
 	NSString *currentSearchPhrase;
 	
-	PreferencesController *preferencesController;
-	ServerSheet *serverSheet;
-	ChannelSheet *channelSheet;
 	NickSheet *nickSheet;
 	ModeSheet *modeSheet;
+	AboutPanel *aboutPanel;
 	TopicSheet *topicSheet;
 	InviteSheet *inviteSheet;
-	AboutPanel *aboutPanel;
+	ServerSheet *serverSheet;
+	ChannelSheet *channelSheet;
+	PreferencesController *preferencesController;
 	
 	BOOL isInFullScreenMode;
 }
@@ -134,8 +134,8 @@
 - (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
 - (void)onShowAcknowledgments:(id)sender;
+- (void)processNavigationItem:(id)sender;
 - (void)wantsFullScreenModeToggled:(id)sender;
-- (void)processNavigationItem:(NSMenuItem *)sender;
 
 - (void)onWantThemeForceReloaded:(id)sender;
 

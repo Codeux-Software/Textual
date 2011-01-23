@@ -20,122 +20,123 @@ typedef enum {
 @interface IRCClient : IRCTreeItem
 {
 	IRCWorld *world;
+	IRCConnection *conn;
 	IRCClientConfig *config;
-	
-	NSMutableArray *channels;
 	IRCISupportInfo *isupport;
 	
-	IRCConnection *conn;
+	IRCChannel *whoisChannel;
+	IRCChannel *lastSelectedChannel;
+	
+	NSMutableArray *channels;
+	NSMutableArray *commandQueue;
+	
+	NSMutableDictionary *trackedUsers;
+	
 	NSInteger connectDelay;
+	NSInteger tryingNickNumber;
+	
+	BOOL isAway;
+	BOOL hasIRCopAccess;
+	
 	BOOL reconnectEnabled;
-	BOOL retryEnabled;
-	
 	BOOL rawModeEnabled;
-	
+	BOOL isReconnecting;
+	BOOL retryEnabled;
 	BOOL isConnecting;
 	BOOL isConnected;
 	BOOL isLoggedIn;
 	BOOL isQuitting;
+	
+	BOOL serverHasNickServ;
+	BOOL autojoinInitialized;
+	
+	BOOL inList;
+	BOOL identifyMsg;
+	BOOL identifyCTCP;
+	BOOL inChanBanList;
+	BOOL inFirstISONRun;
+	BOOL inWhoWasRequest;
+	
 	NSStringEncoding encoding;
+	
+	NSString *logDate;
 	
 	NSString *inputNick;
 	NSString *sentNick;
 	NSString *myNick;
 	NSString *myHost;
-	NSInteger tryingNickNumber;
 	
 	NSString *serverHostname;
 	
-	BOOL isAway;
-	BOOL inList;
-	BOOL identifyMsg;
-	BOOL identifyCTCP;
-	BOOL inChanBanList;
-	BOOL inWhoWasRequest;
-	BOOL hasIRCopAccess;
-	BOOL inFirstISONRun;
-	BOOL serverHasNickServ;
-	BOOL autojoinInitialized;
-	
+	Timer *isonTimer;
 	Timer *pongTimer;
 	Timer *retryTimer;
-	Timer *isonTimer;
 	Timer *autoJoinTimer;
 	Timer *reconnectTimer;
 	Timer *commandQueueTimer;
 	
-	NSMutableArray *commandQueue;
-	
-	IRCChannel *lastSelectedChannel;
-	
 	ConnectMode connectType;
 	DisconnectType disconnectType;
 	
-	ChanBanExceptionSheet *banExceptionSheet;
-	ChanBanSheet *chanBanListSheet;
 	ListDialog *channelListDialog;
+	ChanBanSheet *chanBanListSheet;
+	ChanBanExceptionSheet *banExceptionSheet;
+	
+	FileLogger *logFile;
 	
 #ifdef IS_TRIAL_BINARY
 	Timer *trialPeriodTimer;
 #endif
-	
-	FileLogger *logFile;
-	NSString *logDate;
-	
-	IRCChannel *whoisChannel;
-	
-	NSMutableDictionary *trackedUsers;
 }
 
-@property (nonatomic, assign) IRCWorld *world;
-@property (nonatomic, readonly) NSString *name;
-@property (nonatomic, readonly) IRCClientConfig *config;
-@property (nonatomic, readonly) IRCISupportInfo *isupport;
-@property (nonatomic, readonly) NSMutableArray *channels;
-@property (nonatomic, retain) NSMutableDictionary *trackedUsers;
-@property (nonatomic, readonly) BOOL isConnecting;
-@property (nonatomic, readonly) BOOL isConnected;
-@property (nonatomic, readonly) BOOL isReconnecting;
-@property (nonatomic, readonly) BOOL isLoggedIn;
-@property (nonatomic, readonly) NSString *myNick;
-@property (nonatomic, readonly) NSString *myHost;
-@property (nonatomic, retain) IRCChannel *lastSelectedChannel;
+@property (nonatomic, retain) IRCWorld *world;
 @property (nonatomic, retain) IRCConnection *conn;
-@property (nonatomic, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
-@property (nonatomic, assign) BOOL reconnectEnabled;
-@property (nonatomic, assign) BOOL retryEnabled;
-@property (nonatomic, assign) BOOL rawModeEnabled;
-@property (nonatomic, assign) BOOL isQuitting;
-@property (nonatomic) NSStringEncoding encoding;
-@property (nonatomic, retain) NSString *inputNick;
-@property (nonatomic, retain) NSString *sentNick;
-@property (nonatomic) NSInteger tryingNickNumber;
-@property (nonatomic, retain) NSString *serverHostname;
-@property (nonatomic, assign) BOOL inList;
+@property (nonatomic, retain) IRCClientConfig *config;
+@property (nonatomic, retain) IRCISupportInfo *isupport;
+@property (nonatomic, retain) IRCChannel *whoisChannel;
+@property (nonatomic, retain) IRCChannel *lastSelectedChannel;
+@property (nonatomic, retain) NSMutableArray *channels;
+@property (nonatomic, retain) NSMutableArray *commandQueue;
+@property (nonatomic, retain) NSMutableDictionary *trackedUsers;
+@property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
+@property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign) BOOL inChanBanList;
-@property (nonatomic, assign) BOOL identifyMsg;
-@property (nonatomic, assign) BOOL identifyCTCP;
 @property (nonatomic, assign) BOOL hasIRCopAccess;
-@property (nonatomic, assign) BOOL inFirstISONRun;
-@property (nonatomic, assign) BOOL inWhoWasRequest;
+@property (nonatomic, assign) BOOL reconnectEnabled;
+@property (nonatomic, assign) BOOL rawModeEnabled;
+@property (nonatomic, assign) BOOL retryEnabled;
+@property (nonatomic, assign) BOOL isConnecting;
+@property (nonatomic, assign) BOOL isReconnecting;
+@property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isLoggedIn;
+@property (nonatomic, assign) BOOL isQuitting;
 @property (nonatomic, assign) BOOL serverHasNickServ;
 @property (nonatomic, assign) BOOL autojoinInitialized;
+@property (nonatomic, assign) BOOL inList;
+@property (nonatomic, assign) BOOL identifyMsg;
+@property (nonatomic, assign) BOOL identifyCTCP;
+@property (nonatomic, assign) BOOL inChanBanList;
+@property (nonatomic, assign) BOOL inFirstISONRun;
+@property (nonatomic, assign) BOOL inWhoWasRequest;
+@property (nonatomic, assign) NSStringEncoding encoding;
+@property (nonatomic, retain) NSString *logDate;
+@property (nonatomic, retain) NSString *inputNick;
+@property (nonatomic, retain) NSString *sentNick;
+@property (nonatomic, retain) NSString *myNick;
+@property (nonatomic, retain) NSString *myHost;
+@property (nonatomic, retain) NSString *serverHostname;
+@property (nonatomic, retain) Timer *isonTimer;
+@property (nonatomic, retain) Timer *pongTimer;
+@property (nonatomic, retain) Timer *retryTimer;
+@property (nonatomic, retain) Timer *autoJoinTimer;
+@property (nonatomic, retain) Timer *reconnectTimer;
+@property (nonatomic, retain) Timer *commandQueueTimer;
 @property (nonatomic, assign) ConnectMode connectType;
 @property (nonatomic, assign) DisconnectType disconnectType;
-@property (nonatomic, retain) Timer *pongTimer;
-@property (nonatomic, retain) Timer *reconnectTimer;
-@property (nonatomic, retain) Timer *retryTimer;
-@property (nonatomic, retain) Timer *isonTimer;
-@property (nonatomic, retain) Timer *autoJoinTimer;
-@property (nonatomic, retain) Timer *commandQueueTimer;
-@property (nonatomic, retain) NSMutableArray *commandQueue;
-@property (nonatomic, retain) ChanBanExceptionSheet *banExceptionSheet;
-@property (nonatomic, retain) ChanBanSheet *chanBanListSheet;
 @property (nonatomic, retain) ListDialog *channelListDialog;
+@property (nonatomic, retain) ChanBanSheet *chanBanListSheet;
+@property (nonatomic, retain) ChanBanExceptionSheet *banExceptionSheet;
 @property (nonatomic, retain) FileLogger *logFile;
-@property (nonatomic, retain) NSString *logDate;
-@property (nonatomic, retain) IRCChannel *whoisChannel;
 
 - (void)setup:(IRCClientConfig *)seed;
 - (void)updateConfig:(IRCClientConfig *)seed;
@@ -143,7 +144,6 @@ typedef enum {
 - (NSMutableDictionary *)dictionaryValue;
 
 - (void)autoConnect:(NSInteger)delay;
-- (void)onTimer;
 - (void)terminate;
 - (void)closeDialogs;
 - (void)preferencesChanged;
@@ -167,24 +167,26 @@ typedef enum {
 
 - (BOOL)IRCopStatus;
 
-- (void)changeNick:(NSString *)newNick;
+- (void)joinChannels:(NSArray *)chans;
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(NSString *)password;
 - (void)partChannel:(IRCChannel *)channel;
 - (void)sendWhois:(NSString *)nick;
+- (void)changeNick:(NSString *)newNick;
 - (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value;
 - (void)kick:(IRCChannel *)channel target:(NSString *)nick;
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text;
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text;
 - (void)sendCTCPPing:(NSString *)target;
 
+- (void)createChannelListDialog;
 - (void)createChanBanListDialog;
 - (void)createChanBanExceptionListDialog;
 
 - (BOOL)inputText:(NSString *)s command:(NSString *)command;
-- (void)sendText:(NSString *)s command:(NSString *)command channel:(IRCChannel *)channel;
 - (BOOL)sendCommand:(NSString *)s;
 - (BOOL)sendCommand:(NSString *)s completeTarget:(BOOL)completeTarget target:(NSString *)target;
+- (void)sendText:(NSString *)s command:(NSString *)command channel:(IRCChannel *)channel;
 
 - (void)sendLine:(NSString *)str;
 - (void)send:(NSString *)str, ...;
@@ -194,8 +196,6 @@ typedef enum {
 - (IRCChannel *)findChannel:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk;
-
-- (void)createChannelListDialog;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
@@ -216,11 +216,10 @@ typedef enum {
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
 
-- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text;
 - (void)notifyEvent:(GrowlNotificationType)type;
 - (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text;
-
-- (void)joinChannels:(NSArray *)chans;
+- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text;
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
+
 @end

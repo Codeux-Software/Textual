@@ -38,16 +38,16 @@
 	
 	type = [dic intForKey:@"type"];
 	
-	name = [[dic stringForKey:@"name"] retain] ?: @"";
-	password = [[dic stringForKey:@"password"] retain] ?: @"";
+	name = (([[dic stringForKey:@"name"] retain]) ?: @"");
+	password = (([[dic stringForKey:@"password"] retain]) ?: @"");
 	
 	growl = [dic boolForKey:@"growl"];
 	autoJoin = [dic boolForKey:@"auto_join"];
 	ihighlights = [dic boolForKey:@"ignore_highlights"];
 	
-	mode = [[dic stringForKey:@"mode"] retain] ?: @"";
-	topic = [[dic stringForKey:@"topic"] retain] ?: @"";
-	encryptionKey = [[dic stringForKey:@"encryptionKey"] retain] ?: @"";
+	mode = (([[dic stringForKey:@"mode"] retain]) ?: @"");
+	topic = (([[dic stringForKey:@"topic"] retain]) ?: @"");
+	encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: @"");
 	
 	return self;
 }

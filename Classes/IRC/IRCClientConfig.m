@@ -84,7 +84,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if ([nickPassword isEmpty]) {
+	if (NSStringIsEmpty(nickPassword)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -92,7 +92,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 										   withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if ([kcPassword isEmpty]) { 
+			if (NSStringIsEmpty(kcPassword)) { 
 				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
 														withItemKind:@"application password" 
 														 forUsername:nil 
@@ -121,7 +121,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (void)setNickPassword:(NSString *)pass
 {
 	if ([nickPassword isEqualToString:pass] == NO) {	
-		if ([pass isEmpty]) {
+		if (NSStringIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
 							   forUsername:nil
@@ -147,7 +147,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if ([password isEmpty]) {
+	if (NSStringIsEmpty(password)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -155,7 +155,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 										   withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if ([kcPassword isEmpty]) { 
+			if (NSStringIsEmpty(kcPassword)) { 
 				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
 														withItemKind:@"application password" 
 														 forUsername:nil
@@ -184,7 +184,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (void)setPassword:(NSString *)pass
 {
 	if ([password isEqualToString:pass] == NO) {
-		if ([pass isEmpty]) {
+		if (NSStringIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
 							   forUsername:nil
@@ -225,7 +225,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	[self init];	
 	
-	cuid = [dic intForKey:@"cuid"] ?: cuid;
+	cuid = (([dic intForKey:@"cuid"]) ?: cuid);
 	
 	// * =================================== * //
 	
@@ -239,8 +239,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		name = [[dic stringForKey:@"name"] retain];
 	}
 	
-	host = [[dic stringForKey:@"host"] retain] ?: @"";
-	port = [dic intForKey:@"port"] ?: 6667;
+	host = (([[dic stringForKey:@"host"] retain]) ?: @"");
+	port = (([dic intForKey:@"port"]) ?: 6667);
 	
 	if ([dic stringForKey:@"nick"]) {
 		[nick release];
@@ -264,16 +264,16 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
 	proxyType = [dic intForKey:@"proxy"];
-	proxyHost = [[dic stringForKey:@"proxy_host"] retain] ?: @"";
-	proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
-	proxyUser = [[dic stringForKey:@"proxy_user"] retain] ?: @"";
-	proxyPassword = [[dic stringForKey:@"proxy_password"] retain] ?: @"";
+	proxyHost = (([[dic stringForKey:@"proxy_host"] retain]) ?: @"");
+	proxyPort = (([dic intForKey:@"proxy_port"]) ?: 1080);
+	proxyUser = (([[dic stringForKey:@"proxy_user"] retain]) ?: @"");
+	proxyPassword = (([[dic stringForKey:@"proxy_password"] retain]) ?: @"");
 	
 	autoConnect = [dic boolForKey:@"auto_connect"];
 	autoReconnect = [dic boolForKey:@"auto_reconnect"];
 	bouncerMode = [dic boolForKey:@"bouncer_mode"];
-	encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
-	fallbackEncoding = [dic intForKey:@"fallback_encoding"] ?: NSISOLatin1StringEncoding;
+	encoding = (([dic intForKey:@"encoding"]) ?: NSUTF8StringEncoding);
+	fallbackEncoding = (([dic intForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
 	
 	if ([dic stringForKey:@"leaving_comment"]) {
 		[leavingComment release];
@@ -285,7 +285,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
 	}
 	
-	userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
+	userInfo = (([[dic stringForKey:@"userinfo"] retain]) ?: @"");
 	invisibleMode = [dic boolForKey:@"invisible"];
 	
 	isTrustedConnection = [dic boolForKey:@"trustedConnection"];

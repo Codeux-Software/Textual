@@ -279,7 +279,7 @@
 	NSString *realHost = nil;
 	NSString *hostname = [hostCombo.stringValue cleanedServerHostmask];
 	
-	if (hostname.length < 1) {
+	if (NSStringIsEmpty(hostname)) {
 		config.host = @"unknown.host.com";
 	} else {
 		realHost = [self nameMatchesServerInList:hostname];
@@ -349,7 +349,7 @@
 	NSInteger port = [portText integerValue];
 	NSString *nick = [nickText stringValue];
 	
-	BOOL enabled = name.length > 0 && host.length > 0 && ![host isEqualToString:@"-"] && port > 0 && nick.length > 0;
+	BOOL enabled = NSStringIsEmpty(name) == NO && NSStringIsEmpty(host) == NO && ![host isEqualToString:@"-"] && port > 0 && NSStringIsEmpty(nick) == NO;
 	[okButton setEnabled:enabled];
 }
 

@@ -33,57 +33,57 @@
 	IBOutlet NSMenu *chanMenu;
 	IBOutlet NSMenu *memberMenu;
 	
-	IRCExtras *extrac;
-	WelcomeSheet *WelcomeSheetDisplay;
-	GrowlController *growl;
-	FieldEditorTextView *fieldEditor;
 	IRCWorld *world;
+	IRCExtras *extrac;
 	ViewTheme *viewTheme;
+	GrowlController *growl;
 	InputHistory *inputHistory;
+	FieldEditorTextView *fieldEditor;
+	WelcomeSheet *WelcomeSheetDisplay;
 	NickCompletionStatus *completionStatus;
 	
 	BOOL terminating;
 }
 
-@property (nonatomic, retain) MainWindow *window;
-@property (nonatomic, retain) ServerTreeView *tree;
-@property (nonatomic, retain) NSBox *logBase;
-@property (nonatomic, retain) MemberListView *memberList;
-@property (nonatomic, retain) InputTextField *text;
 @property (nonatomic, retain) ChatBox *chatBox;
+@property (nonatomic, retain) MainWindow *window;
+@property (nonatomic, retain) MenuController *menu;
+@property (nonatomic, retain) InputTextField *text;
+@property (nonatomic, retain) ServerTreeView *tree;
+@property (nonatomic, retain) MemberListView *memberList;
+@property (nonatomic, retain) NSBox *logBase;
 @property (nonatomic, retain) NSScrollView *treeScrollView;
 @property (nonatomic, retain) NSView *leftTreeBase;
 @property (nonatomic, retain) NSView *rightTreeBase;
 @property (nonatomic, retain) ThinSplitView *rootSplitter;
 @property (nonatomic, retain) ThinSplitView *infoSplitter;
 @property (nonatomic, retain) ThinSplitView *treeSplitter;
-@property (nonatomic, retain) MenuController *menu;
 @property (nonatomic, retain) NSMenuItem *serverMenu;
 @property (nonatomic, retain) NSMenuItem *channelMenu;
-@property (nonatomic, retain) NSMenu *memberMenu;
-@property (nonatomic, retain) NSMenu *treeMenu;
+@property (nonatomic, retain) NSMenuItem *formattingMenu;
 @property (nonatomic, retain) NSMenu *logMenu;
 @property (nonatomic, retain) NSMenu *urlMenu;
+@property (nonatomic, retain) NSMenu *treeMenu;
 @property (nonatomic, retain) NSMenu *addrMenu;
 @property (nonatomic, retain) NSMenu *chanMenu;
-@property (nonatomic, retain) NSMenuItem *formattingMenu;
-@property (nonatomic, retain) IRCExtras *extrac;
-@property (nonatomic, retain) WelcomeSheet *WelcomeSheetDisplay;
-@property (nonatomic, retain) GrowlController *growl;
-@property (nonatomic, retain) FieldEditorTextView *fieldEditor;
+@property (nonatomic, retain) NSMenu *memberMenu;
 @property (nonatomic, retain) IRCWorld *world;
+@property (nonatomic, retain) IRCExtras *extrac;
 @property (nonatomic, retain) ViewTheme *viewTheme;
+@property (nonatomic, retain) GrowlController *growl;
 @property (nonatomic, retain) InputHistory *inputHistory;
+@property (nonatomic, retain) FieldEditorTextView *fieldEditor;
+@property (nonatomic, retain) WelcomeSheet *WelcomeSheetDisplay;
 @property (nonatomic, retain) NickCompletionStatus *completionStatus;
 @property (nonatomic, assign) BOOL terminating;
 
 - (void)loadWindowState;
 - (void)saveWindowState;
 
-- (IBAction)insertColorCharIntoTextBox:(id)sender;
-- (IBAction)insertBoldCharIntoTextBox:(id)sender;
-- (IBAction)insertItalicCharIntoTextBox:(id)sender;
-- (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
+- (void)insertColorCharIntoTextBox:(id)sender;
+- (void)insertBoldCharIntoTextBox:(id)sender;
+- (void)insertItalicCharIntoTextBox:(id)sender;
+- (void)insertUnderlineCharIntoTextBox:(id)sender;
 
 - (void)textEntered:(id)sender;
 

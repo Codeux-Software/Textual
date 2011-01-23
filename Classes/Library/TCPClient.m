@@ -279,7 +279,7 @@
 
 - (BOOL)checkTag:(AsyncSocket *)sock
 {
-	return tag == [sock userData];
+	return (tag == [sock userData]);
 }
 
 - (void)waitRead
