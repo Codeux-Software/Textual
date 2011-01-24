@@ -30,5 +30,3 @@
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 + (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 @end
-
-#define ddsynthesize(_X_) @synthesize _X_ = _##_X_

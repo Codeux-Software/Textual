@@ -3,9 +3,9 @@
 
 @interface NSBundle (NSBundleHelper)
 
-+ (void)reloadAllAvailableBundles:(IRCWorld *)world;
-+ (void)loadAllAvailableBundlesIntoMemory:(IRCWorld *)world;
-+ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld *)world;
++ (void)reloadBundles:(IRCWorld *)world;
++ (void)loadBundlesIntoMemory:(IRCWorld *)world;
++ (void)deallocBundlesFromMemory:(IRCWorld *)world;
 
 + (void)sendUserInputDataToBundles:(IRCWorld *)world
 						   message:(NSString *)message

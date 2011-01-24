@@ -15,7 +15,7 @@ extern void TXDevNullDestroyOSStatusObject(OSStatus objt) { return; }
 
 extern NSInteger TXRandomThousandNumber(void)
 {
-	return (1 + arc4random() % (9999 + 1));
+	return ((1 + arc4random()) % (9999 + 1));
 }
 
 NSString *TXTLS(NSString *key)
@@ -45,9 +45,11 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 							 informativeTextWithFormat:whatFor];
 		
 		[alert setShowsSuppressionButton:YES];
+		
 		[[alert suppressionButton] setTitle:((suppressionText == nil) ? TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE") : suppressionText)];
 		
 		NSInteger button = [alert runModal];
+		
 		if (button == NSAlertDefaultReturn) {
 			[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
 			
@@ -79,7 +81,7 @@ extern NSString *promptForInput(NSString *whatFor,
 		
 		[dialog release];
 		
-		if ([result length] < 1) {
+		if (NSStringIsEmpty(result)) {
 			return nil;
 		} else {
 			return result;
@@ -143,6 +145,7 @@ extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *ov
 	strftime(buf, TIME_BUFFER_SIZE, [format UTF8String], local);
 	buf[TIME_BUFFER_SIZE] = 0;
 	NSString *result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
+	
 	return result;
 }
 

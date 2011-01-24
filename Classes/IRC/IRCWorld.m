@@ -65,7 +65,7 @@
 
 - (void)dealloc
 {
-	[NSBundle deallocAllAvailableBundlesFromMemory:self];
+	[NSBundle deallocBundlesFromMemory:self];
 	
 	[allLoadedBundles release];
 	[bundlesForServerInput release];
@@ -559,7 +559,7 @@
 
 - (void)selectChannelAt:(NSInteger)n
 {
-	IRCClient *c = self.selectedClient;
+	IRCClient *c = [self selectedClient];
 	if (c == nil) return;
 	
 	if (n == 0) {
@@ -994,8 +994,8 @@
 {
 	if (selected == nil) return;
 	
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
+	IRCClient *u = [self selectedClient];
+	IRCChannel *c = [self selectedChannel];
 	
 	if (c == nil) {
 		if (u.isConnecting || u.isConnected || u.isLoggedIn) {

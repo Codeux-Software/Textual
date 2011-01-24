@@ -85,7 +85,7 @@
 
 - (void)validateChannelMenuSubmenus:(NSMenuItem *)item
 {
-	IRCChannel *c = world.selectedChannel;
+	IRCChannel *c = [world selectedChannel];
 	
 	if (c.isClient == NO && c.isTalk == NO && c.isChannel == YES) {
 		[[[item menu] itemWithTag:936] setHidden:NO];
@@ -106,8 +106,8 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	NSInteger tag = item.tag;
 	
@@ -398,7 +398,7 @@
 
 - (NSArray *)selectedMembers:(NSMenuItem *)sender
 {
-	IRCChannel *c = world.selectedChannel;
+	IRCChannel *c = [world selectedChannel];
 	
 	if (c == nil) {
 		return [NSArray array];
@@ -501,7 +501,7 @@
 
 - (void)onCloseCurrentPanel:(id)sender
 {
-	IRCChannel *c = world.selectedChannel;
+	IRCChannel *c = [world selectedChannel];
 	
 	if (c) {
 		[world destroyChannel:c];
@@ -610,14 +610,14 @@
 
 - (void)onConnect:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	[u connect];
 }
 
 - (void)onDisconnect:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	[u quit];
 	[u cancelReconnect];
@@ -625,7 +625,7 @@
 
 - (void)onCancelReconnecting:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	[u cancelReconnect];
 }
@@ -634,7 +634,7 @@
 {
 	if (nickSheet) return;
 	
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	nickSheet = [NickSheet new];
@@ -659,7 +659,7 @@
 
 - (void)onChannelList:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	[u createChannelListDialog];
 	[u send:IRCCI_LIST, nil];
@@ -683,7 +683,7 @@
 
 - (void)onCopyServer:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	IRCClientConfig *config = u.storedConfig;
@@ -697,7 +697,7 @@
 
 - (void)onDeleteServer:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u || u.isConnected) return;
 	
 	BOOL result = promptWithSuppression(TXTLS(@"WANT_SERVER_DELETE_MESSAGE"), 
@@ -735,7 +735,7 @@
 
 - (void)onServerProperties:(id)sender
 {
-	[self showServerPropertyDialog:world.selectedClient ignore:NO];
+	[self showServerPropertyDialog:[world selectedClient] ignore:NO];
 }
 
 - (void)ServerSheetOnOK:(ServerSheet *)sender
@@ -758,16 +758,16 @@
 
 - (void)onJoin:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (!u || !c || !u.isLoggedIn || c.isActive || !c.isChannel) return;
 	[u joinChannel:c];
 }
 
 - (void)onLeave:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (!u || !c || !u.isLoggedIn || !c.isActive) return;
 	if (c.isChannel) {
 		[u partChannel:c];
@@ -778,8 +778,8 @@
 
 - (void)onTopic:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	TopicSheet *t = [TopicSheet new];
@@ -809,8 +809,8 @@
 
 - (void)onMode:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	ModeSheet *m = [ModeSheet new];
@@ -849,10 +849,10 @@
 		return;
 	}
 	
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
-	IRCChannel *c = world.selectedChannel;
+	IRCChannel *c = [world selectedChannel];
 	IRCChannelConfig *config;
 	if (c && c.isChannel) {
 		config = [[c.config mutableCopy] autorelease];
@@ -873,7 +873,7 @@
 
 - (void)onDeleteChannel:(id)sender
 {
-	IRCChannel *c = world.selectedChannel;
+	IRCChannel *c = [world selectedChannel];
 	if (!c) return;
 	
 	if ([c isChannel]) {
@@ -897,8 +897,8 @@
 		return;
 	}
 	
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	ChannelSheet *d = [[ChannelSheet new] autorelease];
@@ -947,7 +947,7 @@
 
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	NSArray *nicknames = [self selectedMembers:sender];
@@ -996,7 +996,7 @@
 
 - (void)onMemberTalk:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1014,8 +1014,8 @@
 {
 	if (inviteSheet) return;
 	
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (!u || !u.isLoggedIn || !c) return;
 	
 	NSMutableArray *nicks = [NSMutableArray array];
@@ -1057,7 +1057,7 @@
 
 - (void)onMemberPing:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1069,7 +1069,7 @@
 
 - (void)onMemberTime:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1081,7 +1081,7 @@
 
 - (void)onMemberVersion:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1093,7 +1093,7 @@
 
 - (void)onMemberUserInfo:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1105,7 +1105,7 @@
 
 - (void)onMemberClientInfo:(id)sender
 {
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1125,7 +1125,7 @@
 - (void)onJoinChannel:(id)sender
 {
 	if (!pointedChannelName) return;
-	IRCClient *u = world.selectedClient;
+	IRCClient *u = [world selectedClient];
 	if (!u || !u.isLoggedIn) return;
 	[u send:IRCCI_JOIN, pointedChannelName, nil];
 }
@@ -1160,7 +1160,7 @@
 
 - (void)onWantIgnoreListShown:(id)sender
 {
-	[self showServerPropertyDialog:world.selectedClient ignore:YES];
+	[self showServerPropertyDialog:[world selectedClient] ignore:YES];
 }
 
 - (void)wantsFullScreenModeToggled:(id)sender
@@ -1201,8 +1201,8 @@
 
 - (void)processModeChange:(id)sender mode:(NSString *)tmode 
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1249,8 +1249,8 @@
 
 - (void)onMemberKick:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1275,8 +1275,8 @@
 
 - (void)onMemberBan:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1301,8 +1301,8 @@
 
 - (void)onMemberBanKick:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1327,8 +1327,8 @@
 
 - (void)onMemberKill:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1349,8 +1349,8 @@
 
 - (void)onMemberGline:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1371,8 +1371,8 @@
 
 - (void)onMemberShun:(id)sender
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	if (!u || !c.isChannel) return;
 	
@@ -1404,8 +1404,8 @@
 
 - (void)onWantToReadChannelLogs:(id)sender;
 {
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	if (NO_CLIENT_OR_CHANNEL || IS_NOT_CHANNEL) return;
 	
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
@@ -1426,8 +1426,8 @@
 - (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString *)vhost
 {
 	if ([vhost length] >= 1 && vhost != nil) {
-		IRCClient *u = world.selectedClient;
-		IRCChannel *c = world.selectedChannel;
+		IRCClient *u = [world selectedClient];
+		IRCChannel *c = [world selectedChannel];
 		
 		if (!u || !c.isChannel) return;
 		
@@ -1466,14 +1466,14 @@
 
 - (void)onWantChannelBanList:(id)sender
 {
-	[world.selectedClient createChanBanListDialog];
-	[world.selectedClient send:IRCCI_MODE, [[world selectedChannel] name], @"+b", nil];
+	[[world selectedClient] createChanBanListDialog];
+	[[world selectedClient] send:IRCCI_MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
 - (void)onWantChannelBanExceptionList:(id)sender
 {
-	[world.selectedClient createChanBanExceptionListDialog];
-	[world.selectedClient send:IRCCI_MODE, [[world selectedChannel] name], @"+e", nil];
+	[[world selectedClient] createChanBanExceptionListDialog];
+	[[world selectedClient] send:IRCCI_MODE, [[world selectedChannel] name], @"+e", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender

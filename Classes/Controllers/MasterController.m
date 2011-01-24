@@ -211,7 +211,7 @@
 	
 	[self registerKeyHandlers];
 	
-	[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
+	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
 	
 	[viewTheme validateFilePathExistanceAndReload:YES];
 }
@@ -865,8 +865,8 @@
 
 - (void)completeNick:(BOOL)forward
 {
-	IRCClient *client = world.selectedClient;
-	IRCChannel *channel = world.selectedChannel;
+	IRCClient *client = [world selectedClient];
+	IRCChannel *channel = [world selectedChannel];
 	
 	if (client == nil) return;
 	
@@ -996,7 +996,7 @@
 		NSMutableArray *channels = [NSMutableArray array];
 		NSMutableArray *lowerChannels = [NSMutableArray array];
 		
-		IRCClient *u = world.selectedClient;
+		IRCClient *u = [world selectedClient];
 		
 		for (IRCChannel *c in u.channels) {
 			[channels addObject:c.name];
@@ -1154,7 +1154,7 @@ typedef enum {
 			}
 		}
 	} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-		IRCClient *client = world.selectedClient;
+		IRCClient *client = [world selectedClient];
 		if (client == nil) return;
 		
 		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];

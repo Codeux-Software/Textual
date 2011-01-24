@@ -9,7 +9,7 @@
 				  message:(NSString*)messageString
 				  command:(NSString*)commandString
 {
-	if ([[[client world] selectedChannel] isChannel] == NO) return;
+	if ([[client.world selectedChannel] isChannel] == NO) return;
 	
 	NSInteger operCount = 0;
 	NSInteger chanOpCount = 0;
@@ -20,7 +20,7 @@
 	NSInteger powerOverCount = 0;
 	
 	for (IRCClient *c in [[client world] clients]) {
-		if (!c.isConnected) continue;
+		if (c.isConnected == NO) continue;
 		
 		networkCount++;
 		channelCount += [c.channels count];
@@ -30,12 +30,14 @@
 		}
 		
 		BOOL addUser = NO;
+		
 		NSMutableArray *trackedUsers = [NSMutableArray new];
 		
 		for (IRCChannel *ch in c.channels) {
 			if ([ch isActive] == NO || [ch isChannel] == NO) continue;
 			
 			IRCUser *myself = [ch findMember:c.myNick];
+			
 			NSString *myselfLC = [myself.nick lowercaseString];
 			
 			if (myself.q || myself.a || myself.o) {
@@ -60,8 +62,9 @@
 				}
 				
 				if (addUser == YES) {
-					if (![trackedUsers containsObject:m.nick]) {
+					if ([trackedUsers containsObject:m.nick] == NO) {
 						powerOverCount++;
+						
 						[trackedUsers addObject:m.nick];	
 					}
 				}

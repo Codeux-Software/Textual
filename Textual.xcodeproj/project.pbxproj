@@ -493,7 +493,7 @@
 		4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D14121F32430051543F /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
-		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 1; };
+		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC212312BDC00740B40 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFontHelper.h; sourceTree = "<group>"; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -816,6 +816,21 @@
 				78287EA90D742DAA008D5656 /* Styles */,
 			);
 			name = "Styles & Scripts";
+			sourceTree = "<group>";
+		};
+		4C239ECA12ED1F9C00A469C9 /* Google */ = {
+			isa = PBXGroup;
+			children = (
+				78A8C0EC11737F660044E7A1 /* GTMBase64.h */,
+				78A8C0ED11737F660044E7A1 /* GTMBase64.m */,
+				78A8C0EE11737F660044E7A1 /* GTMDefines.h */,
+				78A8C0EF11737F660044E7A1 /* GTMGarbageCollection.h */,
+				78A8C0F011737F660044E7A1 /* GTMNSString+HTML.h */,
+				78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */,
+				78A8C0F211737F660044E7A1 /* GTMNSString+URLArguments.h */,
+				78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */,
+			);
+			name = Google;
 			sourceTree = "<group>";
 		};
 		4C282AA612A3A9B500F44108 /* Products */ = {
@@ -1163,6 +1178,7 @@
 		78A8C0EB11737F660044E7A1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4C239ECA12ED1F9C00A469C9 /* Google */,
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
 				78A8C10211737F660044E7A1 /* NSStringHelper.h */,
@@ -1181,14 +1197,6 @@
 				78A7B4F51174427C006B324A /* NSData+Kana.m */,
 				78A8C0F611737F660044E7A1 /* NSColorHelper.h */,
 				78A8C0F711737F660044E7A1 /* NSColorHelper.m */,
-				78A8C0EC11737F660044E7A1 /* GTMBase64.h */,
-				78A8C0ED11737F660044E7A1 /* GTMBase64.m */,
-				78A8C0EE11737F660044E7A1 /* GTMDefines.h */,
-				78A8C0EF11737F660044E7A1 /* GTMGarbageCollection.h */,
-				78A8C0F011737F660044E7A1 /* GTMNSString+HTML.h */,
-				78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */,
-				78A8C0F211737F660044E7A1 /* GTMNSString+URLArguments.h */,
-				78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */,
 				78A8C0FE11737F660044E7A1 /* NSPasteboardHelper.h */,
 				78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */,
 				78A8C10011737F660044E7A1 /* NSRectHelper.h */,

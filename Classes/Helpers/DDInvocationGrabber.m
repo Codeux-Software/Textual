@@ -47,8 +47,6 @@
     [super dealloc];
 }
 
-#pragma mark -
-
 - (id)target
 {
     return _target;
@@ -124,8 +122,6 @@
 }
 
 @end
-
-#pragma mark -
 
 @implementation DDInvocationGrabber (DDnvocationGrabber_Conveniences)
 
