@@ -5,7 +5,7 @@
 
 + (void)play:(NSString *)name isMuted:(BOOL)muted
 {
-	if (!name || NSStringIsEmpty(name) || muted) return;
+	if (NSStringIsEmpty(name) || muted) return;
 	
 	if ([name isEqualToString:@"Beep"]) {
 		NSBeep();

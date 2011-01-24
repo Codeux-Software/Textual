@@ -38,12 +38,12 @@
 									msg.sender.user, @"senderUsername",
 									msg.sender.address, @"senderDNSMask", 
 									[NSNumber numberWithBool:msg.sender.isServer], @"senderIsServer", nil];
+		
 		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
 									 [[client config] server], @"messageServer",
 									 [[client config] network], @"messageNetwork",
 									 [msg sequence], @"messageSequence",
 									 [msg params], @"messageParamaters",
-									 [msg params], @"messageParameters",
 									 [NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
 									 [msg command], @"messageCommand", nil];
 		

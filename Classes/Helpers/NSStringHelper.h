@@ -17,8 +17,6 @@
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars;
 
-- (BOOL)isIPAddress;
-
 - (NSString *)nicknameFromHostmask;
 - (NSString *)cleanedServerHostmask;
 
@@ -47,6 +45,7 @@
 
 - (NSString *)safeUsername;
 - (NSString *)safeFileName;
+- (NSString *)canonicalName;
 
 - (NSString *)stripEffects;
 
@@ -61,10 +60,8 @@
 
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
-- (NSString *)canonicalName;
 
 + (NSString *)stringWithUUID;
-+ (NSString *)bundleString:(NSString *)key;
 
 - (NSString *)stringWithInputIRCFormatting;
 - (NSString *)stringWithASCIIFormatting;

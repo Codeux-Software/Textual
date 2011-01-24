@@ -11,8 +11,8 @@
 				andIRCWorld:(IRCWorld *)world
 		  withUserInputDict:(NSMutableDictionary *)newUserDict
 		withServerInputDict:(NSMutableDictionary *)newServerDict
-	  withUserInputDictRefs:(NSMutableDictionary**)userDict
-	withServerInputDictRefs:(NSMutableDictionary**)serverDict
+	  withUserInputDictRefs:(NSMutableDictionary **)userDict
+	withServerInputDictRefs:(NSMutableDictionary **)serverDict
 {
 	pluginPrimaryClass = [[primaryClass alloc] init];
 	
@@ -28,11 +28,11 @@
 							
 							NSArray *cmdDict = [newUserDict objectForKey:cmd];
 							
-							if (!cmdDict) {
+							if (cmdDict == nil) {
 								[newUserDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 							}
 							
-							if (![cmdDict containsObject:bundle]) {
+							if ([cmdDict containsObject:bundle] == NO) {
 								[[newUserDict objectForKey:cmd] addObject:self];
 							}
 						}
@@ -51,11 +51,11 @@
 							
 							NSArray *cmdDict = [newServerDict objectForKey:cmd];
 							
-							if (!cmdDict) {
+							if (cmdDict == nil) {
 								[newServerDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 							}
 							
-							if (![cmdDict containsObject:bundle]) {
+							if ([cmdDict containsObject:bundle] == NO) {
 								[[newServerDict objectForKey:cmd] addObject:self];
 							}
 						}
@@ -81,6 +81,7 @@
 	
 	[pluginPrimaryClass release];
 	[pluginBundle release];
+	
 	[super dealloc];
 }
 

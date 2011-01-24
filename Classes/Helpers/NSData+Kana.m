@@ -17,8 +17,10 @@ typedef enum {
 {
 	NSInteger len = self.length;
 	NSMutableData *dest = [NSMutableData dataWithLength:len];
+	
 	const unsigned char* src = [self bytes];
 	unsigned char* buf = [dest mutableBytes];
+	
 	NSInteger n = 0;
 	
 	KanaEncoding enc = ENC_OTHER;
@@ -29,7 +31,7 @@ typedef enum {
 		if (c == ESC) {
 			BOOL seq = NO;
 			
-			if (i+2 < len) {
+			if ((i + 2) < len) {
 				unsigned char d = src[i+1];
 				unsigned char e = src[i+2];
 				
@@ -53,9 +55,11 @@ typedef enum {
 							case 'i':
 								enc = ENC_JIS_ROMAN;
 								seq = YES;
+								
 								buf[n++] = ESC;
 								buf[n++] = '(';
 								buf[n++] = 'J';
+								
 								break;
 						}
 						break;
@@ -78,6 +82,7 @@ typedef enum {
 	}
 	
 	[dest setLength:n];
+	
 	return dest;
 }
 
@@ -85,17 +90,21 @@ typedef enum {
 {
 	NSInteger len = self.length;
 	NSMutableData *dest = [NSMutableData dataWithLength:len];
+	
 	const unsigned char* src = [self bytes];
 	unsigned char* buf = [dest mutableBytes];
+	
 	NSInteger n = 0;
 	
 	KanaEncoding enc = ENC_OTHER;
 	
 	for (NSInteger i=0; i<len; ++i) {
 		unsigned char c = src[i];
+		
 		if (c == ESC) {
 			BOOL seq = NO;
-			if (i+2 < len) {
+			
+			if ((i + 2) < len) {
 				unsigned char d = src[i+1];
 				unsigned char e = src[i+2];
 				
@@ -119,9 +128,11 @@ typedef enum {
 							case 'j':
 								enc = ENC_JIS_ROMAN;
 								seq = YES;
+								
 								buf[n++] = ESC;
 								buf[n++] = '(';
 								buf[n++] = 'I';
+								
 								break;
 							case 'I':
 							case 'i':
@@ -160,6 +171,7 @@ typedef enum {
 	}
 	
 	[dest setLength:n];
+	
 	return dest;
 }
 
