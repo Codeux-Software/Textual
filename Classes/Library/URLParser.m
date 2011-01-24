@@ -64,6 +64,7 @@
 	
 	NSRange rs = [shortstring rangeOfRegex:[self complexURLRegularExpression]];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
+	
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
 	NSString *leftchar = nil;
@@ -95,7 +96,7 @@ static NSString *urlAddrRegexComplex;
 
 + (NSString *)complexURLRegularExpression
 {
-	if (!urlAddrRegexComplex) {
+	if (urlAddrRegexComplex == nil) {
 		urlAddrRegexComplex = [NSString stringWithFormat:@"((((\\b(?:[a-zA-Z][a-zA-Z0-9+.-]{2,6}://)?)([a-zA-Z0-9-]+\\.))+%@\\b)|((\\b([a-zA-Z][a-zA-Z0-9+.-]{2,6}://))+(([0-9]{1,3}\\.){3})+([0-9]{1,3})\\b))(?:\\:([0-9]+))?(?:/[a-zA-Z0-9;áàâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ/\\?\\:\\,\\]\\[\\)\\(\\=\\&\\._\\#\\>\\<\\$\\'\\}\\{\\`\\~\\!\\@\\^\\|\\*\\+\\-\\%%]*)?", TXTLS(@"ALL_DOMAIN_EXTENSIONS")];
 	}
 	

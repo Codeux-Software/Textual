@@ -3,4 +3,5 @@
 
 @interface NSFont (NSFontHelper)
 - (NSFont *)convertToItalics;
+- (BOOL)fontTraitSet:(NSFontTraitMask)trait;
 @end

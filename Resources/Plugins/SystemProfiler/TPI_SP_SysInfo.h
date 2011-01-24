@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface TPI_SP_SysInfo : NSObject 
-
 + (NSString *)compiledOutput;
 + (NSString *)model;
 + (NSString *)processor;
@@ -24,8 +23,6 @@
 + (NSString *)getTextualRunCount;
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
-
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
 + (NSString *)formattedCPUFrequency:(double)rate;
-
 @end

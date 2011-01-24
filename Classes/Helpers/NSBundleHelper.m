@@ -40,12 +40,12 @@
 									[NSNumber numberWithBool:msg.sender.isServer], @"senderIsServer", nil];
 		
 		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
-									 [[client config] server], @"messageServer",
-									 [[client config] network], @"messageNetwork",
+									 msg.command, @"messageCommand",
 									 [msg sequence], @"messageSequence",
 									 [msg params], @"messageParamaters",
-									 [NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply",
-									 [msg command], @"messageCommand", nil];
+									 client.config.server, @"messageServer",
+									 client.config.network, @"messageNetwork",
+									 [NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply", nil];
 		
 		for (TextualPluginItem *plugin in cmdPlugins) {
 			PluginProtocol *bundle = [plugin pluginPrimaryClass];
@@ -57,13 +57,13 @@
 	[pool drain];
 }
 
-+ (void)reloadAllAvailableBundles:(IRCWorld *)world
++ (void)reloadBundles:(IRCWorld *)world
 {
-	[self deallocAllAvailableBundlesFromMemory:world];
-	[self loadAllAvailableBundlesIntoMemory:world];
+	[self deallocBundlesFromMemory:world];
+	[self loadBundlesIntoMemory:world];
 }
 
-+ (void)deallocAllAvailableBundlesFromMemory:(IRCWorld *)world
++ (void)deallocBundlesFromMemory:(IRCWorld *)world
 {		
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -92,14 +92,14 @@
 	[pool release];
 }
 
-+ (void)loadAllAvailableBundlesIntoMemory:(IRCWorld *)world
++ (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
 	if ([world.allLoadedBundles count] > 0) {
-		[self deallocAllAvailableBundlesFromMemory:world];
+		[self deallocBundlesFromMemory:world];
 	}
 	
 	NSMutableArray *completeBundleIndex = [NSMutableArray new];

@@ -8,8 +8,8 @@
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime",
-			@"netstats", @"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg", nil];
+	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", 
+			@"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg", nil];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -17,7 +17,7 @@
 				  command:(NSString*)commandString
 {
 	if ([client isConnected]) {
-		NSString *channelName = [[[client world] selectedChannel] name];
+		NSString *channelName = [[client.world selectedChannel] name];
 		
 		if ([channelName length] >= 1) {
 			if ([commandString isEqualToString:@"SYSINFO"]) {

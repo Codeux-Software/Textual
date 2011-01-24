@@ -18,6 +18,7 @@
 	
 	if (pluginPrimaryClass) {
 		if (pluginPrimaryClass) {
+			// User Input
 			if ([pluginPrimaryClass respondsToSelector:@selector(messageSentByUser:message:command:)]) {
 				if ([pluginPrimaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
 					NSArray *spdcmds = [pluginPrimaryClass pluginSupportsUserInputCommands];

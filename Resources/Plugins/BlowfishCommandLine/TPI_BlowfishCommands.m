@@ -19,12 +19,12 @@
 		}
 		
 		if ([commandString isEqualToString:@"SETKEY"]) {
-			if ([messageString length] < 1) {
+			if (NSStringIsEmpty(messageString)) {
 				c.config.encryptionKey = nil;
 				
 				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 			} else {
-				if ([c.config.encryptionKey length] > 0) {
+				if (NSStringIsEmpty(c.config.encryptionKey) == NO) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
 						[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
 					}
@@ -40,9 +40,10 @@
 			}
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			c.config.encryptionKey = nil;
+			
 			[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 		} else if ([commandString isEqualToString:@"KEY"]) {
-			if ([c.config.encryptionKey length] > 1) {
+			if (NSStringIsEmpty(c.config.encryptionKey) == NO) {
 				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:[NSString stringWithFormat:TXTLS(@"BLOWFISH_ENCRYPTION_KEY"), c.config.encryptionKey]];
 			} else {	
 				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_NO_KEY")];

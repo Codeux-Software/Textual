@@ -110,6 +110,7 @@
 
 - (NSArray *)splitIntoLines
 {
+	NSInteger start = 0;
 	NSInteger len = self.length;
 	
 	UniChar buf[len];
@@ -117,8 +118,6 @@
 	[self getCharacters:buf range:NSMakeRange(0, len)];
 	
 	NSMutableArray *lines = [NSMutableArray array];
-	
-	NSInteger start = 0;
 	
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
@@ -134,21 +133,13 @@
 				}
 			}
 			
-			NSString *s = [[NSString alloc] initWithCharacters:(buf + start) length:(pos - start)];
-			
-			[lines addObject:s];
-			
-			[s release];
+			[lines addObject:[NSString stringWithCharacters:(buf + start) length:(pos - start)]];
 			
 			start = (i + 1);
 		}
 	}
 	
-	NSString *s = [[NSString alloc] initWithCharacters:(buf + start) length:(len - start)];
-	
-	[lines addObject:s];
-	
-	[s release];
+	[lines addObject:[NSString stringWithCharacters:(buf + start) length:(len - start)]];
 	
 	return lines;
 }
@@ -275,13 +266,12 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)safeUsername
 {
+	NSInteger n = 0;
 	NSInteger len = self.length;
 	
 	const UniChar* buf = [self getCharactersBuffer];
 	
 	UniChar dest[len];
-	
-	NSInteger n = 0;
 	
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
@@ -293,7 +283,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	return [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+	return [NSString stringWithCharacters:dest length:n];
 }
 
 - (NSString *)safeFileName
@@ -312,34 +302,26 @@ BOOL isUnicharDigit(unichar c)
 - (id)attributedStringWithIRCFormatting
 {
 	if ([Preferences removeAllFormatting]) {
-		return [[[NSAttributedString alloc] initWithString:[self stripEffects]] autorelease];
+		return [self stripEffects];
 	}
 	
-	return [LogRenderer renderBody:self
-						controller:nil
-						   nolinks:NO
-						  keywords:nil
-					  excludeWords:nil
-					exactWordMatch:NO
-					   highlighted:NULL
-						 URLRanges:NULL
-				  attributedString:YES];
+	return [LogRenderer renderBody:self controller:nil nolinks:NO keywords:nil excludeWords:nil 
+					exactWordMatch:NO highlighted:NULL URLRanges:NULL attributedString:YES];
 }
 
 - (NSString *)stripEffects
 {
+	NSInteger pos = 0;
 	NSInteger len = self.length;
+	
 	if (len == 0) return self;
 	
 	NSInteger buflen = (len * sizeof(unichar));
 	
 	unichar* src = alloca(buflen);
-	
-	[self getCharacters:src];
-	
 	unichar* buf = alloca(buflen);
 	
-	NSInteger pos = 0;
+	[self getCharacters:src];
 	
 	for (NSInteger i = 0; i < len; ++i) {
 		unichar c = src[i];
@@ -353,47 +335,30 @@ BOOL isUnicharDigit(unichar c)
 					break;
 				case 0x3:
 					if ((i + 1) >= len) continue;
-					
 					unichar d = src[i+1];
-					
 					if (isUnicharDigit(d) == NO) continue;
-					
 					i++;
 					
 					if ((i + 1) >= len) continue;
-					
 					unichar e = src[i+1];
-					
 					if (IsIRCColor(e, (d - '0')) == NO && e != ',') continue;
-					
 					i++;
 					
-					BOOL comma = (e == ',');
-					
-					if (comma == NO) {
+					if ((e == ',') == NO) {
 						if ((i + 1) >= len) continue;
-						
 						unichar f = src[i+1];
-						
 						if (f != ',') continue;
-						
 						i++;
 					}
 					
 					if ((i + 1) >= len) continue;
-					
 					unichar g = src[i+1];
-					
 					if (isUnicharDigit(g) == NO) continue;
-					
 					i++;
 					
 					if ((i + 1) >= len) continue;
-					
 					unichar h = src[i+1];
-					
 					if (IsIRCColor(h, (g - '0')) == NO) continue;
-					
 					i++;
 					
 					break;
@@ -406,7 +371,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	return [[[NSString alloc] initWithCharacters:buf length:pos] autorelease];
+	return [NSString stringWithCharacters:buf length:pos];
 }
 
 - (BOOL)isChannelName
@@ -446,7 +411,6 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSRange rs = [shortstring rangeOfRegex:@"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
 	NSInteger prev = (r.location - 1);
@@ -484,9 +448,8 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [shortstring rangeOfRegex:@"(?<![a-zA-Z0-9_])[#\\&][^ \\t,　]+"];
+	NSRange rs = [shortstring rangeOfRegex:@"(#\\w\\w+)"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
 	NSInteger prev = (r.location - 1);
@@ -581,9 +544,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUUID 
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-	
 	NSString *uuidString = (NSString *)CFUUIDCreateString(nil, uuidObj);
-	
 	CFRelease(uuidObj);
 	
 	return [uuidString autorelease];

@@ -11,8 +11,8 @@
 	NSRect frame = self.frame;
 	NSSize size = frame.size;
 	
-	p.x -= (size.width /2);
-	p.y -= (size.height /2);
+	p.x -= (size.width / 2);
+	p.y -= (size.height / 2);
 	
 	NSScreen *screen = window.screen;
 	

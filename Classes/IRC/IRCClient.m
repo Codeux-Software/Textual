@@ -519,8 +519,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)createChanBanListDialog
 {
 	if (chanBanListSheet == nil) {
-		IRCClient *u = world.selectedClient;
-		IRCChannel *c = world.selectedChannel;
+		IRCClient *u = [world selectedClient];
+		IRCChannel *c = [world selectedChannel];
 		
 		if (u == nil || c == nil) return;
 		
@@ -564,8 +564,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)createChanBanExceptionListDialog
 {
 	if (banExceptionSheet == nil) {
-		IRCClient *u = world.selectedClient;
-		IRCChannel *c = world.selectedChannel;
+		IRCClient *u = [world selectedClient];
+		IRCChannel *c = [world selectedChannel];
 		
 		if (u == nil || c == nil) return;
 		
@@ -1360,8 +1360,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (NSStringIsEmpty(cmd)) return NO;
 	if (NSStringIsEmpty(str)) return NO;
 	
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
 	
 	IRCChannel *selChannel = nil;
 	
@@ -2223,12 +2223,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		case 76: // Command: UNLOAD_PLUGINS
-			[[NSBundle invokeInBackgroundThread] deallocAllAvailableBundlesFromMemory:world];
+			[[NSBundle invokeInBackgroundThread] deallocBundlesFromMemory:world];
 			
 			return YES;
 			break;
 		case 91: // Command: LOAD_PLUGINS
-			[[NSBundle invokeInBackgroundThread] loadAllAvailableBundlesIntoMemory:world];
+			[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
 			
 			return YES;
 			break;
@@ -2896,7 +2896,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (channel) {
 		if ([Preferences autoAddScrollbackMark]) {
-			if (channel != world.selectedChannel || [[NSApp mainWindow] isOnCurrentWorkspace] == NO) {
+			if (channel != [world selectedChannel] || [[NSApp mainWindow] isOnCurrentWorkspace] == NO) {
 				if (channel.isUnread == NO) {
 					if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION || type == LINE_TYPE_NOTICE) {
 						[channel.log unmark];

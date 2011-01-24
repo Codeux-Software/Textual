@@ -3,20 +3,20 @@
 
 @implementation NSFont (NSFontHelper)
 
+const CGFloat kRotationForItalicText = -14.0;   
+
 - (NSFont *)convertToItalics
 { 
 	// The following code to make a font have italics with an extra fallback is from:
 	// <http://www.answerspice.com/c119/1619181/how-do-i-get-lucida-grande-italic-into-my-application>
 	
-	NSFontManager *sharedFontManager = [NSFontManager sharedFontManager];  
-	NSFont *theFont = [sharedFontManager convertFont:self toHaveTrait:NSItalicFontMask];     
-	NSFontTraitMask fontTraits = [sharedFontManager traitsOfFont:theFont];    
+	NSFont *theFont = [[NSFontManager sharedFontManager] convertFont:self toHaveTrait:NSItalicFontMask];  
 	
-	if (((fontTraits & NSItalicFontMask) == NSItalicFontMask) == 0) {        
-		const CGFloat kRotationForItalicText = -14.0;     
+	if ([self fontTraitSet:NSItalicFontMask] == NO) {       
+		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
+		NSAffineTransform *italicTransform = [NSAffineTransform transform];  
 		
-		NSAffineTransform *fontTransform = [NSAffineTransform transform];                
-		[fontTransform scaleBy:[NSFont systemFontSizeForControlSize:NSRegularControlSize]];         
+		[fontTransform scaleBy:[NSFont systemFontSizeForControlSize:NSRegularControlSize]];           
 		
 		NSAffineTransformStruct italicTransformData;   
 		
@@ -26,9 +26,7 @@
 		italicTransformData.m22 = 1;         
 		italicTransformData.tX  = 0;       
 		italicTransformData.tY  = 0;      
-		
-		NSAffineTransform *italicTransform = [NSAffineTransform transform];       
-		
+		     
 		[italicTransform setTransformStruct:italicTransformData];      
 		[fontTransform appendTransform:italicTransform]; 
 		
@@ -40,6 +38,13 @@
 	}
 	
 	return self;
+}
+
+- (BOOL)fontTraitSet:(NSFontTraitMask)trait
+{
+	NSFontTraitMask fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:self];    
+	
+	return ((fontTraits & trait) == trait);
 }
 
 @end
