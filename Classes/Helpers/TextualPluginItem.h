@@ -14,7 +14,7 @@
 				andIRCWorld:(IRCWorld *)world
 		  withUserInputDict:(NSMutableDictionary *)newUserDict
 		withServerInputDict:(NSMutableDictionary *)newServerDict
-	  withUserInputDictRefs:(NSMutableDictionary**)userDict
-	withServerInputDictRefs:(NSMutableDictionary**)serverDict;
+	  withUserInputDictRefs:(NSMutableDictionary **)userDict
+	withServerInputDictRefs:(NSMutableDictionary **)serverDict;
 
 @end

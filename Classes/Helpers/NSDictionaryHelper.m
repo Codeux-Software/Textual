@@ -6,63 +6,77 @@
 - (BOOL)boolForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj respondsToSelector:@selector(boolValue)]) {
 		return [obj boolValue];
 	}
+	
 	return NO;
 }
 
 - (NSInteger)intForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj respondsToSelector:@selector(integerValue)]) {
 		return [obj integerValue];
 	}
+	
 	return 0;
 }
 
 - (long long)longLongForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj respondsToSelector:@selector(longLongValue)]) {
 		return [obj longLongValue];
 	}
+	
 	return 0;
 }
 
 - (double)doubleForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj respondsToSelector:@selector(doubleValue)]) {
 		return [obj doubleValue];
 	}
+	
 	return 0;
 }
 
 - (NSString *)stringForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj isKindOfClass:[NSString class]]) {
 		return obj;
 	}
+	
 	return nil;
 }
 
 - (NSDictionary *)dictionaryForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj isKindOfClass:[NSDictionary class]]) {
 		return obj;
 	}
+	
 	return nil;
 }
 
 - (NSArray *)arrayForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
+	
 	if ([obj isKindOfClass:[NSArray class]]) {
 		return obj;
 	}
+	
 	return nil;
 }
 

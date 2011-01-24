@@ -43,6 +43,7 @@
 {
     [self setTarget:NULL];
     [self setInvocation:NULL];
+	
     [super dealloc];
 }
 
@@ -55,8 +56,7 @@
 
 - (void)setTarget:(id)inTarget
 {
-    if (_target != inTarget)
-	{
+    if (_target != inTarget) {
         [_target autorelease];
         _target = [inTarget retain];
 	}
@@ -69,8 +69,7 @@
 
 - (void)setInvocation:(NSInvocation *)inInvocation
 {
-    if (_invocation != inInvocation)
-	{
+    if (_invocation != inInvocation) {
         [_invocation autorelease];
         _invocation = [inInvocation retain];
 	}
@@ -106,6 +105,7 @@
 - (void)forwardInvocation:(NSInvocation *)ioInvocation
 {
     [ioInvocation setTarget:[self target]];
+	
     [self setInvocation:ioInvocation];
 	
 	if (_waitUntilDone == NO) {
@@ -132,6 +132,7 @@
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
     [self setTarget:inTarget];
+	
     return self;
 }
 

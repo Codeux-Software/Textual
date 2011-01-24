@@ -349,7 +349,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	
 	NSDictionary *receipt = dictionaryWithAppStoreReceipt(path);
 	
-	if (!receipt) return NO;
+	if (receipt == nil) return NO;
 	
 	NSData *guidData = nil;
 	NSString *bundleVersion = nil;
@@ -358,7 +358,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	guidData = (NSData *)copy_mac_address();
 	[guidData autorelease];
 
-	if (!guidData) return NO;
+	if (guidData == nil) return NO;
 	
 	bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	bundleIdentifer = [[NSBundle mainBundle] bundleIdentifier];
@@ -375,12 +375,6 @@ BOOL validateReceiptAtPath(NSString *path)
 	if ([bundleIdentifer isEqualToString:[receipt objectForKey:kReceiptBundleIdentifer]] &&
 		[bundleVersion isEqualToString:[receipt objectForKey:kReceiptVersion]] &&
 		[hash isEqualToData:[receipt objectForKey:kReceiptHash]]) {
-		
-		if ([bundleIdentifer contains:@"codeux"] == NO || [bundleIdentifer contains:@"irc"] == NO || 
-			[bundleIdentifer contains:@"textual"] == NO || [bundleIdentifer isEqualToString:BASE_BUNDLE_ID] == NO) {
-			
-			return NO;
-		}
 		
 		if (validateBinarySignature(@"Apple Mac OS Application Signing") == YES) {
 			return YES;

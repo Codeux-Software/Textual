@@ -5,7 +5,7 @@
 
 - (BOOL)hasStringContent
 {
-	return [self availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] != nil;
+	return BOOLReverseValue([self availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] == nil);
 }
 
 - (NSString *)stringContent
