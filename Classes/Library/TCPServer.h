@@ -5,10 +5,12 @@
 {
 	id delegate;
 	
-	AsyncSocket *conn;
-	NSMutableArray *clients;
 	BOOL isActive;
+	
 	NSInteger port;
+	AsyncSocket *conn;
+	
+	NSMutableArray *clients;
 }
 
 @property (nonatomic, assign) id delegate;

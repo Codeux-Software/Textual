@@ -20,6 +20,7 @@
 @interface KeyEventHandler : NSObject
 {
 	id target;
+	
 	NSMutableDictionary *codeHandlerMap;
 	NSMutableDictionary *characterHandlerMap;
 }

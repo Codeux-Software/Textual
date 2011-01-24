@@ -51,6 +51,7 @@
 									  [NSNumber numberWithInteger:errSSLPeerUnsupportedCert], 
 									  [NSNumber numberWithInteger:errSSLPeerUnknownCA], nil];
 	}
+	
 	return self;
 }
 
@@ -61,7 +62,9 @@
 	conn = [socket retain];
 	conn.delegate = self;
 	[conn setUserData:tag];
+	
 	active = connecting = YES;
+	
 	sendQueueSize = 0;
 	
 	return self;
@@ -73,11 +76,11 @@
 	[proxyHost release];
 	[proxyUser release];
 	[proxyPassword release];
-	
 	[socketBadSSLCertErrorCodes release];
 	
 	if (conn) {
 		conn.delegate = nil;
+		
 		[conn disconnect];
 		[conn autorelease];
 	}
@@ -92,17 +95,19 @@
 	[self close];
 	
 	[buffer setLength:0];
+	
 	++tag;
 	
 	conn = [[AsyncSocket alloc] initWithDelegate:self userData:tag];
 	[conn connectToHost:host onPort:port error:NULL];
+	
 	active = connecting = YES;
 	sendQueueSize = 0;
 }
 
 - (void)close
 {
-	if (!conn) return;
+	if (conn == nil) return;
 	
 	++tag;
 	
@@ -117,22 +122,27 @@
 - (NSData *)read
 {
 	NSData *result = [buffer autorelease];
+	
 	buffer = [NSMutableData new];
+	
 	return result;
 }
 
 - (NSData *)readLine
 {
 	NSInteger len = [buffer length];
-	if (!len) return nil;
+	if (len < 1) return nil;
 	
 	const char* bytes = [buffer bytes];
 	char* p = memchr(bytes, LF, len);
-	if (!p) return nil;
-	NSInteger n = p - bytes;
+	
+	if (p == NULL) return nil;
+	
+	NSInteger n = (p - bytes);
 	
 	if (n > 0) {
 		char prev = *(p - 1);
+		
 		if (prev == CR) {
 			--n;
 		}
@@ -141,30 +151,34 @@
 	NSMutableData *result = [buffer autorelease];
 	
 	++p;
-	if (p < bytes + len) {
-		buffer = [[NSMutableData alloc] initWithBytes:p length:bytes + len - p];
+	
+	if (p < (bytes + len)) {
+		buffer = [[NSMutableData alloc] initWithBytes:p length:(bytes + len - p)];
 	} else {
 		buffer = [NSMutableData new];
 	}
 	
 	[result setLength:n];
+	
 	return result;
 }
 
 - (void)write:(NSData *)data
 {
-	if (![self connected]) return;
+	if ([self connected] == NO) return;
 	
 	++sendQueueSize;
 	
 	[conn writeData:data withTimeout:-1 tag:0];
+	
 	[self waitRead];
 }
 
 - (BOOL)connected
 {
-	if (!conn) return NO;
-	if (![self checkTag:conn]) return NO;
+	if (conn == nil) return NO;
+	if ([self checkTag:conn] == NO) return NO;
+	
 	return [conn isConnected];
 }
 
@@ -183,8 +197,10 @@
 
 - (void)onSocket:(AsyncSocket *)sender didConnectToHost:(NSString *)aHost port:(UInt16)aPort
 {
-	if (![self checkTag:sender]) return;
+	if ([self checkTag:sender] == NO) return;
+	
 	[self waitRead];
+	
 	connecting = NO;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
@@ -194,8 +210,8 @@
 
 - (void)onSocket:(AsyncSocket *)sender willDisconnectWithError:(NSError *)error
 {
-	if (![self checkTag:sender]) return;
-	if (!error) return;
+	if ([self checkTag:sender] == NO) return;
+	if (error == nil) return;
 	
 	NSString *msg = nil;
 	
@@ -206,12 +222,9 @@
 			if ([socketBadSSLCertErrorCodes containsObject:[NSNumber numberWithInteger:[error code]]]) {
 				IRCClient *client = (IRCClient *)[delegate delegate];
 				
-				NSString *suppKey = [NSString stringWithFormat:@"Preferences.prompts.cert_trust_error.%@", client.config.guid];
-				BOOL suppValue = [TXNSUserDefaults() boolForKey:suppKey];
+				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
 				
-				if ((client.config.isTrustedConnection == NO && suppValue == NO) ||
-					(client.config.isTrustedConnection == NO && suppValue == YES)) {
-					
+				if (client.config.isTrustedConnection == NO) {
 					BOOL status = promptWithSuppression(TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE"), 
 														TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE"), 
 														TXTLS(@"TRUST_BUTTON"), 
@@ -219,9 +232,6 @@
 					
 					client.config.isTrustedConnection = status;
 					client.disconnectType = ((status == YES) ? DISCONNECT_BAD_SSL_CERT : DISCONNECT_NORMAL);
-					
-					// If we trust this connection and want to connect to it, then 
-					// let us override our prompt suppressor to hide every time.
 					
 					[TXNSUserDefaults() setBool:status forKey:suppKey];
 					
@@ -233,7 +243,7 @@
 		}
 	}
 	
-	if (!msg) {
+	if (NSStringIsEmpty(msg)) {
 		msg = [error localizedDescription];
 	}
 	
@@ -244,7 +254,7 @@
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sender
 {
-	if (![self checkTag:sender]) return;
+	if ([self checkTag:sender] == NO) return;
 	
 	[self close];
 	
@@ -255,7 +265,7 @@
 
 - (void)onSocket:(AsyncSocket *)sender didReadData:(NSData *)data withTag:(long)aTag
 {
-	if (![self checkTag:sender]) return;
+	if ([self checkTag:sender] == NO) return;
 	
 	[buffer appendData:data];
 	
@@ -268,7 +278,7 @@
 
 - (void)onSocket:(AsyncSocket *)sender didWriteDataWithTag:(long)aTag
 {
-	if (![self checkTag:sender]) return;
+	if ([self checkTag:sender] == NO) return;
 	
 	--sendQueueSize;
 	

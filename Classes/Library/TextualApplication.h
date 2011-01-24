@@ -24,6 +24,8 @@
 		#define END_WATCH ;
 	#endif
 
+	#define CFItemRefToID(s)			(id)s
+
 	typedef unsigned long long TXFSLongInt; // filesizes
 
 	#import "GlobalModels.h"

@@ -12,8 +12,7 @@
 
 @implementation URLParser
 
-#pragma mark -
-#pragma mark URL Parser
+static NSString *urlAddrRegexComplex = nil;
 
 + (NSArray *)locatedLinksForString:(NSString *)body
 {
@@ -24,10 +23,7 @@
 	
 	while (start < len) {
 		NSRange r = [self rangeOfUrlStart:start withString:body];
-		
-		if (r.location == NSNotFound) {
-			break;
-		}
+		if (r.location == NSNotFound) break;
 		
 		if (r.length >= 1) {
 			NSString *link = [body substringWithRange:r];
@@ -64,7 +60,6 @@
 	
 	NSRange rs = [shortstring rangeOfRegex:[self complexURLRegularExpression]];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
 	NSString *leftchar = nil;
@@ -88,11 +83,6 @@
 	
 	return r;
 }
-
-#pragma mark -
-#pragma mark Info for Parser
-
-static NSString *urlAddrRegexComplex;
 
 + (NSString *)complexURLRegularExpression
 {

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.SystemVersion">10J842</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">823</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="233"/>
@@ -1344,7 +1344,7 @@
 				<reference key="NSMixedImage" ref="852898728"/>
 				<string key="NSAction">submenuAction:</string>
 				<object class="NSMenu" key="NSSubmenu" id="643128149">
-					<string key="NSTitle">Formatting</string>
+					<string key="NSTitle">IRC Formatting</string>
 					<array class="NSMutableArray" key="NSMenuItems">
 						<object class="NSMenuItem" id="163355105">
 							<reference key="NSMenu" ref="643128149"/>
@@ -6754,14 +6754,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">BWHyperlinkButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Helpers/BWHyperlinkButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">ChanBanExceptionSheet</string>
 					<string key="superclassName">SheetBase</string>
 					<dictionary class="NSMutableDictionary" key="actions">
@@ -6839,6 +6831,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="cancel:">id</string>
 						<string key="ok:">id</string>
+						<string key="onMenuBarItemChanged:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="cancel:">
@@ -6849,20 +6842,45 @@
 							<string key="name">ok:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onMenuBarItemChanged:">
+							<string key="name">onMenuBarItemChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="autoJoinCheck">NSButton</string>
+						<string key="contentView">NSView</string>
+						<string key="encryptKeyText">NSTextField</string>
+						<string key="encryptView">NSView</string>
+						<string key="generalView">NSView</string>
 						<string key="growlCheck">NSButton</string>
 						<string key="ihighlights">NSButton</string>
 						<string key="modeText">NSTextField</string>
 						<string key="nameText">NSTextField</string>
 						<string key="passwordText">NSTextField</string>
+						<string key="tabView">NSSegmentedControl</string>
 						<string key="topicText">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="autoJoinCheck">
 							<string key="name">autoJoinCheck</string>
 							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="contentView">
+							<string key="name">contentView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encryptKeyText">
+							<string key="name">encryptKeyText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encryptView">
+							<string key="name">encryptView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="generalView">
+							<string key="name">generalView</string>
+							<string key="candidateClassName">NSView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="growlCheck">
 							<string key="name">growlCheck</string>
@@ -6883,6 +6901,10 @@
 						<object class="IBToOneOutletInfo" key="passwordText">
 							<string key="name">passwordText</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tabView">
+							<string key="name">tabView</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="topicText">
 							<string key="name">topicText</string>
@@ -7300,7 +7322,7 @@
 						<string key="onWantToReadChannelLogs:">id</string>
 						<string key="onWantToReadTextualLogs:">id</string>
 						<string key="openHelpMenuLinkItem:">id</string>
-						<string key="processNavigationItem:">NSMenuItem</string>
+						<string key="processNavigationItem:">id</string>
 						<string key="wantsFullScreenModeToggled:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -7578,7 +7600,7 @@
 						</object>
 						<object class="IBActionInfo" key="processNavigationItem:">
 							<string key="name">processNavigationItem:</string>
-							<string key="candidateClassName">NSMenuItem</string>
+							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="wantsFullScreenModeToggled:">
 							<string key="name">wantsFullScreenModeToggled:</string>
@@ -8182,7 +8204,6 @@
 						<string key="scriptsView">NSView</string>
 						<string key="stylesView">NSView</string>
 						<string key="themeButton">NSPopUpButton</string>
-						<string key="timestampSymbolsLinkButton">BWHyperlinkButton</string>
 						<string key="transcriptFolderButton">NSPopUpButton</string>
 						<string key="transfersView">NSView</string>
 						<string key="updatesView">NSView</string>
@@ -8276,10 +8297,6 @@
 							<string key="name">themeButton</string>
 							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="timestampSymbolsLinkButton">
-							<string key="name">timestampSymbolsLinkButton</string>
-							<string key="candidateClassName">BWHyperlinkButton</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="transcriptFolderButton">
 							<string key="name">transcriptFolderButton</string>
 							<string key="candidateClassName">NSPopUpButton</string>
@@ -8301,6 +8318,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addChannel:">id</string>
 						<string key="addIgnore:">id</string>
+						<string key="bouncerModeChanged:">id</string>
 						<string key="cancel:">id</string>
 						<string key="deleteChannel:">id</string>
 						<string key="deleteIgnore:">id</string>
@@ -8319,6 +8337,10 @@
 						</object>
 						<object class="IBActionInfo" key="addIgnore:">
 							<string key="name">addIgnore:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="bouncerModeChanged:">
+							<string key="name">bouncerModeChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="cancel:">
@@ -8368,6 +8390,7 @@
 						<string key="altNicksText">NSTextField</string>
 						<string key="autoConnectCheck">NSButton</string>
 						<string key="autoReconnectCheck">NSButton</string>
+						<string key="bouncerModeCheck">NSButton</string>
 						<string key="channelTable">ListView</string>
 						<string key="contentView">NSView</string>
 						<string key="deleteChannelButton">NSButton</string>
@@ -8421,6 +8444,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="autoReconnectCheck">
 							<string key="name">autoReconnectCheck</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="bouncerModeCheck">
+							<string key="name">bouncerModeCheck</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="channelTable">

@@ -186,7 +186,7 @@
 {
 	if (selected == nil) return nil;
 	if ([selected isClient]) return nil;
-	if ([selected client] == c) return nil;
+	if (selected.client.uid != c.uid) return nil;
 	
 	return (IRCChannel *)selected;
 }

@@ -18,7 +18,7 @@ extern NSInteger TXRandomThousandNumber(void)
 	return ((1 + arc4random()) % (9999 + 1));
 }
 
-NSString *TXTLS(NSString *key)
+extern NSString *TXTLS(NSString *key)
 {
 	return [LanguagePreferences localizedStringWithKey:key];
 }
@@ -35,28 +35,24 @@ extern BOOL promptWithSuppression(NSString *whatFor,
 {
 	BOOL suppCheck = [TXNSUserDefaults() boolForKey:suppressionKey];
 	
-	if (suppCheck == YES) {
+	if (suppCheck == YES) return YES;
+
+	NSAlert *alert = [NSAlert alertWithMessageText:((title == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : title)
+									 defaultButton:((defaultButton == nil) ? TXTLS(@"OK_BUTTON") : defaultButton)
+								   alternateButton:((altButton == nil) ? TXTLS(@"CANCEL_BUTTON") : altButton)
+									   otherButton:nil
+						 informativeTextWithFormat:whatFor];
+	
+	[alert setShowsSuppressionButton:YES];
+	
+	[[alert suppressionButton] setTitle:((suppressionText == nil) ? TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE") : suppressionText)];
+	
+	if ([alert runModal] == NSAlertDefaultReturn) {
+		[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
+		
 		return YES;
 	} else {
-		NSAlert *alert = [NSAlert alertWithMessageText:((title == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : title)
-										 defaultButton:((defaultButton == nil) ? TXTLS(@"OK_BUTTON") : defaultButton)
-									   alternateButton:((altButton == nil) ? TXTLS(@"CANCEL_BUTTON") : altButton)
-										   otherButton:nil
-							 informativeTextWithFormat:whatFor];
-		
-		[alert setShowsSuppressionButton:YES];
-		
-		[[alert suppressionButton] setTitle:((suppressionText == nil) ? TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE") : suppressionText)];
-		
-		NSInteger button = [alert runModal];
-		
-		if (button == NSAlertDefaultReturn) {
-			[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:suppressionKey];
-			
-			return YES;
-		} else {
-			return NO;
-		}
+		return NO;
 	}
 }
 
@@ -76,21 +72,12 @@ extern NSString *promptForInput(NSString *whatFor,
 	
 	[dialog runModal];
 	
-	if ([dialog buttonClicked] == NSAlertDefaultReturn) {
-		NSString *result = [dialog promptValue];
-		
-		[dialog release];
-		
-		if (NSStringIsEmpty(result)) {
-			return nil;
-		} else {
-			return result;
-		}
-	} else {
-		[dialog release];
-		
-		return nil;
-	}
+	NSInteger button = [dialog buttonClicked];
+	NSString *result = [dialog promptValue];
+	
+	[dialog release];
+	
+	return ((NSStringIsEmpty(result) == NO && button == NSAlertDefaultReturn) ? result : nil);
 }
 
 #pragma mark -
@@ -136,7 +123,7 @@ extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat)
 
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
-	if ([format length] < 1) format = @"[%H:%M:%S]";
+	if (NSStringIsEmpty(format)) format = @"[%H:%M:%S]";
 	if (override) format = override;
 	
 	time_t global = time(NULL);
