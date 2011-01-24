@@ -9,23 +9,26 @@
 	
 	NSString *host;
 	NSInteger port;
-	BOOL useSSL;
 	
-	BOOL useSystemSocks;
+	NSInteger tag;
+	NSInteger sendQueueSize;
+	
+	BOOL useSSL;
 	BOOL useSocks;
+	BOOL useSystemSocks;
+	
+	BOOL active;
+	BOOL connecting;
+	
 	NSInteger socksVersion;
 	NSString *proxyHost;
 	NSInteger proxyPort;
 	NSString *proxyUser;
 	NSString *proxyPassword;
 	
-	NSInteger sendQueueSize;
-	
 	AsyncSocket *conn;
+	
 	NSMutableData *buffer;
-	NSInteger tag;
-	BOOL active;
-	BOOL connecting;
 	
 	NSArray *socketBadSSLCertErrorCodes;
 }
@@ -48,7 +51,7 @@
 @property (nonatomic, retain) AsyncSocket *conn;
 @property (nonatomic, retain) NSMutableData *buffer;
 @property (nonatomic, retain) NSArray *socketBadSSLCertErrorCodes;
-@property (nonatomic) NSInteger tag;
+@property (nonatomic, assign) NSInteger tag;
 
 - (id)initWithExistingConnection:(AsyncSocket *)socket;
 
@@ -57,6 +60,7 @@
 
 - (NSData *)read;
 - (NSData *)readLine;
+
 - (void)write:(NSData *)data;
 @end
 

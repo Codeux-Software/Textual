@@ -18,42 +18,33 @@
 @synthesize clickedNotificationName;
 @synthesize timedOutNotificationName;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
 	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
+	
 	[dnc removeObserver:self name:GROWL_IS_READY object:nil];
 	[dnc removeObserver:self name:clickedNotificationName object:nil];
 	[dnc removeObserver:self name:timedOutNotificationName object:nil];
+	
 	[appName release];
+	[appIcon release];
 	[allNotifications release];
 	[defaultNotifications release];
-	[appIcon release];
 	[clickedNotificationName release];
 	[timedOutNotificationName release];
+	
 	[super dealloc];
 }
 
 #pragma mark -
 #pragma mark Utilities
 
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc
 {
 	[self notifyWithType:type title:title description:desc clickContext:nil sticky:NO priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc
-		  clickContext:(id)context
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc  clickContext:(id)context
 {
 	[self notifyWithType:type title:title description:desc clickContext:context sticky:NO priority:0 icon:nil];
 }
@@ -75,15 +66,19 @@
 			  priority:(NSInteger)priority
 				  icon:(NSImage *)icon
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-								appName, @"ApplicationName",
-								[NSNumber numberWithInteger:[[NSProcessInfo processInfo] processIdentifier]], @"ApplicationPID",
-								type, @"NotificationName",
-								title, @"NotificationTitle",
-								desc, @"NotificationDescription",
-								[NSNumber numberWithInteger:priority], @"NotificationPriority",
-								nil];
-
+	NSInteger pid = [[NSProcessInfo processInfo] processIdentifier];
+	
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	[dic setObject:appName forKey:@"ApplicationName"];
+	
+	[dic setObject:type forKey:@"NotificationName"];;
+	[dic setObject:title forKey:@"NotificationTitle"];
+	[dic setObject:desc forKey:@"NotificationDescription"];
+	
+	[dic setObject:[NSString stringWithInteger:pid] forKey:@"ApplicationPID"];
+	[dic setObject:[NSString stringWithInteger:priority] forKey:@"NotificationPriority"];
+	
 	if (icon) {
 		[dic setObject:[icon TIFFRepresentation] forKey:@"NotificationIcon"];
 	}
@@ -96,18 +91,16 @@
 		[dic setObject:context forKey:@"NotificationClickContext"];
 	}
 	
-	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
-	[dnc postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
 }
 
 - (void)registerApplication
 {
-	if (!appName) {
-		
-		self.appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+	if (NSStringIsEmpty(appName)) {
+		self.appName = [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"];
 	}
 	
-	if (!defaultNotifications) {
+	if (defaultNotifications == nil) {
 		self.defaultNotifications = allNotifications;
 	}
 	
@@ -120,24 +113,22 @@
 	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_TIMED_OUT] retain];
 	
 	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
+	
 	[dnc addObserver:self selector:@selector(onReady:) name:GROWL_IS_READY object:nil];
 	[dnc addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
 	[dnc addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
 	
 	NSImage *icon = ((appIcon) ?: [NSApp applicationIconImage]);
 	
-	NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
-						 appName, @"ApplicationName",
-						 allNotifications, @"AllNotifications",
-						 defaultNotifications, @"DefaultNotifications",
-						 [icon TIFFRepresentation], @"ApplicationIcon",
-						 nil];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	[dic setObject:appName forKey:@"ApplicationName"];
+	[dic setObject:allNotifications forKey:@"AllNotifications"];
+	[dic setObject:defaultNotifications forKey:@"DefaultNotifications"];
+	[dic setObject:[icon TIFFRepresentation] forKey:@"ApplicationIcon"];
 	
 	[dnc postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:NO];
 }
-
-#pragma mark -
-#pragma mark Growl Delegate
 
 - (void)onReady:(NSNotification *)note
 {
@@ -147,7 +138,7 @@
 - (void)onClicked:(NSNotification *)note
 {
 	id context = [[note userInfo] objectForKey:GROWL_CONTEXT_KEY];
-
+	
 	if ([delegate respondsToSelector:@selector(tinyGrowlClient:didClick:)]) {
 		[delegate tinyGrowlClient:self didClick:context];
 	}

@@ -14,6 +14,7 @@
 	if ((self = [super init])) {
 		clients = [NSMutableArray new];
 	}
+	
 	return self;
 }
 
@@ -32,9 +33,11 @@
 	
 	conn = [[AsyncSocket alloc] initWithDelegate:self];
 	isActive = [conn acceptOnPort:port error:NULL];
-	if (!isActive) {
+	
+	if (isActive == NO) {
 		[self close];
 	}
+	
 	return isActive;
 }
 
@@ -42,6 +45,7 @@
 {
 	[conn disconnect];
 	[conn autorelease];
+	
 	conn = nil;
 	isActive = NO;
 }
@@ -58,6 +62,7 @@
 		[[c retain] autorelease];
 		[c close];
 	}
+	
 	[clients removeAllObjects];
 }
 
@@ -84,6 +89,7 @@
 	if ([delegate respondsToSelector:@selector(tcpServer:didDisconnect:)]) {
 		[delegate tcpServer:self didDisconnect:sender];
 	}
+	
 	[self closeClient:sender];
 }
 

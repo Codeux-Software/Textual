@@ -4,6 +4,7 @@
 @interface Timer : NSObject
 {
 	id delegate;
+	
 	BOOL reqeat;
 	SEL selector;
 	NSTimer *timer;

@@ -7,20 +7,17 @@
 {
 	IRCClient *client = (IRCClient *)[[theDelegate delegate] delegate];
 	
-	NSDictionary *settings = nil;
+	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+	
+	[settings setObject:CFItemRefToID(kCFStreamSocketSecurityLevelNegotiatedSSL) forKey:CFItemRefToID(kCFStreamSSLLevel)];
 	
 	if (client.config.isTrustedConnection) {
-		settings = [NSDictionary dictionaryWithObjectsAndKeys:
-					(NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
-					kCFNull, kCFStreamSSLPeerName,
-					kCFBooleanFalse, kCFStreamSSLIsServer,
-					kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
-					kCFBooleanTrue, kCFStreamSSLAllowsExpiredRoots,
-					kCFBooleanTrue, kCFStreamSSLAllowsExpiredCertificates,
-					kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
-					nil];
-	} else {
-		settings = [NSDictionary dictionaryWithObjectsAndKeys:(NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,  nil];
+		[settings setObject:CFItemRefToID(kCFNull) forKey:CFItemRefToID(kCFStreamSSLPeerName)];
+		[settings setObject:CFItemRefToID(kCFBooleanFalse) forKey:CFItemRefToID(kCFStreamSSLIsServer)];
+		[settings setObject:CFItemRefToID(kCFBooleanTrue) forKey:CFItemRefToID(kCFStreamSSLAllowsAnyRoot)];
+		[settings setObject:CFItemRefToID(kCFBooleanTrue) forKey:CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)];
+		[settings setObject:CFItemRefToID(kCFBooleanTrue) forKey:CFItemRefToID(kCFStreamSSLAllowsExpiredCertificates)];
+		[settings setObject:CFItemRefToID(kCFBooleanFalse) forKey:CFItemRefToID(kCFStreamSSLValidatesCertificateChain)];
 	}
 	
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
@@ -40,16 +37,16 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	if (version == 4) {
-		[settings setObject:(NSString *)kCFStreamSocketSOCKSVersion4 forKey:(NSString *)kCFStreamPropertySOCKSVersion];
+		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion4) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
 	} else {
-		[settings setObject:(NSString *)kCFStreamSocketSOCKSVersion5 forKey:(NSString *)kCFStreamPropertySOCKSVersion];
+		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion5) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
 	}
 	
-	[settings setObject:host forKey:(NSString *)kCFStreamPropertySOCKSProxyHost];
-	[settings setObject:[NSNumber numberWithInteger:port] forKey:(NSString *)kCFStreamPropertySOCKSProxyPort];
+	[settings setObject:host forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
+	[settings setObject:[NSNumber numberWithInteger:port] forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
 	
-	if ([user length]) [settings setObject:user forKey:(NSString *)kCFStreamPropertySOCKSUser];
-	if ([password length]) [settings setObject:password forKey:(NSString *)kCFStreamPropertySOCKSPassword];
+	if (NSStringIsEmpty(user) == NO) [settings setObject:user forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
+	if (NSStringIsEmpty(password) == NO) [settings setObject:password forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
 	
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
@@ -59,11 +56,7 @@
 {
 	const char* error = strerror(code);
 	
-	if (error) {
-		return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
-	} else {
-		return nil;
-	}
+	return ((error) ? [NSString stringWithCString:error encoding:NSASCIIStringEncoding] : nil);
 }
 
 @end

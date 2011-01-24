@@ -4,10 +4,12 @@
 @interface TinyGrowlClient : NSObject
 {
 	id delegate;
+	
+	NSImage *appIcon;
 	NSString *appName;
+	
 	NSArray *allNotifications;
 	NSArray *defaultNotifications;
-	NSImage *appIcon;
 	
 	NSString *clickedNotificationName;
 	NSString *timedOutNotificationName;
@@ -15,22 +17,16 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, copy) NSString *appName;
+@property (nonatomic, retain) NSImage *appIcon;
 @property (nonatomic, retain) NSArray *allNotifications;
 @property (nonatomic, retain) NSArray *defaultNotifications;
-@property (nonatomic, retain) NSImage *appIcon;
 @property (nonatomic, retain) NSString *clickedNotificationName;
 @property (nonatomic, retain) NSString *timedOutNotificationName;
 
 - (void)registerApplication;
 
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc;
-
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc
-		  clickContext:(id)context;
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc;
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc clickContext:(id)context;
 
 - (void)notifyWithType:(NSString *)type
 				 title:(NSString *)title

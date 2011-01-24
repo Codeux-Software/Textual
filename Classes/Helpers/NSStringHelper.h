@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define IsAlpha(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
-#define IsNumeric(c)						('0' <= (c) && (c) <= '9' && !IsAlpha(c)) 
+#define IsNumeric(c)						('0' <= (c) && (c) <= '9' && IsAlpha(c) == NO) 
 #define IsAlphaNum(c)						(IsAlpha(c) || IsNumeric(c))
 #define IsWordLetter(c)						(IsAlphaNum(c) || (c) == '_')
 #define IsIRCColor(c,f)						([NSNumber compareIRCColor:c against:f])

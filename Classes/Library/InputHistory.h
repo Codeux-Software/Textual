@@ -8,7 +8,7 @@
 }
 
 @property (nonatomic, retain) NSMutableArray *buf;
-@property (nonatomic) NSInteger pos;
+@property (nonatomic, assign) NSInteger pos;
 
 - (void)add:(NSString *)s;
 - (NSString *)up:(NSString *)s;

@@ -13,6 +13,7 @@
 		codeHandlerMap = [NSMutableDictionary new];
 		characterHandlerMap = [NSMutableDictionary new];
 	}
+	
 	return self;
 }
 
@@ -20,6 +21,7 @@
 {
 	[codeHandlerMap release];
 	[characterHandlerMap release];
+	
 	[super dealloc];
 }
 
@@ -27,34 +29,38 @@
 {
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [codeHandlerMap objectForKey:modsKey];
-	if (!map) {
+	
+	if (map == nil) {
 		map = [NSMutableDictionary dictionary];
+		
 		[codeHandlerMap setObject:map forKey:modsKey];
 	}
 	
-	NSNumber *codeKey = [NSNumber numberWithInteger:code];
-	[map setObject:NSStringFromSelector(selector) forKey:codeKey];
+	[map setObject:NSStringFromSelector(selector) forKey:[NSNumber numberWithInteger:code]];
 }
 
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [characterHandlerMap objectForKey:modsKey];
-	if (!map) {
+	
+	if (map == nil) {
 		map = [NSMutableDictionary dictionary];
+		
 		[characterHandlerMap setObject:map forKey:modsKey];
 	}
 	
-	NSNumber *charKey = [NSNumber numberWithInteger:c];
-	[map setObject:NSStringFromSelector(selector) forKey:charKey];
+	[map setObject:NSStringFromSelector(selector) forKey:[NSNumber numberWithInteger:c]];
 }
 
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods
 {
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [characterHandlerMap objectForKey:modsKey];
-	if (!map) {
+	
+	if (map == nil) {
 		map = [NSMutableDictionary dictionary];
+		
 		[characterHandlerMap setObject:map forKey:modsKey];
 	}
 	
@@ -63,6 +69,7 @@
 	
 	for (NSInteger i = from; i < to; ++i) {
 		NSNumber *charKey = [NSNumber numberWithInteger:i];
+		
 		[map setObject:NSStringFromSelector(selector) forKey:charKey];
 	}
 }
@@ -73,29 +80,32 @@
 	if (im && [im markedRange].length > 0) return NO;
 	
 	NSUInteger m = [e modifierFlags];
-	m &= NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
+	m &= (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask);
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:m];
 	
 	NSMutableDictionary *codeMap = [codeHandlerMap objectForKey:modsKey];
+	
 	if (codeMap) {
-		NSInteger k = [e keyCode];
-		NSNumber *codeKey = [NSNumber numberWithInteger:k];
-		NSString *selectorName = [codeMap objectForKey:codeKey];
+		NSString *selectorName = [codeMap objectForKey:[NSNumber numberWithInteger:[e keyCode]]];
+		
 		if (selectorName) {
 			[target performSelector:NSSelectorFromString(selectorName) withObject:e];
+			
 			return YES;
 		}
 	}
 	
 	NSMutableDictionary *characterMap = [characterHandlerMap objectForKey:modsKey];
+	
 	if (characterMap) {
 		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
-		if (str.length) {
-			UniChar c = [str characterAtIndex:0];
-			NSNumber *charKey = [NSNumber numberWithInteger:c];
-			NSString *selectorName = [characterMap objectForKey:charKey];
+		
+		if (NSStringIsEmpty(str) == NO) {
+			NSString *selectorName = [characterMap objectForKey:[NSNumber numberWithInteger:[str characterAtIndex:0]]];
+			
 			if (selectorName) {
 				[target performSelector:NSSelectorFromString(selectorName) withObject:e];
+				
 				return YES;
 			}
 		}

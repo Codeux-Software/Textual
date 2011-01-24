@@ -13,13 +13,6 @@
 @synthesize fileName;
 @synthesize file;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
 	[self close];
@@ -32,6 +25,7 @@
 	if (file) {
 		[file closeFile];
 		[file release];
+		
 		file = nil;
 	}
 }
@@ -43,9 +37,14 @@
 	if (file) {
 		s = [s stringByAppendingString:@"\n"];
 		
-		NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];
-		if (!data) {
-			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSData *data = [s dataUsingEncoding:client.encoding];
+		
+		if (data == nil) {
+			data = [s dataUsingEncoding:client.config.fallbackEncoding];
+			
+			if (data == nil) {
+				data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+			}
 		}
 		
 		if (data) {
@@ -56,7 +55,7 @@
 
 - (void)reopenIfNeeded
 {
-	if (!fileName || ![fileName isEqualToString:[self buildFileName]]) {
+	if (NSStringIsEmpty(fileName) || [fileName isEqualToString:[self buildFileName]] == NO) {
 		[self open];
 	}
 }
@@ -72,11 +71,11 @@
 	
 	BOOL isDir = NO;
 	
-	if (![TXNSFileManager() fileExistsAtPath:dir isDirectory:&isDir]) {
+	if ([TXNSFileManager() fileExistsAtPath:dir isDirectory:&isDir] == NO) {
 		[TXNSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	if (![TXNSFileManager() fileExistsAtPath:fileName]) {
+	if ([TXNSFileManager() fileExistsAtPath:fileName] == NO) {
 		[TXNSFileManager() createFileAtPath:fileName contents:[NSData data] attributes:nil];
 	}
 	
@@ -90,14 +89,15 @@
 
 - (NSString *)buildFileName
 {
-	NSString *base = [Preferences transcriptFolder];
-	base = [base stringByExpandingTildeInPath];
+	NSString *base = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	
 	static NSDateFormatter *format = nil;
-	if (!format) {
+	
+	if (format == nil) {
 		format = [NSDateFormatter new];
 		[format setDateFormat:@"yyyy-MM-dd"];
 	}
+	
 	NSString *date = [format stringFromDate:[NSDate date]];
 	NSString *name = [[client name] safeFileName];
 	
