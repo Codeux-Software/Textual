@@ -9,27 +9,30 @@
 @implementation ViewTheme
 
 @synthesize baseUrl;
+@synthesize core_js;
 @synthesize name;
 @synthesize other;
 @synthesize path;
-@synthesize core_js;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		other = [OtherTheme new];
+		
 		core_js = [FileWithContent new];
-		core_js.fileName = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
+		core_js.filename = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
+	
 	return self;
 }
 
 - (void)dealloc
 {
 	[name release];
+	[path release];
 	[other release];
 	[core_js release];
-	[path release];
+	
 	[super dealloc];
 }
 
@@ -51,21 +54,19 @@
 - (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
 	if (name) {
-		NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+		NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
+		NSString *filename = [ViewTheme extractThemeName:[Preferences themeName]];
 		
-		if (kindAndName) {
-			NSString *kind = [kindAndName safeObjectAtIndex:0];
-			NSString *fname = [kindAndName safeObjectAtIndex:1];
-			
+		if (NSStringIsEmpty(kind) == NO && NSStringIsEmpty(filename) == NO) {
 			if ([kind isEqualToString:@"resource"]) {
-				path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
+				path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 			} else {
-				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:fname];
+				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:filename];
 			}
 			
 			if ([TXNSFileManager() fileExistsAtPath:path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
-					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:fname];
+					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 					
 					if (reload) [self reload];
 				}
@@ -79,6 +80,7 @@
 			self.baseUrl = [NSURL fileURLWithPath:path];
 			
 			other.path = path;
+			
 			return;
 		}
 	}
@@ -96,9 +98,7 @@
 	[other reload];
 }
 
-+ (void)copyItemsUsingRecursionFrom:(NSString *)location 
-								 to:(NSString *)dest 
-					   whileForcing:(BOOL)force_reset
++ (void)copyItemsUsingRecursionFrom:(NSString *)location to:(NSString *)dest whileForcing:(BOOL)force_reset
 {
 	BOOL isDirectory = NO;
 	
@@ -109,14 +109,15 @@
 	}
 	
 	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:location error:NULL];
+	
 	for (NSString *file in resourceFiles) {
-		NSString *source = [location stringByAppendingPathComponent:file];
 		NSString *sdest = [dest stringByAppendingPathComponent:file];
+		NSString *source = [location stringByAppendingPathComponent:file];
 		
 		[TXNSFileManager() fileExistsAtPath:source isDirectory:&isDirectory];
 		[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
-			 ofItemAtPath:source
-					error:NULL];
+							ofItemAtPath:source
+								   error:NULL];
 		
 		BOOL resetAttrInfo = NO;
 		
@@ -151,8 +152,8 @@
 		
 		if (resetAttrInfo == YES || force_reset == YES) {
 			[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
-				 ofItemAtPath:sdest 
-						error:NULL];
+								ofItemAtPath:sdest 
+									   error:NULL];
 		}
 	}	
 }
@@ -168,21 +169,30 @@
 	[pool release];
 }
 
-+ (NSString *)buildResourceFileName:(NSString *)name
++ (NSString *)buildResourceFilename:(NSString *)name
 {
 	return [NSString stringWithFormat:@"resource:%@", name];
 }
 
-+ (NSString *)buildUserFileName:(NSString *)name
++ (NSString *)buildUserFilename:(NSString *)name
 {
 	return [NSString stringWithFormat:@"user:%@", name];
 }
 
-+ (NSArray *)extractFileName:(NSString *)source
++ (NSString *)extractThemeSource:(NSString *)source
 {
-	NSArray *ary = [source componentsSeparatedByString:@":"];
-	if (ary.count != 2) return nil;
-	return ary;
+	if ([source hasPrefix:@"user:"] == NO && 
+		[source hasPrefix:@"resource:"] == NO) return nil;
+	
+	return [source safeSubstringToIndex:[source stringPosition:@":"]];
+}
+
++ (NSString *)extractThemeName:(NSString *)source
+{
+	if ([source hasPrefix:@"user:"] == NO && 
+		[source hasPrefix:@"resource:"] == NO) return nil;
+
+	return [source safeSubstringAfterIndex:[source stringPosition:@":"]];	
 }
 
 @end

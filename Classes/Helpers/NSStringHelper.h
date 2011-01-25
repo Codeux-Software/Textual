@@ -12,8 +12,11 @@
 #define NSStringIsEmpty(s)					(s == nil || [s length] < 1)
 
 @interface NSString (NSStringHelper)
-- (NSString *)safeSubstringFromIndex:(NSUInteger)anIndex;
-- (NSString *)safeSubstringToIndex:(NSUInteger)anIndex;
+- (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
+- (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;
+
+- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex;
+- (NSString *)safeSubstringToIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars;

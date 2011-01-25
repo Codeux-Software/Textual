@@ -5,8 +5,10 @@
 @interface ViewTheme : NSObject
 {
 	NSURL *baseUrl;
+	
 	NSString *path;
 	NSString *name;
+	
 	OtherTheme *other;
 	FileWithContent *core_js;
 }
@@ -22,8 +24,10 @@
 
 - (void)validateFilePathExistanceAndReload:(BOOL)reload;
 
-+ (NSString *)buildResourceFileName:(NSString *)name;
-+ (NSString *)buildUserFileName:(NSString *)name;
-+ (NSArray *)extractFileName:(NSString *)source;
++ (NSString *)buildResourceFilename:(NSString *)name;
++ (NSString *)buildUserFilename:(NSString *)name;
+
++ (NSString *)extractThemeSource:(NSString *)source;
++ (NSString *)extractThemeName:(NSString *)source;
 
 @end

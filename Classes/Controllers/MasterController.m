@@ -787,12 +787,11 @@
 		if (suppCheck == NO) {
 			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 			
-			NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
-			NSString *fname = [kindAndName safeObjectAtIndex:1];
+			NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
 			
 			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
 			[alert setMessageText:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")];
-			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), fname, sf]];
+			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), theme, sf]];
 			
 			[alert setShowsSuppressionButton:YES];
 			[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];

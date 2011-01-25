@@ -39,86 +39,108 @@ typedef enum {
 
 @interface Preferences : NSObject
 
-+ (NSInteger)startTime;
 + (void)validateStoreReceipt;
+
++ (BOOL)isUpgradedFromVersion100;
+
++ (NSInteger)startTime;
+
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
+
 + (NSString *)whereScriptsPath;
 + (NSString *)whereApplicationSupportPath;
-+ (NSInteger)commandUIndex:(NSString *)command;
-+ (NSDictionary *)commandIndexList;
 + (NSString *)whereThemesPath;
 + (NSString *)whereScriptsLocalPath;
 + (NSString *)whereThemesLocalPath;
 + (NSString *)whereResourcePath;
 + (NSString *)wherePluginsPath;
 + (NSString *)wherePluginsLocalPath;
-+ (NSString *)completionSuffix;
+
++ (NSDictionary *)commandIndexList;
++ (NSInteger)commandUIndex:(NSString *)command;
+
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
 + (NSString *)defaultNickname;
++ (NSString *)defaultKickMessage;
+
++ (BOOL)handleIRCopAlerts;
++ (BOOL)handleServerNotices;
+
 + (NSString *)IRCopDefaultKillMessage;
 + (NSString *)IRCopDefaultGlineMessage;
 + (NSString *)IRCopDefaultShunMessage;
-+ (BOOL)floodControlIsEnabled;
-+ (NSInteger)floodControlDelayTimer;
-+ (NSInteger)floodControlMaxMessages;
 + (NSString *)IRCopAlertMatch;
-+ (NSInteger)autojoinMaxChannelJoins;
-+ (NSString *)defaultKickMessage;
-+ (BOOL)trackConversations;
-+ (BOOL)autojoinWaitForNickServ;
-+ (BOOL)inputHistoryIsChannelSpecific;
-+ (BOOL)logAllHighlightsToQuery;
-+ (BOOL)clearAllOnlyOnActiveServer;
-+ (BOOL)displayServerMOTD;
-+ (BOOL)copyOnSelect;
-+ (BOOL)handleIRCopAlerts;
-+ (BOOL)autoAddScrollbackMark;
-+ (BOOL)rightToLeftFormatting;
-+ (BOOL)removeAllFormatting;
-+ (BOOL)displayDockBadge;
-+ (BOOL)handleServerNotices;
+
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
 + (BOOL)nickAllConnections;
-+ (BOOL)confirmQuit;
++ (BOOL)clearAllOnlyOnActiveServer;
+
++ (NoticesSendToLocation)locationToSendNotices;
+
++ (BOOL)trackConversations;
++ (BOOL)disableNicknameColors;
+
++ (BOOL)logAllHighlightsToQuery;
++ (BOOL)keywordCurrentNick;
+
++ (KeywordMatchType)keywordMatchingMethod;
+
++ (BOOL)displayDockBadge;
++ (BOOL)countPublicMessagesInIconBadge;
+
++ (BOOL)autoAddScrollbackMark;
++ (BOOL)showInlineImages;
++ (BOOL)showJoinLeave;
 + (BOOL)indentOnHang;
-+ (BOOL)processChannelModes;
-+ (BOOL)rejoinOnKick;
++ (BOOL)displayServerMOTD;
++ (BOOL)rightToLeftFormatting;
++ (BOOL)removeAllFormatting;
+
 + (BOOL)autoJoinOnInvite;
++ (BOOL)processChannelModes;
+
++ (BOOL)confirmQuit;
++ (BOOL)rejoinOnKick;
++ (BOOL)copyOnSelect;
++ (BOOL)autojoinWaitForNickServ;
++ (BOOL)inputHistoryIsChannelSpecific;
+
++ (CmdW_Shortcut_ResponseType)cmdWResponseType;
+
++ (BOOL)logTranscript;
+
++ (BOOL)openBrowserInBackground;
+
 + (BOOL)connectOnDoubleclick;
 + (BOOL)disconnectOnDoubleclick;
 + (BOOL)joinOnDoubleclick;
 + (BOOL)leaveOnDoubleclick;
-+ (BOOL)logTranscript;
-+ (BOOL)openBrowserInBackground;
-+ (BOOL)showInlineImages;
-+ (BOOL)showJoinLeave;
-+ (BOOL)stopGrowlOnActive;
-+ (BOOL)disableNicknameColors;
-+ (BOOL)isUpgradedFromVersion100;
-+ (BOOL)countPublicMessagesInIconBadge;
-+ (TabActionType)tabAction;
-+ (BOOL)keywordCurrentNick;
-+ (HostmaskBanFormat)banFormat;
-+ (KeywordMatchType)keywordMatchingMethod;
-+ (CmdW_Shortcut_ResponseType)cmdWResponseType;
-+ (NoticesSendToLocation)locationToSendNotices;
+
 + (UserDoubleClickAction)userDoubleClickOption;
+
++ (BOOL)floodControlIsEnabled;
++ (NSInteger)floodControlDelayTimer;
++ (NSInteger)floodControlMaxMessages;
++ (NSInteger)autojoinMaxChannelJoins;
+
++ (HostmaskBanFormat)banFormat;
 
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 
 + (NSString *)themeName;
-+ (void)setThemeName:(NSString *)value;
 + (NSString *)themeLogFontName;
-+ (void)setThemeLogFontName:(NSString *)value;
-+ (double)themeLogFontSize;
-+ (void)setThemeLogFontSize:(double)value;
 + (NSString *)themeNickFormat;
 + (NSString *)themeTimestampFormat;
 + (double)themeTransparency;
++ (double)themeLogFontSize;
+
++ (void)setThemeName:(NSString *)value;
++ (void)setThemeLogFontName:(NSString *)value;
++ (void)setThemeLogFontSize:(double)value;
 
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;
@@ -126,35 +148,43 @@ typedef enum {
 + (NSString *)transcriptFolder;
 + (void)setTranscriptFolder:(NSString *)value;
 
++ (BOOL)stopGrowlOnActive;
+
 + (NSString *)titleForEvent:(GrowlNotificationType)event;
 + (NSString *)soundForEvent:(GrowlNotificationType)event;
-+ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event;
+
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event;
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
-+ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event;
+
++ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event;
++ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
++ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event;
 
++ (TabActionType)tabAction;
+
++ (NSString *)completionSuffix;
 + (void)setCompletionSuffix:(NSString *)value;
 
 + (BOOL)spellCheckEnabled;
-+ (void)setSpellCheckEnabled:(BOOL)value;
 + (BOOL)grammarCheckEnabled;
-+ (void)setGrammarCheckEnabled:(BOOL)value;
 + (BOOL)spellingCorrectionEnabled;
-+ (void)setSpellingCorrectionEnabled:(BOOL)value;
 + (BOOL)smartInsertDeleteEnabled;
-+ (void)setSmartInsertDeleteEnabled:(BOOL)value;
 + (BOOL)quoteSubstitutionEnabled;
-+ (void)setQuoteSubstitutionEnabled:(BOOL)value;
 + (BOOL)dashSubstitutionEnabled;
-+ (void)setDashSubstitutionEnabled:(BOOL)value;
 + (BOOL)linkDetectionEnabled;
-+ (void)setLinkDetectionEnabled:(BOOL)value;
 + (BOOL)dataDetectionEnabled;
-+ (void)setDataDetectionEnabled:(BOOL)value;
 + (BOOL)textReplacementEnabled;
+
++ (void)setSpellCheckEnabled:(BOOL)value;
++ (void)setGrammarCheckEnabled:(BOOL)value;
++ (void)setSpellingCorrectionEnabled:(BOOL)value;
++ (void)setSmartInsertDeleteEnabled:(BOOL)value;
++ (void)setQuoteSubstitutionEnabled:(BOOL)value;
++ (void)setDashSubstitutionEnabled:(BOOL)value;
++ (void)setLinkDetectionEnabled:(BOOL)value;
++ (void)setDataDetectionEnabled:(BOOL)value;
 + (void)setTextReplacementEnabled:(BOOL)value;
 
 + (BOOL)registeredToGrowl;
