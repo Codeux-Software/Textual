@@ -474,15 +474,8 @@
 		++tag;
 	}
 	
-	NSArray *kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
-	
-	if (!kindAndName) {
-		[themeButton selectItemAtIndex:0];
-		return;
-	}
-	
-	NSString *kind = [kindAndName safeObjectAtIndex:0];
-	NSString *name = [kindAndName safeObjectAtIndex:1];
+	NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
+	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
 	
 	NSInteger targetTag = 0;
 	
@@ -510,9 +503,9 @@
 	NSString *name = [item title];
 	
 	if (item.tag == 0) {
-		newThemeName = [ViewTheme buildResourceFileName:name];
+		newThemeName = [ViewTheme buildResourceFilename:name];
 	} else {
-		newThemeName = [ViewTheme buildUserFileName:name];
+		newThemeName = [ViewTheme buildUserFilename:name];
 	}
 	
 	if ([[Preferences themeName] isEqual:newThemeName]) return;

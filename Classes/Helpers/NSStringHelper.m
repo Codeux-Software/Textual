@@ -9,22 +9,33 @@
 
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 {
+	if (range.location == NSNotFound) return nil;
 	if (range.length > [self length]) return nil;
-	if ([self length] < range.location) return nil;
+	if (range.location > [self length]) return nil;
 	
 	return [self substringWithRange:range];
 }
 
-- (NSString *)safeSubstringFromIndex:(NSUInteger)anIndex
+- (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex
 {
-	if ([self length] < anIndex) return nil;
+	return [self safeSubstringFromIndex:(anIndex + 1)];
+}
+
+- (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex
+{
+	return [self safeSubstringFromIndex:(anIndex - 1)];
+}
+
+- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
+{
+	if ([self length] < anIndex || anIndex < 0) return nil;
 	
 	return [self substringFromIndex:anIndex];
 }
 
-- (NSString *)safeSubstringToIndex:(NSUInteger)anIndex
+- (NSString *)safeSubstringToIndex:(NSInteger)anIndex
 {
-	if ([self length] < anIndex) return nil;
+	if ([self length] < anIndex || anIndex < 0) return nil;
 	
 	return [self substringToIndex:anIndex];
 }

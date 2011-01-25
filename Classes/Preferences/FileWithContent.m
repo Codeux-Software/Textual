@@ -8,21 +8,22 @@
 
 @implementation FileWithContent
 
-@synthesize fileName;
+@synthesize filename;
 @synthesize content;
 
 - (void)dealloc
 {
-	[fileName release];
+	[filename release];
 	[content release];
+	
 	[super dealloc];
 }
 
-- (void)setFileName:(NSString *)value
+- (void)setFilename:(NSString *)value
 {
-	if (fileName != value) {
-		[fileName release];
-		fileName = [value retain];
+	if (filename != value) {
+		[filename release];
+		filename = [value retain];
 	}
 	
 	[self reload];
@@ -31,9 +32,10 @@
 - (void)reload
 {
 	[content release];
+	content = nil;
 	
-	NSData *data = [NSData dataWithContentsOfFile:fileName];
-	content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	content = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
+	[content retain];
 }
 
 @end

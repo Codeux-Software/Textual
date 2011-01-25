@@ -8,11 +8,14 @@
 	
 	NSColor *underlyingWindowColor;
 	
+	NSFont *treeFont;
 	NSFont *inputTextFont;
+	NSFont *memberListFont;
+	NSFont *overrideChannelFont;
+	
 	NSColor *inputTextBgColor;
 	NSColor *inputTextColor;
 	
-	NSFont *treeFont;
 	NSColor *treeBgColor;
 	NSColor *treeHighlightColor;
 	NSColor *treeNewTalkColor;
@@ -28,7 +31,6 @@
 	NSColor *treeSelTopColor;
 	NSColor *treeSelBottomColor;
 	
-	NSFont *memberListFont;
 	NSColor *memberListBgColor;
 	NSColor *memberListColor;
 	NSColor *memberListOpColor;
@@ -41,8 +43,6 @@
 	
 	NSString *nicknameFormat;
 	NSString *timestampFormat;
-	
-	NSFont *overrideChannelFont;
 	
 	BOOL indentWrappedMessages;
 	BOOL overrideMessageIndentWrap;

@@ -137,15 +137,11 @@
 
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world
 {
-    NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
-    
-    if (kindAndName) {
-        NSString* fname = [kindAndName safeObjectAtIndex:1];
-        
-        if (fname) {
-            return [NSString stringWithFormat:@"\002Current Theme:\002 %@", fname];
-        }
-    }
+	NSString* fname = [ViewTheme extractThemeName:[Preferences themeName]];
+	
+	if (fname) {
+		return [NSString stringWithFormat:@"\002Current Theme:\002 %@", fname];
+	}
     
     return @"\002Current Theme:\002 Unknown";
 }

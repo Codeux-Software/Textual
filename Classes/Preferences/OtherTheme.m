@@ -14,38 +14,38 @@
 
 @implementation OtherTheme
 
-@synthesize inputTextFont;
+@synthesize indentWrappedMessages;
 @synthesize inputTextBgColor;
 @synthesize inputTextColor;
-@synthesize treeFont;
-@synthesize treeBgColor;
-@synthesize treeHighlightColor;
-@synthesize treeNewTalkColor;
-@synthesize treeUnreadColor;
-@synthesize treeActiveColor;
-@synthesize treeInactiveColor;
-@synthesize treeSelActiveColor;
-@synthesize treeSelInactiveColor;
-@synthesize treeSelTopLineColor;
-@synthesize treeSelBottomLineColor;
-@synthesize treeSelTopColor;
-@synthesize treeSelBottomColor;
-@synthesize memberListFont;
+@synthesize inputTextFont;
 @synthesize memberListBgColor;
 @synthesize memberListColor;
+@synthesize memberListFont;
 @synthesize memberListOpColor;
-@synthesize memberListSelColor;
-@synthesize memberListSelTopLineColor;
-@synthesize memberListSelBottomLineColor;
-@synthesize memberListSelTopColor;
 @synthesize memberListSelBottomColor;
-@synthesize underlyingWindowColor;
+@synthesize memberListSelBottomLineColor;
+@synthesize memberListSelColor;
+@synthesize memberListSelTopColor;
+@synthesize memberListSelTopLineColor;
 @synthesize nicknameFormat;
-@synthesize timestampFormat;
-@synthesize overrideChannelFont;
-@synthesize indentWrappedMessages;
-@synthesize overrideMessageIndentWrap;
 @synthesize nicknameFormatFixedWidth;
+@synthesize overrideChannelFont;
+@synthesize overrideMessageIndentWrap;
+@synthesize timestampFormat;
+@synthesize treeActiveColor;
+@synthesize treeBgColor;
+@synthesize treeFont;
+@synthesize treeHighlightColor;
+@synthesize treeInactiveColor;
+@synthesize treeNewTalkColor;
+@synthesize treeSelActiveColor;
+@synthesize treeSelBottomColor;
+@synthesize treeSelBottomLineColor;
+@synthesize treeSelInactiveColor;
+@synthesize treeSelTopColor;
+@synthesize treeSelTopLineColor;
+@synthesize treeUnreadColor;
+@synthesize underlyingWindowColor;
 
 - (NSString *)path
 {
@@ -64,44 +64,36 @@
 
 - (void)dealloc
 {
-	[path release];
-	
-	[inputTextFont release];
 	[inputTextBgColor release];
 	[inputTextColor release];
-
-	[treeFont release];
-	[treeBgColor release];
-	[treeHighlightColor release];
-	[treeNewTalkColor release];
-	[treeUnreadColor release];
-	
-	[treeActiveColor release];
-	[treeInactiveColor release];
-	
-	[treeSelActiveColor release];
-	[treeSelInactiveColor release];
-	[treeSelTopLineColor release];
-	[treeSelBottomLineColor release];
-	[treeSelTopColor release];
-	[treeSelBottomColor release];
-	
-	[memberListFont release];
+	[inputTextFont release];
 	[memberListBgColor release];
 	[memberListColor release];
+	[memberListFont release];
 	[memberListOpColor release];
-
-	[memberListSelColor release];
-	[memberListSelTopLineColor release];
-	[memberListSelBottomLineColor release];
-	[memberListSelTopColor release];
 	[memberListSelBottomColor release];
-	
-	[underlyingWindowColor release];
-	
+	[memberListSelBottomLineColor release];
+	[memberListSelColor release];
+	[memberListSelTopColor release];
+	[memberListSelTopLineColor release];
 	[nicknameFormat release];
-	[timestampFormat release];
 	[overrideChannelFont release];
+	[path release];
+	[timestampFormat release];
+	[treeActiveColor release];
+	[treeBgColor release];
+	[treeFont release];
+	[treeHighlightColor release];
+	[treeInactiveColor release];
+	[treeNewTalkColor release];
+	[treeSelActiveColor release];
+	[treeSelBottomColor release];
+	[treeSelBottomLineColor release];
+	[treeSelInactiveColor release];
+	[treeSelTopColor release];
+	[treeSelTopLineColor release];
+	[treeUnreadColor release];
+	[underlyingWindowColor release];	
 	
 	[super dealloc];
 }

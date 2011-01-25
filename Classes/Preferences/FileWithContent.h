@@ -4,11 +4,11 @@
 
 @interface FileWithContent : NSObject
 {
-	NSString *fileName;
+	NSString *filename;
 	NSString *content;
 }
 
-@property (nonatomic, retain) NSString *fileName;
+@property (nonatomic, retain) NSString *filename;
 @property (nonatomic, readonly) NSString *content;
 
 @end

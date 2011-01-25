@@ -9,9 +9,8 @@
 #pragma mark -
 #pragma mark Version Dictonaries
 
-static NSDictionary *textualPlist;
-static NSDictionary *systemVersionPlist;
-static NSMutableDictionary *commandIndex;
+static NSDictionary *textualPlist = nil;
+static NSDictionary *systemVersionPlist = nil;
 
 + (NSDictionary *)textualInfoPlist
 {
@@ -39,6 +38,8 @@ static NSMutableDictionary *commandIndex;
 
 #pragma mark -
 #pragma mark Command Index
+
+static NSMutableDictionary *commandIndex = nil;
 
 + (NSDictionary *)commandIndexList
 {
@@ -223,6 +224,8 @@ static NSMutableDictionary *commandIndex;
 
 #pragma mark - 
 #pragma mark General Preferences
+
+/* There is no real logic to how the following preferences are ordered. */
 
 + (NSInteger)autojoinMaxChannelJoins
 {
@@ -630,48 +633,56 @@ static NSMutableDictionary *commandIndex;
 + (NSString *)soundForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	
 	return [TXNSUserDefaults() objectForKey:key];
 }
 
 + (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	
 	[TXNSUserDefaults() setObject:value forKey:key];
 }
 
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	
 	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	
 	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	
 	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	
 	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	
 	return [TXNSUserDefaults() boolForKey:key];
 }
 
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
 {
 	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	
 	[TXNSUserDefaults() setBool:value forKey:key];
 }
 
@@ -680,7 +691,8 @@ static NSMutableDictionary *commandIndex;
 
 + (BOOL)spellCheckEnabled
 {
-	if (![TXNSUserDefaults() objectForKey:@"spellCheck2"]) return YES;
+	if ([TXNSUserDefaults() objectForKey:@"spellCheck2"] == nil) return YES;
+	
 	return [TXNSUserDefaults() boolForKey:@"spellCheck2"];
 }
 
@@ -711,7 +723,8 @@ static NSMutableDictionary *commandIndex;
 
 + (BOOL)smartInsertDeleteEnabled
 {
-	if (![TXNSUserDefaults() objectForKey:@"smartInsertDelete"]) return YES;
+	if ([TXNSUserDefaults() objectForKey:@"smartInsertDelete"] == nil) return YES;
+	
 	return [TXNSUserDefaults() boolForKey:@"smartInsertDelete"];
 }
 
@@ -812,8 +825,8 @@ static NSMutableDictionary *commandIndex;
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray *keywords;
-static NSMutableArray *excludeWords;
+static NSMutableArray *keywords = nil;
+static NSMutableArray *excludeWords = nil;
 
 + (void)loadKeywords
 {
@@ -828,7 +841,9 @@ static NSMutableArray *excludeWords;
 	for (NSDictionary *e in ary) {
 		NSString *s = [e objectForKey:@"string"];
 		
-		if (s) [keywords addObject:s];
+		if (NSStringIsEmpty(s) == NO) {
+			[keywords addObject:s];
+		}
 	}
 }
 
@@ -858,7 +873,7 @@ static NSMutableArray *excludeWords;
 	for (NSDictionary *e in src) {
 		NSString *s = [e objectForKey:@"string"];
 		
-		if (s.length) {
+		if (NSStringIsEmpty(s) == NO) {
 			[ary addObject:s];
 		}
 	}
@@ -871,6 +886,7 @@ static NSMutableArray *excludeWords;
 		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 		
 		[dic setObject:s forKey:@"string"];
+		
 		[saveAry addObject:dic];
 	}
 	
@@ -904,10 +920,7 @@ static NSInteger startUpTime;
 	return startUpTime;
 }
 
-+ (void)observeValueForKeyPath:(NSString *)key
-					  ofObject:(id)object
-						change:(NSDictionary *)change
-					   context:(void *)context
++ (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([key isEqualToString:@"keywords"]) {
 		[self loadKeywords];
@@ -945,18 +958,22 @@ static NSInteger startUpTime;
 			BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.default_irc_client"];
 			
 			if (suppCheck == NO) {
-				NSAlert *alert = [[NSAlert alloc] init];
+				NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 				
-				[alert autorelease];
+				[alert setAlertStyle:NSInformationalAlertStyle];
 				
 				[alert addButtonWithTitle:TXTLS(@"YES_BUTTON")];
 				[alert addButtonWithTitle:TXTLS(@"NO_BUTTON")];
 				[alert setMessageText:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_TITLE")];
 				[alert setInformativeText:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_MESSAGE")];
+				
 				[alert setShowsSuppressionButton:YES];
 				[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
-				[alert setAlertStyle:NSInformationalAlertStyle];
-				[alert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(defaultIRCClientSheetCallback:returnCode:contextInfo:) contextInfo:nil];
+				
+				[alert beginSheetModalForWindow:[NSApp mainWindow] 
+								  modalDelegate:self 
+								 didEndSelector:@selector(defaultIRCClientSheetCallback:returnCode:contextInfo:) 
+									contextInfo:nil];
 			}
 		}
 	}
@@ -968,8 +985,9 @@ static NSInteger startUpTime;
 
 + (void)initPreferences
 {
-	NSInteger numberOfRuns = [TXNSUserDefaults() integerForKey:@"TXRunCount"];
-	[TXNSUserDefaults() setInteger:(numberOfRuns + 1) forKey:@"TXRunCount"];
+	NSInteger numberOfRuns = ([TXNSUserDefaults() integerForKey:@"TXRunCount"] + 1);
+
+	[TXNSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
 	
 	if (numberOfRuns > 0) {
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
@@ -1062,9 +1080,9 @@ static NSInteger startUpTime;
 	[TXNSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[TXNSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
-	systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-	if (!systemVersionPlist) systemVersionPlist = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-	if (!systemVersionPlist) exit(10);
+	systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
+	if (systemVersionPlist == nil) systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+	if (systemVersionPlist == nil) exit(10);
 	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
 	
