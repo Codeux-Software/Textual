@@ -7,11 +7,13 @@
 @interface LogPolicy : NSObject
 {
 	MenuController *menuController;
+	
 	NSMenu *menu;
 	NSMenu *urlMenu;
 	NSMenu *addrMenu;
 	NSMenu *memberMenu;
 	NSMenu *chanMenu;
+	
 	NSString *url;
 	NSString *addr;
 	NSString *nick;

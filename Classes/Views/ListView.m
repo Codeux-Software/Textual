@@ -77,6 +77,7 @@
 				if ([self countSelectedRows] > 0) {
 					if ([keyDelegate respondsToSelector:@selector(listViewDelete)]) {
 						[keyDelegate listViewDelete];
+						
 						return;
 					}
 				}
@@ -84,9 +85,11 @@
 			case 126:	
 			{
 				NSIndexSet *set = [self selectedRowIndexes];
+				
 				if ([set count] > 0 && [set containsIndex:0]) {
 					if ([keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
 						[keyDelegate listViewMoveUp];
+						
 						return;
 					}
 				}

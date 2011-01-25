@@ -16,11 +16,6 @@
 	return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (NSString *)displayName
 {
 	return [Preferences titleForEvent:eventType];

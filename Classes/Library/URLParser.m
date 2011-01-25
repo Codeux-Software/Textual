@@ -26,14 +26,14 @@ static NSString *urlAddrRegexComplex = nil;
 		if (r.location == NSNotFound) break;
 		
 		if (r.length >= 1) {
-			NSString *link = [body substringWithRange:r];
+			NSString *link = [body safeSubstringWithRange:r];
 			NSString *choppedString = [link fastChopEndWithChars:[self bannedURLRegexEndChars]];
 			
 			NSInteger origLenth = [link length];
 			NSInteger choppedLenth = [choppedString length];
 			
 			if (choppedLenth < origLenth) {
-				NSString *lastchar = [link substringWithRange:NSMakeRange(choppedLenth, 1)];
+				NSString *lastchar = [link safeSubstringWithRange:NSMakeRange(choppedLenth, 1)];
 				NSString *mapChar = [[self URLRegexSpecialCharactersMapping] objectForKey:lastchar];
 				
 				if (mapChar && [link contains:mapChar]) {
@@ -68,11 +68,11 @@ static NSString *urlAddrRegexComplex = nil;
 	NSInteger rightcharLocal = (r.location + r.length);
 	
 	if (r.location > 0) {
-		leftchar = [string substringWithRange:NSMakeRange((r.location - 1), 1)];
+		leftchar = [string safeSubstringWithRange:NSMakeRange((r.location - 1), 1)];
 	}
 	
 	if (rightcharLocal < [string length]) {
-		rightchar = [string substringWithRange:NSMakeRange(rightcharLocal, 1)];
+		rightchar = [string safeSubstringWithRange:NSMakeRange(rightcharLocal, 1)];
 	}
 	
 	if ([[self bannedURLRegexLeftBufferChars] containsObject:leftchar] ||

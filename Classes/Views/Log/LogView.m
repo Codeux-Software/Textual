@@ -10,14 +10,16 @@
 {
 	if (keyDelegate) {
 		NSUInteger m = [e modifierFlags];
+		
 		BOOL cmd = ((m & NSCommandKeyMask) != 0);
 		BOOL ctrl = ((m & NSControlKeyMask) != 0);
 		BOOL alt = ((m & NSAlternateKeyMask) != 0);
 		
-		if (!ctrl && !alt && !cmd) {
+		if (ctrl == NO && alt == NO && cmd == NO) {
 			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
 				[keyDelegate logViewKeyDown:e];
 			}
+			
 			return;
 		}
 	}
@@ -46,11 +48,14 @@
 - (NSString *)contentString
 {
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[self mainFrameDocument];
-	if (!doc) return @"";
+	if (doc == nil) return @"";
+	
 	DOMElement *body = [doc body];
-	if (!body) return @"";
+	if (body == nil) return @"";
+	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	if (!root) return @"";
+	if (root == nil) return @"";
+	
 	return [root outerHTML];
 }
 
@@ -66,13 +71,14 @@
 
 - (BOOL)hasSelection
 {
-	return [self selection].length > 0;
+	return BOOLReverseValue(NSStringIsEmpty([self selection]));
 }
 
 - (NSString *)selection
 {
 	DOMRange *range = [self selectedDOMRange];
-	if (!range) return nil;
+	if (range == nil) return nil;
+	
 	return [range toString];
 }
 

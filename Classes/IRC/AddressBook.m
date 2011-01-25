@@ -23,13 +23,6 @@
 	[super dealloc];
 }
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ([self init]) {

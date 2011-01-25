@@ -181,7 +181,7 @@
 			break;
 		default:
 		{
-			TextualPluginItem *plugin = [world.bundlesWithPreferences objectAtIndex:([sender tag] - 20)];
+			TextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
 			
 			if (plugin) {
 				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];

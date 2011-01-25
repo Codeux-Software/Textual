@@ -15,11 +15,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)start:(NSString *)topic
 {
 	[text setStringValue:(([topic stringWithInputIRCFormatting]) ?: @"")];

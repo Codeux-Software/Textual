@@ -11,13 +11,6 @@
 @synthesize fileName;
 @synthesize content;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
 	[fileName release];

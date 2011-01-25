@@ -5,9 +5,10 @@
 
 - (void)setEnabled:(BOOL)value
 {
-	[super setEnabled:value];
+	NSColor *color = ((value) ? [NSColor controlTextColor] : [NSColor disabledControlTextColor]);
 	
-	[self setTextColor:((value) ? [NSColor controlTextColor] : [NSColor disabledControlTextColor])];
+	[super setEnabled:value];
+	[self setTextColor:color];
 }
 
 @end

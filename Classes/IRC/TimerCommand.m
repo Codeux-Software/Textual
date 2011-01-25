@@ -7,13 +7,6 @@
 @synthesize cid;
 @synthesize input;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
 	[input release];

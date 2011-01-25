@@ -489,7 +489,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ((stringl + baseMath) > IRC_BODY_LEN) {
 		stringl = (IRC_BODY_LEN - baseMath);
 		
-		new = [new substringToIndex:stringl];
+		new = [new safeSubstringToIndex:stringl];
 		
 		NSRange currentRange = NSMakeRange(0, stringl);
 		NSRange spaceRange = [new rangeOfString:@" " options:NSBackwardsSearch];
@@ -497,13 +497,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (spaceRange.location != NSNotFound) {
 			currentRange.length = (stringl - (stringl - spaceRange.location));
 			
-			if ((stringl - currentRange.length) < (stringl - 20)) {
+			if ((stringl - currentRange.length) < (stringl - 40)) {
 				currentRange.length = stringl;
 			}
 		}
 		
 		[base deleteCharactersInRange:currentRange];
-		return [new substringWithRange:currentRange];
+		
+		return [new safeSubstringWithRange:currentRange];
 	} else {
 		[base deleteCharactersInRange:NSMakeRange(0, new.length)];
 	}
@@ -2679,7 +2680,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		NSRange numRange = r;
 		
 		if (numRange.location != NSNotFound && numRange.length > 0) {
-			NSString *numStr = [s substringWithRange:numRange];
+			NSString *numStr = [s safeSubstringWithRange:numRange];
 			NSInteger n = [numStr integerValue];
 			NSString *formattedNick = nick;
 			
@@ -4241,7 +4242,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					
 					if (NSStringIsEmpty(nick)) continue;
 					
-					NSString *u = [nick substringWithRange:NSMakeRange(0, 1)];
+					NSString *u = [nick safeSubstringWithRange:NSMakeRange(0, 1)];
 					NSString *op = @" ";
 					
 					if ([u isEqualTo:@"@"] || [u isEqualTo:@"~"] || 

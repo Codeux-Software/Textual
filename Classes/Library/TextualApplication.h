@@ -58,7 +58,6 @@
 	#import "LogController.h"
 	#import "MemberListViewCell.h"
 	#import "FieldEditorTextView.h"
-	#import "TableProgressIndicator.h"
 	#import "TextFieldWithDisabledState.h"
 	#import "Timer.h"
 	#import "TCPClient.h"

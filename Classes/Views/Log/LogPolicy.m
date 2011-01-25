@@ -2,10 +2,10 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface LogPolicy (Private)
-- (void)modifyMemberMenu:(NSMenu *)menu;
-- (void)modifyMemberMenuItem:(NSMenuItem *)item;
-@end
+#define WebMenuItemTagInspectElement	2024
+#define WebMenuItemTagIRCopServices		42354
+
+#define DeveloperEnvironmentToken		@"TextualDeveloperEnvironment"
 
 @implementation LogPolicy
 
@@ -20,24 +20,18 @@
 @synthesize nick;
 @synthesize chan;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
-	[menu release];
-	[urlMenu release];
-	[addrMenu release];
-	[memberMenu release];
-	[chanMenu release];
 	[url release];
 	[addr release];
 	[nick release];
 	[chan release];
+	[menu release];
+	[urlMenu release];
+	[addrMenu release];
+	[chanMenu release];
+	[memberMenu release];
+	
 	[super dealloc];
 }
 
@@ -49,10 +43,11 @@
 		if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 			DOMRange *range = [sender selectedDOMRange];
 			
-			if (!range) return;
-			if ([[range toString] length] < 1) return;
+			if (range == nil) return;
+			if ([(LogView *)sender hasSelection] == NO) return;
 			
 			[NSApp sendAction:@selector(copy:) to:[[NSApp mainWindow] firstResponder] from:self];
+			
 			[sender setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
 		}
 	}
@@ -65,12 +60,14 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
+	NSMutableArray *ary = [NSMutableArray array];
+	
 	if (url) {
 		menuController.pointedUrl = url;
+		
 		[url autorelease];
 		url = nil;
 		
-		NSMutableArray *ary = [NSMutableArray array];
 		for (NSMenuItem *item in [urlMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
@@ -78,61 +75,62 @@
 		return ary;
 	} else if (addr) {
 		menuController.pointedAddress = addr;
+		
 		[addr autorelease];
 		addr = nil;
 		
-		NSMutableArray *ary = [NSMutableArray array];
 		for (NSMenuItem *item in [addrMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
 	} else if (nick) {
-		NSMutableArray *ary = [NSMutableArray array];
-		
 		menuController.pointedNick = nick;
+		
 		[nick autorelease];
 		nick = nil;
 		
+		NSMenuItem *userOptions = [[NSMenuItem new] autorelease];
+		
+		[userOptions setTitle:[NSString stringWithFormat:TXTLS(@"USER_OPTIONS_MENU_ITEM"), menuController.pointedNick]];
+		
+		[ary addObject:userOptions];
+		[ary addObject:[NSMenuItem separatorItem]];
+		
+		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
+		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
-			item = [[item copy] autorelease];
-			[self modifyMemberMenuItem:item];
-			[ary addObject:item];
+			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) continue;
+			
+			[ary addObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
 	} else if (chan) {
 		menuController.pointedChannelName = chan;
+		
 		[chan autorelease];
 		chan = nil;
 		
-		NSMutableArray *ary = [NSMutableArray array];
 		for (NSMenuItem *item in [chanMenu itemArray]) {
 			[ary addObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
 	} else if (menu) {
-		NSMutableArray *ary = [NSMutableArray array];
-		
 		NSMenuItem *inspectElementItem = nil;
 		NSMenuItem *lookupInDictionaryItem = nil;
 		
 		for (NSMenuItem *item in defaultMenuItems) {
-			switch ([item tag]) {
-				case WebMenuItemTagLookUpInDictionary:
-					lookupInDictionaryItem = item;
-					break;
-				case 2024:
-					inspectElementItem = item;
-					break;
-				default:
-					break;
+			if ([item tag] == WebMenuItemTagLookUpInDictionary) {
+				lookupInDictionaryItem = item;
+			} else if ([item tag] == WebMenuItemTagInspectElement) {
+				inspectElementItem = item;
 			}
 		}
 		
 		for (NSMenuItem *item in [menu itemArray]) {
-			if ([item tag] == 2024) {
+			if ([item tag] == WebMenuItemTagInspectElement) {
 				if (lookupInDictionaryItem) {
 					[ary addObject:[[lookupInDictionaryItem copy] autorelease]];
 				}
@@ -141,19 +139,23 @@
 			}
 		}
 		
-		if ([TXNSUserDefaults() boolForKey:@"TextualDeveloperEnvironment"]) {
+		if ([TXNSUserDefaults() boolForKey:DeveloperEnvironmentToken]) {
 			[ary addObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {
 				[ary addObject:[[inspectElementItem copy] autorelease]];
 			}
 			
-			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:@"Copy Log as HTML" action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
-			[copyHTML setTarget:menuController];
-			[ary addObject:copyHTML];
+			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
+															   action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
 			
-			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:@"Force Reload Theme" action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
+			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
+																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
+			
+			[copyHTML setTarget:menuController];
 			[reloadTheme setTarget:menuController];
+		
+			[ary addObject:copyHTML];
 			[ary addObject:reloadTheme];
 		}
 		
@@ -165,26 +167,16 @@
 	return defaultMenuItems;
 }
 
-- (void)modifyMemberMenu:(NSMenu *)submenu
-{
-	for (NSMenuItem *item in [submenu itemArray]) {
-		[self modifyMemberMenuItem:item];
-	}
-}
-
-- (void)modifyMemberMenuItem:(NSMenuItem *)item
-{
-	item.tag += 500;
-	if ([item hasSubmenu]) [self modifyMemberMenu:item.submenu];
-}
-
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
 	NSInteger action = [[actionInformation objectForKey:WebActionNavigationTypeKey] integerValue];
+	
 	switch (action) {
 		case WebNavigationTypeLinkClicked:
 			[listener ignore];
+			
 			[URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
+			
 			break;
 		case WebNavigationTypeOther:
 			[listener use];

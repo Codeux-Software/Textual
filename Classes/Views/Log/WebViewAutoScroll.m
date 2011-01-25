@@ -5,13 +5,16 @@
 - (void)scrollViewToBottom:(NSView *)aView
 {
 	NSRect visibleRect = [aView visibleRect];
+	
 	visibleRect.origin.y = NSHeight([aView frame]) - NSHeight(visibleRect);
+	
 	[aView scrollRectToVisible:visibleRect];
 }
 
 - (void)dealloc
 {
 	self.webFrame = nil;
+	
 	[super dealloc];
 }
 
@@ -22,8 +25,9 @@
 
 - (void)setWebFrame:(WebFrameView *)aWebFrame
 {
-	if (aWebFrame == webFrame)
+	if (aWebFrame == webFrame) {
 		return;
+	}
 	
 	webFrame = aWebFrame;
 	
@@ -42,8 +46,10 @@
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
 	NSClipView *clipView = [[[webFrame documentView] enclosingScrollView] contentView];
-	if (clipView != [aNotification object])
+	
+	if (clipView != [aNotification object]) {
 		return;
+	}
 	
 	lastVisibleRect = [[clipView documentView] visibleRect];
 }
@@ -51,14 +57,18 @@
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
 	NSView *view = [aNotification object];
-	if (view != webFrame && view != [webFrame documentView])
+	
+	if (view != webFrame && view != [webFrame documentView]) {
 		return;
+	}
 	
 	if (view == [webFrame documentView]) {
 		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame)) {
 			[self scrollViewToBottom:view];
+			
 			lastVisibleRect = [view visibleRect];
 		}
+		
 		lastFrame = [view frame];
 	}
 	

@@ -28,14 +28,15 @@
 	[transform scaleXBy:1 yBy:scale];
 	[transform translateXBy:0 yBy:offset];
 	
-	NSMutableArray *lines = [NSMutableArray array];
 	NSPoint prev = NSMakePoint(-1, -1);
+	NSMutableArray *lines = [NSMutableArray array];
 	
 	for (NSNumber *e in ary) {
 		NSInteger i = [e integerValue];
 		NSPoint pt = NSMakePoint(0, i);
 		
 		pt = [transform transformPoint:pt];
+		
 		pt.x = ceil(pt.x);
 		pt.y = (ceil(pt.y) + 0.5);
 		
@@ -48,13 +49,13 @@
 		[line setLineWidth:1];
 		[line moveToPoint:pt];
 		[line relativeLineToPoint:NSMakePoint(width, 0)];
+		
 		[lines addObject:line];
 	}
 	
 	NSRectClip(NSInsetRect([self rectForPart:NSScrollerKnobSlot], 3, 4));
-	NSColor *color = [dataSource markedScrollerColor:self];
-	
-	[color set];
+
+	[[dataSource markedScrollerColor:self] set];
 	
 	for (NSBezierPath *e in lines) {
 		[e stroke];

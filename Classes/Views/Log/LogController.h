@@ -8,36 +8,42 @@
 {
 	LogView *view;
 	LogPolicy *policy;
-	LogScriptEventSink *sink;
-	MarkedScroller *scroller;
 	WebScriptObject *js;
+	MarkedScroller *scroller;
+	LogScriptEventSink *sink;
 	WebViewAutoScroll *autoScroller;
 
 	IRCWorld *world;
 	IRCClient *client;
 	IRCChannel *channel;
+	
 	NSMenu *menu;
 	NSMenu *urlMenu;
 	NSMenu *addrMenu;
 	NSMenu *chanMenu;
 	NSMenu *memberMenu;
-	ViewTheme *theme;
-	NSInteger maxLines;
-	NSColor *initialBackgroundColor;
-	NSMutableArray *highlightedLineNumbers;
 	
-	BOOL becameVisible;
+	ViewTheme *theme;
+	
+	NSColor *initialBackgroundColor;
+	
 	BOOL bottom;
-	BOOL movingToBottom;
-	NSMutableArray *lines;
-	NSInteger lineNumber;
-	NSInteger count;
-	BOOL needsLimitNumberOfLines;
 	BOOL loaded;
-	NSInteger loadingImages;
-	NSString *html;
 	BOOL scrollBottom;
+	BOOL becameVisible;
+	BOOL movingToBottom;
+	BOOL needsLimitNumberOfLines;
+	
+	NSInteger count;
+	NSInteger maxLines;
 	NSInteger scrollTop;
+	NSInteger lineNumber;
+	NSInteger loadingImages;
+	
+	NSMutableArray *lines;
+	NSMutableArray *highlightedLineNumbers;
+
+	NSString *html;
 }
 
 @property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
@@ -84,7 +90,7 @@
 - (void)unmark;
 - (void)goToMark;
 - (void)reloadTheme;
-- (void) applyOverrideStyle;
+- (void)applyOverrideStyle;
 - (void)clear;
 - (void)changeTextSize:(BOOL)bigger;
 

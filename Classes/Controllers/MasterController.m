@@ -470,7 +470,7 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	
 	NSInteger charCountIndex = 0;
 	NSMutableArray *charRanges = [NSMutableArray new];
@@ -479,7 +479,7 @@
 		if (charCountIndex >= [selectedText length]) break;
 		
 		NSRange charRange = NSMakeRange(charCountIndex, 1);
-		NSString *charValue = [selectedText substringWithRange:charRange];
+		NSString *charValue = [selectedText safeSubstringWithRange:charRange];
 		
 		NSInteger firstColor = ((arc4random() % 15) + 1);
 		NSInteger secondColor = ((arc4random() % 15) + 1);
@@ -509,7 +509,7 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	
 	if ([sender tag] == 100) { // rainbow text
 		NSInteger charCountIndex = 0;
@@ -522,7 +522,7 @@
 			if (charCountIndex >= [selectedText length]) break;
 			
 			NSRange charRange = NSMakeRange(charCountIndex, 1);
-			NSString *charValue = [selectedText substringWithRange:charRange];
+			NSString *charValue = [selectedText safeSubstringWithRange:charRange];
 			
 			if ([charValue isEqualToString:@" "]) {
 				[rainbowRanges addObject:@" "];
@@ -532,7 +532,7 @@
 			
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
 			
-			NSInteger colorChar = [[colorCodes objectAtIndex:rainbowArrayIndex] integerValue];
+			NSInteger colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
 			charValue = [NSString stringWithFormat:@"▤%i%@▤", colorChar, charValue];
 			
 			[rainbowRanges addObject:charValue];
@@ -556,7 +556,7 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	selectedText = [NSString stringWithFormat:@"▥%@▥", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
@@ -568,7 +568,7 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	selectedText = [NSString stringWithFormat:@"▧%@▧", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
@@ -580,7 +580,7 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] substringWithRange:selectedTextRange];
+	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	selectedText = [NSString stringWithFormat:@"▨%@▨", selectedText];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
@@ -899,7 +899,7 @@
 	BOOL head = YES;
 	
 	NSString *pre = [s safeSubstringToIndex:selectedRange.location];
-	NSString *sel = [s substringWithRange:selectedRange];
+	NSString *sel = [s safeSubstringWithRange:selectedRange];
 	
 	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
 		UniChar c = [pre characterAtIndex:i];

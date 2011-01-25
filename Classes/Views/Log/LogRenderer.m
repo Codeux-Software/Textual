@@ -114,7 +114,7 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 
 static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len, LogController *log)
 {
-	NSString *content = [body substringWithRange:NSMakeRange(start, len)];
+	NSString *content = [body safeSubstringWithRange:NSMakeRange(start, len)];
 	
 	if (attr & CONVERSATION_TRKR_ATTR) {
 		content = logEscape(content);
@@ -122,7 +122,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		IRCUser *user = [log.channel findMember:content options:NSCaseInsensitiveSearch];
 		
 		if (user) {
-			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
+			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
 		} 
 		
 		return content;
@@ -144,14 +144,20 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", content];
 	} else if (attr & EFFECT_MASK) {
 		content = logEscape(content);
+		
 		NSMutableString *s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
+		
 		if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
-		if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
 		if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
+		if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
+		
 		[s appendString:@"\""];
+		
 		if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
 		if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
+	
 		[s appendFormat:@">%@</span>", content];
+		
 		return s;
 	} else {
 		return logEscape(content);
@@ -191,20 +197,22 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 attributedString:(BOOL)attributed
 {
 	NSInteger len = body.length;
-	attr_t attrBuf[len];
-	memset(attrBuf, 0, len * sizeof(attr_t));
+	NSInteger start = 0;
+	NSInteger n = 0;
 	
-	NSInteger start;
+	attr_t attrBuf[len];
+	attr_t currentAttr = 0;
+	
+	memset(attrBuf, 0, (len * sizeof(attr_t)));
 	
 	UniChar source[len];
-	CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
-	
-	attr_t currentAttr = 0;
 	UniChar dest[len];
-	NSInteger n = 0;
+	
+	CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
 	
 	for (NSInteger i = 0; i < len; i++) {
 		UniChar c = source[i];
+		
 		if (c < 0x20) {
 			switch (c) {
 				case 0x02:
@@ -213,37 +221,51 @@ attributedString:(BOOL)attributed
 					} else {
 						currentAttr |= BOLD_ATTR;
 					}
+					
 					continue;
 				case 0x03:
 				{
 					NSInteger textColor = -1;
 					NSInteger backgroundColor = -1;
 					
-					if (i+1 < len) {
+					if ((i + 1) < len) {
 						c = source[i+1];
+						
 						if (IsNumeric(c)) {
 							++i;
-							textColor = c - '0';
-							if (i+1 < len) {
+							
+							textColor = (c - '0');
+							
+							if ((i + 1) < len) {
 								c = source[i+1];
+								
 								if (IsIRCColor(c, textColor)) {
 									++i;
-									textColor = textColor * 10 + c - '0';
+									
+									textColor = (textColor * 10 + c - '0');
 								}
-								if (i+1 < len) {
+								
+								if ((i + 1) < len) {
 									c = source[i+1];
+									
 									if (c == ',') {
 										++i;
-										if (i+1 < len) {
+										
+										if ((i + 1) < len) {
 											c = source[i+1];
+											
 											if (IsNumeric(c)) {
 												++i;
-												backgroundColor = c - '0';
-												if (i+1 < len) {
+												
+												backgroundColor = (c - '0');
+												
+												if ((i + 1) < len) {
 													c = source[i+1];
+													
 													if (IsIRCColor(c, backgroundColor)) {
 														++i;
-														backgroundColor = backgroundColor * 10 + c - '0';
+														
+														backgroundColor = (backgroundColor * 10 + c - '0');
 													}
 												}
 											}
@@ -257,6 +279,7 @@ attributedString:(BOOL)attributed
 						
 						if (backgroundColor >= 0) {
 							backgroundColor %= 16;
+							
 							currentAttr |= BACKGROUND_COLOR_ATTR;
 							currentAttr |= (backgroundColor << 4) & BACKGROUND_COLOR_MASK;
 						} else {
@@ -265,6 +288,7 @@ attributedString:(BOOL)attributed
 						
 						if (textColor >= 0) {
 							textColor %= 16;
+							
 							currentAttr |= TEXT_COLOR_ATTR;
 							currentAttr |= textColor & TEXT_COLOR_MASK;
 						} else {
@@ -282,6 +306,7 @@ attributedString:(BOOL)attributed
 					} else {
 						currentAttr |= ITALIC_ATTR;
 					}
+					
 					continue;
 				case 0x1F:
 					if (currentAttr & UNDERLINE_ATTR) {
@@ -289,6 +314,7 @@ attributedString:(BOOL)attributed
 					} else {
 						currentAttr |= UNDERLINE_ATTR;
 					}
+					
 					continue;
 			}
 		}
@@ -297,7 +323,7 @@ attributedString:(BOOL)attributed
 		dest[n++] = c;
 	}
 	
-	body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+	body = [NSString stringWithCharacters:dest length:n];
 	len = n;
 	
 	if (attributed == NO) {
@@ -311,6 +337,7 @@ attributedString:(BOOL)attributed
 					
 					if (r.length >= 1) {
 						setFlag(attrBuf, URL_ATTR, r.location, r.length);
+						
 						[urlAry addObject:[NSValue valueWithRange:r]];
 					}
 				}
@@ -330,13 +357,16 @@ attributedString:(BOOL)attributed
 				start = 0;
 				
 				while (start < len) {
-					NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+					NSRange r = [body rangeOfString:excludeWord 
+											options:NSCaseInsensitiveSearch 
+											  range:NSMakeRange(start, (len - start))];
 					
 					if (r.location == NSNotFound) {
 						break;
 					}
 					
 					[excludeRanges addObject:[NSValue valueWithRange:r]];
+					
 					start = (NSMaxRange(r) + 1);
 				}
 			}
@@ -346,7 +376,9 @@ attributedString:(BOOL)attributed
 			start = 0;
 			
 			while (start < len) {
-				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+				NSRange r = [body rangeOfString:keyword 
+										options:NSCaseInsensitiveSearch 
+										  range:NSMakeRange(start, (len - start))];
 				
 				if (r.location == NSNotFound) {
 					break;
@@ -357,6 +389,7 @@ attributedString:(BOOL)attributed
 				for (NSValue *e in excludeRanges) {
 					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
 						enabled = NO;
+						
 						break;
 					}
 				}
@@ -398,7 +431,9 @@ attributedString:(BOOL)attributed
 				if (enabled) {
 					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
 						setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
+						
 						foundKeyword = YES;
+						
 						break;
 					}
 				}
