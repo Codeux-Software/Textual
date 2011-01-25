@@ -47,13 +47,6 @@
 @synthesize overrideMessageIndentWrap;
 @synthesize nicknameFormatFixedWidth;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (NSString *)path
 {
 	return path;

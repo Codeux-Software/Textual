@@ -14,6 +14,7 @@
 @interface NSString (NSStringHelper)
 - (NSString *)safeSubstringFromIndex:(NSUInteger)anIndex;
 - (NSString *)safeSubstringToIndex:(NSUInteger)anIndex;
+- (NSString *)safeSubstringWithRange:(NSRange)range;
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars;
 

@@ -34,9 +34,9 @@
 {
 	[theme release];
 	[bgColor release];
+	[gradient release];
 	[topLineColor release];
 	[bottomLineColor release];
-	[gradient release];
 	
 	[super dealloc];
 }
@@ -58,9 +58,9 @@
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
 			switch (k) {
-				case KEY_PAGE_UP:			// page up
-				case KEY_PAGE_DOWN:			// page down
-				case KEY_LEFT ... KEY_UP:	// cursor keys
+				case KEY_PAGE_UP:		
+				case KEY_PAGE_DOWN:		
+				case KEY_LEFT ... KEY_UP:	
 					break;
 				default:
 					if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
@@ -78,9 +78,9 @@
 - (void)themeChanged
 {
 	[bgColor release];
+	[gradient release];
 	[topLineColor release];
 	[bottomLineColor release];
-	[gradient release];
 	
 	bgColor = [theme.memberListBgColor retain];
 	topLineColor = [theme.memberListSelTopLineColor retain];
@@ -107,19 +107,25 @@
 	
 	if (topLineColor && bottomLineColor && gradient) {
 		NSRect rect = frame;
+		
 		rect.origin.y += 1;
 		rect.size.height -= 2;
+		
 		[gradient drawInRect:rect angle:90];
 		
 		[topLineColor set];
+		
 		rect = frame;
 		rect.size.height = 1;
+		
 		NSRectFill(rect);
 		
 		[bottomLineColor set];
+		
 		rect = frame;
 		rect.origin.y += rect.size.height - 1;
 		rect.size.height = 1;
+		
 		NSRectFill(rect);
 	} else {
 		if ([self window] && [[self window] isMainWindow] && [[self window] firstResponder] == self) {

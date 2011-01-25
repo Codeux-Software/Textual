@@ -44,11 +44,6 @@
 	[self updatePosition];
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (CGFloat)dividerThickness
 {
 	return myDividerThickness;
@@ -92,6 +87,7 @@
 	myDividerThickness = value;
 	
 	[self setDividerThickness:myDividerThickness];
+	
 	[self adjustSubviews];
 }
 
@@ -159,6 +155,7 @@
 		NSPoint left, right;
 		
 		left = rect.origin;
+		
 		right = left;
 		right.x += rect.size.width;
 		
@@ -166,6 +163,7 @@
 		
 		left = rect.origin;
 		left.y += rect.size.height;
+		
 		right = left;
 		right.x += rect.size.width;
 		
@@ -229,7 +227,7 @@
 			fixedFrame.origin.x = ((fixedViewIndex) ? (flyingFrame.size.width + w) : 0);
 			fixedFrame.origin.y = 0;
 			
-			if (fixedFrame.size.height > (height - w)) fixedFrame.size.height = (height - w);
+			if (fixedFrame.size.width > (width - w)) fixedFrame.size.width = (width - w);
 		} else {
 			flyingFrame.size.width = width;
 			flyingFrame.size.height = (height - w - position);
@@ -251,6 +249,7 @@
 	[flyingView setFrame:flyingFrame];
 	
 	[self setNeedsDisplay:YES];
+	
 	[[self window] invalidateCursorRectsForView:self];
 }
 

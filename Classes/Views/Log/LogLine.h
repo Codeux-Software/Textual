@@ -37,12 +37,17 @@ typedef enum {
 	NSString *place;
 	NSString *nick;
 	NSString *body;
-	LogLineType lineType;
-	LogMemberType memberType;
+	
 	NSString *nickInfo;
 	NSString *clickInfo;
+		
 	BOOL identified;
+	
+	LogLineType lineType;
+	LogMemberType memberType;
+	
 	NSInteger nickColorNumber;
+	
 	NSArray *keywords;
 	NSArray *excludeWords;
 }

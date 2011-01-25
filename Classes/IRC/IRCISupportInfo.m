@@ -26,11 +26,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)reset
 {
 	memset(modes, 0, MODES_SIZE);
@@ -159,7 +154,7 @@
 	if ([str hasPrefix:@"("]) {
 		NSRange r = [str rangeOfString:@")"];
 		if (r.location != NSNotFound) {
-			str = [str substringWithRange:NSMakeRange(1, r.location - 1)];
+			str = [str safeSubstringWithRange:NSMakeRange(1, r.location - 1)];
 			
 			NSInteger len = str.length;
 			

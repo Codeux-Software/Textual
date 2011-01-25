@@ -7,6 +7,14 @@
 
 @implementation NSString (NSStringHelper)
 
+- (NSString *)safeSubstringWithRange:(NSRange)range;
+{
+	if (range.length > [self length]) return nil;
+	if ([self length] < range.location) return nil;
+	
+	return [self substringWithRange:range];
+}
+
 - (NSString *)safeSubstringFromIndex:(NSUInteger)anIndex
 {
 	if ([self length] < anIndex) return nil;

@@ -5,18 +5,6 @@
 
 @synthesize world;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel
 {	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 

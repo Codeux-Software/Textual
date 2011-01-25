@@ -17,6 +17,7 @@
 		x = -10000;
 		y = -10000;
 	}
+	
 	return self;
 }
 
@@ -35,17 +36,21 @@
 		|| sel == @selector(setNick:)
 		|| sel == @selector(setChan:)
 		|| sel == @selector(print:)) {
+		
 		return NO;
 	}
+	
 	return YES;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
 	NSString *s = NSStringFromSelector(sel);
+	
 	if ([s hasSuffix:@":"]) {
-		return [s safeSubstringToIndex:s.length - 1];
+		return [s safeSubstringToIndex:(s.length - 1)];
 	}
+	
 	return nil;
 }
 
@@ -74,13 +79,16 @@
 	
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
-	if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
-		if (now < lastClickTime + 0.5) {
+	if ((x - d) <= cx && cx <= (x + d) && 
+		(y - d) <= cy && cy <= (y + d)) {
+		
+		if (now < (lastClickTime + 0.5)) {
 			res = YES;
 		}
 	}
 	
 	lastClickTime = now;
+	
 	x = cx;
 	y = cy;
 	

@@ -171,7 +171,7 @@
 		NSArray *pieces = [text split:[Preferences completionSuffix]];
 	 
 		if ([pieces count] > 1) {
-			NSString *nick = [pieces objectAtIndex:0];
+			NSString *nick = [pieces safeObjectAtIndex:0];
 			IRCUser *talker = [self findMember:nick];
 			
 			if (talker) {

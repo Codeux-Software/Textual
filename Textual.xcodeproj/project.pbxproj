@@ -175,7 +175,6 @@
 		4CA945C211E1AFBA00D36367 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19511737F660044E7A1 /* MemberListView.m */; };
 		4CA945C311E1AFBA00D36367 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19711737F660044E7A1 /* MemberListViewCell.m */; };
 		4CA945C411E1AFBA00D36367 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19911737F660044E7A1 /* ServerTreeView.m */; };
-		4CA945C511E1AFBA00D36367 /* TableProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19D11737F660044E7A1 /* TableProgressIndicator.m */; };
 		4CA945C611E1AFBA00D36367 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19F11737F660044E7A1 /* TextField.m */; };
 		4CA945C711E1AFBA00D36367 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
 		4CA945C811E1AFBA00D36367 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A311737F660044E7A1 /* ThinSplitView.m */; };
@@ -205,7 +204,6 @@
 		4CAA3B5B12E0ECCB00FB83EB /* IRCChannelConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11011737F660044E7A1 /* IRCChannelConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B5C12E0ECCB00FB83EB /* NSRectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10011737F660044E7A1 /* NSRectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B5D12E0ECCB00FB83EB /* ModeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0D611737F660044E7A1 /* ModeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CAA3B5E12E0ECCB00FB83EB /* TableProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C19C11737F660044E7A1 /* TableProgressIndicator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B5F12E0ECCB00FB83EB /* SoundWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0DF11737F660044E7A1 /* SoundWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B6012E0ECCB00FB83EB /* AddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 789ED3F11193EF4400CFC0B2 /* AddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B6112E0ECCB00FB83EB /* NickSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0D811737F660044E7A1 /* NickSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -682,8 +680,6 @@
 		78A8C19711737F660044E7A1 /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		78A8C19811737F660044E7A1 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
 		78A8C19911737F660044E7A1 /* ServerTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTreeView.m; sourceTree = "<group>"; };
-		78A8C19C11737F660044E7A1 /* TableProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableProgressIndicator.h; sourceTree = "<group>"; };
-		78A8C19D11737F660044E7A1 /* TableProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableProgressIndicator.m; sourceTree = "<group>"; };
 		78A8C19E11737F660044E7A1 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextField.h; sourceTree = "<group>"; };
 		78A8C19F11737F660044E7A1 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		78A8C1A011737F660044E7A1 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldWithDisabledState.h; sourceTree = "<group>"; };
@@ -1325,8 +1321,6 @@
 				78A8C19211737F660044E7A1 /* MarkedScroller.m */,
 				78A8C19811737F660044E7A1 /* ServerTreeView.h */,
 				78A8C19911737F660044E7A1 /* ServerTreeView.m */,
-				78A8C19C11737F660044E7A1 /* TableProgressIndicator.h */,
-				78A8C19D11737F660044E7A1 /* TableProgressIndicator.m */,
 				78A8C19E11737F660044E7A1 /* TextField.h */,
 				78A8C19F11737F660044E7A1 /* TextField.m */,
 				78A8C1A011737F660044E7A1 /* TextFieldWithDisabledState.h */,
@@ -1385,7 +1379,6 @@
 				4CAA3B5B12E0ECCB00FB83EB /* IRCChannelConfig.h in Headers */,
 				4CAA3B5C12E0ECCB00FB83EB /* NSRectHelper.h in Headers */,
 				4CAA3B5D12E0ECCB00FB83EB /* ModeSheet.h in Headers */,
-				4CAA3B5E12E0ECCB00FB83EB /* TableProgressIndicator.h in Headers */,
 				4CAA3B5F12E0ECCB00FB83EB /* SoundWrapper.h in Headers */,
 				4CAA3B6012E0ECCB00FB83EB /* AddressBook.h in Headers */,
 				4CAA3B6112E0ECCB00FB83EB /* NickSheet.h in Headers */,
@@ -1770,7 +1763,6 @@
 				4CA945C211E1AFBA00D36367 /* MemberListView.m in Sources */,
 				4CA945C311E1AFBA00D36367 /* MemberListViewCell.m in Sources */,
 				4CA945C411E1AFBA00D36367 /* ServerTreeView.m in Sources */,
-				4CA945C511E1AFBA00D36367 /* TableProgressIndicator.m in Sources */,
 				4CA945C611E1AFBA00D36367 /* TextField.m in Sources */,
 				4CA945C711E1AFBA00D36367 /* TextFieldWithDisabledState.m in Sources */,
 				4CA945C811E1AFBA00D36367 /* ThinSplitView.m in Sources */,
@@ -2097,7 +2089,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
@@ -2264,7 +2255,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)/Frameworks/BWToolkit\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";

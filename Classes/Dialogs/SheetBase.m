@@ -9,13 +9,6 @@
 @synthesize okButton;
 @synthesize cancelButton;
 
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
-
 - (void)dealloc
 {
 	[sheet release];

@@ -21,8 +21,10 @@
 	[text setFont:font];
 	
 	NSRect f = [text frame];
+	
 	f.size.height = 1e+37;
 	f.size.height = (ceil([[text cell] cellSizeForBounds:f].height) + 2);
+	
 	[text setFrameSize:f.size];
 	
 	NSRange range;
@@ -54,10 +56,11 @@
 		boxFrame.origin.y = (textFrame.size.height + CHATBOX_SPACE);
 		boxFrame.size.width = f.size.width;
 		boxFrame.size.height = ((f.size.height - textFrame.size.height) - CHATBOX_SPACE);
-		[box setFrame:boxFrame];
 		
 		textFrame.origin = NSMakePoint(0, 0);
 		textFrame.size.width = f.size.width;
+		
+		[box setFrame:boxFrame];
 		[text setFrame:textFrame];
 	}
 	

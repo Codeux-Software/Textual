@@ -16,11 +16,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)start:(NSString *)nick
 {
 	[currentText setStringValue:nick];

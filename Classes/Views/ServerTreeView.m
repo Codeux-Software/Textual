@@ -44,9 +44,9 @@
 {
 	[theme release];
 	[bgColor release];
+	[gradient release];
 	[topLineColor release];
 	[bottomLineColor release];
-	[gradient release];
 	
 	[super dealloc];
 }
@@ -106,7 +106,7 @@
 	[bottomLineColor set];
 	
 	rect = frame;
-	rect.origin.y += rect.size.height - 1;
+	rect.origin.y += (rect.size.height - 1);
 	rect.size.height = 1;
 	
 	NSRectFill(rect);

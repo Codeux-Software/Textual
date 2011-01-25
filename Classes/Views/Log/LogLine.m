@@ -9,20 +9,13 @@
 @synthesize nick;
 @synthesize body;
 @synthesize lineType;
-@synthesize memberType;
+@synthesize keywords;
 @synthesize nickInfo;
 @synthesize clickInfo;
 @synthesize identified;
-@synthesize nickColorNumber;
-@synthesize keywords;
+@synthesize memberType;
 @synthesize excludeWords;
-
-- (id)init
-{
-	if ((self = [super init])) {
-	}
-	return self;
-}
+@synthesize nickColorNumber;
 
 - (void)dealloc
 {
@@ -30,10 +23,11 @@
 	[place release];
 	[nick release];
 	[body release];
+	[keywords release];
 	[nickInfo release];
 	[clickInfo release];
-	[keywords release];
 	[excludeWords release];
+	
 	[super dealloc];
 }
 
@@ -62,6 +56,7 @@
 		case LINE_TYPE_WEBSITE: return @"website";
 		case LINE_TYPE_DEBUG: return @"debug_send";
 	}
+	
 	return @"";
 }
 
@@ -71,6 +66,7 @@
 		case MEMBER_TYPE_NORMAL: return @"normal";
 		case MEMBER_TYPE_MYSELF: return @"myself";
 	}
+	
 	return @"";
 }
 

@@ -14,11 +14,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)show
 {	
 	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
