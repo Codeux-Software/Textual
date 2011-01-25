@@ -4,6 +4,7 @@
 @interface FieldEditorTextView : NSTextView
 {
 	id pasteDelegate;
+	
 	KeyEventHandler *keyHandler;
 }
 

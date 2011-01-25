@@ -25,6 +25,7 @@
 - (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend
 {
 	NSMutableIndexSet *set = [NSMutableIndexSet indexSet];
+	
 	for (NSNumber *n in indices) {
 		[set addIndex:[n integerValue]];
 	}
@@ -36,8 +37,9 @@
 {
 	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
 	NSInteger i = [self rowAtPoint:p];
+	
 	if (i >= 0) {
-		if (![[self selectedRowIndexes] containsIndex:i]) {
+		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
 			[self selectItemAtIndex:i];
 		}
 	}
@@ -52,8 +54,11 @@
 	}
 	
 	NSRect f = [self frame];
+	
 	f.size.height = 1e+37;
+	
 	CGFloat height = ceil([[[[self tableColumns] safeObjectAtIndex:0] dataCell] cellSizeForBounds:f].height);
+	
 	[self setRowHeight:height];
 	[self setNeedsDisplay:YES];
 }
@@ -68,7 +73,7 @@
 	if (keyDelegate) {
 		switch ([e keyCode]) {
 			case 51:
-			case 117:	// delete
+			case 117:	
 				if ([self countSelectedRows] > 0) {
 					if ([keyDelegate respondsToSelector:@selector(listViewDelete)]) {
 						[keyDelegate listViewDelete];
@@ -76,7 +81,7 @@
 					}
 				}
 				break;
-			case 126:	// up
+			case 126:	
 			{
 				NSIndexSet *set = [self selectedRowIndexes];
 				if ([set count] > 0 && [set containsIndex:0]) {
@@ -87,14 +92,15 @@
 				}
 				break;
 			}
-			case 116:	// page up
-			case 121:	// page down
-			case 123 ... 125:	// cursor keys
+			case 116:
+			case 121:
+			case 123 ... 125:	
 				break;
 			default:
 				if ([keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
 					[keyDelegate listViewKeyDown:e];
 				}
+				
 				break;
 		}
 	}

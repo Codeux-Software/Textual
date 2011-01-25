@@ -544,7 +544,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUUID 
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-	NSString *uuidString = (NSString *)CFUUIDCreateString(nil, uuidObj);
+	NSString *uuidString = CFItemRefToID(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
 	
 	return [uuidString autorelease];

@@ -3,6 +3,5 @@
 
 @interface DockIcon : NSObject
 + (void)drawWithoutCounts;
-+ (NSString *)badgeFilename:(NSInteger)count;
 + (void)drawWithHilightCount:(NSInteger)hilight_count messageCount:(NSInteger)message_count;
 @end

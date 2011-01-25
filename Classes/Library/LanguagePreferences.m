@@ -7,10 +7,13 @@ static NSDictionary *themeLocalizations = nil;
 
 + (void)setThemeForLocalization:(NSString *)path
 {
+	[themeLocalizations release];
+	themeLocalizations = nil;
+	
 	NSString *filepath = [path stringByAppendingPathComponent:@"/BasicLanguage.plist"];
 	
 	if ([TXNSFileManager() fileExistsAtPath:filepath]) {
-		NSDictionary *localkeys = [NSDictionary dictionaryWithContentsOfFile:filepath];
+		NSDictionary *localkeys = [[NSDictionary dictionaryWithContentsOfFile:filepath] retain];
 			
 		if (localkeys) {
 			themeLocalizations = localkeys;

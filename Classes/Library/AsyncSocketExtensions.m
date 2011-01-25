@@ -5,7 +5,7 @@
 
 - (void)useSSL
 {
-	IRCClient *client = (IRCClient *)[[theDelegate delegate] delegate];
+	IRCClient *client = [[theDelegate delegate] delegate]; // Everything is interconnected
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	

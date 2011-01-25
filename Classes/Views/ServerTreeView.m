@@ -12,12 +12,13 @@
 
 - (void)setUp
 {
-	bgColor = [[NSColor colorWithCalibratedRed:229/255.0 green:237/255.0 blue:247/255.0 alpha:1] retain];
-	topLineColor = [[NSColor colorWithCalibratedRed:173/255.0 green:187/255.0 blue:208/255.0 alpha:1] retain];
-	bottomLineColor = [[NSColor colorWithCalibratedRed:140/255.0 green:152/255.0 blue:176/255.0 alpha:1] retain];
+	bgColor = [[NSColor colorWithCalibratedRed:(229 / 255.0) green:(237 / 255.0) blue:(247 / 255.0) alpha:1] retain];
+	topLineColor = [[NSColor colorWithCalibratedRed:(173 / 255.0) green:(187 / 255.0) blue:(208 / 255.0) alpha:1] retain];
+	bottomLineColor = [[NSColor colorWithCalibratedRed:(140 / 255.0) green:(152 / 255.0) blue:(176 / 255.0) alpha:1] retain];
 	
-	NSColor *start = [NSColor colorWithCalibratedRed:173/255.0 green:187/255.0 blue:208/255.0 alpha:1];
-	NSColor *end = [NSColor colorWithCalibratedRed:152/255.0 green:170/255.0 blue:196/255.0 alpha:1];
+	NSColor *start = [NSColor colorWithCalibratedRed:(173 / 255.0) green:(187 / 255.0) blue:(208 / 255.0) alpha:1];
+	NSColor *end = [NSColor colorWithCalibratedRed:(152 / 255.0) green:(170 / 255.0) blue:(196 / 255.0) alpha:1];
+	
 	gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 }
 
@@ -26,6 +27,7 @@
 	if ((self = [super initWithFrame:rect])) {
 		[self setUp];
 	}
+	
 	return self;
 }
 
@@ -34,6 +36,7 @@
 	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
 	}
+	
 	return self;
 }
 
@@ -44,6 +47,7 @@
 	[topLineColor release];
 	[bottomLineColor release];
 	[gradient release];
+	
 	[super dealloc];
 }
 
@@ -51,8 +55,10 @@
 {
 	if (responderDelegate) {
 		[responderDelegate serverTreeViewAcceptsFirstResponder];
+		
 		return NO;
 	}
+	
 	return YES;
 }
 
@@ -69,6 +75,7 @@
 	
 	NSColor *start = theme.treeSelTopColor;
 	NSColor *end = theme.treeSelBottomColor;
+	
 	gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 }
 
@@ -79,29 +86,36 @@
 
 - (void)_highlightRow:(NSInteger)row clipRect:(NSRect)clipRect
 {
-	if (![NSApp isActive]) return;
+	if ([NSApp isActive] == NO) return;
 	
 	NSRect frame = [self rectOfRow:row];
 	NSRect rect = frame;
+	
 	rect.origin.y += 1;
 	rect.size.height -= 2;
+	
 	[gradient drawInRect:rect angle:90];
 	
 	[topLineColor set];
+	
 	rect = frame;
 	rect.size.height = 1;
+	
 	NSRectFill(rect);
 	
 	[bottomLineColor set];
+	
 	rect = frame;
 	rect.origin.y += rect.size.height - 1;
 	rect.size.height = 1;
+	
 	NSRectFill(rect);
 }
 
 - (void)drawBackgroundInClipRect:(NSRect)rect
 {
 	[bgColor set];
+	
 	NSRectFill(rect);
 }
 

@@ -17,6 +17,7 @@
 	if (((self = [super initWithFrame:rect]))) {
 		[self setUp];
 	}
+	
 	return self;
 }
 
@@ -25,6 +26,7 @@
 	if ((self = [super initWithCoder:coder])) {
 		[self setUp];
 	}
+	
 	return self;
 }
 
@@ -35,6 +37,7 @@
 	[topLineColor release];
 	[bottomLineColor release];
 	[gradient release];
+	
 	[super dealloc];
 }
 
@@ -48,11 +51,12 @@
 	if (keyDelegate) {
 		NSInteger k = [e keyCode];
 		NSUInteger m = [e modifierFlags];
+		
 		BOOL ctrl = (m && NSControlKeyMask != 0);
 		BOOL alt = (m && NSAlternateKeyMask != 0);
 		BOOL cmd = (m && NSCommandKeyMask != 0);
 		
-		if (!ctrl && !alt && !cmd) {
+		if (ctrl == NO && alt == NO && cmd == NO) {
 			switch (k) {
 				case KEY_PAGE_UP:			// page up
 				case KEY_PAGE_DOWN:			// page down
@@ -62,6 +66,7 @@
 					if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
 						[keyDelegate memberListViewKeyDown:e];
 					}
+					
 					return;
 			}
 		}
@@ -122,6 +127,7 @@
 		} else {
 			[[NSColor selectedControlColor] set];
 		}
+		
 		NSRectFill(frame);
 	}
 }
@@ -129,12 +135,14 @@
 - (void)drawBackgroundInClipRect:(NSRect)rect
 {
 	[bgColor set];
+	
 	NSRectFill(rect);
 }
 
 - (NSInteger)draggedRow:(id <NSDraggingInfo>)sender
 {
 	NSPoint p = [self convertPoint:[sender draggingLocation] fromView:nil];
+	
 	return [self rowAtPoint:p];
 }
 
@@ -142,6 +150,7 @@
 {
 	if (on) {
 		NSInteger row = [self draggedRow:sender];
+		
 		if (row < 0) {
 			[self deselectAll:nil];
 		} else {
@@ -165,11 +174,14 @@
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
 	NSArray *files = [self draggedFiles:sender];
+	
 	if ([files count] > 0 && [self draggedRow:sender] >= 0) {
 		[self drawDraggingPoisition:sender on:YES];
+		
 		return NSDragOperationCopy;
 	} else {
 		[self drawDraggingPoisition:sender on:NO];
+		
 		return NSDragOperationNone;
 	}
 }
@@ -187,18 +199,22 @@
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
 	NSArray *files = [self draggedFiles:sender];
+	
 	return ([files count] > 0 && [self draggedRow:sender] >= 0);
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
 	NSArray *files = [self draggedFiles:sender];
+	
 	if ([files count] > 0) {
 		NSInteger row = [self draggedRow:sender];
+		
 		if (row >= 0) {
 			if ([dropDelegate respondsToSelector:@selector(memberListViewDropFiles:row:)]) {
 				[dropDelegate memberListViewDropFiles:files row:[NSNumber numberWithInteger:row]];
 			}
+			
 			return YES;
 		} else {
 			return NO;
