@@ -15,6 +15,7 @@
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
 		keyHandler = [KeyEventHandler new];
 	}
+	
 	return self;
 }
 

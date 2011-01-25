@@ -7,6 +7,7 @@
 {
 	[super drawRect:dirtyRect];
 	[[self backgroundColor] set];
+	
 	NSFrameRectWithWidth([self bounds], 3);
 }
 

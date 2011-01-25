@@ -11,6 +11,7 @@
 	if ((self = [super initWithFrame:frameRect textContainer:aTextContainer])) {
 		keyHandler = [KeyEventHandler new];
 	}
+	
 	return self;
 }
 

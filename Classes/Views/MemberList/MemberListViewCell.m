@@ -20,6 +20,7 @@ static NSInteger markWidth;
 		[nickStyle setAlignment:NSLeftTextAlignment];
 		[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	}
+	
 	return self;
 }
 
@@ -28,14 +29,17 @@ static NSInteger markWidth;
 	[nickStyle release];
 	[markStyle release];
 	[member release];
+	
 	[super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	MemberListViewCell *c = [[MemberListViewCell allocWithZone:zone] init];
+	
 	c.font = self.font;
 	c.member = member;
+	
 	return c;
 }
 
@@ -49,6 +53,7 @@ static NSInteger markWidth;
 	for (NSString *s in marks) {
 		NSSize size = [s sizeWithAttributes:style];
 		NSInteger width = ceil(size.width);
+		
 		if (markWidth < width) {
 			markWidth = width;
 		}
@@ -58,7 +63,9 @@ static NSInteger markWidth;
 + (MemberListViewCell *)initWithTheme:(id)aTheme
 {
 	MemberListViewCell *cell = [[MemberListViewCell alloc] init];
+	
 	cell.theme = aTheme;
+	
 	return [cell autorelease];
 }
 
@@ -79,16 +86,16 @@ static NSInteger markWidth;
 		if (member.q) permission = @"USER_HOSTMASK_HOVER_TOOLTIP_MODE_Q";
 		
 		NSString *fullhost = [NSString stringWithFormat:@"%@%@\n%@%@\n%@%@\n%@%@", TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME"), member.nick, 
-																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME"), member.username, 
-																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address,
-																					TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES"), TXTLS(permission)];
+							  TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME"), member.username, 
+							  TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK"), member.address,
+							  TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES"), TXTLS(permission)];
 		
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:13], NSFontAttributeName, 
-							   [NSColor whiteColor], NSForegroundColorAttributeName, nil];
-		
-		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:13];
+		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Lucida Grande" size:13], 
+							   NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, nil];
 		
 		NSMutableAttributedString *atrsTooltip = [[NSMutableAttributedString alloc] initWithString:fullhost attributes:attrs];
+		
+		NSFont *boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:NSBoldFontMask weight:1.0 size:13];
 		
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME")]];
@@ -140,6 +147,7 @@ static NSInteger markWidth;
 								 (hostTextSize.height + 16));
 		
 		NSBezierPath *path = [NSBezierPath bezierPath];
+		
 		[path appendBezierPathWithRoundedRect:rect xRadius:10 yRadius:10];
 		[path setLineWidth:2];
 		[path stroke];
@@ -148,7 +156,7 @@ static NSInteger markWidth;
 		[view setAlphaValue:0.5];
 		
 		[tooltip drawAtPoint:NSMakePoint((cellFrame.origin.x + 11), 
-											 (cellFrame.origin.y + 7))];
+										 (cellFrame.origin.y + 7))];
 	} else {
 		[super drawWithExpansionFrame:cellFrame inView:view];
 	}
@@ -180,15 +188,17 @@ static NSInteger markWidth;
 	}
 	
 	NSRect rect = frame;
+	
 	rect.origin.x += MARK_LEFT_MARGIN;
 	rect.origin.y -= 1;
 	rect.size.width = markWidth;
 	
 	char mark = [member mark];
+	
 	if (mark != ' ') {
 		NSString *markStr = [NSString stringWithChar:mark];
 		
-		if (mark == '+' || mark == '%') {
+		if (mark == '+' || mark == '%' || mark == '&') {
 			rect.origin.y += 1;
 		}
 		
@@ -197,14 +207,13 @@ static NSInteger markWidth;
 	
 	[style setObject:nickStyle forKey:NSParagraphStyleAttributeName];
 	
-	NSInteger offset = MARK_LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN;
+	NSInteger offset = (MARK_LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN);
 	
 	rect = frame;
 	rect.origin.x += offset;
 	rect.size.width -= offset;
-	
-	NSString *nick = [member nick];
-	[nick drawInRect:rect withAttributes:style];
+
+	[[member nick] drawInRect:rect withAttributes:style];
 }
 
 @end

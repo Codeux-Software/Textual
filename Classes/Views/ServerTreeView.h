@@ -4,11 +4,13 @@
 @interface ServerTreeView : TreeView
 {
 	id responderDelegate;
+	
 	OtherTheme *theme;
 	
 	NSColor *bgColor;
 	NSColor *topLineColor;
 	NSColor *bottomLineColor;
+	
 	NSGradient *gradient;
 }
 

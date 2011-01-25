@@ -7,8 +7,9 @@
 	#include <WebKit/WebKit.h>
 	#include <Security/Security.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
-	
-	#define BOOLReverseValue(b)		((b == YES) ? NO : YES)
+
+	#define CFItemRefToID(s)			(id)s
+	#define BOOLReverseValue(b)			((b == YES) ? NO : YES)
 
 	#ifdef DEBUG
 		#define LOG(...) NSLog(__VA_ARGS__);
@@ -23,8 +24,6 @@
 		#define START_WATCH	;
 		#define END_WATCH ;
 	#endif
-
-	#define CFItemRefToID(s)			(id)s
 
 	typedef unsigned long long TXFSLongInt; // filesizes
 
@@ -49,7 +48,6 @@
 	#import "KeyEventHandler.h"
 	#import "MainWindow.h"
 	#import "LogRenderer.h"
-	#import "DialogWindow.h"
 	#import "ThinSplitView.h"
 	#import "InputTextField.h"
 	#import "ImageURLParser.h"

@@ -4,9 +4,11 @@
 @interface ThinSplitView : NSSplitView
 {
 	NSColor *dividerColor;
+	
 	NSInteger fixedViewIndex;
 	NSInteger myDividerThickness;
 	NSInteger position;
+	
 	BOOL inverted;
 	BOOL hidden;
 }

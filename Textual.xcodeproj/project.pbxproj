@@ -161,7 +161,6 @@
 		4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
 		4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
 		4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
-		4CA945B611E1AFBA00D36367 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17411737F660044E7A1 /* DialogWindow.m */; };
 		4CA945B711E1AFBA00D36367 /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17611737F660044E7A1 /* FieldEditorTextView.m */; };
 		4CA945B811E1AFBA00D36367 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
 		4CA945B911E1AFBA00D36367 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18111737F660044E7A1 /* ListView.m */; };
@@ -240,7 +239,6 @@
 		4CAA3B7D12E0ECCB00FB83EB /* AboutPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E561211B0386200B5DE98 /* AboutPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B7E12E0ECCB00FB83EB /* ServerSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C0E111737F660044E7A1 /* ServerSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B7F12E0ECCB00FB83EB /* DDInvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFF3BD411CC715A00FF2930 /* DDInvocationGrabber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CAA3B8012E0ECCB00FB83EB /* DialogWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C17311737F660044E7A1 /* DialogWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B8112E0ECCB00FB83EB /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10D11737F660044E7A1 /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B8212E0ECCB00FB83EB /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C11811737F660044E7A1 /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3B8312E0ECCB00FB83EB /* ImageURLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 780C67C611822AFF00CB739F /* ImageURLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -656,8 +654,6 @@
 		78A8C16F11737F660044E7A1 /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
 		78A8C17111737F660044E7A1 /* ChatBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBox.h; sourceTree = "<group>"; };
 		78A8C17211737F660044E7A1 /* ChatBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatBox.m; sourceTree = "<group>"; };
-		78A8C17311737F660044E7A1 /* DialogWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogWindow.h; sourceTree = "<group>"; };
-		78A8C17411737F660044E7A1 /* DialogWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogWindow.m; sourceTree = "<group>"; };
 		78A8C17511737F660044E7A1 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldEditorTextView.h; sourceTree = "<group>"; };
 		78A8C17611737F660044E7A1 /* FieldEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldEditorTextView.m; sourceTree = "<group>"; };
 		78A8C17711737F660044E7A1 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextField.h; sourceTree = "<group>"; };
@@ -1317,8 +1313,6 @@
 				78A8C17211737F660044E7A1 /* ChatBox.m */,
 				29847DE21297B41900D495D5 /* DockIcon.h */,
 				29847DE31297B41900D495D5 /* DockIcon.m */,
-				78A8C17311737F660044E7A1 /* DialogWindow.h */,
-				78A8C17411737F660044E7A1 /* DialogWindow.m */,
 				78A8C17511737F660044E7A1 /* FieldEditorTextView.h */,
 				78A8C17611737F660044E7A1 /* FieldEditorTextView.m */,
 				78A8C17711737F660044E7A1 /* InputTextField.h */,
@@ -1425,7 +1419,6 @@
 				4CAA3B7D12E0ECCB00FB83EB /* AboutPanel.h in Headers */,
 				4CAA3B7E12E0ECCB00FB83EB /* ServerSheet.h in Headers */,
 				4CAA3B7F12E0ECCB00FB83EB /* DDInvocationGrabber.h in Headers */,
-				4CAA3B8012E0ECCB00FB83EB /* DialogWindow.h in Headers */,
 				4CAA3B8112E0ECCB00FB83EB /* IRC.h in Headers */,
 				4CAA3B8212E0ECCB00FB83EB /* IRCConnection.h in Headers */,
 				4CAA3B8312E0ECCB00FB83EB /* ImageURLParser.h in Headers */,
@@ -1763,7 +1756,6 @@
 				4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */,
 				4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */,
 				4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */,
-				4CA945B611E1AFBA00D36367 /* DialogWindow.m in Sources */,
 				4CA945B711E1AFBA00D36367 /* FieldEditorTextView.m in Sources */,
 				4CA945B811E1AFBA00D36367 /* InputTextField.m in Sources */,
 				4CA945B911E1AFBA00D36367 /* ListView.m in Sources */,

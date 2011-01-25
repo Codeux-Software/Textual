@@ -220,7 +220,7 @@
 	} else {
 		if ([[error domain] isEqualToString:txCFStreamErrorDomainSSL]) {
 			if ([socketBadSSLCertErrorCodes containsObject:[NSNumber numberWithInteger:[error code]]]) {
-				IRCClient *client = (IRCClient *)[delegate delegate];
+				IRCClient *client = [delegate delegate]; // Trace legacy
 				
 				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
 				
