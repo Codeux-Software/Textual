@@ -86,7 +86,7 @@
 			{
 				NSIndexSet *set = [self selectedRowIndexes];
 				
-				if ([set count] > 0 && [set containsIndex:0]) {
+				if (NSObjectIsNotEmpty(set) && [set containsIndex:0]) {
 					if ([keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
 						[keyDelegate listViewMoveUp];
 						

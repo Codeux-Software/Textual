@@ -55,7 +55,7 @@
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
-		scriptsController = [[ScriptsWrapper alloc] init];
+		scriptsController = [ScriptsWrapper new];
 	}
 	return self;
 }
@@ -201,8 +201,9 @@
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
 {							   
 	NSRect windowFrame = [self.window frame];
-	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
+	
 	windowFrame.size.width = [view frame].size.width;
+	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y = NSMaxY([self.window frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	
 	if ([[contentView subviews] count] != 0) {
@@ -210,6 +211,7 @@
 	}
 	
 	[self.window setFrame:windowFrame display:YES animate:YES];
+	
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
 	
@@ -298,7 +300,7 @@
 - (NSArray *)availableSounds
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
-	NSArray *directoryContents = [TXNSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
+	NSArray *directoryContents = [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
 	
 	[sound_list addObject:EMPTY_SOUND];
 	
@@ -309,7 +311,7 @@
 	}
 	
 	NSString *home_sounds = [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Sounds"];
-	NSArray *homeDirectoryContents = [TXNSFileManager() contentsOfDirectoryAtPath:home_sounds error:NULL];
+	NSArray *homeDirectoryContents = [_NSFileManager() contentsOfDirectoryAtPath:home_sounds error:NULL];
 	
 	if (homeDirectoryContents && [homeDirectoryContents count] > 0) {
 		[sound_list addObject:EMPTY_SOUND];
@@ -376,7 +378,7 @@
 	path = [path stringByExpandingTildeInPath];
 	NSString *dirName = [path lastPathComponent];
 	
-	NSImage *icon = [TXNSWorkspace() iconForFile:path];
+	NSImage *icon = [_NSWorkspace() iconForFile:path];
 	
 	[icon setSize:NSMakeSize(16, 16)];
 	
@@ -395,8 +397,8 @@
 		
 		BOOL isDir;
 		
-		if (![TXNSFileManager() fileExistsAtPath:path isDirectory:&isDir]) {
-			[TXNSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+		if (![_NSFileManager() fileExistsAtPath:path isDirectory:&isDir]) {
+			[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
 		}
 		
 		[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
@@ -440,16 +442,16 @@
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
-		NSArray *files = [TXNSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+		NSArray *files = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 		
 		for (NSString *file in files) {
 			if ([path isEqualToString:[Preferences whereThemesLocalPath]]) {
-				if ([TXNSFileManager() fileExistsAtPath:[[Preferences whereThemesPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
+				if ([_NSFileManager() fileExistsAtPath:[[Preferences whereThemesPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
 					continue;
 				}
 			}
 			
-			if ([TXNSFileManager() fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
+			if ([_NSFileManager() fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
 				NSString *baseName = [file stringByDeletingPathExtension];
 				
 				[set addObject:baseName];
@@ -539,7 +541,7 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	[TXNSNotificationCenter() postNotificationName:TransparencyDidChangeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:TransparencyDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onTimestampFormatChanged:(id)sender
@@ -586,27 +588,27 @@
 
 - (void)onInputHistorySchemeChanged:(id)sender
 {
-	[TXNSNotificationCenter() postNotificationName:InputHistoryGlobalSchemeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:InputHistoryGlobalSchemeNotification object:nil userInfo:nil];
 }
 
 - (void)onLayoutChanged:(id)sender
 {
-	[TXNSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onStyleChanged:(id)sender
 {
-	[TXNSNotificationCenter() postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onOpenPathToThemes:(id)sender
 {
-	[TXNSWorkspace() openFile:[Preferences whereThemesPath]];
+	[_NSWorkspace() openFile:[Preferences whereThemesPath]];
 }
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[TXNSWorkspace() openFile:[Preferences whereApplicationSupportPath]];
+	[_NSWorkspace() openFile:[Preferences whereApplicationSupportPath]];
 }
 
 
@@ -617,7 +619,7 @@
 {
 	[Preferences cleanUpWords];
 	
-	[TXNSUserDefaults() synchronize];
+	[_NSUserDefaults() synchronize];
 	
 	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[delegate preferencesDialogWillClose:self];

@@ -110,7 +110,7 @@
 {
 	NSString *objk = [modeIndexes objectForKey:mode];
 	
-	return BOOLReverseValue((objk == nil));
+	return BOOLReverseValue((PointerIsEmpty(objk)));
 }
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode

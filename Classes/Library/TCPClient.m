@@ -107,7 +107,7 @@
 
 - (void)close
 {
-	if (conn == nil) return;
+	if (PointerIsEmpty(conn)) return;
 	
 	++tag;
 	
@@ -176,7 +176,7 @@
 
 - (BOOL)connected
 {
-	if (conn == nil) return NO;
+	if (PointerIsEmpty(conn)) return NO;
 	if ([self checkTag:conn] == NO) return NO;
 	
 	return [conn isConnected];
@@ -211,7 +211,7 @@
 - (void)onSocket:(AsyncSocket *)sender willDisconnectWithError:(NSError *)error
 {
 	if ([self checkTag:sender] == NO) return;
-	if (error == nil) return;
+	if (PointerIsEmpty(error)) return;
 	
 	NSString *msg = nil;
 	
@@ -225,15 +225,17 @@
 				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
 				
 				if (client.config.isTrustedConnection == NO) {
-					BOOL status = promptWithSuppression(TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE"), 
-														TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE"), 
-														TXTLS(@"TRUST_BUTTON"), 
-														TXTLS(@"CANCEL_BUTTON"), suppKey, nil);
+					BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
+																   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
+														   defaultButton:TXTLS(@"TRUST_BUTTON") 
+														 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+														  suppressionKey:suppKey
+														 suppressionText:nil];
 					
 					client.config.isTrustedConnection = status;
 					client.disconnectType = ((status == YES) ? DISCONNECT_BAD_SSL_CERT : DISCONNECT_NORMAL);
 					
-					[TXNSUserDefaults() setBool:status forKey:suppKey];
+					[_NSUserDefaults() setBool:status forKey:suppKey];
 					
 					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
 						[delegate tcpClient:self error:nil];
@@ -243,7 +245,7 @@
 		}
 	}
 	
-	if (NSStringIsEmpty(msg)) {
+	if (NSObjectIsEmpty(msg)) {
 		msg = [error localizedDescription];
 	}
 	

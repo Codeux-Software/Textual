@@ -47,6 +47,8 @@
 		4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA112D1BD20001990A9 /* TPWTB_Styles.png */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
+		4C4A041712EF1C65009A7988 /* PopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A041512EF1C65009A7988 /* PopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A041612EF1C65009A7988 /* PopupPrompts.m */; };
 		4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
 		4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1A12D1B6A900D6B18C /* main.m */; };
 		4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1D12D1B6A900D6B18C /* ValidateReceipt.m */; };
@@ -327,19 +329,26 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BragSpam;
 		};
-		4C282ACE12A3AA0700F44108 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
-			remoteInfo = BragSpam;
-		};
-		4C282AD012A3AA0B00F44108 /* PBXContainerItemProxy */ = {
+		4C287A6112F02FC9004CA55C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = SystemProfiler;
+		};
+		4C287A6312F02FCC004CA55C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
+			remoteInfo = BlowfishCommandLine;
+		};
+		4C287A6512F02FD1004CA55C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
+			remoteInfo = BragSpam;
 		};
 		4C3F6CFD12DC6EB900F5E696 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -353,13 +362,6 @@
 			containerPortal = 4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = BlowfishCommandLine;
-		};
-		4C858F7412E0A1F400F3FAE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = BlowfishCommandLine;
 		};
 /* End PBXContainerItemProxy section */
@@ -429,6 +431,8 @@
 		4C400E2E1238A655005BDA9D /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguagePreferences.h; sourceTree = "<group>"; };
 		4C400E2F1238A655005BDA9D /* LanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagePreferences.m; sourceTree = "<group>"; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		4C4A041512EF1C65009A7988 /* PopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupPrompts.h; sourceTree = "<group>"; };
+		4C4A041612EF1C65009A7988 /* PopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupPrompts.m; sourceTree = "<group>"; };
 		4C5938E411D0E0790094B049 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGKeychain.h; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1273,6 +1277,8 @@
 				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
 				4CCD0F8611BAE7E900758B81 /* GlobalModels.h */,
 				4CCD0F8711BAE7E900758B81 /* GlobalModels.m */,
+				4C4A041512EF1C65009A7988 /* PopupPrompts.h */,
+				4C4A041612EF1C65009A7988 /* PopupPrompts.m */,
 				4C982D14121F32430051543F /* URLParser.h */,
 				4C982D15121F32430051543F /* URLParser.m */,
 				4C400E2E1238A655005BDA9D /* LanguagePreferences.h */,
@@ -1480,6 +1486,7 @@
 				4CAA3BC212E0ECCB00FB83EB /* NSData+Kana.h in Headers */,
 				4CAA3BC312E0ECCB00FB83EB /* SoundPlayer.h in Headers */,
 				4CAA3BC412E0ECCB00FB83EB /* WebViewAutoScroll.h in Headers */,
+				4C4A041712EF1C65009A7988 /* PopupPrompts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,9 +1510,9 @@
 			);
 			dependencies = (
 				4C3F6CFE12DC6EB900F5E696 /* PBXTargetDependency */,
-				4C282ACF12A3AA0700F44108 /* PBXTargetDependency */,
-				4C282AD112A3AA0B00F44108 /* PBXTargetDependency */,
-				4C858F7512E0A1F400F3FAE0 /* PBXTargetDependency */,
+				4C287A6212F02FC9004CA55C /* PBXTargetDependency */,
+				4C287A6412F02FCC004CA55C /* PBXTargetDependency */,
+				4C287A6612F02FD1004CA55C /* PBXTargetDependency */,
 			);
 			name = Textual;
 			productName = LimeChat;
@@ -1796,31 +1803,32 @@
 				29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */,
 				4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */,
 				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
+				4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C282ACF12A3AA0700F44108 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BragSpam;
-			targetProxy = 4C282ACE12A3AA0700F44108 /* PBXContainerItemProxy */;
-		};
-		4C282AD112A3AA0B00F44108 /* PBXTargetDependency */ = {
+		4C287A6212F02FC9004CA55C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SystemProfiler;
-			targetProxy = 4C282AD012A3AA0B00F44108 /* PBXContainerItemProxy */;
+			targetProxy = 4C287A6112F02FC9004CA55C /* PBXContainerItemProxy */;
+		};
+		4C287A6412F02FCC004CA55C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BlowfishCommandLine;
+			targetProxy = 4C287A6312F02FCC004CA55C /* PBXContainerItemProxy */;
+		};
+		4C287A6612F02FD1004CA55C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BragSpam;
+			targetProxy = 4C287A6512F02FD1004CA55C /* PBXContainerItemProxy */;
 		};
 		4C3F6CFE12DC6EB900F5E696 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
 			targetProxy = 4C3F6CFD12DC6EB900F5E696 /* PBXContainerItemProxy */;
-		};
-		4C858F7512E0A1F400F3FAE0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BlowfishCommandLine;
-			targetProxy = 4C858F7412E0A1F400F3FAE0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

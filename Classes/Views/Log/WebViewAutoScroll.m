@@ -32,14 +32,14 @@
 	webFrame = aWebFrame;
 	
 	if (webFrame) {
-		[TXNSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
-		[TXNSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
+		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
+		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
 		lastFrame = [[webFrame documentView] frame];
 		lastVisibleRect = [[webFrame documentView] visibleRect];
 	} else {
-		[TXNSNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
-		[TXNSNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
+		[_NSNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
+		[_NSNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
 	}
 }
 

@@ -43,7 +43,7 @@
 		if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 			DOMRange *range = [sender selectedDOMRange];
 			
-			if (range == nil) return;
+			if (PointerIsEmpty(range)) return;
 			if ([(LogView *)sender hasSelection] == NO) return;
 			
 			[NSApp sendAction:@selector(copy:) to:[[NSApp mainWindow] firstResponder] from:self];
@@ -139,7 +139,7 @@
 			}
 		}
 		
-		if ([TXNSUserDefaults() boolForKey:DeveloperEnvironmentToken]) {
+		if ([_NSUserDefaults() boolForKey:DeveloperEnvironmentToken]) {
 			[ary addObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {

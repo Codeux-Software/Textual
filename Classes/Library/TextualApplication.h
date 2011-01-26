@@ -2,33 +2,37 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #ifdef __OBJC__
+	/* System Headers */
 	#include <Cocoa/Cocoa.h>
 	#include <Carbon/Carbon.h>
 	#include <WebKit/WebKit.h>
 	#include <Security/Security.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
 
-	#define CFItemRefToID(s)			(id)s
-	#define BOOLReverseValue(b)			((b == YES) ? NO : YES)
+	/* Establish Common Pointers */
+	#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
+	#define _NSFileManager()						[NSFileManager defaultManager]
+	#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
+	#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+	#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
+	#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
+	#define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
+	#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
 
-	#ifdef DEBUG
-		#define LOG(...) NSLog(__VA_ARGS__);
-		#define LOG_METHOD NSLog(@"%s", __func__);
-		#define APPLOG(...) NSLog(__VA_ARGS__);
-		#define START_WATCH			CFAbsoluteTime start_time__ = CFAbsoluteTimeGetCurrent();
-		#define END_WATCH			LOG(@"### time elapsed: %f", CFAbsoluteTimeGetCurrent() - start_time__);
-	#else
-		#define LOG(...) ;
-		#define LOG_METHOD ;
-		#define APPLOG(...) { if (NSAppEnableApplicationLog) NSLog(__VA_ARGS__); }
-		#define START_WATCH	;
-		#define END_WATCH ;
-	#endif
+	/* Miscellaneous functions to handle small tasks */
+	#define DevNullDestroyObject(...)			; 
 
+	#define CFItemRefToID(s)					(id)s
+	#define PointerIsEmpty(s)					(s == NULL || s == nil)
+	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
+
+	/* Item types */
 	typedef unsigned long long TXFSLongInt; // filesizes
 
+	/* Textual Headers */
 	#import "GlobalModels.h"
 	#import "RegexKitLite.h"
+	#import "PopupPrompts.h"
 	#import "AsyncSocket.h"
 	#import "AsyncSocketExtensions.h"
 	#import "TinyGrowlClient.h"

@@ -69,14 +69,14 @@
 @property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL movingToBottom;
 @property (nonatomic, retain) NSMutableArray *lines;
-@property (nonatomic) NSInteger lineNumber;
-@property (nonatomic) NSInteger count;
+@property (nonatomic, assign) NSInteger lineNumber;
+@property (nonatomic, assign) NSInteger count;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) BOOL loaded;
-@property (nonatomic) NSInteger loadingImages;
+@property (nonatomic, assign) NSInteger loadingImages;
 @property (nonatomic, retain) NSString *html;
 @property (nonatomic, assign) BOOL scrollBottom;
-@property (nonatomic) NSInteger scrollTop;
+@property (nonatomic, assign) NSInteger scrollTop;
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;

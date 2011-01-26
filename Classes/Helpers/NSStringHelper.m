@@ -74,7 +74,7 @@
 	
 	if (buffer == NULL) {
 		NSMutableData *data = [NSMutableData dataWithLength:(len * sizeof(UniChar))];
-		if (data == nil) return NULL;
+		if (NSObjectIsEmpty(data)) return NULL;
 		
 		[self getCharacters:[data mutableBytes]];
 		buffer = [data bytes];
@@ -395,7 +395,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (BOOL)isChannelName
 {
-	if (NSStringIsEmpty(self)) return NO;
+	if (NSObjectIsEmpty(self)) return NO;
 	
 	UniChar c = [self characterAtIndex:0];
 	
@@ -404,7 +404,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (BOOL)isModeChannelName
 {
-	if (NSStringIsEmpty(self)) return NO;
+	if (NSObjectIsEmpty(self)) return NO;
 	
 	UniChar c = [self characterAtIndex:0];
 	
@@ -496,7 +496,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIComponent
 {
-	if (NSStringIsEmpty(self)) return @"";
+	if (NSObjectIsEmpty(self)) return @"";
 	
 	static const char* characters = "0123456789ABCDEF";
 	
@@ -525,7 +525,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIFragment
 {
-	if (NSStringIsEmpty(self)) return @"";
+	if (NSObjectIsEmpty(self)) return @"";
 	
 	static const char* characters = "0123456789ABCDEF";
 	
@@ -571,7 +571,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)nicknameFromHostmask
 {
-	if (NSStringIsEmpty(self)) return nil;
+	if (NSObjectIsEmpty(self)) return nil;
 	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
 	
 	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
@@ -645,7 +645,7 @@ BOOL isUnicharDigit(unichar c)
 {
 	static NSCharacterSet *spaceSet = nil;
 	
-	if (spaceSet == nil) {
+	if (PointerIsEmpty(spaceSet)) {
 		spaceSet = [[NSCharacterSet characterSetWithCharactersInString:@" "] retain];
 	}
 	

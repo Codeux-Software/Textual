@@ -5,11 +5,12 @@
 @interface ServerSheet : SheetBase
 {
 	NSInteger uid;
+	
 	IRCClient *client;
 	IRCClientConfig *config;
 	
-	NSInteger initialTabTag;
 	NSView *initalView;
+	NSInteger initialTabTag;
 	
 	NSDictionary *serverList;
 	
@@ -70,7 +71,7 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, retain) IRCClientConfig *config;
 @property (nonatomic, assign) IRCClient *client;
-@property (nonatomic) NSInteger initialTabTag;
+@property (nonatomic, assign) NSInteger initialTabTag;
 @property (nonatomic, retain) NSView *initalView;
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *generalView;

@@ -57,14 +57,14 @@
 		NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
 		NSString *filename = [ViewTheme extractThemeName:[Preferences themeName]];
 		
-		if (NSStringIsEmpty(kind) == NO && NSStringIsEmpty(filename) == NO) {
+		if (NSObjectIsNotEmpty(kind) && NSObjectIsNotEmpty(filename)) {
 			if ([kind isEqualToString:@"resource"]) {
 				path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 			} else {
 				path = [[Preferences whereThemesPath] stringByAppendingPathComponent:filename];
 			}
 			
-			if ([TXNSFileManager() fileExistsAtPath:path] == NO) {
+			if ([_NSFileManager() fileExistsAtPath:path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 					
@@ -72,7 +72,7 @@
 				}
 			}
 			
-			if ([TXNSFileManager() fileExistsAtPath:path] == NO) {
+			if ([_NSFileManager() fileExistsAtPath:path] == NO) {
 				NSLog(@"Error: No path to local resources.");
 				exit(0);
 			}
@@ -104,39 +104,39 @@
 	
 	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
 	
-	if ([TXNSFileManager() fileExistsAtPath:dest] == NO) {
-		[TXNSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:location error:NULL];
+	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:location error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		NSString *sdest = [dest stringByAppendingPathComponent:file];
 		NSString *source = [location stringByAppendingPathComponent:file];
 		
-		[TXNSFileManager() fileExistsAtPath:source isDirectory:&isDirectory];
-		[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+		[_NSFileManager() fileExistsAtPath:source isDirectory:&isDirectory];
+		[_NSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 							ofItemAtPath:source
 								   error:NULL];
 		
 		BOOL resetAttrInfo = NO;
 		
-		if ([TXNSFileManager() fileExistsAtPath:sdest]) {
+		if ([_NSFileManager() fileExistsAtPath:sdest]) {
 			if (isDirectory == YES) {
 				resetAttrInfo = YES;
 				
 				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
 			} else {
-				NSDictionary *attributes = [TXNSFileManager() attributesOfItemAtPath:sdest error:nil];
+				NSDictionary *attributes = [_NSFileManager() attributesOfItemAtPath:sdest error:nil];
 				
 				if (attributes) {
 					NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
 					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
 					
 					if (creationDate == modificationDate || creationDate < 1) {
-						[TXNSFileManager() removeItemAtPath:sdest error:NULL];
+						[_NSFileManager() removeItemAtPath:sdest error:NULL];
 						
-						resetAttrInfo = [TXNSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
+						resetAttrInfo = [_NSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
 					}
 				}
 			}
@@ -146,12 +146,12 @@
 				
 				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
 			} else {
-				resetAttrInfo = [TXNSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
+				resetAttrInfo = [_NSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
 			}
 		}
 		
 		if (resetAttrInfo == YES || force_reset == YES) {
-			[TXNSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
+			[_NSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 								ofItemAtPath:sdest 
 									   error:NULL];
 		}
@@ -160,7 +160,7 @@
 
 + (void)createUserDirectory:(BOOL)force_reset
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	[self copyItemsUsingRecursionFrom:[Preferences whereThemesLocalPath] to:[Preferences whereThemesPath] whileForcing:force_reset];
 	[self copyItemsUsingRecursionFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];

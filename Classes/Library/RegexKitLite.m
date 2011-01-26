@@ -631,7 +631,7 @@ __attribute__((constructor)) static void rkl_RegisterForLowMemoryNotifications(v
   while((rkl_HaveRegisteredForLowMemoryNotifications == 0) && ((didSwap = OSAtomicCompareAndSwapIntBarrier(0, 1, &rkl_HaveRegisteredForLowMemoryNotifications)) == false)) { /* Allows for spurious CAS failures. */ }
   if(didSwap == true) {
     if((memoryWarningNotification = (void **)dlsym(RTLD_DEFAULT, "UIApplicationDidReceiveMemoryWarningNotification")) != NULL) {
-      [TXNSNotificationCenter() addObserver:[RKLLowMemoryWarningObserver class] selector:@selector(lowMemoryWarning:) name:(NSString *)*memoryWarningNotification object:NULL];
+      [_NSNotificationCenter() addObserver:[RKLLowMemoryWarningObserver class] selector:@selector(lowMemoryWarning:) name:(NSString *)*memoryWarningNotification object:NULL];
     }
   }
 }
@@ -1946,7 +1946,7 @@ errorExit:
 //  The only 'caveat' is that the user needs to -retain any strings that they want to use past the point at which their ^block returns.  Logically, it is as if the following takes place:
 //  
 //  for(eachMatchOfRegexInStringToSearch) {
-//    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//    NSAutoreleasePool *pool = [NSAutoreleasePool new];
 //    callUsersBlock(capturedCount, capturedStrings, capturedStringRanges, stop);
 //    [pool release];
 //  }
@@ -2018,7 +2018,7 @@ static id rkl_performEnumerationUsingBlock(id self, SEL _cmd,
   if(autoreleaseArray != NULL) { CFArrayAppendValue((CFMutableArrayRef)autoreleaseArray, blockEnumerationHelper); autoreleaseReplaceRange.location++; } // We do not autorelease blockEnumerationHelper, but instead add it to autoreleaseArray.
   
   if(performStringReplacement == YES) {
-    if(RKL_EXPECTED((mutableReplacementString = [[NSMutableString alloc] init]) == NULL, 0L)) { goto exitNow; } // Warning about potential leak of mutableReplacementString can be safely ignored.
+    if(RKL_EXPECTED((mutableReplacementString = [NSMutableString new]) == NULL, 0L)) { goto exitNow; } // Warning about potential leak of mutableReplacementString can be safely ignored.
     if(autoreleaseArray != NULL) { CFArrayAppendValue((CFMutableArrayRef)autoreleaseArray, mutableReplacementString); autoreleaseReplaceRange.location++; } // We do not autorelease mutableReplacementString, but instead add it to autoreleaseArray.
   }
 

@@ -88,9 +88,9 @@
 	NSMutableString *s = [[str mutableCopy] autorelease];
 	BOOL plus = NO;
 	
-	while (!NSStringIsEmpty(s)) {
+	while (!NSObjectIsEmpty(s)) {
 		NSString *token = [s getToken];
-		if (NSStringIsEmpty(token)) break;
+		if (NSObjectIsEmpty(token)) break;
 		UniChar c = [token characterAtIndex:0];
 		
 		if (c == '+' || c == '-') {
@@ -227,7 +227,7 @@
 
 + (IRCModeInfo *)modeInfo
 {
-	return [[[IRCModeInfo alloc] init] autorelease];
+	return [[IRCModeInfo new] autorelease];
 }
 
 - (void)dealloc

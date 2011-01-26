@@ -7,7 +7,7 @@
 
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel
 {	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
+	NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
 	
 	BOOL useSSL = NO;
 	

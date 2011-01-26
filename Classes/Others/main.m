@@ -1,8 +1,8 @@
 
 int main(int argc, const char* argv[])
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	
 #if !defined(DEBUG) && !defined(IS_TRIAL_BINARY)
 #ifdef VALIDATE_APPSTORE_RECEIPT
 #if VALIDATE_APPSTORE_RECEIPT == 1

@@ -81,21 +81,18 @@
 	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
-	[TXNSNotificationCenter() addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
-	[TXNSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
-	[TXNSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
-	[TXNSNotificationCenter() addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
-	[TXNSNotificationCenter() addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
-	[TXNSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
-	NSNotificationCenter *wsnc = [TXNSWorkspace() notificationCenter];
-	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
-	[wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-	[wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
-	[wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
-	
-	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
+	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
 	rootSplitter.fixedViewIndex = 1;
 	infoSplitter.fixedViewIndex = 1;
@@ -220,9 +217,9 @@
 
 - (void)showTrialPeroidIntroDialog
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
-	BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.trial_period_info"];
+	BOOL suppCheck = [_NSUserDefaults() boolForKey:@"Preferences.prompts.trial_period_info"];
 	
 	if (suppCheck == NO) {
 		NSAlert *alert = [NSAlert alertWithMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
@@ -233,7 +230,7 @@
 		
 		[alert runModal];
 		
-		[TXNSUserDefaults() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
+		[_NSUserDefaults() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
 	}
 	
 	[pool release];
@@ -365,7 +362,7 @@
 	[menu terminate];
 	
 	if ([Preferences isUpgradedFromVersion100] == YES) {
-		[TXNSUserDefaults() removeObjectForKey:@"SUHasLaunchedBefore"];
+		[_NSUserDefaults() removeObjectForKey:@"SUHasLaunchedBefore"];
 	}
 	
 	[self saveWindowState];
@@ -593,7 +590,7 @@
 - (BOOL)fieldEditorTextViewPaste:(id)sender;
 {
 	NSString *s = [[NSPasteboard generalPasteboard] stringContent];
-	if (NSStringIsEmpty(s)) return NO;
+	if (NSObjectIsEmpty(s)) return NO;
 	
 	if ([[window firstResponder] isKindOfClass:[NSTextView class]] == NO) {
 		[world focusInputText];
@@ -615,12 +612,12 @@
 	[text setStringValue:@""];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		if (world.selected.currentInputHistory && NSStringIsEmpty(world.selected.currentInputHistory) == NO) {
+		if (world.selected.currentInputHistory && NSObjectIsNotEmpty(world.selected.currentInputHistory)) {
 			world.selected.currentInputHistory = nil;
 		}
 	}
 	
-	if (NSStringIsEmpty(s) == NO) {
+	if (NSObjectIsNotEmpty(s)) {
 		if ([world inputText:s command:command]) {
 			[inputHistory add:os];
 		}
@@ -742,7 +739,7 @@
 
 - (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {	
-	[TXNSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+	[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
 }
 
 - (void)themeDidChange:(NSNotification *)note
@@ -781,11 +778,11 @@
 	
 	sf = (NSMutableString *)[sf trim];
 	
-	if (NSStringIsEmpty(sf) == NO) {		
-		BOOL suppCheck = [TXNSUserDefaults() boolForKey:@"Preferences.prompts.theme_override_info"];
+	if (NSObjectIsNotEmpty(sf)) {		
+		BOOL suppCheck = [_NSUserDefaults() boolForKey:@"Preferences.prompts.theme_override_info"];
 		
 		if (suppCheck == NO) {
-			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+			NSAlert *alert = [[NSAlert new] autorelease];
 			
 			NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
 			
@@ -867,19 +864,19 @@
 	IRCClient *client = [world selectedClient];
 	IRCChannel *channel = [world selectedChannel];
 	
-	if (client == nil) return;
+	if (PointerIsEmpty(client)) return;
 	
 	if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
 		[world focusInputText];
 	}
 	
 	NSText *fe = [window fieldEditor:YES forObject:text];
-	if (fe == nil) return;
+	if (PointerIsEmpty(fe)) return;
 	
 	NSRange selectedRange = [fe selectedRange];
 	if (selectedRange.location == NSNotFound) return;
 	
-	if (completionStatus == nil) {
+	if (PointerIsEmpty(completionStatus)) {
 		completionStatus = [NickCompletionStatus new];
 	}
 	
@@ -915,7 +912,7 @@
 		}
 	}
 	
-	if (NSStringIsEmpty(pre)) return;
+	if (NSObjectIsEmpty(pre)) return;
 	
 	BOOL channelMode = NO;
 	BOOL commandMode = NO;
@@ -927,17 +924,17 @@
 		
 		pre = [pre safeSubstringFromIndex:1];
 		
-		if (NSStringIsEmpty(pre)) return;
+		if (NSObjectIsEmpty(pre)) return;
 	} else if (c == '@') {
-		if (channel == nil) return;
+		if (PointerIsEmpty(channel)) return;
 		
 		pre = [pre safeSubstringFromIndex:1];
 		
-		if (NSStringIsEmpty(pre)) return;
+		if (NSObjectIsEmpty(pre)) return;
 	} else if (c == '#') {
 		channelMode = YES;
 		
-		if (NSStringIsEmpty(pre)) return;
+		if (NSObjectIsEmpty(pre)) return;
 	}
 	
 	NSString *current = [pre stringByAppendingString:sel];
@@ -955,7 +952,7 @@
 		}
 	}
 	
-	if (NSStringIsEmpty(current)) return;
+	if (NSObjectIsEmpty(current)) return;
 	
 	NSString *lowerPre = [pre lowercaseString];
 	NSString *lowerCurrent = [current lowercaseString];
@@ -966,7 +963,7 @@
 	if (commandMode) {
 		choices = [NSMutableArray array];
 		
-		NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 		
 		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
 			[choices addObject:[command lowercaseString]];
@@ -1067,7 +1064,7 @@
 	if ((commandMode || channelMode) || head == NO) {
 		t = [t stringByAppendingString:@" "];
 	} else {
-		if (NSStringIsEmpty([Preferences completionSuffix]) == NO) {
+		if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
 			t = [t stringByAppendingString:[Preferences completionSuffix]];
 		}
 	}
@@ -1112,7 +1109,7 @@ typedef enum {
 {
 	if (dir == MOVE_UP || dir == MOVE_DOWN) {
 		id sel = world.selected;
-		if (sel == nil) return;
+		if (PointerIsEmpty(sel)) return;
 		
 		NSInteger n = [tree rowForItem:sel];
 		if (n < 0) return;
@@ -1154,7 +1151,7 @@ typedef enum {
 		}
 	} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
 		IRCClient *client = [world selectedClient];
-		if (client == nil) return;
+		if (PointerIsEmpty(client)) return;
 		
 		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
 		if (pos == NSNotFound) return;

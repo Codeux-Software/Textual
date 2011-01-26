@@ -143,7 +143,7 @@
 {
 	if (hidden) return;
 	
-	if (dividerColor == nil) {
+	if (PointerIsEmpty(dividerColor)) {
 		[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
 	} else {
 		[dividerColor set];

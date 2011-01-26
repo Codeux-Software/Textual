@@ -9,8 +9,6 @@
 #define IsIRCColor(c,f)						([NSNumber compareIRCColor:c against:f])
 #define IsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
 
-#define NSStringIsEmpty(s)					(s == nil || [s length] < 1)
-
 @interface NSString (NSStringHelper)
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;

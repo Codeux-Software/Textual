@@ -331,7 +331,7 @@ attributedString:(BOOL)attributed
 			NSMutableArray *urlAry = [NSMutableArray array];
 			NSArray *urlAryRanges = [URLParser locatedLinksForString:body];
 			
-			if ([urlAryRanges count] > 0) {
+			if (NSObjectIsNotEmpty(urlAryRanges)) {
 				for (NSString *rn in urlAryRanges) {
 					NSRange r = NSRangeFromString(rn);
 					
@@ -343,7 +343,7 @@ attributedString:(BOOL)attributed
 				}
 			}
 			
-			if (urlAry.count && urlRanges != NULL) {
+			if (NSObjectIsNotEmpty(urlAry) && PointerIsEmpty(urlRanges) == NO) {
 				*urlRanges = urlAry;
 			}
 		}
@@ -476,7 +476,7 @@ attributedString:(BOOL)attributed
 			start = (NSMaxRange(r) + 1);
 		}
 		
-		if (highlighted != NULL) {
+		if (PointerIsEmpty(highlighted) == NO) {
 			*highlighted = foundKeyword;
 		}
 		

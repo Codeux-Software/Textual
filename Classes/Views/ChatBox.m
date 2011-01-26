@@ -43,7 +43,7 @@
 
 - (void)setFrame:(NSRect)rect
 {
-	if ([self subviews].count > 0) {
+	if (NSObjectIsNotEmpty([self subviews])) {
 		NSRect f = rect;
 		
 		NSView *box = [self logBase];

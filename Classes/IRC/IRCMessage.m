@@ -72,7 +72,7 @@
 	command = [[[s getToken] uppercaseString] retain];
 	numericReply = [command integerValue];
 	
-	while (!NSStringIsEmpty(s)) {
+	while (!NSObjectIsEmpty(s)) {
 		if ([s hasPrefix:@":"]) {
 			[params addObject:[s safeSubstringFromIndex:1]];
 			break;

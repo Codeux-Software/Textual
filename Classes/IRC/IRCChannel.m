@@ -167,7 +167,7 @@
 
 - (void)detectOutgoingConversation:(NSString *)text
 {
-	if (NSStringIsEmpty([Preferences completionSuffix]) == NO) {
+	if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
 		NSArray *pieces = [text split:[Preferences completionSuffix]];
 	 
 		if ([pieces count] > 1) {

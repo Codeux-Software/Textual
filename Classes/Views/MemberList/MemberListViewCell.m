@@ -62,7 +62,7 @@ static NSInteger markWidth;
 
 + (MemberListViewCell *)initWithTheme:(id)aTheme
 {
-	MemberListViewCell *cell = [[MemberListViewCell alloc] init];
+	MemberListViewCell *cell = [MemberListViewCell new];
 	
 	cell.theme = aTheme;
 	

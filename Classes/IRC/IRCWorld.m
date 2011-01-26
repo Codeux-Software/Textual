@@ -169,14 +169,14 @@
 
 - (IRCClient *)selectedClient
 {
-	if (selected == nil) return nil;
+	if (PointerIsEmpty(selected)) return nil;
 	
 	return [selected client];
 }
 
 - (IRCChannel *)selectedChannel
 {
-	if (selected == nil) return nil;
+	if (PointerIsEmpty(selected)) return nil;
 	if ([selected isClient]) return nil;
 	
 	return (IRCChannel *)selected;
@@ -184,7 +184,7 @@
 
 - (IRCChannel *)selectedChannelOn:(IRCClient *)c
 {
-	if (selected == nil) return nil;
+	if (PointerIsEmpty(selected)) return nil;
 	if ([selected isClient]) return nil;
 	if (selected.client.uid != c.uid) return nil;
 	
@@ -243,7 +243,7 @@
 
 - (BOOL)inputText:(NSString *)s command:(NSString *)command
 {
-	if (selected == nil) return NO;
+	if (PointerIsEmpty(selected)) return NO;
 	
 	return [[selected client] inputText:s command:command];
 }
@@ -332,7 +332,7 @@
 
 - (void)storePreviousSelection
 {
-	if (selected == nil) {
+	if (PointerIsEmpty(selected)) {
 		previousSelectedClientId = 0;
 		previousSelectedChannelId = 0;
 	} else if (selected.isClient) {
@@ -391,7 +391,7 @@
 
 - (void)updateTitle
 {
-	if (selected == nil) {
+	if (PointerIsEmpty(selected)) {
 		[window setTitle:[[Preferences textualInfoPlist] objectForKey:@"CFBundleName"]];
 		return;
 	}
@@ -403,21 +403,21 @@
 		
 		NSMutableString *title = [NSMutableString string];
 		
-		if (NSStringIsEmpty(u.config.network) == NO) {
+		if (NSObjectIsNotEmpty(u.config.network)) {
 			[title appendString:u.config.network];
 		} else {
-			if (NSStringIsEmpty(u.config.name) == NO) {
+			if (NSObjectIsNotEmpty(u.config.name)) {
 				[title appendString:u.config.name];
 			}
 		}
 		
-		if (NSStringIsEmpty(u.config.server) == NO) {
-			if (NSStringIsEmpty(title) == NO) [title appendString:@" — "];
+		if (NSObjectIsNotEmpty(u.config.server)) {
+			if (NSObjectIsNotEmpty(title)) [title appendString:@" — "];
 		
 			[title appendString:u.config.server];
 		} else {
-			if (NSStringIsEmpty(u.config.host) == NO) {
-				if (NSStringIsEmpty(title) == NO) [title appendString:@" — "];
+			if (NSObjectIsNotEmpty(u.config.host)) {
+				if (NSObjectIsNotEmpty(title)) [title appendString:@" — "];
 				
 				[title appendString:u.config.host];
 			}
@@ -425,24 +425,24 @@
 		
 		[window setTitle:title];
 		
-		[TXNSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
+		[_NSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 	} else {		
 		IRCClient *u = sel.client;
 		IRCChannel *c = (IRCChannel *)sel;
 		
 		NSMutableString *title = [NSMutableString string];
 		
-		if (NSStringIsEmpty(u.config.network) == NO) {
+		if (NSObjectIsNotEmpty(u.config.network)) {
 			[title appendString:u.config.network];
 		} else {
-			if (NSStringIsEmpty(u.config.name) == NO) {
+			if (NSObjectIsNotEmpty(u.config.name)) {
 				[title appendString:u.config.name];
 			}
 		}
 		
-		if (NSStringIsEmpty(title) == NO) [title appendString:@" — "];
+		if (NSObjectIsNotEmpty(title)) [title appendString:@" — "];
 		
-		if (NSStringIsEmpty(c.name) == NO) {
+		if (NSObjectIsNotEmpty(c.name)) {
 			[title appendString:c.name];
 		}
 		
@@ -453,9 +453,9 @@
 				[title appendString:[NSString stringWithFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), [c.mode titleString]]];
 			}
 			
-			[TXNSNotificationCenter() postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
+			[_NSNotificationCenter() postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
 		} else {
-			[TXNSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
+			[_NSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 		}
 		
 		[window setTitle:title];
@@ -464,7 +464,7 @@
 
 - (void)updateClientTitle:(IRCClient *)client
 {
-	if (client == nil || selected == nil) return;
+	if (PointerIsEmpty(client) || PointerIsEmpty(selected)) return;
 	
 	if (selected == client) {
 		[self updateTitle];
@@ -473,7 +473,7 @@
 
 - (void)updateChannelTitle:(IRCChannel *)channel
 {
-	if (channel == nil || selected == nil) return;
+	if (PointerIsEmpty(channel) || PointerIsEmpty(selected)) return;
 	
 	if (selected == channel) {
 		[self updateTitle];
@@ -528,7 +528,7 @@
 	
 	[self storePreviousSelection];
 	
-	if (item == nil) {
+	if (PointerIsEmpty(item)) {
 		self.selected = nil;
 		
 		logBase.contentView = dummyLog.view;
@@ -560,7 +560,7 @@
 - (void)selectChannelAt:(NSInteger)n
 {
 	IRCClient *c = [self selectedClient];
-	if (c == nil) return;
+	if (PointerIsEmpty(c)) return;
 	
 	if (n == 0) {
 		[self select:c];
@@ -992,12 +992,12 @@
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
-	if (selected == nil) return;
+	if (PointerIsEmpty(selected)) return;
 	
 	IRCClient *u = [self selectedClient];
 	IRCChannel *c = [self selectedChannel];
 	
-	if (c == nil) {
+	if (PointerIsEmpty(c)) {
 		if (u.isConnecting || u.isConnected || u.isLoggedIn) {
 			if ([Preferences disconnectOnDoubleclick]) {
 				[u quit];
@@ -1024,7 +1024,7 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
-	if (item == nil) return clients.count;
+	if (PointerIsEmpty(item)) return clients.count;
 	
 	return [item numberOfChildren];
 }
@@ -1036,7 +1036,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem *)item
 {
-	if (item == nil) return [clients safeObjectAtIndex:index];
+	if (PointerIsEmpty(item)) return [clients safeObjectAtIndex:index];
 	
 	return [item childAtIndex:index];
 }
@@ -1057,7 +1057,7 @@
 	
 	self.selected = nextItem;
 	
-	if (selected == nil) {
+	if (PointerIsEmpty(selected)) {
 		logBase.contentView = dummyLog.view;
 		[dummyLog notifyDidBecomeVisible];
 		
@@ -1097,7 +1097,7 @@
 		NSString *inputValue = [text stringValue];
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
-		if (NSStringIsEmpty(inputValue) == NO > 0) {
+		if (NSObjectIsNotEmpty(inputValue)) {
 			if (previous.currentInputHistory) {
 				[previous.currentInputHistory release];
 				previous.currentInputHistory = nil;
@@ -1108,7 +1108,7 @@
 		
 		[text setStringValue:@""];
 		
-		if (selected.currentInputHistory && NSStringIsEmpty(selected.currentInputHistory) == NO > 0) {
+		if (NSObjectIsNotEmpty(selected.currentInputHistory)) {
 			[text setStringValue:selected.currentInputHistory];
 		}
 	}
@@ -1199,20 +1199,20 @@
 	if (index < 0) return NSDragOperationNone;
 	
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if ([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES] == nil) return NSDragOperationNone;
+	if (PointerIsEmpty([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES])) return NSDragOperationNone;
 	
 	NSString *infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
-	if (infoStr == nil) return NSDragOperationNone;
+	if (PointerIsEmpty(infoStr)) return NSDragOperationNone;
 	
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-	if (i == nil) return NSDragOperationNone;
+	if (PointerIsEmpty(i)) return NSDragOperationNone;
 	
 	if (i.isClient) {
 		if (item) {
 			return NSDragOperationNone;
 		}
 	} else {
-		if (item == nil) return NSDragOperationNone;
+		if (PointerIsEmpty(item)) return NSDragOperationNone;
 	
 		IRCChannel *c = (IRCChannel *)i;
 		if (c.client != item) return NSDragOperationNone;
@@ -1250,13 +1250,13 @@
 	if (index < 0) return NO;
 	
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if ([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES] == nil) return NO;
+	if (PointerIsEmpty([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES])) return NO;
 
 	NSString *infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
-	if (infoStr == nil) return NO;
+	if (PointerIsEmpty(infoStr)) return NO;
 	
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-	if (i == nil) return NO;
+	if (PointerIsEmpty(i)) return NO;
 	
 	if (i.isClient) {
 		if (item) return NO;
@@ -1280,7 +1280,7 @@
 		[self reloadTree];
 		[self save];
 	} else {
-		if (item == nil || item != i.client) return NO;
+		if (PointerIsEmpty(item) || item != i.client) return NO;
 		
 		IRCClient *u = (IRCClient *)item;
 	
