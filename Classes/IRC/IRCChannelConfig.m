@@ -29,6 +29,7 @@
 		password = @"";
 		encryptionKey = @"";
 	}
+
 	return self;
 }
 

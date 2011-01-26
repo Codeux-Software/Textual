@@ -80,8 +80,7 @@
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	NSUInteger current_index = [indexes lastIndex];
 	
-	while (current_index != NSNotFound)
-	{
+	while (current_index != NSNotFound) {
 		[str appendString:@"e"];
 		[trail appendFormat:@" %@", [[list safeObjectAtIndex:current_index] safeObjectAtIndex:0]];
 		

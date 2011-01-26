@@ -24,6 +24,7 @@
 		
 		channels = [NSMutableArray new];
 	}
+	
 	return self;
 }
 
@@ -46,6 +47,7 @@
 - (void)close
 {
 	delegate = nil;
+	
 	[self endSheet];
 }
 
@@ -55,12 +57,12 @@
 	NSMutableArray *chans = [NSMutableArray array];
 	
 	for (NSString *s in channels) {
-		if (s.length > 0) {
-			if (![s isChannelName]) {
+		if (NSObjectIsNotEmpty(s)) {
+			if ([s isChannelName] == NO) {
 				s = [@"#" stringByAppendingString:s];
 			}
 			
-			if (![set containsObject:s]) {
+			if ([set containsObject:s] == NO) {
 				[chans addObject:s];
 				[set addObject:s];
 			}
@@ -68,9 +70,10 @@
 	}
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	[dic setObject:chans forKey:@"channels"];
 	[dic setObject:nickText.stringValue forKey:@"nick"];
 	[dic setObject:[hostCombo.stringValue cleanedServerHostmask] forKey:@"host"];
-	[dic setObject:chans forKey:@"channels"];
 	[dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
 	
 	if ([delegate respondsToSelector:@selector(WelcomeSheet:onOK:)]) {
@@ -88,8 +91,11 @@
 - (void)onAddChannel:(id)sender
 {
 	[channels addObject:@""];
+	
 	[channelTable reloadData];
-	NSInteger row = channels.count - 1;
+	
+	NSInteger row = (channels.count - 1);
+	
 	[channelTable selectItemAtIndex:row];
 	[channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
@@ -97,14 +103,19 @@
 - (void)onDeleteChannel:(id)sender
 {
 	NSInteger n = [channelTable selectedRow];
+	
 	if (n >= 0) {
 		[channels safeRemoveObjectAtIndex:n];
+		
 		[channelTable reloadData];
+		
 		NSInteger count = channels.count;
-		if (count <= n) n = count - 1;
+		if (count <= n) n = (count - 1);
+		
 		if (n >= 0) {
 			[channelTable selectItemAtIndex:n];
 		}
+		
 		[self tableViewSelectionIsChanging:nil];
 	}
 }
@@ -123,7 +134,10 @@
 {
 	NSString *nick = nickText.stringValue;
 	NSString *host = hostCombo.stringValue;
-	[okButton setEnabled:nick.length > 0 && host.length > 0];
+	
+	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
+	
+	[okButton setEnabled:enabled];
 }
 
 #pragma mark -
@@ -132,11 +146,15 @@
 - (void)textDidEndEditing:(NSNotification *)note
 {
 	NSInteger n = [channelTable editedRow];
+	
 	if (n >= 0) {
 		NSString *s = [[[[[note object] textStorage] string] copy] autorelease];
+		
 		[channels replaceObjectAtIndex:n withObject:s];
+		
 		[channelTable reloadData];
 		[channelTable selectItemAtIndex:n];
+		
 		[self tableViewSelectionIsChanging:nil];
 	}
 }
@@ -153,7 +171,7 @@
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
 {
-	[deleteChannelButton setEnabled:[channelTable selectedRow] >= 0];
+	[deleteChannelButton setEnabled:([channelTable selectedRow] >= 0)];
 }
 
 #pragma mark -

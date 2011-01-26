@@ -5,7 +5,9 @@
 @interface ModeSheet : SheetBase
 {
 	IRCChannelMode *mode;
+	
 	NSString *channelName;
+	
 	NSInteger uid;
 	NSInteger cid;
 	
@@ -17,6 +19,7 @@
 	IBOutlet NSButton *mCheck;
 	IBOutlet NSButton *kCheck;
 	IBOutlet NSButton *lCheck;
+	
 	IBOutlet NSTextField *kText;
 	IBOutlet NSTextField *lText;
 }

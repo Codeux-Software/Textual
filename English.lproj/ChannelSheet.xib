@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.SystemVersion">10J846</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">823</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,7 +39,7 @@
 				<string key="NSWindowRect">{{780, 583}, {325, 426}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Channel Properties</string>
-				<string key="NSWindowClass">DialogWindow</string>
+				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
@@ -2037,14 +2037,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">DialogWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/DialogWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3316,6 +3308,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addChannel:</string>
 							<string>addIgnore:</string>
+							<string>bouncerModeChanged:</string>
 							<string>cancel:</string>
 							<string>deleteChannel:</string>
 							<string>deleteIgnore:</string>
@@ -3329,6 +3322,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -3349,6 +3343,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addChannel:</string>
 							<string>addIgnore:</string>
+							<string>bouncerModeChanged:</string>
 							<string>cancel:</string>
 							<string>deleteChannel:</string>
 							<string>deleteIgnore:</string>
@@ -3368,6 +3363,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">addIgnore:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">bouncerModeChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -3421,6 +3420,7 @@
 							<string>altNicksText</string>
 							<string>autoConnectCheck</string>
 							<string>autoReconnectCheck</string>
+							<string>bouncerModeCheck</string>
 							<string>channelTable</string>
 							<string>contentView</string>
 							<string>deleteChannelButton</string>
@@ -3460,6 +3460,7 @@
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>ListView</string>
@@ -3506,6 +3507,7 @@
 							<string>altNicksText</string>
 							<string>autoConnectCheck</string>
 							<string>autoReconnectCheck</string>
+							<string>bouncerModeCheck</string>
 							<string>channelTable</string>
 							<string>contentView</string>
 							<string>deleteChannelButton</string>
@@ -3560,6 +3562,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">autoReconnectCheck</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bouncerModeCheck</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">

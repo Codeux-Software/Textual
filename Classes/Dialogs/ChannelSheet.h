@@ -6,6 +6,7 @@
 {
 	NSInteger uid;
 	NSInteger cid;
+	
 	IRCChannelConfig *config;
 	
 	IBOutlet NSView *contentView;

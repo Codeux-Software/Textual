@@ -17,6 +17,7 @@
 	if ((self = [super init])) {
 		registered = [Preferences registeredToGrowl];
 	}
+
 	return self;
 }
 

@@ -17,6 +17,7 @@
 	if ((self = [super init])) {
 		[self parseLine:@""];
 	}
+
 	return self;
 }
 
@@ -25,6 +26,7 @@
 	if ((self = [super init])) {
 		[self parseLine:line];
 	}
+
 	return self;
 }
 

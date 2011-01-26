@@ -17,6 +17,7 @@
 		user = @"";
 		address = @"";
 	}
+
 	return self;
 }
 

@@ -14,6 +14,8 @@
 {
 	id delegate;
 	
+	IRCWorld *world;
+	
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *highlightView;
 	IBOutlet NSView *interfaceView;
@@ -32,19 +34,23 @@
 	IBOutlet NSTableView *keywordsTable;
 	IBOutlet NSTableView *excludeWordsTable;
 	IBOutlet NSTableView *installedScriptsTable;
+	
 	IBOutlet NSArrayController *keywordsArrayController;
 	IBOutlet NSArrayController *excludeWordsArrayController;
+	
 	IBOutlet NSPopUpButton *transcriptFolderButton;
 	IBOutlet NSPopUpButton *themeButton;
+	
 	IBOutlet NSTextField *scriptLocationField;
-	IBOutlet NSToolbar *preferenceSelectToolbar;
+	
 	IBOutlet NSMenu *installedScriptsMenu;
+	IBOutlet NSToolbar *preferenceSelectToolbar;
 	
 	ScriptsWrapper *scriptsController;
 	
 	NSFont *logFont;
-	IRCWorld *world;
 	NSMutableArray *sounds;
+	
 	NSOpenPanel *transcriptFolderOpenPanel;
 }
 

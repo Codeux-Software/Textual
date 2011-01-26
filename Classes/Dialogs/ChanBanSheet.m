@@ -15,9 +15,9 @@
 - (id)init
 {
     if ((self = [super init])) {
-	  [NSBundle loadNibNamed:@"ChanBanSheet" owner:self];
-	  
-	  list = [NSMutableArray new];
+		[NSBundle loadNibNamed:@"ChanBanSheet" owner:self];
+		
+		list = [NSMutableArray new];
     }
     
     return self;
@@ -68,7 +68,7 @@
 - (void)onUpdate:(id)sender
 {
     if ([delegate respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
-	  [delegate chanBanDialogOnUpdate:self];
+		[delegate chanBanDialogOnUpdate:self];
     }
 }
 
@@ -80,8 +80,7 @@
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	NSUInteger current_index = [indexes lastIndex];
 	
-	while (current_index != NSNotFound)
-	{
+	while (current_index != NSNotFound) {
 		[str appendString:@"b"];
 		[trail appendFormat:@" %@", [[list safeObjectAtIndex:current_index] safeObjectAtIndex:0]];
 		
@@ -107,11 +106,11 @@
     NSString *col = [column identifier];
     
     if ([col isEqualToString:@"mask"]) {
-	  return [item safeObjectAtIndex:0];
+		return [item safeObjectAtIndex:0];
     } else if ([col isEqualToString:@"setby"]) {
-	  return [item safeObjectAtIndex:1];
+		return [item safeObjectAtIndex:1];
     } else {
-	  return [item safeObjectAtIndex:2];
+		return [item safeObjectAtIndex:2];
     }
 }
 

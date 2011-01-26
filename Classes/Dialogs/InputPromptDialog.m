@@ -17,6 +17,7 @@
 - (void)dealloc
 {
 	[finalModalValue release];
+	
     [super dealloc];
 }
 
@@ -36,39 +37,34 @@
 			 informativeText:(NSString *)informativeText
 			defaultUserInput:(NSString *)userInputText
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	[NSBundle loadNibNamed:@"InputPromptDialog" owner:self];
 	
-	if (userInputText != nil) {
+	if (NSObjectIsNotEmpty(userInputText)) {
 		[userInputField setStringValue:userInputText];
 	}
 	
+	[dialogTitle setStringValue:messageTitle];
+	[defaultButton setTitle:defaultButtonTitle];
+	[alternateButton setTitle:alternateButtonTitle];
 	[informationalText setStringValue:informativeText];
-	[defaultButton setTitle:((PointerIsEmpty(defaultButtonTitle)) ? TXTLS(@"OK_BUTTON") : defaultButtonTitle)];
-	[dialogTitle setStringValue:((PointerIsEmpty(messageTitle)) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : messageTitle)];
-	[alternateButton setTitle:((PointerIsEmpty(alternateButtonTitle)) ? TXTLS(@"CANCEL_BUTTON") : alternateButtonTitle)];
-	
-	[pool release];
 }
 
 - (void)runModal
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
-	// The below text size calculation method is based off the examples at:
-	// <http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/TextLayout/Tasks/StringHeight.html>
-	
 	NSRect infoTextFrame = [informationalText frame];
 	
-	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithString:[informationalText stringValue]] autorelease];
-	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(298.0, FLT_MAX)] autorelease];
-	NSLayoutManager *layoutManager = [[NSLayoutManager new] autorelease];
+	NSLayoutManager *layoutManager = [NSLayoutManager new];
+	
+	NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:[informationalText stringValue]];
+	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(298.0, FLT_MAX)];
 	
 	[layoutManager addTextContainer:textContainer];
 	[textStorage addLayoutManager:layoutManager];
 	
-	[textStorage addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11.0] range:NSMakeRange(0, [textStorage length])];
+	[textStorage addAttribute:NSFontAttributeName 
+						value:[NSFont fontWithName:@"Lucida Grande" size:11.0] 
+						range:NSMakeRange(0, [textStorage length])];
+	
 	[textContainer setLineFragmentPadding:0.0];
 	
 	[layoutManager glyphRangeForTextContainer:textContainer];
@@ -77,32 +73,39 @@
 	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
 	
 	NSRect windowFrame = [dialogWindow frame];
-	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + 3);
-	[dialogWindow setFrame:windowFrame display:NO animate:NO];
 	
 	infoTextFrame.size.height = (newHeight + 3);
-	[informationalText setFrame:infoTextFrame];
+	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + 3);
 	
+	[dialogWindow setFrame:windowFrame display:NO animate:NO];
 	[dialogWindow makeKeyAndOrderFront:nil];
 	
+	[informationalText setFrame:infoTextFrame];
+	
 	while ([dialogWindow isVisible]) {
-		continue; // Do nothing - Just hang method until we have value to work with
+		continue;
 	}
 	
-	[pool release];
+	[textStorage release];
+	[textContainer release];
+	[layoutManager release];
 }
 
-- (IBAction)modalDidCloseWithDefaultButton:(id)sender
+- (void)modalDidCloseWithDefaultButton:(id)sender
 {
 	buttonClicked = NSAlertDefaultReturn;
+	
 	finalModalValue = [[userInputField stringValue] retain];
+	
 	[dialogWindow close];
 }
 
-- (IBAction)modalDidCloseWithAlternateButton:(id)sender
+- (void)modalDidCloseWithAlternateButton:(id)sender
 {
 	buttonClicked = NSAlertAlternateReturn;
+	
 	finalModalValue = [[userInputField stringValue] retain];
+	
 	[dialogWindow close];
 }
 

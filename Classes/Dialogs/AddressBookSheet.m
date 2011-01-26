@@ -1,6 +1,8 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define WINDOW_TOOLBAR_HEIGHT 163
+
 @interface AddressBookSheet (Private)
 - (void)updateButtons;
 - (void)reloadChannelTable;
@@ -25,13 +27,12 @@
 @synthesize ignoreItemView;
 @synthesize ignorePMHighlights;
 
-#define WINDOW_TOOLBAR_HEIGHT 163
-
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AddressBookSheet" owner:self];
 	}
+
 	return self;
 }
 
@@ -64,7 +65,7 @@
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
-	if ([[contentView subviews] count] != 0) {
+	if (NSObjectIsNotEmpty([contentView subviews])) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
@@ -78,8 +79,9 @@
 
 - (void)start
 {
-	if (!newItem) {
+	if (newItem == NO) {
 		[hostmask setStringValue:ignore.hostmask];
+		
 		[ignorePublicMsg setState:ignore.ignorePublicMsg];
 		[ignorePrivateMsg setState:ignore.ignorePrivateMsg];
 		[ignoreHighlights setState:ignore.ignoreHighlights];
@@ -89,21 +91,17 @@
 		[notifyJoins setState:ignore.notifyJoins];
 		[notifyWhoisJoins setState:ignore.notifyWhoisJoins];
 		[ignorePMHighlights setState:ignore.ignorePMHighlights];
-		
 	}
 	
 	[self startSheet];
 	[self firstPane:ignoreItemView];
+	
 	[sheet recalculateKeyViewLoop];
 }
 
 - (void)ok:(id)sender
 {
-	if ([[hostmask stringValue] length]) {
-		ignore.hostmask = [hostmask stringValue];
-	} else {
-		ignore.hostmask = nil;
-	}
+	ignore.hostmask = [hostmask stringValue];
 	
 	ignore.ignorePublicMsg = [ignorePublicMsg state];
 	ignore.ignorePrivateMsg = [ignorePrivateMsg state];
