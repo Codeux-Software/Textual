@@ -27,6 +27,7 @@
 	[nick release];
 	[user release];
 	[address release];
+	
 	[super dealloc];
 }
 

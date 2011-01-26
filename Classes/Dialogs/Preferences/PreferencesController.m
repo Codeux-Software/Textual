@@ -337,8 +337,6 @@
 - (NSMutableArray *)sounds
 {
 	if (NSObjectIsEmpty(sounds)) {
-		SoundWrapper *e = nil;
-		
 		NSMutableArray *ary = [NSMutableArray new];
 		
 		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];

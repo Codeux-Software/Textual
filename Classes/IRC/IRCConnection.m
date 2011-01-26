@@ -9,30 +9,32 @@
 
 @implementation IRCConnection
 
+@synthesize conn;
 @synthesize delegate;
-@synthesize host;
-@synthesize port;
-@synthesize useSSL;
 @synthesize encoding;
-@synthesize useSystemSocks;
-@synthesize useSocks;
-@synthesize socksVersion;
+@synthesize host;
+@synthesize loggedIn;
+@synthesize maxMsgCount;
+@synthesize port;
 @synthesize proxyHost;
+@synthesize proxyPassword;
 @synthesize proxyPort;
 @synthesize proxyUser;
-@synthesize proxyPassword;
-@synthesize loggedIn;
-@synthesize conn;
-@synthesize timer;
-@synthesize maxMsgCount;
 @synthesize sendQueue;
 @synthesize sending;
+@synthesize socksVersion;
+@synthesize timer;
+@synthesize useSSL;
+@synthesize useSocks;
+@synthesize useSystemSocks;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		encoding = NSUTF8StringEncoding;
+		
 		sendQueue = [NSMutableArray new];
+		
 		timer = [Timer new];
 		timer.delegate = self;
 	}
@@ -42,14 +44,12 @@
 
 - (void)dealloc
 {
+	[conn autorelease];
+	[conn close];
 	[host release];
 	[proxyHost release];
-	[proxyUser release];
 	[proxyPassword release];
-	
-	[conn close];
-	[conn autorelease];
-	
+	[proxyUser release];
 	[sendQueue release];
 	
 	[timer stop];
@@ -62,6 +62,8 @@
 {
 	[self close];
 	
+	maxMsgCount = 0;
+	
 	conn = [TCPClient new];
 	conn.delegate = self;
 	conn.host = host;
@@ -71,7 +73,7 @@
 	if (useSystemSocks) {
 		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
 		NSNumber *num = (NSNumber *)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
-		BOOL systemSocksEnabled = [num integerValue] != 0;
+		BOOL systemSocksEnabled = BOOLReverseValue([num integerValue] == 0);
 		CFRelease(proxyDic);
 		
 		conn.useSocks = systemSocksEnabled;
@@ -91,8 +93,13 @@
 - (void)close
 {
 	loggedIn = NO;
+	
+	maxMsgCount = 0;
+	
 	[timer stop];
+	
 	[sendQueue removeAllObjects];
+	
 	[conn close];
 	[conn autorelease];
 	conn = nil;
@@ -115,34 +122,30 @@
 
 - (BOOL)readyToSend
 {
-	return (!sending && maxMsgCount < [Preferences floodControlMaxMessages]);
+	return (sending == NO && maxMsgCount < [Preferences floodControlMaxMessages]);
 }
 
 - (void)clearSendQueue
 {
 	[sendQueue removeAllObjects];
+	
 	[self updateTimer];
 }
 
 - (void)sendLine:(NSString *)line
 {
 	[sendQueue addObject:line];
+	
 	[self tryToSend];
 	[self updateTimer];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)s
 {
-	if (encoding == 0x0000) encoding = NSUTF8StringEncoding;
-		
 	NSData *data = [s dataUsingEncoding:encoding];
 	
-	if (!data) {
-		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
-		
-		if (!data) {
-			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		}
+	if (NSObjectIsEmpty(data)) {
+		data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	}
 	
 	if (encoding == NSISO2022JPStringEncoding) {
@@ -156,12 +159,12 @@
 
 - (BOOL)tryToSend
 {
-	if ([sendQueue count] == 0) return NO;
 	if (sending) return NO;
+	if (NSObjectIsEmpty(sendQueue)) return NO;
 	if (maxMsgCount > [Preferences floodControlMaxMessages]) return NO;
 	
-	NSString *s = [sendQueue safeObjectAtIndex:0];
-	s = [s stringByAppendingString:@"\r\n"];
+	NSString *s = [[sendQueue safeObjectAtIndex:0] stringByAppendingString:@"\r\n"];
+	
 	[sendQueue safeRemoveObjectAtIndex:0];
 	
 	NSData *data = [self convertToCommonEncoding:s];
@@ -185,12 +188,12 @@
 
 - (void)updateTimer
 {
-	if (sendQueue.count < 1 && maxMsgCount < 1) {
+	if (NSObjectIsEmpty(sendQueue) && maxMsgCount < 1) {
 		if (timer.isActive) {
 			[timer stop];
 		}
 	} else {
-		if (!timer.isActive) {
+		if (timer.isActive == NO) {
 			if ([Preferences floodControlIsEnabled]) {
 				[timer start:[Preferences floodControlDelayTimer]];
 			}
@@ -202,8 +205,8 @@
 {
 	maxMsgCount = 0;
 	
-	if (sendQueue.count > 0) {
-		while (sendQueue.count > 0) {
+	if (NSObjectIsNotEmpty(sendQueue)) {
+		while (NSObjectIsNotEmpty(sendQueue)) {
 			if ([self tryToSend] == NO) {
 				break;
 			}
@@ -227,6 +230,7 @@
 - (void)tcpClient:(TCPClient *)sender error:(NSString *)error
 {
 	[timer stop];
+	
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidError:)]) {
@@ -237,6 +241,7 @@
 - (void)tcpClientDidDisconnect:(TCPClient *)sender
 {
 	[timer stop];
+	
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
@@ -248,7 +253,7 @@
 {
 	while (1) {
 		NSData *data = [conn readLine];
-		if (!data) break;
+		if (NSObjectIsEmpty(data)) break;
 		
 		if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
 			[delegate ircConnectionDidReceive:data];
@@ -259,6 +264,7 @@
 - (void)tcpClientDidSendData:(TCPClient *)sender
 {
 	sending = NO;
+	
 	[self tryToSend];
 }
 

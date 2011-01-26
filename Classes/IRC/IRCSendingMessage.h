@@ -3,10 +3,12 @@
 
 @interface IRCSendingMessage : NSObject
 {
-	NSString *command;
-	NSMutableArray *params;
-	BOOL completeColon;
 	NSString *string;
+	NSString *command;
+	
+	BOOL completeColon;
+	
+	NSMutableArray *params;
 }
 
 @property (nonatomic, readonly) NSString *command;

@@ -7,12 +7,16 @@
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 {
 	NSInteger uid;
+	
 	LogController *log;
+	
 	BOOL isKeyword;
 	BOOL isUnread;
 	BOOL isNewTalk;
+	
 	NSInteger keywordCount;
 	NSInteger unreadCount;
+	
 	InputHistory *inputHistory;
 	NSString *currentInputHistory;
 }
@@ -37,5 +41,4 @@
 - (IRCTreeItem *)childAtIndex:(NSInteger)index;
 
 - (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u;
-
 @end

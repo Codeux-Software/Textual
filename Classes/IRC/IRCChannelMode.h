@@ -2,14 +2,17 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+@class IRCModeInfo;
+
 @interface IRCChannelMode : NSObject <NSMutableCopying>
 {
 	IRCISupportInfo *isupport;
+	
 	NSMutableArray *allModes;
 	NSMutableDictionary *modeIndexes;
 }
 
-@property (nonatomic, retain) IRCISupportInfo *isupport;
+@property (nonatomic, assign) IRCISupportInfo *isupport;
 @property (nonatomic, readonly) NSMutableArray *allModes;
 @property (nonatomic, readonly) NSMutableDictionary *modeIndexes;
 

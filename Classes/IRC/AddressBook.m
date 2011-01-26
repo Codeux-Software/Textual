@@ -20,14 +20,14 @@
 {
 	[hostmask release];
 	[hostmaskRegex release];
+	
 	[super dealloc];
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ([self init]) {
-		cid = TXRandomThousandNumber();
-		cid = (([dic intForKey:@"cid"]) ?: cid);
+		cid = (([dic intForKey:@"cid"]) ?: TXRandomThousandNumber());
 		
 		hostmask = [[dic objectForKey:@"hostmask"] retain];
 		
@@ -49,10 +49,10 @@
 
 - (void)processHostMaskRegex
 {
-	if (!hostmaskRegex) {
+	if (NSObjectIsEmpty(hostmaskRegex)) {
 		NSString *nhostmask = hostmask;
 		
-		if (![nhostmask contains:@"@"]) {
+		if ([nhostmask contains:@"@"] == NO) {
 			nhostmask = [nhostmask stringByAppendingString:@"@*"];
 		} 
 		
@@ -63,7 +63,7 @@
 			NSString *second = [nhostmask safeSubstringFromIndex:(atsrange.location + 1)];
 			
 			if (first) {
-				if (![first contains:@"!"]) {
+				if ([first contains:@"!"] == NO) {
 					nhostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
 				}
 			}
@@ -73,6 +73,9 @@
 			[hostmask release];
 			hostmask = [nhostmask retain];
 		}
+		
+		/* There probably is an easier way to escape characters before making
+		 our regular expression, but let us do it the hard way instead. More fun. */
 		
 		NSString *new_hostmask = hostmask;
 		
@@ -89,7 +92,6 @@
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
 		
 		hostmaskRegex = [[NSString stringWithFormat:@"^%@$", new_hostmask] retain];
-		new_hostmask = nil;
 	}
 }
 
@@ -116,9 +118,7 @@
 - (BOOL)checkIgnore:(NSString *)thehost
 {
 	if (hostmaskRegex && thehost) {
-		if ([thehost isMatchedByRegex:[hostmaskRegex lowercaseString]]) {
-			return YES;
-		}
+		return [thehost isMatchedByRegex:hostmaskRegex options:RKLCaseless inRange:NSMakeRange(0, [thehost length]) error:NULL];
 	}
 	
 	return NO;

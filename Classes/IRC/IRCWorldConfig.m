@@ -18,10 +18,11 @@
 {
 	[self init];
 	
-	NSArray *ary = (([dic arrayForKey:@"clients"]) ?: [dic arrayForKey:@"units"]);
+	NSArray *ary = [dic arrayForKey:@"clients"];
 	
 	for (NSDictionary *e in ary) {
 		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
+	
 		[clients addObject:c];
 	}
 	
@@ -37,11 +38,12 @@
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
 	NSMutableArray *clientAry = [NSMutableArray array];
+	
 	for (IRCClientConfig *e in clients) {
 		[clientAry addObject:[e dictionaryValue]];
 	}
+	
 	[dic setObject:clientAry forKey:@"clients"];
 	
 	return dic;

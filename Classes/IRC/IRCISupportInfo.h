@@ -2,25 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define MODES_SIZE	52
-
-@interface IRCModeInfo : NSObject
-{
-	unsigned char mode;
-	BOOL plus;
-	BOOL op;
-	BOOL simpleMode;
-	NSString *param;
-}
-
-@property (nonatomic, assign) unsigned char mode;
-@property (nonatomic, assign) BOOL plus;
-@property (nonatomic, assign) BOOL op;
-@property (nonatomic, assign) BOOL simpleMode;
-@property (nonatomic, retain) NSString *param;
-
-+ (IRCModeInfo *)modeInfo;
-@end
+#define MODES_SIZE		52
 
 @interface IRCISupportInfo : NSObject
 {
@@ -35,6 +17,7 @@
 
 - (void)reset;
 - (BOOL)update:(NSString *)s;
+
 - (NSArray *)parseMode:(NSString *)s;
 - (IRCModeInfo *)createMode:(NSString *)mode;
 @end

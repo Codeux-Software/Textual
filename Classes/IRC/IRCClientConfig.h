@@ -17,14 +17,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSString *guid;
 	NSString *name;
 	
-	// connection
 	NSString *host;
 	NSInteger port;
 	NSString *server;
 	NSString *network;
 	BOOL useSSL;
 	
-	// user
 	NSString *nick;
 	NSString *password;
 	NSString *username;
@@ -32,24 +30,25 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSString *nickPassword;
 	NSMutableArray *altNicks;
 	
-	// proxy
 	ProxyType proxyType;
 	NSString *proxyHost;
 	NSInteger proxyPort;
 	NSString *proxyUser;
 	NSString *proxyPassword;
 	
-	// others
 	BOOL autoConnect;
 	BOOL autoReconnect;
 	BOOL bouncerMode;
+	BOOL invisibleMode;
 	BOOL isTrustedConnection;
+	
 	NSStringEncoding encoding;
 	NSStringEncoding fallbackEncoding;
+	
 	NSString *leavingComment;
 	NSString *sleepQuitMessage;
 	NSString *userInfo;
-	BOOL invisibleMode;
+
 	NSMutableArray *loginCommands;
 	NSMutableArray *channels;
 	NSMutableArray *ignores;

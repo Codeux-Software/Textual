@@ -101,6 +101,7 @@
 	#import "IRCWorldConfig.h"
 	#import "IRCWorld.h"
 	#import "IRCClientConfig.h"
+	#import "IRCModeInfo.h"
 	#import "IRCISupportInfo.h"
 	#import "IRCChannelMode.h"
 	#import "IRCConnection.h"

@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+/* Sloppy mode parser. */
+
 @implementation IRCChannelMode
 
 @synthesize isupport;
@@ -20,25 +22,19 @@
 
 - (id)initWithChannelMode:(IRCChannelMode *)other
 {
-	isupport = [other.isupport retain];
-	modeIndexes = other.modeIndexes;
+	isupport = other.isupport;
 	allModes = other.allModes;
+	modeIndexes = other.modeIndexes;
 	
 	return self;
 }
 
 - (void)dealloc
 {
-	[isupport release];
 	[allModes release];
 	[modeIndexes release];
 	
 	[super dealloc];
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone
-{
-	return [[IRCChannelMode allocWithZone:zone] initWithChannelMode:self];
 }
 
 - (void)clear
@@ -47,28 +43,33 @@
 	[modeIndexes removeAllObjects];
 }
 
+- (NSArray *)badModes 
+{
+	return [NSArray arrayWithObjects:@"q", @"a", @"o", @"h", @"v", @"b", @"e", nil];
+}
+
 - (NSArray *)update:(NSString *)str
 {
 	NSArray *ary = [isupport parseMode:str];
-	NSArray *badObjects = [NSArray arrayWithObjects:@"q", @"a", @"o", @"h", @"v", @"b", @"e", nil];
 	
 	for (IRCModeInfo *h in ary) {
 		if (h.op) continue;
 		    
 		NSString *modec = [NSString stringWithChar:h.mode];
 		
-		if ([badObjects containsObject:modec]) continue;
+		if ([[self badModes] containsObject:modec]) continue;
 		
 		NSString *objk = [modeIndexes objectForKey:modec];
+		
 		if (objk) {
 			NSInteger moindex = [objk integerValue];
+			
 			[allModes safeRemoveObjectAtIndex:moindex];
 			[allModes insertObject:h atIndex:moindex];
 		} else {
 			[allModes addObject:h];
 			
-			NSInteger i = [allModes indexOfObject:h];
-			[modeIndexes setObject:[NSNumber numberWithInteger:i] forKey:modec];
+			[modeIndexes setObject:[NSNumber numberWithInteger:[allModes indexOfObject:h]] forKey:modec];
 		}
 	}
 	
@@ -109,9 +110,7 @@
 
 - (BOOL)modeIsDefined:(NSString *)mode
 {
-	NSString *objk = [modeIndexes objectForKey:mode];
-	
-	return BOOLReverseValue((PointerIsEmpty(objk)));
+	return NSObjectIsNotEmpty([modeIndexes objectForKey:mode]);
 }
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
@@ -120,9 +119,10 @@
 	
 	if (objk == NO) {
 		IRCModeInfo *m = [isupport createMode:mode];
+		
 		[allModes addObject:m];
-		NSInteger i = [allModes indexOfObject:m];
-		[modeIndexes setObject:[NSNumber numberWithInteger:i] forKey:mode];
+		
+		[modeIndexes setObject:[NSNumber numberWithInteger:[allModes indexOfObject:m]] forKey:mode];
 	}
 	
 	return [allModes safeObjectAtIndex:[[modeIndexes objectForKey:mode] integerValue]];
@@ -137,7 +137,7 @@
 	
 	for (IRCModeInfo *h in allModes) {
 		if (maskK == YES) {
-			if ((const char)h.mode == 'k') continue;
+			if (h.mode == 'k') continue;
 		}
 		
 		if (h.plus) {
@@ -160,6 +160,11 @@
 - (NSString *)titleString
 {
 	return [self format:YES];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	return [[IRCChannelMode allocWithZone:zone] initWithChannelMode:self];
 }
 
 @end

@@ -35,6 +35,7 @@
 	[sender release];
 	[command release];
 	[params release];
+	
 	[super dealloc];
 }
 
@@ -44,29 +45,33 @@
 	[command release];
 	[params release];
 	
-	sender = [IRCPrefix new];
 	command = @"";
+	sender = [IRCPrefix new];
 	params = [NSMutableArray new];
 	
 	NSMutableString *s = [line mutableCopy];
 	
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [s getToken];
+		
 		t = [t safeSubstringFromIndex:1];
+		
 		sender.raw = t;
 		
 		NSInteger i = [t findCharacter:'!'];
+		
 		if (i < 0) {
 			sender.nick = t;
 			sender.isServer = YES;
 		} else {
 			sender.nick = [t safeSubstringToIndex:i];
-			t = [t safeSubstringFromIndex:i+1];
 			
+			t = [t safeSubstringAfterIndex:i];
 			i = [t findCharacter:'@'];
+			
 			if (i >= 0) {
 				sender.user = [t safeSubstringToIndex:i];
-				sender.address = [t safeSubstringFromIndex:i+1];
+				sender.address = [t safeSubstringAfterIndex:i];
 			}
 		}
 	}
@@ -74,9 +79,10 @@
 	command = [[[s getToken] uppercaseString] retain];
 	numericReply = [command integerValue];
 	
-	while (!NSObjectIsEmpty(s)) {
+	while (NSObjectIsNotEmpty(s)) {
 		if ([s hasPrefix:@":"]) {
 			[params addObject:[s safeSubstringFromIndex:1]];
+			
 			break;
 		} else {
 			[params addObject:[s getToken]];
@@ -108,11 +114,11 @@
 {
 	NSMutableString *s = [NSMutableString string];
 	
-	NSInteger count = params.count;
-	
-	for (NSInteger i = index; i < count; i++) {
+	for (NSInteger i = index; i < params.count; i++) {
 		NSString *e = [params safeObjectAtIndex:i];
+		
 		if (i != index) [s appendString:@" "];
+		
 		[s appendString:e];
 	}
 	
@@ -122,13 +128,17 @@
 - (NSString *)description
 {
 	NSMutableString *ms = [NSMutableString string];
+	
 	[ms appendString:@"<IRCMessage "];
 	[ms appendString:command];
+	
 	for (NSString *s in params) {
 		[ms appendString:@" "];
 		[ms appendString:s];
 	}
+	
 	[ms appendString:@">"];
+	
 	return ms;
 }
 
