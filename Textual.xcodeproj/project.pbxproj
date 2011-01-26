@@ -307,6 +307,8 @@
 		4CAA3BC212E0ECCB00FB83EB /* NSData+Kana.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A7B4F41174427C006B324A /* NSData+Kana.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3BC312E0ECCB00FB83EB /* SoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A8C10611737F660044E7A1 /* SoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAA3BC412E0ECCB00FB83EB /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 780C685C118230EE00CB739F /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD0136D12F0C772001953E6 /* IRCModeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0136B12F0C772001953E6 /* IRCModeInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
 		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
 		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
@@ -502,6 +504,8 @@
 		4CC5AC7F119C92790046BC5C /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../Library/TextualApplication.h; sourceTree = "<group>"; };
 		4CCD0F8611BAE7E900758B81 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalModels.h; sourceTree = "<group>"; };
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
+		4CD0136B12F0C772001953E6 /* IRCModeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCModeInfo.h; sourceTree = "<group>"; };
+		4CD0136C12F0C772001953E6 /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCModeInfo.m; sourceTree = "<group>"; };
 		4CD1733B120EB20600F03B37 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualPluginItem.h; sourceTree = "<group>"; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
 		4CDC7038122C6B0F004F8B35 /* ChanBanExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanBanExceptionSheet.h; sourceTree = "<group>"; };
@@ -1235,6 +1239,8 @@
 				78A8C11311737F660044E7A1 /* IRCChannelMode.m */,
 				78A8C11A11737F660044E7A1 /* IRCISupportInfo.h */,
 				78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */,
+				4CD0136B12F0C772001953E6 /* IRCModeInfo.h */,
+				4CD0136C12F0C772001953E6 /* IRCModeInfo.m */,
 				78A8C11C11737F660044E7A1 /* IRCMessage.h */,
 				78A8C11D11737F660044E7A1 /* IRCMessage.m */,
 				78A8C11E11737F660044E7A1 /* IRCPrefix.h */,
@@ -1487,6 +1493,7 @@
 				4CAA3BC312E0ECCB00FB83EB /* SoundPlayer.h in Headers */,
 				4CAA3BC412E0ECCB00FB83EB /* WebViewAutoScroll.h in Headers */,
 				4C4A041712EF1C65009A7988 /* PopupPrompts.h in Headers */,
+				4CD0136D12F0C772001953E6 /* IRCModeInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1804,6 +1811,7 @@
 				4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */,
 				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
 				4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */,
+				4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

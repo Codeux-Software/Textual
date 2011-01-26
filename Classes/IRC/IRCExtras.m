@@ -7,21 +7,22 @@
 
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel
 {	
-	NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
-	
 	BOOL useSSL = NO;
 	
 	NSArray *chunks;
-	NSInteger port = 6667;
-	NSString *server = @"";
-	NSString *password = @"";
 	
-	if (![s contains:@" "]) {
+	NSInteger port = 6667;
+	
+	NSString *server = nil;
+	NSString *password = nil;
+	NSString *tempPort = nil;
+	
+	if ([s contains:@" "] == NO) {
 		if ([s contains:@":"]) {
 			chunks = [s componentsSeparatedByString:@":"];
 			
 			server = [chunks safeObjectAtIndex:0];
-			NSString *tempPort = [chunks safeObjectAtIndex:1];
+			tempPort = [chunks safeObjectAtIndex:1];
 			
 			if ([tempPort hasPrefix:@"+"]) {
 				useSSL = YES;
@@ -43,7 +44,7 @@
 			if ([server contains:@":"]) {
 				chunks = [server componentsSeparatedByString:@":"];
 				
-				NSString *tempPort = [chunks safeObjectAtIndex:1];
+				tempPort = [chunks safeObjectAtIndex:1];
 				
 				if ([tempPort hasPrefix:@"+"]) {
 					tempPort = [tempPort safeSubstringFromIndex:1];
@@ -56,7 +57,7 @@
 				}
 			} else {
 				if ([chunks count] > 2) {
-					NSString *tempPort = [chunks safeObjectAtIndex:2];
+					tempPort = [chunks safeObjectAtIndex:2];
 					
 					if ([tempPort hasPrefix:@"+"]) {
 						tempPort = [tempPort safeSubstringFromIndex:1];
@@ -75,7 +76,7 @@
 			if ([server contains:@":"]) {
 				chunks = [server componentsSeparatedByString:@":"];
 				
-				NSString *tempPort = [chunks safeObjectAtIndex:1];
+				tempPort = [chunks safeObjectAtIndex:1];
 				
 				if ([tempPort hasPrefix:@"+"]) {
 					useSSL = YES;
@@ -106,46 +107,38 @@
 		}
 	}
 	
-	NSMutableDictionary *nsconfig = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[nsconfig setObject:server forKey:@"host"];
-	[nsconfig setObject:server forKey:@"name"];
+	[dic setObject:server forKey:@"host"];
+	[dic setObject:server forKey:@"name"];
 	
-	[nsconfig setObject:[NSNumber numberWithBool:useSSL] forKey:@"ssl"];
-	[nsconfig setObject:[NSNumber numberWithInteger:port] forKey:@"port"];
-	[nsconfig setObject:[Preferences defaultNickname] forKey:@"nickname"];
-	[nsconfig setObject:[Preferences defaultUsername] forKey:@"username"];
-	[nsconfig setObject:[Preferences defaultRealname] forKey:@"realname"];
-	[nsconfig setObject:[NSNumber numberWithBool:NO] forKey:@"auto_connect"];
-	[nsconfig setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+	[dic setObject:[NSNumber numberWithBool:useSSL] forKey:@"ssl"];
+	[dic setObject:[NSNumber numberWithInteger:port] forKey:@"port"];
+	[dic setObject:[Preferences defaultNickname] forKey:@"nickname"];
+	[dic setObject:[Preferences defaultUsername] forKey:@"username"];
+	[dic setObject:[Preferences defaultRealname] forKey:@"realname"];
+	[dic setObject:[NSNumber numberWithBool:NO] forKey:@"auto_connect"];
+	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
 	
-	if ([channel length] >= 2) {
-		NSMutableArray *nschannels = [NSMutableArray array];
+	if (NSObjectIsNotEmpty(channel)) {
+		NSMutableArray *channels = [NSMutableArray array];
 		
-		[nschannels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-							   channel, @"name",
-							   [NSNumber numberWithBool:YES], @"auto_join",
-							   [NSNumber numberWithBool:YES], @"growl",
-							   @"+sn", @"mode",
-							   nil]];	
+		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:channel, @"name", nil]];	
 		
-		[nsconfig setObject:nschannels forKey:@"channels"];
+		[dic setObject:channels forKey:@"channels"];
 	}
 	
-	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:nsconfig] autorelease];
+	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
 
-	if ([password length] >= 1) {
-		//c.password = password;
+	if (NSObjectIsNotEmpty(password)) {
+		c.password = password;
 	}	
 	
 	IRCClient *u = [world createClient:c reload:YES];
+	
 	[world save];
+	
 	[u connect];
-	
-	c = nil;
-	nsconfig = nil;
-	
-	[pool drain];
 }
 
 @end

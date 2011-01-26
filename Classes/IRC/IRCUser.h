@@ -20,6 +20,7 @@
 	
 	CGFloat incomingWeight;
 	CGFloat outgoingWeight;
+	
 	CFAbsoluteTime lastFadedWeights;
 }
 

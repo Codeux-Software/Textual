@@ -7,6 +7,7 @@
 	NSString *nick;
 	NSString *user;
 	NSString *address;
+	
 	BOOL isServer;
 }
 

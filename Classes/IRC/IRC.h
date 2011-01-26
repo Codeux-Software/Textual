@@ -94,4 +94,4 @@
 #define IRCII_SME				@"SME"
 #define IRCII_SMSG				@"SMSG"
 
-#define IRC_BODY_LEN		512
+#define IRC_BODY_LEN			512

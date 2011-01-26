@@ -36,13 +36,13 @@
 
 - (void)dealloc
 {
+	[mode release];
+	[topic release];	
 	[config release];
 	[logDate release];
 	[logFile release];
 	[members release];
-	[mode release];
 	[storedTopic release];
-	[topic release];	
 	
 	[super dealloc];
 }
@@ -136,17 +136,17 @@
 {
 	isActive = YES;
 	
-	[members removeAllObjects];
 	[mode clear];
+	[members removeAllObjects];
 	
 	isOp = NO;
 	isHalfOp = NO;
 	
 	self.topic = nil;
 	
+	isWhoInit = NO;
 	isModeInit = NO;
 	isNamesInit = NO;
-	isWhoInit = NO;
 	errLastJoin = NO;
 	
 	[self reloadMemberList];
@@ -169,10 +169,9 @@
 {
 	if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
 		NSArray *pieces = [text split:[Preferences completionSuffix]];
-	 
+		
 		if ([pieces count] > 1) {
-			NSString *nick = [pieces safeObjectAtIndex:0];
-			IRCUser *talker = [self findMember:nick];
+			IRCUser *talker = [self findMember:[pieces safeObjectAtIndex:0]];
 			
 			if (talker) {
 				[talker incomingConversation];
@@ -191,7 +190,7 @@
 	BOOL result = [log print:line withHTML:rawHTML];
 	
 	if ([Preferences logTranscript]) {
-		if (!logFile) {
+		if (PointerIsEmpty(logFile)) {
 			logFile = [FileLogger new];
 			logFile.client = client;
 			logFile.channel = self;
@@ -202,6 +201,7 @@
 		if (logDate) {
 			if ([logDate isEqualToString:comp] == NO) {
 				[logDate release];
+				
 				logDate = [comp retain];
 				[logFile reopenIfNeeded];
 			}
@@ -250,6 +250,7 @@
 		
 		if ([t compare:item] == NSOrderedDescending) {
 			[members insertObject:item atIndex:i];
+			
 			return;
 		}
 	}
@@ -274,7 +275,9 @@
 	
 	[self sortedInsert:user];
 	
-	if (reload) [self reloadMemberList];
+	if (reload) {
+		[self reloadMemberList];
+	}
 }
 
 - (void)removeMember:(NSString *)nick
@@ -291,29 +294,30 @@
 		
 		[members safeRemoveObjectAtIndex:n];
 	}
-
+	
 	if (reload) [self reloadMemberList];
 }
 
 - (void)renameMember:(NSString *)fromNick to:(NSString *)toNick
 {
 	NSInteger n = [self indexOfMember:fromNick];
-	if (n < 0) return;
 	
-	IRCUser *m = [members safeObjectAtIndex:n];
-	
-	[[m retain] autorelease];
-	
-	[self removeMember:toNick reload:NO];
-	
-	m.nick = toNick;
-	
-	[[[members safeObjectAtIndex:n] retain] autorelease];
-	
-	[members safeRemoveObjectAtIndex:n];
-	
-	[self sortedInsert:m];
-	[self reloadMemberList];
+	if (n >= 0) {
+		IRCUser *m = [members safeObjectAtIndex:n];
+		
+		[[m retain] autorelease];
+		
+		[self removeMember:toNick reload:NO];
+		
+		m.nick = toNick;
+		
+		[[[members safeObjectAtIndex:n] retain] autorelease];
+		
+		[members safeRemoveObjectAtIndex:n];
+		
+		[self sortedInsert:m];
+		[self reloadMemberList];
+	}
 }
 
 - (void)updateOrAddMember:(IRCUser *)user
@@ -332,24 +336,25 @@
 - (void)changeMember:(NSString *)nick mode:(char)modeChar value:(BOOL)value
 {
 	NSInteger n = [self indexOfMember:nick];
-	if (n < 0) return;
 	
-	IRCUser *m = [members safeObjectAtIndex:n];
-	
-	switch (modeChar) {
-		case 'q': m.q = value; break;
-		case 'a': m.a = value; break;
-		case 'o': m.o = value; break;
-		case 'h': m.h = value; break;
-		case 'v': m.v = value; break;
+	if (n >= 0) {
+		IRCUser *m = [members safeObjectAtIndex:n];
+		
+		switch (modeChar) {
+			case 'q': m.q = value; break;
+			case 'a': m.a = value; break;
+			case 'o': m.o = value; break;
+			case 'h': m.h = value; break;
+			case 'v': m.v = value; break;
+		}
+		
+		[[[members safeObjectAtIndex:n] retain] autorelease];
+		
+		[members safeRemoveObjectAtIndex:n];
+		
+		[self sortedInsert:m];
+		[self reloadMemberList];
 	}
-	
-	[[[members safeObjectAtIndex:n] retain] autorelease];
-	
-	[members safeRemoveObjectAtIndex:n];
-	
-	[self sortedInsert:m];
-	[self reloadMemberList];
 }
 
 - (void)clearMembers
@@ -398,9 +403,12 @@
 - (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask
 {
 	NSInteger n = [self indexOfMember:nick options:mask];
-	if (n < 0) return nil;
 	
-	return [members safeObjectAtIndex:n];
+	if (n >= 0) {
+		return [members safeObjectAtIndex:n];
+	}
+	
+	return nil;
 }
 
 - (NSInteger)numberOfMembers
@@ -462,8 +470,9 @@
 {
 	IRCUser *user = [members safeObjectAtIndex:row];
 	
-	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), 
-			[user nick], [config.name safeSubstringFromIndex:1]];
+	NSString *channel = [config.name safeSubstringFromIndex:1];
+	
+	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), [user nick], channel];
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row

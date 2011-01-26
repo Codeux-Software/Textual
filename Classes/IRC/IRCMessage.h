@@ -17,6 +17,7 @@
 - (id)initWithLine:(NSString *)line;
 
 - (NSString *)paramAt:(NSInteger)index;
+
 - (NSString *)sequence;
 - (NSString *)sequence:(NSInteger)index;
 @end

@@ -2,8 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define ISUPPORT_SUFFIX	@" are supported by this server"
-#define OP_VALUE		100
+#define ISUPPORT_SUFFIX		@" are supported by this server"
+#define OP_VALUE			100
 
 @interface IRCISupportInfo (Private)
 - (void)setValue:(NSInteger)value forMode:(unsigned char)m;
@@ -30,6 +30,7 @@
 - (void)reset
 {
 	memset(modes, 0, MODES_SIZE);
+	
 	nickLen = 9;
 	modesCount = 3;
 	
@@ -40,6 +41,7 @@
 	[self setValue:OP_VALUE forMode:'q'];
 	[self setValue:OP_VALUE forMode:'b'];
 	[self setValue:OP_VALUE forMode:'e'];
+	
 	[self setValue:1 forMode:'I'];
 	[self setValue:1 forMode:'R'];
 	[self setValue:2 forMode:'k'];
@@ -56,7 +58,7 @@
 - (BOOL)update:(NSString *)str
 {
 	if ([str hasSuffix:ISUPPORT_SUFFIX]) {
-		str = [str safeSubstringToIndex:str.length - [ISUPPORT_SUFFIX length]];
+		str = [str safeSubstringToIndex:(str.length - [ISUPPORT_SUFFIX length])];
 	}
 	
 	NSArray *ary = [str split:@" "];
@@ -87,20 +89,21 @@
 {
 	NSMutableArray *ary = [NSMutableArray array];
 	NSMutableString *s = [[str mutableCopy] autorelease];
+	
 	BOOL plus = NO;
 	
-	while (!NSObjectIsEmpty(s)) {
+	while (NSObjectIsNotEmpty(s)) {
 		NSString *token = [s getToken];
 		if (NSObjectIsEmpty(token)) break;
+		
 		UniChar c = [token characterAtIndex:0];
 		
 		if (c == '+' || c == '-') {
 			plus = (c == '+');
+			
 			token = [token safeSubstringFromIndex:1];
 			
-			NSInteger len = token.length;
-			
-			for (NSInteger i = 0; i < len; i++) {
+			for (NSInteger i = 0; i < token.length; i++) {
 				c = [token characterAtIndex:i];
 				
 				switch (c) {
@@ -113,21 +116,21 @@
 					default:
 					{
 						NSInteger v = [self valueForMode:c];
+						
+						IRCModeInfo *m = [IRCModeInfo modeInfo];
+						
 						if ([self hasParamForMode:c plus:plus]) {
-							// 1 param
-							IRCModeInfo *m = [IRCModeInfo modeInfo];
 							m.mode = c;
 							m.plus = plus;
 							m.param = [s getToken];
-							[ary addObject:m];
 						} else {
-							// simple mode
-							IRCModeInfo *m = [IRCModeInfo modeInfo];
 							m.mode = c;
 							m.plus = plus;
 							m.simpleMode = (v == 4);
-							[ary addObject:m];
 						}
+						
+						[ary addObject:m];
+						
 						break;
 					}
 				}
@@ -154,13 +157,15 @@
 {
 	if ([str hasPrefix:@"("]) {
 		NSRange r = [str rangeOfString:@")"];
+		
 		if (r.location != NSNotFound) {
-			str = [str safeSubstringWithRange:NSMakeRange(1, r.location - 1)];
+			str = [str safeSubstringWithRange:NSMakeRange(1, (r.location - 1))];
 			
 			NSInteger len = str.length;
 			
 			for (NSInteger i = 0; i < len; i++) {
 				UniChar c = [str characterAtIndex:i];
+				
 				[self setValue:OP_VALUE forMode:c];
 			}
 		}
@@ -171,15 +176,13 @@
 {
 	NSArray *ary = [str split:@","];
 	
-	NSInteger count = ary.count;
-	
-	for (NSInteger i = 0; i < count; i++) {
+	for (NSInteger i = 0; i < ary.count; i++) {
 		NSString *s = [ary safeObjectAtIndex:i];
-		NSInteger len = s.length;
 		
-		for (NSInteger j = 0; j < len; j++) {
+		for (NSInteger j = 0; j < s.length; j++) {
 			UniChar c = [s characterAtIndex:j];
-			[self setValue:i+1 forMode:c];
+			
+			[self setValue:(i + 1) forMode:c];
 		}
 	}
 }
@@ -187,10 +190,12 @@
 - (void)setValue:(NSInteger)value forMode:(unsigned char)m
 {
 	if ('a' <= m && m <= 'z') {
-		NSInteger n = m - 'a';
+		NSInteger n = (m - 'a');
+		
 		modes[n] = value;
 	} else if ('A' <= m && m <= 'Z') {
-		NSInteger n = m - 'A' + 26;
+		NSInteger n = ((m - 'A') + 26);
+		
 		modes[n] = value;
 	}
 }
@@ -198,43 +203,27 @@
 - (NSInteger)valueForMode:(unsigned char)m
 {
 	if ('a' <= m && m <= 'z') {
-		NSInteger n = m - 'a';
+		NSInteger n = (m - 'a');
+		
 		return modes[n];
 	} else if ('A' <= m && m <= 'Z') {
-		NSInteger n = m - 'A' + 26;
+		NSInteger n = ((m - 'A') + 26);
+		
 		return modes[n];
 	}
+	
 	return 0;
 }
 
 - (IRCModeInfo *)createMode:(NSString *)mode
 {
 	IRCModeInfo *m = [IRCModeInfo modeInfo];
+	
 	m.mode = [mode characterAtIndex:0];
 	m.plus = NO;
 	m.param = @"";
+	
 	return m;
-}
-
-@end
-
-@implementation IRCModeInfo
-
-@synthesize mode;
-@synthesize plus;
-@synthesize op;
-@synthesize simpleMode;
-@synthesize param;
-
-+ (IRCModeInfo *)modeInfo
-{
-	return [[IRCModeInfo new] autorelease];
-}
-
-- (void)dealloc
-{
-	[param release];
-	[super dealloc];
 }
 
 @end

@@ -56,10 +56,9 @@
 - (void)dealloc
 {
 	[name release];
-	[password release];
-	
 	[mode release];
 	[topic release];
+	[password release];
 	[encryptionKey release];
 	
 	[super dealloc];
@@ -71,13 +70,12 @@
 	
 	[dic setInt:type forKey:@"type"];
 	
-	if (name) [dic setObject:name forKey:@"name"];
-	if (password) [dic setObject:password forKey:@"password"];
-	
 	[dic setBool:growl forKey:@"growl"];
 	[dic setBool:autoJoin forKey:@"auto_join"];
     [dic setBool:ihighlights forKey:@"ignore_highlights"];
 	
+	if (name) [dic setObject:name forKey:@"name"];
+	if (password) [dic setObject:password forKey:@"password"];
 	if (mode) [dic setObject:mode forKey:@"mode"];
 	if (topic) [dic setObject:topic forKey:@"topic"];
 	if (encryptionKey) [dic setObject:encryptionKey forKey:@"encryptionKey"];

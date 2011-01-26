@@ -53,8 +53,8 @@
 
 - (void)resetState
 {
-	isKeyword = isUnread = isNewTalk = NO;
 	keywordCount = unreadCount = 0;
+	isKeyword = isUnread = isNewTalk = NO;
 }
 
 - (NSInteger)numberOfChildren

@@ -10,9 +10,11 @@
 - (id)initWithCommand:(NSString *)aCommand
 {
 	if ((self = [super init])) {
-		command = [[aCommand uppercaseString] retain];
-		completeColon = YES;
 		params = [NSMutableArray new];
+		
+		completeColon = YES;
+		
+		command = [[aCommand uppercaseString] retain];
 	}
 
 	return self;
@@ -22,6 +24,7 @@
 {
 	[command release];
 	[params release];
+	
 	[super dealloc];
 }
 
@@ -32,10 +35,10 @@
 
 - (NSString *)string
 {
-	if (!string) {
+	if (NSObjectIsEmpty(string)) {
 		BOOL forceCompleteColon = NO;
 		
-		if ([command isEqualToString:IRCCI_PRIVMSG] ||[command isEqualToString:IRCCI_NOTICE]) {
+		if ([command isEqualToString:IRCCI_PRIVMSG] || [command isEqualToString:IRCCI_NOTICE]) {
 			forceCompleteColon = YES;
 		} else if ([command isEqualToString:IRCCI_NICK]
 				 || [command isEqualToString:IRCCI_MODE]
@@ -48,6 +51,7 @@
 				 || [command isEqualToString:IRCCI_WHOWAS]
 				 || [command isEqualToString:IRCCI_ISON]
 				 || [command isEqualToString:IRCCI_USER]) {
+			
 			completeColon = NO;
 		}
 		
@@ -58,7 +62,7 @@
 		NSInteger count = [params count];
 		
 		if (count > 0) {
-			for (NSInteger i = 0; i < count-1; ++i) {
+			for (NSInteger i = 0; i < (count - 1); ++i) {
 				NSString *s = [params safeObjectAtIndex:i];
 				
 				[d appendString:@" "];
@@ -66,17 +70,21 @@
 			}
 			
 			[d appendString:@" "];
-			NSString *s = [params safeObjectAtIndex:count-1];
-			NSInteger len = s.length;
+			
+			NSString *s = [params safeObjectAtIndex:(count - 1)];
+			
 			BOOL firstColonOrSpace = NO;
-			if (len > 0) {
+			
+			if (NSObjectIsNotEmpty(s)) {
 				UniChar c = [s characterAtIndex:0];
+				
 				firstColonOrSpace = (c == ' ' || c == ':');
 			}
 			
-			if (forceCompleteColon || completeColon && (s.length == 0 || firstColonOrSpace)) {
+			if (forceCompleteColon || (completeColon && (NSObjectIsEmpty(s) || firstColonOrSpace))) {
 				[d appendString:@":"];
 			}
+			
 			[d appendString:s];
 		}
 		
@@ -84,6 +92,7 @@
 		
 		string = d;
 	}
+	
 	return string;
 }
 

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>8805</string>
+	<string>8817</string>
 	<key>Build Reference</key>
-	<string>2.0.3-10-g5bb33ff-codebase-rewrite</string>
+	<string>2.0.3-11-g571d6e5-codebase-rewrite</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
