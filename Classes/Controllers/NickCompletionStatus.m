@@ -11,6 +11,7 @@
 	if ((self = [super init])) {
 		[self clear];
 	}
+
 	return self;
 }
 

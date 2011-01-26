@@ -9,10 +9,9 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		 if (!scripts) {
-			 scripts = [NSMutableArray new];
-		 }
+		 scripts = [NSMutableArray new];
 	}
+
 	return self;
 }
 
@@ -24,7 +23,7 @@
 		if ([file hasSuffix:@".scpt"]) {
 			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
 			
-			if (![scripts containsObject:script]) {
+			if ([scripts containsObject:script] == NO) {
 				[scripts addObject:script];
 			}
 		}
@@ -33,7 +32,7 @@
 	for (NSString *cmd in world.bundlesForUserInput) {
 		cmd = [cmd lowercaseString];
 		
-		if (![scripts containsObject:cmd]) {
+		if ([scripts containsObject:cmd] == NO) {
 			[scripts addObject:cmd];
 		}
 	}

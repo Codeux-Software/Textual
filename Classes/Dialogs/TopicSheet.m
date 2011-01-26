@@ -12,12 +12,14 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"TopicSheet" owner:self];
 	}
+
 	return self;
 }
 
 - (void)start:(NSString *)topic
 {
 	[text setStringValue:(([topic stringWithInputIRCFormatting]) ?: @"")];
+	
 	[self startSheet];
 }
 

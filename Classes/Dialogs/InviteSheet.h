@@ -5,6 +5,7 @@
 @interface InviteSheet : SheetBase
 {
 	NSArray *nicks;
+	
 	NSInteger uid;
 	
 	IBOutlet NSTextField *titleLabel;

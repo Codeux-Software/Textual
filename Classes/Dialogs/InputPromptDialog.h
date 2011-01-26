@@ -4,6 +4,7 @@
 @interface InputPromptDialog : NSObject 
 {
 	NSInteger buttonClicked;
+	
 	NSString *finalModalValue;
 	
 	IBOutlet NSWindow *dialogWindow;
@@ -36,7 +37,7 @@
 			 informativeText:(NSString *)informativeText
 			defaultUserInput:(NSString *)userInputText;
 
-- (IBAction)modalDidCloseWithDefaultButton:(id)sender;
-- (IBAction)modalDidCloseWithAlternateButton:(id)sender;
+- (void)modalDidCloseWithDefaultButton:(id)sender;
+- (void)modalDidCloseWithAlternateButton:(id)sender;
 
 @end

@@ -20,6 +20,7 @@
 	IBOutlet NSView *ignoreItemView;
 	
 	BOOL newItem;
+	
 	AddressBook *ignore;
 }
 

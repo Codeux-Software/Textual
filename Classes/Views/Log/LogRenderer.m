@@ -59,6 +59,10 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 	return len - start;
 }
 
+NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context) {
+	return ([s1.nick length] <= [s2.nick length]);
+}
+
 NSString *logEscape(NSString *s)
 {
 	return [[s gtm_stringByEscapingForHTML] stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
@@ -485,7 +489,7 @@ attributedString:(BOOL)attributed
 				IRCChannel *log_channel = log.channel;
 				
 				if (log_channel) {
-					NSArray *channel_members = log_channel.members;
+					NSArray *channel_members = [[NSArray arrayWithArray:log_channel.members] sortedArrayUsingFunction:nicknameLengthSort context:nil];
 					
 					if (channel_members) {
 						for (IRCUser *user in channel_members) {

@@ -29,6 +29,7 @@
 		colorNumber = -1;
 		lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}
+
 	return self;
 }
 

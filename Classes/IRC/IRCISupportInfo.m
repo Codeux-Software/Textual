@@ -23,6 +23,7 @@
 	if ((self = [super init])) {
 		[self reset];
 	}
+
 	return self;
 }
 

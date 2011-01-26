@@ -11,6 +11,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"AboutPanel" owner:self];
 	}
+
 	return self;
 }
 

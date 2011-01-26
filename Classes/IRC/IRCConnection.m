@@ -36,6 +36,7 @@
 		timer = [Timer new];
 		timer.delegate = self;
 	}
+
 	return self;
 }
 

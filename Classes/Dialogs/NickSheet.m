@@ -13,13 +13,15 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"NickSheet" owner:self];
 	}
+
 	return self;
 }
 
 - (void)start:(NSString *)nick
 {
-	[currentText setStringValue:nick];
 	[newText setStringValue:nick];
+	[currentText setStringValue:nick];
+	
 	[sheet makeFirstResponder:newText];
 	
 	[self startSheet];

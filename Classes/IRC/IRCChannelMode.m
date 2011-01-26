@@ -14,6 +14,7 @@
 		allModes = [NSMutableArray new];
 		modeIndexes = [NSMutableDictionary new];
 	}
+
 	return self;
 }
 

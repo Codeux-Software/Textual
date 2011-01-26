@@ -14,6 +14,7 @@
 		completeColon = YES;
 		params = [NSMutableArray new];
 	}
+
 	return self;
 }
 

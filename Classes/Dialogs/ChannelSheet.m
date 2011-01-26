@@ -35,6 +35,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ChannelSheet" owner:self];
 	}
+
 	return self;
 }
 
@@ -43,6 +44,7 @@
 	[config release];
 	[generalView release];
 	[encryptView release];
+	
 	[super dealloc];
 }
 
@@ -72,7 +74,7 @@
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
-	if ([[contentView subviews] count] != 0) {
+	if (NSObjectIsNotEmpty([contentView subviews])) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
@@ -93,6 +95,7 @@
 	[self update];
 	[self startSheet];
 	[self firstPane:generalView];
+	
 	[tabView setSelectedSegment:0];
 }
 
@@ -104,6 +107,7 @@
 - (void)close
 {
 	delegate = nil;
+	
 	[self endSheet];
 }
 
@@ -132,7 +136,7 @@
 	config.autoJoin = autoJoinCheck.state;
     config.ihighlights = ihighlights.state;
 	
-	if (![config.name isChannelName]) {
+	if ([config.name isChannelName] == NO) {
 		config.name = [@"#" stringByAppendingString:config.name];
 	}
 }
@@ -144,7 +148,8 @@
 	}
 	
 	NSString *s = nameText.stringValue;
-	[okButton setEnabled:s.length > 0];
+	
+	[okButton setEnabled:NSObjectIsNotEmpty(s)];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note

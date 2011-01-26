@@ -41,8 +41,8 @@
 @synthesize generalView;
 @synthesize hostCombo;
 @synthesize ignoreSheet;
-@synthesize ignoreTable;
 @synthesize ignoresView;
+@synthesize ignoreTable;
 @synthesize initalView;
 @synthesize initialTabTag;
 @synthesize invisibleCheck;
@@ -73,13 +73,15 @@
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
 		serverList = [NSDictionary dictionaryWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
-	
+		[serverList retain];
+		
 		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		
 		for (NSString *key in sortedKeys) {
 			[hostCombo addItemWithObjectValue:key];
 		}
 	}
+
 	return self;
 }
 
@@ -156,7 +158,7 @@
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
-	if ([[contentView subviews] count] != 0) {
+	if (NSObjectIsNotEmpty([contentView subviews])) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
@@ -235,8 +237,6 @@
 		nickText.stringValue = config.nick;
 	}
 	
-	passwordText.stringValue = config.password;
-	
 	if (NSObjectIsEmpty(config.username)) {
 		usernameText.stringValue = [Preferences defaultUsername];
 	} else {
@@ -249,13 +249,14 @@
 		realNameText.stringValue = config.realName;
 	}
 	
-	nickPasswordText.stringValue = config.nickPassword;
-	
 	if (config.altNicks.count > 0) {
 		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	} else {
 		altNicksText.stringValue = @"";
 	}
+	
+	passwordText.stringValue = config.password;
+	nickPasswordText.stringValue = config.nickPassword;
 
 	sleepQuitMessageText.stringValue = config.sleepQuitMessage;
 	leavingCommentText.stringValue = config.leavingComment;
@@ -266,12 +267,12 @@
 	
 	[proxyCombo selectItemWithTag:config.proxyType];
 	proxyHostText.stringValue = config.proxyHost;
-	proxyPortText.intValue = config.proxyPort;
+	proxyPortText.integerValue = config.proxyPort;
 	proxyUserText.stringValue = config.proxyUser;
 	proxyPasswordText.stringValue = config.proxyPassword;
 
-	loginCommandsText.string = [config.loginCommands componentsJoinedByString:@"\n"];
 	invisibleCheck.state = config.invisibleMode;
+	loginCommandsText.string = [config.loginCommands componentsJoinedByString:@"\n"];
 }
 
 - (void)save
@@ -287,11 +288,16 @@
 		config.host = @"unknown.host.com";
 	} else {
 		realHost = [self nameMatchesServerInList:hostname];
-		config.host = ((PointerIsEmpty(realHost)) ? hostname : [serverList objectForKey:realHost]);
+		
+		if (NSObjectIsEmpty(realHost)) {
+			config.host = hostname;
+		} else {
+			config.host = [serverList objectForKey:realHost];
+		}
 	}
 	
-	if ([nameText.stringValue length] < 1) {
-		if (PointerIsEmpty(realHost)) {
+	if (NSObjectIsEmpty(nameText.stringValue)) {
+		if (NSObjectIsEmpty(realHost)) {
 			config.name = TXTLS(@"UNTITLED_CONNECTION_NAME");
 		} else {
 			config.name = realHost;
@@ -300,13 +306,13 @@
 		config.name = nameText.stringValue;
 	}
 	
-	config.useSSL = sslCheck.state;
-	
-	if (portText.intValue < 1) {
+	if (portText.integerValue < 1) {
 		config.port = 6667;
 	} else {
-		config.port = portText.intValue;
+		config.port = portText.integerValue;
 	}
+	
+	config.useSSL = sslCheck.state;
 	
 	config.nick = nickText.stringValue;
 	config.password = passwordText.stringValue;
@@ -315,9 +321,11 @@
 	config.nickPassword = nickPasswordText.stringValue;
 	
 	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
+	
 	[config.altNicks removeAllObjects];
+	
 	for (NSString *s in nicks) {
-		if (s.length) {
+		if (NSObjectIsNotEmpty(s)) {
 			[config.altNicks addObject:s];
 		}
 	}
@@ -336,9 +344,11 @@
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
 	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
+	
 	[config.loginCommands removeAllObjects];
+	
 	for (NSString *s in commands) {
-		if (s.length) {
+		if (NSObjectIsNotEmpty(s)) {
 			[config.loginCommands addObject:s];
 		}
 	}
@@ -350,18 +360,25 @@
 {
 	NSString *name = [nameText stringValue];
 	NSString *host = [hostCombo stringValue];
-	NSInteger port = [portText integerValue];
 	NSString *nick = [nickText stringValue];
 	
-	BOOL enabled = NSObjectIsNotEmpty(name) && NSObjectIsNotEmpty(host) && ![host isEqualToString:@"-"] && port > 0 && NSObjectIsNotEmpty(nick);
+	NSInteger port = [portText integerValue];
+	
+	BOOL enabled = (NSObjectIsNotEmpty(name) && NSObjectIsNotEmpty(host) && [host isEqualToString:@"-"] == NO && port > 0 && NSObjectIsNotEmpty(nick));
+	
 	[okButton setEnabled:enabled];
 }
 
 - (void)updateChannelsPage
 {
 	NSInteger i = [channelTable selectedRow];
-	BOOL enabled = (i >= 0) && ![bouncerModeCheck state];
-	[addChannelButton setEnabled:![bouncerModeCheck state]];
+	
+	BOOL count = (i >= 0);
+	BOOL bouncer = BOOLReverseValue([bouncerModeCheck state]);
+	
+	BOOL enabled = (count && bouncer);
+	
+	[addChannelButton setEnabled:bouncer];
 	[editChannelButton setEnabled:enabled];
 	[deleteChannelButton setEnabled:enabled];
 }
@@ -369,13 +386,15 @@
 - (void)reloadChannelTable
 {
 	[channelTable reloadData];
-	[channelTable setEnabled:![bouncerModeCheck state]];
+	[channelTable setEnabled:BOOLReverseValue([bouncerModeCheck state])];
 }
 
 - (void)updateIgnoresPage
 {
 	NSInteger i = [ignoreTable selectedRow];
+	
 	BOOL enabled = (i >= 0);
+	
 	[editIgnoreButton setEnabled:enabled];
 	[deleteIgnoreButton setEnabled:enabled];
 }
@@ -397,7 +416,7 @@
 	for (NSInteger i = (ignores.count - 1); i >= 0; --i) {
 		AddressBook *g = [ignores safeObjectAtIndex:i];
 		
-		if ([g.hostmask length] < 1) {
+		if (NSObjectIsEmpty(g.hostmask)) {
 			[ignores safeRemoveObjectAtIndex:i];
 		}
 	}
@@ -426,14 +445,15 @@
 
 - (void)encodingChanged:(id)sender
 {
-	NSInteger tag = [encodingCombo selectedTag];
-	[fallbackEncodingCombo setEnabled:(tag == NSUTF8StringEncoding)];
+	[fallbackEncodingCombo setEnabled:([encodingCombo selectedTag] == NSUTF8StringEncoding)];
 }
 
 - (void)proxyChanged:(id)sender
 {
 	NSInteger tag = [proxyCombo selectedTag];
+	
 	BOOL enabled = (tag == PROXY_SOCKS4 || tag == PROXY_SOCKS5);
+	
 	[proxyHostText setEnabled:enabled];
 	[proxyPortText setEnabled:enabled];
 	[proxyUserText setEnabled:enabled];
@@ -442,7 +462,7 @@
 
 - (void)bouncerModeChanged:(id)sender
 {
-	[channelTable setEnabled:![bouncerModeCheck state]];
+	[channelTable setEnabled:BOOLReverseValue([bouncerModeCheck state])];
 }
 
 #pragma mark -
@@ -451,16 +471,20 @@
 - (void)addChannel:(id)sender
 {
 	NSInteger sel = [channelTable selectedRow];
+	
 	IRCChannelConfig *conf;
+	
 	if (sel < 0) {
 		conf = [[IRCChannelConfig new] autorelease];
 	} else {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
+		
 		conf = [[c mutableCopy] autorelease];
 		conf.name = @"";
 	}
 	
 	[channelSheet release];
+	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
 	channelSheet.window = sheet;
@@ -474,9 +498,11 @@
 {
 	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
+	
 	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
 	
 	[channelSheet release];
+	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
 	channelSheet.window = sheet;
@@ -489,14 +515,16 @@
 - (void)ChannelSheetOnOK:(ChannelSheet *)sender
 {
 	IRCChannelConfig *conf = sender.config;
+	
 	NSString *name = conf.name;
 	
-	NSInteger n = -1;
 	NSInteger i = 0;
+	NSInteger n = -1;
 	
 	for (IRCChannelConfig *c in config.channels) {
 		if ([c.name isEqualToString:name]) {
 			n = i;
+			
 			break;
 		}
 		
@@ -526,9 +554,10 @@
 	[config.channels safeRemoveObjectAtIndex:sel];
 	
 	NSInteger count = config.channels.count;
+	
 	if (count) {
 		if (count <= sel) {
-			[channelTable selectItemAtIndex:count - 1];
+			[channelTable selectItemAtIndex:(count - 1)];
 		} else {
 			[channelTable selectItemAtIndex:sel];
 		}
@@ -543,6 +572,7 @@
 - (void)addIgnore:(id)sender
 {
 	[ignoreSheet release];
+	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;
 	ignoreSheet.window = sheet;
@@ -557,6 +587,7 @@
 	if (sel < 0) return;
 	
 	[ignoreSheet release];
+	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;
 	ignoreSheet.window = sheet;
@@ -572,15 +603,17 @@
 	[config.ignores safeRemoveObjectAtIndex:sel];
 	
 	NSInteger count = config.ignores.count;
+	
 	if (count) {
 		if (count <= sel) {
-			[ignoreTable selectItemAtIndex:count - 1];
+			[ignoreTable selectItemAtIndex:(count - 1)];
 		} else {
 			[ignoreTable selectItemAtIndex:sel];
 		}
 	}
 	
 	[self reloadIgnoreTable];
+	
 	[client populateISONTrackedUsersList:config.ignores];
 }
 
@@ -589,16 +622,17 @@
 	NSString *hostmask = [sender.ignore.hostmask trim];
 	
 	if (sender.newItem) {
-		if ([hostmask length]  > 1) {
+		if (NSObjectIsNotEmpty(hostmask)) {
 			[config.ignores addObject:sender.ignore];
 		}
 	} else {
-		if ([hostmask length] < 1) {
+		if (NSObjectIsEmpty(hostmask)) {
 			[config.ignores removeObject:sender.ignore];
 		}
 	}
 	
 	[self reloadIgnoreTable];
+	
 	[client populateISONTrackedUsersList:config.ignores];
 }
 
@@ -624,6 +658,7 @@
 {
 	if (sender == channelTable) {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:row];
+		
 		NSString *columnId = [column identifier];
 		
 		if ([columnId isEqualToString:@"name"]) {
@@ -635,6 +670,7 @@
 		}
 	} else {
 		AddressBook *g = [config.ignores safeObjectAtIndex:row];
+		
 		return g.hostmask;
 	}
 	
@@ -645,13 +681,12 @@
 {
 	if (sender == channelTable) {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:row];
+		
 		NSString *columnId = [column identifier];
 		
 		if ([columnId isEqualToString:@"join"]) {
-			c.autoJoin = [obj integerValue] != 0;
+			c.autoJoin = BOOLReverseValue([obj integerValue] == 0);
 		}
-	} else {
-		;
 	}
 }
 
@@ -679,11 +714,11 @@
 {
 	if (sender == channelTable) {
 		NSArray *ary = [NSArray arrayWithObject:[NSNumber numberWithInteger:[rows firstIndex]]];
+	
 		[pboard declareTypes:TABLE_ROW_TYPES owner:self];
 		[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
-	} else {
-		;
 	}
+	
 	return YES;
 }
 
@@ -691,6 +726,7 @@
 {
 	if (sender == channelTable) {
 		NSPasteboard *pboard = [info draggingPasteboard];
+	
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
 			return NSDragOperationGeneric;
 		} else {
@@ -705,38 +741,41 @@
 {
 	if (sender == channelTable) {
 		NSPasteboard *pboard = [info draggingPasteboard];
+		
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
+			NSMutableArray *ary = config.channels;
+			
 			NSArray *selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
 			NSInteger sel = [[selectedRows safeObjectAtIndex:0] integerValue];
 			
-			NSMutableArray *ary = config.channels;
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
+			
 			[[target retain] autorelease];
 
 			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
-			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
+			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autorelease];
 			
 			[low removeObjectIdenticalTo:target];
 			[high removeObjectIdenticalTo:target];
 			
 			[ary removeAllObjects];
 			
-			[ary addObjectsFromArray:low];
 			[ary addObject:target];
+			[ary addObjectsFromArray:low];
 			[ary addObjectsFromArray:high];
 			
 			[self reloadChannelTable];
 			
 			sel = [ary indexOfObjectIdenticalTo:target];
+			
 			if (0 <= sel) {
 				[channelTable selectItemAtIndex:sel];
 			}
 			
 			return YES;
 		}
-	} else {
-		;
-	}
+	} 
+	
 	return NO;
 }
 

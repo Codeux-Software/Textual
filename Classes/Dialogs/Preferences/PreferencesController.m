@@ -21,66 +21,66 @@
 
 @implementation PreferencesController
 
-@synthesize delegate;
-@synthesize world;
-@synthesize logFont;
-@synthesize contentView;
-@synthesize highlightView;
-@synthesize interfaceView;
 @synthesize alertsView;
-@synthesize stylesView;
-@synthesize transfersView;
-@synthesize logView;
-@synthesize generalView;
-@synthesize scriptsView;
-@synthesize identityView;
-@synthesize keywordsTable;
-@synthesize updatesView;
-@synthesize excludeWordsTable;
-@synthesize keywordsArrayController;
-@synthesize excludeWordsArrayController;
-@synthesize transcriptFolderButton;
-@synthesize themeButton;
-@synthesize scriptLocationField;
-@synthesize preferenceSelectToolbar;
-@synthesize transcriptFolderOpenPanel;
-@synthesize floodControlView;
-@synthesize IRCopServicesView;
-@synthesize installedScriptsTable;
-@synthesize installedScriptsMenu;
-@synthesize scriptsController;
 @synthesize channelManagementView;
+@synthesize contentView;
+@synthesize delegate;
+@synthesize excludeWordsArrayController;
+@synthesize excludeWordsTable;
+@synthesize floodControlView;
+@synthesize generalView;
+@synthesize highlightView;
+@synthesize identityView;
+@synthesize installedScriptsMenu;
+@synthesize installedScriptsTable;
+@synthesize interfaceView;
+@synthesize IRCopServicesView;
+@synthesize keywordsArrayController;
+@synthesize keywordsTable;
+@synthesize logFont;
+@synthesize logView;
+@synthesize preferenceSelectToolbar;
+@synthesize scriptLocationField;
+@synthesize scriptsController;
+@synthesize scriptsView;
+@synthesize stylesView;
+@synthesize themeButton;
+@synthesize transcriptFolderButton;
+@synthesize transcriptFolderOpenPanel;
+@synthesize transfersView;
+@synthesize updatesView;
+@synthesize world;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
+		
 		scriptsController = [ScriptsWrapper new];
 	}
+	
 	return self;
 }
 
 - (void)dealloc
 {
-	[sounds release];
-	[transcriptFolderOpenPanel release];
-	[logFont release];
-	
-	[highlightView release];
-	[interfaceView release];
 	[alertsView release];
-	[stylesView release];
-	[transfersView release];
-	[logView release];
-	[generalView release];
-	[scriptsView release];
-	[identityView release];
-	[updatesView release];
-	[floodControlView release];
-	[IRCopServicesView release];
 	[channelManagementView release];
-	
+	[floodControlView release];
+	[generalView release];
+	[highlightView release];
+	[identityView release];
+	[interfaceView release];
+	[IRCopServicesView release];
+	[logFont release];
+	[logView release];
 	[scriptsController release];
+	[scriptsView release];
+	[sounds release];
+	[stylesView release];
+	[transcriptFolderOpenPanel release];
+	[transfersView release];
+	[updatesView release];	
 	
 	[super dealloc];
 }
@@ -90,10 +90,10 @@
 
 - (void)show
 {
-	installedScriptsTable.dataSource = scriptsController;
-	
 	scriptsController.world = world;
 	[scriptsController populateData];
+	
+	installedScriptsTable.dataSource = scriptsController;
 	[installedScriptsTable reloadData];
 	
 	[self updateTranscriptFolder];
@@ -104,12 +104,13 @@
 	[logFont release];
 	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
 	
-	if (![self.window isVisible]) {
+	if ([self.window isVisible] == NO) {
 		[self.window center];
 	}
 	
 	[self setUpToolbarItemsAndMenus];
 	[self.window makeKeyAndOrderFront:nil];
+	
 	[self firstPane:generalView selectedItem:0];
 }
 
@@ -125,14 +126,18 @@
 {
 	[[self.window toolbar] removeItemAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
 	
-	if ([world.bundlesWithPreferences count] > 0) {
+	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
 		[[self.window toolbar] insertItemWithItemIdentifier:@"13" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];
 		
 		for (TextualPluginItem *plugin in world.bundlesWithPreferences) {
 			NSInteger tagIndex = [world.bundlesWithPreferences indexOfObject:plugin];
-			NSString *menuItemTitle = [plugin.pluginPrimaryClass preferencesMenuItemName];
 			
-			NSMenuItem *pluginMenu = [[NSMenuItem alloc] initWithTitle:menuItemTitle action:@selector(onPrefPaneSelected:) keyEquivalent:@""];
+			NSMenuItem *pluginMenu = [NSMenuItem new];
+			
+			[pluginMenu setAction:@selector(onPrefPaneSelected:)];
+			[pluginMenu setTarget:self];
+			
+			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
 			[pluginMenu setTag:(tagIndex + 20)];
 			[pluginMenu autorelease];
 			
@@ -206,7 +211,7 @@
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y = NSMaxY([self.window frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	
-	if ([[contentView subviews] count] != 0) {
+	if (NSObjectIsNotEmpty([contentView subviews])) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
@@ -277,6 +282,7 @@
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
 		NSInteger n = [*value integerValue];
+		
 		if (n < LINES_MIN) {
 			*value = [NSNumber numberWithInteger:LINES_MIN];
 		} else if (n > LINES_MAX) {
@@ -284,6 +290,7 @@
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
+		
 		if (n < INLINE_IMAGE_MIN) {
 			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MIN];
 		} else if (INLINE_IMAGE_MAX < n) {
@@ -300,24 +307,27 @@
 - (NSArray *)availableSounds
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
+	
 	NSArray *directoryContents = [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
+	NSArray *homeDirectoryContents = [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath] error:NULL];
 	
 	[sound_list addObject:EMPTY_SOUND];
 	
-	if (directoryContents && [directoryContents count] > 0) {
+	if (NSObjectIsNotEmpty(directoryContents)) {
 		for (NSString *s in directoryContents) {	
-			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+			if ([s contains:@"."]) {
+				[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+			}
 		}
 	}
 	
-	NSString *home_sounds = [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Sounds"];
-	NSArray *homeDirectoryContents = [_NSFileManager() contentsOfDirectoryAtPath:home_sounds error:NULL];
-	
-	if (homeDirectoryContents && [homeDirectoryContents count] > 0) {
+	if (NSObjectIsNotEmpty(homeDirectoryContents)) {
 		[sound_list addObject:EMPTY_SOUND];
 		
 		for (NSString *s in homeDirectoryContents) {	
-			[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+			if ([s contains:@"."]) {
+				[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+			}
 		}		
 	}
 	
@@ -326,42 +336,22 @@
 
 - (NSMutableArray *)sounds
 {
-	if (!sounds) {
+	if (NSObjectIsEmpty(sounds)) {
+		SoundWrapper *e = nil;
+		
 		NSMutableArray *ary = [NSMutableArray new];
-		SoundWrapper *e;
 		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_KICKED];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_INVITED];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH];
-		[ary addObject:e];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_KICKED]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_INVITED]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
+		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
 		
 		sounds = ary;
 	}
@@ -374,17 +364,14 @@
 
 - (void)updateTranscriptFolder
 {
-	NSString *path = [Preferences transcriptFolder];
-	path = [path stringByExpandingTildeInPath];
-	NSString *dirName = [path lastPathComponent];
+	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	
 	NSImage *icon = [_NSWorkspace() iconForFile:path];
-	
 	[icon setSize:NSMakeSize(16, 16)];
 	
 	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
 	
-	[item setTitle:dirName];
+	[item setTitle:[path lastPathComponent]];
 	[item setImage:icon];
 }
 
@@ -397,7 +384,7 @@
 		
 		BOOL isDir;
 		
-		if (![_NSFileManager() fileExistsAtPath:path isDirectory:&isDir]) {
+		if ([_NSFileManager() fileExistsAtPath:path isDirectory:&isDir] == NO) {
 			[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
 		}
 		
@@ -414,17 +401,19 @@
 {
 	if ([transcriptFolderButton selectedTag] != 2) return;
 	
-	NSString *path = [Preferences transcriptFolder];
-	path = [path stringByExpandingTildeInPath];
+	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	NSString *parentPath = [path stringByDeletingLastPathComponent];
 	
 	NSOpenPanel *d = [NSOpenPanel openPanel];
+	
 	[d setCanChooseFiles:NO];
 	[d setCanChooseDirectories:YES];
 	[d setResolvesAliases:YES];
 	[d setAllowsMultipleSelection:NO];
 	[d setCanCreateDirectories:YES];
-	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	
+	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self 
+		  didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
 	
 	[transcriptFolderOpenPanel release];
 	transcriptFolderOpenPanel = [d retain];
@@ -437,11 +426,13 @@
 {
 	[themeButton removeAllItems];
 	
-	NSArray *ary = [NSArray arrayWithObjects:[Preferences whereThemesLocalPath], [Preferences whereThemesPath], nil];
 	NSInteger tag = 0;
+	
+	NSArray *ary = [NSArray arrayWithObjects:[Preferences whereThemesLocalPath], [Preferences whereThemesPath], nil];
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
+		
 		NSArray *files = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 		
 		for (NSString *file in files) {
@@ -452,9 +443,7 @@
 			}
 			
 			if ([_NSFileManager() fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
-				NSString *baseName = [file stringByDeletingPathExtension];
-				
-				[set addObject:baseName];
+				[set addObject:[file stringByDeletingPathExtension]];
 			}
 		}
 		
@@ -481,7 +470,7 @@
 	
 	NSInteger targetTag = 0;
 	
-	if (![kind isEqualToString:@"resource"]) {
+	if ([kind isEqualToString:@"resource"] == NO) {
 		targetTag = 1;
 	}
 	
@@ -492,6 +481,7 @@
 		
 		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
 			[themeButton selectItemAtIndex:i];
+			
 			break;
 		}
 	}
@@ -501,7 +491,7 @@
 {
 	NSMenuItem *item = [themeButton selectedItem];
 	
-	NSString *newThemeName;
+	NSString *newThemeName = nil;
 	NSString *name = [item title];
 	
 	if (item.tag == 0) {
@@ -510,15 +500,19 @@
 		newThemeName = [ViewTheme buildUserFilename:name];
 	}
 	
-	if ([[Preferences themeName] isEqual:newThemeName]) return;
+	if ([[Preferences themeName] isEqual:newThemeName]) {
+		return;
+	}
 	
 	[Preferences setThemeName:newThemeName];
+	
 	[self onLayoutChanged:nil];
 }
 
 - (void)onSelectFont:(id)sender
 {
 	NSFontManager *fm = [NSFontManager sharedFontManager];
+	
 	[fm setSelectedFont:logFont isMultiple:NO];
 	[fm orderFrontFontPanel:self];
 }
@@ -569,7 +563,8 @@
 
 - (void)editTable:(NSTableView *)table
 {
-	NSInteger row = [table numberOfRows] - 1;
+	NSInteger row = ([table numberOfRows] - 1);
+	
 	[table scrollRowToVisible:row];
 	[table editColumn:0 row:row withEvent:nil select:YES];
 }
@@ -577,12 +572,14 @@
 - (void)onAddKeyword:(id)sender
 {
 	[keywordsArrayController add:nil];
+	
 	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
 	[excludeWordsArrayController add:nil];
+	
 	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
 }
 

@@ -43,6 +43,7 @@
 		
 		[self processHostMaskRegex];
 	}
+
 	return self;
 }
 

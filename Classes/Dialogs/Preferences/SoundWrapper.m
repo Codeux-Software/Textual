@@ -8,6 +8,7 @@
 	if ((self = [super init])) {
 		eventType = aEventType;
 	}
+
 	return self;
 }
 
@@ -25,7 +26,7 @@
 {
 	NSString *sound = [Preferences soundForEvent:eventType];
 	
-	if (sound.length == 0) {
+	if (NSObjectIsEmpty(sound)) {
 		return EMPTY_SOUND;
 	} else {
 		return sound;
@@ -38,7 +39,7 @@
 		value = @"";
 	}
 	
-	if (value.length) {
+	if (NSObjectIsNotEmpty(value)) {
 		[SoundPlayer play:value isMuted:NO];
 	}
 	

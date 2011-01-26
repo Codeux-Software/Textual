@@ -28,8 +28,8 @@
 	IBOutlet NSButton *bouncerModeCheck;
 	
 	IBOutlet NSComboBox *hostCombo;
-	IBOutlet NSButton *sslCheck;
 	IBOutlet NSTextField *portText;
+	IBOutlet NSButton *sslCheck;
 	
 	IBOutlet NSTextField *nickText;
 	IBOutlet NSTextField *passwordText;

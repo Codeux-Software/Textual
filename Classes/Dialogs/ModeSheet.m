@@ -28,6 +28,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ModeSheet" owner:self];
 	}
+
 	return self;
 }
 
@@ -35,6 +36,7 @@
 {
 	[mode release];
 	[channelName release];
+	
 	[super dealloc];
 }
 
@@ -46,8 +48,9 @@
 	[tCheck setState:[mode modeInfoFor:@"t"].plus];
 	[iCheck setState:[mode modeInfoFor:@"i"].plus];
 	[mCheck setState:[mode modeInfoFor:@"m"].plus];
-	[kCheck setState:BOOLReverseValue(NSObjectIsEmpty([mode modeInfoFor:@"k"].param))];
-	[lCheck setState:[[mode modeInfoFor:@"s"].param integerValue] > 0];
+	
+	[kCheck setState:NSObjectIsNotEmpty([mode modeInfoFor:@"k"].param)];
+	[lCheck setState:([[mode modeInfoFor:@"s"].param integerValue] > 0)];
 	
 	if ([mode modeInfoFor:@"k"].plus) {
 		[kText setStringValue:[mode modeInfoFor:@"k"].param];
