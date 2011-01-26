@@ -84,7 +84,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSStringIsEmpty(nickPassword)) {
+	if (NSObjectIsEmpty(nickPassword)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -92,7 +92,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 										   withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if (NSStringIsEmpty(kcPassword)) { 
+			if (NSObjectIsEmpty(kcPassword)) { 
 				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
 														withItemKind:@"application password" 
 														 forUsername:nil 
@@ -121,7 +121,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (void)setNickPassword:(NSString *)pass
 {
 	if ([nickPassword isEqualToString:pass] == NO) {	
-		if (NSStringIsEmpty(pass)) {
+		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
 							   forUsername:nil
@@ -147,7 +147,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSStringIsEmpty(password)) {
+	if (NSObjectIsEmpty(password)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -155,7 +155,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 										   withLegacySupport:NO];
 		
 		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if (NSStringIsEmpty(kcPassword)) { 
+			if (NSObjectIsEmpty(kcPassword)) { 
 				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
 														withItemKind:@"application password" 
 														 forUsername:nil
@@ -184,7 +184,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (void)setPassword:(NSString *)pass
 {
 	if ([password isEqualToString:pass] == NO) {
-		if (NSStringIsEmpty(pass)) {
+		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
 							   forUsername:nil

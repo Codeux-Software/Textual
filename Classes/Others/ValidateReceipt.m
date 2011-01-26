@@ -52,7 +52,7 @@ NSData *appleRootCert()
 	SecKeychainItemRef itemRef = nil;
 	NSData *resultData = nil;
 	
-	while (SecKeychainSearchCopyNext(searchRef, &itemRef) == noErr && resultData == nil) {
+	while (SecKeychainSearchCopyNext(searchRef, &itemRef) == noErr && PointerIsEmpty(resultData)) {
 		SecKeychainAttributeList list;
 		SecKeychainAttribute attributes[1];
 		
@@ -328,10 +328,10 @@ BOOL validateBinarySignature(NSString *authority)
 	NSString *requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", authority];
 	
 	status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
-	TXDevNullDestroyOSStatusObject(status);
+	DevNullDestroyObject(status);
 	
 	status = SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &req);
-	TXDevNullDestroyOSStatusObject(status);
+	DevNullDestroyObject(status);
 	
 	status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, req);
 	
@@ -349,7 +349,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	
 	NSDictionary *receipt = dictionaryWithAppStoreReceipt(path);
 	
-	if (receipt == nil) return NO;
+	if (PointerIsEmpty(receipt)) return NO;
 	
 	NSData *guidData = nil;
 	NSString *bundleVersion = nil;
@@ -358,7 +358,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	guidData = (NSData *)copy_mac_address();
 	[guidData autorelease];
 
-	if (guidData == nil) return NO;
+	if (PointerIsEmpty(guidData)) return NO;
 	
 	bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	bundleIdentifer = [[NSBundle mainBundle] bundleIdentifier];

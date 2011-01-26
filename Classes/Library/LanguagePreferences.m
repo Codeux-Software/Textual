@@ -12,7 +12,7 @@ static NSDictionary *themeLocalizations = nil;
 	
 	NSString *filepath = [path stringByAppendingPathComponent:@"/BasicLanguage.plist"];
 	
-	if ([TXNSFileManager() fileExistsAtPath:filepath]) {
+	if ([_NSFileManager() fileExistsAtPath:filepath]) {
 		NSDictionary *localkeys = [[NSDictionary dictionaryWithContentsOfFile:filepath] retain];
 			
 		if (localkeys) {
@@ -23,7 +23,7 @@ static NSDictionary *themeLocalizations = nil;
 
 + (NSString *)localizedStringWithKey:(NSString *)key
 {
-	if (themeLocalizations == nil) {
+	if (PointerIsEmpty(themeLocalizations)) {
 		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);
 	} else {
 		NSString *localstring = [themeLocalizations objectForKey:key];

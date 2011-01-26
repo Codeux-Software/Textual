@@ -1,8 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define NSDataIsEmpty(s)		(s == nil || [s length] < 1)
-
 @interface NSData (NSDataHelper)
 - (BOOL)isValidUTF8;
 - (NSString *)validateUTF8;

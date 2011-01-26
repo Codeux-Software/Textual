@@ -36,7 +36,7 @@
 			 informativeText:(NSString *)informativeText
 			defaultUserInput:(NSString *)userInputText
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	[NSBundle loadNibNamed:@"InputPromptDialog" owner:self];
 	
@@ -45,16 +45,16 @@
 	}
 	
 	[informationalText setStringValue:informativeText];
-	[defaultButton setTitle:((defaultButtonTitle == nil) ? TXTLS(@"OK_BUTTON") : defaultButtonTitle)];
-	[dialogTitle setStringValue:((messageTitle == nil) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : messageTitle)];
-	[alternateButton setTitle:((alternateButtonTitle  == nil) ? TXTLS(@"CANCEL_BUTTON") : alternateButtonTitle)];
+	[defaultButton setTitle:((PointerIsEmpty(defaultButtonTitle)) ? TXTLS(@"OK_BUTTON") : defaultButtonTitle)];
+	[dialogTitle setStringValue:((PointerIsEmpty(messageTitle)) ? TXTLS(@"INPUT_REQUIRED_TO_CONTINUE") : messageTitle)];
+	[alternateButton setTitle:((PointerIsEmpty(alternateButtonTitle)) ? TXTLS(@"CANCEL_BUTTON") : alternateButtonTitle)];
 	
 	[pool release];
 }
 
 - (void)runModal
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	// The below text size calculation method is based off the examples at:
 	// <http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/TextLayout/Tasks/StringHeight.html>
@@ -63,7 +63,7 @@
 	
 	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithString:[informationalText stringValue]] autorelease];
 	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(298.0, FLT_MAX)] autorelease];
-	NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
+	NSLayoutManager *layoutManager = [[NSLayoutManager new] autorelease];
 	
 	[layoutManager addTextContainer:textContainer];
 	[textStorage addLayoutManager:layoutManager];

@@ -48,13 +48,13 @@
 - (NSString *)contentString
 {
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[self mainFrameDocument];
-	if (doc == nil) return @"";
+	if (PointerIsEmpty(doc)) return @"";
 	
 	DOMElement *body = [doc body];
-	if (body == nil) return @"";
+	if (PointerIsEmpty(body)) return @"";
 	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	if (root == nil) return @"";
+	if (PointerIsEmpty(root)) return @"";
 	
 	return [root outerHTML];
 }
@@ -71,13 +71,13 @@
 
 - (BOOL)hasSelection
 {
-	return BOOLReverseValue(NSStringIsEmpty([self selection]));
+	return BOOLReverseValue(NSObjectIsEmpty([self selection]));
 }
 
 - (NSString *)selection
 {
 	DOMRange *range = [self selectedDOMRange];
-	if (range == nil) return nil;
+	if (PointerIsEmpty(range)) return nil;
 	
 	return [range toString];
 }

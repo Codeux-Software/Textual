@@ -20,7 +20,7 @@
 	NSString *hostmaskRegex;
 }
 
-@property (nonatomic) NSInteger cid;
+@property (nonatomic, assign) NSInteger cid;
 @property (nonatomic, retain) NSString *hostmask;
 @property (nonatomic, assign) BOOL ignorePublicMsg;
 @property (nonatomic, assign) BOOL ignorePrivateMsg;

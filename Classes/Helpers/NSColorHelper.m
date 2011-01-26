@@ -34,7 +34,7 @@ static NSDictionary *nameMap = nil;
 		}
 	}
 	
-	if (nameMap == nil) {
+	if (NSObjectIsEmpty(nameMap)) {
 		nameMap = [NSDictionary dictionaryWithObjectsAndKeys:
 				   DEVICE_RGB(0, 0, 0), @"black",
 				   DEVICE_RGB(0xC0, 0xC0, 0xC0), @"silver",

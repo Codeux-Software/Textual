@@ -105,7 +105,7 @@
 
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return (([value length]) ? value : defaultv);
+	return ((NSObjectIsNotEmpty(value)) ? value : defaultv);
 }
 
 - (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv
@@ -117,7 +117,7 @@
 				   font_size:(NSInteger)style_size
 						 def:(NSFont *)defaultv
 {
-	return ((style_size < 1 || style_value == nil) ? defaultv : [NSFont fontWithName:style_value size:style_size]);
+	return ((style_size < 1 || PointerIsEmpty(style_value)) ? defaultv : [NSFont fontWithName:style_value size:style_size]);
 }
 
 - (void)reload 
@@ -203,12 +203,10 @@
 	
 	// ====================================================== //
 	
-	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-	
-	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.nicknameFormat == nil)] forKey:@"Preferences.Theme.tpoce_nick_format"];
-	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.timestampFormat == nil)] forKey:@"Preferences.Theme.tpoce_timestamp_format"];
-	[[defaultsController values] setValue:[NSNumber numberWithBool:(self.overrideChannelFont == nil)] forKey:@"Preferences.Theme.tpoce_channel_font"];
-	[[defaultsController values] setValue:[NSNumber numberWithBool:BOOLReverseValue(self.overrideMessageIndentWrap)] forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.nicknameFormat)] forKey:@"Preferences.Theme.tpoce_nick_format"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.timestampFormat)] forKey:@"Preferences.Theme.tpoce_timestamp_format"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.overrideChannelFont)] forKey:@"Preferences.Theme.tpoce_channel_font"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:BOOLReverseValue(self.overrideMessageIndentWrap)] forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
 	
 	// ====================================================== //
 	

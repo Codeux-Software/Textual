@@ -39,7 +39,7 @@
 @property (nonatomic, readonly) CGFloat totalWeight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
-@property (nonatomic) CFAbsoluteTime lastFadedWeights;
+@property (nonatomic, assign) CFAbsoluteTime lastFadedWeights;
 
 - (BOOL)hasMode:(char)mode;
 - (NSString *)banMask;

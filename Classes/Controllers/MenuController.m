@@ -2,7 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define	NO_CLIENT_OR_CHANNEL	(u == nil || c == nil)
+#define	NO_CLIENT_OR_CHANNEL	(PointerIsEmpty(u) || PointerIsEmpty(c))
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && u.isConnected == NO)
 #define LOGIN                   (u && u.isLoggedIn)
@@ -10,7 +10,7 @@
 #define NOT_ACTIVE              (LOGIN && c && c.isActive == NO)
 #define ACTIVE_CHANNEL			(ACTIVE && c.isChannel)
 #define ACTIVE_CHANTALK			(ACTIVE && (c.isChannel || c.isTalk))
-#define LOGIN_CHANTALK			(LOGIN && (c == nil || c.isChannel || c.isTalk))
+#define LOGIN_CHANTALK			(LOGIN && (PointerIsEmpty(c) || c.isChannel || c.isTalk))
 #define IS_NOT_CHANNEL          (c.isChannel == NO)
 #define IS_NOT_CLIENT           (c.isClient == NO)
 
@@ -119,10 +119,10 @@
 			}
 			
 			NSWindow *win = [NSApp keyWindow];
-			if (win == nil) return NO;
+			if (PointerIsEmpty(win)) return NO;
 			
 			id t = [win firstResponder];
-			if (t == nil) return NO;
+			if (PointerIsEmpty(t)) return NO;
 			
 			if (win == window) {
 				return YES;
@@ -141,7 +141,7 @@
 			[self validateChannelMenuSubmenus:item];
 			
 			LogView *web = [self currentWebView];
-			if (web == nil) return NO;
+			if (PointerIsEmpty(web)) return NO;
 			
 			return [web hasSelection];
 			break;
@@ -284,7 +284,7 @@
 				IRCClient *u = [world selectedClient];
 				IRCChannel *c = [world selectedChannel];
 				
-				if (u == nil) return NO;
+				if (PointerIsEmpty(u)) return NO;
 				
 				switch ([Preferences cmdWResponseType]) {
 					case CMDWKEY_SHORTCUT_CLOSE:
@@ -311,7 +311,7 @@
 					}
 					case CMDWKEY_SHORTCUT_DISCT:
 					{
-						NSString *textc = ((u.config.server == nil) ? u.config.name : u.config.server);
+						NSString *textc = ((PointerIsEmpty(u.config.server)) ? u.config.name : u.config.server);
 						
 						[item setTitle:[NSString stringWithFormat:TXTLS(@"CMDWKEY_SHORTCUT_DISCONNECT"), textc]];
 						
@@ -339,14 +339,15 @@
 
 - (void)_onWantFindPanel:(id)sender
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
-	NSString *newPhrase = promptForInput(TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE"), 
-										 TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE"), 
-										 TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON"), 
-										 nil, currentSearchPhrase);
+	NSString *newPhrase = [PopupPrompts dialogWindowWithInput:TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE")
+														title:TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE")
+												defaultButton:TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON")
+											  alternateButton:TXTLS(@"CANCEL_BUTTON") 
+												 defaultInput:currentSearchPhrase];
 	
-	if (newPhrase == nil) {
+	if (PointerIsEmpty(newPhrase)) {
 		[currentSearchPhrase release];
 		currentSearchPhrase = @"";
 	} else {
@@ -366,7 +367,7 @@
 
 - (void)onWantFindPanel:(id)sender
 {
-	if ([sender tag] == 1 || currentSearchPhrase == nil) {
+	if ([sender tag] == 1 || PointerIsEmpty(currentSearchPhrase)) {
 		[[self invokeInBackgroundThread] _onWantFindPanel:sender];
 	} else {
 		if ([sender tag] == 2) {
@@ -400,7 +401,7 @@
 {
 	IRCChannel *c = [world selectedChannel];
 	
-	if (c == nil) {
+	if (PointerIsEmpty(c)) {
 		return [NSArray array];
 	} else {
 		NSMutableArray *ary = [NSMutableArray array];
@@ -474,7 +475,7 @@
 
 - (void)onPreferences:(id)sender
 {
-	if (preferencesController == nil) {
+	if (PointerIsEmpty(preferencesController)) {
 		preferencesController = [PreferencesController alloc];
 		preferencesController.delegate = self;
 		preferencesController.world = world;
@@ -511,8 +512,8 @@
 
 - (void)onShowAcknowledgments:(id)sender
 {
-	[TXNSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] 
-													 stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] 
+													stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
 }
 
 - (void)onPaste:(id)sender
@@ -521,14 +522,14 @@
 	if ([pb hasStringContent] == NO) return;
 	
 	NSWindow *win = [NSApp keyWindow];
-	if (win == nil) return;
+	if (PointerIsEmpty(win)) return;
 	
 	id t = [win firstResponder];
-	if (t == nil) return;
+	if (PointerIsEmpty(t)) return;
 	
 	if (win == window) {
 		NSString *s = [pb stringContent];
-		if (NSStringIsEmpty(s)) return;
+		if (NSObjectIsEmpty(s)) return;
 		
 		if ([t isKindOfClass:[NSTextView class]] == NO) {
 			[world focusInputText];
@@ -555,11 +556,11 @@
 - (void)onSearchWeb:(id)sender
 {
 	LogView *web = [self currentWebView];
-	if (web == nil) return;
+	if (PointerIsEmpty(web)) return;
 	
 	NSString *s = [web selection];
 	
-	if (NSStringIsEmpty(s) == NO) {
+	if (NSObjectIsNotEmpty(s)) {
 		s = [s gtm_stringByEscapingForURLArgument];
 		
 		NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", s];
@@ -700,9 +701,14 @@
 	IRCClient *u = [world selectedClient];
 	if (!u || u.isConnected) return;
 	
-	BOOL result = promptWithSuppression(TXTLS(@"WANT_SERVER_DELETE_MESSAGE"), 
-										TXTLS(@"WANT_SERVER_DELETE_TITLE"), 
-										nil, nil, @"Preferences.prompts.delete_server", nil);
+	
+	
+	BOOL result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_SERVER_DELETE_MESSAGE")
+												   title:TXTLS(@"WANT_SERVER_DELETE_TITLE")
+										   defaultButton:TXTLS(@"OK_BUTTON") 
+										 alternateButton:TXTLS(@"CANCEL_BUTTON")
+										  suppressionKey:@"Preferences.prompts.delete_server"
+										 suppressionText:nil];
 	
 	if (result == NO) {
 		return;
@@ -877,9 +883,12 @@
 	if (!c) return;
 	
 	if ([c isChannel]) {
-		BOOL result = promptWithSuppression(TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE"), 
-											TXTLS(@"WANT_CHANNEL_DELETE_TITLE"), 
-											nil, nil, @"Preferences.prompts.delete_channel", nil);
+		BOOL result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE") 
+													   title:TXTLS(@"WANT_CHANNEL_DELETE_TITLE") 
+											   defaultButton:TXTLS(@"OK_BUTTON") 
+											 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+											  suppressionKey:@"Preferences.prompts.delete_channel"
+											 suppressionText:nil];
 		
 		if (result == NO) {
 			return;
@@ -924,11 +933,11 @@
 		IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
 		if (!c) return;
 		
-		if (NSStringIsEmpty(c.config.encryptionKey) && NSStringIsEmpty(sender.config.encryptionKey) == NO) {
+		if (NSObjectIsEmpty(c.config.encryptionKey) && NSObjectIsNotEmpty(sender.config.encryptionKey)) {
 			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
-		} else if (NSStringIsEmpty(c.config.encryptionKey) == NO && NSStringIsEmpty(sender.config.encryptionKey)) {
+		} else if (NSObjectIsNotEmpty(c.config.encryptionKey) && NSObjectIsEmpty(sender.config.encryptionKey)) {
 			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
-		} else if (NSStringIsEmpty(c.config.encryptionKey) == NO && NSStringIsEmpty(sender.config.encryptionKey) == NO) {
+		} else if (NSObjectIsNotEmpty(c.config.encryptionKey) && NSObjectIsNotEmpty(sender.config.encryptionKey)) {
 			if ([c.config.encryptionKey isEqualToString:sender.config.encryptionKey] == NO) {
 				[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
 			}
@@ -1395,8 +1404,8 @@
 {	
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	
-	if ([TXNSFileManager() fileExistsAtPath:path]) {
-		[TXNSWorkspace() openURL:[NSURL fileURLWithPath:path]];
+	if ([_NSFileManager() fileExistsAtPath:path]) {
+		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		NSRunAlertPanel(TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE"), TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE"), TXTLS(@"OK_BUTTON"), nil, nil);	
 	}
@@ -1411,8 +1420,8 @@
 	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", u.name, ((c.isTalk) ? @"Queries" : @"Channels"), c.name]];
 	
-	if ([TXNSFileManager() fileExistsAtPath:path]) {
-		[TXNSWorkspace() openURL:[NSURL fileURLWithPath:path]];
+	if ([_NSFileManager() fileExistsAtPath:path]) {
+		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		NSRunAlertPanel(TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE"), TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE"), TXTLS(@"OK_BUTTON"), nil, nil);	
 	}
@@ -1449,10 +1458,13 @@
 
 - (void)_onWantHostServVhostSet:(id)sender
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
-	NSString *vhost = promptForInput(TXTLS(@"SET_USER_VHOST_PROMPT_MESSAGE"), 
-									 TXTLS(@"SET_USER_VHOST_PROMPT_TITLE"), nil, nil, nil);
+	NSString *vhost = [PopupPrompts dialogWindowWithInput:TXTLS(@"WANT_SERVER_DELETE_MESSAGE")
+													title:TXTLS(@"WANT_SERVER_DELETE_TITLE") 
+											defaultButton:TXTLS(@"OK_BUTTON")  
+										  alternateButton:TXTLS(@"CANCEL_BUTTON") 
+											 defaultInput:nil];
 	
 	[[self invokeOnMainThread] __onWantHostServVhostSet:sender andVhost:vhost];
 	
@@ -1480,25 +1492,25 @@
 {
 	switch ([sender tag]) {
 		case 101:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
 			break;
 		case 103:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
 			break;
 		case 104:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
 			break;
 		case 105:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
 			break;
 		case 106:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
 			break;
 		case 108:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
 			break;
 		case 110:
-			[TXNSWorkspace() openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
 			break;
 		default:
 			break;
@@ -1551,7 +1563,7 @@
 
 - (void)onWantThemeForceReloaded:(id)sender
 {
-	[TXNSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onWantChannelModerated:(id)sender

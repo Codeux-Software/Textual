@@ -21,59 +21,58 @@
 
 @implementation ServerSheet
 
-@synthesize uid;
-@synthesize config;
-@synthesize initialTabTag;
-@synthesize initalView;
-@synthesize contentView;
-@synthesize generalView;
-@synthesize detailsView;
-@synthesize onloginView;
-@synthesize ignoresView;
-@synthesize tabView;
-@synthesize nameText;
-@synthesize autoReconnectCheck;
-@synthesize autoConnectCheck;
-@synthesize hostCombo;
-@synthesize sslCheck;
-@synthesize portText;
-@synthesize nickText;
-@synthesize passwordText;
-@synthesize usernameText;
-@synthesize realNameText;
-@synthesize nickPasswordText;
+@synthesize addChannelButton;
+@synthesize addIgnoreButton;
 @synthesize altNicksText;
-@synthesize sleepQuitMessageText;
-@synthesize leavingCommentText;
-@synthesize userInfoText;
+@synthesize autoConnectCheck;
+@synthesize autoReconnectCheck;
+@synthesize channelSheet;
+@synthesize channelTable;
+@synthesize client;
+@synthesize config;
+@synthesize contentView;
+@synthesize deleteChannelButton;
+@synthesize deleteIgnoreButton;
+@synthesize detailsView;
+@synthesize editChannelButton;
+@synthesize editIgnoreButton;
 @synthesize encodingCombo;
 @synthesize fallbackEncodingCombo;
+@synthesize generalView;
+@synthesize hostCombo;
+@synthesize ignoreSheet;
+@synthesize ignoreTable;
+@synthesize ignoresView;
+@synthesize initalView;
+@synthesize initialTabTag;
+@synthesize invisibleCheck;
+@synthesize leavingCommentText;
+@synthesize loginCommandsText;
+@synthesize nameText;
+@synthesize nickPasswordText;
+@synthesize nickText;
+@synthesize onloginView;
+@synthesize passwordText;
+@synthesize portText;
 @synthesize proxyCombo;
 @synthesize proxyHostText;
+@synthesize proxyPasswordText;
 @synthesize proxyPortText;
 @synthesize proxyUserText;
-@synthesize proxyPasswordText;
-@synthesize channelTable;
-@synthesize addChannelButton;
-@synthesize editChannelButton;
-@synthesize deleteChannelButton;
-@synthesize loginCommandsText;
-@synthesize invisibleCheck;
-@synthesize ignoreTable;
-@synthesize addIgnoreButton;
-@synthesize editIgnoreButton;
-@synthesize deleteIgnoreButton;
-@synthesize channelSheet;
-@synthesize ignoreSheet;
-@synthesize client;
+@synthesize realNameText;
+@synthesize sleepQuitMessageText;
+@synthesize sslCheck;
+@synthesize tabView;
+@synthesize uid;
+@synthesize userInfoText;
+@synthesize usernameText;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
-		NSString *serverListPath = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"];
-		serverList = [[NSDictionary alloc] initWithContentsOfFile:serverListPath];
+		serverList = [NSDictionary dictionaryWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
 	
 		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		
@@ -87,13 +86,14 @@
 - (void)dealloc
 {
 	[config release];
-	[channelSheet release];
+	[serverList release];
 	[ignoreSheet release];
 	[generalView release];
 	[detailsView release];
 	[onloginView release];
 	[ignoresView release];
-	[serverList release];
+	[channelSheet release];
+	
 	[super dealloc];
 }
 
@@ -116,7 +116,7 @@
 	for (NSString *key in serverList) {
 		NSString *host = [serverList objectForKey:key];
 		
-		if ([[hosto lowercaseString] isEqualToString:[host lowercaseString]]) {
+		if ([hosto isEqualNoCase:host]) {
 			return key;
 		}
 	}
@@ -151,15 +151,17 @@
 - (void)firstPane:(NSView *)view 
 {
 	NSRect windowFrame = [sheet frame];
-	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
+	
 	windowFrame.size.width = [view frame].size.width;
-	windowFrame.origin.y = NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
 	if ([[contentView subviews] count] != 0) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
 	[sheet setFrame:windowFrame display:YES animate:YES];
+	
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
 	
@@ -180,6 +182,7 @@
 	[ignoreTable registerForDraggedTypes:TABLE_ROW_TYPES];
 	
 	[self load];
+	
 	[self updateConnectionPage];
 	[self updateChannelsPage];
 	[self updateIgnoresPage];
@@ -203,29 +206,30 @@
 {
 	[self startSheet];
 	[self firstPane:initalView];
+	
 	[tabView setSelectedSegment:initialTabTag];
 }
 
 - (void)close
 {
 	delegate = nil;
+	
 	[self endSheet];
 }
 
 - (void)load
 {
 	nameText.stringValue = config.name;
+	bouncerModeCheck.state = config.bouncerMode;
 	autoConnectCheck.state = config.autoConnect;
 	autoReconnectCheck.state = config.autoReconnect;
-	bouncerModeCheck.state = config.bouncerMode;
 	
-	NSString *realHost = [self hostFoundInServerList:config.host];
-	hostCombo.stringValue = ((realHost == nil) ? config.host : realHost);
+	hostCombo.stringValue = (([self hostFoundInServerList:config.host]) ?: config.host);
 	
 	sslCheck.state = config.useSSL;
-	portText.intValue = config.port;
+	portText.integerValue = config.port;
 
-	if ([config.nick length] < 1) {
+	if (NSObjectIsEmpty(config.nick)) {
 		nickText.stringValue = [Preferences defaultNickname];
 	} else {
 		nickText.stringValue = config.nick;
@@ -233,13 +237,13 @@
 	
 	passwordText.stringValue = config.password;
 	
-	if ([config.username length] < 1) {
+	if (NSObjectIsEmpty(config.username)) {
 		usernameText.stringValue = [Preferences defaultUsername];
 	} else {
 		usernameText.stringValue = config.username;
 	}
 	
-	if ([config.realName length] < 1) {
+	if (NSObjectIsEmpty(config.realName)) {
 		realNameText.stringValue = [Preferences defaultRealname];
 	} else {
 		realNameText.stringValue = config.realName;
@@ -247,7 +251,7 @@
 	
 	nickPasswordText.stringValue = config.nickPassword;
 	
-	if (config.altNicks.count) {
+	if (config.altNicks.count > 0) {
 		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	} else {
 		altNicksText.stringValue = @"";
@@ -279,15 +283,15 @@
 	NSString *realHost = nil;
 	NSString *hostname = [hostCombo.stringValue cleanedServerHostmask];
 	
-	if (NSStringIsEmpty(hostname)) {
+	if (NSObjectIsEmpty(hostname)) {
 		config.host = @"unknown.host.com";
 	} else {
 		realHost = [self nameMatchesServerInList:hostname];
-		config.host = ((realHost == nil) ? hostname : [serverList objectForKey:realHost]);
+		config.host = ((PointerIsEmpty(realHost)) ? hostname : [serverList objectForKey:realHost]);
 	}
 	
 	if ([nameText.stringValue length] < 1) {
-		if (realHost == nil) {
+		if (PointerIsEmpty(realHost)) {
 			config.name = TXTLS(@"UNTITLED_CONNECTION_NAME");
 		} else {
 			config.name = realHost;
@@ -349,7 +353,7 @@
 	NSInteger port = [portText integerValue];
 	NSString *nick = [nickText stringValue];
 	
-	BOOL enabled = NSStringIsEmpty(name) == NO && NSStringIsEmpty(host) == NO && ![host isEqualToString:@"-"] && port > 0 && NSStringIsEmpty(nick) == NO;
+	BOOL enabled = NSObjectIsNotEmpty(name) && NSObjectIsNotEmpty(host) && ![host isEqualToString:@"-"] && port > 0 && NSObjectIsNotEmpty(nick);
 	[okButton setEnabled:enabled];
 }
 

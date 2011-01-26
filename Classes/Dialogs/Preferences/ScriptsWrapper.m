@@ -18,7 +18,7 @@
 
 - (void)populateData;
 {			
-	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".scpt"]) {

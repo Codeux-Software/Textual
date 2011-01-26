@@ -59,15 +59,17 @@
 - (void)firstPane:(NSView *)view 
 {
 	NSRect windowFrame = [sheet frame];
-	windowFrame.size.height = [view frame].size.height + WINDOW_TOOLBAR_HEIGHT;
+	
 	windowFrame.size.width = [view frame].size.width;
-	windowFrame.origin.y = NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
 	if ([[contentView subviews] count] != 0) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
 	[sheet setFrame:windowFrame display:YES animate:YES];
+	
 	[contentView setFrame:[view frame]];
 	[contentView addSubview:view];	
 	

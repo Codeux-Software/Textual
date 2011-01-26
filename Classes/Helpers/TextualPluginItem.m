@@ -14,7 +14,7 @@
 	  withUserInputDictRefs:(NSMutableDictionary **)userDict
 	withServerInputDictRefs:(NSMutableDictionary **)serverDict
 {
-	pluginPrimaryClass = [[primaryClass alloc] init];
+	pluginPrimaryClass = [primaryClass new];
 	
 	if (pluginPrimaryClass) {
 		if (pluginPrimaryClass) {
@@ -23,13 +23,13 @@
 				if ([pluginPrimaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
 					NSArray *spdcmds = [pluginPrimaryClass pluginSupportsUserInputCommands];
 					
-					if ([spdcmds count] >= 1) {
+					if (NSObjectIsNotEmpty(spdcmds)) {
 						for (NSString *cmd in spdcmds) {
 							cmd = [cmd uppercaseString];
 							
 							NSArray *cmdDict = [newUserDict objectForKey:cmd];
 							
-							if (cmdDict == nil) {
+							if (NSObjectIsEmpty(cmdDict)) {
 								[newUserDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 							}
 							
@@ -46,13 +46,13 @@
 				if ([pluginPrimaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]) {
 					NSArray *spdcmds = [pluginPrimaryClass pluginSupportsServerInputCommands];
 					
-					if ([spdcmds count] >= 1) {
+					if (NSObjectIsNotEmpty(spdcmds)) {
 						for (NSString *cmd in spdcmds) {
 							cmd = [cmd uppercaseString];
 							
 							NSArray *cmdDict = [newServerDict objectForKey:cmd];
 							
-							if (cmdDict == nil) {
+							if (NSObjectIsEmpty(cmdDict)) {
 								[newServerDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
 							}
 							

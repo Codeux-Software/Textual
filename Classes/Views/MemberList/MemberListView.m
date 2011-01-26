@@ -181,7 +181,7 @@
 {
 	NSArray *files = [self draggedFiles:sender];
 	
-	if ([files count] > 0 && [self draggedRow:sender] >= 0) {
+	if (NSObjectIsNotEmpty(files) && [self draggedRow:sender] >= 0) {
 		[self drawDraggingPoisition:sender on:YES];
 		
 		return NSDragOperationCopy;
@@ -206,14 +206,14 @@
 {
 	NSArray *files = [self draggedFiles:sender];
 	
-	return ([files count] > 0 && [self draggedRow:sender] >= 0);
+	return (NSObjectIsNotEmpty(files) && [self draggedRow:sender] >= 0);
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
 	NSArray *files = [self draggedFiles:sender];
 	
-	if ([files count] > 0) {
+	if (NSObjectIsNotEmpty(files)) {
 		NSInteger row = [self draggedRow:sender];
 		
 		if (row >= 0) {

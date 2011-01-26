@@ -46,7 +46,7 @@
 	[tCheck setState:[mode modeInfoFor:@"t"].plus];
 	[iCheck setState:[mode modeInfoFor:@"i"].plus];
 	[mCheck setState:[mode modeInfoFor:@"m"].plus];
-	[kCheck setState:BOOLReverseValue(NSStringIsEmpty([mode modeInfoFor:@"k"].param))];
+	[kCheck setState:BOOLReverseValue(NSObjectIsEmpty([mode modeInfoFor:@"k"].param))];
 	[lCheck setState:[[mode modeInfoFor:@"s"].param integerValue] > 0];
 	
 	if ([mode modeInfoFor:@"k"].plus) {

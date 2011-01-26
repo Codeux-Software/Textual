@@ -26,7 +26,7 @@
 {
 	pos = buf.count;
 	
-	if (NSStringIsEmpty(s)) return;
+	if (NSObjectIsEmpty(s)) return;
 	if ([[buf lastObject] isEqualToString:s]) return;
 	
 	[buf addObject:s];
@@ -40,14 +40,14 @@
 
 - (NSString *)up:(NSString *)s
 {
-	if (NSStringIsEmpty(s) == NO) {
+	if (NSObjectIsNotEmpty(s)) {
 		NSString *cur = nil;
 		
 		if (0 <= pos && pos < buf.count) {
 			cur = [buf safeObjectAtIndex:pos];
 		}
 		
-		if (cur == nil || [cur isEqualToString:s] == NO) {
+		if (NSObjectIsEmpty(cur) || [cur isEqualToString:s] == NO) {
 			[buf addObject:s];
 			
 			if (buf.count > INPUT_HISTORY_MAX) {
@@ -73,7 +73,7 @@
 
 - (NSString *)down:(NSString *)s
 {
-	if (NSStringIsEmpty(s)) {
+	if (NSObjectIsEmpty(s)) {
 		pos = buf.count;
 		
 		return nil;
@@ -85,7 +85,7 @@
 		cur = [buf safeObjectAtIndex:pos];
 	}
 
-	if (cur == nil || [cur isEqualToString:s] == NO) {
+	if (NSObjectIsEmpty(cur) || [cur isEqualToString:s] == NO) {
 		[self add:s];
 		
 		return @"";

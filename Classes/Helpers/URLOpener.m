@@ -6,15 +6,15 @@
 + (void)open:(NSURL *)url
 {
 	if ([Preferences openBrowserInBackground]) {
-		[TXNSWorkspace() openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:nil options:NSWorkspaceLaunchWithoutActivation additionalEventParamDescriptor:nil launchIdentifiers:nil];
+		[_NSWorkspace() openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:nil options:NSWorkspaceLaunchWithoutActivation additionalEventParamDescriptor:nil launchIdentifiers:nil];
 	} else {
-		[TXNSWorkspace() openURL:url];
+		[_NSWorkspace() openURL:url];
 	}
 }
 
 + (void)openAndActivate:(NSURL *)url
 {
-	[TXNSWorkspace() openURL:url];
+	[_NSWorkspace() openURL:url];
 }
 
 @end

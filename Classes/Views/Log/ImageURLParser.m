@@ -21,7 +21,7 @@
 	NSString *path = u.path;
 	
 	if ([host hasSuffix:@"twitpic.com"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			NSString *s = [path safeSubstringFromIndex:1];
 			
 			if ([s hasSuffix:@"/full"]) {
@@ -33,19 +33,19 @@
 			}
 		}
 	} else if ([host hasSuffix:@"tweetphoto.com"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			return [NSString stringWithFormat:@"http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url encodeURIComponent]];
 		}
 	} else if ([host hasSuffix:@"yfrog.com"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			return [NSString stringWithFormat:@"%@:iphone", url];
 		}
 	} else if ([host hasSuffix:@"cl.ly"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			return [NSString stringWithFormat:@"%@/content", url];
 		}
 	} else if ([host hasSuffix:@"twitgoo.com"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			NSString *s = [path safeSubstringFromIndex:1];
 			
 			if ([s isAlphaNumOnly]) {
@@ -53,7 +53,7 @@
 			}
 		}
 	} else if ([host isEqualToString:@"img.ly"]) {
-		if (NSStringIsEmpty(path) == NO) {
+		if (NSObjectIsNotEmpty(path)) {
 			NSString *s = [path safeSubstringFromIndex:1];
 			
 			if ([s isAlphaNumOnly]) {
@@ -88,7 +88,7 @@
 		if ([host isEqualToString:@"youtu.be"]) {
 			NSString *path = u.path;
 			
-			if (NSStringIsEmpty(path) == NO) {
+			if (NSObjectIsNotEmpty(path)) {
 				vid = [path safeSubstringFromIndex:1];
 			}
 		} else {
@@ -97,7 +97,7 @@
 			if (query.length) {
 				NSArray *queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
 				
-				if (queries.count) {
+				if (NSObjectIsNotEmpty(queries)) {
 					NSCharacterSet *equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
 					
 					for (NSString *e in queries) {
@@ -127,7 +127,7 @@
 		if ([host isEqualToString:@"nico.ms"]) {
 			NSString *path = u.path;
 			
-			if (NSStringIsEmpty(path) == NO) {
+			if (NSObjectIsNotEmpty(path)) {
 				path = [path safeSubstringFromIndex:1];
 				
 				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {

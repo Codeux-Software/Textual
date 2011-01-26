@@ -20,11 +20,9 @@
 
 - (void)dealloc
 {
-	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
-	
-	[dnc removeObserver:self name:GROWL_IS_READY object:nil];
-	[dnc removeObserver:self name:clickedNotificationName object:nil];
-	[dnc removeObserver:self name:timedOutNotificationName object:nil];
+	[_NSDistributedNotificationCenter() removeObserver:self name:GROWL_IS_READY object:nil];
+	[_NSDistributedNotificationCenter() removeObserver:self name:clickedNotificationName object:nil];
+	[_NSDistributedNotificationCenter() removeObserver:self name:timedOutNotificationName object:nil];
 	
 	[appName release];
 	[appIcon release];
@@ -96,11 +94,11 @@
 
 - (void)registerApplication
 {
-	if (NSStringIsEmpty(appName)) {
+	if (NSObjectIsEmpty(appName)) {
 		self.appName = [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"];
 	}
 	
-	if (defaultNotifications == nil) {
+	if (PointerIsEmpty(defaultNotifications)) {
 		self.defaultNotifications = allNotifications;
 	}
 	
@@ -112,11 +110,9 @@
 	clickedNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_CLICKED] retain];
 	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_TIMED_OUT] retain];
 	
-	NSDistributedNotificationCenter *dnc = [NSDistributedNotificationCenter defaultCenter];
-	
-	[dnc addObserver:self selector:@selector(onReady:) name:GROWL_IS_READY object:nil];
-	[dnc addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
-	[dnc addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
+	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onReady:) name:GROWL_IS_READY object:nil];
+	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
+	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
 	
 	NSImage *icon = ((appIcon) ?: [NSApp applicationIconImage]);
 	
@@ -127,7 +123,7 @@
 	[dic setObject:defaultNotifications forKey:@"DefaultNotifications"];
 	[dic setObject:[icon TIFFRepresentation] forKey:@"ApplicationIcon"];
 	
-	[dnc postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:NO];
+	[_NSDistributedNotificationCenter() postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:NO];
 }
 
 - (void)onReady:(NSNotification *)note

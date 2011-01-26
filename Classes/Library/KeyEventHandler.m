@@ -30,7 +30,7 @@
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [codeHandlerMap objectForKey:modsKey];
 	
-	if (map == nil) {
+	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
 		[codeHandlerMap setObject:map forKey:modsKey];
@@ -44,7 +44,7 @@
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [characterHandlerMap objectForKey:modsKey];
 	
-	if (map == nil) {
+	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
 		[characterHandlerMap setObject:map forKey:modsKey];
@@ -58,7 +58,7 @@
 	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
 	NSMutableDictionary *map = [characterHandlerMap objectForKey:modsKey];
 	
-	if (map == nil) {
+	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
 		[characterHandlerMap setObject:map forKey:modsKey];
@@ -100,7 +100,7 @@
 	if (characterMap) {
 		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
 		
-		if (NSStringIsEmpty(str) == NO) {
+		if (NSObjectIsNotEmpty(str)) {
 			NSString *selectorName = [characterMap objectForKey:[NSNumber numberWithInteger:[str characterAtIndex:0]]];
 			
 			if (selectorName) {

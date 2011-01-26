@@ -39,10 +39,10 @@
 		
 		NSData *data = [s dataUsingEncoding:client.encoding];
 		
-		if (data == nil) {
+		if (NSObjectIsEmpty(data)) {
 			data = [s dataUsingEncoding:client.config.fallbackEncoding];
 			
-			if (data == nil) {
+			if (NSObjectIsEmpty(data)) {
 				data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 			}
 		}
@@ -55,7 +55,7 @@
 
 - (void)reopenIfNeeded
 {
-	if (NSStringIsEmpty(fileName) || [fileName isEqualToString:[self buildFileName]] == NO) {
+	if (NSObjectIsEmpty(fileName) || [fileName isEqualToString:[self buildFileName]] == NO) {
 		[self open];
 	}
 }
@@ -71,12 +71,12 @@
 	
 	BOOL isDir = NO;
 	
-	if ([TXNSFileManager() fileExistsAtPath:dir isDirectory:&isDir] == NO) {
-		[TXNSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([_NSFileManager() fileExistsAtPath:dir isDirectory:&isDir] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	if ([TXNSFileManager() fileExistsAtPath:fileName] == NO) {
-		[TXNSFileManager() createFileAtPath:fileName contents:[NSData data] attributes:nil];
+	if ([_NSFileManager() fileExistsAtPath:fileName] == NO) {
+		[_NSFileManager() createFileAtPath:fileName contents:[NSData data] attributes:nil];
 	}
 	
 	[file release];
@@ -93,7 +93,7 @@
 	
 	static NSDateFormatter *format = nil;
 	
-	if (format == nil) {
+	if (PointerIsEmpty(format)) {
 		format = [NSDateFormatter new];
 		[format setDateFormat:@"yyyy-MM-dd"];
 	}
@@ -101,7 +101,7 @@
 	NSString *date = [format stringFromDate:[NSDate date]];
 	NSString *name = [[client name] safeFileName];
 	
-	if (!channel) {
+	if (PointerIsEmpty(channel)) {
 		return [base stringByAppendingFormat:@"/%@/Console/%@.txt", name, date];
 	} else if ([channel isTalk]) {
 		return [base stringByAppendingFormat:@"/%@/Queries/%@/%@.txt", name, [[channel name] safeFileName], date];

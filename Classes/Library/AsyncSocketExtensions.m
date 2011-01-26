@@ -45,8 +45,8 @@
 	[settings setObject:host forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
 	[settings setObject:[NSNumber numberWithInteger:port] forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
 	
-	if (NSStringIsEmpty(user) == NO) [settings setObject:user forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
-	if (NSStringIsEmpty(password) == NO) [settings setObject:password forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
+	if (NSObjectIsNotEmpty(user)) [settings setObject:user forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
+	if (NSObjectIsNotEmpty(password)) [settings setObject:password forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
 	
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);

@@ -8,11 +8,11 @@
 						   command:(NSString *)command
 							client:(IRCClient *)client
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
 	
-	if ([cmdPlugins count] >= 1) {
+	if (NSObjectIsNotEmpty(cmdPlugins)) {
 		for (TextualPluginItem *plugin in cmdPlugins) {
 			PluginProtocol *bundle = [plugin pluginPrimaryClass];
 			
@@ -27,11 +27,11 @@
 							  client:(IRCClient *)client
 							 message:(IRCMessage *)msg
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	NSArray *cmdPlugins = [[world bundlesForServerInput] objectForKey:[msg command]];
 	
-	if ([cmdPlugins count] >= 1) {
+	if (NSObjectIsNotEmpty(cmdPlugins)) {
 		NSDictionary *senderData = [NSDictionary dictionaryWithObjectsAndKeys:
 									msg.sender.raw, @"senderHostmask",
 									msg.sender.nick, @"senderNickname",
@@ -65,12 +65,12 @@
 
 + (void)deallocBundlesFromMemory:(IRCWorld *)world
 {		
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	PreferencesController *prefController = world.menuController.preferencesController;
 	
 	if (prefController) {
-		if ([world.bundlesWithPreferences count] > 0) {
+		if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
 			if ([prefController isWindowLoaded]) {
 				[prefController.window close];
 			}
@@ -94,11 +94,11 @@
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	NSString *path = [Preferences wherePluginsPath];
 	
-	if ([world.allLoadedBundles count] > 0) {
+	if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
 		[self deallocBundlesFromMemory:world];
 	}
 	
@@ -107,14 +107,14 @@
  	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	
-	NSArray *resourceFiles = [TXNSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
-			TextualPluginItem *plugin = [[TextualPluginItem alloc] init];
+			TextualPluginItem *plugin = [TextualPluginItem new];
 			
 			[plugin initWithPluginClass:[currBundle principalClass] 
 							  andBundle:currBundle 
@@ -130,7 +130,7 @@
 				NSView *itemView = [plugin.pluginPrimaryClass preferencesView];
 				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
 				
-				if (NSStringIsEmpty(itemName) == NO && itemView) {
+				if (NSObjectIsNotEmpty(itemName) && itemView) {
 					[preferencesBundlesIndex addObject:plugin];
 				}
 			}

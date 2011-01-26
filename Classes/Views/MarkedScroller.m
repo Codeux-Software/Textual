@@ -9,7 +9,7 @@
 {
 	[super drawRect:dirtyRect];
 	
-	if (dataSource == nil) return;
+	if (PointerIsEmpty(dataSource)) return;
 	if ([dataSource respondsToSelector:@selector(markedScrollerColor:)] == NO) return;
 	if ([dataSource respondsToSelector:@selector(markedScrollerPositions:)] == NO) return;
 	
@@ -17,7 +17,7 @@
 	NSInteger contentHeight = [[scrollView contentView] documentRect].size.height;
 	NSArray *ary = [dataSource markedScrollerPositions:self];
 	
-	if (ary == nil || ary.count < 1) return;
+	if (NSObjectIsEmpty(ary)) return;
 	
 	NSAffineTransform *transform = [NSAffineTransform transform];
 	

@@ -185,24 +185,24 @@
 - (NSString *)topicValue
 {
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return @"";
+	if (PointerIsEmpty(doc)) return @"";
 	
 	return [(DOMHTMLElement *)[self topic:doc] innerHTML];
 }
 
 - (BOOL)setTopicWithoutDelay:(NSString *)topic
 {
-	if (NSStringIsEmpty(topic) == NO) {
+	if (NSObjectIsNotEmpty(topic)) {
 		if ([[self topicValue] isEqualToString:topic]) return YES;
 		
 		NSString *body = [LogRenderer renderBody:topic controller:nil nolinks:NO keywords:nil 
 									excludeWords:nil exactWordMatch:NO  highlighted:NULL URLRanges:NULL];
 		
 		DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-		if (doc == nil) return NO;
+		if (PointerIsEmpty(doc)) return NO;
 		
 		DOMHTMLElement *topic_body = (DOMHTMLElement *)[self topic:doc];
-		if (topic_body == nil) return NO;
+		if (PointerIsEmpty(topic_body)) return NO;
 		
 		[topic_body setInnerHTML:body];
 	}
@@ -222,7 +222,7 @@
 	if (loaded == NO) return;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *body = [doc body];
 	
@@ -236,7 +236,7 @@
 	if (loaded == NO) return;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *body = [doc body];
 	
@@ -249,7 +249,7 @@
 	if (movingToBottom) return YES;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return YES;
+	if (PointerIsEmpty(doc)) return YES;
 	
 	DOMHTMLElement *body = [doc body];
 	
@@ -282,7 +282,7 @@
 	[self unmark];
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement *e = (DOMHTMLElement *)[doc createElement:@"div"];
@@ -317,7 +317,7 @@
 	if (loaded == NO) return;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:@"mark"];
 	
@@ -342,12 +342,12 @@
 	if (loaded == NO) return;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	[[view js_api] callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
 	
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
-	if (body == nil) return;
+	if (PointerIsEmpty(body)) return;
 	
 	self.html = [body innerHTML];
 	
@@ -394,7 +394,7 @@
 	if (loaded == NO || n <= 0 || count <= 0) return;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
 	DOMNodeList *nodeList = [body childNodes];
@@ -405,7 +405,7 @@
 		[body removeChild:[nodeList item:i]];
 	}
 	
-	if (highlightedLineNumbers.count > 0) {
+	if (NSObjectIsNotEmpty(highlightedLineNumbers)) {
 		DOMNodeList *nodeList = [body childNodes];
 		
 		if (nodeList.length) {
@@ -418,7 +418,7 @@
 					NSString *lineNumStr = [lineId safeSubstringFromIndex:4];
 					NSInteger lineNum = [lineNumStr integerValue];
 					
-					while (highlightedLineNumbers.count) {
+					while (NSObjectIsNotEmpty(highlightedLineNumbers)) {
 						NSInteger i = [[highlightedLineNumbers safeObjectAtIndex:0] integerValue];
 						
 						if (lineNum <= i) break;
@@ -455,7 +455,7 @@
 
 - (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML
 {
-	if (NSStringIsEmpty(line.body)) return NO;
+	if (NSObjectIsEmpty(line.body)) return NO;
 	
 	LogLineType type = line.lineType;
 	
@@ -493,7 +493,7 @@
 		[s appendFormat:@"<p>"];
 	}
 	
-	if (NSStringIsEmpty(line.time) && rawHTML == NO) {
+	if (NSObjectIsEmpty(line.time) && rawHTML == NO) {
 		return NO;
 	}
 	
@@ -510,7 +510,7 @@
 		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
 	}
 	
-	if (isText && urlRanges.count && [Preferences showInlineImages]) {
+	if (isText && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
 		NSString *imagePageUrl = nil;
 		NSString *imageUrl = nil;
 		
@@ -576,7 +576,7 @@
 	++count;
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[[view mainFrame] DOMDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement *div = (DOMHTMLElement *)[doc createElement:@"div"];
@@ -650,7 +650,7 @@
 	[s appendFormat:@"<body %@>", bodyAttrs];
 	[s appendString:@"<div id=\"body_home\"></div>"];
 	
-	if (NSStringIsEmpty(topic) == NO) {
+	if (NSObjectIsNotEmpty(topic)) {
 		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
 	} else {
 		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"NO_TOPIC_DEFAULT_TOPIC")];
@@ -737,7 +737,7 @@
 - (void)setUpScroller
 {
 	WebFrameView *frame = [[view mainFrame] frameView];
-	if (frame == nil) return;
+	if (PointerIsEmpty(frame)) return;
 	
 	NSScrollView *scrollView = nil;
 	
@@ -749,7 +749,7 @@
 		}
 	}
 	
-	if (scrollView == nil) return;
+	if (PointerIsEmpty(scrollView)) return;
 	
 	[scrollView setHasHorizontalScroller:NO];
 	
@@ -793,7 +793,7 @@
 	
 	[self setUpScroller];
 	
-	if (autoScroller == nil) {
+	if (PointerIsEmpty(autoScroller)) {
 		autoScroller = [WebViewAutoScroll new];
 	}
 	
@@ -828,7 +828,7 @@
 	[lines removeAllObjects];
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[frame DOMDocument];
-	if (doc == nil) return;
+	if (PointerIsEmpty(doc)) return;
 	
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
 	DOMHTMLElement *e = (DOMHTMLElement *)[body firstChild];

@@ -46,19 +46,15 @@
 	_cpu_model = [_cpu_model stringByReplacingOccurrencesOfRegex:@"\\s+" withString:@" "];
 	_cpu_model = [_cpu_model trim];
 	
-	if (NSStringIsEmpty(_model) == NO) {
+	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
 		
-		NSString *_exact_model = [_all_models objectForKey:_model];
-		
-		if (NSStringIsEmpty(_exact_model)) {
-			_exact_model = _model;
-		}
+		NSString *_exact_model = (([_all_models objectForKey:_model]) ?: _model);	
 		
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Model:\002 %@ \002•\002", _exact_model];
 	}
 	
-	if (_cpu_count_int >= 1 && NSStringIsEmpty(_cpu_speed) == NO) {
+	if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
 		if (_cpu_count_int == 1) {
 			sysinfo = [sysinfo stringByAppendingFormat:@" \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002", _cpu_model, _cpu_count, _cpu_speed];
 		} else {
@@ -81,19 +77,19 @@
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
-	if (NSStringIsEmpty(_gpu_model) == NO) {
+	if (NSObjectIsNotEmpty(_gpu_model)) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics:\002 %@ \002•\002", _gpu_model];
 	}
 	
 	NSArray *allScreens = [NSScreen screens];
 	
-	if ([allScreens count] >= 1) {		
+	if (NSObjectIsNotEmpty(allScreens)) {		
 		NSScreen *maiScreen = [allScreens objectAtIndex:0];
 		
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Screen Resolution:\002 %.0f x %.0f \002•\002", maiScreen.frame.size.width, maiScreen.frame.size.height];
 	}
 	
-	if (NSStringIsEmpty(_loadavg) == NO) {
+	if (NSObjectIsNotEmpty(_loadavg)) {
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@%% \002•\002", _loadavg];
 	}
 	
@@ -160,7 +156,7 @@
 
 + (NSString *)getTextualRunCount
 {
-	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times.", [TXNSUserDefaults() integerForKey:@"TXRunCount"]];
+	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times.", [_NSUserDefaults() integerForKey:@"TXRunCount"]];
 }
 
 + (NSString *)getNetworkStats
@@ -212,7 +208,7 @@
 	    freeifaddrs(ifa_list);
 	}
 	
-	if (NSStringIsEmpty(netstat)) {
+	if (NSObjectIsEmpty(netstat)) {
 		return @"Error: Unable to locate any network statistics. ";
 	} else {
 		return [@"\002Network Traffic:\002" stringByAppendingString:netstat];
@@ -228,7 +224,7 @@
 	
 	NSMutableString *result = [NSMutableString string];
 	
-	NSArray *drives = [TXNSFileManager() contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
+	NSArray *drives = [_NSFileManager() contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
 	
 	for (NSString *name in drives) {
 		NSInteger objectIndex = [drives indexOfObject:name];
@@ -253,10 +249,10 @@
 		
 		if (isVolume) {
 			if (statfs(fsRep, &stat) == 0) {
-				NSString *fileSystemName = [TXNSFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
+				NSString *fileSystemName = [_NSFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
 				
 				if ([fileSystemName isEqualToString:@"hfs"]) {
-					NSDictionary *diskInfo = [TXNSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
+					NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 					
 					if (diskInfo) {
 						TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
@@ -273,7 +269,7 @@
 		}
 	}
 	
-	if (NSStringIsEmpty(result)) {
+	if (NSObjectIsEmpty(result)) {
 		return @"Error: Unable to find any mounted drives.";
 	} else {
 		return [@"\002Mounted Drives:\002 " stringByAppendingString:result];
@@ -336,7 +332,7 @@
 	CGLPixelFormatObj pixelFormat = NULL;
 	CGLContextObj curr_ctx = CGLGetCurrentContext();
 	
-	TXDevNullDestroyObject(curr_ctx);
+	DevNullDestroyObject(curr_ctx);
 	
 	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
 	
@@ -357,7 +353,7 @@
 
 + (NSString *)diskInfo
 {	
-	NSDictionary *diskInfo = [TXNSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
+	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
