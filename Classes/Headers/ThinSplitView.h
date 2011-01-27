@@ -5,12 +5,12 @@
 {
 	NSColor *dividerColor;
 	
+	NSInteger position;
 	NSInteger fixedViewIndex;
 	NSInteger myDividerThickness;
-	NSInteger position;
 	
-	BOOL inverted;
 	BOOL hidden;
+	BOOL inverted;
 }
 
 @property (nonatomic, assign) NSColor *dividerColor;

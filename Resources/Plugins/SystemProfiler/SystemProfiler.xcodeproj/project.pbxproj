@@ -14,6 +14,7 @@
 		4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */; };
 		4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBE211CB4D47002A6868 /* Cocoa.framework */; };
 		4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC17BA011F1870400A3E4F7 /* OpenGL.framework */; };
+		4CD0E77E12F1B80600C8F016 /* Headers in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0E77D12F1B80600C8F016 /* Headers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,113 +29,7 @@
 		4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4CBDDBE211CB4D47002A6868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CC17BA011F1870400A3E4F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		4CD0142A12F0CCB6001953E6 /* NSNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSNumberHelper.h; path = ../../../Classes/Helpers/NSNumberHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0142B12F0CCB6001953E6 /* IRCChannelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfig.h; path = ../../../Classes/IRC/IRCChannelConfig.h; sourceTree = SOURCE_ROOT; };
-		4CD0142C12F0CCB6001953E6 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSRectHelper.h; path = ../../../Classes/Helpers/NSRectHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0142D12F0CCB6001953E6 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeSheet.h; path = ../../../Classes/Dialogs/ModeSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0142E12F0CCB6001953E6 /* SoundWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundWrapper.h; path = ../../../Classes/Dialogs/Preferences/SoundWrapper.h; sourceTree = SOURCE_ROOT; };
-		4CD0142F12F0CCB6001953E6 /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBook.h; path = ../../../Classes/IRC/AddressBook.h; sourceTree = SOURCE_ROOT; };
-		4CD0143012F0CCB6001953E6 /* NickSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickSheet.h; path = ../../../Classes/Dialogs/NickSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0143112F0CCB6001953E6 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = ../../../Classes/Library/TCPServer.h; sourceTree = SOURCE_ROOT; };
-		4CD0143212F0CCB6001953E6 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../../../Classes/Library/TextualApplication.h; sourceTree = SOURCE_ROOT; };
-		4CD0143312F0CCB6001953E6 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = ../../../Classes/Preferences/Preferences.h; sourceTree = SOURCE_ROOT; };
-		4CD0143412F0CCB6001953E6 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesController.h; path = ../../../Classes/Dialogs/Preferences/PreferencesController.h; sourceTree = SOURCE_ROOT; };
-		4CD0143512F0CCB6001953E6 /* URLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLOpener.h; path = ../../../Classes/Helpers/URLOpener.h; sourceTree = SOURCE_ROOT; };
-		4CD0143612F0CCB6001953E6 /* TextualPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualPluginItem.h; path = ../../../Classes/Helpers/TextualPluginItem.h; sourceTree = SOURCE_ROOT; };
-		4CD0143712F0CCB6001953E6 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtherTheme.h; path = ../../../Classes/Preferences/OtherTheme.h; sourceTree = SOURCE_ROOT; };
-		4CD0143812F0CCB6001953E6 /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorld.h; path = ../../../Classes/IRC/IRCWorld.h; sourceTree = SOURCE_ROOT; };
-		4CD0143912F0CCB6001953E6 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnicodeHelper.h; path = ../../../Classes/Helpers/UnicodeHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0143A12F0CCB6001953E6 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = ../../../Classes/Views/DockIcon.h; sourceTree = SOURCE_ROOT; };
-		4CD0143B12F0CCB6001953E6 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLogger.h; path = ../../../Classes/Library/FileLogger.h; sourceTree = SOURCE_ROOT; };
-		4CD0143C12F0CCB6001953E6 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = ../../../Classes/Views/TextField.h; sourceTree = SOURCE_ROOT; };
-		4CD0143D12F0CCB6001953E6 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerTreeView.h; path = ../../../Classes/Views/ServerTreeView.h; sourceTree = SOURCE_ROOT; };
-		4CD0143E12F0CCB6001953E6 /* NickCompletionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickCompletionStatus.h; path = ../../../Classes/Controllers/NickCompletionStatus.h; sourceTree = SOURCE_ROOT; };
-		4CD0143F12F0CCB6001953E6 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = ../../../Classes/Helpers/NSWindowHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0144012F0CCB6001953E6 /* AsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocketExtensions.h; path = ../../../Classes/Library/AsyncSocketExtensions.h; sourceTree = SOURCE_ROOT; };
-		4CD0144112F0CCB6001953E6 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalModels.h; path = ../../../Classes/Library/GlobalModels.h; sourceTree = SOURCE_ROOT; };
-		4CD0144212F0CCB6001953E6 /* TopicSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopicSheet.h; path = ../../../Classes/Dialogs/TopicSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0144312F0CCB6001953E6 /* IRCChannelMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelMode.h; path = ../../../Classes/IRC/IRCChannelMode.h; sourceTree = SOURCE_ROOT; };
-		4CD0144412F0CCB6001953E6 /* FileWithContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileWithContent.h; path = ../../../Classes/Preferences/FileWithContent.h; sourceTree = SOURCE_ROOT; };
-		4CD0144512F0CCB6001953E6 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView.h; path = ../../../Classes/Views/TreeView.h; sourceTree = SOURCE_ROOT; };
-		4CD0144612F0CCB6001953E6 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = ../../../Classes/Library/Timer.h; sourceTree = SOURCE_ROOT; };
-		4CD0144712F0CCB6001953E6 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = ../../../Classes/Helpers/GTMGarbageCollection.h; sourceTree = SOURCE_ROOT; };
-		4CD0144812F0CCB6001953E6 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListView.h; path = ../../../Classes/Views/ListView.h; sourceTree = SOURCE_ROOT; };
-		4CD0144912F0CCB6001953E6 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDictionaryHelper.h; path = ../../../Classes/Helpers/NSDictionaryHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0144A12F0CCB6001953E6 /* MarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkedScroller.h; path = ../../../Classes/Views/MarkedScroller.h; sourceTree = SOURCE_ROOT; };
-		4CD0144B12F0CCB6001953E6 /* InputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputHistory.h; path = ../../../Classes/Library/InputHistory.h; sourceTree = SOURCE_ROOT; };
-		4CD0144C12F0CCB6001953E6 /* AboutPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutPanel.h; path = ../../../Classes/Dialogs/AboutPanel.h; sourceTree = SOURCE_ROOT; };
-		4CD0144D12F0CCB6001953E6 /* ServerSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSheet.h; path = ../../../Classes/Dialogs/ServerSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0144E12F0CCB6001953E6 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = ../../../Classes/Helpers/DDInvocationGrabber.h; sourceTree = SOURCE_ROOT; };
-		4CD0144F12F0CCB6001953E6 /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRC.h; path = ../../../Classes/IRC/IRC.h; sourceTree = SOURCE_ROOT; };
-		4CD0145012F0CCB6001953E6 /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnection.h; path = ../../../Classes/IRC/IRCConnection.h; sourceTree = SOURCE_ROOT; };
-		4CD0145112F0CCB6001953E6 /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageURLParser.h; path = ../../../Classes/Views/Log/ImageURLParser.h; sourceTree = SOURCE_ROOT; };
-		4CD0145212F0CCB6001953E6 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogPolicy.h; path = ../../../Classes/Views/Log/LogPolicy.h; sourceTree = SOURCE_ROOT; };
-		4CD0145312F0CCB6001953E6 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = ../../../Classes/Views/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
-		4CD0145412F0CCB6001953E6 /* IRCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClient.h; path = ../../../Classes/IRC/IRCClient.h; sourceTree = SOURCE_ROOT; };
-		4CD0145512F0CCB7001953E6 /* WelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeSheet.h; path = ../../../Classes/Dialogs/WelcomeSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0145612F0CCB7001953E6 /* IRCPrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCPrefix.h; path = ../../../Classes/IRC/IRCPrefix.h; sourceTree = SOURCE_ROOT; };
-		4CD0145712F0CCB7001953E6 /* SheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SheetBase.h; path = ../../../Classes/Dialogs/SheetBase.h; sourceTree = SOURCE_ROOT; };
-		4CD0145812F0CCB7001953E6 /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItem.h; path = ../../../Classes/IRC/IRCTreeItem.h; sourceTree = SOURCE_ROOT; };
-		4CD0145912F0CCB7001953E6 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEventHandler.h; path = ../../../Classes/Library/KeyEventHandler.h; sourceTree = SOURCE_ROOT; };
-		4CD0145A12F0CCB7001953E6 /* InviteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteSheet.h; path = ../../../Classes/Dialogs/InviteSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0145B12F0CCB7001953E6 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = ../../../Classes/Library/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
-		4CD0145C12F0CCB7001953E6 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputTextField.h; path = ../../../Classes/Views/InputTextField.h; sourceTree = SOURCE_ROOT; };
-		4CD0145D12F0CCB7001953E6 /* ChatBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatBox.h; path = ../../../Classes/Views/ChatBox.h; sourceTree = SOURCE_ROOT; };
-		4CD0145E12F0CCB7001953E6 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldWithDisabledState.h; path = ../../../Classes/Views/TextFieldWithDisabledState.h; sourceTree = SOURCE_ROOT; };
-		4CD0145F12F0CCB7001953E6 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTheme.h; path = ../../../Classes/Preferences/ViewTheme.h; sourceTree = SOURCE_ROOT; };
-		4CD0146012F0CCB7001953E6 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListView.h; path = ../../../Classes/Views/MemberList/MemberListView.h; sourceTree = SOURCE_ROOT; };
-		4CD0146112F0CCB7001953E6 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMBase64.h; path = ../../../Classes/Helpers/GTMBase64.h; sourceTree = SOURCE_ROOT; };
-		4CD0146212F0CCB7001953E6 /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginProtocol.h; path = ../../../Classes/Helpers/PluginProtocol.h; sourceTree = SOURCE_ROOT; };
-		4CD0146312F0CCB7001953E6 /* AddressBookSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookSheet.h; path = ../../../Classes/Dialogs/AddressBookSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0146412F0CCB7001953E6 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogLine.h; path = ../../../Classes/Views/Log/LogLine.h; sourceTree = SOURCE_ROOT; };
-		4CD0146512F0CCB7001953E6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = ../../../Classes/Library/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
-		4CD0146612F0CCB7001953E6 /* ChanBanExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanExceptionSheet.h; path = ../../../Classes/Dialogs/ChanBanExceptionSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0146712F0CCB7001953E6 /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCSendingMessage.h; path = ../../../Classes/IRC/IRCSendingMessage.h; sourceTree = SOURCE_ROOT; };
-		4CD0146812F0CCB7001953E6 /* IRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannel.h; path = ../../../Classes/IRC/IRCChannel.h; sourceTree = SOURCE_ROOT; };
-		4CD0146912F0CCB7001953E6 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayHelper.h; path = ../../../Classes/Helpers/NSArrayHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0146A12F0CCB7001953E6 /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateReceipt.h; path = ../../../Classes/Others/ValidateReceipt.h; sourceTree = SOURCE_ROOT; };
-		4CD0146B12F0CCB7001953E6 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPasteboardHelper.h; path = ../../../Classes/Helpers/NSPasteboardHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0146C12F0CCB7001953E6 /* ChanBanSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanBanSheet.h; path = ../../../Classes/Dialogs/ChanBanSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0146D12F0CCB7001953E6 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDataHelper.h; path = ../../../Classes/Helpers/NSDataHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0146E12F0CCB7001953E6 /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLParser.h; path = ../../../Classes/Library/URLParser.h; sourceTree = SOURCE_ROOT; };
-		4CD0146F12F0CCB7001953E6 /* TimerCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimerCommand.h; path = ../../../Classes/IRC/TimerCommand.h; sourceTree = SOURCE_ROOT; };
-		4CD0147012F0CCB7001953E6 /* ScriptsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScriptsWrapper.h; path = ../../../Classes/Dialogs/Preferences/ScriptsWrapper.h; sourceTree = SOURCE_ROOT; };
-		4CD0147112F0CCB7001953E6 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSFontHelper.h; path = ../../../Classes/Helpers/NSFontHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0147212F0CCB7001953E6 /* MasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterController.h; path = ../../../Classes/Controllers/MasterController.h; sourceTree = SOURCE_ROOT; };
-		4CD0147312F0CCB7001953E6 /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogRenderer.h; path = ../../../Classes/Views/Log/LogRenderer.h; sourceTree = SOURCE_ROOT; };
-		4CD0147412F0CCB7001953E6 /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExtras.h; path = ../../../Classes/IRC/IRCExtras.h; sourceTree = SOURCE_ROOT; };
-		4CD0147512F0CCB7001953E6 /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguagePreferences.h; path = ../../../Classes/Library/LanguagePreferences.h; sourceTree = SOURCE_ROOT; };
-		4CD0147612F0CCB7001953E6 /* IRCISupportInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfo.h; path = ../../../Classes/IRC/IRCISupportInfo.h; sourceTree = SOURCE_ROOT; };
-		4CD0147712F0CCB7001953E6 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "../../../Classes/Helpers/GTMNSString+URLArguments.h"; sourceTree = SOURCE_ROOT; };
-		4CD0147812F0CCB7001953E6 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = ../../../Classes/Helpers/NSColorHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0147912F0CCB7001953E6 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "../../../Classes/Helpers/GTMNSString+HTML.h"; sourceTree = SOURCE_ROOT; };
-		4CD0147A12F0CCB7001953E6 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = ../../../Classes/Views/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		4CD0147B12F0CCB7001953E6 /* ListDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDialog.h; path = ../../../Classes/Dialogs/ListDialog.h; sourceTree = SOURCE_ROOT; };
-		4CD0147C12F0CCB7001953E6 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldEditorTextView.h; path = ../../../Classes/Views/FieldEditorTextView.h; sourceTree = SOURCE_ROOT; };
-		4CD0147D12F0CCB7001953E6 /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListViewCell.h; path = ../../../Classes/Views/MemberList/MemberListViewCell.h; sourceTree = SOURCE_ROOT; };
-		4CD0147E12F0CCB7001953E6 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrowlController.h; path = ../../../Classes/Controllers/GrowlController.h; sourceTree = SOURCE_ROOT; };
-		4CD0147F12F0CCB7001953E6 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogController.h; path = ../../../Classes/Views/Log/LogController.h; sourceTree = SOURCE_ROOT; };
-		4CD0148012F0CCB7001953E6 /* IRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCMessage.h; path = ../../../Classes/IRC/IRCMessage.h; sourceTree = SOURCE_ROOT; };
-		4CD0148112F0CCB7001953E6 /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldConfig.h; path = ../../../Classes/IRC/IRCWorldConfig.h; sourceTree = SOURCE_ROOT; };
-		4CD0148212F0CCB7001953E6 /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfig.h; path = ../../../Classes/IRC/IRCClientConfig.h; sourceTree = SOURCE_ROOT; };
-		4CD0148312F0CCB7001953E6 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuController.h; path = ../../../Classes/Controllers/MenuController.h; sourceTree = SOURCE_ROOT; };
-		4CD0148412F0CCB7001953E6 /* ChannelSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelSheet.h; path = ../../../Classes/Dialogs/ChannelSheet.h; sourceTree = SOURCE_ROOT; };
-		4CD0148512F0CCB7001953E6 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = ../../../Classes/Library/TCPClient.h; sourceTree = SOURCE_ROOT; };
-		4CD0148612F0CCB7001953E6 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGKeychain.h; path = ../../../Classes/Library/AGKeychain.h; sourceTree = SOURCE_ROOT; };
-		4CD0148712F0CCB7001953E6 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = ../../../Classes/Library/TinyGrowlClient.h; sourceTree = SOURCE_ROOT; };
-		4CD0148812F0CCB7001953E6 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogScriptEventSink.h; path = ../../../Classes/Views/Log/LogScriptEventSink.h; sourceTree = SOURCE_ROOT; };
-		4CD0148912F0CCB7001953E6 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DDExtensions.h"; path = "../../../Classes/Helpers/NSObject+DDExtensions.h"; sourceTree = SOURCE_ROOT; };
-		4CD0148A12F0CCB7001953E6 /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogView.h; path = ../../../Classes/Views/Log/LogView.h; sourceTree = SOURCE_ROOT; };
-		4CD0148B12F0CCB7001953E6 /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = ../../../Classes/Helpers/NSBundleHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0148C12F0CCB7001953E6 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../Classes/IRC/IRCUser.h; sourceTree = SOURCE_ROOT; };
-		4CD0148D12F0CCB7001953E6 /* InputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputPromptDialog.h; path = ../../../Classes/Dialogs/InputPromptDialog.h; sourceTree = SOURCE_ROOT; };
-		4CD0148E12F0CCB7001953E6 /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringHelper.h; path = ../../../Classes/Helpers/NSStringHelper.h; sourceTree = SOURCE_ROOT; };
-		4CD0148F12F0CCB7001953E6 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = ../../../Classes/Helpers/GTMDefines.h; sourceTree = SOURCE_ROOT; };
-		4CD0149012F0CCB7001953E6 /* NSData+Kana.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Kana.h"; path = "../../../Classes/Helpers/NSData+Kana.h"; sourceTree = SOURCE_ROOT; };
-		4CD0149112F0CCB7001953E6 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundPlayer.h; path = ../../../Classes/Helpers/SoundPlayer.h; sourceTree = SOURCE_ROOT; };
-		4CD0149212F0CCB7001953E6 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewAutoScroll.h; path = ../../../Classes/Views/Log/WebViewAutoScroll.h; sourceTree = SOURCE_ROOT; };
-		4CD0149312F0CCB7001953E6 /* PopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupPrompts.h; path = ../../../Classes/Library/PopupPrompts.h; sourceTree = SOURCE_ROOT; };
-		4CD0149412F0CCB7001953E6 /* IRCModeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCModeInfo.h; path = ../../../Classes/IRC/IRCModeInfo.h; sourceTree = SOURCE_ROOT; };
+		4CD0E77D12F1B80600C8F016 /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = ../../../Classes/Headers; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -177,7 +72,7 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4C9E180F1209E502004E5032 /* Headers */,
+				4CD0E77D12F1B80600C8F016 /* Headers */,
 				4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */,
 				4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */,
 				4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */,
@@ -201,121 +96,6 @@
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
-		};
-		4C9E180F1209E502004E5032 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				4CD0142A12F0CCB6001953E6 /* NSNumberHelper.h */,
-				4CD0142B12F0CCB6001953E6 /* IRCChannelConfig.h */,
-				4CD0142C12F0CCB6001953E6 /* NSRectHelper.h */,
-				4CD0142D12F0CCB6001953E6 /* ModeSheet.h */,
-				4CD0142E12F0CCB6001953E6 /* SoundWrapper.h */,
-				4CD0142F12F0CCB6001953E6 /* AddressBook.h */,
-				4CD0143012F0CCB6001953E6 /* NickSheet.h */,
-				4CD0143112F0CCB6001953E6 /* TCPServer.h */,
-				4CD0143212F0CCB6001953E6 /* TextualApplication.h */,
-				4CD0143312F0CCB6001953E6 /* Preferences.h */,
-				4CD0143412F0CCB6001953E6 /* PreferencesController.h */,
-				4CD0143512F0CCB6001953E6 /* URLOpener.h */,
-				4CD0143612F0CCB6001953E6 /* TextualPluginItem.h */,
-				4CD0143712F0CCB6001953E6 /* OtherTheme.h */,
-				4CD0143812F0CCB6001953E6 /* IRCWorld.h */,
-				4CD0143912F0CCB6001953E6 /* UnicodeHelper.h */,
-				4CD0143A12F0CCB6001953E6 /* DockIcon.h */,
-				4CD0143B12F0CCB6001953E6 /* FileLogger.h */,
-				4CD0143C12F0CCB6001953E6 /* TextField.h */,
-				4CD0143D12F0CCB6001953E6 /* ServerTreeView.h */,
-				4CD0143E12F0CCB6001953E6 /* NickCompletionStatus.h */,
-				4CD0143F12F0CCB6001953E6 /* NSWindowHelper.h */,
-				4CD0144012F0CCB6001953E6 /* AsyncSocketExtensions.h */,
-				4CD0144112F0CCB6001953E6 /* GlobalModels.h */,
-				4CD0144212F0CCB6001953E6 /* TopicSheet.h */,
-				4CD0144312F0CCB6001953E6 /* IRCChannelMode.h */,
-				4CD0144412F0CCB6001953E6 /* FileWithContent.h */,
-				4CD0144512F0CCB6001953E6 /* TreeView.h */,
-				4CD0144612F0CCB6001953E6 /* Timer.h */,
-				4CD0144712F0CCB6001953E6 /* GTMGarbageCollection.h */,
-				4CD0144812F0CCB6001953E6 /* ListView.h */,
-				4CD0144912F0CCB6001953E6 /* NSDictionaryHelper.h */,
-				4CD0144A12F0CCB6001953E6 /* MarkedScroller.h */,
-				4CD0144B12F0CCB6001953E6 /* InputHistory.h */,
-				4CD0144C12F0CCB6001953E6 /* AboutPanel.h */,
-				4CD0144D12F0CCB6001953E6 /* ServerSheet.h */,
-				4CD0144E12F0CCB6001953E6 /* DDInvocationGrabber.h */,
-				4CD0144F12F0CCB6001953E6 /* IRC.h */,
-				4CD0145012F0CCB6001953E6 /* IRCConnection.h */,
-				4CD0145112F0CCB6001953E6 /* ImageURLParser.h */,
-				4CD0145212F0CCB6001953E6 /* LogPolicy.h */,
-				4CD0145312F0CCB6001953E6 /* ThinSplitView.h */,
-				4CD0145412F0CCB6001953E6 /* IRCClient.h */,
-				4CD0145512F0CCB7001953E6 /* WelcomeSheet.h */,
-				4CD0145612F0CCB7001953E6 /* IRCPrefix.h */,
-				4CD0145712F0CCB7001953E6 /* SheetBase.h */,
-				4CD0145812F0CCB7001953E6 /* IRCTreeItem.h */,
-				4CD0145912F0CCB7001953E6 /* KeyEventHandler.h */,
-				4CD0145A12F0CCB7001953E6 /* InviteSheet.h */,
-				4CD0145B12F0CCB7001953E6 /* AsyncSocket.h */,
-				4CD0145C12F0CCB7001953E6 /* InputTextField.h */,
-				4CD0145D12F0CCB7001953E6 /* ChatBox.h */,
-				4CD0145E12F0CCB7001953E6 /* TextFieldWithDisabledState.h */,
-				4CD0145F12F0CCB7001953E6 /* ViewTheme.h */,
-				4CD0146012F0CCB7001953E6 /* MemberListView.h */,
-				4CD0146112F0CCB7001953E6 /* GTMBase64.h */,
-				4CD0146212F0CCB7001953E6 /* PluginProtocol.h */,
-				4CD0146312F0CCB7001953E6 /* AddressBookSheet.h */,
-				4CD0146412F0CCB7001953E6 /* LogLine.h */,
-				4CD0146512F0CCB7001953E6 /* RegexKitLite.h */,
-				4CD0146612F0CCB7001953E6 /* ChanBanExceptionSheet.h */,
-				4CD0146712F0CCB7001953E6 /* IRCSendingMessage.h */,
-				4CD0146812F0CCB7001953E6 /* IRCChannel.h */,
-				4CD0146912F0CCB7001953E6 /* NSArrayHelper.h */,
-				4CD0146A12F0CCB7001953E6 /* ValidateReceipt.h */,
-				4CD0146B12F0CCB7001953E6 /* NSPasteboardHelper.h */,
-				4CD0146C12F0CCB7001953E6 /* ChanBanSheet.h */,
-				4CD0146D12F0CCB7001953E6 /* NSDataHelper.h */,
-				4CD0146E12F0CCB7001953E6 /* URLParser.h */,
-				4CD0146F12F0CCB7001953E6 /* TimerCommand.h */,
-				4CD0147012F0CCB7001953E6 /* ScriptsWrapper.h */,
-				4CD0147112F0CCB7001953E6 /* NSFontHelper.h */,
-				4CD0147212F0CCB7001953E6 /* MasterController.h */,
-				4CD0147312F0CCB7001953E6 /* LogRenderer.h */,
-				4CD0147412F0CCB7001953E6 /* IRCExtras.h */,
-				4CD0147512F0CCB7001953E6 /* LanguagePreferences.h */,
-				4CD0147612F0CCB7001953E6 /* IRCISupportInfo.h */,
-				4CD0147712F0CCB7001953E6 /* GTMNSString+URLArguments.h */,
-				4CD0147812F0CCB7001953E6 /* NSColorHelper.h */,
-				4CD0147912F0CCB7001953E6 /* GTMNSString+HTML.h */,
-				4CD0147A12F0CCB7001953E6 /* MainWindow.h */,
-				4CD0147B12F0CCB7001953E6 /* ListDialog.h */,
-				4CD0147C12F0CCB7001953E6 /* FieldEditorTextView.h */,
-				4CD0147D12F0CCB7001953E6 /* MemberListViewCell.h */,
-				4CD0147E12F0CCB7001953E6 /* GrowlController.h */,
-				4CD0147F12F0CCB7001953E6 /* LogController.h */,
-				4CD0148012F0CCB7001953E6 /* IRCMessage.h */,
-				4CD0148112F0CCB7001953E6 /* IRCWorldConfig.h */,
-				4CD0148212F0CCB7001953E6 /* IRCClientConfig.h */,
-				4CD0148312F0CCB7001953E6 /* MenuController.h */,
-				4CD0148412F0CCB7001953E6 /* ChannelSheet.h */,
-				4CD0148512F0CCB7001953E6 /* TCPClient.h */,
-				4CD0148612F0CCB7001953E6 /* AGKeychain.h */,
-				4CD0148712F0CCB7001953E6 /* TinyGrowlClient.h */,
-				4CD0148812F0CCB7001953E6 /* LogScriptEventSink.h */,
-				4CD0148912F0CCB7001953E6 /* NSObject+DDExtensions.h */,
-				4CD0148A12F0CCB7001953E6 /* LogView.h */,
-				4CD0148B12F0CCB7001953E6 /* NSBundleHelper.h */,
-				4CD0148C12F0CCB7001953E6 /* IRCUser.h */,
-				4CD0148D12F0CCB7001953E6 /* InputPromptDialog.h */,
-				4CD0148E12F0CCB7001953E6 /* NSStringHelper.h */,
-				4CD0148F12F0CCB7001953E6 /* GTMDefines.h */,
-				4CD0149012F0CCB7001953E6 /* NSData+Kana.h */,
-				4CD0149112F0CCB7001953E6 /* SoundPlayer.h */,
-				4CD0149212F0CCB7001953E6 /* WebViewAutoScroll.h */,
-				4CD0149312F0CCB7001953E6 /* PopupPrompts.h */,
-				4CD0149412F0CCB7001953E6 /* IRCModeInfo.h */,
-			);
-			name = Headers;
-			path = /Applications/Textual.app/Contents/Headers;
-			sourceTree = "<absolute>";
 		};
 		4CBDDBDC11CB4D28002A6868 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -379,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */,
+				4CD0E77E12F1B80600C8F016 /* Headers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +186,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -419,6 +200,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
@@ -435,7 +217,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -446,6 +228,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -521,7 +304,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -532,6 +315,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -568,7 +352,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,6 +363,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

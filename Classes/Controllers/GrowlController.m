@@ -25,6 +25,7 @@
 {
 	[growl release];
 	[lastClickedContext release];
+	
 	[super dealloc];
 }
 
@@ -35,9 +36,10 @@
 	growl = [TinyGrowlClient new];
 	growl.delegate = self;
 	
-	if (!registered) {
+	if (registered == NO) {
 		growl.allNotifications = [NSArray array];
 		growl.defaultNotifications = growl.allNotifications;
+		
 		[growl registerApplication];
 	}
 	
@@ -47,34 +49,35 @@
 							  TXTLS(@"GROWL_MSG_TALK_MSG"), TXTLS(@"GROWL_MSG_HIGHLIGHT"), 
 							  TXTLS(@"GROWL_MSG_DISCONNECT"), TXTLS(@"GROWL_MSG_TALK_NOTICE"), 
 							  TXTLS(@"GROWL_MSG_CHANNEL_MSG"), TXTLS(@"GROWL_MSG_CHANNEL_NOTICE"), 
-							  TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"),
-								nil];
+							  TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"), nil];
+	
 	growl.defaultNotifications = growl.allNotifications;
 	[growl registerApplication];
 }
 
 - (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
-	if (![Preferences growlEnabledForEvent:type]) return;
+	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	
-	NSInteger priority = 0;
-	BOOL sticky = [Preferences growlStickyForEvent:type];
 	NSString *kind = nil;
+	NSInteger priority = 0;
+	
+	BOOL sticky = [Preferences growlStickyForEvent:type];
 	
 	switch (type) {
 		case GROWL_ADDRESS_BOOK_MATCH:
-			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
 			priority = 1;
+			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
 			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
 			break;
 		case GROWL_HIGHLIGHT:
-			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
 			priority = 1;
+			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
 			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_HIGHLIGHT_TITLE"), title];
 			break;
 		case GROWL_NEW_TALK:
-			kind =  TXTLS(@"GROWL_MSG_NEW_TALK");
 			priority = 1;
+			kind =  TXTLS(@"GROWL_MSG_NEW_TALK");
 			title = TXTLS(@"GROWL_MSG_NEW_TALK_TITLE");
 			break;
 		case GROWL_CHANNEL_MSG:
@@ -108,8 +111,6 @@
 			kind =  TXTLS(@"GROWL_MSG_DISCONNECT");
 			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_DISCONNECT_TITLE"), title];
 			break;
-		default:
-			break;
 	}
 	
 	[growl notifyWithType:kind title:title description:desc clickContext:context sticky:sticky priority:priority icon:nil];
@@ -119,33 +120,37 @@
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
-	if (now - lastClickedTime < CLICK_INTERVAL) {
+	if ((now - lastClickedTime) < CLICK_INTERVAL) {
 		if (lastClickedContext && [lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
 	
 	lastClickedTime = now;
+	
 	[lastClickedContext release];
 	lastClickedContext = [context retain];
 	
-	if (!registered) {
+	if (registered == NO) {
 		registered = YES;
+		
 		[Preferences setRegisteredToGrowl:YES];
 	}
 	
 	[owner.window makeKeyAndOrderFront:nil];
+	
 	[NSApp activateIgnoringOtherApps:YES];
 	
 	if ([context isKindOfClass:[NSString class]]) {
-		NSString *s = context;
-		NSArray *ary = [s componentsSeparatedByString:@" "];
+		NSArray *ary = [context componentsSeparatedByString:@" "];
+		
 		if (ary.count >= 2) {
 			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
 			NSInteger cid = [[ary safeObjectAtIndex:1] integerValue];
 			
 			IRCClient *u = [owner findClientById:uid];
 			IRCChannel *c = [owner findChannelByClientId:uid channelId:cid];
+			
 			if (c) {
 				[owner select:c];
 			} else if (u) {
@@ -155,6 +160,7 @@
 			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
 			
 			IRCClient *u = [owner findClientById:uid];
+			
 			if (u) {
 				[owner select:u];
 			}
@@ -164,8 +170,9 @@
 
 - (void)tinyGrowlClient:(TinyGrowlClient *)sender didTimeOut:(id)context
 {
-	if (!registered) {
+	if (registered == NO) {
 		registered = YES;
+		
 		[Preferences setRegisteredToGrowl:YES];
 	}
 }

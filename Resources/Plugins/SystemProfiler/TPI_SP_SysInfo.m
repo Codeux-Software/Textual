@@ -332,7 +332,7 @@
 	CGLPixelFormatObj pixelFormat = NULL;
 	CGLContextObj curr_ctx = CGLGetCurrentContext();
 	
-	DevNullDestroyObject(curr_ctx);
+	DevNullDestroyObject(YES, curr_ctx);
 	
 	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
 	

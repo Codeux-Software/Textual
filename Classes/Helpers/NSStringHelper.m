@@ -498,9 +498,9 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (NSObjectIsEmpty(self)) return @"";
 	
-	static const char* characters = "0123456789ABCDEF";
-	
+	const char* characters = "0123456789ABCDEF";
 	const char* src = [self UTF8String];
+	
 	if (src == NULL) return @"";
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
@@ -527,9 +527,9 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (NSObjectIsEmpty(self)) return @"";
 	
-	static const char* characters = "0123456789ABCDEF";
-	
+	const char* characters = "0123456789ABCDEF";
 	const char* src = [self UTF8String];
+	
 	if (src == NULL) return @"";
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
@@ -643,13 +643,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)getToken
 {
-	static NSCharacterSet *spaceSet = nil;
-	
-	if (PointerIsEmpty(spaceSet)) {
-		spaceSet = [[NSCharacterSet characterSetWithCharactersInString:@" "] retain];
-	}
-	
-	NSRange r = [self rangeOfCharacterFromSet:spaceSet];
+	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
 	
 	if (r.location != NSNotFound) {
 		NSString *result = [self safeSubstringToIndex:r.location];

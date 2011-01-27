@@ -61,7 +61,7 @@
 		
 		NSInteger count = [params count];
 		
-		if (count > 0) {
+		if (NSObjectIsNotEmpty(params)) {
 			for (NSInteger i = 0; i < (count - 1); ++i) {
 				NSString *s = [params safeObjectAtIndex:i];
 				

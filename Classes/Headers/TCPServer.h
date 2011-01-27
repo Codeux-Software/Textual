@@ -9,7 +9,6 @@
 	
 	NSInteger port;
 	AsyncSocket *conn;
-	
 	NSMutableArray *clients;
 }
 

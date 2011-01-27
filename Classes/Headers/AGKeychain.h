@@ -9,6 +9,7 @@
 //
 
 @interface AGKeychain : NSObject
+
 + (NSString *)getPasswordFromSecKeychainItemRef:(SecKeychainItemRef)item;
 
 + (BOOL)checkForExistanceOfKeychainItem:(NSString *)keychainItemName 

@@ -148,12 +148,6 @@
 		data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	}
 	
-	if (encoding == NSISO2022JPStringEncoding) {
-		if (data) {
-			data = [data convertKanaFromISO2022ToNative];
-		}
-	}
-	
 	return data;
 }
 

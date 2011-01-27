@@ -15,12 +15,14 @@
 							forUsername:(NSString *)username
 							serviceName:(NSString *)service
 {
-	SecKeychainSearchRef search;
+	NSInteger numberOfItemsFound = 0;
+	
 	SecKeychainItemRef item;
+	SecKeychainSearchRef search;
 	SecKeychainAttributeList list;
 	SecKeychainAttribute attributes[4];
+	
 	OSErr result;
-	NSInteger numberOfItemsFound = 0;
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
@@ -47,12 +49,14 @@
 		// Cool
 	}
 	
-	while (SecKeychainSearchCopyNext (search, &item) == noErr) {
-		CFRelease (item);
+	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
+		CFRelease(item);
+		
 		numberOfItemsFound++;
 	}
 	
 	CFRelease(search);
+	
 	return numberOfItemsFound;
 }
 
@@ -61,13 +65,16 @@
 			   forUsername:(NSString *)username
 			   serviceName:(NSString *)service
 {
-	SecKeychainAttribute attributes[4];
-	SecKeychainAttributeList list;
+	BOOL status = NO;
+	
+	NSInteger numberOfItemsFound = 0;
+	
 	SecKeychainItemRef item;
 	SecKeychainSearchRef search;
-	BOOL status = NO;
+	SecKeychainAttributeList list;
+	SecKeychainAttribute attributes[4];
+	
 	OSErr result;
-	NSInteger numberOfItemsFound = 0;
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
@@ -94,7 +101,7 @@
 		// Cool
 	}
 	
-	while (SecKeychainSearchCopyNext (search, &item) == noErr) {
+	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		numberOfItemsFound++;
 	}
 	
@@ -118,12 +125,13 @@
 					withComment:(NSString *)comment
 					serviceName:(NSString *)service
 {
-	SecKeychainAttribute attributes[5];
-	SecKeychainAttributeList list;
 	SecKeychainItemRef item;
 	SecKeychainSearchRef search;
-	OSStatus status;
+	SecKeychainAttributeList list;
+	SecKeychainAttribute attributes[5];
+	
 	OSErr result;
+	OSStatus status;
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
@@ -154,18 +162,22 @@
 		// Cool
 	}
 	
-	result = SecKeychainSearchCopyNext (search, &item);
+	result = SecKeychainSearchCopyNext(search, &item);
+	
 	list.count = 5;
+	
 	if (result == errSecItemNotFound) {
-		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], [newPassword UTF8String], NULL,NULL, &item);
+		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], 
+												  [newPassword UTF8String], NULL,NULL, &item);
 	} else {
 		status = SecKeychainItemModifyContent(item, &list, [newPassword length], [newPassword UTF8String]);
+		
 		CFRelease(item);
 	}
 	
 	CFRelease(search);
 	
-	return !status;
+	return BOOLReverseValue(status);
 }
 
 + (BOOL)addKeychainItem:(NSString *)keychainItemName 
@@ -174,9 +186,10 @@
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
 {	
-	SecKeychainAttribute attributes[4];
-	SecKeychainAttributeList list;
 	SecKeychainItemRef item;
+	SecKeychainAttributeList list;
+	SecKeychainAttribute attributes[4];
+	
 	OSStatus status;
 	
 	attributes[0].tag = kSecAccountItemAttr;
@@ -198,9 +211,10 @@
 	list.count = 4;
 	list.attr = attributes;
 	
-	status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [password length], [password UTF8String], NULL,NULL, &item);
+	status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [password length], 
+											  [password UTF8String], NULL,NULL, &item);
 	
-	return !status;
+	return BOOLReverseValue(status);
 }
 
 + (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName 
@@ -209,10 +223,11 @@
 							  serviceName:(NSString *)service
 						withLegacySupport:(BOOL)legacy
 {
-	SecKeychainSearchRef search;
 	SecKeychainItemRef item;
+	SecKeychainSearchRef search;
 	SecKeychainAttributeList list;
 	SecKeychainAttribute attributes[4];
+	
 	OSErr result;
 	
 	attributes[0].tag = kSecAccountItemAttr;
@@ -229,10 +244,6 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	
-	// Legacy support makes it so the longstanding bug in the keychain length
-	// does not break keychain movement from Textual version 1.0 to 2.0
-	
 	attributes[3].length = ((legacy) ? [keychainItemName length] : [service length]);
 	
 	list.count = 4;
@@ -246,10 +257,10 @@
 	
 	NSString *password = @"";
 	
-	if (SecKeychainSearchCopyNext (search, &item) == noErr) {
+	if (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		password = [self getPasswordFromSecKeychainItemRef:item];
 		
-		if (!password) {
+		if (NSObjectIsEmpty(password)) {
 			password = @"";
 		}	
 		
@@ -265,22 +276,17 @@
 {
 	UInt32 length;
 	char *password;
-	OSStatus status;
+	
 	NSString *fpass = @"";
 	
-	status = SecKeychainItemCopyContent(item, NULL, NULL, &length, 
-										(void **)&password);
+	OSStatus status = SecKeychainItemCopyContent(item, NULL, NULL, &length, (void **)&password);
 	
 	if (status == noErr) {
-		if (password != NULL) {
+		if (PointerIsEmpty(password) == NO) {
 			char passwordBuffer[1024];
-			
-			if (length > 1023) {
-				length = 1023; 
-			}
-			
-			strncpy (passwordBuffer, password, length);
+			strncpy(passwordBuffer, password, length);
 			passwordBuffer[length] = '\0';
+			
 			fpass = [NSString stringWithUTF8String:passwordBuffer];
 		}
 	} else {

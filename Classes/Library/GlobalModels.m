@@ -21,6 +21,11 @@ extern BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
+extern void DevNullDestroyObject(BOOL condition, ...)
+{
+	return;
+}
+
 extern NSInteger TXRandomThousandNumber(void)
 {
 	return ((1 + arc4random()) % (9999 + 1));

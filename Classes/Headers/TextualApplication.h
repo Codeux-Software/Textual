@@ -20,8 +20,6 @@
 	#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
 
 	/* Miscellaneous functions to handle small tasks */
-	#define DevNullDestroyObject(...)			; 
-
 	#define CFItemRefToID(s)					(id)s
 	#define PointerIsEmpty(s)					(s == NULL || s == nil)
 	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
@@ -74,7 +72,6 @@
 	#import "GTMBase64.h"
 	#import "URLOpener.h"
 	#import "GTMDefines.h"
-	#import "NSData+Kana.h"
 	#import "SoundPlayer.h"
 	#import "NSFontHelper.h"
 	#import "NSDataHelper.h"

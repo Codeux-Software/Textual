@@ -1,7 +1,8 @@
-#define MARK_LEFT_MARGIN	2
-#define MARK_RIGHT_MARGIN	2
 
-static NSInteger markWidth;
+#define MARK_LEFT_MARGIN		2
+#define MARK_RIGHT_MARGIN		2
+
+static NSInteger markWidth = 0;
 
 @implementation MemberListViewCell
 

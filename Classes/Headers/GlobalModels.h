@@ -6,6 +6,8 @@
 extern BOOL NSObjectIsEmpty(id obj);
 extern BOOL NSObjectIsNotEmpty(id obj);
 
+extern void DevNullDestroyObject(BOOL condition, ...);
+
 extern NSString *TXTLS(NSString *key);
 
 extern NSInteger TXRandomThousandNumber(void);

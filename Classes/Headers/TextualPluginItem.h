@@ -3,6 +3,7 @@
 
 @interface TextualPluginItem : NSObject {
 	NSBundle *pluginBundle;
+	
 	PluginProtocol *pluginPrimaryClass;
 }
 
