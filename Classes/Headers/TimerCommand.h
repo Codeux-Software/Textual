@@ -3,9 +3,11 @@
 
 @interface TimerCommand : NSObject
 {
-	CFAbsoluteTime time;
 	NSInteger cid;
+	
 	NSString *input;
+	
+	CFAbsoluteTime time;
 }
 
 @property (nonatomic, assign) CFAbsoluteTime time;

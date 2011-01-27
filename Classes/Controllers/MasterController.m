@@ -1265,8 +1265,7 @@ typedef enum {
 		case TAB_UNREAD:
 			[self move:MOVE_DOWN target:MOVE_UNREAD];
 			break;
-		default:
-			break;
+		default: break;
 	}
 }
 
@@ -1279,8 +1278,7 @@ typedef enum {
 		case TAB_UNREAD:
 			[self move:MOVE_UP target:MOVE_UNREAD];
 			break;
-		default:
-			break;
+		default: break;
 	}
 }
 

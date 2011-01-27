@@ -328,10 +328,10 @@ BOOL validateBinarySignature(NSString *authority)
 	NSString *requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", authority];
 	
 	status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
-	DevNullDestroyObject(status);
+	DevNullDestroyObject(YES, status);
 	
 	status = SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &req);
-	DevNullDestroyObject(status);
+	DevNullDestroyObject(YES, status);
 	
 	status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, req);
 	

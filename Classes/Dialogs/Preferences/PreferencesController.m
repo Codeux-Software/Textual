@@ -167,7 +167,7 @@
 			[self firstPane:stylesView selectedItem:4];
 			break;
 		case 5:
-			[self firstPane:logView selectedItem:5];
+			[self firstPane:logView selectedItem:11];
 			break;
 		case 6:
 			[self firstPane:floodControlView selectedItem:11];

@@ -7,6 +7,7 @@
 	
 	BOOL reqeat;
 	SEL selector;
+	
 	NSTimer *timer;
 }
 

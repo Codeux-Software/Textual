@@ -24,6 +24,7 @@
 - (void)clear
 {
 	self.text = nil;
+	
 	range = NSMakeRange(NSNotFound, 0);
 }
 

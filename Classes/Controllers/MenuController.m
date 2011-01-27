@@ -1512,8 +1512,6 @@
 		case 110:
 			[_NSWorkspace() openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
 			break;
-		default:
-			break;
 	}
 }
 
@@ -1555,8 +1553,6 @@
 			break;
 		case 50012:
 			[master selectNextSelection:nil];
-			break;
-		default:
 			break;
 	}
 }
