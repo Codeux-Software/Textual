@@ -12,6 +12,19 @@
 	return nil;
 }
 
+- (BOOL)containsObjectIgnoringCase:(id)anObject
+{
+	for (id object in self) {
+		if ([object isKindOfClass:[NSString class]]) {
+			if ([object caseInsensitiveCompare:anObject] == NSOrderedSame) {
+				return YES;
+			}
+		} 
+	}
+	
+	return [self containsObject:anObject];
+}
+
 @end
 
 @implementation NSMutableArray (NSMutableArrayHelper)

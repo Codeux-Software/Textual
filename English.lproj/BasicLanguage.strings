@@ -32,6 +32,8 @@
 "DEFAULT_QPS_MESSAGE" = "Leaving...";
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
+"DCC_REQUEST_ERROR_MESSAGE" = "The Textual IRC Client has received a DCC request that could not be processed.";
+
 "OK_BUTTON" = "OK";
 "NO_BUTTON" = "No";
 "YES_BUTTON" = "Yes";
@@ -109,6 +111,7 @@
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
 "IRC_CONNECTED_TO_SERVER" = "Connected to host.";
+"IRC_CHANNEL_NAMES_LIST" = "Names for %1$@: %2$@";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_AWAY_COMMAND_DEFAULT_REASON" = "Be back later.";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";

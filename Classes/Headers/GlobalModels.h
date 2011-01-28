@@ -14,4 +14,5 @@ extern NSInteger TXRandomThousandNumber(void);
 
 extern NSString *TXFormattedTimestamp(NSString *format);
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
-extern NSString *TXReadableTime(NSTimeInterval date, BOOL longFormat);
+
+extern NSString *TXReadableTime(NSInteger dateInterval);

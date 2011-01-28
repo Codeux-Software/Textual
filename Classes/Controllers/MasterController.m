@@ -208,35 +208,10 @@
 	
 	[self registerKeyHandlers];
 	
-	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
-	
 	[viewTheme validateFilePathExistanceAndReload:YES];
+	
+	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
 }
-
-#ifdef IS_TRIAL_BINARY
-
-- (void)showTrialPeroidIntroDialog
-{
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
-	BOOL suppCheck = [_NSUserDefaults() boolForKey:@"Preferences.prompts.trial_period_info"];
-	
-	if (suppCheck == NO) {
-		NSAlert *alert = [NSAlert alertWithMessageText:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
-										 defaultButton:TXTLS(@"OK_BUTTON")
-									   alternateButton:nil
-										   otherButton:nil
-							 informativeTextWithFormat:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")];
-		
-		[alert runModal];
-		
-		[_NSUserDefaults() setBool:YES forKey:@"Preferences.prompts.trial_period_info"];
-	}
-	
-	[pool release];
-}
-
-#endif
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
@@ -253,7 +228,12 @@
 	}
 	
 #ifdef IS_TRIAL_BINARY
-	[[self invokeInBackgroundThread] showTrialPeroidIntroDialog];
+	[[PopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_MESSAGE")
+																title:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
+														defaultButton:TXTLS(@"OK_BUTTON") 
+													  alternateButton:nil
+													   suppressionKey:@"Preferences.prompts.trial_period_info" 
+													  suppressionText:nil];
 #endif
 	
 }
@@ -264,7 +244,6 @@
     
 	if (sel) {
 		[sel resetState];
-		
 		[world updateIcon];
 	}
 	
@@ -279,7 +258,6 @@
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
 	[window makeKeyAndOrderFront:nil];
-	
 	[text focus];
 	
 	return YES;
@@ -288,11 +266,9 @@
 - (void)applicationDidReceiveHotKey:(id)sender
 {
 	if ([window isVisible] == NO || [NSApp isActive] == NO) {
-		if (world.clients.count < 1) {
+		if (NSObjectIsEmpty(world.clients)) {
 			[NSApp activateIgnoringOtherApps:YES];
-			
 			[window makeKeyAndOrderFront:nil];
-			
 			[text focus];
 		}
 	} else {
@@ -307,12 +283,13 @@
 	}
 	
 	if ([Preferences confirmQuit]) {
-		NSInteger result = NSRunAlertPanel(TXTLS(@"WANT_QUIT_TITLE"), 
-										   TXTLS(@"WANT_QUIT_MESSAGE"), 
-										   TXTLS(@"QUIT_BUTTON"), 
-										   TXTLS(@"CANCEL_BUTTON"), nil);
+		NSInteger result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_QUIT_MESSAGE")
+															title:TXTLS(@"WANT_QUIT_TITLE") 
+													defaultButton:TXTLS(@"QUIT_BUTTON") 
+												  alternateButton:TXTLS(@"CANCEL_BUTTON") 
+												   suppressionKey:nil suppressionText:nil];
 		
-		if (result != NSAlertDefaultReturn) {
+		if (result == NO) {
 			return NO;
 		}
 	}
@@ -435,7 +412,6 @@
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
 	[window makeKeyAndOrderFront:nil];
-	
 	[text focus];
 	
 	return YES;
@@ -470,7 +446,7 @@
 	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	
 	NSInteger charCountIndex = 0;
-	NSMutableArray *charRanges = [NSMutableArray new];
+	NSMutableArray *charRanges = [NSMutableArray array];
 	
 	while (1 == 1) {
 		if (charCountIndex >= [selectedText length]) break;
@@ -752,8 +728,6 @@
 	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	
-	// ====================================================== //
-	
 	NSMutableString *sf = [NSMutableString string];
 	
 	if (viewTheme.other.nicknameFormat) {
@@ -779,24 +753,17 @@
 	sf = (NSMutableString *)[sf trim];
 	
 	if (NSObjectIsNotEmpty(sf)) {		
-		BOOL suppCheck = [_NSUserDefaults() boolForKey:@"Preferences.prompts.theme_override_info"];
+		NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
 		
-		if (suppCheck == NO) {
-			NSAlert *alert = [[NSAlert new] autorelease];
-			
-			NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
-			
-			[alert addButtonWithTitle:TXTLS(@"OK_BUTTON")];
-			[alert setMessageText:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")];
-			[alert setInformativeText:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), theme, sf]];
-			
-			[alert setShowsSuppressionButton:YES];
-			[[alert suppressionButton] setTitle:TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE")];
-			
-			[alert setAlertStyle:NSInformationalAlertStyle];
-			
-			[alert beginSheetModalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) contextInfo:nil];
-		}
+		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
+									   target:self 
+									   action:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) 
+										 body:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), theme, sf]
+										title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
+								defaultButton:TXTLS(@"OK_BUTTON")
+							  alternateButton:nil 
+							   suppressionKey:@"Preferences.prompts.theme_override_info" 
+							  suppressionText:nil];
 	}
 }
 
@@ -1115,16 +1082,18 @@ typedef enum {
 		if (n < 0) return;
 		
 		NSInteger start = n;
-		
 		NSInteger count = [tree numberOfRows];
+		
 		if (count <= 1) return;
 		
 		while (1) {
 			if (dir == MOVE_UP) {
 				--n;
+				
 				if (n < 0) n = (count - 1);
 			} else {
 				++n;
+				
 				if (count <= n) n = 0;
 			}
 			
@@ -1136,15 +1105,18 @@ typedef enum {
 				if (target == MOVE_ACTIVE) {
 					if ([i isClient] == NO && [i isActive]) {
 						[world select:i];
+						
 						break;
 					}
 				} else if (target == MOVE_UNREAD) {
 					if ([i isUnread]) {
 						[world select:i];
+						
 						break;
 					}
 				} else {
 					[world select:i];
+					
 					break;
 				}
 			}
@@ -1165,9 +1137,11 @@ typedef enum {
 		while (1) {
 			if (dir == MOVE_LEFT) {
 				--n;
+				
 				if (n < 0) n = (count - 1);
 			} else {
 				++n;
+				
 				if (count <= n) n = 0;
 			}
 			
@@ -1293,6 +1267,7 @@ typedef enum {
 	
 	if (s) {
 		[text setStringValue:s];
+		
 		[world focusInputText];
 	}
 }
@@ -1303,6 +1278,7 @@ typedef enum {
 	
 	if (s) {
 		[text setStringValue:s];
+		
 		[world focusInputText];
 	}
 }
@@ -1351,27 +1327,19 @@ typedef enum {
 - (void)WelcomeSheet:(WelcomeSheet *)sender onOK:(NSDictionary *)config
 {
 	NSString *host = [config objectForKey:@"host"];
-	NSString *name = host;
-	
 	NSString *nick = [config objectForKey:@"nick"];
-	NSString *user = [[nick lowercaseString] safeUsername];
-	NSString *realName = nick;
 	
 	NSMutableArray *channels = [NSMutableArray array];
 	
 	for (NSString *s in [config objectForKey:@"channels"]) {
-		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys: s, @"name", 
-							 [NSNumber numberWithBool:YES], @"auto_join", 
-							 [NSNumber numberWithBool:YES], @"growl", nil]];
+		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys: s, @"name", nil]];
 	}
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setObject:host forKey:@"host"];
-	[dic setObject:name forKey:@"name"];
+	[dic setObject:host forKey:@"name"];
 	[dic setObject:nick forKey:@"nick"];
-	[dic setObject:user forKey:@"username"];
-	[dic setObject:realName forKey:@"realname"];
 	[dic setObject:channels forKey:@"channels"];
 	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];

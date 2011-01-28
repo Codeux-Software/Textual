@@ -339,8 +339,6 @@
 
 - (void)_onWantFindPanel:(id)sender
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	NSString *newPhrase = [PopupPrompts dialogWindowWithInput:TXTLS(@"FIND_SEARCH_PHRASE_PROPMT_MESSAGE")
 														title:TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE")
 												defaultButton:TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON")
@@ -361,8 +359,6 @@
 												direction:YES 
 											caseSensitive:NO 
 													 wrap:YES];
-	
-	[pool release];
 }
 
 - (void)onWantFindPanel:(id)sender
@@ -1458,8 +1454,6 @@
 
 - (void)_onWantHostServVhostSet:(id)sender
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	NSString *vhost = [PopupPrompts dialogWindowWithInput:TXTLS(@"WANT_SERVER_DELETE_MESSAGE")
 													title:TXTLS(@"WANT_SERVER_DELETE_TITLE") 
 											defaultButton:TXTLS(@"OK_BUTTON")  
@@ -1467,8 +1461,6 @@
 											 defaultInput:nil];
 	
 	[[self invokeOnMainThread] __onWantHostServVhostSet:sender andVhost:vhost];
-	
-	[pool release];
 }
 
 - (void)onWantHostServVhostSet:(id)sender

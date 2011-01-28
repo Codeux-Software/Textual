@@ -17,14 +17,14 @@ extern NSString *logEscape(NSString *s);
 			 highlighted:(BOOL *)highlighted 
 			   URLRanges:(NSArray**)urlRanges;
 
-+ (id)renderBody:(NSString *)body 
-	  controller:(LogController *)log
-		 nolinks:(BOOL)hideLinks
-		keywords:(NSArray *)keywords 
-	excludeWords:(NSArray *)excludeWords 
-  exactWordMatch:(BOOL)exactWordMatch 
-	 highlighted:(BOOL *)highlighted 
-	   URLRanges:(NSArray**)urlRanges
-attributedString:(BOOL)attributed;
++ (NSString *)renderBody:(NSString *)body 
+			  controller:(LogController *)log
+				 nolinks:(BOOL)hideLinks
+				keywords:(NSArray *)keywords 
+			excludeWords:(NSArray *)excludeWords 
+		  exactWordMatch:(BOOL)exactWordMatch 
+			 highlighted:(BOOL *)highlighted 
+			   URLRanges:(NSArray**)urlRanges
+		attributedString:(BOOL)attributed;
 
 @end

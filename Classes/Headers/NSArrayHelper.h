@@ -3,6 +3,7 @@
 
 @interface NSArray (NSArrayHelper)
 - (id)safeObjectAtIndex:(NSInteger)n;
+- (BOOL)containsObjectIgnoringCase:(id)anObject;
 @end
 
 @interface NSMutableArray (NSMutableArrayHelper)

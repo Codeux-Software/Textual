@@ -116,8 +116,8 @@
                                       withObject:nil
                                    waitUntilDone:_waitUntilDone];
     } else {
-        [_invocation performSelectorInBackground:@selector(invoke)
-                                      withObject:nil];
+        [_invocation performSelectorInBackground:@selector(performInvocation:)
+									  withObject:_invocation];
 	}
 }
 
@@ -133,3 +133,15 @@
 }
 
 @end
+
+@implementation NSInvocation (DDInvocationWrapper)
+
+- (void)performInvocation:(NSInvocation *)anInvocation {
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	
+	[anInvocation invoke];
+	
+	[pool release];
+}
+
+@end 

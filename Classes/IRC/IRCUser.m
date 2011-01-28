@@ -79,7 +79,7 @@
 
 - (BOOL)isHalfOp 
 {
-	return h;
+	return (h || [self isOp]);
 }
 
 - (NSInteger)colorNumber

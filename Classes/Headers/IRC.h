@@ -95,3 +95,4 @@
 #define IRCII_SMSG				@"SMSG"
 
 #define IRC_BODY_LEN			512
+#define MAX_BODY_LEN			480

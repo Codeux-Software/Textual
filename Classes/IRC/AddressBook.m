@@ -58,14 +58,16 @@
 		
 		NSRange atsrange = [nhostmask rangeOfString:@"@" options:NSBackwardsSearch];
 		
-		if ([nhostmask length] > 3) {
+		if ([nhostmask length] >= 2) {
 			NSString *first = [nhostmask safeSubstringToIndex:atsrange.location];
 			NSString *second = [nhostmask safeSubstringFromIndex:(atsrange.location + 1)];
 			
-			if (first) {
-				if ([first contains:@"!"] == NO) {
-					nhostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
-				}
+			if (NSObjectIsEmpty(first)) {
+				first = @"*";
+			}
+			
+			if ([first contains:@"!"] == NO) {
+				nhostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
 			}
 		}
 		

@@ -85,6 +85,8 @@
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
+		4C67A80812F38125002E308B /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67A80612F38125002E308B /* NSDateHelper.m */; };
+		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C858F3F12E0A03F00F3FAE0 /* BlowfishCommandLine.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
@@ -94,7 +96,7 @@
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
-		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; };
+		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
 		4CA9456511E1AFBA00D36367 /* ChannelSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */; };
@@ -336,6 +338,13 @@
 			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
 			remoteInfo = "Update Version Data";
 		};
+		4C67A85512F388D8002E308B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
+			remoteInfo = "Clean Up Resources ";
+		};
 		4C858F3D12E0A02000F3FAE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */;
@@ -448,6 +457,8 @@
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
 		4C66E88412DF69E500446250 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
+		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
+		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
@@ -1172,24 +1183,26 @@
 				4C239ECA12ED1F9C00A469C9 /* Google */,
 				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
-				4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */,
-				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
-				4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */,
-				4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */,
-				4CD0E6B112F1B70300C8F016 /* NSDictionaryHelper.h */,
-				78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */,
 				4CD0E6AD12F1B70300C8F016 /* NSArrayHelper.h */,
 				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
-				4CD0E6B012F1B70300C8F016 /* NSDataHelper.h */,
-				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
-				4CD0E6B212F1B70300C8F016 /* NSFontHelper.h */,
-				4C9FEAC312312BDC00740B40 /* NSFontHelper.m */,
 				4CD0E6AF12F1B70300C8F016 /* NSColorHelper.h */,
 				78A8C0F711737F660044E7A1 /* NSColorHelper.m */,
+				4CD0E6B012F1B70300C8F016 /* NSDataHelper.h */,
+				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
+				4C67A81012F38268002E308B /* NSDateHelper.h */,
+				4C67A80612F38125002E308B /* NSDateHelper.m */,
+				4CD0E6B112F1B70300C8F016 /* NSDictionaryHelper.h */,
+				78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */,
+				4CD0E6B212F1B70300C8F016 /* NSFontHelper.h */,
+				4C9FEAC312312BDC00740B40 /* NSFontHelper.m */,
+				4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */,
+				4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */,
 				4CD0E6B512F1B70300C8F016 /* NSPasteboardHelper.h */,
 				78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */,
 				4CD0E6B612F1B70300C8F016 /* NSRectHelper.h */,
 				78A8C10111737F660044E7A1 /* NSRectHelper.m */,
+				4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */,
+				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
 				4CD0E6B812F1B70300C8F016 /* NSWindowHelper.h */,
 				78A8C10511737F660044E7A1 /* NSWindowHelper.m */,
 				4CD0E6C912F1B75300C8F016 /* SoundPlayer.h */,
@@ -1258,10 +1271,18 @@
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
 				4CD0E68D12F1B6B000C8F016 /* FileLogger.h */,
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
+				4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */,
+				4CCD0F8711BAE7E900758B81 /* GlobalModels.m */,
 				4CD0E68F12F1B6B000C8F016 /* InputHistory.h */,
 				78A8C13C11737F660044E7A1 /* InputHistory.m */,
 				4CD0E69012F1B6B000C8F016 /* KeyEventHandler.h */,
 				78A8C13E11737F660044E7A1 /* KeyEventHandler.m */,
+				4CD0E69112F1B6B000C8F016 /* LanguagePreferences.h */,
+				4C400E2F1238A655005BDA9D /* LanguagePreferences.m */,
+				4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */,
+				4C4A041612EF1C65009A7988 /* PopupPrompts.m */,
+				4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */,
+				4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */,
 				4CD0E69412F1B6B000C8F016 /* TCPClient.h */,
 				78A8C14211737F660044E7A1 /* TCPClient.m */,
 				4CD0E69512F1B6B000C8F016 /* TCPServer.h */,
@@ -1270,16 +1291,8 @@
 				78A8C14611737F660044E7A1 /* Timer.m */,
 				4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */,
 				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
-				4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */,
-				4CCD0F8711BAE7E900758B81 /* GlobalModels.m */,
-				4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */,
-				4C4A041612EF1C65009A7988 /* PopupPrompts.m */,
 				4CD0E69812F1B6B000C8F016 /* URLParser.h */,
 				4C982D15121F32430051543F /* URLParser.m */,
-				4CD0E69112F1B6B000C8F016 /* LanguagePreferences.h */,
-				4C400E2F1238A655005BDA9D /* LanguagePreferences.m */,
-				4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */,
-				4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1482,6 +1495,7 @@
 				4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */,
 				4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */,
 				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
+				4C67A81112F38268002E308B /* NSDateHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,6 +1519,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4C67A85612F388D8002E308B /* PBXTargetDependency */,
 				4C3F6CFE12DC6EB900F5E696 /* PBXTargetDependency */,
 			);
 			name = Textual;
@@ -1811,6 +1826,7 @@
 				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
 				4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */,
 				4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */,
+				4C67A80812F38125002E308B /* NSDateHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1821,6 +1837,11 @@
 			isa = PBXTargetDependency;
 			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
 			targetProxy = 4C3F6CFD12DC6EB900F5E696 /* PBXContainerItemProxy */;
+		};
+		4C67A85612F388D8002E308B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
+			targetProxy = 4C67A85512F388D8002E308B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

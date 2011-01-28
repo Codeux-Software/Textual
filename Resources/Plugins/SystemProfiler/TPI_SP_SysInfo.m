@@ -128,7 +128,7 @@
 
 + (NSString *)applicationAndSystemUptime
 {
-	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime([Preferences startTime], YES)];
+	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime([NSDate secondsSinceUnixTimestamp:[Preferences startTime]])];
 }
 
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world
@@ -374,7 +374,7 @@
 		boottime.tv_sec = 0;
 	}
 	
-	return TXReadableTime(boottime.tv_sec, YES);
+	return TXReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec]);
 }
 
 + (NSString *)loadAveragesWithCores:(NSInteger)cores

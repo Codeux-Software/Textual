@@ -23,6 +23,7 @@
 	#define CFItemRefToID(s)					(id)s
 	#define PointerIsEmpty(s)					(s == NULL || s == nil)
 	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
+	#define ObjectsShareType(a, b)				(strcmp(@encode(typeof(a)), @encode(b)) == 0)
 
 	/* Item types */
 	typedef unsigned long long TXFSLongInt; // filesizes
@@ -74,6 +75,7 @@
 	#import "GTMDefines.h"
 	#import "SoundPlayer.h"
 	#import "NSFontHelper.h"
+	#import "NSDateHelper.h"
 	#import "NSDataHelper.h"
 	#import "NSRectHelper.h"
 	#import "UnicodeHelper.h"

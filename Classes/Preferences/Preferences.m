@@ -943,8 +943,6 @@ static NSInteger startUpTime;
 
 + (void)defaultIRCClientPrompt
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	[NSThread sleepForTimeInterval:1.5];
 	
     CFURLRef ircAppURL = NULL;
@@ -968,8 +966,6 @@ static NSInteger startUpTime;
 	}
 	
 	if (ircAppURL) CFRelease(ircAppURL);
-	
-	[pool release];
 }
 
 + (void)initPreferences
