@@ -12,7 +12,7 @@
 {
 	BOOL useSupression = NO;
 	
-	if (NSObjectIsEmpty(suppressKey)) {
+	if (NSObjectIsNotEmpty(suppressKey)) {
 		useSupression = YES;
 		
 		if ([_NSUserDefaults() boolForKey:suppressKey] == YES) {
@@ -72,7 +72,7 @@
 }
 
 + (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(Class)targetClass
+						 target:(id)targetClass
 						 action:(SEL)actionSelector
 						   body:(NSString *)bodyText 
 						  title:(NSString *)titleText
@@ -83,7 +83,7 @@
 {
 	BOOL useSupression = NO;
 	
-	if (NSObjectIsEmpty(suppressKey)) {
+	if (NSObjectIsNotEmpty(suppressKey)) {
 		useSupression = YES;
 		
 		if ([_NSUserDefaults() boolForKey:suppressKey] == YES) {

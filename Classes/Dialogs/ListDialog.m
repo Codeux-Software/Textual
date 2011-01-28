@@ -94,10 +94,10 @@
 			filteredList = [NSMutableArray new];
 		}
 		
-		NSRange tr = [topic rangeOfString:filter options:NSCaseInsensitiveSearch];
-		NSRange cr = [channel rangeOfString:filter options:NSCaseInsensitiveSearch];
+		NSInteger tr = [topic stringPositionIgnoringCase:filter];
+		NSInteger cr = [channel stringPositionIgnoringCase:filter];
 		
-		if (tr.location != NSNotFound || cr.location != NSNotFound) {
+		if (tr >= 0 || cr >= 0) {
 			[self sortedInsert:item inArray:filteredList];
 		}
 	}
@@ -224,10 +224,10 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 			NSString *channel = [item safeObjectAtIndex:0];
 			NSString *topic = [item safeObjectAtIndex:2];
 			
-			NSRange tr = [topic rangeOfString:filter options:NSCaseInsensitiveSearch];
-			NSRange cr = [channel rangeOfString:filter options:NSCaseInsensitiveSearch];
+			NSInteger tr = [topic stringPositionIgnoringCase:filter];
+			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 			
-			if (tr.location != NSNotFound || cr.location != NSNotFound) {
+			if (tr >= 0 || cr >= 0) {
 				[ary addObject:item];
 			}
 		}

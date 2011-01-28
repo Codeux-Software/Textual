@@ -20,6 +20,7 @@
 - (NSString *)fastChopEndWithChars:(NSArray *)chars;
 
 - (NSString *)nicknameFromHostmask;
+- (NSString *)hostmaskFromRawString;
 - (NSString *)cleanedServerHostmask;
 
 - (BOOL)isEqualNoCase:(NSString *)other;
@@ -29,8 +30,9 @@
 
 - (NSInteger)findCharacter:(UniChar)c;
 - (NSInteger)findCharacter:(UniChar)c start:(NSInteger)start;
-- (NSInteger)findString:(NSString *)str;
+
 - (NSInteger)stringPosition:(NSString *)needle;
+- (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
 - (NSArray *)split:(NSString *)delimiter;
 - (NSArray *)splitIntoLines;

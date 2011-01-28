@@ -53,3 +53,7 @@ typedef enum {
 @interface DDInvocationGrabber (DDInvocationGrabber_Conveniences)
 - (id)prepareWithInvocationTarget:(id)inTarget;
 @end
+
+@interface NSInvocation (DDInvocationWrapper)
+- (void)performInvocation:(NSInvocation *)anInvocation;
+@end 

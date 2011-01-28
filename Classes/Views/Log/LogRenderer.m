@@ -159,7 +159,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		
 		if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
 		if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
-	
+		
 		[s appendFormat:@">%@</span>", content];
 		
 		return s;
@@ -190,15 +190,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		   attributedString:NO];
 }
 
-+ (id)renderBody:(NSString *)body 
-	  controller:(LogController *)log
-		 nolinks:(BOOL)hideLinks
-		keywords:(NSArray *)keywords 
-	excludeWords:(NSArray *)excludeWords 
-  exactWordMatch:(BOOL)exactWordMatch 
-	 highlighted:(BOOL *)highlighted 
-	   URLRanges:(NSArray**)urlRanges
-attributedString:(BOOL)attributed
++ (NSString *)renderBody:(NSString *)body 
+			  controller:(LogController *)log
+				 nolinks:(BOOL)hideLinks
+				keywords:(NSArray *)keywords 
+			excludeWords:(NSArray *)excludeWords 
+		  exactWordMatch:(BOOL)exactWordMatch 
+			 highlighted:(BOOL *)highlighted 
+			   URLRanges:(NSArray**)urlRanges
+		attributedString:(BOOL)attributed
 {
 	NSInteger len = body.length;
 	NSInteger start = 0;
@@ -496,7 +496,9 @@ attributedString:(BOOL)attributed
 							start = 0;
 							
 							while (start < len) {
-								NSRange r = [body rangeOfString:user.nick options:NSCaseInsensitiveSearch range:NSMakeRange(start, (len - start))];
+								NSRange r = [body rangeOfString:user.nick 
+														options:NSCaseInsensitiveSearch 
+														  range:NSMakeRange(start, (len - start))];
 								
 								if (r.location == NSNotFound) {
 									break;

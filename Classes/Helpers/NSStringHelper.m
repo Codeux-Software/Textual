@@ -93,12 +93,14 @@
 - (BOOL)contains:(NSString *)str
 {
 	NSRange r = [self rangeOfString:str];
+	
 	return BOOLReverseValue(r.location == NSNotFound);
 }
 
 - (BOOL)containsIgnoringCase:(NSString *)str
 {
 	NSRange r = [self rangeOfString:str options:NSCaseInsensitiveSearch];
+	
 	return BOOLReverseValue(r.location == NSNotFound);
 }
 
@@ -111,13 +113,6 @@
 {
 	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(c, 1)] 
 									  options:0 range:NSMakeRange(start, ([self length] - start))];
-	
-	return ((r.location == NSNotFound) ? -1 : r.location);
-}
-
-- (NSInteger)findString:(NSString *)str
-{
-	NSRange r = [self rangeOfString:str];
 	
 	return ((r.location == NSNotFound) ? -1 : r.location);
 }
@@ -314,6 +309,13 @@ BOOL isUnicharDigit(unichar c)
 - (NSInteger)stringPosition:(NSString *)needle
 {
 	NSRange r = [self rangeOfString:needle];
+	if (r.location == NSNotFound) return -1;
+	return r.location;
+}
+
+- (NSInteger)stringPositionIgnoringCase:(NSString *)needle
+{
+	NSRange r = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
 	if (r.location == NSNotFound) return -1;
 	return r.location;
 }
@@ -567,6 +569,14 @@ BOOL isUnicharDigit(unichar c)
 	CFRelease(uuidObj);
 	
 	return [uuidString autorelease];
+}
+
+- (NSString *)hostmaskFromRawString
+{
+	if (NSObjectIsEmpty(self)) return nil;
+	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
+	
+	return [self safeSubstringAfterIndex:[self stringPosition:@"!"]];
 }
 
 - (NSString *)nicknameFromHostmask

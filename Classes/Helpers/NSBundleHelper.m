@@ -8,8 +8,6 @@
 						   command:(NSString *)command
 							client:(IRCClient *)client
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
@@ -19,16 +17,12 @@
 			[bundle messageSentByUser:client message:message command:command];
 		}
 	}
-	
-	[pool drain];
 }
 
 + (void)sendServerInputDataToBundles:(IRCWorld *)world
 							  client:(IRCClient *)client
 							 message:(IRCMessage *)msg
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	NSArray *cmdPlugins = [[world bundlesForServerInput] objectForKey:[msg command]];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
@@ -53,8 +47,6 @@
 			[bundle messageReceivedByServer:client sender:senderData message:messageData];
 		}
 	}
-	
-	[pool drain];
 }
 
 + (void)reloadBundles:(IRCWorld *)world
@@ -65,8 +57,6 @@
 
 + (void)deallocBundlesFromMemory:(IRCWorld *)world
 {		
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	PreferencesController *prefController = world.menuController.preferencesController;
 	
 	if (prefController) {
@@ -88,14 +78,10 @@
 	}
 	
 	[allBundles release];
-	
-	[pool release];
 }
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	
 	NSString *path = [Preferences wherePluginsPath];
 	
 	if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
@@ -150,8 +136,6 @@
 	[serverInputBundles release];
 	[completeBundleIndex release];
 	[preferencesBundlesIndex release];
-	
-	[pool release];
 }
 
 @end

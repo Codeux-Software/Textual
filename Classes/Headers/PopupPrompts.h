@@ -17,7 +17,7 @@
 					   defaultInput:(NSString *)defaultValue;
 
 + (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(Class)targetClass
+						 target:(id)targetClass
 						 action:(SEL)actionSelector
 						   body:(NSString *)bodyText 
 						  title:(NSString *)titleText
