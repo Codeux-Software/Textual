@@ -1248,7 +1248,7 @@
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	NSString *opString = nil;
+	NSString *opString = @"";
 	NSInteger currentIndex = 0;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1259,7 +1259,7 @@
 		if (currentIndex == MAXIMUM_SETS_PER_MODE) {
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
 			
-			opString = nil;
+			opString = @"";
 			currentIndex = 0;
 		}
 	}
