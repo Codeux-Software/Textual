@@ -1022,6 +1022,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 }
 
+- (void)updateAutoJoinIVAR
+{
+	autojoinInitialized = NO;
+}
+
 - (void)performAutoJoin
 {
 	NSMutableArray *ary = [NSMutableArray array];
@@ -1035,6 +1040,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	[self joinChannels:ary];
+	
+	[self performSelector:@selector(updateAutoJoinIVAR) withObject:nil afterDelay:5.0];
 }
 
 - (void)joinChannels:(NSArray *)chans
