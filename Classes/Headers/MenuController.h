@@ -66,10 +66,9 @@
 - (void)onCopyLogAsHtml:(id)sender;
 
 - (void)onMarkScrollback:(id)sender;
-- (void)onClearMark:(id)sender;
-- (void)onGoToMark:(id)sender;
 - (void)onMarkAllAsRead:(id)sender;
-- (void)onMarkAllAsReadAndMarkAllScrollbacks:(id)sender;
+- (void)onIncreaseFontSize:(id)sender;
+- (void)onDecreaseFontSize:(id)sender;
 
 - (void)onConnect:(id)sender;
 - (void)onDisconnect:(id)sender;

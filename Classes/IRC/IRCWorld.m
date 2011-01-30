@@ -260,6 +260,11 @@
 			c.isUnread = NO;
 			c.unreadCount = 0;
 			c.keywordCount = 0;
+			
+			if ([Preferences autoAddScrollbackMark]) {
+				[c.log unmark];
+				[c.log mark];
+			}
 		}
 	}
 	
@@ -1288,8 +1293,8 @@
 		
 		[ary removeAllObjects];
 		
-		[ary addObject:i];
 		[ary addObjectsFromArray:low];
+		[ary addObject:i];
 		[ary addObjectsFromArray:high];
 		
 		[self reloadTree];
@@ -1310,8 +1315,8 @@
 		
 		[ary removeAllObjects];
 		
-		[ary addObject:i];
 		[ary addObjectsFromArray:low];
+		[ary addObject:i];
 		[ary addObjectsFromArray:high];
 		
 		[self reloadTree];

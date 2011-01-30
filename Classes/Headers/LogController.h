@@ -79,6 +79,7 @@
 @property (nonatomic, assign) NSInteger scrollTop;
 
 - (void)setUp;
+- (void)restorePosition;
 - (void)notifyDidBecomeVisible;
 
 - (void)moveToTop;
@@ -89,15 +90,16 @@
 - (void)mark;
 - (void)unmark;
 - (void)goToMark;
+
 - (void)reloadTheme;
 - (void)applyOverrideStyle;
+
 - (void)clear;
+
 - (void)changeTextSize:(BOOL)bigger;
 
 - (BOOL)print:(LogLine *)line;
 - (BOOL)print:(LogLine *)line withHTML:(BOOL)stripHTML;
 
 - (void)logViewOnDoubleClick:(NSString *)e;
-
-- (void)restorePosition;
 @end

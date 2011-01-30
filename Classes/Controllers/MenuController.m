@@ -591,36 +591,31 @@
 	
 	if (PointerIsEmpty(sel)) return;
 	
+	[sel.log unmark];
 	[sel.log mark];
 }
 
-- (void)onClearMark:(id)sender
+- (void)onIncreaseFontSize:(id)sender
 {
 	IRCTreeItem *sel = world.selected;
 	
 	if (PointerIsEmpty(sel)) return;
 	
-	[sel.log unmark];
+	[sel.log changeTextSize:YES];
 }
 
-- (void)onGoToMark:(id)sender
+- (void)onDecreaseFontSize:(id)sender
 {
 	IRCTreeItem *sel = world.selected;
 	
 	if (PointerIsEmpty(sel)) return;
 	
-	[sel.log goToMark];
+	[sel.log changeTextSize:NO];
 }
 
 - (void)onMarkAllAsRead:(id)sender
 {
 	[world markAllAsRead];
-}
-
-- (void)onMarkAllAsReadAndMarkAllScrollbacks:(id)sender
-{
-	[world markAllAsRead];
-	[world markAllScrollbacks];
 }
 
 - (void)onConnect:(id)sender
@@ -925,17 +920,19 @@
 {
 	IRCChannel *c = [world selectedChannel];
 	
-	if (NO_CHANNEL || IS_QUERY || IS_CLIENT) return;
+	if (NO_CHANNEL || IS_CLIENT) return;
 	
-	BOOL result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE") 
-												   title:TXTLS(@"WANT_CHANNEL_DELETE_TITLE") 
-										   defaultButton:TXTLS(@"OK_BUTTON") 
-										 alternateButton:TXTLS(@"CANCEL_BUTTON") 
-										  suppressionKey:@"Preferences.prompts.delete_channel"
-										 suppressionText:nil];
-	
-	if (result == NO) {
-		return;
+	if (IS_CHANNEL) {
+		BOOL result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_CHANNEL_DELETE_MESSAGE") 
+													   title:TXTLS(@"WANT_CHANNEL_DELETE_TITLE") 
+											   defaultButton:TXTLS(@"OK_BUTTON") 
+											 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+											  suppressionKey:@"Preferences.prompts.delete_channel"
+											 suppressionText:nil];
+		
+		if (result == NO) {
+			return;
+		}
 	}
 	
 	[world destroyChannel:c];
