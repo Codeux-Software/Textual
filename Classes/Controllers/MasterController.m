@@ -344,6 +344,8 @@
 	[menu terminate];
 	
 	[self saveWindowState];
+	
+	[Preferences updateTotalRunTime];
 }
 
 #pragma mark -

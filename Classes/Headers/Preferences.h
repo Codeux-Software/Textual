@@ -42,6 +42,8 @@ typedef enum {
 + (void)validateStoreReceipt;
 
 + (NSInteger)startTime;
++ (NSInteger)totalRunTime;
++ (void)updateTotalRunTime;
 
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;

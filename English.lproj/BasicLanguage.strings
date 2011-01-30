@@ -165,21 +165,21 @@
 "USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
 "USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available."; // normal user 
 
-"TIME_CONVERT_SECOND" = "sec";
-"TIME_CONVERT_MINUTE" = "min";
-"TIME_CONVERT_HOUR" = "hour";
-"TIME_CONVERT_DAY" = "day";
-"TIME_CONVERT_WEEK" = "week";
-"TIME_CONVERT_MONTH" = "month";
-"TIME_CONVERT_YEAR" = "year";
+"TIME_CONVERT_SECOND" = "Second";
+"TIME_CONVERT_MINUTE" = "Minute";
+"TIME_CONVERT_HOUR" = "Hour";
+"TIME_CONVERT_DAY" = "Day";
+"TIME_CONVERT_WEEK" = "Week";
+"TIME_CONVERT_MONTH" = "Month";
+"TIME_CONVERT_YEAR" = "Year";
 
-"TIME_CONVERT_SECOND_PLURAL" = "secs";
-"TIME_CONVERT_MINUTE_PLURAL" = "mins";
-"TIME_CONVERT_HOUR_PLURAL" = "hours";
-"TIME_CONVERT_DAY_PLURAL" = "days";
-"TIME_CONVERT_WEEK_PLURAL" = "weeks";
-"TIME_CONVERT_MONTH_PLURAL" = "months";
-"TIME_CONVERT_YEAR_PLURAL" = "years";
+"TIME_CONVERT_SECOND_PLURAL" = "Seconds";
+"TIME_CONVERT_MINUTE_PLURAL" = "Minutes";
+"TIME_CONVERT_HOUR_PLURAL" = "Hours";
+"TIME_CONVERT_DAY_PLURAL" = "Days";
+"TIME_CONVERT_WEEK_PLURAL" = "Weeks";
+"TIME_CONVERT_MONTH_PLURAL" = "Months";
+"TIME_CONVERT_YEAR_PLURAL" = "Years";
 
 "ACCESSIBILITY_MEMBER_LIST_DESCRIPTION" = "User %@ selected in member list of channel pound %@.";
 
