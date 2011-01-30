@@ -288,7 +288,7 @@
 				IRCClient *u = [world selectedClient];
 				IRCChannel *c = [world selectedChannel];
 				
-				if (NO_CLIENT_OR_CHANNEL) return NO;
+				if (NO_CLIENT_OR_CHANNEL) return YES;
 				
 				switch ([Preferences cmdWResponseType]) {
 					case CMDWKEY_SHORTCUT_CLOSE:
