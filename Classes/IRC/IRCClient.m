@@ -754,6 +754,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
+	autojoinInitialized = YES;
+	
 	[autoJoinTimer stop];
 }
 
