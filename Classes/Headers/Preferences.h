@@ -41,8 +41,6 @@ typedef enum {
 
 + (void)validateStoreReceipt;
 
-+ (BOOL)isUpgradedFromVersion100;
-
 + (NSInteger)startTime;
 
 + (NSDictionary *)textualInfoPlist;

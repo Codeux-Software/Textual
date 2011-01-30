@@ -32,18 +32,18 @@
 
 - (void)dealloc
 {
-	[sender release];
-	[command release];
-	[params release];
+	[sender drain];
+	[command drain];
+	[params drain];
 	
 	[super dealloc];
 }
 
 - (void)parseLine:(NSString *)line
 {
-	[sender release];
-	[command release];
-	[params release];
+	[sender drain];
+	[command drain];
+	[params drain];
 	
 	command = @"";
 	sender = [IRCPrefix new];
@@ -89,7 +89,7 @@
 		}
 	}
 	
-	[s release];
+	[s drain];
 }
 
 - (NSString *)paramAt:(NSInteger)index

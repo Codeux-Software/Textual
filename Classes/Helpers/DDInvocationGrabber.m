@@ -141,7 +141,7 @@
 	
 	[anInvocation invoke];
 	
-	[pool release];
+	[pool drain];
 }
 
 @end 

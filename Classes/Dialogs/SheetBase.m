@@ -11,7 +11,7 @@
 
 - (void)dealloc
 {
-	[sheet release];
+	[sheet drain];
 	[super dealloc];
 }
 

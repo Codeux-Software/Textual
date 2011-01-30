@@ -46,14 +46,14 @@
 {
 	[conn autorelease];
 	[conn close];
-	[host release];
-	[proxyHost release];
-	[proxyPassword release];
-	[proxyUser release];
-	[sendQueue release];
+	[host drain];
+	[proxyHost drain];
+	[proxyPassword drain];
+	[proxyUser drain];
+	[sendQueue drain];
 	
 	[timer stop];
-	[timer release];
+	[timer drain];
 	
 	[super dealloc];
 }

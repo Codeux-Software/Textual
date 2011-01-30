@@ -19,14 +19,14 @@
 
 - (void)dealloc
 {
-	[time release];
-	[place release];
-	[nick release];
-	[body release];
-	[keywords release];
-	[nickInfo release];
-	[clickInfo release];
-	[excludeWords release];
+	[time drain];
+	[place drain];
+	[nick drain];
+	[body drain];
+	[keywords drain];
+	[nickInfo drain];
+	[clickInfo drain];
+	[excludeWords drain];
 	
 	[super dealloc];
 }

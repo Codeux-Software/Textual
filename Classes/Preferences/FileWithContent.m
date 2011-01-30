@@ -13,8 +13,8 @@
 
 - (void)dealloc
 {
-	[filename release];
-	[content release];
+	[filename drain];
+	[content drain];
 	
 	[super dealloc];
 }
@@ -22,7 +22,7 @@
 - (void)setFilename:(NSString *)value
 {
 	if (filename != value) {
-		[filename release];
+		[filename drain];
 		filename = [value retain];
 	}
 	
@@ -31,7 +31,7 @@
 
 - (void)reload
 {
-	[content release];
+	[content drain];
 	content = nil;
 	
 	content = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];

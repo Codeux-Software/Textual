@@ -16,7 +16,7 @@
 
 - (void)dealloc
 {
-	[finalModalValue release];
+	[finalModalValue drain];
 	
     [super dealloc];
 }
@@ -86,9 +86,9 @@
 		continue;
 	}
 	
-	[textStorage release];
-	[textContainer release];
-	[layoutManager release];
+	[textStorage drain];
+	[textContainer drain];
+	[layoutManager drain];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender

@@ -80,8 +80,8 @@
 		[pluginPrimaryClass pluginUnloadedFromMemory];
 	}
 	
-	[pluginPrimaryClass release];
-	[pluginBundle release];
+	[pluginPrimaryClass drain];
+	[pluginBundle drain];
 	
 	[super dealloc];
 }

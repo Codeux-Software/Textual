@@ -9,3 +9,7 @@
 @interface NSMutableArray (NSMutableArrayHelper)
 - (void)safeRemoveObjectAtIndex:(NSInteger)n;
 @end
+
+@interface NSIndexSet (NSIndexSetHelper)
+- (NSArray *)arrayFromIndexSet;
+@end

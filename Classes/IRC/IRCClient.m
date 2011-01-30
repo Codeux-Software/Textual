@@ -172,39 +172,39 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)dealloc
 {
-	[autoJoinTimer release];
+	[autoJoinTimer drain];
 	[autoJoinTimer stop];
-	[chanBanListSheet release];
-	[channelListDialog release];
-	[channels release];
-	[commandQueueTimer release];
+	[chanBanListSheet drain];
+	[channelListDialog drain];
+	[channels drain];
+	[commandQueueTimer drain];
 	[commandQueueTimer stop];
-	[commandQueue release];
-	[config release];
+	[commandQueue drain];
+	[config drain];
 	[conn autorelease];
 	[conn close];
-	[inputNick release];
-	[isonTimer release];
+	[inputNick drain];
+	[isonTimer drain];
 	[isonTimer stop];
-	[isupport release];
-	[lastSelectedChannel release];
-	[logDate release];
-	[logFile release];
-	[myHost release];
-	[myNick release];
-	[pongTimer release];
+	[isupport drain];
+	[lastSelectedChannel drain];
+	[logDate drain];
+	[logFile drain];
+	[myHost drain];
+	[myNick drain];
+	[pongTimer drain];
 	[pongTimer stop];
-	[reconnectTimer release];
+	[reconnectTimer drain];
 	[reconnectTimer stop];
-	[retryTimer release];
+	[retryTimer drain];
 	[retryTimer stop];
-	[sentNick release];
-	[serverHostname release];
-	[trackedUsers release];
+	[sentNick drain];
+	[serverHostname drain];
+	[trackedUsers drain];
 	
 #ifdef IS_TRIAL_BINARY
 	[trialPeriodTimer stop];
-	[trialPeriodTimer release];
+	[trialPeriodTimer drain];
 #endif
 	
 	[super dealloc];
@@ -221,7 +221,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
-	[config release];
+	[config drain];
 	config = nil;
 	
 	config = [seed mutableCopy];
@@ -375,7 +375,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
-		[trackedUsers release];
+		[trackedUsers drain];
 		trackedUsers = [newEntries retain];
 	} else {
 		for (AddressBook *g in ignores) {
@@ -419,7 +419,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)closeDialogs
 {
 	[channelListDialog close];
-	[channelListDialog release];
+	[channelListDialog drain];
 }
 
 - (void)preferencesChanged
@@ -1188,7 +1188,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);	
 	}
 	
-	[appleScript release];
+	[appleScript drain];
 }
 
 - (void)processBundlesUserMessage:(NSArray *)info
@@ -1305,7 +1305,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self send:cmd, channel.name, newstr, nil];
 		}
 		
-		[str release];
+		[str drain];
 	}
 }
 
@@ -2739,7 +2739,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (logDate) {
 			if ([logDate isEqualToString:comp] == NO) {
-				[logDate release];
+				[logDate drain];
                 
 				logDate = [comp retain];
 				[logFile reopenIfNeeded];
@@ -3388,7 +3388,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		[self reloadTree];
 		
-		[myHost release];
+		[myHost drain];
 		myHost = [m.sender.raw retain];
 		
 		if (autojoinInitialized == NO && [autoJoinTimer isActive] == NO) {
@@ -3594,7 +3594,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL myself = [nick isEqualNoCase:myNick];
 	
 	if (myself) {
-		[myNick release];
+		[myNick drain];
 		myNick = [toNick retain];
 	} else {
 		ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
@@ -3732,10 +3732,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	tryingNickNumber = -1;
 	
-	[serverHostname release];
+	[serverHostname drain];
 	serverHostname = [m.sender.raw retain];
 	
-	[myNick release];
+	[myNick drain];
 	myNick = [[m paramAt:0] retain];
 	
 	[self notifyEvent:GROWL_LOGIN];
@@ -4491,7 +4491,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					[s appendString:@"_"];
 				}
 				
-				[sentNick release];
+				[sentNick drain];
 				sentNick = [s retain];
 				
 				break;
@@ -4499,7 +4499,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		
 		if (found == NO) {
-			[sentNick release];
+			[sentNick drain];
 			sentNick = @"0";
 		}
 	} else {
@@ -4533,8 +4533,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	isConnecting = isConnected = isLoggedIn = isQuitting = NO;
 	hasIRCopAccess = serverHasNickServ = autojoinInitialized = NO;
 	
-	[myNick release];
-	[sentNick release];
+	[myNick drain];
+	[sentNick drain];
 	myNick = @"";
 	sentNick = @"";
 	

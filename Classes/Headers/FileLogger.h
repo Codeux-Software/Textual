@@ -9,13 +9,13 @@
 	IRCClient *client;
 	IRCChannel *channel;
 	
-	NSString *fileName;
+	NSString *filename;
 	NSFileHandle *file;
 }
 
 @property (nonatomic, assign) IRCClient *client;
 @property (nonatomic, assign) IRCChannel *channel;
-@property (nonatomic, retain) NSString *fileName;
+@property (nonatomic, retain) NSString *filename;
 @property (nonatomic, retain) NSFileHandle *file;
 
 - (void)open;

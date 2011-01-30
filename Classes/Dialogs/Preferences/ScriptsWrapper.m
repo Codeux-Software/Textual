@@ -42,7 +42,7 @@
 
 - (void)dealloc
 {
-	[scripts release];
+	[scripts drain];
 	[super dealloc];
 }
 

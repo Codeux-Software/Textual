@@ -22,15 +22,15 @@
 
 - (void)dealloc
 {
-	[url release];
-	[addr release];
-	[nick release];
-	[chan release];
-	[menu release];
-	[urlMenu release];
-	[addrMenu release];
-	[chanMenu release];
-	[memberMenu release];
+	[url drain];
+	[addr drain];
+	[nick drain];
+	[chan drain];
+	[menu drain];
+	[urlMenu drain];
+	[addrMenu drain];
+	[chanMenu drain];
+	[memberMenu drain];
 	
 	[super dealloc];
 }

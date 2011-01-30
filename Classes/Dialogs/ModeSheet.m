@@ -34,8 +34,8 @@
 
 - (void)dealloc
 {
-	[mode release];
-	[channelName release];
+	[mode drain];
+	[channelName drain];
 	
 	[super dealloc];
 }

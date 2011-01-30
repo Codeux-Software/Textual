@@ -87,14 +87,14 @@
 
 - (void)dealloc
 {
-	[config release];
-	[serverList release];
-	[ignoreSheet release];
-	[generalView release];
-	[detailsView release];
-	[onloginView release];
-	[ignoresView release];
-	[channelSheet release];
+	[config drain];
+	[serverList drain];
+	[ignoreSheet drain];
+	[generalView drain];
+	[detailsView drain];
+	[onloginView drain];
+	[ignoresView drain];
+	[channelSheet drain];
 	
 	[super dealloc];
 }
@@ -483,7 +483,7 @@
 		conf.name = @"";
 	}
 	
-	[channelSheet release];
+	[channelSheet drain];
 	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
@@ -501,7 +501,7 @@
 	
 	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
 	
-	[channelSheet release];
+	[channelSheet drain];
 	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
@@ -571,7 +571,7 @@
 
 - (void)addIgnore:(id)sender
 {
-	[ignoreSheet release];
+	[ignoreSheet drain];
 	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;
@@ -586,7 +586,7 @@
 	NSInteger sel = [ignoreTable selectedRow];
 	if (sel < 0) return;
 	
-	[ignoreSheet release];
+	[ignoreSheet drain];
 	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;

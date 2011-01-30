@@ -55,11 +55,11 @@
 
 - (void)dealloc
 {
-	[name release];
-	[mode release];
-	[topic release];
-	[password release];
-	[encryptionKey release];
+	[name drain];
+	[mode drain];
+	[topic drain];
+	[password drain];
+	[encryptionKey drain];
 	
 	[super dealloc];
 }

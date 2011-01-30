@@ -42,11 +42,11 @@
 
 - (void)dealloc
 {
-	[theme release];
-	[bgColor release];
-	[gradient release];
-	[topLineColor release];
-	[bottomLineColor release];
+	[theme drain];
+	[bgColor drain];
+	[gradient drain];
+	[topLineColor drain];
+	[bottomLineColor drain];
 	
 	[super dealloc];
 }
@@ -64,10 +64,10 @@
 
 - (void)themeChanged
 {
-	[bgColor release];
-	[topLineColor release];
-	[bottomLineColor release];
-	[gradient release];
+	[bgColor drain];
+	[topLineColor drain];
+	[bottomLineColor drain];
+	[gradient drain];
 
 	bgColor = [theme.treeBgColor retain];
 	topLineColor = [theme.treeSelTopLineColor retain];

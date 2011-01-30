@@ -55,7 +55,7 @@
 - (void)setPath:(NSString *)value
 {
 	if (path != value) {
-		[path release];
+		[path drain];
 		path = [value retain];
 	}
 	
@@ -64,36 +64,36 @@
 
 - (void)dealloc
 {
-	[inputTextBgColor release];
-	[inputTextColor release];
-	[inputTextFont release];
-	[memberListBgColor release];
-	[memberListColor release];
-	[memberListFont release];
-	[memberListOpColor release];
-	[memberListSelBottomColor release];
-	[memberListSelBottomLineColor release];
-	[memberListSelColor release];
-	[memberListSelTopColor release];
-	[memberListSelTopLineColor release];
-	[nicknameFormat release];
-	[overrideChannelFont release];
-	[path release];
-	[timestampFormat release];
-	[treeActiveColor release];
-	[treeBgColor release];
-	[treeFont release];
-	[treeHighlightColor release];
-	[treeInactiveColor release];
-	[treeNewTalkColor release];
-	[treeSelActiveColor release];
-	[treeSelBottomColor release];
-	[treeSelBottomLineColor release];
-	[treeSelInactiveColor release];
-	[treeSelTopColor release];
-	[treeSelTopLineColor release];
-	[treeUnreadColor release];
-	[underlyingWindowColor release];	
+	[inputTextBgColor drain];
+	[inputTextColor drain];
+	[inputTextFont drain];
+	[memberListBgColor drain];
+	[memberListColor drain];
+	[memberListFont drain];
+	[memberListOpColor drain];
+	[memberListSelBottomColor drain];
+	[memberListSelBottomLineColor drain];
+	[memberListSelColor drain];
+	[memberListSelTopColor drain];
+	[memberListSelTopLineColor drain];
+	[nicknameFormat drain];
+	[overrideChannelFont drain];
+	[path drain];
+	[timestampFormat drain];
+	[treeActiveColor drain];
+	[treeBgColor drain];
+	[treeFont drain];
+	[treeHighlightColor drain];
+	[treeInactiveColor drain];
+	[treeNewTalkColor drain];
+	[treeSelActiveColor drain];
+	[treeSelBottomColor drain];
+	[treeSelBottomLineColor drain];
+	[treeSelInactiveColor drain];
+	[treeSelTopColor drain];
+	[treeSelTopLineColor drain];
+	[treeUnreadColor drain];
+	[underlyingWindowColor drain];	
 	
 	[super dealloc];
 }
@@ -218,10 +218,10 @@
 	memberListGradient = nil;
 	prefOIndentMessages = nil;
 	
-	[userInterface release];
+	[userInterface drain];
 	userInterface = nil;
 	
-	[preferencesOverride release];
+	[preferencesOverride drain];
 	preferencesOverride = nil;
 }
 

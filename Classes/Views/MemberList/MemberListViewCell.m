@@ -27,9 +27,9 @@ static NSInteger markWidth = 0;
 
 - (void)dealloc
 {
-	[nickStyle release];
-	[markStyle release];
-	[member release];
+	[nickStyle drain];
+	[markStyle drain];
+	[member drain];
 	
 	[super dealloc];
 }

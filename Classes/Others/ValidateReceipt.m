@@ -81,7 +81,7 @@ NSData *appleRootCert()
 			if (itemRef) CFRelease(itemRef);
 		}
 		
-        [name release];
+        [name drain];
 	}
 	
 	CFRelease(searchList);

@@ -36,9 +36,9 @@
 
 - (void)dealloc
 {
-	[nick release];
-	[address release];
-	[username release];
+	[nick drain];
+	[address drain];
+	[username drain];
 	
 	[super dealloc];
 }

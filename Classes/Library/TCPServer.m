@@ -21,7 +21,7 @@
 - (void)dealloc
 {
 	[conn disconnect];
-	[clients release];
+	[clients drain];
 	[super dealloc];
 }
 

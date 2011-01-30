@@ -17,7 +17,7 @@
 
 - (void)dealloc
 {
-	[param release];
+	[param drain];
 	[super dealloc];
 }
 

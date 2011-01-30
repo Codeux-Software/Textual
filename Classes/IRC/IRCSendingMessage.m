@@ -22,8 +22,8 @@
 
 - (void)dealloc
 {
-	[command release];
-	[params release];
+	[command drain];
+	[params drain];
 	
 	[super dealloc];
 }

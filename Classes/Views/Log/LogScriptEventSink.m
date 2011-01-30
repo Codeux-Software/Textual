@@ -23,7 +23,7 @@
 
 - (void)dealloc
 {
-	[policy release];
+	[policy drain];
 	[super dealloc];
 }
 

@@ -30,7 +30,7 @@
 
 - (void)dealloc
 {
-	[channels release];
+	[channels drain];
 	[super dealloc];
 }
 

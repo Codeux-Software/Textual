@@ -41,9 +41,9 @@
 
 - (void)dealloc
 {
-	[config release];
-	[generalView release];
-	[encryptView release];
+	[config drain];
+	[generalView drain];
+	[encryptView drain];
 	
 	[super dealloc];
 }

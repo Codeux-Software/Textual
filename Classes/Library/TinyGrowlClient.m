@@ -24,12 +24,12 @@
 	[_NSDistributedNotificationCenter() removeObserver:self name:clickedNotificationName object:nil];
 	[_NSDistributedNotificationCenter() removeObserver:self name:timedOutNotificationName object:nil];
 	
-	[appName release];
-	[appIcon release];
-	[allNotifications release];
-	[defaultNotifications release];
-	[clickedNotificationName release];
-	[timedOutNotificationName release];
+	[appName drain];
+	[appIcon drain];
+	[allNotifications drain];
+	[defaultNotifications drain];
+	[clickedNotificationName drain];
+	[timedOutNotificationName drain];
 	
 	[super dealloc];
 }
@@ -104,8 +104,8 @@
 	
 	NSInteger pid = [[NSProcessInfo processInfo] processIdentifier];
 	
-	[clickedNotificationName release];
-	[timedOutNotificationName release];
+	[clickedNotificationName drain];
+	[timedOutNotificationName drain];
 	
 	clickedNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_CLICKED] retain];
 	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_TIMED_OUT] retain];

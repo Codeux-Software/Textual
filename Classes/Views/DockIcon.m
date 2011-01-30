@@ -43,7 +43,7 @@
 			[textString drawAtPoint:NSMakePoint((appIcon.size.width - redBadge.size.width + ((redBadge.size.width - textSize.width) / 2)), 
 												(appIcon.size.height - redBadge.size.height + ((redBadge.size.height - textSize.height) / 2) + 1))];
 			
-			[textString release];
+			[textString drain];
 			
 			if (highlight_count >= 1) {
 				textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:highlight_count] attributes:attrs];
@@ -56,7 +56,7 @@
 				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)), 
 													(appIcon.size.height - greenBadge.size.height + ((greenBadge.size.height - textSize.height) / 2) - (redBadge.size.height - 6)))];
 			
-				[textString release];
+				[textString drain];
 			}
 		} else {
 			if (highlight_count >= 1) {
@@ -69,7 +69,7 @@
 				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)), 
 													(appIcon.size.height - greenBadge.size.height + ((greenBadge.size.height - textSize.height) / 2) + 1))];
 				
-				[textString release];
+				[textString drain];
 			}
 		}
 		
@@ -77,9 +77,9 @@
 		
 		[NSApp setApplicationIconImage:appIcon];
 		
-		[appIcon release];
-		[redBadge release];
-		[greenBadge release];
+		[appIcon drain];
+		[redBadge drain];
+		[greenBadge drain];
 	}
 }
 

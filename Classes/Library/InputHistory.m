@@ -18,7 +18,7 @@
 
 - (void)dealloc
 {
-	[buf release];
+	[buf drain];
 	[super dealloc];
 }
 
