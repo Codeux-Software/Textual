@@ -350,7 +350,7 @@
 
 - (IRCTreeItem *)previouslySelectedItem
 {
-	if (previousSelectedClientId == 0 && previousSelectedClientId == 0) return nil;
+	if (previousSelectedClientId == 0) return nil;
 	
 	NSInteger uid = previousSelectedClientId;
 	NSInteger cid = previousSelectedChannelId;
@@ -718,7 +718,7 @@
 {
 	IRCClient *c = [[IRCClient new] autorelease];
 	
-	c.uid = itemId++;
+	c.uid = ++itemId;
 	c.world = self;
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
@@ -750,7 +750,7 @@
 	
 	c = [[IRCChannel new] autorelease];
 
-	c.uid = itemId++;
+	c.uid = ++itemId;
 	c.client = client;
 	c.mode.isupport = client.isupport;
 	

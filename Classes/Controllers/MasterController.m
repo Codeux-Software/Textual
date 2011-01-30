@@ -244,6 +244,7 @@
     
 	if (sel) {
 		[sel resetState];
+		
 		[world updateIcon];
 	}
 	
@@ -258,6 +259,7 @@
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
 	[window makeKeyAndOrderFront:nil];
+	
 	[text focus];
 	
 	return YES;
@@ -268,7 +270,9 @@
 	if ([window isVisible] == NO || [NSApp isActive] == NO) {
 		if (NSObjectIsEmpty(world.clients)) {
 			[NSApp activateIgnoringOtherApps:YES];
+			
 			[window makeKeyAndOrderFront:nil];
+			
 			[text focus];
 		}
 	} else {
@@ -413,6 +417,7 @@
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
 	[window makeKeyAndOrderFront:nil];
+	
 	[text focus];
 	
 	return YES;
@@ -441,24 +446,25 @@
 
 - (void)insertCrazyColorCharIntoTextBox:(id)sender
 {
-/*	NSString *body = [text stringValue];
+	NSString *selectedText = [text stringValue];
 	
-	if (NSObjectIsNotEmpty(body)) {
-		NSInteger len = [body length];
-		
-		UniChar resultArray[len];
+	if (NSObjectIsNotEmpty(selectedText)) {
 		NSMutableString *result = [NSMutableString string];
 		
-		CFStringGetCharacters((CFStringRef)selectedText, CFRangeMake(0, len), source);
-	
-		for (NSInteger i = 0; i < len; i++) {
-			UniChar c = source[i];
-	
-			NSInteger firstColor = ((arc4random() % 15) + 1);
-			NSInteger secondColor = ((arc4random() % 15) + 1);
-			
-			NSString *charValue = [NSString stringWithUniChar:c];
+		NSInteger firstColor = 0;
+		NSInteger secondColor = 0;
+		NSInteger charCountIndex = 0;
 		
+		NSString *charValue = nil;
+		
+		while (1 == 1) {
+			if (charCountIndex >= [selectedText length]) break;
+	
+			firstColor = ((arc4random() % 15) + 1);
+			secondColor = ((arc4random() % 15) + 1);
+			
+			charValue = [selectedText safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
+			
 			if ((firstColor % 2) == 0) {
 				charValue = [charValue lowercaseString];
 			} else {
@@ -466,13 +472,13 @@
 			}
 		
 			[result appendFormat:@"▤%i,%i%@▤", firstColor, secondColor, charValue];
+			
+			charCountIndex++;
+		}
+	
+		[text setStringValue:result];
+		[text focus];
 	}
-	
-	selectedText = [charRanges componentsJoinedByString:nil];
-	[charRanges drain];
-	
-	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
-	[text focus];*/
 }
 
 - (IBAction)insertColorCharIntoTextBox:(id)sender
@@ -483,27 +489,31 @@
 	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
 	
 	if ([sender tag] == 100) { // rainbow text
+		NSString *charValue = nil;
+		
+		NSInteger colorChar = 0;
 		NSInteger charCountIndex = 0;
 		NSInteger rainbowArrayIndex = 0;
 		
-		NSMutableArray *rainbowRanges = [NSMutableArray new];
-		NSArray *colorCodes = [NSArray arrayWithObjects:@"4", @"7", @"8", @"3", @"12", @"2", @"6", nil];
+		NSMutableArray *rainbowRanges = [NSMutableArray array];
+		NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"4", @"7", @"8", @"3", @"12", @"2", @"6", nil];
 		
 		while (1 == 1) {
 			if (charCountIndex >= [selectedText length]) break;
 			
-			NSRange charRange = NSMakeRange(charCountIndex, 1);
-			NSString *charValue = [selectedText safeSubstringWithRange:charRange];
+			charValue = [selectedText safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
 			
 			if ([charValue isEqualToString:@" "]) {
 				[rainbowRanges addObject:@" "];
+				
 				charCountIndex++;
+				
 				continue;
 			}
 			
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
 			
-			NSInteger colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
+			colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
 			charValue = [NSString stringWithFormat:@"▤%i%@▤", colorChar, charValue];
 			
 			[rainbowRanges addObject:charValue];
@@ -513,12 +523,13 @@
 		}
 		
 		selectedText = [rainbowRanges componentsJoinedByString:nil];
-		[rainbowRanges drain];
 	} else {
 		selectedText = [NSString stringWithFormat:@"▤%i%@▤", [sender tag], selectedText];
 	}
 	
-	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
+	
+	[text setStringValue:selectedText];
 	[text focus];
 }
 
@@ -527,10 +538,13 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▥%@▥", selectedText];
+	NSString *selectedText = nil;
 	
-	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"▥%@▥", selectedText];
+	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
+	
+	[text setStringValue:selectedText];
 	[text focus];
 }
 
@@ -539,10 +553,13 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▧%@▧", selectedText];
+	NSString *selectedText = nil;
 	
-	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"▧%@▧", selectedText];
+	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
+	
+	[text setStringValue:selectedText];
 	[text focus];
 }
 
@@ -551,10 +568,13 @@
 	NSRange selectedTextRange = [[text currentEditor] selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
-	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▨%@▨", selectedText];
+	NSString *selectedText = nil;
 	
-	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
+	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
+	selectedText = [NSString stringWithFormat:@"▨%@▨", selectedText];
+	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
+	
+	[text setStringValue:selectedText];
 	[text focus];
 }
 
@@ -564,6 +584,7 @@
 - (BOOL)fieldEditorTextViewPaste:(id)sender;
 {
 	NSString *s = [[NSPasteboard generalPasteboard] stringContent];
+	
 	if (NSObjectIsEmpty(s)) return NO;
 	
 	if ([[window firstResponder] isKindOfClass:[NSTextView class]] == NO) {
@@ -718,6 +739,8 @@
 
 - (void)themeDidChange:(NSNotification *)note
 {
+	NSMutableString *sf = [NSMutableString string];
+	
 	[world reloadTheme];
 	
 	[self setColumnLayout];
@@ -725,8 +748,6 @@
 	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	
-	NSMutableString *sf = [NSMutableString string];
 	
 	if (viewTheme.other.nicknameFormat) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
@@ -1324,16 +1345,11 @@ typedef enum {
 
 - (void)WelcomeSheet:(WelcomeSheet *)sender onOK:(NSDictionary *)config
 {
+	NSMutableArray *channels = [NSMutableArray array];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
 	NSString *host = [config objectForKey:@"host"];
 	NSString *nick = [config objectForKey:@"nick"];
-	
-	NSMutableArray *channels = [NSMutableArray array];
-	
-	for (NSString *s in [config objectForKey:@"channels"]) {
-		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys: s, @"name", nil]];
-	}
-	
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setObject:host forKey:@"host"];
 	[dic setObject:host forKey:@"name"];
@@ -1341,6 +1357,10 @@ typedef enum {
 	[dic setObject:channels forKey:@"channels"];
 	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+	
+	for (NSString *s in [config objectForKey:@"channels"]) {
+		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys: s, @"name", nil]];
+	}
 	
 	[window makeKeyAndOrderFront:nil];
 	
