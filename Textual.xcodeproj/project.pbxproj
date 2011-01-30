@@ -1681,7 +1681,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\nrm -R \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
+			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\nrm -Rf \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
 		};
 		4CADEF5C12F1D2D100179329 /* Build Plugins */ = {
 			isa = PBXShellScriptBuildPhase;

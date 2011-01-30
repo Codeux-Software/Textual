@@ -80,10 +80,12 @@ extern NSString *TXReadableTime(NSInteger dateInterval)
 					languageKey = [languageKey stringByAppendingString:@"_PLURAL"];
 				}
 				
-				[finalResult appendFormat:@"%i%@ ", total, TXTLS(languageKey)];
+				[finalResult appendFormat:@"%i %@, ", total, TXTLS(languageKey)];
 			}
 		}
-			
+		
+		[finalResult deleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+		
 		return finalResult;
 	}
 	

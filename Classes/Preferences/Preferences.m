@@ -906,14 +906,31 @@ static NSMutableArray *excludeWords = nil;
 }
 
 #pragma mark -
-#pragma mark KVO
+#pragma mark Start/Run Time Monitoring
 
-static NSInteger startUpTime;
+static NSInteger startUpTime = 0;
+static NSInteger totalRunTime = 0;
 
 + (NSInteger)startTime
 {
 	return startUpTime;
 }
+
++ (NSInteger)totalRunTime
+{
+	totalRunTime  = [_NSUserDefaults() integerForKey:@"TXRunTime"];
+	totalRunTime += [NSDate secondsSinceUnixTimestamp:startUpTime];
+	
+	return totalRunTime;
+}
+
++ (void)updateTotalRunTime
+{
+	[_NSUserDefaults() setInteger:[self totalRunTime] forKey:@"TXRunTime"];
+}
+
+#pragma mark -
+#pragma mark Key-Value Observing
 
 + (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -923,6 +940,9 @@ static NSInteger startUpTime;
 		[self loadExcludeWords];
 	}
 }
+
+#pragma mark -
+#pragma mark Initialization
 
 + (void)defaultIRCClientSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {	
@@ -975,7 +995,7 @@ static NSInteger startUpTime;
 	
 	// ====================================================== //
 	
-	startUpTime = (long)[[NSDate date] timeIntervalSince1970];
+	startUpTime = [[NSDate date] timeIntervalSince1970];
 	
 	NSString *nick = NSUserName();
 	

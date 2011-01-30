@@ -156,7 +156,7 @@
 
 + (NSString *)getTextualRunCount
 {
-	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times.", [_NSUserDefaults() integerForKey:@"TXRunCount"]];
+	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times with a total runtime of %@", [_NSUserDefaults() integerForKey:@"TXRunCount"], TXReadableTime([Preferences totalRunTime])];
 }
 
 + (NSString *)getNetworkStats
