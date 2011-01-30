@@ -72,11 +72,11 @@
 
 - (void)dealloc
 {
-	[host release];
-	[proxyHost release];
-	[proxyUser release];
-	[proxyPassword release];
-	[socketBadSSLCertErrorCodes release];
+	[host drain];
+	[proxyHost drain];
+	[proxyUser drain];
+	[proxyPassword drain];
+	[socketBadSSLCertErrorCodes drain];
 	
 	if (conn) {
 		conn.delegate = nil;
@@ -85,7 +85,7 @@
 		[conn autorelease];
 	}
 	
-	[buffer release];
+	[buffer drain];
 	
 	[super dealloc];
 }

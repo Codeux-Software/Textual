@@ -19,8 +19,8 @@
 
 - (void)dealloc
 {
-	[codeHandlerMap release];
-	[characterHandlerMap release];
+	[codeHandlerMap drain];
+	[characterHandlerMap drain];
 	
 	[super dealloc];
 }

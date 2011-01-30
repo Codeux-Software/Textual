@@ -38,7 +38,7 @@
 
 - (void)dealloc
 {
-	[ignore release];
+	[ignore drain];
 	[super dealloc];
 }
 
@@ -113,7 +113,7 @@
 	ignore.notifyWhoisJoins = [notifyWhoisJoins state];
 	ignore.ignorePMHighlights = [ignorePMHighlights state];
 	
-	[ignore.hostmaskRegex release];
+	[ignore.hostmaskRegex drain];
 	ignore.hostmaskRegex = nil;
 	
 	[ignore processHostMaskRegex];

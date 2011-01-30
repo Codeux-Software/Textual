@@ -18,8 +18,8 @@
 
 - (void)dealloc
 {
-	[hostmask release];
-	[hostmaskRegex release];
+	[hostmask drain];
+	[hostmaskRegex drain];
 	
 	[super dealloc];
 }
@@ -72,7 +72,7 @@
 		}
 		
 		if (hostmask != nhostmask) {
-			[hostmask release];
+			[hostmask drain];
 			hostmask = [nhostmask retain];
 		}
 		

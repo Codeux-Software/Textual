@@ -67,17 +67,17 @@
 {
 	[NSBundle deallocBundlesFromMemory:self];
 	
-	[allLoadedBundles release];
-	[bundlesForServerInput release];
-	[bundlesForUserInput release];
-	[bundlesWithPreferences release];
-	[channelMenu release];
-	[clients release];
-	[config release];
-	[dummyLog release];
-	[extrac release];
-	[selected release];
-	[serverMenu release];	
+	[allLoadedBundles drain];
+	[bundlesForServerInput drain];
+	[bundlesForUserInput drain];
+	[bundlesWithPreferences drain];
+	[channelMenu drain];
+	[clients drain];
+	[config drain];
+	[dummyLog drain];
+	[extrac drain];
+	[selected drain];
+	[serverMenu drain];	
 	
 	[super dealloc];
 }
@@ -199,10 +199,10 @@
 
 - (void)resetLoadedBundles
 {
-	[allLoadedBundles release];
-	[bundlesForUserInput release];
-	[bundlesForServerInput release];
-	[bundlesWithPreferences release];
+	[allLoadedBundles drain];
+	[bundlesForUserInput drain];
+	[bundlesForServerInput drain];
+	[bundlesWithPreferences drain];
 	
 	allLoadedBundles = [NSArray new];
 	bundlesWithPreferences = [NSArray new];
@@ -1116,7 +1116,7 @@
 		
 		if (NSObjectIsNotEmpty(inputValue)) {
 			if (previous.currentInputHistory) {
-				[previous.currentInputHistory release];
+				[previous.currentInputHistory drain];
 				previous.currentInputHistory = nil;
 			}
 			

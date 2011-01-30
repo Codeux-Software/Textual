@@ -10,13 +10,13 @@
 
 @synthesize client;
 @synthesize channel;
-@synthesize fileName;
+@synthesize filename;
 @synthesize file;
 
 - (void)dealloc
 {
 	[self close];
-	[fileName release];
+	[filename drain];
 	[super dealloc];
 }
 
@@ -24,7 +24,7 @@
 {
 	if (file) {
 		[file closeFile];
-		[file release];
+		[file drain];
 		
 		file = nil;
 	}
@@ -55,7 +55,7 @@
 
 - (void)reopenIfNeeded
 {
-	if (NSObjectIsEmpty(fileName) || [fileName isEqualToString:[self buildFileName]] == NO) {
+	if (NSObjectIsEmpty(filename) || [filename isEqualToString:[self buildFileName]] == NO) {
 		[self open];
 	}
 }
@@ -64,10 +64,10 @@
 {
 	[self close];
 	
-	[fileName release];
-	fileName = [[self buildFileName] retain];
+	[filename drain];
+	filename = [[self buildFileName] retain];
 	
-	NSString *dir = [fileName stringByDeletingLastPathComponent];
+	NSString *dir = [filename stringByDeletingLastPathComponent];
 	
 	BOOL isDir = NO;
 	
@@ -75,12 +75,12 @@
 		[_NSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	if ([_NSFileManager() fileExistsAtPath:fileName] == NO) {
-		[_NSFileManager() createFileAtPath:fileName contents:[NSData data] attributes:nil];
+	if ([_NSFileManager() fileExistsAtPath:filename] == NO) {
+		[_NSFileManager() createFileAtPath:filename contents:[NSData data] attributes:nil];
 	}
 	
-	[file release];
-	file = [[NSFileHandle fileHandleForUpdatingAtPath:fileName] retain];
+	[file drain];
+	file = [[NSFileHandle fileHandleForUpdatingAtPath:filename] retain];
 	
 	if (file) {
 		[file seekToEndOfFile];

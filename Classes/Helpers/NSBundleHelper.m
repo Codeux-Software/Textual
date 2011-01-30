@@ -77,7 +77,7 @@
 		}
 	}
 	
-	[allBundles release];
+	[allBundles drain];
 }
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
@@ -132,10 +132,10 @@
 	[world setBundlesForServerInput:serverInputBundles];
 	[world setBundlesWithPreferences:preferencesBundlesIndex];
 	
-	[userInputBundles release];
-	[serverInputBundles release];
-	[completeBundleIndex release];
-	[preferencesBundlesIndex release];
+	[userInputBundles drain];
+	[serverInputBundles drain];
+	[completeBundleIndex drain];
+	[preferencesBundlesIndex drain];
 }
 
 @end

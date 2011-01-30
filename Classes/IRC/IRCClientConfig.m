@@ -92,28 +92,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 												 forUsername:nil 
 												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]
 										   withLegacySupport:NO];
-		
-		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if (NSObjectIsEmpty(kcPassword)) { 
-				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (NickServ)"
-														withItemKind:@"application password" 
-														 forUsername:nil 
-														 serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
-												   withLegacySupport:YES];
-			}
-		}
 	}
 	
 	if (kcPassword) {
-		if ([Preferences isUpgradedFromVersion100] == YES) {
-			[self setNickPassword:kcPassword];
-		} else {
-			if ([kcPassword isEqualToString:nickPassword] == NO) {
-				[nickPassword release];
-				nickPassword = nil;
-				
-				nickPassword = [kcPassword retain];
-			}
+		if ([kcPassword isEqualToString:nickPassword] == NO) {
+			[nickPassword drain];
+			nickPassword = nil;
+			
+			nickPassword = [kcPassword retain];
 		}
 	}
 	
@@ -138,7 +124,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
 		}
 		
-		[nickPassword release];
+		[nickPassword drain];
 		nickPassword = nil;
 		
 		nickPassword = [pass retain];
@@ -155,28 +141,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 												 forUsername:nil 
 												 serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
 										   withLegacySupport:NO];
-		
-		if ([Preferences isUpgradedFromVersion100] == YES) {
-			if (NSObjectIsEmpty(kcPassword)) { 
-				kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual Keychain (Server Password)"
-														withItemKind:@"application password" 
-														 forUsername:nil
-														 serviceName:[NSString stringWithFormat:@"textual.clients.cuid.%i", cuid]
-												   withLegacySupport:YES];
-			}
-		}
 	}
 	
 	if (kcPassword) {
-		if ([Preferences isUpgradedFromVersion100] == YES) {
-			[self setPassword:kcPassword];
-		} else {
-			if ([kcPassword isEqualToString:password] == NO) {
-				[password release];
-				password = nil;
-				
-				password = [kcPassword retain];
-			}
+		if ([kcPassword isEqualToString:password] == NO) {
+			[password drain];
+			password = nil;
+			
+			password = [kcPassword retain];
 		}
 	}
 	
@@ -200,7 +172,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];			
 		}
 		
-		[password release];
+		[password drain];
 		password = nil;
 		
 		password = [pass retain];
@@ -230,12 +202,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	cuid = (([dic intForKey:@"cuid"]) ?: cuid);
 	
 	if ([dic stringForKey:@"guid"]) {
-		[guid release];
+		[guid drain];
 		guid = [[dic stringForKey:@"guid"] retain];
 	}
 	
 	if ([dic stringForKey:@"name"]) {
-		[name release];
+		[name drain];
 		name = [[dic stringForKey:@"name"] retain];
 	}
 	
@@ -243,19 +215,19 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	port = (([dic intForKey:@"port"]) ?: 6667);
 	
 	if ([dic stringForKey:@"nick"]) {
-		[nick release];
+		[nick drain];
 		nick = [[dic stringForKey:@"nick"] retain];
 	}
 	
 	useSSL = [dic boolForKey:@"ssl"];
 	
 	if ([dic stringForKey:@"username"]) {
-		[username release];
+		[username drain];
 		username = [[dic stringForKey:@"username"] retain];
 	}
 	
 	if ([dic stringForKey:@"realname"]) {
-		[realName release];
+		[realName drain];
 		realName = [[dic stringForKey:@"realname"] retain];
 	}
 	
@@ -274,12 +246,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	fallbackEncoding = (([dic intForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
 	
 	if ([dic stringForKey:@"leaving_comment"]) {
-		[leavingComment release];
+		[leavingComment drain];
 		leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
 	}
 	
 	if ([dic stringForKey:@"sleep_quit_message"]) {
-		[sleepQuitMessage release];
+		[sleepQuitMessage drain];
 		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
 	}
 	
@@ -307,26 +279,26 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (void)dealloc
 {
-	[altNicks release];
-	[channels release];
-	[guid release];
-	[host release];
-	[ignores release];
-	[leavingComment release];
-	[loginCommands release];
-	[name release];
-	[network release];
-	[nickPassword release];
-	[nick release];
-	[password release];
-	[proxyHost release];
-	[proxyPassword release];
-	[proxyUser release];
-	[realName release];
-	[server release];
-	[sleepQuitMessage release];
-	[userInfo release];
-	[username release];	
+	[altNicks drain];
+	[channels drain];
+	[guid drain];
+	[host drain];
+	[ignores drain];
+	[leavingComment drain];
+	[loginCommands drain];
+	[name drain];
+	[network drain];
+	[nickPassword drain];
+	[nick drain];
+	[password drain];
+	[proxyHost drain];
+	[proxyPassword drain];
+	[proxyUser drain];
+	[realName drain];
+	[server drain];
+	[sleepQuitMessage drain];
+	[userInfo drain];
+	[username drain];	
 	
 	[super dealloc];
 }

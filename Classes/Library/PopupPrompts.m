@@ -35,7 +35,9 @@
 	}
 	
 	if ([alert runModal] == NSAlertDefaultReturn) {
-		[_NSUserDefaults() setBool:[button state] forKey:suppressKey];
+		if (useSupression) {
+			[_NSUserDefaults() setBool:[button state] forKey:suppressKey];
+		}
 		
 		return YES;
 	} else {
@@ -62,7 +64,7 @@
 	NSInteger button = [dialog buttonClicked];
 	NSString *result = [dialog promptValue];
 	
-	[dialog release];
+	[dialog drain];
 	
 	if (NSObjectIsNotEmpty(result) && button == NSAlertDefaultReturn) {
 		return result;
@@ -106,7 +108,7 @@
 	[alert beginSheetModalForWindow:window modalDelegate:targetClass 
 					 didEndSelector:actionSelector contextInfo:nil];
 	
-	[alert release];
+	[alert drain];
 }
 
 @end

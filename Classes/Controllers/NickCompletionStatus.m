@@ -17,7 +17,7 @@
 
 - (void)dealloc
 {
-	[text release];
+	[text drain];
 	[super dealloc];
 }
 

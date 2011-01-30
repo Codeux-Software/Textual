@@ -58,14 +58,14 @@
 
 - (void)dealloc
 {
-	[completionStatus release];
-	[extrac release];
-	[fieldEditor release];
-	[growl release];
-	[inputHistory release];
-	[viewTheme release];
-	[WelcomeSheetDisplay release];
-	[world release];	
+	[completionStatus drain];
+	[extrac drain];
+	[fieldEditor drain];
+	[growl drain];
+	[inputHistory drain];
+	[viewTheme drain];
+	[WelcomeSheetDisplay drain];
+	[world drain];	
 	
 	[super dealloc];
 }
@@ -336,11 +336,8 @@
 	
 	[world save];
 	[world terminate];
-	[menu terminate];
 	
-	if ([Preferences isUpgradedFromVersion100] == YES) {
-		[_NSUserDefaults() removeObjectForKey:@"SUHasLaunchedBefore"];
-	}
+	[menu terminate];
 	
 	[self saveWindowState];
 }
@@ -367,6 +364,10 @@
 			
 			server = [chunks safeObjectAtIndex:0];
 			channel = [chunks safeObjectAtIndex:1];
+			
+			if ([channel contains:@" "]) {
+				channel = [channel safeSubstringToIndex:[channel stringPosition:@" "]];
+			}
 			
 			if ([channel hasPrefix:@"#"] == NO) {
 				channel = [@"#" stringByAppendingString:channel];
@@ -440,41 +441,38 @@
 
 - (void)insertCrazyColorCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[text currentEditor] selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+/*	NSString *body = [text stringValue];
 	
-	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
+	if (NSObjectIsNotEmpty(body)) {
+		NSInteger len = [body length];
+		
+		UniChar resultArray[len];
+		NSMutableString *result = [NSMutableString string];
+		
+		CFStringGetCharacters((CFStringRef)selectedText, CFRangeMake(0, len), source);
 	
-	NSInteger charCountIndex = 0;
-	NSMutableArray *charRanges = [NSMutableArray array];
+		for (NSInteger i = 0; i < len; i++) {
+			UniChar c = source[i];
 	
-	while (1 == 1) {
-		if (charCountIndex >= [selectedText length]) break;
+			NSInteger firstColor = ((arc4random() % 15) + 1);
+			NSInteger secondColor = ((arc4random() % 15) + 1);
+			
+			NSString *charValue = [NSString stringWithUniChar:c];
 		
-		NSRange charRange = NSMakeRange(charCountIndex, 1);
-		NSString *charValue = [selectedText safeSubstringWithRange:charRange];
+			if ((firstColor % 2) == 0) {
+				charValue = [charValue lowercaseString];
+			} else {
+				charValue = [charValue uppercaseString];
+			}
 		
-		NSInteger firstColor = ((arc4random() % 15) + 1);
-		NSInteger secondColor = ((arc4random() % 15) + 1);
-		
-		if (firstColor % 2 == 0) {
-			charValue = [charValue lowercaseString];
-		} else {
-			charValue = [charValue uppercaseString];
-		}
-		
-		charValue = [NSString stringWithFormat:@"▤%i,%i%@▤", firstColor, secondColor, charValue];
-		
-		[charRanges addObject:charValue];
-		
-		charCountIndex++;
+			[result appendFormat:@"▤%i,%i%@▤", firstColor, secondColor, charValue];
 	}
 	
 	selectedText = [charRanges componentsJoinedByString:nil];
-	[charRanges release];
+	[charRanges drain];
 	
 	[text setStringValue:[[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText]];
-	[text focus];
+	[text focus];*/
 }
 
 - (IBAction)insertColorCharIntoTextBox:(id)sender
@@ -515,7 +513,7 @@
 		}
 		
 		selectedText = [rainbowRanges componentsJoinedByString:nil];
-		[rainbowRanges release];
+		[rainbowRanges drain];
 	} else {
 		selectedText = [NSString stringWithFormat:@"▤%i%@▤", [sender tag], selectedText];
 	}
@@ -780,18 +778,18 @@
 - (void)inputHistorySchemeChanged:(NSNotification *)note
 {
 	if (inputHistory) {
-		[inputHistory release];
+		[inputHistory drain];
 		inputHistory = nil;
 	}
 	
 	for (IRCClient *c in world.clients) {
 		if (c.inputHistory) {
-			[c.inputHistory release];
+			[c.inputHistory drain];
 			c.inputHistory = nil;
 		}
 		
 		if (c.currentInputHistory) {
-			[c.currentInputHistory release];
+			[c.currentInputHistory drain];
 			c.currentInputHistory = nil;
 		}
 		
@@ -802,12 +800,12 @@
 		
 		for (IRCChannel *u in c.channels) {
 			if (u.inputHistory) {
-				[u.inputHistory release];
+				[u.inputHistory drain];
 				u.inputHistory = nil;
 			}
 			
 			if (u.currentInputHistory) {
-				[u.currentInputHistory release];
+				[u.currentInputHistory drain];
 				u.currentInputHistory = nil;
 			}
 			
@@ -983,7 +981,7 @@
 		choices = nicks;
 		lowerChoices = lowerNicks;
 		
-		[users release];
+		[users drain];
 	}
 	
 	NSMutableArray *currentChoices = [NSMutableArray array];

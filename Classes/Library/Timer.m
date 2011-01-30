@@ -44,7 +44,7 @@
 - (void)stop
 {
 	[timer invalidate];
-	[timer release];
+	[timer drain];
 	timer = nil;
 }
 

@@ -16,11 +16,11 @@
 
 - (void)dealloc
 {
-	[log release];
+	[log drain];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		[inputHistory release];
-		[currentInputHistory release];
+		[inputHistory drain];
+		[currentInputHistory drain];
 	}
 	
 	[super dealloc];
@@ -30,7 +30,7 @@
 {
 	[[log view] close];
 	 
-	[log release];
+	[log drain];
 	log = nil;
 	
 	log = [[world createLogWithClient:u channel:c] retain];

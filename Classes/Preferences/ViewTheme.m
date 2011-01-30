@@ -28,10 +28,10 @@
 
 - (void)dealloc
 {
-	[name release];
-	[path release];
-	[other release];
-	[core_js release];
+	[name drain];
+	[path drain];
+	[other drain];
+	[core_js drain];
 	
 	[super dealloc];
 }
@@ -44,7 +44,7 @@
 - (void)setName:(NSString *)value
 {
 	if (name != value) {
-		[name release];
+		[name drain];
 		name = [value retain];
 	}
 	

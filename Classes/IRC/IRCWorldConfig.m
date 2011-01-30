@@ -31,7 +31,7 @@
 
 - (void)dealloc
 {
-	[clients release];
+	[clients drain];
 	[super dealloc];
 }
 

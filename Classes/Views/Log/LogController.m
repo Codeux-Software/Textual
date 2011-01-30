@@ -71,22 +71,22 @@
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 	
-	[addrMenu release];
-	[autoScroller release];
-	[chanMenu release];
-	[highlightedLineNumbers release];
-	[html release];
-	[initialBackgroundColor release];
-	[js release];
-	[lines release];
-	[memberMenu release];
-	[menu release];
-	[policy release];
-	[scroller release];
-	[sink release];
-	[theme release];
-	[urlMenu release];
-	[view release];
+	[addrMenu drain];
+	[autoScroller drain];
+	[chanMenu drain];
+	[highlightedLineNumbers drain];
+	[html drain];
+	[initialBackgroundColor drain];
+	[js drain];
+	[lines drain];
+	[memberMenu drain];
+	[menu drain];
+	[policy drain];
+	[scroller drain];
+	[sink drain];
+	[theme drain];
+	[urlMenu drain];
+	[view drain];
 	
 	[super dealloc];
 }
@@ -134,7 +134,7 @@
 	
 	if (view) {
 		[view removeFromSuperview];
-		[view release];
+		[view drain];
 	}
 	
 	view = [[LogView alloc] initWithFrame:NSZeroRect];
@@ -762,7 +762,7 @@
 	if (old && [old isKindOfClass:[MarkedScroller class]] == NO) {
 		if (scroller) {
 			[scroller removeFromSuperview];
-			[scroller release];
+			[scroller drain];
 		}
 		
 		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
@@ -780,7 +780,7 @@
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-	[js release];
+	[js drain];
 	js = [windowObject retain];
 	
 	[js setValue:sink forKey:@"app"];

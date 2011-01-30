@@ -9,7 +9,7 @@
 
 - (void)dealloc
 {
-	[input release];
+	[input drain];
 	[super dealloc];
 }
 

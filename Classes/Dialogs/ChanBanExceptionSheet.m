@@ -25,7 +25,7 @@
 
 - (void)dealloc
 {
-    [list release];
+    [list drain];
     [super dealloc];
 }
 

@@ -64,23 +64,23 @@
 
 - (void)dealloc
 {
-	[alertsView release];
-	[channelManagementView release];
-	[floodControlView release];
-	[generalView release];
-	[highlightView release];
-	[identityView release];
-	[interfaceView release];
-	[IRCopServicesView release];
-	[logFont release];
-	[logView release];
-	[scriptsController release];
-	[scriptsView release];
-	[sounds release];
-	[stylesView release];
-	[transcriptFolderOpenPanel release];
-	[transfersView release];
-	[updatesView release];	
+	[alertsView drain];
+	[channelManagementView drain];
+	[floodControlView drain];
+	[generalView drain];
+	[highlightView drain];
+	[identityView drain];
+	[interfaceView drain];
+	[IRCopServicesView drain];
+	[logFont drain];
+	[logView drain];
+	[scriptsController drain];
+	[scriptsView drain];
+	[sounds drain];
+	[stylesView drain];
+	[transcriptFolderOpenPanel drain];
+	[transfersView drain];
+	[updatesView drain];	
 	
 	[super dealloc];
 }
@@ -101,7 +101,7 @@
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
-	[logFont release];
+	[logFont drain];
 	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
 	
 	if ([self.window isVisible] == NO) {
@@ -413,7 +413,7 @@
 	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self 
 		  didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
 	
-	[transcriptFolderOpenPanel release];
+	[transcriptFolderOpenPanel drain];
 	transcriptFolderOpenPanel = [d retain];
 }
 

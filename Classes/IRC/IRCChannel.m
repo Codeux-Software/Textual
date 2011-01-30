@@ -36,13 +36,13 @@
 
 - (void)dealloc
 {
-	[mode release];
-	[topic release];	
-	[config release];
-	[logDate release];
-	[logFile release];
-	[members release];
-	[storedTopic release];
+	[mode drain];
+	[topic drain];	
+	[config drain];
+	[logDate drain];
+	[logFile drain];
+	[members drain];
+	[storedTopic drain];
 	
 	[super dealloc];
 }
@@ -200,7 +200,7 @@
 		
 		if (logDate) {
 			if ([logDate isEqualToString:comp] == NO) {
-				[logDate release];
+				[logDate drain];
 				
 				logDate = [comp retain];
 				[logFile reopenIfNeeded];

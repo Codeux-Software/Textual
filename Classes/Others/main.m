@@ -14,6 +14,6 @@ int main(int argc, const char* argv[])
 #endif
 	
     NSApplicationMain(argc, argv);
-	[pool release];
+	[pool drain];
     return 0;
 }

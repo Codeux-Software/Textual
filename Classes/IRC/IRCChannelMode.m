@@ -31,8 +31,8 @@
 
 - (void)dealloc
 {
-	[allModes release];
-	[modeIndexes release];
+	[allModes drain];
+	[modeIndexes drain];
 	
 	[super dealloc];
 }

@@ -23,8 +23,8 @@
 
 - (void)dealloc
 {
-	[growl release];
-	[lastClickedContext release];
+	[growl drain];
+	[lastClickedContext drain];
 	
 	[super dealloc];
 }
@@ -128,7 +128,7 @@
 	
 	lastClickedTime = now;
 	
-	[lastClickedContext release];
+	[lastClickedContext drain];
 	lastClickedContext = [context retain];
 	
 	if (registered == NO) {

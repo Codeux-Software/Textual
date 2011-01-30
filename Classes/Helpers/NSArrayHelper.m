@@ -16,7 +16,7 @@
 {
 	for (id object in self) {
 		if ([object isKindOfClass:[NSString class]]) {
-			if ([object caseInsensitiveCompare:anObject] == NSOrderedSame) {
+			if ([object isEqualNoCase:anObject]) {
 				return YES;
 			}
 		} 
@@ -34,6 +34,27 @@
 	if (n >= 0 && n < self.count) {
 		[self removeObjectAtIndex:n];
 	}
+}
+
+@end
+
+@implementation NSIndexSet (NSIndexSetHelper)
+
+- (NSArray *)arrayFromIndexSet
+{
+	NSMutableArray *ary = [NSMutableArray array];
+	
+	NSUInteger current_index = [self lastIndex];
+	
+	while (current_index) {
+		if (current_index == NSNotFound) break;
+		
+		[ary addObject:[NSNumber numberWithUnsignedInteger:current_index]];
+		
+		current_index = [self indexLessThanIndex:current_index];
+	}
+	
+	return ary;
 }
 
 @end

@@ -74,6 +74,7 @@
 	#import "URLOpener.h"
 	#import "GTMDefines.h"
 	#import "SoundPlayer.h"
+	#import "NSObjectHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDataHelper.h"

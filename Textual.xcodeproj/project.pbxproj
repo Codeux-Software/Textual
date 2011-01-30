@@ -313,6 +313,8 @@
 		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
 		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
+		4CFA00C812F4EE2900A9EC74 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */; };
+		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -331,18 +333,18 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BragSpam;
 		};
-		4C3F6CFD12DC6EB900F5E696 /* PBXContainerItemProxy */ = {
+		4C36B93E12F4FFFD00F7F663 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
 			remoteInfo = "Update Version Data";
 		};
-		4C67A85512F388D8002E308B /* PBXContainerItemProxy */ = {
+		4C36B94012F4FFFD00F7F663 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
+			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC;
 			remoteInfo = "Clean Up Resources ";
 		};
 		4C858F3D12E0A02000F3FAE0 /* PBXContainerItemProxy */ = {
@@ -587,6 +589,8 @@
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
 		4CF1682D11DC7CAA00B60505 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanSheet.xib; sourceTree = "<group>"; };
+		4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
+		4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectHelper.h; path = Classes/Headers/NSObjectHelper.h; sourceTree = SOURCE_ROOT; };
 		4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
 		4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInvocationGrabber.m; sourceTree = "<group>"; };
 		4CFF3BD711CC715A00FF2930 /* NSObject+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DDExtensions.m"; sourceTree = "<group>"; };
@@ -1197,6 +1201,8 @@
 				4C9FEAC312312BDC00740B40 /* NSFontHelper.m */,
 				4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */,
 				4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */,
+				4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */,
+				4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */,
 				4CD0E6B512F1B70300C8F016 /* NSPasteboardHelper.h */,
 				78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */,
 				4CD0E6B612F1B70300C8F016 /* NSRectHelper.h */,
@@ -1496,6 +1502,7 @@
 				4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */,
 				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
 				4C67A81112F38268002E308B /* NSDateHelper.h in Headers */,
+				4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1519,8 +1526,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C67A85612F388D8002E308B /* PBXTargetDependency */,
-				4C3F6CFE12DC6EB900F5E696 /* PBXTargetDependency */,
+				4C36B94112F4FFFD00F7F663 /* PBXTargetDependency */,
+				4C36B93F12F4FFFD00F7F663 /* PBXTargetDependency */,
 			);
 			name = Textual;
 			productName = LimeChat;
@@ -1674,7 +1681,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -R \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
+			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\nrm -R \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -R \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
 		};
 		4CADEF5C12F1D2D100179329 /* Build Plugins */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1701,7 +1708,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "cd Resources/Miscellaneous/\n\n# Handle Build Number\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# Handle Build Reference\n\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleVersion\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nrefBranch=`${gitBundle} branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`\nbuildRef=\"${bundleVersion}-${refInfo}-${refBranch}\"\n\nif [ ${#refInfo} -gt 10 ] && [ ${#refBranch} -gt 0 ]\nthen\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi\n\n# Generic Checks\n\nif [ ! -f \"/Applications/Textual.app/Contents/MacOS/Textual\" ]\nthen\necho \"WARNING: \\\"/Applications/Textual.app/Contents/MacOS/Textual\\\" does not exist. Xcode needs this file to link plugin headers properly.\"\nfi";
+			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\ncd Resources/Miscellaneous/\n\n# Handle Build Number\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# Handle Build Reference\n\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleVersion\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nrefBranch=`${gitBundle} branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`\nbuildRef=\"${bundleVersion}-${refInfo}-${refBranch}\"\n\nif [ ${#refInfo} -gt 10 ] && [ ${#refBranch} -gt 0 ]\nthen\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi\n\n# Generic Checks\n\nif [ ! -f \"/Applications/Textual.app/Contents/MacOS/Textual\" ]\nthen\necho \"WARNING: \\\"/Applications/Textual.app/Contents/MacOS/Textual\\\" does not exist. Xcode needs this file to link plugin headers properly.\"\nfi";
 		};
 		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1827,21 +1834,22 @@
 				4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */,
 				4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */,
 				4C67A80812F38125002E308B /* NSDateHelper.m in Sources */,
+				4CFA00C812F4EE2900A9EC74 /* NSObjectHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C3F6CFE12DC6EB900F5E696 /* PBXTargetDependency */ = {
+		4C36B93F12F4FFFD00F7F663 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
-			targetProxy = 4C3F6CFD12DC6EB900F5E696 /* PBXContainerItemProxy */;
+			targetProxy = 4C36B93E12F4FFFD00F7F663 /* PBXContainerItemProxy */;
 		};
-		4C67A85612F388D8002E308B /* PBXTargetDependency */ = {
+		4C36B94112F4FFFD00F7F663 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
-			targetProxy = 4C67A85512F388D8002E308B /* PBXContainerItemProxy */;
+			targetProxy = 4C36B94012F4FFFD00F7F663 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

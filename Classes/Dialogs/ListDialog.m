@@ -36,8 +36,8 @@
 
 - (void)dealloc
 {
-	[list release];
-	[filteredList release];
+	[list drain];
+	[filteredList drain];
 	
 	[super dealloc];
 }
@@ -77,7 +77,7 @@
 {
 	[list removeAllObjects];
 	
-	[filteredList release];
+	[filteredList drain];
 	filteredList = nil;
 	
 	[self reloadTable];
@@ -212,7 +212,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 
 - (void)onSearchFieldChange:(id)sender
 {
-	[filteredList release];
+	[filteredList drain];
 	filteredList = nil;
 
 	NSString *filter = [filterText stringValue];

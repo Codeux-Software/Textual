@@ -20,7 +20,7 @@
 
 - (void)dealloc
 {
-	[nicks release];
+	[nicks drain];
 	[super dealloc];
 }
 

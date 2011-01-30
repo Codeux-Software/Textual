@@ -23,10 +23,10 @@
 
 - (void)dealloc
 {
-	[raw release];
-	[nick release];
-	[user release];
-	[address release];
+	[raw drain];
+	[nick drain];
+	[user drain];
+	[address drain];
 	
 	[super dealloc];
 }
