@@ -1024,7 +1024,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 }
 
-- (void)updateAutoJoinIVAR
+- (void)updateAutoJoinStatus
 {
 	autojoinInitialized = NO;
 }
@@ -1043,7 +1043,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[self joinChannels:ary];
 	
-	[self performSelector:@selector(updateAutoJoinIVAR) withObject:nil afterDelay:5.0];
+	[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:5.0];
 }
 
 - (void)joinChannels:(NSArray *)chans
@@ -2804,11 +2804,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (channel) {
 		return [channel print:c withHTML:YES];
 	} else {
-		if ([Preferences logTranscript]) {
-			return [self printAndLog:c withHTML:YES];
-		} else {
-			return [log print:c withHTML:YES];
-		}
+		return [log print:c withHTML:YES];
 	}
 }
 

@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J842</string>
+		<string key="IBDocument.SystemVersion">10J846</string>
 		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -11,7 +11,9 @@
 			<string key="NS.object.0">851</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="1783"/>
 			<integer value="233"/>
+			<integer value="374"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -418,6 +420,25 @@
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="22765018">
 									<reference key="NSMenu" ref="280333478"/>
+									<string key="NSTitle">Mark Scrollback</string>
+									<string key="NSKeyEquiv">l</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="598612084">
+									<reference key="NSMenu" ref="280333478"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="766095104">
+									<reference key="NSMenu" ref="280333478"/>
 									<string key="NSTitle">Mark All As Read</string>
 									<string key="NSKeyEquiv">U</string>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -426,6 +447,34 @@
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
 								<object class="NSMenuItem" id="366875387">
+									<reference key="NSMenu" ref="280333478"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="442725346">
+									<reference key="NSMenu" ref="280333478"/>
+									<string key="NSTitle">Increase Font Size</string>
+									<string key="NSKeyEquiv">+</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="458959136">
+									<reference key="NSMenu" ref="280333478"/>
+									<string key="NSTitle">Decrease Font Size</string>
+									<string key="NSKeyEquiv">-</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
+								<object class="NSMenuItem" id="963020559">
 									<reference key="NSMenu" ref="280333478"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -683,7 +732,7 @@
 								<object class="NSMenuItem" id="933029848">
 									<reference key="NSMenu" ref="676947198"/>
 									<string key="NSTitle">Query Logs</string>
-									<string key="NSKeyEquiv">l</string>
+									<string key="NSKeyEquiv">L</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -705,7 +754,7 @@
 											<object class="NSMenuItem" id="780948417">
 												<reference key="NSMenu" ref="557176961"/>
 												<string key="NSTitle">Logs</string>
-												<string key="NSKeyEquiv">l</string>
+												<string key="NSKeyEquiv">L</string>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="222848805"/>
@@ -2298,7 +2347,7 @@
 								<object class="NSMenuItem" id="884924773">
 									<reference key="NSMenu" ref="152228139"/>
 									<string key="NSTitle">Query Logs</string>
-									<string key="NSKeyEquiv">l</string>
+									<string key="NSKeyEquiv">L</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -2474,7 +2523,7 @@
 					<object class="NSMenuItem" id="224753435">
 						<reference key="NSMenu" ref="705667632"/>
 						<string key="NSTitle">Query Logs</string>
-						<string key="NSKeyEquiv">l</string>
+						<string key="NSKeyEquiv">L</string>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
@@ -4230,14 +4279,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onMarkAllAsRead:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="22765018"/>
-					</object>
-					<int key="connectionID">1792</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onShowAcknowledgments:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="938816563"/>
@@ -4363,6 +4404,38 @@
 						<reference key="destination" ref="569555360"/>
 					</object>
 					<int key="connectionID">1917</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onMarkAllAsRead:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="766095104"/>
+					</object>
+					<int key="connectionID">1925</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onIncreaseFontSize:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="442725346"/>
+					</object>
+					<int key="connectionID">1926</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onMarkScrollback:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="22765018"/>
+					</object>
+					<int key="connectionID">1927</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onDecreaseFontSize:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="458959136"/>
+					</object>
+					<int key="connectionID">1928</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5942,9 +6015,14 @@
 						<int key="objectID">1783</int>
 						<reference key="object" ref="280333478"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="22765018"/>
 							<reference ref="366875387"/>
 							<reference ref="623730998"/>
+							<reference ref="963020559"/>
+							<reference ref="442725346"/>
+							<reference ref="458959136"/>
+							<reference ref="598612084"/>
+							<reference ref="766095104"/>
+							<reference ref="22765018"/>
 						</array>
 						<reference key="parent" ref="680857465"/>
 					</object>
@@ -6138,6 +6216,31 @@
 						<reference key="object" ref="522571501"/>
 						<reference key="parent" ref="739238452"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1918</int>
+						<reference key="object" ref="963020559"/>
+						<reference key="parent" ref="280333478"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1919</int>
+						<reference key="object" ref="442725346"/>
+						<reference key="parent" ref="280333478"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1921</int>
+						<reference key="object" ref="458959136"/>
+						<reference key="parent" ref="280333478"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1923</int>
+						<reference key="object" ref="598612084"/>
+						<reference key="parent" ref="280333478"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1924</int>
+						<reference key="object" ref="766095104"/>
+						<reference key="parent" ref="280333478"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6208,7 +6311,7 @@
 				<string key="1455.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="1" key="1455.ImportedFromIB2"/>
 				<string key="1471.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1484.IBEditorWindowLastContentRect">{{954, 623}, {225, 143}}</string>
+				<string key="1484.IBEditorWindowLastContentRect">{{968, 623}, {225, 143}}</string>
 				<string key="1484.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="149.ImportedFromIB2"/>
@@ -6216,7 +6319,7 @@
 				<string key="150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="150.ImportedFromIB2"/>
 				<string key="1500.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1501.IBEditorWindowLastContentRect">{{1026, 616}, {199, 143}}</string>
+				<string key="1501.IBEditorWindowLastContentRect">{{1063, 287}, {199, 143}}</string>
 				<string key="1501.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1502.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1503.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6227,7 +6330,7 @@
 				<string key="1515.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1524.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1543.IBEditorWindowLastContentRect">{{875, 786}, {203, 93}}</string>
+				<string key="1543.IBEditorWindowLastContentRect">{{912, 457}, {203, 93}}</string>
 				<string key="1543.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1545.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1546.IBEditorWindowLastContentRect">{{1078, 786}, {243, 93}}</string>
@@ -6343,7 +6446,7 @@
 				<dictionary class="NSMutableDictionary" key="1780.IBAttributePlaceholdersKey"/>
 				<string key="1780.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1782.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1783.IBEditorWindowLastContentRect">{{728, 497}, {209, 53}}</string>
+				<string key="1783.IBEditorWindowLastContentRect">{{728, 417}, {219, 133}}</string>
 				<string key="1783.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1786.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1788.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6399,6 +6502,11 @@
 				<dictionary class="NSMutableDictionary" key="191.IBAttributePlaceholdersKey"/>
 				<string key="191.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="191.ImportedFromIB2"/>
+				<string key="1918.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1919.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1921.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1923.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1924.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="196.ImportedFromIB2"/>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="2.ImportedFromIB2"/>
@@ -6430,7 +6538,7 @@
 				<string key="235.CustomClassName">ThinSplitView</string>
 				<string key="235.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="235.ImportedFromIB2"/>
-				<string key="24.IBEditorWindowLastContentRect">{{966, 666}, {218, 213}}</string>
+				<string key="24.IBEditorWindowLastContentRect">{{1003, 337}, {218, 213}}</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="24.ImportedFromIB2"/>
 				<dictionary class="NSMutableDictionary" key="257.IBAttributePlaceholdersKey"/>
@@ -6453,7 +6561,7 @@
 				<boolean value="YES" key="267.ImportedFromIB2"/>
 				<string key="276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="276.ImportedFromIB2"/>
-				<string key="277.IBEditorWindowLastContentRect">{{801, 737}, {225, 143}}</string>
+				<string key="277.IBEditorWindowLastContentRect">{{838, 407}, {225, 143}}</string>
 				<string key="277.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="277.ImportedFromIB2"/>
 				<string key="286.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6514,7 +6622,7 @@
 				<boolean value="YES" key="367.ImportedFromIB2"/>
 				<string key="369.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="369.ImportedFromIB2"/>
-				<string key="374.IBEditorWindowLastContentRect">{{732, 723}, {222, 173}}</string>
+				<string key="374.IBEditorWindowLastContentRect">{{732, 723}, {236, 173}}</string>
 				<string key="374.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="374.ImportedFromIB2"/>
 				<string key="377.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6639,7 +6747,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1917</int>
+			<int key="maxID">1928</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6660,9 +6768,9 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="675090234">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="234352381">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/AboutPanel.h</string>
+						<string key="minorKey">Classes/Headers/AboutPanel.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6748,9 +6856,9 @@
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="423605889">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="481066025">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/AddressBookSheet.h</string>
+						<string key="minorKey">Classes/Headers/AddressBookSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6784,9 +6892,9 @@
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1048220639">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="513336947">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ChanBanExceptionSheet.h</string>
+						<string key="minorKey">Classes/Headers/ChanBanExceptionSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6820,9 +6928,9 @@
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="183887550">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="977973033">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ChanBanSheet.h</string>
+						<string key="minorKey">Classes/Headers/ChanBanSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6911,9 +7019,9 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="458028292">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="498497463">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ChannelSheet.h</string>
+						<string key="minorKey">Classes/Headers/ChannelSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6921,7 +7029,7 @@
 					<string key="superclassName">NSBox</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/ChatBox.h</string>
+						<string key="minorKey">Classes/Headers/ChatBox.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6938,9 +7046,9 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="502228282">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="623200377">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/IRC/IRCConnection.h</string>
+						<string key="minorKey">Classes/Headers/IRCConnection.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6948,7 +7056,7 @@
 					<string key="superclassName">TextField</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/InputTextField.h</string>
+						<string key="minorKey">Classes/Headers/InputTextField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6979,9 +7087,9 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="749884810">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="241747377">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/InviteSheet.h</string>
+						<string key="minorKey">Classes/Headers/InviteSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7045,9 +7153,9 @@
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="393512134">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="685292173">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ListDialog.h</string>
+						<string key="minorKey">Classes/Headers/ListDialog.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7067,9 +7175,9 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="19410520">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="674867069">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/ListView.h</string>
+						<string key="minorKey">Classes/Headers/ListView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7077,7 +7185,7 @@
 					<string key="superclassName">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/MainWindow.h</string>
+						<string key="minorKey">Classes/Headers/MainWindow.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7228,7 +7336,7 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Controllers/MasterController.h</string>
+						<string key="minorKey">Classes/Headers/MasterController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7245,9 +7353,9 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="359435294">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="53949500">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/MemberList/MemberListView.h</string>
+						<string key="minorKey">Classes/Headers/MemberListView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7261,22 +7369,21 @@
 						<string key="onCancelReconnecting:">id</string>
 						<string key="onChannelList:">id</string>
 						<string key="onChannelProperties:">id</string>
-						<string key="onClearMark:">id</string>
 						<string key="onCloseWindow:">id</string>
 						<string key="onConnect:">id</string>
 						<string key="onCopyAddress:">id</string>
 						<string key="onCopyLogAsHtml:">id</string>
 						<string key="onCopyServer:">id</string>
 						<string key="onCopyUrl:">id</string>
+						<string key="onDecreaseFontSize:">id</string>
 						<string key="onDeleteChannel:">id</string>
 						<string key="onDeleteServer:">id</string>
 						<string key="onDisconnect:">id</string>
-						<string key="onGoToMark:">id</string>
+						<string key="onIncreaseFontSize:">id</string>
 						<string key="onJoin:">id</string>
 						<string key="onJoinChannel:">id</string>
 						<string key="onLeave:">id</string>
 						<string key="onMarkAllAsRead:">id</string>
-						<string key="onMarkAllAsReadAndMarkAllScrollbacks:">id</string>
 						<string key="onMarkScrollback:">id</string>
 						<string key="onMemberBan:">id</string>
 						<string key="onMemberBanKick:">id</string>
@@ -7354,10 +7461,6 @@
 							<string key="name">onChannelProperties:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="onClearMark:">
-							<string key="name">onClearMark:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="onCloseWindow:">
 							<string key="name">onCloseWindow:</string>
 							<string key="candidateClassName">id</string>
@@ -7382,6 +7485,10 @@
 							<string key="name">onCopyUrl:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onDecreaseFontSize:">
+							<string key="name">onDecreaseFontSize:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onDeleteChannel:">
 							<string key="name">onDeleteChannel:</string>
 							<string key="candidateClassName">id</string>
@@ -7394,8 +7501,8 @@
 							<string key="name">onDisconnect:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="onGoToMark:">
-							<string key="name">onGoToMark:</string>
+						<object class="IBActionInfo" key="onIncreaseFontSize:">
+							<string key="name">onIncreaseFontSize:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onJoin:">
@@ -7412,10 +7519,6 @@
 						</object>
 						<object class="IBActionInfo" key="onMarkAllAsRead:">
 							<string key="name">onMarkAllAsRead:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="onMarkAllAsReadAndMarkAllScrollbacks:">
-							<string key="name">onMarkAllAsReadAndMarkAllScrollbacks:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onMarkScrollback:">
@@ -7620,7 +7723,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Controllers/MenuController.h</string>
+						<string key="minorKey">Classes/Headers/MenuController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7691,9 +7794,9 @@
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="191925012">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="484878683">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ModeSheet.h</string>
+						<string key="minorKey">Classes/Headers/ModeSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7709,7 +7812,7 @@
 							<string key="candidateClassName">AboutPanel</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="675090234"/>
+					<reference key="sourceIdentifier" ref="234352381"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -7727,7 +7830,7 @@
 							<string key="candidateClassName">AddressBookSheet</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="423605889"/>
+					<reference key="sourceIdentifier" ref="481066025"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -7745,7 +7848,7 @@
 							<string key="candidateClassName">ChanBanExceptionSheet</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="1048220639"/>
+					<reference key="sourceIdentifier" ref="513336947"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -7763,7 +7866,7 @@
 							<string key="candidateClassName">ChanBanSheet</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="183887550"/>
+					<reference key="sourceIdentifier" ref="977973033"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -7781,157 +7884,13 @@
 							<string key="candidateClassName">ChannelSheet</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="458028292"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">inviteSheetWillClose:</string>
-						<string key="NS.object.0">InviteSheet</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">inviteSheetWillClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">inviteSheetWillClose:</string>
-							<string key="candidateClassName">InviteSheet</string>
-						</object>
-					</object>
-					<reference key="sourceIdentifier" ref="749884810"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="listDialogOnUpdate:">ListDialog</string>
-						<string key="listDialogWillClose:">ListDialog</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="listDialogOnUpdate:">
-							<string key="name">listDialogOnUpdate:</string>
-							<string key="candidateClassName">ListDialog</string>
-						</object>
-						<object class="IBActionInfo" key="listDialogWillClose:">
-							<string key="name">listDialogWillClose:</string>
-							<string key="candidateClassName">ListDialog</string>
-						</object>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="393512134"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="modeSheetOnOK:">ModeSheet</string>
-						<string key="modeSheetWillClose:">ModeSheet</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="modeSheetOnOK:">
-							<string key="name">modeSheetOnOK:</string>
-							<string key="candidateClassName">ModeSheet</string>
-						</object>
-						<object class="IBActionInfo" key="modeSheetWillClose:">
-							<string key="name">modeSheetWillClose:</string>
-							<string key="candidateClassName">ModeSheet</string>
-						</object>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="191925012"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">nickSheetWillClose:</string>
-						<string key="NS.object.0">NickSheet</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">nickSheetWillClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">nickSheetWillClose:</string>
-							<string key="candidateClassName">NickSheet</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1010750864">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/NickSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">preferencesDialogWillClose:</string>
-						<string key="NS.object.0">PreferencesController</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">preferencesDialogWillClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">preferencesDialogWillClose:</string>
-							<string key="candidateClassName">PreferencesController</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="410306282">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/Preferences/PreferencesController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="ServerSheetOnOK:">ServerSheet</string>
-						<string key="ServerSheetWillClose:">ServerSheet</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="ServerSheetOnOK:">
-							<string key="name">ServerSheetOnOK:</string>
-							<string key="candidateClassName">ServerSheet</string>
-						</object>
-						<object class="IBActionInfo" key="ServerSheetWillClose:">
-							<string key="name">ServerSheetWillClose:</string>
-							<string key="candidateClassName">ServerSheet</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="451984100">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/ServerSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">topicSheetWillClose:</string>
-						<string key="NS.object.0">TopicSheet</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">topicSheetWillClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">topicSheetWillClose:</string>
-							<string key="candidateClassName">TopicSheet</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="593103634">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/TopicSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">WelcomeSheetWillClose:</string>
-						<string key="NS.object.0">WelcomeSheet</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">WelcomeSheetWillClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">WelcomeSheetWillClose:</string>
-							<string key="candidateClassName">WelcomeSheet</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="181218945">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/WelcomeSheet.h</string>
-					</object>
+					<reference key="sourceIdentifier" ref="498497463"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Helpers/NSObject+DDExtensions.h</string>
+						<string key="minorKey">Classes/Headers/FieldEditorTextView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7950,7 +7909,158 @@
 							<string key="candidateClassName">IRCConnection</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="502228282"/>
+					<reference key="sourceIdentifier" ref="623200377"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">inviteSheetWillClose:</string>
+						<string key="NS.object.0">InviteSheet</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">inviteSheetWillClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">inviteSheetWillClose:</string>
+							<string key="candidateClassName">InviteSheet</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="241747377"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="listDialogOnUpdate:">ListDialog</string>
+						<string key="listDialogWillClose:">ListDialog</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="listDialogOnUpdate:">
+							<string key="name">listDialogOnUpdate:</string>
+							<string key="candidateClassName">ListDialog</string>
+						</object>
+						<object class="IBActionInfo" key="listDialogWillClose:">
+							<string key="name">listDialogWillClose:</string>
+							<string key="candidateClassName">ListDialog</string>
+						</object>
+					</dictionary>
+					<reference key="sourceIdentifier" ref="685292173"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<reference key="sourceIdentifier" ref="674867069"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/LogView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/MarkedScroller.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<reference key="sourceIdentifier" ref="53949500"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="modeSheetOnOK:">ModeSheet</string>
+						<string key="modeSheetWillClose:">ModeSheet</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="modeSheetOnOK:">
+							<string key="name">modeSheetOnOK:</string>
+							<string key="candidateClassName">ModeSheet</string>
+						</object>
+						<object class="IBActionInfo" key="modeSheetWillClose:">
+							<string key="name">modeSheetWillClose:</string>
+							<string key="candidateClassName">ModeSheet</string>
+						</object>
+					</dictionary>
+					<reference key="sourceIdentifier" ref="484878683"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/NSObject+DDExtensions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/NSObjectHelper.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">nickSheetWillClose:</string>
+						<string key="NS.object.0">NickSheet</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">nickSheetWillClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">nickSheetWillClose:</string>
+							<string key="candidateClassName">NickSheet</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="698094640">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/NickSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">preferencesDialogWillClose:</string>
+						<string key="NS.object.0">PreferencesController</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">preferencesDialogWillClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">preferencesDialogWillClose:</string>
+							<string key="candidateClassName">PreferencesController</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="487894879">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/PreferencesController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="ServerSheetOnOK:">ServerSheet</string>
+						<string key="ServerSheetWillClose:">ServerSheet</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="ServerSheetOnOK:">
+							<string key="name">ServerSheetOnOK:</string>
+							<string key="candidateClassName">ServerSheet</string>
+						</object>
+						<object class="IBActionInfo" key="ServerSheetWillClose:">
+							<string key="name">ServerSheetWillClose:</string>
+							<string key="candidateClassName">ServerSheet</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="549507801">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/ServerSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="83467241">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/ServerTreeView.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -7978,16 +8088,16 @@
 							<string key="candidateClassName">TCPClient</string>
 						</object>
 					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="803245387">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="927484634">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/TCPClient.h</string>
+						<string key="minorKey">Classes/Headers/TCPClient.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/TCPServer.h</string>
+						<string key="minorKey">Classes/Headers/TCPServer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8003,66 +8113,66 @@
 							<string key="candidateClassName">Timer</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="950002327">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="726099184">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/Timer.h</string>
+						<string key="minorKey">Classes/Headers/Timer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Library/TinyGrowlClient.h</string>
+						<string key="minorKey">Classes/Headers/TinyGrowlClient.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">topicSheetWillClose:</string>
+						<string key="NS.object.0">TopicSheet</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">topicSheetWillClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">topicSheetWillClose:</string>
+							<string key="candidateClassName">TopicSheet</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="692741865">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/FieldEditorTextView.h</string>
+						<string key="minorKey">Classes/Headers/TopicSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="19410520"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="480654992">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/Log/LogView.h</string>
+						<string key="minorKey">Classes/Headers/TreeView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/MarkedScroller.h</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">WelcomeSheetWillClose:</string>
+						<string key="NS.object.0">WelcomeSheet</string>
 					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="359435294"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1018818787">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/ServerTreeView.h</string>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">WelcomeSheetWillClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">WelcomeSheetWillClose:</string>
+							<string key="candidateClassName">WelcomeSheet</string>
+						</object>
 					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1057400255">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="95477171">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/TreeView.h</string>
+						<string key="minorKey">Classes/Headers/WelcomeSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Helpers/NSWindowHelper.h</string>
+						<string key="minorKey">Classes/Headers/NSWindowHelper.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8082,7 +8192,7 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="1010750864"/>
+					<reference key="sourceIdentifier" ref="698094640"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">PreferencesController</string>
@@ -8310,7 +8420,7 @@
 							<string key="candidateClassName">NSView</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="410306282"/>
+					<reference key="sourceIdentifier" ref="487894879"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">ServerSheet</string>
@@ -8583,7 +8693,7 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="451984100"/>
+					<reference key="sourceIdentifier" ref="549507801"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">ServerTreeView</string>
@@ -8599,7 +8709,7 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="1018818787"/>
+					<reference key="sourceIdentifier" ref="83467241"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SheetBase</string>
@@ -8644,7 +8754,7 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Dialogs/SheetBase.h</string>
+						<string key="minorKey">Classes/Headers/SheetBase.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8661,14 +8771,14 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="803245387"/>
+					<reference key="sourceIdentifier" ref="927484634"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TextField</string>
 					<string key="superclassName">NSTextField</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/TextField.h</string>
+						<string key="minorKey">Classes/Headers/TextField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8676,7 +8786,7 @@
 					<string key="superclassName">NSSplitView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/ThinSplitView.h</string>
+						<string key="minorKey">Classes/Headers/ThinSplitView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8693,7 +8803,7 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="950002327"/>
+					<reference key="sourceIdentifier" ref="726099184"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TopicSheet</string>
@@ -8709,7 +8819,7 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="593103634"/>
+					<reference key="sourceIdentifier" ref="692741865"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TreeView</string>
@@ -8725,7 +8835,7 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="1057400255"/>
+					<reference key="sourceIdentifier" ref="480654992"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WelcomeSheet</string>
@@ -8793,7 +8903,7 @@
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
-					<reference key="sourceIdentifier" ref="181218945"/>
+					<reference key="sourceIdentifier" ref="95477171"/>
 				</object>
 			</array>
 			<array class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
