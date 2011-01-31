@@ -36,6 +36,21 @@ extern NSString *TXTLS(NSString *key)
 	return [LanguagePreferences localizedStringWithKey:key];
 }
 
+extern NSString *TXTFLS(NSString *key, ...)
+{
+	NSString *formattedString = [NSString alloc];
+	NSString *languageString = [LanguagePreferences localizedStringWithKey:key];
+	
+	va_list args;
+	va_start(args, key);
+	
+	formattedString = [formattedString initWithFormat:languageString arguments:args];
+	
+	va_end(args);
+	
+	return [formattedString autorelease];
+}
+
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
 	if (NSObjectIsEmpty(format)) format = @"[%H:%M:%S]";
@@ -75,7 +90,7 @@ extern NSString *TXReadableTime(NSInteger dateInterval)
 			
 			if (total >= 1) {
 				NSString *languageKey = [@"TIME_CONVERT_" stringByAppendingString:[unit uppercaseString]];
-	
+				
 				if (total > 1 || total < 1) {
 					languageKey = [languageKey stringByAppendingString:@"_PLURAL"];
 				}

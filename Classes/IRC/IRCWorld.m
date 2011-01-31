@@ -36,6 +36,7 @@
 @synthesize itemId;
 @synthesize logBase;
 @synthesize logMenu;
+@synthesize master;
 @synthesize memberList;
 @synthesize memberMenu;
 @synthesize menuController;
@@ -1115,7 +1116,7 @@
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		NSString *inputValue = [text stringValue];
 		
-		menuController.master.inputHistory = selected.inputHistory;
+		master.inputHistory = selected.inputHistory;
 		
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		

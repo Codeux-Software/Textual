@@ -34,12 +34,12 @@
 		NSString *first = [nicks safeObjectAtIndex:0];
 		NSString *second = [nicks safeObjectAtIndex:1];
 		
-		target = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_TWO_PEOPLE"), first, second];
+		target = TXTFLS(@"INVITE_SHEET_TWO_PEOPLE", first, second);
 	} else {
-		target = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_MULTIPLE_PEOPLE"), nicks.count];
+		target = TXTFLS(@"INVITE_SHEET_MULTIPLE_PEOPLE", nicks.count);
 	}
 	
-	titleLabel.stringValue = [NSString stringWithFormat:TXTLS(@"INVITE_SHEET_TARGET_DESC"), target];
+	titleLabel.stringValue = TXTFLS(@"INVITE_SHEET_TARGET_DESC", target);
 	
 	for (NSString *s in channels) {
 		[channelPopup addItemWithTitle:s];

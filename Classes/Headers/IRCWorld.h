@@ -2,6 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+@class MasterController;
 @class IRCClient, IRCChannel, IRCChannelConfig, IRCClientConfig;
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
@@ -13,6 +14,7 @@
 	InputTextField *text;
 	GrowlController *growl;
 	LogController *dummyLog;
+	MasterController *master;
 	MemberListView *memberList;
 	MenuController *menuController;
 	FieldEditorTextView *fieldEditor;
@@ -62,6 +64,7 @@
 @property (nonatomic, assign) ServerTreeView *tree;
 @property (nonatomic, assign) InputTextField *text;
 @property (nonatomic, assign) GrowlController *growl;
+@property (nonatomic, assign) MasterController *master;
 @property (nonatomic, retain) LogController *dummyLog;
 @property (nonatomic, assign) MemberListView *memberList;
 @property (nonatomic, assign) MenuController *menuController;

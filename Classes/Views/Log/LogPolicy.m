@@ -92,7 +92,7 @@
 		
 		NSMenuItem *userOptions = [[NSMenuItem new] autorelease];
 		
-		[userOptions setTitle:[NSString stringWithFormat:TXTLS(@"USER_OPTIONS_MENU_ITEM"), menuController.pointedNick]];
+		[userOptions setTitle:TXTFLS(@"USER_OPTIONS_MENU_ITEM", menuController.pointedNick)];
 		
 		[ary addObject:userOptions];
 		[ary addObject:[NSMenuItem separatorItem]];

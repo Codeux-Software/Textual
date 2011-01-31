@@ -73,7 +73,7 @@
 		case GROWL_HIGHLIGHT:
 			priority = 1;
 			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_HIGHLIGHT_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_HIGHLIGHT_TITLE", title);
 			break;
 		case GROWL_NEW_TALK:
 			priority = 1;
@@ -85,7 +85,7 @@
 			break;
 		case GROWL_CHANNEL_NOTICE:
 			kind =  TXTLS(@"GROWL_MSG_CHANNEL_NOTICE");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_CHANNEL_NOTICE_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_CHANNEL_NOTICE_TITLE", title);
 			break;
 		case GROWL_TALK_MSG:
 			kind =  TXTLS(@"GROWL_MSG_TALK_MSG");
@@ -97,19 +97,19 @@
 			break;
 		case GROWL_KICKED:
 			kind =  TXTLS(@"GROWL_MSG_KICKED");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_KICKED_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_KICKED_TITLE", title);
 			break;
 		case GROWL_INVITED:
 			kind =  TXTLS(@"GROWL_MSG_INVITED");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_INVITED_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_INVITED_TITLE", title);
 			break;
 		case GROWL_LOGIN:
 			kind =  TXTLS(@"GROWL_MSG_LOGIN");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_LOGIN_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_LOGIN_TITLE", title);
 			break;
 		case GROWL_DISCONNECT:
 			kind =  TXTLS(@"GROWL_MSG_DISCONNECT");
-			title = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_DISCONNECT_TITLE"), title];
+			title = TXTFLS(@"GROWL_MSG_DISCONNECT_TITLE", title);
 			break;
 	}
 	

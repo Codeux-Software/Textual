@@ -63,7 +63,7 @@
 		network = client.config.name;
 	}
 	
-	[networkName setStringValue:[NSString stringWithFormat:TXTLS(@"CHANNEL_LIST_NETWORK_NAME"), network]];
+	[networkName setStringValue:TXTFLS(@"CHANNEL_LIST_NETWORK_NAME", network)];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -109,9 +109,9 @@
 - (void)reloadTable
 {
 	if (NSObjectIsNotEmpty([filterText stringValue]) && [list count] != [filteredList count]) {
-		[channelCount setStringValue:[NSString stringWithFormat:TXTLS(@"LIST_DIALOG_HAS_SEARCH_RESULTS"), [list count], [filteredList count]]];
+		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_SEARCH_RESULTS", [list count], [filteredList count])];
 	} else {
-		[channelCount setStringValue:[NSString stringWithFormat:TXTLS(@"LIST_DIALOG_HAS_CHANNELS"), [list count]]];
+		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_CHANNELS", [list count])];
 	}
 	
 	[table reloadData];
