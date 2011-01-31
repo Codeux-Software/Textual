@@ -1120,12 +1120,12 @@
 		
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
+		if (previous.currentInputHistory) {
+			[previous.currentInputHistory drain];
+			previous.currentInputHistory = nil;
+		}
+		
 		if (NSObjectIsNotEmpty(inputValue)) {
-			if (previous.currentInputHistory) {
-				[previous.currentInputHistory drain];
-				previous.currentInputHistory = nil;
-			}
-			
 			previous.currentInputHistory = [inputValue retain];
 		}
 		

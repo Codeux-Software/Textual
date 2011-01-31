@@ -482,19 +482,22 @@
 		return;
 	}
 	
-	preferencesController = [PreferencesController alloc];
-	preferencesController.delegate = self;
-	preferencesController.world = world;
+	PreferencesController *pc = [PreferencesController alloc];
 	
-	[preferencesController init];
-	[preferencesController show];
+	pc.delegate = self;
+	pc.world = world;
+	
+	[pc init];
+	[pc show];
+	
+	preferencesController = pc;
 }
 
 - (void)preferencesDialogWillClose:(PreferencesController *)sender
 {
 	[world preferencesChanged];
 	
-	[preferencesController autorelease];
+	[preferencesController drain];
 	preferencesController = nil;
 }
 
