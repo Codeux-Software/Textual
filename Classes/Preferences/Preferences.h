@@ -95,6 +95,7 @@ typedef enum {
 + (BOOL)openBrowserInBackground;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
++ (BOOL)stopGrowlOnActiveChannel;
 + (BOOL)stopGrowlOnActive;
 + (BOOL)disableNicknameColors;
 + (BOOL)isUpgradedFromVersion100;

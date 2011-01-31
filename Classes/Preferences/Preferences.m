@@ -419,6 +419,11 @@ static NSMutableDictionary *commandIndex;
 	return [TXNSUserDefaults() boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (BOOL)stopGrowlOnActiveChannel
+{
+	return [TXNSUserDefaults() boolForKey:@"Preferences.General.stop_growl_on_active_channel"];
+}
+
 + (BOOL)countPublicMessagesInIconBadge
 {
 	return [TXNSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
@@ -1030,6 +1035,7 @@ static NSInteger startUpTime;
 	[d setBool:NO forKey:@"Preferences.General.show_inline_images"];
 	[d setBool:YES forKey:@"Preferences.General.use_growl"];
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active_channel"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
 	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];

@@ -2394,6 +2394,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (!channel.config.growl) {
 				return;
 			}
+			if ([Preferences stopGrowlOnActiveChannel] && [world selectedChannel] == channel && [NSApp isActive]) return;
 		} else {
 			chname = (NSString *)target;
 		}
