@@ -154,6 +154,7 @@
 	world.window = window;
 	world.growl = growl;
 	world.tree = tree;
+	world.master = self;
 	world.extrac = extrac;
 	world.text = text;
 	world.logBase = logBase;
@@ -779,7 +780,7 @@
 		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
 									   target:self 
 									   action:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) 
-										 body:[NSString stringWithFormat:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE"), theme, sf]
+										 body:TXTFLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE", theme, sf)
 										title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
 								defaultButton:TXTLS(@"OK_BUTTON")
 							  alternateButton:nil 

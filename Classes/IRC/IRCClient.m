@@ -328,7 +328,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL sendWhois = BOOLReverseValue(localKey == @"USER_TRACKING_NICKNAME_NO_LONGER_AVAILABLE");
 	
 	if (sendEvent) {
-		NSString *text = [NSString stringWithFormat:TXTLS(localKey), host, ignoreItem.hostmask];
+		NSString *text = TXTFLS(localKey, host, ignoreItem.hostmask);
         
 		IRCChannel *nsc = [self findChannelOrCreate:TXTLS(@"NOTIFICATION_WINDOW_TITLE") useTalk:YES];
 		
@@ -788,15 +788,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	switch (mode) {
 		case CONNECT_NORMAL:
-			[self printSystemBoth:nil text:[NSString stringWithFormat:TXTLS(@"IRC_IS_CONNECTING"), host, config.port]];
+			[self printSystemBoth:nil text:TXTFLS(@"IRC_IS_CONNECTING", host, config.port)];
 			break;
 		case CONNECT_RECONNECT:
 			[self printSystemBoth:nil text:TXTLS(@"IRC_IS_RECONNECTING")];
-			[self printSystemBoth:nil text:[NSString stringWithFormat:TXTLS(@"IRC_IS_CONNECTING"), host, config.port]];
+			[self printSystemBoth:nil text:TXTFLS(@"IRC_IS_CONNECTING", host, config.port)];
 			break;
 		case CONNECT_RETRY:
 			[self printSystemBoth:nil text:TXTLS(@"IRC_IS_RETRYING_CONNECTION")];
-			[self printSystemBoth:nil text:[NSString stringWithFormat:TXTLS(@"IRC_IS_CONNECTING"), host, config.port]];
+			[self printSystemBoth:nil text:TXTFLS(@"IRC_IS_CONNECTING", host, config.port)];
 			break;
 		default: break;
 	}
@@ -2023,7 +2023,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				for (IRCUser *m in c.members) {
 					if (m.totalWeight > 0) {
-						NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_WEIGHTS_COMMAND_RESULT"), m.nick, m.incomingWeight, m.outgoingWeight, m.totalWeight];
+						NSString *text = TXTFLS(@"IRC_WEIGHTS_COMMAND_RESULT", m.nick, m.incomingWeight, m.outgoingWeight, m.totalWeight);
 						
 						[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
 					}
@@ -2188,7 +2188,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (c.isChannel == NO && c.isTalk == NO) {
 				[self printBoth:self type:LINE_TYPE_DEBUG text:text];
 			} else {
-				text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_TITLE"), text];
+				text = TXTFLS(@"IRC_CTCP_VERSION_TITLE", text);
 				
 				[self sendPrivmsgToSelectedChannel:text];
 			}
@@ -2197,12 +2197,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 90: // Command: RESETFILES
-			[[ViewTheme invokeInBackgroundThread] createUserDirectory:YES];
+		{
+			NSString *path = [Preferences whereApplicationSupportPath];
 			
-			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"SOURCE_RESOURCES_FILES_RESET")];
+			BOOL doAction = [PopupPrompts dialogWindowWithQuestion:TXTFLS(@"RESOURCES_FILE_RESET_WARNING_MESSAGE", path)
+															 title:TXTLS(@"RESOURCES_FILE_RESET_WARNING_TITLE")
+													 defaultButton:TXTLS(@"YES_BUTTON")
+												   alternateButton:TXTLS(@"NO_BUTTON")
+													suppressionKey:nil suppressionText:nil];
+			
+			if (doAction) {
+				if ([_NSFileManager() removeItemAtPath:path error:NULL] == NO) {
+					NSLog(@"Silently ignoring failed resource removal.");
+				}
+				
+				[PopupPrompts dialogWindowWithQuestion:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_MESSAGE")
+												 title:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_TITLE")
+										 defaultButton:TXTLS(@"OK_BUTTON") 
+									   alternateButton:nil suppressionKey:nil suppressionText:nil];
+				
+				world.master.terminating = YES; 
+				
+				[NSApp terminate:nil];
+			}
 			
 			return YES;
 			break;
+		}
 		case 74: // Command: MUTE
 			if (world.soundMuted) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_ALREADY_MUTED")];
@@ -2335,7 +2356,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return c;
 		}
 	}
-    
+	
 	return nil;
 }
 
@@ -2542,11 +2563,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		case GROWL_KICKED:
 			title = channel.name;
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_KICKED_DESC"), nick, text];
+			desc = TXTFLS(@"GROWL_MSG_KICKED_DESC", nick, text);
 			break;
 		case GROWL_INVITED:
 			title = self.name;
-			desc = [NSString stringWithFormat:TXTLS(@"GROWL_MSG_INVITED_DESC"), nick, text];
+			desc = TXTFLS(@"GROWL_MSG_INVITED_DESC", nick, text);
 			break;
 		case GROWL_ADDRESS_BOOK_MATCH:
 			desc = text;
@@ -2585,7 +2606,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([NSApp isActive] && world.selected == t) return;
 	
 	[t setIsKeyword:YES];
-    
+	
 	[self reloadTree];
 	
 	if ([NSApp isActive] == NO) [NSApp requestUserAttention:NSInformationalRequest];
@@ -2749,7 +2770,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (logDate) {
 			if ([logDate isEqualToString:comp] == NO) {
 				[logDate drain];
-                
+				
 				logDate = [comp retain];
 				[logFile reopenIfNeeded];
 			}
@@ -2786,7 +2807,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	LogLine *c = [[LogLine new] autorelease];
 	
 	IRCChannel *channel = [world selectedChannelOn:self];
-    
+	
 	c.body = text;
 	c.lineType = LINE_TYPE_REPLY;
 	c.memberType = MEMBER_TYPE_NORMAL;
@@ -2947,7 +2968,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence]];
+	NSString *text = TXTFLS(@"IRC_HAD_RAW_ERROR", m.numericReply, [m sequence]);
 	
 	[self printBoth:channel type:LINE_TYPE_ERROR_REPLY text:text];
 }
@@ -3077,7 +3098,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		
 		IRCChannel *c = [self findChannel:target];
-        if (PointerIsEmpty(c)) return;
+		if (PointerIsEmpty(c)) return;
 		
 		[self decryptIncomingMessage:&text channel:c];
 		
@@ -3090,12 +3111,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self setUnreadState:c];
 			
 			if (highlight) {
-                [self setKeywordState:c];
-                
-                [self notifyText:GROWL_HIGHLIGHT target:c nick:anick text:text];
-            } else {
-                [self notifyText:GROWL_CHANNEL_MSG target:c nick:anick text:text];
-            }
+				[self setKeywordState:c];
+				
+				[self notifyText:GROWL_HIGHLIGHT target:c nick:anick text:text];
+			} else {
+				[self notifyText:GROWL_CHANNEL_MSG target:c nick:anick text:text];
+			}
 			
 			if (c) {
 				IRCUser *sender = [c findMember:anick];
@@ -3306,7 +3327,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			target = [world selectedChannelOn:self];
 		}
 		
-		NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_REQUEST"), command, nick];
+		NSString *text = TXTFLS(@"IRC_RECIEVED_CTCP_REQUEST", command, nick);
 		
 		[self printBoth:target type:LINE_TYPE_CTCP text:text];
 		
@@ -3355,9 +3376,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		double time = [s doubleValue];
 		double delta = (CFAbsoluteTimeGetCurrent() - time);
 		
-		text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_PING_REPLY"), nick, command, delta];
+		text = TXTFLS(@"IRC_RECIEVED_CTCP_PING_REPLY", nick, command, delta);
 	} else {
-		text = [NSString stringWithFormat:TXTLS(@"IRC_RECIEVED_CTCP_REPLY"), nick, command, s];
+		text = TXTFLS(@"IRC_RECIEVED_CTCP_REPLY", nick, command, s);
 	}
 	
 	[self printBoth:c type:LINE_TYPE_CTCP text:text];
@@ -3444,7 +3465,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
-		NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_JOINED_CHANNEL"), nick, m.sender.user, m.sender.address];
+		NSString *text = TXTFLS(@"IRC_USER_JOINED_CHANNEL", nick, m.sender.user, m.sender.address);
 		
 		[self printBoth:c type:LINE_TYPE_JOIN text:text];
 	}
@@ -3475,7 +3496,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				return;
 			}
 			
-			NSString *message = [NSString stringWithFormat:TXTLS(@"IRC_USER_PARTED_CHANNEL"), nick, m.sender.user, m.sender.address];
+			NSString *message = TXTFLS(@"IRC_USER_PARTED_CHANNEL", nick, m.sender.user, m.sender.address);
 			
 			if (NSObjectIsNotEmpty(comment)) {
 				message = [message stringByAppendingFormat:@" (%@)", comment];
@@ -3506,7 +3527,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				return;
 			}
 			
-			NSString *message = [NSString stringWithFormat:TXTLS(@"IRC_USER_KICKED_FROM_CHANNEL"), nick, target, comment];
+			NSString *message = TXTFLS(@"IRC_USER_KICKED_FROM_CHANNEL", nick, target, comment);
 			
 			[self printBoth:c type:LINE_TYPE_KICK text:message];
 		}
@@ -3555,7 +3576,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_DISCONNECTED"), nick, m.sender.user, m.sender.address];
+	NSString *text = TXTFLS(@"IRC_USER_DISCONNECTED", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
 		text = [text stringByAppendingFormat:@" (%@)", comment];
@@ -3631,7 +3652,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	for (IRCChannel *c in channels) {
 		if ([c findMember:nick]) { 
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
-				NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_CHANGED_NICKNAME"), nick, toNick];
+				NSString *text = TXTFLS(@"IRC_USER_CHANGED_NICKNAME", nick, toNick);
 				
 				[self printChannel:c type:LINE_TYPE_NICK text:text];
 			}
@@ -3671,10 +3692,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[c changeMember:h.param mode:h.mode value:h.plus];
 			}
 			
-			[self printBoth:c type:LINE_TYPE_MODE text:[NSString stringWithFormat:TXTLS(@"IRC_MDOE_SET"), nick, modeStr]];
+			[self printBoth:c type:LINE_TYPE_MODE text:TXTFLS(@"IRC_MDOE_SET", nick, modeStr)];
 		}
 	} else {
-		[self printBoth:nil type:LINE_TYPE_MODE text:[NSString stringWithFormat:TXTLS(@"IRC_MDOE_SET"), nick, modeStr]];
+		[self printBoth:nil type:LINE_TYPE_MODE text:TXTFLS(@"IRC_MDOE_SET", nick, modeStr)];
 	}
 }
 
@@ -3692,7 +3713,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c setTopic:topic];
 		[c.log setTopic:topic];
 		
-		[self printBoth:c type:LINE_TYPE_TOPIC text:[NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_TOPIC_CHANGED"), nick, topic]];
+		[self printBoth:c type:LINE_TYPE_TOPIC text:TXTFLS(@"IRC_CHANNEL_TOPIC_CHANGED", nick, topic)];
 	}
 }
 
@@ -3701,7 +3722,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *nick = m.sender.nick;
 	NSString *chname = [m paramAt:1];
 	
-	NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_INVITED_YOU_TO"), nick, m.sender.user, m.sender.address, chname];
+	NSString *text = TXTFLS(@"IRC_USER_INVITED_YOU_TO", nick, m.sender.user, m.sender.address, chname);
 	
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
@@ -3832,7 +3853,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if ([modeStr isEqualToString:@"+"]) return;
 			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_YOU_HAVE_UMODES"), modeStr]];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_YOU_HAVE_UMODES", modeStr)];
 			
 			break;
 		}
@@ -3858,7 +3879,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			IRCChannel *c = [self findChannel:nick];
 			IRCChannel *sc = [world selectedChannelOn:self];
 			
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_IS_AWAY"), nick, comment];
+			NSString *text = TXTFLS(@"IRC_USER_IS_AWAY", nick, comment);
 			
 			if (c) {
 				[self printBoth:(id)nick type:LINE_TYPE_REPLY text:text];
@@ -3933,9 +3954,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if (inWhoWasRequest) {
-				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOWAS_HOSTMASK"), nick, username, address, realname];
+				text = TXTFLS(@"IRC_USER_WHOWAS_HOSTMASK", nick, username, address, realname);
 			} else {
-				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_HOSTMASK"), nick, username, address, realname];
+				text = TXTFLS(@"IRC_USER_WHOIS_HOSTMASK", nick, username, address, realname);
 			}	
 			
 			if (whoisChannel) {
@@ -3955,9 +3976,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *text = nil;
 			
 			if (inWhoWasRequest) {
-				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOWAS_CONNECTED_FROM"), nick, server, [dateTimeFormatter stringFromDate:[NSDate dateWithNaturalLanguageString:serverInfo]]];
+				text = TXTFLS(@"IRC_USER_WHOWAS_CONNECTED_FROM", nick, server, [dateTimeFormatter stringFromDate:[NSDate dateWithNaturalLanguageString:serverInfo]]);
 			} else {
-				text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_CONNECTED_FROM"), nick, server, serverInfo];
+				text = TXTFLS(@"IRC_USER_WHOIS_CONNECTED_FROM", nick, server, serverInfo);
 			}
 			
 			if (whoisChannel) {
@@ -3978,7 +3999,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *idleTime = TXReadableTime(idleStr);
 			NSString *dateFromString = [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:signOnStr]];
 			
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_UPTIME"), nick, dateFromString, idleTime];
+			NSString *text = TXTFLS(@"IRC_USER_WHOIS_UPTIME", nick, dateFromString, idleTime);
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
@@ -3993,7 +4014,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *nick = [m paramAt:1];
 			NSString *trail = [[m paramAt:2] trim];
 			
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_USER_WHOIS_CHANNELS"), nick, trail];
+			NSString *text = TXTFLS(@"IRC_USER_WHOIS_CHANNELS", nick, trail);
 			
 			if (whoisChannel) {
 				[self printBoth:whoisChannel type:LINE_TYPE_REPLY text:text];
@@ -4026,7 +4047,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					c.isModeInit = YES;
 				}
 				
-				[self printBoth:c type:LINE_TYPE_MODE text:[NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_HAS_MODES"), modeStr]];
+				[self printBoth:c type:LINE_TYPE_MODE text:TXTFLS(@"IRC_CHANNEL_HAS_MODES", modeStr)];
 			}
 			
 			break;
@@ -4044,7 +4065,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[c setTopic:topic];
 				[c.log setTopic:topic];
 				
-				[self printBoth:c type:LINE_TYPE_TOPIC text:[NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_HAS_TOPIC"), topic]];
+				[self printBoth:c type:LINE_TYPE_TOPIC text:TXTFLS(@"IRC_CHANNEL_HAS_TOPIC", topic)];
 			}
 			
 			break;
@@ -4067,7 +4088,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (c) {
 				NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_HAS_TOPIC_AUTHOR"), setter, 
 								  [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
-                
+				
 				[self printBoth:c type:LINE_TYPE_TOPIC text:text];
 			}
 			
@@ -4078,7 +4099,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *nick = [m paramAt:1];
 			NSString *chname = [m paramAt:2];
 			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_USER_INVITED_OTHER_USER"), nick, chname]];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_INVITED_OTHER_USER", nick, chname)];
 			
 			break;
 		}
@@ -4223,7 +4244,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				[c reloadMemberList];
 			} else {
-				[self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_NAMES_LIST"), chname, trail]];
+				[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_CHANNEL_NAMES_LIST", chname, trail)];
 			}
 			
 			break;
@@ -4365,7 +4386,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 381:
 			hasIRCopAccess = YES;
 			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:[NSString stringWithFormat:TXTLS(@"IRC_USER_HAS_GOOD_LIFE"), m.sender.nick]];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_HAS_GOOD_LIFE", m.sender.nick)];
 			
 			break;
 		case 328:
@@ -4376,7 +4397,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			IRCChannel *c = [self findChannel:chname];
 			
 			if (c && website) {
-				[self printBoth:c type:LINE_TYPE_WEBSITE text:[NSString stringWithFormat:TXTLS(@"IRC_CHANNEL_HAS_WEBSITE"), website]];
+				[self printBoth:c type:LINE_TYPE_WEBSITE text:TXTFLS(@"IRC_CHANNEL_HAS_WEBSITE", website)];
 			}
 			
 			break;
@@ -4421,7 +4442,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		case 402:   // ERR_NOSUCHSERVER
 		{
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:1]];
+			NSString *text = TXTFLS(@"IRC_HAD_RAW_ERROR", m.numericReply, [m sequence:1]);
 			
 			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
 			
@@ -4431,7 +4452,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 404:	// ERR_CANNOTSENDMESSAGE
 		{
 			NSString *chname = [m paramAt:1];
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_HAD_RAW_ERROR"), m.numericReply, [m sequence:2]];
+			NSString *text = TXTFLS(@"IRC_HAD_RAW_ERROR", m.numericReply, [m sequence:2]);
 			
 			[self printBoth:[self findChannel:chname] type:LINE_TYPE_REPLY text:text];
 			
@@ -4647,7 +4668,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (PointerIsEmpty(s)) {
 		s = [[[NSString alloc] initWithData:data encoding:config.fallbackEncoding] autorelease];
-        
+		
 		if (PointerIsEmpty(s)) {
 			s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
 			

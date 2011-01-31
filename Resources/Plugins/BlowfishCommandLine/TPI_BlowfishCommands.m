@@ -44,7 +44,7 @@
 			[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
-				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:[NSString stringWithFormat:TXTLS(@"BLOWFISH_ENCRYPTION_KEY"), c.config.encryptionKey]];
+				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTFLS(@"BLOWFISH_ENCRYPTION_KEY", c.config.encryptionKey)];
 			} else {	
 				[[client invokeOnMainThread] printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_NO_KEY")];
 			}

@@ -315,7 +315,7 @@
 					}
 					case CMDWKEY_SHORTCUT_DISCT:
 					{
-						[item setTitle:[NSString stringWithFormat:TXTLS(@"CMDWKEY_SHORTCUT_DISCONNECT"), ((u.config.server) ?: u.config.name)]];
+						[item setTitle:TXTFLS(@"CMDWKEY_SHORTCUT_DISCONNECT", ((u.config.server) ?: u.config.name))];
 						
 						if (NOT_CONNECTED) return NO;
 						

@@ -8,7 +8,8 @@ extern BOOL NSObjectIsNotEmpty(id obj);
 
 extern void DevNullDestroyObject(BOOL condition, ...);
 
-extern NSString *TXTLS(NSString *key);
+extern NSString *TXTLS(NSString *key); // Textual Language String
+extern NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
 
 extern NSInteger TXRandomThousandNumber(void);
 

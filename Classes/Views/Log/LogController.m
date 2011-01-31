@@ -555,7 +555,7 @@
 	if (key && [Preferences logAllHighlightsToQuery]) {
 		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
 		
-		line.body = [NSString stringWithFormat:TXTLS(@"IRC_USER_WAS_HIGHLIGHTED"), [channel name], line.body];
+		line.body = TXTFLS(@"IRC_USER_WAS_HIGHLIGHTED", [channel name], line.body);
 		line.keywords = nil;
 		line.excludeWords = nil;
 		

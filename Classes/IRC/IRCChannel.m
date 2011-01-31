@@ -470,9 +470,7 @@
 {
 	IRCUser *user = [members safeObjectAtIndex:row];
 	
-	NSString *channel = [config.name safeSubstringFromIndex:1];
-	
-	return [NSString stringWithFormat:TXTLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION"), [user nick], channel];
+	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [config.name safeSubstringFromIndex:1]);
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
