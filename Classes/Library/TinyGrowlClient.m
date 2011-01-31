@@ -42,16 +42,12 @@
 	[self notifyWithType:type title:title description:desc clickContext:nil sticky:NO priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc  clickContext:(id)context
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc clickContext:(id)context
 {
 	[self notifyWithType:type title:title description:desc clickContext:context sticky:NO priority:0 icon:nil];
 }
 
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc
-		  clickContext:(id)context
-				sticky:(BOOL)sticky
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc clickContext:(id)context sticky:(BOOL)sticky
 {
 	[self notifyWithType:type title:title description:desc clickContext:context sticky:sticky priority:0 icon:nil];
 }
@@ -74,8 +70,8 @@
 	[dic setObject:title forKey:@"NotificationTitle"];
 	[dic setObject:desc forKey:@"NotificationDescription"];
 	
-	[dic setObject:[NSString stringWithInteger:pid] forKey:@"ApplicationPID"];
-	[dic setObject:[NSString stringWithInteger:priority] forKey:@"NotificationPriority"];
+	[dic setObject:[NSNumber numberWithInteger:pid] forKey:@"ApplicationPID"];
+	[dic setObject:[NSNumber numberWithInteger:priority] forKey:@"NotificationPriority"];
 	
 	if (icon) {
 		[dic setObject:[icon TIFFRepresentation] forKey:@"NotificationIcon"];
@@ -89,7 +85,7 @@
 		[dic setObject:context forKey:@"NotificationClickContext"];
 	}
 	
-	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
+	[_NSDistributedNotificationCenter() postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
 }
 
 - (void)registerApplication

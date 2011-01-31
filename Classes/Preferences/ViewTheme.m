@@ -122,7 +122,7 @@
 		BOOL resetAttrInfo = NO;
 		
 		if ([_NSFileManager() fileExistsAtPath:sdest]) {
-			if (isDirectory == YES) {
+			if (isDirectory) {
 				resetAttrInfo = YES;
 				
 				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
@@ -133,7 +133,7 @@
 					NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
 					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
 					
-					if (creationDate == modificationDate || creationDate < 1) {
+					if (creationDate == modificationDate || creationDate < 1 || force_reset) {
 						[_NSFileManager() removeItemAtPath:sdest error:NULL];
 						
 						resetAttrInfo = [_NSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
@@ -150,7 +150,7 @@
 			}
 		}
 		
-		if (resetAttrInfo == YES || force_reset == YES) {
+		if (resetAttrInfo || force_reset) {
 			[_NSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
 								ofItemAtPath:sdest 
 									   error:NULL];
