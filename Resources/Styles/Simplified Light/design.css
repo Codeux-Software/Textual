@@ -277,7 +277,7 @@ body div[type=nick] .message:before {
 
 body div[type=privmsg] .sender[type=myself],
 body div[type=action] .sender[type=myself] { 
-	color: #FF1676; 
+	color: #ea0d68; 
 }
 	
 body .sender[type=normal][colornumber='0'], 
@@ -287,22 +287,22 @@ body .inline_nickname[colornumber='0'] {
 
 body .sender[type=normal][colornumber='1'], 
 body .inline_nickname[colornumber='1'] {
-	color: #00DF00; 
+	color: #059005; 
 }
 
 body .sender[type=normal][colornumber='2'], 
 body .inline_nickname[colornumber='2'] {
-	color: #ff0080; 
+	color: #a80054; 
 }
 
 body .sender[type=normal][colornumber='3'], 
 body .inline_nickname[colornumber='3'] {
-	color: #dd00ff; 
+	color: #9b0db1; 
 }
 
 body .sender[type=normal][colornumber='4'], 
 body .inline_nickname[colornumber='4'] {
-	color: #76E0BD; 
+	color: #108860; 
 }
 
 body .sender[type=normal][colornumber='5'], 
@@ -312,12 +312,12 @@ body .inline_nickname[colornumber='5'] {
 
 body .sender[type=normal][colornumber='6'], 
 body .inline_nickname[colornumber='6'] {
-	color: #8BC100; 
+	color: #58701a; 
 }
 
 body .sender[type=normal][colornumber='7'], 
 body .inline_nickname[colornumber='7'] {
-	color: #cc66ff; 
+	color: #620a8e; 
 }
 
 body .sender[type=normal][colornumber='8'], 
@@ -327,12 +327,12 @@ body .inline_nickname[colornumber='8'] {
 
 body .sender[type=normal][colornumber='9'], 
 body .inline_nickname[colornumber='9'] {
-	color: #6F42BC; 
+	color: #44345f; 
 }
 
 body .sender[type=normal][colornumber='10'], 
 body .inline_nickname[colornumber='10'] {
-	color: #008080; 
+	color: #2f5353; 
 }
 
 body .sender[type=normal][colornumber='11'], 
@@ -347,7 +347,7 @@ body .inline_nickname[colornumber='12'] {
 
 body .sender[type=normal][colornumber='13'], 
 body .inline_nickname[colornumber='13'] {
-	color: #4ABFD1; 
+	color: #57797e; 
 }
 
 body .sender[type=normal][colornumber='14'], 
@@ -357,5 +357,5 @@ body .inline_nickname[colornumber='14'] {
 
 body .sender[type=normal][colornumber='15'], 
 body .inline_nickname[colornumber='15'] {
-	color: #C19C46; 
+	color: #5f4d22; 
 }

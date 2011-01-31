@@ -284,3 +284,7 @@ body div[type=nick] .message:before {
 .effect[bgcolor-number='13'] { background-color: #f0f; }
 .effect[bgcolor-number='14'] { background-color: #888; }
 .effect[bgcolor-number='15'] { background-color: #ccc; }
+
+/* Nickname Colors */
+
+body .inline_nickname { color: #21DB00; }
