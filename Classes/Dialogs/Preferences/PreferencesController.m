@@ -108,9 +108,9 @@
 		[self.window center];
 	}
 	
-	[self setUpToolbarItemsAndMenus];
 	[self.window makeKeyAndOrderFront:nil];
 	
+	[self setUpToolbarItemsAndMenus];
 	[self firstPane:generalView selectedItem:0];
 }
 
@@ -124,7 +124,12 @@
 
 - (void)setUpToolbarItemsAndMenus
 {
-	[[self.window toolbar] removeItemAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+	NSArray *visibleItems = [[self.window toolbar] visibleItems];
+	NSMenuItem *addonItem = [visibleItems objectAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+	
+	if ([addonItem tag] == 13 || [addonItem tag] == 10) {
+		[[self.window toolbar] removeItemAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
+	}
 	
 	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
 		[[self.window toolbar] insertItemWithItemIdentifier:@"13" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];

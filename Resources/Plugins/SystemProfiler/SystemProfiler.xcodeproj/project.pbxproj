@@ -14,7 +14,6 @@
 		4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */; };
 		4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBE211CB4D47002A6868 /* Cocoa.framework */; };
 		4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC17BA011F1870400A3E4F7 /* OpenGL.framework */; };
-		4CD0E77E12F1B80600C8F016 /* Headers in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0E77D12F1B80600C8F016 /* Headers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4CBDDBE211CB4D47002A6868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CC17BA011F1870400A3E4F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		4CD0E77D12F1B80600C8F016 /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = ../../../Classes/Headers; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -72,7 +70,6 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4CD0E77D12F1B80600C8F016 /* Headers */,
 				4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */,
 				4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */,
 				4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */,
@@ -159,7 +156,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */,
-				4CD0E77E12F1B80600C8F016 /* Headers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
