@@ -275,6 +275,10 @@ body div[type=nick] .message:before {
 
 /* Nickname Colors */
 
+body .inline_nickname {
+    font-weight: 700;
+}
+
 body div[type=privmsg] .sender[type=myself],
 body div[type=action] .sender[type=myself] { 
 	color: #ea0d68; 
