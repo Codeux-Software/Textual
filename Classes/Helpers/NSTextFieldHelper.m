@@ -28,7 +28,7 @@ static NSColor *_oldTextColor = nil;
 										   backgroundColor:[self backgroundColor]
 											   defaultFont:[self font]];
 	
-	[super setAttributedStringValue:string];
+	[self setAttributedStringValue:string];
 }
 
 @end

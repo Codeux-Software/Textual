@@ -20,7 +20,7 @@
 {
 	[[[delegate master] formattingMenu] enableSheetField:text];
 	
-	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting]];
+	[text setFilteredAttributedStringValue:[topic attributedStringWithIRCFormatting]];
 	
 	[self startSheet];
 }

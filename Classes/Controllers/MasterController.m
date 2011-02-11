@@ -505,7 +505,6 @@
 	[text setStringValue:@""];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		[world.selected.inputHistory.lastHistoryItem drain];
 		world.selected.inputHistory.lastHistoryItem = nil;
 	}
 	
