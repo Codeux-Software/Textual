@@ -12,7 +12,7 @@
 {
 	BOOL useSupression = NO;
 	
-	if (NSObjectIsNotEmpty(suppressKey)) {
+	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
 		useSupression = YES;
 		
 		if ([_NSUserDefaults() boolForKey:suppressKey] == YES) {
@@ -88,7 +88,7 @@
 	if (NSObjectIsNotEmpty(suppressKey)) {
 		useSupression = YES;
 		
-		if ([_NSUserDefaults() boolForKey:suppressKey] == YES) {
+		if ([_NSUserDefaults() boolForKey:suppressKey] == YES && [suppressText isEqualToString:@"-"] == NO) {
 			return;
 		}
 	}

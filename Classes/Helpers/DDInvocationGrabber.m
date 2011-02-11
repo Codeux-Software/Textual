@@ -24,6 +24,11 @@
 
 @implementation DDInvocationGrabber
 
+@synthesize target;
+@synthesize invocation;
+@synthesize threadType;
+@synthesize waitUntilDone;
+
 + (id)invocationGrabber
 {
     return [[[self alloc] init] autorelease];
@@ -31,112 +36,64 @@
 
 - (id)init
 {
-    _target = nil;
-    _invocation = nil;
-    _waitUntilDone = NO;
-    _threadType = INVOCATION_BACKGROUND_THREAD;
+    target = nil;
+    invocation = nil;
+    waitUntilDone = NO;
+    threadType = INVOCATION_BACKGROUND_THREAD;
     
+    return self;
+}
+
+- (id)prepareWithInvocationTarget:(id)inTarget
+{
+    target = [inTarget retain];
+	
     return self;
 }
 
 - (void)dealloc
 {
-    [self setTarget:NULL];
-    [self setInvocation:NULL];
+    [target release];
+	[invocation release];
 	
     [super dealloc];
 }
 
-- (id)target
-{
-    return _target;
-}
-
-- (void)setTarget:(id)inTarget
-{
-    if (_target != inTarget) {
-        [_target autorelease];
-        _target = [inTarget retain];
-	}
-}
-
-- (NSInvocation *)invocation
-{
-    return _invocation;
-}
-
-- (void)setInvocation:(NSInvocation *)inInvocation
-{
-    if (_invocation != inInvocation) {
-        [_invocation autorelease];
-        _invocation = [inInvocation retain];
-	}
-}
-
-- (invocationThreadType)threadType
-{
-	return _threadType;
-}
-
-- (void)setInvocationThreadType:(invocationThreadType)threadType
-{
-	_threadType = threadType;
-}
-
-- (BOOL)waitUntilDone;
-{
-    return _waitUntilDone;
-}
-
-- (void)setWaitUntilDone:(BOOL)waitUntilDone;
-{
-    _waitUntilDone = waitUntilDone;
-}
-
-#pragma mark -
-
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-    return [[self target] methodSignatureForSelector:selector];
+    return [target methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)ioInvocation
 {
-    [ioInvocation setTarget:[self target]];
+    [ioInvocation setTarget:target];
 	
-    [self setInvocation:ioInvocation];
+	invocation = [ioInvocation retain];
 	
-	if (_waitUntilDone == NO) {
-		[_invocation retainArguments];
+	if (waitUntilDone == NO) {
+		[invocation retainArguments];
 	}
 	
-    if (_threadType == INVOCATION_MAIN_THREAD)
-    {
-        [_invocation performSelectorOnMainThread:@selector(invoke)
-                                      withObject:nil
-                                   waitUntilDone:_waitUntilDone];
+    if (threadType == INVOCATION_MAIN_THREAD) {
+        [invocation performSelectorOnMainThread:@selector(invoke)
+									 withObject:nil
+								  waitUntilDone:waitUntilDone];
     } else {
-        [_invocation performSelectorInBackground:@selector(performInvocation:)
-									  withObject:_invocation];
+        [invocation performSelectorInBackground:@selector(performInvocation:)
+									 withObject:invocation];
 	}
-}
-
-@end
-
-@implementation DDInvocationGrabber (DDnvocationGrabber_Conveniences)
-
-- (id)prepareWithInvocationTarget:(id)inTarget
-{
-    [self setTarget:inTarget];
-	
-    return self;
 }
 
 @end
 
 @implementation NSInvocation (DDInvocationWrapper)
 
-- (void)performInvocation:(NSInvocation *)anInvocation {
+- (void)performInvocation:(NSInvocation *)anInvocation 
+{
+	/* Mac OS does not automatically place background threads in an
+	 autorelease pool like the default application run loop. For that
+	 reason let us invoke the invocation within our autorelease pool. */
+	
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	
 	[anInvocation invoke];

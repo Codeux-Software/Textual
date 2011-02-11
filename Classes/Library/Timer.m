@@ -21,6 +21,7 @@
 - (void)dealloc
 {
 	[self stop];
+	
 	[super dealloc];
 }
 

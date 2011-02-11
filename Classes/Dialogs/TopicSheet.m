@@ -18,7 +18,9 @@
 
 - (void)start:(NSString *)topic
 {
-	[text setStringValue:(([topic stringWithInputIRCFormatting]) ?: @"")];
+	[[[delegate master] formattingMenu] enableSheetField:text];
+	
+	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting]];
 	
 	[self startSheet];
 }
@@ -26,7 +28,9 @@
 - (void)ok:(id)sender
 {
 	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-		[delegate topicSheet:self onOK:[[text stringValue] stringWithASCIIFormatting]];
+		NSString *topic = [[text attributedStringValue] attributedStringToASCIIFormatting];
+		
+		[delegate topicSheet:self onOK:topic];
 	}
 	
 	[super ok:nil];
@@ -37,6 +41,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[[[delegate master] formattingMenu] enableWindowField:[[delegate master] text]];
+	
 	if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
 		[delegate topicSheetWillClose:self];
 	}

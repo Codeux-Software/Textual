@@ -3,13 +3,10 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface OtherTheme (Private)
+- (NSFont *)processFontValue:(NSString *)style_value font_size:(NSInteger)style_size def:(NSFont *)defaultv;
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv;
-
-- (NSFont *)processFontValue:(NSString *)style_value 
-				   font_size:(NSInteger)style_size
-						 def:(NSFont *)defaultv;
 @end
 
 @implementation OtherTheme
@@ -100,29 +97,47 @@
 
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return [NSColor fromCSS:(([value length] == 7 || [value length] == 4) ? value : defaultv)];
+	NSString *color = defaultv;
+	
+	if ([value length] == 7 || [value length] == 4) {
+		color = value;
+	}
+	
+	return [NSColor fromCSS:value];
 }
 
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv
 {
-	return ((NSObjectIsNotEmpty(value)) ? value : defaultv);
+	NSString *data = defaultv;
+	
+	if (NSObjectIsNotEmpty(value)) {
+		data = value;
+	}
+	
+	return data;
 }
 
 - (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv
 {
-	return ((value > 0) ? value : defaultv);
+	return ((value >= 1) ? value : defaultv);
 }
 
-- (NSFont *)processFontValue:(NSString *)style_value 
-				   font_size:(NSInteger)style_size
-						 def:(NSFont *)defaultv
+- (NSFont *)processFontValue:(NSString *)style_value font_size:(NSInteger)style_size def:(NSFont *)defaultv
 {
-	return ((style_size < 1 || PointerIsEmpty(style_value)) ? defaultv : [NSFont fontWithName:style_value size:style_size]);
+	NSFont *theFont = defaultv;
+	
+	if (style_size >= 1.0 && NSObjectIsNotEmpty(style_value)) {
+		if ([NSFont fontIsAvailable:style_value]) {
+			theFont = [NSFont fontWithName:style_value size:style_size];
+		}
+	}
+	
+	return theFont;
 }
 
 - (void)reload 
 {	
-	NSDictionary *userInterface = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:[path stringByAppendingPathComponent:@"/userInterface.plist"]];
+	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/userInterface.plist"]];
 	
 	NSDictionary *inputTextFormat = [userInterface objectForKey:@"Input Box"];
 	NSDictionary *memberListFormat = [userInterface objectForKey:@"Member List"];
@@ -136,7 +151,7 @@
 	self.inputTextBgColor = [self processColorStringValue:[inputTextFormat objectForKey:@"Background Color"] def:@"#000000"];
 	
 	self.inputTextFont = [self processFontValue:[inputTextFormat objectForKey:@"Text Font Style"] 
-								  font_size:[inputTextFormat intForKey:@"Text Font Size"] 
+								  font_size:[inputTextFormat integerForKey:@"Text Font Size"] 
 										def:[NSFont systemFontOfSize:0]];
 	
 	// ====================================================== //
@@ -159,7 +174,7 @@
 	self.treeSelBottomLineColor = [self processColorStringValue:[serverTreeGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"];
 	
 	self.treeFont = [self processFontValue:[serverListFormat objectForKey:@"Text Font Style"] 
-							 font_size:[serverListFormat intForKey:@"Text Font Size"] 
+							 font_size:[serverListFormat integerForKey:@"Text Font Size"] 
 								   def:[NSFont fontWithName:@"Lucida Grande" size:11]];
 	
 	// ====================================================== //
@@ -177,12 +192,12 @@
 	self.memberListSelBottomLineColor = [self processColorStringValue:[memberListGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"];
 	
 	self.memberListFont = [self processFontValue:[memberListFormat objectForKey:@"Text Font Style"] 
-							 font_size:[memberListFormat intForKey:@"Text Font Size"] 
+							 font_size:[memberListFormat integerForKey:@"Text Font Size"] 
 								   def:[NSFont fontWithName:@"Lucida Grande" size:11]];
 	
 	// ====================================================== //
 	
-	NSDictionary *preferencesOverride = [[NSDictionary allocWithZone:nil] initWithContentsOfFile:[path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
+	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
 	
 	NSDictionary *prefOChannelFont = [preferencesOverride objectForKey:@"Override Channel Font"];
 	NSDictionary *prefOIndentMessages = [preferencesOverride objectForKey:@"Indent Wrapped Messages"];
@@ -196,16 +211,16 @@
 	self.overrideMessageIndentWrap = [prefOIndentMessages boolForKey:@"Override Setting"];
 	
 	self.overrideChannelFont = [self processFontValue:[prefOChannelFont objectForKey:@"Font Name"] 
-											font_size:[prefOChannelFont intForKey:@"Font Size"] 
+											font_size:[prefOChannelFont integerForKey:@"Font Size"] 
 												  def:nil];
 	
-	self.nicknameFormatFixedWidth = [self processIntegerValue:[preferencesOverride intForKey:@"Nickname Format Fixed Width"] def:0];
+	self.nicknameFormatFixedWidth = [self processIntegerValue:[preferencesOverride integerForKey:@"Nickname Format Fixed Width"] def:0];
 	
 	// ====================================================== //
 	
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.nicknameFormat)] forKey:@"Preferences.Theme.tpoce_nick_format"];
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.timestampFormat)] forKey:@"Preferences.Theme.tpoce_timestamp_format"];
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.overrideChannelFont)] forKey:@"Preferences.Theme.tpoce_channel_font"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.nicknameFormat)]		      forKey:@"Preferences.Theme.tpoce_nick_format"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.timestampFormat)]			  forKey:@"Preferences.Theme.tpoce_timestamp_format"];
+	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.overrideChannelFont)]		  forKey:@"Preferences.Theme.tpoce_channel_font"];
 	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:BOOLReverseValue(self.overrideMessageIndentWrap)] forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
 	
 	// ====================================================== //
@@ -218,10 +233,7 @@
 	memberListGradient = nil;
 	prefOIndentMessages = nil;
 	
-	[userInterface drain];
 	userInterface = nil;
-	
-	[preferencesOverride drain];
 	preferencesOverride = nil;
 }
 

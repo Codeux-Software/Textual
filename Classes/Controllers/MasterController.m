@@ -61,6 +61,7 @@
 	[completionStatus drain];
 	[extrac drain];
 	[fieldEditor drain];
+	[formattingMenu drain];
 	[growl drain];
 	[inputHistory drain];
 	[viewTheme drain];
@@ -100,6 +101,7 @@
 	fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
 	[fieldEditor setFieldEditor:YES];
 	fieldEditor.pasteDelegate = self;
+	fieldEditor.copyDelegate = self;
 	
 	[fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
 	[fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
@@ -202,6 +204,8 @@
 	world.growl = growl;
 	
 	[growl registerToGrowl];
+
+	formattingMenu.textField = text;
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
 		inputHistory = [InputHistory new];
@@ -432,169 +436,61 @@
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
 	if (client == text) {
-		NSMenu *fMenu = [fieldEditor menu];
+		NSMenu	   *editorMenu = [fieldEditor menu];
+		NSMenuItem *formatMenu = [formattingMenu formatterMenu];
 		
-		if ([fMenu indexOfItem:formattingMenu] < 1) {
-			[fMenu addItem:[NSMenuItem separatorItem]];
-			[fMenu addItem:formattingMenu];
+		if (formatMenu) {
+			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
+			NSInteger fontIndex = [editorMenu indexOfItemWithTitle:[NSString localizedStringWithFormat:@"%@", @"Font"]];
 			
-			[fieldEditor setMenu:fMenu];
+			if (fontIndex >= 0) {
+				[editorMenu removeItemAtIndex:fontIndex];
+			}
+			
+			if (fmtrIndex == -1) {
+				[editorMenu addItem:[NSMenuItem separatorItem]];
+				[editorMenu addItem:formatMenu];
+			}
+			
+			[fieldEditor setMenu:editorMenu];
 		}
 		
 		return fieldEditor;
-	} else {
-		return nil;
-	}
-}
-
-- (void)insertCrazyColorCharIntoTextBox:(id)sender
-{
-	NSString *selectedText = [text stringValue];
-	
-	if (NSObjectIsNotEmpty(selectedText)) {
-		NSMutableString *result = [NSMutableString string];
-		
-		NSInteger firstColor = 0;
-		NSInteger secondColor = 0;
-		NSInteger charCountIndex = 0;
-		
-		NSString *charValue = nil;
-		
-		while (1 == 1) {
-			if (charCountIndex >= [selectedText length]) break;
-	
-			firstColor = ((arc4random() % 15) + 1);
-			secondColor = ((arc4random() % 15) + 1);
-			
-			charValue = [selectedText safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
-			
-			if ((firstColor % 2) == 0) {
-				charValue = [charValue lowercaseString];
-			} else {
-				charValue = [charValue uppercaseString];
-			}
-		
-			[result appendFormat:@"▤%i,%i%@▤", firstColor, secondColor, charValue];
-			
-			charCountIndex++;
-		}
-	
-		[text setStringValue:result];
-		[text focus];
-	}
-}
-
-- (IBAction)insertColorCharIntoTextBox:(id)sender
-{
-	NSRange selectedTextRange = [[text currentEditor] selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
-	
-	NSString *selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	
-	if ([sender tag] == 100) { // rainbow text
-		NSString *charValue = nil;
-		
-		NSInteger colorChar = 0;
-		NSInteger charCountIndex = 0;
-		NSInteger rainbowArrayIndex = 0;
-		
-		NSMutableArray *rainbowRanges = [NSMutableArray array];
-		NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"4", @"7", @"8", @"3", @"12", @"2", @"6", nil];
-		
-		while (1 == 1) {
-			if (charCountIndex >= [selectedText length]) break;
-			
-			charValue = [selectedText safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
-			
-			if ([charValue isEqualToString:@" "]) {
-				[rainbowRanges addObject:@" "];
-				
-				charCountIndex++;
-				
-				continue;
-			}
-			
-			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
-			
-			colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
-			charValue = [NSString stringWithFormat:@"▤%i%@▤", colorChar, charValue];
-			
-			[rainbowRanges addObject:charValue];
-			
-			charCountIndex++;
-			rainbowArrayIndex++;
-		}
-		
-		selectedText = [rainbowRanges componentsJoinedByString:nil];
-	} else {
-		selectedText = [NSString stringWithFormat:@"▤%i%@▤", [sender tag], selectedText];
 	}
 	
-	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
-	
-	[text setStringValue:selectedText];
-	[text focus];
-}
-
-- (IBAction)insertBoldCharIntoTextBox:(id)sender
-{
-	NSRange selectedTextRange = [[text currentEditor] selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
-	
-	NSString *selectedText = nil;
-	
-	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▥%@▥", selectedText];
-	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
-	
-	[text setStringValue:selectedText];
-	[text focus];
-}
-
-- (IBAction)insertItalicCharIntoTextBox:(id)sender
-{
-	NSRange selectedTextRange = [[text currentEditor] selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
-	
-	NSString *selectedText = nil;
-	
-	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▧%@▧", selectedText];
-	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
-	
-	[text setStringValue:selectedText];
-	[text focus];
-}
-
-- (IBAction)insertUnderlineCharIntoTextBox:(id)sender
-{
-	NSRange selectedTextRange = [[text currentEditor] selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
-	
-	NSString *selectedText = nil;
-	
-	selectedText = [[text stringValue] safeSubstringWithRange:selectedTextRange];
-	selectedText = [NSString stringWithFormat:@"▨%@▨", selectedText];
-	selectedText = [[text stringValue] stringByReplacingCharactersInRange:selectedTextRange withString:selectedText];
-	
-	[text setStringValue:selectedText];
-	[text focus];
+	return nil;
 }
 
 #pragma mark -
-#pragma mark FieldEditorTextView Delegate
+#pragma mark FieldEditorTextView Delegates
 
-- (BOOL)fieldEditorTextViewPaste:(id)sender;
+- (void)fieldEditorTextViewPaste:(id)sender
 {
-	NSString *s = [[NSPasteboard generalPasteboard] stringContent];
-	
-	if (NSObjectIsEmpty(s)) return NO;
-	
-	if ([[window firstResponder] isKindOfClass:[NSTextView class]] == NO) {
-		[world focusInputText];
+	if ([window attachedSheet]) {
+		id responder = [[window attachedSheet] firstResponder];
+		
+		[responder paste:sender];
+		
+		if ([responder isKindOfClass:[NSTextView class]]) {
+			NSTextField *field = [responder delegate];
+			
+			if ([field allowsEditingTextAttributes]) {
+				[field pasteFilteredAttributedStringValue:[field attributedStringValue]];
+			}
+		}
+	} else {
+		if ([window firstResponder] == fieldEditor) {
+			if ([text allowsEditingTextAttributes]) {
+				[text focus];
+				[text pasteFilteredAttributedStringValue:[text attributedStringValue]];
+			}
+		}
 	}
-	
-	return NO;
+}
+
+- (void)fieldEditorTextViewCopy:(id)sender
+{
+	return;
 }
 
 #pragma mark -
@@ -602,22 +498,20 @@
 
 - (void)sendText:(NSString *)command
 {
-	NSString *s = [text stringValue];
-	NSString *os = s;
+	NSAttributedString *as = [text attributedStringValue];
 	
-	s = [s stringWithASCIIFormatting];
+	NSString *s = [as attributedStringToASCIIFormatting];
 	
 	[text setStringValue:@""];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		if (world.selected.currentInputHistory && NSObjectIsNotEmpty(world.selected.currentInputHistory)) {
-			world.selected.currentInputHistory = nil;
-		}
+		[world.selected.inputHistory.lastHistoryItem drain];
+		world.selected.inputHistory.lastHistoryItem = nil;
 	}
 	
 	if (NSObjectIsNotEmpty(s)) {
 		if ([world inputText:s command:command]) {
-			[inputHistory add:os];
+			[inputHistory add:as];
 		}
 	}
 	
@@ -674,17 +568,17 @@
 	rootSplitter.position = 130;
 	
 	if (dic) {
-		NSInteger x = [dic intForKey:@"x"];
-		NSInteger y = [dic intForKey:@"y"];
-		NSInteger w = [dic intForKey:@"w"];
-		NSInteger h = [dic intForKey:@"h"];
+		NSInteger x = [dic integerForKey:@"x"];
+		NSInteger y = [dic integerForKey:@"y"];
+		NSInteger w = [dic integerForKey:@"w"];
+		NSInteger h = [dic integerForKey:@"h"];
 		
 		id spellCheckingValue = [dic objectForKey:@"SpellChecking"];
 		
 		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
 		
-		infoSplitter.position = [dic intForKey:@"info"];
-		treeSplitter.position = [dic intForKey:@"tree"];
+		infoSplitter.position = [dic integerForKey:@"info"];
+		treeSplitter.position = [dic integerForKey:@"tree"];
 		
 		if (spellCheckingValue) {
 			[fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
@@ -721,13 +615,13 @@
 	
 	NSRect rect = window.frame;
 	
-	[dic setInt:rect.origin.x forKey:@"x"];
-	[dic setInt:rect.origin.y forKey:@"y"];
-	[dic setInt:rect.size.width forKey:@"w"];
-	[dic setInt:rect.size.height forKey:@"h"];
+	[dic setInteger:rect.origin.x forKey:@"x"];
+	[dic setInteger:rect.origin.y forKey:@"y"];
+	[dic setInteger:rect.size.width forKey:@"w"];
+	[dic setInteger:rect.size.height forKey:@"h"];
 	
-	[dic setInt:infoSplitter.position forKey:@"info"];
-	[dic setInt:treeSplitter.position forKey:@"tree"];
+	[dic setInteger:infoSplitter.position forKey:@"info"];
+	[dic setInteger:treeSplitter.position forKey:@"tree"];
 	
 	[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	
@@ -812,14 +706,8 @@
 			c.inputHistory = nil;
 		}
 		
-		if (c.currentInputHistory) {
-			[c.currentInputHistory drain];
-			c.currentInputHistory = nil;
-		}
-		
 		if ([Preferences inputHistoryIsChannelSpecific]) {
 			c.inputHistory = [InputHistory new];
-			c.currentInputHistory = nil;
 		}
 		
 		for (IRCChannel *u in c.channels) {
@@ -828,14 +716,8 @@
 				u.inputHistory = nil;
 			}
 			
-			if (u.currentInputHistory) {
-				[u.currentInputHistory drain];
-				u.currentInputHistory = nil;
-			}
-			
 			if ([Preferences inputHistoryIsChannelSpecific]) {
 				u.inputHistory = [InputHistory new];
-				u.currentInputHistory = nil;
 			}
 		}
 	}
@@ -1008,7 +890,7 @@
 		[users drain];
 	}
 	
-	NSMutableArray *currentChoices = [NSMutableArray array];
+	NSMutableArray *currentChoices      = [NSMutableArray array];
 	NSMutableArray *currentLowerChoices = [NSMutableArray array];
 	
 	NSInteger i = 0;
@@ -1285,10 +1167,10 @@ typedef enum {
 
 - (void)inputHistoryUp:(NSEvent *)e
 {
-	NSString *s = [inputHistory up:[text stringValue]];
+	NSAttributedString *s = [inputHistory up:[text attributedStringValue]];
 	
 	if (s) {
-		[text setStringValue:s];
+		[text setFilteredAttributedStringValue:s];
 		
 		[world focusInputText];
 	}
@@ -1296,10 +1178,10 @@ typedef enum {
 
 - (void)inputHistoryDown:(NSEvent *)e
 {
-	NSString *s = [inputHistory down:[text stringValue]];
+	NSAttributedString *s = [inputHistory down:[text attributedStringValue]];
 	
 	if (s) {
-		[text setStringValue:s];
+		[text setFilteredAttributedStringValue:s];
 		
 		[world focusInputText];
 	}
@@ -1333,8 +1215,6 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
-	
-	[self handler:@selector(insertCrazyColorCharIntoTextBox:) char:'c' mods:(NSControlKeyMask|NSShiftKeyMask|NSAlternateKeyMask|NSCommandKeyMask)];
 	
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];

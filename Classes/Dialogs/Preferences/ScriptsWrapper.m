@@ -43,6 +43,7 @@
 - (void)dealloc
 {
 	[scripts drain];
+	
 	[super dealloc];
 }
 

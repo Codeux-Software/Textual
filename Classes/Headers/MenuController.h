@@ -62,6 +62,8 @@
 - (void)onCloseWindow:(id)sender;
 
 - (void)onPaste:(id)sender;
+- (void)onCopy:(id)sender;
+
 - (void)onSearchWeb:(id)sender;
 - (void)onCopyLogAsHtml:(id)sender;
 

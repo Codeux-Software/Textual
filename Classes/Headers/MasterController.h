@@ -24,7 +24,6 @@
 	
 	IBOutlet NSMenuItem *serverMenu;
 	IBOutlet NSMenuItem *channelMenu;
-	IBOutlet NSMenuItem *formattingMenu;
 	
 	IBOutlet NSMenu *logMenu;
 	IBOutlet NSMenu *urlMenu;
@@ -32,6 +31,8 @@
 	IBOutlet NSMenu *addrMenu;
 	IBOutlet NSMenu *chanMenu;
 	IBOutlet NSMenu *memberMenu;
+	
+	IBOutlet IRCTextFormatterMenu *formattingMenu;
 	
 	IRCWorld *world;
 	IRCExtras *extrac;
@@ -45,6 +46,7 @@
 	BOOL terminating;
 }
 
+@property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, retain) ChatBox *chatBox;
 @property (nonatomic, retain) MainWindow *window;
 @property (nonatomic, retain) MenuController *menu;
@@ -60,7 +62,6 @@
 @property (nonatomic, retain) ThinSplitView *treeSplitter;
 @property (nonatomic, retain) NSMenuItem *serverMenu;
 @property (nonatomic, retain) NSMenuItem *channelMenu;
-@property (nonatomic, retain) NSMenuItem *formattingMenu;
 @property (nonatomic, retain) NSMenu *logMenu;
 @property (nonatomic, retain) NSMenu *urlMenu;
 @property (nonatomic, retain) NSMenu *treeMenu;
@@ -74,16 +75,11 @@
 @property (nonatomic, retain) InputHistory *inputHistory;
 @property (nonatomic, retain) FieldEditorTextView *fieldEditor;
 @property (nonatomic, retain) WelcomeSheet *WelcomeSheetDisplay;
+@property (nonatomic, retain) IRCTextFormatterMenu *formattingMenu;
 @property (nonatomic, retain) NickCompletionStatus *completionStatus;
-@property (nonatomic, assign) BOOL terminating;
 
 - (void)loadWindowState;
 - (void)saveWindowState;
-
-- (void)insertColorCharIntoTextBox:(id)sender;
-- (void)insertBoldCharIntoTextBox:(id)sender;
-- (void)insertItalicCharIntoTextBox:(id)sender;
-- (void)insertUnderlineCharIntoTextBox:(id)sender;
 
 - (void)textEntered:(id)sender;
 

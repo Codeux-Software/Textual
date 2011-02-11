@@ -195,8 +195,11 @@
 	if (NSObjectIsNotEmpty(topic)) {
 		if ([[self topicValue] isEqualToString:topic]) return YES;
 		
-		NSString *body = [LogRenderer renderBody:topic controller:nil nolinks:NO keywords:nil 
-									excludeWords:nil exactWordMatch:NO  highlighted:NULL URLRanges:NULL];
+		NSString *body = [LogRenderer renderBody:topic 
+									  controller:nil
+									  renderType:ASCII_TO_HTML 
+									  properties:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"renderLinks", nil]
+									  resultInfo:NULL];
 		
 		DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
 		if (PointerIsEmpty(doc)) return NO;
@@ -254,6 +257,7 @@
 	DOMHTMLElement *body = [doc body];
 	
 	NSInteger viewHeight = view.frame.size.height;
+	
 	NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
 	NSInteger top = [[body valueForKey:@"scrollTop"] integerValue];
 	
@@ -459,22 +463,39 @@
 	
 	LogLineType type = line.lineType;
 	
-	NSString *body = nil;
+	NSString *body			 = nil;
 	NSString *lineTypeString = [LogLine lineTypeString:type];
 	
-	BOOL key = NO;
+	BOOL highlighted     = NO;
 	BOOL showInlineImage = NO;
-	BOOL isText = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
 	
-	NSArray *urlRanges = nil;
+	BOOL isText			 = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
+	BOOL drawLinks		 = BOOLReverseValue([[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
+	
+	NSArray *urlRanges = [NSArray array];
 	
 	if (rawHTML == NO) {
+		NSMutableDictionary *inputDictionary  = [NSMutableDictionary dictionary];
+		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
+		
+		if (NSObjectIsNotEmpty(line.keywords)) {
+			[inputDictionary setObject:line.keywords forKey:@"keywords"];
+		}
+		
+		if (NSObjectIsNotEmpty(line.excludeWords)) {
+			[inputDictionary setObject:line.excludeWords forKey:@"excludeWords"];
+		}
+		
+		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
+		
 		body = [LogRenderer renderBody:line.body
-							controller:((type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) ? self : nil)
-							   nolinks:[[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]
-							  keywords:line.keywords excludeWords:line.excludeWords
-						exactWordMatch:([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT)
-						   highlighted:&key URLRanges:&urlRanges];
+							controller:((type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) ? self : nil) 
+							renderType:ASCII_TO_HTML 
+							properties:inputDictionary 
+							resultInfo:&outputDictionary];
+		
+		urlRanges   = [outputDictionary arrayForKey:@"URLRanges"];
+		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	} else {
 		body = line.body;
 	}
@@ -482,7 +503,7 @@
 	if (loaded == NO) {
 		[lines addObject:line];
 		
-		return key;
+		return highlighted;
 	}
 	
 	NSMutableString *s = [NSMutableString string];
@@ -543,7 +564,7 @@
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 	
 	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
-	[attrs setObject:((key) ? @"true" : @"false") forKey:@"highlight"];
+	[attrs setObject:((highlighted) ? @"true" : @"false") forKey:@"highlight"];
 	[attrs setObject:((isText) ? @"line text" : @"line event") forKey:@"class"];
 	
 	if (line.nickInfo) {
@@ -552,7 +573,7 @@
 	
 	[self writeLine:s attributes:attrs];
 	
-	if (key && [Preferences logAllHighlightsToQuery]) {
+	if (highlighted && [Preferences logAllHighlightsToQuery]) {
 		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
 		
 		line.body = TXTFLS(@"IRC_USER_WAS_HIGHLIGHTED", [channel name], line.body);
@@ -565,7 +586,7 @@
 		[world reloadTree];
 	}
 	
-	return key;
+	return highlighted;
 }
 
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
@@ -921,9 +942,9 @@
 				NSInteger offsetTop = [[e valueForKey:@"offsetTop"] integerValue];
 				NSInteger offsetHeight = [[e valueForKey:@"offsetHeight"] integerValue];
 				
-				NSInteger pos = ((offsetTop + offsetHeight) / 2);
+				NSInteger pos = (offsetTop + (offsetHeight / 2));
 				
-				[result addObject:[NSNumber numberWithInt:pos]];
+				[result addObject:[NSNumber numberWithInteger:pos]];
 			}
 		}
 	}

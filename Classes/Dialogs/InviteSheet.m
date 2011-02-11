@@ -21,6 +21,7 @@
 - (void)dealloc
 {
 	[nicks drain];
+	
 	[super dealloc];
 }
 

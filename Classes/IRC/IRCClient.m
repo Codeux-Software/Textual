@@ -47,21 +47,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)changeStateOff;
 - (void)performAutoJoin;
 
-- (void)startISONTimer;
-- (void)stopISONTimer;
-- (void)onISONTimer:(id)sender;
-
 - (void)addCommandToCommandQueue:(TimerCommand *)m;
 - (void)clearCommandQueue;
-
-- (void)processBundlesUserMessage:(NSArray *)info;
 
 - (void)handleUserTrackingNotification:(AddressBook *)ignoreItem 
 							  nickname:(NSString *)nick
 							  hostmask:(NSString *)host
 							  langitem:(NSString *)localKey;
-
-- (void)startReconnectTimer;
 
 @end
 
@@ -352,25 +344,29 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (hasIRCopAccess) return;
 	if (isLoggedIn == NO) return;
-	if (trackedUsers == NO) trackedUsers = [NSMutableDictionary new];
+	
+	if (PointerIsEmpty(trackedUsers)) {
+		trackedUsers = [NSMutableDictionary new];
+	}
 	
 	if (NSObjectIsNotEmpty(trackedUsers)) {
 		NSMutableDictionary *oldEntries = [NSMutableDictionary dictionary];
 		NSMutableDictionary *newEntries = [NSMutableDictionary dictionary];
 		
-		for (NSString *name in trackedUsers) {
-			[oldEntries setObject:name forKey:[name lowercaseString]];
+		for (NSString *lname in trackedUsers) {
+			[oldEntries setObject:[trackedUsers objectForKey:lname] forKey:lname];
 		}
 		
 		for (AddressBook *g in ignores) {
 			if (g.notifyJoins || g.notifyWhoisJoins) {
-				NSString *name = [g trackingNickname];
-				NSString *lcname = [name lowercaseString];
+				NSString *lname = [g trackingNickname];
 				
-				if ([oldEntries objectForKey:lcname]) {
-					[newEntries setObject:[trackedUsers objectForKey:name] forKey:name];
-				} else {
-					[newEntries setObject:[NSNumber numberWithBool:NO] forKey:name];
+				if ([lname isNickname]) {
+					if ([oldEntries containsKeyIgnoringCase:lname]) {
+						[newEntries setObject:[oldEntries objectForKey:lname] forKey:lname];
+					} else {
+						[newEntries setObject:[NSNumber numberWithBool:NO] forKey:lname];
+					}
 				}
 			}
 		}
@@ -380,13 +376,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		for (AddressBook *g in ignores) {
 			if (g.notifyJoins || g.notifyWhoisJoins) {
-				[trackedUsers setObject:[NSNumber numberWithBool:NO] forKey:[g trackingNickname]];
+				NSString *lname = [g trackingNickname];
+				
+				if ([lname isNickname]) {
+					[trackedUsers setObject:[NSNumber numberWithBool:NO] forKey:[g trackingNickname]];
+				}
 			}
 		}
 	}
 	
-	if (isonTimer.isActive) [self stopISONTimer];
-	if (isonTimer.isActive == NO && NSObjectIsNotEmpty(trackedUsers)) [self startISONTimer];
+	if (NSObjectIsNotEmpty(trackedUsers)) {
+		[self performSelector:@selector(startISONTimer)];
+	} else {
+		[self performSelector:@selector(stopISONTimer)];
+	}
 }
 
 #pragma mark -
@@ -461,32 +464,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return nil;
 }
 
-- (AddressBook *)checkIgnore:(NSString *)hostmask 
-					   uname:(NSString *)username 
-						name:(NSString *)nickname
-				matchAgainst:(NSArray *)matches
-{
-	if ([nickname contains:@"."]) return nil;
-	
-	NSString *real_host = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
-	
-	return [self checkIgnoreAgainstHostmask:real_host withMatches:matches];
-}
-
 - (NSString *)truncateTextForIRC:(NSMutableString **)string lineType:(LogLineType)type channel:(NSString *)chan 
 {
 	NSMutableString *base = *string;
-	NSString *new = [[base copy] autorelease];
+	
+	NSString *new  = [base copy];
 	
 	NSInteger stringl = new.length;
-	NSInteger baseMath = ((chan.length + myHost.length) + 4); 
+	NSInteger baseMath = (chan.length + myHost.length + 14); 
 	
-	switch (type) {
-		case LINE_TYPE_PRIVMSG: baseMath += 9; break;
-		case LINE_TYPE_ACTION: baseMath += 18; break;
-		case LINE_TYPE_NOTICE: baseMath += 8; break;
-		default: break;
-	}
+	[new autorelease];
 	
 	if ((stringl + baseMath) > IRC_BODY_LEN) {
 		stringl = (IRC_BODY_LEN - baseMath);
@@ -494,7 +481,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		new = [new safeSubstringToIndex:stringl];
 		
 		NSRange currentRange = NSMakeRange(0, stringl);
-		NSRange spaceRange = [new rangeOfString:@" " options:NSBackwardsSearch];
+		NSRange spaceRange = [new rangeOfString:@" " options:NSBackwardsSearch]; 
 		
 		if (spaceRange.location != NSNotFound) {
 			currentRange.length = (stringl - (stringl - spaceRange.location));
@@ -557,7 +544,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	inChanBanList = NO;
 	
-	[chanBanListSheet autorelease];
+	[chanBanListSheet drain];
 	chanBanListSheet = nil;
 }
 
@@ -602,7 +589,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	inChanBanList = NO;
 	
-	[banExceptionSheet autorelease];
+	[banExceptionSheet drain];
 	banExceptionSheet = nil;
 }
 
@@ -632,7 +619,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)listDialogWillClose:(ListDialog *)sender
 {
-	[channelListDialog autorelease];
+	[channelListDialog drain];
 	channelListDialog = nil;
 }
 
@@ -1153,7 +1140,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)executeTextualCmdScript:(NSDictionary *)details 
 {
-	if (PointerIsEmpty([details objectForKey:@"path"])) {
+	if ([details containsKey:@"path"] == NO) {
 		return;
 	}
 	
@@ -1282,7 +1269,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		type = LINE_TYPE_PRIVMSG;
 	}
 	
-	if ([[world bundlesForUserInput] objectForKey:command]) {
+	if ([[world bundlesForUserInput] containsKey:command]) {
 		[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:str, nil, nil]];
 	}
 	
@@ -1306,7 +1293,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (type == LINE_TYPE_ACTION) {
 				cmd = IRCCI_PRIVMSG;
-				newstr = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, IRCCI_ACTION, newstr, (UniChar)0x01];
+				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCCI_ACTION, newstr, 0x01];
 			} else if (type == LINE_TYPE_PRIVMSG) {
 				[channel detectOutgoingConversation:newstr];
 			}
@@ -1323,9 +1310,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *trail;
 	
 	if (NSObjectIsNotEmpty(text)) {
-		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
+		trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, text, 0x01];
 	} else {
-		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
+		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
 	}
 	
 	[self send:IRCCI_PRIVMSG, target, trail, nil];
@@ -1336,9 +1323,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *trail;
 	
 	if (NSObjectIsNotEmpty(text)) {
-		trail = [NSString stringWithFormat:@"%c%@ %@%c", (UniChar)0x01, command, text, (UniChar)0x01];
+		trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, text, 0x01];
 	} else {
-		trail = [NSString stringWithFormat:@"%c%@%c", (UniChar)0x01, command, (UniChar)0x01];
+		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
 	}
 	
 	[self send:IRCCI_NOTICE, target, trail, nil];
@@ -1731,6 +1718,28 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		case 23: // Command: WHO
+		{
+			NSString *chaname = [s getToken];
+			
+			if (NSObjectIsEmpty(s)) {
+				if ([chaname isChannelName]) {
+					IRCChannel *c = [self findChannel:chaname];
+					
+					if (c) {
+						[c setIsWhoInit:YES];
+						[c setForceOutput:YES];
+					}
+				}
+				
+				[self send:IRCCI_WHO, chaname, nil];
+			} else {
+				[self send:IRCCI_WHO, chaname, s, nil];
+			}
+			
+			return YES;
+			break;
+		}
 		case 24: // Command: WHOIS
 			if ([s contains:@" "]) {
 				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, s]];
@@ -3143,7 +3152,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (NSObjectIsEmpty(anick)) {
 			[self printBoth:nil type:type text:text];
-		} else if ([anick contains:@"."]) {
+		} else if ([anick isNickname] == NO) {
 			if (type == LINE_TYPE_NOTICE) {
 				if (hasIRCopAccess) {
 					if ([text hasPrefix:@"*** Notice -- Client connecting"] || 
@@ -3292,7 +3301,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 	} else {
-		if (NSObjectIsEmpty(anick) || [anick contains:@"."]) {
+		if (NSObjectIsEmpty(anick) || [anick isNickname] == NO) {
 			[self printBoth:nil type:type text:text];
 		} else {
 			if ([ignoreChecks ignorePublicMsg] == YES) {
@@ -3387,6 +3396,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)requestUserHosts:(IRCChannel *)c 
 {
 	if ([c.name isChannelName]) {
+		[c setIsWhoInit:YES];
 		[c setIsModeInit:YES];
 		
 		[self send:IRCCI_MODE, c.name, nil];
@@ -3802,8 +3812,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSInteger n = m.numericReply; 
 	
 	if (400 <= n && n < 600 && n != 403 && n != 422) {
-		[self receiveErrorNumericReply:m];
-		return;
+		return [self receiveErrorNumericReply:m];
 	}
 	
 	switch (n) {
@@ -3822,14 +3831,27 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 2 ... 4:
+		{
+			if (NSObjectIsEmpty(config.server)) {
+				if ([m.sender.nick isNickname]) {
+					[config setServer:m.sender.nick];
+				}
+			}
+			
+			[self printReply:m];
+			
+			break;
+		}
 		case 10:
 		case 20:
 		case 42:
 		case 250 ... 255:
 		case 265 ... 266:
+		{
 			[self printReply:m];
 			
 			break;
+		}
 		case 372:
 		case 375:
 		case 376:	 
@@ -4155,11 +4177,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			IRCChannel *c = [self findChannel:chname];
 			
-			if (c && c.isModeInit) {
+			if (c && (c.isModeInit || c.isWhoInit)) {
+				[c setIsWhoInit:NO];
 				[c setIsModeInit:NO];
-			} else {
-				[self printUnknownReply:m];
-			}
+				
+				if (c.forceOutput) {
+					[self printUnknownReply:m];
+				
+					[c setForceOutput:NO];
+				}
+			} 
 			
 			break;
 		}
@@ -4169,29 +4196,37 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			IRCChannel *c = [self findChannel:chname];
 			
-			if (c && c.isModeInit) {
-				NSString *nick = [m paramAt:5];
-				NSString *hostmask = [m paramAt:3];
-				NSString *username = [m paramAt:2];
-				
-				IRCUser *u = [c findMember:nick];
-				
-				if (u) {
-					if (NSObjectIsEmpty(u.address)) {
-						[u setAddress:hostmask];
-						[u setUsername:username];
+			if (c) {
+				if (c.isWhoInit) {
+					NSString *nick = [m paramAt:5];
+					NSString *hostmask = [m paramAt:3];
+					NSString *username = [m paramAt:2];
+					
+					IRCUser *u = [c findMember:nick];
+					
+					if (u) {
+						if (NSObjectIsEmpty(u.address)) {
+							[u setAddress:hostmask];
+							[u setUsername:username];
+						}
+					} else {
+						IRCUser *u = [[IRCUser new] autorelease];
+						
+						u.nick = nick;
+						u.username = username;
+						u.address = hostmask;
+						
+						[c addMember:u];
+					}
+					
+					if (c.forceOutput) {
+						[self printUnknownReply:m];	
 					}
 				} else {
-					IRCUser *u = [[IRCUser new] autorelease];
-					
-					u.nick = nick;
-					u.username = username;
-					u.address = hostmask;
-					
-					[c addMember:u];
+					if (c.isActive == NO) {
+						[self printUnknownReply:m];	
+					}
 				}
-			} else {
-				[self printUnknownReply:m];
 			}
 			
 			break;
@@ -4335,8 +4370,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		case 321:
 		case 329:
-			// do nothing
-			
+			return;
 			break;
 		case 330:
 		{
@@ -4354,31 +4388,31 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			NSString *mask = [m paramAt:2];
 			NSString *owner = [m paramAt:3];
+			
 			long long seton = [[m paramAt:4] longLongValue];
 			
 			if (inChanBanList && chanBanListSheet) {
 				[chanBanListSheet addBan:mask tset:[dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:seton]] setby:owner];
-			} else {
-				[self printUnknownReply:m];
 			}
 			
 			break;
 		}
 		case 368:
 		case 349:
+		{
 			inChanBanList = NO;
 			
 			break;
+		}
 		case 348:
 		{
 			NSString *mask = [m paramAt:2];
 			NSString *owner = [m paramAt:3];
+			
 			long long seton = [[m paramAt:4] longLongValue];
 			
 			if (inChanBanList && banExceptionSheet) {
 				[banExceptionSheet addException:mask tset:[dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:seton]] setby:owner];
-			} else {
-				[self printUnknownReply:m];
 			}
 			
 			break;
@@ -4409,7 +4443,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		default:
-			if ([world.bundlesForServerInput objectForKey:[NSString stringWithInteger:m.numericReply]]) break;
+			if ([world.bundlesForServerInput containsKey:[NSString stringWithInteger:m.numericReply]]) break;
 			
 			[self printUnknownReply:m];
 			
@@ -4693,12 +4727,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	NSString *cmd = m.command;
 	
-	if (m.numericReply > 1 && NSObjectIsEmpty(config.server)) {
-		if ([m.sender.nick contains:@"."]) {
-			[config setServer:m.sender.nick];
-		}
-	}
-	
 	if (m.numericReply > 0) { 
 		[self receiveNumericReply:m];
 	} else {
@@ -4761,7 +4789,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	if ([[world bundlesForServerInput] objectForKey:cmd]) {
+	if ([[world bundlesForServerInput] containsKey:cmd]) {
 		[[self invokeInBackgroundThread] processBundlesServerMessage:m];
 	}
 	

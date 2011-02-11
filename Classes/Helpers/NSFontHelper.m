@@ -10,7 +10,7 @@ const CGFloat kRotationForItalicText = -14.0;
 	// The following code to make a font have italics with an extra fallback is from:
 	// <http://www.answerspice.com/c119/1619181/how-do-i-get-lucida-grande-italic-into-my-application>
 	
-	NSFont *theFont = [[NSFontManager sharedFontManager] convertFont:self toHaveTrait:NSItalicFontMask];  
+	NSFont *theFont = [_NSFontManager() convertFont:self toHaveTrait:NSItalicFontMask];  
 	
 	if ([self fontTraitSet:NSItalicFontMask] == NO) {       
 		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
@@ -40,11 +40,29 @@ const CGFloat kRotationForItalicText = -14.0;
 	return self;
 }
 
+- (BOOL)fontMatchesFont:(NSFont *)otherFont
+{
+	NSString *oldName = [self fontName];
+	NSString *newName = [otherFont fontName];
+	
+	NSInteger oldSize = [self pointSize];
+	NSInteger newSize = [otherFont pointSize];
+	
+	return ([oldName isEqualToString:newName] && oldSize == newSize);
+}
+
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait
 {
-	NSFontTraitMask fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:self];    
+	NSFontTraitMask fontTraits = [_NSFontManager() traitsOfFont:self];    
 	
 	return ((fontTraits & trait) == trait);
+}
+
++ (BOOL)fontIsAvailable:(NSString *)fontName
+{
+	NSArray *systemFonts = [_NSFontManager() availableFonts];
+	
+	return [systemFonts containsObjectIgnoringCase:fontName];
 }
 
 @end

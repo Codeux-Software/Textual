@@ -10,6 +10,7 @@
 - (void)dealloc
 {
 	[input drain];
+	
 	[super dealloc];
 }
 

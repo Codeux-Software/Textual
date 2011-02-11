@@ -11,7 +11,9 @@
 
 	/* Establish Common Pointers */
 	#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
+	#define _NSPasteboard()							[NSPasteboard generalPasteboard]
 	#define _NSFileManager()						[NSFileManager defaultManager]
+	#define _NSFontManager()						[NSFontManager sharedFontManager]
 	#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
 	#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
 	#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
@@ -23,6 +25,7 @@
 	#define CFItemRefToID(s)					(id)s
 	#define PointerIsEmpty(s)					(s == NULL || s == nil)
 	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
+	#define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 	#define ObjectsShareType(a, b)				(strcmp(@encode(typeof(a)), @encode(b)) == 0)
 
 	/* Item types */
@@ -85,17 +88,20 @@
 	#import "NSWindowHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSNumberHelper.h"
+	#import "IRCColorFormat.h"
+	#import "NSTextFieldHelper.h"
 	#import "GTMNSString+HTML.h"
 	#import "NSPasteboardHelper.h"
 	#import "NSDictionaryHelper.h"
 	#import "DDInvocationGrabber.h"
 	#import "GTMGarbageCollection.h"
-	#import "NSObject+DDExtensions.h"
+	#import "DDExtensions.h"
 	#import "GTMNSString+URLArguments.h"
 	#import "IRC.h"
 	#import "IRCUser.h"
 	#import "MemberListViewCell.h"
 	#import "MemberListView.h"
+	#import "IRCTextFormatterMenu.h"
 	#import "IRCExtras.h"
 	#import "IRCTreeItem.h"
 	#import "IRCWorldConfig.h"

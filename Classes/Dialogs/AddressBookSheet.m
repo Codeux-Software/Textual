@@ -39,6 +39,7 @@
 - (void)dealloc
 {
 	[ignore drain];
+	
 	[super dealloc];
 }
 

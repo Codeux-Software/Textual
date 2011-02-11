@@ -11,10 +11,8 @@
 @implementation TinyGrowlClient
 
 @synthesize delegate;
-@synthesize appName;
 @synthesize allNotifications;
 @synthesize defaultNotifications;
-@synthesize appIcon;
 @synthesize clickedNotificationName;
 @synthesize timedOutNotificationName;
 
@@ -24,8 +22,6 @@
 	[_NSDistributedNotificationCenter() removeObserver:self name:clickedNotificationName object:nil];
 	[_NSDistributedNotificationCenter() removeObserver:self name:timedOutNotificationName object:nil];
 	
-	[appName drain];
-	[appIcon drain];
 	[allNotifications drain];
 	[defaultNotifications drain];
 	[clickedNotificationName drain];
@@ -60,22 +56,17 @@
 			  priority:(NSInteger)priority
 				  icon:(NSImage *)icon
 {
-	NSInteger pid = [[NSProcessInfo processInfo] processIdentifier];
-	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:appName forKey:@"ApplicationName"];
+	[dic setObject:[Preferences applicationName] forKey:@"ApplicationName"];
 	
-	[dic setObject:type forKey:@"NotificationName"];;
+	[dic setObject:type forKey:@"NotificationName"];
 	[dic setObject:title forKey:@"NotificationTitle"];
 	[dic setObject:desc forKey:@"NotificationDescription"];
 	
-	[dic setObject:[NSNumber numberWithInteger:pid] forKey:@"ApplicationPID"];
+	[dic setObject:[Preferences applicationIcon] forKey:@"NotificationIcon"];
+	[dic setObject:[Preferences applicationProcessID] forKey:@"ApplicationPID"];
 	[dic setObject:[NSNumber numberWithInteger:priority] forKey:@"NotificationPriority"];
-	
-	if (icon) {
-		[dic setObject:[icon TIFFRepresentation] forKey:@"NotificationIcon"];
-	}
 	
 	if (sticky) {
 		[dic setObject:[NSNumber numberWithInteger:1] forKey:@"NotificationSticky"];
@@ -90,34 +81,26 @@
 
 - (void)registerApplication
 {
-	if (NSObjectIsEmpty(appName)) {
-		self.appName = [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"];
-	}
-	
 	if (PointerIsEmpty(defaultNotifications)) {
 		self.defaultNotifications = allNotifications;
 	}
 	
-	NSInteger pid = [[NSProcessInfo processInfo] processIdentifier];
-	
 	[clickedNotificationName drain];
 	[timedOutNotificationName drain];
 	
-	clickedNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_CLICKED] retain];
-	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", appName, pid, GROWL_TIMED_OUT] retain];
+	clickedNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", [Preferences applicationName], [Preferences applicationProcessID], GROWL_CLICKED] retain];
+	timedOutNotificationName = [[NSString stringWithFormat:@"%@-%d-%@", [Preferences applicationName], [Preferences applicationProcessID], GROWL_TIMED_OUT] retain];
 	
 	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onReady:) name:GROWL_IS_READY object:nil];
 	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onClicked:) name:clickedNotificationName object:nil];
 	[_NSDistributedNotificationCenter() addObserver:self selector:@selector(onTimeout:) name:timedOutNotificationName object:nil];
 	
-	NSImage *icon = ((appIcon) ?: [NSApp applicationIconImage]);
-	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:appName forKey:@"ApplicationName"];
 	[dic setObject:allNotifications forKey:@"AllNotifications"];
 	[dic setObject:defaultNotifications forKey:@"DefaultNotifications"];
-	[dic setObject:[icon TIFFRepresentation] forKey:@"ApplicationIcon"];
+	[dic setObject:[Preferences applicationName] forKey:@"ApplicationName"];
+	[dic setObject:[Preferences applicationIcon] forKey:@"NotificationIcon"];
 	
 	[_NSDistributedNotificationCenter() postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:NO];
 }

@@ -11,6 +11,7 @@
 @synthesize client;
 @synthesize config;
 @synthesize errLastJoin;
+@synthesize forceOutput;
 @synthesize isActive;
 @synthesize isHalfOp;
 @synthesize isModeInit;
@@ -116,7 +117,7 @@
 
 - (void)closeDialogs
 {
-	// do nothing
+	return;
 }
 
 - (void)preferencesChanged
@@ -147,6 +148,7 @@
 	isWhoInit = NO;
 	isModeInit = NO;
 	isNamesInit = NO;
+	forceOutput = NO;
 	errLastJoin = NO;
 	
 	[self reloadMemberList];
@@ -160,6 +162,8 @@
 	
 	isOp = NO;
 	isHalfOp = NO;
+	
+	forceOutput = NO;
 	errLastJoin = NO;
 	
 	[self reloadMemberList];

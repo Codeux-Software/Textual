@@ -10,6 +10,8 @@
 #define IsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
 
 @interface NSString (NSStringHelper)
++ (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
+
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;
 
@@ -21,6 +23,7 @@
 
 - (NSString *)nicknameFromHostmask;
 - (NSString *)hostmaskFromRawString;
+
 - (NSString *)cleanedServerHostmask;
 
 - (BOOL)isEqualNoCase:(NSString *)other;
@@ -62,13 +65,13 @@
 - (NSString *)encodeURIComponent;
 - (NSString *)encodeURIFragment;
 
+- (BOOL)isNickname;
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
 
 + (NSString *)stringWithUUID;
 
-- (NSString *)stringWithInputIRCFormatting;
-- (NSString *)stringWithASCIIFormatting;
+- (NSString *)reservedCharactersToIRCFormatting;
 @end
 
 @interface NSString (NSStringNumberHelper)
@@ -92,4 +95,8 @@
 @interface NSMutableString (NSMutableStringHelper)
 - (NSString *)getToken;
 - (NSString *)getIgnoreToken;
+@end
+
+@interface NSAttributedString (NSAttributedStringHelper)
+- (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 @end

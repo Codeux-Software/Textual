@@ -14,7 +14,7 @@
 	return NO;
 }
 
-- (NSInteger)intForKey:(NSString *)key
+- (NSInteger)integerForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
 	
@@ -80,6 +80,24 @@
 	return nil;
 }
 
+- (BOOL)containsKey:(id)anObject
+{	
+	return BOOLValueFromObject([self objectForKey:anObject]);
+}
+	
+- (BOOL)containsKeyIgnoringCase:(id)anObject
+{
+	for (id object in [self allKeys]) {
+		if ([object isKindOfClass:[NSString class]]) {
+			if ([object isEqualNoCase:anObject]) {
+				return YES;
+			}
+		} 
+	}
+	
+	return [self containsKey:anObject];
+}
+
 @end
 
 @implementation NSMutableDictionary (NSMutableDictionaryHelper)
@@ -89,7 +107,7 @@
 	[self setObject:[NSNumber numberWithBool:value] forKey:key];
 }
 
-- (void)setInt:(NSInteger)value forKey:(NSString *)key
+- (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
 	[self setObject:[NSNumber numberWithInteger:value] forKey:key];
 }

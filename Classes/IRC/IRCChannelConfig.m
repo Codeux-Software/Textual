@@ -37,7 +37,7 @@
 {
 	[self init];
 	
-	type = [dic intForKey:@"type"];
+	type = [dic integerForKey:@"type"];
 	
 	name = (([[dic stringForKey:@"name"] retain]) ?: @"");
 	password = (([[dic stringForKey:@"password"] retain]) ?: @"");
@@ -68,7 +68,7 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInt:type forKey:@"type"];
+	[dic setInteger:type forKey:@"type"];
 	
 	[dic setBool:growl forKey:@"growl"];
 	[dic setBool:autoJoin forKey:@"auto_join"];

@@ -24,6 +24,7 @@
 - (void)dealloc
 {
 	[policy drain];
+	
 	[super dealloc];
 }
 

@@ -24,8 +24,6 @@
 "CHANNEL_APPLICATION_TITLE_USERS" = " (%i Users)";
 "CHANNEL_APPLICATION_TITLE_MODES" = " (%@)";
 
-"SOURCE_RESOURCES_FILES_RESET" = "Files reset. Please restart Textual to apply changes.";
-
 "RESOURCES_FILE_RESET_WARNING_TITLE" = "Reset Resources";
 "RESOURCES_FILE_RESET_WARNING_MESSAGE" = "Execution of this command will erase the contents of the folder \"%@\" which contains cached files used by the Textual IRC Client. Are you sure you wish to continue with this action? There is no undo. ";
 "RESOURCES_FILE_RESET_QUITTING_TITLE" = "Action Completed";
@@ -36,7 +34,7 @@
 "SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 
-"DEFAULT_QPS_MESSAGE" = "Leaving...";
+"DEFAULT_QPS_MESSAGE" = "Textual IRC Client: http://www.textualapp.com/";
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "DCC_REQUEST_ERROR_MESSAGE" = "The Textual IRC Client has received a DCC request that could not be processed.";

@@ -230,10 +230,13 @@
 														   defaultButton:TXTLS(@"TRUST_BUTTON") 
 														 alternateButton:TXTLS(@"CANCEL_BUTTON") 
 														  suppressionKey:suppKey
-														 suppressionText:nil];
+														 suppressionText:@"-"];
 					
 					client.config.isTrustedConnection = status;
-					client.disconnectType = ((status == YES) ? DISCONNECT_BAD_SSL_CERT : DISCONNECT_NORMAL);
+					
+					if (status) {
+						client.disconnectType = DISCONNECT_BAD_SSL_CERT;
+					}
 					
 					[_NSUserDefaults() setBool:status forKey:suppKey];
 					

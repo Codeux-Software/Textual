@@ -18,8 +18,8 @@
 @interface MenuController (Private)
 - (LogView *)currentWebView;
 
-- (BOOL)checkSelectedMembers:(NSMenuItem *)item;
 - (NSArray *)selectedMembers:(NSMenuItem *)sender;
+- (BOOL)checkSelectedMembers:(NSMenuItem *)item;
 - (void)deselectMembers:(NSMenuItem *)sender;
 @end
 
@@ -113,7 +113,7 @@
 	switch (tag) {
 		case 313:	// paste
 		{
-			if ([[NSPasteboard generalPasteboard] hasStringContent] == NO) {
+			if ([_NSPasteboard() hasStringContent] == NO) {
 				return NO;
 			}
 			
@@ -123,9 +123,25 @@
 			id t = [win firstResponder];
 			if (PointerIsEmpty(t)) return NO;
 			
-			if (win == window) {
+			if ([t respondsToSelector:@selector(paste:)]) {
+				if ([t respondsToSelector:@selector(validateMenuItem:)]) {
+					return [t validateMenuItem:item];
+				}
+				
 				return YES;
-			} else if ([t respondsToSelector:@selector(paste:)]) {
+			}
+			
+			break;
+		}
+		case 549:	// copy
+		{
+			NSWindow *win = [NSApp keyWindow];
+			if (PointerIsEmpty(win)) return NO;
+			
+			id t = [win firstResponder];
+			if (PointerIsEmpty(t)) return NO;
+			
+			if ([t respondsToSelector:@selector(copy:)]) {
 				if ([t respondsToSelector:@selector(validateMenuItem:)]) {
 					return [t validateMenuItem:item];
 				}
@@ -526,26 +542,43 @@
 	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
 }
 
-- (void)onPaste:(id)sender
+- (void)onCopy:(id)sender
 {
-	NSPasteboard *pb = [NSPasteboard generalPasteboard];
-	if ([pb hasStringContent] == NO) return;
-	
 	NSWindow *win = [NSApp keyWindow];
 	if (PointerIsEmpty(win)) return;
 	
 	id t = [win firstResponder];
 	if (PointerIsEmpty(t)) return;
 	
-	if (win == window) {
-		NSString *s = [pb stringContent];
-		if (NSObjectIsEmpty(s)) return;
+	if ([t respondsToSelector:@selector(copy:)]) {
+		BOOL validated = YES;
 		
-		if ([t isKindOfClass:[NSTextView class]] == NO) {
-			[world focusInputText];
+		if ([t respondsToSelector:@selector(validateMenuItem:)]) {
+			validated = [t validateMenuItem:sender];
 		}
 		
-		NSText *e = [win fieldEditor:NO forObject:text];
+		if (validated) {
+			if (win == window || [window attachedSheet] == win) {
+				NSText *e = [win fieldEditor:NO forObject:text];
+				
+				[e copy:nil];
+			} else {
+				[t copy:sender];
+			}
+		}
+	}
+}
+
+- (void)onPaste:(id)sender
+{
+	NSWindow *win = [NSApp keyWindow];
+	if (PointerIsEmpty(win)) return;
+	
+	id t = [win firstResponder];
+	if (PointerIsEmpty(t)) return;
+	
+	if (win == window || [window attachedSheet] == win) {
+		NSText *e = [window fieldEditor:NO forObject:text];
 		
 		[e paste:nil];
 	} else {
@@ -585,7 +618,7 @@
 	
 	if (PointerIsEmpty(sel)) return;
 	
-	[[NSPasteboard generalPasteboard] setStringContent:[sel.log.view contentString]];
+	[_NSPasteboard() setStringContent:[sel.log.view contentString]];
 }
 
 - (void)onMarkScrollback:(id)sender
@@ -643,7 +676,7 @@
 - (void)onCancelReconnecting:(id)sender
 {
 	IRCClient *u = [world selectedClient];
-
+	
 	if (NO_CLIENT) return;
 	
 	[u cancelReconnect];
@@ -668,7 +701,7 @@
 - (void)nickSheet:(NickSheet *)sender didInputNick:(NSString *)newNick
 {
 	IRCClient *u = [world findClientById:sender.uid];
-
+	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
 	[u changeNick:newNick];
@@ -728,7 +761,7 @@
 - (void)onDeleteServer:(id)sender
 {
 	IRCClient *u = [world selectedClient];
-	 
+	
 	if (NO_CLIENT || CONNECTED) return;
 	
 	BOOL result = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"WANT_SERVER_DELETE_MESSAGE")
@@ -975,7 +1008,7 @@
 		[world expandClient:u];
 	} else {
 		IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
-	
+		
 		if (NO_CHANNEL) return;
 		
 		if (NSObjectIsEmpty(c.config.encryptionKey) && NSObjectIsNotEmpty(sender.config.encryptionKey)) {
@@ -1080,7 +1113,7 @@
 	
 	NSMutableArray *nicks = [NSMutableArray array];
 	NSMutableArray *channels = [NSMutableArray array];
-
+	
 	for (IRCUser *m in [self selectedMembers:sender]) {
 		[nicks addObject:m.nick];
 	}
@@ -1192,8 +1225,8 @@
 - (void)onCopyUrl:(id)sender
 {
 	if (NSObjectIsNotEmpty(pointedUrl)) {
-		[[NSPasteboard generalPasteboard] setStringContent:pointedUrl];
-	
+		[_NSPasteboard() setStringContent:pointedUrl];
+		
 		pointedUrl = nil;
 	}
 }
@@ -1201,8 +1234,8 @@
 - (void)onCopyAddress:(id)sender
 {
 	if (NSObjectIsNotEmpty(pointedAddress)) {
-		[[NSPasteboard generalPasteboard] setStringContent:pointedAddress];
-	
+		[_NSPasteboard() setStringContent:pointedAddress];
+		
 		pointedAddress = nil;
 	}
 }

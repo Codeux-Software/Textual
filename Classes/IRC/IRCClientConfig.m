@@ -199,7 +199,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	[self init];	
 	
-	cuid = (([dic intForKey:@"cuid"]) ?: cuid);
+	cuid = (([dic integerForKey:@"cuid"]) ?: cuid);
 	
 	if ([dic stringForKey:@"guid"]) {
 		[guid drain];
@@ -212,7 +212,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	host = (([[dic stringForKey:@"host"] retain]) ?: @"");
-	port = (([dic intForKey:@"port"]) ?: 6667);
+	port = (([dic integerForKey:@"port"]) ?: 6667);
 	
 	if ([dic stringForKey:@"nick"]) {
 		[nick drain];
@@ -233,17 +233,17 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
-	proxyType = [dic intForKey:@"proxy"];
+	proxyType = [dic integerForKey:@"proxy"];
 	proxyHost = (([[dic stringForKey:@"proxy_host"] retain]) ?: @"");
-	proxyPort = (([dic intForKey:@"proxy_port"]) ?: 1080);
+	proxyPort = (([dic integerForKey:@"proxy_port"]) ?: 1080);
 	proxyUser = (([[dic stringForKey:@"proxy_user"] retain]) ?: @"");
 	proxyPassword = (([[dic stringForKey:@"proxy_password"] retain]) ?: @"");
 	
 	autoConnect = [dic boolForKey:@"auto_connect"];
 	autoReconnect = [dic boolForKey:@"auto_reconnect"];
 	bouncerMode = [dic boolForKey:@"bouncer_mode"];
-	encoding = (([dic intForKey:@"encoding"]) ?: NSUTF8StringEncoding);
-	fallbackEncoding = (([dic intForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
+	encoding = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
+	fallbackEncoding = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
 	
 	if ([dic stringForKey:@"leaving_comment"]) {
 		[leavingComment drain];
@@ -307,11 +307,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInt:port forKey:@"port"];
-	[dic setInt:proxyType forKey:@"proxy"];
-	[dic setInt:proxyPort forKey:@"proxy_port"];
-	[dic setInt:encoding forKey:@"encoding"];
-	[dic setInt:fallbackEncoding forKey:@"fallback_encoding"];
+	[dic setInteger:port forKey:@"port"];
+	[dic setInteger:proxyType forKey:@"proxy"];
+	[dic setInteger:proxyPort forKey:@"proxy_port"];
+	[dic setInteger:encoding forKey:@"encoding"];
+	[dic setInteger:fallbackEncoding forKey:@"fallback_encoding"];
 	
 	[dic setBool:useSSL forKey:@"ssl"];
 	[dic setBool:autoConnect forKey:@"auto_connect"];
@@ -320,7 +320,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setBool:invisibleMode forKey:@"invisible"];
 	[dic setBool:isTrustedConnection forKey:@"trustedConnection"];
 	
-	if (cuid) [dic setInt:cuid forKey:@"cuid"];
+	if (cuid) [dic setInteger:cuid forKey:@"cuid"];
 	if (guid) [dic setObject:guid forKey:@"guid"];
 	if (name) [dic setObject:name forKey:@"name"];
 	if (host) [dic setObject:host forKey:@"host"];

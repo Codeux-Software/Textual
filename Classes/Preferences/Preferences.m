@@ -144,6 +144,24 @@ static NSMutableDictionary *commandIndex = nil;
 }
 
 #pragma mark -
+#pragma mark Application Information
+
++ (NSData *)applicationIcon
+{
+	return [[NSApp applicationIconImage] TIFFRepresentation];
+}
+
++ (NSString *)applicationName;
+{
+	return [textualPlist objectForKey:@"CFBundleName"];
+}
+
++ (NSNumber *)applicationProcessID
+{
+	return [NSNumber numberWithInteger:[[NSProcessInfo processInfo] processIdentifier]];
+}
+
+#pragma mark -
 #pragma mark Path Index
 
 + (NSString *)whereApplicationSupportPath
@@ -1023,9 +1041,9 @@ static NSInteger totalRunTime = 0;
 	[d setBool:NO forKey:@"Preferences.General.handle_server_notices"];
 	[d setObject:@"ircop alert" forKey:@"Preferences.General.ircop_alert_match"];
 	[d setBool:NO forKey:@"Preferences.FloodControl.enabled"];
-	[d setInt:2 forKey:@"Preferences.FloodControl.timer"];
-	[d setInt:2 forKey:@"Preferences.FloodControl.maxmsg"];
-	[d setInt:5 forKey:@"Preferences.General.autojoin_maxchans"];
+	[d setInteger:2 forKey:@"Preferences.FloodControl.timer"];
+	[d setInteger:2 forKey:@"Preferences.FloodControl.maxmsg"];
+	[d setInteger:5 forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setBool:NO forKey:@"Preferences.General.handle_operalerts"];
 	[d setBool:NO forKey:@"Preferences.General.process_channel_modes"];
 	[d setBool:NO forKey:@"Preferences.General.clear_only_active"];
@@ -1050,9 +1068,9 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
-	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
+	[d setInteger:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
-	[d setInt:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
+	[d setInteger:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
 	[d setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
 	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
@@ -1064,16 +1082,16 @@ static NSInteger totalRunTime = 0;
 	[d setBool:NO forKey:@"Preferences.General.nickserv_delay_autojoin"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
-	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
-	[d setInt:300 forKey:@"Preferences.General.inline_image_width"];
+	[d setInteger:300 forKey:@"Preferences.General.max_log_lines"];
+	[d setInteger:300 forKey:@"Preferences.General.inline_image_width"];
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
-	[d setInt:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
-	[d setInt:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
-	[d setInt:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
-	[d setInt:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
+	[d setInteger:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
+	[d setInteger:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
+	[d setInteger:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
+	[d setInteger:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
     
 	[_NSUserDefaults() registerDefaults:d];
 	

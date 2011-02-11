@@ -16,7 +16,9 @@
 - (void)dealloc
 {
 	[self close];
+	
 	[filename drain];
+	
 	[super dealloc];
 }
 

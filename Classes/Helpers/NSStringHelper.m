@@ -7,6 +7,11 @@
 
 @implementation NSString (NSStringHelper)
 
++ (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+{
+	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autorelease];
+}
+
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 {
 	if (range.location == NSNotFound) return nil;
@@ -43,9 +48,9 @@
 - (NSString *)fastChopEndWithChars:(NSArray *)chars
 {
 	NSInteger chopMnt = 0;
-	NSInteger slnt = [self length];
+	NSInteger slnt	  = [self length];
 	
-	NSString *slchar = nil;
+	NSString *slchar	 = nil;
 	NSString *strChopper = self;
 	
 	for (NSInteger i = 1; i < slnt; i++) {
@@ -310,6 +315,7 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSRange r = [self rangeOfString:needle];
 	if (r.location == NSNotFound) return -1;
+	
 	return r.location;
 }
 
@@ -317,6 +323,7 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSRange r = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
 	if (r.location == NSNotFound) return -1;
+	
 	return r.location;
 }
 
@@ -326,8 +333,7 @@ BOOL isUnicharDigit(unichar c)
 		return [self stripEffects];
 	}
 	
-	return [LogRenderer renderBody:self controller:nil nolinks:NO keywords:nil excludeWords:nil 
-					exactWordMatch:NO highlighted:NULL URLRanges:NULL attributedString:YES];
+	return [LogRenderer renderBody:self controller:nil renderType:ASCII_TO_ATTRIBUTED_STRING properties:nil resultInfo:NULL];
 }
 
 - (NSString *)stripEffects
@@ -393,6 +399,13 @@ BOOL isUnicharDigit(unichar c)
 	}
 	
 	return [NSString stringWithCharacters:buf length:pos];
+}
+
+- (BOOL)isNickname
+{
+	if (NSObjectIsEmpty(self)) return NO;
+	
+	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
 }
 
 - (BOOL)isChannelName
@@ -500,8 +513,8 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (NSObjectIsEmpty(self)) return @"";
 	
+	const char* src		   = [self UTF8String];
 	const char* characters = "0123456789ABCDEF";
-	const char* src = [self UTF8String];
 	
 	if (src == NULL) return @"";
 	
@@ -522,15 +535,15 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	return [[[NSString alloc] initWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding] autorelease];
+	return [NSString stringWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding];
 }
 
 - (NSString *)encodeURIFragment
 {
 	if (NSObjectIsEmpty(self)) return @"";
 	
+	const char* src		   = [self UTF8String];
 	const char* characters = "0123456789ABCDEF";
-	const char* src = [self UTF8String];
 	
 	if (src == NULL) return @"";
 	
@@ -559,7 +572,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	return [[[NSString alloc] initWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding] autorelease];
+	return [NSString stringWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding];
 }
 
 + (NSString *)stringWithUUID 
@@ -573,40 +586,26 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)hostmaskFromRawString
 {
-	if (NSObjectIsEmpty(self)) return nil;
-	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
+	if ([self contains:@"!"] == NO || [self contains:@"@"] == NO) return self;
 	
 	return [self safeSubstringAfterIndex:[self stringPosition:@"!"]];
 }
 
 - (NSString *)nicknameFromHostmask
 {
-	if (NSObjectIsEmpty(self)) return nil;
-	if ([self contains:@"!"] == NO && [self contains:@"."] == YES) return self;
+	if ([self contains:@"!"] == NO) return self;
 	
 	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
 }
 
-- (NSString *)stringWithInputIRCFormatting
+- (NSString *)reservedCharactersToIRCFormatting
 {
 	NSString *s = self;
 	
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x03] withString:@"▤"]; // color
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x02] withString:@"▥"]; // bold
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x16] withString:@"▧"]; // italics
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:(UniChar)0x1F] withString:@"▨"]; // underline
-	
-	return s;
-}
-
-- (NSString *)stringWithASCIIFormatting
-{
-	NSString *s = self;
-	
-	s = [s stringByReplacingOccurrencesOfString:@"▤" withString:[NSString stringWithUniChar:(UniChar)0x03]]; // color
-	s = [s stringByReplacingOccurrencesOfString:@"▥" withString:[NSString stringWithUniChar:(UniChar)0x02]]; // bold
-	s = [s stringByReplacingOccurrencesOfString:@"▧" withString:[NSString stringWithUniChar:(UniChar)0x16]]; // italics
-	s = [s stringByReplacingOccurrencesOfString:@"▨" withString:[NSString stringWithUniChar:(UniChar)0x1F]]; // underline
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x03] withString:@"▤"]; // color
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x02] withString:@"▥"]; // bold
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x16] withString:@"▧"]; // italics
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x1F] withString:@"▨"]; // underline
 	
 	return s;
 }
@@ -737,6 +736,30 @@ BOOL isUnicharDigit(unichar c)
 	[self setString:@""];
 	
 	return result;
+}
+
+@end
+
+@implementation NSAttributedString (NSAttributedStringHelper)
+
+- (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
+{
+	NSString *str = [self string];
+	
+	NSRange range;
+	
+	NSUInteger loc = 0;
+	NSUInteger len = 0;
+	
+	NSCharacterSet *invertedSet = [set invertedSet];
+	
+	range = [str rangeOfCharacterFromSet:invertedSet];
+	loc   = ((range.length >= 1) ? range.location : 0);
+	
+	range = [str rangeOfCharacterFromSet:invertedSet options:NSBackwardsSearch];
+	len   = ((range.length >= 1) ? (NSMaxRange(range) - loc) : ([str length] - loc));
+	
+	return [self attributedSubstringFromRange:NSMakeRange(loc,len)];
 }
 
 @end

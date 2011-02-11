@@ -29,9 +29,9 @@ static NSDictionary *themeLocalizations = nil;
 	} else {
 		NSString *localstring = [themeLocalizations objectForKey:key];
 		
-		if (localstring) return [localstring stringWithASCIIFormatting];
+		if (localstring) return [localstring reservedCharactersToIRCFormatting];
 		
-		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);;
+		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);
 	}
 }
 
