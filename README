@@ -17,6 +17,12 @@ setting can be changed by going to the "File" menu and then
 "Project Settings" Ñ If this is not done, then the plugins will 
 not be compiled in correct location for Textual to copy over. 
 
+Additionally, Textual comes pre-packaged with four build schemes
+for Xcode 4 users. It is recommended to only use these schemes
+and none that Xcode itself automatically generates. These schemes
+which are in the format "Textual (<build type>)" have already been 
+configured for the best results. 
+
 #### Friendly Request ####
 
 It is asked that those with knowledge of compiling Textual do not 
@@ -31,7 +37,7 @@ Based on work by Satoshi Nakagawa <psychs AT limechat DOT net>
 Copyright (c) 2008-2010 All rights reserved.
 <http://github.com/psychs/limechat>
 
-Modifications done by Codeux Software <support AT codeux DOT com>
+Extensive done by Codeux Software <support AT codeux DOT com>
 Copyright (c) 2010, 2011 <https://github.com/codeux/Textual>
 
 A full list of acknowledgements and contributors can be found in the

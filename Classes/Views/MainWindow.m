@@ -22,6 +22,7 @@
 - (void)dealloc
 {
 	[keyHandler drain];
+	
 	[super dealloc];
 }
 

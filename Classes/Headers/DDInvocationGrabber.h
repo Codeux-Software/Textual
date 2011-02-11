@@ -29,28 +29,18 @@ typedef enum {
 
 @interface DDInvocationGrabber : NSProxy
 {
-	id _target;
-	BOOL _waitUntilDone;
-	NSInvocation *_invocation;
-	invocationThreadType _threadType;
+	id target;
+	BOOL waitUntilDone;
+	NSInvocation *invocation;
+	invocationThreadType threadType;
 }
 
+@property (nonatomic, retain) id target;
+@property (nonatomic, assign) BOOL waitUntilDone;
+@property (nonatomic, retain) NSInvocation *invocation;
+@property (nonatomic, assign) invocationThreadType threadType;
+
 + (id)invocationGrabber;
-
-- (id)target;
-- (void)setTarget:(id)inTarget;
-
-- (NSInvocation *)invocation;
-- (void)setInvocation:(NSInvocation *)inInvocation;
-
-- (invocationThreadType)threadType;
-- (void)setInvocationThreadType:(invocationThreadType)threadType;
-
-- (BOOL)waitUntilDone;
-- (void)setWaitUntilDone:(BOOL)waitUntilDone;
-@end
-
-@interface DDInvocationGrabber (DDInvocationGrabber_Conveniences)
 - (id)prepareWithInvocationTarget:(id)inTarget;
 @end
 

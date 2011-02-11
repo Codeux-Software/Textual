@@ -18,4 +18,16 @@
 	return NO;
 }
 
+- (NSString *)integerWithLeadingZero
+{
+	NSString *ints = [self stringValue];
+	NSInteger intv = [self integerValue];
+	
+	if (intv >= 0 && intv <= 9) {
+		return [@"0" stringByAppendingString:ints];
+	}
+	
+	return ints;
+}
+
 @end

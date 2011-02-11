@@ -3,4 +3,6 @@
 
 @interface NSNumber (NSNumberHelper)
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;
+
+- (NSString *)integerWithLeadingZero;
 @end

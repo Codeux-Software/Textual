@@ -4,14 +4,17 @@
 @interface FieldEditorTextView : NSTextView
 {
 	id pasteDelegate;
+	id copyDelegate;
 	
 	KeyEventHandler *keyHandler;
 }
 
 @property (nonatomic, assign) id pasteDelegate;
+@property (nonatomic, assign) id copyDelegate;
 @property (nonatomic, retain) KeyEventHandler *keyHandler;
 
 - (void)paste:(id)sender;
+- (void)copy:(id)sender;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
@@ -19,5 +22,6 @@
 @end
 
 @interface NSObject (FieldEditorTextViewDelegate)
-- (BOOL)fieldEditorTextViewPaste:(id)sender;
+- (void)fieldEditorTextViewPaste:(id)sender;
+- (void)fieldEditorTextViewCopy:(id)sender;
 @end

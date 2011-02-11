@@ -27,7 +27,7 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ([self init]) {
-		cid = (([dic intForKey:@"cid"]) ?: TXRandomThousandNumber());
+		cid = (([dic integerForKey:@"cid"]) ?: TXRandomThousandNumber());
 		
 		hostmask = [[dic objectForKey:@"hostmask"] retain];
 		
@@ -101,7 +101,7 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInt:cid forKey:@"cid"];
+	[dic setInteger:cid forKey:@"cid"];
 	
 	[dic setObject:hostmask forKey:@"hostmask"];
 	[dic setBool:ignorePublicMsg forKey:@"ignorePublicMsg"];

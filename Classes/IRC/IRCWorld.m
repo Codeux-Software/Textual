@@ -110,7 +110,7 @@
 	[tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
 	[tree registerForDraggedTypes:TREE_DRAG_ITEM_TYPES];
 	
-	IRCClient *client = nil;;
+	IRCClient *client = nil;
 	
 	for (IRCClient *e in clients) {
 		if (e.config.autoConnect) {
@@ -462,7 +462,7 @@
 			
 			NSString *modes = [c.mode titleString];
 			
-			if (NSObjectIsNotEmpty(modes)) {
+			if ([modes length] >= 2) {
 				[title appendFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), modes];
 			}
 			
@@ -655,12 +655,21 @@
 
 - (void)changeInputTextTheme
 {
+	NSAttributedString *original = [text attributedStringValue];
+	
 	[chatBox setInputTextFont:viewTheme.other.inputTextFont];
 	
-	[text setTextColor:viewTheme.other.inputTextColor];
+	[text setFontColor:viewTheme.other.inputTextColor];
 	[text setBackgroundColor:viewTheme.other.inputTextBgColor];
 	
 	[fieldEditor setInsertionPointColor:viewTheme.other.inputTextColor];
+	
+	[text setFilteredAttributedStringValue:original];
+	 
+	[window makeFirstResponder:nil];
+	[window makeFirstResponder:text];
+	
+	[self focusInputText];
 }
 
 - (void)changeTreeTheme
@@ -729,7 +738,6 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [InputHistory new];
-		c.currentInputHistory = nil;
 	}
 	
 	c.log = [self createLogWithClient:c channel:nil];
@@ -762,7 +770,6 @@
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [InputHistory new];
-		c.currentInputHistory = nil;
 	}
 	
 	[c setup:seed];
@@ -1114,25 +1121,21 @@
 	[selected.log.view clearSelection];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		NSString *inputValue = [text stringValue];
+		NSAttributedString *inputValue = [text attributedStringValue];
 		
 		master.inputHistory = selected.inputHistory;
 		
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
-		if (previous.currentInputHistory) {
-			[previous.currentInputHistory drain];
-			previous.currentInputHistory = nil;
-		}
+		InputHistory *oldHistory = previous.inputHistory;
+		InputHistory *newHistory = selected.inputHistory;
 		
-		if (NSObjectIsNotEmpty(inputValue)) {
-			previous.currentInputHistory = [inputValue retain];
-		}
+		[oldHistory setLastHistoryItem:inputValue];
 		
 		[text setStringValue:@""];
 		
-		if (NSObjectIsNotEmpty(selected.currentInputHistory)) {
-			[text setStringValue:selected.currentInputHistory];
+		if (NSObjectIsNotEmpty(newHistory.lastHistoryItem)) {
+			[text setFilteredAttributedStringValue:newHistory.lastHistoryItem];
 		}
 	}
 	

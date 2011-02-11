@@ -30,7 +30,7 @@
 		sortKey = 1;
 		sortOrder = NSOrderedDescending;
 	}
-
+	
 	return self;
 }
 
@@ -58,7 +58,7 @@
 	IRCClient *client = delegate;
 	
 	NSString *network = client.config.network;
-
+	
 	if (NSObjectIsEmpty(network)) {
 		network = client.config.name;
 	}
@@ -85,25 +85,27 @@
 
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
-	NSArray *item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
-	
-	NSString *filter = [filterText stringValue];
-	
-	if (NSObjectIsNotEmpty(filter)) {
-		if (PointerIsEmpty(filteredList)) {
-			filteredList = [NSMutableArray new];
+	if ([channel isChannelName]) {
+		NSArray *item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
+		
+		NSString *filter = [filterText stringValue];
+		
+		if (NSObjectIsNotEmpty(filter)) {
+			if (PointerIsEmpty(filteredList)) {
+				filteredList = [NSMutableArray new];
+			}
+			
+			NSInteger tr = [topic stringPositionIgnoringCase:filter];
+			NSInteger cr = [channel stringPositionIgnoringCase:filter];
+			
+			if (tr >= 0 || cr >= 0) {
+				[self sortedInsert:item inArray:filteredList];
+			}
 		}
 		
-		NSInteger tr = [topic stringPositionIgnoringCase:filter];
-		NSInteger cr = [channel stringPositionIgnoringCase:filter];
-		
-		if (tr >= 0 || cr >= 0) {
-			[self sortedInsert:item inArray:filteredList];
-		}
+		[self sortedInsert:item inArray:list];
+		[self reloadTable];
 	}
-	
-	[self sortedInsert:item inArray:list];
-	[self reloadTable];
 }
 
 - (void)reloadTable
@@ -214,7 +216,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 {
 	[filteredList drain];
 	filteredList = nil;
-
+	
 	NSString *filter = [filterText stringValue];
 	
 	if (NSObjectIsNotEmpty(filter)) {

@@ -12,16 +12,11 @@
 @synthesize unreadCount;
 @synthesize keywordCount;
 @synthesize inputHistory;
-@synthesize currentInputHistory;
 
 - (void)dealloc
 {
 	[log drain];
-	
-	if ([Preferences inputHistoryIsChannelSpecific]) {
-		[inputHistory drain];
-		[currentInputHistory drain];
-	}
+	[inputHistory drain];
 	
 	[super dealloc];
 }

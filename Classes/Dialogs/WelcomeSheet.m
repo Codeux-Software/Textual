@@ -31,6 +31,7 @@
 - (void)dealloc
 {
 	[channels drain];
+	
 	[super dealloc];
 }
 

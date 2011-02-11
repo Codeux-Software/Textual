@@ -34,6 +34,8 @@
 /* Begin PBXBuildFile section */
 		29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */; };
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
+		4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
+		4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14549712F8ACA20014CC3A /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */; };
 		4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9812D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png */; };
 		4C329CA412D1BD20001990A9 /* TPWTB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9912D1BD20001990A9 /* TPWTB_ChannelManagement.png */; };
@@ -46,6 +48,9 @@
 		4C329CAB12D1BD20001990A9 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA012D1BD20001990A9 /* TPWTB_Logs.png */; };
 		4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA112D1BD20001990A9 /* TPWTB_Styles.png */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
+		4C3F693B12FD958500B50CB9 /* BlowfishCommandLine.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
+		4C3F693C12FD958500B50CB9 /* BragSpam.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
+		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
 		4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A041612EF1C65009A7988 /* PopupPrompts.m */; };
 		4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
@@ -81,21 +86,20 @@
 		4C5AEF7B12D1B6FD00D6B18C /* Contributors.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF7612D1B6FD00D6B18C /* Contributors.pdf */; };
 		4C5AF34812D1B8C000D6B18C /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AF34712D1B8C000D6B18C /* IRCNetworks.plist */; };
 		4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5AF36F12D1BA9800D6B18C /* IOKit.framework */; };
-		4C5AF37612D1BB3900D6B18C /* core.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
+		4C5AF37612D1BB3900D6B18C /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
-		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
+		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A80812F38125002E308B /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67A80612F38125002E308B /* NSDateHelper.m */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
-		4C858F3F12E0A03F00F3FAE0 /* BlowfishCommandLine.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
+		4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
+		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
 		4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
-		4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
@@ -195,7 +199,7 @@
 		4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD0F8711BAE7E900758B81 /* GlobalModels.m */; };
 		4CA945D911E1AFBA00D36367 /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */; };
 		4CA945DB11E1AFBA00D36367 /* DDInvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */; };
-		4CA945DC11E1AFBA00D36367 /* NSObject+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD711CC715A00FF2930 /* NSObject+DDExtensions.m */; };
+		4CA945DC11E1AFBA00D36367 /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD711CC715A00FF2930 /* DDExtensions.m */; };
 		4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5938E511D0E0790094B049 /* AGKeychain.m */; };
 		4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1681811DC7B9200B60505 /* ChanBanSheet.m */; };
 		4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -203,6 +207,8 @@
 		4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
+		4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */; };
+		4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
 		4CD0E5ED12F1B45900C8F016 /* GrowlController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5E912F1B45900C8F016 /* GrowlController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E5EE12F1B45900C8F016 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EA12F1B45900C8F016 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -292,7 +298,7 @@
 		4CD0E6BD12F1B70300C8F016 /* NSDictionaryHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B112F1B70300C8F016 /* NSDictionaryHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6BE12F1B70300C8F016 /* NSFontHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B212F1B70300C8F016 /* NSFontHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6BF12F1B70300C8F016 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E6C012F1B70300C8F016 /* NSObject+DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B412F1B70300C8F016 /* NSObject+DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD0E6C012F1B70300C8F016 /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B412F1B70300C8F016 /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6C112F1B70300C8F016 /* NSPasteboardHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B512F1B70300C8F016 /* NSPasteboardHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6C212F1B70300C8F016 /* NSRectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B612F1B70300C8F016 /* NSRectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6C312F1B70300C8F016 /* NSStringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -333,14 +339,14 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BragSpam;
 		};
-		4C36B93E12F4FFFD00F7F663 /* PBXContainerItemProxy */ = {
+		4C3F691212FD939200B50CB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
 			remoteInfo = "Update Version Data";
 		};
-		4C36B94012F4FFFD00F7F663 /* PBXContainerItemProxy */ = {
+		4C3F691412FD939400B50CB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -357,36 +363,39 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4C5AF37912D1BB5700D6B18C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = JavaScript/API;
-			dstSubfolderSpec = 7;
-			files = (
-				4C5AF37612D1BB3900D6B18C /* core.js in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4C66E89512DF6A4D00446250 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CA9457711E1AFBA00D36367 /* CopyFiles */ = {
+		4C3F693E12FD95A300B50CB9 /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4C858F3F12E0A03F00F3FAE0 /* BlowfishCommandLine.bundle in CopyFiles */,
-				4C7AD493121AEF940021648A /* BragSpam.bundle in CopyFiles */,
-				4CA5344A11FB560900D3A0E8 /* SystemProfiler.bundle in CopyFiles */,
+				4C3F693B12FD958500B50CB9 /* BlowfishCommandLine.bundle in Copy Plugins */,
+				4C3F693C12FD958500B50CB9 /* BragSpam.bundle in Copy Plugins */,
+				4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */,
 			);
+			name = "Copy Plugins";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = JavaScript/API;
+			dstSubfolderSpec = 7;
+			files = (
+				4C5AF37612D1BB3900D6B18C /* core.js in Copy JavaScript Files */,
+			);
+			name = "Copy JavaScript Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C66E89512DF6A4D00446250 /* Copy Additional Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
+			);
+			name = "Copy Additional Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -397,6 +406,8 @@
 		29847DE31297B41900D495D5 /* DockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockIcon.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4C14549412F8AC720014CC3A /* IRCColorFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCColorFormat.m; path = ../Library/IRCColorFormat.m; sourceTree = "<group>"; };
+		4C14549712F8ACA20014CC3A /* IRCColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormat.h; path = Classes/Headers/IRCColorFormat.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SystemProfiler.xcodeproj; path = Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj; sourceTree = "<group>"; };
 		4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BragSpam.xcodeproj; path = Resources/Plugins/BragSpam/BragSpam.xcodeproj; sourceTree = "<group>"; };
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
@@ -462,6 +473,8 @@
 		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
+		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
+		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
 		4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = "<group>"; };
@@ -477,6 +490,8 @@
 		4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Classes/Headers/TextualApplication.h; sourceTree = SOURCE_ROOT; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
+		4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextFieldHelper.m; sourceTree = "<group>"; };
+		4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSTextFieldHelper.h; path = Classes/Headers/NSTextFieldHelper.h; sourceTree = SOURCE_ROOT; };
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
 		4CD0136C12F0C772001953E6 /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCModeInfo.m; sourceTree = "<group>"; };
 		4CD0E5E912F1B45900C8F016 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrowlController.h; path = Classes/Headers/GrowlController.h; sourceTree = SOURCE_ROOT; };
@@ -521,7 +536,7 @@
 		4CD0E64512F1B58600C8F016 /* TopicSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopicSheet.h; path = Classes/Headers/TopicSheet.h; sourceTree = SOURCE_ROOT; };
 		4CD0E64D12F1B5B500C8F016 /* FileWithContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileWithContent.h; path = Classes/Headers/FileWithContent.h; sourceTree = SOURCE_ROOT; };
 		4CD0E64E12F1B5B500C8F016 /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtherTheme.h; path = Classes/Headers/OtherTheme.h; sourceTree = SOURCE_ROOT; };
-		4CD0E64F12F1B5B500C8F016 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = Classes/Headers/Preferences.h; sourceTree = SOURCE_ROOT; };
+		4CD0E64F12F1B5B500C8F016 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = Classes/Headers/Preferences.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CD0E65012F1B5B500C8F016 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTheme.h; path = Classes/Headers/ViewTheme.h; sourceTree = SOURCE_ROOT; };
 		4CD0E65812F1B5DE00C8F016 /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageURLParser.h; path = Classes/Headers/ImageURLParser.h; sourceTree = SOURCE_ROOT; };
 		4CD0E65912F1B5DE00C8F016 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogController.h; path = Classes/Headers/LogController.h; sourceTree = SOURCE_ROOT; };
@@ -567,7 +582,7 @@
 		4CD0E6B112F1B70300C8F016 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDictionaryHelper.h; path = ../Headers/NSDictionaryHelper.h; sourceTree = "<group>"; };
 		4CD0E6B212F1B70300C8F016 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSFontHelper.h; path = ../Headers/NSFontHelper.h; sourceTree = "<group>"; };
 		4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSNumberHelper.h; path = ../Headers/NSNumberHelper.h; sourceTree = "<group>"; };
-		4CD0E6B412F1B70300C8F016 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DDExtensions.h"; path = "../Headers/NSObject+DDExtensions.h"; sourceTree = "<group>"; };
+		4CD0E6B412F1B70300C8F016 /* DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDExtensions.h; path = ../Headers/DDExtensions.h; sourceTree = "<group>"; };
 		4CD0E6B512F1B70300C8F016 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPasteboardHelper.h; path = ../Headers/NSPasteboardHelper.h; sourceTree = "<group>"; };
 		4CD0E6B612F1B70300C8F016 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSRectHelper.h; path = ../Headers/NSRectHelper.h; sourceTree = "<group>"; };
 		4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringHelper.h; path = ../Headers/NSStringHelper.h; sourceTree = "<group>"; };
@@ -593,7 +608,7 @@
 		4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectHelper.h; path = Classes/Headers/NSObjectHelper.h; sourceTree = SOURCE_ROOT; };
 		4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
 		4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInvocationGrabber.m; sourceTree = "<group>"; };
-		4CFF3BD711CC715A00FF2930 /* NSObject+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DDExtensions.m"; sourceTree = "<group>"; };
+		4CFF3BD711CC715A00FF2930 /* DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDExtensions.m; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
 		780C685D118230EE00CB739F /* WebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewAutoScroll.m; sourceTree = "<group>"; };
@@ -712,13 +727,13 @@
 			isa = PBXGroup;
 			children = (
 				78A8C0C111737F660044E7A1 /* Controllers */,
-				78A8C10C11737F660044E7A1 /* IRC */,
 				78A8C0CA11737F660044E7A1 /* Dialogs */,
+				78A8C0EB11737F660044E7A1 /* Helpers */,
+				78A8C10C11737F660044E7A1 /* IRC */,
+				78A8C12E11737F660044E7A1 /* Library */,
+				4C5AEF1912D1B6A900D6B18C /* Others */,
 				78A8C16711737F660044E7A1 /* Preferences */,
 				78A8C17011737F660044E7A1 /* Views */,
-				78A8C12E11737F660044E7A1 /* Library */,
-				78A8C0EB11737F660044E7A1 /* Helpers */,
-				4C5AEF1912D1B6A900D6B18C /* Others */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -766,21 +781,21 @@
 		4C1BBCB311954F7300D968BB /* Templates */ = {
 			isa = PBXGroup;
 			children = (
-				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
-				78A7B5D811745616006B324A /* InviteSheet.xib */,
-				78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */,
-				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
-				789ED4B11193FA9E00CFC0B2 /* AddressBookSheet.xib */,
-				78347ECF1158D4B00073E2F0 /* WelcomeSheet.xib */,
-				78347EBD1158D4B00073E2F0 /* TopicSheet.xib */,
-				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
-				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
-				4C8CCEA411952E1A001A07FF /* MainMenu.xib */,
 				4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */,
-				78347ECD1158D4B00073E2F0 /* ServerSheet.xib */,
+				789ED4B11193FA9E00CFC0B2 /* AddressBookSheet.xib */,
 				4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */,
 				4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */,
+				78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */,
 				4C62C7581221D385002DCB9A /* InputPromptDialog.xib */,
+				78A7B5D811745616006B324A /* InviteSheet.xib */,
+				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
+				4C8CCEA411952E1A001A07FF /* MainMenu.xib */,
+				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
+				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
+				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
+				78347ECD1158D4B00073E2F0 /* ServerSheet.xib */,
+				78347EBD1158D4B00073E2F0 /* TopicSheet.xib */,
+				78347ECF1158D4B00073E2F0 /* WelcomeSheet.xib */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -811,16 +826,46 @@
 		4C239ECA12ED1F9C00A469C9 /* Google */ = {
 			isa = PBXGroup;
 			children = (
-				4CD0E6DC12F1B78D00C8F016 /* GTMDefines.h */,
-				4CD0E6DD12F1B78D00C8F016 /* GTMGarbageCollection.h */,
 				4CD0E6DB12F1B78D00C8F016 /* GTMBase64.h */,
 				78A8C0ED11737F660044E7A1 /* GTMBase64.m */,
+				4CD0E6DC12F1B78D00C8F016 /* GTMDefines.h */,
+				4CD0E6DD12F1B78D00C8F016 /* GTMGarbageCollection.h */,
 				4CD0E6DE12F1B78D00C8F016 /* GTMNSString+HTML.h */,
 				78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */,
 				4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */,
 				78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */,
 			);
 			name = Google;
+			sourceTree = "<group>";
+		};
+		4C26FB8312FA6B680094F17E /* Text Formatting */ = {
+			isa = PBXGroup;
+			children = (
+				4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */,
+				4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */,
+			);
+			name = "Text Formatting";
+			sourceTree = "<group>";
+		};
+		4C26FB8B12FA6C1D0094F17E /* Text Formatting */ = {
+			isa = PBXGroup;
+			children = (
+				4C14549712F8ACA20014CC3A /* IRCColorFormat.h */,
+				4C14549412F8AC720014CC3A /* IRCColorFormat.m */,
+				4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */,
+				4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */,
+			);
+			name = "Text Formatting";
+			sourceTree = "<group>";
+		};
+		4C26FB9212FA6E660094F17E /* Ignore System */ = {
+			isa = PBXGroup;
+			children = (
+				4CD0E61A12F1B4E200C8F016 /* AddressBook.h */,
+				789ED3F21193EF4400CFC0B2 /* AddressBook.m */,
+			);
+			name = "Ignore System";
+			path = ../IRC;
 			sourceTree = "<group>";
 		};
 		4C282AA612A3A9B500F44108 /* Products */ = {
@@ -1025,14 +1070,14 @@
 		4C5AF05012D1B76A00D6B18C /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
-				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
-				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
-				4C59393011D0E6CF0094B049 /* Security.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				4C5AF36F12D1BA9800D6B18C /* IOKit.framework */,
+				4C59393011D0E6CF0094B049 /* Security.framework */,
+				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
+				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 			);
 			name = "System Frameworks";
 			sourceTree = "<group>";
@@ -1040,8 +1085,8 @@
 		4C5AF05112D1B77100D6B18C /* System Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4C90F3B212B6375F00CAEB7B /* libicucore.dylib */,
 				4C8D702A12A36CE800738B2C /* libcrypto.dylib */,
+				4C90F3B212B6375F00CAEB7B /* libicucore.dylib */,
 			);
 			name = "System Libraries";
 			sourceTree = "<group>";
@@ -1074,9 +1119,9 @@
 		4CB34D0011CCB4C90023206B /* Plug-In Architecture */ = {
 			isa = PBXGroup;
 			children = (
-				4CD0E6D212F1B77300C8F016 /* PluginProtocol.h */,
 				4CD0E6AE12F1B70300C8F016 /* NSBundleHelper.h */,
 				4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */,
+				4CD0E6D212F1B77300C8F016 /* PluginProtocol.h */,
 				4CD0E6D312F1B77300C8F016 /* TextualPluginItem.h */,
 				4CD1733C120EB20600F03B37 /* TextualPluginItem.m */,
 			);
@@ -1103,26 +1148,26 @@
 			name = Binaries;
 			sourceTree = "<group>";
 		};
-		4CFF3BD111CC714300FF2930 /* DDFoundation */ = {
+		4CFF3BD111CC714300FF2930 /* Thread Support */ = {
 			isa = PBXGroup;
 			children = (
 				4CD0E6D912F1B78200C8F016 /* DDInvocationGrabber.h */,
 				4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */,
-				4CD0E6B412F1B70300C8F016 /* NSObject+DDExtensions.h */,
-				4CFF3BD711CC715A00FF2930 /* NSObject+DDExtensions.m */,
+				4CD0E6B412F1B70300C8F016 /* DDExtensions.h */,
+				4CFF3BD711CC715A00FF2930 /* DDExtensions.m */,
 			);
-			name = DDFoundation;
+			name = "Thread Support";
 			sourceTree = "<group>";
 		};
 		78A8C0C111737F660044E7A1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0E5E912F1B45900C8F016 /* GrowlController.h */,
+				78A8C0C511737F660044E7A1 /* GrowlController.m */,
 				4CD0E5EA12F1B45900C8F016 /* MasterController.h */,
 				78A8C0C311737F660044E7A1 /* MasterController.m */,
 				4CD0E5EB12F1B45900C8F016 /* MenuController.h */,
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
-				4CD0E5E912F1B45900C8F016 /* GrowlController.h */,
-				78A8C0C511737F660044E7A1 /* GrowlController.m */,
 				4CD0E5EC12F1B45900C8F016 /* NickCompletionStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */,
 				4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */,
@@ -1135,34 +1180,34 @@
 			isa = PBXGroup;
 			children = (
 				78A8C0DC11737F660044E7A1 /* Preferences */,
-				4CD0E63112F1B53300C8F016 /* ServerSheet.h */,
-				78A8C0E211737F660044E7A1 /* ServerSheet.m */,
+				4CD0E64212F1B58600C8F016 /* AboutPanel.h */,
+				4C7E561311B0386200B5DE98 /* AboutPanel.m */,
 				4CD0E62A12F1B53300C8F016 /* AddressBookSheet.h */,
 				789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */,
+				4CD0E62B12F1B53300C8F016 /* ChanBanExceptionSheet.h */,
+				4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */,
+				4CD0E62C12F1B53300C8F016 /* ChanBanSheet.h */,
+				4CF1681811DC7B9200B60505 /* ChanBanSheet.m */,
 				4CD0E62D12F1B53300C8F016 /* ChannelSheet.h */,
 				78A8C0CC11737F660044E7A1 /* ChannelSheet.m */,
+				4CD0E62E12F1B53300C8F016 /* InputPromptDialog.h */,
+				4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */,
 				4CD0E62F12F1B53300C8F016 /* InviteSheet.h */,
 				78A7B58611744F12006B324A /* InviteSheet.m */,
+				4CD0E63012F1B53300C8F016 /* ListDialog.h */,
+				7835FB911177341D005DC0B4 /* ListDialog.m */,
 				4CD0E64312F1B58600C8F016 /* ModeSheet.h */,
 				78A8C0D711737F660044E7A1 /* ModeSheet.m */,
 				4CD0E64412F1B58600C8F016 /* NickSheet.h */,
 				78A8C0D911737F660044E7A1 /* NickSheet.m */,
+				4CD0E63112F1B53300C8F016 /* ServerSheet.h */,
+				78A8C0E211737F660044E7A1 /* ServerSheet.m */,
+				4CD0E63212F1B53300C8F016 /* SheetBase.h */,
+				78A8C0E411737F660044E7A1 /* SheetBase.m */,
 				4CD0E64512F1B58600C8F016 /* TopicSheet.h */,
 				78A8C0E611737F660044E7A1 /* TopicSheet.m */,
 				4CD0E63312F1B53300C8F016 /* WelcomeSheet.h */,
 				78A8C0E811737F660044E7A1 /* WelcomeSheet.m */,
-				4CD0E63212F1B53300C8F016 /* SheetBase.h */,
-				78A8C0E411737F660044E7A1 /* SheetBase.m */,
-				4CD0E64212F1B58600C8F016 /* AboutPanel.h */,
-				4C7E561311B0386200B5DE98 /* AboutPanel.m */,
-				4CD0E63012F1B53300C8F016 /* ListDialog.h */,
-				7835FB911177341D005DC0B4 /* ListDialog.m */,
-				4CD0E62C12F1B53300C8F016 /* ChanBanSheet.h */,
-				4CF1681811DC7B9200B60505 /* ChanBanSheet.m */,
-				4CD0E62B12F1B53300C8F016 /* ChanBanExceptionSheet.h */,
-				4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */,
-				4CD0E62E12F1B53300C8F016 /* InputPromptDialog.h */,
-				4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */,
 			);
 			name = Dialogs;
 			path = Classes/Dialogs;
@@ -1185,8 +1230,9 @@
 			isa = PBXGroup;
 			children = (
 				4C239ECA12ED1F9C00A469C9 /* Google */,
-				4CFF3BD111CC714300FF2930 /* DDFoundation */,
 				4CB34D0011CCB4C90023206B /* Plug-In Architecture */,
+				4C26FB8B12FA6C1D0094F17E /* Text Formatting */,
+				4CFF3BD111CC714300FF2930 /* Thread Support */,
 				4CD0E6AD12F1B70300C8F016 /* NSArrayHelper.h */,
 				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
 				4CD0E6AF12F1B70300C8F016 /* NSColorHelper.h */,
@@ -1225,43 +1271,41 @@
 		78A8C10C11737F660044E7A1 /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				4CD0E60312F1B47A00C8F016 /* IRCWorld.h */,
-				78A8C12911737F660044E7A1 /* IRCWorld.m */,
-				4CD0E5F812F1B47A00C8F016 /* IRCClient.h */,
-				78A8C11511737F660044E7A1 /* IRCClient.m */,
+				4CD0E5F412F1B47A00C8F016 /* IRC.h */,
 				4CD0E5F512F1B47A00C8F016 /* IRCChannel.h */,
 				78A8C10F11737F660044E7A1 /* IRCChannel.m */,
-				4CD0E60112F1B47A00C8F016 /* IRCTreeItem.h */,
-				78A8C12311737F660044E7A1 /* IRCTreeItem.m */,
-				4CD0E60212F1B47A00C8F016 /* IRCUser.h */,
-				78A8C12511737F660044E7A1 /* IRCUser.m */,
-				4CD0E60412F1B47A00C8F016 /* IRCWorldConfig.h */,
-				78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */,
-				4CD0E5F912F1B47A00C8F016 /* IRCClientConfig.h */,
-				78A8C11711737F660044E7A1 /* IRCClientConfig.m */,
 				4CD0E5F612F1B47A00C8F016 /* IRCChannelConfig.h */,
 				78A8C11111737F660044E7A1 /* IRCChannelConfig.m */,
-				4CD0E5FA12F1B47A00C8F016 /* IRCConnection.h */,
-				78A8C11911737F660044E7A1 /* IRCConnection.m */,
 				4CD0E5F712F1B47A00C8F016 /* IRCChannelMode.h */,
 				78A8C11311737F660044E7A1 /* IRCChannelMode.m */,
+				4CD0E5F812F1B47A00C8F016 /* IRCClient.h */,
+				78A8C11511737F660044E7A1 /* IRCClient.m */,
+				4CD0E5F912F1B47A00C8F016 /* IRCClientConfig.h */,
+				78A8C11711737F660044E7A1 /* IRCClientConfig.m */,
+				4CD0E5FA12F1B47A00C8F016 /* IRCConnection.h */,
+				78A8C11911737F660044E7A1 /* IRCConnection.m */,
+				4CD0E5FB12F1B47A00C8F016 /* IRCExtras.h */,
+				4C6E801E11B3753800BACBA7 /* IRCExtras.m */,
 				4CD0E5FC12F1B47A00C8F016 /* IRCISupportInfo.h */,
 				78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */,
-				4CD0E5FE12F1B47A00C8F016 /* IRCModeInfo.h */,
-				4CD0136C12F0C772001953E6 /* IRCModeInfo.m */,
 				4CD0E5FD12F1B47A00C8F016 /* IRCMessage.h */,
 				78A8C11D11737F660044E7A1 /* IRCMessage.m */,
+				4CD0E5FE12F1B47A00C8F016 /* IRCModeInfo.h */,
+				4CD0136C12F0C772001953E6 /* IRCModeInfo.m */,
 				4CD0E5FF12F1B47A00C8F016 /* IRCPrefix.h */,
 				78A8C11F11737F660044E7A1 /* IRCPrefix.m */,
 				4CD0E60012F1B47A00C8F016 /* IRCSendingMessage.h */,
 				78A8C12111737F660044E7A1 /* IRCSendingMessage.m */,
-				4CD0E61A12F1B4E200C8F016 /* AddressBook.h */,
-				789ED3F21193EF4400CFC0B2 /* AddressBook.m */,
+				4CD0E60112F1B47A00C8F016 /* IRCTreeItem.h */,
+				78A8C12311737F660044E7A1 /* IRCTreeItem.m */,
+				4CD0E60212F1B47A00C8F016 /* IRCUser.h */,
+				78A8C12511737F660044E7A1 /* IRCUser.m */,
+				4CD0E60312F1B47A00C8F016 /* IRCWorld.h */,
+				78A8C12911737F660044E7A1 /* IRCWorld.m */,
+				4CD0E60412F1B47A00C8F016 /* IRCWorldConfig.h */,
+				78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */,
 				4CD0E61B12F1B4E200C8F016 /* TimerCommand.h */,
 				78A8C12D11737F660044E7A1 /* TimerCommand.m */,
-				4CD0E5FB12F1B47A00C8F016 /* IRCExtras.h */,
-				4C6E801E11B3753800BACBA7 /* IRCExtras.m */,
-				4CD0E5F412F1B47A00C8F016 /* IRC.h */,
 			);
 			name = IRC;
 			path = Classes/IRC;
@@ -1270,6 +1314,7 @@
 		78A8C12E11737F660044E7A1 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				4C26FB9212FA6E660094F17E /* Ignore System */,
 				4C5938DE11D0E0660094B049 /* Keychain Control */,
 				4CD0E68B12F1B6B000C8F016 /* AsyncSocket.h */,
 				78A8C13011737F660044E7A1 /* AsyncSocket.m */,
@@ -1307,14 +1352,14 @@
 		78A8C16711737F660044E7A1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0E64D12F1B5B500C8F016 /* FileWithContent.h */,
+				780FF69E11813BC3003C7648 /* FileWithContent.m */,
+				4CD0E64E12F1B5B500C8F016 /* OtherTheme.h */,
+				4CA999D011FCF7180040D8E7 /* OtherTheme.m */,
 				4CD0E64F12F1B5B500C8F016 /* Preferences.h */,
 				78A8C16D11737F660044E7A1 /* Preferences.m */,
 				4CD0E65012F1B5B500C8F016 /* ViewTheme.h */,
 				78A8C16F11737F660044E7A1 /* ViewTheme.m */,
-				4CD0E64E12F1B5B500C8F016 /* OtherTheme.h */,
-				4CA999D011FCF7180040D8E7 /* OtherTheme.m */,
-				4CD0E64D12F1B5B500C8F016 /* FileWithContent.h */,
-				780FF69E11813BC3003C7648 /* FileWithContent.m */,
 			);
 			name = Preferences;
 			path = Classes/Preferences;
@@ -1323,8 +1368,9 @@
 		78A8C17011737F660044E7A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				78A8C18211737F660044E7A1 /* Log */,
-				78A8C19311737F660044E7A1 /* MemberList */,
+				78A8C18211737F660044E7A1 /* Channel View */,
+				78A8C19311737F660044E7A1 /* Member List */,
+				4C26FB8312FA6B680094F17E /* Text Formatting */,
 				4CD0E67012F1B63D00C8F016 /* ChatBox.h */,
 				78A8C17211737F660044E7A1 /* ChatBox.m */,
 				4CD0E68912F1B66900C8F016 /* DockIcon.h */,
@@ -1354,30 +1400,31 @@
 			path = Classes/Views;
 			sourceTree = "<group>";
 		};
-		78A8C18211737F660044E7A1 /* Log */ = {
+		78A8C18211737F660044E7A1 /* Channel View */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0E65812F1B5DE00C8F016 /* ImageURLParser.h */,
+				780C67C711822AFF00CB739F /* ImageURLParser.m */,
 				4CD0E65912F1B5DE00C8F016 /* LogController.h */,
 				78A8C18411737F660044E7A1 /* LogController.m */,
-				4CD0E65C12F1B5DE00C8F016 /* LogRenderer.h */,
-				78A8C18A11737F660044E7A1 /* LogRenderer.m */,
 				4CD0E65A12F1B5DE00C8F016 /* LogLine.h */,
 				78A8C18611737F660044E7A1 /* LogLine.m */,
 				4CD0E65B12F1B5DE00C8F016 /* LogPolicy.h */,
 				78A8C18811737F660044E7A1 /* LogPolicy.m */,
+				4CD0E65C12F1B5DE00C8F016 /* LogRenderer.h */,
+				78A8C18A11737F660044E7A1 /* LogRenderer.m */,
 				4CD0E65D12F1B5DE00C8F016 /* LogScriptEventSink.h */,
 				78A8C18C11737F660044E7A1 /* LogScriptEventSink.m */,
 				4CD0E65E12F1B5DE00C8F016 /* LogView.h */,
 				78A8C18E11737F660044E7A1 /* LogView.m */,
 				4CD0E65F12F1B5DE00C8F016 /* WebViewAutoScroll.h */,
 				780C685D118230EE00CB739F /* WebViewAutoScroll.m */,
-				4CD0E65812F1B5DE00C8F016 /* ImageURLParser.h */,
-				780C67C711822AFF00CB739F /* ImageURLParser.m */,
 			);
+			name = "Channel View";
 			path = Log;
 			sourceTree = "<group>";
 		};
-		78A8C19311737F660044E7A1 /* MemberList */ = {
+		78A8C19311737F660044E7A1 /* Member List */ = {
 			isa = PBXGroup;
 			children = (
 				4CD0E66B12F1B60400C8F016 /* MemberListView.h */,
@@ -1385,6 +1432,7 @@
 				4CD0E66C12F1B60400C8F016 /* MemberListViewCell.h */,
 				78A8C19711737F660044E7A1 /* MemberListViewCell.m */,
 			);
+			name = "Member List";
 			path = MemberList;
 			sourceTree = "<group>";
 		};
@@ -1483,7 +1531,7 @@
 				4CD0E6BD12F1B70300C8F016 /* NSDictionaryHelper.h in Headers */,
 				4CD0E6BE12F1B70300C8F016 /* NSFontHelper.h in Headers */,
 				4CD0E6BF12F1B70300C8F016 /* NSNumberHelper.h in Headers */,
-				4CD0E6C012F1B70300C8F016 /* NSObject+DDExtensions.h in Headers */,
+				4CD0E6C012F1B70300C8F016 /* DDExtensions.h in Headers */,
 				4CD0E6C112F1B70300C8F016 /* NSPasteboardHelper.h in Headers */,
 				4CD0E6C212F1B70300C8F016 /* NSRectHelper.h in Headers */,
 				4CD0E6C312F1B70300C8F016 /* NSStringHelper.h in Headers */,
@@ -1503,6 +1551,9 @@
 				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
 				4C67A81112F38268002E308B /* NSDateHelper.h in Headers */,
 				4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */,
+				4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */,
+				4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */,
+				4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,20 +1565,20 @@
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
 				4CA9456111E1AFBA00D36367 /* Resources */,
-				4C5AF37912D1BB5700D6B18C /* CopyFiles */,
-				4C66E89512DF6A4D00446250 /* CopyFiles */,
+				4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */,
+				4C66E89512DF6A4D00446250 /* Copy Additional Frameworks */,
 				4CA9457911E1AFBA00D36367 /* Sources */,
 				4CA945DF11E1AFBA00D36367 /* Frameworks */,
 				4CAA3BCD12E0ECF300FB83EB /* Headers */,
-				4CADEF5C12F1D2D100179329 /* Build Plugins */,
-				4CA9457711E1AFBA00D36367 /* CopyFiles */,
-				4CEE709A12AB8AE40083F30F /* Code Sign */,
+				4C3F690F12FD925F00B50CB9 /* Compile Plugins */,
+				4C3F693E12FD95A300B50CB9 /* Copy Plugins */,
+				4C3F691112FD926600B50CB9 /* Code Sign Executable */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4C36B94112F4FFFD00F7F663 /* PBXTargetDependency */,
-				4C36B93F12F4FFFD00F7F663 /* PBXTargetDependency */,
+				4C3F691512FD939400B50CB9 /* PBXTargetDependency */,
+				4C3F691312FD939200B50CB9 /* PBXTargetDependency */,
 			);
 			name = Textual;
 			productName = LimeChat;
@@ -1670,6 +1721,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C3F690F12FD925F00B50CB9 /* Compile Plugins */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Plugins";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n";
+		};
+		4C3F691112FD926600B50CB9 /* Code Sign Executable */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign Executable";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f \"$PROJECT_DIR/CERTIFICATE\" ]; then\nexport CODE_SIGNING_IDENTITY=`cat \"$PROJECT_DIR/CERTIFICATE\"`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_PATH\" \nfi";
+		};
 		4C9CB1CC12AD549E00F107FC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1681,21 +1760,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\nrm -Rf \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
-		};
-		4CADEF5C12F1D2D100179329 /* Build Plugins */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build Plugins";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Building Plugins\"\n\ncd Resources/Plugins/\n\ncd BlowfishCommandLine/\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"BlowfishCommandLine\" -project BlowfishCommandLine.xcodeproj NATIVE_ARCH=\"${NATIVE_ARCH}\"\ncd ..\n\ncd BragSpam/\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"BragSpam\" -project BragSpam.xcodeproj NATIVE_ARCH=\"${NATIVE_ARCH}\"\ncd ..\n\ncd SystemProfiler\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"SystemProfiler\" -project SystemProfiler.xcodeproj NATIVE_ARCH=\"${NATIVE_ARCH}\"\ncd ..\n\necho \"Done building plugins.\"";
+			shellScript = "if [ $CONFIGURATION == \"Debug\" ]; then exit; fi;\n\nrm -Rf \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1708,21 +1773,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [ $CONFIGURATION == \"Debug\" ]\nthen \nexit\nfi\n\ncd Resources/Miscellaneous/\n\n# Handle Build Number\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n\n# Handle Build Reference\n\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleVersion\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nrefBranch=`${gitBundle} branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`\nbuildRef=\"${bundleVersion}-${refInfo}-${refBranch}\"\n\nif [ ${#refInfo} -gt 10 ] && [ ${#refBranch} -gt 0 ]\nthen\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi\n\n# Generic Checks\n\nif [ ! -f \"/Applications/Textual.app/Contents/MacOS/Textual\" ]\nthen\necho \"WARNING: \\\"/Applications/Textual.app/Contents/MacOS/Textual\\\" does not exist. Xcode needs this file to link plugin headers properly.\"\nfi";
-		};
-		4CEE709A12AB8AE40083F30F /* Code Sign */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Code Sign";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# --------------------------------------------------------------------------------------\n# \n# Look for a file named \"CERTIFICATE\" for code signing. If file exists, then we\n# will take the content of it to use for the name during code signing. \n# \n# Do this so those who are not compiling for app store do not require the certificate\n# to compile their own custom build of Textual.\n# \n# --------------------------------------------------------------------------------------\n\nexport PRODUCT_NAME=\"Textual\"\nexport FULL_PRODUCT_NAME=\"$PRODUCT_NAME.app\"\nexport EXECUTABLE_PATH=\"$FULL_PRODUCT_NAME/Contents/MacOS/$PRODUCT_NAME\"\n\nif [ -f \"$PROJECT_DIR/CERTIFICATE\" ]\nthen\nexport CODE_SIGNING_IDENTITY=`cat \"$PROJECT_DIR/CERTIFICATE\"`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" \"$PROJECT_DIR/build/$CONFIGURATION/$EXECUTABLE_PATH\" \nfi";
+			shellScript = "if [ $CONFIGURATION == \"Debug\" ]; then exit; fi;\n\ncd \"$PROJECT_DIR/Resources/Miscellaneous/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleVersion\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nrefBranch=`${gitBundle} branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`\nbuildRef=\"${bundleVersion}-${refInfo}-${refBranch}\"\n\nbuildNumber=$(($buildNumber + 1))\n\nif [ ${#refInfo} -gt 10 ] && [ ${#refBranch} -gt 0 ]; then\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1815,7 +1866,7 @@
 				4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */,
 				4CA945D911E1AFBA00D36367 /* NSBundleHelper.m in Sources */,
 				4CA945DB11E1AFBA00D36367 /* DDInvocationGrabber.m in Sources */,
-				4CA945DC11E1AFBA00D36367 /* NSObject+DDExtensions.m in Sources */,
+				4CA945DC11E1AFBA00D36367 /* DDExtensions.m in Sources */,
 				4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */,
 				4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */,
 				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
@@ -1835,21 +1886,24 @@
 				4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */,
 				4C67A80812F38125002E308B /* NSDateHelper.m in Sources */,
 				4CFA00C812F4EE2900A9EC74 /* NSObjectHelper.m in Sources */,
+				4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */,
+				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
+				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C36B93F12F4FFFD00F7F663 /* PBXTargetDependency */ = {
+		4C3F691312FD939200B50CB9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
-			targetProxy = 4C36B93E12F4FFFD00F7F663 /* PBXContainerItemProxy */;
+			targetProxy = 4C3F691212FD939200B50CB9 /* PBXContainerItemProxy */;
 		};
-		4C36B94112F4FFFD00F7F663 /* PBXTargetDependency */ = {
+		4C3F691512FD939400B50CB9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
-			targetProxy = 4C36B94012F4FFFD00F7F663 /* PBXContainerItemProxy */;
+			targetProxy = 4C3F691412FD939400B50CB9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2048,7 +2102,6 @@
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
-					"-licucore",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -2148,6 +2201,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
 				SDKROOT = macosx10.6;
+				STRIPFLAGS = "-S";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};

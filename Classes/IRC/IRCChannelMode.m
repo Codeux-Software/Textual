@@ -69,7 +69,7 @@
 		} else {
 			[allModes addObject:h];
 			
-			[modeIndexes setObject:[NSNumber numberWithInteger:[allModes indexOfObject:h]] forKey:modec];
+			[modeIndexes setInteger:[allModes indexOfObject:h] forKey:modec];
 		}
 	}
 	
@@ -122,7 +122,7 @@
 		
 		[allModes addObject:m];
 		
-		[modeIndexes setObject:[NSNumber numberWithInteger:[allModes indexOfObject:m]] forKey:mode];
+		[modeIndexes setInteger:[allModes indexOfObject:m] forKey:mode];
 	}
 	
 	return [allModes safeObjectAtIndex:[[modeIndexes objectForKey:mode] integerValue]];

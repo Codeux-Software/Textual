@@ -18,6 +18,7 @@
 - (void)dealloc
 {
 	[text drain];
+	
 	[super dealloc];
 }
 

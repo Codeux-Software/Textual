@@ -5,9 +5,6 @@
 {
 	id delegate;
 	
-	NSImage *appIcon;
-	NSString *appName;
-	
 	NSArray *allNotifications;
 	NSArray *defaultNotifications;
 	
@@ -16,8 +13,6 @@
 }
 
 @property (nonatomic, assign) id delegate;
-@property (nonatomic, copy) NSString *appName;
-@property (nonatomic, retain) NSImage *appIcon;
 @property (nonatomic, retain) NSArray *allNotifications;
 @property (nonatomic, retain) NSArray *defaultNotifications;
 @property (nonatomic, retain) NSString *clickedNotificationName;
@@ -27,12 +22,7 @@
 
 - (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc;
 - (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc clickContext:(id)context;
-
-- (void)notifyWithType:(NSString *)type
-				 title:(NSString *)title
-		   description:(NSString *)desc
-		  clickContext:(id)context
-				sticky:(BOOL)sticky;
+- (void)notifyWithType:(NSString *)type title:(NSString *)title description:(NSString *)desc clickContext:(id)context sticky:(BOOL)sticky;
 
 - (void)notifyWithType:(NSString *)type
 				 title:(NSString *)title

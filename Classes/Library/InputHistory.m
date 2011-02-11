@@ -6,6 +6,7 @@
 
 @synthesize buf;
 @synthesize pos;
+@synthesize lastHistoryItem;
 
 - (id)init
 {
@@ -19,15 +20,17 @@
 - (void)dealloc
 {
 	[buf drain];
+	[lastHistoryItem drain];
+	
 	[super dealloc];
 }
 
-- (void)add:(NSString *)s
+- (void)add:(NSAttributedString *)s
 {
 	pos = buf.count;
 	
 	if (NSObjectIsEmpty(s)) return;
-	if ([[buf lastObject] isEqualToString:s]) return;
+	if ([[[buf lastObject] string] isEqualToString:[s string]]) return;
 	
 	[buf addObject:s];
 	
@@ -38,16 +41,16 @@
 	pos = buf.count;
 }
 
-- (NSString *)up:(NSString *)s
+- (NSAttributedString *)up:(NSAttributedString *)s
 {
 	if (NSObjectIsNotEmpty(s)) {
-		NSString *cur = nil;
+		NSAttributedString *cur = nil;
 		
 		if (0 <= pos && pos < buf.count) {
 			cur = [buf safeObjectAtIndex:pos];
 		}
 		
-		if (NSObjectIsEmpty(cur) || [cur isEqualToString:s] == NO) {
+		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
 			[buf addObject:s];
 			
 			if (buf.count > INPUT_HISTORY_MAX) {
@@ -67,11 +70,11 @@
 	} else if (0 <= pos && pos < buf.count) {
 		return [buf safeObjectAtIndex:pos];
 	} else {
-		return @"";
+		return nil;
 	}
 }
 
-- (NSString *)down:(NSString *)s
+- (NSAttributedString *)down:(NSAttributedString *)s
 {
 	if (NSObjectIsEmpty(s)) {
 		pos = buf.count;
@@ -79,16 +82,16 @@
 		return nil;
 	}
 	
-	NSString *cur = nil;
+	NSAttributedString *cur = nil;
 	
 	if (0 <= pos && pos < buf.count) {
 		cur = [buf safeObjectAtIndex:pos];
 	}
 
-	if (NSObjectIsEmpty(cur) || [cur isEqualToString:s] == NO) {
+	if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
 		[self add:s];
 		
-		return @"";
+		return nil;
 	} else {
 		++pos;
 		
@@ -96,7 +99,7 @@
 			return [buf safeObjectAtIndex:pos];
 		}
 		
-		return @"";
+		return nil;
 	}
 }
 

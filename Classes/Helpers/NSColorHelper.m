@@ -19,7 +19,7 @@ static NSDictionary *nameMap = nil;
 			NSInteger g = ((n >> 8) & 0xff);
 			NSInteger b = (n & 0xff);
 			
-			return DEVICE_RGB(r, g, b);
+			return RGB(r, g, b);
 		} else if (len == 3) {
 			long n = strtol([s UTF8String], NULL, 16);
 			
@@ -27,32 +27,32 @@ static NSDictionary *nameMap = nil;
 			NSInteger g = ((n >> 4) & 0xf);
 			NSInteger b = (n & 0xf);
 			
-			return [NSColor colorWithDeviceRed:(r / 15.0) 
-										 green:(g / 15.0) 
-										  blue:(b / 15.0) 
-										 alpha:1];
+			return [NSColor colorWithCalibratedRed:(r / 15.0) 
+											 green:(g / 15.0) 
+											  blue:(b / 15.0) 
+											 alpha:1];
 		}
 	}
 	
 	if (NSObjectIsEmpty(nameMap)) {
 		nameMap = [NSDictionary dictionaryWithObjectsAndKeys:
-				   DEVICE_RGB(0, 0, 0), @"black",
-				   DEVICE_RGB(0xC0, 0xC0, 0xC0), @"silver",
-				   DEVICE_RGB(0x80, 0x80, 0x80), @"gray",
-				   DEVICE_RGB(0xFF, 0xFF, 0xFF), @"white",
-				   DEVICE_RGB(0x80, 0, 0), @"maroon",
-				   DEVICE_RGB(0xFF, 0, 0), @"red",
-				   DEVICE_RGB(0x80, 0, 0x80), @"purple",
-				   DEVICE_RGB(0xFF, 0, 0xFF), @"fuchsia",
-				   DEVICE_RGB(0, 0x80, 0), @"green",
-				   DEVICE_RGB(0, 0xFF, 0), @"lime",
-				   DEVICE_RGB(0x80, 0x80, 0), @"olive",
-				   DEVICE_RGB(0xFF, 0xFF, 0), @"yellow",
-				   DEVICE_RGB(0, 0, 0x80), @"navy",
-				   DEVICE_RGB(0, 0, 0xFF), @"blue",
-				   DEVICE_RGB(0, 0x80, 0x80), @"teal",
-				   DEVICE_RGB(0, 0xFF, 0xFF), @"aqua",
-				   DEVICE_RGBA(0, 0, 0, 0), @"transparent", nil];
+				   RGB(0, 0, 0), @"black",
+				   RGB(0xC0, 0xC0, 0xC0), @"silver",
+				   RGB(0x80, 0x80, 0x80), @"gray",
+				   RGB(0xFF, 0xFF, 0xFF), @"white",
+				   RGB(0x80, 0, 0), @"maroon",
+				   RGB(0xFF, 0, 0), @"red",
+				   RGB(0x80, 0, 0x80), @"purple",
+				   RGB(0xFF, 0, 0xFF), @"fuchsia",
+				   RGB(0, 0x80, 0), @"green",
+				   RGB(0, 0xFF, 0), @"lime",
+				   RGB(0x80, 0x80, 0), @"olive",
+				   RGB(0xFF, 0xFF, 0), @"yellow",
+				   RGB(0, 0, 0x80), @"navy",
+				   RGB(0, 0, 0xFF), @"blue",
+				   RGB(0, 0x80, 0x80), @"teal",
+				   RGB(0, 0xFF, 0xFF), @"aqua",
+				   RGBA(0, 0, 0, 0), @"transparent", nil];
 		
 		[nameMap retain];
 	}

@@ -24,6 +24,7 @@
 	BOOL isNamesInit;
 	BOOL isWhoInit;
 	
+	BOOL forceOutput;
 	BOOL errLastJoin;
 	
 	FileLogger *logFile;
@@ -43,6 +44,7 @@
 @property (nonatomic, assign) BOOL isModeInit;
 @property (nonatomic, assign) BOOL isNamesInit;
 @property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, assign) BOOL forceOutput;
 @property (nonatomic, assign) BOOL errLastJoin;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;

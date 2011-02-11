@@ -68,25 +68,38 @@ NSString *logEscape(NSString *s)
 	return [[s gtm_stringByEscapingForHTML] stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
-NSColor *mapColor(NSInteger colorChar) 
+extern NSInteger mapColorValue(NSColor *color)
+{
+	for (NSInteger i = 0; i <= 15; i++) {
+		NSColor *mapped = mapColorCode(i);
+		
+		if ([mapped isEqual:color]) {
+			return i;
+		}
+	}
+	
+	return -1;
+}
+
+extern NSColor *mapColorCode(NSInteger colorChar) 
 {
 	switch (colorChar) {
-		case 0: return [NSColor fromCSS:@"#fff"]; 
-		case 1: return [NSColor fromCSS:@"#000"]; 
-		case 2: return [NSColor fromCSS:@"#008"]; 
-		case 3: return [NSColor fromCSS:@"#080"]; 
-		case 4: return [NSColor fromCSS:@"#f00"]; 
-		case 5: return [NSColor fromCSS:@"#800"]; 
-		case 6: return [NSColor fromCSS:@"#808"]; 
-		case 7: return [NSColor fromCSS:@"#f80"]; 
-		case 8: return [NSColor fromCSS:@"#ff0"]; 
-		case 9: return [NSColor fromCSS:@"#0f0"]; 
-		case 10: return [NSColor fromCSS:@"#088"]; 
-		case 11: return [NSColor fromCSS:@"#0ff"]; 
-		case 12: return [NSColor fromCSS:@"#00f"]; 
-		case 13: return [NSColor fromCSS:@"#f0f"]; 
-		case 14: return [NSColor fromCSS:@"#888"]; 
-		case 15: return [NSColor fromCSS:@"#ccc"]; 
+		case 0:  return [NSColor fromCSS:@"#ffffff"]; 
+		case 1:  return [NSColor fromCSS:@"#000000"]; 
+		case 2:  return [NSColor fromCSS:@"#000088"]; 
+		case 3:  return [NSColor fromCSS:@"#008800"]; 
+		case 4:  return [NSColor fromCSS:@"#ff0000"]; 
+		case 5:  return [NSColor fromCSS:@"#880000"]; 
+		case 6:  return [NSColor fromCSS:@"#880088"]; 
+		case 7:  return [NSColor fromCSS:@"#ff8800"]; 
+		case 8:  return [NSColor fromCSS:@"#ffff00"]; 
+		case 9:  return [NSColor fromCSS:@"#00ff00"]; 
+		case 10: return [NSColor fromCSS:@"#008888"]; 
+		case 11: return [NSColor fromCSS:@"#00ffff"]; 
+		case 12: return [NSColor fromCSS:@"#0000ff"]; 
+		case 13: return [NSColor fromCSS:@"#ff00ff"]; 
+		case 14: return [NSColor fromCSS:@"#888888"]; 
+		case 15: return [NSColor fromCSS:@"#cccccc"]; 
 	}
 	
 	return nil;
@@ -97,20 +110,42 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 	NSRange r = NSMakeRange(start, len);
 	
 	if (attr & EFFECT_MASK) {
-		NSFontTraitMask traitMask = 0;
-		NSFontManager *fontManager = [NSFontManager sharedFontManager];
+		NSFont *boldItalic = [NSFont fontWithName:@"Lucida Grande" size:12.0];
 		
-		if (attr & BOLD_ATTR) traitMask |= NSBoldFontMask;
+		if (attr & BOLD_ATTR) {
+			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
+			
+			[body addAttribute:IRCTextFormatterBoldAttributeName value:[NSNumber numberWithBool:YES] range:r];
+		}
 		
-		NSFont *boldItalic = [fontManager fontWithFamily:@"Lucida Grande" traits:traitMask weight:1.0 size:12];
+		if (attr & ITALIC_ATTR) {
+			boldItalic = [boldItalic convertToItalics];
+			
+			[body addAttribute:IRCTextFormatterItalicAttributeName value:[NSNumber numberWithBool:YES] range:r];
+		}
 		
-		if (attr & ITALIC_ATTR) boldItalic = [boldItalic convertToItalics];
+		if (boldItalic) {
+			[body addAttribute:NSFontAttributeName value:boldItalic range:r];
+		}
 		
-		[body addAttribute:NSFontAttributeName value:boldItalic range:r];
+		if (attr & UNDERLINE_ATTR) {
+			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:[NSNumber numberWithBool:YES]					range:r];
+			[body addAttribute:NSUnderlineStyleAttributeName		  value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
+		}
 		
-		if (attr & UNDERLINE_ATTR) [body addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
-		if (attr & TEXT_COLOR_ATTR) [body addAttribute:NSForegroundColorAttributeName value:mapColor(attr & TEXT_COLOR_MASK) range:r];
-		if (attr & BACKGROUND_COLOR_ATTR) [body addAttribute:NSBackgroundColorAttributeName value:mapColor((attr & BACKGROUND_COLOR_MASK) >> 4) range:r];
+		if (attr & TEXT_COLOR_ATTR) {
+			NSInteger colorCode = (attr & TEXT_COLOR_MASK);
+			
+			[body addAttribute:NSForegroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
+			[body addAttribute:IRCTextFormatterForegroundColorAttributeName value:[NSNumber numberWithInteger:colorCode] range:r];
+		}
+		
+		if (attr & BACKGROUND_COLOR_ATTR) {
+			NSInteger colorCode = ((attr & BACKGROUND_COLOR_MASK) >> 4);
+			
+			[body addAttribute:NSBackgroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
+			[body addAttribute:IRCTextFormatterBackgroundColorAttributeName value:[NSNumber numberWithInteger:colorCode] range:r];
+		}
 	}
 	
 	return body;
@@ -172,35 +207,19 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(LogController *)log
-				 nolinks:(BOOL)hideLinks
-				keywords:(NSArray *)keywords 
-			excludeWords:(NSArray *)excludeWords 
-		  exactWordMatch:(BOOL)exactWordMatch 
-			 highlighted:(BOOL *)highlighted 
-			   URLRanges:(NSArray**)urlRanges
+			  renderType:(LogRendererType)drawingType
+			  properties:(NSDictionary *)inputDictionary
+			  resultInfo:(NSDictionary **)outputDictionary
 {
-	return [self renderBody:body
-				 controller:log
-					nolinks:hideLinks
-				   keywords:keywords
-			   excludeWords:excludeWords
-			 exactWordMatch:exactWordMatch
-				highlighted:highlighted
-				  URLRanges:urlRanges
-		   attributedString:NO];
-}
-
-+ (NSString *)renderBody:(NSString *)body 
-			  controller:(LogController *)log
-				 nolinks:(BOOL)hideLinks
-				keywords:(NSArray *)keywords 
-			excludeWords:(NSArray *)excludeWords 
-		  exactWordMatch:(BOOL)exactWordMatch 
-			 highlighted:(BOOL *)highlighted 
-			   URLRanges:(NSArray**)urlRanges
-		attributedString:(BOOL)attributed
-{
-	NSInteger len = body.length;
+	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
+	
+	BOOL renderLinks = [inputDictionary boolForKey:@"renderLinks"];
+	BOOL exactWordMatching = ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT);
+	
+	NSArray *keywords = [inputDictionary arrayForKey:@"keywords"];
+	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
+	
+	NSInteger len = [body length];
 	NSInteger start = 0;
 	NSInteger n = 0;
 	
@@ -209,8 +228,8 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	
 	memset(attrBuf, 0, (len * sizeof(attr_t)));
 	
-	UniChar source[len];
 	UniChar dest[len];
+	UniChar source[len];
 	
 	CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
 	
@@ -327,12 +346,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		dest[n++] = c;
 	}
 	
-	body = [NSString stringWithCharacters:dest length:n];
 	len = n;
+	body = [NSString stringWithCharacters:dest length:n];
 	
-	if (attributed == NO) {
-		if (hideLinks == NO) {
+	if (drawingType == ASCII_TO_HTML) {
+		/* Links */
+		
+		if (renderLinks) {
 			NSMutableArray *urlAry = [NSMutableArray array];
+			
 			NSArray *urlAryRanges = [URLParser locatedLinksForString:body];
 			
 			if (NSObjectIsNotEmpty(urlAryRanges)) {
@@ -347,16 +369,16 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 			}
 			
-			if (NSObjectIsNotEmpty(urlAry) && PointerIsEmpty(urlRanges) == NO) {
-				*urlRanges = urlAry;
-			}
+			[resultInfo setObject:urlAry forKey:@"URLRanges"];
 		}
+		
+		/* Word Matching — Highlights */
 		
 		BOOL foundKeyword = NO;
 		
 		NSMutableArray *excludeRanges = [NSMutableArray array];
 		
-		if (!exactWordMatch) {
+		if (exactWordMatching == NO) {
 			for (NSString *excludeWord in excludeWords) {
 				start = 0;
 				
@@ -398,7 +420,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					}
 				}
 				
-				if (exactWordMatch) {
+				if (exactWordMatching) {
 					if (enabled) {
 						UniChar c = [body characterAtIndex:r.location];
 						
@@ -448,6 +470,10 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			if (foundKeyword) break;
 		}
 		
+		[resultInfo setBool:foundKeyword forKey:@"wordMatchFound"];
+		
+		/* IP Address and Channel Name Detection */
+		
 		start = 0;
 		
 		while (start < len) {
@@ -480,9 +506,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			start = (NSMaxRange(r) + 1);
 		}
 		
-		if (PointerIsEmpty(highlighted) == NO) {
-			*highlighted = foundKeyword;
-		}
+		/* Conversation Tracking */
 		
 		if ([Preferences trackConversations]) {
 			if (log) {
@@ -551,11 +575,17 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 			}
 		}
+		
+		if (PointerIsEmpty(outputDictionary) == NO) {
+			*outputDictionary = resultInfo;
+		}
 	}
+	
+	/* Draw Actual Result */
 	
 	id result = nil;
 	
-	if (attributed) {
+	if (drawingType == ASCII_TO_ATTRIBUTED_STRING) {
 		result = [[[NSMutableAttributedString alloc] initWithString:body] autorelease];
 	} else {
 		result = [NSMutableString string];
@@ -565,11 +595,12 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	
 	while (start < len) {
 		NSInteger n = getNextAttributeRange(attrBuf, start, len);
+		
 		if (n <= 0) break;
 		
 		attr_t t = attrBuf[start];
 		
-		if (attributed) {
+		if (drawingType == ASCII_TO_ATTRIBUTED_STRING) {
 			result = renderAttributedRange(result, t, start, n);	
 		} else {
 			[result appendString:renderRange(body, t, start, n, log)];

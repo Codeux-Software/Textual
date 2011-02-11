@@ -28,7 +28,7 @@
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
-    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+	[grabber setThreadType:INVOCATION_MAIN_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }
@@ -37,7 +37,7 @@
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
-    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    [grabber setThreadType:INVOCATION_MAIN_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }
@@ -46,7 +46,7 @@
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
-    [grabber setInvocationThreadType:INVOCATION_BACKGROUND_THREAD];
+    [grabber setThreadType:INVOCATION_BACKGROUND_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }
@@ -55,7 +55,7 @@
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
-    [grabber setInvocationThreadType:INVOCATION_BACKGROUND_THREAD];
+    [grabber setThreadType:INVOCATION_BACKGROUND_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }
@@ -65,7 +65,7 @@
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
     [grabber setWaitUntilDone:waitUntilDone];
-    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    [grabber setThreadType:INVOCATION_MAIN_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }
@@ -75,7 +75,7 @@
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
     [grabber setWaitUntilDone:waitUntilDone];
-    [grabber setInvocationThreadType:INVOCATION_MAIN_THREAD];
+    [grabber setThreadType:INVOCATION_MAIN_THREAD];
 	
     return [grabber prepareWithInvocationTarget:self];
 }

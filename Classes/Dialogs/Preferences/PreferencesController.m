@@ -122,20 +122,19 @@
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+{		
+	NSString *addonID = ((NSObjectIsNotEmpty(world.bundlesWithPreferences)) ? @"13" : @"10");
+	
+	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"1", @"2", 
+			@"3", @"4", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
+}
+
 - (void)setUpToolbarItemsAndMenus
 {
-	NSArray *visibleItems = [[self.window toolbar] visibleItems];
-	NSMenuItem *addonItem = [visibleItems objectAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
-	
-	if ([addonItem tag] == 13 || [addonItem tag] == 10) {
-		[[self.window toolbar] removeItemAtIndex:ADDONS_TOOLBAR_ITEM_INDEX];
-	}
-	
 	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
-		[[self.window toolbar] insertItemWithItemIdentifier:@"13" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];
-		
 		for (TextualPluginItem *plugin in world.bundlesWithPreferences) {
-			NSInteger tagIndex = [world.bundlesWithPreferences indexOfObject:plugin];
+			NSInteger tagIndex = ([world.bundlesWithPreferences indexOfObject:plugin] + 20);
 			
 			NSMenuItem *pluginMenu = [NSMenuItem new];
 			
@@ -143,13 +142,11 @@
 			[pluginMenu setTarget:self];
 			
 			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
-			[pluginMenu setTag:(tagIndex + 20)];
+			[pluginMenu setTag:tagIndex];
 			[pluginMenu autorelease];
 			
 			[installedScriptsMenu addItem:pluginMenu];
 		}
-	} else {
-		[[self.window toolbar] insertItemWithItemIdentifier:@"10" atIndex:ADDONS_TOOLBAR_ITEM_INDEX];
 	}
 }
 
@@ -514,10 +511,8 @@
 
 - (void)onSelectFont:(id)sender
 {
-	NSFontManager *fm = [NSFontManager sharedFontManager];
-	
-	[fm setSelectedFont:logFont isMultiple:NO];
-	[fm orderFrontFontPanel:self];
+	[_NSFontManager() setSelectedFont:logFont isMultiple:NO];
+	[_NSFontManager() orderFrontFontPanel:self];
 }
 
 - (void)changeFont:(id)sender
