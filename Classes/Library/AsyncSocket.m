@@ -3219,7 +3219,7 @@ Failed:
 	                                                     readLength:0
 	                                                     terminator:nil
 	                                                            tag:tag];
-	[theReadQueue addObject:packet];
+	[theReadQueue safeAddObject:packet];
 	[self scheduleDequeueRead];
 	
 	[packet release];
@@ -3247,7 +3247,7 @@ Failed:
 	                                                     readLength:length
 	                                                     terminator:nil
 	                                                            tag:tag];
-	[theReadQueue addObject:packet];
+	[theReadQueue safeAddObject:packet];
 	[self scheduleDequeueRead];
 	
 	[packet release];
@@ -3291,7 +3291,7 @@ Failed:
 	                                                     readLength:0
 	                                                     terminator:data
 	                                                            tag:tag];
-	[theReadQueue addObject:packet];
+	[theReadQueue safeAddObject:packet];
 	[self scheduleDequeueRead];
 	
 	[packet release];
@@ -3740,7 +3740,7 @@ Failed:
 	
 	AsyncWritePacket *packet = [[AsyncWritePacket alloc] initWithData:data timeout:timeout tag:tag];
 	
-	[theWriteQueue addObject:packet];
+	[theWriteQueue safeAddObject:packet];
 	[self scheduleDequeueWrite];
 	
 	[packet release];
@@ -3979,10 +3979,10 @@ Failed:
 	
 	AsyncSpecialPacket *packet = [[AsyncSpecialPacket alloc] initWithTLSSettings:tlsSettings];
 	
-	[theReadQueue addObject:packet];
+	[theReadQueue safeAddObject:packet];
 	[self scheduleDequeueRead];
 	
-	[theWriteQueue addObject:packet];
+	[theWriteQueue safeAddObject:packet];
 	[self scheduleDequeueWrite];
 	
 	[packet release];

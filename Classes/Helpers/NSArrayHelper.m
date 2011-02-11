@@ -36,6 +36,20 @@
 	}
 }
 
+- (void)safeAddObject:(id)anObject
+{
+	if (PointerIsEmpty(anObject) == NO) {
+		[self addObject:anObject];
+	}
+}
+
+- (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index
+{
+	if (PointerIsEmpty(anObject) == NO) {
+		[self insertObject:anObject atIndex:index];
+	}
+}
+
 @end
 
 @implementation NSIndexSet (NSIndexSetHelper)

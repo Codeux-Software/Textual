@@ -50,7 +50,7 @@
 		[line moveToPoint:pt];
 		[line relativeLineToPoint:NSMakePoint(width, 0)];
 		
-		[lines addObject:line];
+		[lines safeAddObject:line];
 	}
 	
 	NSRectClip(NSInsetRect([self rectForPart:NSScrollerKnobSlot], 3, 4));

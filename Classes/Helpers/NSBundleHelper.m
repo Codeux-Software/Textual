@@ -117,11 +117,11 @@
 				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
 				
 				if (NSObjectIsNotEmpty(itemName) && itemView) {
-					[preferencesBundlesIndex addObject:plugin];
+					[preferencesBundlesIndex safeAddObject:plugin];
 				}
 			}
 			
-			[completeBundleIndex addObject:currBundle];
+			[completeBundleIndex safeAddObject:currBundle];
 			
 			[plugin autorelease];
 		}

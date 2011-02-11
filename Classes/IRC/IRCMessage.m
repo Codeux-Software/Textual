@@ -81,11 +81,11 @@
 	
 	while (NSObjectIsNotEmpty(s)) {
 		if ([s hasPrefix:@":"]) {
-			[params addObject:[s safeSubstringFromIndex:1]];
+			[params safeAddObject:[s safeSubstringFromIndex:1]];
 			
 			break;
 		} else {
-			[params addObject:[s getToken]];
+			[params safeAddObject:[s getToken]];
 		}
 	}
 	

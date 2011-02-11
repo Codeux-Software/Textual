@@ -152,13 +152,13 @@
 				}
 			}
 			
-			[lines addObject:[NSString stringWithCharacters:(buf + start) length:(pos - start)]];
+			[lines safeAddObject:[NSString stringWithCharacters:(buf + start) length:(pos - start)]];
 			
 			start = (i + 1);
 		}
 	}
 	
-	[lines addObject:[NSString stringWithCharacters:(buf + start) length:(len - start)]];
+	[lines safeAddObject:[NSString stringWithCharacters:(buf + start) length:(len - start)]];
 	
 	return lines;
 }
@@ -741,6 +741,13 @@ BOOL isUnicharDigit(unichar c)
 @end
 
 @implementation NSAttributedString (NSAttributedStringHelper)
+
++ (NSAttributedString *)emptyString
+{
+	NSAttributedString *newstr = [[NSAttributedString alloc] initWithString:@""];
+	
+	return [newstr autorelease];
+}
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
 {

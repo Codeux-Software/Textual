@@ -5,7 +5,7 @@
 
 @synthesize world;
 
-- (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel
+- (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)c
 {	
 	BOOL useSSL = NO;
 	
@@ -13,7 +13,7 @@
 	
 	NSInteger port = 6667;
 	
-	NSString *server = nil;
+	NSString *server   = nil;
 	NSString *password = nil;
 	NSString *tempPort = nil;
 	
@@ -120,25 +120,29 @@
 	[dic setObject:[NSNumber numberWithBool:NO] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
 	
-	if (NSObjectIsNotEmpty(channel)) {
+	if (NSObjectIsNotEmpty(c)) {
 		NSMutableArray *channels = [NSMutableArray array];
 		
-		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:channel, @"name", nil]];	
+		if ([c isChannelName]) {
+			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
+								 [NSNumber numberWithBool:YES], @"auto_join", 
+								 [NSNumber numberWithBool:YES], @"growl", nil]];	
+		}
 		
 		[dic setObject:channels forKey:@"channels"];
 	}
 	
-	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClientConfig *cf = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
 
 	if (NSObjectIsNotEmpty(password)) {
-		c.password = password;
+		cf.password = password;
 	}	
 	
-	IRCClient *u = [world createClient:c reload:YES];
+	IRCClient *uf = [world createClient:cf reload:YES];
 	
 	[world save];
 	
-	[u connect];
+	[uf connect];
 }
 
 @end

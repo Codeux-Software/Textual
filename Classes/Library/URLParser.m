@@ -43,7 +43,7 @@ static NSString *urlAddrRegexComplex = nil;
 				r.length = choppedLenth;	
 			}
 			
-			[urlRanges addObject:NSStringFromRange(r)];
+			[urlRanges safeAddObject:NSStringFromRange(r)];
 		}
 		
 		start = (NSMaxRange(r) + 1);

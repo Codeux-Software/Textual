@@ -313,22 +313,22 @@
 	NSArray *directoryContents = [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
 	NSArray *homeDirectoryContents = [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath] error:NULL];
 	
-	[sound_list addObject:EMPTY_SOUND];
+	[sound_list safeAddObject:EMPTY_SOUND];
 	
 	if (NSObjectIsNotEmpty(directoryContents)) {
 		for (NSString *s in directoryContents) {	
 			if ([s contains:@"."]) {
-				[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+				[sound_list safeAddObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 			}
 		}
 	}
 	
 	if (NSObjectIsNotEmpty(homeDirectoryContents)) {
-		[sound_list addObject:EMPTY_SOUND];
+		[sound_list safeAddObject:EMPTY_SOUND];
 		
 		for (NSString *s in homeDirectoryContents) {	
 			if ([s contains:@"."]) {
-				[sound_list addObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
+				[sound_list safeAddObject:[s safeSubstringToIndex:[s stringPosition:@"."]]];
 			}
 		}		
 	}
@@ -341,17 +341,17 @@
 	if (NSObjectIsEmpty(sounds)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_KICKED]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_INVITED]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
-		[ary addObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_KICKED]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_INVITED]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
 		
 		sounds = ary;
 	}

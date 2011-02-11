@@ -387,7 +387,7 @@
 				IRCUser *m = [c memberAtIndex:nindex];
 				
 				if (m) {
-					[ary addObject:m];
+					[ary safeAddObject:m];
 				}
 			}
 		} else {
@@ -395,7 +395,7 @@
 				IRCUser *m = [c findMember:pointedNick];
 				
 				if (m) {
-					[ary addObject:m];
+					[ary safeAddObject:m];
 				} 
 			}
 		}
@@ -1115,12 +1115,12 @@
 	NSMutableArray *channels = [NSMutableArray array];
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[nicks addObject:m.nick];
+		[nicks safeAddObject:m.nick];
 	}
 	
 	for (IRCChannel *e in u.channels) {
 		if (c != e && e.isChannel) {
-			[channels addObject:e.name];
+			[channels safeAddObject:e.name];
 		}
 	}
 	
@@ -1620,7 +1620,7 @@
 		[u.channels removeAllObjects];
 		
 		for (IRCChannel *c in clientChannels) {
-			[u.channels addObject:c];
+			[u.channels safeAddObject:c];
 		}
 		
 		[u updateConfig:[u storedConfig]];

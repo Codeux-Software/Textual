@@ -204,7 +204,7 @@
 	world.growl = growl;
 	
 	[growl registerToGrowl];
-
+	
 	formattingMenu.textField = text;
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
@@ -836,14 +836,14 @@
 		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 		
 		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
-			[choices addObject:[command lowercaseString]];
+			[choices safeAddObject:[command lowercaseString]];
 		}
 		
 		for (NSString *command in [[world bundlesForUserInput] allKeys]) {
 			NSString *cmdl = [command lowercaseString];
 			
 			if ([choices containsObject:cmdl] == NO) {
-				[choices addObject:cmdl];
+				[choices safeAddObject:cmdl];
 			}
 		}
 		
@@ -852,7 +852,7 @@
 				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
 				
 				if ([choices containsObject:cmdl] == NO) {
-					[choices addObject:cmdl];
+					[choices safeAddObject:cmdl];
 				}
 			}
 		}
@@ -865,8 +865,8 @@
 		IRCClient *u = [world selectedClient];
 		
 		for (IRCChannel *c in u.channels) {
-			[channels addObject:c.name];
-			[lowerChannels addObject:[c.name lowercaseString]];
+			[channels safeAddObject:c.name];
+			[lowerChannels safeAddObject:[c.name lowercaseString]];
 		}
 		
 		choices = channels;
@@ -879,8 +879,8 @@
 		NSMutableArray *lowerNicks = [NSMutableArray array];
 		
 		for (IRCUser *m in users) {
-			[nicks addObject:m.nick];
-			[lowerNicks addObject:[m.nick lowercaseString]];
+			[nicks safeAddObject:m.nick];
+			[lowerNicks safeAddObject:[m.nick lowercaseString]];
 		}
 		
 		choices = nicks;
@@ -896,8 +896,8 @@
 	
 	for (NSString *s in lowerChoices) {
 		if ([s hasPrefix:lowerPre]) {
-			[currentLowerChoices addObject:s];
-			[currentChoices addObject:[choices safeObjectAtIndex:i]];
+			[currentLowerChoices safeAddObject:s];
+			[currentChoices safeAddObject:[choices safeObjectAtIndex:i]];
 		}
 		
 		++i;
@@ -1230,6 +1230,14 @@ typedef enum {
 	NSMutableArray *channels = [NSMutableArray array];
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
+	for (NSString *s in [config objectForKey:@"channels"]) {
+		if ([s isChannelName]) {
+			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"name", 
+									 [NSNumber numberWithBool:YES], @"auto_join", 
+									 [NSNumber numberWithBool:YES], @"growl", nil]];	
+		}
+	}
+	
 	NSString *host = [config objectForKey:@"host"];
 	NSString *nick = [config objectForKey:@"nick"];
 	
@@ -1239,10 +1247,6 @@ typedef enum {
 	[dic setObject:channels forKey:@"channels"];
 	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
-	
-	for (NSString *s in [config objectForKey:@"channels"]) {
-		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys: s, @"name", nil]];
-	}
 	
 	[window makeKeyAndOrderFront:nil];
 	
@@ -1258,7 +1262,7 @@ typedef enum {
 
 - (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
 {
-	[WelcomeSheetDisplay autorelease];
+	[WelcomeSheetDisplay drain];
 	WelcomeSheetDisplay = nil;
 }
 

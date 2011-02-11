@@ -501,7 +501,7 @@
 	}
 	
 	if (loaded == NO) {
-		[lines addObject:line];
+		[lines safeAddObject:line];
 		
 		return highlighted;
 	}
@@ -619,7 +619,7 @@
 	}
 	
 	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-		[highlightedLineNumbers addObject:[NSNumber numberWithInt:lineNumber]];
+		[highlightedLineNumbers safeAddObject:[NSNumber numberWithInt:lineNumber]];
 	}
 	
 	if (scroller) {
@@ -944,7 +944,7 @@
 				
 				NSInteger pos = (offsetTop + (offsetHeight / 2));
 				
-				[result addObject:[NSNumber numberWithInteger:pos]];
+				[result safeAddObject:[NSNumber numberWithInteger:pos]];
 			}
 		}
 	}

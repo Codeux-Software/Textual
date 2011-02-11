@@ -23,7 +23,7 @@
 	for (NSDictionary *e in ary) {
 		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
 	
-		[clients addObject:c];
+		[clients safeAddObject:c];
 	}
 	
 	return self;
@@ -42,7 +42,7 @@
 	NSMutableArray *clientAry = [NSMutableArray array];
 	
 	for (IRCClientConfig *e in clients) {
-		[clientAry addObject:[e dictionaryValue]];
+		[clientAry safeAddObject:[e dictionaryValue]];
 	}
 	
 	[dic setObject:clientAry forKey:@"clients"];

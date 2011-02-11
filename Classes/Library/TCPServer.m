@@ -72,7 +72,7 @@
 {
 	TCPClient *c = [[[TCPClient alloc] initWithExistingConnection:newSocket] autorelease];
 	c.delegate = self;
-	[clients addObject:c];
+	[clients safeAddObject:c];
 	
 	if ([delegate respondsToSelector:@selector(tcpServer:didAccept:)]) {
 		[delegate tcpServer:self didAccept:c];

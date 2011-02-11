@@ -24,7 +24,7 @@
 			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
 			
 			if ([scripts containsObject:script] == NO) {
-				[scripts addObject:script];
+				[scripts safeAddObject:script];
 			}
 		}
 	}
@@ -33,7 +33,7 @@
 		cmd = [cmd lowercaseString];
 		
 		if ([scripts containsObject:cmd] == NO) {
-			[scripts addObject:cmd];
+			[scripts safeAddObject:cmd];
 		}
 	}
 	

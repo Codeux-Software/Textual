@@ -69,7 +69,7 @@
 		url = nil;
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
@@ -80,7 +80,7 @@
 		addr = nil;
 		
 		for (NSMenuItem *item in [addrMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
@@ -94,15 +94,15 @@
 		
 		[userOptions setTitle:TXTFLS(@"USER_OPTIONS_MENU_ITEM", menuController.pointedNick)];
 		
-		[ary addObject:userOptions];
-		[ary addObject:[NSMenuItem separatorItem]];
+		[ary safeAddObject:userOptions];
+		[ary safeAddObject:[NSMenuItem separatorItem]];
 		
 		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
 			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) continue;
 			
-			[ary addObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
@@ -113,7 +113,7 @@
 		chan = nil;
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autorelease]];
 		}
 		
 		return ary;
@@ -132,18 +132,18 @@
 		for (NSMenuItem *item in [menu itemArray]) {
 			if ([item tag] == WebMenuItemTagInspectElement) {
 				if (lookupInDictionaryItem) {
-					[ary addObject:[[lookupInDictionaryItem copy] autorelease]];
+					[ary safeAddObject:[[lookupInDictionaryItem copy] autorelease]];
 				}
 			} else {
-				[ary addObject:[[item copy] autorelease]];
+				[ary safeAddObject:[[item copy] autorelease]];
 			}
 		}
 		
 		if ([_NSUserDefaults() boolForKey:DeveloperEnvironmentToken]) {
-			[ary addObject:[NSMenuItem separatorItem]];
+			[ary safeAddObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {
-				[ary addObject:[[inspectElementItem copy] autorelease]];
+				[ary safeAddObject:[[inspectElementItem copy] autorelease]];
 			}
 			
 			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
@@ -155,8 +155,8 @@
 			[copyHTML setTarget:menuController];
 			[reloadTheme setTarget:menuController];
 		
-			[ary addObject:copyHTML];
-			[ary addObject:reloadTheme];
+			[ary safeAddObject:copyHTML];
+			[ary safeAddObject:reloadTheme];
 		}
 		
 		return ary;

@@ -134,7 +134,7 @@
 
 - (void)sendLine:(NSString *)line
 {
-	[sendQueue addObject:line];
+	[sendQueue safeAddObject:line];
 	
 	[self tryToSend];
 	[self updateTimer];

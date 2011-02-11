@@ -8,6 +8,9 @@
 
 @interface NSMutableArray (NSMutableArrayHelper)
 - (void)safeRemoveObjectAtIndex:(NSInteger)n;
+
+- (void)safeAddObject:(id)anObject;
+- (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index;
 @end
 
 @interface NSIndexSet (NSIndexSetHelper)
