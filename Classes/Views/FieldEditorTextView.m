@@ -25,7 +25,7 @@
 
 - (void)copy:(id)sender
 {
-	BOOL hasSheet = BOOLValueFromObject([[NSApp keyWindow] attachedSheet]);
+	BOOL hasSheet = BOOLValueFromObject([[self window] attachedSheet]);
 	
 	if (hasSheet == NO) {
 		[super copy:sender];
@@ -38,7 +38,7 @@
 
 - (void)paste:(id)sender
 {
-	BOOL hasSheet = BOOLValueFromObject([[NSApp keyWindow] attachedSheet]);
+	BOOL hasSheet = BOOLValueFromObject([[self window] attachedSheet]);
 	
 	if (hasSheet == NO) {
 		[super paste:sender];
