@@ -1007,7 +1007,7 @@ static NSInteger totalRunTime = 0;
 
 	[_NSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
 	
-	if (numberOfRuns > 0) {
+	if (numberOfRuns >= 2) {
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
 	} 
 	
@@ -1068,6 +1068,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
+	[d setObject:@"Glass" forKey:@"eventHighlightSound"];
 	[d setInteger:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setInteger:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
