@@ -265,13 +265,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
 		IRCChannelConfig *c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
 		
-		[channels addObject:c];
+		[channels safeAddObject:c];
 	}
 	
 	for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
 		AddressBook *ignore = [[[AddressBook alloc] initWithDictionary:e] autorelease];
 		
-		[ignores addObject:ignore];
+		[ignores safeAddObject:ignore];
 	}
 	
 	return self;
@@ -340,11 +340,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSMutableArray *ignoreAry = [NSMutableArray array];
 	
 	for (IRCChannelConfig *e in channels) {
-		[channelAry addObject:[e dictionaryValue]];
+		[channelAry safeAddObject:[e dictionaryValue]];
 	}
 	
 	for (AddressBook *e in ignores) {
-		[ignoreAry addObject:[e dictionaryValue]];
+		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	
 	[dic setObject:channelAry forKey:@"channels"];

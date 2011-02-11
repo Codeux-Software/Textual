@@ -326,7 +326,7 @@
 	
 	for (NSString *s in nicks) {
 		if (NSObjectIsNotEmpty(s)) {
-			[config.altNicks addObject:s];
+			[config.altNicks safeAddObject:s];
 		}
 	}
 	
@@ -349,7 +349,7 @@
 	
 	for (NSString *s in commands) {
 		if (NSObjectIsNotEmpty(s)) {
-			[config.loginCommands addObject:s];
+			[config.loginCommands safeAddObject:s];
 		}
 	}
 	
@@ -532,7 +532,7 @@
 	}
 	
 	if (n < 0) {
-		[config.channels addObject:conf];
+		[config.channels safeAddObject:conf];
 	} else {
 		[config.channels replaceObjectAtIndex:n withObject:conf];
 	}
@@ -623,7 +623,7 @@
 	
 	if (sender.newItem) {
 		if (NSObjectIsNotEmpty(hostmask)) {
-			[config.ignores addObject:sender.ignore];
+			[config.ignores safeAddObject:sender.ignore];
 		}
 	} else {
 		if (NSObjectIsEmpty(hostmask)) {
@@ -760,7 +760,7 @@
 			
 			[ary removeAllObjects];
 			
-			[ary addObject:target];
+			[ary safeAddObject:target];
 			[ary addObjectsFromArray:low];
 			[ary addObjectsFromArray:high];
 			

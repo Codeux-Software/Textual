@@ -32,7 +32,7 @@
 	if (NSObjectIsEmpty(s)) return;
 	if ([[[buf lastObject] string] isEqualToString:[s string]]) return;
 	
-	[buf addObject:s];
+	[buf safeAddObject:s];
 	
 	if (buf.count > INPUT_HISTORY_MAX) {
 		[buf safeRemoveObjectAtIndex:0];
@@ -51,7 +51,7 @@
 		}
 		
 		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
-			[buf addObject:s];
+			[buf safeAddObject:s];
 			
 			if (buf.count > INPUT_HISTORY_MAX) {
 				[buf safeRemoveObjectAtIndex:0];
@@ -59,7 +59,7 @@
 				--pos;
 			}
 		}
-	}
+	}	
 	
 	--pos;
 	
@@ -70,7 +70,7 @@
 	} else if (0 <= pos && pos < buf.count) {
 		return [buf safeObjectAtIndex:pos];
 	} else {
-		return nil;
+		return [NSAttributedString emptyString];
 	}
 }
 
@@ -91,7 +91,7 @@
 	if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
 		[self add:s];
 		
-		return nil;
+		return [NSAttributedString emptyString];
 	} else {
 		++pos;
 		
@@ -99,7 +99,7 @@
 			return [buf safeObjectAtIndex:pos];
 		}
 		
-		return nil;
+		return [NSAttributedString emptyString];
 	}
 }
 

@@ -34,7 +34,7 @@
 							}
 							
 							if ([cmdDict containsObject:bundle] == NO) {
-								[[newUserDict objectForKey:cmd] addObject:self];
+								[[newUserDict objectForKey:cmd] safeAddObject:self];
 							}
 						}
 					}
@@ -57,7 +57,7 @@
 							}
 							
 							if ([cmdDict containsObject:bundle] == NO) {
-								[[newServerDict objectForKey:cmd] addObject:self];
+								[[newServerDict objectForKey:cmd] safeAddObject:self];
 							}
 						}
 					}

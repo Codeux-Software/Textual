@@ -129,7 +129,7 @@
 							m.simpleMode = (v == 4);
 						}
 						
-						[ary addObject:m];
+						[ary safeAddObject:m];
 						
 						break;
 					}

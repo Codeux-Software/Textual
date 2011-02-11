@@ -253,13 +253,13 @@
 		IRCUser *t = [members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedDescending) {
-			[members insertObject:item atIndex:i];
+			[members safeInsertObject:item atIndex:i];
 			
 			return;
 		}
 	}
 	
-	[members addObject:item];
+	[members safeAddObject:item];
 }
 
 - (void)addMember:(IRCUser *)user

@@ -855,7 +855,7 @@ static NSMutableArray *excludeWords = nil;
 		NSString *s = [e objectForKey:@"string"];
 		
 		if (NSObjectIsNotEmpty(s)) {
-			[keywords addObject:s];
+			[keywords safeAddObject:s];
 		}
 	}
 }
@@ -873,7 +873,7 @@ static NSMutableArray *excludeWords = nil;
 	for (NSDictionary *e in ary) {
 		NSString *s = [e objectForKey:@"string"];
 		
-		if (s) [excludeWords addObject:s];
+		if (s) [excludeWords safeAddObject:s];
 	}
 }
 
@@ -887,7 +887,7 @@ static NSMutableArray *excludeWords = nil;
 		NSString *s = [e objectForKey:@"string"];
 		
 		if (NSObjectIsNotEmpty(s)) {
-			[ary addObject:s];
+			[ary safeAddObject:s];
 		}
 	}
 	
@@ -900,7 +900,7 @@ static NSMutableArray *excludeWords = nil;
 		
 		[dic setObject:s forKey:@"string"];
 		
-		[saveAry addObject:dic];
+		[saveAry safeAddObject:dic];
 	}
 	
 	[_NSUserDefaults() setObject:saveAry forKey:key];

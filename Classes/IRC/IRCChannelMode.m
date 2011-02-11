@@ -65,9 +65,9 @@
 			NSInteger moindex = [objk integerValue];
 			
 			[allModes safeRemoveObjectAtIndex:moindex];
-			[allModes insertObject:h atIndex:moindex];
+			[allModes safeInsertObject:h atIndex:moindex];
 		} else {
-			[allModes addObject:h];
+			[allModes safeAddObject:h];
 			
 			[modeIndexes setInteger:[allModes indexOfObject:h] forKey:modec];
 		}
@@ -120,7 +120,7 @@
 	if (objk == NO) {
 		IRCModeInfo *m = [isupport createMode:mode];
 		
-		[allModes addObject:m];
+		[allModes safeAddObject:m];
 		
 		[modeIndexes setInteger:[allModes indexOfObject:m] forKey:mode];
 	}

@@ -146,7 +146,7 @@
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	for (IRCClient *u in clients) {
-		[ary addObject:[u dictionaryValue]];
+		[ary safeAddObject:[u dictionaryValue]];
 	}
 	
 	[dic setObject:ary forKey:@"clients"];
@@ -614,10 +614,10 @@
 	NSMutableArray *logs = [NSMutableArray array];
 	
 	for (IRCClient *u in clients) {
-		[logs addObject:u.log];
+		[logs safeAddObject:u.log];
 		
 		for (IRCChannel *c in u.channels) {
-			[logs addObject:c.log];
+			[logs safeAddObject:c.log];
 		}
 	}
 	
@@ -633,10 +633,10 @@
 	NSMutableArray *logs = [NSMutableArray array];
 	
 	for (IRCClient *u in clients) {
-		[logs addObject:u.log];
+		[logs safeAddObject:u.log];
 		
 		for (IRCChannel *c in u.channels) {
-			[logs addObject:c.log];
+			[logs safeAddObject:c.log];
 		}
 	}
 	
@@ -748,7 +748,7 @@
 		[self createChannel:e client:c reload:NO adjust:NO];
 	}
 	
-	[clients addObject:c];
+	[clients safeAddObject:c];
 	
 	if (reload) {
 		[self reloadTree];
@@ -782,15 +782,15 @@
 			NSInteger n = [client indexOfTalkChannel];
 			
 			if (n >= 0) {
-				[client.channels insertObject:c atIndex:n];
+				[client.channels safeInsertObject:c atIndex:n];
 			} else {
-				[client.channels addObject:c];
+				[client.channels safeAddObject:c];
 			}
 			
 			break;
 		}
 		default:
-			[client.channels addObject:c];
+			[client.channels safeAddObject:c];
 			break;
 	}
 	
@@ -1298,7 +1298,7 @@
 		[ary removeAllObjects];
 		
 		[ary addObjectsFromArray:low];
-		[ary addObject:i];
+		[ary safeAddObject:i];
 		[ary addObjectsFromArray:high];
 		
 		[self reloadTree];
@@ -1320,7 +1320,7 @@
 		[ary removeAllObjects];
 		
 		[ary addObjectsFromArray:low];
-		[ary addObject:i];
+		[ary safeAddObject:i];
 		[ary addObjectsFromArray:high];
 		
 		[self reloadTree];

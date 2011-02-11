@@ -168,13 +168,13 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 	
 	for (NSInteger i = left; i < right; ++i) {
 		if (compareItems([ary safeObjectAtIndex:i], item, self) == NSOrderedDescending) {
-			[ary insertObject:item atIndex:i];
+			[ary safeInsertObject:item atIndex:i];
 			
 			return;
 		}
 	}
 	
-	[ary insertObject:item atIndex:right];
+	[ary safeInsertObject:item atIndex:right];
 }
 
 #pragma mark -
@@ -230,7 +230,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 			
 			if (tr >= 0 || cr >= 0) {
-				[ary addObject:item];
+				[ary safeAddObject:item];
 			}
 		}
 		

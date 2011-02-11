@@ -227,13 +227,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (c) {
 			[c updateConfig:i];
 			
-			[ary addObject:c];
+			[ary safeAddObject:c];
 			
 			[channels removeObjectIdenticalTo:c];
 		} else {
 			c = [world createChannel:i client:self reload:NO adjust:NO];
 			
-			[ary addObject:c];
+			[ary safeAddObject:c];
 		}
 	}
 	
@@ -241,7 +241,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (c.isChannel) {
 			[self partChannel:c];
 		} else {
-			[ary addObject:c];
+			[ary safeAddObject:c];
 		}
 	}
 	
@@ -262,7 +262,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if (c.isChannel) {
-			[u.channels addObject:[[c.config mutableCopy] autorelease]];
+			[u.channels safeAddObject:[[c.config mutableCopy] autorelease]];
 		}
 	}
 	
@@ -276,7 +276,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if (c.isChannel) {
-			[ary addObject:[c dictionaryValue]];
+			[ary safeAddObject:[c dictionaryValue]];
 		}
 	}
 	
@@ -919,7 +919,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (m) {
 			if (value != [m hasMode:mode]) {
-				[users addObject:m];
+				[users safeAddObject:m];
 			}
 		}
 	}
@@ -1023,7 +1023,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
 			if (c.errLastJoin == NO && c.isActive == NO) {
-				[ary addObject:c];
+				[ary safeAddObject:c];
 			}
 		}
 	}
@@ -1045,7 +1045,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (pass) {
 			pass = hasPass;
 			
-			[ary addObject:c];
+			[ary safeAddObject:c];
 		} else {
 			if (hasPass) {
 				[self quickJoin:ary];
@@ -1055,7 +1055,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				pass = hasPass;
 			}
 			
-			[ary addObject:c];
+			[ary safeAddObject:c];
 		}
 		
 		if (ary.count >= [Preferences autojoinMaxChannelJoins]) {
@@ -1958,7 +1958,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 					
 					if (found == NO) {
-						[config.ignores addObject:g];
+						[config.ignores safeAddObject:g];
 						[world save];
 					}
 				} else {
@@ -2331,7 +2331,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	va_start(args, str);
 	
 	while ((obj = va_arg(args, id))) {
-		[ary addObject:obj];
+		[ary safeAddObject:obj];
 	}
 	
 	va_end(args);
@@ -2450,7 +2450,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (m.time < c.time) {
 			added = YES;
 			
-			[commandQueue insertObject:m atIndex:i];
+			[commandQueue safeInsertObject:m atIndex:i];
 			
 			break;
 		}
@@ -2459,7 +2459,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if (added == NO) {
-		[commandQueue addObject:m];
+		[commandQueue safeAddObject:m];
 	}
 	
 	if (i == 0) {
@@ -2875,7 +2875,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if ([Preferences keywordCurrentNick]) {
 					NSMutableArray *ary = [[keywords mutableCopy] autorelease];
 					
-					[ary insertObject:myNick atIndex:0];
+					[ary safeInsertObject:myNick atIndex:0];
 					
 					keywords = ary;
 				}
@@ -4774,12 +4774,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			case 87: // Command: LOCOPS
 			case 88: // Command: NACHAT
 			case 89: // Command: ADCHAT
-				[m.params insertObject:m.sender.nick atIndex:0];
+				[m.params safeInsertObject:m.sender.nick atIndex:0];
 				
 				NSString *text = [m.params safeObjectAtIndex:1];
 				
 				[m.params safeRemoveObjectAtIndex:1];
-				[m.params insertObject:[NSString stringWithFormat:@"[%@]: %@", m.command, text] atIndex:1];
+				[m.params safeInsertObject:[NSString stringWithFormat:@"[%@]: %@", m.command, text] atIndex:1];
 				
 				m.command = IRCCI_NOTICE;
 				

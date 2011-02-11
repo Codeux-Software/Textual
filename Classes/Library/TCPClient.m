@@ -243,6 +243,8 @@
 					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
 						[delegate tcpClient:self error:nil];
 					}
+					
+					return;
 				}
 			}
 		}

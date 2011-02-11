@@ -30,7 +30,7 @@
 
 - (void)addParameter:(NSString *)parameter
 {
-	[params addObject:parameter];
+	[params safeAddObject:parameter];
 }
 
 - (NSString *)string
