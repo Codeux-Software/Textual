@@ -1110,6 +1110,10 @@ static NSInteger totalRunTime = 0;
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
+	
+	if ([NSFont fontIsAvailable:[Preferences themeLogFontName]] == NO) {
+		[_NSUserDefaults() setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
+	}
 }
 
 + (void)sync

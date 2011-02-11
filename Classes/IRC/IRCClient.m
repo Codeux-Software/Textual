@@ -164,32 +164,32 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)dealloc
 {
-	[autoJoinTimer drain];
 	[autoJoinTimer stop];
+	[autoJoinTimer drain];
 	[chanBanListSheet drain];
 	[channelListDialog drain];
 	[channels drain];
-	[commandQueueTimer drain];
 	[commandQueueTimer stop];
+	[commandQueueTimer drain];
 	[commandQueue drain];
 	[config drain];
 	[conn autorelease];
 	[conn close];
 	[inputNick drain];
-	[isonTimer drain];
 	[isonTimer stop];
+	[isonTimer drain];
 	[isupport drain];
 	[lastSelectedChannel drain];
 	[logDate drain];
 	[logFile drain];
 	[myHost drain];
 	[myNick drain];
-	[pongTimer drain];
 	[pongTimer stop];
-	[reconnectTimer drain];
+	[pongTimer drain];
 	[reconnectTimer stop];
-	[retryTimer drain];
+	[reconnectTimer drain];
 	[retryTimer stop];
+	[retryTimer drain];
 	[sentNick drain];
 	[serverHostname drain];
 	[trackedUsers drain];
