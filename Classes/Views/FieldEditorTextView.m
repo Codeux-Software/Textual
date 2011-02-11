@@ -25,15 +25,15 @@
 
 - (void)copy:(id)sender
 {
-	BOOL hasSheet = BOOLValueFromObject([[NSApp keyWindow] attachedSheet]);
+	//BOOL hasSheet = BOOLValueFromObject([[NSApp keyWindow] attachedSheet]);
 	
-	if (hasSheet == NO) {
+	//if (hasSheet == NO) {
 		[super copy:sender];
-	}
+	//}
 	
-	if (copyDelegate) {
-		[copyDelegate fieldEditorTextViewCopy:self];
-	}
+	//if (copyDelegate) {
+	//	[copyDelegate fieldEditorTextViewCopy:self];
+	//}
 }
 
 - (void)paste:(id)sender
