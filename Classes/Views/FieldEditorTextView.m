@@ -4,7 +4,6 @@
 @implementation FieldEditorTextView
 
 @synthesize pasteDelegate;
-@synthesize copyDelegate;
 @synthesize keyHandler;
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer
@@ -21,19 +20,6 @@
 	[keyHandler drain];
 	
 	[super dealloc];
-}
-
-- (void)copy:(id)sender
-{
-	BOOL hasSheet = BOOLValueFromObject([[self window] attachedSheet]);
-	
-	if (hasSheet == NO) {
-		[super copy:sender];
-	}
-	
-	if (copyDelegate) {
-		[copyDelegate fieldEditorTextViewCopy:self];
-	}
 }
 
 - (void)paste:(id)sender

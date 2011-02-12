@@ -64,6 +64,7 @@
 
 - (NSString *)encodeURIComponent;
 - (NSString *)encodeURIFragment;
+- (NSString *)decodeURIFragement;
 
 - (BOOL)isNickname;
 - (BOOL)isChannelName;

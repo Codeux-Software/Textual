@@ -575,6 +575,11 @@ BOOL isUnicharDigit(unichar c)
 	return [NSString stringWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding];
 }
 
+- (NSString *)decodeURIFragement
+{
+	return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+}
+
 + (NSString *)stringWithUUID 
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
