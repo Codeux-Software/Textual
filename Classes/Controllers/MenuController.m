@@ -133,24 +133,6 @@
 			
 			break;
 		}
-		case 549:	// copy
-		{
-			NSWindow *win = [NSApp keyWindow];
-			if (PointerIsEmpty(win)) return NO;
-			
-			id t = [win firstResponder];
-			if (PointerIsEmpty(t)) return NO;
-			
-			if ([t respondsToSelector:@selector(copy:)]) {
-				if ([t respondsToSelector:@selector(validateMenuItem:)]) {
-					return [t validateMenuItem:item];
-				}
-				
-				return YES;
-			}
-			
-			break;
-		}
 		case 331:	// search in google
 		{
 			[self validateChannelMenuSubmenus:item];
@@ -540,33 +522,6 @@
 - (void)onShowAcknowledgments:(id)sender
 {
 	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
-}
-
-- (void)onCopy:(id)sender
-{
-	NSWindow *win = [NSApp keyWindow];
-	if (PointerIsEmpty(win)) return;
-	
-	id t = [win firstResponder];
-	if (PointerIsEmpty(t)) return;
-	
-	if ([t respondsToSelector:@selector(copy:)]) {
-		BOOL validated = YES;
-		
-		if ([t respondsToSelector:@selector(validateMenuItem:)]) {
-			validated = [t validateMenuItem:sender];
-		}
-		
-		if (validated) {
-			if (win == window || [window attachedSheet] == win) {
-				NSText *e = [win fieldEditor:NO forObject:text];
-				
-				[e copy:nil];
-			} else {
-				[t copy:sender];
-			}
-		}
-	}
 }
 
 - (void)onPaste:(id)sender

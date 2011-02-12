@@ -101,7 +101,6 @@
 	fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
 	[fieldEditor setFieldEditor:YES];
 	fieldEditor.pasteDelegate = self;
-	fieldEditor.copyDelegate = self;
 	
 	[fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
 	[fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
@@ -206,6 +205,8 @@
 	[growl registerToGrowl];
 	
 	formattingMenu.textField = text;
+	
+	[_NSFontManager() setFontMenu:nil];
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
 		inputHistory = [InputHistory new];
@@ -358,7 +359,7 @@
 
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-	NSString *url = [[event descriptorAtIndex:1] stringValue];
+	NSString *url = [[[event descriptorAtIndex:1] stringValue] decodeURIFragement];
 	
 	if ([url hasPrefix:@"irc://"]) {
 		url = [url safeSubstringFromIndex:6];
@@ -441,11 +442,6 @@
 		
 		if (formatMenu) {
 			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
-			NSInteger fontIndex = [editorMenu indexOfItemWithTitle:[NSString localizedStringWithFormat:@"%@", @"Font"]];
-			
-			if (fontIndex >= 0) {
-				[editorMenu removeItemAtIndex:fontIndex];
-			}
 			
 			if (fmtrIndex == -1) {
 				[editorMenu addItem:[NSMenuItem separatorItem]];
@@ -454,6 +450,8 @@
 			
 			[fieldEditor setMenu:editorMenu];
 		}
+		
+		[fieldEditor setUsesFontPanel:NO];
 		
 		return fieldEditor;
 	}
@@ -486,11 +484,6 @@
 			}
 		}
 	}
-}
-
-- (void)fieldEditorTextViewCopy:(id)sender
-{
-	return;
 }
 
 #pragma mark -

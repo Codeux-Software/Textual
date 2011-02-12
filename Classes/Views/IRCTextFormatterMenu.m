@@ -20,7 +20,7 @@
 - (void)enableWindowField:(NSTextField *)field
 {
 	textField = field;
-    
+	
 	sheetOverrideEnabled = NO;
 }
 
