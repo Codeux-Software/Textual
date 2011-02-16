@@ -492,6 +492,7 @@
 	NSString *s = [as attributedStringToASCIIFormatting];
 	
 	[text setStringValue:@""];
+	[[text undoManager] removeAllActions];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		world.selected.inputHistory.lastHistoryItem = nil;
