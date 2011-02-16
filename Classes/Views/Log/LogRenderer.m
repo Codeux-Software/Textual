@@ -202,7 +202,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			if (matchedUser == NO) {
 				return content;
 			} else {
-				[s appendFormat:@"%@</span>", content];
+				[s appendString:content];
 			}
 		}
 		
