@@ -3,4 +3,5 @@
 
 @interface NSTextField (NSTextFieldHelper)
 - (void)focus;
+- (NSRange)selectedRange;
 @end

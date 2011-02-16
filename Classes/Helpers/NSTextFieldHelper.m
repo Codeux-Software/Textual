@@ -14,4 +14,9 @@
 	[e scrollRangeToVisible:[e selectedRange]];
 }
 
+- (NSRange)selectedRange
+{
+	return [[self currentEditor] selectedRange];
+}
+
 @end

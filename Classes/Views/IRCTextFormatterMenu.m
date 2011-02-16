@@ -33,7 +33,7 @@
 - (NSRange)selectionRange:(NSAttributedString *)stringValue
 {
 	if (NSObjectIsNotEmpty(stringValue)) {
-		NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+		NSRange selectedTextRange = [textField selectedRange];
 		
 		if (selectedTextRange.location == NSNotFound) {
 			selectedTextRange = NSMakeRange(0, [stringValue length]);
@@ -134,7 +134,7 @@
 
 - (void)insertBoldCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -151,7 +151,7 @@
 
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -168,7 +168,7 @@
 
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -185,7 +185,7 @@
 
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -239,7 +239,7 @@
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -287,7 +287,7 @@
 
 - (void)removeBoldCharFromTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -303,7 +303,7 @@
 
 - (void)removeItalicCharFromTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -319,7 +319,7 @@
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -335,7 +335,7 @@
 
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
@@ -356,7 +356,7 @@
 
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
-	NSRange selectedTextRange = [[textField currentEditor] selectedRange];
+	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];

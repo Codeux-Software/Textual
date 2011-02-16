@@ -30,6 +30,13 @@
 	}
 }
 
+- (void)removeAllUndoActions
+{
+	if (_usesCustomUndoManager) {
+		[[self undoManager] removeAllActions];
+	}
+}
+
 - (void)setUsesCustomUndoManager:(BOOL)customManager
 {
 	if (_usesCustomUndoManager) {
@@ -71,10 +78,6 @@
 		if (undo && [obj isEqual:_oldInputValue] == NO) {
 			[[undoMan prepareWithInvocationTarget:self] setObjectValue:_oldInputValue recordUndo:YES];
 		}
-		
-		if ([obj isKindOfClass:[NSAttributedString class]]) {
-			return [self setFilteredAttributedStringValue:obj];
-		}
 	}
 	
 	[super setObjectValue:obj];
@@ -98,7 +101,7 @@
 	[super setObjectValue:string];
 }
 
-- (void)pasteFilteredAttributedString
+- (void)pasteFilteredAttributedString:(NSRange)selectedRange
 {
 	NSText *currentEditor = [self currentEditor];
 	
@@ -120,10 +123,6 @@
 		
 		if (PointerIsEmpty(newString) == NO) {
 			newString = [newString sanitizeNSLinkedAttributedString:[self textColor]];
-			
-			NSRange selectedRange = [currentEditor selectedRange];
-			
-			[self focus];
 			
 			if (selectedRange.length >= 1) {
 				[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
