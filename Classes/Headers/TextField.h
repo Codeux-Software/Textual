@@ -13,12 +13,15 @@
 @property (nonatomic, readonly) BOOL _usesCustomUndoManager;
 
 - (void)setFontColor:(NSColor *)color;
+
+- (void)removeAllUndoActions;
 - (void)setUsesCustomUndoManager:(BOOL)customManager;
 
-- (void)pasteFilteredAttributedString;
+- (void)pasteFilteredAttributedString:(NSRange)selectedRange;
 
 - (void)setStringValue:(NSString *)aString;
 - (void)setAttributedStringValue:(NSAttributedString *)obj;
 - (void)setFilteredAttributedStringValue:(NSAttributedString *)string;
+
 - (void)setObjectValue:(id)obj recordUndo:(BOOL)undo;
 @end

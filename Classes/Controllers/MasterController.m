@@ -467,12 +467,17 @@
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender
 {
-	NSTextField *field = [window selectedTextField];
+	id field = [window selectedTextField];
 	
 	if (PointerIsEmpty(field) == NO) {
 		if ([field allowsEditingTextAttributes]) {
-			if ([field respondsToSelector:@selector(pasteFilteredAttributedString)]) {
-				[field performSelector:@selector(pasteFilteredAttributedString)];
+			if ([field respondsToSelector:@selector(pasteFilteredAttributedString:)]) {
+				TextField *tfield = field;
+				
+				NSRange selectedRang = [tfield selectedRange];
+				
+				[tfield focus];
+				[tfield pasteFilteredAttributedString:selectedRang];
 				
 				return YES;
 			}
@@ -492,7 +497,7 @@
 	NSString *s = [as attributedStringToASCIIFormatting];
 	
 	[text setStringValue:@""];
-	[[text undoManager] removeAllActions];
+	[text removeAllUndoActions];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		world.selected.inputHistory.lastHistoryItem = nil;

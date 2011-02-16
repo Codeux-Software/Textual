@@ -1,118 +1,25 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface URLParser (Private)
-+ (NSRange)rangeOfUrlStart:(NSInteger)start withString:(NSString *)string;
-+ (NSString *)complexURLRegularExpression;
-+ (NSDictionary *)URLRegexSpecialCharactersMapping;
-+ (NSArray *)bannedURLRegexEndChars;
-+ (NSArray *)bannedURLRegexLeftBufferChars;
-+ (NSArray *)bannedURLRegexRightBufferChars;
-@end
+#import <AutoHyperlinks/AutoHyperlinks.h>
 
 @implementation URLParser
 
-static NSString *urlAddrRegexComplex = nil;
-
 + (NSArray *)locatedLinksForString:(NSString *)body
 {
-	NSMutableArray *urlRanges = [NSMutableArray array];
+	AHHyperlinkScanner *scanner = [AHHyperlinkScanner hyperlinkScannerWithString:body];
 	
-	NSInteger start = 0;
-	NSInteger len = [body length];
+	NSMutableArray *result = [NSMutableArray array];
 	
-	while (start < len) {
-		NSRange r = [self rangeOfUrlStart:start withString:body];
-		if (r.location == NSNotFound) break;
+	for (AHMarkedHyperlink *link in [scanner allURIs]) {
+		NSRange r = [link range];
 		
-		if (r.length >= 1) {
-			NSString *link = [body safeSubstringWithRange:r];
-			NSString *choppedString = [link fastChopEndWithChars:[self bannedURLRegexEndChars]];
-			
-			NSInteger origLenth = [link length];
-			NSInteger choppedLenth = [choppedString length];
-			
-			if (choppedLenth < origLenth) {
-				NSString *lastchar = [link safeSubstringWithRange:NSMakeRange(choppedLenth, 1)];
-				NSString *mapChar = [[self URLRegexSpecialCharactersMapping] objectForKey:lastchar];
-				
-				if (mapChar && [link contains:mapChar]) {
-					choppedLenth += 1;
-				} 
-				
-				r.length = choppedLenth;	
-			}
-			
-			[urlRanges safeAddObject:NSStringFromRange(r)];
+		if (r.location != NSNotFound) {
+			[result addObject:NSStringFromRange(r)];
 		}
-		
-		start = (NSMaxRange(r) + 1);
 	}
 	
-	return urlRanges;
-}
-
-+ (NSRange)rangeOfUrlStart:(NSInteger)start withString:(NSString *)string
-{
-	if ([string length] <= start) return NSMakeRange(NSNotFound, 0);
-	
-	NSString *shortstring = [string safeSubstringFromIndex:start];
-	
-	NSRange rs = [shortstring rangeOfRegex:[self complexURLRegularExpression]];
-	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	NSRange r = NSMakeRange((rs.location + start), rs.length);
-	
-	NSString *leftchar = nil;
-	NSString *rightchar = nil;
-	
-	NSInteger rightcharLocal = (r.location + r.length);
-	
-	if (r.location > 0) {
-		leftchar = [string safeSubstringWithRange:NSMakeRange((r.location - 1), 1)];
-	}
-	
-	if (rightcharLocal < [string length]) {
-		rightchar = [string safeSubstringWithRange:NSMakeRange(rightcharLocal, 1)];
-	}
-	
-	if ([[self bannedURLRegexLeftBufferChars] containsObject:leftchar] ||
-		[[self bannedURLRegexRightBufferChars] containsObject:rightchar]) {
-		
-		return NSMakeRange(rightcharLocal, 0);
-	}
-	
-	return r;
-}
-
-+ (NSString *)complexURLRegularExpression
-{
-	if (PointerIsEmpty(urlAddrRegexComplex)) {
-		urlAddrRegexComplex = [NSString stringWithFormat:@"((((\\b(?:[a-zA-Z][a-zA-Z0-9+.-]{2,6}://)?)([a-zA-Z0-9-]+\\.))+%@\\b)|((\\b([a-zA-Z][a-zA-Z0-9+.-]{2,6}://))+(([0-9]{1,3}\\.){3})+([0-9]{1,3})\\b))(?:\\:([0-9]+))?(?:/[a-zA-Z0-9;áàâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ/\\?\\:\\,\\]\\[\\)\\(\\=\\&\\._\\#\\>\\<\\$\\'\\}\\{\\`\\~\\!\\@\\^\\|\\*\\+\\-\\%%]*)?", TXTLS(@"ALL_DOMAIN_EXTENSIONS")];
-	}
-	
-	return urlAddrRegexComplex;
-}
-
-+ (NSDictionary *)URLRegexSpecialCharactersMapping
-{
-	return [NSDictionary dictionaryWithObjectsAndKeys:@"(", @")", nil];
-}
-
-+ (NSArray *)bannedURLRegexEndChars
-{
-	return [NSArray arrayWithObjects:@")", @"]", @"'", @"\"", @":", @">", @"<", @"}", @"|", @",", @".", nil];
-}
-
-+ (NSArray *)bannedURLRegexLeftBufferChars
-{
-	return [NSArray arrayWithObjects:@"~", @"!", @"@", @"#", @"$", @"%", @"^", @"&", 
-			@"*", @"_", @"+", @"=", @"-", @"`", @";", @"/", @".", @",", @"?", nil];
-}
-
-+ (NSArray *)bannedURLRegexRightBufferChars
-{
-	return [NSArray arrayWithObjects:@"~", @"@", @"#", @"$", @"%", @"^", 
-			@"&", @"*", @"_", @"+", @"=", @"-", @"`", @"/", @".", @"!", nil];
+	return result;
 }
 
 + (NSArray *)bannedURLRegexLineTypes

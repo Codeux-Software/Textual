@@ -667,6 +667,7 @@
 	[fieldEditor setInsertionPointColor:viewTheme.other.inputTextColor];
 	
 	[text setFilteredAttributedStringValue:original];
+	[text removeAllUndoActions];
 	
 	[self focusInputText];
 }
