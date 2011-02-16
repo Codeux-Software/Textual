@@ -24,15 +24,13 @@
 
 - (void)paste:(id)sender
 {
-	BOOL hasSheet = BOOLValueFromObject([[self window] attachedSheet]);
-	
-	if (hasSheet == NO) {
-		[super paste:sender];
-	}
-	
 	if (pasteDelegate) {
-		[pasteDelegate fieldEditorTextViewPaste:self];
+		if ([pasteDelegate fieldEditorTextViewPaste:self]) {
+			return;
+		}
 	}
+	
+	[super paste:sender];
 }
 
 - (void)setKeyHandlerTarget:(id)target

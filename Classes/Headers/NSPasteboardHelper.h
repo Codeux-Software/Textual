@@ -3,10 +3,6 @@
 
 @interface NSPasteboard (NSPasteboardHelper)
 - (BOOL)hasStringContent;
-
 - (NSString *)stringContent;
-- (NSAttributedString *)attributedStringContent;
-
 - (void)setStringContent:(NSString *)s;
-- (void)setAttributedStringContent:(NSAttributedString *)s;
 @end

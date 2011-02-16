@@ -3833,7 +3833,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 2 ... 4:
 		{
 			if (NSObjectIsEmpty(config.server)) {
-				if ([m.sender.nick isNickname]) {
+				if ([m.sender.nick isNickname] == NO) {
 					[config setServer:m.sender.nick];
 				}
 			}

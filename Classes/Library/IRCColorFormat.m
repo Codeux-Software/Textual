@@ -220,32 +220,22 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		BOOL boldText   = [baseFont fontTraitSet:NSBoldFontMask];
 		BOOL italicText = [baseFont fontTraitSet:NSItalicFontMask];
 		
-		BOOL hasNewFont = BOOLReverseValue([defaultFont fontMatchesFont:baseFont]);
-		
-		if (hasNewFont) {
-			baseFont = defaultFont;
-		}
+		baseFont = defaultFont;
 		
 		if (baseFont) {
 			if (boldText) {
-				if (hasNewFont) {
-					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-				}
+				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
 				
 				[result addAttribute:IRCTextFormatterBoldAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
 			}
 			
 			if (italicText) {
-				if (hasNewFont) {
-					baseFont = [baseFont convertToItalics];
-				}
+				baseFont = [baseFont convertToItalics];
 				
 				[result addAttribute:IRCTextFormatterItalicAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
 			}
 			
-			if (hasNewFont) {
-				[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
-			}
+			[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
 		}
 	
 		/* Process other attributes */
@@ -267,7 +257,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		[result removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
 		
 		if (foregroundColorD) {
-			if ([defaultColor isEqual:foregroundColorD] || [foregroundColorD isEqual:oldFontColor]) {
+			if ([foregroundColorD isEqual:defaultColor] || (oldFontColor && [foregroundColorD isEqual:oldFontColor])) {
 				[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
 				
 				[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
@@ -301,6 +291,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
+	[result addAttribute:NSFontAttributeName						   value:defaultFont  range:NSMakeRange(0, [result length])];
 	[result addAttribute:IRCTextFormatterDefaultFontColorAttributeName value:defaultColor range:NSMakeRange(0, [result length])];
 	
 	return [result autorelease];

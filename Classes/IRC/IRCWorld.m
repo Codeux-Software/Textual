@@ -213,6 +213,8 @@
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
 {
+	if (master.ghostMode && afterWakeUp == NO) return;
+	
 	NSInteger delay = 0;
 	
 	if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;
@@ -665,9 +667,6 @@
 	[fieldEditor setInsertionPointColor:viewTheme.other.inputTextColor];
 	
 	[text setFilteredAttributedStringValue:original];
-	 
-	[window makeFirstResponder:nil];
-	[window makeFirstResponder:text];
 	
 	[self focusInputText];
 }

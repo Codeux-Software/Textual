@@ -43,9 +43,11 @@
 	WelcomeSheet *WelcomeSheetDisplay;
 	NickCompletionStatus *completionStatus;
 	
+	BOOL ghostMode;
 	BOOL terminating;
 }
 
+@property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, retain) ChatBox *chatBox;
 @property (nonatomic, retain) MainWindow *window;

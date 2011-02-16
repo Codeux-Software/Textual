@@ -11,12 +11,12 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="233"/>
+			<integer value="21"/>
+			<integer value="367"/>
 			<integer value="374"/>
-			<integer value="432"/>
 			<integer value="327"/>
 			<integer value="426"/>
-			<integer value="367"/>
+			<integer value="432"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2952,7 +2952,7 @@
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSTextFieldCell" key="NSCell" id="294578779">
 																		<int key="NSCellFlags">-1804468671</int>
-																		<int key="NSCellFlags2">1342178304</int>
+																		<int key="NSCellFlags2">1342182400</int>
 																		<string key="NSContents"/>
 																		<object class="NSFont" key="NSSupport" id="437142984">
 																			<string key="NSName">LucidaGrande</string>
@@ -7097,9 +7097,9 @@
 				<string key="1977.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="2.ImportedFromIB2"/>
-				<string key="21.IBEditorWindowLastContentRect">{{755, 523}, {632, 501}}</string>
+				<string key="21.IBEditorWindowLastContentRect">{{755, 524}, {632, 501}}</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="21.IBWindowTemplateEditedContentRect">{{755, 523}, {632, 501}}</string>
+				<string key="21.IBWindowTemplateEditedContentRect">{{755, 524}, {632, 501}}</string>
 				<boolean value="YES" key="21.ImportedFromIB2"/>
 				<boolean value="YES" key="21.windowTemplate.hasMinSize"/>
 				<string key="21.windowTemplate.minSize">{213, 107}</string>
@@ -7620,42 +7620,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">FieldEditorTextView</string>
-					<string key="superclassName">NSTextView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="copy:">id</string>
-						<string key="paste:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="copy:">
-							<string key="name">copy:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="paste:">
-							<string key="name">paste:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="copyDelegate">id</string>
-						<string key="pasteDelegate">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="copyDelegate">
-							<string key="name">copyDelegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pasteDelegate">
-							<string key="name">pasteDelegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="116080821">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Headers/FieldEditorTextView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">IRCConnection</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
@@ -8049,7 +8013,6 @@
 						<string key="onChannelProperties:">id</string>
 						<string key="onCloseWindow:">id</string>
 						<string key="onConnect:">id</string>
-						<string key="onCopy:">id</string>
 						<string key="onCopyAddress:">id</string>
 						<string key="onCopyLogAsHtml:">id</string>
 						<string key="onCopyServer:">id</string>
@@ -8146,10 +8109,6 @@
 						</object>
 						<object class="IBActionInfo" key="onConnect:">
 							<string key="name">onConnect:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="onCopy:">
-							<string key="name">onCopy:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="onCopyAddress:">
@@ -8578,21 +8537,21 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="fieldEditorTextViewCopy:">id</string>
-						<string key="fieldEditorTextViewPaste:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="fieldEditorTextViewCopy:">
-							<string key="name">fieldEditorTextViewCopy:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="fieldEditorTextViewPaste:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">fieldEditorTextViewPaste:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">fieldEditorTextViewPaste:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">fieldEditorTextViewPaste:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="116080821"/>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/FieldEditorTextView.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
