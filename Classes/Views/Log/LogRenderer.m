@@ -188,13 +188,13 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (attr & EFFECT_MASK) {
 			[s appendString:@"<span class=\"effect\" style=\""];
 			
-			if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
-			if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
+			if (attr & BOLD_ATTR)	   [s appendString:@"font-weight:bold;"];
+			if (attr & ITALIC_ATTR)    [s appendString:@"font-style:italic;"];
 			if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
 			
 			[s appendString:@"\""];
 			
-			if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
+			if (attr & TEXT_COLOR_ATTR)		  [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
 			if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
 			
 			[s appendFormat:@">%@</span>", content];
