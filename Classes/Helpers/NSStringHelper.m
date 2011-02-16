@@ -380,7 +380,10 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar g = src[i+1];
-					if (isUnicharDigit(g) == NO) continue;
+					if (isUnicharDigit(g) == NO) {
+						i--;
+						continue;
+					}
 					i++;
 					
 					if ((i + 1) >= len) continue;

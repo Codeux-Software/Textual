@@ -50,6 +50,37 @@
 	}	
 }
 
+- (NSTextView *)selectedFieldEditor
+{
+	id responder = [self firstResponder];
+	
+	if ([self attachedSheet]) {
+		responder = [[self attachedSheet] firstResponder];
+	}
+	
+	if ([responder isKindOfClass:[NSTextView class]]) {
+		return responder;
+	}
+	
+	return nil;
+}
+
+- (NSTextField *)selectedTextField 
+{
+	id field	 = nil;
+	id responder = [self selectedFieldEditor];
+	
+	if ([responder isKindOfClass:[NSTextView class]]) {
+		field = [responder delegate];
+		
+		if ([field isKindOfClass:[NSTextField class]]) {
+			return field;
+		}
+	}
+	
+	return nil;
+}
+
 - (BOOL)isOnCurrentWorkspace
 {
 	return [self isOnActiveSpace];

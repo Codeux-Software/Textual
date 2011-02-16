@@ -8,10 +8,10 @@
 	
 	BOOL sheetOverrideEnabled;
 	
-	NSTextField *textField;
+	TextField *textField;
 }
 
-@property (nonatomic, assign) NSTextField *textField;
+@property (nonatomic, assign) TextField *textField;
 @property (nonatomic, retain) NSMenuItem *formatterMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 

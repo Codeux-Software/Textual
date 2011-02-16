@@ -12,7 +12,6 @@
 @property (nonatomic, retain) KeyEventHandler *keyHandler;
 
 - (void)paste:(id)sender;
-- (void)copy:(id)sender;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
@@ -20,5 +19,5 @@
 @end
 
 @interface NSObject (FieldEditorTextViewDelegate)
-- (void)fieldEditorTextViewPaste:(id)sender;
+- (BOOL)fieldEditorTextViewPaste:(id)sender;
 @end

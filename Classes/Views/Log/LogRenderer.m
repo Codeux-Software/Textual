@@ -59,7 +59,8 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 	return len - start;
 }
 
-NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context) {
+NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context) 
+{
 	return ([s1.nick length] <= [s2.nick length]);
 }
 
@@ -155,51 +156,61 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 {
 	NSString *content = [body safeSubstringWithRange:NSMakeRange(start, len)];
 	
-	if (attr & CONVERSATION_TRKR_ATTR) {
-		content = logEscape(content);
-		
-		IRCUser *user = [log.channel findMember:content options:NSCaseInsensitiveSearch];
-		
-		if (user) {
-			return [NSString stringWithFormat:@"<span class=\"inline_nickname\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">%@</span>", [user colorNumber], content];
-		} 
-		
-		return content;
-	} else if (attr & URL_ATTR) {
+	if (attr & URL_ATTR) {
 		NSString *link = content;
 		
 		if ([link contains:@"://"] == NO) {
 			link = [NSString stringWithFormat:@"http://%@", link];
+		}	
+		
+		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, logEscape(content)];
+	} else if (attr & ADDRESS_ATTR) {
+		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", logEscape(content)];
+	} else if (attr & CHANNEL_NAME_ATTR) {
+		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
+	} else {
+		BOOL matchedUser = NO;
+		
+		content = logEscape(content);
+		
+		NSMutableString *s = [NSMutableString string];
+		
+		if (attr & CONVERSATION_TRKR_ATTR) {
+			IRCUser *user = [log.channel findMember:content options:NSCaseInsensitiveSearch];
+			
+			if (PointerIsEmpty(user) == NO) {
+				matchedUser = YES;
+				
+				[s appendFormat:@"<span class=\"inline_nickname\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
+			} 
 		}
 		
-		content = logEscape(content);		
+		if (attr & EFFECT_MASK) {
+			[s appendString:@"<span class=\"effect\" style=\""];
+			
+			if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
+			if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
+			if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
+			
+			[s appendString:@"\""];
+			
+			if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
+			if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
+			
+			[s appendFormat:@">%@</span>", content];
+		} else {
+			if (matchedUser == NO) {
+				return content;
+			} else {
+				[s appendFormat:@"%@</span>", content];
+			}
+		}
 		
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, content];
-	} else if (attr & ADDRESS_ATTR) {
-		content = logEscape(content);
-		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", content];
-	} else if (attr & CHANNEL_NAME_ATTR) {
-		content = logEscape(content);
-		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", content];
-	} else if (attr & EFFECT_MASK) {
-		content = logEscape(content);
-		
-		NSMutableString *s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
-		
-		if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
-		if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
-		if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
-		
-		[s appendString:@"\""];
-		
-		if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
-		if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
-		
-		[s appendFormat:@">%@</span>", content];
+		if (matchedUser) {
+			[s appendString:@"</span>"];
+		}
 		
 		return s;
-	} else {
-		return logEscape(content);
 	}
 }
 
@@ -291,6 +302,8 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 														backgroundColor = (backgroundColor * 10 + c - '0');
 													}
 												}
+											} else {
+												i--;
 											}
 										}
 									}

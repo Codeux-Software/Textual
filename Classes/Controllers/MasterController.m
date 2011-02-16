@@ -32,6 +32,7 @@
 @synthesize extrac;
 @synthesize fieldEditor;
 @synthesize formattingMenu;
+@synthesize ghostMode;
 @synthesize growl;
 @synthesize infoSplitter;
 @synthesize inputHistory;
@@ -76,6 +77,10 @@
 
 - (void)awakeFromNib
 {
+	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+		ghostMode = YES;
+	}
+	
 	[window makeMainWindow];
 	
 	[Preferences initPreferences];
@@ -84,13 +89,13 @@
 	
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
+	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
@@ -126,12 +131,12 @@
 	
 	[text setFocusRingType:NSFocusRingTypeNone];
 	
-	viewTheme = [ViewTheme new];
+	viewTheme	   = [ViewTheme new];
 	viewTheme.name = [Preferences themeName];
 	
 	tree.theme = viewTheme.other;
-	
 	memberList.theme = viewTheme.other;
+	
 	MemberListViewCell *cell = [MemberListViewCell initWithTheme:viewTheme.other];
 	[[[memberList tableColumns] safeObjectAtIndex:0] setDataCell:cell];
 	
@@ -150,8 +155,8 @@
 	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 	
 	extrac = [IRCExtras new];
+	world  = [IRCWorld new];
 	
-	world = [IRCWorld new];
 	world.window = window;
 	world.growl = growl;
 	world.tree = tree;
@@ -204,9 +209,7 @@
 	
 	[growl registerToGrowl];
 	
-	formattingMenu.textField = text;
-	
-	[_NSFontManager() setFontMenu:nil];
+	[formattingMenu enableWindowField:text];
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
 		inputHistory = [InputHistory new];
@@ -462,28 +465,21 @@
 #pragma mark -
 #pragma mark FieldEditorTextView Delegates
 
-- (void)fieldEditorTextViewPaste:(id)sender
+- (BOOL)fieldEditorTextViewPaste:(id)sender
 {
-	if ([window attachedSheet]) {
-		id responder = [[window attachedSheet] firstResponder];
-		
-		[responder paste:sender];
-		
-		if ([responder isKindOfClass:[NSTextView class]]) {
-			NSTextField *field = [responder delegate];
-			
-			if ([field allowsEditingTextAttributes]) {
-				[field pasteFilteredAttributedStringValue:[field attributedStringValue]];
-			}
-		}
-	} else {
-		if ([window firstResponder] == fieldEditor) {
-			if ([text allowsEditingTextAttributes]) {
-				[text focus];
-				[text pasteFilteredAttributedStringValue:[text attributedStringValue]];
+	NSTextField *field = [window selectedTextField];
+	
+	if (PointerIsEmpty(field) == NO) {
+		if ([field allowsEditingTextAttributes]) {
+			if ([field respondsToSelector:@selector(pasteFilteredAttributedString)]) {
+				[field performSelector:@selector(pasteFilteredAttributedString)];
+				
+				return YES;
 			}
 		}
 	}
+	
+	return NO;
 }
 
 #pragma mark -

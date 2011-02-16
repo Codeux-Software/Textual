@@ -19,27 +19,4 @@
 	[self setString:s forType:NSStringPboardType];
 }
 
-- (NSAttributedString *)attributedStringContent
-{
-	NSData *rtfData = [self dataForType:NSRTFPboardType];
-	
-	if (rtfData) {
-		NSAttributedString *attrString = [[NSAttributedString alloc] initWithRTF:rtfData documentAttributes:nil];
-		
-		return [attrString autorelease];
-	}	
-	
-	return nil;
-}
-
-- (void)setAttributedStringContent:(NSAttributedString *)s
-{
-	NSData *stringData = [s RTFFromRange:NSMakeRange(0, [s length]) documentAttributes:nil];
-	
-	if (stringData) {
-		[self declareTypes:[NSArray arrayWithObject:NSRTFPboardType] owner:nil];
-		[self setData:stringData forType:NSRTFPboardType];	
-	}
-}
-
 @end

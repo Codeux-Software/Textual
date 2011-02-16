@@ -3,32 +3,15 @@
 
 @implementation NSTextField (NSTextFieldHelper)
 
-static NSColor *_oldTextColor = nil;
-
-- (void)setFontColor:(NSColor *)color
+- (void)focus
 {
-	_oldTextColor = [self textColor];
+	[self.window makeFirstResponder:nil];
+	[self.window makeFirstResponder:self];
 	
-	[self setTextColor:color];
-}
-
-- (void)pasteFilteredAttributedStringValue:(NSAttributedString *)string
-{
-	string = [string attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-	string = [string sanitizeNSLinkedAttributedString:[self textColor]];
+	NSText *e = [self currentEditor];
 	
-	[self setFilteredAttributedStringValue:string];
-}
-
-- (void)setFilteredAttributedStringValue:(NSAttributedString *)string
-{
-	string = [string attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-	string = [string sanitizeIRCCompatibleAttributedString:[self textColor] 
-												  oldColor:_oldTextColor
-										   backgroundColor:[self backgroundColor]
-											   defaultFont:[self font]];
-	
-	[self setAttributedStringValue:string];
+	[e setSelectedRange:NSMakeRange([[self stringValue] length], 0)];
+	[e scrollRangeToVisible:[e selectedRange]];
 }
 
 @end

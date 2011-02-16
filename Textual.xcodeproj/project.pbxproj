@@ -852,8 +852,6 @@
 			children = (
 				4C14549712F8ACA20014CC3A /* IRCColorFormat.h */,
 				4C14549412F8AC720014CC3A /* IRCColorFormat.m */,
-				4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */,
-				4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */,
 			);
 			name = "Text Formatting";
 			sourceTree = "<group>";
@@ -1255,6 +1253,8 @@
 				78A8C10111737F660044E7A1 /* NSRectHelper.m */,
 				4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */,
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
+				4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */,
+				4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */,
 				4CD0E6B812F1B70300C8F016 /* NSWindowHelper.h */,
 				78A8C10511737F660044E7A1 /* NSWindowHelper.m */,
 				4CD0E6C912F1B75300C8F016 /* SoundPlayer.h */,

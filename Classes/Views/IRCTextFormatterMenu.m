@@ -10,18 +10,24 @@
 #pragma mark -
 #pragma mark Menu Management
 
-- (void)enableSheetField:(NSTextField *)field
+- (void)enableSheetField:(TextField *)field
 {
-	textField = field;
-    
 	sheetOverrideEnabled = YES;
+	textField			 = field;
+	
+	[_NSFontManager() setFontMenu:nil];
+	
+	[textField setUsesCustomUndoManager:YES];
 }
 
-- (void)enableWindowField:(NSTextField *)field
+- (void)enableWindowField:(TextField *)field
 {
-	textField = field;
-	
 	sheetOverrideEnabled = NO;
+	textField			 = field;
+	
+	[_NSFontManager() setFontMenu:nil];
+	
+	[textField setUsesCustomUndoManager:YES];
 }
 
 - (NSRange)selectionRange:(NSAttributedString *)stringValue
