@@ -28,5 +28,7 @@
 	<string>irc.wyldryde.org</string>
 	<key>OFTC</key>
 	<string>irc.oftc.net</string>
+	<key>Thinkstack</key>
+	<string>irc.thinstack.net</string>
 </dict>
 </plist>

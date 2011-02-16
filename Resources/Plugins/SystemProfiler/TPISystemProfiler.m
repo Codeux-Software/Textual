@@ -24,6 +24,10 @@
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
 			} else if ([commandString isEqualToString:@"MEMORY"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
+				
+				if ([_NSUserDefaults() boolForKey:@"HideMemoryCommandExtraInfo"] == NO) {
+					[[client invokeOnMainThread] sendCommand:@"ECHO Information about memory use: http://is.gd/j0a9s"];
+				}
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
 				[[client invokeOnMainThread] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
 			} else if ([commandString isEqualToString:@"NETSTATS"]) {
