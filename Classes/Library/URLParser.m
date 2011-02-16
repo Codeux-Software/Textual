@@ -15,6 +15,12 @@
 		NSRange r = [link range];
 		
 		if (r.location != NSNotFound) {
+			NSString *url = [body safeSubstringWithRange:r];
+			
+			if ([url contains:@"@"] && [url isMatchedByRegex:@"(.*)://(.*)@(.*)"] == NO) {
+				continue;
+			}
+			
 			[result addObject:NSStringFromRange(r)];
 		}
 	}

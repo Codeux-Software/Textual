@@ -467,6 +467,8 @@
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender
 {
+	[text focus];
+	
 	id field = [window selectedTextField];
 	
 	if (PointerIsEmpty(field) == NO) {
