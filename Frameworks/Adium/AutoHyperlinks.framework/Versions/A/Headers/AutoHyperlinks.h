@@ -1,6 +1,6 @@
 /*
- * The AutoHyperlinks Framework is the legal property of its developers (DEVELOPERS), whose names are listed in the
- * copyright file included with this source distribution.
+ * The AutoHyperlinks Framework is the legal property of its developers (DEVELOPERS), 
+ * whose names are listed in the copyright file included with this source distribution.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -25,5 +25,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "AHHyperlinkScanner.h"
-#import "AHMarkedHyperlink.h"
+#include <AutoHyperlinks/AHLinkLexer.h>
+#include <AutoHyperlinks/AHHyperlinkScanner.h>
+#include <AutoHyperlinks/AHMarkedHyperlink.h>
