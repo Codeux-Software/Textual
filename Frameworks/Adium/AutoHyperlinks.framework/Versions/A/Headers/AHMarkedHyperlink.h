@@ -1,6 +1,6 @@
 /*
- * The AutoHyperlinks Framework is the legal property of its developers (DEVELOPERS), whose names are listed in the
- * copyright file included with this source distribution.
+ * The AutoHyperlinks Framework is the legal property of its developers (DEVELOPERS), 
+ * whose names are listed in the copyright file included with this source distribution.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -25,24 +25,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "AHLinkLexer.h"
-
-
 @interface AHMarkedHyperlink : NSObject <NSCopying> {
-    NSRange                      linkRange;
-    NSURL                       *linkURL;
-    NSString                    *pString;
-    AH_URI_VERIFICATION_STATUS	 urlStatus;
+    NSRange				linkRange;
+    NSURL				*linkURL;
+    NSString			*pString;
+    AH_URI_STATUS		urlStatus;
 }
 
-@property(assign) NSRange											 range;
-@property(retain) NSURL												*URL;
-@property(retain) NSString										*parentString;
-@property(assign) AH_URI_VERIFICATION_STATUS	 validationStatus;
+@property (nonatomic, retain) NSURL	*URL;
+@property (nonatomic, assign) NSRange range;
+@property (nonatomic, retain) NSString *parentString;
+@property (nonatomic, assign) AH_URI_STATUS	validationStatus;
 
-+ (id)hyperlinkWithString:(NSString *)inString withValidationStatus:(AH_URI_VERIFICATION_STATUS)status parentString:(NSString *)pInString andRange:(NSRange)inRange;
--(id)initWithString:(NSString *)inString withValidationStatus:(AH_URI_VERIFICATION_STATUS)status parentString:(NSString *)pInString andRange:(NSRange)inRange;
++ (id)hyperlinkWithString:(NSString *)inString withValidationStatus:(AH_URI_STATUS)status parentString:(NSString *)pInString andRange:(NSRange)inRange;
+- (id)initWithString:(NSString *)inString withValidationStatus:(AH_URI_STATUS)status parentString:(NSString *)pInString andRange:(NSRange)inRange;
 
--(void)setURLFromString:(NSString *)inString;
-
+- (void)setURLFromString:(NSString *)inString;
 @end
