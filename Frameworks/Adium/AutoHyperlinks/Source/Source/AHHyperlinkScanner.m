@@ -137,23 +137,15 @@ static NSArray					*encKeys						= nil;
 	[super dealloc];
 }
 
-+ (BOOL)isStringValidURI:(NSString *)inString 
-			 usingStrict:(BOOL)useStrictChecking 
-			   fromIndex:(unsigned long *)sIndex 
-			  withStatus:(AH_URI_STATUS *)validStatus 
+- (BOOL)isStringValidURI:(NSString *)inString usingStrict:(BOOL)useStrictChecking fromIndex:(unsigned long *)sIndex 
 {
     AH_BUFFER_STATE		buf;  
-	yyscan_t			scanner; 
+	AH_URI_STATUS		validStatus;
 	const char			*inStringEnc;
     unsigned long		encodedLength;
+	yyscan_t			scanner; 
 	
-	if (validStatus == NO) {
-		AH_URI_STATUS newStatus = AH_URL_INVALID;
-		
-		validStatus = &newStatus;
-	}
-	
-	*validStatus = AH_URL_INVALID; 
+	validStatus = AH_URL_INVALID; 
 	
 	NSStringEncoding stringEnc = [inString fastestEncoding];
 	
@@ -171,13 +163,15 @@ static NSArray					*encKeys						= nil;
 	
     buf = AH_scan_string(inStringEnc, scanner);
 	
-    *validStatus = (AH_URI_STATUS)AHlex(scanner);
+    validStatus = (AH_URI_STATUS)AHlex(scanner);
 	
 	if (sIndex) {
 		*sIndex += AHget_leng(scanner);
 	}
 	
-    if (*validStatus == AH_URL_VALID || *validStatus == AH_MAILTO_VALID || *validStatus == AH_FILE_VALID) {
+    if ((validStatus == AH_URL_VALID || validStatus == AH_MAILTO_VALID || validStatus == AH_FILE_VALID) ||
+		((validStatus == AH_URL_DEGENERATE || validStatus == AH_MAILTO_DEGENERATE) && useStrictChecking == NO)) {
+		
         AH_delete_buffer(buf, scanner); 
 		
         buf = NULL;
@@ -187,18 +181,7 @@ static NSArray					*encKeys						= nil;
 			
             return YES;
         }
-    }else if ((*validStatus == AH_URL_DEGENERATE || *validStatus == AH_MAILTO_DEGENERATE) && useStrictChecking == NO){
-		
-        AH_delete_buffer(buf, scanner);
-		
-        buf = NULL;
-		
-        if (AHget_leng(scanner) == encodedLength) {
-			AHlex_destroy(scanner);
-			
-            return YES;
-        }
-    }else{
+    } else {
         AH_delete_buffer(buf, scanner);
 		
         buf = NULL;
@@ -211,15 +194,7 @@ static NSArray					*encKeys						= nil;
 	AHlex_destroy(scanner);
 	
     return NO;
-}
-
-- (BOOL)isValidURI
-{
-	return [AHHyperlinkScanner isStringValidURI:m_scanString 
-									usingStrict:m_strictChecking 
-									  fromIndex:nil 
-									 withStatus:nil];
-}
+}	
 
 - (NSString *)nextURI
 {
@@ -230,8 +205,6 @@ static NSArray					*encKeys						= nil;
 	[self _scanString:m_scanString charactersFromSet:startSet intoRange:nil fromIndex:&scannedLocation];
 	
 	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation]) {
-		BOOL foundUnpairedEnclosureCharacter = NO;
-		
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
@@ -243,8 +216,6 @@ static NSArray					*encKeys						= nil;
 				if (NSNotFound != encRange.location) {
 					scannedRange.location++; 
 					scannedRange.length -= 2;
-				}else{
-					foundUnpairedEnclosureCharacter = YES;
 				}
 			}
 		}
@@ -258,44 +229,41 @@ static NSArray					*encKeys						= nil;
 		while (scannedRange.length > 2 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
 			if ((longestEnclosure.location + longestEnclosure.length) < scannedRange.length) {
 				scannedRange.length -= 1;
-				
-				foundUnpairedEnclosureCharacter = NO;
 			} else {
 				break;
 			}
 		}
 		
-		AH_URI_STATUS	validStatus;
-		NSString		*_scanString = nil;
+		if (m_firstCharOnlyMatch) {
+			if (scannedRange.location >= 1) {
+				scannedRange.location--; 
+				scannedRange.length++;
+			}
+			
+			m_firstCharOnlyMatch = NO;
+		}
 		
 		if (scannedRange.length >= 4) {
-			_scanString = [m_scanString substringWithRange:scannedRange];
 			
-			if ([[self class] isStringValidURI:_scanString 
-								   usingStrict:m_strictChecking 
-									 fromIndex:&m_scanLocation 
-									withStatus:&validStatus]) {
-				
-				BOOL makeLink = TRUE;
-				
-				if (makeLink) {
-					return NSStringFromRange(scannedRange);
-				}
+			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
+			
+			if ([self isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation]) {
+				return NSStringFromRange(scannedRange);
 			}
 		}
 		
-		if (foundUnpairedEnclosureCharacter == NO) {
-			NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
+		NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
+		
+		if (startRange.location == NSNotFound) {
+			m_scanLocation += scannedRange.length;
+		} else {
+			m_firstCharOnlyMatch = YES;
 			
-			if (startRange.location == NSNotFound) {
-				m_scanLocation += scannedRange.length;
-			} else {
-				m_scanLocation = (startRange.location + startRange.length);
-			}
+			m_scanLocation++;
 		}
 		
 		scannedLocation = m_scanLocation;
-    }
+	}
 	
     m_scanLocation = m_scanStringLength;
 	
@@ -307,21 +275,17 @@ static NSArray					*encKeys						= nil;
 
 - (NSArray *)_allMatches;
 {
-    NSString			*markedLink = nil;
-    NSMutableArray		*rangeArray = [NSMutableArray array];
-	unsigned long		_holdOffset = m_scanLocation; 
+    NSMutableArray *rangeArray = [NSMutableArray array];
 	
 	m_scanLocation = 0; 
     
 	while (m_scanLocation < [m_scanString length]) {
-		markedLink = [self nextURI];
+		NSString *markedLink = [self nextURI];
 		
 		if (markedLink) {	
 			[rangeArray addObject:markedLink];
 		}	
 	}
-	
-    m_scanLocation = _holdOffset; 
 	
 	return rangeArray;
 }

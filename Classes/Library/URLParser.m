@@ -1,7 +1,7 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#include <AutoHyperlinks/AutoHyperlinks.h>
+#import <AutoHyperlinks/AutoHyperlinks.h>
 
 @implementation URLParser
 
