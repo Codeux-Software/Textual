@@ -3589,6 +3589,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *text = TXTFLS(@"IRC_USER_DISCONNECTED", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
+		if ([comment isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\.([a-zA-Z0-9-_]+)))$"]) {
+			comment = TXTFLS(@"IRC_SERVER_HAD_NETSPLIT", comment);
+		}
+		
 		text = [text stringByAppendingFormat:@" (%@)", comment];
 	}
 	
