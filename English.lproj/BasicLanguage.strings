@@ -155,6 +155,8 @@
 "IRC_CTCP_VERSION_TITLE" = "\002Current Version:\002 %@";
 "IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference: %3$@)"; 
 
+"IRC_SERVER_HAD_NETSPLIT" = "Netsplit: %@";
+
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
 "LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";
 
