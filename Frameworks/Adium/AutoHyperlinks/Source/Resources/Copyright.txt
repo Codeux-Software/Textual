@@ -1,0 +1,16 @@
+AutoHyperlinks Framework
+
+© 2004 - 2011 by the following:
+
+Colin Barrett
+Graham Booker
+Jorge Salvador Caffarena
+Evan Schoenberg
+Augie Fackler
+Stephen Holt
+Peter Hosey
+Adam Iser
+Jeffrey Melloy
+Toby Peterson
+Eric Richie
+David Smith
