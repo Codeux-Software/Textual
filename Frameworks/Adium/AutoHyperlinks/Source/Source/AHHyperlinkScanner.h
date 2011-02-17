@@ -38,7 +38,7 @@ extern void						AH_delete_buffer(AH_BUFFER_STATE, yyscan_t scanner);
 extern YY_EXTRA_TYPE			AHget_extra(yyscan_t scanner);
 extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 
-@interface AHHyperlinkScanner : NSObject <NSFastEnumeration>
+@interface AHHyperlinkScanner : NSObject 
 {
 	NSDictionary		*m_urlSchemes;
 	NSString			*m_scanString;
