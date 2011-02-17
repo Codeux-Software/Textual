@@ -1,18 +1,18 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import <AutoHyperlinks/AutoHyperlinks.h>
+#include <AutoHyperlinks/AutoHyperlinks.h>
 
 @implementation URLParser
 
 + (NSArray *)locatedLinksForString:(NSString *)body
 {
-	AHHyperlinkScanner *scanner = [AHHyperlinkScanner hyperlinkScannerWithString:body];
-	
 	NSMutableArray *result = [NSMutableArray array];
 	
-	for (AHMarkedHyperlink *link in [scanner allURIs]) {
-		NSRange r = [link range];
+	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
+	
+	for (NSString *link in [scanner matchesForString:body]) {
+		NSRange r = NSRangeFromString(link);
 		
 		if (r.location != NSNotFound) {
 			NSString *url = [body safeSubstringWithRange:r];
@@ -24,6 +24,9 @@
 			[result addObject:NSStringFromRange(r)];
 		}
 	}
+	
+	[scanner drain];
+	scanner = nil;
 	
 	return result;
 }

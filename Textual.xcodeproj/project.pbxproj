@@ -47,9 +47,9 @@
 		4C329CAA12D1BD20001990A9 /* TPWTB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9F12D1BD20001990A9 /* TPWTB_IRCopServices.png */; };
 		4C329CAB12D1BD20001990A9 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA012D1BD20001990A9 /* TPWTB_Logs.png */; };
 		4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA112D1BD20001990A9 /* TPWTB_Styles.png */; };
-		4C35FBF3130C4BE4000C3C0D /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C35FBF2130C4BE4000C3C0D /* AutoHyperlinks.framework */; };
-		4C35FC24130C4CF3000C3C0D /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C35FBF2130C4BE4000C3C0D /* AutoHyperlinks.framework */; };
 		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
+		4C3BCC98130D8373006C36A9 /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
+		4C3BCCA5130D837D006C36A9 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C3F693B12FD958500B50CB9 /* BlowfishCommandLine.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
 		4C3F693C12FD958500B50CB9 /* BragSpam.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
@@ -395,7 +395,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C35FC24130C4CF3000C3C0D /* AutoHyperlinks.framework in Copy Additional Frameworks */,
+				4C3BCCA5130D837D006C36A9 /* AutoHyperlinks.framework in Copy Additional Frameworks */,
 				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 			);
 			name = "Copy Additional Frameworks";
@@ -427,8 +427,8 @@
 		4C329CA012D1BD20001990A9 /* TPWTB_Logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Logs.png; sourceTree = "<group>"; };
 		4C329CA112D1BD20001990A9 /* TPWTB_Styles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Styles.png; sourceTree = "<group>"; };
 		4C33F97211AA81FF003EAB65 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
-		4C35FBF2130C4BE4000C3C0D /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = Frameworks/Adium/AutoHyperlinks.framework; sourceTree = "<group>"; };
 		4C3761E612095DD700E02C1A /* ScriptsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptsWrapper.m; sourceTree = "<group>"; };
+		4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = Frameworks/Adium/AutoHyperlinks/AutoHyperlinks.framework; sourceTree = "<group>"; };
 		4C400E2F1238A655005BDA9D /* LanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagePreferences.m; sourceTree = "<group>"; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C4A041612EF1C65009A7988 /* PopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupPrompts.m; sourceTree = "<group>"; };
@@ -721,7 +721,7 @@
 				4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */,
 				4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */,
 				4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */,
-				4C35FBF3130C4BE4000C3C0D /* AutoHyperlinks.framework in Frameworks */,
+				4C3BCC98130D8373006C36A9 /* AutoHyperlinks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,7 +1097,7 @@
 		4C66E86912DF694A00446250 /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C35FBF2130C4BE4000C3C0D /* AutoHyperlinks.framework */,
+				4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */,
 				4C66E88412DF69E500446250 /* BlowfishEncryption.framework */,
 			);
 			name = "External Frameworks";
@@ -2090,6 +2090,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
+					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2180,6 +2181,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
+					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2235,6 +2237,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
+					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2349,6 +2352,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
+					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
