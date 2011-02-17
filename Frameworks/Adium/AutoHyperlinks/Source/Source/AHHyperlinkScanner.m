@@ -302,25 +302,6 @@ static NSArray					*encKeys						= nil;
     return nil;
 }
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
-{
-	NSString *currentLink = nil;
-	
-	NSUInteger fastEnumCount = 0;
-	
-	while (fastEnumCount < len && nil != (currentLink = [self nextURI])) {
-		stackbuf[fastEnumCount] = currentLink;
-		
-		++fastEnumCount;
-	}
-	
-	state->itemsPtr = stackbuf;
-	state->mutationsPtr = (unsigned long *)self;
-	state->state = ((nil == currentLink) ? (NSUInteger)currentLink : NSNotFound);
-	
-	return fastEnumCount;
-}
-
 #pragma mark -
 #pragma mark Private Methods
 
@@ -332,8 +313,12 @@ static NSArray					*encKeys						= nil;
 	
 	m_scanLocation = 0; 
     
-	while ((markedLink = [self nextURI])) {
-		[rangeArray addObject:markedLink];
+	while (m_scanLocation < [m_scanString length]) {
+		markedLink = [self nextURI];
+		
+		if (markedLink) {	
+			[rangeArray addObject:markedLink];
+		}	
 	}
 	
     m_scanLocation = _holdOffset; 
@@ -388,7 +373,10 @@ static NSArray					*encKeys						= nil;
 						enclosureArray = [NSMutableArray array];
 					}
 					
-					[enclosureStack removeObject:encDict];
+					if ([enclosureStack containsObject:encDict]) {
+						[enclosureStack removeObject:encDict];
+					}
+					
 					[enclosureArray addObject:NSStringFromRange(encRange)];
 					
 					break;
