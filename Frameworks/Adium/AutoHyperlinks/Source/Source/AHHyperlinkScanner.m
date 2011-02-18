@@ -60,21 +60,25 @@ static NSArray					*encKeys						= nil;
 + (void)initialize
 {
 	if (self == [AHHyperlinkScanner class]) {
-		NSMutableCharacterSet *mutableSkipSet = [[NSMutableCharacterSet alloc] init];
-		NSMutableCharacterSet *mutableStartSet = [[NSMutableCharacterSet alloc] init];
+		NSMutableCharacterSet *mutablePuncSet = [NSMutableCharacterSet new];
+		NSMutableCharacterSet *mutableSkipSet = [NSMutableCharacterSet new];
+		NSMutableCharacterSet *mutableStartSet = [NSMutableCharacterSet new];
 		
-		[mutableSkipSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		[mutableSkipSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
 		[mutableSkipSet formUnionWithCharacterSet:[NSCharacterSet illegalCharacterSet]];
 		[mutableSkipSet formUnionWithCharacterSet:[NSCharacterSet controlCharacterSet]];
 		[mutableSkipSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 		
-		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
 		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"\"'.,:;<?!-@%C%C", 0x2014, 0x2013]]];
+		
+		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
+		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!"]];
 		
 		skipSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableSkipSet bitmapRepresentation]];
 		startSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableStartSet bitmapRepresentation]];
+		puncSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutablePuncSet bitmapRepresentation]];
 		endSet = [NSCharacterSet characterSetWithCharactersInString:@"\"',:;>)]}.?!@"];
-		puncSet = [NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!"];
 		hostnameComponentSeparatorSet = [NSCharacterSet characterSetWithCharactersInString:@"./"];
 		enclosureStartArray = [NSArray arrayWithObjects:@"(",@"[",@"{",nil];
 		enclosureSet = [NSCharacterSet characterSetWithCharactersInString:@"()[]{}"];
@@ -93,6 +97,7 @@ static NSArray					*encKeys						= nil;
 		
 		[mutableStartSet release];
 		[mutableSkipSet release];
+		[mutablePuncSet release];
 	}
 }
 
@@ -227,23 +232,23 @@ static NSArray					*encKeys						= nil;
 			}
 		}	
 		
-		if (scannedRange.length <= 0) {
+		if (scannedRange.length <= 0 && scannedRange.location == NSNotFound) {
 			break;
 		}
 		
 		NSRange longestEnclosure = [self _longestBalancedEnclosureInRange:scannedRange];
-
-			while (scannedRange.length >= 3 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
-				NSInteger longestEnclosureIndex = (longestEnclosure.location + longestEnclosure.length);
+		
+		while (scannedRange.length >= 3 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
+			NSInteger longestEnclosureIndex = (longestEnclosure.location + longestEnclosure.length);
+			
+			if (longestEnclosureIndex < scannedRange.length) {
+				scannedRange.length -= 1;
 				
-				if (longestEnclosureIndex < scannedRange.length) {
-					scannedRange.length -= 1;
-					
-					foundUnpairedEnclosureCharacter = NO;
-				} else {
-					break;
-				}
+				foundUnpairedEnclosureCharacter = NO;
+			} else {
+				break;
 			}
+		}
 		
 		if (scannedRange.length >= 4) {
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
@@ -253,24 +258,24 @@ static NSArray					*encKeys						= nil;
 			}
 		}
 		
-		if (foundUnpairedEnclosureCharacter){
-			m_scanLocation++;
-		}else{
-			NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
-			
-			if (startRange.location == NSNotFound) {
-				m_scanLocation += scannedRange.length;
+		NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
+		
+		if (startRange.location == NSNotFound) {
+			if (foundUnpairedEnclosureCharacter) {
+				m_scanLocation++;
 			} else {
-				m_scanLocation = startRange.location + startRange.length;
+				m_scanLocation += scannedRange.length;
 			}
+		} else {
+			m_scanLocation = (startRange.location + startRange.length);
 		}
 		
 		scannedLocation = m_scanLocation;
 	}
 	
-    m_scanLocation = m_scanStringLength;
+	m_scanLocation = m_scanStringLength;
 	
-    return nil;
+	return nil;
 }
 
 #pragma mark -
