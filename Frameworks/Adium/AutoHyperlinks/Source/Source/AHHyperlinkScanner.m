@@ -205,46 +205,47 @@ static NSArray					*encKeys						= nil;
 	[self _scanString:m_scanString charactersFromSet:startSet intoRange:nil fromIndex:&scannedLocation];
 	
 	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation]) {
+		BOOL foundUnpairedEnclosureCharacter = NO;
+		
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
 			NSRange encRange;
 			
-			if (NSNotFound != encIdx) {
+			if (encIdx != NSNotFound) {
 				encRange = [m_scanString rangeOfString:[enclosureStopArray objectAtIndex:encIdx] options:NSBackwardsSearch range:scannedRange];
 				
-				if (NSNotFound != encRange.location) {
-					scannedRange.location++; 
+				scannedRange.location++; 
+				
+				if (encRange.location == NSNotFound) {
+					foundUnpairedEnclosureCharacter = YES;
+					
+					scannedRange.length -= 1;
+				} else {
 					scannedRange.length -= 2;
 				}
 			}
-		}
+		}	
 		
 		if (scannedRange.length <= 0) {
 			break;
 		}
 		
 		NSRange longestEnclosure = [self _longestBalancedEnclosureInRange:scannedRange];
-		
-		while (scannedRange.length > 2 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
-			if ((longestEnclosure.location + longestEnclosure.length) < scannedRange.length) {
-				scannedRange.length -= 1;
-			} else {
-				break;
+
+			while (scannedRange.length >= 3 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
+				NSInteger longestEnclosureIndex = (longestEnclosure.location + longestEnclosure.length);
+				
+				if (longestEnclosureIndex < scannedRange.length) {
+					scannedRange.length -= 1;
+					
+					foundUnpairedEnclosureCharacter = NO;
+				} else {
+					break;
+				}
 			}
-		}
-		
-		if (m_firstCharOnlyMatch) {
-			if (scannedRange.location >= 1) {
-				scannedRange.location--; 
-				scannedRange.length++;
-			}
-			
-			m_firstCharOnlyMatch = NO;
-		}
 		
 		if (scannedRange.length >= 4) {
-			
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
 			
 			if ([self isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation]) {
@@ -252,14 +253,16 @@ static NSArray					*encKeys						= nil;
 			}
 		}
 		
-		NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
-		
-		if (startRange.location == NSNotFound) {
-			m_scanLocation += scannedRange.length;
-		} else {
-			m_firstCharOnlyMatch = YES;
-			
+		if (foundUnpairedEnclosureCharacter){
 			m_scanLocation++;
+		}else{
+			NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
+			
+			if (startRange.location == NSNotFound) {
+				m_scanLocation += scannedRange.length;
+			} else {
+				m_scanLocation = startRange.location + startRange.length;
+			}
 		}
 		
 		scannedLocation = m_scanLocation;

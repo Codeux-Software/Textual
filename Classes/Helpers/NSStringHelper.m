@@ -801,7 +801,7 @@ BOOL isUnicharDigit(unichar c)
 	range = [str rangeOfCharacterFromSet:invertedSet options:NSBackwardsSearch];
 	len   = ((range.length >= 1) ? (NSMaxRange(range) - loc) : ([str length] - loc));
 	
-	return [self attributedSubstringFromRange:NSMakeRange(loc,len)];
+	return [self attributedSubstringFromRange:NSMakeRange(loc, len)];
 }
 
 @end

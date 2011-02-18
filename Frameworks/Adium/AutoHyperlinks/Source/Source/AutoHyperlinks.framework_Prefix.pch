@@ -30,6 +30,4 @@
 
 	#import "AHLinkLexer.h"
 	#import "AHHyperlinkScanner.h"
-
-	#import <libkern/OSAtomic.h>
 #endif
