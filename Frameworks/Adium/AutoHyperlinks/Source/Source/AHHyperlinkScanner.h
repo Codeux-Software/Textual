@@ -44,7 +44,7 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 	NSString			*m_scanString;
 	
 	BOOL				m_strictChecking;
-	BOOL				m_firstCharOnlyMatch;
+	BOOL				m_firstCharMismactch;
 	
 	unsigned long		m_scanLocation;
 	unsigned long		m_scanStringLength;
