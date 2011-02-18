@@ -859,7 +859,7 @@
 	m.uid = u.uid;
 	m.cid = c.uid;
 	m.channelName = c.name;
-	m.mode = [[c.mode mutableCopy] autorelease];
+	m.mode = [c.mode mutableCopy];
 	
 	[m start];
 	

@@ -59,10 +59,8 @@
 		
 		if ([[self badModes] containsObject:modec]) continue;
 		
-		NSString *objk = [modeIndexes objectForKey:modec];
-		
-		if (objk) {
-			NSInteger moindex = [objk integerValue];
+		if ([modeIndexes containsKey:modec]) {
+			NSInteger moindex = [modeIndexes integerForKey:modec];
 			
 			[allModes safeRemoveObjectAtIndex:moindex];
 			[allModes safeInsertObject:h atIndex:moindex];
@@ -78,7 +76,7 @@
 
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode
 {
-	NSMutableString *str = [NSMutableString string];
+	NSMutableString *str   = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
 	
 	for (IRCModeInfo *h in mode.allModes) {
@@ -110,7 +108,7 @@
 
 - (BOOL)modeIsDefined:(NSString *)mode
 {
-	return NSObjectIsNotEmpty([modeIndexes objectForKey:mode]);
+	return [modeIndexes containsKey:mode];
 }
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
@@ -121,7 +119,6 @@
 		IRCModeInfo *m = [isupport createMode:mode];
 		
 		[allModes safeAddObject:m];
-		
 		[modeIndexes setInteger:[allModes indexOfObject:m] forKey:mode];
 	}
 	
@@ -130,7 +127,7 @@
 
 - (NSString *)format:(BOOL)maskK
 {
-	NSMutableString *str = [NSMutableString string];
+	NSMutableString *str   = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
 	
 	[str appendString:@"+"];

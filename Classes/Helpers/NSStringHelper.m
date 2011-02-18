@@ -750,6 +750,33 @@ BOOL isUnicharDigit(unichar c)
 
 @implementation NSAttributedString (NSAttributedStringHelper)
 
+- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
+{
+	if (location > [self length]) return nil;
+	
+	return [self attribute:attrName atIndex:location effectiveRange:range];
+}
+
+- (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
+{
+	if (location > [self length]) return nil;
+	if (rangeLimit.location == NSNotFound) return nil;
+	if (rangeLimit.length > [self length]) return nil;
+	if (rangeLimit.location > [self length]) return nil;
+	
+	return [self attributesAtIndex:location longestEffectiveRange:range inRange:rangeLimit];
+}
+
+- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
+{	
+	if (location > [self length]) return nil;
+	if (rangeLimit.location == NSNotFound) return nil;
+	if (rangeLimit.length > [self length]) return nil;
+	if (rangeLimit.location > [self length]) return nil;
+	
+	return [self attribute:attrName atIndex:location longestEffectiveRange:range inRange:rangeLimit];
+}
+
 + (NSAttributedString *)emptyString
 {
 	NSAttributedString *newstr = [[NSAttributedString alloc] initWithString:@""];
