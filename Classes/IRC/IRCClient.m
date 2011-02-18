@@ -2211,8 +2211,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			BOOL doAction = [PopupPrompts dialogWindowWithQuestion:TXTFLS(@"RESOURCES_FILE_RESET_WARNING_MESSAGE", path)
 															 title:TXTLS(@"RESOURCES_FILE_RESET_WARNING_TITLE")
-													 defaultButton:TXTLS(@"YES_BUTTON")
-												   alternateButton:TXTLS(@"NO_BUTTON")
+													 defaultButton:TXTLS(@"CONTINUE_BUTTON")
+												   alternateButton:TXTLS(@"CANCEL_BUTTON")
 													suppressionKey:nil suppressionText:nil];
 			
 			if (doAction) {

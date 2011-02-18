@@ -17,13 +17,13 @@
 @property (nonatomic, readonly) NSMutableDictionary *modeIndexes;
 
 - (void)clear;
-- (NSArray *)update:(NSString *)str;
 
-- (NSString *)getChangeCommand:(IRCChannelMode *)mode;
+- (NSArray *)update:(NSString *)str;
+- (IRCModeInfo *)modeInfoFor:(NSString *)mode;
 
 - (NSString *)string;
 - (NSString *)titleString;
+- (NSString *)getChangeCommand:(IRCChannelMode *)mode;
 
 - (BOOL)modeIsDefined:(NSString *)mode;
-- (IRCModeInfo *)modeInfoFor:(NSString *)mode;
 @end

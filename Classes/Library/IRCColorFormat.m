@@ -23,7 +23,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	NSRange limitRange = NSMakeRange(0, [self length]);
 	
 	while (limitRange.length > 0) {
-		NSDictionary *dict = [self attributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		NSNumber *foregroundNumber = [dict objectForKey:IRCTextFormatterForegroundColorAttributeName];
 		NSNumber *backgroundNumber = [dict objectForKey:IRCTextFormatterBackgroundColorAttributeName];
@@ -68,7 +68,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self attributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		switch (effect) {
 			case IRCTextFormatterBoldEffect: 
@@ -159,7 +159,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	limitRange = NSMakeRange(0, [result length]);
 	
 	while (limitRange.length >= 1) {
-		id nextURL = [result attribute:NSLinkAttributeName atIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		id nextURL = [result safeAttribute:NSLinkAttributeName atIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		if (nextURL) {
 			if ([nextURL isKindOfClass:[NSURL class]]) {
@@ -205,7 +205,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	limitRange = NSMakeRange(0, [result length]);
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self attributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		/* Remove unwanted attributes. */
 		for (NSString *attr in dict) {
@@ -315,8 +315,8 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 {
 	NSMutableAttributedString *result = [self mutableCopy];
 	
-	NSFont  *baseFont  = [self attribute:NSFontAttributeName			atIndex:limitRange.location effectiveRange:NULL];
-	NSColor *fontColor = [self attribute:NSForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
+	NSFont  *baseFont  = [self safeAttribute:NSFontAttributeName			atIndex:limitRange.location effectiveRange:NULL];
+	NSColor *fontColor = [self safeAttribute:NSForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
 	
 	if (baseFont) {
 		switch (effect) {
@@ -375,7 +375,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			}
 			case IRCTextFormatterBackgroundColorEffect:
 			{
-				NSNumber *foregroundColor = [self attribute:IRCTextFormatterForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
+				NSNumber *foregroundColor = [self safeAttribute:IRCTextFormatterForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
 				
 				if (foregroundColor) {
 					NSInteger backColor  = [value integerValue];
@@ -406,7 +406,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self attributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
 		

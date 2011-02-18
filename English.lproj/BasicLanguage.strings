@@ -25,7 +25,7 @@
 "CHANNEL_APPLICATION_TITLE_MODES" = " (%@)";
 
 "RESOURCES_FILE_RESET_WARNING_TITLE" = "Reset Resources";
-"RESOURCES_FILE_RESET_WARNING_MESSAGE" = "Execution of this command will erase the contents of the folder \"%@\" which contains cached files used by the Textual IRC Client. Are you sure you wish to continue with this action? There is no undo. ";
+"RESOURCES_FILE_RESET_WARNING_MESSAGE" = "Execution of this command will erase the contents of the folder \"%@\" which contains cached files used by the Textual IRC Client. Are you sure you wish to continue with this action? There is no undo.\n\nIMPORTANT: This folder does contain any custom addons such as scripts, plugins, and styles you may have created. Please backup before continuing.";
 "RESOURCES_FILE_RESET_QUITTING_TITLE" = "Action Completed";
 "RESOURCES_FILE_RESET_QUITTING_MESSAGE" = "Textual will now quit to apply changes. Relaunch when ready for use.";
 
@@ -49,6 +49,7 @@
 "TRUST_BUTTON" = "Trust";
 "CANCEL_BUTTON" = "Cancel";
 "DELETE_BUTTON" = "Delete";
+"CONTINUE_BUTTON" = "Continue";
 
 "SUPPRESSION_BUTTON_DEFAULT_TITLE" = "Do not show this message again";
 
