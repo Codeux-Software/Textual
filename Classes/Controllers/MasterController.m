@@ -498,7 +498,8 @@
 	
 	NSString *s = [as attributedStringToASCIIFormatting];
 	
-	[text setStringValue:@""];
+	[text setAttributedStringValue:[NSAttributedString emptyString]];
+	[text setTextColor:[text textColor]];
 	[text removeAllUndoActions];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
