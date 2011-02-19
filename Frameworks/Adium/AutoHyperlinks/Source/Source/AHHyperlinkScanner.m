@@ -32,6 +32,7 @@
 @interface AHHyperlinkScanner (Private)
 - (NSArray *)_allMatches;
 - (NSRange)_longestBalancedEnclosureInRange:(NSRange)inRange;
+- (void)_logDebugData:(NSString *)matchString withRange:(NSRange)scannedRange;
 - (BOOL)_scanString:(NSString *)inString charactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx;
 - (BOOL)_scanString:(NSString *)inString upToCharactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx;
 @end
@@ -73,7 +74,7 @@ static NSArray					*encKeys						= nil;
 		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"\"'.,:;<?!-@%C%C", 0x2014, 0x2013]]];
 		
 		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
-		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!"]];
+		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"',:;<?!"]];
 		
 		skipSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableSkipSet bitmapRepresentation]];
 		startSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableStartSet bitmapRepresentation]];
@@ -212,6 +213,8 @@ static NSArray					*encKeys						= nil;
 	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation]) {
 		BOOL foundUnpairedEnclosureCharacter = NO;
 		
+		[self _logDebugData:@"google.com" withRange:scannedRange];
+		
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
@@ -232,6 +235,8 @@ static NSArray					*encKeys						= nil;
 			}
 		}	
 		
+		
+		[self _logDebugData:@"google.com" withRange:scannedRange];
 		if (scannedRange.length <= 0 && scannedRange.location == NSNotFound) {
 			break;
 		}
@@ -250,6 +255,8 @@ static NSArray					*encKeys						= nil;
 			}
 		}
 		
+		
+		[self _logDebugData:@"google.com" withRange:scannedRange];
 		if (scannedRange.length >= 4) {
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
 			
@@ -296,6 +303,15 @@ static NSArray					*encKeys						= nil;
 	}
 	
 	return rangeArray;
+}
+
+- (void)_logDebugData:(NSString *)matchString withRange:(NSRange)scannedRange
+{
+	NSRange matchRange = [m_scanString rangeOfString:matchString];
+	
+	if (matchRange.location != NSNotFound) {
+		NSLog(@"%@ %@", [m_scanString substringWithRange:scannedRange], NSStringFromRange(scannedRange));
+	}
 }
 
 - (NSRange)_longestBalancedEnclosureInRange:(NSRange)inRange
