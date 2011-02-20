@@ -160,12 +160,11 @@
 		4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12911737F660044E7A1 /* IRCWorld.m */; };
 		4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
 		4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
-		4CA945A811E1AFBA00D36367 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* AsyncSocket.m */; };
+		4CA945A811E1AFBA00D36367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */; };
 		4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
 		4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
 		4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
 		4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
-		4CA945AE11E1AFBA00D36367 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
 		4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
 		4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
@@ -278,7 +277,7 @@
 		4CD0E68412F1B63D00C8F016 /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67912F1B63D00C8F016 /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68512F1B63D00C8F016 /* TreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67A12F1B63D00C8F016 /* TreeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68912F1B66900C8F016 /* DockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E69912F1B6B000C8F016 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* AsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68D12F1B6B000C8F016 /* FileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -288,7 +287,6 @@
 		4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A112F1B6B000C8F016 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69412F1B6B000C8F016 /* TCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E6A312F1B6B000C8F016 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69512F1B6B000C8F016 /* TCPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69612F1B6B000C8F016 /* Timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69812F1B6B000C8F016 /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -564,7 +562,7 @@
 		4CD0E67912F1B63D00C8F016 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = Classes/Headers/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67A12F1B63D00C8F016 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView.h; path = Classes/Headers/TreeView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68912F1B66900C8F016 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = Classes/Headers/DockIcon.h; sourceTree = SOURCE_ROOT; };
-		4CD0E68B12F1B6B000C8F016 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = Classes/Headers/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocketExtensions.h; path = Classes/Headers/AsyncSocketExtensions.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68D12F1B6B000C8F016 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLogger.h; path = Classes/Headers/FileLogger.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalModels.h; path = Classes/Headers/GlobalModels.h; sourceTree = SOURCE_ROOT; };
@@ -574,7 +572,6 @@
 		4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupPrompts.h; path = Classes/Headers/PopupPrompts.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Classes/Headers/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69412F1B6B000C8F016 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = Classes/Headers/TCPClient.h; sourceTree = SOURCE_ROOT; };
-		4CD0E69512F1B6B000C8F016 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = Classes/Headers/TCPServer.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69612F1B6B000C8F016 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = Classes/Headers/Timer.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = Classes/Headers/TinyGrowlClient.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69812F1B6B000C8F016 /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLParser.h; path = Classes/Headers/URLParser.h; sourceTree = SOURCE_ROOT; };
@@ -676,12 +673,11 @@
 		78A8C12911737F660044E7A1 /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
 		78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
 		78A8C12D11737F660044E7A1 /* TimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerCommand.m; sourceTree = "<group>"; };
-		78A8C13011737F660044E7A1 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		78A8C13211737F660044E7A1 /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
 		78A8C13C11737F660044E7A1 /* InputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHistory.m; sourceTree = "<group>"; };
 		78A8C13E11737F660044E7A1 /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
 		78A8C14211737F660044E7A1 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
-		78A8C14411737F660044E7A1 /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; wrapsLines = 0; };
@@ -1322,8 +1318,8 @@
 			children = (
 				4C26FB9212FA6E660094F17E /* Ignore System */,
 				4C5938DE11D0E0660094B049 /* Keychain Control */,
-				4CD0E68B12F1B6B000C8F016 /* AsyncSocket.h */,
-				78A8C13011737F660044E7A1 /* AsyncSocket.m */,
+				4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */,
+				78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */,
 				4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */,
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
 				4CD0E68D12F1B6B000C8F016 /* FileLogger.h */,
@@ -1342,8 +1338,6 @@
 				4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */,
 				4CD0E69412F1B6B000C8F016 /* TCPClient.h */,
 				78A8C14211737F660044E7A1 /* TCPClient.m */,
-				4CD0E69512F1B6B000C8F016 /* TCPServer.h */,
-				78A8C14411737F660044E7A1 /* TCPServer.m */,
 				4CD0E69612F1B6B000C8F016 /* Timer.h */,
 				78A8C14611737F660044E7A1 /* Timer.m */,
 				4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */,
@@ -1515,7 +1509,7 @@
 				4CD0E68412F1B63D00C8F016 /* ThinSplitView.h in Headers */,
 				4CD0E68512F1B63D00C8F016 /* TreeView.h in Headers */,
 				4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */,
-				4CD0E69912F1B6B000C8F016 /* AsyncSocket.h in Headers */,
+				4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */,
 				4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */,
 				4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */,
 				4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */,
@@ -1525,7 +1519,6 @@
 				4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */,
 				4CD0E6A112F1B6B000C8F016 /* RegexKitLite.h in Headers */,
 				4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */,
-				4CD0E6A312F1B6B000C8F016 /* TCPServer.h in Headers */,
 				4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */,
 				4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */,
 				4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */,
@@ -1831,12 +1824,11 @@
 				4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */,
 				4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */,
 				4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */,
-				4CA945A811E1AFBA00D36367 /* AsyncSocket.m in Sources */,
+				4CA945A811E1AFBA00D36367 /* GCDAsyncSocket.m in Sources */,
 				4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */,
 				4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */,
 				4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */,
 				4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */,
-				4CA945AE11E1AFBA00D36367 /* TCPServer.m in Sources */,
 				4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */,
 				4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */,
 				4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */,

@@ -7,26 +7,31 @@
 	id delegate;
 	
 	NSString *host;
+	
 	NSInteger port;
+	NSInteger proxyPort;
+	NSInteger socksVersion;
+	NSInteger maxMsgCount;
+	
 	NSStringEncoding encoding;
 	
 	NSString *proxyHost;
-	NSInteger proxyPort;
 	NSString *proxyUser;
-	NSInteger socksVersion;
 	NSString *proxyPassword;
 	
 	TCPClient *conn;
 	
 	Timer *timer;
-	NSInteger maxMsgCount;
-	NSMutableArray *sendQueue;
 	
 	BOOL useSystemSocks;
 	BOOL loggedIn;
 	BOOL useSocks;
 	BOOL sending;
 	BOOL useSSL;
+	
+	NSMutableArray *sendQueue;
+	
+	dispatch_queue_t dispatchQueue;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -51,6 +56,7 @@
 @property (nonatomic, retain) TCPClient *conn;
 @property (nonatomic, retain) NSMutableArray *sendQueue;
 @property (nonatomic, assign) BOOL sending;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 
 - (void)open;
 - (void)close;

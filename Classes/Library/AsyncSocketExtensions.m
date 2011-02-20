@@ -1,18 +1,22 @@
 // Created by Josh Goebel <dreamer3 AT gmail DOT com> <http://github.com/yyyc514/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@implementation AsyncSocket (AsyncSocketExtensions) 
+@implementation GCDAsyncSocket (AsyncSocketExtensions) 
+
++ (GCDAsyncSocket *)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
+{
+	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq];
+}
 
 - (void)useSSL
 {
-	IRCClient *client = [[theDelegate delegate] delegate]; // Everything is interconnected
+	IRCClient *client = [[delegate delegate] delegate]; // Everything is interconnected
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	[settings setObject:CFItemRefToID(kCFStreamSocketSecurityLevelNegotiatedSSL) forKey:CFItemRefToID(kCFStreamSSLLevel)];
 	
 	if (client.config.isTrustedConnection) {
-		[settings setObject:CFItemRefToID(kCFNull) forKey:CFItemRefToID(kCFStreamSSLPeerName)];
 		[settings setObject:CFItemRefToID(kCFBooleanFalse) forKey:CFItemRefToID(kCFStreamSSLIsServer)];
 		[settings setObject:CFItemRefToID(kCFBooleanTrue) forKey:CFItemRefToID(kCFStreamSSLAllowsAnyRoot)];
 		[settings setObject:CFItemRefToID(kCFBooleanTrue) forKey:CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)];
@@ -20,21 +24,35 @@
 		[settings setObject:CFItemRefToID(kCFBooleanFalse) forKey:CFItemRefToID(kCFStreamSSLValidatesCertificateChain)];
 	}
 	
-	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
-	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);
+	[self startTLS:settings];
+}
+
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code
+{
+	const char *error = strerror(code);
+	
+	if (error) {
+		return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
+	}
+	
+	return nil;
 }
 
 - (void)useSystemSocksProxy
 {
-	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
+	/*CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
-	CFRelease(settings);
+	CFRelease(settings);*/
 }
 
-- (void)useSocksProxyVersion:(NSInteger)version host:(NSString *)host port:(NSInteger)port user:(NSString *)user password:(NSString *)password
+- (void)useSocksProxyVersion:(NSInteger)version 
+						host:(NSString *)host 
+						port:(NSInteger)port 
+						user:(NSString *)user 
+					password:(NSString *)password
 {
-	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+/*	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	if (version == 4) {
 		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion4) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
@@ -49,14 +67,7 @@
 	if (NSObjectIsNotEmpty(password)) [settings setObject:password forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
 	
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
-	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
-}
-
-+ (NSString *)posixErrorStringFromErrno:(NSInteger)code
-{
-	const char* error = strerror(code);
-	
-	return ((error) ? [NSString stringWithCString:error encoding:NSASCIIStringEncoding] : nil);
+	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);*/
 }
 
 @end

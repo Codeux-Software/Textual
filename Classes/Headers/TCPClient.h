@@ -8,10 +8,14 @@
 	id delegate;
 	
 	NSString *host;
-	NSInteger port;
+	NSString *proxyHost;
+	NSString *proxyUser;
+	NSString *proxyPassword;
 	
-	NSInteger tag;
+	NSInteger port;
+	NSInteger proxyPort;
 	NSInteger sendQueueSize;
+	NSInteger socksVersion;
 	
 	BOOL useSSL;
 	BOOL useSocks;
@@ -20,17 +24,9 @@
 	BOOL active;
 	BOOL connecting;
 	
-	NSInteger socksVersion;
-	NSString *proxyHost;
-	NSInteger proxyPort;
-	NSString *proxyUser;
-	NSString *proxyPassword;
-	
-	AsyncSocket *conn;
+	GCDAsyncSocket *conn;
 	
 	NSMutableData *buffer;
-	
-	NSArray *socketBadSSLCertErrorCodes;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -48,12 +44,10 @@
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, retain) AsyncSocket *conn;
+@property (nonatomic, retain) GCDAsyncSocket *conn;
 @property (nonatomic, retain) NSMutableData *buffer;
-@property (nonatomic, retain) NSArray *socketBadSSLCertErrorCodes;
-@property (nonatomic, assign) NSInteger tag;
 
-- (id)initWithExistingConnection:(AsyncSocket *)socket;
+- (id)initWithExistingConnection:(GCDAsyncSocket *)socket;
 
 - (void)open;
 - (void)close;
@@ -62,6 +56,8 @@
 - (NSData *)readLine;
 
 - (void)write:(NSData *)data;
+
+- (BOOL)badSSLCertErrorFound:(NSInteger)code;
 @end
 
 @interface NSObject (TCPClientDelegate)

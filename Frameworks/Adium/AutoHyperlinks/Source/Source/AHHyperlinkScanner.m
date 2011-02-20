@@ -74,7 +74,7 @@ static NSArray					*encKeys						= nil;
 		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"\"'.,:;<?!-@%C%C", 0x2014, 0x2013]]];
 		
 		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
-		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"',:;<?!"]];
+		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!"]];
 		
 		skipSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableSkipSet bitmapRepresentation]];
 		startSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableStartSet bitmapRepresentation]];
@@ -213,8 +213,6 @@ static NSArray					*encKeys						= nil;
 	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation]) {
 		BOOL foundUnpairedEnclosureCharacter = NO;
 		
-		[self _logDebugData:@"google.com" withRange:scannedRange];
-		
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
@@ -235,8 +233,6 @@ static NSArray					*encKeys						= nil;
 			}
 		}	
 		
-		
-		[self _logDebugData:@"google.com" withRange:scannedRange];
 		if (scannedRange.length <= 0 && scannedRange.location == NSNotFound) {
 			break;
 		}
@@ -255,8 +251,6 @@ static NSArray					*encKeys						= nil;
 			}
 		}
 		
-		
-		[self _logDebugData:@"google.com" withRange:scannedRange];
 		if (scannedRange.length >= 4) {
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
 			
