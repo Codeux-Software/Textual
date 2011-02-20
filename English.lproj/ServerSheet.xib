@@ -977,7 +977,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="665865515">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">** Reconnet required to apply changes</string>
+							<string key="NSContents">** Reconnect required to apply changes</string>
 							<reference key="NSSupport" ref="24"/>
 							<reference key="NSControlView" ref="503773000"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
