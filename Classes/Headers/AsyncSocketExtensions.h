@@ -3,9 +3,16 @@
 
 @class IRCClient;
 
-@interface AsyncSocket (AsyncSocketExtensions) 
+@interface GCDAsyncSocket (AsyncSocketExtensions) 
++ (GCDAsyncSocket *)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq;
+
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
+
 - (void)useSSL;
 - (void)useSystemSocksProxy;
-+ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
-- (void)useSocksProxyVersion:(NSInteger)version host:(NSString *)host port:(NSInteger)port user:(NSString *)user password:(NSString *)password;
+- (void)useSocksProxyVersion:(NSInteger)version 
+						host:(NSString *)host 
+						port:(NSInteger)port 
+						user:(NSString *)user 
+					password:(NSString *)password;
 @end

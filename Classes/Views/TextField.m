@@ -112,11 +112,17 @@
 		id newString = [NSMutableAttributedString alloc];
 		id oldString = [[self attributedStringValue] mutableCopy];
 		
+		NSString *currentValue = [self stringValue];
+		
 		[newString autorelease];
 		[oldString autorelease];
 		
 		if (PointerIsEmpty(rtfData) == NO) {
-			newString = [newString initWithRTF:rtfData documentAttributes:nil];
+			if ([currentValue hasPrefix:@"/"] == NO) {
+				newString = [newString initWithRTF:rtfData documentAttributes:nil];
+			} else {
+				newString = [newString initWithString:rawData];
+			}
 		} else {
 			newString = [newString initWithString:rawData];
 		}
