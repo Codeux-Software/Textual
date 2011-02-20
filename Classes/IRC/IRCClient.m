@@ -1105,16 +1105,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan
 {
-	if (chan && *message) {
-		if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-			NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
-			
-			if ([newstr length] < 5) {
-				[self printBoth:chan type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPT_FAILED")];
-				
-				return NO;
-			} else {
-				*message = newstr;
+	if ([chan isKindOfClass:[IRCChannel class]]) {
+		if (PointerIsEmpty(chan) == NO && *message) {
+			if ([chan isChannel] || [chan isTalk]) {
+				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
+					NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
+					
+					if ([newstr length] < 5) {
+						[self printBoth:chan type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPT_FAILED")];
+						
+						return NO;
+					} else {
+						*message = newstr;
+					}
+				}
 			}
 		}
 	}
@@ -1124,12 +1128,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan
 {
-	if (chan && *message) {
-		if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-			NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey];
-			
-			if (NSObjectIsNotEmpty(newstr)) {
-				*message = newstr;
+	if ([chan isKindOfClass:[IRCChannel class]]) {
+		if (PointerIsEmpty(chan) == NO && *message) {
+			if ([chan isChannel] || [chan isTalk]) {
+				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
+					NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey];
+					
+					if (NSObjectIsNotEmpty(newstr)) {
+						*message = newstr;
+					}
+				}
 			}
 		}
 	}
@@ -4187,7 +4195,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				if (c.forceOutput) {
 					[self printUnknownReply:m];
-				
+					
 					[c setForceOutput:NO];
 				}
 			} 
