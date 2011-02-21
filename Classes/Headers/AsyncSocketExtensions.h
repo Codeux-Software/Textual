@@ -3,10 +3,14 @@
 
 @class IRCClient;
 
-@interface GCDAsyncSocket (AsyncSocketExtensions) 
-+ (GCDAsyncSocket *)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq;
+@interface GCDAsyncSocket (GCDAsyncSocketExtensions)
++ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
-+ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
+- (void)useSSL;
+@end 
+
+@interface AsyncSocket (RLMAsyncSocketExtensions)
++ (id)socketWithDelegate:(id)delegate;
 
 - (void)useSSL;
 - (void)useSystemSocksProxy;
@@ -15,4 +19,6 @@
 						port:(NSInteger)port 
 						user:(NSString *)user 
 					password:(NSString *)password;
+
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
 @end

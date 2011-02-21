@@ -5,17 +5,23 @@
 
 - (void)focus
 {
-	NSTextField *field = [self.window selectedTextField];
+	NSText		*edito = [self currentEditor];
+	NSTextField *field = [self.window selectedTextField];	
 	
 	if (field != self) {
 		[self.window makeFirstResponder:nil];
 		[self.window makeFirstResponder:self];
-		
-		NSText *e = [self currentEditor];
-		
-		[e setSelectedRange:NSMakeRange([[self stringValue] length], 0)];
-		[e scrollRangeToVisible:[e selectedRange]];
 	}
+	
+	NSRange newRange = NSMakeRange([self stringLength], 0);
+	
+	[edito setSelectedRange:newRange];
+	[edito scrollRangeToVisible:newRange];
+}
+
+- (NSInteger)stringLength
+{
+	return [[self stringValue] length];
 }
 
 - (NSRange)selectedRange

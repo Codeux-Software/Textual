@@ -39,6 +39,7 @@
 	/* Textual Headers */
 	#import "GlobalModels.h"
 	#import "PopupPrompts.h"
+	#import "RLMAsyncSocket.h"
 	#import "GCDAsyncSocket.h"
 	#import "AsyncSocketExtensions.h"
 	#import "TinyGrowlClient.h"

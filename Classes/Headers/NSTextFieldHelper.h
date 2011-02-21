@@ -3,5 +3,6 @@
 
 @interface NSTextField (NSTextFieldHelper)
 - (void)focus;
+- (NSInteger)stringLength;
 - (NSRange)selectedRange;
 @end

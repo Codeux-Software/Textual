@@ -104,6 +104,8 @@
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
+		4C93A73E1312803F009D42EC /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */; };
+		4C93A7421312804E009D42EC /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93A7401312804E009D42EC /* GCDAsyncSocket.m */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -164,7 +166,7 @@
 		4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12911737F660044E7A1 /* IRCWorld.m */; };
 		4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
 		4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
-		4CA945A811E1AFBA00D36367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */; };
+		4CA945A811E1AFBA00D36367 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */; };
 		4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
 		4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
 		4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
@@ -281,7 +283,7 @@
 		4CD0E68412F1B63D00C8F016 /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67912F1B63D00C8F016 /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68512F1B63D00C8F016 /* TreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67A12F1B63D00C8F016 /* TreeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68912F1B66900C8F016 /* DockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD0E69912F1B6B000C8F016 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68D12F1B6B000C8F016 /* FileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -493,6 +495,8 @@
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4C93A7401312804E009D42EC /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
@@ -569,7 +573,7 @@
 		4CD0E67912F1B63D00C8F016 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = Classes/Headers/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67A12F1B63D00C8F016 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView.h; path = Classes/Headers/TreeView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68912F1B66900C8F016 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = Classes/Headers/DockIcon.h; sourceTree = SOURCE_ROOT; };
-		4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLMAsyncSocket.h; path = Classes/Headers/RLMAsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocketExtensions.h; path = Classes/Headers/AsyncSocketExtensions.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68D12F1B6B000C8F016 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLogger.h; path = Classes/Headers/FileLogger.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalModels.h; path = Classes/Headers/GlobalModels.h; sourceTree = SOURCE_ROOT; };
@@ -679,7 +683,7 @@
 		78A8C12911737F660044E7A1 /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
 		78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
 		78A8C12D11737F660044E7A1 /* TimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerCommand.m; sourceTree = "<group>"; };
-		78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLMAsyncSocket.m; sourceTree = "<group>"; };
 		78A8C13211737F660044E7A1 /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
 		78A8C13C11737F660044E7A1 /* InputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHistory.m; sourceTree = "<group>"; };
 		78A8C13E11737F660044E7A1 /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
@@ -1125,6 +1129,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4C93A73813127FF5009D42EC /* Socket Control */ = {
+			isa = PBXGroup;
+			children = (
+				4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */,
+				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
+				4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */,
+				4C93A7401312804E009D42EC /* GCDAsyncSocket.m */,
+				4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */,
+				78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */,
+			);
+			name = "Socket Control";
+			sourceTree = "<group>";
+		};
 		4CB34D0011CCB4C90023206B /* Plug-In Architecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -1329,10 +1346,7 @@
 			children = (
 				4C26FB9212FA6E660094F17E /* Ignore System */,
 				4C5938DE11D0E0660094B049 /* Keychain Control */,
-				4CD0E68B12F1B6B000C8F016 /* GCDAsyncSocket.h */,
-				78A8C13011737F660044E7A1 /* GCDAsyncSocket.m */,
-				4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */,
-				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
+				4C93A73813127FF5009D42EC /* Socket Control */,
 				4CD0E68D12F1B6B000C8F016 /* FileLogger.h */,
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
 				4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */,
@@ -1468,7 +1482,7 @@
 				4CD0E67C12F1B63D00C8F016 /* FieldEditorTextView.h in Headers */,
 				4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */,
 				4CD0E65112F1B5B500C8F016 /* FileWithContent.h in Headers */,
-				4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */,
+				4CD0E69912F1B6B000C8F016 /* RLMAsyncSocket.h in Headers */,
 				4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */,
 				4CD0E5ED12F1B45900C8F016 /* GrowlController.h in Headers */,
 				4CD0E6E012F1B78D00C8F016 /* GTMBase64.h in Headers */,
@@ -1562,6 +1576,7 @@
 				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
 				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
+				4C93A73E1312803F009D42EC /* GCDAsyncSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1834,7 +1849,7 @@
 				4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */,
 				4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */,
 				4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */,
-				4CA945A811E1AFBA00D36367 /* GCDAsyncSocket.m in Sources */,
+				4CA945A811E1AFBA00D36367 /* RLMAsyncSocket.m in Sources */,
 				4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */,
 				4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */,
 				4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */,
@@ -1897,6 +1912,7 @@
 				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
 				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
 				4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */,
+				4C93A7421312804E009D42EC /* GCDAsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
