@@ -2194,7 +2194,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[s insertString:@":" atIndex:0];
 			}
 			
-			[s insertString:@" " atIndex:0];
+			if ([s length]) {
+				[s insertString:@" " atIndex:0];
+			}
+			
 			[s insertString:cmd atIndex:0];
 			
 			[self sendLine:s];
