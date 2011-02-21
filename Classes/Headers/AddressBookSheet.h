@@ -24,8 +24,6 @@
 	AddressBook *ignore;
 }
 
-- (void)onMenuBarItemChanged:(id)sender;
-
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, retain) AddressBook *ignore;
 @property (nonatomic, retain) NSTextField *hostmask;
@@ -42,6 +40,7 @@
 @property (nonatomic, retain) NSView *notificationView;
 @property (nonatomic, retain) NSView *ignoreItemView;
 
+- (void)onMenuBarItemChanged:(id)sender;
 - (void)start;
 @end
 

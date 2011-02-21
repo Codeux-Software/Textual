@@ -9,9 +9,6 @@
 	IRCClient *client;
 	IRCClientConfig *config;
 	
-	NSView *initalView;
-	NSInteger initialTabTag;
-	
 	NSDictionary *serverList;
 	
 	IBOutlet NSView *contentView;
@@ -71,8 +68,6 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, retain) IRCClientConfig *config;
 @property (nonatomic, assign) IRCClient *client;
-@property (nonatomic, assign) NSInteger initialTabTag;
-@property (nonatomic, retain) NSView *initalView;
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *generalView;
 @property (nonatomic, retain) NSView *detailsView;
@@ -114,8 +109,11 @@
 @property (nonatomic, retain) ChannelSheet *channelSheet;
 @property (nonatomic, retain) AddressBookSheet *ignoreSheet;
 
-- (void)startWithIgnoreTab:(BOOL)ignoreTab;
+- (void)startWithIgnoreTab:(NSString *)imask;
+
 - (void)show;
+- (void)showWithDefaultView:(NSView *)view andSegment:(NSInteger)segment;
+
 - (void)close;
 
 - (void)ok:(id)sender;

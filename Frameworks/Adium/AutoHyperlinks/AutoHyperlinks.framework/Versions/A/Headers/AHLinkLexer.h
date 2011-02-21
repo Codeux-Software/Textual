@@ -28,10 +28,8 @@
 typedef enum {
     AH_URL_INVALID = -1,
     AH_URL_VALID = 0,
-    AH_MAILTO_VALID,
     AH_FILE_VALID,
     AH_URL_DEGENERATE,
-    AH_MAILTO_DEGENERATE
 } AH_URI_STATUS;
 
 #define YY_EXTRA_TYPE unsigned int

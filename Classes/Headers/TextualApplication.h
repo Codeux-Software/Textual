@@ -128,6 +128,7 @@
 	#import "ServerSheet.h"
 	#import "InputPromptDialog.h"
 	#import "ChanBanExceptionSheet.h"
+	#import "ChanInviteExceptionSheet.h"
 	#import "IRCPrefix.h"
 	#import "IRCChannel.h"
 	#import "IRCMessage.h"

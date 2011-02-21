@@ -93,6 +93,9 @@
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
 		
+		[hostmaskRegex drain];
+		hostmaskRegex = nil;
+		
 		hostmaskRegex = [[NSString stringWithFormat:@"^%@$", new_hostmask] retain];
 	}
 }

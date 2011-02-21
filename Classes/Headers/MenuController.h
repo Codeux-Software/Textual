@@ -56,7 +56,6 @@
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
-- (void)showServerPropertyDialog:(IRCClient *)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
 - (void)onCloseWindow:(id)sender;
@@ -64,6 +63,8 @@
 - (void)onPaste:(id)sender;
 - (void)onSearchWeb:(id)sender;
 - (void)onCopyLogAsHtml:(id)sender;
+
+- (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
 
 - (void)onMarkScrollback:(id)sender;
 - (void)onMarkAllAsRead:(id)sender;
@@ -128,13 +129,14 @@
 - (void)onWantFindPanel:(id)sender;
 - (void)onWantChannelBanList:(id)sender;
 - (void)onWantChannelBanExceptionList:(id)sender;
-- (void)onWantMainWindowCentered:(id)sender;
+- (void)onWantChannelInviteExceptionList:(id)sender;
 
 - (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
 - (void)onShowAcknowledgments:(id)sender;
 - (void)processNavigationItem:(id)sender;
 - (void)wantsFullScreenModeToggled:(id)sender;
+- (void)onWantMainWindowCentered:(id)sender;
 
 - (void)onWantThemeForceReloaded:(id)sender;
 

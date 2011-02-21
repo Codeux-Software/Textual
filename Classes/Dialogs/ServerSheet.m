@@ -43,8 +43,6 @@
 @synthesize ignoreSheet;
 @synthesize ignoresView;
 @synthesize ignoreTable;
-@synthesize initalView;
-@synthesize initialTabTag;
 @synthesize invisibleCheck;
 @synthesize leavingCommentText;
 @synthesize loginCommandsText;
@@ -173,7 +171,7 @@
 #pragma mark -
 #pragma mark Initalization Handler
 
-- (void)startWithIgnoreTab:(BOOL)ignoreTab
+- (void)startWithIgnoreTab:(NSString *)imask
 {
 	[channelTable setTarget:self];
 	[channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
@@ -193,23 +191,40 @@
 	[self reloadChannelTable];
 	[self reloadIgnoreTable];
 	
-	if (ignoreTab) {
-		initialTabTag = 3;
-		initalView = ignoresView;
+	if (NSObjectIsNotEmpty(imask)) {
+		[self showWithDefaultView:ignoresView andSegment:3];
+		
+		if ([imask isEqualToString:@"-"] == NO) {
+			[ignoreSheet drain];
+			ignoreSheet = nil;
+			
+			ignoreSheet = [AddressBookSheet new];
+			ignoreSheet.delegate = self;
+			ignoreSheet.window = sheet;
+			ignoreSheet.newItem = YES;
+			
+			ignoreSheet.ignore = [AddressBook new];
+			ignoreSheet.ignore.hostmask = imask;
+			[ignoreSheet.ignore processHostMaskRegex];
+			
+			[ignoreSheet start];
+		}
 	} else {
-		initialTabTag = 0;
-		initalView = generalView;
+		[self show];
 	}
-	
-	[self show];
 }
 
 - (void)show
 {
+	[self showWithDefaultView:generalView andSegment:0];
+}
+
+- (void)showWithDefaultView:(NSView *)view andSegment:(NSInteger)segment
+{
 	[self startSheet];
-	[self firstPane:initalView];
+	[self firstPane:view];
 	
-	[tabView setSelectedSegment:initialTabTag];
+	[tabView setSelectedSegment:segment];
 }
 
 - (void)close
@@ -484,6 +499,7 @@
 	}
 	
 	[channelSheet drain];
+	channelSheet = nil;
 	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
@@ -502,6 +518,7 @@
 	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
 	
 	[channelSheet drain];
+	channelSheet = nil;
 	
 	channelSheet = [ChannelSheet new];
 	channelSheet.delegate = self;
@@ -542,7 +559,7 @@
 
 - (void)ChannelSheetWillClose:(ChannelSheet *)sender
 {
-	[channelSheet autorelease];
+	[channelSheet drain];
 	channelSheet = nil;
 }
 
@@ -572,11 +589,12 @@
 - (void)addIgnore:(id)sender
 {
 	[ignoreSheet drain];
+	ignoreSheet = nil;
 	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;
 	ignoreSheet.window = sheet;
-	ignoreSheet.ignore = [[AddressBook new] autorelease];
+	ignoreSheet.ignore = [AddressBook new];
 	ignoreSheet.newItem = YES;
 	[ignoreSheet start];
 }
@@ -587,6 +605,7 @@
 	if (sel < 0) return;
 	
 	[ignoreSheet drain];
+	ignoreSheet = nil;
 	
 	ignoreSheet = [AddressBookSheet new];
 	ignoreSheet.delegate = self;
@@ -638,7 +657,7 @@
 
 - (void)ignoreItemSheetWillClose:(AddressBookSheet *)sender
 {
-	[ignoreSheet autorelease];
+	[ignoreSheet drain];
 	ignoreSheet = nil;
 }
 
@@ -760,8 +779,8 @@
 			
 			[ary removeAllObjects];
 			
-			[ary safeAddObject:target];
 			[ary addObjectsFromArray:low];
+			[ary safeAddObject:target];
 			[ary addObjectsFromArray:high];
 			
 			[self reloadChannelTable];

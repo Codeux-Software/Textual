@@ -39,6 +39,8 @@
 - (void)dealloc
 {
 	[ignore drain];
+	[ignoreItemView drain];
+	[notificationView drain];
 	
 	[super dealloc];
 }
@@ -80,24 +82,22 @@
 
 - (void)start
 {
-	if (newItem == NO) {
+	if (NSObjectIsNotEmpty(ignore.hostmask)) {
 		[hostmask setStringValue:ignore.hostmask];
-		
-		[ignorePublicMsg setState:ignore.ignorePublicMsg];
-		[ignorePrivateMsg setState:ignore.ignorePrivateMsg];
-		[ignoreHighlights setState:ignore.ignoreHighlights];
-		[ignoreNotices setState:ignore.ignoreNotices];
-		[ignoreCTCP setState:ignore.ignoreCTCP];
-		[ignoreJPQE setState:ignore.ignoreJPQE];
-		[notifyJoins setState:ignore.notifyJoins];
-		[notifyWhoisJoins setState:ignore.notifyWhoisJoins];
-		[ignorePMHighlights setState:ignore.ignorePMHighlights];
-	}
+	} 
+	
+	[ignorePublicMsg setState:ignore.ignorePublicMsg];
+	[ignorePrivateMsg setState:ignore.ignorePrivateMsg];
+	[ignoreHighlights setState:ignore.ignoreHighlights];
+	[ignoreNotices setState:ignore.ignoreNotices];
+	[ignoreCTCP setState:ignore.ignoreCTCP];
+	[ignoreJPQE setState:ignore.ignoreJPQE];
+	[notifyJoins setState:ignore.notifyJoins];
+	[notifyWhoisJoins setState:ignore.notifyWhoisJoins];
+	[ignorePMHighlights setState:ignore.ignorePMHighlights];
 	
 	[self startSheet];
 	[self firstPane:ignoreItemView];
-	
-	[sheet recalculateKeyViewLoop];
 }
 
 - (void)ok:(id)sender
@@ -113,9 +113,6 @@
 	ignore.notifyJoins = [notifyJoins state];
 	ignore.notifyWhoisJoins = [notifyWhoisJoins state];
 	ignore.ignorePMHighlights = [ignorePMHighlights state];
-	
-	[ignore.hostmaskRegex drain];
-	ignore.hostmaskRegex = nil;
 	
 	[ignore processHostMaskRegex];
 	

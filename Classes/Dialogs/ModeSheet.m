@@ -34,7 +34,6 @@
 
 - (void)dealloc
 {
-	[mode drain];
 	[channelName drain];
 	
 	[super dealloc];
@@ -72,14 +71,12 @@
 	
 	[self updateTextFields];
 	[self startSheet];
-	
-	[[self sheet] becomeFirstResponder];
 }
 
 - (void)updateTextFields
 {
-	[kText setEnabled:kCheck.state == NSOnState];
-	[lText setEnabled:lCheck.state == NSOnState];
+	[kText setEnabled:(kCheck.state == NSOnState)];
+	[lText setEnabled:(lCheck.state == NSOnState)];
 }
 
 - (void)onChangeCheck:(id)sender

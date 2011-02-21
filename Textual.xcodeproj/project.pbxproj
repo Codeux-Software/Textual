@@ -96,6 +96,9 @@
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
+		4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */; };
+		4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
@@ -479,6 +482,9 @@
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
 		4C7E561311B0386200B5DE98 /* AboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPanel.m; sourceTree = "<group>"; };
+		4C83EBA31311B3790016AE76 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanInviteExceptionSheet.xib; sourceTree = "<group>"; };
+		4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanInviteExceptionSheet.m; sourceTree = "<group>"; };
+		4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChanInviteExceptionSheet.h; path = Classes/Headers/ChanInviteExceptionSheet.h; sourceTree = SOURCE_ROOT; };
 		4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = "<group>"; };
 		4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlowfishCommandLine.xcodeproj; path = Resources/Plugins/BlowfishCommandLine/BlowfishCommandLine.xcodeproj; sourceTree = "<group>"; };
 		4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputPromptDialog.m; sourceTree = "<group>"; };
@@ -786,6 +792,7 @@
 				789ED4B11193FA9E00CFC0B2 /* AddressBookSheet.xib */,
 				4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */,
 				4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */,
+				4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */,
 				4C62C7581221D385002DCB9A /* InputPromptDialog.xib */,
 				78A7B5D811745616006B324A /* InviteSheet.xib */,
@@ -1188,6 +1195,8 @@
 				4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */,
 				4CD0E62C12F1B53300C8F016 /* ChanBanSheet.h */,
 				4CF1681811DC7B9200B60505 /* ChanBanSheet.m */,
+				4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */,
+				4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */,
 				4CD0E62D12F1B53300C8F016 /* ChannelSheet.h */,
 				78A8C0CC11737F660044E7A1 /* ChannelSheet.m */,
 				4CD0E62E12F1B53300C8F016 /* InputPromptDialog.h */,
@@ -1553,6 +1562,7 @@
 				4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */,
 				4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */,
 				4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */,
+				4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1714,6 +1724,7 @@
 				4C329CAA12D1BD20001990A9 /* TPWTB_IRCopServices.png in Resources */,
 				4C329CAB12D1BD20001990A9 /* TPWTB_Logs.png in Resources */,
 				4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */,
+				4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1759,7 +1770,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nrm -Rf \"$PROJECT_DIR/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/Compiled/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BragSpam/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/SystemProfiler/build/\" 2> /dev/null\nrm -Rf \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine/build/\" 2> /dev/null";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -r '{}' +";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1887,6 +1898,7 @@
 				4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */,
 				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
 				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
+				4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,6 +1940,14 @@
 				4C62C7551221D37B002DCB9A /* English */,
 			);
 			name = InputPromptDialog.xib;
+			sourceTree = "<group>";
+		};
+		4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C83EBA31311B3790016AE76 /* English */,
+			);
+			name = ChanInviteExceptionSheet.xib;
 			sourceTree = "<group>";
 		};
 		4C8CCEA411952E1A001A07FF /* MainMenu.xib */ = {

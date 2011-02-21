@@ -107,12 +107,8 @@ notes:\/\/              |
 gopher:\/\/             |
 x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 
-mailto:{mailSpec}       {return AH_MAILTO_VALID;}
-{mailSpec}              {return AH_MAILTO_DEGENERATE;}
-
 {urlSpec}               {return AH_URL_DEGENERATE;}
 
-sip:{mailSpec}          |
 {myimSpec}              |
 {jabberSpec}            |
 {gtalkSpec}             |
