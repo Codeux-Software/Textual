@@ -587,7 +587,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 #pragma mark Security
 
 /**
- * Secures the connection using onSocketWillConnect:/TLS.
+ * Secures the connection using SSL/TLS.
  * 
  * This method may be called at any time, and the TLS handshake will occur after all pending reads and writes
  * are finished. This allows one the option of sending a protocol dependent StartTLS message, and queuing

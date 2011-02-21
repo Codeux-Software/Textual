@@ -5,6 +5,7 @@
 
 @interface TCPClient : NSObject
 {
+	id conn;
 	id delegate;
 	
 	NSString *host;
@@ -24,11 +25,13 @@
 	BOOL active;
 	BOOL connecting;
 	
-	GCDAsyncSocket *conn;
+	dispatch_queue_t delegateQueue;
+	dispatch_queue_t socketQueue;
 	
 	NSMutableData *buffer;
 }
 
+@property (nonatomic, retain) id conn;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) NSString *host;
 @property (nonatomic, assign) NSInteger port;
@@ -44,10 +47,13 @@
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, retain) GCDAsyncSocket *conn;
 @property (nonatomic, retain) NSMutableData *buffer;
+@property (nonatomic, assign) dispatch_queue_t delegateQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
 
-- (id)initWithExistingConnection:(GCDAsyncSocket *)socket;
+- (id)initWithExistingConnection:(AsyncSocket *)socket;
+
+- (BOOL)usingNewSocketEngine;
 
 - (void)open;
 - (void)close;

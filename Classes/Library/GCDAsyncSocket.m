@@ -5463,7 +5463,6 @@ OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, size_t 
 		{
 			BOOL allowsAnyRoot = [value boolValue];
 			
-			
 			status = SSLSetAllowsAnyRoot(sslContext, allowsAnyRoot);
 			if (status != noErr)
 			{
