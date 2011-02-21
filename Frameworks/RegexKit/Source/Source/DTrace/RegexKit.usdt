@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.RegexKit" name="RegexKit" version="1.0">
+  <activation>
+    <rule kind="extension-point" id="com.apple.xray.dtrace.usdt"/>
+  </activation>
+  <extension   point="com.apple.xray.dtrace.usdt"
+                  id="com.apple.xray.dtrace.usdt.RegexKit-type"
+                name="RegexKitStaticProbes"
+             version="1.0"
+            provider="RegexKit*"
+ providerDisplayName="RegexKit Framework"
+              module=""
+ providerDescription="DTrace static probes for RegexKit Framework">
+ 
+    <probeName name="BeginRegexCompile" index="0">
+      <field index="0" name="RKRegex Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Regex"                    code="copyinstr(arg2)" type="%s" width="20" truncation="middle"/>
+      <field index="3" name="Options"                  code="arg3"            type="%x" width="15" truncation="right"/>
+    </probeName>
+    <probeName name="EndRegexCompile" index="1">
+      <field index="0" name="RKRegex Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Regex"                    code="copyinstr(arg2)" type="%s" width="20" truncation="middle"/>
+      <field index="3" name="Options"                  code="arg3"            type="%x" width="15" truncation="right"/>
+      <field index="4" name="Error Code"               code="arg4"            type="%d" width="10" trunaction="right"/>
+      <field index="5" name="Error Code String"        code="copyinstr(arg5)" type="%s" width="20" truncation="left"/>
+      <field index="6" name="PCRE Error String"        code="copyinstr(arg6)" type="%s" width="25" truncation="middle"/>
+      <field index="7" name="Error at Regex Character" code="arg7"            type="%d" width="10" trunaction="right"/>
+    </probeName>
+    <probeName name="BeginMatch" index="2">
+      <field index="0" name="regexProbeObject Ptr"     code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Ranges Ptr"               code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Range Count"              code="arg3"            type="%d" width="10" truncation="right"/>
+      <field index="4" name="Characters Buffer Ptr"    code="arg4"            type="%x" width="15" truncation="right"/>
+      <field index="5" name="Characters Buffer Size"   code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Search NSRange Ptr"       code="arg6"            type="%x" width="15" truncation="right"/>
+      <field index="7" name="Match Options"            code="arg7"            type="%x" width="15" truncation="right"/>
+    </probeName>
+    <probeName name="EndMatch" index="3">
+      <field index="0" name="regexProbeObject Ptr"     code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Ranges Ptr"               code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Range Count"              code="arg3"            type="%d" width="10" truncation="right"/>
+      <field index="4" name="Characters Buffer Ptr"    code="arg4"            type="%x" width="15" truncation="right"/>
+      <field index="5" name="Characters Buffer Size"   code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Search NSRange Ptr"       code="arg6"            type="%x" width="15" truncation="right"/>
+      <field index="7" name="Match Options"            code="arg7"            type="%x" width="15" truncation="right"/>
+      <field index="8" name="Match Result"             code="arg8"            type="%x" width="15" truncation="right"/>
+      <field index="9" name="Match Result String"      code="copyinstr(arg9)" type="%s" width="20" truncation="middle"/>
+    </probeName>
+    <probeName name="MatchException" index="4">
+      <field index="0" name="regexProbeObject Ptr"     code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Ranges Ptr"               code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Range Count"              code="arg3"            type="%d" width="10" truncation="right"/>
+      <field index="4" name="Characters Buffer Ptr"    code="arg4"            type="%x" width="15" truncation="right"/>
+      <field index="5" name="Characters Buffer Size"   code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Search NSRange Ptr"       code="arg6"            type="%x" width="15" truncation="right"/>
+      <field index="7" name="Match Options"            code="arg7"            type="%x" width="15" truncation="right"/>
+      <field index="8" name="Exception Name"           code="copyinstr(arg8)" type="%s" width="20" truncation="right"/>
+      <field index="9" name="Reason"                   code="copyinstr(arg9)" type="%s" width="25" truncation="middle"/>
+    </probeName>
+    <probeName name="CacheCleared" index="5">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Cache Description"        code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Did Clear Cache"          code="arg2"            type="%d" width="10" truncation="right"/>
+      <field index="3" name="Cache Cleared Count"      code="arg3"            type="%d" width="10" truncation="right"/>
+      <field index="4" name="Cache Hits"               code="arg4"            type="%d" width="10" truncation="right"/>
+      <field index="5" name="Cache Misses"             code="arg5"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="BeginCacheLookup" index="6">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Lookup Hash"              code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Lookup Description"       code="copyinstr(arg3)" type="%s" width="20" truncation="middle"/>
+      <field index="4" name="Should Autorelease"       code="arg4"            type="%d" width="10" truncation="right"/>
+      <field index="5" name="Cache Enabled"            code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Cache Hits"               code="arg6"            type="%d" width="10" truncation="right"/>
+      <field index="7" name="Cache Misses"             code="arg7"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="EndCacheLookup" index="7">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Lookup Hash"              code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Lookup Description"       code="copyinstr(arg3)" type="%s" width="20" truncation="middle"/>
+      <field index="4" name="Should Autorelease"       code="arg4"            type="%d" width="10" truncation="right"/>
+      <field index="5" name="Cache Enabled"            code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Cache Hits"               code="arg6"            type="%d" width="10" truncation="right"/>
+      <field index="7" name="Cache Misses"             code="arg7"            type="%d" width="10" truncation="right"/>
+      <field index="8" name="Object From Cache"        code="arg8"            type="%x" width="15" truncation="right"/>
+    </probeName>
+    <probeName name="BeginCacheAdd" index="8">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Add Object"               code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Object Hash"              code="arg3"            type="%x" width="15" truncation="right"/>
+      <field index="4" name="Object Description"       code="copyinstr(arg4)" type="%s" width="20" truncation="middle"/>
+      <field index="5" name="Cache Enabled"            code="arg5"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="EndCacheAdd" index="9">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Add Object"               code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Object Hash"              code="arg3"            type="%x" width="15" truncation="right"/>
+      <field index="4" name="Object Description"       code="copyinstr(arg4)" type="%s" width="20" truncation="middle"/>
+      <field index="5" name="Cache Enabled"            code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Added To Cache"           code="arg6"            type="%d" width="10" truncation="right"/>
+      <field index="7" name="Cached Objects Count"     code="arg7"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="BeginCacheRemove" index="10">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Remove Object Hash"       code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Cache Enabled"            code="arg3"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="EndCacheRemove" index="11">
+      <field index="0" name="RKCache Object"           code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Description"              code="copyinstr(arg1)" type="%s" width="20" truncation="middle"/>
+      <field index="2" name="Remove Object"            code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="Object Hash"              code="arg3"            type="%x" width="15" truncation="right"/>
+      <field index="4" name="Object Description"       code="copyinstr(arg4)" type="%s" width="20" truncation="middle"/>
+      <field index="5" name="Cache Enabled"            code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Cached Objects Count"     code="arg6"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="PerformanceNote" index="12">
+      <field index="0" name="Thread"                   code="tid"             type="%x" width="15" truncation="right"/>
+      <field index="1" name="Time"                     code="walltimestamp"   type="%d" width="15" truncation="left"/>
+      <field index="2" name="Object"                   code="arg0"            type="%x" width="15" truncation="middle"/>
+      <field index="3" name="Hash"                     code="arg1"            type="%x" width="15" truncation="middle"/>
+      <field index="4" name="Description"              code="copyinstr(arg2)" type="%s" width="25" truncation="right"/>
+      <field index="5" name="Size"                     code="arg3"            type="%d" width="15" truncation="left"/>
+      <field index="6" name="Severity"                 code="arg4"            type="%d" width="10" truncation="left"/>
+      <field index="7" name="generalStartEnd"          code="arg5"            type="%d" width="10" truncation="left"/>
+      <field index="8" name="Note"                     code="copyinstr(arg6)" type="%s" width="40" truncation="right"/>
+    </probeName>
+    <probeName name="BeginLock" index="13">
+      <field index="0" name="RKLock Object"            code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Acquire Lock Strategy"    code="(int)arg1"       type="%d" width="10" truncation="right"/>
+      <field index="2" name="Multithreading Enabled"   code="arg2"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="EndLock" index="14">
+      <field index="0" name="RKLock Object"            code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Acquired Lock Type"       code="(int)arg1"       type="%d" width="10" truncation="right"/>
+      <field index="2" name="Multithreading Enabled"   code="arg2"            type="%d" width="10" truncation="right"/>
+      <field index="3" name="Lock Acquired"            code="arg3"            type="%d" width="10" truncation="right"/>
+      <field index="3" name="Spin Count"               code="arg4"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="Unlock" index="15">
+      <field index="0" name="RKLock Object"            code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Acquire Lock Strategy"    code="(int)arg1"       type="%d" width="10" truncation="right"/>
+      <field index="2" name="Multithreading Enabled"   code="arg2"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="BeginSortedRegexSort" index="16">
+      <field index="0" name="Sorted Regex Object"      code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Collection Count"         code="arg2"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="EndSortedRegexSort" index="17">
+      <field index="0" name="Sorted Regex Object"      code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Collection Count"         code="arg2"            type="%d" width="10" truncation="right"/>
+      <field index="3" name="Successfully sorted"      code="arg3"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="BeginSortedRegexMatch" index="18">
+      <field index="0" name="Sorted Regex Object"      code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="Collection Count"         code="arg2"            type="%d" width="10" truncation="right"/>
+      <field index="3" name="Match Target"             code="copyinstr(arg3)" type="%s" width="25" truncation="right"/>
+    </probeName>
+    <probeName name="EndSortedRegexMatch" index="19">
+      <field index="0" name="Sorted Regex Object"      code="arg0"            type="%x" width="15" truncation="right"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="right"/>
+      <field index="2" name="RKRegex Object"           code="arg2"            type="%x" width="15" truncation="right"/>
+      <field index="3" name="RKRegex Hash"             code="arg3"            type="%x" width="15" truncation="right"/>
+      <field index="4" name="Regex"                    code="copyinstr(arg4)" type="%s" width="20" truncation="middle"/>
+      <field index="5" name="Matches tried"            code="arg5"            type="%d" width="10" truncation="right"/>
+      <field index="6" name="Collection Count"         code="arg6"            type="%d" width="10" truncation="right"/>
+      <field index="7" name="Hit count for match"      code="arg7"            type="%d" width="10" truncation="right"/>
+      <field index="8" name="Index in Collection"      code="arg8"            type="%d" width="10" truncation="right"/>
+      <field index="9" name="Resort Required"          code="arg9"            type="%d" width="10" truncation="right"/>
+    </probeName>
+    <probeName name="SortedRegexCache" index="20">
+      <field index="0" name="Sorted Regex Object"      code="arg0"            type="%x" width="15" truncation="middle"/>
+      <field index="1" name="Hash"                     code="arg1"            type="%x" width="15" truncation="middle"/>
+      <field index="2" name="Collection Count"         code="arg2"            type="%d" width="15" truncation="right"/>
+      <field index="3" name="Hits"                     code="arg3"            type="%d" width="15" truncation="right"/>
+      <field index="4" name="Hits %"                   code="*((double *)copyin(arg5, sizeof(double)))" type="%f" width="15" truncation="right"/>
+      <field index="5" name="Misses"                   code="arg4"            type="%d" width="15" truncation="right"/>
+      <field index="6" name="Misses %"                 code="*((double *)copyin(arg6, sizeof(double)))" type="%f" width="15" truncation="right"/>
+    </probeName>
+  </extension>
+</plugin>

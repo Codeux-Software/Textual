@@ -1,0 +1,344 @@
+#
+#  This Makefile is executed by the 'PCRE' target in Xcode.
+#  It is invoked by a 'Script Build Phase' that can be accessed by right clicking 'Targets > PCRE > Build PCRE Library' and selecting 'Get Info'
+#  After some basic checks, the 'Script Build Phase' then executes the buildPCRE.sh shell script, which after checking for build environment changes,
+#  invokes this Makefile.
+#
+#  NOTE: Nearly all of the functionality and behavior of this Makefile can be tuned from within Xcode via build settings.
+#        Most build settings related to building the PCRE library are consolidated in the 'RegexKit Build Settings' text file.
+#
+#  Attempts to automagically configure itself from the various target settings:
+#
+#  Architectures (ppc, i386, etc, essentially universal binary build)
+#  Debugging information, and style (stabs vs dwarf)
+#  Generating profile information
+#  Optimization setting
+#  Profile directed feedback setting
+#
+
+.PHONY:	all build pcre clean distclean check_pcre_header
+
+#
+# Files that can only be built with the native target, and the results are copied to the other architectures.
+# Will skip files that don't build successfully which is hopefully due to version differences.
+#
+# The main reason these are included here is packages, such as pcre, sometimes need to build intermediate
+# products which is the input to the next stage.  The files here are an example of that, they represent
+# files that are used to build locale tables applicable to the machine in which the build is running.
+# Obviously these files can not be built for a non-native architecture and run, but the output from the
+# files is likely identical.  This forces the listed files to be built for the native architecture, and the
+# results are copied in to all non-native architectures in the hope that it will work.
+#
+
+ifeq (pcre-7.0, ${PCRE_NAME_VERSION})
+MUST_BUILD_WITH_NATIVE_ARCH_FILES := dftables.o dftables pcre_chartables.c
+else
+MUST_BUILD_WITH_NATIVE_ARCH_FILES :=
+endif
+
+#####
+#
+# Organize the various files and paths requires along native and non-native architecture lines.
+#
+
+PCRE_CONFIGURE_ARCH_DIRS            = $(foreach arch, $(ARCHS), ${PCRE_CONFIGURE_DIR}/$(arch))
+PCRE_INSTALL_ARCH_DIRS              = $(foreach arch, $(ARCHS), ${PCRE_INSTALL_DIR}/$(arch))
+
+PCRE_DIRECTORIES                    = ${PCRE_TARGET_BUILD_DIR} ${PCRE_TEMP_ROOT} \
+																			${PCRE_TEMP_DIR} ${PCRE_HTML_DIR} ${PCRE_CONFIGURE_DIR} ${PCRE_INSTALL_DIR} \
+                                      ${PCRE_CONFIGURE_ARCH_DIRS} ${PCRE_INSTALL_ARCH_DIRS} \
+																			${PCRE_INSTALL_DIR}/lib ${PCRE_TARGET_BUILD_DIR}/lib
+
+PCRE_DONT_CLEAN_DIRECTORIES        += ${PCRE_TARBALL_DISTRIBUTIONS_DIR}
+PCRE_CLEAN_DIRECTORIES              = $(filter-out ${PCRE_DONT_CLEAN_DIRECTORIES}, ${PCRE_DIRECTORIES})
+
+PCRE_ARCH_MAKEFILES                 = $(foreach srcdir, ${PCRE_CONFIGURE_ARCH_DIRS}, $(srcdir)/Makefile)
+PCRE_ARCH_LIB_FILES                 = $(foreach srcdir, ${PCRE_INSTALL_ARCH_DIRS}, $(srcdir)/lib/libpcre.a)
+
+PCRE_NATIVE_ARCH_DIR                = ${PCRE_CONFIGURE_DIR}/${NATIVE_ARCH}
+PCRE_NATIVE_ARCH_MAKEFILE           = ${PCRE_NATIVE_ARCH_DIR}/Makefile
+PCRE_NATIVE_ARCH_FILES              = ${MUST_BUILD_WITH_NATIVE_ARCH_FILES}
+PCRE_NATIVE_ARCH_FULLPATH_FILES     = $(foreach file, ${PCRE_NATIVE_ARCH_FILES}, ${PCRE_NATIVE_ARCH_DIR}/$(file))
+
+PCRE_NON_NATIVE_ARCH_ARCHS          = $(filter-out ${NATIVE_ARCH}, ${ARCHS})
+PCRE_NON_NATIVE_ARCH_DIRS           = $(foreach narch, ${PCRE_NON_NATIVE_ARCH_ARCHS}, ${PCRE_CONFIGURE_DIR}/$(narch))
+PCRE_NON_NATIVE_ARCH_FULLPATH_FILES = $(foreach ndir, ${PCRE_NON_NATIVE_ARCH_DIRS}, $(foreach file, ${PCRE_NATIVE_ARCH_FILES}, $(ndir)/$(file)))
+
+#
+# Add appropriate flags if SDKROOT is set
+#
+
+ifneq ($(strip ${SDKROOT}),)
+PCRE_CONF_CFLAGS += -isysroot ${SDKROOT}
+PCRE_CONF_LDFLAGS += -Wl,-syslibroot,${SDKROOT}
+endif
+
+#
+# Handle debugging information generation
+#
+
+ifeq (YES, ${GCC_GENERATE_DEBUGGING_SYMBOLS})
+PCRE_GCC_DEBUG := YES
+endif
+
+ifeq (YES, ${PCRE_GCC_DEBUG})
+
+  ifeq (dwarf, ${DEBUG_INFORMATION_FORMAT})
+  PCRE_GCC_DEBUG_CFLAGS += -gdwarf-2
+  endif
+
+  ifeq (stabs, ${DEBUG_INFORMATION_FORMAT})
+  PCRE_GCC_DEBUG_CFLAGS += -g
+  endif
+
+	ifeq (full, ${GCC_DEBUGGING_SYMBOLS})
+	PCRE_GCC_DEBUG_CFLAGS += -g${GCC_DEBUGGING_SYMBOLS}
+	endif
+
+  ifndef PCRE_GCC_DEBUG_CFLAGS
+  PCRE_GCC_DEBUG_CFLAGS += -g
+  endif
+
+  PCRE_CONF_CFLAGS += ${PCRE_GCC_DEBUG_CFLAGS}
+
+endif
+
+#
+# Handle profile generation
+# NOTE: This does not seem to work correctly at the Xcode / compiler / linker / executable level. ??
+#
+
+ifeq (YES, ${GENERATE_PROFILING_CODE})
+PCRE_CONF_CFLAGS += -pg
+PCRE_CONF_LDFLAGS += -pg
+endif
+
+ifeq (YES, ${GCC_INSTRUMENT_PROGRAM_FLOW_ARCS})
+PCRE_CONF_CFLAGS += -finstrument-functions
+PCRE_CONF_LDFLAGS += -lSaturn
+endif
+
+#
+# Handle optimization settings
+#
+
+ifdef GCC_OPTIMIZATION_LEVEL
+ifneq (0, ${GCC_OPTIMIZATION_LEVEL})
+PCRE_CONF_CFLAGS += -O${GCC_OPTIMIZATION_LEVEL}
+endif
+endif
+
+ifdef GCC_MODEL_TUNING
+PCRE_NATIVE_CONF_CFLAGS += -mtune=${GCC_MODEL_TUNING}
+endif
+
+#
+# Handle the profile directed feedback optimization settings
+#
+
+ifeq (GenerateProfile, ${GCC_FEEDBACK_DIRECTED_OPTIMIZATION})
+PCRE_CONF_CFLAGS += -fprofile-generate
+PCRE_CONF_LDFLAGS += -fprofile-generate
+endif
+
+ifeq (UseProfile, ${GCC_FEEDBACK_DIRECTED_OPTIMIZATION})
+PCRE_CONF_CFLAGS += -fprofile-use
+PCRE_CONF_LDFLAGS += -fprofile-use
+endif
+
+# 
+# Handle any extra linker flags
+#
+
+ifdef OTHER_LDFLAGS
+PCRE_CONF_LDFLAGS += ${OTHER_LDFLAGS}
+endif
+	
+##########
+#
+# These three rules drive the build process.  all, being first, is default and is dependent on pcre.
+# The target 'build', the target supplied by Xcode during a build, is also dependent on pcre.
+#
+# Master pcre target: Primary driver / dependency relationships
+#
+# ${PCRE_TARGET_LIB_FILE}     The file that the framework ultimately links against.
+# ${PROJECT_PCRE_HEADER_FILE} Copies the pcre distributions pcre.h in to the frameworks Source/Header/RegexKit
+# check_pcre_header           Ensures the frameworks copy of pcre.h in Source/Headers/RegexKit and the pcre distributions pcre.h remain in sync
+#
+##########
+
+all: pcre
+	
+build: pcre
+
+pcre: ${PCRE_TARGET_LIB_FILE} ${PROJECT_PCRE_HEADER_FILE} check_pcre_header
+
+clean:
+	@echo "${MAKEFILE_PCRE}:177: note: Cleaning pcre."; \
+	rm -rf ${PCRE_CLEAN_DIRECTORIES};
+
+distclean: clean
+	rm -rf ${PCRE_TARBALL_FILE_NAME}
+
+#
+# Below are the build rules in roughly build time chronology.
+# prerequisites -> fetch -> untar -> configure -> any required pre-build steps -> build -> install
+#
+##########
+
+##### prerequisites
+#
+# Perform any steps needed to build the library, such as creating various directories.
+#
+
+# The PCRE_TEMP_DIR is created by the untaring of the distribution so it must be filtered here.
+$(filter-out ${PCRE_TEMP_DIR}, ${PCRE_DIRECTORIES}):
+	mkdir -p '$@'
+
+##### fetch & untar
+#
+# Fetches the pcre tarball if it doesn't exist and untars it.  Makes a timestamp so if the tarball is updated it causes an untaring of the newer tarball.
+#
+
+${PCRE_TARBALL_FILE_PATH}:
+	@echo "${MAKEFILE_PCRE}:204: note: The pcre library distribution file '${PCRE_TARBALL_FILE_NAME}' does not exist.  Downloading from '${PCRE_TARBALL_URL}'."; \
+	mkdir -p '${PCRE_TARBALL_DISTRIBUTIONS_DIR}'; \
+	${PCRE_FETCH_COMMAND} || \
+	  if [ ! -f '${PCRE_TARBALL_FILE_PATH}' ] || [ -z '${PCRE_TARBALL_FILE_PATH}' ]; then \
+	    echo "${MAKEFILE_PCRE}:208: error: Unable to download the pcre library distribution file '${PCRE_TARBALL_FILE_NAME}'."; \
+		  echo "${MAKEFILE_PCRE}:209: error: The shell command that was executed: '${PCRE_FETCH_COMMAND}'."; \
+		  echo "${MAKEFILE_PCRE}:210: error: You can manually download the appropriate distribution file from 'http://www.pcre.org/'."; \
+		  echo "${MAKEFILE_PCRE}:211: error: Place the downloaded distribution file in the directory '${PCRE_TARBALL_DISTRIBUTIONS_DIR}'."; \
+		  echo "${MAKEFILE_PCRE}:212: error: The full path including the file name that I expect the tarball at is: '${PCRE_TARBALL_FILE_PATH}'."; \
+		  exit 1; \
+	  fi;
+		
+${PCRE_TEMP_DIR}: ${PCRE_TARBALL_FILE_PATH}
+	@echo "${MAKEFILE_PCRE}:217: note: Untaring '${PCRE_TARBALL_FILE_NAME}'."; \
+	cd '${PCRE_TEMP_ROOT}' && \
+	  ${PCRE_UNTAR_COMMAND};
+
+##### configure
+#
+# These rules perform the 'configure' portion of the autoconf 'configure; make; make install;' steps.
+# First, the configure script must exist, which requires the distribution directory,
+# which is created when the distribution is untared.
+# Then, a directory is created for each architecture, the working directory is set
+# to that directory, and '../../configure' is executed relative to that directory.
+# This allows each architecture to be configured independently of the other architectures.
+# Also handles proper compiler target architecture configuration.
+#
+
+GCC_DUMPMACHINE=$(shell gcc -dumpmachine)
+GCC_VENDOR_OS=$(shell '${PERL}' -e '($$_ = "${GCC_DUMPMACHINE}") =~ s/[^\-]+\-//; print($$_);')
+CONFIGURE_BUILD_FOR=--build=${GCC_DUMPMACHINE}
+
+${PCRE_TEMP_DIR}/configure: ${PCRE_TEMP_DIR}
+
+${PCRE_ARCH_MAKEFILES}: ${PCRE_TEMP_DIR}/configure
+	@BUILD_FOR_ARCH="$(patsubst ${PCRE_CONFIGURE_DIR}/%/Makefile,%, $@)"; \
+	HOST_ARCH="$${BUILD_FOR_ARCH}"; case $${HOST_ARCH} in i386 | x86_64 ) ARCH_TUNE_FLAGS="-mtune=generic"; esac; \
+	case $${BUILD_FOR_ARCH} in ppc | i386 ) ARCH_MACOSX_DEPLOYMENT_TARGET="10.4"; esac; \
+	case $${BUILD_FOR_ARCH} in ppc64 | x86_64 ) ARCH_MACOSX_DEPLOYMENT_TARGET="10.5"; esac; \
+	if [ "$${BUILD_FOR_ARCH}" == "ppc" ]; then ARCH_TUNE_FLAGS="-mtune=G4"; fi; \
+	if [ "$${BUILD_FOR_ARCH}" == "ppc64" ]; then ARCH_TUNE_FLAGS="-mtune=G5"; fi; \
+	echo "${MAKEFILE_PCRE}:245: note: Configuring the pcre library for the '$${BUILD_FOR_ARCH}' architecture using the '${CONFIGURATION}' configuration. This may take some time."; \
+	mkdir -p "${PCRE_CONFIGURE_DIR}/$${BUILD_FOR_ARCH}"; \
+	cd "${PCRE_CONFIGURE_DIR}/$${BUILD_FOR_ARCH}" && \
+	  ../../configure --prefix="${PCRE_INSTALL_DIR}/$${BUILD_FOR_ARCH}" \
+	                  ${CONFIGURE_BUILD_FOR} --host=$${HOST_ARCH}-${GCC_VENDOR_OS} --target=$${HOST_ARCH}-${GCC_VENDOR_OS} \
+	                  ${PCRE_CONF_OPTIONS} \
+	                  CFLAGS="${PCRE_CONF_CFLAGS} -arch $${BUILD_FOR_ARCH} $${ARCH_TUNE_FLAGS} -mmacosx-version-min=$${ARCH_MACOSX_DEPLOYMENT_TARGET}" \
+	                  LDFLAGS="${PCRE_CONF_LDFLAGS} -arch $${BUILD_FOR_ARCH} -mmacosx-version-min=$${ARCH_MACOSX_DEPLOYMENT_TARGET}";
+
+##### required pre-build steps
+#
+# The following two rules are largely for pcre-7.0, which requires some files be prebuilt using the native architecture.
+#
+
+${PCRE_NATIVE_ARCH_FULLPATH_FILES}: ${PCRE_NATIVE_ARCH_MAKEFILE}
+	@BUILD_FOR_ARCH="${NATIVE_ARCH}"; \
+	BUILD_FOR_TARGET="$(patsubst ${PCRE_NATIVE_ARCH_DIR}/%,%, $@)"; \
+	BUILD_FOR_CONF_DIR="${PCRE_NATIVE_ARCH_DIR}"; \
+	echo "${MAKEFILE_PCRE}:263: note: Pre-building the pcre library for the '$${BUILD_FOR_ARCH}' native architecture using the '${CONFIGURATION}' configuration. This may take some time."; \
+	cd "$${BUILD_FOR_CONF_DIR}" && \
+	  '${MAKE}' $${BUILD_FOR_TARGET} &>/dev/null; \
+	LAST_RESULT=$$?; \
+	if [ $${LAST_RESULT} != 0 ]; then \
+		echo "${MAKEFILE_PCRE}:268: note: '$${BUILD_FOR_TARGET}' returned code '$${LAST_RESULT}'. Possibly an invalid target for this pcre version.  Continuing."; \
+		touch "$${BUILD_FOR_TARGET}"; \
+	fi; \
+	if [ -h "$${BUILD_FOR_TARGET}" ]; then \
+		TARGET_LINK=`readlink "$${BUILD_FOR_TARGET}"`; \
+		if [ "$${TARGET_LINK}" -ot '${PCRE_NATIVE_ARCH_MAKEFILE}' ]; then \
+			touch "$${BUILD_FOR_TARGET}"; \
+		fi; \
+	fi;
+
+${PCRE_NON_NATIVE_ARCH_FULLPATH_FILES}: ${PCRE_NON_NATIVE_ARCH_DIRS}/%: ${PCRE_NATIVE_ARCH_DIR}/%
+	@BUILD_FOR_TARGET="$(notdir $@)"; \
+	BUILD_FOR_ARCH="$(patsubst ${PCRE_CONFIGURE_DIR}/%/$(notdir $@),%, $@)"; \
+	BUILD_FOR_CONF_DIR="${PCRE_CONFIGURE_DIR}/$${BUILD_FOR_ARCH}"; \
+	echo "${MAKEFILE_PCRE}:282: note: Copying the required pre-built file '$${BUILD_FOR_TARGET}' from the '$${BUILD_FOR_ARCH}' native architecture to the '$${BUILD_FOR_TARGET}' non-native architecture."; \
+	'${CP}' -f '$<' '$@'
+
+##### build
+#
+# These two rules first build the pcre static library for each architecture, then merge it in to a single universal static library.
+#
+
+${PCRE_ARCH_LIB_FILES}: ${PCRE_ARCH_MAKEFILES} ${PCRE_NATIVE_ARCH_FULLPATH_FILES} ${PCRE_NON_NATIVE_ARCH_FULLPATH_FILES}
+	@BUILD_FOR_ARCH="$(patsubst ${PCRE_INSTALL_DIR}/%/lib/libpcre.a,%, $@)"; \
+	BUILD_FOR_CONF_DIR="${PCRE_CONFIGURE_DIR}/$${BUILD_FOR_ARCH}"; \
+	echo "${MAKEFILE_PCRE}:293: note: Building the pcre library for the '$${BUILD_FOR_ARCH}' architecture using the '${CONFIGURATION}' configuration. This may take some time."; \
+	mkdir -p "$${BUILD_FOR_CONF_DIR}"; \
+	cd "$${BUILD_FOR_CONF_DIR}" && \
+		'${MAKE}' install
+#	  if [ '${PCRE_PARALLEL_BUILD}' == "YES" ]; then '${MAKE}' -j '${CPUS}' -l '${MAXLOAD}' install; else '${MAKE}' install; fi;
+
+${PCRE_UNIVERSAL_LIB_FILE}: ${PCRE_ARCH_LIB_FILES} ${PCRE_INSTALL_DIR}/lib
+	@echo "${MAKEFILE_PCRE}:300: note: Combining the separate architectures libpcre.a results into a single universal binary libpcre.a."; \
+	lipo $(foreach lib, $(filter-out ${PCRE_INSTALL_DIR}/lib, $^), "$(lib)") -create -output '${PCRE_UNIVERSAL_LIB_FILE}'
+
+##### install
+#
+# The final universal static library is kept in the 'temporary build files' for the target.
+# Xcode does not execute our target phase script for a 'Clean target' action, we have to find a work around.
+# The logic for this depends on the fact that Xcode will delete the 'temporary build files' (ie, 'build/RegexKit.build/Release/PCRE.build/') directory for a clean.
+# Access to the final universal pcre library is via the 'built product directory' (ie, 'build/Release/pcre-7.4'). This directory is not deleted during a clean.
+# We use a symlink from the 'built files directory' to the actual library in the 'temporary build files' directory.
+# This way we can ensure that we're not leaving out of date / non-cleaned copies of the final library around.
+# The symlink file that the framework links against ends up pointing to nothing when the 'temporary build files' directory is erased. Better than nothing, I suppose.
+#
+
+${PCRE_TARGET_LIB_FILE}: ${PCRE_UNIVERSAL_LIB_FILE} ${PCRE_TARGET_BUILD_DIR}/lib
+	@if [ ! -L '${PCRE_TARGET_LIB_FILE}' ]; then \
+		echo "${MAKEFILE_PCRE}:316: note: Symlinking build/${CONFIGURATION}/${PCRE_NAME_VERSION}/lib/libpcre.a -> actual libpcre.a."; \
+		ln -sf '${PCRE_UNIVERSAL_LIB_FILE}' '${PCRE_TARGET_LIB_FILE}'; \
+	fi;
+
+${PROJECT_PCRE_HEADER_FILE}: check_pcre_header
+
+# This is a semi-hack which ensures that if the pcre library pcre.h header file changes in any way, we delete the frameworks copy in Source/Headers/RegexKit.
+# This ensures that we are exactly in sync with the linked against pcre version.
+check_pcre_header: ${PCRE_UNIVERSAL_LIB_FILE}
+	@if [ ! -f '${PROJECT_PCRE_HEADER_FILE}' ] && [ -f '${PCRE_HEADER_FILE}' ]; then \
+		'${CP}' -p '${PCRE_HEADER_FILE}' '${PROJECT_PCRE_HEADER_FILE}'; \
+	fi; \
+	if [ -f '${PROJECT_PCRE_HEADER_FILE}' ] && [ -f '${BUILD_DISTRIBUTION_TEMP_PCRE_HEADER_FILE}' ]; then \
+	  TEMP_HEADER=`diff -q '${PROJECT_PCRE_HEADER_FILE}' '${BUILD_DISTRIBUTION_TEMP_PCRE_HEADER_FILE}'`; \
+	  if [ "$${TEMP_HEADER}" == "" ]; then \
+			rm -f '${PROJECT_PCRE_HEADER_FILE}'; \
+			'${CP}' -p '${PCRE_HEADER_FILE}' '${PROJECT_PCRE_HEADER_FILE}'; \
+		fi; \
+	fi; \
+	if [ -f '${PROJECT_PCRE_HEADER_FILE}' ]; then \
+		PCRE_DIST_HEADER=`diff -q '${PROJECT_PCRE_HEADER_FILE}' '${PCRE_HEADER_FILE}'`; \
+		if [ "$${PCRE_DIST_HEADER}" != "" ]; then \
+			echo "${MAKEFILE_PCRE}:338: error: The pcre distributions '${PCRE_HEADER_FILE}' header file and the frameworks '${PROJECT_PCRE_HEADER_FILE}' header file differ."; \
+			echo "${MAKEFILE_PCRE}:339: warning: This should be investigated and corrected if appropriate."; \
+			echo "${MAKEFILE_PCRE}:340: warning: This is likely due to rebuilding with a different version of the pcre library."; \
+			echo "${MAKEFILE_PCRE}:341: warning: If this is the case, replace the frameworks header file with the current pcre distributions version."; \
+			echo "${MAKEFILE_PCRE}:342: warning: I will not replace the frameworks header file because it may contain local edits."; \
+		fi; \
+	fi;

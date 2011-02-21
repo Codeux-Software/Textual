@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+@import "CSS/guide.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RegexKit Release Notes</title>
+</head>
+
+<body>
+<div class="releaseNotes bodyTop">
+<h1>RegexKit Release Notes</h1>
+
+<div class="releaseNotesContents">
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>This document contains a summary of the changes and important information for each version of RegexKit that developers should be aware of.</p>
+
+<h3><a name="Contents">Contents:</a></h3>
+
+<ul class="contents">
+<li><a href="#Release_0_6_0">Release 0.6.0 Beta</a></li>
+<li><a href="#Release_0_5_0">Release 0.5.0 Beta</a></li>
+<li><a href="#Release_0_4_0">Release 0.4.0 Beta</a></li>
+<li><a href="#Release_0_3_1">Release 0.3.1 Beta</a></li>
+<li><a href="#Release_0_3_0">Release 0.3.0 Beta</a></li>
+<li><a href="#Release_0_2_0">Release 0.2.0 Beta</a></li>
+<li><a href="#Release_Alpha">Release Alpha</a></li>
+</ul>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="ReleaseInformation.html" class="section-link nobr">RegexKit Framework Release Information - Release History</a></li>
+    <li><a href="ChangeLog.html" class="section-link nobr">RegexKit Framework Release Information - Change Log</a></li>
+  </ul>
+</div>
+
+</div> <!-- releaseNotesContents -->
+
+<div class="Release_0_6_0_Beta">
+<h2><a name="Release_0_6_0">Release Notes for 0.6.0 Beta</a></h2>
+
+<div class="outer">
+<div class="security">
+<div class="inner">
+<h3>Security Related Fixes</h3>
+
+<p>PCRE 7.6 includes an important security related buffer overflow fix.  From the PCRE 7.6 <a href="http://www.pcre.org/changelog.txt" class="section-link">Change Log</a>:</p>
+
+<div class="important box"><div class="table"><div class="row"><div class="message cell"><p class="code">A class with a very large number of characters with codepoints greater than 255 (in UTF-8 mode, of course), caused a buffer overflow.</p>
+</div></div></div></div>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">RegexKit and PCRE are now compiled with the GCC compiler option <span class="code">-fstack-protector-all</span>, introduced in Xcode 3.0, which <i>may</i> help protect against certain types of buffer overflow bugs.  The effectiveness of the protection is heavily dependent on the specific details regarding the buffer overflow.</div></div></div></div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li>PCRE 7.6 <a href="http://www.pcre.org/changelog.txt" class="section-link">Change Log</a></li>
+      <li>Wikipedia <a href="http://en.wikipedia.org/wiki/Stack-smashing_protection" class="section-link">stack-smashing protection</a></li>
+      <li>GCC 4.0 Release Notes <a href="http://developer.apple.com/releasenotes/DeveloperTools/RN-GCC4/index.html#//apple_ref/doc/uid/TP40001825-DontLinkElementID_1" class="section-link">Xcode 3.0 Release</a></li>
+  </ul>
+</div>
+
+</div>
+</div>
+</div>
+
+<h3>Linking Problems When Using Mac OS X 10.4 or Xcode Versions Prior to 3.0</h3>
+
+<p>A problem with linking against the framework on Xcode versions prior to 3.0 or under Mac OS X 10.4 has come to light.  The problem lies with the DTrace functionality introduced in RegexKit 0.5 and the fact that Apple uses a new linker section type to hold the information required for DTrace support.  This is only a problem with the step during the build process that does the final link of <span class="file">.o</span> files in to a single executable image, not with the run time linking that takes places during the start of program execution.  This problem is harmless in the sense that it does not cause any problems with the execution of applications linked under Xcode 3.0 / Mac OS X 10.5 and run on a Mac OS X 10.4 system.  It is, however, a major inconvenience if you are attempting to use the older toolchain for development.</p>
+
+<p>I have opened a bug with Apple, ID # <span class="code">5698078</span>, regarding this issue.  I can't say if this will result in a fix from Apple, but a bug report has at least been filed.  <b>Update:</b> The first bug has been closed as <i>Behaves correctly</i>.  Resubmitted bug (ID # <span class="code">5708443</span>) because the justification given for closing the bug suggests the engineer did not actually read the bug report.</p>
+
+<p>Unfortunately I can not find nor think of an elegant work around for this issue.  A proper fix from Apple would involve a trivial modification to the <span class="file">ld</span> linker that simply ignores the DTrace section instead of throwing an error.  None of the common tools, such as <span class="file">ld</span>, <span class="file">nmedit</span>, or <span class="file">strip</span> appear to have the ability to remove the offending section.  <span class="file">strip</span> does support a 'stub library' mode that strips a shared library of all of it's executable code and data but leaves all the dynamic library symbol information required to perform the final linking step, but when testing this feature it was discovered that the offending DTrace Object Format section remained in the stripped stub library.</p>
+
+<p>A very kludgey work around if you absolutely must link using the older tools is to re-build the framework with DTrace support disabled.  You can disable DTrace by following these steps:</p>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The following has not been heavily tested, but should work or at least cover the basic steps required.</div></div></div></div>
+
+<ul class="square">
+  <li>Comment out the @link ENABLE_DTRACE_INSTRUMENTATION ENABLE_DTRACE_INSTRUMENTATION @/link <span class="code">#define</span> near the end of <span class="file">RegexKitDefines.h</span>.</li>
+  <li>Be sure to <span class="menu-selection">Build</span> &gt; <span class="menu-selection">Clean</span> to make sure that there are no lingering references to any DTrace functionality left in any of the object files.</li>
+  <li>Rebuild the framework.</li>
+</ul>
+
+<p>When doing some quick tests of this procedure, the cleaning step seems to be important.  I'm not sure what's lingering that causes the final linked product to have a DTrace Object Format section, but cleaning seems to do the trick.  While I did not need to remove <span class="file">RegexKitProbes.d</span> from the <span class="xcode-group">RegexKit Framework</span> compiled sources, it is another potential source of <span class="hardNobr">'DTrace contamination.'</span>  If you need to, you can stop <span class="file">RegexKitProbes.d</span> from being 'compiled' (it only creates a .h header, not actual code) by removing it from <span class="xcode-group">Targets</span> &gt; <span class="xcode-group">RegexKit Framework</span> &gt; <span class="xcode-group">Compile Sources</span>.</p>
+
+<p>Depending on your needs, you can either use the rebuilt framework as-is, including copying the rebuilt framework version in to your applications bundle.  One possibility is to simply copy the rebuilt framework over the copy you are currently linking against.  This will also have the effect of causing the rebuilt framework, without DTrace support, to be copied in to your applications bundle and used during execution, assuming your application links to RegexKit as outlined in <a href="RegexKitProgrammingGuide.html#AddingtheRegexKitframeworktoyourProject" class="section-link">Adding the <span class="nobr">RegexKit.framework</span> to your Project</a>.</p>
+
+<p>The other option requires a bit more work, but retains the DTrace functionality.  Since Mac OS X 10.4 can properly execute the framework version with DTrace support, the rebuilt framework (without DTrace support) is really only needed as a temporary stand-in to allow the final linking step to complete.  This would involve altering your applications build settings so that the linking step uses the rebuilt framework, but the <span class="build-phase">Copy Files</span> build phase that copies the RegexKit framework in to your applications bundle copies the fully functional version.</p>
+
+<p>Another possibility would be to use the simpler first method for the majority of your work, but manually replace the RegexKit shared library file inside your applications <span class="code">.App</span> bundle on an as needed basis.  From the shell, this would probably be something like (as a single line, in case your browser was forced to split the line for rendering purposes):</p>
+
+<div class="box sourcecode">shell% cp <i>Path_to_fully_functional_RegexKit</i>/RegexKit.framework/Versions/A/RegexKit <i>Path_to_your_applications_.App_bundle</i>/YourApp.App/Contents/Frameworks/RegexKit.framework/Versions/A/RegexKit</div>
+
+<h3>Important Changes You Should Be Aware Of</h3>
+
+<p>This release brings a number of forward looking changes to the frameworks API.  Two changes that you should be aware of is the addition of a <span class="code">library:</span> parameter to the @link RKRegex RKRegex @/link class and the addition of an <span class="code">error:</span> parameter to many methods.  The version of PCRE has been upgraded to the latest available, 7.6.</p>
+
+<h4>PCRE Upgraded to 7.6</h4>
+
+<p>The version of PCRE used by RegexKit has been upgraded to version 7.6.  Users are encouraged to read the PCRE <a href="http://www.pcre.org/changelog.txt" class="section-link">Change Log</a> for information regarding the 7.6 release.  In summary, this release is largely a bug fix release and introduces no new features or major improvements.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell"><p>PCRE 7.6 includes an important security related buffer overflow fix.</p></div></div></div></div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li>PCRE 7.6 <a href="http://www.pcre.org/changelog.txt" class="section-link">Change Log</a></li>
+  </ul>
+</div>
+
+<h4>Addition of a <span class="code">library:</span> Parameter to Some Methods</h4>
+
+<p>The purpose of the <span class="code">library:</span> parameter is to enable the ability to use additional regular expression libraries in the future.  As of this release the only supported library remains the PCRE library, which is specified using the @link RKRegexPCRELibrary RKRegexPCRELibrary @/link constant.  Nearly all the functionality provided by RegexKit is independent of the underlying pattern matching library, and most regular expression pattern matching libraries provide similar API's for compiling regular expressions, performing matches, and extracting the results of a match.  Ideally, a generic pattern matching library interface can be created, hiding the details of implementing support for individual regular expression libraries behind a common API.</p>
+
+<h4>Addition of an <span class="code">error:</span> Parameter to Some Methods</h4>
+
+<p>Adding the <span class="code">error:</span> parameter to methods allows users of the framework to use the @link NSError NSError @/link paradigm for catching and reporting errors.  Initially, RegexKit would throw an exception for error conditions such as a regular expression syntax error.  Now, when using a method with a <span class="code">error:</span> parameter, these types of error conditions no longer result in an exception being thrown.  Instead, information about the cause of the error is returned via a @link NSError NSError @/link object.  These @link NSError NSError @/link objects can be handled using the same infrastructure used in handling other @link NSError NSError @/link error conditions, such as displaying errors using the @link NSResponder NSResponder @/link @link presentError: presentError: @/link method or the @link NSAlert NSAlert @/link @link alertWithError: alertWithError: @/link method.</p>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The exception throwing behavior of methods available prior to 0.6 is unchanged to ensure maximum compatibility.</div></div></div></div>
+
+<h4>Throwing an Exception vs. Returning a <span class="code">NSError</span></h4>
+
+<p>One of the guidelines used to determine whether or not an error condition should throw an exception or create a @link NSError NSError @/link object is whether or not an error condition could be the result of user input.  As an example, passing <span class="code">nil</span> as an argument for a required parameter is almost certainly due to programmer error and will throw a @link NSInvalidArgumentException NSInvalidArgumentException @/link exception.  However, a syntax error in a regular expression might just be a mistake on the users part and will create a @link NSError NSError @/link object with information regarding the error along with providing a @link NSLocalizedDescriptionKey NSLocalizedDescriptionKey @/link and @link NSLocalizedFailureReasonErrorKey NSLocalizedFailureReasonErrorKey @/link that are suitable for displaying to the user.  The goal is to simplify the process of dealing with user generated error conditions and ideally being able to hand any @link NSError NSError @/link objects directly over to the standard @link NSError NSError @/link display machinery.  Using the common @link NSError NSError @/link <span class="code">error:</span> way of returning error conditions avoids having to bracket calls within <span class="code">@try</span> / <span class="code">@catch</span> blocks to the RegexKit framework that could possibly result in throwing an exception due to unpredictable user input.</p>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The process of adding an <span class="code">error:</span> parameter to appropriate methods is a work in progress.  This typically involves re-writing methods that throw exceptions to be stubs to their <span class="code">error:</span> counterparts and rewriting the error description so that it is of sufficient quality as to be displayed directly to end users via the GUI.</div></div></div></div>
+
+<p>To support the creation of error reporting strings that are displayed to the user, the ability to localize the strings used by the RegexKit framework was started.  In addition to this, a number of alternative substitutions for the error strings returned by the PCRE library were created in order to provide a consistent Cocoa user experience.  For example, an error string provided by the PCRE library:</p>
+
+<ul class="square"><li><span class="code">missing )</span></li></ul>
+
+<p>And the localizable alternative text provided and used by RegexKit:</p>
+
+<ul class="square"><li><span class="code">The closing ')' for a '(...)' parenthesis pair is missing.</span></li></ul>
+
+<h3>Localization</h3>
+
+<p>This release begins the process of adding the ability to localize the strings used by RegexKit for different locales.  Much of the internal infrastructure required to localize strings has been put in place, however any additional localizations will have to be contributed by users as the author of RegexKit only speaks English.  See the <a href="ChangeLog.html#Release_0_6_0" class="section-link">Change Log for 0.6.0 Beta</a> for details.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Users who wish to contribute a localization must read and agree to the terms in <a href="ReleaseInformation.html#ReleaseInformation_UserContributions" class="section-link">User Contributions</a>.</div></div></div></div>
+
+<h3>Concurrent, Multithreaded Evaluation of Regular Expressions in Collections</h3>
+
+<p>The Safari plug-in, <a href="http://safariadblock.sourceforge.net/" class="section-link">Safari AdBlock</a>, uses RegexKit to perform regular expression pattern matches.  This involves checking each URL against a list of regular expressions to check for a match.  This need to determine if any of the regular expressions in a collection matched a common string was the inspiration for this feature.  There are three techniques that RegexKit uses to accelerate this particular task:</p>
+
+<ul class="square">
+<li>The first technique is to perform checks in parallel if possible, specifically one thread per CPU.</li>
+
+<li>The second technique is to keep a count of the number of times a regular expression in a collection successfully matched.  The list of the collections regular expressions is then kept in sorted order, from the regular expression with the highest number of matches to the lowest number of matches.  The order of this sorted list is then used determine the order that regular expressions are evaluated, stopping at the first match.  This causes the regular expressions that historically have the greatest chance of matching to be tried first.  In a list of several hundred regular expressions, this can prevent the needless evaluation of hundreds of regexes, substantially speeding up the process of determining if any regular expression in the collection matches.</li>
+
+<li>The third technique caches the negative result when a string is not matched by any of the regular expressions in the collection.  When a string to be checked is not matched by any of the lists regular expressions, all of the regular expressions must be evaluated to arrive at this result.  This is both the slowest and most common case, unfortunately.  However, once a string is known not to match, it will never be matched by any of the regular expressions in the list.  The framework uses this fact to keep a small cache of negative hits by hashing a strings hash value over a small number of hash buckets (251 as currently implemented).  This forms a simple, resource cheap, and very effective Least Recently Used cache which is dramatically faster than re-evaluating all the regular expressions.</li>
+</ul>
+
+<p>For the parallel, multithreading evaluation of regular expressions, the framework creates a thread pool with a number of threads equal to the number of CPU's available.  If there is only a single CPU, no thread pool is created and evaluation of regular expressions is done sequentially.  When running under Mac OS X 10.5, the new thread affinity feature is used to bind each thread to a separate CPU.</p>
+
+<p>When searching a @link NSArray NSArray @/link for the first matching regular expression in the array using @link firstMatchingRegexInArray: firstMatchingRegexInArray: @/link, and additional performance improvement is available.  If a regular expression in the @link NSArray NSArray @/link matches, only regular expressions with a lower index value (that is, regular expressions that are before the matching regular expression) are checked from that point on, skipping any regular expressions that may have bubbled to the top from many successful matches, but occur at a later point in the array than the current lowest match.</p>
+
+<p>Five new DTrace probe points, <span class="code">RegexKit:::BeginSortedRegexMatch</span>, <span class="code">RegexKit:::EndSortedRegexMatch</span>, <span class="code">RegexKit:::BeginSortedRegexSort</span>, <span class="code">RegexKit:::EndSortedRegexSort</span>, and <span class="code">RegexKit:::SortedRegexCache</span> were added to assist in evaluating the performance aspect of using this new functionality.  In addition to the DTrace probe points, two new <span class="file">Instruments.app</span> instruments were added, <span class="file">Collection Cache</span> and <span class="file">Collection Timing</span>, to provide easy access to the information from the new DTrace probe points.</p>
+
+<p>These enhancements are added as extensions to the @link NSObject NSObject @/link class and documentation for the methods can be found <a href="NSObject.html">here</a>.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="http://safariadblock.sourceforge.net/" class="section-link">Safari AdBlock</a></li>
+      <li><a href="http://developer.apple.com/releasenotes/Performance/RN-AffinityAPI/" class="section-link">Thread Affinity API Release Notes</a></li>
+      <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html" class="section-link" target="_top">Instruments User Guide</a></li>
+      <li><a href="http://docs.sun.com/app/docs/doc/817-6223" class="section-link" target="_top">Solaris Dynamic Tracing Guide</a> <a href="http://dlc.sun.com/pdf/817-6223/817-6223.pdf" class="section-link" target="_top">(as .PDF)</a></li>
+      <li><a href="NSObject.html" class="section-link">NSObject RegexKit Additions</a></li>
+      <li><a href="ChangeLog.html#Release_0_6_0" class="section-link">Release Information - Change Log for 0.6.0 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_6_0_Beta -->
+
+<div class="Release_0_5_0_Beta">
+<h2><a name="Release_0_5_0">Release Notes for 0.5.0 Beta</a></h2>
+
+<h3>RegexKit Provider DTrace Probe Points</h3>
+
+<p>This release contains enhanced DTrace support via RegexKit specific DTrace user defined static probes.  Additional information can be find in <a href="RegexKitProgrammingGuide.html#DTraceProbePointsinRegexKit" class="section-link">DTrace Probe Points in RegexKit</a>.</p>
+
+<h3>Collection of RegexKit Instruments for Instruments.app</h3>
+
+<p>A collection of instruments for <span class="file">Instruments.app</span> are now included that use the new DTrace probe points to assist you in your debugging efforts.</p>
+
+<h3>NSArray Additions</h3>
+
+<p>Added @link indexSetOfObjectsMatchingRegex: indexSetOfObjectsMatchingRegex: @/link and @link indexSetOfObjectsMatchingRegex:inRange: indexSetOfObjectsMatchingRegex:inRange: @/link to the @link NSArray NSArray @/link category additions.</p>
+
+<h3>NSData Class Category Additions</h3>
+
+<p>This release brings regular expression matching functionality to the @link NSData NSData @/link class.  See <a href="NSData.html" class="section-link">NSData RegexKit Additions Reference</a> for additional information.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_0_5_0" class="section-link">Release Information - Change Log for 0.5.0 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_5_0_Beta -->
+
+
+<div class="Release_0_4_0_Beta">
+<h2><a name="Release_0_4_0">Release Notes for 0.4.0 Beta</a></h2>
+
+<h3>Important Changes You Should Be Aware Of</h3>
+
+<p>Previously, the RegexKit @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class expected and returned all @link NSRange NSRange @/link results as @link UTF8 UTF8 @/link character indexes.  This behavior was not explicitly documented.  From an API perspective, the Foundation @link NSString NSString @/link class treats all strings as if they were @link UTF16 UTF16 @/link encoded for the purposes calculating character indexes, regardless of the strings actual encoding.  This is a problem when moving from one character index domain to the other without first converting the results for Unicode strings that contain non-@link ASCII ASCII @/link characters.  As of version 0.4.0, the API for the @link NSString NSString @/link additions and the @link RKEnumerator RKEnumerator @/link class now calculate all character indexes exactly the same way as the Foundation @link NSString NSString @/link class does.  Because of this, RegexKit @link NSRange NSRange @/link values can be used interchangeably with Foundation @link NSRange NSRange @/link values and produce the expected results.  Previous versions of RegexKit may not have produced the expected results depending on the specific interaction of the regular expression and underlying strings being matched.</p>
+
+<p>It is important to note that the API of the @link RKRegex RKRegex @/link class continues to use PCREs native @link UTF8 UTF8 @/link format for the purposes of calculating character indexes.  This class is not used directly by most users, and those that make use of it require the more exposed access to the PCRE library that it provides.  See <a href="RKRegex.html#overview_ImportantNSRangeDifferences" class="section-link">Important NSRange Differences</a> for more information.</p>
+
+<p>In addition to this change, the @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link objects now require all @link RKRegex RKRegex @/link objects to have the @link RKCompileUTF8 RKCompileUTF8 @/link option set.  Normally, the bytes that PCRE performs matches against is treated as raw 8-bit data.  For Unicode strings, the most significant bit of a byte (ie, <span class="code">>= 128 / 0x80</span>) has special meaning that must be interpreted to extract the additional Unicode information.  Since the @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class can only operate on @link NSString NSString @/link Unicode strings, @link RKCompileUTF8 RKCompileUTF8 @/link is now set for any @link NSString NSString @/link regex arguments <span class="hardNobr">(ie, <span class="code">[searchString</span> @link rangeOfRegex: rangeOfRegex:@/link<span class="code"><i>@"(.*)"</i>]</span>),</span> and for any @link RKRegex RKRegex @/link object arguments <span class="hardNobr">(ie, <span class="code">[searchString</span> @link rangeOfRegex: rangeOfRegex:@/link<span class="code"><i>regexObject</i>]</span>)</span> are recompiled with the option set if it is not enabled in the supplied @link RKRegex RKRegex @/link object.  See <a href="RKRegex.html#overview_FoundationAdditionsRKCompileOptionRequirements" class="section-link">Foundation Additions RKCompileOption Requirements</a> for more information.</p>
+
+<h3>Unicode Support Significantly Improved</h3>
+
+<p>Due in large part to the changes described above, Unicode support is significantly enhanced.  In addition to enabling the interpretation of Unicode information for the bytes that are being searched, @link RKCompileUTF8 RKCompileUTF8 @/link can subtly alter the behavior of regular expressions.  The reason for this is without @link RKCompileUTF8 RKCompileUTF8@/link, PCRE treats the search buffer as raw 8-bit data.  For example, the definition of the regular expression metacharacter <span class="regex">.</span> (dot) is <i>'match any character except newline'</i>.  A <i>character</i> is defined as a <i>single byte</i>, but @link RKCompileUTF8 RKCompileUTF8 @/link changes this to <i>a single Unicode character</i>, which can be anywhere from one to six bytes.  Normally these changes are invisible and alter the definitions in ways you would intuitively expect.  However, these changes can alter a regular expression in subtle, but critical, ways.  See <a href="pcre/pcre.html#utf8support" class="section-link">UTF8 Support</a> for more information.  It should be noted that RegexKit always enables the <i>UTF8</i> and <i>Unicode properties</i> features in the PCRE library.</p>
+
+<p>While these features and capabilities existed in prior versions of RegexKit, the @link RKCompileUTF8 RKCompileUTF8 @/link option was not enabled by default for either regular expressions passed as a @link NSString NSString@/link, or as a @link RKRegex RKRegex @/link object to the @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class.  Certainly most users would expect this option and the behavior it enables to be enabled when matching @link NSString NSString @/link objects, which are always Unicode strings.  As mentioned previously, the @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class now require the @link RKCompileUTF8 RKCompileUTF8 @/link option, and will forcibly enable it if not present.</p>
+
+<h3>Replacement Reference String Case Conversion Feature</h3>
+
+<p>RegexKit now supports the Perl style <span class="regex">\u</span>, <span class="regex">\l</span>, <span class="regex">\U</span>, <span class="regex">\L</span>, and <span class="regex">\E</span> case conversion escape sequences along with the <span class="hardNobr"><span class="regex">\</span><i>digit</i></span> capture subpattern syntax for replacement reference strings.  Case conversion is performed with the @link NSString NSString @/link @link uppercaseString uppercaseString @/link and @link lowercaseString lowercaseString @/link methods, which follow Unicode case conversion rules.</p>
+
+<p>See <a href="NSString.html#CaseConversionEscapeSequences" class="section-link">Case Conversion Syntax</a> for additional information.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_0_4_0" class="section-link">Release Information - Change Log for 0.4.0 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_4_0_Beta -->
+
+<div class="Release_0_3_1_Beta">
+<h2><a name="Release_0_3_1">Release Notes for 0.3.1 Beta</a></h2>
+
+<h3>Xcode 3.0 DocSet Subscription Enabled</h3>
+
+<p>You can now 'Subscribe' to the RegexKit documentation.  Xcode will then periodically check to see if there's a newer version of the documentation available and allow you to automatically update to the newer documentation.</p>
+
+<div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">This does not update the corresponding RegexKit.framework binary or source code, which will be out of step with the newly installed documentation.  You must update the other framework components manually.</div></div></div></div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_0_3_1" class="section-link">Release Information - Change Log for 0.3.1 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_3_1_Beta -->
+
+<div class="Release_0_3_0_Beta">
+<h2><a name="Release_0_3_0">Release Notes for 0.3.0 Beta</a></h2>
+
+<h3>Xcode 3.0 DocSet Documentation</h3>
+
+
+<p>The documentation is now made available in the new Xcode 3.0 DocSet format. This allows you to access the RegexKit documentation from within Xcode. If you open the Research Assistant ( Help &gt; Show Research Assistant ), and then place the insert point over a RegexKit method, the Research Assistant will display the relevent section of documentation.  Also available is full text searching of the documentation from the documentation viewer. Although the Subscribe button is present, there is no subscription available at this time (this seems to be a bug with Xcode, no URL is present to even subscribe to.)  Automatic documentation updating will be added in a later release.</p>
+
+<h3>Garbage Collection support</h3>
+
+<p>RegexKit now includes support for Mac OS X 10.5's Garbage Collection feature. Cocoa's Garbage Collection system requires that all linked files have Garbage Collection enabled for it to be active.  RegexKit supports both the new Garbage Collection system and the older @link retain retain @/link / @link release release @/link system.  At load time, if Cocoa has enabled the GC system, RegexKit switches to using that.  Otherwise, it falls back to the older @link retain retain @/link / @link release release @/link way of managing memory automatically.</p>
+
+
+<h3>64-bit support</h3>
+
+<p>RegexKit now supports 64-bits cleanly.  For Mac OS X users, the framework binary now includes the following architectures:</p>
+
+<div class="table">
+<table class="standard" summary="Minimum Requirements per Architecture">
+<caption>Minimum Requirements per Architecture</caption>
+<tr><th>Architecture</th><th>ABI</th><th>Minimum Mac OS X</th></tr>
+<tr><td>ppc</td><td>32 bit</td><td>Mac OS X 10.4</td></tr>
+<tr><td>i386</td><td>32 bit</td><td>Mac OS X 10.4</td></tr>
+<tr><td>ppc64</td><td>64 bit</td><td>Mac OS X 10.5 / Leopard</td></tr>
+<tr><td>x86_64</td><td>64 bit</td><td>Mac OS X 10.5 / Leopard</td></tr>
+</table>
+</div>
+
+<h3>Mac OS X Installer <span class="file">.dmg</span> distribution</h3>
+
+<p>RegexKit 0.3.0 marks the introduction of a Mac OS X Installer based distribution.  It bundles together the Mac OS X Binary executable RegexKit.framework, the Documentation, and the source code in to one convenient package.</p>
+
+<h3>Build system improvements</h3>
+
+<p>Began to enable parallel building where possible.  For now, the PCRE target and part of the <span class="xcode-target">Distribution</span> target are converted.  The global build configuration flag <span class="xcode-setting">PARALLEL_BUILD</span> controls this feature.  The PCRE target can be selectively disabled with <span class="xcode-setting">PCRE_PARALLEL_BUILD</span> = <span class="code">NO</span>, and the <span class="xcode-target">Distribution</span> target can be selectively disabled with <span class="xcode-setting">DISTRIBUTION_PARALLEL_BUILD</span> = <span class="code">NO</span>.</p>
+
+<p>By default it will spawn as many jobs as there are CPU's.</p>
+
+<h3>RegexKit.framework <span class="file">Info.plist</span> version bug fix</h3>
+
+<p>RegexKit 0.2.0 had a bug in the <span class="file">Info.plist</span> file. The settings for the keys <span class="code">CFBundleShortVersionString</span> and <span class="code">CFBundleVersion</span> where set to the variable <span class="xcode-setting">${REGEXKIT_CURRENT_VERSION}</span> when they should have been set to <span class="xcode-setting">${PROJECT_CURRENT_VERSION}</span>.</p>
+
+<h3>Multi-threading memory leak</h3>
+
+<p>Fixed a very minor memory leak.  Forgot to @link free free() @/link the per-thread local storage struct when a thread exited.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_0_3_0" class="section-link">Release Information - Change Log for 0.3.0 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_3_0_Beta -->
+
+<div class="Release_0_2_0_Beta">
+<h2><a name="Release_0_2_0">Release Notes for 0.2.0 Beta</a></h2>
+
+<p>The version of PCRE used was updated to the latest available: 7.4.</p>
+
+<p>Nearly all changes have been to the build system.  Very few changes, with the exception of upgrading to PCRE 7.4, resulted in any changes to the framework proper.</p>
+
+<p>A priority for the project is to get a usable version of the framework in to the hands of developers.  This means that the framework code, API documentation, and end user distribution packaging and layout are the top priorities.  Other issues, such as documentation on the implementation, will be allowed to fall behind in order to meet the other objectives in a timely manner.</p>
+
+<h3>Framework Versioning</h3>
+
+<p>This release adds the first version numbers internal to the framework. Some of these changes technically have a substantial impact to those linking to the framework, but pragmatically are a complete non-issue because the framework is embedded and copied in to end users application bundles. See ChangeLog for additional information.</p>
+
+<h3>NSString / NSMutableString Additions</h3>
+
+<p>The framework additions to these two classes are likely to be the most volatile going forward, as I expect that vast majority of users need to perform regex operations on strings.</p>
+
+<p>Candidly, it is extremely difficult to craft a usable, clean, and intuitive API.  I often lack the proper perspective of what's required by end users since I tend to view things from the perspective of whats easiest to implement, rather than what's the easiest to use.  <b>FEEDBACK REGARDING THE API IS EXTREMELY APPRECIATED</b>.</p>
+
+<h3>Known Issues</h3>
+
+<h3>Unicode Support</h3>
+
+<p>I am still uncertain as to how well supported Unicode is in practice.  I have no Unicode experience to speak of, so it is extraordinarily difficult for me to conceive of test vectors to verify proper operation.  Being a native English speaker who cut his teeth exclusively on ASCII, I am certain there are things that would seem almost comically obvious to non-English readers and writers but I am completely ignorant of.  I strongly desire to have complete, error free Unicode support in the framework so any help you can provide is greatly appreciated!</p>
+
+<p>You can help in the following ways:</p>
+
+<ul>
+<li>Providing known @link Unicode Unicode @/link samples that illustrate a specific feature or property.  Ideally these would be provided in a form that guarded against any code of corruption, such as an archived @link NSDictionary NSDictionary @/link that can be readily loaded and used for testing.</li>
+<li>Providing standard Xcode Unit Tests that exercise and verify proper @link Unicode Unicode @/link operation.  Patches are a bonus.</li>
+</ul>
+
+<h3>Implementation Documentation</h3>
+
+<p>The implementation documentation (<span class="file">RegexKitImplementation.html</span>) has not been updated in any meaningful way to track the latest changes.  Since the audience for this documentation is expected to be a small fraction of the RegexKit user base, I'm letting it slip in the interest of getting out a product that is used by most people.</p>
+
+<h3>GNUstep Support</h3>
+
+<p>This release did not include any testing of the @link GNUstep GNUstep @/link configuration.  It is likely that there are a few issues that would prevent an 'out of the box' clean build under @link GNUstep GNUstep @/link at this time, but the amount of work should be minimal.  It has worked flawlessly in the past, so it should be a matter of bringing things up to date.  I certainly try to code things with @link GNUstep GNUstep @/link compatibility in mind, but 99.99% of the work happens under Mac OS X Cocoa, so things slip through.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_0_2_0" class="section-link">Release Information - Change Log for 0.2.0 Beta</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_0_2_0_Beta -->
+
+<div class="Release_Alpha">
+<h2><a name="Release_Alpha">Release Notes for Alpha</a></h2>
+
+<p>The first public release of the RegexKit framework.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+      <li><a href="ChangeLog.html#Release_Alpha" class="section-link">Release Information - Change Log for Alpha</a></li>
+  </ul>
+</div>
+
+</div> <!-- Release_Alpha -->
+
+
+</div> <!-- releaseNotes -->
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</body>
+</html>

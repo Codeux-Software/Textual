@@ -1,0 +1,141 @@
+
+.PHONY:	all build clean distclean \
+	build_tarballs \
+	bin_stage bin_stage_fw bin_stage_doc bin_stage_misc build_bin_tarballs \
+	src_stage src_stage_fw src_stage_doc src_stage_misc build_src_tarballs
+
+DISTRIBUTION_BINARY_DIRECTORIES = ${DISTRIBUTION_TEMP_BINARY_DIR} ${DISTRIBUTION_TEMP_BINARY_ROOT}
+DISTRIBUTION_SOURCE_DIRECTORIES = ${DISTRIBUTION_TEMP_SOURCE_DIR} ${DISTRIBUTION_TEMP_SOURCE_ROOT}
+
+DISTRIBUTION_DIRECTORIES = ${DISTRIBUTION_TARGET_DIR} ${DISTRIBUTION_BINARY_DIRECTORIES} ${DISTRIBUTION_SOURCE_DIRECTORIES}
+
+build_tarballs: build_bin_tarballs build_src_tarballs
+
+build: all
+
+all:
+	@echo "${MAKEFILE_DIST}:17: error: A valid target must be specified."
+
+clean:
+	@echo "${MAKEFILE_DIST}:20: error: Cleaning distribution not supported.";
+
+distclean: clean
+
+${DISTRIBUTION_DIRECTORIES}:
+	@mkdir -p '$@'
+
+
+###########
+#
+#  Binary distribution bits
+#
+
+build_bin_tarballs: ${DISTRIBUTION_TARGET_DIR} ${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.bz2 ${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.gz
+
+${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.bz2: ${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.bz2
+	@'${RSYNC}' -aC '$<' '$@'
+
+${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.gz: ${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.gz
+	@'${RSYNC}' -aC '$<' '$@'
+
+${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.bz2: ${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar
+	@echo "${MAKEFILE_DIST}:42: note: Creating binary .bz2 tarball."; \
+	'${BZIP2_CMD}' -c9 '$<' > '$@'
+
+${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar.gz: ${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar
+	@echo "${MAKEFILE_DIST}:46: note: Creating binary .gz tarball."; \
+	'${GZIP_CMD}' -c9 '$<' > '$@'
+
+${DISTRIBUTION_TEMP_BINARY_DIR}/${DISTRIBUTION_ROOT_NAME}.tar: bin_stage
+	@if [ -r '${DISTRIBUTION_TEMP_BINARY_DIR}/bin_stage.tar' ]; then \
+		REBUILD_TAR=`diff -q '${DISTRIBUTION_TEMP_BINARY_DIR}/bin_stage.tar' '${DISTRIBUTION_TEMP_BINARY_DIR}/bin_stage.find'`; \
+		if [ "$${REBUILD_TAR}" == "" ]; then exit 0; fi; \
+	fi; \
+	cd '${DISTRIBUTION_TEMP_BINARY_DIR}'; \
+	'${TAR}' cf '$@' '${DISTRIBUTION_ROOT_NAME}'; \
+	'${FIND}' '${DISTRIBUTION_TEMP_BINARY_ROOT}' -ls > '${DISTRIBUTION_TEMP_BINARY_DIR}/bin_stage.tar'
+
+bin_stage: bin_stage_fw bin_stage_doc bin_stage_misc
+	@'${FILE_CHECK_SCRIPT}' '${DISTRIBUTION_SQL_DATABASE_FILE}' 'Binary' '${DISTRIBUTION_TEMP_BINARY_ROOT}' && \
+	'${FIND}' '${DISTRIBUTION_TEMP_BINARY_ROOT}' -ls > '${DISTRIBUTION_TEMP_BINARY_DIR}/bin_stage.find'
+
+bin_stage_fw: ${DISTRIBUTION_TEMP_BINARY_ROOT}
+	@'${RSYNC}' -rltgoD --delete --cvs-exclude '${BUILD_DIR}/${CONFIGURATION}/RegexKit.framework' '$<'; \
+	'${CHMOD}' -R g-w '$</RegexKit.framework'
+
+bin_stage_doc: ${DISTRIBUTION_TEMP_BINARY_ROOT}
+	@'${RSYNC}' -rltgoD --delete --cvs-exclude '${BUILD_DIR}/${CONFIGURATION}/Documentation' '$<'; \
+	'${CHMOD}' -R g-w '$</Documentation'
+
+bin_stage_misc: ${DISTRIBUTION_TEMP_BINARY_ROOT}
+	@'${RSYNC}' -rltgoD --delete --cvs-exclude ChangeLog LICENSE README ReleaseNotes '${BUILD_DISTRIBUTION_DIR}/Documentation.html' '${BUILD_DISTRIBUTION_DIR}/Adding RegexKit to your Project.html' '$<'; \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '$</ChangeLog' '$</LICENSE' '$</README' '$</ReleaseNotes'; \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -a E      '$</Adding RegexKit to your Project.html'; \
+	'${CHMOD}' -R g-w '$</ChangeLog' '$</LICENSE' '$</README' '$</ReleaseNotes' '$</Documentation.html' '$</Adding RegexKit to your Project.html'
+
+
+###########
+#
+#  Source distribution bits
+#
+
+
+build_src_tarballs: ${DISTRIBUTION_TARGET_DIR} ${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.bz2 ${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.gz
+
+${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.bz2: ${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.bz2
+	@'${RSYNC}' -aC '$<' '$@'
+
+${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.gz: ${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.gz
+	@'${RSYNC}' -aC '$<' '$@'
+
+${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.bz2: ${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar
+	@echo "${MAKEFILE_DIST}:91: note: Creating source .bz2 tarball."; \
+	'${BZIP2_CMD}' -c9 '$<' > '$@'
+
+${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar.gz: ${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar
+	@echo "${MAKEFILE_DIST}:95: note: Creating source .gz tarball."; \
+	'${GZIP_CMD}' -c9 '$<' > '$@'
+
+${DISTRIBUTION_TEMP_SOURCE_DIR}/${DISTRIBUTION_BASE_SOURCE_FILE_NAME}.tar: src_stage
+	@if [ -r '${DISTRIBUTION_TEMP_SOURCE_DIR}/src_stage.tar' ]; then \
+		REBUILD_XCODE=`diff -q '${DISTRIBUTION_TEMP_SOURCE_ROOT}/${PROJECT_NAME}.xcodeproj/project.pbxproj' '${PROJECT_NAME}.xcodeproj/project.pbxproj'`; \
+		REBUILD_TAR=`diff -q '${DISTRIBUTION_TEMP_SOURCE_DIR}/src_stage.tar' '${DISTRIBUTION_TEMP_SOURCE_DIR}/src_stage.find'`; \
+		if [ "$${REBUILD_XCODE}" == "" ] && [ "$${REBUILD_TAR}" == "" ]; then exit 0; fi; \
+	fi; \
+	cd '${DISTRIBUTION_TEMP_SOURCE_DIR}'; \
+	'${TAR}' cf '$@' '${DISTRIBUTION_BASE_SOURCE_FILE_NAME}'; \
+	'${FIND}' '${DISTRIBUTION_TEMP_SOURCE_ROOT}' -ls | grep -v '${PROJECT_NAME}.xcodeproj' > '${DISTRIBUTION_TEMP_SOURCE_DIR}/src_stage.tar'
+
+src_stage: src_stage_main src_stage_pkg
+	@'${FILE_CHECK_SCRIPT}' '${DISTRIBUTION_SQL_DATABASE_FILE}' 'Source' '${DISTRIBUTION_TEMP_SOURCE_ROOT}' && \
+	'${FIND}' '${DISTRIBUTION_TEMP_SOURCE_ROOT}' -ls | grep -v '${PROJECT_NAME}.xcodeproj' > '${DISTRIBUTION_TEMP_SOURCE_DIR}/src_stage.find'
+
+src_stage_main: ${DISTRIBUTION_TEMP_SOURCE_ROOT}
+	@'${RSYNC}' -a --cvs-exclude --delete \
+		--exclude="\.*" \
+		--exclude="*~" \
+		--exclude="#*#" \
+		--exclude='Source/Headers/RegexKit/pcre.h' \
+		--exclude='Source/pcre' \
+		ChangeLog LICENSE README README.MacOSX ReleaseNotes GNUstep Source '${BUILD_DIR}/${CONFIGURATION}/Documentation' \
+		'${BUILD_DISTRIBUTION_DIR}/Documentation.html' '${BUILD_DISTRIBUTION_DIR}/Adding RegexKit to your Project.html' \
+		'${DISTRIBUTION_TEMP_SOURCE_ROOT}' && \
+	'${RSYNC}' -a --cvs-exclude '${BUILD_DISTRIBUTION_DIR}/distribution_pcre.h' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/Source/Headers/RegexKit/pcre.h' && \
+	mkdir -p '${DISTRIBUTION_TEMP_SOURCE_ROOT}/${PROJECT_NAME}.xcodeproj/' && \
+	'${RSYNC}' -aC '${PROJECT_NAME}.xcodeproj/project.pbxproj' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/${PROJECT_NAME}.xcodeproj/project.pbxproj' && \
+	'${CHMOD}' -R g-w '${DISTRIBUTION_TEMP_SOURCE_ROOT}' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/ChangeLog' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/LICENSE' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/README' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/README.MacOSX' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -t 'TEXT' '${DISTRIBUTION_TEMP_SOURCE_ROOT}/ReleaseNotes' && \
+	'${SYSTEM_DEVELOPER_TOOLS}/SetFile' -a E      '${DISTRIBUTION_TEMP_SOURCE_ROOT}/Adding RegexKit to your Project.html'
+
+src_stage_pkg: src_stage_main
+	@'${RSYNC}' -aCE --delete \
+		--exclude='/Adding RegexKit to your Project.html' \
+		--exclude='/Documentation.html' \
+		--exclude='/Documentation' \
+		'${DISTRIBUTION_TEMP_SOURCE_ROOT}/' '${DISTRIBUTION_TEMP_SOURCE_DIR}/Sourcecode' && \
+	'${CHMOD}' -R g+w '${DISTRIBUTION_TEMP_SOURCE_DIR}/Sourcecode'
+		

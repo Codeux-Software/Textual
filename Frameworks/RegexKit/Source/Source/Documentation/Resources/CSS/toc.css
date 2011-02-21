@@ -1,0 +1,86 @@
+@import url(common.css);
+
+
+body { margin: 0px; background-color: white; font: 12px "lucida grande", geneva, helvetica, arial, sans-serif; color: black; }
+
+.toc.outerBorder { border: 1px solid #cccccc; margin: 0.5em 1ex; }
+.toc             { overflow: hidden; background-color: #e9e9e9; border: 1px solid #919699; }
+
+.toc .bar { border-top: 1px solid #cccccc; border-bottom: 1px solid #f0f0f0; }
+.toc .break { margin: 0.5em 0em 0em 0em; padding: 0em; }
+.toc .spacer { border-top: 1px; border-bottom: 1px; }
+
+.toc   .masthead { padding: 1em 2ex 0px 2ex; }
+.toc   .masthead > .framework { font-size: 1.25em; font-weight: bold; }
+.toc   .masthead > .subtitle  { font-size: 0.9167em; margin-top: 0.25em; }
+
+.toc   .section { clear: both; white-space: nowrap; }
+
+.toc   .section.last { margin-bottom: 1em; }
+
+.toc .masthead > a:link, .toc .masthead > a:link:hover, .toc .masthead > a:active, .toc .masthead > a:visited, .toc .masthead > a:visited:hover { text-decoration: none; color: black; }
+
+.toc .section .label > a:link, .toc .section .label > a:link:hover, .toc .section .label > a:active, .toc .section .label > a:visited, .toc .section .label > a:visited:hover { text-decoration: none; color: black; }
+
+.toc .section .title > a:link, .toc .section .title > a:link:hover, .toc .section .title > a:active, .toc .section .title > a:visited, .toc .section .title > a:visited:hover { text-decoration: none; color: black; }
+
+.toc > .section > .header                                         { min-width: 38ex;  }
+.toc > .section                                                   { overflow: hidden; }
+.toc > .section.open > .contents > .entries > .section > .header  { min-width: 60ex;  }
+.toc > .section.open > .contents > .entries                       { overflow: hidden; }
+
+
+.toc > .header                                           { margin-bottom: 0.125em; }
+.toc   .header > .label                                  { font-size: 0.9167em; }
+
+.toc > .section.open   > .header                         { margin-bottom: 0.0834em; }
+.toc > .section        > .header, .toc > .header         { padding-left: 2ex; }
+
+.toc > .section.pcreDoc.open > .contents > .entries > .entry { padding-left: 2ex; }
+
+.toc > .section .header .spacer { width: 2ex; height: 1em; float: left; }
+
+/*
+.toc > .section .header .spacer.large { width: 2ex; height: 1em; float: left; }
+.toc > .section .header .spacer.small { font-size: 0.9167em; width: 2ex; height: 1em; float: left; }
+
+.toc .header > .indicator        { cursor: pointer; color: #888; float: left; }
+.toc .header > .indicator.large  { width: 2ex; height: 1em; }
+.toc .header > .indicator.small  { font-size: 0.9167em; width: 2ex; height: 1em; }
+.toc .open     .indicator:before { content: "▼"; }
+.toc .closed   .indicator:before { content: "▶"; }
+*/
+
+.toc                     .header > .indicator            { cursor: pointer; float: left; }
+
+.toc                     .header > .indicator            { width: 2ex; height: 1em; }
+
+.toc   .section.closed > .header > .indicator.large      { background: url(../Images/triangle_closed.png)    no-repeat 0px 0.0834em; }
+.toc   .section.open   > .header > .indicator.large      { background: url(../Images/triangle_open.png)      no-repeat 0px 0.0834em; margin-left: -0.1429ex; margin-right: 0.1429ex; }
+
+.toc   .section.closed > .header > .indicator.small      { background: url(../Images/triangle_closed_sm.png) no-repeat 0.3334ex 0.1819em; }
+.toc   .section.open   > .header > .indicator.small      { background: url(../Images/triangle_open_sm.png)   no-repeat 0.1667ex 0.1819em; }
+
+
+.toc                     .header > .title                { cursor: pointer; white-space: nowrap; }
+.toc > .section        > .header > .title                { font-weight: bold; }
+.toc   .section.sub    > .header > .title                { font-weight: normal; font-size: 0.9167em; }
+
+/* position: relative; used for .rightEdge positioning below. */
+.toc   .section        > .contents                       { position: relative; }
+
+.toc   .section.closed > .contents                       { display: none; }
+.toc   .section.open   > .contents                       { display: block; }
+
+.toc > .section.open   > .contents                       { border-top: 1px solid #cccccc; border-bottom: 1px solid #d0d0d0; background-color: #fefefe; }
+
+.toc > .section.open   > .contents            > .entries { padding-top: 0.25em; padding-bottom: 0.25em; }
+.toc > .section.open   > .contents            > .entries { padding-left: 4.1429ex; padding-right: 2.0ex; }
+.toc > .section.open   > .contents .section.sub .entries { padding-left: 2.5ex; }
+
+.toc                                            .entry   { white-space: nowrap; font-size: 0.9167em; }
+
+
+/* Right edge fade. rightEdge width == image width */
+.toc                     .contents .rightEdge            { position: absolute; right: 0px; top: 0px; height: 100%; float: right; width: 2.0ex; min-width: 18px; overflow: hidden; }
+.toc                     .contents .rightEdge > img      { width: 100%; height: 100%; margin-left: 0.125ex; }

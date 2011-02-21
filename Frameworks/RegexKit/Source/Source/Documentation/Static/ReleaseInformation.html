@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+@import "CSS/guide.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RegexKit Release Information</title>
+</head>
+
+<body>
+<div class="releaseInformation bodyTop">
+<h1><a name="ReleaseInformation">RegexKit Release Information</a></h1>
+
+<div class="version-info">
+
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>This document contains the history of each version of RegexKit, including the date, summary of changes, and a URL of where the distribution may be downloaded.  An overview of the RegexKit version numbering methodology is also included, along with important information for those wishing to submit contributions to RegexKit.</p>
+
+<h3><a name="ReleaseInformation_ReleaseHistory">Release History</a></h3>
+
+<div class="chrono">
+
+  <div class="entry">
+    <div class="banner"><span class="date">2008/01/29</span><span class="bannerItemSpacer">-</span><span class="release">0.6.0 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>Upgraded to PCRE version 7.6, which includes an important security related bug fix.</li>
+        <li>Preliminary support for internationalization, though English remains the only provided localization.</li>
+        <li>Support for returning @link NSError NSError @/link objects for error conditions.</li>
+        <li>Support for multiple regular expressions in a collection (i.e., @link NSArray NSArray@/link) to be evaluated concurrently on multiple threads, one per CPU.</li>
+      </ul>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_6_0" class="section-link">Release Information - Release Notes for 0.6.0 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/11/30</span><span class="bannerItemSpacer">-</span><span class="release">0.5.0 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>RegexKit specific DTrace probes added.</li>
+        <li>Collection of RegexKit instruments for <span class="file">Instruments.app</span>.</li>
+        <li>New @link NSArray NSArray @/link methods for returning a @link NSIndexSet NSIndexSet @/link for matches.</li>
+        <li>@link NSData NSData @/link class category additions.</li>
+      </ul>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_5_0" class="section-link">Release Information - Release Notes for 0.5.0 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/11/13</span><span class="bannerItemSpacer">-</span><span class="release">0.4.0 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>Many improvements in the handling of Unicode strings.</li>
+        <li>The @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class now calculate character indexes and @link NSRange NSRange @/link values the same way the Foundation @link NSString NSString @/link class does for all string encodings.</li>
+        <li>Perl style <span class="regex">\u</span>, <span class="regex">\l</span>, <span class="regex">\U</span>, <span class="regex">\L</span>, and <span class="regex">\E</span> escape sequences for case conversions, and <span class="hardNobr"><span class="regex">\</span><i>digit</i></span> for capture subpattern references in replacement reference strings.</li>
+      </ul>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_4_0" class="section-link">Release Information - Release Notes for 0.4.0 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/10/31</span><span class="bannerItemSpacer">-</span><span class="release">0.3.1 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>Xcode 3.0 RegexKit documentation subscription and update notification.</li>
+      </ul>
+      <p>This release is largely to address a sourceforge.net webserver issue which does not send the correct mime type for .dmg files.  This results in Safari 3 misidentifying the .dmg as a .bz2 file.  As a workaround, the .dmg is wrapped in a .tar file to protect it.  Bug <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1823644&amp;group_id=1&amp;atid=200001">1823644</a> filed with sourceforge.net.</p>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_3_1" class="section-link">Release Information - Release Notes for 0.3.1 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/10/29</span><span class="bannerItemSpacer">-</span><span class="release">0.3.0 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>Mac OS X Installer.</li>
+        <li>Mac OS X 10.5 support.</li>
+        <li><span class="file">RegexKit.framework</span> <span class="file">Info.plist</span> version corrected.</li>
+        <li>Minor documentation updates.</li>
+        <li>Parallel target builds.</li>
+      </ul>
+      <p>The new Mac OS X <span class="file">.dmg</span> distribution combines the previously separate binary and source code bundles into a single, convenient installer based package.</p>
+      
+      <p>Mac OS X 10.5 Features:</p>
+      <ul class="square">
+        <li>64 bit support.</li>
+        <li>Garbage Collection enabled.</li>
+        <li>Documentation available in native Xcode 3.0 DocSet format.</li>
+      </ul>
+      <p>The RegexKit.framework binary now includes support for four architectures: <span class="code">ppc</span>, <span class="code">ppc64</span>, <span class="code">i386</span>, and <span class="code">x86_64</span>.  The 32 bit architecture images require a minimum Mac OS X of 10.4, while the 64 bit architecture versions require a minimum of 10.5.</p>
+      <p>The choice between using Garbage Collection or the traditional @link retain retain @/link / @link release release @/link style of memory management is made at load time.  If the dynamic linker determines that the necessary Garbage Collection prerequisites have been met, RegexKit switches to using Garbage Collection.  Otherwise if Garbage Collection is not active at load time, RegexKit uses the traditional @link retain retain @/link / @link release release @/link style of memory management.</p>
+      <p>The documentation for RegexKit is now available in the new <span class="nobr">Xcode 3.0 DocSet</span> format.  This allows you to access the frameworks documentation from within Xcode, including real time access via the <span class="nobr">Research Assistant</span>.  The DocSet documentation is installed in <span class="file">/Library/Developer/Shared/Documentation/DocSets/</span>, which Xcode 3.0 is set to scan automatically.  You may have to quit and restart Xcode in order for the documentation to appear.  Subscriptions are not yet enabled despite the subscription button being present.</p>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_3_0" class="section-link">Release Information - Release Notes for 0.3.0 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/10/09</span><span class="bannerItemSpacer">-</span><span class="release">0.2.0 Beta</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      <p>The largest user visible change in this release is the upgrade to PCRE 7.4 from the previous releases 7.3.  The majority of work went towards bug fixes and improvements in the build system.</p>
+      <p>Release highlights:</p>
+      <ul class="square">
+        <li>PCRE upgraded to 7.4.</li>
+        <li>Version numbering system implemented.  The framework version is also used for the frameworks shared library version.  The previous release did not set a version and used the default of <span class="code">1</span>.  This release has the version <span class="code">0.2.0</span>.  Due to the fact that the framework is used as an embedded private framework, this should be a non-issue.</li>
+        <li>~<span class="code">15K</span> smaller executable due to build setting optimizations.  Now optimized with <span class="code">-Oz</span> and dead code stripped.</li>
+        <li>The source code distribution no longer contains the <span class="nobr">Mac OS X</span> framework binary.</li>
+        <li>PCRE build system received a major overhaul.</li>
+        <li>All project build configuration settings were removed from <span class="file">RegexKit.xcodeproj/project.pbxproj</span> and placed in <span class="file">Source/Build/Xcode/RegexKit Build Settings.xcconfig</span>.  This allows easier maintenance of the variables and the ability to document them with comments.</li>
+        <li>There were several bugs in the build system regarding availability of tools and packages and their versions.  This release should be more tolerant of differences and handle any issues much more gracefully.</li>
+        <li>Minor documentation updates.</li>
+        <li>Changed the framework initialization to use the more portable @link NSObject/load +load @/link method rather than <span class="code">__attribute__(constructor).</span></li>
+      </ul>
+
+      <p>See <a href="ReleaseNotes.html#Release_0_2_0" class="section-link">Release Information - Release Notes for 0.2.0 Beta</a> for more information.</p>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="banner"><span class="date">2007/08/31</span><span class="bannerItemSpacer">-</span><span class="release">Alpha</span></div>
+    <div class="bannerSpacer"></div>
+    <div class="content">
+      <p>The first public release of the RegexKit framework.</p>
+
+      <p>See <a href="ReleaseNotes.html#Release_Alpha" class="section-link">Release Information - Release Notes for Alpha</a> for more information.</p>
+    </div>
+  </div>
+</div>
+
+<h3><a name="ReleaseInformation_SubversionRepository">Subversion Repository</a></h3>
+
+<p>The RegexKit source is kept in the publically accessable SourceForge subversion repository at <a href="http://regexkit.svn.sourceforge.net/svnroot/regexkit/">http://regexkit.svn.sourceforge.net/svnroot/regexkit/</a></p>
+
+<p>Users wishing to check-out the source are most likely interested in the subversion standard <i>trunk</i> portion of the repository, which contains the most up to date check-ins, and not the entire repository.  The URL to access just the trunk portion is <a href="http://regexkit.svn.sourceforge.net/svnroot/regexkit/trunk/">http://regexkit.svn.sourceforge.net/svnroot/regexkit/trunk/</a></p>
+
+<p>You can also browse the repository with a web-based interface at <a href="http://regexkit.svn.sourceforge.net/viewvc/regexkit/">http://regexkit.svn.sourceforge.net/viewvc/regexkit/</a></p>
+
+<h3>Distributions</h3>
+
+<h4><span class="file">.dmg</span> Distributions</h4>
+
+<p>The <span class="file">.dmg</span> Installer distributions include the following:</p>
+<ul class="square">
+<li>RegexKit framework binary for <span class="code">ppc</span>, <span class="code">ppc64</span>, <span class="code">i386</span>, and <span class="code">x86_64</span> architectures.</li>
+<li>Documentation in HTML.</li>
+<li>Documentation in Xcode 3.0 DocSet form.</li>
+<li>Complete source code.</li>
+</ul>
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">Safari 3 incorrectly identifies <span class="file">.dmg</span> files from the SourceForge download servers as a <span class="file">.bz2</span> bzip2 compressed file because the SourceForge servers are unable to supply the correct MIME type for <span class="file">.dmg</span> disk images.</div></div></div></div>
+
+<p>Until the SourceForge MIME issue is resolved, the RegexKit <span class="file">.dmg</span> distributions will be placed inside a <span class="file">.tar</span> archive to prevent Safari 3 from incorrectly appending <span class="file">.bz2</span> to the downloaded file.  While the <span class="file">.tar</span> archive work around results in a one time extra unpacking step, after which the resulting <span class="file">.dmg</span> file is mounted correctly, the result of Safari 3 appending <span class="file">.bz2</span> is for the Finder to perpetually attempt to <span class="file">bunzip2</span> the <span class="file">.dmg.bz2</span> file with a error message that file is corrupt, leading to considerable user confusion.</p>
+
+<table class="standard marginSpacer printNegLeft" summary="Mac OS X .dmg Installer Distributions">
+  <caption>Mac OS X <span class="file">.dmg</span> Installer Distributions</caption>
+  <tr><th>Date</th><th>Version</th><th>PCRE</th><th>Operating System</th><th>Architecture</th><th>Size</th><th>File</th><th>Format</th></tr>
+  <tr><td>2008/01/29</td><td>0.6.0 Beta</td><td>7.6</td><td>Mac OS X 10.4 and later</td><td>ppc, ppc64, i386, x86_64</td><td>1,695K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.6.0.dmg.tar" class="file">RegexKit_0.6.0.dmg.tar</a></td><td>Apple Disk Image inside a .tar</td></tr>
+  <tr><td>2007/11/30</td><td>0.5.0 Beta</td><td>7.4</td><td>Mac OS X 10.4 and later</td><td>ppc, ppc64, i386, x86_64</td><td>1,468K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.5.0.dmg.tar" class="file">RegexKit_0.5.0.dmg.tar</a></td><td>Apple Disk Image inside a .tar</td></tr>
+  <tr><td>2007/11/13</td><td>0.4.0 Beta</td><td>7.4</td><td>Mac OS X 10.4 and later</td><td>ppc, ppc64, i386, x86_64</td><td>1,389K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.4.0.dmg.tar" class="file">RegexKit_0.4.0.dmg.tar</a></td><td>Apple Disk Image inside a .tar</td></tr>
+  <tr><td>2007/10/31</td><td>0.3.1 Beta</td><td>7.4</td><td>Mac OS X 10.4 and later</td><td>ppc, ppc64, i386, x86_64</td><td>1,340K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.3.1.dmg.tar" class="file">RegexKit_0.3.1.dmg.tar</a></td><td>Apple Disk Image inside a .tar</td></tr>
+  <tr><td>2007/10/29</td><td>0.3.0 Beta</td><td>7.4</td><td>Mac OS X 10.4 and later</td><td>ppc, ppc64, i386, x86_64</td><td>1,333K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.3.0.dmg" class="file">RegexKit_0.3.0.dmg</a></td><td>Apple Disk Image</td></tr>
+</table>
+
+<h4>Binary Distributions</h4>
+
+<table class="standard marginSpacer printNegLeft" summary="Mac OS X Binary Distributions">
+  <caption>Mac OS X Binary Distributions</caption>
+  <tr><th>Date</th><th>Version</th><th>PCRE</th><th>Operating System</th><th>Architecture</th><th>Size</th><th>File</th><th>Format</th></tr>
+  <tr><td>2007/10/09</td><td>0.2.0 Beta</td><td>7.4</td><td>Mac OS X 10.4 and later</td><td>Universal, PowerPC and Intel</td><td>412K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.2.0.tar.bz2" class="file">RegexKit_0.2.0.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/08/31</td><td>Alpha</td><td>7.3</td><td>Mac OS X 10.4 and later</td><td>Universal, PowerPC and Intel</td><td>412K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_ALPHA.tar.bz2" class="file">RegexKit_ALPHA.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+</table>
+
+<h4>Source Distributions</h4>
+
+<table class="standard marginSpacer printNegLeft" summary="Source Code Distributions">
+  <caption>Source Code Distributions</caption>
+  <tr><th>Date</th><th>Version</th><th>PCRE</th><th>Minimum Development Environment</th><th>Size</th><th>File</th><th>Format</th></tr>
+  <tr><td>2008/01/29</td><td>0.6.0 Beta</td><td>7.6</td><td>Xcode 2.4.1</td><td>655K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.6.0_source.tar.bz2" class="file">RegexKit_0.6.0_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/11/30</td><td>0.5.0 Beta</td><td>7.4</td><td>Xcode 2.4.1</td><td>572K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.5.0_source.tar.bz2" class="file">RegexKit_0.5.0_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/11/13</td><td>0.4.0 Beta</td><td>7.4</td><td>Xcode 2.4.1</td><td>544K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.4.0_source.tar.bz2" class="file">RegexKit_0.4.0_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/10/31</td><td>0.3.1 Beta</td><td>7.4</td><td>Xcode 2.4.1</td><td>519K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.3.1_source.tar.bz2" class="file">RegexKit_0.3.1_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/10/29</td><td>0.3.0 Beta</td><td>7.4</td><td>Xcode 2.4.1</td><td>515K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.3.0_source.tar.bz2" class="file">RegexKit_0.3.0_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/10/09</td><td>0.2.0 Beta</td><td>7.4</td><td>Xcode 2.4.1</td><td>484K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_0.2.0_source.tar.bz2" class="file">RegexKit_0.2.0_source.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+  <tr><td>2007/08/31</td><td>Alpha</td><td>7.3</td><td>Xcode 2.4.1</td><td>655K</td><td><a href="http://downloads.sourceforge.net/regexkit/RegexKit_source_ALPHA.tar.bz2" class="file">RegexKit_source_ALPHA.tar.bz2</a></td><td>bzip2 compressed tar archive</td></tr>
+</table>
+
+<h2><a name="ReleaseInformation_VersionNumberingInformation">Version Numbering Information</a></h2>
+
+<p>The following section outlines the the version numbering system adopted by the RegexKit framework and the changes you can expect between different versions of the framework.</p>
+
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The following should serve as a guideline as the nature of some changes may not be easily categorized by the following system.</div></div></div></div>
+
+<p>A set of three point delimited numbers is used to indicate the version number.  This follows the common hierarchical version numbering system where each number represents one of the following:</p>
+
+<ul class="square">
+  <li>Major Version Number</li>
+  <li>Minor Version Number</li>
+  <li>Point Version Number</li>
+</ul>
+
+<h3><a name="ReleaseInformation_VersionNumberingInformation_MajorVersionNumber">Major Version Number</a></h3>
+
+<p>A major version of the framework incorporates significant changes that are may not be compatible with previous major versions. Some example changes that would require a new major version are:</p>
+
+<ul class="square">
+<li>A fundamental change to the API that is not backwards compatible.</li>
+<li>Significant addition of features and functionality.</li>
+<li>A dependency of the framework has fundamentally changed.</li>
+<li>A change in the underlying ABI which would result in binary incompatibility between versions.</li>
+<li>A new major version release of the PCRE library.</li>
+</ul>
+
+<p>When upgrading to a new major version, users should expect that a significant effort on their part may be required in order to use the new major version, depending on the nature of the changes.</p>
+
+<h3><a name="ReleaseInformation_VersionNumberingInformation_MinorVersionNumber">Minor Version Number</a></h3>
+
+<p>A new minor version is used to indicate changes that are not likely to be disruptive to current users.  Some example changes when the minor version is incremented are:</p>
+
+<ul class="square">
+<li>Minor, incremental enhancements.</li>
+<li>Significant bug fixes.</li>
+<li>A new minor version release of the PCRE library.</li>
+</ul>
+
+<p>Users upgrading to a later minor version should expect to a minimal amount of work to be required on their part.  A given minor version is likely to be forward compatible with later minor versions of a given major version, but may not be fully backwards compatible with previous minor versions.  Use of any new features introduced in a minor version would almost certainly preclude the use of any previous minor versions.</p>
+
+<h3><a name="ReleaseInformation_VersionNumberingInformation_PointVersionNumber">Point Version Number</a></h3>
+
+<p>A new point version indicates changes that do not alter the features or functionality of the framework in any significant way.  Examples of a point version change include:</p>
+
+<ul class="square">
+<li>Minor bug fixes that do not significantly alter the behavior of the API interface.</li>
+<li>Corrections, clarifications, or minor additions to documentation.</li>
+<li>Changes in the build system that result in no framework executable changes.</li>
+</ul>
+
+<p>Users upgrading to a later point version of a <i>major</i>.<i>minor</i> version should expect full compatibility with the previous <i>major</i>.<i>minor</i> release and no changes on their part should be required.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="ChangeLog.html" class="section-link nobr">Release Information - RegexKit Change Log</a></li>
+    <li><a href="ReleaseNotes.html" class="section-link nobr">Release Information - RegexKit Release Notes</a></li>
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/DynamicLibraries/index.html" class="section-link nobr" target="_top">Dynamic Library Programming Topics</a></li>
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/DynamicLibraries/Articles/DynamicLibraryDesignGuidelines.html#//apple_ref/doc/uid/TP40002013-SW20" class="section-link nobr" target="_top">Dynamic Library Programming Topics - Managing Client Compatibility With Dependent Libraries</a></li>
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/DynamicLibraries/Articles/DynamicLibraryDesignGuidelines.html#//apple_ref/doc/uid/TP40002013-DontLinkElementID_10" class="section-link nobr" target="_top">Dynamic Library Programming Topics - Specifying Version Information</a></li>
+  </ul>
+</div>
+
+</div>
+
+
+<h2><a name="ReleaseInformation_UserContributions">User Contributions</a></h2>
+
+<p>Users who wish to contribute to RegexKit, such as patches, implementation of new features or functionality, or localizations, must do so in a manner that is compatible with <a href="#LicenseInformation" class="hardNobr">RegexKits BSD License</a>.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Submitters agree that any submitted contributions will in no way alter the nature of the BSD license under which RegexKit is licensed and distributed and accept all liability arising from submitted contributions that cause any such violations.</div></div></div></div>
+
+<p>Submitters agree to be considered as a <span class="disclaimer"><b>contributer</b></span> under <a href="#License" class="hardNobr">RegexKits license</a>.  In the interest of keeping the number of licenses to a minimum, submitters agree that the <a href="#License" class="hardNobr">RegexKit license</a> will be the only license used to represent all works contained within RegexKit.</p>
+
+<p>Submitters agree that all contributions are royalty-free and without compensation, now or in the future.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">By submitting a contribution, the submitter implicitly agrees to these terms for all contributions submitted, and such terms apply worldwide and are irrevocable.  Additionally, the submitter implicitly acknowledges that they have the rights and authority to agree to these terms for all contributions submitted.  Furthermore, the submitter agrees to accept all liability if they misrepresent their rights or authority to agree to these terms for the submitted contributions and in no way shall they hold the RegexKit copyright owner or contributers liable for any reason or cause.</div></div></div></div>
+
+
+<h2><a name="LicenseInformation">License Information</a></h2>
+
+<p>The code for this framework is licensed under what is commonly known as the <span class="nobr"><i>revised, 3-clause BSD-Style</i></span> license.</p>
+
+<h3><a name="License">License</a></h3>
+
+<div class="sourceLicense"><p>Copyright &copy; 2007-2008, John Engelhart</p>
+
+<p>All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the name of the Zang Industries nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ul>
+
+<p class="disclaimer">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</div>
+
+</div> <!-- releaseInformation -->
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</body>
+</html>

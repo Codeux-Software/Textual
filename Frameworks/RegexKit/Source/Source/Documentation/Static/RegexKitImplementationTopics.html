@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+@import "CSS/guide.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RegexKit Implementation Topics</title>
+</head>
+
+<body>
+<div class="bodyTop">
+
+<div class="guide">
+<h1>RegexKit</h1>
+
+<span class="frameworkabstract">An <span class="nobr">Objective-C</span> Framework for Regular Expressions using the PCRE Library</span>
+
+<div class="intro">
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>This document demonstrates how to use regular expressions by incorporating the <span class="nobr">RegexKit.framework</span> in to your project.</p>
+
+<p>The <span class="nobr">RegexKit.framework</span> is an <span class="nobr">Objective-C</span> wrapper for the <span class="new-term">PCRE</span> (Perl Compatible Regular Expression) library available at <a href="http://www.pcre.org/" class="nobr">www.pcre.org</a>. The <span class="nobr">RegexKit.framework</span> acts as a bridge between the <span class="nobr">Objective-C</span> <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> framework and the <a href="pcre/index.html"><i>PCRE</i></a> library by providing regular expression pattern matching extensions to <a href="NSArray.html" class="code">NSArray</a>, <a href="NSDictionary.html" class="code">NSDictionary</a>, <a href="NSSet.html" class="code">NSSet</a>, and <a href="NSString.html" class="code">NSString</a>, and their mutable variants.</p>
+
+<div class="highlights">
+<h5><a name="Introduction_Highlights">Highlights</a></h5>
+
+<ul>
+<li>Multithreading safe.</li>
+<li>Automatically caches compiled regular expressions.</li>
+<li>For <span class="nobr">Mac OS X</span>, the framework is built as a <span class="nobr">Universal Binary.</span></li>
+<li>Uses <span class="nobr"><a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a></span> on <span class="nobr">Mac OS X</span> for greater speed.</li>
+<li>PCRE library built in, no need to build or install separately.</li>
+<li><a href="http://www.gnustep.org/"><i>GNUstep</i></a> support.</li>
+</ul>
+
+</div>
+
+<div class="prerequisites">
+<h5><a name="Introduction_Prerequisites">Prerequisites</a></h5>
+
+<ul>
+<li>An <span class="nobr">Objective-C</span> development environment.</li>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a> <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> framework, or compatible.</li>
+<li>For <span class="nobr">Mac OS X, 10.4</span> or greater is required.</li>
+<li>Some experience with regular expressions.</li>
+</ul>
+
+</div>
+
+<div class="overview">
+<h5><a name="Introduction_Documentationoverview">Documentation overview</a></h5>
+
+<ul>
+<li><a href="#PCREVersionandFeatureSupport">PCRE Version and Feature Support</a></li>
+<li><a href="#MultithreadingSafety">Multithreading Safety</a></li>
+<li><a href="#BuildingtheRegexKitframeworkwithXcode">Building the <span class="nobr">RegexKit.framework</span> with Xcode</a></li>
+<li><a href="#GNUstep">GNUstep</a></li>
+<li><a href="#ImplementationDetails">Implementation Details</a></li>
+<li><a href="#FrameworkDependencies">Framework Dependencies</a></li>
+<li><a href="#LicenseInformation">License Information</a></li>
+</ul>
+</div>
+
+</div> <!-- class 'intro' -->
+
+<!-- ____________________________________________ -->
+
+<div class="features">
+
+<h2><a name="PCREVersionandFeatureSupport">PCRE Version and Feature Support</a></h2>
+
+<h5><a name="PCREVersionandFeatureSupport_PCREVersionsSupported">PCRE Versions Supported</a></h5>
+
+<p>The version of <b>PCRE</b> used for development was <span class="code nobr">7.0 18-Dec-2006</span>, which was the latest stable at the time of development.  No version prior to <span class="code nobr">7.0</span> was tested for compatibility.</p>
+
+<h5><a name="PCREVersionandFeatureSupport_FeaturesSupported">Features Supported</a></h5>
+
+<ul>
+<li>Named subpattern captures.<br>
+<p>Named subpattern captures are fully supported.  You can find the capture index of a capture name with @link captureIndexForCaptureName: captureIndexForCaptureName:@/link. In general, the convenience methods will automatically convert a capture name to a capture index when the index request is not numeric.</p>
+</li>
+<li>Unicode support.<br>
+<p>Provided the underlying PCRE library was built with Unicode support, the default, the framework should support Unicode as well.  Currently only the default locale table created when the <b>PCRE</b> library was built is supported.</p>
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The author is a native English speaker and has dealt almost exclusively with ASCII strings, therefore the Unicode support probably contains bugs. Bug reports and especially unit tests that exercise the Unicode portions are welcome.</div></div></div></div>
+</li>
+</ul>
+
+<h5><a name="PCREVersionandFeatureSupport_FeaturesNotSupported">Features Not Supported</a></h5>
+
+<ul>
+<li>Callouts during matching.
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Use of callouts will raise a @link RKRegexUnsupportedException RKRegexUnsupportedException@/link.</div></div></div></div>
+</li>
+<li>Using the alternative <a href="pcre/pcre_dfa_exec.html">DFA pattern matching function</a>.</li>
+<li>Alternate locale tables.</li>
+<li>Alternative values for @link PCRE_EXTRA_MATCH_LIMIT PCRE_EXTRA_MATCH_LIMIT @/link or @link PCRE_EXTRA_MATCH_LIMIT_RECURSION PCRE_EXTRA_MATCH_LIMIT_RECURSION @/link during pattern matching.</li>
+</ul>
+
+</div>
+<!-- ____________________________________________ -->
+<div class="multithreading">
+
+<h2><a name="MultithreadingSafety">Multithreading Safety</a></h2>
+
+<div class="box warning"><div class="table"><div class="row"><div class="label cell">Warning:</div><div class="message cell">Multithreaded programming is extremely difficult and error prone.  While an effort has been made to make this framework multithreading safe there are a large number of unproven assumptions made, notably that the libraries and frameworks that <span class="nobr">RegexKit.framework</span> depends on are multithreading safe.</div></div></div></div>
+
+<p>The <span class="nobr">RegexKit.framework</span> has been written with multithreading safety in mind.  The major points on which multithreading safety is predicated on are:</p>
+
+<ul>
+<li>The underlying <b>PCRE</b> library is multithreading safe, which it typically is.  Consult the <b>PCRE</b> library documentation for details.  Version <span class="nobr">7.0</span> of the <b>PCRE</b> library contained the following provision:
+<div class="box">
+<p>The PCRE functions can be used in multithreading applications, with the proviso that the memory management functions pointed to by @link pcre_malloc pcre_malloc@/link, @link pcre_free pcre_free@/link, @link pcre_stack_malloc pcre_stack_malloc@/link, and @link pcre_stack_free pcre_stack_free@/link, and the callout function pointed to by @link pcre_callout pcre_callout@/link, are shared by all threads.</p> 
+<p>The compiled form of a regular expression is not altered during matching, so the same compiled pattern can safely be used by several threads at once.</p>
+</div>
+</li>
+
+<li>The implementation of @link NSMapTable NSMapTable @/link used to store cached @link RKRegex RKRegex @/link objects is <span class="nobr">multiple reader / single writer</span> multithreading safe, which is usually true.  Refer to the @link RKCache RKCache @/link class documentation for additional information.</li>
+
+<li>The underlying <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> implementation of @link NSAutoreleasePool NSAutoreleasePool @/link follows the semantics of <span class="nobr"><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a>'s</span> implementation, which is to say that there is a @link NSAutoreleasePool NSAutoreleasePool @/link per thread.  Access to the cache is protected with a multiple reader, single writer lock.  If the cache system finds a hit, it performs a @link retain retain @/link on the matched object while it still has the cache locked.  This protects against premature deallocation if another thread immediately clears the cache, which can only be done under the write lock.  Convenience methods that subsequently @link autorelease autorelease @/link the cached object will place it in to that threads @link NSAutoreleasePool NSAutoreleasePool @/link.  This ensures that any objects that are returned from the cache remain valid until at least the end of the threads @link NSAutoreleasePool NSAutoreleasePool @/link context that obtained the cached result regardless of any intervening requests to clear the cache by other threads.</li>
+</ul>
+
+<p>@link RKRegex RKRegex @/link objects are safe to share between threads.  No special precautions need to be taken except for those that are to be expected, such as making sure the object is properly retained so it is not accidentally deallocated during the time between threads.</p>
+
+<div class="seealso">
+  <div class="section">See also</div>
+  <ul>
+    <li><a href="pcre/pcreapi.html#SEC4" class="section-link">PCRE Multithreading</a></li>
+  </ul>
+</div>
+
+
+<h5><a name="MultithreadingSafety_threadLocalData">Thread Local Data</a></h5>
+ 
+<p>The capture conversion routines can create a @link NSNumber NSNumber @/link object by using a @link NSNumberFormatter NSNumberFormatter @/link to perform the conversion.  Since the @link NSNumberFormatter NSNumberFormatter @/link is likely to be reused again and again, the framework creates and retains a per thread instantiation the first time that thread performs a @link NSNumber NSNumber @/link conversion.  When the thread exits, the @link NSNumberFormatter NSNumberFormatter @/link is automatically released.  This is required because the documentation for @link NSNumberFormatter NSNumberFormatter @/link says that a single @link NSNumberFormatter NSNumberFormatter @/link is not safe to share across threads.</p>
+
+<p>The thread local data structures are managed with the <i>pthread</i> library @link pthread_getspecific pthread_getspecific @/link and @link pthread_setspecific pthread_setspecific @/link functions.</p>
+
+<h5><a name="MultithreadingSafety_AtomicPrimitives">Atomic Primitives</a></h5>
+
+<div class="table">
+ <table class="standard" summary="Required atomic primitives">
+<caption>Required atomic primitives</caption>
+ <tr>
+<th>Primitive</th>
+ <th>Description</th>
+ </tr>
+<tr>
+<td>@link RKThreadYield RKThreadYield @/link</td> <td>Force the calling thread to yield the CPU to a different thread.</td>
+</tr>
+<tr>
+<td>@link RKIsMainThread RKIsMainThread @/link</td> <td>Returns <span class="code">YES</span> if the calling thread is the main thread, <span class="code">NO</span> otherwise.</td>
+</tr>
+<tr>
+<td>@link RKAtomicMemoryBarrier RKAtomicMemoryBarrier @/link</td>
+<td>Force all pending memory loads and stores to complete before continuing.</td>
+</tr>
+<tr>
+<td>@link RKAtomicIncrementInt RKAtomicIncrementInt @/link</td>
+<td>Atomically increment a C <span class="code">int</span> (as defined by the platform / compiler) by one.</td>
+</tr>
+<tr>
+<td>@link RKAtomicDecrementInt RKAtomicDecrementInt @/link</td>
+<td>Atomically decrement a C <span class="code">int</span> (as defined by the platform / compiler) by one.</td>
+</tr>
+<tr>
+<td>@link RKAtomicCompareAndSwapInt RKAtomicCompareAndSwapInt @/link</td>
+ <td>Compare a C <span class="code">int</span> (as defined by the platform / compiler) value (referred to as <span class="argument">old</span>) with a value (referred to as <span class="argument">new</span>) at a location in memory (referred to as <span class="argument">ptr</span>) if and only if the value at <span class="argument">ptr</span> contains the value of <span class="argument">old</span> and can be replaced with the value of <span class="argument">new</span> in a single atomic operation.</td>
+ </tr>
+<tr>
+<td>@link RKAtomicCompareAndSwapPtr RKAtomicCompareAndSwapPtr @/link</td>
+ <td>Compare a C <span class="code nobr">void *</span> (as defined by the platform / compiler) value (referred to as <span class="argument">old</span>) with a value (referred to as <span class="argument">new</span>) at a location in memory (referred to as <span class="argument">ptr</span>) if and only if the value at <span class="argument">ptr</span> contains the value of <span class="argument">old</span> and can be replaced with the value of <span class="argument">new</span> in a single atomic operation.</td>
+ </tr>
+</table>
+</div>
+
+<p>In order to ensure correct multithreading operation, the framework requires a handful of atomic primitives.  These are very common primitives, save for the fact that there's no common API to use them.</p>
+
+<p>If <span class="header_file">RegexKitPrivate.h</span> does not have atomic operations defined for the build platform and GCC 4.1 or greater is used, then the GCC 4.1+ atomic intrinsics will be used if possible.</p>
+
+<p>Locks are handled by two private, internal classes: @link RKLock RKLock @/link and @link RKReadWriteLock RKReadWriteLock @/link.  These use <i>pthread</i> mutex locks as their locking primitives and should compile on any platform with <i>pthread</i> support.  The lock objects also provide some debugging capabilities and spurious error handling ability.</p>
+
+<h5><a name="MultithreadingSafety_SinglethreadedvsMultithreaded">Single threaded vs. Multithreaded</a></h5>
+
+<p>The private lock objects optimize their locking strategy so that when running in single threaded mode they do not actually obtain the lock, but simply return as though they had.  As soon as multithreading is detected, as determined by <span class="nobr"><span class="code">[</span>@link NSThread NSThread @/link @link isMultiThreaded isMultiThreaded@/link<span class="code">]</span></span>, they automatically switch to multithreading safe full lock acquisition.  This can result in an approximate <span class="nobr">10%</span> performance increase for the single threaded case.  No special precautions or steps are required when switching from single to multithreading.</p>
+
+<h5>Cocoa Specifics</h5>
+
+<p>The <span class="nobr">RegexKit.framework</span> was primarily designed and tested with the <span class="nobr">Mac OS X 10.4 <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a></span> environment.  Multithreading has been extensively tested and should be safe to use.</p>
+
+<h5><a name="MultithreadingSafety_GNUstepSpecifics">GNUstep Specifics</a></h5>
+
+<p>While the <span class="nobr">RegexKit.framework</span> has had extensive multithreaded testing under the <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a> environment, there has been much less testing under <a href="http://www.gnustep.org/"><i>GNUstep</i></a>.  Testing on <span class="nobr">FreeBSD 5.4 amd64</span> with ports <span class="nobr">GCC 4.1.3 20070402</span> (and its included ObjC runtime) along with OCUnit v27 using ports <span class="nobr">GNUstep-base 1.13.1</span> revealed a number of multithreading bugs, but none (as near as could be determined) with the <span class="nobr">RegexKit.framework</span>.  Notably it would appear the ObjC runtime in <span class="nobr">GCC 4.1.3</span> "leaks" the <span class="nobr">__objc_runtime_mutex</span> lock under unknown conditions.  Since the lock is thread <span class="nobr">re-entrant,</span> this is not really a problem during single threaded use. However, if another thread attempts to acquire the lock, it will obviously deadlock because not all of the <span class="nobr">lock/unlock</span> calls are balanced.  This was observed during certain situations, such as first time selector lookup from a thread other than the main thread (which <span class="nobr">held/leaked</span> the lock).  It was possible to <span class="nobr">"pre-lookup"</span> the selectors in question before becoming multithreaded and complete most multithreaded tests, but this is not very encouraging. Some debugging revealed that this lock had been leaked before a single line of test code had been executed meaning the condition was caused outside the <span class="nobr">RegexKit.framework</span> and unit testing code base during initialization. Also, unit tests that exercised exception (ie, @link NSException NSException @/link) conditions had to be completely disabled as this would <span class="nobr">'seem'</span> to cause the ObjC runtime to deadlock but was unable to be debugged because of bugs in the debugger.</p>
+
+<p>In short, single threaded use should be fine.  Multithreading should be used cautiously, but the framework itself seems to be multithreading safe.  After <span class="nobr">pre-populating</span> certain ObjC runtime structures to prevent deadlock, the multithreading tests completed without incident except for previously mentioned @link NSException NSException @/link tests which were disabled. <i class="nobr">Caveat emptor.</i></p>
+
+</div>
+<!-- ____________________________________________ -->
+<div class="building-framework">
+
+<h2><a name="BuildingtheRegexKitframeworkwithXcode">Building the <span class="nobr">RegexKit.framework</span> with Xcode</a></h2>
+
+<p>The Xcode project included with the framework distribution comes with a number of targets.  In addition to the targets, a number of additional project settings have been added to assist in the building of the PCRE library.  You can view these by choosing the <span class="menu-selection">Project &gt; Edit Project Settings</span> and then clicking on the Build tab. </p>
+
+<div class="table">
+ <table class="standard" summary="Included Xcode targets">
+<caption>Included Xcode targets</caption>
+<tr><th>Target</th><th>Description</th></tr>
+<tr><td><span class="nobr">Unit Tests</span></td><td>Tests that exercise the functionality of the framework.</td></tr>
+<tr><td><span class="nobr">PCRE</span></td><td>Downloads, configures, and builds the PCRE library.</td></tr>
+<tr><td><span class="nobr">RegexKit Framework</span></td><td>Builds the framework so that it can be used as an embedded private framework.</td></tr>
+<tr><td><span class="nobr">Documentation</span></td><td>Builds the documentation for the framework from the comments in the header files.</td></tr>
+<tr><td><span class="nobr">Distribution</span></td><td>Builds the pcre, Embedded Framework, and Documentation targets and then packages them in to the distribution groups <span class="file">RegexKit</span> and <span class="file">RegexKit_source</span>.  The finished distribution files are in the <span class="file">build/Distribution</span> directory.</td></tr>
+</table>
+</div>
+
+<p>When building the framework, it may be useful to select the menu item <span class="">Build &gt; Build Results</span> to open the build results window.  A number of build targets will output status messages prefixed with <span class="code">debug:</span> that will allow you to monitor the targets build progress.  Additional information is available via the <span class="icon-button-name">Build Transcript</span> icon (resembles a text document) on the middle pane splitter.  This allows you to view the targets build output as you would see it if you were to perform the build from the shell.</p>
+
+<h5>Unit Tests</h5>
+
+<p>Included with the distribution are a set of unit tests.  They are divided in to three categories:</p>
+
+<ul>
+ <li>Functionality</li>
+ <li>Multithreading</li>
+ <li>Timing</li>
+</ul>
+
+<p>The multithreading and timing tests both duplicate the majority of the code in the functionality tests while adding additional code to either exercise the tests under multithreading conditions or to time repeated executions of the tests.</p>
+
+<p>The timing tests record the amount of CPU time that has elapsed rather than the amount of "wall time".  This is because the amount of CPU time required to execute a test remains fairly consistent regardless of any other activities the machine executing the tests is performing, whereas the amount of "wall time" a test takes can vary considerably if the tests are executing concurrently with other processes that are consuming a significant amount of CPU time.</p>
+
+<p>The multithreading tests add some additional tests to enable, disable, and clear both the entire cache and individual entries.  A complete series of all the tests is a <span class="new-term">round</span>.  The multithreading test prepares a number of threads, each of which executes a configurable number of rounds while delaying a random amount of time in-between rounds.  The reasoning behind a random amount of time between rounds is to maximize the overlap of different test cases executing simultaneously.  While non-deterministic, the tests at least provide some confidence that multithreading behavior is somewhat reliable.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The multithreading tests can trigger a bug in the @link malloc malloc() @/link memory allocation library on <span class="nobr">Mac OS X</span> up to at least version <span class="nobr">10.4.10</span>.  The Apple Problem ID is 5083704.  It is only triggered when <span class="code">MallocStackLogging</span> or <span class="code">MallocStackLoggingNoCompact</span> environment variables have been set.</div></div></div></div>
+
+<p>In short, the stack logging code has a lock to synchronize updates to the stack log. Occasionally when the stack log grows, the entire stack recording allocation must be moved to a new block in memory in order to accommodate the request (ie, @link realloc realloc()@/link).  A race condition exists when this happens because the stack logging code keeps the lock within that allocated memory.  By chance, another thread may need to record a stack allocation while a different thread is moving the stack recording allocation, and begin waiting for the lock at the original allocation address. However, once the thread that has the lock moves the stack recording allocation, the blocked thread will be waiting on a lock which will no longer be the valid because it has been moved with the reallocation.</p>
+
+<p>The program will core dump at this point because the underlying memory for the old block has been unmapped from the process space. The top most frame in the stack trace will be a call to @link spin_lock spin_lock()@/link, which was called by @link stack_logging_log_stack stack_logging_log_stack() @/link.</p>
+
+<p>These crashes are not due to a bug in the <span class="code nobr">RegexKit.framework</span> code.</p>
+
+<h5>Building the PCRE library</h5>
+
+<p>The <span class="code">PCRE</span> target automatically downloads and builds the PCRE library.  There are a number of project settings that help control the PCRE library build process.</p>
+
+<div class="table">
+ <table class="standard" summary="Noteworthy PCRE related project settings">
+<caption>Noteworthy PCRE related project settings</caption>
+ <tr>
+<th>Name</th>
+ <th>Default</th>
+ <th>Description</th>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_CONF_CFLAGS</span></td>
+ <td><span class="code nobr">-isysroot ${SDKROOT}</span></td>
+ <td><span class="code">CFLAGS</span> passed to the PCRE <span class="file">configure</span> script.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_CONF_LDFLAGS</span></td>
+ <td><span class="code nobr">-Wl,-syslibroot,${SDKROOT}</span></td>
+ <td><span class="code">LDFLAGS</span> passed to the PCRE <span class="file">configure</span> script.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_CONF_OPTIONS</span></td>
+ <td><span class="code nobr">--enable-utf8</span> <span class="code nobr">--enable-unicode-properties</span> <span class="code nobr">--disable-cpp</span> <span class="code nobr">--disable-shared</span></td>
+ <td>Options to enable or disable that is passed to the PCRE <span class="file">configure</span> script. The default configures Unicode support and disables C++ support.  Only the static link library is required, not the shared dynamic link library.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_TARBALL_FILE</span></td>
+ <td><span class="code nobr">${PCRE_NAME_VERSION}.tar.bz2</span></td>
+ <td>The file name for the tarred and compressed PCRE distribution file.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_URL_ROOT</span></td>
+ <td><span class="code nobr">ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre</span></td>
+ <td>The base URL where the PCRE distribution can be found.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_VERSION</span></td>
+ <td><span class="code nobr">7.0</span></td>
+ <td>The version number of the PCRE distribution.</td>
+ </tr>
+<tr>
+<td><span class="xcode-setting">PCRE_NAME_VERSION</span></td>
+ <td><span class="code nobr">pcre-${PCRE_VERSION}</span></td>
+ <td>The base name of the PCRE distribution.</td>
+ </tr>
+
+</table>
+</div>
+
+<p>These settings, along with the make file <span class="file">Makefile.pcre</span>, work together to build the PCRE library. The make file automatically detects and adds the appropriate configuration options based on a limited set of Xcode settings such as the architecture(s) to build for if creating a Universal Binary and the appropriate debugging and optimization flags.</p>
+
+<p>The end result is an automated process configured by the project settings for performing the typical cycle of:</p>
+
+<ul>
+ <li>Download the distributions tarball.</li>
+ <li>Decompress and untar the distribution.</li>
+ <li>Run the included <span class="file">./configure</span> script with the desired options.</li>
+ <li>Build the distribution.</li>
+ <li>Install the distribution.</li>
+</ul>
+
+<p>The scripts configure the PCRE library to install in the projects <span class="code">${BUILD_DIR}</span> directory.  Different configuration styles are built and installed in different locations, just as your regular code would be.  Since the target is driven by a <span class="file">Makefile</span>, the library is only built as required.  Since it is not as tightly integrated in to the Xcode build process, it is a good idea to clean the target if you make any non-obvious changes that directly affect the PCRE library.  You should review <span class="file">Makefile.pcre</span> for additional information on the PCRE library build process.</p>
+
+<p>It should be possible to change the <span class="xcode-setting">PCRE_VERSION</span> setting and rebuild the framework to switch to a different version of PCRE.  Although things naturally change from release to release, the pcre target is hopefully robust enough to accommodate most simple changes. Any changes required to successfully build a new distribution are likely to be limited to the <span class="file">Makefile.pcre</span> file.</p>
+
+<p>The <span class="file">RegexKit.framework</span> statically links to the PCRE library.  This was chosen because the 'right thing' for using dynamic libraries is neither obvious nor easy.  While a copy of the PCRE shared library could be included, what is the correct behavior if the user has the PCRE library installed as well? And what if, in the unlikely event, your regular expressions are not compatible with users PCRE library?  Troubleshooting such an issue would be very difficult because there would be no way to easily determine if a different PCRE library version was causing the problems.  For this, and other reasons, it was chosen to statically link the PCRE library to the framework.  It forms an always known base, and various steps are taken so that none of the PCRE library symbols are exposed outside of the framework.  This prevents inadvertent tampering with the PCRE internals, such as the @link pcre_callout pcre_callout @/link feature, and prevents a linking conflict if a different PCRE library is linked to for whatever reason.</p>
+
+</div>
+<!-- ____________________________________________ -->
+<div class="gnustep">
+
+<h2><a name="GNUstep">GNUstep</a></h2>
+
+<h5 class="XXX">Needs to be updated and checked.</h5>
+
+<p>The <span class="nobr">RegexKit.framework</span> has been tested with <a href="http://www.gnustep.org/"><i>GNUstep</i></a>, though not nearly as extensively as testing done with <span class="nobr">Mac OS X <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a></span>.  In general, the framework should work under <a href="http://www.gnustep.org/"><i>GNUstep</i></a>, but the shear number of variations of operating systems, compilers, and revision combinations makes testing difficult.  Also, <a href="http://www.gnustep.org/"><i>GNUstep</i></a> is not the primary development target of the framework.  Certainly the foundation for <a href="http://www.gnustep.org/"><i>GNUstep</i></a> compatibility has been laid, and any changes required for a specific platform are hopefully minimal. The various <a href="#MultithreadingSafety_AtomicPrimitives" class="nobr">atomic primitives</a>, determined and defined in <span class="header_file">REPrivate.h</span>, will have to be added if they are not automatically configured.</p>
+
+<p>The header markup used is Apples <a href="http://developer.apple.com/opensource/tools/headerdoc.html"><i>HeaderDoc</i></a> which, unfortunately, is not compatible with <a href="http://www.gnustep.org/"><i>GNUstep</i></a> GSDoc format.  Therefore there is no native <a href="http://www.gnustep.org/"><i>GNUstep</i></a> style GSDoc documentation provided.</p>
+
+<p>You should review the <a href="#MultithreadingSafety_GNUstepSpecifics">multithreading</a> notes in this document and the <span class="code">GNUstep/README.GNUstep</span> file in the distribution for additional information.</p>
+
+</div>
+<!-- ____________________________________________ -->
+<div class="implementation">
+
+<h2><a name="ImplementationDetails">Implementation Details</a></h2>
+
+<p><a name="ImplementationDetails_Compilerfeaturemacros">The following macros are used to control various compiler specific features:</a></p>
+<div class="table">
+ <table class="standard" summary="Compiler feature macros">
+<caption>Compiler feature macros</caption>
+ <tr>
+<th>Macro</th>
+ <th>Compiler</th>
+ <th>Description</th>
+ </tr>
+<tr>
+<td><span class="cpp_flag">RKREGEX_STATIC_INLINE</span></td>
+ <td><span class="nobr">GCC &gt;= 4</span></td>
+ <td>Portable equivalent of <span class="code">FOUNDATION_STATIC_INLINE</span> which causes a function to be defined as static and always inlined.</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">RK_EXPECTED</span></td>
+ <td><span class="nobr">GCC &gt;= 4</span></td>
+ <td>Used to provide a hint to the compiler to aid instruction scheduling when the outcome of a conditional evaluation is known with a high degree of certainty.</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">RK_ATTRIBUTES</span></td>
+ <td><span class="nobr">GCC &gt;= 4</span></td>
+ <td>Defines GCC specific function attributes which can help the compiler in optimizations, sentry checks, and diagnostic messages.</td>
+ </tr>
+</table>
+</div>
+
+<p><a name="ImplementationDetails_Compiletimeconfigurationflags">The following C Preprocessor defines are used to control various compile time options:</a></p>
+
+<div class="table">
+ <table class="standard" summary="Compile time configuration flags">
+<caption>Compile time configuration flags</caption>
+ <tr>
+<th>Flag</th>
+ <th>Default</th>
+ <th>Description</th>
+ </tr>
+<tr>
+<td><span class="cpp_flag">USE_MACRO_EXCEPTIONS</span></td>
+ <td><span class="nobr">Enabled if not Mac OS X</span></td>
+ <td>Controls whether or not <span class="nobr">@link NS_DURING NS_DURING @/link / @link NS_HANDLER NS_HANDLER @/link / @link NS_ENDHANDLER NS_ENDHANDLER @/link</span> macros are used to catch exceptions. Enabled if not running under <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a> or <span class="nobr">GCC &lt; 3.3</span>.  Otherwise, on <span class="nobr">Mac OS X &gt;= 10.3</span>, the newer style <span class="code nobr">-fobjc-exceptions</span> <span class="nobr">@link @try @try @/link / @link @catch @catch @/link</span> compiler exception syntax is used.</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">USE_AUTORELEASED_MALLOC</span></td>
+ <td>Enabled</td>
+ <td>
+Controls whether the framework makes use of a special object for temporary memory allocations that are returned to callers for certain types of results.  Currently this only used by the @link rangesForCharacters:length:inRange:options: rangesForCharacters:length:inRange:options: @/link family of functions to return an array (in the C sense, not @link NSArray NSArray @/link) of @link NSRange NSRange @/link results from a match. In short, the memory allocation that is returned is automatically @link free free()@/linkd when the current @link NSAutoreleasePool NSAutoreleasePool @/link context pops.  Memory allocations are <span class="nobr">% 16</span> aligned.
+ When disabled, a @link NSMutableData NSMutableData @/link of sufficient capacity is substituted instead. Only the @link mutableBytes mutableBytes @/link pointer is returned, the object itself is @link autorelease autorelease@/linkd.
+</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">USE_PLACEHOLDER</span></td>
+ <td>Enabled</td>
+ <td>Controls whether or not the framework takes the additional step of substituting a placeholder object when @link allocWithZone: allocWithZone: @/link is called with a special singleton object.  The singleton object then receives the @link initWithRegexString:options: initWithRegexString:options: @/link call and checks the cache first.  Only when the regular expression is not already in the cache is a new object allocated to fill the request.  Without this modification a new object is allocated only to be immediately released if a match is found in the cache.</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">USE_CORE_FOUNDATION</span></td>
+ <td><span class="nobr">Enabled on Mac OS X</span></td>
+ <td>See <a href="#ImplementationDetails_OpenStepFoundationvsCoreFoundation" class="nobr">OpenStep Foundation vs. Core Foundation</a> for details.</td>
+ </tr>
+<tr>
+<td><span class="cpp_flag">_USE_DEFINES</span></td>
+ <td><span class="nobr">Enabled</span></td>
+ <td>Controls whether or not a number of utility functions are replaced with macro equivalents or if static inline functions are used.  For example, @link NSMakeRange NSMakeRange @/link is redefined as <span class="code nobr">NSMakeRange(x, y) (NSRange){x, y}</span>.</td>
+ </tr>
+
+
+</table>
+</div>
+
+<h5>Object Hash Value and Equality</h5>
+
+<p>The hash value for a @link RKRegex RKRegex @/link object is computed by taking the hash value of the string representation of the regular expression and performing a bitwise exclusive-or with its @link RKCompileOption RKCompileOption @/link value, (ie, <span class="code nobr">stringHash ^ compileOptions</span>).  Collisions are therefore strongly dependent on the string implementations @link hash hash @/link function.  Identical regular expression strings with different @link RKCompileOption RKCompileOption @/link will obviously be unique.</p>
+
+<h5>Cache membership</h5>
+
+<p>A @link NSMapTable NSMapTable @/link is used to store the cached objects.  The key used to store and retrieve items from the cache is the @link RKRegex RKRegex @/link computed hash value.   If the cache is asked to add a @link RKRegex RKRegex @/link and there is already a @link RKRegex RKRegex @/link with the same hash value, the existing object is kept in the cache and the new object is not added.  Assuming that equal hashes represent true equality and not a collision (that is, two different @link RKRegex RKRegex @/link have identical hash values), this policy keeps the @link RKRegex RKRegex @/link that is already in use 'hot' in the CPU caches.</p>
+
+<h5>Exported symbols</h5>
+
+<p>The file <span class="file">Source/Build/export_list</span> contains the symbols that are visible to programs that link to the framework.  This acts as a filter to ensure only the symbols required to use the framework are exported.  The remaining symbols are invisible and unavailable to programs that link with the framework.  While many items are declared static to prevent external visibility, sometimes a symbol needs to be available outside of it's compile unit, but still private to the framework.  New functionality that requires user visibility of the <span class="nobr">symbol(s)</span> will have to be added here.  New <span class="nobr">Objective-C</span> methods and the corresponding <span class="nobr">@link @selector @selector() @/link</span> signatures are not added here, they are added dynamically at load time by the <span class="nobr">Objective-C</span> runtime system.</p>
+
+<h5>Use of Global Variables</h5>
+
+<p>In general what few global variables that do exist are defined <span class="code">static</span> so they are not exported outside of the compile unit.  Use of global variables is multithreading safe by either being constant (ie, the major version of the <b>PCRE</b> library) or protected by locks to control access.  Since the regular expression cache is accessed with class methods it requires global variables to manage the cache state, but those variables are not exported and all access to the shared state is controlled by locks.  Initialization of any global variables is done in functions marked with the <span class="code">constructor</span> attribute or the classes @link initialize initialize @/link method.  In either case, atomic barriers are used to prevent the highly unlikely event that the initialization routines are invoked multiple times, or simultaneously from multiple threads.</p>
+
+<h5>Memory Allocation and the use of the Stack</h5>
+
+<p>The <span class="nobr">RegexKit.framework</span> tries, whenever possible, to use the stack for all of its memory allocation needs.  Stack based allocation has essentially no overhead associated with it and usually maps to a handful of instructions executed on most architectures.  Since the allocation is associated with the stack, there is no resource to free as it is 'released' when the stack frame pops.  Internally, the framework uses <span class="nobr">@link alloca alloca() @/link</span> for these allocations.  Extreme care must be taken when dealing with functions that make use of <span class="nobr">@link alloca alloca()@/link,</span> however.  The reasons for this are beyond the scope of this text, but safe to say that with all the numerous advantages comes an equally numerous amount of caveats and responsibilities.  If you have no idea why this warning is here, you have no business altering code that makes use of <span class="nobr">@link alloca alloca()@/link.</span>  <i class="nobr">You have been warned.</i></p>
+
+<h5><a name="ImplementationDetails_OpenStepFoundationvsCoreFoundation">OpenStep Foundation vs. Core Foundation</a></h5>
+
+<p>The <span class="cpp_flag">USE_CORE_FOUNDATION</span> flag controls whether or not the framework uses Apples <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> C API or the OpenStep <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> <span class="nobr">Objective-C</span> API to perform most of the low level object creation and manipulation.  Using <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> can increase overall performance since <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> is an <span class="nobr">Objective-C</span> aware library that uses a C based API.  This eliminates the <span class="nobr">Objective-C</span> message dispatch overhead and results in significantly less <span class="nobr">object creation / autorelease</span> overhead.  The functionality provided by <span class="nobr">RegexKit.framework</span> is identical in either case, essentially substituting <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> calls for the equivalent <span class="nobr">OpenStep <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a></span> methods.</p>
+
+<p>Using <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> also causes the framework to optimize some <span class="nobr">@link retain retain @/link / @link autorelease autorelease @/link</span> calls.  Since <a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a> allows you to specify custom collection callbacks for @link retain retain @/link and @link release release@/link, the framework makes use of this by eliminating the @link retain retain @/link callback when it can safely do so.  For example, if the framework is requested to return an @link NSArray NSArray @/link of results, which is equivalent to @link CFArray CFArray@/link, the framework instantiates all the objects to be contained in the @link CFArray CFArray @/link and then creates the @link CFArray CFArray @/link using a @link CFArrayCallBacks CFArrayCallBacks @/link with a <span class="code">NULL</span> @link retain retain @/link callback. When the instantiated objects are added to the @link CFArray CFArray @/link, their retain count remains the same, effectively transferring ownership from the creating @link RKRegex RKRegex @/link to the @link CFArray CFArray@/link. In this case it eliminates the typical <span class="nobr">@link autorelease autorelease @/link / @link retain retain @/link / @link release release @/link</span> calling sequence for every object in the collection.  The framework uses this same technique in certain convenience methods, such as @link getCapturesWithRegexAndReferences: getCapturesWithRegexAndReferences:@/link, where it groups all of the instantiated objects to be returned in to a single @link CFArray CFArray@/link.  Only the @link CFArray CFArray @/link with all the objects is added to the @link NSAutoreleasePool NSAutoreleasePool@/link, again eliminating a number of extraneous <span class="nobr">@link retain retain @/link / @link release release @/link</span> calls per object.</p>
+
+<h5>Cocoa vs. GNUstep</h5>
+
+<p>The primary development target is the <span class="nobr">Mac OS X <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a></span> environment.  However, an effort has been made to support the <a href="http://www.gnustep.org/"><i>GNUstep</i></a> environment as well.  The two <span class="nobr">pre-processor</span> defines, <span class="cpp_definition">__MACOSX_RUNTIME__</span> and <span class="cpp_definition">__GNUSTEP_RUNTIME__</span> (defined in <span class="header_file">RegexKitDefines.h</span>), are used to determine which platform is being targeted.  Use of the <a href="http://www.gnustep.org/"><i>GNUstep</i></a> runtime automatically disables <span class="cpp_flag">USE_CORE_FOUNDATION</span> and enables <span class="cpp_flag">USE_MACRO_EXCEPTIONS</span>, which represents the largest difference between the <span class="nobr">Mac OS X <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a></span> and <a href="http://www.gnustep.org/"><i>GNUstep</i></a> targets.</p>
+
+<h5>Multithreading locks</h5>
+
+<p>Two private classes, @link RKLock RKLock @/link and @link RKReadWriteLock REReadWriteLock @/link, are used internally to hide the host implementation details of the locking mechanism used.  Currently <i>pthread</i> <span class="code">mutex</span> and <span class="code">rwlock</span> primitives are used to provide the locking functionality.  A collection of debugging statistics can be toggled at run time.  Debugging statistics kept are generally of the number of times the lock was busy on the first attempt to acquire it and the number of times the lock spun before it was finally acquired.  Since the statistics are for debugging only, no effort is made to ensure that counter increments are atomic across threads due to the inherit performance penalty of such atomic operations.</p>
+
+<p>A number of C function calls are privately exported to make use of instantiated lock objects.  They accept the C API equivalent of an <span class="nobr">Objective-C</span> method invocation, specifically <span class="code nobr">func(id self, SEL _cmd, ...)</span>.  This is done to bypass the normal <span class="nobr">Objective-C</span> message dispatch overhead for maximum speed.</p>
+
+<p>The locking code tries to be robust in the event of spurious errors or wakeups.  @link RKLOCK_MAX_SPURIOUS_ERROR_ATTEMPTS RKLOCK_MAX_SPURIOUS_ERROR_ATTEMPTS @/link (defined in <span class="header_file">RKLock.h</span>) controls the number of spurious errors the lock attempts to overcome before finally giving up in failure.  The default value is <span class="code">2</span>.  When a spurious error occurs the lock objects always atomically increment their spurious error counter.</p>
+
+<div class="box warning"><div class="table"><div class="row"><div class="label cell">Warning:</div><div class="message cell">Finding legitimate test conditions to exercise code that is not on the common path is very difficult.  Consequently overall behavior under unusual lock conditions is not well tested.</div></div></div></div>
+</div>
+<!-- ____________________________________________ -->
+<div class="dependencies">
+<h2><a name="FrameworkDependencies">Framework Dependencies</a></h2>
+
+<p>The following lists the major external dependencies that the <span class="code nobr">RegexKit.framework</span> is dependent on.</p>
+
+<div class="table">
+ <table class="standard" summary="Framework Dependencies">
+ <caption>Framework Dependencies</caption>
+ <tr><th>Name</th><th>URL</th><th>Description</th></tr>
+ <tr><td><b>PCRE</b></td><td><a href="http://www.pcre.org/" class="nobr">http://www.pcre.org/</a></td><td>Provides the regular expression matching engine.</td></tr>
+ </table>
+</div>
+
+</div>
+<!-- ____________________________________________ -->
+
+<div class="license">
+<h2><a name="LicenseInformation">License Information</a></h2>
+
+<p>The code for this framework is licensed under what is commonly known as the <span class="nobr"><i>revised, 3-clause BSD-Style</i></span> license.</p>
+
+<h3>License</h3>
+
+<div class="sourceLicense"><p>Copyright &copy; 2007-2008, John Engelhart</p>
+
+<p>All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the name of the Zang Industries nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ul>
+
+<p class="disclaimer">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</div>
+
+<!-- ____________________________________________ -->
+
+
+</div>
+
+</div> <!-- class 'guide' -->
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>
+

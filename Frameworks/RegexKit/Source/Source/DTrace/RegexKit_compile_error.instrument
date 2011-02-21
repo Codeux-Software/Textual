@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.compile.error" name="RegexKit.instrument.compile.error" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Compile Errors" runClass="PFTDTraceRun" instrumentDescription="Records regular expressions that failed to compile due to an error." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.compile.error" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+
+		<probe_definition index="0" event_name="Compile Failure" probe="RegexKit*:::EndRegexCompile" silent_script="" predicate=" (arg4 != 0)" attach_debugger="">			
+
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKRegex Object" code="arg0" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Hash" code="arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Regex" code="copyinstr(arg2)" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Error at Regex Character" code="arg7" type="%d" width="15"/>
+		  <field index="5" name="Options" code="arg3" type="%x" width="15" truncation="middle"/>
+		  <field index="6" name="Error Code" code="arg4" type="%d" width="15"/>
+		  <field index="7" name="Error Code String" code="copyinstr(arg5)" type="%s" width="20" truncation="left"/>
+		  <field index="8" name="PCRE Error String" code="copyinstr(arg6)" type="%s" width="25" truncation="midle"/>
+
+		</probe_definition>
+
+	</extension>
+</plugin>

@@ -1,0 +1,23 @@
+The GNUmakefile is a standard GNUstep style makefile.
+
+Make sure that you have your environment properly set up for GNUstep.  This
+typically involves `source`ing in your shell the appropriate 
+[GNUSTEP]/System/Makefiles/GNUstep.(sh|csh) files.
+
+You may add "messages=yes" to any of the make arguments to see the output
+of the commands being executed in case you need to debug something.
+
+To compile the framework:
+  $ cd [REGEXKIT_ROOT_DIR]/GNUstep
+  $ gmake -f GNUmakefile
+    or
+  $ gmake -f GNUmakefile messages=yes
+
+To install the framework:
+
+  $ gmake -f GNUmakefile install
+
+If you would like to install the framework in a different location than the
+default chosen by GNUstep, you can use:
+
+  $ gmake -f GNUmakefile install GNUSTEP_INSTALLATION_DIR=[ALTERNATE_DIR]

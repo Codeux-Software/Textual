@@ -51,11 +51,12 @@
 @synthesize updatesView;
 @synthesize world;
 
-- (id)init
+- (id)initWithWorldController:(IRCWorld *)word
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 		
+		world = word;
 		scriptsController = [ScriptsWrapper new];
 	}
 	

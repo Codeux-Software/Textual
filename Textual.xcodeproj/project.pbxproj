@@ -36,6 +36,8 @@
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
 		4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14549712F8ACA20014CC3A /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2BAAB813121960001358FF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2BAAB713121960001358FF /* RegexKit.framework */; };
+		4C2BAB9013121E54001358FF /* RegexKit.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2BAAB713121960001358FF /* RegexKit.framework */; };
 		4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */; };
 		4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9812D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png */; };
 		4C329CA412D1BD20001990A9 /* TPWTB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9912D1BD20001990A9 /* TPWTB_ChannelManagement.png */; };
@@ -102,7 +104,6 @@
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
-		4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -288,7 +289,6 @@
 		4CD0E69E12F1B6B000C8F016 /* KeyEventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69012F1B6B000C8F016 /* KeyEventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69F12F1B6B000C8F016 /* LanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69112F1B6B000C8F016 /* LanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E6A112F1B6B000C8F016 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69412F1B6B000C8F016 /* TCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69612F1B6B000C8F016 /* Timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -368,7 +368,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4C3F693E12FD95A300B50CB9 /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
@@ -396,6 +396,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4C2BAB9013121E54001358FF /* RegexKit.framework in Copy Additional Frameworks */,
 				4C3BCCA5130D837D006C36A9 /* AutoHyperlinks.framework in Copy Additional Frameworks */,
 				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 			);
@@ -414,6 +415,7 @@
 		4C14549712F8ACA20014CC3A /* IRCColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormat.h; path = Classes/Headers/IRCColorFormat.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SystemProfiler.xcodeproj; path = Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj; sourceTree = "<group>"; };
 		4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BragSpam.xcodeproj; path = Resources/Plugins/BragSpam/BragSpam.xcodeproj; sourceTree = "<group>"; };
+		4C2BAAB713121960001358FF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Frameworks/RegexKit/RegexKit.framework; sourceTree = "<group>"; };
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Advanced.png; sourceTree = "<group>"; };
@@ -491,7 +493,6 @@
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
@@ -576,7 +577,6 @@
 		4CD0E69012F1B6B000C8F016 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEventHandler.h; path = Classes/Headers/KeyEventHandler.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69112F1B6B000C8F016 /* LanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguagePreferences.h; path = Classes/Headers/LanguagePreferences.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupPrompts.h; path = Classes/Headers/PopupPrompts.h; sourceTree = SOURCE_ROOT; };
-		4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Classes/Headers/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69412F1B6B000C8F016 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = Classes/Headers/TCPClient.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69612F1B6B000C8F016 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = Classes/Headers/Timer.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = Classes/Headers/TinyGrowlClient.h; sourceTree = SOURCE_ROOT; };
@@ -724,6 +724,7 @@
 				4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */,
 				4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */,
 				4C3BCC98130D8373006C36A9 /* AutoHyperlinks.framework in Frameworks */,
+				4C2BAAB813121960001358FF /* RegexKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1103,7 @@
 			children = (
 				4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */,
 				4C66E88412DF69E500446250 /* BlowfishEncryption.framework */,
+				4C2BAAB713121960001358FF /* RegexKit.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
@@ -1343,8 +1345,6 @@
 				4C400E2F1238A655005BDA9D /* LanguagePreferences.m */,
 				4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */,
 				4C4A041612EF1C65009A7988 /* PopupPrompts.m */,
-				4CD0E69312F1B6B000C8F016 /* RegexKitLite.h */,
-				4C90F3BE12B637B000CAEB7B /* RegexKitLite.m */,
 				4CD0E69412F1B6B000C8F016 /* TCPClient.h */,
 				78A8C14211737F660044E7A1 /* TCPClient.m */,
 				4CD0E69612F1B6B000C8F016 /* Timer.h */,
@@ -1452,16 +1452,42 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD0E64612F1B58600C8F016 /* AboutPanel.h in Headers */,
+				4CD0E61C12F1B4E200C8F016 /* AddressBook.h in Headers */,
+				4CD0E63412F1B53300C8F016 /* AddressBookSheet.h in Headers */,
+				4CD0E6AC12F1B6ED00C8F016 /* AGKeychain.h in Headers */,
+				4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */,
+				4CD0E63512F1B53300C8F016 /* ChanBanExceptionSheet.h in Headers */,
+				4CD0E63612F1B53300C8F016 /* ChanBanSheet.h in Headers */,
+				4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */,
+				4CD0E63712F1B53300C8F016 /* ChannelSheet.h in Headers */,
+				4CD0E67B12F1B63D00C8F016 /* ChatBox.h in Headers */,
+				4CD0E6C012F1B70300C8F016 /* DDExtensions.h in Headers */,
+				4CD0E6DA12F1B78200C8F016 /* DDInvocationGrabber.h in Headers */,
+				4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */,
+				4CD0E67C12F1B63D00C8F016 /* FieldEditorTextView.h in Headers */,
+				4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */,
+				4CD0E65112F1B5B500C8F016 /* FileWithContent.h in Headers */,
+				4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */,
+				4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */,
 				4CD0E5ED12F1B45900C8F016 /* GrowlController.h in Headers */,
-				4CD0E5EE12F1B45900C8F016 /* MasterController.h in Headers */,
-				4CD0E5EF12F1B45900C8F016 /* MenuController.h in Headers */,
-				4CD0E5F012F1B45900C8F016 /* NickCompletionStatus.h in Headers */,
+				4CD0E6E012F1B78D00C8F016 /* GTMBase64.h in Headers */,
+				4CD0E6E112F1B78D00C8F016 /* GTMDefines.h in Headers */,
+				4CD0E6E212F1B78D00C8F016 /* GTMGarbageCollection.h in Headers */,
+				4CD0E6E312F1B78D00C8F016 /* GTMNSString+HTML.h in Headers */,
+				4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */,
+				4CD0E66012F1B5DE00C8F016 /* ImageURLParser.h in Headers */,
+				4CD0E69D12F1B6B000C8F016 /* InputHistory.h in Headers */,
+				4CD0E63812F1B53300C8F016 /* InputPromptDialog.h in Headers */,
+				4CD0E67D12F1B63D00C8F016 /* InputTextField.h in Headers */,
+				4CD0E63912F1B53300C8F016 /* InviteSheet.h in Headers */,
 				4CD0E60512F1B47A00C8F016 /* IRC.h in Headers */,
 				4CD0E60612F1B47A00C8F016 /* IRCChannel.h in Headers */,
 				4CD0E60712F1B47A00C8F016 /* IRCChannelConfig.h in Headers */,
 				4CD0E60812F1B47A00C8F016 /* IRCChannelMode.h in Headers */,
 				4CD0E60912F1B47A00C8F016 /* IRCClient.h in Headers */,
 				4CD0E60A12F1B47A00C8F016 /* IRCClientConfig.h in Headers */,
+				4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */,
 				4CD0E60B12F1B47A00C8F016 /* IRCConnection.h in Headers */,
 				4CD0E60C12F1B47A00C8F016 /* IRCExtras.h in Headers */,
 				4CD0E60D12F1B47A00C8F016 /* IRCISupportInfo.h in Headers */,
@@ -1469,100 +1495,73 @@
 				4CD0E60F12F1B47A00C8F016 /* IRCModeInfo.h in Headers */,
 				4CD0E61012F1B47A00C8F016 /* IRCPrefix.h in Headers */,
 				4CD0E61112F1B47A00C8F016 /* IRCSendingMessage.h in Headers */,
+				4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */,
 				4CD0E61212F1B47A00C8F016 /* IRCTreeItem.h in Headers */,
 				4CD0E61312F1B47A00C8F016 /* IRCUser.h in Headers */,
 				4CD0E61412F1B47A00C8F016 /* IRCWorld.h in Headers */,
 				4CD0E61512F1B47A00C8F016 /* IRCWorldConfig.h in Headers */,
-				4CD0E61C12F1B4E200C8F016 /* AddressBook.h in Headers */,
-				4CD0E61D12F1B4E200C8F016 /* TimerCommand.h in Headers */,
-				4CD0E62412F1B4FB00C8F016 /* PreferencesController.h in Headers */,
-				4CD0E62512F1B4FB00C8F016 /* ScriptsWrapper.h in Headers */,
-				4CD0E62612F1B4FB00C8F016 /* SoundWrapper.h in Headers */,
-				4CD0E63412F1B53300C8F016 /* AddressBookSheet.h in Headers */,
-				4CD0E63512F1B53300C8F016 /* ChanBanExceptionSheet.h in Headers */,
-				4CD0E63612F1B53300C8F016 /* ChanBanSheet.h in Headers */,
-				4CD0E63712F1B53300C8F016 /* ChannelSheet.h in Headers */,
-				4CD0E63812F1B53300C8F016 /* InputPromptDialog.h in Headers */,
-				4CD0E63912F1B53300C8F016 /* InviteSheet.h in Headers */,
+				4CD0E69E12F1B6B000C8F016 /* KeyEventHandler.h in Headers */,
+				4CD0E69F12F1B6B000C8F016 /* LanguagePreferences.h in Headers */,
 				4CD0E63A12F1B53300C8F016 /* ListDialog.h in Headers */,
-				4CD0E63B12F1B53300C8F016 /* ServerSheet.h in Headers */,
-				4CD0E63C12F1B53300C8F016 /* SheetBase.h in Headers */,
-				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
-				4CD0E64612F1B58600C8F016 /* AboutPanel.h in Headers */,
-				4CD0E64712F1B58600C8F016 /* ModeSheet.h in Headers */,
-				4CD0E64812F1B58600C8F016 /* NickSheet.h in Headers */,
-				4CD0E64912F1B58600C8F016 /* TopicSheet.h in Headers */,
-				4CD0E65112F1B5B500C8F016 /* FileWithContent.h in Headers */,
-				4CD0E65212F1B5B500C8F016 /* OtherTheme.h in Headers */,
-				4CD0E65312F1B5B500C8F016 /* Preferences.h in Headers */,
-				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
-				4CD0E66012F1B5DE00C8F016 /* ImageURLParser.h in Headers */,
+				4CD0E67E12F1B63D00C8F016 /* ListView.h in Headers */,
 				4CD0E66112F1B5DE00C8F016 /* LogController.h in Headers */,
 				4CD0E66212F1B5DE00C8F016 /* LogLine.h in Headers */,
 				4CD0E66312F1B5DE00C8F016 /* LogPolicy.h in Headers */,
 				4CD0E66412F1B5DE00C8F016 /* LogRenderer.h in Headers */,
 				4CD0E66512F1B5DE00C8F016 /* LogScriptEventSink.h in Headers */,
 				4CD0E66612F1B5DE00C8F016 /* LogView.h in Headers */,
-				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
-				4CD0E66D12F1B60400C8F016 /* MemberListView.h in Headers */,
-				4CD0E66E12F1B60400C8F016 /* MemberListViewCell.h in Headers */,
-				4CD0E67B12F1B63D00C8F016 /* ChatBox.h in Headers */,
-				4CD0E67C12F1B63D00C8F016 /* FieldEditorTextView.h in Headers */,
-				4CD0E67D12F1B63D00C8F016 /* InputTextField.h in Headers */,
-				4CD0E67E12F1B63D00C8F016 /* ListView.h in Headers */,
 				4CD0E67F12F1B63D00C8F016 /* MainWindow.h in Headers */,
 				4CD0E68012F1B63D00C8F016 /* MarkedScroller.h in Headers */,
-				4CD0E68112F1B63D00C8F016 /* ServerTreeView.h in Headers */,
-				4CD0E68212F1B63D00C8F016 /* TextField.h in Headers */,
-				4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */,
-				4CD0E68412F1B63D00C8F016 /* ThinSplitView.h in Headers */,
-				4CD0E68512F1B63D00C8F016 /* TreeView.h in Headers */,
-				4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */,
-				4CD0E69912F1B6B000C8F016 /* GCDAsyncSocket.h in Headers */,
-				4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */,
-				4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */,
-				4CD0E69C12F1B6B000C8F016 /* GlobalModels.h in Headers */,
-				4CD0E69D12F1B6B000C8F016 /* InputHistory.h in Headers */,
-				4CD0E69E12F1B6B000C8F016 /* KeyEventHandler.h in Headers */,
-				4CD0E69F12F1B6B000C8F016 /* LanguagePreferences.h in Headers */,
-				4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */,
-				4CD0E6A112F1B6B000C8F016 /* RegexKitLite.h in Headers */,
-				4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */,
-				4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */,
-				4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */,
-				4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */,
-				4CD0E6AC12F1B6ED00C8F016 /* AGKeychain.h in Headers */,
+				4CD0E5EE12F1B45900C8F016 /* MasterController.h in Headers */,
+				4CD0E66D12F1B60400C8F016 /* MemberListView.h in Headers */,
+				4CD0E66E12F1B60400C8F016 /* MemberListViewCell.h in Headers */,
+				4CD0E5EF12F1B45900C8F016 /* MenuController.h in Headers */,
+				4CD0E64712F1B58600C8F016 /* ModeSheet.h in Headers */,
+				4CD0E5F012F1B45900C8F016 /* NickCompletionStatus.h in Headers */,
+				4CD0E64812F1B58600C8F016 /* NickSheet.h in Headers */,
 				4CD0E6B912F1B70300C8F016 /* NSArrayHelper.h in Headers */,
 				4CD0E6BA12F1B70300C8F016 /* NSBundleHelper.h in Headers */,
 				4CD0E6BB12F1B70300C8F016 /* NSColorHelper.h in Headers */,
 				4CD0E6BC12F1B70300C8F016 /* NSDataHelper.h in Headers */,
+				4C67A81112F38268002E308B /* NSDateHelper.h in Headers */,
 				4CD0E6BD12F1B70300C8F016 /* NSDictionaryHelper.h in Headers */,
 				4CD0E6BE12F1B70300C8F016 /* NSFontHelper.h in Headers */,
 				4CD0E6BF12F1B70300C8F016 /* NSNumberHelper.h in Headers */,
-				4CD0E6C012F1B70300C8F016 /* DDExtensions.h in Headers */,
+				4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */,
 				4CD0E6C112F1B70300C8F016 /* NSPasteboardHelper.h in Headers */,
 				4CD0E6C212F1B70300C8F016 /* NSRectHelper.h in Headers */,
 				4CD0E6C312F1B70300C8F016 /* NSStringHelper.h in Headers */,
+				4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */,
 				4CD0E6C412F1B70300C8F016 /* NSWindowHelper.h in Headers */,
+				4CD0E65212F1B5B500C8F016 /* OtherTheme.h in Headers */,
+				4CD0E6D412F1B77300C8F016 /* PluginProtocol.h in Headers */,
+				4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */,
+				4CD0E65312F1B5B500C8F016 /* Preferences.h in Headers */,
+				4CD0E62412F1B4FB00C8F016 /* PreferencesController.h in Headers */,
+				4CD0E62512F1B4FB00C8F016 /* ScriptsWrapper.h in Headers */,
+				4CD0E63B12F1B53300C8F016 /* ServerSheet.h in Headers */,
+				4CD0E68112F1B63D00C8F016 /* ServerTreeView.h in Headers */,
+				4CD0E63C12F1B53300C8F016 /* SheetBase.h in Headers */,
 				4CD0E6CC12F1B75300C8F016 /* SoundPlayer.h in Headers */,
+				4CD0E62612F1B4FB00C8F016 /* SoundWrapper.h in Headers */,
+				4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */,
+				4CD0E68212F1B63D00C8F016 /* TextField.h in Headers */,
+				4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */,
+				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
+				4CD0E6D512F1B77300C8F016 /* TextualPluginItem.h in Headers */,
+				4CD0E68412F1B63D00C8F016 /* ThinSplitView.h in Headers */,
+				4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */,
+				4CD0E61D12F1B4E200C8F016 /* TimerCommand.h in Headers */,
+				4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */,
+				4CD0E64912F1B58600C8F016 /* TopicSheet.h in Headers */,
+				4CD0E68512F1B63D00C8F016 /* TreeView.h in Headers */,
 				4CD0E6CD12F1B75300C8F016 /* UnicodeHelper.h in Headers */,
 				4CD0E6CE12F1B75300C8F016 /* URLOpener.h in Headers */,
-				4CD0E6D412F1B77300C8F016 /* PluginProtocol.h in Headers */,
-				4CD0E6D512F1B77300C8F016 /* TextualPluginItem.h in Headers */,
-				4CD0E6DA12F1B78200C8F016 /* DDInvocationGrabber.h in Headers */,
-				4CD0E6E012F1B78D00C8F016 /* GTMBase64.h in Headers */,
-				4CD0E6E112F1B78D00C8F016 /* GTMDefines.h in Headers */,
-				4CD0E6E212F1B78D00C8F016 /* GTMGarbageCollection.h in Headers */,
-				4CD0E6E312F1B78D00C8F016 /* GTMNSString+HTML.h in Headers */,
-				4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */,
+				4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */,
 				4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */,
-				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
-				4C67A81112F38268002E308B /* NSDateHelper.h in Headers */,
-				4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */,
-				4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */,
-				4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */,
-				4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */,
-				4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */,
+				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
+				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
+				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,25 +1665,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CA9456311E1AFBA00D36367 /* Scripts in Resources */,
-				4CA9456411E1AFBA00D36367 /* Styles in Resources */,
-				4CA9456511E1AFBA00D36367 /* ChannelSheet.xib in Resources */,
-				4CA9456611E1AFBA00D36367 /* TopicSheet.xib in Resources */,
-				4CA9456811E1AFBA00D36367 /* ListDialog.xib in Resources */,
-				4CA9456911E1AFBA00D36367 /* ModeSheet.xib in Resources */,
-				4CA9456A11E1AFBA00D36367 /* NickSheet.xib in Resources */,
-				4CA9456B11E1AFBA00D36367 /* Preferences.xib in Resources */,
-				4CA9456C11E1AFBA00D36367 /* ServerSheet.xib in Resources */,
-				4CA9456D11E1AFBA00D36367 /* WelcomeSheet.xib in Resources */,
-				4CA9456E11E1AFBA00D36367 /* InviteSheet.xib in Resources */,
-				4CA9456F11E1AFBA00D36367 /* AddressBookSheet.xib in Resources */,
-				4CA9457011E1AFBA00D36367 /* MainMenu.xib in Resources */,
-				4CA9457111E1AFBA00D36367 /* BasicLanguage.strings in Resources */,
-				4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */,
-				4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */,
-				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
-				4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */,
+				4C5AEF7A12D1B6FD00D6B18C /* Acknowledgments.pdf in Resources */,
 				4C5AEF4F12D1B6E400D6B18C /* application.icns in Resources */,
+				4C5AEF7B12D1B6FD00D6B18C /* Contributors.pdf in Resources */,
 				4C5AEF5012D1B6E400D6B18C /* DIbadge_Green_1&2.tiff in Resources */,
 				4C5AEF5112D1B6E400D6B18C /* DIbadge_Green_3.tiff in Resources */,
 				4C5AEF5212D1B6E400D6B18C /* DIbadge_Green_4.tiff in Resources */,
@@ -1710,9 +1693,9 @@
 				4C5AEF6612D1B6E400D6B18C /* FormattingColor_8.png in Resources */,
 				4C5AEF6712D1B6E400D6B18C /* FormattingColor_9.png in Resources */,
 				4C5AEF6812D1B6E400D6B18C /* FormattingColor_Rainbow.png in Resources */,
-				4C5AEF7A12D1B6FD00D6B18C /* Acknowledgments.pdf in Resources */,
-				4C5AEF7B12D1B6FD00D6B18C /* Contributors.pdf in Resources */,
 				4C5AF34812D1B8C000D6B18C /* IRCNetworks.plist in Resources */,
+				4CA9456311E1AFBA00D36367 /* Scripts in Resources */,
+				4CA9456411E1AFBA00D36367 /* Styles in Resources */,
 				4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */,
 				4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */,
 				4C329CA412D1BD20001990A9 /* TPWTB_ChannelManagement.png in Resources */,
@@ -1724,6 +1707,22 @@
 				4C329CAA12D1BD20001990A9 /* TPWTB_IRCopServices.png in Resources */,
 				4C329CAB12D1BD20001990A9 /* TPWTB_Logs.png in Resources */,
 				4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */,
+				4CA9456511E1AFBA00D36367 /* ChannelSheet.xib in Resources */,
+				4CA9456611E1AFBA00D36367 /* TopicSheet.xib in Resources */,
+				4CA9456811E1AFBA00D36367 /* ListDialog.xib in Resources */,
+				4CA9456911E1AFBA00D36367 /* ModeSheet.xib in Resources */,
+				4CA9456A11E1AFBA00D36367 /* NickSheet.xib in Resources */,
+				4CA9456B11E1AFBA00D36367 /* Preferences.xib in Resources */,
+				4CA9456C11E1AFBA00D36367 /* ServerSheet.xib in Resources */,
+				4CA9456D11E1AFBA00D36367 /* WelcomeSheet.xib in Resources */,
+				4CA9456E11E1AFBA00D36367 /* InviteSheet.xib in Resources */,
+				4CA9456F11E1AFBA00D36367 /* AddressBookSheet.xib in Resources */,
+				4CA9457011E1AFBA00D36367 /* MainMenu.xib in Resources */,
+				4CA9457111E1AFBA00D36367 /* BasicLanguage.strings in Resources */,
+				4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */,
+				4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */,
+				4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */,
+				4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */,
 				4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1733,7 +1732,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4C3F690F12FD925F00B50CB9 /* Compile Plugins */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1887,7 +1886,6 @@
 				4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */,
 				4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */,
 				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
-				4C90F3C012B637B000CAEB7B /* RegexKitLite.m in Sources */,
 				29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */,
 				4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */,
 				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
@@ -2103,6 +2101,7 @@
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
+					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2194,6 +2193,7 @@
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
+					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2250,6 +2250,7 @@
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
+					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2365,6 +2366,7 @@
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
 					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
+					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";

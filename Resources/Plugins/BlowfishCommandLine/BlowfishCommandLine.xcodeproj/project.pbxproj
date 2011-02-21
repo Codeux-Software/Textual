@@ -146,10 +146,7 @@
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -169,10 +166,7 @@
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
@@ -246,10 +240,7 @@
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;
@@ -285,10 +276,7 @@
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
 				INFOPLIST_FILE = Info.plist;

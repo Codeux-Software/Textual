@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html ; charset=utf-8">
+<style type="text/css">
+@import "CSS/doc.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RKEnumerator Class Reference</title>
+</head>
+<body>
+<div class="bodyTop">
+
+<h1>RKEnumerator Class Reference</h1>
+
+<div class="box classSpecs hasRows zebraRows">
+<div class="row odd firstRow"><span class="cell left">Inherits from</span><span class="cell right lastCell"><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSEnumerator_Class/index.html" target="_top">NSEnumerator</a></span></div>
+<div class="row even"><span class="cell left">Framework</span><span class="cell right lastCell"><a href="index.html">RegexKit.framework</a></span></div>
+<div class="row odd regexKitVersion"><span class="cell left">RegexKit</span><span class="cell right lastCell"><span class="version">\$ENV{PROJECT_CURRENT_VERSION}</span> <span class="releaseNotes"><a href="ReleaseNotes.html#Release_\$ENV{PROJECT_VERSION_MAJOR}_\$ENV{PROJECT_VERSION_MINOR}_\$ENV{PROJECT_VERSION_POINT}">Release Notes</a></span></span></div>
+<div class="row even"><span class="cell left">PCRE</span><span class="cell right lastCell">\$ENV{PCRE_VERSION}</span></div>
+<div class="row odd"><span class="cell left">Availability</span><span class="cell right lastCell">Available in Mac OS X v10.4 or later.</span></div>
+<div class="row even"><span class="cell left">Declared in</span><ul class="cell right lastCell"><li>RegexKit/RKEnumerator.h</li></ul></div>
+<div class="row odd lastRow"><span class="cell left">Companion guides</span><span class="cell right lastCell"><a href="RegexKitProgrammingGuide.html">RegexKit Programming Guide</a></span></div>
+</div>
+
+<div class="overview">
+  <div class="masthead">Overview</div>
+
+<p>The @link RKEnumerator RKEnumerator @/link class enables you to enumerate each successive match of a regular expression over a @link NSString NSString@/link, and optionally confined to a specific range of the @link NSString NSString@/link.</p>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Modifying a @link NSMutableString NSMutableString @/link while it is being enumerated is not supported and will result in undefined behavior.</div></div></div></div>
+
+<p>An instantiated @link RKEnumerator RKEnumerator @/link records the @link NSRange NSRange @/link for the current match of a regular expression, along with all the ranges for each capture subpattern of a regular expression.  This is done by creating a private buffer that is <span class="nobr"><span class="code">sizeof(</span>@link NSRange NSRange@/link<span class="code">) * [</span><span class="argument">regex</span> @link captureCount captureCount@/link<span class="code">]</span></span> bytes large and invoking @link getRanges:withCharacters:length:inRange:options: getRanges:withCharacters:length:inRange:options: @/link to obtain the matches range information.  The <span class="argument">inRange</span> parameter for each successive call is set the location of the last character of the previous match, or the start of the requested enumeration range for the first match.</p>
+
+<div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The @link RKEnumerator RKEnumerator @/link class is currently only capable of enumerating the matches of a @link NSString NSString @/link class object.</div></div></div></div>
+
+<p>The @link RKEnumerator RKEnumerator @/link class provides a number of methods to make use of the current match result.  Some of these include:</p>
+
+<ul>
+<li>Obtaining the range of the current match, or the range of a particular capture subpattern.</li>
+<li>Extracting a capture subpattern from the current match, or type converting a capture subpattern.</li>
+<li>Creating a new string with capture subpattern references to the current match.</li>
+</ul>
+
+<p>When all of the matches have been exhausted, the instantiated @link RKEnumerator RKEnumerator @/link sends a release to the @link NSString NSString @/link and @link RKRegex RKRegex @/link used for matching.  Like a @link NSEnumerator NSEnumerator@/link, once all of the matches have been enumerated, the enumerator can not be reset.  A new @link RKEnumerator RKEnumerator @/link is required to enumerate the matches again.</p>
+
+<h3>Advancing to the Next Match</h3>
+
+<div class="table">
+<table class="standard" summary="RKEnumerator Match Advancement Methods">
+<caption>@link RKEnumerator RKEnumerator @/link Match Advancement Methods</caption>
+<tr><th>Method</th><th>Returns</th><th>Returns When Exhausted</th><th>Speed</th><th>Description</th></tr>
+<tr><td>@link nextObject nextObject @/link</td><td><span class="hardNobr">@link NSArray NSArray * @/link</span></td><td><span class="code">NULL</span></td><td>Slowest</td><td>Creates a @link NSArray NSArray @/link of @link NSValue NSValue @/link objects containing a @link NSRange NSRange @/link of the match range of the next enumeration for each capture subpattern.</td></tr>
+<tr><td>@link nextRange nextRange @/link</td><td>@link NSRange NSRange @/link</td><td><span class="hardNobr"><span class="code">{</span>@link NSNotFound NSNotFound@/link<span class="code">, 0}</span></span></td><td>Fast</td><td>Returns the entire range of the next enumeration that was matched by the regular expression.</td></tr>
+<tr><td>@link nextRangeForCapture: nextRangeForCapture: @/link</td><td>@link NSRange NSRange @/link</td><td><span class="hardNobr"><span class="code">{</span>@link NSNotFound NSNotFound@/link<span class="code">, 0}</span></span></td><td>Medium</td><td>Returns the matching range of the next enumeration for a particular capture subpattern.</td></tr>
+<tr><td>@link nextRangeForCaptureName: nextRangeForCaptureName: @/link</td><td>@link NSRange NSRange @/link</td><td><span class="hardNobr"><span class="code">{</span>@link NSNotFound NSNotFound@/link<span class="code">, 0}</span></span></td><td>Slow</td><td>Returns the matching range of the next enumeration for a particular named capture subpattern.</td></tr>
+<tr><td>@link nextRanges nextRanges @/link</td><td><span class="hardNobr">@link NSRange NSRange * @/link</span></td><td><span class="code">NULL</span></td><td>Fastest</td><td>Updates the objects private buffer of @link NSRange NSRange @/link structures with the results of the next enumeration and then returns a pointer to the buffer.</td></tr>
+</table>
+</div>
+
+<p>The standard @link NSEnumerator NSEnumerator @/link method @link RKEnumerator/nextObject nextObject @/link incurs a substantial amount of overhead in the creation of @link NSValue NSValue @/link objects to contain the @link NSRange NSRange @/link results for each capture subpattern, and then storing those in a @link NSArray NSArray@/link.  The result is quite flexible, and can easily be stored in various collection objects without any additional work.  However, if you don't require this flexibility, it is recommended that you use one of the other methods, such as @link nextRanges nextRanges@/link, which do not create any intermediate objects to advance to the next match.</p>
+
+<div class="box warning marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Warning:</div><div class="message cell">Some methods, such as @link nextRangeForCapture: nextRangeForCapture:@/link and @link nextRangeForCaptureName: nextRangeForCaptureName:@/link, can not unambiguously distinguish between the exhaustion of all enumerations and a capture subpattern that did not contain a match result.</div></div></div></div>
+
+<p>The @link nextRanges nextRanges @/link method returns a pointer to the @link RKEnumerator RKEnumerator @/link objects private buffer of an array of @link NSRange NSRange @/link structures.  Repeated calls to @link nextRanges nextRanges @/link will return the same address, only the data at the pointer location is updated.  See the documentation for @link nextRanges nextRanges @/link for important information regarding this and other data lifetime issues when using this method.  This method offers the highest performance and can be safely used as the conditional test in a while loop, for example:</p>
+
+<div class="box sourcecode">while([anEnumerator nextRanges] != NULL) {
+  // Do something with the current match results of anEnumerator
+  NSRange matchRange = [anEnumerator currentRange];
+  
+}</div>
+
+  <h3><a name="overview_ImportantNSRangeDifferences">Important NSRange Differences</a></h3>
+
+<p>It is important to note that the public API for the @link RKEnumerator RKEnumerator @/link class returns and accepts character index values for strings, and therefore the location and length for @link NSRange NSRange @/link values, as if they were calculated as @link UTF16 UTF16 @/link characters.  This is the same method that is used by Foundation natively and therefore no coversions between @link UTF16 UTF16 @/link and other string encodings, such as @link UTF8 UTF8 @/link need to be performed.</p>
+
+<p>Additional details can be found in the <a href="NSString.html" class="section-link">NSString RegexKit Additions Reference</a> and <a href="RKRegex.html" class="section-link">RKRegex Class Reference</a>.</p>
+
+<div class="seealso">
+  <div class="section">See also</div>
+  <ul>
+    <li><a href="NSString.html#overview_NSRangeCompatibilitywithFoundation" class="section-link">NSRange Compatibility with Foundation</a></li>
+    <li><a href="RKRegex.html#overview_ImportantNSRangeDifferences" class="section-link">Important NSRange Differences</a></li>
+    <li><a href="RKRegex.html#overview_FoundationAdditionsRKCompileOptionRequirements" class="section-link">Foundation Additions RKCompileOption Requirements</a></li>
+  </ul>
+</div>
+
+<h3>Specifying a Regular Expression</h3>
+
+<p>When specifying a regular expression, the regular expression can be either a @link RKRegex RKRegex @/link object or a @link NSString NSString @/link containing the text of a regular expression. When specified as a @link NSString NSString@/link, as determined by sending @link isKindOfClass: isKindOfClass:@/link, the receiver will convert the string to a @link RKRegex RKRegex @/link object via @link regexWithRegexString:options: regexWithRegexString:options:@/link.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The method will raise @link NSInvalidArgumentException NSInvalidArgumentException @/link if the regular expression is <span class="code">nil</span>. If passed as a @link NSString NSString@/link, the method will raise @link RKRegexSyntaxErrorException RKRegexSyntaxErrorException @/link if the regular expression is not valid.</div></div></div></div>
+
+<h4>Determining if an Object Matches a Regular Expression</h4>
+
+<p>Objects are sent @link isMatchedByRegex: isMatchedByRegex: @/link to determine whether or not they are matched by the specified regular expression.</p>
+
+</div>
+
+\$hdoc{'RKEnumerator'}{'tasks'}
+\$hdoc{'RKEnumerator'}{'methods'}
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>

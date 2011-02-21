@@ -1,1 +1,3 @@
+#define __TEXTUALIRC__
+
 #import "TextualApplication.h"

@@ -103,7 +103,7 @@
 		color = value;
 	}
 	
-	return [NSColor fromCSS:value];
+	return [NSColor fromCSS:color];
 }
 
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv

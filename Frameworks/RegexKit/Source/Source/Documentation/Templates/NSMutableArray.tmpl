@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html ; charset=utf-8">
+<style type="text/css">
+@import "CSS/doc.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>NSMutableArray RegexKit Additions Reference</title>
+</head>
+<body>
+<div class="bodyTop">
+
+<h1>NSMutableArray RegexKit Additions Reference</h1>
+
+<div class="box classSpecs hasRows zebraRows">
+<div class="row odd"><span class="cell left">Extends by category</span><span class="cell right lastCell"><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSMutableArray_Class/index.html" target="_top">NSMutableArray</a></span></div>
+<div class="row even"><span class="cell left">Framework</span><span class="cell right lastCell"><a href="index.html">RegexKit.framework</a></span></div>
+<div class="row odd regexKitVersion"><span class="cell left">RegexKit</span><span class="cell right lastCell"><span class="version">\$ENV{PROJECT_CURRENT_VERSION}</span> <span class="releaseNotes"><a href="ReleaseNotes.html#Release_\$ENV{PROJECT_VERSION_MAJOR}_\$ENV{PROJECT_VERSION_MINOR}_\$ENV{PROJECT_VERSION_POINT}">Release Notes</a></span></span></div>
+<div class="row even"><span class="cell left">PCRE</span><span class="cell right lastCell">\$ENV{PCRE_VERSION}</span></div>
+<div class="row odd"><span class="cell left">Availability</span><span class="cell right lastCell">Available in Mac OS X v10.4 or later.</span></div>
+<div class="row even"><span class="cell left">Declared in</span><ul class="cell right lastCell"><li>RegexKit/NSArray.h</li></ul></div>
+<div class="row odd lastRow"><span class="cell left">Companion guides</span>
+<ul class="cell right lastCell">
+  <li><a href="RegexKitProgrammingGuide.html">RegexKit Programming Guide</a></li>
+  <li><a href="pcre/pcrepattern.html">PCRE Regular Expression Syntax</a></li>
+</ul></div>
+</div>
+
+<div class="overview">
+  <div class="masthead">Overview</div>
+
+<h3>Specifying a Regular Expression</h3>
+
+<p>When specifying a regular expression, the regular expression can be either a @link RKRegex RKRegex @/link object or a @link NSString NSString @/link containing the text of a regular expression. When specified as a @link NSString NSString@/link, as determined by sending @link isKindOfClass: isKindOfClass:@/link, the receiver will convert the string to a @link RKRegex RKRegex @/link object via @link regexWithRegexString:options: regexWithRegexString:options:@/link.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The method will raise @link NSInvalidArgumentException NSInvalidArgumentException @/link if the regular expression is <span class="code">nil</span>. If passed as a @link NSString NSString@/link, the method will raise @link RKRegexSyntaxErrorException RKRegexSyntaxErrorException @/link if the regular expression is not valid.</div></div></div></div>
+
+<h4>Determining if an Object Matches a Regular Expression</h4>
+
+<p>Objects are sent @link isMatchedByRegex: isMatchedByRegex: @/link to determine whether or not they are matched by the specified regular expression.</p>
+
+  <div class="seealso">
+    <div class="section">See also</div>
+      <ul>
+        <li><a href="pcre/pcrepattern.html"><i>PCRE Regular Expression Syntax</i></a></li>
+      </ul>
+  </div>
+</div>
+
+\$hdoc{'NSMutableArray'}{'tasks'}
+\$hdoc{'NSMutableArray'}{'methods'}
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>

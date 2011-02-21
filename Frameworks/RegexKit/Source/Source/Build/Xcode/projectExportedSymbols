@@ -1,0 +1,95 @@
+#
+# Used by the 'RegexKit Framework' target in Xcode
+#
+# IMPORTANT: Any new public functions, objc classes, constants, etc MUST be listed here in order to be visible to clients!
+# Use 'nm -gm FILE' to see what is exported.  May require disabling this export list temporarily to get full visibility.
+#
+# Exported symbols
+#
+# Constants
+#
+_RKRegexSyntaxErrorException
+_RKRegexUnsupportedException
+_RKRegexCaptureReferenceException
+#
+#
+#
+_RKAbreviatedAttributedRegexStringErrorKey
+_RKAbreviatedRegexStringErrorKey
+_RKAbreviatedRegexStringErrorRangeErrorKey
+_RKArrayIndexErrorKey
+_RKAttributedRegexStringErrorKey
+_RKCollectionErrorKey
+_RKCompileErrorCodeErrorKey
+_RKCompileErrorCodeStringErrorKey
+_RKCompileOptionArrayErrorKey
+_RKCompileOptionArrayStringErrorKey
+_RKCompileOptionErrorKey
+_RKObjectErrorKey
+_RKRegexErrorDomain
+_RKRegexLibraryErrorKey
+_RKRegexLibraryErrorStringErrorKey
+_RKRegexPCRELibrary
+_RKRegexPCRELibraryErrorDomain
+_RKRegexStringErrorKey
+_RKRegexStringErrorRangeErrorKey
+#
+#
+#
+# Functions
+#
+_RKArrayFromBuildConfig
+_RKArrayFromCompileOption
+_RKArrayFromMatchOption
+_RKStringFromCompileErrorCode
+_RKStringFromMatchErrorCode
+_RKStringFromNewlineOption
+_RKConvertUTF8ToUTF16RangeForString
+_RKConvertUTF16ToUTF8RangeForString
+#
+# Objective C
+#
+.objc_class_name_RKRegex
+.objc_class_name_RKCache
+.objc_class_name_RKEnumerator
+#
+#
+#
+#############################################################################
+#
+# Not exported, but can't be marked static internally, so we catch them here.
+#
+#_RKFastLock
+#_RKFastUnlock
+#_RKFastReadWriteLock
+#_RKFastReadWriteUnlock
+#_RKRegexInitWithCoder
+#_RKRegexCoderDifferencesDictionary
+#_RKRegexEncodeWithCoder
+#_RKArrayOfPrettyNewlineTypes
+#_RKRegexPCRECallout
+#_autoreleasedMalloc
+#___RKGetThreadLocalData
+#___RKGetThreadLocalNumberFormatter
+#
+# A list of some of the other symbols that we have, but don't export.  For reference, mostly.
+#
+#.objc_category_name_NSArrayRegexKitAdditions
+#.objc_category_name_NSDataRegexKitAdditions
+#.objc_category_name_NSDictionaryRegexKitAdditions
+#.objc_category_name_NSObjectRegexKitAdditions
+#.objc_category_name_NSSetRegexKitAdditions
+#.objc_category_name_NSStringRegexKitAdditions
+#.objc_category_name_NSMutableArrayRegexKitAdditions
+#.objc_category_name_NSMutableDataRegexKitAdditions
+#.objc_category_name_NSMutableDictionaryRegexKitAdditions
+#.objc_category_name_NSMutableSetRegexKitAdditions
+#.objc_category_name_NSMutableStringRegexKitAdditions
+#.objc_category_name_RKRegex_Private
+#.objc_category_name_RKCache_CacheDebugging
+#.objc_category_name_RKCache_CountersDebugging
+#
+#.objc_class_name_RKAutoreleasedMemory
+#.objc_class_name_RKLock
+#.objc_class_name_RKReadWriteLock
+#.objc_class_name_RKRegexPlaceholder

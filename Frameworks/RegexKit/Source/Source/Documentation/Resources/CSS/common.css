@@ -1,0 +1,88 @@
+A:link          { text-decoration: none;      color: #0000FF; }
+A:link:hover    { text-decoration: underline; color: #FF6600; }
+A:active        { text-decoration: underline; color: #FF6600; }
+A[name]:active  { text-decoration: none;      color: #000000; }
+A:visited       { text-decoration: none;      color: #0000AA; }
+A:visited:hover	{ text-decoration: underline; color: #FF6600; }
+
+.todo {}
+.hide { display: none; }
+
+.hostedby { margin-top: 0.5em; }
+.hostedby.bar { margin-top: 2em; }
+.hostedby .text { vertical-align: middle; padding-right: 2ex; }
+
+.XXX { border: 2px solid red; padding: 2px; }
+.XXX { border-color: rgba(255,0,0,0.8); -webkit-border-radius: 6px; -webkit-box-shadow: 8px 8px 10px #444; text-shadow: 2px 2px 2px #400; -moz-border-radius: 4px; -moz-border-bottom-colors: #FF0000 #D00000; -moz-border-top-colors: #FF0000 #D00000; -moz-border-right-colors: #FF0000 #D00000; -moz-border-left-colors: #FF0000 #D00000; }
+
+.security { border: 2px solid red; padding: 0.5ex 0.5em; margin-left: 0.5ex; margin-right: 0.5ex; }
+.security { border-color: rgba(255,0,0,0.8); -webkit-border-radius: 6px; -webkit-box-shadow: 8px 8px 10px #444; -moz-border-radius: 4px; -moz-border-bottom-colors: #FF0000 #D00000; -moz-border-top-colors: #FF0000 #D00000; -moz-border-right-colors: #FF0000 #D00000; -moz-border-left-colors: #FF0000 #D00000; }
+
+.topFrameSet { border-width: 50px; }
+
+.nobr { white-space: nowrap; white-space: pre-wrap !important; }
+.hardNobr { white-space: nowrap; }
+
+.marginTopSpacer { margin-top: 1em !important; }
+.marginBottomSpacer { margin-bottom: 1em !important; }
+.marginLeftSpacer { margin-left: 1ex !important; }
+.marginRightSpacer { margin-right: 1ex !important; }
+.marginSpacer { margin: 1em 1ex !important; }
+
+.floatRight { float: right; }
+.floatLeft { float: left; }
+
+.clearLeft { clear: left; }
+.clearRight { clear: right; }
+.clearBoth { clear: both; }
+
+.table { display: table; }
+.table > .row { display: table-row; }
+.table > .row > .cell { display: table-cell; }
+
+.bar { height: 0px; width: 100%; margin-top: 0.5em; margin-bottom: 0.5em; border-bottom: 1px solid #a1a5a9; }
+
+.box   { margin: 0.5em 3ex; padding: 0.5em 1.75ex; text-align: left; vertical-align: top; -webkit-box-shadow: 3px 3px 4px #999; border: 1px solid #a1a5a9; background-color: #f7f7f7; }
+.box + .box { margin-top: 1em; }
+.box p { margin: 0px 0px; }
+.box p + p { margin-top: 1em; }
+
+.box.sourcecode { margin-left: 0px; margin-right: 0px; padding: 1.0em 2ex; border: 1px solid #c7cfd5; background-color: #f1f5f9; }
+.box.sourcecode { white-space: pre; white-space: pre-wrap !important; font: 0.9167em monaco, courier, monospace; }
+
+
+.box.note, .box.important, .box.warning { -webkit-border-radius: 0.5em; -moz-border-radius: 0.5em; }
+/*.box.note      > p:before { content: "Note:";      font-weight: bold; margin-right: 1.5ex; }*/
+/*.box.important > p:before { content: "Important:"; font-weight: bold; margin-right: 1.5ex; }*/
+/*.box.warning   > p:before { content: "Warning:";   font-weight: bold; margin-right: 1.5ex; }*/
+.box .label { font-weight: bold; padding-right: 1.5ex; vertical-align: middle; }
+
+.box.important  { border-color: #111111; background-color: #e8e8e8; }
+.box.warning    { border-color: black;   background-color: white;   }
+.box.tip        { display: table; padding: 0.25em 1.0ex; border: 1px solid #c3c3c3; background-color: #e9e9e9; -webkit-border-radius: 1.0em; -moz-border-radius: 1.0em; }
+.box.tip .label { padding-right: 1.0ex; }
+
+/* Scripts/common.js:fixupBoxRows() tidies all .box.hasRows so everything is tip top and good to go. */
+/* automatically sets: firstRow, lastRow, firstCell, lastCell, even, odd (when zebraRows is set)  */
+.box.hasRows                                 { display: table; padding: 0px; background-color: white; }
+.box.hasRows                                 { border-left: 1px solid #919699; border-top: 1px solid #919699; }
+.box.hasRows > .row                          { display: table-row;  }
+.box.hasRows > .row         > .cell          { display: table-cell; padding: 1ex; border-bottom: 1px solid #919699; border-right: 0.834em solid #919699; }
+.box.hasRows > .row         > .cell.lastCell { border-right: none;  }
+.box.hasRows > .row.lastRow > .cell          { border-bottom: none; }
+
+/* zebra rows are tagged even/odd.  Scripts/common.js:fixupBoxRows() will automatically populate and/or correct any even/odd tags */
+.box.hasRows.zebraRows > .row.odd             { background-color: #F0F5F9;                       }
+.box.hasRows           > .row.headerRow       { background-color: #E2E2E2;                       }
+.box.hasRows           > .row.headerRow .cell { padding-top: 0.3334em; padding-bottom: 0.3334em; }
+
+/*.box.frameworkSpecs .row.regexKitVersion .version { margin-right: 2ex; }*/
+.box.frameworkSpecs .row.regexKitVersion .releaseNotes, .box.classSpecs .row.regexKitVersion .releaseNotes { margin-left: 2ex; }
+
+/* table styles */
+/* The standard table style */
+table.standard                       { border-collapse: collapse; border-top: 1px solid #919699; border-left: 1px solid #919699; -webkit-box-shadow: 3px 3px 4px #999; }
+table.standard caption               { margin-bottom: 0.5em; text-align: left; -webkit-box-shadow: 0px 0px 0px #000; }
+table.standard caption > .identifier { font-weight: bold; margin-right: 1.5ex; }
+table.standard th                    { padding: 0.3334em 1ex; text-align: left;  border-bottom: 1px solid #919699; border-right: 1px solid #919699; background: #E2E2E2; }
+table.standard td                    { vertical-align: top; padding: 1ex; border-bottom: 1px solid #919699; border-right: 1px solid #919699; }

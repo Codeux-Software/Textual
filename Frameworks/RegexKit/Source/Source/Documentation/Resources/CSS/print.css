@@ -1,0 +1,44 @@
+
+@media print {
+body { font: 10pt palatino, "lucida grande", geneva, helvetica, arial, sans-serif; }
+h1 { padding-bottom: 0px; padding-top: 0.5em; margin-top: 2in; margin-bottom: 0.5em; border-top: 1px solid black; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+h2 { page-break-before: always; page-break-after: avoid; padding-bottom: 2.5em; padding-left: 0.75in; padding-top: 2em; margin-bottom: 1.0em; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+h3, .tasks .header, .guide .seealso > .header { border-bottom: 1px solid black; page-break-after: avoid; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+h4 { border-bottom: 1px solid black; page-break-after: avoid; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+h5 { border-bottom: 1px solid black; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+
+.overview > .masthead { page-break-before: always; page-break-after: avoid; padding-bottom: 2.5em; margin-top: 0px; margin-bottom: 1.0em; font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+
+.printPageBreak { page-break-before: always; }
+
+.frameworkabstract { margin-left: -0.5in; }
+
+.table, .box { background-color: white; }
+.code, .regex, .regex-textual, .regex-def, .header_file, .file, .build-phase, .xcode-group, .xcode-target, .window-name, .box.sourcecode, .guide .sourceLicense pre, .method > .signature, .function > .signature, .constants > .constant > .identifier  { font-size: 0.8334em; font-family: "Letter Gothic Std",   "Courier New", monaco, courier, monospace; }
+.regex b           { font: bold 1.1000em "Letter Gothic Std", "Courier New", monaco, courier, monospace; }
+.syntax > .specification { font-family: "Letter Gothic Std", "Courier New", monaco, courier, monospace; }
+
+.syntax > .specification .parameter, .tasks .header .code, .method .name { font-family: palatino, "lucida grande", geneva, helvetica, arial, sans-serif; font-weight: normal; }
+
+.box.tip        { -webkit-border-radius: 0.85em; -moz-border-radius: 0.85em; }
+.box.sourcecode { margin-left: 0px; margin-right: 0px; padding: 0px; border-style: none; border-width: 0px; border-style: none;  background-color: transparent; -webkit-box-shadow: 0px 0px 0px rgba(255,255,255,0.0); }
+
+table, .box, .figure, .seealso, li, p { page-break-inside: avoid; }
+
+
+
+.bodyTop { margin-left: 0.75in; }
+.security { padding-left: 0.75in; }
+.security > .inner { margin-left: 0.5ex; }
+h1, h2, h3, .overview > .masthead, .guide .seealso > .header, .security { margin-left: -0.75in; }
+.printNegLeft { font-size: 0.5em; }
+
+.sourceLicense pre { margin-left: -0.25in; }
+
+.printImg { width: 100%; }
+.guide .seealso > .header { margin-top: 2.0em; margin-bottom: 0.5000em; font-size: 1.5834em; }
+
+A:link, A:active, A:visited { text-decoration: none; color: #000000; }
+}
+
+/*@page { margin: 0.5in; }*/

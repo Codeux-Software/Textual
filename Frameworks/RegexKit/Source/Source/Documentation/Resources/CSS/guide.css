@@ -1,0 +1,18 @@
+@import url(doc.css);
+
+ul.square  { margin-left: 4.0ex; padding-left: 1ex; list-style-type: square; }
+ul.square li { margin-top: 0.5em; }
+
+.guide .intro .overview ul    { margin-left: 9.5ex; list-style-type: none; }
+.guide .intro .overview ul li { margin-top: 0em; }
+
+ul.contents    { margin-top: 0em; margin-left: 4ex; list-style-type: none; }
+ul.contents li { margin-top: 0em; }
+
+.releaseNotes .releaseNotesContents ul,    .changeLog .changeLogContents ul    { margin-top: 0em; margin-left: 4ex; list-style-type: none; }
+.releaseNotes .releaseNotesContents ul li, .changeLog .changeLogContents ul li { margin-top: 0em; }
+
+ul.seealso { margin: 0px; padding: 0px; list-style-type: none; }
+ul.seealso > li { margin: 0px 0px 0px 6.25ex; }
+
+.guide .parameters ul { list-style-type: none; margin: 0px 0px 0px 2ex; padding: 0px; } 

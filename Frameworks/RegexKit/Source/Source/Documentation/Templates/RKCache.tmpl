@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html ; charset=utf-8">
+<style type="text/css">
+@import "CSS/doc.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RKCache Class Reference</title>
+</head>
+<body>
+<div class="bodyTop">
+
+<h1>RKCache Class Reference</h1>
+
+<div class="box classSpecs hasRows zebraRows">
+<div class="row odd firstRow"><span class="cell left">Inherits from</span><span class="cell right lastCell"><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSObject_Class/index.html" target="_top">NSObject</a></span></div>
+<div class="row even"><span class="cell left">Framework</span><span class="cell right lastCell"><a href="index.html">RegexKit.framework</a></span></div>
+<div class="row odd regexKitVersion"><span class="cell left">RegexKit</span><span class="cell right lastCell"><span class="version">\$ENV{PROJECT_CURRENT_VERSION}</span> <span class="releaseNotes"><a href="ReleaseNotes.html#Release_\$ENV{PROJECT_VERSION_MAJOR}_\$ENV{PROJECT_VERSION_MINOR}_\$ENV{PROJECT_VERSION_POINT}">Release Notes</a></span></span></div>
+<div class="row even"><span class="cell left">PCRE</span><span class="cell right lastCell">\$ENV{PCRE_VERSION}</span></div>
+<div class="row odd"><span class="cell left">Availability</span><span class="cell right lastCell">Available in Mac OS X v10.4 or later.</span></div>
+<div class="row even"><span class="cell left">Declared in</span><ul class="cell right lastCell"><li>RegexKit/RKCache.h</li></ul></div>
+<div class="row odd lastRow"><span class="cell left">Companion guides</span><span class="cell right lastCell"><a href="RegexKitProgrammingGuide.html">RegexKit Programming Guide</a></span></div>
+</div>
+
+<div class="overview">
+  <div class="masthead">Overview</div>
+
+  <div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The @link RKCache RKCache @/link class is not intended for general usage.  This documentation is provided for completeness and to aid in debugging issues.</div></div></div></div>
+
+  <p>The @link RKCache RKCache @/link class declares the programmatic interface for the @link RKRegex RKRegex @/link framework caching feature.</p>
+
+  <p>Some of the features provided by the @link RKCache RKCache @/link class are:</p>
+
+  <ul>
+    <li>Only one instance of a representation of an objects 'value' (as determined by @link hash hash @/link) can be placed in the cache at a time, similar to @link NSSet NSSet @/link behavior.</li>
+    <li>Uses @link NSMapTable NSMapTable @/link for the backing store.</li>
+    <li>Can be enabled or disabled at any time.</li>
+    <li>Multithreading safe.  Multiple reader, single writer locking methodology.</li>
+    <li>Safe to add objects, remove individual objects, or clear the entire cache at any time without having to coordinate or synchronize threads.</li>
+    <li>Uses a fast lock bypass when single threaded which automatically switches to full multithreaded atomic semantics as soon as @link isMultiThreaded isMultiThreaded @/link returns <span class="code">YES</span></li>
+  </ul>
+
+  <div class="section">Restrictions</div>
+
+  <p>While a @link RKCache RKCache @/link will permit any type of object to be added, as a pragmatic limitation only immutable objects should be added to a cache.  In essence, a @link RKCache RKCache @/link is a multithreading safe @link NSMutableSet NSMutableSet@/link.  The cache can only ensure that an object retrieved from the cache will not be deallocated before the retrieving thread has finished with the object and released it properly.  Once an object has been retrieved, the retrieved object must provide any concurrent modification safety mechanisms.  Since immutable objects can not be modified by definition, this greatly simplifies concurrent access to objects and is the reason why only immutable objects should be added in general.</p>
+
+  <p>A @link RKCache RKCache @/link is best applied to situations in which a result can take an appreciable amount of time to prepare, but once computed, the result can be used again and again.  For example, the <span class="code">RegexKit.framework</span> must compile a regular expression to an internal format before it can perform any matches with it.  The compiled regular expression does not change, and can be reused again and again.  While compiling a regular expression is relatively quick, it can still be an order of magnitude slower than a cache lookup.</p>
+
+  <div class="section">Ownership and deallocation of cached objects</div>
+
+  <p>When an object is added to the cache, it is sent a @link retain retain @/link message just as if it were being added to any other type of collection.  Similarly, when an object is removed from the cache, it is sent a @link release release @/link message.  Adding or removing objects from the cache requires the thread to obtain the exclusive use write lock on the cache.  There can be any number of simultaneous threads with a read lock, but the write lock guarantees that the write lock owner is the only thread accessing the cache.</p>
+
+  <p>The cache takes certain steps to ensure that objects are not deallocated while in use even if another thread immediately clears the cache after the requesting thread has retrieved an object.  To do this, the cache obtains a read lock on the @link NSMapTable NSMapTable @/link and performs a lookup.  If there is a match, the cache sends a @link retain retain @/link message to the retrieved object while it still has the cache read locked and then releases its read lock. A different thread might immediately obtain a write lock on the cache and clear it, causing the cache to release ownership of the just retrieved object.  Since the cache sent a @link retain retain @/link message to the just retrieved object, it is not immediately deallocated.  If the caller requests it, the cache sends an @link autorelease autorelease @/link to the object before returning it.</p>
+
+  <p>Each thread is required to have at least one @link NSAutoreleasePool NSAutoreleasePool@/link.  Since the @link autorelease autorelease @/link is registered with the retrieving threads @link NSAutoreleasePool NSAutoreleasePool@/link, this ensures that the object will not be deallocated until the requesting threads @link NSAutoreleasePool NSAutoreleasePool @/link is released.  A caller might request that an @link autorelease autorelease @/link not be sent automatically after the object was retrieved because it will be returning the result as part of an <span class="code">init...</span> method and would have to counter the @link autorelease autorelease @/link with another @link retain retain @/link message immediately, wasting effort.</p>
+  
+  <div class="seealso">
+    <div class="section">See also</div>
+      <ul>
+        <li><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/Multithreading/index.html#//apple_ref/doc/uid/10000057i" target="_top"><i>Multithreading Programming Topics</i></a></li>
+        <li><a href="http://developer.apple.com/technotes/tn2002/tn2059.html"><i>Technical Note TN2059 - Using collection classes safely with multithreaded applications</i></a></li>
+        <li><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/MemoryMgmt/index.html" target="_top"><i>Memory Management Programming Guide for Cocoa</i></a></li>
+      </ul>
+  </div>
+</div>
+
+\$hdoc{'RKCache'}{'tasks'}
+\$hdoc{'RKCache'}{'methods'}
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>

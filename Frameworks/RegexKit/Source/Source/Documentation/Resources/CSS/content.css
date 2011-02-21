@@ -1,0 +1,36 @@
+@import url(common.css);
+
+body { font: 12px "lucida grande", geneva, helvetica, arial, sans-serif; color: black; background-color: white; }
+
+.content { white-space: nowrap; min-width: 100%; position: relative; }
+
+.content .tab { display: table; width: 100%; }
+.content .row { display: table-row; }
+
+.leftMargin { width: 25%; }
+.midMargin { width: 50%;  }
+.rightMargin, .midMargin, .leftMargin { display: table-cell; }
+.rightMargin { width: 25%; }
+.midMargin {  }
+
+.leftMargin { vertical-align: top; }
+.box.noJavascript { font-size: 0.8334em; border-width: 1px; white-space: normal; margin: 0px 8ex 0px 0px; padding: 0.5em 1ex;}
+.box.noJavascript > p + p { margin-top: 0.5em !important; }
+
+.content .header { white-space: inherit; margin-bottom: 1.5em; max-width: 50%; }
+.content .header > .title { white-space: inherit; margin-top: 0.5em; font-size: 2.6667em; font-weight: bold; }
+.content .header > .subtitle { white-space: inherit; margin-top: 0.25em; }
+.content .intro { white-space: inherit; border-bottom: 1px solid #a1a5a9; padding-bottom: 0.5em; margin-bottom: 2.0em; }
+.content .intro .text { white-space: inherit; font-size: 0.9167em; margin-top: 1.0em; margin-bottom: 0.5em; }
+
+.content .intro .box.frameworkSpecs > .row > .cell.left { font-weight: bold; border-right: none; }
+.content .intro .box.frameworkSpecs > .row > ul.cell { list-style-type: none; }
+
+.content .references { white-space: inherit; display: table;  width: 100%; }
+.content .references .referenceRow { white-space: inherit; display: table-row; }
+.content .references .referenceColumn { white-space: inherit; display: table-cell; padding-left: 0.5ex; padding-right: 3.5ex; }
+.content .references .referenceColumn > .title { white-space: inherit; font-size: 1.0834em; padding-bottom: 0.25em; padding-right: 3.0ex; margin-bottom: 0.25em; font-weight: bold; border-bottom: 1px solid #A1A5A9; }
+.content .references .referenceColumn > .entries > .bar { margin-top: 1.0em; }
+.content .references .referenceColumn .entry { white-space: inherit; font-size: 0.9167em; }
+
+.entry.ohloh { margin-top: 3px; margin-bottom: -3px; }

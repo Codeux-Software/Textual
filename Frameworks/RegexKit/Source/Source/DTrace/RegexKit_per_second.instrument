@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.per.second" name="RegexKit.instrument.per.second" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+
+  <!--
+    This really abuses Instrument.app and this XML format for defining instruments.  Since this file format doesn't support the printing of aggregate information from dtrace, we have to fake it.  The first probe definition is cosmetic only, it never fires, but Instruments.app picks up the names for fields from it.
+    
+    the tick-1sec probe is the one that actually supplies the data.  It prints it out in the format that exported scripts from Instrument.app do.  It sneaks in printa() at the appropriate spot to get the data from our various aggregates.  We also normalize our data to per second because the probe doesn't seem to fire once per second as expected, especially when running from instruments.app.  Running as a dtrace -s script it'll only occasionally miss a sample.
+  -->
+
+	<extension end_silent="printf(\'&lt;e&gt; -1 0 %d %-14d\n\',tid, walltimestamp/1000);\nnprinta(\'%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n\', @matchTimeAvgPerSec, @matchBytesAvgPerSec, @compileTimeAvgPerSec, @lookupTimeAvgPerSec, @matchTimePerSec, @matchBytesPerSec, @matchCountPerSec, @compileTimePerSec, @compileCountPerSec, @lookupTimePerSec, @lookupCountPerSec, @sortedRegexCollectionMatchTimeAvgPerSec, @sortedRegexCollectionMatchTimePerSec, @sortedRegexCollectionMatchCountPerSec);\nnprintf(\'&lt;/e&gt;\n\');" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="@sortedRegexCollectionMatchTimeAvgPerSec = avg(0);\nn @sortedRegexCollectionMatchTimePerSec = sum(0); @sortedRegexCollectionMatchCountPerSec = count();\nn @matchTimeAvgPerSec = avg(0);\nn @matchBytesAvgPerSec = avg(0);\nn @compileTimeAvgPerSec = avg(0);\nn @lookupTimeAvgPerSec = avg(0);\nn @matchTimePerSec = sum(0);\nn @matchBytesPerSec = sum(0);\nn @matchCountPerSec = count();\nn @compileTimePerSec = sum(0);\nn @compileCountPerSec = count();\nn @lookupTimePerSec = sum(0);\nn @lookupCountPerSec = count();\nn @readLocksPerSec = count();\nn @readLocksSpinsPerSec = sum(0);\nn @readLocksSpinsAvgPerSec = avg(0);\nn @readLockTimePerSec = sum(0);\nn  @readLockTimeAvgPerSec = avg(0);\nnclear(@sortedRegexCollectionMatchTimeAvgPerSec);\nnclear(@sortedRegexCollectionMatchTimePerSec);\nnclear(@sortedRegexCollectionMatchCountPerSec);\nnclear(@readLocksPerSec);\nnclear(@readLocksSpinsPerSec);\nnclear(@readLocksSpinsAvgPerSec);\nnclear(@readLockTimePerSec);\nnclear(@readLockTimeAvgPerSec);\nnclear(@matchTimePerSec);\nnclear(@matchBytesPerSec);\nnclear(@matchCountPerSec);\nnclear(@compileTimePerSec);\nnclear(@compileCountPerSec);\nnclear(@lookupTimePerSec);\nnclear(@lookupCountPerSec);\nnclear(@matchTimeAvgPerSec);\nnclear(@matchBytesAvgPerSec);\nnclear(@compileTimeAvgPerSec);\nnclear(@lookupTimeAvgPerSec);\nnregexKitTickPerSecondStart = walltimestamp;" deletable="false" deckUnits="1" name="Per Second" runClass="PFTDTraceRun" instrumentDescription="Records per second statistics." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.per.second" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="false" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Fake Printer" probe="RegexKit*:::PerformanceNoteX" silent_script="" predicate=" ((int)arg3 &gt; 0)" attach_debugger="">
+		  <field index="0" name="Match time avg uSec"        code="arg0" type="%d" width="10" truncation="middle"/>
+		  <field index="1" name="Match bytes avg uSec"       code="arg1" type="%d" width="10" truncation="middle"/>
+		  <field index="2" name="Compile time avg uSec"      code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="3" name="Lookup time avg uSec"       code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="4" name="Read Lock acquire avg uSec" code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="5" name="Match time"                 code="arg0" type="%d" width="10" truncation="middle"/>
+		  <field index="6" name="Match bytes"                code="arg1" type="%d" width="10" truncation="middle"/>
+		  <field index="7" name="Match count"                code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="8" name="Compile time"               code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="9" name="Compile count"              code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="10" name="Lookup time"               code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="11" name="Lookup count"              code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="12" name="Read Lock time"            code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="13" name="Read Lock count"           code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="14" name="Read Lock spin count"      code="arg2" type="%d" width="10" truncation="middle"/>
+		  <field index="15" name="SortCol avg time"          code="arg0" type="%d" width="10" truncation="middle"/>
+		  <field index="16" name="SortCol time"              code="arg0" type="%d" width="10" truncation="middle"/>
+		  <field index="17" name="SortCol count"             code="arg1" type="%d" width="10" truncation="middle"/>
+		</probe_definition>
+
+		<probe_definition index="1" event_name="Per Second" probe="tick-1sec" silent_script="normalize(@sortedRegexCollectionMatchTimeAvgPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@matchTimePerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@matchBytesPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@matchCountPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@compileTimePerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@compileCountPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@lookupTimePerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@lookupCountPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@readLockTimePerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@readLocksPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnnormalize(@readLocksSpinsPerSec, (walltimestamp - regexKitTickPerSecondStart) / 1000000000);\nnprintf(\'&lt;e&gt; -1 0 %d %-14d\n\',tid, walltimestamp/1000);\nnprinta(\'%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n%@d\n\', @matchTimeAvgPerSec, @matchBytesAvgPerSec, @compileTimeAvgPerSec, @lookupTimeAvgPerSec, @readLockTimeAvgPerSec, @matchTimePerSec, @matchBytesPerSec, @matchCountPerSec, @compileTimePerSec, @compileCountPerSec, @lookupTimePerSec, @lookupCountPerSec, @readLockTimePerSec, @readLocksPerSec, @readLocksSpinsPerSec, @sortedRegexCollectionMatchTimeAvgPerSec, @sortedRegexCollectionMatchTimePerSec, @sortedRegexCollectionMatchCountPerSec);\nnprintf(\'&lt;/e&gt;\n\');\nnregexKitTickPerSecondStart = walltimestamp;\nnclear(@sortedRegexCollectionMatchTimeAvgPerSec);\nnclear(@matchTimePerSec);\nnclear(@matchBytesPerSec);\nnclear(@matchCountPerSec);\nnclear(@compileTimePerSec);\nnclear(@compileCountPerSec);\nnclear(@lookupTimePerSec);\nnclear(@lookupCountPerSec);\nnclear(@matchTimeAvgPerSec);\nnclear(@matchBytesAvgPerSec);\nnclear(@compileTimeAvgPerSec);\nnclear(@lookupTimeAvgPerSec);\nnclear(@readLockTimePerSec);\nnclear(@readLocksPerSec);\nnclear(@readLocksSpinsPerSec);\nnclear(@readLockTimeAvgPerSec);\nnclear(@readLocksSpinsAvgPerSec);" predicate="" attach_debugger="">
+		</probe_definition>
+    
+		<probe_definition index="2" event_name="Begin Match" probe="RegexKit*:::BeginMatch" silent_script="self->matchStartTimePerSec = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="3" event_name="End Match" probe="RegexKit*:::EndMatch" silent_script="this->matchElapsedTimePerSec = (vtimestamp - self->matchStartTimePerSec) / 1000;\nnthis->searchRangePerSec = (unsigned long *)copyin(arg6, sizeof(unsigned long) * 2);\nnthis->matchRangePerSec = (unsigned long *)copyin(arg2, sizeof(unsigned long) * 2);\nn @matchTimePerSec = sum(this->matchElapsedTimePerSec);\nn @matchBytesPerSec = sum((int)arg8 == -1 ? this->searchRangePerSec[1] : this->matchRangePerSec[1]);\nn @matchCountPerSec = count();\nn @matchTimeAvgPerSec = avg(this->matchElapsedTimePerSec);\nn @matchBytesAvgPerSec = avg((int)arg8 == -1 ? this->searchRangePerSec[1] : this->matchRangePerSec[1]);" predicate=" (int)arg8 >= -1" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="4" event_name="Begin Compile" probe="RegexKit*:::BeginRegexCompile" silent_script="self->compileStartTimePerSec = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="5" event_name="End Compile" probe="RegexKit*:::EndRegexCompile" silent_script="this->compileElapsedTimePerSec = (vtimestamp - self->compileStartTimePerSec) / 1000;\nn @compileTimePerSec = sum(this->compileElapsedTimePerSec);\nn @compileTimeAvgPerSec = avg(this->compileElapsedTimePerSec);\nn @compileCountPerSec = count();" predicate=" (arg4 == 0)" attach_debugger="">			
+		</probe_definition>
+
+		<probe_definition index="6" event_name="Begin Cache Lookup" probe="RegexKit*:::BeginCacheLookup" silent_script="self->lookupStartTimePerSec = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="7" event_name="End Cache Lookup" probe="RegexKit*:::EndCacheLookup" silent_script="this->lookupElapsedTimePerSec = (vtimestamp - self->lookupStartTimePerSec) / 1000;\nn @lookupTimePerSec = sum(this->lookupElapsedTimePerSec);\nn @lookupTimeAvgPerSec = avg(this->lookupElapsedTimePerSec);\nn @lookupCountPerSec = count();" predicate="" attach_debugger="">			
+		</probe_definition>
+
+		<probe_definition index="8" event_name="Begin Read Lock" probe="RegexKit*:::BeginLock" silent_script="self->readLockStartTimePerSec = vtimestamp;" predicate=" (arg1 == 0)" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="9" event_name="End Read Lock" probe="RegexKit*:::EndLock" silent_script="this->readLockElapsedTimePerSec = (vtimestamp - self->readLockStartTimePerSec) / 1000;\nn @readLockTimePerSec = sum(this->readLockElapsedTimePerSec);\nn @readLockTimeAvgPerSec = avg(this->readLockElapsedTimePerSec); @readLocksPerSec = count();\nn @readLocksSpinsPerSec = sum(arg4); @readLocksSpinsAvgPerSec = avg(arg4);" predicate=" (arg1 == 0)" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="10" event_name="Begin Sorted Collection" probe="RegexKit*:::BeginSortedRegexMatch" silent_script="self->sortedRegexCollectionMatchStartTimePerSec = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="11" event_name="End Sorted Collection" probe="RegexKit*:::EndSortedRegexMatch" silent_script="this->sortedRegexCollectionMatchElapsedTimePerSec = (vtimestamp - self->sortedRegexCollectionMatchStartTimePerSec) / 1000;\nn self->sortedRegexCollectionMatchStartTimePerSec = 0;\nn @sortedRegexCollectionMatchTimePerSec = sum(this->sortedRegexCollectionMatchElapsedTimePerSec);\nn @sortedRegexCollectionMatchTimeAvgPerSec = avg(this->sortedRegexCollectionMatchElapsedTimePerSec);\nn @sortedRegexCollectionMatchCountPerSec = count();" predicate="self->sortedRegexCollectionMatchStartTimePerSec &gt; 0" attach_debugger="">
+		</probe_definition>
+
+	</extension>
+</plugin>

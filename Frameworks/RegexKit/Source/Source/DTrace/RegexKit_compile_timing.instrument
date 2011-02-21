@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.timing.compile" name="RegexKit.instrument.timing.compile" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Compile Timing" runClass="PFTDTraceRun" instrumentDescription="Records the time it takes to compile a regular expression in microseconds." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.timing.compile" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Begin Compile" probe="RegexKit*:::BeginRegexCompile" silent_script="self->compileStartTime = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="1" event_name="End Compile" probe="RegexKit*:::EndRegexCompile" silent_script="self->compileElapsedTime = (vtimestamp - self->compileStartTime) / 1000;" predicate=" (arg4 == 0)" attach_debugger="">			
+
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKRegex Object" code="arg0" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Hash" code="arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Regex" code="copyinstr(arg2)" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Options" code="arg3" type="%x" width="15" truncation="middle"/>
+		  <field index="5" name="uSec" code="self->compileElapsedTime" type="%d" width="10" truncation="right"/>
+
+		</probe_definition>
+
+	</extension>
+</plugin>

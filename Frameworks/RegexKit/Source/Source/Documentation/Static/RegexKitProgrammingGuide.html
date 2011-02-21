@@ -1,0 +1,1316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+@import "CSS/guide.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RegexKit Programming Guide</title>
+</head>
+
+<body>
+<div class="bodyTop">
+
+<div class="guide">
+<h1>RegexKit Programming Guide</h1>
+
+<span class="frameworkabstract">An <span class="nobr">Objective-C</span> Framework for Regular Expressions using the PCRE Library</span>
+
+<div class="intro">
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>This document introduces the <span class="nobr">RegexKit.framework</span> for the <span class="nobr">Objective-C</span> language and demonstrates how to use regular expressions in your project.  The <span class="nobr">RegexKit.framework</span> enables easy access to regular expressions by providing a number of additions to standard <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> classes, such as <a href="NSArray.html" class="code">NSArray</a>, <a href="NSDictionary.html" class="code">NSDictionary</a>, <a href="NSSet.html" class="code">NSSet</a>, and <a href="NSString.html" class="code">NSString</a>, along with their mutable variants. The <span class="nobr">RegexKit.framework</span> acts as a bridge between the <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> classes and the <span class="new-term">PCRE</span> (Perl Compatible Regular Expression) library, available at <a href="http://www.pcre.org/" class="nobr">www.pcre.org</a>.</p>
+
+<div class="highlights">
+<h3><a name="Introduction_Highlights">Highlights</a></h3>
+
+<ul class="square">
+<li>Multithreading safe.</li>
+<li>Automatically caches compiled regular expressions.</li>
+<li>For <span class="nobr">Mac OS X</span>, the framework is built as a <span class="nobr">Universal Binary.</span></li>
+<li>Uses <span class="nobr"><a href="http://developer.apple.com/documentation/CoreFoundation/Reference/CoreFoundation_Collection/index.html"><i class="nobr">Core Foundation</i></a></span> on <span class="nobr">Mac OS X</span> for greater speed.</li>
+<li>PCRE library built in, no need to build or install separately.</li>
+<li><a href="http://www.gnustep.org/"><i>GNUstep</i></a> support.</li>
+</ul>
+</div>
+
+
+<div class="prerequisitees">
+<h3><a name="Introduction_Prerequisites">Prerequisites</a></h3>
+
+<ul class="square">
+<li>An <span class="nobr">Objective-C</span> development environment.</li>
+<li><a href="http://www.gnustep.org/resources/OpenStepSpec/OpenStepSpec.html"><i>OpenStep</i></a> <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> compatible framework, such as <span class="nobr">Mac OS X <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a></span> or <a href="http://www.gnustep.org/"><i>GNUstep</i></a>.
+<li>For <span class="nobr">Mac OS X, 10.4</span> or greater is required.</li>
+<li>Some experience with regular expressions.</li>
+</ul>
+</div>
+
+
+<div class="overview">
+<h3><a name="Introduction_DocumentationOverview">Documentation Overview</a></h3>
+
+<ul>
+<li><a href="#RegularExpressions">Regular Expressions</a></li>
+<li><a href="#TheRegexKitClasses">The RegexKit Classes</a></li>
+<li><a href="#NSStringAdditions">NSString Additions</a></li>
+<li><a href="#DTraceProbePointsinRegexKit">DTrace Probe Points in RegexKit</a></li>
+<li><a href="#AddingtheRegexKitframeworktoyourProject">Adding the <span class="nobr">RegexKit.framework</span> to your Project</a></li>
+<li><a href="#LicenseInformation">License Information</a></li>
+</ul>
+</div>
+
+</div> <!-- class 'intro' -->
+
+<!-- ____________________________________________ -->
+<div class="regular-expressions">
+
+<h2><a name="RegularExpressions">Regular Expressions</a></h2>
+
+<p>Regular expressions can be quite complex.  This section is in no way meant to be a comprehensive overview of regular expressions, it is only a pragmatic introduction to regular expressions highlighting some of the features than can be put to immediate use.  Since this framework uses the <a href="pcre/index.html" class="section-link">PCRE</a> library to perform the actual regular expression matching, you should familiarize yourself with the specifics of the <a href="pcre/pcrepattern.html" class="section-link">PCRE Regular Expression Syntax</a>.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The C language assigns special meaning to the <span class="regex">\</span> character when inside a quoted <span class="regex">" "</span> string in your source code.  The <span class="regex">\</span> character is the escape character, and the character that follows has a different meaning than normal.  The most common example of this is <span class="regex">\n</span> which translates in to the <i class="nobr">New Line</i> character.  Because of this, you are required to 'escape' any uses of <span class="regex">\</span> by prepending it with another <span class="regex">\</span>.  In practical terms, this means doubling any <span class="regex">\</span> in a regular expression, which unfortunately is quite common, that are inside of quoted <span class="regex">" "</span> strings in your source code. Failure to do so will result in numerous warnings from the compiler about unknown escape sequences.</div></div></div></div>
+
+<div class="table marginSpacer floatRight clearBoth">
+<table class="standard" summary="Characters and Metacharacters">
+<caption>Characters and Metacharacters</caption>
+<tr><th>Pattern</th><th>Description</th></tr>
+<tr title="Period"><td><span class="regex">.</span></td><td>Match any character except <i>New Line</i></td></tr>
+<tr title="Backslash"><td><span class="regex">\</span></td><td>Escape the next character</td></tr>
+<tr title="Circumflex"><td><span class="regex">^</span></td><td>Match the beginning of a line</td></tr>
+<tr title="Dollar Sign"><td><span class="regex">$</span></td><td>Match the end of a line</td></tr>
+<tr title="Vertical Bar, aka Pipe"><td><span class="regex">|</span></td><td>Alternative</td></tr>
+<tr title="Left and Right Parenthesis"><td><span class="regex">( )</span></td><td>Capture subpattern grouping</td></tr>
+<tr title="Left and Right Square Bracket"><td><span class="regex">[ ]</span></td><td>Character class</td></tr>
+</table>
+</div>
+
+<div class="table marginSpacer floatRight clearBoth">
+<table class="standard" summary="Generic Character Types">
+<caption>Generic Character Types</caption>
+<tr><th>Pattern</th><th>Description</th></tr>
+<tr title="Backslash Lower-Case Dee d"><td><span class="regex">\d</span></td><td>Any decimal digit</td></tr>
+<tr title="Backslash Upper-Case Dee D"><td><span class="regex">\D</span></td><td>Any character that is not a decimal digit</td></tr>
+<tr title="Backslash Lower-Case Es s"><td><span class="regex">\s</span></td><td>Any whitespace character</td></tr>
+<tr title="Backslash Upper-Case Es S"><td><span class="regex">\S</span></td><td>Any character that is not a whitespace character</td></tr>
+<tr title="Backslash Lower-Case Duhb-Uhl-Yoo w"><td><span class="regex">\w</span></td><td>Any <span class="regex-def">word</span> character</td></tr>
+<tr title="Backslash Upper-Case Duhb-Uhl-Yoo W"><td><span class="regex">\W</span></td><td>Any <span class="regex-def">non-word</span> character</td></tr>
+</table>
+</div>
+
+<div class="table marginSpacer floatRight clearBoth">
+<table class="standard" summary="Common Quantifiers">
+<caption>Common Quantifiers</caption>
+<tr><th>Pattern</th><th>Description</th></tr>
+<tr title="Asterisk"><td><span class="regex">*</span></td><td>Match 0 or more times</td></tr>
+<tr title="Plus Sign"><td><span class="regex">+</span></td><td>Match 1 or more times</td></tr>
+<tr title="Question Mark"><td><span class="regex">?</span></td><td>Match 1 or 0 times</td></tr>
+<tr title="Left Curly Bracket, Number, Right Curly Bracket"><td><span class="regex">{</span><i>n</i><span class="regex">}</span></td><td>Match exactly <i>n</i> times</td></tr>
+<tr title="Left Curly Bracket, Number, Comma, Right Curly Bracket"><td><span class="regex">{</span><i>n</i><span class="regex">,}</span></td><td>Match at least <i>n</i> times</td></tr>
+<tr title="Left Curly Bracket, Number, Comma, Number, Right Curly Bracket"><td><span class="regex">{</span><i>n</i><span class="regex">,</span><i>m</i><span class="regex">}</span></td><td>Match at least <i>n</i> but not more than <i>m</i> times</td></tr>
+</table>
+</div>
+
+<h3><a name="RegularExpressions_TheBasics">The Basics</a></h3>
+
+<p>One of the basic primitives of regular expressions is the pair <i>What to match</i> and <i>How many times to match</i>, or <i>Quantity</i>.  Some <i>what to match</i> sequences are so common, such as <span class="regex-def">the whitespace characters</span>, or <span class="regex-def">any alphanumeric character except the whitespace characters</span>, that they have special short hand notation in regular expressions.  See the table <i class="nobr">Generic character types</i> for some of the more common shorthands.</p>
+
+
+<p>As an example, suppose you wanted to match a number of the form <span class="regex-textual">123.45</span>  A very simple pattern that would match this <span class="regex">\d+\.\d+</span>  Note that the decimal point is escaped in the regular expression with a <span class="regex">\</span> as we would like to match the character <span class="regex">.</span> and not its normal regular expression meaning which is <span class="regex-def">match any character</span>.  Without the escape, the regular expression would match <span class="regex">123z45</span>, which is clearly not what we want.</p>
+
+<h4><a name="RegularExpressions_ExtractingPartofaMatch">Extracting Part of a Match</a></h4>
+
+<p>Often we're not interested in whether or not a regular expression matches necessarily, but we are interested in certain parts of what matched.  From the previous example, suppose we were interested in the number before the decimal point, and the number after it.  To do that, we use another regular expression feature called <span class="regex-def">subpatterns</span>.
+
+<h4><a name="RegularExpressions_CaptureSubpatterns">Capture Subpatterns</a></h4>
+
+<p><span class="regex-def">Subpatterns</span> are specified in a regular expression with a pair of parenthesis, <span class="regex">( )</span> and have the following syntax:</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">(<span class="parameter required" title="required Regular Expression Pattern">pattern</span>)</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">pattern</div><div class="text">The regular expression pattern to match.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="regex">(\d+)\.(\d+)</span></span></div>
+</div>
+
+<p>To update our previous example, the regular expression becomes <span class="regex">(\d+)\.(\d+)</span>  The regular expression engine then provides the range of matching characters that correspond to a <span class="regex-def">subpattern</span>, which is called a <span class="regex-def">capture</span>.</p>
+
+<p><span class="regex-def">Captures</span> are numbered sequentially, beginning at zero, and then in the order of appearance in the regular expression.  <span class="regex-def">Capture</span> 0 (zero) has a special meaning which is <span class="regex-def">the entire range of characters that the regular expression matched</span>.  In our example, <span class="regex-def">capture</span> 1 (one) corresponds to the number before decimal point, and <span class="regex-def">capture</span> 2 (two) corresponds to the number after the decimal point.</p>
+
+<h4><a name="RegularExpressions_NamedCaptureSubpatterns">Named Capture Subpatterns</a></h4>
+
+<p>Complex regular expressions might contain a number of <span class="regex-def">capture subpatterns</span>, and keeping track of the correct <span class="regex-def">capture subpattern</span> can be error prone.  To make things easier, <a href="pcre/index.html" class="section-link">PCRE</a> provides syntax to name a <span class="regex-def">subpattern</span>, which is:</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">(<span class="optional" title="optional Capture Subpattern Name">?&lt;<span class="parameter required">name</span>&gt;</span><span class="parameter required" title="required Regular Expression Pattern">pattern</span>)</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">name</div><div class="text">The <i>optional</i> name to give the capture subpattern.</div></li>
+      <li><div class="name">pattern</div><div class="text">The regular expression pattern to match.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="regex">(?&lt;total&gt;\d+\.\d+)</span></span></div>
+</div>
+
+<h4><a name="RegularExpressions_NestedCaptureSubpatterns">Nested Capture Subpatterns</a></h4>
+
+<p><span class="regex-def">Capture subpatterns</span> can be nested to an arbitrary depth as well:</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">(<span class="optional" title="optional Capture Subpattern Name">?&lt;<span class="parameter required">name</span>&gt;</span><span class="parameter required" title="required Regular Expression Pattern">pattern</span> (<span class="optional" title="optional Capture Subpattern Name">?&lt;<span class="parameter required">name</span>&gt;</span><span class="parameter required" title="required Regular Expression Pattern">pattern</span>) )</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">name</div><div class="text">The <i>optional</i> name to give the capture subpattern.</div></li>
+      <li><div class="name">pattern</div><div class="text">The regular expression pattern to match.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="regex">(?&lt;total&gt;(?&lt;dollars&gt;\d+)\.(?&lt;cents&gt;\d+))</span></span></div>
+</div>
+
+<p>In the example given, the capture name <span class="argument">dollars</span> would include the digits up to the decimal point, <span class="argument">cents</span> would include the digits after the decimal point, and <span class="argument">total</span> would include the decimal point along with the digits before and after the decimal point.</p>
+
+<h3><a name="RegularExpressions_ItOnlyGetsMoreComplicatedfromHere">It Only Gets More Complicated from Here</a></h3>
+
+<div class="quotation">
+  <span class="quote">Some people, when confronted with a problem, think "I know, I'll use regular expressions."   Now they have two problems.</span>
+  <span class="attribution">Jamie Zawinski</span>
+</div>
+
+<p>Past this point things start to get more complicated quickly.  Using features that are obviously not covered here, it is possible to craft a single regular expression that is capable of matching a wide range of <span class="nobr">"numbers",</span> from the most basic representation of just numeric digits, to optionally accepting digits after the decimal point, but always requiring at least one digit before the decimal point (ie, <span class="regex-textual">.234</span> would not be valid), with optional scientific exponent tacked on the end.  For details on these more advanced features you will need to read the <a href="pcre/pcrepattern.html" class="section-link nobr">PCRE Regular Expression Syntax</a> documentation.</p>
+
+<p>If you're new to regular expressions, hopefully the three basic points (<span class="regex-def">what</span>, <span class="regex-def">how much</span>, <span class="regex-def">which part</span>) covered here are enough to be useful to you.  Regular expressions make most text processing tasks <b>much</b> easier.  A common need is to strip any leading or trailing whitespace in a string and a regular expression like <span class="regex">\s*(.*\S+)\s*</span> will do just that.  Nearly any task that requires a @link NSScanner NSScanner @/link can be done faster and with less code with a regular expression.</p>
+
+<p>However, regular expressions are not the solution to every pattern matching problem.  Regular expressions tend to be very difficult for other programmers to read and understand, let alone maintain, and are often described as "write only." Even after careful review, their can be spectacularly large, but hidden, differences between what a regular expression actually matches and what its author intended.  This can have enormous repercussions in some usage scenarios, such as depending on a regular expression for validation in a security context.  As with all tools, make sure it's the right one for the problem you're trying to solve.</p>
+
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="pcre/pcrepattern.html" class="section-link">PCRE Regular Expression Syntax</a></li>
+    <li><a href="pcre/pcrecompat.html" class="section-link">PCRE Compatibility with Perl</a></li>
+    <li><a href="NSString.html" class="section-link">NSString RegexKit Additions</a></li>
+    <li>The Perl Language <a href="http://www.perl.com/doc/manual/html/pod/perlre.html" class="section-link">Regular Expressions</a></li>
+    <li>Jeffrey Friedl's <a href="http://regex.info/" class="section-link">Mastering Regular Expressions</a></li>
+    <li>Wikipedia <a href="http://en.wikipedia.org/wiki/Regular_expression" class="section-link">Regular expression</a></li>
+  </ul>
+</div>
+
+
+</div>
+<!-- ____________________________________________ -->
+<div class="regexkit_classes">
+
+<h2><a name="TheRegexKitClasses">The RegexKit Classes</a></h2>
+
+<h3><a name="TheRegexKitClasses_RKRegex">RKRegex</a></h3>
+
+<p>The @link RKRegex RKRegex @/link class forms the core of the <span class="nobr">RegexKit.framework</span>.  It provides basic primitives for performing regular expression matches on raw byte buffers and obtaining the results of those matches in the form of @link NSRange NSRange @/link structures.  It also provides methods for translating the name of a capture subpattern to its equivalent capture index number.</p>
+
+<p>While you can create @link RKRegex RKRegex @/link objects directly, all of the extensions to the <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> classes accept either an instantiated @link RKRegex RKRegex @/link object or a @link NSString NSString @/link with a regular expression pattern which will automatically be converted to a @link RKRegex RKRegex @/link object for you.  Usually you will only need to manually instantiate @link RKRegex RKRegex @/link objects when you require an unusual option to be set that can't be altered from within the regular expression pattern itself.</p>
+
+<p>There are two methods used in the creation of @link RKRegex RKRegex @/link objects:</p>
+
+<div class="table">
+<table class="standard" summary="RKRegex Instantiation Methods">
+<caption>@link RKRegex RKRegex @/link Instantiation Methods</caption>
+<tr><th>Method</th><th>Description</th></tr>
+<tr>
+<td>@link initWithRegexString:options: initWithRegexString:options: @/link</td>
+<td>Designated initializer.  Primary means of creating @link RKRegex RKRegex @/link objects.</td>
+</tr>
+<tr>
+<td>@link regexWithRegexString:options: regexWithRegexString:options: @/link</td>
+<td>Convenience method that allocates, initializes, and returns an autoreleased @link RKRegex RKRegex @/link object.</td>
+</tr>
+</table>
+</div>
+
+<p>For each regular expression match, a C style array of @link NSRange NSRange @/link results is created.  The index value of the @link NSRange NSRange @/link array corresponds to the matching regular expression subcapture index value.  <span class="nobr">Index <span class="code">0</span> (zero)</span> is always created and represents the entire range that the regular expression matched.  Subsequent index values, up to the total capture indexes in the regular expression, represent the match range for the equivalent subcapture.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The following methods return only the first matching result for the arguments given.  Additional matches, if any, require another call starting at the end of the last match.</div></div></div></div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="RKRegex Matching Primitives">
+<caption>@link RKRegex RKRegex @/link Matching Primitives</caption>
+<tr><th>Method</th><th>Result</th><th>Description</th></tr>
+<tr>
+<td>@link getRanges:withCharacters:length:inRange:options: getRanges: withCharacters: length: inRange: options: @/link</td>
+<td>@link RKMatchErrorCode RKMatchErrorCode @/link</td>
+<td>Copies an array of @link NSRange NSRange @/link structures to a user supplied buffer that is at least <span class="nobr"><span class="code">[</span><span class="argument">aRegex</span> @link captureCount captureCount@/link<span class="code">]</span></span> big.</td>
+</tr>
+<tr>
+<td>@link matchesCharacters:length:inRange:options: matchesCharacters: length: inRange: options: @/link</td>
+<td>@link BOOL BOOL @/link</td>
+<td>A boolean <span class="code">YES</span> or <span class="code">NO</span> depending on whether or not the regular expression matched the string.</td>
+</tr>
+<tr>
+<td>@link rangeForCharacters:length:inRange:captureIndex:options: rangeForCharacters: length: inRange: captureIndex: options: @/link</td>
+<td>@link NSRange NSRange @/link</td>
+<td>The @link NSRange NSRange @/link for the <span class="code">captureIndex:</span> subcapture</td>
+</tr>
+<tr>
+<td>@link rangesForCharacters:length:inRange:options: rangesForCharacters: length: inRange: options: @/link</td>
+<td>@link NSRange NSRange * @/link</td>
+<td>An autoreleased block of memory containing a C array of @link NSRange NSRange @/link structures, one for each capture. Accessed via <span class="nobr">@link NSRange NSRange@/link<span class="code">[0]</span></span> through <span class="nobr">@link NSRange NSRange@/link<span class="code">[<i>Max Subcapture</i>]</span></span>.</td>
+</tr>
+</table>
+</div>
+
+<p>Since these methods work on raw byte buffers only, and only return the range(s) of a match, they generally aren't used by end user programs directly.  The <span class="nobr">RegexKit.framework</span> provides a number of extensions to common <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> classes, such as @link NSString NSString@/link, that are much easier to use than the raw results provided by the @link RKRegex RKRegex @/link class.</p>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The @link getRanges:withCharacters:length:inRange:options: getRanges:withCharacters:length:inRange:options: @/link method is the analog of the PCRE libraries @link pcre_exec pcre_exec @/link function.  The primary difference is @link getRanges:withCharacters:length:inRange:options: getRanges:withCharacters:length:inRange:options: @/link automatically sizes a buffer from the stack to hold the temporary results from @link pcre_exec pcre_exec@/link, then while copying to the user supplied buffer, converts those results to their equivalent @link NSRange NSRange @/link results.</div></div></div></div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="RegexKitImplementationTopics.html#MultithreadingSafety" class="section-link">Multithreading Safety</a></li>
+    <li><a href="pcre/pcrepattern.html" class="section-link">PCRE Regular Expression Syntax</a></li>
+    <li><a href="RKRegex.html" class="section-link">RKRegex Class</a></li>
+  </ul>
+</div>
+
+<h3><a name="TheRegexKitClasses_RKCache">RKCache</a></h3>
+
+<p>The @link RKCache RKCache @/link class provides the frameworks caching functionality.  It provides a multithreading safe means of caching and retrieving immutable objects, notably @link RKRegex RKRegex @/link objects.  The @link RKRegex RKRegex @/link class makes heavy use of the @link RKCache RKCache @/link class to improve the performance of the framework.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The @link RKCache RKCache @/link class is not meant to be used by end user programs.</div></div></div></div>
+
+<h4><a name="RegularExpressionCaching">Regular Expression Caching</a></h4>
+
+<p>The PCRE library requires that the text form of a regular expression be parsed and compiled to an internal form that is usable by the matching routines.  While this is a relatively quick operation, it is not instantaneous.  The <span class="nobr">RegexKit.framework</span> takes advantage of the fact that once a regular expression has been compiled, the compiled form is immutable and can be reused again and again.</p>
+
+<p>The <span class="nobr">RegexKit.framework</span> maintains a global @link RKCache RKCache @/link of instantiated @link RKRegex RKRegex @/link objects.  When a @link RKRegex RKRegex @/link is allocated and sent a @link initWithRegexString:options: initWithRegexString:option: @/link message, it first checks the global cache.  If the cache contains a match, the cached result is returned instead.  Otherwise a new @link RKRegex RKRegex @/link is created and added to the global cache.  This allows the <span class="nobr">RegexKit.framework</span> to convert a regular expression pattern in @link NSString NSString @/link form in to a @link RKRegex RKRegex @/link very quickly.</p>
+
+<p>Caching happens automatically, and is fully multithreading safe.  Information about the cache is available by invoking the @link RKCache/status status @/link method.  For example:</p>
+
+<div class="box sourcecode">NSString *cacheStatus = [[RKRegex cache] status];
+
+// Example cacheStatus:
+// @"Enabled = Yes, Cleared count = 0, Cache count = 27, Hit rate = 96.27%, Hits = 697, Misses = 27, Total = 724";</div>
+
+<h4><a name="RegularExpressionCaching_TheCacheinAction">The Cache in Action</a></h4>
+
+<p>A common usage scenario is to apply the same regular expression to every line in a text file.  The cache removes the need to anticipate when it makes sense to create a @link RKRegex RKRegex @/link object once and reuse it, or just make use of the convenience methods which would normally recreate the same regular expression for each invocation.  This also results in less clutter in your code.</p>
+
+<p>The following example iterates over all the items in <span class="code">stringArray</span> and strips any leading or trailing whitespace the original string had and skips strings that are empty or contain only whitespace characters.  Since the cache eliminates the need to explicitly manage @link RKRegex RKRegex @/link objects, the following programming style can be used without a performance penalty:</p>
+
+<div class="box sourcecode">/* Backslashes, '\', need to be escaped with a backslash inside of C strings. */
+
+NSEnumerator *stringEnumerator = [stringArray objectEnumerator]; /* Assumes that stringArray exists. */
+NSString *atString = NULL;
+
+while((atString = [stringEnumerator nextObject]) != NULL) {
+  NSString *cleanString = NULL; /* Will contain the result from the capture subpattern extraction. */
+
+  /* Empty or whitespace only strings do not match and are skipped. */
+  if([atString getCapturesWithRegexAndReferences:@"\\s*(.*\\S+)\\s*", @"$1", &amp;cleanString, nil] == NO) { continue; }
+
+  // cleanString now contains a pointer to a new autoreleased NSString that
+  // contains atString without any leading or trailing whitespace.
+}</div>
+
+<h4><a name="RegularExpressionCaching_RegexKitComparedtoNSScanner">RegexKit Compared to NSScanner</a></h4>
+
+<p>In many cases creating a regular expression object ahead of time to use repeatedly is simply not feasible.  Typically the details required to create a long lived regular expression object to use in repeated matchings are not available to the caller due to object abstraction.  The following implements the @link NSScanner NSScanner @/link <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/Strings/Articles/Scanners.html#//apple_ref/doc/uid/20000147-DontLinkElementID_21" class="nobr">matching example</a> from <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/Strings/index.html" class="section-link nobr" target="_top">String Programming Guide for Cocoa</a>.  It is significantly more compact than the <b>27</b> lines used to implement the same functionality with @link NSScanner NSScanner @/link and is dramatically faster as well.  Once the initial regular expression object has been cached there is virtually no overhead except for the actual matching itself.  The underlying methods used by @link isMatchedByRegex: isMatchedByRegex: @/link do not create any additional objects or memory allocations.  Only stack space is required to determine if there was a successful match or not.  No special steps are required by the caller of <span class="code">scanProductString:</span> or by its implementor to achieve the best performance due to automatic caching.</p>
+
+<div class="box sourcecode">/* Example string to match: @"Product: Acme Potato Peeler; Cost: 0.98" */
+
+- (BOOL)scanProductString:(NSString *string
+{
+  return([string isMatchedByRegex:@"Product: .+; Cost: \\d+\\.\\d+"]);
+}</div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="RegexKitImplementationTopics.html#MultithreadingSafety" class="section-link">Multithreading Safety</a></li>
+    <li><a href="RKCache.html" class="section-link">RKCache Class</a></li>
+  </ul>
+</div>
+
+<h3><a name="TheRegexKitClasses_RKEnumerator">RKEnumerator</a></h3>
+
+<p>The @link RKEnumerator RKEnumerator @/link class provides the means to enumerate all the matches of a regular expression in a @link NSString NSString@/link.</p>
+
+<p>In addition to basic enumeration, the @link RKEnumerator RKEnumerator @/link class provides a number of methods to extract, convert, and format the currently enumerated match that are similar to the various @link NSString NSString @/link additions.  These include methods such as @link RKEnumerator/getCapturesWithReferences: getCapturesWithReferences:@/link, @link stringWithReferenceString: stringWithReferenceString:@/link, and @link stringWithReferenceFormat: stringWithReferenceFormat:@/link.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="NSString.html" class="section-link">NSString RegexKit Additions</a></li>
+    <li><a href="RKEnumerator.html" class="section-link">RKEnumerator Class</a></li>
+  </ul>
+</div>
+
+<h3><a name="TheRegexKitClasses_FoundationExtensions">Foundation Extensions</a></h3>
+
+<p>In addition to the above, the <span class="nobr">RegexKit.framework</span> makes a number of <span class="nobr">Objective-C</span> category additions to the @link NSArray NSArray@/link, @link NSDictionary NSDictionary@/link, @link NSSet NSSet@/link, and @link NSString NSString @/link <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> classes.  These additions are the primary means of using the RegexKit.framework.</p>
+
+<h4>NSString Additions</h4>
+
+<p>Since regular expressions are often involved in text manipulation tasks, the @link NSString NSString @/link RegexKit Additions are covered in their own section, <a href="#NSStringAdditions" class="section-link">NSString Additions</a>.</p>
+
+<h4>NSArray, NSDictionary, and NSSet Additions</h4>
+
+<p>The remaining RegexKit additions are to the <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> Collection class objects, @link NSArray NSArray@/link, @link NSDictionary NSDictionary@/link, and @link NSSet NSSet@/link.  Most of the additions are essentially the same and involve either querying a collection to determine if it contains an object that is matched by a regular expression, obtaining the count of objects matched by a regular expression, or creating a new collection from the objects matched by a regular expression.</p>
+
+<p>The @link NSDictionary NSDictionary @/link RegexKit Additions allow you to query on either keys matched by a regular expression, or objects matched by a regular expression.  In both cases, a @link NSArray NSArray @/link of either the matching keys or objects can be returned, or a new @link NSDictionary NSDictionary @/link that contains the results from the regular expression match.</p>
+
+<p>Along with the immutable collection classes, the mutable collection classes receive a number of additions as well.  These are mostly convenience methods, allowing you to remove items from a collection based on whether or not a item is matched by a regular expression, or allowing you to add items matched by a regular expression from a second collection.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="NSArray.html" class="section-link">NSArray RegexKit Additions</a></li>
+    <li><a href="NSDictionary.html" class="section-link">NSDictionary RegexKit Additions</a></li>
+    <li><a href="NSSet.html" class="section-link">NSSet RegexKit Additions</a></li>
+    <li><a href="NSString.html" class="section-link">NSString RegexKit Additions</a></li>
+    <li><a href="NSMutableArray.html" class="section-link">NSMutableArray RegexKit Additions</a></li>
+    <li><a href="NSMutableDictionary.html" class="section-link">NSMutableDictionary RegexKit Additions</a></li>
+    <li><a href="NSMutableSet.html" class="section-link">NSMutableSet RegexKit Additions</a></li>
+    <li><a href="NSMutableString.html" class="section-link">NSMutableString RegexKit Additions</a></li>
+  </ul>
+</div>
+
+</div>
+<!-- ____________________________________________ -->
+<div class="nsstring-additions">
+
+<h2><a name="NSStringAdditions">NSString Additions</a></h2>
+
+<h3><a name="NSStringAdditions_CaptureExtraction">Capture Extraction</a></h3>
+
+<p>Extracting the text of a capture subpattern is done by sending @link getCapturesWithRegexAndReferences: getCapturesWithRegexAndReferences: @/link to a member of the @link NSString NSString @/link class.  The first argument is the regular expression that you would like to match, followed by a <span class="code">nil</span> terminated, variable length list of <span class="argument">key</span> and <span class="argument nobr">pointer to a pointer</span> arguments.</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">[<span class="parameter required" title="required NSString Class Member">aString</span> <span class="code">getCapturesWithRegexAndReferences:</span><span class="parameter required">aRegex</span>, <span class="parameter required">key</span>, <span class="parameter required">pointer to a pointer</span><span class="optional">, <span class="parameter">...</span></span>, <span class="code required">nil</span>]</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">aString</div><div class="text">The @link NSString NSString @/link to search with <span class="argument">aRegex</span>.</div></li>
+      <li><div class="name">aRegex</div><div class="text">A regular expression as either a @link NSString NSString @/link or an instantiated @link RKRegex RKRegex @/link object.</div></li>
+      <li><div class="name">key</div><div class="text">The <a href="NSString.html#CaptureSubpatternReferenceandTypeConversionSyntax" class="section-link">Capture Subpattern Reference</a> for the text you wish to extract, similar to <i>perls</i> <span class="code nobr">$<i>n</i></span> syntax.</div></li>
+      <li><div class="name">pointer to a pointer</div><div class="text">A pointer to a @link NSString NSString @/link pointer where the result of <span class="argument">key</span> will be stored.</div></li>
+      <li><div class="name">...</div><div class="text">An <i>optional</i> list of additional <span class="nobr"><span class="argument">key</span> / <span class="argument">pointer to a pointer</span></span> pairs.</div></li>
+      <li><div class="name">nil</div><div class="text">The <b>required</b> <span class="code">nil</span> terminator.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="code">[@"You owe: 1234.56 (tip not included)" getCapturesWithRegexAndReferences:<span title="C requires backslashes to be escaped with a backslash.">@"(\\d+\\.\\d+)"</span>, <span title="References capture subpattern number 1">@"$1"</span>, <span title='Assumes a definition like: NSString *extractedString; The result will be @"1234.56"'>&amp;extractedString</span>, nil];</span></span></div>
+</div>
+
+<p>The complete example:</p>
+<div class="box sourcecode">NSString *extractedString = NULL;
+
+[@"You owe: 1234.56 (tip not included)" getCapturesWithRegexAndReferences:@"(\\d+\\.\\d+)",
+                                                                          @"$1", &amp;extractedString,
+                                                                          nil];
+                                                                    
+// extractedString = @"1234.56";</div>
+
+<p>After executing, <span class="code">extractedString</span> will contain a pointer to a newly created, autoreleased @link NSString NSString @/link containing the requested matching text.  In the previous example, <span class="code">extractedString</span> will point to a string that is equivalent to <span class="code nobr">@"1234.56";</span></p>
+
+<p>The following example demonstrates extracting multiple strings at once with both numbered and named capture references.  Note that capture number zero refers to entire text that the regular expression matched.</p>
+
+<div class="box sourcecode">NSString *entireMatchString = NULL, *totalString = NULL, *dollarsString = NULL, *centsString = NULL;
+NSString *regexString = @"owe:\\s*\\$?(?&lt;total&gt;(?&lt;dollars&gt;\\d+)\\.(?&lt;cents&gt;\\d+))";
+
+[@"You owe: 1234.56 (tip not included)" getCapturesWithRegexAndReferences:regexString,
+                                                                          @"$0", &amp;entireString,
+                                                                          @"${total}", &amp;totalString,
+                                                                          @"${dollars}", &amp;dollarsString,
+                                                                          @"${cents}", &amp;centsString,
+                                                                          nil];
+                                                                    
+// entireString  = @"owe: 1234.56";
+// totalString   = @"1234.56";
+// dollarsString = @"1234";
+// centsString   = @"56";</div>
+
+<h3><a name="NSStringAdditions_CaptureTypeConversions">Capture Type Conversions</a></h3>
+ 
+<p>The <span class="nobr">RegexKit.framework</span> @link NSString NSString @/link class additions also provide the means to automatically convert the captured text in to a number of formats.  This includes primitive C types and <span class="nobr">Objective-C</span> types such as @link NSNumber NSNumber @/link and @link NSDate NSDate@/link.  Primitive type conversion is handled by the systems @link scanf scanf @/link function and therefore makes use of the same conversion syntax and specifiers that @link scanf scanf @/link does.  If you are unfamiliar with the syntax, it is generally the same <span class="nobr"><i>percent</i>-style</span> used for converting primitive types in to string form.  For example, <span class="code nobr">"%d"</span> would convert an ASCII string form of <span class="code nobr">"4259"</span> in to an <span class="code">int</span> with the value of <span class="code">4259</span>.</p>
+ 
+<p>In the following example, the text of the hex color value is matched and returned as a @link NSString NSString @/link.</p>
+ 
+<div class="box sourcecode">NSString *capturedColor = NULL;
+
+[@"Hex color 0x8f239aff is the best!" getCapturesWithRegexAndReferences:@"Hex color (0x\\w+\\b)", @"$1", &amp;capturedColor, nil];
+
+// capturedColor = @"0x8f239aff";</div>
+
+<p>While useful, additional operations on the value represented by the text are much easier if converted in to a primitive type, such as an <span class="code nobr">unsigned int</span>.  This is accomplished by specifying the conversion type desired with the capture reference.  To avoid ambiguity the capture reference must contain a pair of <span class="nobr"><i>curly braces</i> ('{' and '}')</span>, which contain both the capture subpattern reference and the conversion specification separated by a <span class="nobr"><i>colon</i> (':')</span> character.  For example, <span class="code nobr">${1:%x}</span> refers to capture subpattern number one and specifies <span class="code nobr">%x</span>, or <i>hexadecimal</i> to <span class="code nobr">unsigned int</span>, for the conversion.</p>
+
+<p>As an example, the following matches the text for the hex color in string form, converts it to an <span class="code nobr">unsigned int</span>, and stores the result in <span class="code">hexColor</span>.</p>
+
+<div class="box sourcecode">unsigned int hexColor = 0x0;
+
+[@"Hex color 0x8f239aff is the best!" getCapturesWithRegexAndReferences:@"Hex color (0x\\w+\\b)", @"${1:%x}", &amp;hexColor, nil];
+
+// hexColor = 0x8f239aff;</div>
+
+<p>This same simple conversion, without the help of regular expressions and automatic type conversion, typically spans multiple lines. First, one has to scan the subject string and find the range of interest.  Once found, that text is usually copied to a temporary buffer. Finally, the appropriate string to value conversion function is called. With the ability to perform type conversions as part of the matching process, @link getCapturesWithRegexAndReferences: getCapturesWithRegexAndReferences: @/link makes quick work of what was once a tedious and error prone process.</p>
+
+<p>In addition to converting matched text to basic C data types, you can also convert matched text to @link NSNumber NSNumber @/link and @link NSCalendarDate NSCalendarDate @/link objects. The following example demonstrates the conversion to an @link NSNumber NSNumber @/link using the @link NSNumberFormatterSpellOutStyle NSNumberFormatterSpellOutStyle @/link number format style.</p>
+
+<div class="box sourcecode">NSString *subjectString = @"He said the speed was 'one hundred and five point three two'.";
+NSNumber *convertedNumber = NULL;
+
+[subjectString getCapturesWithRegexAndReferences:@"'([^\\']*)'", @"${1:@wn}", &amp;convertedNumber, nil];
+
+// [convertedNumber doubleValue] = 105.32;</div>
+
+<p>The <span class="code nobr">@d</span> type conversion can parse a wide range of date formats, returning a @link NSCalendarDate NSCalendarDate @/link object:</p>
+
+<div class="box sourcecode">NSString *subjectString = @"Current date and time: 6/20/2007, 11:34PM EDT.";
+NSCalendarDate *convertedDate = NULL;
+
+[subjectString getCapturesWithRegexAndReferences:@":\\s*(?&lt;date&gt;.*)\\.", @"${date:@d}", &amp;convertedDate, nil];
+NSLog(@"Converted date = %@\n", convertedDate);
+
+// NSLog output: Converted date = 2007-06-20 23:34:00 -0400</div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="NSString.html#CaptureSubpatternReferenceandTypeConversionSyntax" class="section-link">Capture Subpattern Reference and Type Conversion Syntax</a></li>
+    <li><a href="NSString.html#ConversionTypeSyntax" class="section-link">Conversion Type Syntax</a></li>
+    <li><a href="NSString.html#CDataTypeConversions" class="section-link">C Data Type Conversions</a></li>
+    <li><a href="NSString.html#ConversionstoNSNumber" class="section-link">Conversions to NSNumber</a></li>
+    <li><a href="NSString.html#ConversiontoNSCalendarDate" class="section-link">Conversion to NSCalendarDate</a></li>
+  </ul>
+</div>
+
+<h3><a name="NSStringAdditions_DeterminingifaStringisMatchedbyaRegularExpression">Determining if a String is Matched by a Regular Expression</a></h3>
+
+<p>The method @link isMatchedByRegex: isMatchedByRegex: @/link can be used to check if a string is matched, or not matched, by a regular expression.</p>
+
+<div class="box sourcecode">BOOL didMatch           = NO;
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+didMatch = [subjectString isMatchedByRegex:@"first"];
+
+// didMatch = YES</div>
+
+<p>Or, as an example of a regular expression not matching a string:</p>
+
+<div class="box sourcecode">BOOL didMatch           = YES;
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+didMatch = [subjectString isMatchedByRegex:@"second"];
+
+// didMatch = NO</div>
+
+<p>The method @link isMatchedByRegex:inRange: isMatchedByRegex:inRange: @/link can be used to alter the range of the string to check for a match as well:</p>
+
+<div class="box sourcecode">BOOL didMatch           = YES;
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+didMatch = [subjectString isMatchedByRegex:@"first" inRange:NSMakeRange(0, 12)];
+
+// didMatch = NO</div>
+
+<p>Even though the range of the string specified, <span class="code">Only the fir</span>, contains the first few characters of the regular expression to match, the result is <span class="code">NO</span> since the entire regular expression, <span class="regex">first</span>, is not matched.</p>
+
+<h3><a name="NSStringAdditions_FindingtheRangeofaMatch">Finding the Range of a Match</a></h3>
+
+<p>To find the the entire range that a regular expression matches in a string, you can use the @link rangeOfRegex: rangeOfRegex: @/link method.  For example:</p>
+
+<div class="box sourcecode">NSRange matchRange      = NSMakeRange(NSNotFound, 0);
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+matchRange = [subjectString rangeOfRegex:@"first"];
+
+// matchRange = {9, 5} == "first"</div>
+
+<p>Or, if the string is not matched by the regular expression, the range <span class="nobr"><span class="code">{</span>@link NSNotFound NSNotFound@/link<span class="code">, 0}</span></span> is returned.</p>
+
+<div class="box sourcecode">NSRange matchRange      = NSMakeRange(NSNotFound, 0);
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+matchRange = [subjectString rangeOfRegex:@"second"];
+
+// matchRange = {NSNotFound, 0}</div>
+
+<p>As the first example demonstrates, only the result of the first match of a regular expression is returned.  Additional results would require invoking @link rangeOfRegex:inRange:capture: rangeOfRegex:inRange:capture: @/link with a capture of <span class="code" title="zero">0</span> with a range that begins at the end of the last match.  For example:</p>
+
+<div class="box sourcecode">NSRange matchRange      = NSMakeRange(NSNotFound, 0);
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+matchRange = [subjectString rangeOfRegex:@"first" inRange:NSMakeRange(9 + 5, [subjectString length] - (9 + 5)) capture:0];
+
+// matchRange = {25, 5} == "first"</div>
+
+<p>@link rangeOfRegex:inRange:capture: rangeOfRegex:inRange:capture: @/link can also be used to find the range of a capture subpattern as well:
+
+<div class="box sourcecode">NSRange matchRange      = NSMakeRange(NSNotFound, 0);
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+matchRange = [subjectString rangeOfRegex:@"'?(first)'?\\s*(\\S+)" inRange:NSMakeRange(0, [subjectString length]) capture:2];
+
+// matchRange = {15, 5} == "match"</div>
+
+<p>To obtain ranges for all the capture subpatterns of a regular expression match, you can use the method @link rangesOfRegex: rangesOfRegex: @/link and it's companion @link rangesOfRegex:inRange: rangesOfRegex:inRange:@/link.  These methods will return a pointer to an array <span class="code">NSRange</span> structures.  The pointer returned is to a block of autoreleased memory that is <span class="nobr"><span class="code">sizeof(</span>@link NSRange NSRange@/link<span class="code">) * [</span><span class="argument">regex</span> @link captureCount captureCount@/link<span class="code">]</span></span> bytes big.  The memory containing the range results will be released, and therefore invalid, once the current @link NSAutoreleasePool NSAutoreleasePool @/link is released.  You should not keep a pointer to the returned buffer past this point, and you should copy any results that you require past the current @link NSAutoreleasePool NSAutoreleasePool @/link context.  As an example:</p>
+
+<div class="box sourcecode">NSRange *matchRanges    = NULL;
+NSString *subjectString = @"Only the first match of 'first' is matched";
+
+matchRanges = [subjectString rangesOfRegex:@"'?(first)'?\\s*(\\S+)"];
+
+// matchRanges[0] = {9, 5} == "first"
+// matchRanges[1] = {15, 5} == "match"</div>
+
+<h3><a name="NSStringAdditions_CreatingaNewStringUsingtheResultsofaMatch">Creating a New String Using the Results of a Match</a></h3>
+
+<p>RegexKit provides a number of methods that allow you to easily create new strings that include the text from a regular expression match, similar to the way that <i>perl</i> allows you to access capture subpatterns with the variables <span class="code nobr">$<i>number</i></span>.</p>
+
+<p>The method @link stringByMatching:withReferenceString: stringByMatching:withReferenceString: @/link allows you to create a new, temporary string that replaces any capture references with the text of the matched text.  For example:</p>
+
+<div class="box sourcecode">NSString *newString      = NULL;
+NSString *subjectString  = @"Amount due: 149.23";
+NSString *regexString    = @"Amount due: (\\d+\\.\\d+)";
+NSString *templateString = @"You owe: $1 (does not include tax)";
+
+newString = [subjectString stringByMatching:regexString withReferenceString:templateString];
+
+// newString = @"You owe: 149.23 (does not include tax)";</div>
+
+<p>Strings can also be created with a combination of match results and format specification argument replacement:</p>
+
+<div class="box sourcecode">NSString *newString      = NULL;
+NSString *subjectString  = @"Amount due: 149.23";
+NSString *regexString    = @"Amount due: (\\d+\\.\\d+)";
+NSString *templateString = @"[%d of %d] You owe: $1 (does not include tax)";
+
+newString = [subjectString stringByMatching:regexString withReferenceFormat:templateString, 1, 5];
+
+// newString = @"[1 of 5] You owe: 149.23 (does not include tax)";</div>
+
+<p>The methods @link stringByMatching:inRange:withReferenceString: stringByMatching:inRange:withReferenceString: @/link and @link stringByMatching:inRange:withReferenceFormat: stringByMatching:inRange:withReferenceFormat: @/link are also available which allow you to work on sub-ranges of strings.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="NSString.html#CaptureSubpatternReferenceSyntax" class="section-link">Capture Subpattern Reference Syntax</a></li>
+    <li><a href="NSString.html" class="section-link">NSString RegexKit Additions</a></li>
+  </ul>
+</div>
+
+<h3><a name="NSStringAdditions_SearchandReplace">Search and Replace</a></h3>
+
+<p>In addition to creating new strings from the results of a match, the NSString RegexKit additions also provide the means to replace the matched range with the text of a new string.  The replacement string may include references to text matched by the regular expression as well.  The search and replace methods allow you to specify the number of times that the regular expression can match and replace the receivers text. A special constant, @link RKReplaceAll RKReplaceAll@/link, is used to specify that all the matches in the receiver should be replaced.  For example:</p>
+
+<div class="box sourcecode">NSString *newString         = NULL;
+NSString *subjectString     = @"Amount due: 149.23";
+NSString *regexString       = @"(\\d+\\.\\d+)";
+NSString *replacementString = @"--&gt; $1 &lt;-- (does not include tax)";
+
+newString = [subjectString stringByMatching:regexString replace:RKReplaceAll withString:replacementString];
+
+// newString = @"Amount due: --&gt; 149.23 &lt;-- (does not include tax)";</div>
+
+<p>An example demonstrating multiple replacements:</p>
+
+<div class="box sourcecode">NSString *newString         = NULL;
+NSString *subjectString     = @"149.23, 151.29, 157.31";
+NSString *regexString       = @"(\\d+\\.\\d+)";
+NSString *replacementString = @"-($1)";
+
+newString = [subjectString stringByMatching:regexString replace:RKReplaceAll withString:replacementString];
+
+// newString = @"-(149.23), -(151.29), -(157.31)";</div>
+
+<p>The same example, but replacing only the first two matches:</p>
+
+<div class="box sourcecode">NSString *newString         = NULL;
+NSString *subjectString     = @"149.23, 151.29, 157.31";
+NSString *regexString       = @"(\\d+\\.\\d+)";
+NSString *replacementString = @"-($1)";
+
+newString = [subjectString stringByMatching:regexString replace:2 withString:replacementString];
+
+// newString = @"-(149.23), -(151.29), 157.31";</div>
+
+<p>An example of a more restrictive regular expression:</p>
+
+<div class="box sourcecode">NSString *newString         = NULL;
+NSString *subjectString     = @"149.23, 151.29, 157.31, 1511.29";
+NSString *regexString       = @"(\\d{3}\\.29)";
+NSString *replacementString = @"-($1)";
+
+newString = [subjectString stringByMatching:regexString replace:RKReplaceAll withString:replacementString];
+
+// newString = @"149.23, -(151.29), 157.31, 1511.29";</div>
+
+<h3><a name="NSStringAdditions_EnumeratingalltheMatchesinaStringbyaRegularExpression">Enumerating all the Matches in a String by a Regular Expression</a></h3>
+
+<p>With the @link RKEnumerator RKEnumerator @/link class, you can enumerate all of the matches of a regular expression in a string the same way you might enumerate all the objects in a @link NSArray NSArray @/link with a @link NSEnumerator NSEnumerator@/link.  Unlike the @link NSEnumerator NSEnumerator @/link class, however, the @link RKEnumerator RKEnumerator @/link class provides a number of additional methods for accessing the details of the currently enumerated match.  Many of the additional methods have analogs to the @link NSString NSString @/link RegexKit additions, such as @link stringWithReferenceFormat: stringWithReferenceFormat:@/link, which allows you to create a new, temporary string with references to the currently enumerated match.</p>
+
+<p>The @link RKEnumerator RKEnumerator @/link class provides a number of <span class="code">next...</span> methods to advance to the next match.  Which one to use depends on what you will use the match results for.  The method @link nextRanges nextRanges @/link is the fastest and has the least internal overhead since it only updates it's private buffer with the information of the next match, if any.  @link nextObject nextObject @/link is the slowest, as it creates a @link NSArray NSArray @/link of @link NSValue NSValue @/link objects containing the ranges of all the capture subpatterns.</p>
+
+<p>Here are some examples demonstrating the use of @link RKEnumerator RKEnumerator@/link:</p>
+
+<div class="box sourcecode">NSString *subjectString = @"149.23, 151.29, 157.31, 1511.29";
+NSString *regexString   = @"(\\d+\\.\\d+)";
+
+RKEnumerator *matchEnumerator = [subjectString matchEnumeratorWithRegex:regexString];
+
+while([matchEnumerator nextRanges] != NULL) {
+  NSLog(@"Range of match: %@", NSStringFromRange([matchEnumerator currentRange]));
+}
+
+// Outputs:
+// Range of match: {0, 6}
+// Range of match: {8, 6}
+// Range of match: {16, 6}
+// Range of match: {24, 7}</div>
+
+<p>The same example, but converting the current match to a <span class="code">double</span>:</p>
+
+<div class="box sourcecode">NSString *subjectString = @"149.23, 151.29, 157.31, 1511.29";
+NSString *regexString   = @"(\\d+\\.\\d+)";
+
+RKEnumerator *matchEnumerator = [subjectString matchEnumeratorWithRegex:regexString];
+
+while([matchEnumerator nextRanges] != NULL) {
+  double enumeratedDouble = 0.0;
+  [matchEnumerator getCapturesWithReferences:@"${1:%lf}", &amp;enumeratedDouble, nil];
+  NSLog(@"Enumerated: %.2f", enumeratedDouble);
+}
+
+// Outputs:
+// Enumerated: 149.23
+// Enumerated: 151.29
+// Enumerated: 157.31
+// Enumerated: 1511.29</div>
+
+<p>An example using the @link stringWithReferenceFormat: stringWithReferenceFormat: @/link method:</p>
+
+<div class="box sourcecode">NSString *subjectString = @"149.23, 151.29, 157.31, 1511.29";
+NSString *regexString   = @"(\\d+\\.\\d+)";
+int matchNumber = 1;
+
+RKEnumerator *matchEnumerator = [subjectString matchEnumeratorWithRegex:regexString];
+
+while([matchEnumerator nextRanges] != NULL) {
+  double enumeratedDouble = 0.0;
+  NSString *newString = NULL;
+
+  [matchEnumerator getCapturesWithReferences:@"${1:%lf}", &amp;enumeratedDouble, nil];
+  newString = [matchEnumerator stringWithReferenceFormat:@"#%d: %.2f", matchNumber, enumeratedDouble * 10.0];
+  NSLog(@"String: %@", newString);
+  matchNumber++;
+}
+
+// Outputs:
+// String: #1: 1492.30
+// String: #2: 1512.90
+// String: #3: 1573.10
+// String: #4: 15112.90</div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="NSString.html#CaptureSubpatternReferenceSyntax" class="section-link">Capture Subpattern Reference Syntax</a></li>
+    <li><a href="NSString.html#CaptureSubpatternReferenceandTypeConversionSyntax" class="section-link">Capture Subpattern Reference and Type Conversion Syntax</a></li>
+    <li><a href="RKEnumerator.html" class="section-link">RKEnumerator Class</a></li>
+  </ul>
+</div>
+
+
+</div>
+<!-- ____________________________________________ -->
+
+<div class="dtrace">
+<h2><a name="DTraceProbePointsinRegexKit">DTrace Probe Points in RegexKit</a></h2>
+
+<p>Mac OS X 10.5 Leopard contains a powerful new debugging facility called DTrace.  DTrace, originally developed by Sun Microsystems for the Solaris Operating System, is an open source kernel level framework for dynamically instrumenting live systems.  While there have been numerous tools in the past to record program execution trace information, such as <span class="file">truss</span> or <span class="file">ktrace</span>, none have been as comprehensive as DTrace.  For example, DTrace allows you to trace the entry and exit of any function, in any program, and record the arguments on entry and the results on exit.  Mac OS X 10.5 provides an Objective-C DTrace provider that extends that functionality to Objective-C class and instance methods as well.  Of course, DTrace also provides extensive kernel level tracing as well, including user to kernel crossings such as <span class="code">syscall</span>.</p>
+
+<p>DTrace also allows applications to define custom probe points that DTrace can attach to.  This allows, for example, shared library developers to offer tailored probe points for specific information, instead of trying to recreate the information by tracking individual calls in to the library.  RegexKit makes use of this functionality to provide a number of RegexKit specific DTrace probe points.</p>
+
+<p>The following simply documents the enhanced DTrace functionality that RegexKit provides.  It is not a guide to the DTrace facility.  A pre-requisite to making the most of DTrace is the <a href="http://docs.sun.com/app/docs/doc/817-6223" class="section-link" target="_top">Solaris Dynamic Tracing Guide</a> <a href="http://dlc.sun.com/pdf/817-6223/817-6223.pdf" class="section-link" target="_top">(as .PDF)</a>.  This is a <b><i>must read</i></b> for anyone who wishes to make the most of DTrace and the information outlined in the following sections.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">You are <b>strongly encouraged</b> to familiarize yourself with the <a href="http://docs.sun.com/app/docs/doc/817-6223" class="section-link" target="_top">Solaris Dynamic Tracing Guide</a> <a href="http://dlc.sun.com/pdf/817-6223/817-6223.pdf" class="section-link" target="_top">(as .PDF)</a>, not just for use with RegexKit, but in general.  DTrace is a powerful, general purpose debugging tool that every Mac OS X programmer should be familiar with.</div></div></div></div>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html" class="section-link" target="_top">Instruments User Guide</a></li>
+    <li><a href="http://docs.sun.com/app/docs/doc/817-6223" class="section-link" target="_top">Solaris Dynamic Tracing Guide</a> <a href="http://dlc.sun.com/pdf/817-6223/817-6223.pdf" class="section-link" target="_top">(as .PDF)</a></li>
+  </ul>
+</div>
+
+<h3><a name="DTraceProbePointsinRegexKit_RegexKitProviderDTraceProbePoints">RegexKit Provider DTrace Probe Points</a></h3>
+
+<p>The following table provides a list of the available RegexKit probe points.  Following the table, the details of each probe are provided, including the number of arguments, argument types, and description of each argument.</p>
+
+<div class="table">
+<table class="standard" summary="RegexKit Provider DTrace Probe Points">
+<caption>RegexKit Provider DTrace Probe Points</caption>
+<tr><th>Probe Point</th><th>Description</th></tr>
+<tr><td><span class="code">RegexKit:::PerformanceNote</span></td><td>Fires for potential performance problems.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginRegexCompile</span></td><td>Fires at the start of compiling a regular expression.</td></tr>
+<tr><td><span class="code">RegexKit:::EndRegexCompile</span></td><td>Fires at the end of compiling a regular expression.</td></tr>
+<tr><td><span class="code">RegexKit:::MatchException</span></td><td>Fires when matching results in an exception.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginMatch</span></td><td>Fires at the start of a match.</td></tr>
+<tr><td><span class="code">RegexKit:::EndMatch</span></td><td>Fires at the end of a match.</td></tr>
+<tr><td><span class="code">RegexKit:::CacheCleared</span></td><td>Fires when the regular expression cache is cleared.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginCacheLookup</span></td><td>Fires at the start of a cache lookup.</td></tr>
+<tr><td><span class="code">RegexKit:::EndCacheLookup</span></td><td>Fires when a cache lookup completes.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginCacheAdd</span></td><td>Fires at the start of adding an object to the cache.</td></tr>
+<tr><td><span class="code">RegexKit:::EndCacheAdd</span></td><td>Fires at the end of adding an object to the cache.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginCacheRemove</span></td><td>Fires at the start of removing an object from the cache.</td></tr>
+<tr><td><span class="code">RegexKit:::EndCacheRemove</span></td><td>Fires at the end of removing an object from the cache.</td></tr>
+<tr><td><span class="code">RegexKit:::BeginLock</span></td><td>Fires at the start of an attempt to acquire a lock.</td></tr>
+<tr><td><span class="code">RegexKit:::EndLock</span></td><td>Fires once a lock has been acquired.</td></tr>
+<tr><td><span class="code">RegexKit:::Unlock</span></td><td>Fires when a previously acquired lock is released and unlocked.</td></tr>
+</table>
+</div>
+
+<h4><a name="DTraceProbePointsinRegexKit_PerformanceNotificationRelatedProbes">Performance Notification Related Probes</a></h4>
+
+<p>The following probe fires when the framework has detected a potential performance impacting condition.</p>
+
+<div class="box sourcecode marginBottomSpacer">PerformanceNote(<span title="arg0">void *object</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">char *description</span>, <span title="arg3">NSUInteger size</span>,
+                <span title="arg4">int impact</span>, <span title="arg5">int noteType</span>, <span title="arg6">char *note</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Performance Note Arguments Description">
+<caption>Performance Note Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">object</span></td><td><span class="argument">arg0</span></td><td>If applicable, contains a pointer to the relevant object.</td></tr>
+<tr><td><span class="code">hash</span></td><td><span class="argument">arg1</span></td><td>The hash value for <span class="argument">object</span>.</td></tr>
+<tr><td><span class="code">description</span></td><td><span class="argument">arg2</span></td><td>The description for <span class="argument">object</span>.</td></tr>
+<tr><td><span class="code">size</span></td><td><span class="argument">arg3</span></td><td>If applicable, contains the size value related to the performance note.</td></tr>
+<tr><td><span class="code">impact</span></td><td><span class="argument">arg4</span></td><td>Conditions which negatively impact performance will have a value <span class="code">&lt; 0</span>.  Conditions which positively impact performance will have a value <span class="code">&gt; 0</span>.</td></tr>
+<tr><td><span class="code">noteType</span></td><td><span class="argument">arg5</span></td><td>For a general performance notes, <span class="argument">noteType</span> is <span class="code">0</span>.  For performance notes that can be timed, <span class="argument">noteType</span> is <span class="code">1</span> to indicate the start, and <span class="code">2</span> to indicate the end.</td></tr>
+<tr><td><span class="code">note</span></td><td><span class="argument">arg6</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the performance condition.</td></tr>
+</table>
+</div>
+
+<h4><a name="DTraceProbePointsinRegexKit_RegularExpressionRelatedProbes">Regular Expression Related Probes</a></h4>
+
+<p>The following probes fire at the start and end of the compiling of a regular expression in to an internal format.</p>
+
+<div class="box sourcecode marginBottomSpacer">BeginRegexCompile(<span title="arg0">void *regex</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">char *regexCharacters</span>, <span title="arg3">int compileOption</span>);
+
+EndRegexCompile(  <span title="arg0">void *regex</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">char *regexCharacters</span>, <span title="arg3">int compileOption</span>,
+                  <span title="arg4">int errorCode</span>, <span title="arg5">char *errorCodeCharacters</span>, <span title="arg6">char *pcreErrorCharacters</span>,
+                  <span title="arg7">int errorAtOffsetOfRegexCharacters</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Regular Expression Compile Arguments Description">
+<caption>Regular Expression Compile Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">regex</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKRegex RKRegex @/link object.</td></tr>
+<tr><td><span class="code">hash</span></td><td><span class="argument">arg1</span></td><td>The computed hash value for the @link RKRegex RKRegex @/link object.</td></tr>
+<tr><td><span class="code">regexCharacters</span></td><td><span class="argument">arg2</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing the text of the regular expression.</td></tr>
+<tr><td><span class="code">compileOption</span></td><td><span class="argument">arg3</span></td><td>The @link RKCompileOption RKCompileOption @/link options for the regular expression.</td></tr>
+<tr><td><span class="code">errorCode</span></td><td><span class="argument">arg4</span></td><td>Contains the @link RKCompileErrorCode RKCompileErrorCode @/link error code.</td></tr>
+<tr><td><span class="code">errorCodeCharacters</span></td><td><span class="argument">arg5</span></td><td>A pointer to a <span class="code">NULL</span> terminated string of the text of the @link RKCompileErrorCode RKCompileErrorCode @/link error code.</td></tr>
+<tr><td><span class="code">pcreErrorCharacters</span></td><td><span class="argument">arg6</span></td><td>If there was an error compiling the regular expression, this is set to a pointer to a <span class="code">NULL</span> terminated string from the pcre library describing the error.</td></tr>
+<tr><td><span class="code">errorAtOffsetOfRegexCharacters</span></td><td><span class="argument">arg7</span></td><td>If there was an error compiling the regular expression, this contains the location of the first character in <span class="code">regexCharacters</span> that caused the error.</td></tr>
+</table>
+</div>
+
+<p>The <span class="code">regexProbeObject</span> type is used in the following match methods as there are only ten arguments, <span class="code">arg0</span> through <span class="code">arg9</span>, available to probes. Although the use of <span class="code">regexProbeObject</span> results in some inconvenience, it does allow for more information to be passed by the probe than would otherwise normally be available.</p>
+
+<div class="box sourcecode">typedef struct {
+  void *regexObject;
+  const char *regexCharacters;
+  int options;
+} regexProbeObject;</div>
+
+<p>The following probes fire at the start and end of a match by a regular expression.</p>
+
+<div class="box sourcecode">BeginMatch(<span title="arg0">regexProbeObject *probeObject</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">NSRange *ranges</span>,
+           <span title="arg3">NSUInteger rangeCount</span>, <span title="arg4">void *charactersBuffer</span>, <span title="arg5">NSUInteger length</span>,
+           <span title="arg6">NSRange *searchRange</span>, <span title="arg7">int matchOptions</span>);
+
+EndMatch(  <span title="arg0">regexProbeObject *probeObject</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">NSRange *ranges</span>,
+           <span title="arg3">NSUInteger rangeCount</span>, <span title="arg4">void *charactersBuffer</span>, <span title="arg5">NSUInteger length</span>,
+           <span title="arg6">NSRange *searchRange</span>, <span title="arg7">int matchOptions</span>,
+           <span title="arg8">int errorCode</span>, <span title="arg9">char *errorCodeCharacters</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Regular Expression Match Arguments Description">
+<caption>Regular Expression Match Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">probeObject</span></td><td><span class="argument">arg0</span></td><td>A pointer to a <span class="code">regexProbeObject</span> type.</td></tr>
+<tr><td><span class="code">hash</span></td><td><span class="argument">arg1</span></td><td>The computed hash value for the @link RKRegex RKRegex @/link object.</td></tr>
+<tr><td><span class="code">ranges</span></td><td><span class="argument">arg2</span></td><td>A pointer to an array of @link NSRange NSRange @/link that will contain the results of the match.</td></tr>
+<tr><td><span class="code">rangeCount</span></td><td><span class="argument">arg3</span></td><td>The number of valid <span class="argument">ranges</span>, usually equal to the number of captures for the regular expression.</td></tr>
+<tr><td><span class="code">charactersBuffer</span></td><td><span class="argument">arg4</span></td><td>A pointer to the buffer containing the bytes to perform the match on.</td></tr>
+<tr><td><span class="code">length</span></td><td><span class="argument">arg5</span></td><td>The length, in bytes, of <span class="argument">charactersBuffer</span>.</td></tr>
+<tr><td><span class="code">searchRange</span></td><td><span class="argument">arg6</span></td><td>A pointer to a @link NSRange NSRange @/link containing the range within <span class="argument">charactersBuffer</span> to perform the match on.</td></tr>
+<tr><td><span class="code">matchOptions</span></td><td><span class="argument">arg7</span></td><td>The @link RKMatchOption RKMatchOption @/link match options.</td></tr>
+<tr><td><span class="code">errorCode</span></td><td><span class="argument">arg8</span></td><td>If the match was successful, <span class="argument">errorCode</span> contains the number of <span class="argument">ranges</span> that contain valid results.  Otherwise, <span class="argument">errorCode</span> contains the @link RKMatchErrorCode RKMatchErrorCode @/link error code.</td></tr>
+<tr><td><span class="code">errorCodeCharacters</span></td><td><span class="argument">arg9</span></td><td>A pointer to a <span class="code">NULL</span> terminated string of the text of the @link RKMatchErrorCode RKMatchErrorCode @/link error code.</td></tr>
+</table>
+</div>
+
+<p>The following probe fires if a regular expression match generates an exception.</p>
+
+<div class="box sourcecode">MatchException(<span title="arg0">regexProbeObject *probeObject</span>, <span title="arg1">NSUInteger hash</span>, <span title="arg2">NSRange *ranges</span>,
+               <span title="arg3">NSUInteger rangeCount</span>, <span title="arg4">void *charactersBuffer</span>, <span title="arg5">NSUInteger length</span>,
+               <span title="arg6">NSRange *searchRange</span>, <span title="arg7">int matchOptions</span>,
+               <span title="arg8">char *exceptionNameCharacters</span>, <span title="arg9">char *reasonCharacters</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Regular Expression Match Exception Arguments Description">
+<caption>Regular Expression Match Exception Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">probeObject</span></td><td><span class="argument">arg0</span></td><td>A pointer to a <span class="code">regexProbeObject</span> type.</td></tr>
+<tr><td><span class="code">hash</span></td><td><span class="argument">arg1</span></td><td>The computed hash value for the @link RKRegex RKRegex @/link object.</td></tr>
+<tr><td><span class="code">ranges</span></td><td><span class="argument">arg2</span></td><td>A pointer to an array of @link NSRange NSRange @/link that will contain the results of the match.</td></tr>
+<tr><td><span class="code">rangeCount</span></td><td><span class="argument">arg3</span></td><td>The number of valid <span class="argument">ranges</span>, usually equal to the number of captures for the regular expression.</td></tr>
+<tr><td><span class="code">charactersBuffer</span></td><td><span class="argument">arg4</span></td><td>A pointer to the buffer containing the bytes to perform the match on.</td></tr>
+<tr><td><span class="code">length</span></td><td><span class="argument">arg5</span></td><td>The length, in bytes, of <span class="argument">charactersBuffer</span>.</td></tr>
+<tr><td><span class="code">searchRange</span></td><td><span class="argument">arg6</span></td><td>A pointer to a @link NSRange NSRange @/link containing the range within <span class="argument">charactersBuffer</span> to perform the match on.</td></tr>
+<tr><td><span class="code">matchOptions</span></td><td><span class="argument">arg7</span></td><td>The @link RKMatchOption RKMatchOption @/link match options.</td></tr>
+<tr><td><span class="code">exceptionNameCharacters</span></td><td><span class="argument">arg8</span></td><td>A pointer to a <span class="code">NULL</span> terminated string of the name of the exception.</td></tr>
+<tr><td><span class="code">reasonCharacters</span></td><td><span class="argument">arg9</span></td><td>A pointer to a <span class="code">NULL</span> terminated string for the reason of the exception.</td></tr>
+</table>
+</div>
+
+<h4><a name="DTraceProbePointsinRegexKit_CacheRelatedProbes">Cache Related Probes</a></h4>
+
+<p>The following probes fire at the start and end of a cache lookup.</p>
+
+<div class="box sourcecode">BeginCacheLookup(<span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">NSUInteger lookupObjectHash</span>,
+                 <span title="arg3">char *lookupObjectDescription</span>, <span title="arg4">int shouldAutorelease</span>,
+                 <span title="arg5">int isCacheEnabled</span>, <span title="arg6">NSUInteger cacheHits</span>, <span title="arg7">NSUInteger cacheMisses</span>);
+
+EndCacheLookup(  <span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">NSUInteger lookupObjectHash</span>,
+                 <span title="arg3">char *lookupObjectDescription</span>, <span title="arg4">int shouldAutorelease</span>,
+                 <span title="arg5">int isCacheEnabled</span>, <span title="arg6">NSUInteger cacheHits</span>, <span title="arg7">NSUInteger cacheMisses</span>,
+                 <span title="arg8">NSUInteger currentCount</span>, <span title="arg9">void *cachedObject</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Cache Look Up Arguments Description">
+<caption>Cache Look Up Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">cache</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">description</span></td><td><span class="argument">arg1</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">lookupObjectHash</span></td><td><span class="argument">arg2</span></td><td>The hash value of the object to look up in the cache.</td></tr>
+<tr><td><span class="code">lookupObjectDescription</span></td><td><span class="argument">arg3</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the object to look up, if available.</td></tr>
+<tr><td><span class="code">shouldAutorelease</span></td><td><span class="argument">arg4</span></td><td>If the requested object is in the cache, it is always sent a @link retain retain @/link message while the cache is locked.  If <span class="argument">shouldAutorelease</span> is set to <span class="code">1</span>, the cache will send a @link autorelease autorelease @/link message to the retrieved object as well.</td></tr>
+<tr><td><span class="code">isCacheEnabled</span></td><td><span class="argument">arg5</span></td><td>Set to <span class="code">1</span> if the cache is currently enabled, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">cacheHits</span></td><td><span class="argument">arg6</span></td><td>The number of times an object was found in the cache since the last reset of the counters.</td></tr>
+<tr><td><span class="code">cacheMisses</span></td><td><span class="argument">arg7</span></td><td>The number of times the cache was unable to fulfill a lookup request with a cached result since the last reset of the counters.</td></tr>
+<tr><td><span class="code">currentCount</span></td><td><span class="argument">arg8</span></td><td>The number of objects currently in the cache.</td></tr>
+<tr><td><span class="code">cachedObject</span></td><td><span class="argument">arg9</span></td><td>Set to <span class="code">NULL</span> if the cache was unable to fulfill the look up request with a result from the cache, other <span class="argument">cachedObject</span> contains a pointer to the object found in the cache.</td></tr>
+</table>
+</div>
+
+<p>The following probes fire at the start and end of adding an object to a cache.</p>
+
+<div class="box sourcecode">BeginCacheAdd(<span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">void *addObject</span>, <span title="arg3">NSUInteger addObjectHash</span>,
+              <span title="arg4">char *addObjectDescription</span>, <span title="arg5">int isCacheEnabled</span>);
+
+EndCacheAdd(  <span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">void *addObject</span>, <span title="arg3">NSUInteger addObjectHash</span>,
+              <span title="arg4">char *addObjectDescription</span>, <span title="arg5">int isCacheEnabled</span>, <span title="arg6">NSUInteger currentCount</span>,
+              <span title="arg7">int didCache</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Add Object To Cache Arguments Description">
+<caption>Add Object To Cache Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">cache</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">description</span></td><td><span class="argument">arg1</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">addObject</span></td><td><span class="argument">arg2</span></td><td>A pointer to the object to add to the cache.</td></tr>
+<tr><td><span class="code">addObjectHash</span></td><td><span class="argument">arg3</span></td><td>The hash value of the object to add to the cache.</td></tr>
+<tr><td><span class="code">addObjectDescription</span></td><td><span class="argument">arg4</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the object to add, if available.</td></tr>
+<tr><td><span class="code">isCacheEnabled</span></td><td><span class="argument">arg5</span></td><td>Set to <span class="code">1</span> if the cache is currently enabled, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">currentCount</span></td><td><span class="argument">arg6</span></td><td>The number of objects currently in the cache.</td></tr>
+<tr><td><span class="code">didCache</span></td><td><span class="argument">arg7</span></td><td>Set to <span class="code">1</span> if the object did not already exist in the cache and was successfully added, <span class="code">0</span> otherwise.</td></tr>
+</table>
+</div>
+
+<p>The following probes fire at the start and end of removing an object from a cache.</p>
+
+<div class="box sourcecode">BeginCacheRemove(<span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">NSUInteger removeObjectHash</span>,
+                 <span title="arg3">int isCacheEnabled</span>);
+
+EndCacheRemove(  <span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">NSUInteger removeObjectHash</span>,
+                 <span title="arg3">int isCacheEnabled</span>, <span title="arg4">NSUInteger currentCount</span>,
+                 <span title="arg5">void *removedObject</span>, <span title="arg6">char *removedObjectDescription</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Cache Object Removal Arguments Description">
+<caption>Cache Object Removal Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">cache</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">description</span></td><td><span class="argument">arg1</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">removeObjectHash</span></td><td><span class="argument">arg2</span></td><td>The hash value of the object to remove from the cache.</td></tr>
+<tr><td><span class="code">isCacheEnabled</span></td><td><span class="argument">arg3</span></td><td>Set to <span class="code">1</span> if the cache is currently enabled, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">currentCount</span></td><td><span class="argument">arg4</span></td><td>The number of objects currently in the cache.</td></tr>
+<tr><td><span class="code">removedObject</span></td><td><span class="argument">arg5</span></td><td>If the object was unable to be removed, or did not exist in the cache, <span class="argument">removedObject</span> contains a pointer to the removed object. Otherwise <span class="argument">removedObject</span> contains <span class="code">NULL</span>.</td></tr>
+<tr><td><span class="code">removedObjectDescription</span></td><td><span class="argument">arg6</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the object to add, if available.</td></tr>
+</table>
+</div>
+
+<p>The following probe fires whenever the statistic counters for a cache are cleared.  The probe provides the cache hit and miss counts just prior to clearing the counters.</p>
+
+<div class="box sourcecode">CacheCleared(<span title="arg0">void *cache</span>, <span title="arg1">char *description</span>, <span title="arg2">int didClearCache</span>, <span title="arg3">NSUInteger cacheClearedCount</span>,
+             <span title="arg4">NSUInteger preClearCacheHits</span>, <span title="arg5">NSUInteger preClearCacheMissed</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Cache Clearing Arguments Description">
+<caption>Cache Clearing Arguments Description</caption>
+<tr><th>Name</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">cache</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">description</span></td><td><span class="argument">arg1</span></td><td>A pointer to a <span class="code">NULL</span> terminated string containing a description of the @link RKCache RKCache @/link object.</td></tr>
+<tr><td><span class="code">didClearCache</span></td><td><span class="argument">arg2</span></td><td>Set to <span class="code">1</span> if the cache was successfully cleared, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">cacheClearedCount</span></td><td><span class="argument">arg3</span></td><td>The number of times the cache was cleared.</td></tr>
+<tr><td><span class="code">preClearCacheHits</span></td><td><span class="argument">arg4</span></td><td>The number of times an object was found in the cache before the counter was cleared.</td></tr>
+<tr><td><span class="code">preClearCacheMissed</span></td><td><span class="argument">arg5</span></td><td>T number of times the cache was unable to fulfill a lookup request with a cached result before the counter was cleared.</td></tr>
+</table>
+</div>
+
+<h4><a name="DTraceProbePointsinRegexKit_MultithreadedLocksRelatedProbes">Multithreaded Locks Related Probes</a></h4>
+
+<p>The following probes fire at the start and end of an attempt to acquire a multithreaded lock.  The Unlock probe fires when a thread relinquishes a lock.</p>
+
+<div class="box sourcecode marginBottomSpacer">BeginLock(<span title="arg0">void *lock</span>, <span title="arg1">int forWriting</span>, <span title="arg2">int isMultithreaded</span>);
+
+EndLock(  <span title="arg0">void *lock</span>, <span title="arg1">int forWriting</span>, <span title="arg2">int isMultithreaded</span>, <span title="arg3">int acquiredLock</span>, <span title="arg4">NSUInteger spinCount</span>); 
+
+Unlock(   <span title="arg0">void *lock</span>, <span title="arg1">int forWriting</span>, <span title="arg2">int isMultithreaded</span>);</div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Multithreaded Locks Arguments Description">
+<caption>Multithreaded Locks Arguments Description</caption>
+<tr><th>Argument</th><th>Argument</th><th>Description</th></tr>
+<tr><td><span class="code">lock</span></td><td><span class="argument">arg0</span></td><td>A pointer to the @link RKLock RKLock @/link object.</td></tr>
+<tr><td><span class="code">forWriting</span></td><td><span class="argument">arg1</span><td>Set to <span class="code">1</span> if the request is a write lock, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">isMultithreaded</span></td><td><span class="argument">arg2</span><td>Set to <span class="code">1</span> if the lock has switched to full multithreading mode, otherwise set to <span class="code">0</span> if the lock still in single threaded performance mode.</td></tr>
+<tr><td><span class="code">acquiredLock</span></td><td><span class="argument">arg3</span><td>Set to <span class="code">1</span> if the the lock was successfully acquired, <span class="code">0</span> otherwise.</td></tr>
+<tr><td><span class="code">spinCount</span></td><td><span class="argument">arg4</span><td>The number of times that an attempt was made to acquire the lock, but the lock was busy and unavailable.</td></tr>
+</table>
+</div>
+
+<h3><a name="DTraceProbePointsinRegexKit_AccessingProbesFromtheShell">Accessing Probes From the Shell</a></h3>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Most uses of the <span class="file">dtrace</span> command require superuser privileges.  The following examples use <span class="file">sudo</span> to execute <span class="file">dtrace</span> as the <span class="regex">root</span> user.</div></div></div></div>
+
+<p>The following is an example of a <span class="file">dtrace</span> script file.  It uses the aggregation variable type to record the number of times a select number of RegexKit probes fire.  Then, once per second, the script outputs the current counts and resets the aggregation variables to zero and begins counting again.</p>
+
+<p>An example <span class="file">dtrace</span> script file, <span class="file">perSecond.d</span> :</p>
+
+<div class="box sourcecode">#pragma D option switchrate=10msec
+#pragma D option bufsize=15m
+#pragma D option quiet
+
+BEGIN { perTimeUnitStart = walltimestamp; }
+
+RegexKit*:::EndMatch        { @matchCount   = count(); }
+RegexKit*:::EndRegexCompile { @compileCount = count(); }
+RegexKit*:::EndCacheLookup  { @lookupCount  = count(); }
+
+tick-1sec
+{
+  normalize(@matchCount,   (walltimestamp - perTimeUnitStart) / 1000000000);
+  normalize(@compileCount, (walltimestamp - perTimeUnitStart) / 1000000000);
+  normalize(@lookupCount,  (walltimestamp - perTimeUnitStart) / 1000000000);
+  printa("Matches %@8d/sec, Compiles %@8d/sec, Cache Lookups %@8d/sec\n", @matchCount, @compileCount, @lookupCount);
+  perTimeUnitStart = walltimestamp;
+  clear(@matchCount);
+  clear(@compileCount);
+  clear(@lookupCount);
+}</div>
+
+<p>The example script above can be copy and pasted in to a shell, and then executed with the following command:</p>
+
+<div class="box sourcecode marginBottomSpacer">shell% sudo dtrace -Z -s perSecond.d
+Matches     1216/sec, Compiles      156/sec, Cache Lookups      456/sec
+Matches     1883/sec, Compiles      345/sec, Cache Lookups     2917/sec
+Matches    25148/sec, Compiles     3453/sec, Cache Lookups    35248/sec
+Matches    26968/sec, Compiles     3697/sec, Cache Lookups    34116/sec
+Matches    28312/sec, Compiles     3586/sec, Cache Lookups    40055/sec
+Matches    25688/sec, Compiles     4196/sec, Cache Lookups    34066/sec
+Matches    28298/sec, Compiles     3178/sec, Cache Lookups    38510/sec
+Matches    26780/sec, Compiles     4902/sec, Cache Lookups    33363/sec
+Matches    29088/sec, Compiles     3560/sec, Cache Lookups    38429/sec
+^C
+
+shell%</div>
+
+<div class="box tip marginTopSpacer"><div class="table"><div class="row"><div class="label cell">Tip:</div><div class="message cell">You can syntax check a script, without <span class="file">sudo</span>, using <span class="file">dtrace -e -s <i>SCRIPT</i></span></div></div></div></div>
+
+<p>It is important to note that in the above example output, the executable to be traced was already executing before the <span class="file">dtrace</span> command was executed.  This illustrates the dynamic part of <span class="file"><b>d</b>trace</span>.  The probe points are always active in the RegexKit framework, and they can be enabled on the fly at any time.</p>
+
+<p>You can also specify probes to match as an argument to the <span class="file">dtrace</span> command.  The following two examples demonstrate the aggregation functionality of <span class="file">dtrace</span> by counting the number of samples within an aggregation bin.</p>
+
+<div class="box note"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">The following statistics were gathered on a 1.5GHz G4 PowerBook while the RegexKit Unit Tests were executing.</div></div></div></div>
+
+<p>The first example measures the amount of time, in microseconds, it takes to perform a lookup in the cache.  The left hand side is the number of microseconds, from zero to 20, an the right hand side is the number of samples counted for each sample bin.  The majority of samples are in the 4 to 6 microsecond range.</p>
+
+<div class="box sourcecode">shell% sudo dtrace -Z -q -n 'RegexKit*:::BeginCacheLookup { self->lookupStartTime = vtimestamp; }' -n 'RegexKit*:::EndCacheLookup { @lookups = lquantize(((vtimestamp - self->lookupStartTime) / 1000), 0, 20, 1); }'
+<i>after a few seconds...</i>
+^C
+
+
+           value  ------------- Distribution ------------- count    
+               3 |                                         0        
+               4 |@@@                                      133696   
+               5 |@@@@@@@@@@@@@@@@@@@@                     768620   
+               6 |@@@@@@@@@@@@@@@                          595496   
+               7 |                                         16868    
+               8 |                                         8733     
+               9 |                                         4119     
+              10 |                                         3112     
+              11 |                                         3071     
+              12 |                                         1690     
+              13 |                                         1831     
+              14 |                                         1050     
+              15 |                                         917      
+              16 |                                         811      
+              17 |                                         670      
+              18 |                                         714      
+              19 |                                         869      
+           >= 20 |                                         10541    
+
+shell% </div>
+
+<p>Next, the amount of time to compile a regular expression is graphed with the same units of measurements (zero to 20 microseconds).</p>
+
+<div class="box sourcecode">shell% sudo dtrace -Z -q -n 'RegexKit*:::BeginRegexCompile { self->compileStartTime = vtimestamp; }' -n 'RegexKit*:::EndRegexCompile { @compiles = lquantize(((vtimestamp - self->compileStartTime) / 1000), 0, 20, 1); }'
+<i>after a few seconds...</i>
+^C
+
+
+           value  ------------- Distribution ------------- count    
+               4 |                                         0        
+               5 |                                         223      
+               6 |@                                        1006     
+               7 |@                                        1062     
+               8 |@                                        1276     
+               9 |@                                        1107     
+              10 |                                         477      
+              11 |                                         582      
+              12 |@                                        977      
+              13 |                                         584      
+              14 |@@@@@@@@@@@@@@@@@@@@@@@@@@               37308    
+              15 |@@@                                      5033     
+              16 |@@                                       2372     
+              17 |@                                        897      
+              18 |                                         577      
+              19 |                                         517      
+           >= 20 |@@@                                      3884     
+
+shell% </div>
+
+<p>It's easy to see that the majority of samples for compiling a regular expression are in the 14 microsecond range, and the distribution is much more spread out compared to the cache lookup distributions.  This also clearly demonstrates the usefulness of the RegexKit cache which is nearly three times faster.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="http://docs.sun.com/app/docs/doc/817-6223" class="section-link" target="_top">Solaris Dynamic Tracing Guide</a> <a href="http://dlc.sun.com/pdf/817-6223/817-6223.pdf" class="section-link" target="_top">(as .PDF)</a></li>
+  </ul>
+</div>
+
+<h3><a name="DTraceProbePointsinRegexKit_AccessingProbesWithInstruments_app">Accessing Probes With Instruments.app</a></h3>
+
+<div class="box warning"><div class="table"><div class="row"><div class="label cell">Warning:</div><div class="message cell">Several bugs in <span class="file">Instrument.app</span> were encountered during the creation of the RegexKit instruments.  Using instruments modified from within <span class="file">Instrument.app</span> may not create the expected results. Since every aspect that is used to generate the results, from RegexKit to DTrace to <span class="file">Instrument.app</span>, is only very recently released results should not be considered authoritative or necessarily even correct.</div></div></div></div>
+
+<p>RegexKit includes a number of instruments tailored to RegexKit for Instruments.app.  These are installed in <span class="file">/Developer/Library/Instruments/PlugIns</span> automatically if <span class="file">Instruments.app</span> is installed.</p>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The file format for creating <span class="file">Instrument.app</span> instruments is currently not documented, therefore the following should be considered experimental.  The following were tested on <span class="file">Instrument.app</span> version <span class="code">1.0 (72)</span>.</div></div></div></div>
+
+<div class="table marginTopSpacer">
+<table class="standard" summary="Description of RegexKit Instruments for Instruments.app">
+<caption>Description of RegexKit Instruments for Instruments.app</caption>
+<tr><th>Instrument</th><th>Description</th></tr>
+<tr><td>Cache Lookup Timing</td><td>Records the time it takes to retrieve a regular expression from the cache in microseconds.</td></tr>
+<tr><td>Collection Cache</td><td>Records the effectiveness of the Least Recently Used negative-hit sorted regex collection cache.</td></tr>
+<tr><td>Collection Timing</td><td>Records the time it takes to determine if a regular expression in a collection matches a target string in microseconds.</td></tr>
+<tr><td>Compile Errors</td><td>Records regular expressions that failed to compile due to an error.</td></tr>
+<tr><td>Compile Timing</td><td>Records the time it takes to compile a regular expression in microseconds.</td></tr>
+<tr><td>Lock Timing</td><td>Records timing information for multithreaded locks in microseconds.</td></tr>
+<tr><td>Match Errors</td><td>Records matches that result in an error.</td></tr>
+<tr><td>Match Timing</td><td>Records the time it takes to perform a match in microseconds.</td></tr>
+<tr><td>Per Second</td><td>Records per second statistics.</td></tr>
+<tr><td>Performance Notes</td><td>Records potential performance problems that the framework has detected.</td></tr>
+</table>
+</div>
+
+<p>The use of <span class="file">Instrument.app</span> will not be covered here.  None the less, using the provided instruments should be straight forward.  <span class="file">Instrument.app</span> also allows for the creation of your own DTrace scripts so you can create or modify scripts to extract the information that you require.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html" class="section-link" target="_top">Instruments User Guide</a></li>
+  </ul>
+</div>
+
+</div>
+<!-- ____________________________________________ -->
+
+<div class="adding-to-project">
+
+<h2><a name="AddingtheRegexKitframeworktoyourProject">Adding the <span class="nobr">RegexKit.framework</span> to your Project</a></h2>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The prebuilt framework included with the distribution, <span class="file">/Developer/Local/Frameworks/RegexKit.framework</span>, may only be used as an <span class="new-term">embedded private framework</span>.  It can only be installed inside your applications bundle, ie <span class="file">My App.App/Contents/Frameworks/RegexKit.framework</span>.  It should not be installed in <span class="file">/Library/Frameworks</span> or <span class="file">~/Library/Frameworks</span>.</div></div></div></div>
+
+<p>Adding the framework to your project is fairly straight forward.  These directions cover adding the framework to your project as an <span class="new-term">embedded private framework</span>.  An embedded private framework is just like a standard framework, such as <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a>, except that unlike <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/index.html"><i>Cocoa</i></a>, a copy of the embedded private framework is included inside your <span class="nobr">applications .App bundle</span> in the <span class="file">My App.App/Contents/Frameworks</span> directory.</p>
+
+<p>Your applications executable file, which is in the <span class="file">My App.app/Contents/MacOS</span> directory, is then dynamically linked to the embedded private framework. The linker records that the path to the embedded private framework, and therefore the shared library that contains the code for the framework, exists within the applications bundle.  Then, when your application is executed, the dynamic linker knows to find the frameworks shared library in the applications bundle and not the standard framework search paths, such as <span class="file">/System/Library/Frameworks</span> or <span class="file">/Library/Frameworks</span>.</p>
+
+<div class="seealso"><div class="header">See Also</div>
+  <ul class="seealso">
+    <li><a href="http://developer.apple.com/documentation/MacOSX/Conceptual/BPFrameworks/index.html" class="section-link nobr" target="_top">Framework Programming Guide</a></li>
+    <li><a href="http://developer.apple.com/documentation/MacOSX/Conceptual/BPFrameworks/Tasks/CreatingFrameworks.html#//apple_ref/doc/uid/20002258-106880-BAJJBIEF" class="section-link nobr">Embedding a Private Framework in Your Application Bundle</a></li>
+    <li><a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/DynamicLibraries/index.html" class="section-link nobr" target="_top">Dynamic Library Programming Topics</a></li>
+  </ul>
+</div>
+
+<h3><a name="AddingtheRegexKitframeworktoyourProject_OutlineofRequiredSteps">Outline of Required Steps</a></h3>
+
+<p>The following outlines the steps required to use the framework in your project.</p>
+
+<ul class="square">
+<li>Linking the framework to your executable.</li>
+<li>Adding a <span class="build-phase">Copy Files</span> build phase to your executable target.</li>
+<li>Import the <span class="file nobr">RegexKit/RegexKit.h</span> header.</li>
+</ul>
+
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">These instructions apply to Xcode versions <span class="nobr">2.4.1</span> and <span class="nobr">3.0.</span>  Other versions should be similar, but may vary for specific details.</div></div></div></div>
+
+<div class="box important marginTopSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">These instructions assume you have installed the framework in the default location <span class="file">/Developer/Local/Frameworks/RegexKit.framework</span>.</div></div></div></div>
+
+<h4><a name="AddingtheRegexKitframeworktoyourProject_LinkingtotheFramework">Linking to the Framework</a></h4>
+
+<p>Using the framework requires that you link your application to it and copy it in to your applications bundle. <span class="nobr">Figure 1</span> shows a typical new application in Xcode.</p>
+
+<div class="figure">
+<div class="caption"><span class="number">Figure 1</span><span class="text">The start of a new Xcode application</span></div>
+<img alt="The start of a new Xcode application" src="Images/1_new_app.png">
+</div>
+
+<p>You link to the framework as follows:</p>
+
+<ol>
+
+<li>
+<p>Add the framework to the resources that Xcode is aware for your application by expanding the <span class="xcode-group">Frameworks</span> group.  Then, right-click on <span class="xcode-group">Linked Frameworks</span> and choose <span class="context-menu">Add &gt; Existing Frameworks...</span> as shown in <span class="nobr">Figure 2.</span></p>
+
+<div class="figure">
+<div class="caption"><span class="number">Figure 2</span><span class="text">Adding an existing framework</span></div>
+<img alt="Adding an existing framework" src="Images/2_add_framework.png">
+</div> 
+</li>
+
+<li>
+<p>Choose <span class="file">/Developer/Local/Frameworks/RegexKit.framework</span>. Xcode will then ask which targets to add the framework to. Select your application if it is not already selected. When you have selected all the targets you would like to add the framework to, click the Add button.  The <span class="file">RegexKit.framework</span> should now appear within the <span class="xcode-group">Linked Frameworks</span> group.  Additionally, the framework should automatically appear under the <span class="build-phase">Link Binary With Libraries</span> build phase for your application as shown in <span class="nobr">Figure 3.</span></p>
+<div class="figure">
+<div class="caption"><span class="number">Figure 3</span><span class="text">The application linked to the framework</span></div>
+<img alt="The application linked to the framework" src="Images/3_added_framework.png">
+</div>
+</li>
+
+</ol>
+
+<h4><a name="AddingtheRegexKitframeworktoyourProject_CopyingtheFrameworktoyourApplicationsBundle">Copying the Framework to your Applications Bundle</a></h4>
+
+<p>Next, you will need to add a <span class="build-phase">Copy Files</span> build phase to your applications target.</p>
+
+<ol>
+
+<li>
+<p>Within the <span class="xcode-group">Targets</span> group, right-click on your application and choose <span class="context-menu">Add &gt; New Build Phase &gt; New Copy Files Build Phase</span> as show in <span class="nobr">Figure 4.</span></p>
+<div class="figure">
+<div class="caption"><span class="number">Figure 4</span><span class="text">Adding a Copy Files build phase to the applications target</span></div>
+<img alt="Adding a Copy Files build phase to your applications target" src="Images/4_copy_files.png" class="printImg">
+</div>
+</li>
+
+<li>
+<p>A window titled <span class="nobr"><span class="window-name">Copy Files Phase for "</span><span class="user-supplied">Your Application</span><span class="window-name">" Info</span></span> will appear.  Choose <span class="pop-up_menu-selection">Frameworks</span> from the <span class="pop-up_menu-name">Destination</span> pop-up menu leaving the <span class="field-name">Path</span> field empty and the <span class="checkbox-name">Copy only when installing</span> checkbox deselected.  The window should now look like <span class="nobr">Figure 5.</span>  When finished, close the window.</p>
+<div class="figure">
+<div class="caption"><span class="number">Figure 5</span><span class="text">Choosing the destination for the Copy Files build phase</span></div>
+<img alt="Choosing the destination for the Copy Files build phase" src="Images/5_copy_dest.png">
+</div>
+</li>
+
+<li>
+<p>Finally, add the <span class="file">RegexKit.framework</span> to the files to be copied.  Choose the <span class="file">RegexKit.framework</span> from <span class="xcode-group">Frameworks &gt; Linked Frameworks </span> and drag it to the newly created <span class="build-phase">Copy Files</span> build phase as shown in <span class="nobr">Figure 6.</span></p>
+<div class="figure">
+<div class="caption"><span class="number">Figure 6</span><span class="text">Adding the framework to the files to be copied</span></div>
+<img alt="Adding the framework to the files to be copied" src="Images/6_added_to_copy.png">
+</div>
+<div class="box important"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The order in which the <span class="build-phase">Copy Files</span> phase takes place is not critical as the copied framework is only required when the application is run, not during the build.  Xcode uses the framework files that are to be copied to complete the actual build operation.  You may leave the <span class="build-phase">Copy Files</span> phase after the <span class="build-phase">Link Binary With Libraries</span> phase, or drag the <span class="build-phase">Copy Files</span> phase to the position after the <span class="build-phase">Copy Bundle Resources</span> phase.</div></div></div></div>
+</li>
+
+</ol>
+
+<h4 style="margin-top: 5px;"><a name="AddingtheRegexKitframeworktoyourProject_ImportingtheRegexKithHeader">Importing the RegexKit.h Header</a></h4>
+
+<ol>
+
+<li>
+<p>For each of your <span class="nobr"><span class="user-supplied">fileName</span><span class="file">.m</span></span> files that makes use of <span class="file">RegexKit.framework</span> functionality, you will need to add a statement to include the <span class="file">RegexKit.h</span> header.  This is normally accomplished by adding the statement <span class="code nobr">#import &lt;RegexKit/RegexKit.h&gt;</span> to <span class="nobr"><span class="user-supplied">fileName</span><span class="file">.h</span></span>.  For example:</p>
+
+<div class="box sourcecode">//
+//  myController.h
+//  My New App
+//
+//  Created by You on 1/1/08.
+//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//
+
+#import &lt;Cocoa/Cocoa.h&gt;
+#import &lt;RegexKit/RegexKit.h&gt;</div>
+</li>
+
+<li>
+<p>Optionally, although recommended, you can add the <span class="file">RegexKit.h</span> header to the list of headers that Xcode precompiles.  This can reduce compile times because the header is processed only once ahead of time, instead of each time that it is imported.  By default, Xcode creates a file called <span class="nobr"><span class="user-supplied">Application</span><span class="file">_Prefix.pch</span></span> that is within the <span class="xcode-group">Other Sources</span> group.  To include the <span class="file">RegexKit.h</span> header in the header files that Xcode precompiles, you need to add a <span class="code nobr">#import &lt;RegexKit/RegexKit.h&gt;</span> statement to <span class="nobr"><span class="user-supplied">Application</span><span class="file">_Prefix.pch</span></span>.  A typical file would look something like:</p>
+
+<div class="box sourcecode">//
+// Prefix header for all source files of the 'My New App' target in the 'My New App' project
+//
+
+#ifdef __OBJC__
+  #import &lt;Cocoa/Cocoa.h&gt;
+  #import &lt;RegexKit/RegexKit.h&gt;
+#endif</div>
+</li>
+
+<li><p>Clean any targets that you have made changes to.  The easiest way to do this is to clean all the targets by choosing <span class="menu-selection">Build &gt; Clean All Targets</span> from the menu bar and then selecting the <span class="checkbox-name">Also Clean Dependencies</span> and <span class="checkbox-name">Also Remove Precompiled Headers</span> checkboxes in the dialog that appears.</p></li>
+
+<li><p>Rebuild the Code Sense Index.  In order to make sure that Xcodes Code Sense feature includes the definitions from <span class="file">RegexKit.framework</span>, it's a good idea to rebuild the Code Sense Index.  From the menu bar, choose <span class="menu-selection">Project &gt; Edit Project Settings</span> and click on the <span class="tab-name">General</span> tab in the window that appears. Then, within the <span class="tab-name">General</span> pane, click on the <span class="button-name">Rebuild Code Sense Index</span> button that is near the bottom.</p></li>
+
+</ol>
+
+<h4 style="margin-top: 5px;"><a name="AddingtheRegexKitframeworktoyourProject_Finished">Finished</a></h4>
+
+<p>Your application is now set up to use the framework.  When you compile your application, Xcode will copy all the files necessary to use the <span class="file">RegexKit.framework</span> in to your applications bundle.</p>
+
+</div>
+<!-- ____________________________________________ -->
+
+<div class="license">
+
+<h2><a name="LicenseInformation">License Information</a></h2>
+
+<p>The code for this framework is licensed under what is commonly known as the <span class="nobr"><i>revised, 3-clause BSD-Style</i></span> license.</p>
+
+<h3>License</h3>
+
+<div class="sourceLicense"><p>Copyright &copy; 2007-2008, John Engelhart</p>
+
+<p>All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the name of the Zang Industries nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ul>
+
+<p class="disclaimer">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</div>
+
+<!-- ____________________________________________ -->
+</div>
+
+
+</div> <!-- class 'guide' -->
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>
+

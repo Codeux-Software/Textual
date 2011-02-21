@@ -88,6 +88,8 @@
 @property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
 @property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
 
+- (id)initWithWorldController:(IRCWorld *)word;
+
 - (void)show;
 
 - (void)onAddKeyword:(id)sender;

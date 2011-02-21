@@ -156,6 +156,7 @@
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -182,6 +183,7 @@
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -259,6 +261,7 @@
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -299,6 +302,7 @@
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
