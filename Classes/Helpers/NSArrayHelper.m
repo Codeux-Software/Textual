@@ -60,9 +60,7 @@
 	
 	NSUInteger current_index = [self lastIndex];
 	
-	while (current_index) {
-		if (current_index == NSNotFound) break;
-		
+	while (current_index != NSNotFound) {
 		[ary addObject:[NSNumber numberWithUnsignedInteger:current_index]];
 		
 		current_index = [self indexLessThanIndex:current_index];

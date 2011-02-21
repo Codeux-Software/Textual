@@ -80,6 +80,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize inList;
 @synthesize inWhoWasRequest;
 @synthesize inputNick;
+@synthesize inviteExceptionSheet;
 @synthesize isAway;
 @synthesize isConnected;
 @synthesize isConnecting;
@@ -176,6 +177,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[conn autorelease];
 	[conn close];
 	[inputNick drain];
+	[inviteExceptionSheet drain];
 	[isonTimer stop];
 	[isonTimer drain];
 	[isupport drain];
@@ -519,6 +521,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		chanBanListSheet.window = world.window;
 	} else {
 		[chanBanListSheet ok:nil];
+		
+		[chanBanListSheet drain];
 		chanBanListSheet = nil;
 		
 		[self createChanBanListDialog];
@@ -549,7 +553,54 @@ static NSDateFormatter *dateTimeFormatter = nil;
 }
 
 #pragma mark -
-#pragma mark Chan Ban List Exception Dialog
+#pragma mark Channel Invite Exception List Dialog
+
+- (void)createChanInviteExceptionListDialog
+{
+	if (PointerIsEmpty(inviteExceptionSheet)) {
+		IRCClient *u = [world selectedClient];
+		IRCChannel *c = [world selectedChannel];
+		
+		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
+		
+		inviteExceptionSheet = [ChanInviteExceptionSheet new];
+		inviteExceptionSheet.delegate = self;
+		inviteExceptionSheet.window = world.window;
+	} else {
+		[inviteExceptionSheet ok:nil];
+		
+		[inviteExceptionSheet drain];
+		inviteExceptionSheet = nil;
+		
+		[self createChanBanExceptionListDialog];
+		
+		return;
+	}
+	
+	inChanBanList = YES;
+	
+	[inviteExceptionSheet show];
+}
+
+- (void)chanInviteExceptionDialogOnUpdate:(ChanInviteExceptionSheet *)sender
+{
+	[self send:IRCCI_MODE, [[world selectedChannel] name], @"+I", nil];
+}
+
+- (void)chanInviteExceptionDialogWillClose:(ChanInviteExceptionSheet *)sender
+{
+	if (NSObjectIsNotEmpty(sender.modeString)) {
+		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [[world selectedChannel] name], sender.modeString]];
+	}
+	
+	inChanBanList = NO;
+	
+	[inviteExceptionSheet drain];
+	inviteExceptionSheet = nil;
+}
+
+#pragma mark -
+#pragma mark Chan Ban Exception List Dialog
 
 - (void)createChanBanExceptionListDialog
 {
@@ -564,6 +615,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		banExceptionSheet.window = world.window;
 	} else {
 		[banExceptionSheet ok:nil];
+		
+		[banExceptionSheet drain];
 		banExceptionSheet = nil;
 		
 		[self createChanBanExceptionListDialog];
@@ -1928,12 +1981,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 50: // Command: IGNORE
 		case 65: // Command: UNIGNORE
 			if (NSObjectIsEmpty(s)) {
-				[world.menuController showServerPropertyDialog:self ignore:YES];
+				[world.menuController showServerPropertyDialog:self ignore:@"-"];
 			} else {
-				IRCUser *u = [c findMember:[s getToken]];
+				NSString *n = [s getToken];
+				IRCUser  *u = [c findMember:n];
 				
 				if (PointerIsEmpty(u)) {
-					[world.menuController showServerPropertyDialog:self ignore:YES];
+					[world.menuController showServerPropertyDialog:self ignore:n];
 					
 					return YES;
 				}
@@ -4410,9 +4464,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 368:
+		case 347:
 		case 349:
 		{
 			inChanBanList = NO;
+			
+			break;
+		}
+		case 346:
+		{
+			NSString *mask = [m paramAt:2];
+			NSString *owner = [m paramAt:3];
+			
+			long long seton = [[m paramAt:4] longLongValue];
+			
+			if (inChanBanList && inviteExceptionSheet) {
+				[inviteExceptionSheet addException:mask tset:[dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:seton]] setby:owner];
+			}
 			
 			break;
 		}

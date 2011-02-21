@@ -9,7 +9,6 @@
 
 @synthesize list;
 @synthesize table;
-@synthesize updateButton;
 @synthesize modeString;
 
 - (id)init
@@ -26,6 +25,8 @@
 - (void)dealloc
 {
     [list drain];
+	[modeString drain];
+	
     [super dealloc];
 }
 
@@ -74,20 +75,24 @@
 
 - (void)onRemoveBans:(id)sender
 {
-	NSMutableString *str = [NSMutableString stringWithString:@"-"];
+	NSMutableString *str   = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
 	NSIndexSet *indexes = [table selectedRowIndexes];
-	NSUInteger current_index = [indexes lastIndex];
 	
-	while (current_index != NSNotFound) {
-		[str appendString:@"b"];
-		[trail appendFormat:@" %@", [[list safeObjectAtIndex:current_index] safeObjectAtIndex:0]];
+	NSLog(@"%@", [indexes arrayFromIndexSet]);
+	
+	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+		NSArray *iteml = [list safeObjectAtIndex:[index unsignedIntegerValue]];
 		
-		current_index = [indexes indexLessThanIndex:current_index];
+		if (NSObjectIsNotEmpty(iteml)) {
+			[str   appendString:@"b"];
+			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
+		}
 	}
 	
 	modeString = [str stringByAppendingString:trail];
+	[modeString retain];
     
 	[self ok:sender];
 }

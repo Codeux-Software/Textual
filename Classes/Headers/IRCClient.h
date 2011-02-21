@@ -81,6 +81,7 @@ typedef enum {
 	ListDialog *channelListDialog;
 	ChanBanSheet *chanBanListSheet;
 	ChanBanExceptionSheet *banExceptionSheet;
+	ChanInviteExceptionSheet *inviteExceptionSheet;
 	
 	FileLogger *logFile;
 	
@@ -118,6 +119,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL inChanBanList;
 @property (nonatomic, assign) BOOL inFirstISONRun;
 @property (nonatomic, assign) BOOL inWhoWasRequest;
+@property (nonatomic, retain) FileLogger *logFile;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, retain) NSString *logDate;
 @property (nonatomic, retain) NSString *inputNick;
@@ -136,7 +138,7 @@ typedef enum {
 @property (nonatomic, retain) ListDialog *channelListDialog;
 @property (nonatomic, retain) ChanBanSheet *chanBanListSheet;
 @property (nonatomic, retain) ChanBanExceptionSheet *banExceptionSheet;
-@property (nonatomic, retain) FileLogger *logFile;
+@property (nonatomic, retain) ChanInviteExceptionSheet *inviteExceptionSheet;
 
 - (void)setup:(IRCClientConfig *)seed;
 - (void)updateConfig:(IRCClientConfig *)seed;
@@ -177,6 +179,7 @@ typedef enum {
 - (void)createChannelListDialog;
 - (void)createChanBanListDialog;
 - (void)createChanBanExceptionListDialog;
+- (void)createChanInviteExceptionListDialog;
 
 - (BOOL)inputText:(NSString *)s command:(NSString *)command;
 - (BOOL)sendCommand:(NSString *)s;

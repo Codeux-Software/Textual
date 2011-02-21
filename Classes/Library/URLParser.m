@@ -11,22 +11,9 @@
 	
 	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
 	
-	for (NSString *link in [scanner matchesForString:body]) {
-		NSRange r = NSRangeFromString(link);
-		
-		if (r.location != NSNotFound) {
-			NSString *url = [body safeSubstringWithRange:r];
-			
-			if ([url contains:@"@"] && [url isMatchedByRegex:@"(.*)://(.*)@(.*)"] == NO) {
-				continue;
-			}
-			
-			[result addObject:NSStringFromRange(r)];
-		}
-	}
+	result = [scanner matchesForString:body];
 	
-	[scanner drain];
-	scanner = nil;
+	[scanner autorelease];
 	
 	return result;
 }

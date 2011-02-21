@@ -24,7 +24,7 @@
 	IBOutlet NSTextField *lText;
 }
 
-@property (nonatomic, retain) IRCChannelMode *mode;
+@property (nonatomic, assign) IRCChannelMode *mode;
 @property (nonatomic, retain) NSString *channelName;
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
@@ -40,7 +40,6 @@
 @property (nonatomic, retain) NSTextField *lText;
 
 - (void)start;
-
 - (void)onChangeCheck:(id)sender;
 @end
 

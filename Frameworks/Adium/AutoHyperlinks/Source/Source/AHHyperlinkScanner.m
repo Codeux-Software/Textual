@@ -74,7 +74,7 @@ static NSArray					*encKeys						= nil;
 		[mutableStartSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"\"'.,:;<?!-@%C%C", 0x2014, 0x2013]]];
 		
 		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
-		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!"]];
+		[mutablePuncSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\"'.,:;<?!@"]];
 		
 		skipSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableSkipSet bitmapRepresentation]];
 		startSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableStartSet bitmapRepresentation]];
@@ -175,8 +175,8 @@ static NSArray					*encKeys						= nil;
 		*sIndex += AHget_leng(scanner);
 	}
 	
-    if ((validStatus == AH_URL_VALID || validStatus == AH_MAILTO_VALID || validStatus == AH_FILE_VALID) ||
-		((validStatus == AH_URL_DEGENERATE || validStatus == AH_MAILTO_DEGENERATE) && useStrictChecking == NO)) {
+    if ((validStatus == AH_URL_VALID || validStatus == AH_FILE_VALID) ||
+		(validStatus == AH_URL_DEGENERATE && useStrictChecking == NO)) {
 		
         AH_delete_buffer(buf, scanner); 
 		
@@ -216,10 +216,8 @@ static NSArray					*encKeys						= nil;
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
-			NSRange encRange;
-			
 			if (encIdx != NSNotFound) {
-				encRange = [m_scanString rangeOfString:[enclosureStopArray objectAtIndex:encIdx] options:NSBackwardsSearch range:scannedRange];
+				NSRange encRange = [m_scanString rangeOfString:[enclosureStopArray objectAtIndex:encIdx] options:NSBackwardsSearch range:scannedRange];
 				
 				scannedRange.location++; 
 				
@@ -255,7 +253,15 @@ static NSArray					*encKeys						= nil;
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
 			
 			if ([self isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation]) {
-				return NSStringFromRange(scannedRange);
+				if (scannedRange.location >= 1) {
+					unichar leftmost = [m_scanString characterAtIndex:(scannedRange.location - 1)];
+					
+					if (leftmost != '@' && leftmost != '.') {
+						return NSStringFromRange(scannedRange);
+					}
+				} else {
+					return NSStringFromRange(scannedRange);
+				}
 			}
 		}
 		
@@ -304,7 +310,7 @@ static NSArray					*encKeys						= nil;
 	NSRange matchRange = [m_scanString rangeOfString:matchString];
 	
 	if (matchRange.location != NSNotFound) {
-		NSLog(@"%@ %@", [m_scanString substringWithRange:scannedRange], NSStringFromRange(scannedRange));
+		NSLog(@"%@ %@ %@", m_scanString, [m_scanString substringWithRange:scannedRange], NSStringFromRange(scannedRange));
 	}
 }
 

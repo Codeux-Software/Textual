@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J855</string>
+		<string key="IBDocument.SystemVersion">10J858</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -11,12 +11,12 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="21"/>
 			<integer value="367"/>
-			<integer value="374"/>
+			<integer value="21"/>
 			<integer value="327"/>
-			<integer value="426"/>
 			<integer value="432"/>
+			<integer value="426"/>
+			<integer value="374"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -878,6 +878,15 @@
 												<reference key="NSMenu" ref="557176961"/>
 												<string key="NSTitle">Ban Exceptions</string>
 												<string key="NSKeyEquiv">E</string>
+												<int key="NSKeyEquivModMask">1048576</int>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="222848805"/>
+												<reference key="NSMixedImage" ref="852898728"/>
+											</object>
+											<object class="NSMenuItem" id="744178805">
+												<reference key="NSMenu" ref="557176961"/>
+												<string key="NSTitle">Invite Exceptions</string>
+												<string key="NSKeyEquiv">I</string>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="222848805"/>
@@ -2744,6 +2753,15 @@
 												<reference key="NSMenu" ref="774445921"/>
 												<string key="NSTitle">Ban Exceptions</string>
 												<string key="NSKeyEquiv">E</string>
+												<int key="NSKeyEquivModMask">1048576</int>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="222848805"/>
+												<reference key="NSMixedImage" ref="852898728"/>
+											</object>
+											<object class="NSMenuItem" id="423028712">
+												<reference key="NSMenu" ref="774445921"/>
+												<string key="NSTitle">Invite Exceptions</string>
+												<string key="NSKeyEquiv">I</string>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="222848805"/>
@@ -4852,6 +4870,22 @@
 					</object>
 					<int key="connectionID">2029</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onWantChannelInviteExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="744178805"/>
+					</object>
+					<int key="connectionID">2032</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onWantChannelInviteExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="423028712"/>
+					</object>
+					<int key="connectionID">2034</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -5899,6 +5933,7 @@
 							<reference ref="1071241716"/>
 							<reference ref="540413936"/>
 							<reference ref="333661442"/>
+							<reference ref="744178805"/>
 						</array>
 						<reference key="parent" ref="590629124"/>
 					</object>
@@ -6373,6 +6408,7 @@
 							<reference ref="969694554"/>
 							<reference ref="516291847"/>
 							<reference ref="638336192"/>
+							<reference ref="423028712"/>
 						</array>
 						<reference key="parent" ref="37081534"/>
 					</object>
@@ -6803,6 +6839,16 @@
 						<reference key="object" ref="700096171"/>
 						<reference key="parent" ref="562520351"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2030</int>
+						<reference key="object" ref="744178805"/>
+						<reference key="parent" ref="557176961"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2033</int>
+						<reference key="object" ref="423028712"/>
+						<reference key="parent" ref="774445921"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -6873,7 +6919,7 @@
 				<string key="1455.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="1" key="1455.ImportedFromIB2"/>
 				<string key="1471.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1484.IBEditorWindowLastContentRect">{{968, 623}, {225, 143}}</string>
+				<string key="1484.IBEditorWindowLastContentRect">{{968, 624}, {225, 143}}</string>
 				<string key="1484.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="149.ImportedFromIB2"/>
@@ -6881,7 +6927,7 @@
 				<string key="150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="150.ImportedFromIB2"/>
 				<string key="1500.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1501.IBEditorWindowLastContentRect">{{1063, 287}, {199, 143}}</string>
+				<string key="1501.IBEditorWindowLastContentRect">{{1010, 220}, {204, 163}}</string>
 				<string key="1501.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1502.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1503.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6959,7 +7005,7 @@
 				<dictionary class="NSMutableDictionary" key="172.IBAttributePlaceholdersKey"/>
 				<string key="172.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="172.ImportedFromIB2"/>
-				<string key="1720.IBEditorWindowLastContentRect">{{1225, 596}, {303, 123}}</string>
+				<string key="1720.IBEditorWindowLastContentRect">{{1214, 219}, {303, 123}}</string>
 				<string key="1720.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1721.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1722.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7010,7 +7056,7 @@
 				<boolean value="YES" key="1883.ImportedFromIB2"/>
 				<string key="1884.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1885.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1886.IBEditorWindowLastContentRect">{{1179, 503}, {199, 143}}</string>
+				<string key="1886.IBEditorWindowLastContentRect">{{1193, 484}, {204, 163}}</string>
 				<string key="1886.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1887.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1888.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7097,6 +7143,8 @@
 				<string key="1977.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="2.ImportedFromIB2"/>
+				<string key="2030.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2033.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBEditorWindowLastContentRect">{{755, 524}, {632, 501}}</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBWindowTemplateEditedContentRect">{{755, 524}, {632, 501}}</string>
@@ -7148,7 +7196,7 @@
 				<boolean value="YES" key="267.ImportedFromIB2"/>
 				<string key="276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="276.ImportedFromIB2"/>
-				<string key="277.IBEditorWindowLastContentRect">{{838, 407}, {225, 143}}</string>
+				<string key="277.IBEditorWindowLastContentRect">{{785, 360}, {225, 143}}</string>
 				<string key="277.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="277.ImportedFromIB2"/>
 				<string key="286.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7160,7 +7208,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{557, 551}, {577, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{505, 503}, {577, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7334,7 +7382,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2029</int>
+			<int key="maxID">2034</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7518,6 +7566,42 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="977973033">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Headers/ChanBanSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ChanInviteExceptionSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="onRemoveExceptions:">id</string>
+						<string key="onUpdate:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="onRemoveExceptions:">
+							<string key="name">onRemoveExceptions:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onUpdate:">
+							<string key="name">onUpdate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="table">ListView</string>
+						<string key="updateButton">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="table">
+							<string key="name">table</string>
+							<string key="candidateClassName">ListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="updateButton">
+							<string key="name">updateButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="401843252">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Headers/ChanInviteExceptionSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -8058,6 +8142,7 @@
 						<string key="onWantAboutWindowShown:">id</string>
 						<string key="onWantChannelBanExceptionList:">id</string>
 						<string key="onWantChannelBanList:">id</string>
+						<string key="onWantChannelInviteExceptionList:">id</string>
 						<string key="onWantChannelListSorted:">id</string>
 						<string key="onWantChannelModerated:">id</string>
 						<string key="onWantChannelVoiceOnly:">id</string>
@@ -8291,6 +8376,10 @@
 							<string key="name">onWantChannelBanList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onWantChannelInviteExceptionList:">
+							<string key="name">onWantChannelInviteExceptionList:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onWantChannelListSorted:">
 							<string key="name">onWantChannelListSorted:</string>
 							<string key="candidateClassName">id</string>
@@ -8513,6 +8602,24 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="chanInviteExceptionDialogOnUpdate:">ChanInviteExceptionSheet</string>
+						<string key="chanInviteExceptionDialogWillClose:">ChanInviteExceptionSheet</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="chanInviteExceptionDialogOnUpdate:">
+							<string key="name">chanInviteExceptionDialogOnUpdate:</string>
+							<string key="candidateClassName">ChanInviteExceptionSheet</string>
+						</object>
+						<object class="IBActionInfo" key="chanInviteExceptionDialogWillClose:">
+							<string key="name">chanInviteExceptionDialogWillClose:</string>
+							<string key="candidateClassName">ChanInviteExceptionSheet</string>
+						</object>
+					</dictionary>
+					<reference key="sourceIdentifier" ref="401843252"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="ChannelSheetOnOK:">ChannelSheet</string>
 						<string key="ChannelSheetWillClose:">ChannelSheet</string>
 					</dictionary>
@@ -8537,17 +8644,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">fieldEditorTextViewPaste:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">fieldEditorTextViewPaste:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">fieldEditorTextViewPaste:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Headers/FieldEditorTextView.h</string>
@@ -8744,13 +8840,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="927484634">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Headers/TCPClient.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Headers/TCPServer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -9470,13 +9559,13 @@
 					<string key="superclassName">SheetBase</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">text</string>
-						<string key="NS.object.0">NSTextField</string>
+						<string key="NS.object.0">TextField</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<string key="NS.key.0">text</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">text</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">TextField</string>
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="692741865"/>

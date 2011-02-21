@@ -191,64 +191,65 @@
 	}
 }
 
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock 
+{
+	[self close];
+	
+	if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
+		[[delegate invokeOnMainThread] tcpClientDidDisconnect:self];
+	}	
+}
+
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
 {
-	if (PointerIsEmpty(error)) {
-		[self close];
-		
-		if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-			[[delegate invokeOnMainThread] tcpClientDidDisconnect:self];
-		}	
+	NSString *msg    = nil;
+	NSString *domain = [error domain];
+	
+	if ([error code] == -9805) { /* connection closed gracefully */
+		[self socketDidDisconnect:sock];
 	} else {
-		NSString *msg    = nil;
-		NSString *domain = [error domain];
-		
-		if ([error code] == -9805) { /* connection closed gracefully */
-			if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-				[[delegate invokeOnMainThread] tcpClientDidDisconnect:self];
-			}	
+		if ([domain isEqualToString:NSPOSIXErrorDomain]) {
+			msg = [GCDAsyncSocket posixErrorStringFromErrno:[error code]];
 		} else {
-			if ([domain isEqualToString:NSPOSIXErrorDomain]) {
-				msg = [GCDAsyncSocket posixErrorStringFromErrno:[error code]];
-			} else {
-				if ([domain isEqualToString:txCFStreamErrorDomainSSL] && [self badSSLCertErrorFound:[error code]]) {
-					IRCClient *client = [delegate delegate];
+			if ([domain isEqualToString:txCFStreamErrorDomainSSL] && [self badSSLCertErrorFound:[error code]]) {
+				IRCClient *client = [delegate delegate];
+				
+				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
+				
+				if (client.config.isTrustedConnection == NO) {
+					BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
+																   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
+														   defaultButton:TXTLS(@"TRUST_BUTTON") 
+														 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+														  suppressionKey:suppKey
+														 suppressionText:@"-"];
 					
-					NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
-					
-					if (client.config.isTrustedConnection == NO) {
-						BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
-																	   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
-															   defaultButton:TXTLS(@"TRUST_BUTTON") 
-															 alternateButton:TXTLS(@"CANCEL_BUTTON") 
-															  suppressionKey:suppKey
-															 suppressionText:@"-"];
-						
-						if (status) {
-							client.disconnectType = DISCONNECT_BAD_SSL_CERT;
-						}
-						
-						client.config.isTrustedConnection = status;
-						
-						[_NSUserDefaults() setBool:status forKey:suppKey];
-						
-						if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-							[[delegate invokeOnMainThread] tcpClient:self error:nil];
-						}
-						
-						return;
+					if (status) {
+						client.disconnectType = DISCONNECT_BAD_SSL_CERT;
 					}
+					
+					client.config.isTrustedConnection = status;
+					
+					[_NSUserDefaults() setBool:status forKey:suppKey];
+					
+					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+						[[delegate invokeOnMainThread] tcpClient:self error:nil];
+					}
+					
+					return;
 				}
 			}
-			
-			if (NSObjectIsEmpty(msg)) {
-				msg = [error localizedDescription];
-			}
-			
-			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-				[[delegate invokeOnMainThread] tcpClient:self error:msg];
-			}
 		}
+		
+		if (NSObjectIsEmpty(msg)) {
+			msg = [error localizedDescription];
+		}
+		
+		if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+			[[delegate invokeOnMainThread] tcpClient:self error:msg];
+		}
+		
+		[self socketDidDisconnect:sock];
 	}
 }
 

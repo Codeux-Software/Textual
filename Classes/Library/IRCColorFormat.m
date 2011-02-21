@@ -172,7 +172,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			 it is equal to the entire length of the newly pasted string. If the
 			 link is part of a text blob, then we do not care about its location. */
 			
-			if (effectiveRange.location == limitRange.location && effectiveRange.length == limitRange.length) {
+			if (effectiveRange.location == 0 && effectiveRange.length == [self length]) {
 				[result replaceCharactersInRange:effectiveRange withString:nextURL];
 				
 				effectiveRange.length = [(NSString *)nextURL length];

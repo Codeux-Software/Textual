@@ -736,7 +736,7 @@
 	[world save];
 }
 
-- (void)showServerPropertyDialog:(IRCClient *)u ignore:(BOOL)ignore
+- (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask
 {
 	if (NO_CLIENT) return;
 	if (serverSheet) return;
@@ -749,7 +749,7 @@
 	d.uid = u.uid;
 	d.client = u;
 	
-	[d startWithIgnoreTab:ignore];
+	[d startWithIgnoreTab:imask];
 	
 	serverSheet = d;
 }
@@ -859,7 +859,7 @@
 	m.uid = u.uid;
 	m.cid = c.uid;
 	m.channelName = c.name;
-	m.mode = [c.mode mutableCopy];
+	m.mode = c.mode;
 	
 	[m start];
 	
@@ -1208,7 +1208,7 @@
 
 - (void)onWantIgnoreListShown:(id)sender
 {
-	[self showServerPropertyDialog:[world selectedClient] ignore:YES];
+	[self showServerPropertyDialog:[world selectedClient] ignore:@"-"];
 }
 
 - (void)onWantAboutWindowShown:(id)sender
@@ -1466,6 +1466,16 @@
 	
 	[[world selectedClient] createChanBanExceptionListDialog];
 	[[world selectedClient] send:IRCCI_MODE, [c name], @"+e", nil];
+}
+
+- (void)onWantChannelInviteExceptionList:(id)sender
+{
+	IRCChannel *c = [world selectedChannel];
+	
+	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
+	
+	[[world selectedClient] createChanInviteExceptionListDialog];
+	[[world selectedClient] send:IRCCI_MODE, [c name], @"+I", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender

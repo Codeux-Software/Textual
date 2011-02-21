@@ -1,11 +1,12 @@
+
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface ChanBanExceptionSheet (Private)
+@interface ChanInviteExceptionSheet (Private)
 - (void)reloadTable;
 @end
 
-@implementation ChanBanExceptionSheet
+@implementation ChanInviteExceptionSheet
 
 @synthesize list;
 @synthesize table;
@@ -14,7 +15,7 @@
 - (id)init
 {
     if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"ChanBanExceptionSheet" owner:self];
+		[NSBundle loadNibNamed:@"ChanInviteExceptionSheet" owner:self];
 		
 		list = [NSMutableArray new];
     }
@@ -39,8 +40,8 @@
 {
 	[self endSheet];
 	
-	if ([delegate respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
-		[delegate chanBanExceptionDialogWillClose:self];
+	if ([delegate respondsToSelector:@selector(chanInviteExceptionDialogWillClose:)]) {
+		[delegate chanInviteExceptionDialogWillClose:self];
 	}
 }
 
@@ -68,8 +69,8 @@
 
 - (void)onUpdate:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
-		[delegate chanBanExceptionDialogOnUpdate:self];
+    if ([delegate respondsToSelector:@selector(chanInviteExceptionDialogOnUpdate:)]) {
+		[delegate chanInviteExceptionDialogOnUpdate:self];
     }
 }
 
@@ -84,7 +85,7 @@
 		NSArray *iteml = [list safeObjectAtIndex:[index unsignedIntegerValue]];
 		
 		if (NSObjectIsNotEmpty(iteml)) {
-			[str   appendString:@"e"];
+			[str   appendString:@"I"];
 			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
 		}
 	}

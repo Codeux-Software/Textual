@@ -1,7 +1,7 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface ChanBanExceptionSheet : SheetBase
+@interface ChanInviteExceptionSheet : SheetBase
 {
 	NSString *modeString;
 	NSMutableArray *list;
@@ -22,7 +22,7 @@
 - (void)onRemoveExceptions:(id)sender;
 @end
 
-@interface NSObject (ChanBanExceptionSheetDelegate)
-- (void)chanBanExceptionDialogOnUpdate:(ChanBanExceptionSheet *)sender;
-- (void)chanBanExceptionDialogWillClose:(ChanBanExceptionSheet *)sender;
+@interface NSObject (ChanInviteExceptionSheetDelegate)
+- (void)chanInviteExceptionDialogOnUpdate:(ChanInviteExceptionSheet *)sender;
+- (void)chanInviteExceptionDialogWillClose:(ChanInviteExceptionSheet *)sender;
 @end
