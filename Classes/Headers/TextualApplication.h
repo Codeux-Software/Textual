@@ -9,6 +9,11 @@
 	#include <Security/Security.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
 
+	/* Textual Specific Frameworks */
+	#import <AutoHyperlinks/AutoHyperlinks.h>
+	#import <BlowfishEncryption/Encryption.h>
+	#import <RegexKit/RegexKit.h>
+
 	/* Establish Common Pointers */
 	#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
 	#define _NSPasteboard()							[NSPasteboard generalPasteboard]
@@ -33,7 +38,6 @@
 
 	/* Textual Headers */
 	#import "GlobalModels.h"
-	#import "RegexKitLite.h"
 	#import "PopupPrompts.h"
 	#import "GCDAsyncSocket.h"
 	#import "AsyncSocketExtensions.h"

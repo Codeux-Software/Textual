@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.match.timing" name="RegexKit.instrument.match.timing" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="self->matchStartTime = 0;" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Match Timing" runClass="PFTDTraceRun" instrumentDescription="Records the time it takes to perform a match in microseconds." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.match.timing" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Begin Match" probe="RegexKit*:::BeginMatch" silent_script="self->matchStartTime = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="1" event_name="End Match" probe="RegexKit*:::EndMatch" silent_script="this->matchElapsedTime = (vtimestamp - self->matchStartTime) / 1000;\nnthis->didMatch = (int)arg8 == -1 ? \'No\' : \'Yes\';\nnthis->regex = (char **)copyin(arg0, 16);\nnthis->searchRange = (unsigned long *)copyin(arg6, sizeof(unsigned long) * 2);\nnthis->ranges = (unsigned long *)copyin(arg2, sizeof(unsigned long) * 2);\nnthis->matchString = (int)arg8 == -1 ? \'\' : stringof(copyin((uintptr_t)arg4 + (uintptr_t)this->ranges[0], (long)this->ranges[1] > 32 ? 32 : (long)this->ranges[1]));\nnthis->matchString[(int)arg8 == -1 ? 0 : (long)this->ranges[1] > 31 ? 32 : (long)this->ranges[1]] = 0;" predicate=" (int)arg8 >= -1" attach_debugger="">			
+
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKRegex Object" code="(unsigned long)this->regex[0]" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Hash" code="(unsigned long)arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Regex" code="copyinstr((user_addr_t)this->regex[1])" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Compile Options" code="((unsigned int *)this->regex)[2]" type="%x" width="15" truncation="middle"/>
+		  <field index="5" name="Match Options" code="arg7" type="%x" width="15" truncation="middle"/>
+		  <field index="6" name="Buffer" code="(unsigned long)arg4" type="%x" width="15" truncation="right"/>
+		  <field index="7" name="Buffer Size" code="(unsigned long)arg5" type="%d" width="10" truncation="right"/>
+		  <field index="8" name="Search Location" code="(unsigned long)this->searchRange[0]" type="%d" width="10" truncation="right"/>
+		  <field index="9" name="Search Length" code="(unsigned long)this->searchRange[1]" type="%d" width="10" truncation="right"/>
+		  <field index="10" name="Matched" code="this->didMatch" type="%s" width="10" truncation="right"/>
+		  <field index="11" name="Matched Location" code="(int)arg8 == -1 ? -1 : (long)this->ranges[0]" type="%d" width="10" truncation="right"/>
+		  <field index="12" name="Matched Length" code="(int)arg8 == -1 ? -1 : (long)this->ranges[1]" type="%d" width="10" truncation="right"/>
+		  <field index="13" name="Matched String" code="this->matchString" type="%s" width="20" truncation="middle"/>
+		  <field index="14" name="uSec" code="this->matchElapsedTime" type="%d" width="10" truncation="right"/>
+		</probe_definition>
+
+	</extension>
+</plugin>

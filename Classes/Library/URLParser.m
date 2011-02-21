@@ -7,13 +7,14 @@
 
 + (NSArray *)locatedLinksForString:(NSString *)body
 {
-	NSMutableArray *result = [NSMutableArray array];
+	NSArray *result;
 	
 	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
 	
 	result = [scanner matchesForString:body];
 	
-	[scanner autorelease];
+	[scanner drain];
+	scanner = nil;
 	
 	return result;
 }

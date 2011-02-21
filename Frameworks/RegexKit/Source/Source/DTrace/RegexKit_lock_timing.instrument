@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.timing.lock" name="RegexKit.instrument.timing.lock" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Lock Timing" runClass="PFTDTraceRun" instrumentDescription="Records timing information for multithreaded locks in microseconds." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.timing.lock" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Begin Lock Acquire" probe="RegexKit*:::BeginLock" silent_script="self->lockStartTime = vtimestamp;\nnself->isReadWrite = arg1;" predicate="" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="1" event_name="End Lock Acquire" probe="RegexKit*:::EndLock" silent_script="self->lockAcquiredTime = vtimestamp;\nnself->didAcquire = arg3;\nnself->lockSpinCount = arg4;" predicate="" attach_debugger="">
+		</probe_definition>
+		<probe_definition index="2" event_name="Unlock" probe="RegexKit*:::Unlock" silent_script="self->unlockTime = vtimestamp;\nnself->lockHeldTime = (self->unlockTime - self->lockAcquiredTime) / 1000;\nnself->lockTimeToAcquire = (self->lockAcquiredTime - self->lockStartTime) / 1000;\nnself->totalLockTime = (self->unlockTime - self->lockStartTime) / 1000;\nnself->didAcquireString = self->didAcquire == 1 ? \'Yes\' : \'No\';\nnself->isReadWriteString = self->isReadWrite == 0 ? \'Read\' : \'Write\';\nnself->isMultithreadedString = arg1 == 0 ? \'No\' : \'Yes\';" predicate=" (vtimestamp &gt; self->lockAcquiredTime) &amp;&amp; (self->lockAcquiredTime &gt; self->lockStartTime)" attach_debugger="">			
+
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="Object" code="arg0" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Read / Write" code="self->isReadWriteString" type="%s" width="20" truncation="right"/>
+		  <field index="3" name="Multithreaded" code="self->isMultithreadedString" type="%s" width="20" truncation="right"/>
+		  <field index="4" name="Time to acquire uSec" code="self->lockTimeToAcquire" type="%d" width="15" truncation="left"/>
+		  <field index="5" name="Spins until acquired" code="self->lockSpinCount" type="%d" width="15" truncation="left"/>
+		  <field index="6" name="Acquired" code="self->didAcquireString" type="%s" width="10" truncation="right"/>
+		  <field index="7" name="Held for uSec" code="self->lockHeldTime" type="%d" width="15" truncation="left"/>
+		  <field index="8" name="Total (Acquire + Held) uSec" code="self->totalLockTime" type="%d" width="15" truncation="left"/>
+
+		</probe_definition>
+
+	</extension>
+</plugin>

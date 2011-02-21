@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html ; charset=utf-8">
+<style type="text/css">
+@import "CSS/doc.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>NSString RegexKit Additions Reference</title>
+</head>
+<body>
+<div class="bodyTop">
+
+<h1>NSString RegexKit Additions Reference</h1>
+
+<div class="box classSpecs hasRows zebraRows">
+<div class="row odd"><span class="cell left">Extends by category</span><span class="cell right lastCell"><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/index.html" target="_top">NSString</a></span></div>
+<div class="row even"><span class="cell left">Framework</span><span class="cell right lastCell"><a href="index.html">RegexKit.framework</a></span></div>
+<div class="row odd regexKitVersion"><span class="cell left">RegexKit</span><span class="cell right lastCell"><span class="version">\$ENV{PROJECT_CURRENT_VERSION}</span> <span class="releaseNotes"><a href="ReleaseNotes.html#Release_\$ENV{PROJECT_VERSION_MAJOR}_\$ENV{PROJECT_VERSION_MINOR}_\$ENV{PROJECT_VERSION_POINT}">Release Notes</a></span></span></div>
+<div class="row even"><span class="cell left">PCRE</span><span class="cell right lastCell">\$ENV{PCRE_VERSION}</span></div>
+<div class="row odd"><span class="cell left">Availability</span><span class="cell right lastCell">Available in Mac OS X v10.4 or later.</span></div>
+<div class="row even"><span class="cell left">Declared in</span><ul class="cell right lastCell"><li>RegexKit/NSString.h</li></ul></div>
+<div class="row odd lastRow"><span class="cell left">Companion guides</span>
+<ul class="cell right lastCell">
+  <li><a href="RegexKitProgrammingGuide.html">RegexKit Programming Guide</a></li>
+  <li><a href="pcre/pcrepattern.html">PCRE Regular Expression Syntax</a></li>
+</ul></div>
+</div>
+
+<div class="overview">
+  <div class="masthead">Overview</div>
+
+<h3><a name="overview_NSRangeCompatibilitywithFoundation">NSRange Compatibility with Foundation</a></h3>
+
+<p>As of version 0.4, all @link NSRange NSRange @/link arguments and results of the RegexKit @link NSString NSString @/link additions and @link RKEnumerator RKEnumerator @/link class use the same method as @link Foundation Foundation @/link for calculating character index values.  Specifically, @link Foundation Foundation @/link treats all strings as if they were @link UTF16 UTF16 @/link encoded, whereas @link pcre PCRE @/link requires all strings to be @link UTF8 UTF8 @/link encoded.  The details of converting between @link UTF8 UTF8 @/link and @link UTF16 UTF16 @/link character index values, and therefore @link NSRange NSRange @/link values, are now handled automatically by the framework, providing a consistant @link UTF16 UTF16 @/link character index API for all @link Foundation Foundation @/link additions and @link RKEnumerator RKEnumerator @/link class objects.</p>
+
+<p>For @link UTF8 UTF8 @/link encoded strings, only character values &lt; <span class="code">128</span> / <span class="code">0x80</span> can be represented with a single byte, which is a one to one mapping to @link ASCII ASCII @/link characters.  To represent non-@link ASCII ASCII @/link characters, @link UTF8 UTF8 @/link uses a special encoding format that uses a variable number of additional bytes, from one to five, to represent a single Unicode character.  Therefore, when dealing with international text, there is no longer a one to one relationship between a 'character' and a byte as there is in @link ASCII ASCII @/link text.</p>
+
+<p>@link UTF16 UTF16 @/link encoded strings use two bytes as its fundamental date type.  The vast majority of text can be encoded in to a single @link UTF16 UTF16 @/link character, but some character encodings will require two or more @link UTF16 UTF16 @/link characters to represent a single Unicode character.  Only @link UTF32 UTF32 @/link has a fixed length at four bytes, which simplifies 'character index' issues, but is not space efficient for the majority of text.  Even @link ASCII ASCII @/link requires four bytes to encode one character in @link UTF32 UTF32 @/link, of which there are only 127 possible @link ASCII ASCII @/link characters.</p>
+
+<p>As of version 0.4, these issues are now abstracted by the framework.  All strings are treated logically as if they were encoded as @link UTF16 UTF16 @/link for @link NSRange NSRange @/link calculation purposes.  Previous versions calculated NSRange values based on @link pcre PCRE's @/link native @link UTF8 UTF8 @/link encoding format.  This meant that @link NSRange NSRange @/link results from RegexKit could be used as arguments by another RegexKit method correctly for international text, but could not be used as arguments for native Foundation methods and vice-versa.  In short, @link NSRange NSRange @/link results and arguments should 'just work' as expected with @link NSRange NSRange @/link results from native @link Foundation Foundation @/link methods.</p>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The @link RKRegex RKRegex @/link class continues to use @link NSRange NSRange @/link values calculated as @link UTF8 UTF8 @/link character indexes.  See @link RKConvertUTF8ToUTF16RangeForString RKConvertUTF8ToUTF16RangeForString @/link and @link RKConvertUTF16ToUTF8RangeForString RKConvertUTF16ToUTF8RangeForString @/link if you need to perform conversions.</div></div></div></div>
+
+<div class="seealso">
+  <div class="section">See also</div>
+  <ul>
+    <li><a href="RKRegex.html#overview_ImportantNSRangeDifferences" class="section-link">Important NSRange Differences</a></li>
+    <li><a href="RKRegex.html#overview_FoundationAdditionsRKCompileOptionRequirements" class="section-link">Foundation Additions RKCompileOption Requirements</a></li>
+  </ul>
+</div>
+
+<h3><a name="ReferenceandReplacementStringSyntax">Reference and Replacement String Syntax</a></h3>
+
+<p>Several methods are available that allow you to create new strings, or replace the matched text, with a string that contains references to the capture subpatterns.  The syntax is modeled after Perls <i>dollar sign</i> variable references, i.e. <span class="regex">$1</span>.  In addition to capture subpattern references, you can also covert the case of the text.  Case conversion is also modeled after Perls <span class="regex">\\u</span>, <span class="regex">\\l</span>, <span class="regex">\\U</span>, <span class="regex">\\L</span>, and <span class="regex">\\E</span> escape sequences.</p>
+
+<h4><a name="CaptureSubpatternReferenceSyntax">Capture Subpattern Reference Syntax</a></h4>
+
+<p>Capture subpattern references have the following three forms:</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">\\<span class="parameter required" title="required Capture Subpattern Number">subpatternNumber</span></span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpatternNumber</div><div class="text">A single digit number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="code">\\1</span></span></div>
+</div>
+
+<p>Or,</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">$<span class="parameter required" title="required Capture Subpattern Number">subpatternNumber</span></span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpatternNumber</div><div class="text">A single digit number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="code">$1</span></span></div>
+</div>
+
+<p>Or,</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">${<span class="parameter required" title="required Capture Subpattern Name Or Number">subpattern</span>}</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpattern</div><div class="text">The name or number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Examples:</span><span class="text"><span class="code">${1}</span>, <span class="code">${date}</span></span></div>
+</div>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">A @link RKRegexCaptureReferenceException RKRegexCaptureReferenceException @/link will be raised if the subpattern number exceeds the number of parenthesized subpatterns in the regular expression, or the named subpattern is not defined by the regular expression.</div></div></div></div>
+
+<h4><a name="OrderofFormatSpecifierArgumentSubstitutionandExpansionofCaptureSubpatternMatchReferences">Order of Format Specifier Argument Substitution and Expansion of Capture Subpattern Match References</a></h4>
+
+<p>In order to prevent the accidental interpretation of the expanded text of a capture subpattern match reference as a format specifier, the order of substitution and expansion is as follows:</p>
+ <ul>
+ <li>First, the <span class="argument">referenceFormatString</span> <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html#//apple_ref/doc/uid/TP40004265" class="section-link">format specifiers</a> are substituted with the variable length arguments.</li>
+ <li>Second, the <a href="NSString.html#ExpansionofCaptureSubpatternMatchReferencesinStrings" class="section-link">capture subpattern references</a> are expanded and replaced.</li>
+ </ul>
+
+<h4><a name="ExpansionofCaptureSubpatternMatchReferencesinStrings">Expansion of Capture Subpattern Match References in Strings</a></h4>
+
+<p>When a capture subpattern reference is expanded in a string, the text of the <span class="argument nobr">capture subpattern reference</span> is replaced with the text of the <span class="argument">subpattern</span> that was matched by the regular expression.</p>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">A @link RKRegexCaptureReferenceException RKRegexCaptureReferenceException @/link will be raised if a <span class="argument">type</span> conversion is specified and only capture subpattern reference expansion is allowed.</div></div></div></div>
+
+
+<h4>Preventing the interpretation of <span class="code">$</span></h4>
+
+<p>To include a <span class="regex">$</span> from the reference string in the final replacement text without the possibility of additional interpretation, you may specify two <i class="nobr">dollar signs</i> consecutively.  Only a single <i class="nobr">dollar sign</i> will be copied to the final expanded text.  For example: <span class="regex nobr">You owe: $$1234.56</span> will be copied as <span class="regex nobr">You owe: $1234.56</span>.  Another example: <span class="regex nobr">Does not reference the $${0} capture subpattern</span> is copied as <span class="regex nobr">Does not reference the ${0} capture subpattern</span>.</p>
+
+<h4><a name="CaseConversionEscapeSequences">Case Conversion Syntax</a></h4>
+
+<p>The following escape sequences allow you to convert the text in the reference and replacement string.  The @link NSString NSString @/link @link uppercaseString uppercaseString @/link and @link lowercaseString lowercaseString @/link methods are used to perform the actual case conversion.</p>
+
+<div class="table">
+<table class="standard" summary="Case Conversion Escape Sequences">
+<caption>Case Conversion Escape Sequences</caption>
+<tr><th>Sequence</th><th>Description</th></tr>
+<tr><td><span class="regex">\\u</span></td><td>Convert the next character to upper case.</td></tr>
+<tr><td><span class="regex">\\l</span></td><td>Convert the next character to lower case.</td></tr>
+<tr><td><span class="regex">\\U</span></td><td>Convert the following characters to upper case until <span class="regex">\\E</span>.</td></tr>
+<tr><td><span class="regex">\\L</span></td><td>Convert the following characters to lower case until <span class="regex">\\E</span>.</td></tr>
+<tr><td><span class="regex">\\E</span></td><td>End case conversion.</td></tr>
+</table>
+</div>
+
+<p>The following is the example given in Apples @link NSString NSString @/link @link lowercaseString lowercaseString @/link method documentation, modified to illustrate the case conversion escape sequences.  As the example given in apples documentation illustrates, Unicode case conversion is not necessarily symmetrical.</p>
+<div class="box sourcecode marginTopSpacer marginBottomSpacer">example = [NSString stringWithUTF8String:"Stra\\xc3\\x9f" "e"]; // Stra&#223;e
+
+upper = [example stringByMatching:@"(.*)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\U$1\\\\E"];       // STRASSE
+                          
+lower = [upper   stringByMatching:@"(.*)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\L$1\\\\E"];       // strasse != Stra&#223;e
+</div>
+
+<p>The following example uses a regular expression that matches all the characters between <span class="regex">a</span> and <span class="regex">e</span> to replace the matched text with <span class="regex">\\U$1\\E</span>.</p>
+
+<div class="box sourcecode marginTopSpacer marginBottomSpacer">upper = [example stringByMatching:@"(?&lt;=a)(.*?)(?=e)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\U$1\\\\E"];       // StraSSe
+
+lower = [upper   stringByMatching:@"(?&lt;=a)(.*?)(?=e)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\L$1\\\\E"];       // Strasse
+</div>
+
+<p>The same regular expression is used in the following example, but the replacement reference string is now <span class="regex">\\u$1</span>.  The <span class="regex">\\u</span> escape sequences causes the next character to be converted to uppercase, and in this case <span class="regex">&#223;</span> is converted to <span class="regex">SS</span>.  The result string, <span class="regex">StraSSe</span>, has the same regular expression applied to it and the replacement reference string is changed to <span class="regex">\\l$1</span>, which converts the next character to lower case.  The final result is <span class="regex">StrasSe</span>.
+
+<div class="box sourcecode marginTopSpacer marginBottomSpacer">upper = [example stringByMatching:@"(?&lt;=a)(.*?)(?=e)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\u$1"];          // StraSSe
+
+lower = [upper   stringByMatching:@"(?&lt;=a)(.*?)(?=e)"
+                          replace:RKReplaceAll
+              withReferenceString:@"\\\\l$1"];          // StrasSe
+</div>
+
+<div class="seealso">
+  <div class="section">See also</div>
+  <ul>
+    <li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/Reference/NSString.html#//apple_ref/occ/instm/NSString/lowercaseString" class="code">- lowercaseString</a></li>
+    <li><a href="http://www.unicode.org/" class="section-link" target="_top">The Unicode Consortium Home Page</a></li>
+    <li><a href="http://developer.apple.com/documentation/CoreFoundation/Conceptual/CFStrings/Articles/UnicodeBasis.html#//apple_ref/doc/uid/20001178"  class="section-link">The Unicode Basis of CFString Objects</a></li>
+    <li><a href="pcre/pcre.html#utf8support" class="section-link">UTF-8 and Unicode Property Support</a></li>
+    <li><a href="RKRegex.html#overview_FoundationAdditionsRKCompileOptionRequirements" class="section-link">Foundation Additions RKCompileOption Requirements</a></li>
+  </ul>
+</div>
+
+<h3><a name="CaptureSubpatternReferenceandTypeConversionSyntax">Capture Subpattern Reference and Type Conversion Syntax</a></h3>
+
+<p>Capture subpattern references and type conversions extend regular capture subpattern references by allowing an optional <span class="argument">type</span> argument:</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">\\<span class="parameter required" title="required Capture Subpattern Number">subpatternNumber</span></span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpatternNumber</div><div class="text">A single digit number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="code">\\1</span></span></div>
+</div>
+
+<p>Or,</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">$<span class="parameter required" title="required Capture Subpattern Number">subpatternNumber</span></span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpatternNumber</div><div class="text">A single digit number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Example:</span><span class="text"><span class="code">$1</span></span></div>
+</div>
+
+<p>Or,</p>
+
+<div class="syntax">
+  <div class="specification"><span class="nobr">${<span class="parameter required" title="required Capture Subpattern Name Or Number">subpattern</span><span class="optional" title="optional Conversion Type to Perform">:<span class="parameter">type</span></span>}</span></div>
+  <div class="parameters">
+    <ul>
+      <li><div class="name">subpattern</div><div class="text">The name or number of a <span class="argument nobr">capture subpattern</span>.</div></li>
+      <li><div class="name">type</div><div class="text">The <i>optional</i> <a href="NSString.html#ConversionTypeSyntax" class="section-link nobr">conversion type</a> to perform.</div></li>
+    </ul>
+  </div>
+  <div class="example"><span class="header">Examples:</span><span class="text"><span class="code">${1}</span>, <span class="code">${date}</span>, <span class="code">${1:%d}</span></span></div>
+</div>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">A @link RKRegexCaptureReferenceException RKRegexCaptureReferenceException @/link will be raised if the subpattern number exceeds the number of parenthesized subpatterns in the regular expression, or the named subpattern is not defined by the regular expression.</div></div></div></div>
+
+<h4><a name="ConversionTypeSyntax">Conversion Type Syntax</a></h4>
+
+<p>There are two major classes of conversion types:</p>
+
+<ul>
+<li>Conversions to basic C data types, such as <span class="code">int</span>.</li>
+<li>Conversions to Objective-C objects, such as @link NSNumber NSNumber @/link or @link NSCalendarDate NSCalendarDate@/link.</li>
+</ul>
+
+<p>The first form, conversion to basic C data types, uses the familiar <span class="nobr"><i>percent</i> (character '%')</span> style specification. For example, <span class="code nobr">%d</span> converts the string <span class="code nobr">"12345"</span> to an <span class="code">int</span> with the value of <span class="code">12345</span>.</p>
+
+<p>The second form uses an <span class="nobr"><i class="nobr">at sign</i> (character '@')</span> to specify conversion to an Objective-C object.  The rest of the conversion specification, such as what type to convert to and conversion options, is similar to the <i>percent</i> style conversion syntax.</p> 
+
+<h4><a name="CDataTypeConversions">C Data Type Conversions</a></h4>
+
+<p>Conversions to basic C data types are handled by the @link scanf scanf @/link standard library function.  If the first character of the conversion specification begins with a <span class="nobr"><span class="code">%</span> (<i>percent</i>)</span>, then the remaining text up to the end of the conversion is passed to @link scanf scanf @/link unaltered.  Any conversion types or conversion options supported by the libraries @link scanf scanf @/link are available.</p>
+
+<div class="box warning marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Warning:</div><div class="message cell">The conversion format specification is passed unaltered to the @link scanf scanf @/link function.  No validation of the conversion format is performed.</div></div></div></div>
+
+<p>Since the conversion specification is passed unaltered to @link scanf scanf@/link, care should be taken to ensure that only a single conversion is specified.  Requesting two or more conversions will result in a crash since the framework will only supply @link scanf scanf @/link a single valid pointer in which to store the conversion result.  It is also not safe to specify a different pointer argument position using the <span class="nobr"><span class="code">%</span><i>n</i><span class="code">$</span></span> syntax.</p>
+
+<p>The following table lists some of the common <i>percent</i> C data type conversion specifiers.  Consult the @link scanf scanf @/link man page for additional information.</p>
+
+<div class="table">
+<table class="standard" summary="Common Conversion Specifiers">
+<caption>Common Conversion Specifiers</caption>
+<tr><th>Conversion</th><th>Syntax</th><th>Converted Type</th><th>Example String Forms</th><th>Description</th></tr>
+<tr><td><span class="nobr">Positive or Negative Integers</span>, <span class="nobr">Non-Floating Point Numbers</span></td><td><span class="code nobr">%d</span></td><td><span class="code">int</span></td><td><span class="nobr">1234,</span> <span class="nobr">-4321</span></td><td>Numbers without a decimal point.</td></tr>
+<tr><td><span class="nobr">Positive Only Integers</span>, <span class="nobr">Non-Floating Point Numbers</span></td><td><span class="code nobr">%u</span></td><td><span class="code nobr">unsigned int</span></td><td><span class="nobr">1234</span></td><td>Non-negative numbers without a decimal point.</td></tr>
+<tr><td><span class="nobr">Hex Values</span></td><td><span class="code nobr">%x</span></td><td><span class="code nobr">unsigned int</span></td><td><span class="nobr">0x1234abcd</span></td><td>Hex values starting with <span class="code nobr">0x</span>.</td></tr>
+<tr><td><span class="nobr">Floating Point Numbers</span></td><td><span class="code nobr">%f</span></td><td><span class="code">float</span></td><td><span class="nobr">1234.567,</span> <span class="nobr">-4321.987,</span> <span class="nobr">2.657e+7,</span> <span class="nobr">nan,</span> <span class="nobr">infinity</span></td><td><span class="nobr">IEEE-754 Single Precision Floating Point numbers.</span></td></tr>
+<tr><td><span class="nobr">Floating Point Numbers</span></td><td><span class="code nobr">%lf</span></td><td><span class="code">double</span></td><td><span class="nobr">1234.567,</span> <span class="nobr">-4321.987,</span> <span class="nobr">2.657e+7,</span> <span class="nobr">nan,</span> <span class="nobr">infinity</span></td><td><span class="nobr">IEEE-754 Double Precision Floating Point numbers.</span><br>The middle <span class="code"><b>l</b></span> must be included for <span class="code">doubles</span>.</td></tr>
+</table>
+</div>
+
+<p>On Mac OS X the floating point conversions will actually accept and convert a wide variety of string formats.  For example, hex values such as <span class="code nobr">0x1234abcd</span> will be correctly converted to <span class="nobr">305441741.0</span> for the requested floating point type.  Even signed hex values, such as <span class="code nobr">-0xfedc9876</span> are correctly converted. Additionally, <span class="code nobr">C99</span> style <i class="nobr">hex floats</i>, such as <span class="code nobr">0x3.fe69149f758p+45</span>, are also correctly converted.</p>
+
+<div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">A common mistake when converting to a <span class="code">double</span> is not including the middle <span class="code">l</span> size specifier. When converting from a <span class="code">double</span> to a string, ie with @link printf printf@/link, the conversion specifier <span class="code nobr">%f</span> can be used even though it strictly refers to a single precision <span class="code">float</span> type. This is because when passing a value of type <span class="code">float</span>, it is automatically promoted to a type <span class="code">double</span>, thus causing <span class="code nobr">%f</span> and <span class="code nobr">%lf</span> to actually refer to the same type, <span class="code">double</span>, for output conversions.</div></div></div></div>
+
+<h4>Objective-C Object Conversions</h4>
+
+<p>Ownership of objects returned by a conversion is the same as ownership of other convenience methods such as <span class="nobr"><span class="code">[</span>@link NSString NSString @/link @link stringWithFormat: stringWithFormat:@/link<span class="code">]</span></span>. Specifically, they have been sent a @link autorelease autorelease @/link message and they do not require any additional @link release release @/link messages.</p>
+
+<p>However, if you require use of a converted object past the current @link NSAutoreleasePool NSAutoreleasePool @/link context, you must take ownership of it by sending a @link retain retain @/link message.</p>
+
+<h5><a name="ConversionstoNSNumber">Conversions to NSNumber</a></h5>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">@link NSNumber NSNumber @/link conversions are not available under <a href="http://www.gnustep.org/"><i>GNUstep</i></a>.</div></div></div></div>
+
+<p>@link NSNumber NSNumber @/link object conversions are specified with <span class="code nobr">@n</span> and the conversions are performed with a thread private @link NSNumberFormatter NSNumberFormatter@/link.  A threads @link NSNumberFormatter NSNumberFormatter @/link is created when the first @link NSNumber NSNumber @/link conversion is requested and is released when the thread exits.</p>
+
+<p>The different types of @link NSNumberFormatterStyle NSNumberFormatterStyle @/link are made available using certain option characters.  For example, the @link NSNumberFormatterCurrencyStyle NSNumberFormatterCurrencyStyle @/link is specified as <span class="code nobr">@$n</span>.</p>
+
+<div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">All @link NSNumber NSNumber @/link conversions are performed with the @link NSNumberFormatter NSNumberFormatter @/link behavior set to @link NSNumberFormatterBehavior10_4 NSNumberFormatterBehavior10_4@/link.</div></div></div></div>
+
+<div class="table">
+<table class="standard" summary="NSNumber conversions specifiers">
+<caption><span class="code">NSNumber</span> type conversion syntax</caption>
+<tr><th>Conversion</th><th>Syntax</th><th>NSNumberFormatterStyle</th><th>Example String Forms</th><th>NSNumber value</th><th>Description</th></tr>
+<tr><td><span class="nobr">General Numbers</span></td><td><span class="code nobr">@n</span></td><td>@link NSNumberFormatterNoStyle NSNumberFormatterNoStyle @/link</td><td><span class="nobr">1234,</span> <span class="nobr">-4321</span></td><td><span class="nobr">1234.0,</span> <span class="nobr">-4321.0</span></td><td>Numbers without a decimal point.</td></tr>
+<tr><td><span class="nobr">Decimal Numbers</span></td><td><span class="code nobr">@.n</span></td><td>@link NSNumberFormatterDecimalStyle NSNumberFormatterDecimalStyle @/link</td><td><span class="nobr">1234.5,</span> <span class="nobr">-4321.9</span></td><td><span class="nobr">1234.5,</span> <span class="nobr">-4321.9</span></td><td>Numbers with a decimal point.</td></tr>
+<tr><td>Currency</td><td><span class="code nobr">@$n</span></td><td>@link NSNumberFormatterCurrencyStyle NSNumberFormatterCurrencyStyle @/link</td><td><span class="nobr">$1,234.56,</span> <span class="nobr">-$4321.00</span></td><td><span class="nobr">1234.56,</span> <span class="nobr">-4321.0</span></td><td>Uses the current locale settings for currency symbols and number separation style.</td></tr>
+<tr><td>Percentages</td><td><span class="code nobr">@%n</span></td><td>@link NSNumberFormatterPercentStyle NSNumberFormatterPercentStyle @/link</td><td>100%, 99.99%</td><td><span class="nobr">1.0,</span> <span class="nobr">0.9999</span></td><td>Percentage values.  For example, 100% is converted to 1.0, 23% becomes 0.23.</td></tr>
+<tr><td><span class="nobr">Scientific Notation</span></td><td><span class="code nobr">@sn</span></td><td>@link NSNumberFormatterScientificStyle NSNumberFormatterScientificStyle @/link</td><td><span class="nobr">9.342124e+06</span></td><td><span class="nobr">9342124.0</span></td><td>Numbers specified with an exponent. Equivalent to <span class="nobr">9.342124 * 10<span class="exponent">6</span>.</span></td></tr>
+<tr><td><span class="nobr">Spelled out words</span></td><td><span class="code nobr">@wn</span></td><td>@link NSNumberFormatterSpellOutStyle NSNumberFormatterSpellOutStyle @/link</td><td><span class="nobr">two hundred forty-three,</span> <span class="nobr">fifty-seven point nine five</span></td><td><span class="nobr">243.0,</span> <span class="nobr">57.95</span></td><td>Numbers that are spelled out with words.</td></tr>
+</table>
+</div>
+
+<h5><a name="ConversiontoNSCalendarDate">Conversion to NSCalendarDate</a></h5>
+
+<p>@link NSCalendarDate NSCalendarDate @/link object conversions are specified with <span class="code nobr">@d</span> and the conversions are performed with the @link NSDate NSDate @/link class method @link NSDate/dateWithNaturalLanguageString: dateWithNaturalLanguageString: @/link. Since the conversions are performed by a class method, conversions are serialized with a lock to ensure correct multithreading behavior.</p>
+
+<div class="table">
+<table class="standard" summary="NSCalendarDate conversion specifiers">
+<caption>Common conversion specifiers</caption>
+<tr><th>Conversion</th><th>Syntax</th><th>Converted Type</th><th>Example String Forms</th><th>Description</th></tr>
+<tr><td><span class="nobr">Dates and Times</span></td><td><span class="code nobr">@d</span></td><td>@link NSCalendarDate NSCalendarDate @/link</td><td><span class="nobr">'07/20/2007',</span> <span class="nobr">'6:44 PM',</span> <span class="nobr">'Feb 5th',</span> <span class="nobr">'6/20/2007, 11:34PM EST'</span></td><td>Parses a wide range of date and time formats.</td></tr>
+</table>
+</div>
+
+<h3>Specifying a Regular Expression</h3>
+
+<p>When specifying a regular expression, the regular expression can be either a @link RKRegex RKRegex @/link object or a @link NSString NSString @/link containing the text of a regular expression. When specified as a @link NSString NSString@/link, as determined by sending @link isKindOfClass: isKindOfClass:@/link, the receiver will convert the string to a @link RKRegex RKRegex @/link object via @link regexWithRegexString:options: regexWithRegexString:options:@/link.</p>
+
+<div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">The method will raise @link NSInvalidArgumentException NSInvalidArgumentException @/link if the regular expression is <span class="code">nil</span>. If passed as a @link NSString NSString@/link, the method will raise @link RKRegexSyntaxErrorException RKRegexSyntaxErrorException @/link if the regular expression is not valid.</div></div></div></div>
+
+<h4>Determining if an Object Matches a Regular Expression</h4>
+
+<p>Objects are sent @link isMatchedByRegex: isMatchedByRegex: @/link to determine whether or not they are matched by the specified regular expression.</p>
+
+  <div class="seealso">
+    <div class="section">See also</div>
+      <ul>
+        <li><a href="pcre/pcrepattern.html"><i>PCRE Regular Expression Syntax</i></a></li>
+      </ul>
+  </div>
+</div>
+
+\$hdoc{'NSString'}{'tasks'}
+\$hdoc{'NSString'}{'methods'}
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>

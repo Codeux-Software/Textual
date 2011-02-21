@@ -151,8 +151,6 @@ static NSArray					*encKeys						= nil;
     unsigned long		encodedLength;
 	yyscan_t			scanner; 
 	
-	validStatus = AH_URL_INVALID; 
-	
 	NSStringEncoding stringEnc = [inString fastestEncoding];
 	
 	if ([@" " lengthOfBytesUsingEncoding:stringEnc] > 1U) {

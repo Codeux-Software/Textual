@@ -4,8 +4,6 @@
 
 #include <arpa/inet.h>
 
-#import <BlowfishEncryption/Encryption.h>
-
 #define PONG_INTERVAL				150
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
@@ -3884,7 +3882,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	switch (n) {
 		case 1:
 		{
-			NSString *matche = [[m sequence:1] stringByMatching:IRC_NETWORK_NAME_REGEX capture:1];
+			NSString *matche = nil;
+			
+			[[m sequence:1] getCapturesWithRegexAndReferences:IRC_NETWORK_NAME_REGEX, @"${1}", &matche, nil];
 			
 			if (matche) {
 				[config setNetwork:matche];

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html ; charset=utf-8">
+<style type="text/css">
+@import "CSS/doc.css";
+</style>
+<link rel="stylesheet" type="text/css" href="CSS/print.css" media="print">
+<title>RKRegex Class Reference</title>
+</head>
+<body>
+<div class="bodyTop">
+
+<h1>RKRegex Class Reference</h1>
+
+<div class="box classSpecs hasRows zebraRows">
+<div class="row odd firstRow"><span class="cell left">Inherits from</span><span class="cell right lastCell"><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSObject_Class/index.html" target="_top">NSObject</a></span></div>
+
+<div class="row even">
+<span class="cell left">Conforms to</span>
+<ul class="cell right lastCell">
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/Reference/Reference.html#//apple_ref/occ/intf/NSCoding">NSCoding</a></li>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSCopying_Protocol/Reference/Reference.html#//apple_ref/occ/intf/NSCopying">NSCopying</a></li>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSObject_Protocol/Reference/NSObject.html#//apple_ref/occ/intf/NSObject">NSObject (NSObject)</a></li>
+</ul></div>
+
+<div class="row odd"><span class="cell left">Framework</span><span class="cell right lastCell"><a href="index.html">RegexKit.framework</a></span></div>
+<div class="row even regexKitVersion"><span class="cell left">RegexKit</span><span class="cell right lastCell"><span class="version">\$ENV{PROJECT_CURRENT_VERSION}</span> <span class="releaseNotes"><a href="ReleaseNotes.html#Release_\$ENV{PROJECT_VERSION_MAJOR}_\$ENV{PROJECT_VERSION_MINOR}_\$ENV{PROJECT_VERSION_POINT}">Release Notes</a></span></span></div>
+<div class="row odd"><span class="cell left">PCRE</span><span class="cell right lastCell">\$ENV{PCRE_VERSION}</span></div>
+<div class="row even"><span class="cell left">Availability</span><span class="cell right lastCell">Available in Mac OS X v10.4 or later.</span></div>
+<div class="row odd"><span class="cell left">Declared in</span><ul class="cell right lastCell"><li>RegexKit/RKRegex.h</li></ul></div>
+<div class="row even lastRow"><span class="cell left">Companion guides</span>
+<ul class="cell right lastCell">
+  <li><a href="RegexKitProgrammingGuide.html">RegexKit Programming Guide</a></li>
+  <li><a href="pcre/pcrepattern.html">PCRE Regular Expression Syntax</a></li>
+</ul></div>
+</div>
+
+<div class="overview">
+  <div class="masthead">Overview</div>
+
+  <p>The @link RKRegex RKRegex @/link class declares the programmatic interface for the @link RKRegex RKRegex @/link framework to the <a href="pcre/index.html"><i>PCRE</i></a> regular expression pattern matching library.</p>
+
+  <p>Some of the noteworthy features provided by the @link RKRegex RKRegex @/link class are:</p>
+
+  <ul>
+    <li>Multithreading safe.</li>
+    <li>The <a href="pcre/index.html"><i>PCRE</i></a> <a href="pcre/pcreapi.html#SEC7" class="section-link">compiled regular expression</a> is cached. See @link RKCache RKCache @/link for more information.</li>
+    <li>Makes extensive use of the stack for temporary results, avoiding expensive and time consuming memory allocations.</li>
+  </ul>
+
+  <div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">Since the regular expression is cached and reused again and again, the regular expression is always studied.  See <a href="pcre/pcreapi.html#SEC9" class="section-link">Studying a Pattern</a> and @link pcre_study pcre_study @/link for more information.</div></div></div></div>
+
+
+  <p>The @link RKRegex RKRegex @/link class provides the low level primitives necessary to perform regular expression matching.  The matching functions perform their work on raw byte buffers and provide match results in the form of @link NSRange NSRange @/link structures containing the range of a match and the range of any matching <a href="pcre/pcrepattern.html#SEC11" class="section-link">subpatterns</a> of a regular expression.</p>
+
+  <p>In addition to the low level matching primitives, the @link RKRegex RKRegex @/link class provides information about the underlying <a href="pcre/index.html"><i>PCRE</i></a> library, such as the version with the method @link PCREVersionString PCREVersionString @/link and <a href="pcre/index.html"><i>PCRE</i></a> <a href="pcre/pcrebuild.html" class="section-link">compile time options</a> via @link PCREBuildConfig PCREBuildConfig@/link.  Various methods for obtaining information about the instantiated @link RKRegex RKRegex @/link compiled regular expression <a href="pcre/pcrepattern.html#SEC12" class="section-link">named capture subpatterns</a>, if any, are provided.</p>
+  
+  <p>In general, the @link RKRegex RKRegex @/link class is not used by end-user applications directly.  Since the @link RKRegex RKRegex @/link class only provides low level primitives, end-user functionality is provided via various category extensions to common <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html"><i>Foundation</i></a> objects, such as the RegexKit framework additions to <a href="NSArray.html" class="code">NSArray</a>, <a href="NSDictionary.html" class="code">NSDictionary</a>, <a href="NSSet.html" class="code">NSSet</a>, <a href="NSString.html" class="code">NSString</a>, and their mutable variants.  Match enumeration is provided by the @link RKEnumerator RKEnumerator @/link class.</p>
+
+  <div class="seealso">
+    <div class="section">See also</div>
+    <ul>
+      <li><a href="pcre/pcreapi.html" class="section-link">PCRE Native API</a></li>
+      <li><a href="pcre/pcreapi.html#SEC6" class="section-link">Checking Build-Time Options</a></li>
+      <li><a href="pcre/pcreapi.html#SEC7" class="section-link">Compiling a Pattern</a></li>
+      <li><a href="pcre/pcrebuild.html" class="section-link">Options for Building PCRE</a></li>
+      <li><a href="pcre/pcre.html" class="section-link">PCRE Regular Expression Pattern Matching Library</a></li>
+    </ul>
+  </div>
+
+<h3><a name="overview_UnicodeSupport">Unicode Support</a></h3>
+
+<p>Unicode strings are fully supported by RegexKit, both in the regular expression pattern and the string to search.</p>
+
+<h3><a name="overview_FoundationAdditionsRKCompileOptionRequirements">Foundation Additions RKCompileOption Requirements</a></h3>
+  
+  <p>The @link Foundation Foundation @/link additions use Unicode strings exclusively for the buffer that @link RKRegex RKRegex @/link performs matches against.  If a @link NSString NSString @/link has an encoding format other than @link ASCII ASCII @/link, it is first converted to @link UTF8 UTF8 @/link before any matching can occur. Because of this, @link RKRegex RKRegex @/link objects must have the @link RKCompileOption RKCompileOption @/link flags @link RKCompileUTF8 RKCompileUTF8 @/link and @link RKCompileNoUTF8Check RKCompileNoUTF8Check @/link set.  Bytes with the most significant bit set in @link UTF8 UTF8 @/link encoded strings have special meaning that must be interpreted.  Without these options set, PCRE treats the buffer as a collection of 8 bit bytes without the required @link UTF8 UTF8 @/link decoding.</p>
+
+  <p>The various @link Foundation Foundation @/link additions will accept either a @link RKRegex RKRegex @/link or a @link NSString NSString @/link for the regex argument.  If the supplied object is a @link NSString NSString@/link, it is automatically converted to a @link RKRegex RKRegex @/link object via the @link regexWithRegexString:options: regexWithRegexString:options: @/link method with an option argument of (@link RKCompileUTF8 RKCompileUTF8 @/link | @link RKCompileNoUTF8Check RKCompileNoUTF8Check@/link).</p>
+  
+  <p>If you are supplying an instantiated @link RKRegex RKRegex @/link object instead of using the @link NSString NSString @/link auto-compile functionality, the @link RKCompileOption RKCompileOption @/link options @link RKCompileUTF8 RKCompileUTF8 @/link and @link RKCompileNoUTF8Check RKCompileNoUTF8Check @/link must be set.</p>
+
+  <div class="box note marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Note:</div><div class="message cell">Unlike the other Foundation additions, the @link NSData NSData @/link additions do not require and <b><i>do not</i></b> set the @link RKCompileUTF8 RKCompileUTF8 @/link and @link RKCompileNoUTF8Check RKCompileNoUTF8Check@/link compile option flags.</div></div></div></div>
+
+  <div class="box important marginTopSpacer marginBottomSpacer"><div class="table"><div class="row"><div class="label cell">Important:</div><div class="message cell">Failure to set the required @link RKCompileOption RKCompileOption @/link options will cause the supplied @link RKRegex RKRegex @/link to be discarded and a new @link RKRegex RKRegex @/link object created from the discarded regex with the required @link UTF8 UTF8 @/link flags logically ORd to any existing options.</div></div></div></div>
+
+  <div class="seealso">
+    <div class="section">See also</div>
+    <ul>
+      <li>@link RKCompileUTF8 RKCompileUTF8 @/link</li>
+      <li><a href="http://www.unicode.org/" class="section-link" target="_top">The Unicode Consortium Home Page</a></li>
+      <li><a href="pcre/pcre.html#utf8support" class="section-link">UTF-8 and Unicode Property Support</a></li>
+      <li><a href="NSString.html#overview_UnicodeSupport" class="section-link">Unicode Support</a></li>
+    </ul>
+  </div>
+
+  <h3><a name="overview_ImportantNSRangeDifferences">Important NSRange Differences</a></h3>
+
+  <p>For the purposes of calculating character indexes, @link Foundation Foundation @/link treats all strings as if they were @link UTF16 UTF16 @/link encoded.  PCRE, on the other hand, uses @link UTF8 UTF8 @/link exclusively.  This has important consequences when using strings that are encoded in anything but @link ASCII ASCII @/link.  It is important to understand that all of the @link Foundation Foundation @/link additions, and the @link RKEnumerator RKEnumerator @/link class, calculate all character index values as UTF16 character indexes.  Since PCRE can only operate on UTF8 encoded strings, this requires any @link NSRange NSRange @/link values to be converted between the two character index spaces.  This provides transparent interoperability with the rest of @link Foundation Foundation @/link at the expense of having to perform the character index conversation.</p>
+
+  <p>However, the @link RKRegex RKRegex @/link methods use @link UTF8 UTF8 @/link character indexes for all @link NSRange NSRange @/link values.  This is an important distinction as @link NSRange NSRange @/link values returned by @link RKRegex RKRegex @/link objects will result in undefined behavior if passed to @link NSString NSString @/link objects without converting to the equivalent @link UTF16 UTF16 @/link character indexes.  The functions @link RKConvertUTF8ToUTF16RangeForString RKConvertUTF8ToUTF16RangeForString @/link and @link RKConvertUTF16ToUTF8RangeForString RKConvertUTF16ToUTF8RangeForString @/link can be used to perform the necessary conversions, if required.</p>
+  
+  <p>The reasoning behind this is that the @link RKRegex RKRegex @/link class provides low level access to the PCRE engine.  The @link Foundation Foundation @/link additions provide abstracted access to the underlying pattern matching engine.  There are still many useful tasks that can be performed with low-level access, such as not enabling @link RKCompileUTF8 RKCompileUTF8 @/link and matching raw binary byte buffers.  Therefore, the @link RKRegex RKRegex @/link class tries to provide unadulterated access to the PCRE matching engine or those users who have special requirements.</p>
+
+  <div class="seealso">
+    <div class="section">See also</div>
+    <ul>
+      <li>@link RKConvertUTF8ToUTF16RangeForString RKConvertUTF8ToUTF16RangeForString @/link</li>
+      <li>@link RKConvertUTF16ToUTF8RangeForString RKConvertUTF16ToUTF8RangeForString @/link</li>
+      <li><a href="NSString.html#overview_NSRangeCompatibilitywithFoundation" class="section-link">NSRange Compatibility with Foundation</a></li>
+    </ul>
+  </div>
+
+  <h3><a name="overview_NSCodingSupport">NSCoding Support</a></h3>
+  
+  <p>The @link RKRegex RKRegex @/link class fully supports the @link NSCoding NSCoding @/link protocol.  When a @link RKRegex RKRegex @/link is archived, the regular expression string used to create the receiver is coded, along with any @link RKCompileOption RKCompileOption @/link options.  In addition to these two main items, the version and @link RKBuildConfig RKBuildConfig @/link flags are also encoded to aid in debugging any unarchiving issues.</p>
+
+  <p>If problems are encountered when attempting to initialize a coded @link RKRegex RKRegex @/link regular expression, a @link NSInvalidUnarchiveOperationException NSInvalidUnarchiveOperationException @/link is raised.  The @link userInfo userInfo @/link portion of the exception contains additional information regarding the failed attempt.  Some of the additional information includes any difference in the archiving @link RKRegex RKRegex @/link PCRE version, any unknown or unsupported @link RKCompileOption RKCompileOption @/link flags for the current RegexKit, and any differences in @link RKBuildConfig RKBuildConfig @/link flags.</p>
+</div>
+
+<h2>Adopted Protocols</h2>
+
+<div class="protocols">
+<div class="header">NSCoding</div>
+<ul>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/Reference/Reference.html#//apple_ref/occ/intfm/NSCoding/encodeWithCoder:" class="code">- encodeWithCoder:</a></li>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/Reference/Reference.html#//apple_ref/occ/intfm/NSCoding/initWithCoder:" class="code">- initWithCoder:</a></li>
+</ul>
+</div>
+
+<div class="protocols">
+<div class="header">NSCopying</div>
+<ul>
+<li><a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Protocols/NSCopying_Protocol/Reference/Reference.html#//apple_ref/occ/intfm/NSCopying/copyWithZone:" class="code">- copyWithZone:</a></li>
+</ul>
+</div>
+
+\$hdoc{'RKRegex'}{'tasks'}
+\$hdoc{'RKRegex'}{'methods'}
+
+<script type="text/javascript" language="JavaScript" src="JavaScript/common.js"></script>
+</div>
+</body>
+</html>

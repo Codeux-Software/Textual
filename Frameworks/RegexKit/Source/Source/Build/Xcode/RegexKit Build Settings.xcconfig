@@ -1,0 +1,355 @@
+// This file contains the global, top level Xcode build configuration
+// variables.  Changes to these variables can be made here, directly, but
+// it is probably more appropriate to make changes from within Xcode via
+// 'Project > Edit Project Settings' or
+// 'Project > Edit Active Target ... Settings'
+
+// A rough table of contents of this file is:
+//
+// General settings
+// Overall build and compiler settings
+// Paths to executables
+// PCRE
+// 'Build/' directory related settings
+// Documentation
+// Distribution
+
+// Variable name to reference this file.
+
+REGEXKIT_XCODE_CONFIG_FILE = ${BUILD_SOURCE_DIR}/Xcode/RegexKit\ Project.xcconfig
+
+// Project version information
+
+PROJECT_VERSION_MAJOR           = 0
+PROJECT_VERSION_MINOR           = 6
+PROJECT_VERSION_POINT           = 0
+
+PROJECT_CURRENT_VERSION         = ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_POINT}
+PROJECT_COMPATIBLE_VERSION      = 0.4.0
+
+// Enable parallel building where possible
+
+PARALLEL_BUILD                  = YES
+
+// The SDK for the current Mac OS X release
+
+SDKROOT_1040                    = /Developer/SDKs/MacOSX10.4u.sdk
+SDKROOT_1050                    = /Developer/SDKs/MacOSX10.5.sdk
+SDKROOT                         = ${SDKROOT_${MAC_OS_X_VERSION_MAJOR}}
+
+// Compiler flags dependent on the current Mac OS X release
+
+XCODE_CFLAGS_1040               = 
+XCODE_CFLAGS_1050               = -fstack-protector-all
+XCODE_CFLAGS_FOR_OS             = ${XCODE_CFLAGS_${MAC_OS_X_VERSION_MAJOR}}
+
+PCRE_CFLAGS_1040                = 
+PCRE_CFLAGS_1050                = -fstack-protector-all
+PCRE_CFLAGS_FOR_OS              = ${PCRE_CFLAGS_${MAC_OS_X_VERSION_MAJOR}}
+
+// The architectures we build for for the current Mac OS X release
+
+ARCHS_1040                      = ppc i386
+ARCHS_1050                      = ppc ppc64 i386 x86_64
+ARCHS                           = ${ARCHS_${MAC_OS_X_VERSION_MAJOR}}
+
+// MACOSX_DEPLOYMENT_TARGET is also set in Makefile.pcre, ppc & i386 @ 10.4, ppc64 & x86_64 @ 10.5
+
+MACOSX_DEPLOYMENT_TARGET_ppc    = 10.4
+MACOSX_DEPLOYMENT_TARGET_i386   = 10.4
+MACOSX_DEPLOYMENT_TARGET_ppc64  = 10.5
+MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5
+
+// File that contains the symbols we export for the 'RegexKit Framework' target.
+
+PROJECT_EXPORTED_SYMBOLS_FILE   = ${BUILD_XCODE_DIR}/projectExportedSymbols
+
+// Framework header information.
+
+PROJECT_HEADERS_ROOT                    = Source/Headers
+PROJECT_HEADERS_DIR                     = ${PROJECT_HEADERS_ROOT}/${PROJECT_NAME}
+
+//
+//  Overall build / compiler settings.
+//
+
+COPY_PHASE_STRIP                        = NO
+PREBINDING                              = NO
+ZERO_LINK                               = NO
+
+STRIP_INSTALLED_PRODUCT                 = NO
+STRIP_STYLE                             = debugging
+
+// GCC build settings.
+
+DEBUG_INFORMATION_FORMAT                = dwarf
+GCC_DEBUGGING_SYMBOLS                   = full
+GCC_GENERATE_DEBUGGING_SYMBOLS          = YES
+GCC_ENABLE_SYMBOL_SEPARATION            = NO
+
+GCC_OPTIMIZATION_LEVEL                  = z
+GCC_C_LANGUAGE_STANDARD                 = gnu99
+OTHER_CFLAGS                            = ${XCODE_CFLAGS_FOR_OS}
+
+GCC_ENABLE_CPP_EXCEPTIONS               = NO
+GCC_ENABLE_CPP_RTTI                     = NO
+GCC_ENABLE_OBJC_EXCEPTIONS              = YES
+GCC_ENABLE_PASCAL_STRINGS               = NO
+GCC_FAST_OBJC_DISPATCH                  = YES
+GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES
+GCC_INLINES_ARE_PRIVATE_EXTERN          = YES
+GCC_MODEL_TUNING                        = G4
+GCC_PRECOMPILE_PREFIX_HEADER            = YES
+GCC_PREFIX_HEADER                       = Source/RegexKit_Prefix.pch
+
+GCC_WARN_ABOUT_RETURN_TYPE              = YES
+GCC_WARN_CHECK_SWITCH_STATEMENTS        = YES
+GCC_WARN_SHADOW                         = YES
+GCC_WARN_SIGN_COMPARE                   = YES
+GCC_WARN_TYPECHECK_CALLS_TO_PRINTF      = YES
+GCC_WARN_UNUSED_FUNCTION                = YES
+GCC_WARN_UNUSED_PARAMETER               = YES
+GCC_WARN_UNUSED_VALUE                   = YES
+GCC_WARN_UNUSED_VARIABLE                = YES
+
+// Executables used by scripts.
+
+BZIP2_CMD = /usr/bin/bzip2
+FIND      = /usr/bin/find
+GZIP_CMD  = /usr/bin/gzip
+MAKE      = /usr/bin/make
+PERL      = /usr/bin/perl
+RSYNC     = /usr/bin/rsync
+SED       = /usr/bin/sed
+SHELL     = /bin/sh
+SQLITE    = /usr/bin/sqlite3
+TAR       = /usr/bin/tar
+TEXTUTIL  = /usr/bin/textutil
+
+// TIDY can be used to pick which 'tidy' executable is used to check the HTML documentation.
+// This is left unset here because 10.4 ships with a tidy that is too old and reports bogus problems.  When left unset, the checkHTML.sh script
+// will check a number of reasonable places where tidy might exist (/usr/local/, /sw/bin, /opt/local/bin, etc) for a useable version, skipping
+// any that have a version on or before 2004/12/01.
+
+// ASPELL can be used to pick which 'aspell' executable is used to perform spell checking on the documentation.
+// Since 'aspell' does not ship with 10.4, it looks in a number of reasonable places for a copy in the same way 'tidy' looks for a reasonable copy.
+
+//
+//  PCRE Configuration Section
+//
+
+//
+//  Options controlling the pcre library version, tarball storage location, and tarball name.
+//
+
+// PCRE_VERSION is the fundamental setting that controls which version of the pcre library will be built.
+// The variable is used to construct the distribution tarball name, such as pcre-7.4.tar.bz2.
+
+PCRE_VERSION         = 8.12
+
+// ${PCRE_URL_ROOT} is the URL where the tarball can be found. It is assembled from the SCHEME, SITE, and PATH
+// build settings.  The SCHEME build setting contains a trailing ':/' which is important because Xcode will
+// always interpret a // as a comment.  The final PCRE_URL_ROOT supplies the additional '/' when it pieces
+// everything together.
+
+// An alternate download location is ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
+//
+//PCRE_URL_ROOT_SCHEME = ftp:/
+//PCRE_URL_ROOT_SITE   = ftp.csx.cam.ac.uk
+//PCRE_URL_ROOT_PATH   = pub/software/programming/pcre
+//PCRE_FETCH_OPTIONS   =                                // No options.
+
+
+PCRE_URL_ROOT_SCHEME = http:/
+PCRE_URL_ROOT_SITE   = downloads.sourceforge.net
+PCRE_URL_ROOT_PATH   = pcre
+PCRE_FETCH_OPTIONS   = -LR                        // -L, follow 302 redirect to mirror, -R set timestamp to remotes timestamp.
+
+PCRE_URL_ROOT        = ${PCRE_URL_ROOT_SCHEME}/${PCRE_URL_ROOT_SITE}/${PCRE_URL_ROOT_PATH}
+
+// Options for how and what to fetch from the master pcre site.
+
+PCRE_TARBALL_URL   = ${PCRE_URL_ROOT}/${PCRE_TARBALL_FILE_NAME}
+PCRE_FETCH_COMMAND = curl ${PCRE_FETCH_OPTIONS} '${PCRE_TARBALL_URL}' -o '${PCRE_TARBALL_FILE_PATH}'
+
+// The base name of the pcre distribution.
+
+PCRE_NAME_VERSION = pcre-${PCRE_VERSION}
+
+// The name and full path to the distribution tarball.
+
+PCRE_TARBALL_FILE_NAME = ${PCRE_NAME_VERSION}.tar.bz2
+PCRE_TARBALL_FILE_PATH = ${PROJECT_DIR}/${PCRE_TARBALL_DISTRIBUTIONS_DIR}/${PCRE_TARBALL_FILE_NAME}
+
+// The location where the tarball distribution files are stored locally.
+
+PCRE_TARBALL_DISTRIBUTIONS_DIR = Source/pcre
+
+// Command to use to untar the distribution.
+// NOTE: The working directory is set to ${PCRE_TEMP_ROOT} before this command is executed.
+
+PCRE_UNTAR_COMMAND = ${TAR} xjf '${PCRE_TARBALL_FILE_PATH}'
+
+//
+//  Options controlling the pcre library build process
+//
+
+// These configuration settings are passed to the pcre './configure' script. The values here are the 'base' values for these settings.
+// Makefile.pcre also alters the final value of these settings.  It will attempt to synthesize the appropriate flags from the various Xcode
+// settings, such as GCC_OPTIMIZATION_LEVEL.
+
+PCRE_CONF_OPTIONS        = --enable-utf8 --enable-unicode-properties --disable-cpp --disable-shared
+
+// PCRE_CONF_CFLAGS      =                                                     // When these are set, they are passed to PCRE's ./configure script as you would expect
+// PCRE_CONF_LDFLAGS     = 
+
+PCRE_CONF_CFLAGS         = ${PCRE_CFLAGS_FOR_OS}
+
+// Locations of important files.
+
+PCRE_HEADER_FILE         = ${PCRE_INSTALL_DIR}/${NATIVE_ARCH}/include/pcre.h   // The distributions pcre.h header file.
+PROJECT_PCRE_HEADER_FILE = ${PROJECT_HEADERS_DIR}/pcre.h                       // The frameworks copy of the distributions pcre.h header file.
+PCRE_UNIVERSAL_LIB_FILE  = ${PCRE_INSTALL_DIR}/lib/libpcre.a                   // The universal binary of the pcre library.
+PCRE_TARGET_LIB_PATH     = ${PCRE_TARGET_BUILD_DIR}/lib                        // The path ultimately fed to -L for linking.
+PCRE_TARGET_LIB_FILE     = ${PCRE_TARGET_LIB_PATH}/libpcre.a                   // The location of the library file that the framework is linked against.
+                                                                               // NOTE: ${PCRE_TARGET_LIB_FILE} is a symlink to ${PCRE_UNIVERSAL_LIB_FILE}.
+
+// Various directory configuration settings.
+
+PCRE_TARGET_BUILD_DIR = ${TARGET_BUILD_DIR}/${PCRE_NAME_VERSION}               // Directory that contains the 'public' files that can be used by other targets.
+PCRE_TEMP_ROOT        = ${PROJECT_TEMP_DIR}/${CONFIGURATION}/PCRE.build        // Root directory that contains all our intermediate files and output used to build the pcre library.
+PCRE_TEMP_DIR         = ${PCRE_TEMP_ROOT}/${PCRE_NAME_VERSION}                 // The root directory for the current version of the pcre library we are building.
+PCRE_CONFIGURE_DIR    = ${PCRE_TEMP_DIR}/${PROJECT_NAME}.configure             // The root directory where individual architectures are './configure'd.
+PCRE_INSTALL_DIR      = ${PCRE_TEMP_DIR}/${PROJECT_NAME}.install               // The root directory where individual architectures are 'make install'd.
+PCRE_HTML_DIR         = ${PCRE_TEMP_DIR}/doc/html                              // The directory that contains the pcre html documentation.
+
+// Settings used to build the pcre library and ensure that dependency changes are propagated to the built pcre library.
+
+PCRE_BUILD_SCRIPT        = ${BUILD_SCRIPTS_DIR}/buildPCRE.sh                   // The script used to do some dependency checks, and then run ${MAKE} -f {$MAKEFILE_PCRE}.
+PCRE_BUILT_WITH_ENV_CMD  = env | sort                                          // Command used to determine the environment variables that the pcre library is being built with.
+PCRE_BUILT_WITH_ENV_FILE = ${PCRE_TEMP_ROOT}/built_with_env                    // Contains the environment variables used when the pcre library was built.
+PCRE_BUILT_WITH_SCRIPT   = ${PCRE_TEMP_ROOT}/built_with_script                 // Contains a copy of ${PCRE_BUILD_SCRIPT} that was used to build the pcre library.
+PCRE_BUILT_WITH_MAKEFILE = ${PCRE_TEMP_ROOT}/built_with_makefile               // Contains a copy of ${MAKEFILE_PCRE} that was used to build the pcre library.
+
+PCRE_PARALLEL_BUILD      = ${PARALLEL_BUILD}                                   // Allow `make` to build the PCRE target with up to hw.activecpu jobs at once.
+
+//
+// Settings that have to do with files in the 'Build/' directory.
+//
+
+BUILD_SOURCE_DIR                     = Source/Build
+BUILD_DISTRIBUTION_DIR               = ${BUILD_SOURCE_DIR}/Distribution
+BUILD_MAKEFILE_DIR                   = ${BUILD_SOURCE_DIR}/Makefiles
+BUILD_PACKAGEMAKER_DIR               = ${BUILD_SOURCE_DIR}/Packagemaker
+BUILD_SCRIPTS_DIR                    = ${BUILD_SOURCE_DIR}/Scripts
+BUILD_SQL_DIR                        = ${BUILD_SOURCE_DIR}/SQL
+BUILD_XCODE_DIR                      = ${BUILD_SOURCE_DIR}/Xcode
+
+MAKEFILE_DIST                        = ${BUILD_MAKEFILE_DIR}/Makefile.dist
+MAKEFILE_PCRE                        = ${BUILD_MAKEFILE_DIR}/Makefile.pcre
+
+BUILD_DISTRIBUTION_SCRIPT            = ${BUILD_SCRIPTS_DIR}/buildDistribution.sh
+BUILD_PCRE_SCRIPT                    = ${BUILD_SCRIPTS_DIR}/buildPCRE.sh
+STRIP_HEADERDOC_SCRIPT               = ${BUILD_SCRIPTS_DIR}/stripHeaderdoc.sh
+FILE_CHECK_SCRIPT                    = ${BUILD_SCRIPTS_DIR}/fileCheck.pl
+PLISTUTIL_SCRIPT                     = ${BUILD_SCRIPTS_DIR}/plistUtil.pl
+PACKAGEDIST_SCRIPT                   = ${BUILD_SCRIPTS_DIR}/packageDist.pl
+
+// When the source distribution is built, the Source/Headers/RegexKit/pcre.h
+// file that was copied from the pcre distribution is NOT copied in to the 
+// source bundle.  This file takes its place in the source distribution.  This
+// is because we fetch the configured pcre distribution and use that 
+// distributions pcre.h file.  Attempting to compile the project with this
+// stand in pcre.h file will issue an #error from the file.
+
+BUILD_DISTRIBUTION_TEMP_PCRE_HEADER_FILE = ${BUILD_DISTRIBUTION_DIR}/distribution_pcre.h
+
+//
+// All things documentation...
+//
+
+DOCUMENTATION_SOURCE_DIR             = Source/Documentation
+DOCUMENTATION_MISC_DIR               = ${DOCUMENTATION_SOURCE_DIR}/Misc
+DOCUMENTATION_RESOURCES_DIR          = ${DOCUMENTATION_SOURCE_DIR}/Resources
+DOCUMENTATION_SCRIPTS_DIR            = ${DOCUMENTATION_SOURCE_DIR}/Scripts
+DOCUMENTATION_SQL_DIR                = ${DOCUMENTATION_SOURCE_DIR}/SQL
+DOCUMENTATION_TARGET_DIR             = ${TARGET_BUILD_DIR}/Documentation
+DOCUMENTATION_TEMP_DIR               = ${PROJECT_TEMP_DIR}/${CONFIGURATION}/Documentation.build
+DOCUMENTATION_TEMPLATES_DIR          = ${DOCUMENTATION_SOURCE_DIR}/Templates
+
+DOCUMENTATION_DOCSET_ID              = com.zang.RegexKit.Documentation.docset
+DOCUMENTATION_DOCSET_PACKAGED_FILE   = ${PROJECT_NAME}_${PROJECT_CURRENT_VERSION}_docset.xar
+                                    // Because xcode thoughtfully chops // off, we can't use http://...
+                                    // We glue it together in createDocSet.pl
+DOCUMENTATION_DOCSET_FEED_SCHEME     = http:
+DOCUMENTATION_DOCSET_FEED_URL        = regexkit.sourceforge.net/RegexKitDocSets.atom
+
+DOCUMENTATION_SQL_DATABASE_DIR       = ${DOCUMENTATION_TEMP_DIR}
+DOCUMENTATION_SQL_DATABASE_FILE      = ${DOCUMENTATION_SQL_DATABASE_DIR}/${PROJECT_NAME}_headerdoc.sqlitedb
+DOCUMENTATION_SQL_CONFIG_FILE        = ${DOCUMENTATION_SQL_DIR}/config.sql
+DOCUMENTATION_SQL_INIT_FILE          = ${DOCUMENTATION_SQL_DIR}/init.sql
+
+BUILD_DOCUMENTATION_SCRIPT           = ${DOCUMENTATION_SCRIPTS_DIR}/buildDocumentation.sh
+BUILD_DOCSET_SCRIPT                  = ${DOCUMENTATION_SCRIPTS_DIR}/buildDocSet.sh
+DOCUMENTATION_CHECK_HTML_SCRIPT      = ${DOCUMENTATION_SCRIPTS_DIR}/checkHTML.sh
+DOCUMENTATION_CHECK_SPELLING_SCRIPT  = ${DOCUMENTATION_SCRIPTS_DIR}/checkSpelling.sh
+DOCUMENTATION_CREATE_DOCSET_SCRIPT   = ${DOCUMENTATION_SCRIPTS_DIR}/createDocSet.pl
+DOCUMENTATION_GENERATE_HTML_SCRIPT   = ${DOCUMENTATION_SCRIPTS_DIR}/generateHTML.pl
+DOCUMENTATION_PARSE_HEADERS_SCRIPT   = ${DOCUMENTATION_SCRIPTS_DIR}/parseHeaders.pl
+DOCUMENTATION_RESOLVE_LINKS_SCRIPT   = ${DOCUMENTATION_SCRIPTS_DIR}/resolveLinks.pl
+
+DOCUMENTATION_DOCSET_TEMP_DIR        = ${PROJECT_TEMP_DIR}/${CONFIGURATION}/DocSet.build
+DOCUMENTATION_DOCSET_TEMP_DOCS_DIR   = ${DOCUMENTATION_DOCSET_TEMP_DIR}/${DOCUMENTATION_DOCSET_ID}/Contents/Resources/Documents
+DOCUMENTATION_DOCSET_SOURCE_HTML     = ${DOCUMENTATION_TARGET_DIR}
+DOCUMENTATION_DOCSET_TARGET_DIR      = ${TARGET_BUILD_DIR}/DocSet
+
+
+//
+// All things distribution...
+//
+
+DISTRIBUTION_ROOT                    = ${DISTRIBUTION_TARGET_DIR}/${DISTRIBUTION_ROOT_NAME}
+DISTRIBUTION_SQL_DATABASE_DIR        = ${DISTRIBUTION_TEMP_DIR}
+DISTRIBUTION_TARGET_DIR              = ${TARGET_BUILD_DIR}/Distribution
+DISTRIBUTION_TEMP_DIR                = ${PROJECT_TEMP_DIR}/${CONFIGURATION}/Distribution.build
+
+DISTRIBUTION_TEMP_BINARY_DIR         = ${DISTRIBUTION_TEMP_DIR}/Binary
+DISTRIBUTION_TEMP_SOURCE_DIR         = ${DISTRIBUTION_TEMP_DIR}/Source
+DISTRIBUTION_TEMP_PACKAGES_DIR       = ${DISTRIBUTION_TEMP_DIR}/Packages
+
+DISTRIBUTION_SOURCE_DTRACE_DIR       = Source/DTrace
+
+DISTRIBUTION_BASE_FILE_NAME          = ${DISTRIBUTION_ROOT_NAME}
+DISTRIBUTION_BASE_SOURCE_FILE_NAME   = ${DISTRIBUTION_BASE_FILE_NAME}_source
+
+DISTRIBUTION_DMG_CONVERT_OPTS        = -format UDBZ
+DISTRIBUTION_DMG_VOL_NAME            = ${DISTRIBUTION_ROOT_NAME}
+
+DISTRIBUTION_ROOT_NAME               = ${PROJECT_NAME}_${PROJECT_CURRENT_VERSION}
+DISTRIBUTION_ROOT_SOURCE_NAME        = ${PROJECT_NAME}_${PROJECT_CURRENT_VERSION}_source
+
+// SQL database with distribution configuration information.
+DISTRIBUTION_SQL_DATABASE_FILE       = ${DISTRIBUTION_SQL_DATABASE_DIR}/${PROJECT_NAME}_distribution.sqlitedb
+DISTRIBUTION_SQL_FILES_FILE          = ${BUILD_SQL_DIR}/files.sql
+
+DISTRIBUTION_PARALLEL_BUILD          = ${PARALLEL_BUILD}   // Allow `make` to build the Distribution target with up to hw.activecpu jobs at once.
+
+// Optionally gzip the .pkg (really Contents/Archive.pax).
+// This is disable by default because it makes the final .dmg ~60-70K larger.
+DISTRIBUTION_GZIP_PACKAGES           = NO
+
+// Optionally include the ${PCRE_TARBALL_FILE_NAME} in the final Mac OS X Installer package.
+// This is disabled by default because it doubles the final .dmg size.
+DISTRIBUTION_INCLUDE_PCRE_PACKAGE    = NO
+
+// The default directory to install everything.
+DISTRIBUTION_DEFAULT_INSTALL_DIR     = /Developer/Local/
+
+
+DISTRIBUTION_PACKAGE_PLISTS_DIR            = ${BUILD_PACKAGEMAKER_DIR}/plists
+DISTRIBUTION_PACKAGE_FRAMEWORK             = RegexKit_Framework.pkg
+DISTRIBUTION_PACKAGE_INSTRUMENTS_ADDITIONS = RegexKit_Instruments_Additions.pkg
+DISTRIBUTION_PACKAGE_HTML_DOCUMENTATION    = RegexKit_HTML_Documentation.pkg
+DISTRIBUTION_PACKAGE_DOCSET_DOCUMENTATION  = RegexKit_DocSet_Documentation.pkg
+DISTRIBUTION_PACKAGE_SOURCECODE            = RegexKit_Sourcecode.pkg
+DISTRIBUTION_PACKAGE_SOURCECODE_PCRE       = RegexKit_Sourcecode_pcre.pkg

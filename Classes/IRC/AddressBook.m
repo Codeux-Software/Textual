@@ -123,7 +123,10 @@
 - (BOOL)checkIgnore:(NSString *)thehost
 {
 	if (hostmaskRegex && thehost) {
-		return [thehost isMatchedByRegex:hostmaskRegex options:RKLCaseless inRange:NSMakeRange(0, [thehost length]) error:NULL];
+		NSString *hmst1 = [thehost		 canonicalName];
+		NSString *hmst2 = [hostmaskRegex canonicalName];
+		
+		return [hmst1 isMatchedByRegex:hmst2];
 	}
 	
 	return NO;

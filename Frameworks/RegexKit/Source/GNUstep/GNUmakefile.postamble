@@ -1,0 +1,26 @@
+# This uses the after-instal rule to strip the header doc comments from the installed product.
+
+# Shiny chrome
+ifneq ($(messages),yes)
+  ECHO_STRIPPING_HEADERDOC = @(echo " Stripping headerdoc comments from installed headers...";
+  HEADERDOC_REDIRECT = >/dev/null
+else
+  ECHO_STRIPPING_HEADERDOC = 
+  HEADERDOC_REDIRECT = 
+endif
+
+FIND ?= $(shell which find)
+PERL ?= $(shell which perl)
+SHELL ?= $(shell which sh)
+SED = $(shell which sed)
+
+after-install::
+	$(ECHO_STRIPPING_HEADERDOC)sh -c  " \
+    export FIND=${FIND}; \
+    export PERL=${PERL}; \
+    export SHELL=${SHELL}; \
+    export SED=${SED}; \
+		export TARGET_BUILD_DIR=${GNUSTEP_INSTALLATION_DIR}/Library/Headers; \
+		export PUBLIC_HEADERS_FOLDER_PATH=${libRegexKit_HEADER_FILES_INSTALL_DIR}; \
+		export TEMP_FILES_DIR=${GNUSTEP_BUILD_DIR}; \
+		${REGEXKIT_SOURCE_DIR}/Build/Scripts/stripHeaderdoc.sh $(HEADERDOC_REDIRECT)"$(END_ECHO)

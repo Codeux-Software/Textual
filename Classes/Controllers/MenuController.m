@@ -480,15 +480,12 @@
 		return;
 	}
 	
-	PreferencesController *pc = [PreferencesController alloc];
+	PreferencesController *pc = [[PreferencesController alloc] initWithWorldController:world];
 	
 	pc.delegate = self;
-	pc.world = world;
-	
-	[pc init];
-	[pc show];
 	
 	preferencesController = pc;
+	[preferencesController show];
 }
 
 - (void)preferencesDialogWillClose:(PreferencesController *)sender

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.match.error" name="RegexKit.instrument.match.error" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Match Errors" runClass="PFTDTraceRun" instrumentDescription="Records matches that result in an error." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.match.error" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+
+		<probe_definition index="0" event_name="Match Error" probe="RegexKit*:::EndMatch" silent_script="this->regex = (char **)copyin(arg0, 16);\nnthis->searchRange = (unsigned long *)copyin(arg6, sizeof(unsigned long) * 2);\nnthis->ranges = (unsigned long *)copyin(arg2, sizeof(unsigned long) * 2);" predicate=" (int)arg8 &lt; -1" attach_debugger="">
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKRegex Object" code="(unsigned long)this->regex[0]" type="%x" width="15" truncation="middle"/>
+      <field index="2" name="Hash" code="(unsigned long)arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Regex" code="copyinstr((user_addr_t)this->regex[1])" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Compile Options" code="((unsigned int *)this->regex)[2]" type="%x" width="15" truncation="middle"/>
+		  <field index="5" name="Match Options" code="arg7" type="%x" width="15" truncation="middle"/>
+		  <field index="6" name="Buffer" code="(unsigned long)arg4" type="%x" width="15" truncation="right"/>
+		  <field index="7" name="Buffer Size" code="(unsigned long)arg5" type="%d" width="10" truncation="right"/>
+		  <field index="8" name="Search Location" code="(unsigned long)this->searchRange[0]" type="%d" width="10" truncation="right"/>
+		  <field index="9" name="Search Length" code="(unsigned long)this->searchRange[1]" type="%d" width="10" truncation="right"/>
+		  <field index="10" name="Match Error Code" code="(int)arg8" type="%d" width="10" truncation="right"/>
+		  <field index="11" name="Match Error String" code="copyinstr(arg9)" type="%s" width="25" truncation="middle"/>
+		</probe_definition>
+
+		<probe_definition index="1" event_name="Match Exception" probe="RegexKit*:::MatchException" silent_script="this->regex = (char **)copyin(arg0, 16);\nnthis->searchRange = (unsigned long *)copyin(arg6, sizeof(unsigned long) * 2);\nnthis->ranges = (unsigned long *)copyin(arg2, sizeof(unsigned long) * 2);" predicate="" attach_debugger="">
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKRegex Object" code="(unsigned long)this->regex[0]" type="%x" width="15" truncation="middle"/>
+      <field index="2" name="Hash" code="(unsigned long)arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Regex" code="copyinstr((user_addr_t)this->regex[1])" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Compile Options" code="((unsigned int *)this->regex)[2]" type="%x" width="15" truncation="middle"/>
+		  <field index="5" name="Match Options" code="arg7" type="%x" width="15" truncation="middle"/>
+		  <field index="6" name="Buffer" code="(unsigned long)arg4" type="%x" width="15" truncation="right"/>
+		  <field index="7" name="Buffer Size" code="(unsigned long)arg5" type="%d" width="10" truncation="right"/>
+		  <field index="8" name="Search Location" code="(unsigned long)this->searchRange[0]" type="%d" width="10" truncation="right"/>
+		  <field index="9" name="Search Length" code="(unsigned long)this->searchRange[1]" type="%d" width="10" truncation="right"/>
+		  <field index="10" name="Exception Name" code="copyinstr(arg8)" type="%s" width="20" truncation="right"/>
+		  <field index="11" name="Reason" code="copyinstr(arg9)" type="%s" width="25" truncation="middle"/>
+		</probe_definition>
+
+	</extension>
+</plugin>

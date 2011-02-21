@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.cache.lookup.timing" name="RegexKit.instrument.cache.lookup.timing" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Cache Lookup Timing" runClass="PFTDTraceRun" instrumentDescription="Records the time it takes to retrieve a regular expression from the cache in microseconds." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.cache.lookup.timing" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Begin Cache Lookup" probe="RegexKit*:::BeginCacheLookup" silent_script="self->lookupStartTime = vtimestamp;" predicate="" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="1" event_name="End Cache Lookup" probe="RegexKit*:::EndCacheLookup" silent_script="this->lookupElapsedTime = (vtimestamp - self->lookupStartTime);" predicate="" attach_debugger="">			
+
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="Object From Cache" code="arg8" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Hash" code="arg2" type="%x" width="15" truncation="middle"/>
+<!--		  <field index="3" name="Regex" code="copyinstr(arg2)" type="%s" width="20" truncation="middle"/>-->
+		  <field index="3" name="Hits" code="arg6" type="%d" width="15" truncation="middle"/>
+		  <field index="4" name="Misses" code="arg7" type="%d" width="15" truncation="middle"/>
+		  <field index="5" name="uSec" code="this->lookupElapsedTime" type="%d" width="10" truncation="right"/>
+
+		</probe_definition>
+
+	</extension>
+</plugin>

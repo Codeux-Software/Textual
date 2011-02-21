@@ -1,0 +1,152 @@
+@import url(common.css);
+
+body { font: 12px "lucida grande", geneva, helvetica, arial, sans-serif; color: #000000; background-color: #FFFFFF; }
+h1   { margin-top: 1.0em; margin-bottom: 0.8334em; font-size: 2.5000em; }
+h2   { margin-top: 2.5em; margin-bottom: 2.0000ex; font-size: 2.0000em; border-bottom: 1px solid black; clear: both; }
+h3   { margin-top: 2.0em; margin-bottom: 0.5000em; font-size: 1.5834em; }
+h4   { margin-top: 2.0em; margin-bottom: 0.5000em; font-size: 1.2500em; }
+h5   { margin-top: 1.5em; margin-bottom: 0.5000em; font-size: 1.0834em; padding: 0px; }
+
+.hidden { display: none !important; }
+.apiHidden { display: none !important; }
+ 
+.tablebox { display: table; }
+.top .box { margin-left: 1em; border-left: 1px solid #919699; border-top: 1px solid #919699; border-right: 1px solid #919699; }
+.top .box ul { padding: 0px; margin: 0px; list-style-type: none; }
+.top .box > div { display: table-row; }
+.top .box .hidden { display: none; }
+.top .box .header { padding: 1ex; text-align: left; vertical-align: top; font-weight: bold; display: table-cell; border-bottom: 1px solid #919699; }
+.top .box .content { padding: 1ex; text-align: left; vertical-align: top; display: table-cell; border-bottom: 1px solid #919699; }
+
+.box.classSpecs > .row > .cell.left { font-weight: bold; border-right: none; }
+.box.classSpecs > .row > ul.cell.right { list-style-type: none; }
+
+.spacer { height: 0px; width: 100%; margin-top: 0.5em; margin-bottom: 0.5em; border-top: 1px solid #fafafa; border-bottom: 1px solid #fdfdfd; }
+
+.overview { margin-bottom: 1em; }
+.overview .masthead { font-size: 2.0000em; font-weight: bold; margin-top: 2.5em; margin-bottom: 2.0000ex; border-bottom: 1px solid black; }
+.overview .header   { font-size: 1.5833em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; }
+.overview .section  { font-size: 1.2500em; font-weight: bold; margin-top: 2.0em; margin-bottom: 0.5em; }
+.overview .seealso > ul { margin: 0px; padding: 0px; list-style-type: none; }
+.overview .seealso > ul > li { margin-left: 6.25ex; }
+
+.syntax > .specification { margin-left: 6.25ex; font: 1.1667em monaco, courier, monospace; }
+.syntax > .specification .parameter { font-style: italic; font: 1.0834em "lucida grande", geneva, helvetica, arial, sans-serif; margin: 0px; border: 0px; }
+.syntax > .specification .optional { -webkit-border-radius: 3px; -webkit-box-shadow: 2px 3px 5px #888; -moz-border-radius: 3px; margin-left: 0.75ex; margin-right: 0.75ex; padding-left: 0.5ex; padding-right: 0.5ex; border: 1px solid #d1d5d9; background-color: #e8e8e8; }
+.syntax > .parameters { margin-top: 0.75em; }
+.syntax > .parameters > ul > li > .name { font-style: italic; }
+.syntax > .example { margin-top: 0.75em; margin-left: 2ex; }
+.syntax > .example > .header { font-weight: bold; font-size: 1em; margin-bottom: 0.1667em; margin-right: 1.25ex; }
+
+.tasks { margin-bottom: 1em; }
+.tasks > .header { font-size: 1.5833em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; }
+.tasks .header .code { font: bold 1em "lucida grande", geneva, helvetica, arial, sans-serif; }
+.tasks > ul { margin: 0px; padding: 0px; list-style-type: none; }
+.tasks > ul > li { margin-left: 6.25ex; }
+
+.protocols { margin-bottom: 1em; }
+.protocols > .header { margin-bottom: 0.75ex; }
+.protocols > ul { margin: 0px; padding: 0px; list-style-type: none; }
+.protocols > ul > li { margin-left: 6.25ex; }
+
+.method, .function, .macro { margin: 2.5em 0px 0px 0px; padding: 2.5em 0px 0px 0px; }
+.method > .name, .function > .name, .macro > .name { font-size: 1.5833em; font-weight: bold; }
+.method > .summary, .function > .summary, .macro > .summary { margin: 0.75em 0px 0.75em 0px; }
+.method > .signature, .function > .signature, .macro > .signature { margin: 1em 0px 0.75em 0px; font: 0.9166em monaco, courier, monospace; }
+.method > .signature .code, .function > .signature .code, .macro > .code { font-size: 1em; }
+.method .header + p, .function .header + p, .macro .header + p { margin-top: 0px; }
+
+.discussion { margin-top: 1em; margin-bottom: 1em; }
+.discussion > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.1539em; }
+.discussion p { margin-top: 0.5em; margin-bottom: 0.5em; }
+
+.declared_in { margin-top: 1em; margin-bottom: 1em; }
+.declared_in > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.1539em; }
+
+.parameters { margin: 1.5em 0ex 1em 0ex; padding: 0px; }
+.parameters > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.1667em; }
+.parameters   ul { list-style-type: none; margin: 0px 0px 0px 2ex; padding: 0px; } 
+.parameters   li { margin: 0px; }
+.parameters   li > .name { font-style: italic; }
+.parameters   li > .text { margin-top: 0.0834em; margin-left: 4ex; margin-bottom: 0.5em; }
+
+.seealso { margin-top: 1em; margin-bottom: 1em; padding: 0px; }
+.seealso > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.1667em; }
+.seealso ul { list-style-type: none; margin: 0px; padding: 0px; }
+.seealso li { margin: 0px; }
+
+.result { margin: 1em 0px; }
+.result > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.1667em; }
+
+.figure .caption { margin-bottom: 0.5em; margin-top: 0.5em; }
+.figure .caption .number { font-weight: bold; margin-right: 1.25ex; white-space: nowrap; }
+
+
+.typedef { margin: 5em 0px 0px 0px; }
+.typedef > .name { font-size: 1.5833em; font-weight: bold; margin-bottom: 0.5em; }
+.typedef > .summary { margin: 1em 0px 0.75em 0px; }
+
+.typedef > .declaration { margin: 0px; padding: 0px; }
+.typedef > .declaration > .enum > .identifier { padding-left: 4ex;   }
+.typedef > .declaration > .enum > .equals {  padding-left: 2ex; padding-right: 2ex; }
+
+.constants { margin-top: 1.5em; }
+.constants > .header { font-weight: bold; font-size: 1.0834em; margin-bottom: 0.25em; }
+.constants > .constant  { margin-top: 0.5em; margin-bottom: 0.5em; }
+.constants > .constant > .identifier { font: 0.9167em monaco, courier, monospace; }
+.constants > .constant > .text { margin-left: 2ex; }
+.constants > .constant > .text > p { margin-top: 0px; margin-bottom: 0px; }
+.constants > .constant > .text > p + p { margin-top: 1em; }
+
+.chrono                                         { margin-left: 1.5ex; margin-bottom: 2em; padding-right: 4ex; }
+/*
+.chrono .header                                 { margin-left: -1.5ex; padding-left: 1.5ex; border-bottom: 1px solid black; margin-bottom: 1em;  }
+.chrono .title                                  { font-size: 1.5834em; margin-top: 2.0em; margin-bottom: 0.25em; }
+.chrono .title:first-child                      { margin-top: 0px; }
+*/
+.chrono ul                                      { margin-left: 4.0ex; padding-left: 1ex; list-style-type: square; }
+.chrono ul li                                   { margin-top: 0.5em; }
+
+.chrono > .entry                                { margin-left: 2ex; margin-bottom: 1.75em; padding-right: 2ex; }
+.chrono > .entry > .banner                      { margin-left: -1.25ex; font-size: 1.0834em; }
+.chrono > .entry > .banner > .bannerItemSpacer  { margin-right: 1.25ex; margin-left: 1.25ex; }
+/*.chrono > .entry > .bannerSpacer                { border-bottom: 1px solid #e8e8e8; height: 0px; width: 95%; margin-left: -1.5ex; margin-top: 0.25em; margin-bottom: 0.25em; }*/
+.chrono > .entry > .bannerSpacer                { margin-left: -2.0ex; /*padding-left: 1.5ex;*/ border-bottom: 1px solid #d8d8d8; margin-top: 0.25em; margin-bottom: 0.25em; width: 95% }
+.chrono > .entry > .content                     { margin-top: 0.5em; }
+.chrono > .entry > .content > p:first-child     { margin-top: 0px; margin-bottom: 0px; }
+
+.quotation { margin: 1em 6.25ex 1em 6.25ex; }
+.quotation .quote { font-style: italic; }
+.quotation .attribution:before { margin-left: 1.25ex; content:"-"; margin-right: 1.25ex; }
+.quotation .attribution {  }
+
+.sourceLicense pre { white-space: pre; font-family: courier, monospace; margin: 2em 4ex; }
+.sourceLicense { margin: 2em 4ex; max-width: 5.25in; }
+.sourceLicense ul { list-style-type: disk; }
+.sourceLicense li { margin-bottom: 0.75em; }
+.sourceLicense .disclaimer { font-family: courier, monospace;  }
+
+
+.pop-up_menu-selection, .pop-up_menu-name, .context-menu, .menu-selection, .checkbox-name, .tab-name, .button-name, .icon-button-name { white-space: nowrap; white-space: pre-wrap !important; }
+
+.code              {        font:         0.9167em monaco, courier, monospace; }
+.regex             {        font:         0.8334em monaco, courier, monospace; white-space: nowrap; }
+.regex b           {        font: bold    1.1000em monaco, courier, monospace; white-space: nowrap; }
+.regex-textual     {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.regex-def         {        font: italic  0.9167em monaco, courier, monospace; }
+.argument          {  font-style: italic; white-space: nowrap; }
+.section-link      {  font-style: italic; white-space: nowrap; white-space: pre-wrap !important; }
+.cpp_flag          { font-weight: bold; }
+.cpp_definition    { font-weight: bold; }
+.header_file       {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.frameworkabstract {   font-size:         1.0000em; }
+.file              {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.build-phase       {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.xcode-group       {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.xcode-setting     { font-weight: bold;   white-space: nowrap; }
+.xcode-target      {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.window-name       {        font:         0.9167em monaco, courier, monospace; white-space: nowrap; }
+.user-supplied     {  font-style: italic; white-space: nowrap; }
+.new-term          { font-weight: bold;   white-space: nowrap; }
+.exponent          {   font-size:         0.7500em; vertical-align: super; } 
+

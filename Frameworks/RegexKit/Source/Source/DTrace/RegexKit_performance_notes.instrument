@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.performance.notes" name="RegexKit.instrument.performance.notes" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Performance Notes" runClass="PFTDTraceRun" instrumentDescription="Records potential performance problems that the framework has detected." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.performance.notes" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Performance Note General" probe="RegexKit*:::PerformanceNote" silent_script="this->description = arg2 == 0 ? \'\' : copyinstr(arg2);" predicate=" (((int)arg4 &lt; 0) &amp;&amp; (arg5 == 0))" attach_debugger="">
+		  <field index="0" name="Thread"         code="tid"               type="%x" width="15" truncation="right"/>
+      <field index="1" name="Time"           code="walltimestamp"     type="%d" width="15" truncation="left"/>
+		  <field index="2" name="Object"         code="arg0"              type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Hash"           code="arg1"              type="%x" width="15" truncation="middle"/>
+		  <field index="4" name="Description"    code="this->description" type="%s" width="25" truncation="right"/>
+      <field index="5" name="Duration"       code="0"                 type="%d" width="20" truncation="left"/>
+      <field index="6" name="Size"           code="arg3"              type="%d" width="15" truncation="left"/>
+      <field index="7" name="Severity"       code="(int)arg4"         type="%d" width="10" truncation="left"/>
+		  <field index="8" name="Note"           code="copyinstr(arg6)"   type="%s" width="40" truncation="right"/>
+		</probe_definition>
+
+		<probe_definition index="1" event_name="Performance Note Timed Start" probe="RegexKit*:::PerformanceNote" silent_script="self->performanceNoteStartTime = vtimestamp;" predicate=" (((int)arg4 &lt; 0) &amp;&amp; (arg5 == 1))" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="2" event_name="Performance Note Timed End" probe="RegexKit*:::PerformanceNote" silent_script="this->description = arg2 == 0 ? \'\' : copyinstr(arg2);\nnthis->duration = (vtimestamp - self->performanceNoteStartTime) / 1000;" predicate=" (((int)arg4 &lt; 0) &amp;&amp; (arg5 == 2))" attach_debugger="">
+		  <field index="0" name="Thread"         code="tid"               type="%x" width="15" truncation="right"/>
+      <field index="1" name="Time"           code="walltimestamp"     type="%d" width="15" truncation="left"/>
+		  <field index="2" name="Object"         code="arg0"              type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Hash"           code="arg1"              type="%x" width="15" truncation="middle"/>
+		  <field index="4" name="Description"    code="this->description" type="%s" width="25" truncation="right"/>
+      <field index="5" name="Size"           code="arg3"              type="%d" width="15" truncation="left"/>
+      <field index="6" name="Duration"       code="this->duration"    type="%d" width="20" truncation="left"/>
+      <field index="7" name="Severity"       code="(int)arg4"         type="%d" width="10" truncation="left"/>
+		  <field index="8" name="Note"           code="copyinstr(arg6)"   type="%s" width="40" truncation="right"/>
+		</probe_definition>
+
+	</extension>
+</plugin>

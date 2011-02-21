@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.apple.dtrace.instrument.RegexKit.instrument.timing.sortedCollection" name="RegexKit.instrument.timing.sortedCollection" version="1.0">
+	<activation>
+		<rule kind="extension" id="com.apple.powertrace.dtrace-instrument-plugin.main"/>
+	</activation>
+	<extension end_silent="" helpURL="" version="1.0" defaultBrushName="default" category="RegexKit Framework" point="com.apple.xray.dtrace-instrument-type" iconURL="" pluginIdentifier="com.apple.powertrace.dtrace-instrument-plugin.main" begin_silent="" deletable="false" deckUnits="1" name="Collection Timing" runClass="PFTDTraceRun" instrumentDescription="Records statistics related to collection of regular expressions matching." instrumentClass="PFTDTraceInstrument" data_silent="" id="RegexKit.instrument.timing.sortedCollection" >
+		<targetType launched="true" existing="true" all="true" />
+		<brush name="Default"/>
+		<stack ustack="true" kstack="false" jstack="false" />
+		<probe_definition index="0" event_name="Begin Match" probe="RegexKit*:::BeginSortedRegexMatch" silent_script="self->sortedRegexMatchStartTime = vtimestamp;\nnself->matchTargetString = (arg3 == 0) ? \'&lt;NULL&gt;\' : copyinstr(arg3);" predicate="" attach_debugger="">
+		</probe_definition>
+
+		<probe_definition index="1" event_name="End Match" probe="RegexKit*:::EndSortedRegexMatch" silent_script="self->compileElapsedTime = (vtimestamp - self->sortedRegexMatchStartTime);\nnself->regexString = ((arg2 == 0) || (arg4 == 0)) ? \'\' : copyinstr(arg4);\nnself->resortRequiredString = ((arg9 &amp; 0x01) == 0) ? \'No\' : \'Yes\';\nnself->didMatchString = (arg2 == 0) ? \'No\' : \'Yes\';\nnself->cachedLookupString = ((arg9 &amp; 0x02) == 0) ? \'regex\' : \'cache\';\nnself->lowestIndexString = ((arg9 &amp; 0x04) == 0) ? \'No\' : \'Yes\';" predicate="" attach_debugger="">
+		  <field index="0" name="Thread" code="tid" type="%x" width="15" truncation="middle"/>
+		  <field index="1" name="RKSortedRegexCollection Object" code="arg0" type="%x" width="15" truncation="middle"/>
+		  <field index="2" name="Hash" code="arg1" type="%x" width="15" truncation="middle"/>
+		  <field index="3" name="Match Target" code="self->matchTargetString" type="%s" width="20" truncation="middle"/>
+		  <field index="4" name="Found a Match?" code="self->didMatchString" type="%s" width="10" truncation="right"/>
+		  <field index="5" name="Result From" code="self->cachedLookupString" type="%s" width="10" truncation="right"/>
+		  <field index="6" name="RKRegex Object" code="arg2" type="%x" width="15" truncation="middle"/>
+		  <field index="7" name="Regex Hash" code="arg3" type="%x" width="15" truncation="middle"/>
+		  <field index="8" name="Regex" code="self->regexString" type="%s" width="20" truncation="middle"/>
+		  <field index="9" name="Hit Count" code="arg7" type="%d" width="10" truncation="right"/>
+		  <field index="10" name="Matches Tried" code="arg5" type="%d" width="10" truncation="right"/>
+		  <field index="11" name="Skipped Matches Count" code="(arg2 == 0) ? 0 : (int)((int)arg8 - (int)arg5)" type="%d" width="10" truncation="right"/>
+		  <field index="12" name="Collection Index" code="arg8" type="%d" width="10" truncation="right"/>
+		  <field index="13" name="Collection Count" code="arg6" type="%d" width="10" truncation="right"/>
+		  <field index="14" name="Lowest Matching Index" code="self->lowestIndexString" type="%s" width="10" truncation="right"/>
+		  <field index="15" name="Resort Required" code="self->resortRequiredString" type="%s" width="10" truncation="right"/>
+		  <field index="16" name="uSec" code="self->compileElapsedTime / 1000" type="%d" width="10" truncation="right"/>
+		</probe_definition>
+
+	</extension>
+</plugin>
