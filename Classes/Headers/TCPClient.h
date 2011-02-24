@@ -32,7 +32,7 @@
 	NSMutableData *buffer;
 }
 
-@property (nonatomic, retain) NSMutableData *buffer; 
+@property (retain) NSMutableData *buffer; 
 @property (nonatomic, retain) AsyncSocket *conn;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) NSString *host;
