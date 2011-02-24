@@ -62,7 +62,7 @@
 {
 	[self close];
 	
-	[buffer setLength:0];
+	[self.buffer setLength:0];
 	
 	socketThread  = [[NSThread currentThread] retain];
 	
@@ -111,10 +111,10 @@
 
 - (NSData *)readLine
 {
-	NSInteger len = [buffer length];
+	NSInteger len = [self.buffer length];
 	if (len < 1) return nil;
 	
-	const char *bytes = [buffer bytes];
+	const char *bytes = [self.buffer bytes];
 	char *p = memchr(bytes, LF, len);
 	
 	if (p == NULL) return nil;
@@ -129,14 +129,14 @@
 		}
 	}
 	
-	NSMutableData *result = [buffer autorelease];
+	NSMutableData *result = [self.buffer autorelease];
 	
 	++p;
 	
 	if (p < (bytes + len)) {
-		buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
+		self.buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
 	} else {
-		buffer = [NSMutableData new];
+		self.buffer = [NSMutableData new];
 	}
 	
 	[result setLength:n];
@@ -249,7 +249,7 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[buffer appendData:data];
+	[self.buffer appendData:data];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
 		[[delegate invokeOnMainThread] tcpClientDidReceiveData:self];
