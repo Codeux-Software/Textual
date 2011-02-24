@@ -24,6 +24,26 @@
 
 @implementation NSObject (DDExtensions)
 
+- (id)invokeOnThread:(NSThread *)thread
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+	
+	[grabber setParentThread:thread];
+	[grabber setThreadType:INVOCATION_PARENT_THREAD];
+	
+    return [grabber prepareWithInvocationTarget:self];
+}
+
++ (id)invokeOnThread:(NSThread *)thread
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+	
+	[grabber setParentThread:thread];
+	[grabber setThreadType:INVOCATION_PARENT_THREAD];
+	
+    return [grabber prepareWithInvocationTarget:self];
+}
+
 - (id)invokeOnMainThread;
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];

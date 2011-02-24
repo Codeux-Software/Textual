@@ -11,7 +11,6 @@
 
 @synthesize conn;
 @synthesize delegate;
-@synthesize dispatchQueue;
 @synthesize encoding;
 @synthesize host;
 @synthesize loggedIn;
@@ -38,10 +37,6 @@
 		
 		timer = [Timer new];
 		timer.delegate = self;
-		
-		if (dispatchQueue == NULL) {
-			dispatchQueue = dispatch_queue_create("IRCConnectionDispatchQueue", NULL);
-		}
 	}
 
 	return self;
@@ -59,9 +54,6 @@
 	
 	[timer stop];
 	[timer drain];
-	
-	dispatch_release(dispatchQueue);
-	dispatchQueue = NULL;
 	
 	[super dealloc];
 }

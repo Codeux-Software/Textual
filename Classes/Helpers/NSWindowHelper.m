@@ -50,7 +50,7 @@
 	}	
 }
 
-- (NSTextView *)selectedFieldEditor
+- (id)selectedFieldEditor
 {
 	id responder = [self firstResponder];
 	
@@ -65,20 +65,25 @@
 	return nil;
 }
 
-- (NSTextField *)selectedTextField 
+- (id)selectedTextField
 {
 	id field	 = nil;
 	id responder = [self selectedFieldEditor];
 	
-	if ([responder isKindOfClass:[NSTextView class]]) {
+	if ([responder respondsToSelector:@selector(delegate)]) {
 		field = [responder delegate];
 		
-		if ([field isKindOfClass:[NSTextField class]]) {
+		if ([field respondsToSelector:@selector(setStringValue:)]) {
 			return field;
 		}
 	}
 	
 	return nil;
+}
+
+- (BOOL)hasAttachedSheet
+{
+	return BOOLValueFromObject([self attachedSheet]);
 }
 
 - (BOOL)isOnCurrentWorkspace

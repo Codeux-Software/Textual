@@ -27,6 +27,7 @@
 @synthesize target;
 @synthesize invocation;
 @synthesize threadType;
+@synthesize parentThread;
 @synthesize waitUntilDone;
 
 + (id)invocationGrabber
@@ -38,6 +39,7 @@
 {
     target = nil;
     invocation = nil;
+	parentThread = nil;
     waitUntilDone = NO;
     threadType = INVOCATION_BACKGROUND_THREAD;
     
@@ -55,6 +57,7 @@
 {
     [target release];
 	[invocation release];
+	[parentThread release];
 	
     [super dealloc];
 }
@@ -74,13 +77,20 @@
 		[invocation retainArguments];
 	}
 	
-    if (threadType == INVOCATION_MAIN_THREAD) {
-        [invocation performSelectorOnMainThread:@selector(invoke)
-									 withObject:nil
-								  waitUntilDone:waitUntilDone];
-    } else {
-        [invocation performSelectorInBackground:@selector(performInvocation:)
-									 withObject:invocation];
+	if (parentThread && threadType == INVOCATION_PARENT_THREAD) {
+		[invocation performSelector:@selector(performInvocation:) 
+						   onThread:parentThread
+						 withObject:invocation
+					  waitUntilDone:NO];
+	} else {
+		if (threadType == INVOCATION_BACKGROUND_THREAD) {
+			[invocation performSelectorInBackground:@selector(performInvocation:)
+										 withObject:invocation];
+		} else {
+			[invocation performSelectorOnMainThread:@selector(performInvocation:)
+										 withObject:invocation
+									  waitUntilDone:waitUntilDone];
+		}
 	}
 }
 

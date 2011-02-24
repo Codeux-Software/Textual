@@ -4,20 +4,14 @@
 #define LF	0xa
 #define CR	0xd
 
-#define txCFStreamErrorDomainSSL @"kCFStreamErrorDomainSSL"
-
-@interface TCPClient (Private)
-- (void)waitRead;
-@end
-
 @implementation TCPClient
 
 @synthesize active;
 @synthesize buffer;
 @synthesize conn;
+@synthesize connected;
 @synthesize connecting;
 @synthesize delegate;
-@synthesize delegateQueue;
 @synthesize host;
 @synthesize port;
 @synthesize proxyHost;
@@ -25,14 +19,11 @@
 @synthesize proxyPort;
 @synthesize proxyUser;
 @synthesize sendQueueSize;
-@synthesize socketQueue;
+@synthesize socketThread;
 @synthesize socksVersion;
 @synthesize useSocks;
 @synthesize useSSL;
 @synthesize useSystemSocks;
-
-#pragma mark -
-#pragma mark Client Structure
 
 - (id)init
 {
@@ -43,36 +34,18 @@
 	return self;
 }
 
-- (id)initWithExistingConnection:(AsyncSocket *)socket
-{
-	[self init];
-	
-	conn = [socket retain];
-	[conn setDelegate:self];
-	
-	active	   = YES;
-	connecting = YES;
-	
-	sendQueueSize = 0;
-	
-	return self;
-}
-
 - (void)dealloc
 {
 	if (conn) {
-		[conn setDelegate:nil];
+		[[conn invokeOnThread:socketThread] setDelegate:nil];
+		[[conn invokeOnThread:socketThread] disconnect];
 		
-		[conn disconnect];
 		[conn autorelease];
 	}
 	
-	if (delegateQueue) {
-		dispatch_release(delegateQueue);
-	}
-	
-	if (socketQueue) {
-		dispatch_release(socketQueue);
+	if (socketThread) {
+		[socketThread cancel];
+		[socketThread drain];
 	}
 	
 	[buffer drain];
@@ -85,54 +58,55 @@
 	[super dealloc];
 }
 
-- (void)open
+- (void)openBackgroundConnection
 {
 	[self close];
 	
 	[buffer setLength:0];
 	
+	socketThread  = [[NSThread currentThread] retain];
+	
 	NSError *connError = nil;
 	
-	if ([self usingNewSocketEngine]) {
-		delegateQueue = dispatch_queue_create([[NSString stringWithUUID] UTF8String], NULL);
-		socketQueue   = dispatch_queue_create([[NSString stringWithUUID] UTF8String], NULL);
-		
-		conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:delegateQueue socketQueue:socketQueue];
-	} else {
-		conn = [AsyncSocket socketWithDelegate:self];
-	}
+	conn = [AsyncSocket socketWithDelegate:self];
 	
-	if ([conn connectToHost:host onPort:port error:&connError] == NO) {
+	if ([conn connectToHost:host onPort:port withTimeout:15.0 error:&connError] == NO) {
 		NSLog(@"Silently ignoring connection error: %@", [connError localizedDescription]);
 	}
 	
 	active     = YES;
 	connecting = YES;
+	connected  = NO;
 	
 	sendQueueSize = 0;
+	
+	[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:NO];
+	
+	[[NSRunLoop currentRunLoop] run];
+}
+
+- (void)open
+{
+	[[self invokeInBackgroundThread] openBackgroundConnection];
 }
 
 - (void)close
 {
 	if (PointerIsEmpty(conn)) return;
 	
-	[conn disconnect];
+	[[conn invokeOnThread:socketThread] disconnect];
+	
 	[conn autorelease];
 	conn = nil;
 	
+	[socketThread cancel];
+	[socketThread drain];
+	
 	active	   = NO;
 	connecting = NO;
+	connected  = NO;
 	
 	sendQueueSize = 0;
-}
-
-- (NSData *)read
-{
-	NSData *result = [buffer autorelease];
-	
-	buffer = [NSMutableData new];
-	
-	return result;
 }
 
 - (NSData *)readLine
@@ -160,7 +134,7 @@
 	++p;
 	
 	if (p < (bytes + len)) {
-		buffer = [[NSMutableData alloc] initWithBytes:p length:(bytes + len - p)];
+		buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
 	} else {
 		buffer = [NSMutableData new];
 	}
@@ -172,26 +146,26 @@
 
 - (void)write:(NSData *)data
 {
-	if ([self connected] == NO) return;
+	if (connected == NO) return;
 	
 	++sendQueueSize;
 	
-	[conn writeData:data withTimeout:10 tag:0];
-	
-	[self waitRead];
+	[[conn invokeOnThread:socketThread] writeData:data withTimeout:15.0 tag:0];
+	[[conn invokeOnThread:socketThread] readDataWithTimeout:(-1)		tag:0];
 }
-
-#pragma mark -
-#pragma mark Run Loop AsyncSocket Delegate Methods
 
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock
 {
 	if (useSystemSocks) {
-		[conn useSystemSocksProxy];
+		[[conn invokeOnThread:socketThread] useSystemSocksProxy];
 	} else if (useSocks) {
-		[conn useSocksProxyVersion:socksVersion host:proxyHost port:proxyPort user:proxyUser password:proxyPassword];
+		[[conn invokeOnThread:socketThread] useSocksProxyVersion:socksVersion 
+															host:proxyHost 
+															port:proxyPort 
+															user:proxyUser 
+														password:proxyPassword];
 	} else if (useSSL) {
-		[conn performSelector:@selector(useSSL)];
+		[[conn invokeOnThread:socketThread] performSelector:@selector(useSSL)];
 	}
 	
 	return YES;
@@ -199,9 +173,10 @@
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	[self waitRead];
+	[conn readDataWithTimeout:(-1) tag:0]; 
 	
 	connecting = NO;
+	connected  = YES;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
 		[[delegate invokeOnMainThread] tcpClientDidConnect:self];
@@ -229,10 +204,9 @@
 			[self onSocketDidDisconnect:sender];
 		} else {
 			if ([domain isEqualToString:NSPOSIXErrorDomain]) {
-				msg = [AsyncSocket posixErrorStringFromErrno:[error code]];
+				msg = [conn posixErrorStringFromErrno:[error code]];
 			} else {
-				if ([domain isEqualToString:txCFStreamErrorDomainSSL] && [self badSSLCertErrorFound:[error code]]) 
-				{
+				if ([conn badSSLCertErrorFound:error]) {
 					IRCClient *client = [delegate delegate];
 					
 					NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
@@ -256,17 +230,19 @@
 						if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
 							[[delegate invokeOnMainThread] tcpClient:self error:nil];
 						}
-						
-						return;
+					}
+				} else {
+					if (NSObjectIsEmpty(msg)) {
+						msg = [error localizedDescription];
+					}
+					
+					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+						[[delegate invokeOnMainThread] tcpClient:self error:msg];
 					}
 				}
+				
+				[self onSocketDidDisconnect:sender];
 			}
-			
-			if (NSObjectIsEmpty(msg)) {
-				msg = [error localizedDescription];
-			}
-			
-			[self onSocketDidDisconnect:sender];
 		}
 	}
 }
@@ -279,7 +255,7 @@
 		[[delegate invokeOnMainThread] tcpClientDidReceiveData:self];
 	}
 	
-	[self waitRead];
+	[conn readDataWithTimeout:(-1) tag:0]; 
 }
 
 - (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
@@ -289,72 +265,6 @@
 	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
 		[[delegate invokeOnMainThread] tcpClientDidSendData:self];
 	}
-}
-
-#pragma mark -
-#pragma mark Grand Central Dispatch Delegate Methods
-
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
-{
-	[self onSocketWillConnect:nil];
-	[self onSocket:nil didConnectToHost:ahost port:aport];
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
-{
-	[self onSocket:nil didReadData:data withTag:tag];
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
-{
-	[self onSocket:nil didWriteDataWithTag:tag];
-}
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
-{
-	[self onSocket:nil willDisconnectWithError:error];
-}
-
-#pragma mark -
-#pragma mark Misc. Methods
-
-- (void)waitRead
-{
-	[conn readDataWithTimeout:-1 tag:0];
-}
-
-- (BOOL)connected
-{
-	if (PointerIsEmpty(conn)) return NO;
-	
-	return [conn isConnected];
-}
-
-- (BOOL)badSSLCertErrorFound:(NSInteger)code
-{
-	NSArray *errorCodes = [NSArray arrayWithObjects:
-						   [NSNumber numberWithInteger:errSSLBadCert], 
-						   [NSNumber numberWithInteger:errSSLNoRootCert], 
-						   [NSNumber numberWithInteger:errSSLCertExpired],  
-						   [NSNumber numberWithInteger:errSSLPeerBadCert], 
-						   [NSNumber numberWithInteger:errSSLPeerCertRevoked], 
-						   [NSNumber numberWithInteger:errSSLPeerCertExpired], 
-						   [NSNumber numberWithInteger:errSSLPeerCertUnknown], 
-						   [NSNumber numberWithInteger:errSSLUnknownRootCert], 
-						   [NSNumber numberWithInteger:errSSLCertNotYetValid],
-						   [NSNumber numberWithInteger:errSSLXCertChainInvalid], 
-						   [NSNumber numberWithInteger:errSSLPeerUnsupportedCert], 
-						   [NSNumber numberWithInteger:errSSLPeerUnknownCA], 
-						   [NSNumber numberWithInteger:errSSLHostNameMismatch], nil];
-	
-	NSNumber *errorCode = [NSNumber numberWithInteger:code];
-	
-	return [errorCodes containsObject:errorCode];
-}
-
-- (BOOL)usingNewSocketEngine
-{
-	return (useSocks == NO && useSystemSocks == NO);
 }
 
 @end

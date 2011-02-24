@@ -5,7 +5,8 @@
 
 @interface TCPClient : NSObject
 {
-	id conn;
+	AsyncSocket *conn;
+	
 	id delegate;
 	
 	NSString *host;
@@ -24,14 +25,15 @@
 	
 	BOOL active;
 	BOOL connecting;
+	BOOL connected;
 	
-	dispatch_queue_t delegateQueue;
-	dispatch_queue_t socketQueue;
+	NSThread *socketThread;
 	
 	NSMutableData *buffer;
 }
 
-@property (nonatomic, retain) id conn;
+@property (nonatomic, retain) NSMutableData *buffer; 
+@property (nonatomic, retain) AsyncSocket *conn;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) NSString *host;
 @property (nonatomic, assign) NSInteger port;
@@ -47,23 +49,13 @@
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, retain) NSMutableData *buffer;
-@property (nonatomic, assign) dispatch_queue_t delegateQueue;
-@property (nonatomic, assign) dispatch_queue_t socketQueue;
-
-- (id)initWithExistingConnection:(AsyncSocket *)socket;
-
-- (BOOL)usingNewSocketEngine;
+@property (nonatomic, retain) NSThread *socketThread;
 
 - (void)open;
 - (void)close;
 
-- (NSData *)read;
 - (NSData *)readLine;
-
 - (void)write:(NSData *)data;
-
-- (BOOL)badSSLCertErrorFound:(NSInteger)code;
 @end
 
 @interface NSObject (TCPClientDelegate)

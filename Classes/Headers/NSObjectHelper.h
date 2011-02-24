@@ -3,4 +3,5 @@
 
 @interface NSObject (NSOjectHelper)
 - (oneway void)drain;
+- (oneway void)forcedrain;
 @end
