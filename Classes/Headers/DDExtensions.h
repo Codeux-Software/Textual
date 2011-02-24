@@ -23,6 +23,8 @@
  */
 
 @interface NSObject (DDExtensions)
+- (id)invokeOnThread:(NSThread *)thread;
++ (id)invokeOnThread:(NSThread *)thread;
 - (id)invokeOnMainThread;
 + (id)invokeOnMainThread;
 - (id)invokeInBackgroundThread;

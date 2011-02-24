@@ -30,8 +30,6 @@
 	BOOL useSSL;
 	
 	NSMutableArray *sendQueue;
-	
-	dispatch_queue_t dispatchQueue;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -56,7 +54,6 @@
 @property (nonatomic, retain) TCPClient *conn;
 @property (nonatomic, retain) NSMutableArray *sendQueue;
 @property (nonatomic, assign) BOOL sending;
-@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 
 - (void)open;
 - (void)close;

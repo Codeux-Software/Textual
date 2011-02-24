@@ -24,6 +24,7 @@
 
 typedef enum {
 	INVOCATION_MAIN_THREAD,
+	INVOCATION_PARENT_THREAD,
 	INVOCATION_BACKGROUND_THREAD,
 } invocationThreadType;
 
@@ -31,12 +32,14 @@ typedef enum {
 {
 	id target;
 	BOOL waitUntilDone;
+	NSThread *parentThread;
 	NSInvocation *invocation;
 	invocationThreadType threadType;
 }
 
 @property (nonatomic, retain) id target;
 @property (nonatomic, assign) BOOL waitUntilDone;
+@property (nonatomic, retain) NSThread *parentThread;
 @property (nonatomic, retain) NSInvocation *invocation;
 @property (nonatomic, assign) invocationThreadType threadType;
 

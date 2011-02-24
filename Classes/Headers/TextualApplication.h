@@ -10,9 +10,11 @@
 	#include <SystemConfiguration/SystemConfiguration.h>
 
 	/* Textual Specific Frameworks */
-	#import <AutoHyperlinks/AutoHyperlinks.h>
-	#import <BlowfishEncryption/Encryption.h>
-	#import <RegexKit/RegexKit.h>
+	#ifdef LinkTextualIRCFrameworks
+		#import <AutoHyperlinks/AutoHyperlinks.h>
+		#import <BlowfishEncryption/Encryption.h>
+		#import <RegexKit/RegexKit.h>
+	#endif
 
 	/* Establish Common Pointers */
 	#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
@@ -37,10 +39,10 @@
 	typedef unsigned long long TXFSLongInt; // filesizes
 
 	/* Textual Headers */
+	#import "NSObjectHelper.h"
 	#import "GlobalModels.h"
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"
-	#import "GCDAsyncSocket.h"
 	#import "AsyncSocketExtensions.h"
 	#import "TinyGrowlClient.h"
 	#import "GrowlController.h"
@@ -81,7 +83,6 @@
 	#import "URLOpener.h"
 	#import "GTMDefines.h"
 	#import "SoundPlayer.h"
-	#import "NSObjectHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDataHelper.h"

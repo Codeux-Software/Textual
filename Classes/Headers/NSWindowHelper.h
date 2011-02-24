@@ -6,8 +6,9 @@
 - (void)exactlyCenterWindow;
 - (void)centerOfWindow:(NSWindow *)window;
 
-- (NSTextView *)selectedFieldEditor;
-- (NSTextField *)selectedTextField;
+- (id)selectedFieldEditor;
+- (id)selectedTextField;
 
+- (BOOL)hasAttachedSheet;
 - (BOOL)isOnCurrentWorkspace;
 @end

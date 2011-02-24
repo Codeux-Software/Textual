@@ -10,6 +10,15 @@
 		
 		if (retainTotal >= 1) {
 			[self release];
+		} 
+	}
+}
+
+- (oneway void)forcedrain
+{
+	if (self) {
+		while (self && [self retainCount] >= 0) {
+			[self drain];
 		}
 	}
 }

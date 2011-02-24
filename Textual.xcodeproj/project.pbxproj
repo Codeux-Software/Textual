@@ -104,8 +104,6 @@
 		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
-		4C93A73E1312803F009D42EC /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */; };
-		4C93A7421312804E009D42EC /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93A7401312804E009D42EC /* GCDAsyncSocket.m */; };
 		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
 		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -495,8 +493,6 @@
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
-		4C93A7401312804E009D42EC /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
@@ -1134,8 +1130,6 @@
 			children = (
 				4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */,
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
-				4C93A73D1312803F009D42EC /* GCDAsyncSocket.h */,
-				4C93A7401312804E009D42EC /* GCDAsyncSocket.m */,
 				4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */,
 				78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */,
 			);
@@ -1576,7 +1570,6 @@
 				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
 				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
-				4C93A73E1312803F009D42EC /* GCDAsyncSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1784,7 +1777,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -r '{}' +";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1912,7 +1905,6 @@
 				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
 				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
 				4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */,
-				4C93A7421312804E009D42EC /* GCDAsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

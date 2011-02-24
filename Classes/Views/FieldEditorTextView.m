@@ -30,7 +30,11 @@
 		}
 	}
 	
-	[super paste:sender];
+	if ([self.window hasAttachedSheet]) {
+		[[self.window selectedFieldEditor] paste:sender];
+	} else {
+		[super paste:sender];
+	}
 }
 
 - (void)setKeyHandlerTarget:(id)target

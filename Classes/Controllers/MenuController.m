@@ -9,7 +9,7 @@
 #define IS_CHANNEL					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
 #define IS_QUERY					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
 #define CONNECTED					(u && u.isConnected && u.isLoggedIn)
-#define NOT_CONNECTED				(u && u.isConnected == NO && u.isLoggedIn == NO)
+#define NOT_CONNECTED				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 #define ACTIVE						(c && c.isActive)
 #define NOT_ACTIVE					(c && c.isActive == NO)
 
@@ -145,9 +145,11 @@
 		}
 		case 501:	// connect
 		{
-			[item setHidden:CONNECTED];
+			BOOL condition = (CONNECTED || u.isConnecting);
 			
-			return NOT_CONNECTED;
+			[item setHidden:condition];
+			
+			return BOOLReverseValue(condition);
 			break;
 		}
 		case 502:	// disconnect
