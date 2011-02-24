@@ -95,7 +95,11 @@
 
 - (void)setFilteredAttributedStringValue:(NSAttributedString *)string
 {
-	string = [string sanitizeIRCCompatibleAttributedString:[self textColor] oldColor:_oldTextColor backgroundColor:[self backgroundColor] defaultFont:[self font]];
+	string = [string sanitizeIRCCompatibleAttributedString:[self textColor] 
+												  oldColor:_oldTextColor 
+										   backgroundColor:[self backgroundColor] 
+											   defaultFont:[self font]];
+	
 	string = [string attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	[super setObjectValue:string];
@@ -135,12 +139,16 @@
 				[oldString insertAttributedString:newString atIndex:selectedRange.location];
 			}
 			
-			oldString = [oldString sanitizeIRCCompatibleAttributedString:[self textColor] oldColor:_oldTextColor backgroundColor:[self backgroundColor] defaultFont:[self font]];
+			oldString = [oldString sanitizeIRCCompatibleAttributedString:[self textColor] 
+																oldColor:_oldTextColor 
+														 backgroundColor:[self backgroundColor] 
+															 defaultFont:[self font]];
+			
 			oldString = [oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 			
 			[self setObjectValue:oldString recordUndo:YES];
 			
-			selectedRange.length = 0;
+			selectedRange.length   = 0;
 			selectedRange.location = ([(NSMutableAttributedString *)newString length] + selectedRange.location);
 			
 			[currentEditor setSelectedRange:selectedRange];
