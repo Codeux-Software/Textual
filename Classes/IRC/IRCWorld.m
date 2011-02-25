@@ -444,7 +444,7 @@
 		IRCChannel *c = (IRCChannel *)sel;
 		
 		NSMutableString *title = [NSMutableString string];
-		
+	
 		if (NSObjectIsNotEmpty(u.config.network)) {
 			[title appendString:u.config.network];
 		} else {

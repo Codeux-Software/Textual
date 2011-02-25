@@ -9,11 +9,14 @@
 	NSInteger nickLen;
 	NSInteger modesCount;
 	
+	NSString *networkName;
+	
 	unsigned char modes[MODES_SIZE];
 }
 
 @property (nonatomic, readonly) NSInteger nickLen;
 @property (nonatomic, readonly) NSInteger modesCount;
+@property (nonatomic, retain) NSString *networkName;
 
 - (void)reset;
 - (BOOL)update:(NSString *)s;
