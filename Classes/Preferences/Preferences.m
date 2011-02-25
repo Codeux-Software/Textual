@@ -146,6 +146,11 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Application Information
 
++ (BOOL)applicationRanOnLion
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+}
+
 + (NSData *)applicationIcon
 {
 	return [[NSApp applicationIconImage] TIFFRepresentation];

@@ -1553,27 +1553,31 @@
 
 - (void)wantsFullScreenModeToggled:(id)sender
 {
-	if (isInFullScreenMode == NO) {
-		[master saveWindowState];
-		
-		[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
-		
-		[[window standardWindowButton:NSWindowZoomButton] setHidden:YES];
-		[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
-		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
-		
-		[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
+	if ([Preferences applicationRanOnLion]) {
+		[window toggleFullScreen:sender];
 	} else {
-		[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
-		[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
-		[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
+		if (isInFullScreenMode == NO) {
+			[master saveWindowState];
+			
+			[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
+			
+			[[window standardWindowButton:NSWindowZoomButton] setHidden:YES];
+			[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
+			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
+			
+			[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
+		} else {
+			[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
+			[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
+			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
+			
+			[master loadWindowState];
+			
+			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
+		}
 		
-		[master loadWindowState];
-		
-		[NSApp setPresentationOptions:NSApplicationPresentationDefault];
+		isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
 	}
-	
-	isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
 }
 
 - (void)onWantChannelListSorted:(id)sender

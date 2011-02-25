@@ -355,14 +355,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
+			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
 			remoteInfo = "Update Version Data";
 		};
 		4CE5D49B131798F100321734 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
+			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC;
 			remoteInfo = "Clean Up Resources ";
 		};
 /* End PBXContainerItemProxy section */
