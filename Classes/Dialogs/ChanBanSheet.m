@@ -80,8 +80,6 @@
 	
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	
-	NSLog(@"%@", [indexes arrayFromIndexSet]);
-	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSArray *iteml = [list safeObjectAtIndex:[index unsignedIntegerValue]];
 		

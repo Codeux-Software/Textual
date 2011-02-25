@@ -2,10 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface FileLogger (Private)
-- (NSString *)buildFileName;
-@end
-
 @implementation FileLogger
 
 @synthesize client;
@@ -89,10 +85,24 @@
 	}
 }
 
-- (NSString *)buildFileName
+- (NSString *)buildPath
 {
 	NSString *base = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
 	
+	NSString *serv = [[client name] safeFileName];
+	NSString *chan = [[channel name] safeFileName];
+	
+	if (PointerIsEmpty(channel)) {
+		return [base stringByAppendingFormat:@"/%@/Console/", serv];
+	} else if ([channel isTalk]) {
+		return [base stringByAppendingFormat:@"/%@/Queries/%@/", serv, chan];
+	} else {
+		return [base stringByAppendingFormat:@"/%@/Channels/%@/", serv, chan];
+	}
+}
+
+- (NSString *)buildFileName
+{
 	static NSDateFormatter *format = nil;
 	
 	if (PointerIsEmpty(format)) {
@@ -100,18 +110,9 @@
 		[format setDateFormat:@"yyyy-MM-dd"];
 	}
 	
-	NSString *date = [format stringFromDate:[NSDate date]];
-	NSString *name = [[client name] safeFileName];
+	NSString *date = [format stringFromDate:[NSDate date]];	
 	
-	if (PointerIsEmpty(channel)) {
-		return [base stringByAppendingFormat:@"/%@/Console/%@.txt", name, date];
-	} else if ([channel isTalk]) {
-		return [base stringByAppendingFormat:@"/%@/Queries/%@/%@.txt", name, [[channel name] safeFileName], date];
-	} else {
-		return [base stringByAppendingFormat:@"/%@/Channels/%@/%@.txt", name, [[channel name] safeFileName], date];
-	}
-	
-	return nil;
+	return [NSString stringWithFormat:@"%@%@.txt", [self buildPath], date];
 }
 
 @end

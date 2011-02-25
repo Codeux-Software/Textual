@@ -1393,10 +1393,9 @@
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
-	NSString *path = nil;
+	NSString *path = [c.logFile buildPath];
 	
-	path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
-	path = [path stringByAppendingPathComponent:c.logFile.filename];
+	NSLog(@"%@", path);
 	
 	if ([_NSFileManager() fileExistsAtPath:path]) {
 		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
