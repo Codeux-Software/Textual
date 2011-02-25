@@ -42,8 +42,9 @@
 	
 	NSBundle *_bundle = [NSBundle bundleForClass:[self class]];
 	
-	_cpu_model = [_cpu_model stringByMatching:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" replace:RKReplaceAll withReferenceString:@" "];  
-	_cpu_model = [_cpu_model stringByMatching:@"\\s+" replace:RKReplaceAll withReferenceString:@" "];  
+	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
+	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+" withString:@" "];
+	
 	_cpu_model = [_cpu_model trim];
 	
 	if (NSObjectIsNotEmpty(_model)) {

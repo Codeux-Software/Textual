@@ -13,7 +13,6 @@
 	#ifdef LinkTextualIRCFrameworks
 		#import <AutoHyperlinks/AutoHyperlinks.h>
 		#import <BlowfishEncryption/Encryption.h>
-		#import <RegexKit/RegexKit.h>
 	#endif
 
 	/* Establish Common Pointers */
@@ -40,6 +39,7 @@
 
 	/* Textual Headers */
 	#import "NSObjectHelper.h"
+	#import "TXRegularExpression.h"
 	#import "GlobalModels.h"
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"

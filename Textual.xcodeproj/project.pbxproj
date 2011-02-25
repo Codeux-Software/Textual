@@ -36,8 +36,6 @@
 		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
 		4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
 		4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14549712F8ACA20014CC3A /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C2BAAB813121960001358FF /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2BAAB713121960001358FF /* RegexKit.framework */; };
-		4C2BAB9013121E54001358FF /* RegexKit.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2BAAB713121960001358FF /* RegexKit.framework */; };
 		4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */; };
 		4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9812D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png */; };
 		4C329CA412D1BD20001990A9 /* TPWTB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9912D1BD20001990A9 /* TPWTB_ChannelManagement.png */; };
@@ -96,6 +94,7 @@
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A80812F38125002E308B /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67A80612F38125002E308B /* NSDateHelper.m */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; };
 		4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
@@ -212,6 +211,9 @@
 		4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
+		4CC33B7E13177E9F00BDBCA0 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */; };
+		4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CC33B8613177EF700BDBCA0 /* TXRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */; };
 		4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */; };
 		4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
@@ -342,26 +344,26 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BragSpam;
 		};
-		4C3F691212FD939200B50CB9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
-			remoteInfo = "Update Version Data";
-		};
-		4C3F691412FD939400B50CB9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC;
-			remoteInfo = "Clean Up Resources ";
-		};
 		4C858F3D12E0A02000F3FAE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BlowfishCommandLine;
+		};
+		4CE5D499131798F100321734 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
+			remoteInfo = "Update Version Data";
+		};
+		4CE5D49B131798F100321734 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
+			remoteInfo = "Clean Up Resources ";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -396,7 +398,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C2BAB9013121E54001358FF /* RegexKit.framework in Copy Additional Frameworks */,
 				4C3BCCA5130D837D006C36A9 /* AutoHyperlinks.framework in Copy Additional Frameworks */,
 				4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 			);
@@ -415,7 +416,6 @@
 		4C14549712F8ACA20014CC3A /* IRCColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormat.h; path = Classes/Headers/IRCColorFormat.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SystemProfiler.xcodeproj; path = Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj; sourceTree = "<group>"; };
 		4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BragSpam.xcodeproj; path = Resources/Plugins/BragSpam/BragSpam.xcodeproj; sourceTree = "<group>"; };
-		4C2BAAB713121960001358FF /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = Frameworks/RegexKit/RegexKit.framework; sourceTree = "<group>"; };
 		4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4C2CD35011B03BCC00D89A5E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Advanced.png; sourceTree = "<group>"; };
@@ -479,6 +479,7 @@
 		4C66E88412DF69E500446250 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
+		4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXRegularExpression.h; path = Classes/Headers/TXRegularExpression.h; sourceTree = SOURCE_ROOT; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
@@ -499,6 +500,9 @@
 		4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Classes/Headers/TextualApplication.h; sourceTree = SOURCE_ROOT; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
+		4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Classes/Headers/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
+		4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXRegularExpression.m; sourceTree = "<group>"; };
 		4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextFieldHelper.m; sourceTree = "<group>"; };
 		4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSTextFieldHelper.h; path = Classes/Headers/NSTextFieldHelper.h; sourceTree = SOURCE_ROOT; };
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
@@ -724,7 +728,6 @@
 				4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */,
 				4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */,
 				4C3BCC98130D8373006C36A9 /* AutoHyperlinks.framework in Frameworks */,
-				4C2BAAB813121960001358FF /* RegexKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,7 +1106,6 @@
 			children = (
 				4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */,
 				4C66E88412DF69E500446250 /* BlowfishEncryption.framework */,
-				4C2BAAB713121960001358FF /* RegexKit.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
@@ -1146,6 +1148,17 @@
 				4CD1733C120EB20600F03B37 /* TextualPluginItem.m */,
 			);
 			name = "Plug-In Architecture";
+			sourceTree = "<group>";
+		};
+		4CC33B8B13177F0400BDBCA0 /* Regular Expression */ = {
+			isa = PBXGroup;
+			children = (
+				4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */,
+				4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */,
+				4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */,
+				4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */,
+			);
+			name = "Regular Expression";
 			sourceTree = "<group>";
 		};
 		4CD0155E12F17B0F001953E6 /* Projects */ = {
@@ -1340,6 +1353,7 @@
 			children = (
 				4C26FB9212FA6E660094F17E /* Ignore System */,
 				4C5938DE11D0E0660094B049 /* Keychain Control */,
+				4CC33B8B13177F0400BDBCA0 /* Regular Expression */,
 				4C93A73813127FF5009D42EC /* Socket Control */,
 				4CD0E68D12F1B6B000C8F016 /* FileLogger.h */,
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
@@ -1570,6 +1584,8 @@
 				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
 				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
+				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
+				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1593,8 +1609,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C3F691512FD939400B50CB9 /* PBXTargetDependency */,
-				4C3F691312FD939200B50CB9 /* PBXTargetDependency */,
+				4CE5D49C131798F100321734 /* PBXTargetDependency */,
+				4CE5D49A131798F100321734 /* PBXTargetDependency */,
 			);
 			name = Textual;
 			productName = LimeChat;
@@ -1905,21 +1921,23 @@
 				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
 				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
 				4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */,
+				4CC33B7E13177E9F00BDBCA0 /* RegexKitLite.m in Sources */,
+				4CC33B8613177EF700BDBCA0 /* TXRegularExpression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C3F691312FD939200B50CB9 /* PBXTargetDependency */ = {
+		4CE5D49A131798F100321734 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
-			targetProxy = 4C3F691212FD939200B50CB9 /* PBXContainerItemProxy */;
+			targetProxy = 4CE5D499131798F100321734 /* PBXContainerItemProxy */;
 		};
-		4C3F691512FD939400B50CB9 /* PBXTargetDependency */ = {
+		4CE5D49C131798F100321734 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */;
-			targetProxy = 4C3F691412FD939400B50CB9 /* PBXContainerItemProxy */;
+			targetProxy = 4CE5D49B131798F100321734 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2069,7 +2087,6 @@
 				ARCHS = (
 					x86_64,
 					i386,
-					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2082,19 +2099,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = "App Store Release";
 		};
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2107,9 +2121,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
-					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
-					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2136,7 +2148,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2183,10 +2194,6 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2199,9 +2206,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
-					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
-					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2221,6 +2226,7 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2230,7 +2236,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -2240,10 +2245,6 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2256,9 +2257,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
-					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
-					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2285,7 +2284,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2335,7 +2333,6 @@
 				ARCHS = (
 					x86_64,
 					i386,
-					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2347,6 +2344,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -2356,10 +2354,6 @@
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2372,9 +2366,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/Frameworks/Blowfish\"",
-					"\"$(SRCROOT)/Frameworks/Adium\"",
 					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
-					"\"$(SRCROOT)/Frameworks/RegexKit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2404,7 +2396,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2419,7 +2410,6 @@
 				ARCHS = (
 					x86_64,
 					i386,
-					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2431,10 +2421,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -2444,7 +2434,6 @@
 				ARCHS = (
 					x86_64,
 					i386,
-					ppc,
 				);
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2456,9 +2445,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};

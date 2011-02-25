@@ -446,7 +446,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [shortstring rangeOfRegex:@"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}"];
+	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
@@ -485,7 +485,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [shortstring rangeOfRegex:@"(#\\w\\w+)"];
+	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"((#\\w\\w+)"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	

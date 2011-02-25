@@ -347,8 +347,12 @@
 	
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
+
+	WebScriptObject *js_api = [view js_api];
 	
-	[[view js_api] callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
+	if (js_api) {
+		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
+	}
 	
 	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
 	if (PointerIsEmpty(body)) return;
@@ -625,9 +629,13 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
+
+	WebScriptObject *js_api = [view js_api];
 	
-	[[view js_api] callWebScriptMethod:@"newMessagePostedToDisplay" 
+	if (js_api) {
+		[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
 						 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
+	}
 }
 
 - (NSString *)initialDocument:(NSString *)topic
@@ -866,8 +874,12 @@
 		e = next;
 	}
 	
-	[[view js_api] callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
-} 
+	WebScriptObject *js_api = [view js_api];
+	
+	if (js_api) {
+		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
+	}
+}
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
 {
