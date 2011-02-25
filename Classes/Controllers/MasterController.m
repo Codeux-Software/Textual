@@ -624,7 +624,7 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	f (menu.isInFullScreenMode) {
+	if (menu.isInFullScreenMode) {
 		[self loadWindowState];
 	}
 	
