@@ -57,6 +57,8 @@ typedef enum {
 	BOOL inFirstISONRun;
 	BOOL inWhoWasRequest;
 	
+	CFAbsoluteTime lastLagCheck;
+	
 	NSStringEncoding encoding;
 	
 	NSString *logDate;
@@ -99,6 +101,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *channels;
 @property (nonatomic, retain) NSMutableArray *commandQueue;
 @property (nonatomic, retain) NSMutableDictionary *trackedUsers;
+@property (nonatomic, assign) CFAbsoluteTime lastLagCheck;
 @property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) BOOL isAway;

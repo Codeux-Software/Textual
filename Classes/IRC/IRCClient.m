@@ -87,6 +87,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize isQuitting;
 @synthesize isonTimer;
 @synthesize isupport;
+@synthesize lastLagCheck;
 @synthesize lastSelectedChannel;
 @synthesize logDate;
 @synthesize logFile;
@@ -1432,6 +1433,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	switch ([Preferences commandUIndex:cmd]) {
 		case 3: // Command: AWAY
+		{
 			if (NSObjectIsEmpty(s) && cutColon == NO) {
 				s = ((isAway == NO) ? (NSMutableString *)TXTLS(@"IRC_AWAY_COMMAND_DEFAULT_REASON") : nil);
 			}
@@ -1450,7 +1452,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 5: // Command: INVITE
+		{
 			targetChannelName = [s getToken];
 			
 			if (NSObjectIsEmpty(s) && cutColon == NO) {
@@ -1461,6 +1465,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 51: // Command: J
 		case 7: // Command: JOIN
 		{
@@ -1484,6 +1489,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 8: // Command: KICK
+		{
 			if (selChannel && selChannel.isChannel && [s isModeChannelName] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
@@ -1504,6 +1510,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 9: // Command: KILL
 		{
 			NSString *peer = [s getToken];
@@ -1726,6 +1733,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 15: // Command: PART
 		case 52: // Command: LEAVE
+		{
 			if (selChannel && selChannel.isChannel && [s isChannelName] == NO) {
 				targetChannelName = selChannel.name;
 			} else if (selChannel && selChannel.isTalk && [s isChannelName] == NO) {
@@ -1748,6 +1756,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 20: // Command: QUIT
 		{
 			[self quit:[s trim]];
@@ -1757,6 +1766,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 21: // Command: TOPIC
 		case 61: // Command: T
+		{
 			if (selChannel && selChannel.isChannel && [s isChannelName] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
@@ -1777,6 +1787,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 23: // Command: WHO
 		{
 			NSString *chaname = [s getToken];
@@ -1800,6 +1811,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 24: // Command: WHOIS
+		{
 			if ([s contains:@" "]) {
 				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, s]];
 			} else {
@@ -1808,6 +1820,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 32: // Command: CTCP
 		{ 
 			NSString *subCommand = [[s getToken] uppercaseString];
@@ -1826,6 +1839,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 33: // Command: CTCPREPLY
+		{
 			targetChannelName = [s getToken];
 			
 			NSString *subCommand = [s getToken];
@@ -1834,8 +1848,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 41: // Command: BAN
 		case 64: // Command: UNBAN
+		{
 			if (c) {
 				NSString *peer = [s getToken];
 				
@@ -1853,6 +1869,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 11: // Command: MODE
 		case 45: // Command: DEHALFOP
 		case 46: // Command: DEOP
@@ -1862,6 +1879,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 63: // Command: VOICE
 		case 66: // Command: UMODE
 		case 53: // Command: M
+		{
 			if ([cmd isEqualToString:IRCCI_M]) {
 				cmd = IRCCI_MODE;
 			}
@@ -1928,7 +1946,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 42: // Command: CLEAR
+		{
 			if (c) {
 				[world clearContentsOfChannel:c inClient:self];
 				
@@ -1945,6 +1965,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 43: // Command: CLOSE
 		case 77: // Command: REMOVE
 		{
@@ -1964,6 +1985,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 44: // Command: REJOIN
 		case 49: // Command: CYCLE
 		case 58: // Command: HOP
+		{
 			if (c) {
 				NSString *pass = nil;
 				
@@ -1976,8 +1998,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 50: // Command: IGNORE
 		case 65: // Command: UNIGNORE
+		{
 			if (NSObjectIsEmpty(s)) {
 				[world.menuController showServerPropertyDialog:self ignore:@"-"];
 			} else {
@@ -2040,12 +2064,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 57: // Command: RAW
 		case 60: // Command: QUOTE
+		{
 			[self sendLine:s];
 			
 			return YES;
 			break;
+		}
 		case 59: // Command: QUERY
 		{
 			NSString *nick = [s getToken];
@@ -2087,6 +2114,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 68: // Command: WEIGHTS
+		{
 			if (c) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
 				
@@ -2101,8 +2129,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 69: // Command: ECHO
 		case 70: // Command: DEBUG
+		{
 			if ([s isEqualToString:@"raw on"]) {
 				rawModeEnabled = YES;
 				
@@ -2117,7 +2147,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 71: // Command: CLEARALL
+		{
 			if ([Preferences clearAllOnlyOnActiveServer]) {
 				[world clearContentsOfClient:self];
 				
@@ -2145,7 +2177,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 72: // Command: AMSG
+		{
 			if ([Preferences amsgAllConnections]) {
 				for (IRCClient *u in [world clients]) {
 					if ([u isConnected] == NO) continue;
@@ -2170,7 +2204,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 73: // Command: AME
+		{
 			if ([Preferences amsgAllConnections]) {
 				for (IRCClient *u in [world clients]) {
 					if ([u isConnected] == NO) continue;
@@ -2195,8 +2231,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 78: // Command: KB
 		case 79: // Command: KICKBAN 
+		{
 			if (c) {
 				NSString *peer = [s getToken];
 				
@@ -2217,7 +2255,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 81: // Command: ICBADGE
+		{
 			if ([s contains:@" "] == NO) return NO;
 			
 			NSArray *data = [s componentsSeparatedByString:@" "];
@@ -2227,14 +2267,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 82: // Command: SERVER
+		{
 			if (NSObjectIsNotEmpty(s)) {
 				[world createConnection:s chan:nil];
 			}
 			
 			return YES;
 			break;
+		}
 		case 83: // Command: CONN
+		{
 			if (NSObjectIsNotEmpty(s)) {
 				[config setHost:s];
 			}
@@ -2245,6 +2289,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 84: // Command: MYVERSION
 		{
 			NSString *ref = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
@@ -2294,6 +2339,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 74: // Command: MUTE
+		{
 			if (world.soundMuted) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_ALREADY_MUTED")];
 			} else {
@@ -2304,7 +2350,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 75: // Command: UNMUTE
+		{
 			if (world.soundMuted) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"SOUND_IS_NO_LONGER_MUTED")];
 				
@@ -2315,16 +2363,31 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			return YES;
 			break;
+		}
 		case 76: // Command: UNLOAD_PLUGINS
+		{
 			[[NSBundle invokeInBackgroundThread] deallocBundlesFromMemory:world];
 			
 			return YES;
 			break;
+		}
 		case 91: // Command: LOAD_PLUGINS
+		{
 			[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
 			
 			return YES;
 			break;
+		}
+		case 94: // Command: LAGCHECK
+		{
+			lastLagCheck = CFAbsoluteTimeGetCurrent();
+			
+			[self sendCTCPQuery:myNick command:IRCII_LAGCHECK text:[NSString stringWithDouble:lastLagCheck]];
+			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_DEBUG text:TXTLS(@"LAG_CHECK_REQUEST_SENT_MESSAGE")];
+	
+			return YES;
+			break;
+		}
 		default:
 		{
 			NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
@@ -3401,7 +3464,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		NSString *text = TXTFLS(@"IRC_RECIEVED_CTCP_REQUEST", command, nick);
 		
-		[self printBoth:target type:LINE_TYPE_CTCP text:text];
+		if ([command isEqualToString:IRCII_LAGCHECK] == NO) {
+			[self printBoth:target type:LINE_TYPE_CTCP text:text];
+		}
 		
 		if ([command isEqualToString:IRCCI_PING]) {
 			[self sendCTCPReply:nick command:command text:s];
@@ -3420,6 +3485,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self sendCTCPReply:nick command:command text:((config.userInfo) ?: @"")];
 		} else if ([command isEqualToString:IRCCI_CLIENTINFO]) {
 			[self sendCTCPReply:nick command:command text:TXTLS(@"IRC_CTCP_CLIENT_INFO")];
+		} else if ([command isEqualToString:IRCII_LAGCHECK]) {
+			double time = CFAbsoluteTimeGetCurrent();
+			
+			if (time >= lastLagCheck) {
+				double delta = (time - lastLagCheck);
+				
+				text = TXTFLS(@"LAG_CHECK_REQUEST_REPLY_MESSAGE", delta);
+			} else {
+				text = TXTLS(@"LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAG");
+			}
+			
+			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_DEBUG text:text]; 
+			
+			lastLagCheck = 0;
 		}
 	}
 }
@@ -3652,9 +3731,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *text = TXTFLS(@"IRC_USER_DISCONNECTED", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
-        if ([TXRegularExpression string:comment 
-                       isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
-            
+		if ([TXRegularExpression string:comment 
+					   isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
+			
 			comment = TXTFLS(@"IRC_SERVER_HAD_NETSPLIT", comment);
 		}
 		
@@ -3989,17 +4068,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 305: 
+		{
 			isAway = NO;
 			
 			[self printUnknownReply:m];
 			
 			break;
+		}
 		case 306: 
+		{
 			isAway = YES;
 			
 			[self printUnknownReply:m];
 			
 			break;
+		}
 		case 307: // RPL_WHOISGENERAL
 		case 310: // RPL_WHOISGENERAL
 		case 313: // RPL_WHOISGENERAL
@@ -4118,9 +4201,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 318:	// RPL_ENDOFWHOIS
+		{
 			whoisChannel = nil;
 			
 			break;
+		}
 		case 324:	// RPL_CHANNELMODEIS
 		{
 			NSString *chname = [m paramAt:1];
@@ -4436,13 +4521,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 323:	// RPL_LISTEND
+		{
 			inList = NO;
 			
 			break;
+		}
 		case 321:
 		case 329:
+		{
 			return;
 			break;
+		}
 		case 330:
 		{
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
@@ -4503,11 +4592,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 381:
+		{
 			hasIRCopAccess = YES;
 			
 			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_HAS_GOOD_LIFE", m.sender.nick)];
 			
 			break;
+		}
 		case 328:
 		{
 			NSString *chname = [m paramAt:1];
@@ -4522,17 +4613,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 369:
+		{
 			inWhoWasRequest = NO;
 			
 			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:[m sequence]];
 			
 			break;
+		}
 		default:
+		{
 			if ([world.bundlesForServerInput containsKey:[NSString stringWithInteger:m.numericReply]]) break;
 			
 			[self printUnknownReply:m];
 			
 			break;
+		}
 	}
 }
 
