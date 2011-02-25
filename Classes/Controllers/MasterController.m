@@ -624,12 +624,12 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	if (menu.isInFullScreenMode) {
+	f (menu.isInFullScreenMode) {
 		[self loadWindowState];
 	}
 	
 	if (([Preferences applicationRanOnLion] && menu.isInFullScreenMode == NO) ||
-		[[Preferences applicationRanOnLion] == NO) {
+		[Preferences applicationRanOnLion] == NO) {
 		
 		NSRect rect = window.frame;
 		
@@ -643,647 +643,647 @@
 		
 		[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	}
-		 
-		 [Preferences saveWindowState:dic name:@"MainWindow"];
-		 [Preferences sync];
-		 }
-		 
-		 - (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
-	{	
-		[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+	
+	[Preferences saveWindowState:dic name:@"MainWindow"];
+	[Preferences sync];
+}
+
+- (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{	
+	[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
+}
+
+- (void)themeDidChange:(NSNotification *)note
+{
+	NSMutableString *sf = [NSMutableString string];
+	
+	[world reloadTheme];
+	
+	[self setColumnLayout];
+	
+	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
+	
+	if (viewTheme.other.nicknameFormat) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
+		[sf appendString:@"\n"];
 	}
-		 
-		 - (void)themeDidChange:(NSNotification *)note
-	{
-		NSMutableString *sf = [NSMutableString string];
-		
-		[world reloadTheme];
-		
-		[self setColumnLayout];
-		
-		[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-		[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-		[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-		
-		if (viewTheme.other.nicknameFormat) {
-			[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
-			[sf appendString:@"\n"];
-		}
-		
-		if (viewTheme.other.timestampFormat) {
-			[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT")];
-			[sf appendString:@"\n"];
-		}
-		
-		if (viewTheme.other.overrideChannelFont) {
-			[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT")];
-			[sf appendString:@"\n"];
-		}
-		
-		if (viewTheme.other.overrideMessageIndentWrap) {
-			[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED")];
-			[sf appendString:@"\n"];
-		}
-		
-		sf = (NSMutableString *)[sf trim];
-		
-		if (NSObjectIsNotEmpty(sf)) {		
-			NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
-			
-			[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
-										   target:self 
-										   action:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) 
-											 body:TXTFLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE", theme, sf)
-											title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
-									defaultButton:TXTLS(@"OK_BUTTON")
-								  alternateButton:nil 
-								   suppressionKey:@"Preferences.prompts.theme_override_info" 
-								  suppressionText:nil];
-		}
+	
+	if (viewTheme.other.timestampFormat) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT")];
+		[sf appendString:@"\n"];
 	}
-		 
-		 - (void)themeStyleDidChange:(NSNotification *)note
-	{
-		[world updateThemeStyle];
+	
+	if (viewTheme.other.overrideChannelFont) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT")];
+		[sf appendString:@"\n"];
 	}
-		 
-		 - (void)transparencyDidChange:(NSNotification *)note
-	{
-		[window setAlphaValue:[Preferences themeTransparency]];
+	
+	if (viewTheme.other.overrideMessageIndentWrap) {
+		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED")];
+		[sf appendString:@"\n"];
 	}
-		 
-		 - (void)inputHistorySchemeChanged:(NSNotification *)note
-	{
-		if (inputHistory) {
-			[inputHistory drain];
-			inputHistory = nil;
+	
+	sf = (NSMutableString *)[sf trim];
+	
+	if (NSObjectIsNotEmpty(sf)) {		
+		NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
+		
+		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
+									   target:self 
+									   action:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) 
+										 body:TXTFLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE", theme, sf)
+										title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
+								defaultButton:TXTLS(@"OK_BUTTON")
+							  alternateButton:nil 
+							   suppressionKey:@"Preferences.prompts.theme_override_info" 
+							  suppressionText:nil];
+	}
+}
+
+- (void)themeStyleDidChange:(NSNotification *)note
+{
+	[world updateThemeStyle];
+}
+
+- (void)transparencyDidChange:(NSNotification *)note
+{
+	[window setAlphaValue:[Preferences themeTransparency]];
+}
+
+- (void)inputHistorySchemeChanged:(NSNotification *)note
+{
+	if (inputHistory) {
+		[inputHistory drain];
+		inputHistory = nil;
+	}
+	
+	for (IRCClient *c in world.clients) {
+		if (c.inputHistory) {
+			[c.inputHistory drain];
+			c.inputHistory = nil;
 		}
 		
-		for (IRCClient *c in world.clients) {
-			if (c.inputHistory) {
-				[c.inputHistory drain];
-				c.inputHistory = nil;
+		if ([Preferences inputHistoryIsChannelSpecific]) {
+			c.inputHistory = [InputHistory new];
+		}
+		
+		for (IRCChannel *u in c.channels) {
+			if (u.inputHistory) {
+				[u.inputHistory drain];
+				u.inputHistory = nil;
 			}
 			
 			if ([Preferences inputHistoryIsChannelSpecific]) {
-				c.inputHistory = [InputHistory new];
+				u.inputHistory = [InputHistory new];
 			}
-			
-			for (IRCChannel *u in c.channels) {
-				if (u.inputHistory) {
-					[u.inputHistory drain];
-					u.inputHistory = nil;
-				}
-				
-				if ([Preferences inputHistoryIsChannelSpecific]) {
-					u.inputHistory = [InputHistory new];
-				}
-			}
-		}
-		
-		if ([Preferences inputHistoryIsChannelSpecific] == NO) {
-			inputHistory = [InputHistory new];
 		}
 	}
-		 
+	
+	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
+		inputHistory = [InputHistory new];
+	}
+}
+
 #pragma mark -
 #pragma mark Nick Completion
-		 
-		 - (void)completeNick:(BOOL)forward
-	{
-		IRCClient *client = [world selectedClient];
-		IRCChannel *channel = [world selectedChannel];
+
+- (void)completeNick:(BOOL)forward
+{
+	IRCClient *client = [world selectedClient];
+	IRCChannel *channel = [world selectedChannel];
+	
+	if (PointerIsEmpty(client)) return;
+	
+	if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
+		[world focusInputText];
+	}
+	
+	NSText *fe = [window fieldEditor:YES forObject:text];
+	if (PointerIsEmpty(fe)) return;
+	
+	NSRange selectedRange = [fe selectedRange];
+	if (selectedRange.location == NSNotFound) return;
+	
+	if (PointerIsEmpty(completionStatus)) {
+		completionStatus = [NickCompletionStatus new];
+	}
+	
+	NickCompletionStatus *status = completionStatus;
+	
+	NSString *s = text.stringValue;
+	
+	if ([status.text isEqualToString:s]
+		&& status.range.location != NSNotFound
+		&& NSMaxRange(status.range) == selectedRange.location
+		&& selectedRange.length == 0) {
 		
-		if (PointerIsEmpty(client)) return;
+		selectedRange = status.range;
+	}
+	
+	BOOL head = YES;
+	
+	NSString *pre = [s safeSubstringToIndex:selectedRange.location];
+	NSString *sel = [s safeSubstringWithRange:selectedRange];
+	
+	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
+		UniChar c = [pre characterAtIndex:i];
 		
-		if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
-			[world focusInputText];
-		}
-		
-		NSText *fe = [window fieldEditor:YES forObject:text];
-		if (PointerIsEmpty(fe)) return;
-		
-		NSRange selectedRange = [fe selectedRange];
-		if (selectedRange.location == NSNotFound) return;
-		
-		if (PointerIsEmpty(completionStatus)) {
-			completionStatus = [NickCompletionStatus new];
-		}
-		
-		NickCompletionStatus *status = completionStatus;
-		
-		NSString *s = text.stringValue;
-		
-		if ([status.text isEqualToString:s]
-			&& status.range.location != NSNotFound
-			&& NSMaxRange(status.range) == selectedRange.location
-			&& selectedRange.length == 0) {
+		if (c == ' ') {
+			++i;
 			
-			selectedRange = status.range;
-		}
-		
-		BOOL head = YES;
-		
-		NSString *pre = [s safeSubstringToIndex:selectedRange.location];
-		NSString *sel = [s safeSubstringWithRange:selectedRange];
-		
-		for (NSInteger i = (pre.length - 1); i >= 0; --i) {
-			UniChar c = [pre characterAtIndex:i];
+			if (i == pre.length) return;
 			
-			if (c == ' ') {
-				++i;
-				
-				if (i == pre.length) return;
-				
-				head = NO;
-				pre = [pre safeSubstringFromIndex:i];
-				
-				break;
-			}
+			head = NO;
+			pre = [pre safeSubstringFromIndex:i];
+			
+			break;
 		}
+	}
+	
+	if (NSObjectIsEmpty(pre)) return;
+	
+	BOOL channelMode = NO;
+	BOOL commandMode = NO;
+	
+	UniChar c = [pre characterAtIndex:0];
+	
+	if (head && c == '/') {
+		commandMode = YES;
+		
+		pre = [pre safeSubstringFromIndex:1];
 		
 		if (NSObjectIsEmpty(pre)) return;
+	} else if (c == '@') {
+		if (PointerIsEmpty(channel)) return;
 		
-		BOOL channelMode = NO;
-		BOOL commandMode = NO;
+		pre = [pre safeSubstringFromIndex:1];
 		
-		UniChar c = [pre characterAtIndex:0];
+		if (NSObjectIsEmpty(pre)) return;
+	} else if (c == '#') {
+		channelMode = YES;
 		
-		if (head && c == '/') {
-			commandMode = YES;
-			
-			pre = [pre safeSubstringFromIndex:1];
-			
-			if (NSObjectIsEmpty(pre)) return;
-		} else if (c == '@') {
-			if (PointerIsEmpty(channel)) return;
-			
-			pre = [pre safeSubstringFromIndex:1];
-			
-			if (NSObjectIsEmpty(pre)) return;
-		} else if (c == '#') {
-			channelMode = YES;
-			
-			if (NSObjectIsEmpty(pre)) return;
+		if (NSObjectIsEmpty(pre)) return;
+	}
+	
+	NSString *current = [pre stringByAppendingString:sel];
+	
+	NSInteger len = current.length;
+	
+	for (NSInteger i = 0; i < len; ++i) {
+		UniChar c = [current characterAtIndex:i];
+		
+		if (c != ' ' && c != ':') {
+			;
+		} else {
+			current = [current safeSubstringToIndex:i];
+			break;
+		}
+	}
+	
+	if (NSObjectIsEmpty(current)) return;
+	
+	NSString *lowerPre = [pre lowercaseString];
+	NSString *lowerCurrent = [current lowercaseString];
+	
+	NSArray *lowerChoices;
+	NSMutableArray *choices;
+	
+	if (commandMode) {
+		choices = [NSMutableArray array];
+		
+		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+		
+		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
+			[choices safeAddObject:[command lowercaseString]];
 		}
 		
-		NSString *current = [pre stringByAppendingString:sel];
-		
-		NSInteger len = current.length;
-		
-		for (NSInteger i = 0; i < len; ++i) {
-			UniChar c = [current characterAtIndex:i];
+		for (NSString *command in [[world bundlesForUserInput] allKeys]) {
+			NSString *cmdl = [command lowercaseString];
 			
-			if (c != ' ' && c != ':') {
-				;
-			} else {
-				current = [current safeSubstringToIndex:i];
-				break;
+			if ([choices containsObject:cmdl] == NO) {
+				[choices safeAddObject:cmdl];
 			}
 		}
 		
-		if (NSObjectIsEmpty(current)) return;
-		
-		NSString *lowerPre = [pre lowercaseString];
-		NSString *lowerCurrent = [current lowercaseString];
-		
-		NSArray *lowerChoices;
-		NSMutableArray *choices;
-		
-		if (commandMode) {
-			choices = [NSMutableArray array];
-			
-			NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-			
-			for (NSString *command in [[Preferences commandIndexList] allKeys]) {
-				[choices safeAddObject:[command lowercaseString]];
-			}
-			
-			for (NSString *command in [[world bundlesForUserInput] allKeys]) {
-				NSString *cmdl = [command lowercaseString];
+		for (NSString *file in resourceFiles) {
+			if ([file hasSuffix:@".scpt"]) {
+				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
 				
 				if ([choices containsObject:cmdl] == NO) {
 					[choices safeAddObject:cmdl];
 				}
 			}
-			
-			for (NSString *file in resourceFiles) {
-				if ([file hasSuffix:@".scpt"]) {
-					NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
-					
-					if ([choices containsObject:cmdl] == NO) {
-						[choices safeAddObject:cmdl];
-					}
-				}
-			}
-			
-			lowerChoices = choices;
-		} else if (channelMode) {
-			NSMutableArray *channels = [NSMutableArray array];
-			NSMutableArray *lowerChannels = [NSMutableArray array];
-			
-			IRCClient *u = [world selectedClient];
-			
-			for (IRCChannel *c in u.channels) {
-				[channels safeAddObject:c.name];
-				[lowerChannels safeAddObject:[c.name lowercaseString]];
-			}
-			
-			choices = channels;
-			lowerChoices = lowerChannels;
-		} else {
-			NSMutableArray *users = [channel.members mutableCopy];
-			[users sortUsingSelector:@selector(compareUsingWeights:)];
-			
-			NSMutableArray *nicks = [NSMutableArray array];
-			NSMutableArray *lowerNicks = [NSMutableArray array];
-			
-			for (IRCUser *m in users) {
-				[nicks safeAddObject:m.nick];
-				[lowerNicks safeAddObject:[m.nick lowercaseString]];
-			}
-			
-			choices = nicks;
-			lowerChoices = lowerNicks;
-			
-			[users drain];
 		}
 		
-		NSMutableArray *currentChoices      = [NSMutableArray array];
-		NSMutableArray *currentLowerChoices = [NSMutableArray array];
+		lowerChoices = choices;
+	} else if (channelMode) {
+		NSMutableArray *channels = [NSMutableArray array];
+		NSMutableArray *lowerChannels = [NSMutableArray array];
 		
-		NSInteger i = 0;
+		IRCClient *u = [world selectedClient];
 		
-		for (NSString *s in lowerChoices) {
-			if ([s hasPrefix:lowerPre]) {
-				[currentLowerChoices safeAddObject:s];
-				[currentChoices safeAddObject:[choices safeObjectAtIndex:i]];
-			}
-			
-			++i;
+		for (IRCChannel *c in u.channels) {
+			[channels safeAddObject:c.name];
+			[lowerChannels safeAddObject:[c.name lowercaseString]];
 		}
 		
-		if (currentChoices.count < 1) return;
+		choices = channels;
+		lowerChoices = lowerChannels;
+	} else {
+		NSMutableArray *users = [channel.members mutableCopy];
+		[users sortUsingSelector:@selector(compareUsingWeights:)];
 		
-		NSString *t = nil;
+		NSMutableArray *nicks = [NSMutableArray array];
+		NSMutableArray *lowerNicks = [NSMutableArray array];
 		
-		NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
+		for (IRCUser *m in users) {
+			[nicks safeAddObject:m.nick];
+			[lowerNicks safeAddObject:[m.nick lowercaseString]];
+		}
 		
-		if (index == NSNotFound) {
-			t = [currentChoices safeObjectAtIndex:0];
+		choices = nicks;
+		lowerChoices = lowerNicks;
+		
+		[users drain];
+	}
+	
+	NSMutableArray *currentChoices      = [NSMutableArray array];
+	NSMutableArray *currentLowerChoices = [NSMutableArray array];
+	
+	NSInteger i = 0;
+	
+	for (NSString *s in lowerChoices) {
+		if ([s hasPrefix:lowerPre]) {
+			[currentLowerChoices safeAddObject:s];
+			[currentChoices safeAddObject:[choices safeObjectAtIndex:i]];
+		}
+		
+		++i;
+	}
+	
+	if (currentChoices.count < 1) return;
+	
+	NSString *t = nil;
+	
+	NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
+	
+	if (index == NSNotFound) {
+		t = [currentChoices safeObjectAtIndex:0];
+	} else {
+		if (forward) {
+			++index;
+			
+			if (currentChoices.count <= index) {
+				index = 0;
+			}
 		} else {
-			if (forward) {
-				++index;
-				
-				if (currentChoices.count <= index) {
-					index = 0;
-				}
+			if (index == 0) {
+				index = (currentChoices.count - 1);
 			} else {
-				if (index == 0) {
-					index = (currentChoices.count - 1);
-				} else {
-					--index;
-				}
-			}
-			
-			t = [currentChoices safeObjectAtIndex:index];
-		}
-		
-		[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
-		
-		if ((commandMode || channelMode) || head == NO) {
-			t = [t stringByAppendingString:@" "];
-		} else {
-			if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
-				t = [t stringByAppendingString:[Preferences completionSuffix]];
+				--index;
 			}
 		}
 		
-		NSRange r = selectedRange;
-		
-		r.location -= pre.length;
-		r.length += pre.length;
-		
-		[fe replaceCharactersInRange:r withString:t];
-		[fe scrollRangeToVisible:fe.selectedRange];
-		
-		r.location += t.length;
-		r.length = 0;
-		
-		fe.selectedRange = r;
-		
-		if (currentChoices.count == 1) {
-			[status clear];
-		} else {
-			selectedRange.length = (t.length - pre.length);
-			
-			status.text = text.stringValue;
-			status.range = selectedRange;
+		t = [currentChoices safeObjectAtIndex:index];
+	}
+	
+	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
+	
+	if ((commandMode || channelMode) || head == NO) {
+		t = [t stringByAppendingString:@" "];
+	} else {
+		if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
+			t = [t stringByAppendingString:[Preferences completionSuffix]];
 		}
 	}
-		 
+	
+	NSRange r = selectedRange;
+	
+	r.location -= pre.length;
+	r.length += pre.length;
+	
+	[fe replaceCharactersInRange:r withString:t];
+	[fe scrollRangeToVisible:fe.selectedRange];
+	
+	r.location += t.length;
+	r.length = 0;
+	
+	fe.selectedRange = r;
+	
+	if (currentChoices.count == 1) {
+		[status clear];
+	} else {
+		selectedRange.length = (t.length - pre.length);
+		
+		status.text = text.stringValue;
+		status.range = selectedRange;
+	}
+}
+
 #pragma mark -
 #pragma mark Keyboard Navigation
-		 
-		 typedef enum {
-			 MOVE_UP,
-			 MOVE_DOWN,
-			 MOVE_LEFT,
-			 MOVE_RIGHT,
-			 MOVE_ALL,
-			 MOVE_ACTIVE,
-			 MOVE_UNREAD,
-		 } MoveKind;
-		 
-		 - (void)move:(MoveKind)dir target:(MoveKind)target
-	{
-		if (dir == MOVE_UP || dir == MOVE_DOWN) {
-			id sel = world.selected;
-			if (PointerIsEmpty(sel)) return;
-			
-			NSInteger n = [tree rowForItem:sel];
-			if (n < 0) return;
-			
-			NSInteger start = n;
-			NSInteger count = [tree numberOfRows];
-			
-			if (count <= 1) return;
-			
-			while (1) {
-				if (dir == MOVE_UP) {
-					--n;
-					
-					if (n < 0) n = (count - 1);
-				} else {
-					++n;
-					
-					if (count <= n) n = 0;
-				}
+
+typedef enum {
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	MOVE_ALL,
+	MOVE_ACTIVE,
+	MOVE_UNREAD,
+} MoveKind;
+
+- (void)move:(MoveKind)dir target:(MoveKind)target
+{
+	if (dir == MOVE_UP || dir == MOVE_DOWN) {
+		id sel = world.selected;
+		if (PointerIsEmpty(sel)) return;
+		
+		NSInteger n = [tree rowForItem:sel];
+		if (n < 0) return;
+		
+		NSInteger start = n;
+		NSInteger count = [tree numberOfRows];
+		
+		if (count <= 1) return;
+		
+		while (1) {
+			if (dir == MOVE_UP) {
+				--n;
 				
-				if (n == start) break;
+				if (n < 0) n = (count - 1);
+			} else {
+				++n;
 				
-				id i = [tree itemAtRow:n];
-				
-				if (i) {
-					if (target == MOVE_ACTIVE) {
-						if ([i isClient] == NO && [i isActive]) {
-							[world select:i];
-							
-							break;
-						}
-					} else if (target == MOVE_UNREAD) {
-						if ([i isUnread]) {
-							[world select:i];
-							
-							break;
-						}
-					} else {
+				if (count <= n) n = 0;
+			}
+			
+			if (n == start) break;
+			
+			id i = [tree itemAtRow:n];
+			
+			if (i) {
+				if (target == MOVE_ACTIVE) {
+					if ([i isClient] == NO && [i isActive]) {
 						[world select:i];
 						
 						break;
 					}
+				} else if (target == MOVE_UNREAD) {
+					if ([i isUnread]) {
+						[world select:i];
+						
+						break;
+					}
+				} else {
+					[world select:i];
+					
+					break;
 				}
 			}
-		} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-			IRCClient *client = [world selectedClient];
-			if (PointerIsEmpty(client)) return;
-			
-			NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
-			if (pos == NSNotFound) return;
-			
-			NSInteger n = pos;
-			NSInteger start = n;
-			
-			NSInteger count = world.clients.count;
-			if (count <= 1) return;
-			
-			while (1) {
-				if (dir == MOVE_LEFT) {
-					--n;
-					
-					if (n < 0) n = (count - 1);
-				} else {
-					++n;
-					
-					if (count <= n) n = 0;
-				}
+		}
+	} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
+		IRCClient *client = [world selectedClient];
+		if (PointerIsEmpty(client)) return;
+		
+		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
+		if (pos == NSNotFound) return;
+		
+		NSInteger n = pos;
+		NSInteger start = n;
+		
+		NSInteger count = world.clients.count;
+		if (count <= 1) return;
+		
+		while (1) {
+			if (dir == MOVE_LEFT) {
+				--n;
 				
-				if (n == start) break;
+				if (n < 0) n = (count - 1);
+			} else {
+				++n;
 				
-				client = [world.clients safeObjectAtIndex:n];
-				
-				if (client) {
-					if (target == MOVE_ACTIVE) {
-						if (client.isLoggedIn) {
-							id t = ((client.lastSelectedChannel) ?: (id)client);
-							
-							[world select:t];
-							
-							break;
-						}
-					} else {
+				if (count <= n) n = 0;
+			}
+			
+			if (n == start) break;
+			
+			client = [world.clients safeObjectAtIndex:n];
+			
+			if (client) {
+				if (target == MOVE_ACTIVE) {
+					if (client.isLoggedIn) {
 						id t = ((client.lastSelectedChannel) ?: (id)client);
 						
 						[world select:t];
 						
 						break;
 					}
+				} else {
+					id t = ((client.lastSelectedChannel) ?: (id)client);
+					
+					[world select:t];
+					
+					break;
 				}
 			}
 		}
 	}
-		 
-		 - (void)selectPreviousChannel:(NSEvent *)e
-	{
-		[self move:MOVE_UP target:MOVE_ALL];
+}
+
+- (void)selectPreviousChannel:(NSEvent *)e
+{
+	[self move:MOVE_UP target:MOVE_ALL];
+}
+
+- (void)selectNextChannel:(NSEvent *)e
+{
+	[self move:MOVE_DOWN target:MOVE_ALL];
+}
+
+- (void)selectPreviousUnreadChannel:(NSEvent *)e
+{
+	[self move:MOVE_UP target:MOVE_UNREAD];
+}
+
+- (void)selectNextUnreadChannel:(NSEvent *)e
+{
+	[self move:MOVE_DOWN target:MOVE_UNREAD];
+}
+
+- (void)selectPreviousActiveChannel:(NSEvent *)e
+{
+	[self move:MOVE_UP target:MOVE_ACTIVE];
+}
+
+- (void)selectNextActiveChannel:(NSEvent *)e
+{
+	[self move:MOVE_DOWN target:MOVE_ACTIVE];
+}
+
+- (void)selectPreviousServer:(NSEvent *)e
+{
+	[self move:MOVE_LEFT target:MOVE_ALL];
+}
+
+- (void)selectNextServer:(NSEvent *)e
+{
+	[self move:MOVE_RIGHT target:MOVE_ALL];
+}
+
+- (void)selectPreviousActiveServer:(NSEvent *)e
+{
+	[self move:MOVE_LEFT target:MOVE_ACTIVE];
+}
+
+- (void)selectNextActiveServer:(NSEvent *)e
+{
+	[self move:MOVE_RIGHT target:MOVE_ACTIVE];
+}
+
+- (void)selectPreviousSelection:(NSEvent *)e
+{
+	[world selectPreviousItem];
+}
+
+- (void)selectNextSelection:(NSEvent *)e
+{
+	[self move:MOVE_DOWN target:MOVE_ALL];
+}
+
+- (void)tab:(NSEvent *)e
+{
+	switch ([Preferences tabAction]) {
+		case TAB_COMPLETE_NICK:
+			[self completeNick:YES];
+			break;
+		case TAB_UNREAD:
+			[self move:MOVE_DOWN target:MOVE_UNREAD];
+			break;
+		default: break;
 	}
-		 
-		 - (void)selectNextChannel:(NSEvent *)e
-	{
-		[self move:MOVE_DOWN target:MOVE_ALL];
+}
+
+- (void)shiftTab:(NSEvent *)e
+{
+	switch ([Preferences tabAction]) {
+		case TAB_COMPLETE_NICK:
+			[self completeNick:NO];
+			break;
+		case TAB_UNREAD:
+			[self move:MOVE_UP target:MOVE_UNREAD];
+			break;
+		default: break;
 	}
-		 
-		 - (void)selectPreviousUnreadChannel:(NSEvent *)e
-	{
-		[self move:MOVE_UP target:MOVE_UNREAD];
-	}
-		 
-		 - (void)selectNextUnreadChannel:(NSEvent *)e
-	{
-		[self move:MOVE_DOWN target:MOVE_UNREAD];
-	}
-		 
-		 - (void)selectPreviousActiveChannel:(NSEvent *)e
-	{
-		[self move:MOVE_UP target:MOVE_ACTIVE];
-	}
-		 
-		 - (void)selectNextActiveChannel:(NSEvent *)e
-	{
-		[self move:MOVE_DOWN target:MOVE_ACTIVE];
-	}
-		 
-		 - (void)selectPreviousServer:(NSEvent *)e
-	{
-		[self move:MOVE_LEFT target:MOVE_ALL];
-	}
-		 
-		 - (void)selectNextServer:(NSEvent *)e
-	{
-		[self move:MOVE_RIGHT target:MOVE_ALL];
-	}
-		 
-		 - (void)selectPreviousActiveServer:(NSEvent *)e
-	{
-		[self move:MOVE_LEFT target:MOVE_ACTIVE];
-	}
-		 
-		 - (void)selectNextActiveServer:(NSEvent *)e
-	{
-		[self move:MOVE_RIGHT target:MOVE_ACTIVE];
-	}
-		 
-		 - (void)selectPreviousSelection:(NSEvent *)e
-	{
-		[world selectPreviousItem];
-	}
-		 
-		 - (void)selectNextSelection:(NSEvent *)e
-	{
-		[self move:MOVE_DOWN target:MOVE_ALL];
-	}
-		 
-		 - (void)tab:(NSEvent *)e
-	{
-		switch ([Preferences tabAction]) {
-			case TAB_COMPLETE_NICK:
-				[self completeNick:YES];
-				break;
-			case TAB_UNREAD:
-				[self move:MOVE_DOWN target:MOVE_UNREAD];
-				break;
-			default: break;
-		}
-	}
-		 
-		 - (void)shiftTab:(NSEvent *)e
-	{
-		switch ([Preferences tabAction]) {
-			case TAB_COMPLETE_NICK:
-				[self completeNick:NO];
-				break;
-			case TAB_UNREAD:
-				[self move:MOVE_UP target:MOVE_UNREAD];
-				break;
-			default: break;
-		}
-	}
-		 
-		 - (void)sendMsgAction:(NSEvent *)e
-	{
-		[self sendText:IRCCI_ACTION];
-	}
-		 
-		 - (void)inputHistoryUp:(NSEvent *)e
-	{
-		NSAttributedString *s = [inputHistory up:[text attributedStringValue]];
+}
+
+- (void)sendMsgAction:(NSEvent *)e
+{
+	[self sendText:IRCCI_ACTION];
+}
+
+- (void)inputHistoryUp:(NSEvent *)e
+{
+	NSAttributedString *s = [inputHistory up:[text attributedStringValue]];
+	
+	if (s) {
+		[text setFilteredAttributedStringValue:s];
 		
-		if (s) {
-			[text setFilteredAttributedStringValue:s];
-			
-			[world focusInputText];
-		}
+		[world focusInputText];
 	}
-		 
-		 - (void)inputHistoryDown:(NSEvent *)e
-	{
-		NSAttributedString *s = [inputHistory down:[text attributedStringValue]];
+}
+
+- (void)inputHistoryDown:(NSEvent *)e
+{
+	NSAttributedString *s = [inputHistory down:[text attributedStringValue]];
+	
+	if (s) {
+		[text setFilteredAttributedStringValue:s];
 		
-		if (s) {
-			[text setFilteredAttributedStringValue:s];
-			
-			[world focusInputText];
-		}
+		[world focusInputText];
 	}
-		 
-		 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
-	{
-		[window registerKeyHandler:sel key:keyCode modifiers:mods];
-	}
-		 
-		 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
-	{
-		[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
-	}
-		 
-		 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
-	{
-		[window registerKeyHandler:sel character:c modifiers:mods];
-	}
-		 
-		 - (void)registerKeyHandlers
-	{
-		[window setKeyHandlerTarget:self];
-		[fieldEditor setKeyHandlerTarget:self];
-		
-		[self handler:@selector(tab:) code:KEY_TAB mods:0];
-		[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
-		
-		[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
-		[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
-		
-		[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
-		[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
-		
-		[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
-		[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
-		
-		[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
-		[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
-	}
-		 
+}
+
+- (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
+{
+	[window registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
+{
+	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[window registerKeyHandler:sel character:c modifiers:mods];
+}
+
+- (void)registerKeyHandlers
+{
+	[window setKeyHandlerTarget:self];
+	[fieldEditor setKeyHandlerTarget:self];
+	
+	[self handler:@selector(tab:) code:KEY_TAB mods:0];
+	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
+	
+	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
+	
+	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+	
+	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
+	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
+	
+	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
+	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
+}
+
 #pragma mark -
 #pragma mark WelcomeSheet Delegate
-		 
-		 - (void)WelcomeSheet:(WelcomeSheet *)sender onOK:(NSDictionary *)config
-	{
-		NSMutableArray *channels = [NSMutableArray array];
-		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-		
-		for (NSString *s in [config objectForKey:@"channels"]) {
-			if ([s isChannelName]) {
-				[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"name", 
-										 [NSNumber numberWithBool:YES], @"auto_join", 
-										 [NSNumber numberWithBool:YES], @"growl", nil]];	
-			}
-		}
-		
-		NSString *host = [config objectForKey:@"host"];
-		NSString *nick = [config objectForKey:@"nick"];
-		
-		[dic setObject:host forKey:@"host"];
-		[dic setObject:host forKey:@"name"];
-		[dic setObject:nick forKey:@"nick"];
-		[dic setObject:channels forKey:@"channels"];
-		[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
-		[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
-		
-		[window makeKeyAndOrderFront:nil];
-		
-		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
-		IRCClient *u = [world createClient:c reload:YES];
-		
-		[world save];
-		
-		if (c.autoConnect) {
-			[u connect];
+
+- (void)WelcomeSheet:(WelcomeSheet *)sender onOK:(NSDictionary *)config
+{
+	NSMutableArray *channels = [NSMutableArray array];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	for (NSString *s in [config objectForKey:@"channels"]) {
+		if ([s isChannelName]) {
+			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"name", 
+									 [NSNumber numberWithBool:YES], @"auto_join", 
+									 [NSNumber numberWithBool:YES], @"growl", nil]];	
 		}
 	}
-		 
-		 - (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
-	{
-		[WelcomeSheetDisplay drain];
-		WelcomeSheetDisplay = nil;
+	
+	NSString *host = [config objectForKey:@"host"];
+	NSString *nick = [config objectForKey:@"nick"];
+	
+	[dic setObject:host forKey:@"host"];
+	[dic setObject:host forKey:@"name"];
+	[dic setObject:nick forKey:@"nick"];
+	[dic setObject:channels forKey:@"channels"];
+	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
+	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+	
+	[window makeKeyAndOrderFront:nil];
+	
+	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClient *u = [world createClient:c reload:YES];
+	
+	[world save];
+	
+	if (c.autoConnect) {
+		[u connect];
 	}
-		 
-		 @end
+}
+
+- (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
+{
+	[WelcomeSheetDisplay drain];
+	WelcomeSheetDisplay = nil;
+}
+
+@end
