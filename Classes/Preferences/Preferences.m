@@ -136,6 +136,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[commandIndex setObject:@"91" forKey:IRCCI_LOAD_PLUGINS];
 	[commandIndex setObject:@"92" forKey:IRCII_SME];
 	[commandIndex setObject:@"93" forKey:IRCII_SMSG];
+	[commandIndex setObject:@"94" forKey:IRCII_LAGCHECK];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 
