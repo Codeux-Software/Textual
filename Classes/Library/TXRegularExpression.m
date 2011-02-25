@@ -15,7 +15,7 @@
 
 + (BOOL)useNewRegularExpressionEngine
 {
-	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+	return [Preferences applicationRanOnLion];
 }
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle
