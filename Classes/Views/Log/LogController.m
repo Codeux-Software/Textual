@@ -350,7 +350,7 @@
 
 	WebScriptObject *js_api = [view js_api];
 	
-	if (js_api) {
+	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
 	}
 	
@@ -632,7 +632,7 @@
 
 	WebScriptObject *js_api = [view js_api];
 	
-	if (js_api) {
+	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
 						 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
 	}
@@ -876,7 +876,7 @@
 	
 	WebScriptObject *js_api = [view js_api];
 	
-	if (js_api) {
+	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
 	}
 }

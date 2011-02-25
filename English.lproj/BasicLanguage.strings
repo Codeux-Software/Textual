@@ -163,7 +163,7 @@
 
 "LAG_CHECK_REQUEST_SENT_MESSAGE" = "Waiting for response from lag check …";
 "LAG_CHECK_REQUEST_REPLY_MESSAGE" = "Received lag check reply. Time elapsed: %1.5f seconds.";
-"LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAGE" = "Received lag check reply even though we never sent a request for one. Exploit attempt? ";
+"LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAGE" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
 
 "INVITE_SHEET_TWO_PEOPLE" = "%1$@ and %2$@";
 "INVITE_SHEET_MULTIPLE_PEOPLE" = "%d users";
