@@ -17,6 +17,7 @@
 
 @synthesize nickLen;
 @synthesize modesCount;
+@synthesize networkName;
 
 - (id)init
 {
@@ -25,6 +26,13 @@
 	}
 
 	return self;
+}
+
+- (void)dealloc
+{
+	[networkName drain];
+	
+	[super dealloc];
 }
 
 - (void)reset
@@ -78,6 +86,8 @@
 				nickLen = [value integerValue];
 			} else if ([key isEqualToString:@"MODES"]) {
 				modesCount = [value integerValue];
+			} else if ([key isEqualToString:@"NETWORK"]) {
+				networkName = [value retain];
 			}
 		}
 	}

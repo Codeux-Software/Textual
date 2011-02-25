@@ -11,8 +11,6 @@
 #define TRIAL_PERIOD_INTERVAL		1800
 #define AUTOJOIN_DELAY_INTERVAL		2
 
-#define IRC_NETWORK_NAME_REGEX		@"Welcome to the (.*) (.*)"
-
 static NSDateFormatter *dateTimeFormatter = nil;
 
 @interface IRCClient (Private)
@@ -3966,15 +3964,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	switch (n) {
 		case 1:
 		{
-			NSArray *matches = [TXRegularExpression matchesInString:[m sequence:1] withRegex:IRC_NETWORK_NAME_REGEX];
-			
-			if (NSObjectIsNotEmpty(matches)) {
-				NSString *matche = [matches safeObjectAtIndex:0];
-				
-				[config setNetwork:matche];
-				[world updateTitle];
-			}
-			
 			[self receiveInit:m];
 			[self printReply:m];
 			
@@ -3989,6 +3978,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			[self printReply:m];
+			
+			break;
+		}
+		case 5:		// RPL_ISUPPORT
+		{
+			[isupport update:[m sequence:1]];
+			
+			if (NSObjectIsNotEmpty(isupport.networkName)) {
+				[config setNetwork:TXTFLS(@"IRC_HAS_NETWORK_NAME", isupport.networkName)];
+				
+				[world updateTitle];
+			}
+			
+			[self startAutoJoinTimer];
 			
 			break;
 		}
@@ -4013,12 +4016,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 5:		// RPL_ISUPPORT
-			[isupport update:[m sequence:1]];
-			
-			[self startAutoJoinTimer];
-			
-			break;
 		case 221:	// RPL_UMODEIS
 		{
 			NSString *modeStr = [m paramAt:1];
