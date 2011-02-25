@@ -2770,7 +2770,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	while (1) {
-		NSRange r = [s rangeOfRegex:@"%(-?\\d+)?n"];
+		NSRange r = [TXRegularExpression string:s rangeOfRegex:@"%(-?\\d+)?n"];
 		
 		if (r.location == NSNotFound) break;
 		
@@ -3652,7 +3652,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *text = TXTFLS(@"IRC_USER_DISCONNECTED", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
-		if ([comment isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
+        if ([TXRegularExpression string:comment 
+                       isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
+            
 			comment = TXTFLS(@"IRC_SERVER_HAD_NETSPLIT", comment);
 		}
 		
@@ -3885,11 +3887,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	switch (n) {
 		case 1:
 		{
-			NSString *matche = nil;
+			NSArray *matches = [TXRegularExpression matchesInString:[m sequence:1] withRegex:IRC_NETWORK_NAME_REGEX];
 			
-			[[m sequence:1] getCapturesWithRegexAndReferences:IRC_NETWORK_NAME_REGEX, @"${1}", &matche, nil];
-			
-			if (matche) {
+			if (NSObjectIsNotEmpty(matches)) {
+				NSString *matche = [matches safeObjectAtIndex:0];
+				
 				[config setNetwork:matche];
 				[world updateTitle];
 			}

@@ -376,34 +376,9 @@
 	[item setImage:icon];
 }
 
-- (void)transcriptFolderPanelDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void  *)contextInfo
-{
-	[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
-	
-	if (returnCode == NSOKButton) {
-		NSString *path = [[panel filenames] safeObjectAtIndex:0];
-		
-		BOOL isDir;
-		
-		if ([_NSFileManager() fileExistsAtPath:path isDirectory:&isDir] == NO) {
-			[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-		
-		[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
-		
-		[self updateTranscriptFolder];
-	}
-	
-	[transcriptFolderOpenPanel autorelease];
-	transcriptFolderOpenPanel = nil;
-}	
-
 - (void)onTranscriptFolderChanged:(id)sender
 {
 	if ([transcriptFolderButton selectedTag] != 2) return;
-	
-	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
-	NSString *parentPath = [path stringByDeletingLastPathComponent];
 	
 	NSOpenPanel *d = [NSOpenPanel openPanel];
 	
@@ -413,11 +388,27 @@
 	[d setAllowsMultipleSelection:NO];
 	[d setCanCreateDirectories:YES];
 	
-	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self 
-		  didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	[d beginWithCompletionHandler:^(NSInteger returnCode) {
+		[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+		
+		if (returnCode == NSOKButton) {
+			NSURL *pathURL = [[transcriptFolderOpenPanel URLs] safeObjectAtIndex:0];
+			NSString *path = [pathURL absoluteString];
+			
+			BOOL isDir;
+			
+			if ([_NSFileManager() fileExistsAtPath:path isDirectory:&isDir] == NO) {
+				[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+			}
+			
+			[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+			
+			[self updateTranscriptFolder];
+		}
+	}];
 	
-	[transcriptFolderOpenPanel drain];
-	transcriptFolderOpenPanel = [d retain];
+	[transcriptFolderOpenPanel autorelease];
+	transcriptFolderOpenPanel = nil;
 }
 
 #pragma mark -

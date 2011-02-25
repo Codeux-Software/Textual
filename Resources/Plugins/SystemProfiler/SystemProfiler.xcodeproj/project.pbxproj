@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C3843A111D7BFCB00CECE16 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */; };
 		4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */; };
-		4C3FFC691312208800E87826 /* RegexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3FFC681312208800E87826 /* RegexKit.framework */; };
 		4C72E6F411BC466800B97E69 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */; };
 		4C832E2211DD098F007D32E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */; };
 		4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */; };
@@ -22,7 +21,6 @@
 		4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
 		4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_SP_SysInfo.m; sourceTree = "<group>"; };
 		4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
-		4C3FFC681312208800E87826 /* RegexKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RegexKit.framework; path = ../../../Frameworks/RegexKit/RegexKit.framework; sourceTree = SOURCE_ROOT; };
 		4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
 		4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
 		4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -42,7 +40,6 @@
 				4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */,
 				4C832E2211DD098F007D32E5 /* SystemConfiguration.framework in Frameworks */,
 				4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */,
-				4C3FFC691312208800E87826 /* RegexKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +100,6 @@
 				4CBDDBE211CB4D47002A6868 /* Cocoa.framework */,
 				4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */,
 				4CC17BA011F1870400A3E4F7 /* OpenGL.framework */,
-				4C3FFC681312208800E87826 /* RegexKit.framework */,
 				4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;

@@ -1018,8 +1018,7 @@ static NSInteger totalRunTime = 0;
 	NSString *nick = NSUserName();
 	
 	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-	nick = [nick stringByMatching:@"[^a-zA-Z0-9-_]" replace:RKReplaceAll withReferenceString:@""];  
-	
+	nick = [TXRegularExpression string:nick replacedByRegex:@"[^a-zA-Z0-9-_]" withString:@""];
 	
 	if (NSObjectIsEmpty(nick)) {
 		nick = @"User";
