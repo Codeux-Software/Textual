@@ -23,4 +23,7 @@
 - (void)reopenIfNeeded;
 
 - (void)writeLine:(NSString *)s;
+
+- (NSString *)buildPath;
+- (NSString *)buildFileName;
 @end
