@@ -20,14 +20,12 @@
 
 - (void)setFontColor:(NSColor *)color
 {
-	if ([color isEqual:_oldTextColor] == NO) {
-		[_oldTextColor drain];
-		_oldTextColor = nil;
-		
-		_oldTextColor = [[self textColor] retain];
+	[_oldTextColor drain];
+	_oldTextColor = nil;
 	
-		[self setTextColor:color];
-	}
+	_oldTextColor = [[self textColor] retain];
+	
+	[self setTextColor:color];
 }
 
 - (void)removeAllUndoActions
@@ -131,7 +129,13 @@
 		}
 		
 		if (PointerIsEmpty(newString) == NO) {
+			NSRange frontChop;
+			
 			newString = [newString sanitizeNSLinkedAttributedString:[self textColor]];
+			newString = [newString sanitizeIRCCompatibleAttributedString:[self textColor]
+																oldColor:_oldTextColor
+														 backgroundColor:[self backgroundColor]
+															 defaultFont:[self font]];
 			
 			if (selectedRange.length >= 1) {
 				[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
@@ -139,17 +143,16 @@
 				[oldString insertAttributedString:newString atIndex:selectedRange.location];
 			}
 			
-			oldString = [oldString sanitizeIRCCompatibleAttributedString:[self textColor] 
-																oldColor:_oldTextColor 
-														 backgroundColor:[self backgroundColor] 
-															 defaultFont:[self font]];
-			
-			oldString = [oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+			oldString = [oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet] frontChop:&frontChop];
 			
 			[self setObjectValue:oldString recordUndo:YES];
 			
-			selectedRange.length   = 0;
-			selectedRange.location = ([(NSMutableAttributedString *)newString length] + selectedRange.location);
+			selectedRange.length    = 0;
+			selectedRange.location += [(NSMutableAttributedString *)newString length];
+			
+			if (frontChop.location != NSNotFound) {
+				selectedRange.location -= frontChop.location;
+			}
 			
 			[currentEditor setSelectedRange:selectedRange];
 		}
@@ -164,9 +167,9 @@
 		if ([undoMan canUndo] == NO) {
 			[[undoMan prepareWithInvocationTarget:self] setObjectValue:@"" recordUndo:YES];
 		}
-			
+		
 		id newValue = [self objectValue];
-			
+		
 		if ([newValue isEqual:_oldInputValue] == NO) {
 			[[undoMan prepareWithInvocationTarget:self] setObjectValue:_oldInputValue recordUndo:YES];
 		}

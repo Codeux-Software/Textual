@@ -669,6 +669,11 @@
 	[text setFilteredAttributedStringValue:original];
 	[text removeAllUndoActions];
 	
+	/* Changing the first responder will force
+	 the input to draw again thus changing color. */
+	
+	[window makeFirstResponder:nil];
+	
 	[self focusInputText];
 }
 
