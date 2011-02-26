@@ -967,7 +967,7 @@
 - (NSColor *)markedScrollerColor:(MarkedScroller *)sender
 {
 	if ([Preferences applicationRanOnLion]) {
-		return [NSColor fromCSS:@"#CC7B00"];
+		return [NSColor fromCSS:@"#008aff"];
 	}
 	
 	return [NSColor redColor];
