@@ -485,7 +485,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"((#\\w\\w+)"];
+	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"(#\\w\\w+)"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
@@ -786,6 +786,11 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
 {
+	return [self attributedStringByTrimmingCharactersInSet:set frontChop:NULL];
+}
+
+- (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front
+{
 	NSString *str = [self string];
 	
 	NSRange range;
@@ -797,6 +802,10 @@ BOOL isUnicharDigit(unichar c)
 	
 	range = [str rangeOfCharacterFromSet:invertedSet];
 	loc   = ((range.length >= 1) ? range.location : 0);
+	
+	if (PointerIsEmpty(front) == NO) {
+		*front = range;
+	}
 	
 	range = [str rangeOfCharacterFromSet:invertedSet options:NSBackwardsSearch];
 	len   = ((range.length >= 1) ? (NSMaxRange(range) - loc) : ([str length] - loc));

@@ -254,27 +254,27 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			[result addAttribute:IRCTextFormatterUnderlineAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
 		}
 		
-		[result removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
+		[result removeAttribute:NSBackgroundColorAttributeName				 range:effectiveRange];
+		[result removeAttribute:NSForegroundColorAttributeName				 range:effectiveRange];
+		[result removeAttribute:IRCTextFormatterBackgroundColorAttributeName range:effectiveRange];
+		[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
+		
+		[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
 		
 		if (foregroundColorD) {
-			if ([foregroundColorD isEqual:defaultColor] || (oldFontColor && [foregroundColorD isEqual:oldFontColor])) {
-				[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
+			if ([foregroundColorD isEqual:defaultColor] == NO && [foregroundColorD isEqual:backgroundColor] == NO &&
+				[foregroundColorD isEqual:oldFontColor] == NO) {
 				
-				[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
-			} else {
 				NSInteger mappedColor = mapColorValue(foregroundColorD);
 				
 				if (mappedColor >= 0 && mappedColor <= 15) {
 					hasForegroundColor = YES;
 					
+					[result addAttribute:NSForegroundColorAttributeName				  value:foregroundColorD						 range:effectiveRange];
 					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:[NSNumber numberWithInteger:mappedColor] range:effectiveRange];
-				} else {
-					[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
 				}
 			}
-		} else {
-			[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
-		}
+		} 
 		
 		if (backgroundColorD) {
 			if ([backgroundColorD isEqual:backgroundColor] == NO && [backgroundColorD isEqual:defaultColor] == NO && hasForegroundColor) {
@@ -305,7 +305,8 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			NSBackgroundColorAttributeName, 
 			NSUnderlineStyleAttributeName, 
 			IRCTextFormatterDefaultFontColorAttributeName, 
-			IRCTextFormatterForegroundColorAttributeName, nil];
+			IRCTextFormatterForegroundColorAttributeName, 
+			IRCTextFormatterBackgroundColorAttributeName, nil];
 }
 
 #pragma mark -
