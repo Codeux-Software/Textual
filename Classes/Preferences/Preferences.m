@@ -149,11 +149,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (BOOL)applicationRanOnLion
 {
-#ifdef _RUNNING_MAC_OS_LION
-	return YES;
-#endif
-	
-	return NO;
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
 }
 
 + (NSData *)applicationIcon
