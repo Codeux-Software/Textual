@@ -32,9 +32,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */; };
-		29847DE51297B41900D495D5 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
-		4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
 		4C14549812F8ACA20014CC3A /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14549712F8ACA20014CC3A /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9712D1BD20001990A9 /* TPWTB_Advanced.png */; };
 		4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9812D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png */; };
@@ -47,17 +44,11 @@
 		4C329CAA12D1BD20001990A9 /* TPWTB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329C9F12D1BD20001990A9 /* TPWTB_IRCopServices.png */; };
 		4C329CAB12D1BD20001990A9 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA012D1BD20001990A9 /* TPWTB_Logs.png */; };
 		4C329CAC12D1BD20001990A9 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C329CA112D1BD20001990A9 /* TPWTB_Styles.png */; };
-		4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
 		4C3BCC98130D8373006C36A9 /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C3BCCA5130D837D006C36A9 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C3F693B12FD958500B50CB9 /* BlowfishCommandLine.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
 		4C3F693C12FD958500B50CB9 /* BragSpam.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
-		4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
-		4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A041612EF1C65009A7988 /* PopupPrompts.m */; };
-		4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
-		4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1A12D1B6A900D6B18C /* main.m */; };
-		4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1D12D1B6A900D6B18C /* ValidateReceipt.m */; };
 		4C5AEF4F12D1B6E400D6B18C /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2412D1B6E400D6B18C /* application.icns */; };
 		4C5AEF5012D1B6E400D6B18C /* DIbadge_Green_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2712D1B6E400D6B18C /* DIbadge_Green_1&2.tiff */; };
 		4C5AEF5112D1B6E400D6B18C /* DIbadge_Green_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2812D1B6E400D6B18C /* DIbadge_Green_3.tiff */; };
@@ -92,19 +83,121 @@
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
-		4C67A80812F38125002E308B /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67A80612F38125002E308B /* NSDateHelper.m */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; };
-		4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
+		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
-		4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */; };
 		4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
+		4C8B85AE131A35DE0065B4F9 /* NickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D911737F660044E7A1 /* NickSheet.m */; };
+		4C8B85AF131A35DE0065B4F9 /* ChanBanSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1681811DC7B9200B60505 /* ChanBanSheet.m */; };
+		4C8B85B0131A35DE0065B4F9 /* ServerSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E211737F660044E7A1 /* ServerSheet.m */; };
+		4C8B85B1131A35DE0065B4F9 /* LanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C400E2F1238A655005BDA9D /* LanguagePreferences.m */; };
+		4C8B85B2131A35DE0065B4F9 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F911737F660044E7A1 /* NSDataHelper.m */; };
+		4C8B85B3131A35DE0065B4F9 /* InputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */; };
+		4C8B85B4131A35DE0065B4F9 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
+		4C8B85B5131A35DE0065B4F9 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
+		4C8B85B6131A35DE0065B4F9 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
+		4C8B85B7131A35DE0065B4F9 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
+		4C8B85B8131A35DE0065B4F9 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* AddressBook.m */; };
+		4C8B85B9131A35DE0065B4F9 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
+		4C8B85BA131A35DE0065B4F9 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18811737F660044E7A1 /* LogPolicy.m */; };
+		4C8B85BB131A35DE0065B4F9 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A311737F660044E7A1 /* ThinSplitView.m */; };
+		4C8B85BC131A35DE0065B4F9 /* URLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10B11737F660044E7A1 /* URLOpener.m */; };
+		4C8B85BD131A35DE0065B4F9 /* TopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E611737F660044E7A1 /* TopicSheet.m */; };
+		4C8B85BE131A35DE0065B4F9 /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
+		4C8B85BF131A35DE0065B4F9 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11311737F660044E7A1 /* IRCChannelMode.m */; };
+		4C8B85C0131A35DE0065B4F9 /* ChanInviteExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */; };
+		4C8B85C1131A35DE0065B4F9 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10F11737F660044E7A1 /* IRCChannel.m */; };
+		4C8B85C2131A35DE0065B4F9 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
+		4C8B85C3131A35DE0065B4F9 /* ScriptsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3761E612095DD700E02C1A /* ScriptsWrapper.m */; };
+		4C8B85C4131A35DE0065B4F9 /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11511737F660044E7A1 /* IRCClient.m */; };
+		4C8B85C5131A35DE0065B4F9 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11F11737F660044E7A1 /* IRCPrefix.m */; };
+		4C8B85C6131A35DE0065B4F9 /* AboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7E561311B0386200B5DE98 /* AboutPanel.m */; };
+		4C8B85C7131A35DE0065B4F9 /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
+		4C8B85C8131A35DE0065B4F9 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19F11737F660044E7A1 /* TextField.m */; };
+		4C8B85C9131A35DE0065B4F9 /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E011737F660044E7A1 /* SoundWrapper.m */; };
+		4C8B85CA131A35DE0065B4F9 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
+		4C8B85CB131A35DE0065B4F9 /* ChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelSheet.m */; };
+		4C8B85CC131A35DE0065B4F9 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
+		4C8B85CD131A35DE0065B4F9 /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
+		4C8B85CE131A35DE0065B4F9 /* MasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* MasterController.m */; };
+		4C8B85CF131A35DE0065B4F9 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
+		4C8B85D0131A35DE0065B4F9 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10511737F660044E7A1 /* NSWindowHelper.m */; };
+		4C8B85D1131A35DE0065B4F9 /* AsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */; };
+		4C8B85D2131A35DE0065B4F9 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
+		4C8B85D3131A35DE0065B4F9 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11911737F660044E7A1 /* IRCConnection.m */; };
+		4C8B85D4131A35DE0065B4F9 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11D11737F660044E7A1 /* IRCMessage.m */; };
+		4C8B85D5131A35DE0065B4F9 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12111737F660044E7A1 /* IRCSendingMessage.m */; };
+		4C8B85D6131A35DE0065B4F9 /* SheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E411737F660044E7A1 /* SheetBase.m */; };
+		4C8B85D7131A35DE0065B4F9 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F511737F660044E7A1 /* NSArrayHelper.m */; };
+		4C8B85D8131A35DE0065B4F9 /* NickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */; };
+		4C8B85D9131A35DE0065B4F9 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11111737F660044E7A1 /* IRCChannelConfig.m */; };
+		4C8B85DA131A35DE0065B4F9 /* LogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18C11737F660044E7A1 /* LogScriptEventSink.m */; };
+		4C8B85DB131A35DE0065B4F9 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10111737F660044E7A1 /* NSRectHelper.m */; };
+		4C8B85DC131A35DE0065B4F9 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12311737F660044E7A1 /* IRCTreeItem.m */; };
+		4C8B85DD131A35DE0065B4F9 /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
+		4C8B85DE131A35DE0065B4F9 /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18A11737F660044E7A1 /* LogRenderer.m */; };
+		4C8B85DF131A35DE0065B4F9 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */; };
+		4C8B85E0131A35DE0065B4F9 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */; };
+		4C8B85E1131A35DE0065B4F9 /* PopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A041612EF1C65009A7988 /* PopupPrompts.m */; };
+		4C8B85E2131A35DE0065B4F9 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
+		4C8B85E3131A35DE0065B4F9 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F711737F660044E7A1 /* NSColorHelper.m */; };
+		4C8B85E4131A35DE0065B4F9 /* IRCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E801E11B3753800BACBA7 /* IRCExtras.m */; };
+		4C8B85E5131A35DE0065B4F9 /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11711737F660044E7A1 /* IRCClientConfig.m */; };
+		4C8B85E6131A35DE0065B4F9 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0ED11737F660044E7A1 /* GTMBase64.m */; };
+		4C8B85E7131A35DE0065B4F9 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18611737F660044E7A1 /* LogLine.m */; };
+		4C8B85E8131A35DE0065B4F9 /* FileWithContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* FileWithContent.m */; };
+		4C8B85E9131A35DE0065B4F9 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67A80612F38125002E308B /* NSDateHelper.m */; };
+		4C8B85EA131A35DE0065B4F9 /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD711CC715A00FF2930 /* DDExtensions.m */; };
+		4C8B85EB131A35DE0065B4F9 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12911737F660044E7A1 /* IRCWorld.m */; };
+		4C8B85EC131A35DE0065B4F9 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0DE11737F660044E7A1 /* PreferencesController.m */; };
+		4C8B85ED131A35DE0065B4F9 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19911737F660044E7A1 /* ServerTreeView.m */; };
+		4C8B85EE131A35DE0065B4F9 /* GlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD0F8711BAE7E900758B81 /* GlobalModels.m */; };
+		4C8B85EF131A35DE0065B4F9 /* DDInvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */; };
+		4C8B85F0131A35DE0065B4F9 /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
+		4C8B85F1131A35DE0065B4F9 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12511737F660044E7A1 /* IRCUser.m */; };
+		4C8B85F2131A35DE0065B4F9 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
+		4C8B85F3131A35DE0065B4F9 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */; };
+		4C8B85F4131A35DE0065B4F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1A12D1B6A900D6B18C /* main.m */; };
+		4C8B85F5131A35DE0065B4F9 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
+		4C8B85F6131A35DE0065B4F9 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10711737F660044E7A1 /* SoundPlayer.m */; };
+		4C8B85F7131A35DE0065B4F9 /* AddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */; };
+		4C8B85F8131A35DE0065B4F9 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19511737F660044E7A1 /* MemberListView.m */; };
+		4C8B85F9131A35DE0065B4F9 /* MarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19211737F660044E7A1 /* MarkedScroller.m */; };
+		4C8B85FA131A35DE0065B4F9 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
+		4C8B85FB131A35DE0065B4F9 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
+		4C8B85FC131A35DE0065B4F9 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
+		4C8B85FD131A35DE0065B4F9 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
+		4C8B85FE131A35DE0065B4F9 /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1D12D1B6A900D6B18C /* ValidateReceipt.m */; };
+		4C8B85FF131A35DE0065B4F9 /* DockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29847DE31297B41900D495D5 /* DockIcon.m */; };
+		4C8B8600131A35DE0065B4F9 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5938E511D0E0790094B049 /* AGKeychain.m */; };
+		4C8B8601131A35DE0065B4F9 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19711737F660044E7A1 /* MemberListViewCell.m */; };
+		4C8B8602131A35DE0065B4F9 /* TXRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */; };
+		4C8B8603131A35DE0065B4F9 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */; };
+		4C8B8604131A35DE0065B4F9 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19011737F660044E7A1 /* MainWindow.m */; };
+		4C8B8605131A35DE0065B4F9 /* WelcomeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E811737F660044E7A1 /* WelcomeSheet.m */; };
+		4C8B8606131A35DE0065B4F9 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
+		4C8B8607131A35DE0065B4F9 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
+		4C8B8608131A35DE0065B4F9 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */; };
+		4C8B8609131A35DE0065B4F9 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18111737F660044E7A1 /* ListView.m */; };
+		4C8B860A131A35DE0065B4F9 /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18E11737F660044E7A1 /* LogView.m */; };
+		4C8B860B131A35DE0065B4F9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */; };
+		4C8B860C131A35DE0065B4F9 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18411737F660044E7A1 /* LogController.m */; };
+		4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
+		4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10911737F660044E7A1 /* UnicodeHelper.m */; };
+		4C8B860F131A35DE0065B4F9 /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17611737F660044E7A1 /* FieldEditorTextView.m */; };
+		4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
+		4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
+		4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
+		4C8B8613131A35DE0065B4F9 /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */; };
+		4C8B8614131A35DE0065B4F9 /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
+		4C8B8615131A35DE0065B4F9 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */; };
+		4C8B8616131A35DE0065B4F9 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */; };
+		4C8B8617131A35DE0065B4F9 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
+		4C8B8618131A35DE0065B4F9 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10311737F660044E7A1 /* NSStringHelper.m */; };
+		4C8B8619131A35DE0065B4F9 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D711737F660044E7A1 /* ModeSheet.m */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
-		4C982D17121F32430051543F /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D15121F32430051543F /* URLParser.m */; };
-		4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FEAC312312BDC00740B40 /* NSFontHelper.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
@@ -122,101 +215,13 @@
 		4CA9457111E1AFBA00D36367 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C33F97111AA81FF003EAB65 /* BasicLanguage.strings */; };
 		4CA9457211E1AFBA00D36367 /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2CD34F11B03BCC00D89A5E /* AboutPanel.xib */; };
 		4CA9457411E1AFBA00D36367 /* ChanBanSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */; };
-		4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* MasterController.m */; };
-		4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
-		4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
-		4CA9457E11E1AFBA00D36367 /* ChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelSheet.m */; };
-		4CA9458311E1AFBA00D36367 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D711737F660044E7A1 /* ModeSheet.m */; };
-		4CA9458411E1AFBA00D36367 /* NickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D911737F660044E7A1 /* NickSheet.m */; };
-		4CA9458511E1AFBA00D36367 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0DE11737F660044E7A1 /* PreferencesController.m */; };
-		4CA9458611E1AFBA00D36367 /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E011737F660044E7A1 /* SoundWrapper.m */; };
-		4CA9458711E1AFBA00D36367 /* ServerSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E211737F660044E7A1 /* ServerSheet.m */; };
-		4CA9458811E1AFBA00D36367 /* SheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E411737F660044E7A1 /* SheetBase.m */; };
-		4CA9458911E1AFBA00D36367 /* TopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E611737F660044E7A1 /* TopicSheet.m */; };
-		4CA9458A11E1AFBA00D36367 /* WelcomeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E811737F660044E7A1 /* WelcomeSheet.m */; };
-		4CA9458B11E1AFBA00D36367 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0ED11737F660044E7A1 /* GTMBase64.m */; };
-		4CA9458C11E1AFBA00D36367 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */; };
-		4CA9458D11E1AFBA00D36367 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
-		4CA9458E11E1AFBA00D36367 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F511737F660044E7A1 /* NSArrayHelper.m */; };
-		4CA9458F11E1AFBA00D36367 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F711737F660044E7A1 /* NSColorHelper.m */; };
-		4CA9459011E1AFBA00D36367 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F911737F660044E7A1 /* NSDataHelper.m */; };
-		4CA9459111E1AFBA00D36367 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */; };
-		4CA9459211E1AFBA00D36367 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */; };
-		4CA9459311E1AFBA00D36367 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10111737F660044E7A1 /* NSRectHelper.m */; };
-		4CA9459411E1AFBA00D36367 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10311737F660044E7A1 /* NSStringHelper.m */; };
-		4CA9459511E1AFBA00D36367 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10511737F660044E7A1 /* NSWindowHelper.m */; };
-		4CA9459611E1AFBA00D36367 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10711737F660044E7A1 /* SoundPlayer.m */; };
-		4CA9459711E1AFBA00D36367 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10911737F660044E7A1 /* UnicodeHelper.m */; };
-		4CA9459811E1AFBA00D36367 /* URLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10B11737F660044E7A1 /* URLOpener.m */; };
-		4CA9459911E1AFBA00D36367 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10F11737F660044E7A1 /* IRCChannel.m */; };
-		4CA9459A11E1AFBA00D36367 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11111737F660044E7A1 /* IRCChannelConfig.m */; };
-		4CA9459B11E1AFBA00D36367 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11311737F660044E7A1 /* IRCChannelMode.m */; };
-		4CA9459C11E1AFBA00D36367 /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11511737F660044E7A1 /* IRCClient.m */; };
-		4CA9459D11E1AFBA00D36367 /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11711737F660044E7A1 /* IRCClientConfig.m */; };
-		4CA9459E11E1AFBA00D36367 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11911737F660044E7A1 /* IRCConnection.m */; };
-		4CA9459F11E1AFBA00D36367 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */; };
-		4CA945A011E1AFBA00D36367 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11D11737F660044E7A1 /* IRCMessage.m */; };
-		4CA945A111E1AFBA00D36367 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11F11737F660044E7A1 /* IRCPrefix.m */; };
-		4CA945A211E1AFBA00D36367 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12111737F660044E7A1 /* IRCSendingMessage.m */; };
-		4CA945A311E1AFBA00D36367 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12311737F660044E7A1 /* IRCTreeItem.m */; };
-		4CA945A411E1AFBA00D36367 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12511737F660044E7A1 /* IRCUser.m */; };
-		4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12911737F660044E7A1 /* IRCWorld.m */; };
-		4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
-		4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
-		4CA945A811E1AFBA00D36367 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */; };
-		4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
-		4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
-		4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
-		4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
-		4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
-		4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
-		4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
-		4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
-		4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
-		4CA945B711E1AFBA00D36367 /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17611737F660044E7A1 /* FieldEditorTextView.m */; };
-		4CA945B811E1AFBA00D36367 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
-		4CA945B911E1AFBA00D36367 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18111737F660044E7A1 /* ListView.m */; };
-		4CA945BA11E1AFBA00D36367 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18411737F660044E7A1 /* LogController.m */; };
-		4CA945BB11E1AFBA00D36367 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18611737F660044E7A1 /* LogLine.m */; };
-		4CA945BC11E1AFBA00D36367 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18811737F660044E7A1 /* LogPolicy.m */; };
-		4CA945BD11E1AFBA00D36367 /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18A11737F660044E7A1 /* LogRenderer.m */; };
-		4CA945BE11E1AFBA00D36367 /* LogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18C11737F660044E7A1 /* LogScriptEventSink.m */; };
-		4CA945BF11E1AFBA00D36367 /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18E11737F660044E7A1 /* LogView.m */; };
-		4CA945C011E1AFBA00D36367 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19011737F660044E7A1 /* MainWindow.m */; };
-		4CA945C111E1AFBA00D36367 /* MarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19211737F660044E7A1 /* MarkedScroller.m */; };
-		4CA945C211E1AFBA00D36367 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19511737F660044E7A1 /* MemberListView.m */; };
-		4CA945C311E1AFBA00D36367 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19711737F660044E7A1 /* MemberListViewCell.m */; };
-		4CA945C411E1AFBA00D36367 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19911737F660044E7A1 /* ServerTreeView.m */; };
-		4CA945C611E1AFBA00D36367 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19F11737F660044E7A1 /* TextField.m */; };
-		4CA945C711E1AFBA00D36367 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
-		4CA945C811E1AFBA00D36367 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A311737F660044E7A1 /* ThinSplitView.m */; };
-		4CA945C911E1AFBA00D36367 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
-		4CA945CC11E1AFBA00D36367 /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
-		4CA945CD11E1AFBA00D36367 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
-		4CA945CE11E1AFBA00D36367 /* FileWithContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* FileWithContent.m */; };
-		4CA945CF11E1AFBA00D36367 /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
-		4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
-		4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* AddressBook.m */; };
-		4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */; };
-		4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7E561311B0386200B5DE98 /* AboutPanel.m */; };
-		4CA945D711E1AFBA00D36367 /* IRCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E801E11B3753800BACBA7 /* IRCExtras.m */; };
-		4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD0F8711BAE7E900758B81 /* GlobalModels.m */; };
-		4CA945D911E1AFBA00D36367 /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */; };
-		4CA945DB11E1AFBA00D36367 /* DDInvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */; };
-		4CA945DC11E1AFBA00D36367 /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFF3BD711CC715A00FF2930 /* DDExtensions.m */; };
-		4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5938E511D0E0790094B049 /* AGKeychain.m */; };
-		4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1681811DC7B9200B60505 /* ChanBanSheet.m */; };
 		4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		4CA945E211E1AFBA00D36367 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		4CA945E311E1AFBA00D36367 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		4CA945E411E1AFBA00D36367 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		4CA945E611E1AFBA00D36367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59393011D0E6CF0094B049 /* Security.framework */; };
-		4CC33B7E13177E9F00BDBCA0 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */; };
 		4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CC33B8613177EF700BDBCA0 /* TXRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */; };
-		4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */; };
 		4CCA5B8A12FAC92F00707F36 /* NSTextFieldHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
 		4CD0E5ED12F1B45900C8F016 /* GrowlController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5E912F1B45900C8F016 /* GrowlController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E5EE12F1B45900C8F016 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EA12F1B45900C8F016 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E5EF12F1B45900C8F016 /* MenuController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EB12F1B45900C8F016 /* MenuController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -320,13 +325,8 @@
 		4CD0E6E312F1B78D00C8F016 /* GTMNSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DE12F1B78D00C8F016 /* GTMNSString+HTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1733C120EB20600F03B37 /* TextualPluginItem.m */; };
-		4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
-		4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
-		4CFA00C812F4EE2900A9EC74 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */; };
 		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1815,114 +1815,114 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C4D3CF812BDFA7D0096E7FB /* NickCompletionStatus.m in Sources */,
-				4CF88DCA11FCFA27002D3AAC /* OtherTheme.m in Sources */,
-				4CA9457A11E1AFBA00D36367 /* MasterController.m in Sources */,
-				4CA9457B11E1AFBA00D36367 /* GrowlController.m in Sources */,
-				4CA9457C11E1AFBA00D36367 /* MenuController.m in Sources */,
-				4CA9457E11E1AFBA00D36367 /* ChannelSheet.m in Sources */,
-				4CA9458311E1AFBA00D36367 /* ModeSheet.m in Sources */,
-				4CA9458411E1AFBA00D36367 /* NickSheet.m in Sources */,
-				4CA9458511E1AFBA00D36367 /* PreferencesController.m in Sources */,
-				4CA9458611E1AFBA00D36367 /* SoundWrapper.m in Sources */,
-				4CA9458711E1AFBA00D36367 /* ServerSheet.m in Sources */,
-				4CA9458811E1AFBA00D36367 /* SheetBase.m in Sources */,
-				4CA9458911E1AFBA00D36367 /* TopicSheet.m in Sources */,
-				4CA9458A11E1AFBA00D36367 /* WelcomeSheet.m in Sources */,
-				4CA9458B11E1AFBA00D36367 /* GTMBase64.m in Sources */,
-				4CA9458C11E1AFBA00D36367 /* GTMNSString+HTML.m in Sources */,
-				4CA9458D11E1AFBA00D36367 /* GTMNSString+URLArguments.m in Sources */,
-				4CA9458E11E1AFBA00D36367 /* NSArrayHelper.m in Sources */,
-				4CA9458F11E1AFBA00D36367 /* NSColorHelper.m in Sources */,
-				4CA9459011E1AFBA00D36367 /* NSDataHelper.m in Sources */,
-				4CA9459111E1AFBA00D36367 /* NSDictionaryHelper.m in Sources */,
-				4CA9459211E1AFBA00D36367 /* NSPasteboardHelper.m in Sources */,
-				4CA9459311E1AFBA00D36367 /* NSRectHelper.m in Sources */,
-				4CA9459411E1AFBA00D36367 /* NSStringHelper.m in Sources */,
-				4CA9459511E1AFBA00D36367 /* NSWindowHelper.m in Sources */,
-				4CA9459611E1AFBA00D36367 /* SoundPlayer.m in Sources */,
-				4CA9459711E1AFBA00D36367 /* UnicodeHelper.m in Sources */,
-				4CA9459811E1AFBA00D36367 /* URLOpener.m in Sources */,
-				4CA9459911E1AFBA00D36367 /* IRCChannel.m in Sources */,
-				4CA9459A11E1AFBA00D36367 /* IRCChannelConfig.m in Sources */,
-				4CA9459B11E1AFBA00D36367 /* IRCChannelMode.m in Sources */,
-				4CA9459C11E1AFBA00D36367 /* IRCClient.m in Sources */,
-				4CA9459D11E1AFBA00D36367 /* IRCClientConfig.m in Sources */,
-				4CA9459E11E1AFBA00D36367 /* IRCConnection.m in Sources */,
-				4CA9459F11E1AFBA00D36367 /* IRCISupportInfo.m in Sources */,
-				4CA945A011E1AFBA00D36367 /* IRCMessage.m in Sources */,
-				4CA945A111E1AFBA00D36367 /* IRCPrefix.m in Sources */,
-				4CA945A211E1AFBA00D36367 /* IRCSendingMessage.m in Sources */,
-				4CA945A311E1AFBA00D36367 /* IRCTreeItem.m in Sources */,
-				4CA945A411E1AFBA00D36367 /* IRCUser.m in Sources */,
-				4CA945A511E1AFBA00D36367 /* IRCWorld.m in Sources */,
-				4CA945A611E1AFBA00D36367 /* IRCWorldConfig.m in Sources */,
-				4CA945A711E1AFBA00D36367 /* TimerCommand.m in Sources */,
-				4CA945A811E1AFBA00D36367 /* RLMAsyncSocket.m in Sources */,
-				4CA945A911E1AFBA00D36367 /* FileLogger.m in Sources */,
-				4CA945AB11E1AFBA00D36367 /* InputHistory.m in Sources */,
-				4CA945AC11E1AFBA00D36367 /* KeyEventHandler.m in Sources */,
-				4CA945AD11E1AFBA00D36367 /* TCPClient.m in Sources */,
-				4CA945AF11E1AFBA00D36367 /* Timer.m in Sources */,
-				4CA945B011E1AFBA00D36367 /* TinyGrowlClient.m in Sources */,
-				4CA945B311E1AFBA00D36367 /* Preferences.m in Sources */,
-				4CA945B411E1AFBA00D36367 /* ViewTheme.m in Sources */,
-				4CA945B511E1AFBA00D36367 /* ChatBox.m in Sources */,
-				4CA945B711E1AFBA00D36367 /* FieldEditorTextView.m in Sources */,
-				4CA945B811E1AFBA00D36367 /* InputTextField.m in Sources */,
-				4CA945B911E1AFBA00D36367 /* ListView.m in Sources */,
-				4CA945BA11E1AFBA00D36367 /* LogController.m in Sources */,
-				4CA945BB11E1AFBA00D36367 /* LogLine.m in Sources */,
-				4CA945BC11E1AFBA00D36367 /* LogPolicy.m in Sources */,
-				4CA945BD11E1AFBA00D36367 /* LogRenderer.m in Sources */,
-				4CA945BE11E1AFBA00D36367 /* LogScriptEventSink.m in Sources */,
-				4CA945BF11E1AFBA00D36367 /* LogView.m in Sources */,
-				4CA945C011E1AFBA00D36367 /* MainWindow.m in Sources */,
-				4CA945C111E1AFBA00D36367 /* MarkedScroller.m in Sources */,
-				4CA945C211E1AFBA00D36367 /* MemberListView.m in Sources */,
-				4CA945C311E1AFBA00D36367 /* MemberListViewCell.m in Sources */,
-				4CA945C411E1AFBA00D36367 /* ServerTreeView.m in Sources */,
-				4CA945C611E1AFBA00D36367 /* TextField.m in Sources */,
-				4CA945C711E1AFBA00D36367 /* TextFieldWithDisabledState.m in Sources */,
-				4CA945C811E1AFBA00D36367 /* ThinSplitView.m in Sources */,
-				4CA945C911E1AFBA00D36367 /* TreeView.m in Sources */,
-				4CA945CC11E1AFBA00D36367 /* InviteSheet.m in Sources */,
-				4CA945CD11E1AFBA00D36367 /* ListDialog.m in Sources */,
-				4CA945CE11E1AFBA00D36367 /* FileWithContent.m in Sources */,
-				4CA945CF11E1AFBA00D36367 /* ImageURLParser.m in Sources */,
-				4CA945D011E1AFBA00D36367 /* WebViewAutoScroll.m in Sources */,
-				4CA945D111E1AFBA00D36367 /* AddressBook.m in Sources */,
-				4CA945D211E1AFBA00D36367 /* AddressBookSheet.m in Sources */,
-				4CA945D611E1AFBA00D36367 /* AboutPanel.m in Sources */,
-				4CA945D711E1AFBA00D36367 /* IRCExtras.m in Sources */,
-				4CA945D811E1AFBA00D36367 /* GlobalModels.m in Sources */,
-				4CA945D911E1AFBA00D36367 /* NSBundleHelper.m in Sources */,
-				4CA945DB11E1AFBA00D36367 /* DDInvocationGrabber.m in Sources */,
-				4CA945DC11E1AFBA00D36367 /* DDExtensions.m in Sources */,
-				4CA945DD11E1AFBA00D36367 /* AGKeychain.m in Sources */,
-				4CA945DE11E1AFBA00D36367 /* ChanBanSheet.m in Sources */,
-				4C3761E712095DD700E02C1A /* ScriptsWrapper.m in Sources */,
-				4CD1733E120EB20600F03B37 /* TextualPluginItem.m in Sources */,
-				4C982D17121F32430051543F /* URLParser.m in Sources */,
-				4C8A729D1221E98C00FD9773 /* InputPromptDialog.m in Sources */,
-				4CDC703B122C6B0F004F8B35 /* ChanBanExceptionSheet.m in Sources */,
-				4C9FEAC512312BDC00740B40 /* NSFontHelper.m in Sources */,
-				4CFC7DB81231F40C00FFC3B7 /* NSNumberHelper.m in Sources */,
-				4C400E311238A655005BDA9D /* LanguagePreferences.m in Sources */,
-				29847DE51297B41900D495D5 /* DockIcon.m in Sources */,
-				29361C5112B79F1000F84FE9 /* AsyncSocketExtensions.m in Sources */,
-				4C5AEF1E12D1B6A900D6B18C /* main.m in Sources */,
-				4C5AEF2112D1B6A900D6B18C /* ValidateReceipt.m in Sources */,
-				4C4A041812EF1C65009A7988 /* PopupPrompts.m in Sources */,
-				4CD0136E12F0C772001953E6 /* IRCModeInfo.m in Sources */,
-				4C67A80812F38125002E308B /* NSDateHelper.m in Sources */,
-				4CFA00C812F4EE2900A9EC74 /* NSObjectHelper.m in Sources */,
-				4C14549612F8AC720014CC3A /* IRCColorFormat.m in Sources */,
-				4C796D8312F8F1DF008EF597 /* IRCTextFormatterMenu.m in Sources */,
-				4CCA5B6412FAC25A00707F36 /* NSTextFieldHelper.m in Sources */,
-				4C83EBAF1311B3BC0016AE76 /* ChanInviteExceptionSheet.m in Sources */,
-				4CC33B7E13177E9F00BDBCA0 /* RegexKitLite.m in Sources */,
-				4CC33B8613177EF700BDBCA0 /* TXRegularExpression.m in Sources */,
+				4C8B85AE131A35DE0065B4F9 /* NickSheet.m in Sources */,
+				4C8B85AF131A35DE0065B4F9 /* ChanBanSheet.m in Sources */,
+				4C8B85B0131A35DE0065B4F9 /* ServerSheet.m in Sources */,
+				4C8B85B1131A35DE0065B4F9 /* LanguagePreferences.m in Sources */,
+				4C8B85B2131A35DE0065B4F9 /* NSDataHelper.m in Sources */,
+				4C8B85B3131A35DE0065B4F9 /* InputPromptDialog.m in Sources */,
+				4C8B85B4131A35DE0065B4F9 /* FileLogger.m in Sources */,
+				4C8B85B5131A35DE0065B4F9 /* NSNumberHelper.m in Sources */,
+				4C8B85B6131A35DE0065B4F9 /* Timer.m in Sources */,
+				4C8B85B7131A35DE0065B4F9 /* NSFontHelper.m in Sources */,
+				4C8B85B8131A35DE0065B4F9 /* AddressBook.m in Sources */,
+				4C8B85B9131A35DE0065B4F9 /* GrowlController.m in Sources */,
+				4C8B85BA131A35DE0065B4F9 /* LogPolicy.m in Sources */,
+				4C8B85BB131A35DE0065B4F9 /* ThinSplitView.m in Sources */,
+				4C8B85BC131A35DE0065B4F9 /* URLOpener.m in Sources */,
+				4C8B85BD131A35DE0065B4F9 /* TopicSheet.m in Sources */,
+				4C8B85BE131A35DE0065B4F9 /* InviteSheet.m in Sources */,
+				4C8B85BF131A35DE0065B4F9 /* IRCChannelMode.m in Sources */,
+				4C8B85C0131A35DE0065B4F9 /* ChanInviteExceptionSheet.m in Sources */,
+				4C8B85C1131A35DE0065B4F9 /* IRCChannel.m in Sources */,
+				4C8B85C2131A35DE0065B4F9 /* Preferences.m in Sources */,
+				4C8B85C3131A35DE0065B4F9 /* ScriptsWrapper.m in Sources */,
+				4C8B85C4131A35DE0065B4F9 /* IRCClient.m in Sources */,
+				4C8B85C5131A35DE0065B4F9 /* IRCPrefix.m in Sources */,
+				4C8B85C6131A35DE0065B4F9 /* AboutPanel.m in Sources */,
+				4C8B85C7131A35DE0065B4F9 /* OtherTheme.m in Sources */,
+				4C8B85C8131A35DE0065B4F9 /* TextField.m in Sources */,
+				4C8B85C9131A35DE0065B4F9 /* SoundWrapper.m in Sources */,
+				4C8B85CA131A35DE0065B4F9 /* IRCTextFormatterMenu.m in Sources */,
+				4C8B85CB131A35DE0065B4F9 /* ChannelSheet.m in Sources */,
+				4C8B85CC131A35DE0065B4F9 /* TextualPluginItem.m in Sources */,
+				4C8B85CD131A35DE0065B4F9 /* WebViewAutoScroll.m in Sources */,
+				4C8B85CE131A35DE0065B4F9 /* MasterController.m in Sources */,
+				4C8B85CF131A35DE0065B4F9 /* ChatBox.m in Sources */,
+				4C8B85D0131A35DE0065B4F9 /* NSWindowHelper.m in Sources */,
+				4C8B85D1131A35DE0065B4F9 /* AsyncSocketExtensions.m in Sources */,
+				4C8B85D2131A35DE0065B4F9 /* ViewTheme.m in Sources */,
+				4C8B85D3131A35DE0065B4F9 /* IRCConnection.m in Sources */,
+				4C8B85D4131A35DE0065B4F9 /* IRCMessage.m in Sources */,
+				4C8B85D5131A35DE0065B4F9 /* IRCSendingMessage.m in Sources */,
+				4C8B85D6131A35DE0065B4F9 /* SheetBase.m in Sources */,
+				4C8B85D7131A35DE0065B4F9 /* NSArrayHelper.m in Sources */,
+				4C8B85D8131A35DE0065B4F9 /* NickCompletionStatus.m in Sources */,
+				4C8B85D9131A35DE0065B4F9 /* IRCChannelConfig.m in Sources */,
+				4C8B85DA131A35DE0065B4F9 /* LogScriptEventSink.m in Sources */,
+				4C8B85DB131A35DE0065B4F9 /* NSRectHelper.m in Sources */,
+				4C8B85DC131A35DE0065B4F9 /* IRCTreeItem.m in Sources */,
+				4C8B85DD131A35DE0065B4F9 /* ImageURLParser.m in Sources */,
+				4C8B85DE131A35DE0065B4F9 /* LogRenderer.m in Sources */,
+				4C8B85DF131A35DE0065B4F9 /* IRCISupportInfo.m in Sources */,
+				4C8B85E0131A35DE0065B4F9 /* NSDictionaryHelper.m in Sources */,
+				4C8B85E1131A35DE0065B4F9 /* PopupPrompts.m in Sources */,
+				4C8B85E2131A35DE0065B4F9 /* KeyEventHandler.m in Sources */,
+				4C8B85E3131A35DE0065B4F9 /* NSColorHelper.m in Sources */,
+				4C8B85E4131A35DE0065B4F9 /* IRCExtras.m in Sources */,
+				4C8B85E5131A35DE0065B4F9 /* IRCClientConfig.m in Sources */,
+				4C8B85E6131A35DE0065B4F9 /* GTMBase64.m in Sources */,
+				4C8B85E7131A35DE0065B4F9 /* LogLine.m in Sources */,
+				4C8B85E8131A35DE0065B4F9 /* FileWithContent.m in Sources */,
+				4C8B85E9131A35DE0065B4F9 /* NSDateHelper.m in Sources */,
+				4C8B85EA131A35DE0065B4F9 /* DDExtensions.m in Sources */,
+				4C8B85EB131A35DE0065B4F9 /* IRCWorld.m in Sources */,
+				4C8B85EC131A35DE0065B4F9 /* PreferencesController.m in Sources */,
+				4C8B85ED131A35DE0065B4F9 /* ServerTreeView.m in Sources */,
+				4C8B85EE131A35DE0065B4F9 /* GlobalModels.m in Sources */,
+				4C8B85EF131A35DE0065B4F9 /* DDInvocationGrabber.m in Sources */,
+				4C8B85F0131A35DE0065B4F9 /* URLParser.m in Sources */,
+				4C8B85F1131A35DE0065B4F9 /* IRCUser.m in Sources */,
+				4C8B85F2131A35DE0065B4F9 /* ListDialog.m in Sources */,
+				4C8B85F3131A35DE0065B4F9 /* NSObjectHelper.m in Sources */,
+				4C8B85F4131A35DE0065B4F9 /* main.m in Sources */,
+				4C8B85F5131A35DE0065B4F9 /* ChanBanExceptionSheet.m in Sources */,
+				4C8B85F6131A35DE0065B4F9 /* SoundPlayer.m in Sources */,
+				4C8B85F7131A35DE0065B4F9 /* AddressBookSheet.m in Sources */,
+				4C8B85F8131A35DE0065B4F9 /* MemberListView.m in Sources */,
+				4C8B85F9131A35DE0065B4F9 /* MarkedScroller.m in Sources */,
+				4C8B85FA131A35DE0065B4F9 /* TimerCommand.m in Sources */,
+				4C8B85FB131A35DE0065B4F9 /* TextFieldWithDisabledState.m in Sources */,
+				4C8B85FC131A35DE0065B4F9 /* IRCWorldConfig.m in Sources */,
+				4C8B85FD131A35DE0065B4F9 /* InputHistory.m in Sources */,
+				4C8B85FE131A35DE0065B4F9 /* ValidateReceipt.m in Sources */,
+				4C8B85FF131A35DE0065B4F9 /* DockIcon.m in Sources */,
+				4C8B8600131A35DE0065B4F9 /* AGKeychain.m in Sources */,
+				4C8B8601131A35DE0065B4F9 /* MemberListViewCell.m in Sources */,
+				4C8B8602131A35DE0065B4F9 /* TXRegularExpression.m in Sources */,
+				4C8B8603131A35DE0065B4F9 /* RLMAsyncSocket.m in Sources */,
+				4C8B8604131A35DE0065B4F9 /* MainWindow.m in Sources */,
+				4C8B8605131A35DE0065B4F9 /* WelcomeSheet.m in Sources */,
+				4C8B8606131A35DE0065B4F9 /* TreeView.m in Sources */,
+				4C8B8607131A35DE0065B4F9 /* TCPClient.m in Sources */,
+				4C8B8608131A35DE0065B4F9 /* NSPasteboardHelper.m in Sources */,
+				4C8B8609131A35DE0065B4F9 /* ListView.m in Sources */,
+				4C8B860A131A35DE0065B4F9 /* LogView.m in Sources */,
+				4C8B860B131A35DE0065B4F9 /* GTMNSString+HTML.m in Sources */,
+				4C8B860C131A35DE0065B4F9 /* LogController.m in Sources */,
+				4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */,
+				4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */,
+				4C8B860F131A35DE0065B4F9 /* FieldEditorTextView.m in Sources */,
+				4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */,
+				4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */,
+				4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */,
+				4C8B8613131A35DE0065B4F9 /* NSBundleHelper.m in Sources */,
+				4C8B8614131A35DE0065B4F9 /* IRCColorFormat.m in Sources */,
+				4C8B8615131A35DE0065B4F9 /* NSTextFieldHelper.m in Sources */,
+				4C8B8616131A35DE0065B4F9 /* RegexKitLite.m in Sources */,
+				4C8B8617131A35DE0065B4F9 /* MenuController.m in Sources */,
+				4C8B8618131A35DE0065B4F9 /* NSStringHelper.m in Sources */,
+				4C8B8619131A35DE0065B4F9 /* ModeSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
