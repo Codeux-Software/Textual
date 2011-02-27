@@ -58,6 +58,26 @@
 	return WebDragDestinationActionNone;
 }
 
+- (void)channelDoubleClicked
+{
+	menuController.pointedChannelName = chan;
+	
+	[chan autorelease];
+	chan = nil;
+	
+	[menuController onJoinChannel:nil];
+}
+
+- (void)nicknameDoubleClicked
+{
+	menuController.pointedNick = nick;
+	
+	[nick autorelease];
+	nick = nil;
+	
+	[menuController memberListDoubleClicked:nil];
+}
+
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	NSMutableArray *ary = [NSMutableArray array];

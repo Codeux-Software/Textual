@@ -31,4 +31,7 @@
 @property (nonatomic, retain) NSString *nick;
 @property (nonatomic, retain) NSString *chan;
 
+- (void)channelDoubleClicked;
+- (void)nicknameDoubleClicked;
+
 @end

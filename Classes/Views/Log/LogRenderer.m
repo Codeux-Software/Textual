@@ -167,7 +167,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	} else if (attr & ADDRESS_ATTR) {
 		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", logEscape(content)];
 	} else if (attr & CHANNEL_NAME_ATTR) {
-		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
+		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.on_dblclick_chname()\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
 	} else {
 		BOOL matchedUser = NO;
 		
@@ -181,7 +181,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			if (PointerIsEmpty(user) == NO) {
 				matchedUser = YES;
 				
-				[s appendFormat:@"<span class=\"inline_nickname\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
+				[s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
 			} 
 		}
 		

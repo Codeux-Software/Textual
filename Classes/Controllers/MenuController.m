@@ -364,7 +364,7 @@
 	} else {
 		NSIndexSet *indexes = [memberList selectedRowIndexes];
 		
-		if (NSObjectIsNotEmpty(indexes)) {
+		if (NSObjectIsNotEmpty(indexes) && NSObjectIsEmpty(pointedNick)) {
 			for (NSNumber *index in [indexes arrayFromIndexSet]) {
 				NSUInteger nindex = [index unsignedIntegerValue];
 				
