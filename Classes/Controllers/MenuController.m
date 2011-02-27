@@ -1395,8 +1395,6 @@
 	
 	NSString *path = [c.logFile buildPath];
 	
-	NSLog(@"%@", path);
-	
 	if ([_NSFileManager() fileExistsAtPath:path]) {
 		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
@@ -1552,9 +1550,12 @@
 
 - (void)wantsFullScreenModeToggled:(id)sender
 {
+#ifdef _RUNNING_MAC_OS_LION
 	if ([Preferences applicationRanOnLion]) {
 		[window toggleFullScreen:sender];
 	} else {
+#endif
+		
 		if (isInFullScreenMode == NO) {
 			[master saveWindowState];
 			
@@ -1576,7 +1577,10 @@
 		}
 		
 		isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
+		
+#ifdef _RUNNING_MAC_OS_LION
 	}
+#endif
 }
 
 - (void)onWantChannelListSorted:(id)sender

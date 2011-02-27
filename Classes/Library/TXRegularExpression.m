@@ -27,6 +27,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
+#ifdef _RUNNING_MAC_OS_LION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -40,12 +41,17 @@
 		
         return (numMatches >= 1);
 	} else {
+#endif
+		
         if (caseless) {
             return [haystack isMatchedByRegex:needle options:RKLCaseless inRange:strRange error:NULL];
         } else {
             return [haystack isMatchedByRegex:needle];
         }
+
+#ifdef _RUNNING_MAC_OS_LION
 	}
+#endif
 }
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle
@@ -57,6 +63,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
+#ifdef _RUNNING_MAC_OS_LION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -70,27 +77,38 @@
 		
 		return resultRange;
 	} else {
+#endif
+		
         if (caseless) {
 			return [haystack rangeOfRegex:needle options:RKLCaseless inRange:strRange capture:0 error:NULL];
         } else {
             return [haystack rangeOfRegex:needle];
         }
-	}	
+		
+#ifdef _RUNNING_MAC_OS_LION
+	}
+#endif
 }
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
-    NSRange strRange = NSMakeRange(0, [haystack length]);
-    
+#ifdef _RUNNING_MAC_OS_LION
 	if ([self useNewRegularExpressionEngine]) {
+		NSRange strRange = NSMakeRange(0, [haystack length]);
+		
 		NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
 		
 		NSString *newString = [regex stringByReplacingMatchesInString:haystack options:0 range:strRange withTemplate:puppy];
 		
 		return newString;
 	} else {
+#endif
+		
 		return [haystack stringByReplacingOccurrencesOfRegex:needle withString:puppy];
-	}					  
+		
+#ifdef _RUNNING_MAC_OS_LION
+	}
+#endif
 }
 	
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
@@ -102,6 +120,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
+#ifdef _RUNNING_MAC_OS_LION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -125,12 +144,17 @@
 		
 		return realMatches;
 	} else {
+#endif
+		
         if (caseless) {
 			return [haystack componentsSeparatedByRegex:needle options:RKLCaseless range:strRange error:NULL];
         } else {
             return [haystack componentsSeparatedByRegex:needle];
         }
-	}		
+		
+#ifdef _RUNNING_MAC_OS_LION
+	}
+#endif	
 }
 
 @end

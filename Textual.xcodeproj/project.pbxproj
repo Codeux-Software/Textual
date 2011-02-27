@@ -351,13 +351,6 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BlowfishCommandLine;
 		};
-		4CBDAAED1317B8CC00029DC7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CBDAAE61317B8CC00029DC7 /* IRCExtras.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = IRCExtras;
-		};
 		4CE5D499131798F100321734 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -507,8 +500,6 @@
 		4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Classes/Headers/TextualApplication.h; sourceTree = SOURCE_ROOT; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
-		4CBDAAD21317B8C000029DC7 /* IRCExtras.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IRCExtras.bundle; path = Resources/Plugins/Compiled/IRCExtras.bundle; sourceTree = "<group>"; };
-		4CBDAAE61317B8CC00029DC7 /* IRCExtras.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IRCExtras.xcodeproj; path = Resources/Plugins/IRCExtras/IRCExtras.xcodeproj; sourceTree = "<group>"; };
 		4CC33B7C13177E9F00BDBCA0 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Classes/Headers/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
 		4CC33B8513177EF700BDBCA0 /* TXRegularExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXRegularExpression.m; sourceTree = "<group>"; };
@@ -1159,14 +1150,6 @@
 			name = "Plug-In Architecture";
 			sourceTree = "<group>";
 		};
-		4CBDAAE71317B8CC00029DC7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CBDAAEE1317B8CC00029DC7 /* IRCExtras.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4CC33B8B13177F0400BDBCA0 /* Regular Expression */ = {
 			isa = PBXGroup;
 			children = (
@@ -1183,7 +1166,6 @@
 			children = (
 				4C858F3612E0A02000F3FAE0 /* BlowfishCommandLine.xcodeproj */,
 				4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */,
-				4CBDAAE61317B8CC00029DC7 /* IRCExtras.xcodeproj */,
 				4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */,
 			);
 			name = Projects;
@@ -1194,7 +1176,6 @@
 			children = (
 				4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */,
 				4C7AD473121AEF830021648A /* BragSpam.bundle */,
-				4CBDAAD21317B8C000029DC7 /* IRCExtras.bundle */,
 				4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */,
 			);
 			name = Binaries;
@@ -1666,10 +1647,6 @@
 					ProjectRef = 4C282AB612A3A9D300F44108 /* BragSpam.xcodeproj */;
 				},
 				{
-					ProductGroup = 4CBDAAE71317B8CC00029DC7 /* Products */;
-					ProjectRef = 4CBDAAE61317B8CC00029DC7 /* IRCExtras.xcodeproj */;
-				},
-				{
 					ProductGroup = 4C282AA612A3A9B500F44108 /* Products */;
 					ProjectRef = 4C282AA512A3A9B500F44108 /* SystemProfiler.xcodeproj */;
 				},
@@ -1703,13 +1680,6 @@
 			fileType = wrapper.cfbundle;
 			path = BlowfishCommandLine.bundle;
 			remoteRef = 4C858F3D12E0A02000F3FAE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CBDAAEE1317B8CC00029DC7 /* IRCExtras.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = IRCExtras.bundle;
-			remoteRef = 4CBDAAED1317B8CC00029DC7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2133,7 +2103,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.6;
 			};
 			name = "App Store Release";
 		};
@@ -2457,7 +2427,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -2482,7 +2452,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
