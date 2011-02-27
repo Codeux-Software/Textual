@@ -51,11 +51,11 @@ Textual = {
 	
 	on_dblclick_chname: function() {
 		Textual.on_chname();
-		app.nicknameDoubleClicked();
+		app.channelDoubleClicked();
 	},
 	
 	on_dblclick_ct_nick: function() {
 		Textual.on_ct_nick();
-		app.channelDoubleClicked();
+		app.nicknameDoubleClicked();
 	},
 }
