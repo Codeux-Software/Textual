@@ -1209,6 +1209,48 @@ typedef enum {
 	}
 }
 
+- (void)textFormattingBold:(NSEvent *)e
+{
+	if ([formattingMenu boldSet]) {
+		[formattingMenu removeBoldCharFromTextBox:nil];
+	} else {
+		[formattingMenu insertBoldCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingItalic:(NSEvent *)e
+{
+	if ([formattingMenu italicSet]) {
+		[formattingMenu removeItalicCharFromTextBox:nil];
+	} else {
+		[formattingMenu insertItalicCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingUnderline:(NSEvent *)e
+{
+	if ([formattingMenu underlineSet]) {
+		[formattingMenu removeUnderlineCharFromTextBox:nil];
+	} else {
+		[formattingMenu insertUnderlineCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingColor:(NSEvent *)e
+{
+	if ([formattingMenu foregroundColorSet]) {
+		[formattingMenu removeForegroundColorCharFromTextBox:nil];
+	} else {
+		NSRect fieldRect = [formattingMenu.textField frame];
+		
+		fieldRect.origin.y -= 160;
+		
+		[formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
+														  atLocation:fieldRect.origin
+															  inView:[formattingMenu.textField currentEditor]];
+	}
+}
+
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1234,6 +1276,11 @@ typedef enum {
 	
 	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
+	
+	[self handler:@selector(textFormattingBold:) char:'b' mods:NSControlKeyMask];
+	[self handler:@selector(textFormattingColor:) char:'k' mods:NSControlKeyMask];
+	[self handler:@selector(textFormattingItalic:) char:'i' mods:NSControlKeyMask];
+	[self handler:@selector(textFormattingUnderline:) char:'u' mods:NSControlKeyMask];
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];

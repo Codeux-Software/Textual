@@ -5,7 +5,14 @@
 
 @synthesize textField;
 @synthesize formatterMenu;
+@synthesize foregroundColorMenu;
 @synthesize sheetOverrideEnabled;
+
+#define FormattingMenuForegroundColorEnabledTag		95005
+#define FormattingMenuBackgroundColorEnabledTag		95007
+#define FormattingMenuForegroundColorDisabledTag	95004
+#define FormattingMenuBackgroundColorDisabledTag	95006
+#define FormattingMenuRainbowColorMenuItemTag		99
 
 #pragma mark -
 #pragma mark Menu Management
@@ -30,46 +37,27 @@
 	[textField setUsesCustomUndoManager:YES];
 }
 
-- (NSRange)selectionRange:(NSAttributedString *)stringValue
-{
-	if (NSObjectIsNotEmpty(stringValue)) {
-		NSRange selectedTextRange = [textField selectedRange];
-		
-		if (selectedTextRange.location == NSNotFound) {
-			selectedTextRange = NSMakeRange(0, [stringValue length]);
-		}
-		
-		return selectedTextRange;
-	} 
-	
-	return NSMakeRange(NSNotFound, 0);
-}
-
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	if ([[textField window] attachedSheet] && sheetOverrideEnabled == NO) {
+	if ([[textField window] hasAttachedSheet] && sheetOverrideEnabled == NO) {
 		return NO;
 	}
-	
-	NSAttributedString *stringValue = [textField attributedStringValue];
-	
-	NSRange selectedTextRange = [self selectionRange:stringValue];
 	
 	switch ([item tag]) {
 		case 95001: 
 		{
 			NSMenu *rootMenu = [item menu];
 			
-			BOOL boldText		 = [stringValue IRCFormatterAttributeSetInRange:IRCTextFormatterBoldEffect			  range:selectedTextRange];
-			BOOL foregroundColor = [stringValue IRCFormatterAttributeSetInRange:IRCTextFormatterForegroundColorEffect range:selectedTextRange];
-			BOOL backgroundColor = [stringValue IRCFormatterAttributeSetInRange:IRCTextFormatterBackgroundColorEffect range:selectedTextRange];
+			BOOL boldText		 = [self boldSet];
+			BOOL foregroundColor = [self foregroundColorSet];
+			BOOL backgroundColor = [self backgroundColorSet];
 			
-			[[rootMenu itemWithTag:95005] setHidden:foregroundColor];
-			[[rootMenu itemWithTag:95004] setHidden:BOOLReverseValue(foregroundColor)];
+			[[rootMenu itemWithTag:FormattingMenuForegroundColorEnabledTag]  setHidden:foregroundColor];
+			[[rootMenu itemWithTag:FormattingMenuForegroundColorDisabledTag] setHidden:BOOLReverseValue(foregroundColor)];
 			
-			[[rootMenu itemWithTag:95007] setHidden:backgroundColor];
-			[[rootMenu itemWithTag:95007] setEnabled:foregroundColor];
-			[[rootMenu itemWithTag:95006] setHidden:BOOLReverseValue(backgroundColor)];
+			[[rootMenu itemWithTag:FormattingMenuBackgroundColorEnabledTag]  setHidden:backgroundColor];
+			[[rootMenu itemWithTag:FormattingMenuBackgroundColorEnabledTag]  setEnabled:foregroundColor];
+			[[rootMenu itemWithTag:FormattingMenuBackgroundColorDisabledTag] setHidden:BOOLReverseValue(backgroundColor)];
 			
 			[item setState:boldText];
 			
@@ -84,7 +72,7 @@
 		}
 		case 95002:
 		{
-			BOOL italicText = [stringValue IRCFormatterAttributeSetInRange:IRCTextFormatterItalicEffect range:selectedTextRange];
+			BOOL italicText = [self italicSet];
 			
 			if (italicText) {
 				[item setAction:@selector(removeItalicCharFromTextBox:)];
@@ -99,7 +87,7 @@
 		}
 		case 95003:
 		{
-			BOOL underlineText = [stringValue IRCFormatterAttributeSetInRange:IRCTextFormatterUnderlineEffect range:selectedTextRange];
+			BOOL underlineText = [self underlineSet];
 			
 			if (underlineText) {
 				[item setAction:@selector(removeUnderlineCharFromTextBox:)];
@@ -116,7 +104,7 @@
 		{
 			BOOL condition = [_NSUserDefaults() boolForKey:@"EnableRainbowFormattingMenuItem"];
 			
-			NSMenuItem *divider = [[item menu] itemWithTag:99];
+			NSMenuItem *divider = [[item menu] itemWithTag:FormattingMenuRainbowColorMenuItemTag];
 			
 			[item	 setHidden:BOOLReverseValue(condition)];
 			[divider setHidden:BOOLReverseValue(condition)];
@@ -127,6 +115,39 @@
 	}
 	
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Formatting Properties
+
+- (BOOL)propertyIsSet:(IRCTextFormatterEffectType)effect
+{
+	return [[textField attributedStringValue] IRCFormatterAttributeSetInRange:effect range:[textField selectedRange]];
+}
+
+- (BOOL)boldSet
+{
+	return [self propertyIsSet:IRCTextFormatterBoldEffect];
+}
+
+- (BOOL)italicSet
+{
+	return [self propertyIsSet:IRCTextFormatterItalicEffect];
+}
+
+- (BOOL)underlineSet
+{
+	return [self propertyIsSet:IRCTextFormatterUnderlineEffect];
+}
+
+- (BOOL)foregroundColorSet
+{
+	return [self propertyIsSet:IRCTextFormatterForegroundColorEffect];
+}
+
+- (BOOL)backgroundColorSet
+{
+	return [self propertyIsSet:IRCTextFormatterBackgroundColorEffect];
 }
 
 #pragma mark -
