@@ -9,10 +9,15 @@
 	#include <Security/Security.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
 
+	/* Availability Macros */
 	#if defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
 		#define _RUNNING_MAC_OS_LION
 	#endif
 
+	#ifndef NSAppKitVersionNumber10_6
+		#define NSAppKitVersionNumber10_6 1038
+	#endif
+	
 	/* Textual Specific Frameworks */
 	#ifdef LinkTextualIRCFrameworks
 		#import <AutoHyperlinks/AutoHyperlinks.h>
@@ -42,6 +47,11 @@
 
 	/* Textual Headers */
 	#import "NSObjectHelper.h"
+
+	#ifndef _RUNNING_MAC_OS_LION
+		#import "RegexKitLite.h"
+	#endif
+
 	#import "TXRegularExpression.h"
 	#import "GlobalModels.h"
 	#import "PopupPrompts.h"

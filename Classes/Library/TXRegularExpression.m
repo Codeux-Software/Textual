@@ -5,8 +5,6 @@
  of Mac OS X that support NSRegularExpression let us use it instead of relying
  on open source libraries to do the work for us. */
 
-#import "RegexKitLite.h"
-
 @interface TXRegularExpression (Private)
 + (BOOL)useNewRegularExpressionEngine;
 @end
