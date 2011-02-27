@@ -30,18 +30,7 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
-	if (sel == @selector(onDblClick:)
-		|| sel == @selector(shouldStopDoubleClick:)
-		|| sel == @selector(setUrl:)
-		|| sel == @selector(setAddr:)
-		|| sel == @selector(setNick:)
-		|| sel == @selector(setChan:)
-		|| sel == @selector(print:)) {
-		
-		return NO;
-	}
-	
-	return YES;
+	return NO;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
@@ -114,6 +103,16 @@
 - (void)setChan:(NSString *)s
 {
 	[policy setChan:[s gtm_stringByUnescapingFromHTML]];
+}
+
+- (void)channelDoubleClicked
+{
+	[policy channelDoubleClicked];
+}
+
+- (void)nicknameDoubleClicked
+{
+	[policy nicknameDoubleClicked];
 }
 
 - (void)print:(NSString *)s
