@@ -47,11 +47,7 @@
 
 	/* Textual Headers */
 	#import "NSObjectHelper.h"
-
-	#ifndef _RUNNING_MAC_OS_LION
-		#import "RegexKitLite.h"
-	#endif
-
+	#import "RegexKitLite.h"
 	#import "TXRegularExpression.h"
 	#import "GlobalModels.h"
 	#import "PopupPrompts.h"
