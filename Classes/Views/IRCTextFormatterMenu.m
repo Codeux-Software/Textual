@@ -156,7 +156,7 @@
 - (void)insertBoldCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBoldEffect
@@ -173,7 +173,7 @@
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterItalicEffect
@@ -190,7 +190,7 @@
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
@@ -207,7 +207,7 @@
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = oldString;
@@ -261,7 +261,7 @@
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = oldString;
@@ -309,7 +309,7 @@
 - (void)removeBoldCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
@@ -325,7 +325,7 @@
 - (void)removeItalicCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
@@ -341,7 +341,7 @@
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
@@ -357,7 +357,7 @@
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = nil;
@@ -378,7 +378,7 @@
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound) return;
+	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
