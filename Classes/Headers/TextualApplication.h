@@ -33,6 +33,10 @@
 	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 	#define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 	#define ObjectsShareType(a, b)				(strcmp(@encode(typeof(a)), @encode(b)) == 0)
+	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+		#define _RUNNING_MAC_OS_LION
+	#endif
 
 	/* Item types */
 	typedef unsigned long long TXFSLongInt; // filesizes

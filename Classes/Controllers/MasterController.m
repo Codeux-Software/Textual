@@ -81,7 +81,10 @@
 		ghostMode = YES;
 	}
 	
+#ifdef _RUNNING_MAC_OS_LION
 	[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+#endif
+	
 	[window makeMainWindow];
 	
 	[Preferences initPreferences];
