@@ -229,7 +229,7 @@ static NSArray					*encKeys						= nil;
 			}
 		}	
 		
-		if (scannedRange.length <= 0 && scannedRange.location == NSNotFound) {
+		if (scannedRange.length <= 0) {
 			break;
 		}
 		
