@@ -599,7 +599,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	id result = nil;
 	
 	if (drawingType == ASCII_TO_ATTRIBUTED_STRING) {
-		result = [[[NSMutableAttributedString alloc] initWithString:body] autorelease];
+		result = [[[NSMutableAttributedString alloc] initWithString:body] autodrain];
 	} else {
 		result = [NSMutableString string];
 	}

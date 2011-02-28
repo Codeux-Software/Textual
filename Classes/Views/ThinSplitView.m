@@ -102,8 +102,8 @@
 	
 	inverted = value;
 	
-	NSView *a = [[[[self subviews] safeObjectAtIndex:0] retain] autorelease];
-	NSView *b = [[[[self subviews] safeObjectAtIndex:1] retain] autorelease];
+	NSView *a = [[[[self subviews] safeObjectAtIndex:0] retain] autodrain];
+	NSView *b = [[[[self subviews] safeObjectAtIndex:1] retain] autodrain];
 	
 	[a removeFromSuperviewWithoutNeedingDisplay];
 	[b removeFromSuperviewWithoutNeedingDisplay];

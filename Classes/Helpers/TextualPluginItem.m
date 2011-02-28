@@ -30,7 +30,7 @@
 							NSArray *cmdDict = [newUserDict objectForKey:cmd];
 							
 							if (NSObjectIsEmpty(cmdDict)) {
-								[newUserDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
+								[newUserDict setObject:[[NSMutableArray new] autodrain] forKey:cmd];
 							}
 							
 							if ([cmdDict containsObject:bundle] == NO) {
@@ -53,7 +53,7 @@
 							NSArray *cmdDict = [newServerDict objectForKey:cmd];
 							
 							if (NSObjectIsEmpty(cmdDict)) {
-								[newServerDict setObject:[[NSMutableArray new] autorelease] forKey:cmd];
+								[newServerDict setObject:[[NSMutableArray new] autodrain] forKey:cmd];
 							}
 							
 							if ([cmdDict containsObject:bundle] == NO) {

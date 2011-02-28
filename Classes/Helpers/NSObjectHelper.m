@@ -5,13 +5,26 @@
 
 - (oneway void)drain
 {
-	if (self) {
-		NSUInteger retainTotal = [self retainCount];
-		
-		if (retainTotal >= 1) {
-			[self release];
-		} 
+	if ([_NSUserDefaults() boolForKey:@"DisableMemoryDeallocation"] == NO) {
+		if (self) {
+			NSUInteger retainTotal = [self retainCount];
+			
+			if (retainTotal >= 1) {
+				[self release];
+			} 
+		}
 	}
+}
+
+- (id)autodrain
+{
+	if ([_NSUserDefaults() boolForKey:@"DisableMemoryDeallocation"] == NO) {
+		if (self) {
+			return [self autorelease];
+		}
+	}
+	
+	return self;
 }
 
 - (oneway void)forcedrain

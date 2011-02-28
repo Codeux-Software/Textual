@@ -132,7 +132,7 @@
 		[dic setObject:channels forKey:@"channels"];
 	}
 	
-	IRCClientConfig *cf = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClientConfig *cf = [[[IRCClientConfig alloc] initWithDictionary:dic] autodrain];
 
 	if (NSObjectIsNotEmpty(password)) {
 		cf.password = password;

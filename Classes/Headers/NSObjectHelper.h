@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface NSObject (NSObjectHelper)
+- (id)autodrain;
 - (oneway void)drain;
 - (oneway void)forcedrain;
 @end

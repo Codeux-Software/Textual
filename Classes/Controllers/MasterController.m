@@ -156,7 +156,7 @@
 	
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
-	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
+	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autodrain];
 	
 	extrac = [IRCExtras new];
 	world  = [IRCWorld new];
@@ -1328,7 +1328,7 @@ typedef enum {
 	
 	[window makeKeyAndOrderFront:nil];
 	
-	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autodrain];
 	IRCClient *u = [world createClient:c reload:YES];
 	
 	[world save];

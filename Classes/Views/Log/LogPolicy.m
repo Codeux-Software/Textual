@@ -62,7 +62,7 @@
 {
 	menuController.pointedChannelName = chan;
 	
-	[chan autorelease];
+	[chan autodrain];
 	chan = nil;
 	
 	[menuController onJoinChannel:nil];
@@ -72,7 +72,7 @@
 {
 	menuController.pointedNick = nick;
 	
-	[nick autorelease];
+	[nick autodrain];
 	nick = nil;
 	
 	[menuController memberListDoubleClicked:nil];
@@ -85,32 +85,32 @@
 	if (url) {
 		menuController.pointedUrl = url;
 		
-		[url autorelease];
+		[url autodrain];
 		url = nil;
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autodrain]];
 		}
 		
 		return ary;
 	} else if (addr) {
 		menuController.pointedAddress = addr;
 		
-		[addr autorelease];
+		[addr autodrain];
 		addr = nil;
 		
 		for (NSMenuItem *item in [addrMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autodrain]];
 		}
 		
 		return ary;
 	} else if (nick) {
 		menuController.pointedNick = nick;
 		
-		[nick autorelease];
+		[nick autodrain];
 		nick = nil;
 		
-		NSMenuItem *userOptions = [[NSMenuItem new] autorelease];
+		NSMenuItem *userOptions = [[NSMenuItem new] autodrain];
 		
 		[userOptions setTitle:TXTFLS(@"USER_OPTIONS_MENU_ITEM", menuController.pointedNick)];
 		
@@ -122,18 +122,18 @@
 		for (NSMenuItem *item in [memberMenu itemArray]) {
 			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) continue;
 			
-			[ary safeAddObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autodrain]];
 		}
 		
 		return ary;
 	} else if (chan) {
 		menuController.pointedChannelName = chan;
 		
-		[chan autorelease];
+		[chan autodrain];
 		chan = nil;
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autorelease]];
+			[ary safeAddObject:[[item copy] autodrain]];
 		}
 		
 		return ary;
@@ -152,10 +152,10 @@
 		for (NSMenuItem *item in [menu itemArray]) {
 			if ([item tag] == WebMenuItemTagInspectElement) {
 				if (lookupInDictionaryItem) {
-					[ary safeAddObject:[[lookupInDictionaryItem copy] autorelease]];
+					[ary safeAddObject:[[lookupInDictionaryItem copy] autodrain]];
 				}
 			} else {
-				[ary safeAddObject:[[item copy] autorelease]];
+				[ary safeAddObject:[[item copy] autodrain]];
 			}
 		}
 		
@@ -163,14 +163,14 @@
 			[ary safeAddObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {
-				[ary safeAddObject:[[inspectElementItem copy] autorelease]];
+				[ary safeAddObject:[[inspectElementItem copy] autodrain]];
 			}
 			
 			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
-															   action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autorelease];
+															   action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autodrain];
 			
 			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
-																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autorelease];
+																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autodrain];
 			
 			[copyHTML setTarget:menuController];
 			[reloadTheme setTarget:menuController];

@@ -686,7 +686,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[IRCClientConfig new] autorelease];
+	d.config = [[IRCClientConfig new] autodrain];
 	d.uid = -1;
 	
 	[d startWithIgnoreTab:NO];
@@ -897,7 +897,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[IRCChannelConfig new] autorelease];
+	d.config = [[IRCChannelConfig new] autodrain];
 	d.uid = u.uid;
 	d.cid = -1;
 	
@@ -942,7 +942,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[c.config mutableCopy] autorelease];
+	d.config = [[c.config mutableCopy] autodrain];
 	d.uid = u.uid;
 	d.cid = c.uid;
 	

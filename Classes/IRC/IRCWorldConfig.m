@@ -21,7 +21,7 @@
 	NSArray *ary = [dic arrayForKey:@"clients"];
 	
 	for (NSDictionary *e in ary) {
-		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
+		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autodrain];
 	
 		[clients safeAddObject:c];
 	}

@@ -44,7 +44,7 @@
 
 - (void)dealloc
 {
-	[conn autorelease];
+	[conn autodrain];
 	[conn close];
 	[host drain];
 	[proxyHost drain];
@@ -101,7 +101,7 @@
 	[sendQueue removeAllObjects];
 	
 	[conn close];
-	[conn autorelease];
+	[conn autodrain];
 	conn = nil;
 }
 

@@ -48,7 +48,7 @@ extern NSString *TXTFLS(NSString *key, ...)
 	
 	va_end(args);
 	
-	return [formattedString autorelease];
+	return [formattedString autodrain];
 }
 
 extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 

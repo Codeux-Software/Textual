@@ -187,7 +187,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
-	return [result autorelease];
+	return [result autodrain];
 }
 
 - (NSAttributedString *)sanitizeIRCCompatibleAttributedString:(NSColor *)defaultColor 
@@ -294,7 +294,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 	[result addAttribute:NSFontAttributeName						   value:defaultFont  range:NSMakeRange(0, [result length])];
 	[result addAttribute:IRCTextFormatterDefaultFontColorAttributeName value:defaultColor range:NSMakeRange(0, [result length])];
 	
-	return [result autorelease];
+	return [result autodrain];
 }
 
 - (NSArray *)stringSanitizationValidAttributesMatrix
@@ -397,7 +397,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		}
 	}
 	
-	return [result autorelease];
+	return [result autodrain];
 }
 
 - (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange;
@@ -486,7 +486,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
-	return [result autorelease];
+	return [result autodrain];
 }
 
 @end

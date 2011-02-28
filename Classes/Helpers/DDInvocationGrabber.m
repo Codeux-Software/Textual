@@ -32,7 +32,7 @@
 
 + (id)invocationGrabber
 {
-    return [[[self alloc] init] autorelease];
+    return [[[self alloc] init] autodrain];
 }
 
 - (id)init

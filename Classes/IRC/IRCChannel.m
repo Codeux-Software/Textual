@@ -53,13 +53,13 @@
 
 - (void)setup:(IRCChannelConfig *)seed
 {
-	[config autorelease];
+	[config autodrain];
 	config = [seed mutableCopy];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	[config autorelease];
+	[config autodrain];
 	config = [seed mutableCopy];
 }
 
@@ -272,7 +272,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autorelease];
+		[[[members safeObjectAtIndex:n] retain] autodrain];
 		
 		[members safeRemoveObjectAtIndex:n];
 	}
@@ -294,7 +294,7 @@
 	NSInteger n = [self indexOfMember:nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autorelease];
+		[[[members safeObjectAtIndex:n] retain] autodrain];
 		
 		[members safeRemoveObjectAtIndex:n];
 	}
@@ -309,13 +309,13 @@
 	if (n >= 0) {
 		IRCUser *m = [members safeObjectAtIndex:n];
 		
-		[[m retain] autorelease];
+		[[m retain] autodrain];
 		
 		[self removeMember:toNick reload:NO];
 		
 		m.nick = toNick;
 		
-		[[[members safeObjectAtIndex:n] retain] autorelease];
+		[[[members safeObjectAtIndex:n] retain] autodrain];
 		
 		[members safeRemoveObjectAtIndex:n];
 		
@@ -329,7 +329,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autorelease];
+		[[[members safeObjectAtIndex:n] retain] autodrain];
 		
 		[members safeRemoveObjectAtIndex:n];
 	}
@@ -352,7 +352,7 @@
 			case 'v': m.v = value; break;
 		}
 		
-		[[[members safeObjectAtIndex:n] retain] autorelease];
+		[[[members safeObjectAtIndex:n] retain] autodrain];
 		
 		[members safeRemoveObjectAtIndex:n];
 		

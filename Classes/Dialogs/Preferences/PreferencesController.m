@@ -144,7 +144,7 @@
 			
 			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
 			[pluginMenu setTag:tagIndex];
-			[pluginMenu autorelease];
+			[pluginMenu autodrain];
 			
 			[installedScriptsMenu addItem:pluginMenu];
 		}
@@ -407,7 +407,7 @@
 		}
 	}];
 	
-	[transcriptFolderOpenPanel autorelease];
+	[transcriptFolderOpenPanel autodrain];
 	transcriptFolderOpenPanel = nil;
 }
 
@@ -445,7 +445,7 @@
 			NSInteger i = 0;
 			
 			for (NSString *f in files) {
-				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
+				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autodrain];
 				
 				[item setTag:tag];
 				[themeButton.menu addItem:item];
@@ -509,7 +509,7 @@
 
 - (void)changeFont:(id)sender
 {
-	[logFont autorelease];
+	[logFont autodrain];
 	logFont = [[sender convertFont:logFont] retain];
 	
 	[self setValue:logFont.fontName forKey:@"fontDisplayName"];

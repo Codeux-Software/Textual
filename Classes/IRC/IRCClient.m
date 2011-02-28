@@ -174,7 +174,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[commandQueueTimer drain];
 	[commandQueue drain];
 	[config drain];
-	[conn autorelease];
+	[conn autodrain];
 	[conn close];
 	[inputNick drain];
 	[inviteExceptionSheet drain];
@@ -212,7 +212,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)setup:(IRCClientConfig *)seed
 {
-	[config autorelease];
+	[config autodrain];
 	config = [seed mutableCopy];
 }
 
@@ -261,13 +261,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (IRCClientConfig *)storedConfig
 {
-	IRCClientConfig *u = [[config mutableCopy] autorelease];
+	IRCClientConfig *u = [[config mutableCopy] autodrain];
 	
 	[u.channels removeAllObjects];
 	
 	for (IRCChannel *c in channels) {
 		if (c.isChannel) {
-			[u.channels safeAddObject:[[c.config mutableCopy] autorelease]];
+			[u.channels safeAddObject:[[c.config mutableCopy] autodrain]];
 		}
 	}
 	
@@ -478,7 +478,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSInteger stringl = new.length;
 	NSInteger baseMath = (chan.length + myHost.length + 14); 
 	
-	[new autorelease];
+	[new autodrain];
 	
 	if ((stringl + baseMath) > IRC_BODY_LEN) {
 		stringl = (IRC_BODY_LEN - baseMath);
@@ -819,7 +819,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (conn) {
 		[conn close];
-		[conn autorelease];
+		[conn autodrain];
 		conn = nil;
 	}
 	
@@ -874,7 +874,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (conn) {
 		[conn close];
-		[conn autorelease];
+		[conn autodrain];
 		conn = nil;
 	}
 	
@@ -916,8 +916,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (isConnected == NO) return;
 	
-	[inputNick autorelease];
-	[sentNick autorelease];
+	[inputNick autodrain];
+	[sentNick autodrain];
 	
 	inputNick = [newNick retain];
 	sentNick = [newNick retain];
@@ -1015,8 +1015,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSMutableString *pass = [NSMutableString string];
 	
 	for (IRCChannel *c in chans) {
-		NSMutableString *prevTarget = [[target mutableCopy] autorelease];
-		NSMutableString *prevPass = [[pass mutableCopy] autorelease];
+		NSMutableString *prevTarget = [[target mutableCopy] autodrain];
+		NSMutableString *prevPass = [[pass mutableCopy] autodrain];
 		
 		if (NSObjectIsNotEmpty(target)) [target appendString:@","];
 		
@@ -1407,7 +1407,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)sendCommand:(NSString *)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName
 {
-	NSMutableString *s = [[str mutableCopy] autorelease];
+	NSMutableString *s = [[str mutableCopy] autodrain];
 	
 	NSString *cmd = [[s getToken] uppercaseString];
 	
@@ -1622,7 +1622,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if ([cmd isEqualToString:IRCCI_CTCP]) {
-				NSMutableString *t = [[s mutableCopy] autorelease];
+				NSMutableString *t = [[s mutableCopy] autodrain];
 				NSString *subCommand = [[t getToken] uppercaseString];
 				
 				if ([subCommand isEqualToString:IRCCI_ACTION]) {
@@ -2020,7 +2020,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				NSString *hostmask = [u banMask];
 				
-				AddressBook *g = [[AddressBook new] autorelease];
+				AddressBook *g = [[AddressBook new] autodrain];
 				
 				g.hostmask = hostmask;
 				g.ignorePublicMsg = YES;
@@ -2099,7 +2099,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSInteger interval = [[s getToken] integerValue];
 			
 			if (interval > 0) {
-				TimerCommand *cmd = [[TimerCommand new] autorelease];
+				TimerCommand *cmd = [[TimerCommand new] autodrain];
 				
 				if ([s hasPrefix:@"/"]) {
 					[s deleteCharactersInRange:NSMakeRange(0, 1)];
@@ -2511,7 +2511,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (doTalk) {
 		return [world createTalk:name client:self];
 	} else {
-		IRCChannelConfig *seed = [[IRCChannelConfig new] autorelease];
+		IRCChannelConfig *seed = [[IRCChannelConfig new] autodrain];
 		
 		seed.name = name;
 		
@@ -2943,7 +2943,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime
 {
-	LogLine *c = [[LogLine new] autorelease];
+	LogLine *c = [[LogLine new] autodrain];
 	
 	IRCChannel *channel = [world selectedChannelOn:self];
 	
@@ -2970,7 +2970,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
 {
-	LogLine *c = [[LogLine new] autorelease];
+	LogLine *c = [[LogLine new] autodrain];
 	
 	NSString *time = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
 	
@@ -3003,7 +3003,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				excludeWords = [Preferences excludeWords];
 				
 				if ([Preferences keywordCurrentNick]) {
-					NSMutableArray *ary = [[keywords mutableCopy] autorelease];
+					NSMutableArray *ary = [[keywords mutableCopy] autodrain];
 					
 					[ary safeInsertObject:myNick atIndex:0];
 					
@@ -3447,7 +3447,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	NSString *nick = m.sender.nick;
 	
-	NSMutableString *s = [[text mutableCopy] autorelease];
+	NSMutableString *s = [[text mutableCopy] autodrain];
 	NSString *command = [[s getToken] uppercaseString];
 	
 	AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
@@ -3511,7 +3511,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	NSString *nick = m.sender.nick;
 	
-	NSMutableString *s = [[text mutableCopy] autorelease];
+	NSMutableString *s = [[text mutableCopy] autodrain];
 	NSString *command = [[s getToken] uppercaseString];
 	
 	AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
@@ -3583,7 +3583,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if ([c findMember:nick] == NO) {
-		IRCUser *u = [[IRCUser new] autorelease];
+		IRCUser *u = [[IRCUser new] autodrain];
 		
 		u.o = njoin;
 		u.nick = nick;
@@ -3941,11 +3941,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[c activate];
 			
 			IRCUser *m;
-			m = [[IRCUser new] autorelease];
+			m = [[IRCUser new] autodrain];
 			m.nick = myNick;
 			[c addMember:m];
 			
-			m = [[IRCUser new] autorelease];
+			m = [[IRCUser new] autodrain];
 			m.nick = c.name;
 			[c addMember:m];
 		}
@@ -4369,7 +4369,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							[u setUsername:username];
 						}
 					} else {
-						IRCUser *u = [[IRCUser new] autorelease];
+						IRCUser *u = [[IRCUser new] autodrain];
 						
 						u.nick = nick;
 						u.username = username;
@@ -4416,7 +4416,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						op = (([u isEqualToString:@"!"]) ? @"&" : u);
 					}
 					
-					IRCUser *m = [[IRCUser new] autorelease];
+					IRCUser *m = [[IRCUser new] autodrain];
 					
 					m.nick = nick;
 					
@@ -4728,7 +4728,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				found = YES;
 				
 				NSString *head = [nick safeSubstringToIndex:i];
-				NSMutableString *s = [[head mutableCopy] autorelease];
+				NSMutableString *s = [[head mutableCopy] autodrain];
 				
 				for (NSInteger i = (isupport.nickLen - s.length); i > 0; --i) {
 					[s appendString:@"_"];
@@ -4746,7 +4746,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			sentNick = @"0";
 		}
 	} else {
-		[sentNick autorelease];
+		[sentNick autodrain];
 		sentNick = [[sentNick stringByAppendingString:@"_"] retain];
 	}
 	
@@ -4762,7 +4762,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	BOOL prevConnected = isConnected;
 	
-	[conn autorelease];
+	[conn autodrain];
 	conn = nil;
 	
 	[self clearCommandQueue];
@@ -4834,12 +4834,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	encoding = config.encoding;
 	
 	if (NSObjectIsEmpty(inputNick)) {
-		[inputNick autorelease];
+		[inputNick autodrain];
 		inputNick = [config.nick retain];
 	}
 	
-	[sentNick autorelease];
-	[myNick autorelease];
+	[sentNick autodrain];
+	[myNick autodrain];
 	
 	sentNick = [inputNick retain];
 	myNick = [inputNick retain];
@@ -4881,13 +4881,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircConnectionDidReceive:(NSData *)data
 {
-	NSString *s = [[[NSString alloc] initWithData:data encoding:encoding] autorelease];
+	NSString *s = [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
 	
 	if (PointerIsEmpty(s)) {
-		s = [[[NSString alloc] initWithData:data encoding:config.fallbackEncoding] autorelease];
+		s = [[[NSString alloc] initWithData:data encoding:config.fallbackEncoding] autodrain];
 		
 		if (PointerIsEmpty(s)) {
-			s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
+			s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autodrain];
 			
 			if (PointerIsEmpty(s)) {
 				return;
@@ -4906,7 +4906,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		s = [s stripEffects];
 	}
 	
-	IRCMessage *m = [[[IRCMessage alloc] initWithLine:s] autorelease];
+	IRCMessage *m = [[[IRCMessage alloc] initWithLine:s] autodrain];
 	
 	NSString *cmd = m.command;
 	

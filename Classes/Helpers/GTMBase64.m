@@ -277,7 +277,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                 padded:YES];
   if (converted) {
     result = [[[NSString alloc] initWithData:converted
-                                    encoding:NSASCIIStringEncoding] autorelease];
+                                    encoding:NSASCIIStringEncoding] autodrain];
   }
   return result;
 }
@@ -290,7 +290,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                 padded:YES];
   if (converted) {
     result = [[[NSString alloc] initWithData:converted
-                                    encoding:NSASCIIStringEncoding] autorelease];
+                                    encoding:NSASCIIStringEncoding] autodrain];
   }
   return result;
 }
@@ -356,7 +356,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                 padded:padded];
   if (converted) {
     result = [[[NSString alloc] initWithData:converted
-                                    encoding:NSASCIIStringEncoding] autorelease];
+                                    encoding:NSASCIIStringEncoding] autodrain];
   }
   return result;
 }
@@ -371,7 +371,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                 padded:padded];
   if (converted) {
     result = [[[NSString alloc] initWithData:converted
-                                    encoding:NSASCIIStringEncoding] autorelease];
+                                    encoding:NSASCIIStringEncoding] autodrain];
   }
   return result;
 }

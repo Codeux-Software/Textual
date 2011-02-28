@@ -98,7 +98,7 @@
 - (NSArray *)parseMode:(NSString *)str
 {
 	NSMutableArray *ary = [NSMutableArray array];
-	NSMutableString *s = [[str mutableCopy] autorelease];
+	NSMutableString *s = [[str mutableCopy] autodrain];
 	
 	BOOL plus = NO;
 	

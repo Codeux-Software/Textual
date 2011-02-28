@@ -354,7 +354,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	NSString *bundleIdentifer = nil;
 	
 	guidData = (NSData *)copy_mac_address();
-	[guidData autorelease];
+	[guidData autodrain];
 
 	if (PointerIsEmpty(guidData)) return NO;
 	
