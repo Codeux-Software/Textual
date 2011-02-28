@@ -12,7 +12,7 @@
 
 + (IRCModeInfo *)modeInfo
 {
-	return [[IRCModeInfo new] autorelease];
+	return [[IRCModeInfo new] autodrain];
 }
 
 - (void)dealloc

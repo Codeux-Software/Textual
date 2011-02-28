@@ -14,7 +14,7 @@
 
 + (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType
 {
-	return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
+	return [[[SoundWrapper alloc] initWithEventType:eventType] autodrain];
 }
 
 - (NSString *)displayName

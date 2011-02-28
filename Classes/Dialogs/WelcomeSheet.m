@@ -149,7 +149,7 @@
 	NSInteger n = [channelTable editedRow];
 	
 	if (n >= 0) {
-		NSString *s = [[[[[note object] textStorage] string] copy] autorelease];
+		NSString *s = [[[[[note object] textStorage] string] copy] autodrain];
 		
 		[channels replaceObjectAtIndex:n withObject:s];
 		

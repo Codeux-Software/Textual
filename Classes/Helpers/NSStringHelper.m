@@ -9,7 +9,7 @@
 
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
-	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autorelease];
+	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autodrain];
 }
 
 - (NSString *)safeSubstringWithRange:(NSRange)range;
@@ -589,7 +589,7 @@ BOOL isUnicharDigit(unichar c)
 	NSString *uuidString = CFItemRefToID(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
 	
-	return [uuidString autorelease];
+	return [uuidString autodrain];
 }
 
 - (NSString *)hostmaskFromRawString
@@ -677,7 +677,7 @@ BOOL isUnicharDigit(unichar c)
 		return result;
 	}
 	
-	NSString *result = [[self copy] autorelease];
+	NSString *result = [[self copy] autodrain];
 	
 	[self setString:@""];
 	
@@ -739,7 +739,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	NSString *result = [[self copy] autorelease];
+	NSString *result = [[self copy] autodrain];
 	
 	[self setString:@""];
 	
@@ -781,7 +781,7 @@ BOOL isUnicharDigit(unichar c)
 {
 	NSAttributedString *newstr = [[NSAttributedString alloc] initWithString:@""];
 	
-	return [newstr autorelease];
+	return [newstr autodrain];
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set

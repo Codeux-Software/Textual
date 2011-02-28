@@ -116,16 +116,16 @@
 		
 		NSString *currentValue = [self stringValue];
 		
-		[oldString autorelease];
+		[oldString autodrain];
 		
 		if (PointerIsEmpty(rtfData) == NO) {
 			if ([currentValue hasPrefix:@"/"] == NO) {
-				newString = [[newString initWithRTF:rtfData documentAttributes:nil] autorelease];
+				newString = [[newString initWithRTF:rtfData documentAttributes:nil] autodrain];
 			} else {
-				newString = [[newString initWithString:rawData] autorelease];
+				newString = [[newString initWithString:rawData] autodrain];
 			}
 		} else {
-			newString = [[newString initWithString:rawData] autorelease];
+			newString = [[newString initWithString:rawData] autodrain];
 		}
 		
 		if (PointerIsEmpty(newString) == NO) {

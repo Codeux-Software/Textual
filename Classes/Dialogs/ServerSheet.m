@@ -490,11 +490,11 @@
 	IRCChannelConfig *conf;
 	
 	if (sel < 0) {
-		conf = [[IRCChannelConfig new] autorelease];
+		conf = [[IRCChannelConfig new] autodrain];
 	} else {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
 		
-		conf = [[c mutableCopy] autorelease];
+		conf = [[c mutableCopy] autodrain];
 		conf.name = @"";
 	}
 	
@@ -515,7 +515,7 @@
 	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
 	
-	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autorelease];
+	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autodrain];
 	
 	[channelSheet drain];
 	channelSheet = nil;
@@ -769,10 +769,10 @@
 			
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			
-			[[target retain] autorelease];
+			[[target retain] autodrain];
 
-			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
-			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autorelease];
+			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
+			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autodrain];
 			
 			[low removeObjectIdenticalTo:target];
 			[high removeObjectIdenticalTo:target];

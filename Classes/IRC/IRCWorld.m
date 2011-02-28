@@ -736,7 +736,7 @@
 
 - (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload
 {
-	IRCClient *c = [[IRCClient new] autorelease];
+	IRCClient *c = [[IRCClient new] autodrain];
 	
 	c.uid = ++itemId;
 	c.world = self;
@@ -767,7 +767,7 @@
 	IRCChannel *c = [client findChannel:seed.name];
 	if (NSObjectIsNotEmpty(c.name)) return c;
 	
-	c = [[IRCChannel new] autorelease];
+	c = [[IRCChannel new] autodrain];
 
 	c.uid = ++itemId;
 	c.client = client;
@@ -807,7 +807,7 @@
 
 - (IRCChannel *)createTalk:(NSString *)nick client:(IRCClient *)client
 {
-	IRCChannelConfig *seed = [[IRCChannelConfig new] autorelease];
+	IRCChannelConfig *seed = [[IRCChannelConfig new] autodrain];
 	
 	seed.name = nick;
 	seed.type = CHANNEL_TYPE_TALK;
@@ -819,11 +819,11 @@
 		
 		IRCUser *m = nil;
 		
-		m = [[IRCUser new] autorelease];
+		m = [[IRCUser new] autodrain];
 		m.nick = client.myNick;
 		[c addMember:m];
 		
-		m = [[IRCUser new] autorelease];
+		m = [[IRCUser new] autodrain];
 		m.nick = c.name;
 		[c addMember:m];
 	}
@@ -898,7 +898,7 @@
 
 - (void)destroyClient:(IRCClient *)u
 {
-	[[u retain] autorelease];
+	[[u retain] autodrain];
 	
 	[u terminate];
 	[u disconnect];
@@ -915,7 +915,7 @@
 
 - (void)destroyChannel:(IRCChannel *)c
 {
-	[[c retain] autorelease];
+	[[c retain] autodrain];
 	
 	[c terminate];
 	
@@ -963,7 +963,7 @@
 	
 	[c.view setHostWindow:window];
 	
-	return [c autorelease];
+	return [c autodrain];
 }
 
 #pragma mark -
@@ -1251,8 +1251,8 @@
 		
 		NSArray *ary = toClient.channels;
 		
-		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autorelease];
+		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autodrain];
+		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autodrain];
 		
 		[low removeObjectIdenticalTo:c];
 		[high removeObjectIdenticalTo:c];
@@ -1292,13 +1292,13 @@
 		if (item) return NO;
 		
 		NSMutableArray *ary = clients;
-		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autorelease];
+		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autodrain];
+		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autodrain];
 		
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		
-		[[i retain] autorelease];
+		[[i retain] autodrain];
 		
 		[ary removeAllObjects];
 		
@@ -1314,13 +1314,13 @@
 		IRCClient *u = (IRCClient *)item;
 	
 		NSMutableArray *ary = u.channels;
-		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autorelease];
+		NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autodrain];
+		NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy] autodrain];
 		
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		
-		[[i retain] autorelease];
+		[[i retain] autodrain];
 		
 		[ary removeAllObjects];
 		

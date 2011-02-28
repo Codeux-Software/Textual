@@ -123,7 +123,7 @@
 			
 			[completeBundleIndex safeAddObject:currBundle];
 			
-			[plugin autorelease];
+			[plugin autodrain];
 		}
 	}
 	

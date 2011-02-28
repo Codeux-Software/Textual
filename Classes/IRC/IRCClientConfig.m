@@ -263,13 +263,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
 	
 	for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
-		IRCChannelConfig *c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
+		IRCChannelConfig *c = [[[IRCChannelConfig alloc] initWithDictionary:e] autodrain];
 		
 		[channels safeAddObject:c];
 	}
 	
 	for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
-		AddressBook *ignore = [[[AddressBook alloc] initWithDictionary:e] autorelease];
+		AddressBook *ignore = [[[AddressBook alloc] initWithDictionary:e] autodrain];
 		
 		[ignores safeAddObject:ignore];
 	}

@@ -67,7 +67,7 @@ static NSInteger markWidth = 0;
 	
 	cell.theme = aTheme;
 	
-	return [cell autorelease];
+	return [cell autodrain];
 }
 
 - (void)themeChanged
@@ -103,7 +103,7 @@ static NSInteger markWidth = 0;
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK")]];
 		[atrsTooltip addAttribute:NSFontAttributeName value:boldFont range:[fullhost rangeOfString:TXTLS(@"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES")]];
 		
-		return [atrsTooltip autorelease];
+		return [atrsTooltip autodrain];
 	}
 	
 	return nil;

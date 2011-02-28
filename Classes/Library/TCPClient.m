@@ -40,7 +40,7 @@
 		[[conn invokeOnThread:socketThread] setDelegate:nil];
 		[[conn invokeOnThread:socketThread] disconnect];
 		
-		[conn autorelease];
+		[conn autodrain];
 	}
 	
 	if (socketThread) {
@@ -96,7 +96,7 @@
 	
 	[[conn invokeOnThread:socketThread] disconnect];
 	
-	[conn autorelease];
+	[conn autodrain];
 	conn = nil;
 	
 	[socketThread cancel];
@@ -129,7 +129,7 @@
 		}
 	}
 	
-	NSMutableData *result = [self.buffer autorelease];
+	NSMutableData *result = [self.buffer autodrain];
 	
 	++p;
 	
@@ -203,46 +203,46 @@
 		if ([error code] == -9805) { /* connection closed gracefully */
 			[self onSocketDidDisconnect:sender];
 		} else {
-			if ([domain isEqualToString:NSPOSIXErrorDomain]) {
-				msg = [conn posixErrorStringFromErrno:[error code]];
-			} else {
-				if ([conn badSSLCertErrorFound:error]) {
-					IRCClient *client = [delegate delegate];
+			if ([conn badSSLCertErrorFound:error]) {
+				IRCClient *client = [delegate delegate];
+				
+				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
+				
+				if (client.config.isTrustedConnection == NO) {
+					BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
+																   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
+														   defaultButton:TXTLS(@"TRUST_BUTTON") 
+														 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+														  suppressionKey:suppKey
+														 suppressionText:@"-"];
 					
-					NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
+					if (status) {
+						client.disconnectType = DISCONNECT_BAD_SSL_CERT;
+					}
 					
-					if (client.config.isTrustedConnection == NO) {
-						BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
-																	   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
-															   defaultButton:TXTLS(@"TRUST_BUTTON") 
-															 alternateButton:TXTLS(@"CANCEL_BUTTON") 
-															  suppressionKey:suppKey
-															 suppressionText:@"-"];
-						
-						if (status) {
-							client.disconnectType = DISCONNECT_BAD_SSL_CERT;
-						}
-						
-						client.config.isTrustedConnection = status;
-						
-						[_NSUserDefaults() setBool:status forKey:suppKey];
-						
-						if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-							[[delegate invokeOnMainThread] tcpClient:self error:nil];
-						}
-					}
-				} else {
-					if (NSObjectIsEmpty(msg)) {
-						msg = [error localizedDescription];
-					}
+					client.config.isTrustedConnection = status;
+					
+					[_NSUserDefaults() setBool:status forKey:suppKey];
 					
 					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-						[[delegate invokeOnMainThread] tcpClient:self error:msg];
+						[[delegate invokeOnMainThread] tcpClient:self error:nil];
 					}
 				}
+			} else {
+				if ([domain isEqualToString:NSPOSIXErrorDomain]) {
+					msg = [conn posixErrorStringFromErrno:[error code]];
+				} 
 				
-				[self onSocketDidDisconnect:sender];
+				if (NSObjectIsEmpty(msg)) {
+					msg = [error localizedDescription];
+				}
+				
+				if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+					[[delegate invokeOnMainThread] tcpClient:self error:msg];
+				}
 			}
+			
+			[self onSocketDidDisconnect:sender];
 		}
 	}
 }
