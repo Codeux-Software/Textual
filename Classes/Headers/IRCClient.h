@@ -87,6 +87,8 @@ typedef enum {
 	
 	FileLogger *logFile;
 	
+	dispatch_queue_t dispatchQueue;
+	
 #ifdef IS_TRIAL_BINARY
 	Timer *trialPeriodTimer;
 #endif
@@ -136,6 +138,7 @@ typedef enum {
 @property (nonatomic, retain) Timer *autoJoinTimer;
 @property (nonatomic, retain) Timer *reconnectTimer;
 @property (nonatomic, retain) Timer *commandQueueTimer;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, assign) ConnectMode connectType;
 @property (nonatomic, assign) DisconnectType disconnectType;
 @property (nonatomic, retain) ListDialog *channelListDialog;

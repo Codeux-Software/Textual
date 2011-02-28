@@ -38,7 +38,7 @@
 		timer = [Timer new];
 		timer.delegate = self;
 	}
-
+	
 	return self;
 }
 
@@ -245,15 +245,17 @@
 
 - (void)tcpClientDidReceiveData:(TCPClient *)sender
 {
-	while (1) {
-		NSData *data = [conn readLine];
-		
-		if (NSObjectIsEmpty(data)) break;
-		
-		if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
-			[delegate ircConnectionDidReceive:data];
+	dispatch_sync([delegate dispatchQueue], ^{
+		while (1) {
+			NSData *data = [conn readLine];
+			
+			if (NSObjectIsEmpty(data)) break;
+			
+			if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
+				[delegate ircConnectionDidReceive:data];
+			}
 		}
-	}
+	});
 }
 
 - (void)tcpClientDidSendData:(TCPClient *)sender
