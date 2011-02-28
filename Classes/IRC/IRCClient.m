@@ -67,6 +67,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize conn;
 @synthesize connectType;
 @synthesize disconnectType;
+@synthesize dispatchQueue;
 @synthesize encoding;
 @synthesize hasIRCopAccess;
 @synthesize identifyCTCP;
@@ -155,6 +156,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		trialPeriodTimer.reqeat = NO;
 		trialPeriodTimer.selector = @selector(onTrialPeriodTimer:);	
 #endif
+		
+		dispatchQueue = dispatch_queue_create([[NSString stringWithUUID] UTF8String], NULL);
 	}
 	
 	return self;
@@ -192,6 +195,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[sentNick drain];
 	[serverHostname drain];
 	[trackedUsers drain];
+	
+	dispatch_release(dispatchQueue);
+	dispatchQueue = NULL;
 	
 #ifdef IS_TRIAL_BINARY
 	[trialPeriodTimer stop];
