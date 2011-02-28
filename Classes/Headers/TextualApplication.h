@@ -10,8 +10,14 @@
 	#include <SystemConfiguration/SystemConfiguration.h>
 
 	/* Availability Macros */
-	#if defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-		#define _RUNNING_MAC_OS_LION
+	#define _LOAD_MAC_OS_LION_LIBRARIES 0
+
+	#if _LOAD_MAC_OS_LION_LIBRARIES
+		#if defined(MAC_OS_X_VERSION_10_7) 
+			#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+				#define _RUNNING_MAC_OS_LION
+			#endif	
+		#endif
 	#endif
 
 	#ifndef NSAppKitVersionNumber10_6
