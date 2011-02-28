@@ -147,14 +147,20 @@
 			
 			[self setObjectValue:oldString recordUndo:YES];
 			
+			NSInteger finalLength = [(NSMutableAttributedString *)newString length];
+			
 			selectedRange.length    = 0;
-			selectedRange.location += [(NSMutableAttributedString *)newString length];
+			selectedRange.location += finalLength;
 			
 			if (frontChop.location != NSNotFound) {
 				selectedRange.location -= frontChop.location;
 			}
 			
-			[currentEditor setSelectedRange:selectedRange];
+			if (selectedRange.location > finalLength) {
+				[self focus];
+			} else {
+				[currentEditor setSelectedRange:selectedRange];
+			}
 		}
 	}
 }
