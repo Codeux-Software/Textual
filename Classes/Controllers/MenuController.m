@@ -1552,7 +1552,13 @@
 {
 #ifdef _RUNNING_MAC_OS_LION
 	if ([Preferences applicationRanOnLion]) {
-		[window toggleFullScreen:sender];
+		if (isInFullScreenMode) {
+			[window toggleFullScreen:sender];
+			[master loadWindowState];
+		} else {
+			[master saveWindowState];
+			[window toggleFullScreen:sender];
+		}
 	} else {
 #endif
 		
@@ -1576,11 +1582,11 @@
 			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		}
 		
-		isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
-		
 #ifdef _RUNNING_MAC_OS_LION
 	}
 #endif
+	
+	isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
 }
 
 - (void)onWantChannelListSorted:(id)sender
