@@ -628,24 +628,20 @@
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	if (menu.isInFullScreenMode) {
-		[self loadWindowState];
+		[menu wantsFullScreenModeToggled:nil];
 	}
 	
-	if (([Preferences applicationRanOnLion] && menu.isInFullScreenMode == NO) ||
-		[Preferences applicationRanOnLion] == NO) {
-		
-		NSRect rect = window.frame;
-		
-		[dic setInteger:rect.origin.x forKey:@"x"];
-		[dic setInteger:rect.origin.y forKey:@"y"];
-		[dic setInteger:rect.size.width forKey:@"w"];
-		[dic setInteger:rect.size.height forKey:@"h"];
-		
-		[dic setInteger:infoSplitter.position forKey:@"info"];
-		[dic setInteger:treeSplitter.position forKey:@"tree"];
-		
-		[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
-	}
+	NSRect rect = window.frame;
+	
+	[dic setInteger:rect.origin.x forKey:@"x"];
+	[dic setInteger:rect.origin.y forKey:@"y"];
+	[dic setInteger:rect.size.width forKey:@"w"];
+	[dic setInteger:rect.size.height forKey:@"h"];
+	
+	[dic setInteger:infoSplitter.position forKey:@"info"];
+	[dic setInteger:treeSplitter.position forKey:@"tree"];
+	
+	[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	
 	[Preferences saveWindowState:dic name:@"MainWindow"];
 	[Preferences sync];
@@ -905,6 +901,18 @@
 			[nicks safeAddObject:m.nick];
 			[lowerNicks safeAddObject:[m.nick lowercaseString]];
 		}
+		
+		[nicks safeAddObject:@"NickServ"];
+		[nicks safeAddObject:@"RootServ"];
+		[nicks safeAddObject:@"OperServ"];
+		[nicks safeAddObject:@"HostServ"];
+		[nicks safeAddObject:@"ChanServ"];
+		
+		[lowerNicks safeAddObject:@"nickserv"];
+		[lowerNicks safeAddObject:@"rootserv"];
+		[lowerNicks safeAddObject:@"operserv"];
+		[lowerNicks safeAddObject:@"hostserv"];
+		[lowerNicks safeAddObject:@"chanserv"];
 		
 		choices = nicks;
 		lowerChoices = lowerNicks;
