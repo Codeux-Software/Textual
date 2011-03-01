@@ -107,60 +107,54 @@
 {
 	NSText *currentEditor = [self currentEditor];
 	
-	NSData   *rtfData = [_NSPasteboard() dataForType:NSRTFPboardType];
 	NSString *rawData = [_NSPasteboard() stringContent];
+	NSData   *rtfData = [_NSPasteboard() dataForType:NSRTFPboardType];
 	
 	if (PointerIsEmpty(rtfData) == NO || PointerIsEmpty(rawData) == NO) {
-		id newString = [NSMutableAttributedString alloc];
-		id oldString = [[self attributedStringValue] mutableCopy];
+		NSRange frontChop;
+		
+		NSMutableAttributedString *newString = [NSMutableAttributedString alloc];
+		NSMutableAttributedString *oldString = [[self attributedStringValue] mutableCopy];
 		
 		NSString *currentValue = [self stringValue];
-		
-		[oldString autodrain];
-		
-		if (PointerIsEmpty(rtfData) == NO) {
-			if ([currentValue hasPrefix:@"/"] == NO) {
-				newString = [[newString initWithRTF:rtfData documentAttributes:nil] autodrain];
-			} else {
-				newString = [[newString initWithString:rawData] autodrain];
-			}
+	
+		if ([currentValue hasPrefix:@"/"] == NO && PointerIsEmpty(rtfData) == NO) {
+			newString = [newString initWithRTF:rtfData documentAttributes:nil];
 		} else {
-			newString = [[newString initWithString:rawData] autodrain];
+			newString = [newString initWithString:rawData];
 		}
 		
-		if (PointerIsEmpty(newString) == NO) {
-			NSRange frontChop;
-			
-			newString = [newString sanitizeNSLinkedAttributedString:[self textColor]];
-			newString = [newString sanitizeIRCCompatibleAttributedString:[self textColor]
-																oldColor:_oldTextColor
-														 backgroundColor:[self backgroundColor]
-															 defaultFont:[self font]];
-			
-			if (selectedRange.length >= 1) {
-				[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
-			} else {
-				[oldString insertAttributedString:newString atIndex:selectedRange.location];
-			}
-			
-			oldString = [oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet] frontChop:&frontChop];
-			
-			[self setObjectValue:oldString recordUndo:YES];
-			
-			NSInteger finalLength = [(NSMutableAttributedString *)newString length];
-			
-			selectedRange.length    = 0;
-			selectedRange.location += finalLength;
-			
-			if (frontChop.location != NSNotFound) {
-				selectedRange.location -= frontChop.location;
-			}
-			
-			if (selectedRange.location > finalLength) {
-				[self focus];
-			} else {
-				[currentEditor setSelectedRange:selectedRange];
-			}
+		[newString autodrain];
+		[oldString autodrain];
+		
+		newString = (id)[newString sanitizeNSLinkedAttributedString:[self textColor]];
+		newString = (id)[newString sanitizeIRCCompatibleAttributedString:[self textColor]
+															oldColor:_oldTextColor
+													 backgroundColor:[self backgroundColor]
+														 defaultFont:[self font]];
+	
+		if (selectedRange.length >= 1) {
+			[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
+		} else {
+			[oldString insertAttributedString:newString atIndex:selectedRange.location];
+		}
+		
+		oldString = (id)[oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet] frontChop:&frontChop];
+		
+		[self setObjectValue:oldString recordUndo:YES];
+		
+		selectedRange.length    = 0;
+		selectedRange.location += [newString length];
+		
+		if (frontChop.length >= 1) {
+			selectedRange.location -= frontChop.location;
+		}
+		
+		if (selectedRange.location <= [oldString length]) {
+			NSLog(@"ME GUSTA");
+			[currentEditor setSelectedRange:selectedRange];
+		} else {
+			[self focus];
 		}
 	}
 }
