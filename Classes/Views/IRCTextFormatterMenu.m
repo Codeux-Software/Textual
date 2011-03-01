@@ -6,6 +6,7 @@
 @synthesize textField;
 @synthesize formatterMenu;
 @synthesize foregroundColorMenu;
+@synthesize backgroundColorMenu;
 @synthesize sheetOverrideEnabled;
 
 #define FormattingMenuForegroundColorEnabledTag		95005
