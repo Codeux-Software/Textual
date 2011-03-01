@@ -11,12 +11,12 @@
 	if (field != self) {
 		[self.window makeFirstResponder:nil];
 		[self.window makeFirstResponder:self];
-		
-		NSRange newRange = NSMakeRange([self stringLength], 0);
-		
-		[edito setSelectedRange:newRange];
-		[edito scrollRangeToVisible:newRange];
 	}
+	
+	NSRange newRange = NSMakeRange([self stringLength], 0);
+	
+	[edito setSelectedRange:newRange];
+	[edito scrollRangeToVisible:newRange];
 }
 
 - (NSInteger)stringLength
