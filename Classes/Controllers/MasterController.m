@@ -1258,7 +1258,8 @@ typedef enum {
 	} else {
 		NSRect fieldRect = [formattingMenu.textField frame];
 		
-		fieldRect.origin.y -= 160;
+		fieldRect.origin.y -= 200;
+		fieldRect.origin.x += 100;
 		
 		[formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
 														  atLocation:fieldRect.origin
@@ -1274,7 +1275,8 @@ typedef enum {
 		} else {
 			NSRect fieldRect = [formattingMenu.textField frame];
 			
-			fieldRect.origin.y -= 160;
+			fieldRect.origin.y -= 200;
+			fieldRect.origin.x += 100;
 			
 			[formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
 															  atLocation:fieldRect.origin
