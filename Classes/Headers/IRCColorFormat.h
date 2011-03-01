@@ -3,12 +3,12 @@
 
 #import <Foundation/NSAttributedString.h>
 
-extern NSString *IRCTextFormatterBoldAttributeName;
-extern NSString *IRCTextFormatterItalicAttributeName;
-extern NSString *IRCTextFormatterUnderlineAttributeName;
-extern NSString *IRCTextFormatterForegroundColorAttributeName;
-extern NSString *IRCTextFormatterBackgroundColorAttributeName;
-extern NSString *IRCTextFormatterDefaultFontColorAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterBoldAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterItalicAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterUnderlineAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterForegroundColorAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterBackgroundColorAttributeName;
+TEXTUAL_EXTERN NSString *IRCTextFormatterDefaultFontColorAttributeName;
 
 typedef enum {
 	IRCTextFormatterBoldEffect,

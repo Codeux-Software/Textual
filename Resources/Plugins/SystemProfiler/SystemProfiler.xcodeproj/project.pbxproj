@@ -7,114 +7,98 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C3843A111D7BFCB00CECE16 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */; };
-		4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */; };
-		4C72E6F411BC466800B97E69 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */; };
-		4C832E2211DD098F007D32E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */; };
-		4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */; };
-		4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDDBE211CB4D47002A6868 /* Cocoa.framework */; };
-		4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC17BA011F1870400A3E4F7 /* OpenGL.framework */; };
+		4C57A681131D378900252759 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */; };
+		4C57A682131D378900252759 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A680131D378900252759 /* TPISystemProfiler.m */; };
+		4C57A695131D37F000252759 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C57A694131D37F000252759 /* OpenGL.framework */; };
+		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
+		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		32DBCF630370AF2F00C91783 /* SystemProfiler_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfiler_Prefix.pch; sourceTree = "<group>"; };
-		4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
-		4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_SP_SysInfo.m; sourceTree = "<group>"; };
-		4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
-		4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
-		4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
-		4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4CADD91A124BB69400B82983 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		4CBDDBE211CB4D47002A6868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		4CC17BA011F1870400A3E4F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C57A67C131D378900252759 /* SystemProfiler.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfiler.pch; sourceTree = "<group>"; };
+		4C57A67D131D378900252759 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
+		4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_SP_SysInfo.m; sourceTree = "<group>"; };
+		4C57A67F131D378900252759 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
+		4C57A680131D378900252759 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
+		4C57A694131D37F000252759 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		8D576316048677EA00EA77CD /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+		8D576313048677EA00EA77CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CBDDBDF11CB4D3C002A6868 /* CoreFoundation.framework in Frameworks */,
-				4CBDDBE311CB4D47002A6868 /* Cocoa.framework in Frameworks */,
-				4C832E2211DD098F007D32E5 /* SystemConfiguration.framework in Frameworks */,
-				4CC17BA111F1870400A3E4F7 /* OpenGL.framework in Frameworks */,
+				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
+				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
+				4C57A695131D37F000252759 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		089C166AFE841209C02AAC07 /* BotnetValidation */ = {
+		089C166AFE841209C02AAC07 /* BlowfishCommandLine */ = {
 			isa = PBXGroup;
 			children = (
-				4CBDDBDC11CB4D28002A6868 /* Frameworks */,
-				08FB77AFFE84173DC02AAC07 /* Classes */,
-				32C88E010371C26100C91783 /* Other Sources */,
+				08FB77AFFE84173DC02AAC07 /* Source */,
 				089C167CFE841241C02AAC07 /* Resources */,
-				19C28FB8FE9D52D311CA2CBB /* Products */,
+				089C1671FE841209C02AAC07 /* Frameworks */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
 			);
-			name = BotnetValidation;
+			name = BlowfishCommandLine;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				4C57A694131D37F000252759 /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CADD91A124BB69400B82983 /* Info.plist */,
-				4C38442911D7C1EA00CECE16 /* MacintoshModels.plist */,
+				8D576317048677EA00EA77CD /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C38439F11D7BFCB00CECE16 /* TPI_SP_SysInfo.h */,
-				4C3843A011D7BFCB00CECE16 /* TPI_SP_SysInfo.m */,
-				4C72E6F211BC466800B97E69 /* TPISystemProfiler.h */,
-				4C72E6F311BC466800B97E69 /* TPISystemProfiler.m */,
+				4C57A67C131D378900252759 /* SystemProfiler.pch */,
+				4C57A67D131D378900252759 /* TPI_SP_SysInfo.h */,
+				4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */,
+				4C57A67F131D378900252759 /* TPISystemProfiler.h */,
+				4C57A680131D378900252759 /* TPISystemProfiler.m */,
 			);
-			name = Classes;
+			name = Source;
 			sourceTree = "<group>";
 		};
-		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */,
+				8D576316048677EA00EA77CD /* SystemProfiler.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		32C88E010371C26100C91783 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32DBCF630370AF2F00C91783 /* SystemProfiler_Prefix.pch */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		4CBDDBDC11CB4D28002A6868 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4CBDDBE211CB4D47002A6868 /* Cocoa.framework */,
-				4CBDDBDE11CB4D3C002A6868 /* CoreFoundation.framework */,
-				4CC17BA011F1870400A3E4F7 /* OpenGL.framework */,
-				4C832E2111DD098F007D32E5 /* SystemConfiguration.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5B49AC048680CD000E48DA /* SystemProfiler */ = {
+		8D57630D048677EA00EA77CD /* SystemProfiler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */;
 			buildPhases = (
-				8D5B49AF048680CD000E48DA /* Resources */,
-				8D5B49B1048680CD000E48DA /* Sources */,
-				8D5B49B3048680CD000E48DA /* Frameworks */,
+				8D576311048677EA00EA77CD /* Sources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,8 +106,8 @@
 			);
 			name = SystemProfiler;
 			productInstallPath = "$(HOME)/Library/Bundles";
-			productName = BotnetValidation;
-			productReference = 8D5B49B6048680CD000E48DA /* SystemProfiler.bundle */;
+			productName = BlowfishCommandLine;
+			productReference = 8D576316048677EA00EA77CD /* SystemProfiler.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +115,7 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "SystemProfiler" */;
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "SystemProfiler" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -141,68 +125,59 @@
 				French,
 				German,
 			);
-			mainGroup = 089C166AFE841209C02AAC07 /* BotnetValidation */;
+			mainGroup = 089C166AFE841209C02AAC07 /* BlowfishCommandLine */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* SystemProfiler */,
+				8D57630D048677EA00EA77CD /* SystemProfiler */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		8D5B49AF048680CD000E48DA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C38442A11D7C1EA00CECE16 /* MacintoshModels.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		8D5B49B1048680CD000E48DA /* Sources */ = {
+		8D576311048677EA00EA77CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C72E6F411BC466800B97E69 /* TPISystemProfiler.m in Sources */,
-				4C3843A111D7BFCB00CECE16 /* TPI_SP_SysInfo.m in Sources */,
+				4C57A681131D378900252759 /* TPI_SP_SysInfo.m in Sources */,
+				4C57A682131D378900252759 /* TPISystemProfiler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB913B08733D840010E9CD /* Debug */ = {
+		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
+				GCC_PREFIX_HEADER = SystemProfiler.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
-				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
-		1DEB913C08733D840010E9CD /* Release */ = {
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SystemProfiler.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = SystemProfiler;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -211,82 +186,21 @@
 					x86_64,
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = SystemProfiler;
-				SDKROOT = macosx10.6;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		1DEB913F08733D840010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
-		1DEB914008733D840010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-			};
-			name = Release;
-		};
-		4CAA3B3A12E0EC6700FB83EB /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-			};
-			name = "App Store Release";
-		};
-		4CAA3B3B12E0EC6700FB83EB /* App Store Release */ = {
+		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -295,64 +209,85 @@
 					x86_64,
 				);
 				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
-				GCC_ENABLE_OBJC_GC = supported;
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/";
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = "";
+			};
+			name = Release;
+		};
+		4CAA3B2212E0EC3800FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/";
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = "";
+			};
+			name = "App Store Release";
+		};
+		4CAA3B2312E0EC3800FB83EB /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
+				GCC_PREFIX_HEADER = SystemProfiler.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = SystemProfiler;
-				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
 		};
-		4CAA3B3C12E0EC6700FB83EB /* Release (Trial) */ = {
+		4CAA3B2412E0EC3800FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					x86_64,
 					i386,
+					x86_64,
 				);
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/";
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 			};
 			name = "Release (Trial)";
 		};
-		4CAA3B3D12E0EC6700FB83EB /* Release (Trial) */ = {
+		4CAA3B2512E0EC3800FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../Frameworks//**";
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SystemProfiler_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Classes/Headers/";
+				GCC_PREFIX_HEADER = SystemProfiler.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = SystemProfiler;
-				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
@@ -360,24 +295,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB913B08733D840010E9CD /* Debug */,
-				1DEB913C08733D840010E9CD /* Release */,
-				4CAA3B3B12E0EC6700FB83EB /* App Store Release */,
-				4CAA3B3D12E0EC6700FB83EB /* Release (Trial) */,
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+				4CAA3B2312E0EC3800FB83EB /* App Store Release */,
+				4CAA3B2512E0EC3800FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "SystemProfiler" */ = {
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "SystemProfiler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB913F08733D840010E9CD /* Debug */,
-				1DEB914008733D840010E9CD /* Release */,
-				4CAA3B3A12E0EC6700FB83EB /* App Store Release */,
-				4CAA3B3C12E0EC6700FB83EB /* Release (Trial) */,
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+				4CAA3B2212E0EC3800FB83EB /* App Store Release */,
+				4CAA3B2412E0EC3800FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

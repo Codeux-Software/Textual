@@ -3,17 +3,17 @@
 
 /* Highest level objects implemented by Textual. */
 
-extern BOOL NSObjectIsEmpty(id obj);
-extern BOOL NSObjectIsNotEmpty(id obj);
+TEXTUAL_EXTERN BOOL NSObjectIsEmpty(id obj);
+TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
-extern void DevNullDestroyObject(BOOL condition, ...);
+TEXTUAL_EXTERN void DevNullDestroyObject(BOOL condition, ...);
 
-extern NSString *TXTLS(NSString *key); // Textual Language String
-extern NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
+TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
+TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
 
-extern NSInteger TXRandomThousandNumber(void);
+TEXTUAL_EXTERN NSInteger TXRandomThousandNumber(void);
 
-extern NSString *TXFormattedTimestamp(NSString *format);
-extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
+TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSString *format);
+TEXTUAL_EXTERN NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
 
-extern NSString *TXReadableTime(NSInteger dateInterval);
+TEXTUAL_EXTERN NSString *TXReadableTime(NSInteger dateInterval);

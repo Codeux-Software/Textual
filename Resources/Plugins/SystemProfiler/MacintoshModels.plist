@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Meta Information</key>
+	<dict/>
+	<key>List Source</key>
+	<string>http://www.everymac.com/systems/by_capability/mac-specs-by-machine-model-machine-id.html</string>
 	<key>MacBookAir3,1</key>
 	<string>MacBook Air (11-inch Late 2010)</string>
 	<key>MacBookAir3,2</key>
@@ -18,6 +22,12 @@
 	<string>MacBook Pro (15-inch Mid 2010)</string>
 	<key>MacBookPro7,1</key>
 	<string>MacBook Pro (13-inch Mid 2010)</string>
+	<key>MacBookPro8,1</key>
+	<string>MacBook Pro (13-inch Early 2011)</string>
+	<key>MacBookPro8,2</key>
+	<string>MacBook Pro (15-inch Early 2011)</string>
+	<key>MacBookPro8,3</key>
+	<string>MacBook Pro (17-inch Early 2011)</string>
 	<key>MacBookPro5,2</key>
 	<string>MacBook Pro (Early 2009)</string>
 	<key>MacBookPro5,3</key>
@@ -80,6 +90,10 @@
 	<string>Mac mini (Original)</string>
 	<key>iMac11,1</key>
 	<string>iMac (Mid 2010)</string>
+	<key>iMac11,2</key>
+	<string>iMac (Mid 2010)</string>
+	<key>iMac11,3</key>
+	<string>iMac (Mid 2010)</string>
 	<key>iMac10,1</key>
 	<string>iMac (Late 2009)</string>
 	<key>iMac9,1</key>
@@ -89,7 +103,7 @@
 	<key>iMac7,1</key>
 	<string>iMac (Mid 2007)</string>
 	<key>iMac6,1</key>
-	<string>iMac (24-inch late 2006)</string>
+	<string>iMac (Late 2006)</string>
 	<key>iMac5,1</key>
 	<string>iMac (Late 2006)</string>
 	<key>iMac5,2</key>

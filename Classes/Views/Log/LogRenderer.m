@@ -69,7 +69,7 @@ NSString *logEscape(NSString *s)
 	return [[s gtm_stringByEscapingForHTML] stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
-extern NSInteger mapColorValue(NSColor *color)
+NSInteger mapColorValue(NSColor *color)
 {
 	for (NSInteger i = 0; i <= 15; i++) {
 		NSColor *mapped = mapColorCode(i);
@@ -82,7 +82,7 @@ extern NSInteger mapColorValue(NSColor *color)
 	return -1;
 }
 
-extern NSColor *mapColorCode(NSInteger colorChar) 
+NSColor *mapColorCode(NSInteger colorChar) 
 {
 	switch (colorChar) {
 		case 0:  return [NSColor fromCSS:@"#ffffff"]; 

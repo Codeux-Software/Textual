@@ -2813,10 +2813,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (NSObjectIsEmpty(format)) {
 		format = @"<%@%n>";
 	}
+    
+    if ([format contains:@"%n"]) {
+        format = [format stringByReplacingOccurrencesOfString:@"%n" withString:nick];
+    }
 	
-	NSString *s = format;
-	
-	if ([s contains:@"%@"]) {
+	if ([format contains:@"%@"]) {
 		if (channel && channel.isClient == NO && channel.isChannel) {
 			IRCUser *m = [channel findMember:nick];
 			
@@ -2824,67 +2826,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *mark = [NSString stringWithChar:m.mark];
 				
 				if ([mark isEqualToString:@" "] || NSObjectIsEmpty(mark)) {
-					s = [s stringByReplacingOccurrencesOfString:@"%@" withString:@""];
+					format = [format stringByReplacingOccurrencesOfString:@"%@" withString:@""];
 				} else {
-					s = [s stringByReplacingOccurrencesOfString:@"%@" withString:mark];
+					format = [format stringByReplacingOccurrencesOfString:@"%@" withString:mark];
 				}
 			} else {
-				s = [s stringByReplacingOccurrencesOfString:@"%@" withString:@""];	
+				format = [format stringByReplacingOccurrencesOfString:@"%@" withString:@""];	
 			}
 		} else {
-			s = [s stringByReplacingOccurrencesOfString:@"%@" withString:@""];	
+			format = [format stringByReplacingOccurrencesOfString:@"%@" withString:@""];	
 		}
 	}
-	
-	while (1) {
-		NSRange r = [TXRegularExpression string:s rangeOfRegex:@"%(-?\\d+)?n"];
 		
-		if (r.location == NSNotFound) break;
-		
-		NSRange numRange = r;
-		
-		if (numRange.location != NSNotFound && numRange.length > 0) {
-			NSString *numStr = [s safeSubstringWithRange:numRange];
-			
-			NSInteger n = [numStr integerValue];
-			
-			NSString *formattedNick = nick;
-			
-			if (n >= 0) {
-				NSInteger pad = (n - nick.length);
-				
-				if (pad > 0) {
-					NSMutableString *ms = [NSMutableString stringWithString:nick];
-					
-					for (NSInteger i = 0; i < pad; ++i) {
-						[ms appendString:@" "];
-					}
-					
-					formattedNick = ms;
-				}
-			} else {
-				NSInteger pad = (-n - nick.length);
-				
-				if (pad > 0) {
-					NSMutableString *ms = [NSMutableString string];
-					
-					for (NSInteger i = 0; i < pad; ++i) {
-						[ms appendString:@" "];
-					}
-					
-					[ms appendString:nick];
-					
-					formattedNick = ms;
-				}
-			}
-			
-			s = [s stringByReplacingCharactersInRange:r withString:formattedNick];
-		} else {
-			s = [s stringByReplacingCharactersInRange:r withString:nick];
-		}
-	}
-	
-	return s;
+	return format;
 }
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString *)text

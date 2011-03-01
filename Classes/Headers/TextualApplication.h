@@ -48,14 +48,16 @@
 	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 	#define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 
+    #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
+
 	/* Item types */
 	typedef unsigned long long TXFSLongInt; // filesizes
 
-	/* Textual Headers */
+    /* Textual Headers */
+    #import "GlobalModels.h"
 	#import "NSObjectHelper.h"
 	#import "RegexKitLite.h"
 	#import "TXRegularExpression.h"
-	#import "GlobalModels.h"
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"
 	#import "AsyncSocketExtensions.h"

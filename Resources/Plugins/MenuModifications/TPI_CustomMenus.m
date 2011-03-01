@@ -15,7 +15,7 @@
 	
 	[newMenuItem setTarget:world.menuController];
 	[newMenuItem setAction:@selector(postLinkToTextualHomepage:)];
-	[newMenuItem autorelease];
+	[newMenuItem autodrain];
 	
 	[newMenu addItem:[NSMenuItem separatorItem]];
 	[newMenu addItem:newMenuItem];

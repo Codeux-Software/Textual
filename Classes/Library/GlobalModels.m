@@ -3,7 +3,7 @@
 
 #define TIME_BUFFER_SIZE	256
 
-extern BOOL NSObjectIsEmpty(id obj)
+BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
 		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(length)] < 1);
@@ -16,30 +16,30 @@ extern BOOL NSObjectIsEmpty(id obj)
 	return PointerIsEmpty(obj);
 }
 
-extern BOOL NSObjectIsNotEmpty(id obj)
+BOOL NSObjectIsNotEmpty(id obj)
 {
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-extern void DevNullDestroyObject(BOOL condition, ...)
+void DevNullDestroyObject(BOOL condition, ...)
 {
 	return;
 }
 
-extern NSInteger TXRandomThousandNumber(void)
+NSInteger TXRandomThousandNumber(void)
 {
 	return ((1 + arc4random()) % (9999 + 1));
 }
 
-extern NSString *TXTLS(NSString *key)
+NSString *TXTLS(NSString *key)
 {
 	return [LanguagePreferences localizedStringWithKey:key];
 }
 
-extern NSString *TXTFLS(NSString *key, ...)
+NSString *TXTFLS(NSString *key, ...)
 {
 	NSString *formattedString = [NSString alloc];
-	NSString *languageString = [LanguagePreferences localizedStringWithKey:key];
+	NSString *languageString  = [LanguagePreferences localizedStringWithKey:key];
 	
 	va_list args;
 	va_start(args, key);
@@ -51,7 +51,7 @@ extern NSString *TXTFLS(NSString *key, ...)
 	return [formattedString autodrain];
 }
 
-extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
+NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
 	if (NSObjectIsEmpty(format)) format = @"[%H:%M:%S]";
 	if (NSObjectIsNotEmpty(override)) format = override;
@@ -59,12 +59,12 @@ extern NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *ov
 	return [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:format timeZone:nil]];
 }
 
-extern NSString *TXFormattedTimestamp(NSString *format) 
+NSString *TXFormattedTimestamp(NSString *format) 
 {
 	return TXFormattedTimestampWithOverride(format, nil);
 }
 
-extern NSString *TXReadableTime(NSInteger dateInterval) 
+NSString *TXReadableTime(NSInteger dateInterval) 
 {
 	NSArray *orderMatrix = [NSArray arrayWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
 	
