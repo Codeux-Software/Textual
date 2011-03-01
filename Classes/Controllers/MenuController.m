@@ -17,10 +17,6 @@
 
 @interface MenuController (Private)
 - (LogView *)currentWebView;
-
-- (NSArray *)selectedMembers:(NSMenuItem *)sender;
-- (BOOL)checkSelectedMembers:(NSMenuItem *)item;
-- (void)deselectMembers:(NSMenuItem *)sender;
 @end
 
 @implementation MenuController

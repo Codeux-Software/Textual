@@ -8,10 +8,10 @@ typedef enum {
 	ASCII_TO_ATTRIBUTED_STRING,
 } LogRendererType;
 
-extern NSString *logEscape(NSString *s);
+TEXTUAL_EXTERN NSString *logEscape(NSString *s);
 
-extern NSInteger mapColorValue(NSColor *color);
-extern NSColor *mapColorCode(NSInteger colorChar);
+TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
+TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);
 
 @interface LogRenderer : NSObject
 

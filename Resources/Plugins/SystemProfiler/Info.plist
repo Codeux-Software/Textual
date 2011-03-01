@@ -15,6 +15,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>NSPrincipalClass</key>
-	<string>SystemProfiler</string>
+	<string>TPISystemProfiler</string>
 </dict>
 </plist>

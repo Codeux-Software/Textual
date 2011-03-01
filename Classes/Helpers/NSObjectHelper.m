@@ -30,7 +30,7 @@
 - (oneway void)forcedrain
 {
 	if (self) {
-		while (self && [self retainCount] >= 0) {
+		while (self && [self retainCount] >= 1) {
 			[self drain];
 		}
 	}

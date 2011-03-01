@@ -1,22 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "TPI_SP_SysInfo.h"
-
-#include <mach/mach.h>
-#include <mach/mach_host.h>
-#include <mach/host_info.h>
-
-#include <sys/mount.h>
-#include <sys/types.h>
-#include <sys/sysctl.h>
-#include <sys/socket.h>
-
-#include <ifaddrs.h>
-#include <net/if.h>
-
-#import <OpenGL/OpenGL.h>
-
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
 
 @implementation TPI_SP_SysInfo

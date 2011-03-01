@@ -20,4 +20,5 @@
 {
 	return @"My Test Plugin";
 }
+
 @end

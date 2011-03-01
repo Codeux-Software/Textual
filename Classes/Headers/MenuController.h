@@ -57,6 +57,10 @@
 
 - (void)terminate;
 
+- (NSArray *)selectedMembers:(NSMenuItem *)sender;
+- (BOOL)checkSelectedMembers:(NSMenuItem *)item;
+- (void)deselectMembers:(NSMenuItem *)sender;
+
 - (void)onPreferences:(id)sender;
 - (void)onCloseWindow:(id)sender;
 

@@ -1793,7 +1793,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name Compiled -exec rm -rf '{}' +";
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2104,15 +2104,15 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
 			};
 			name = "App Store Release";
 		};
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2134,13 +2134,10 @@
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
-				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				KEEP_PRIVATE_EXTERNS = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2149,8 +2146,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2195,9 +2190,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2223,12 +2216,10 @@
 					"VALIDATE_APPSTORE_RECEIPT=0",
 					DEBUG,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GENERATE_PROFILING_CODE = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
+				KEEP_PRIVATE_EXTERNS = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2237,7 +2228,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2246,9 +2236,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2270,13 +2258,10 @@
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
-				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				KEEP_PRIVATE_EXTERNS = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2285,8 +2270,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2350,15 +2333,15 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
 			};
 			name = "Release (Trial)";
 		};
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2383,13 +2366,10 @@
 					"VALIDATE_APPSTORE_RECEIPT=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
-				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_OWNER = "$(USER)";
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				KEEP_PRIVATE_EXTERNS = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2398,8 +2378,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = all;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2428,6 +2406,8 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
 			};
 			name = Debug;
 		};
@@ -2453,6 +2433,8 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};
