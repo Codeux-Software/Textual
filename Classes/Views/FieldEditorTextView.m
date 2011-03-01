@@ -30,8 +30,10 @@
 		}
 	}
 	
-	if ([self.window hasAttachedSheet]) {
-		[[self.window selectedFieldEditor] paste:sender];
+	NSWindow *awin = self.window;
+	
+	if ([awin hasAttachedSheet]) {
+		[[awin selectedFieldEditor] paste:sender];
 	} else {
 		[super paste:sender];
 	}
