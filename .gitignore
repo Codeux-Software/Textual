@@ -9,3 +9,5 @@ build/
 Debug.xcconfig
 Resources/Plugins/Compiled
 CERTIFICATE
+.LSOverride
+xcuserdata
