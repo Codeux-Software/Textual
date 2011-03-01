@@ -377,6 +377,9 @@
 				if (m) {
 					[ary safeAddObject:m];
 				} 
+                
+                [pointedNick autodrain];
+                pointedNick = nil;
 			}
 		}
 	}
@@ -1177,6 +1180,7 @@
 	if (NSObjectIsNotEmpty(pointedUrl)) {
 		[_NSPasteboard() setStringContent:pointedUrl];
 		
+        [pointedUrl autodrain];
 		pointedUrl = nil;
 	}
 }
@@ -1186,6 +1190,7 @@
 	if (NSObjectIsNotEmpty(pointedAddress)) {
 		[_NSPasteboard() setStringContent:pointedAddress];
 		
+        [pointedAddress drain];
 		pointedAddress = nil;
 	}
 }
@@ -1198,6 +1203,9 @@
 	
 	if (NSObjectIsNotEmpty(pointedChannelName)) {
 		[u send:IRCCI_JOIN, pointedChannelName, nil];
+        
+        [pointedChannelName autodrain];
+        pointedChannelName = nil;
 	}
 }
 
