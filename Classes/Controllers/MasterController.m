@@ -1251,7 +1251,7 @@ typedef enum {
 	}
 }
 
-- (void)textFormattingColor:(NSEvent *)e
+- (void)textFormattingForegroundColor:(NSEvent *)e
 {
 	if ([formattingMenu foregroundColorSet]) {
 		[formattingMenu removeForegroundColorCharFromTextBox:nil];
@@ -1263,6 +1263,23 @@ typedef enum {
 		[formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
 														  atLocation:fieldRect.origin
 															  inView:[formattingMenu.textField currentEditor]];
+	}
+}
+
+- (void)textFormattingBackgroundColor:(NSEvent *)e
+{
+	if ([formattingMenu foregroundColorSet]) {
+		if ([formattingMenu backgroundColorSet]) {
+			[formattingMenu removeForegroundColorCharFromTextBox:nil];
+		} else {
+			NSRect fieldRect = [formattingMenu.textField frame];
+			
+			fieldRect.origin.y -= 160;
+			
+			[formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
+															  atLocation:fieldRect.origin
+																  inView:[formattingMenu.textField currentEditor]];
+		}
 	}
 }
 
@@ -1293,9 +1310,10 @@ typedef enum {
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
 	
 	[self handler:@selector(textFormattingBold:) char:'b' mods:NSControlKeyMask];
-	[self handler:@selector(textFormattingColor:) char:'k' mods:NSControlKeyMask];
 	[self handler:@selector(textFormattingItalic:) char:'i' mods:NSControlKeyMask];
 	[self handler:@selector(textFormattingUnderline:) char:'u' mods:NSControlKeyMask];
+	[self handler:@selector(textFormattingForegroundColor:) char:'k' mods:NSControlKeyMask];
+	[self handler:@selector(textFormattingBackgroundColor:) char:'k' mods:(NSControlKeyMask | NSAlternateKeyMask)];
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];

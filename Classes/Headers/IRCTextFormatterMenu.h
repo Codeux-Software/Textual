@@ -5,7 +5,9 @@
 
 @interface IRCTextFormatterMenu : NSObject {
 	IBOutlet NSMenuItem *formatterMenu;
-	IBOutlet NSMenu		*foregroundColorMenu;
+	
+	IBOutlet NSMenu	*foregroundColorMenu;
+	IBOutlet NSMenu *backgroundColorMenu;
 	
 	BOOL sheetOverrideEnabled;
 	
@@ -15,6 +17,7 @@
 @property (nonatomic, assign) TextField *textField;
 @property (nonatomic, retain) NSMenuItem *formatterMenu;
 @property (nonatomic, retain) NSMenu *foregroundColorMenu;
+@property (nonatomic, retain) NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(NSTextField *)field;

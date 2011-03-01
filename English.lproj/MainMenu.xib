@@ -3114,6 +3114,7 @@
                               </array>
                               <string key="NSFrameSize">{180, 328}</string>
                               <reference key="NSSuperview" ref="665902286"/>
+                              <reference key="NSNextKeyView" ref="88410196"/>
                               <reference key="NSDocView" ref="88410196"/>
                               <reference key="NSBGColor" ref="375145136"/>
                               <int key="NScvFlags">4</int>
@@ -3140,6 +3141,7 @@
                           </array>
                           <string key="NSFrameSize">{180, 328}</string>
                           <reference key="NSSuperview" ref="1006686548"/>
+                          <reference key="NSNextKeyView" ref="972199680"/>
                           <int key="NSsFlags">133648</int>
                           <reference key="NSVScroller" ref="40277675"/>
                           <reference key="NSHScroller" ref="43410202"/>
@@ -3225,6 +3227,7 @@
                                       </array>
                                       <string key="NSFrameSize">{180, 164}</string>
                                       <reference key="NSSuperview" ref="1046264392"/>
+                                      <reference key="NSNextKeyView" ref="605736511"/>
                                       <reference key="NSDocView" ref="605736511"/>
                                       <object class="NSColor" key="NSBGColor">
                                         <int key="NSColorSpace">1</int>
@@ -3254,6 +3257,7 @@
                                   </array>
                                   <string key="NSFrameSize">{180, 164}</string>
                                   <reference key="NSSuperview" ref="18418633"/>
+                                  <reference key="NSNextKeyView" ref="123026376"/>
                                   <int key="NSsFlags">133680</int>
                                   <reference key="NSVScroller" ref="896108245"/>
                                   <reference key="NSHScroller" ref="752818090"/>
@@ -4884,6 +4888,14 @@
             <reference key="destination" ref="118182728"/>
           </object>
           <int key="connectionID">2037</int>
+        </object>
+        <object class="IBConnectionRecord">
+          <object class="IBOutletConnection" key="connection">
+            <string key="label">backgroundColorMenu</string>
+            <reference key="source" ref="4596802"/>
+            <reference key="destination" ref="562520351"/>
+          </object>
+          <int key="connectionID">2038</int>
         </object>
       </array>
       <object class="IBMutableOrderedSet" key="objectRecords">
@@ -7381,7 +7393,7 @@
       <nil key="activeLocalization"/>
       <dictionary class="NSMutableDictionary" key="localizations"/>
       <nil key="sourceID"/>
-      <int key="maxID">2037</int>
+      <int key="maxID">2038</int>
     </object>
     <object class="IBClassDescriber" key="IBDocument.Classes">
       <array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7770,10 +7782,15 @@
             </object>
           </dictionary>
           <dictionary class="NSMutableDictionary" key="outlets">
+            <string key="backgroundColorMenu">NSMenu</string>
             <string key="foregroundColorMenu">NSMenu</string>
             <string key="formatterMenu">NSMenuItem</string>
           </dictionary>
           <dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+            <object class="IBToOneOutletInfo" key="backgroundColorMenu">
+              <string key="name">backgroundColorMenu</string>
+              <string key="candidateClassName">NSMenu</string>
+            </object>
             <object class="IBToOneOutletInfo" key="foregroundColorMenu">
               <string key="name">foregroundColorMenu</string>
               <string key="candidateClassName">NSMenu</string>
