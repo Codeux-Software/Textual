@@ -488,23 +488,30 @@
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender
 {
-	[text focus];
-	
 	id field = [window selectedTextField];
 	
 	if (PointerIsEmpty(field) == NO) {
+		if ([sender isKindOfClass:[NSString class]]) {
+			if ([sender isEqual:@"reset"]) {
+				[field focus];
+			}
+		}
+		
+		NSRange selectedRang = [field selectedRange];
+		
 		if ([field allowsEditingTextAttributes]) {
 			if ([field respondsToSelector:@selector(pasteFilteredAttributedString:)]) {
 				TextField *tfield = field;
 				
-				NSRange selectedRang = [tfield selectedRange];
-				
-				[tfield focus];
 				[tfield pasteFilteredAttributedString:selectedRang];
 				
 				return YES;
 			}
 		}
+	} else {
+		[text focus];
+		
+		return [self fieldEditorTextViewPaste:@"reset"];
 	}
 	
 	return NO;

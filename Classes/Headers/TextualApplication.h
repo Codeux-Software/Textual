@@ -10,7 +10,7 @@
 	#include <SystemConfiguration/SystemConfiguration.h>
 
 	/* Availability Macros */
-	#define _LOAD_MAC_OS_LION_LIBRARIES 1
+	#define _LOAD_MAC_OS_LION_LIBRARIES 0
 
 	#if _LOAD_MAC_OS_LION_LIBRARIES
 		#if defined(MAC_OS_X_VERSION_10_7) 
