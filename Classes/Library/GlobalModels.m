@@ -53,7 +53,7 @@ NSString *TXTFLS(NSString *key, ...)
 
 NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
 {
-	if (NSObjectIsEmpty(format)) format = @"[%H:%M:%S]";
+	if (NSObjectIsEmpty(format))      format = @"[%H:%M:%S]";
 	if (NSObjectIsNotEmpty(override)) format = override;
 	
 	return [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:format timeZone:nil]];
