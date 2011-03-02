@@ -3,6 +3,7 @@
 
 @interface NSNumber (NSNumberHelper)
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;
++ (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
 - (NSString *)integerWithLeadingZero;
 @end
