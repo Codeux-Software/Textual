@@ -327,9 +327,16 @@
 		CGLSetCurrentContext(cglContext);
 		
 		if (cglContext) {
-			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
+			NSString *model   = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
+            NSString *version = [NSString stringWithCString:(const char *)glGetString(GL_VERSION)  encoding:NSASCIIStringEncoding];
 			
-			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
+            if ([version contains:@" "]) {
+                version = [version safeSubstringToIndex:[version stringPosition:@" "]];
+            }
+            
+			model = [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
+            
+            return [NSString stringWithFormat:@"%@ (OpenGL v%@)", model, version];
 		}
 	}	
 	
@@ -341,8 +348,8 @@
 	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
-		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
-		TXFSLongInt freeSpace = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize]     longLongValue];
+		TXFSLongInt freeSpace  = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
 		
 		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 	} else {
