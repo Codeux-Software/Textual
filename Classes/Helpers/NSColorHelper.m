@@ -5,6 +5,46 @@
 
 static NSDictionary *nameMap = nil;
 
++ (NSColor *)tealColor
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.533333 blue:0.533333 alpha:1.0];
+}
+
++ (NSColor *)darkGreenColor
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.533333 blue:0.0 alpha:1.0];
+}
+
++ (NSColor *)navyBlueColor
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.533333 alpha:1.0];
+}
+
+- (NSString *)hexadecimalValue
+{
+	NSInteger redIntValue,   greenIntValue,   blueIntValue;
+	CGFloat   redFloatValue, greenFloatValue, blueFloatValue;
+	NSString *redHexValue,  *greenHexValue,  *blueHexValue;
+	
+	NSColor *convertedColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	
+	if (convertedColor) {
+		[convertedColor getRed:&redFloatValue green:&greenFloatValue blue:&blueFloatValue alpha:NULL];
+		
+		redIntValue   = (redFloatValue * 255.99999f);
+		greenIntValue = (greenFloatValue * 255.99999f);
+		blueIntValue  = (blueFloatValue * 255.99999f);
+		
+		redHexValue   = [NSString stringWithFormat:@"%02x", redIntValue];
+		greenHexValue = [NSString stringWithFormat:@"%02x", greenIntValue];
+		blueHexValue  = [NSString stringWithFormat:@"%02x", blueIntValue];
+		
+		return [NSString stringWithFormat:@"#%@%@%@", redHexValue, greenHexValue, blueHexValue];
+	}
+	
+	return nil;
+}
+
 + (NSColor *)fromCSS:(NSString *)s
 {
 	if ([s hasPrefix:@"#"]) {

@@ -18,6 +18,14 @@
 	return NO;
 }
 
++ (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2
+{
+	NSString *bleh1 = [NSString stringWithFormat:@"%.2f", num1];
+	NSString *bleh2 = [NSString stringWithFormat:@"%.2f", num2];
+	
+	return [bleh1 isEqualToString:bleh2];
+}
+
 - (NSString *)integerWithLeadingZero
 {
 	NSString *ints = [self stringValue];

@@ -151,7 +151,6 @@
 		}
 		
 		if (selectedRange.location <= [oldString length]) {
-			NSLog(@"ME GUSTA");
 			[currentEditor setSelectedRange:selectedRange];
 		} else {
 			[self focus];

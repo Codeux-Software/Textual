@@ -18,6 +18,9 @@
 
 #define EFFECT_MASK				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR)
 
+#define _DirtyCGFloatsMatch(s,r)				([NSNumber compareCGFloat:s toFloat:r])
+#define _NSCalibratedRBGColor(r, b, g, a)		([NSColor colorWithCalibratedRed:r green:g blue:b alpha:a])
+
 typedef uint32_t attr_t;
 
 static void setFlag(attr_t* attrBuf, attr_t flag, NSInteger start, NSInteger len)
@@ -71,11 +74,39 @@ NSString *logEscape(NSString *s)
 
 NSInteger mapColorValue(NSColor *color)
 {
-	for (NSInteger i = 0; i <= 15; i++) {
-		NSColor *mapped = mapColorCode(i);
+	if ([color numberOfComponents] == 4) {
+		CGFloat _redc   = [color redComponent];
+		CGFloat _bluec  = [color blueComponent];
+		CGFloat _greenc = [color greenComponent];
+		CGFloat _alphac = [color alphaComponent];
 		
-		if ([mapped isEqual:color]) {
-			return i;
+		for (NSInteger i = 0; i <= 15; i++) {
+			NSColor *mapped = mapColorCode(i);
+			
+			if ([mapped numberOfComponents] == 4) {
+				CGFloat redc   = [mapped redComponent];
+				CGFloat bluec  = [mapped blueComponent];
+				CGFloat greenc = [mapped greenComponent];
+				CGFloat alphac = [mapped alphaComponent];
+				
+				if (_DirtyCGFloatsMatch(_redc, redc)     && _DirtyCGFloatsMatch(_bluec, bluec) &&
+					_DirtyCGFloatsMatch(_greenc, greenc) && _DirtyCGFloatsMatch(_alphac, alphac)) {
+					
+					return i;
+				}
+			} else {
+				if ([color isEqual:mapped]) {
+					return i;
+				}
+			}
+		}
+	} else {
+		for (NSInteger i = 0; i <= 15; i++) {
+			NSColor *mapped = mapColorCode(i);
+			
+			if ([color isEqual:mapped]) {
+				return i;
+			}
 		}
 	}
 	
@@ -85,22 +116,22 @@ NSInteger mapColorValue(NSColor *color)
 NSColor *mapColorCode(NSInteger colorChar) 
 {
 	switch (colorChar) {
-		case 0:  return [NSColor fromCSS:@"#ffffff"]; 
-		case 1:  return [NSColor fromCSS:@"#000000"]; 
-		case 2:  return [NSColor fromCSS:@"#000088"]; 
-		case 3:  return [NSColor fromCSS:@"#008800"]; 
-		case 4:  return [NSColor fromCSS:@"#ff0000"]; 
-		case 5:  return [NSColor fromCSS:@"#880000"]; 
-		case 6:  return [NSColor fromCSS:@"#880088"]; 
-		case 7:  return [NSColor fromCSS:@"#ff8800"]; 
-		case 8:  return [NSColor fromCSS:@"#ffff00"]; 
-		case 9:  return [NSColor fromCSS:@"#00ff00"]; 
-		case 10: return [NSColor fromCSS:@"#008888"]; 
-		case 11: return [NSColor fromCSS:@"#00ffff"]; 
-		case 12: return [NSColor fromCSS:@"#0000ff"]; 
-		case 13: return [NSColor fromCSS:@"#ff00ff"]; 
-		case 14: return [NSColor fromCSS:@"#888888"]; 
-		case 15: return [NSColor fromCSS:@"#cccccc"]; 
+		case 0:  return _NSCalibratedRBGColor(1.00, 1.00, 1.00, 1.00);
+		case 1:  return _NSCalibratedRBGColor(0.00, 0.00, 0.00, 1.00);
+		case 2:  return _NSCalibratedRBGColor(0.04, 0.52, 0.00, 1.00); 
+		case 3:  return _NSCalibratedRBGColor(0.00, 0.08, 0.54, 1.00); 
+		case 4:  return _NSCalibratedRBGColor(1.00, 0.04, 0.05, 1.00);
+		case 5:  return _NSCalibratedRBGColor(0.55, 0.02, 0.02, 1.00);
+		case 6:  return _NSCalibratedRBGColor(0.55, 0.53, 0.00, 1.00);
+		case 7:  return _NSCalibratedRBGColor(1.00, 0.09, 0.54, 1.00);
+		case 8:  return _NSCalibratedRBGColor(1.00, 0.15, 1.00, 1.00);
+		case 9:  return _NSCalibratedRBGColor(0.00, 0.15, 1.00, 1.00);
+		case 10: return _NSCalibratedRBGColor(0.00, 0.53, 0.53, 1.00);
+		case 11: return _NSCalibratedRBGColor(0.00, 1.00, 1.00, 1.00);
+		case 12: return _NSCalibratedRBGColor(0.07, 0.98, 0.00, 1.00);
+		case 13: return _NSCalibratedRBGColor(1.00, 0.98, 0.00, 1.00);
+		case 14: return _NSCalibratedRBGColor(0.53, 0.53, 0.53, 1.00);
+		case 15: return _NSCalibratedRBGColor(0.80, 0.80, 0.80, 1.00);
 	}
 	
 	return nil;
