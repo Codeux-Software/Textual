@@ -19,7 +19,6 @@
 @interface MasterController (Private)
 - (void)setColumnLayout;
 - (void)registerKeyHandlers;
-- (void)registerSparkleFeed:(NSNotification *)note;
 @end
 
 @implementation MasterController
