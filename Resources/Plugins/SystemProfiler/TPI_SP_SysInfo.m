@@ -310,17 +310,24 @@
 {
 	CGDirectDisplayID displayID = CGMainDisplayID();
 	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
-	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, (CGLPixelFormatAttribute)displayMask, (CGLPixelFormatAttribute)0};
-	
+    
 	GLint numPixelFormats = 0;
 	CGLContextObj cglContext = 0;
 	CGLPixelFormatObj pixelFormat = NULL;
 	CGLContextObj curr_ctx = CGLGetCurrentContext();
 	
 	DevNullDestroyObject(YES, curr_ctx);
-	
-	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-	
+    
+    if ([Preferences applicationRanOnLion]) {
+        CGLPixelFormatAttribute attribs[] = {kCGLPFAOpenGLProfile, kCGLOGLPVersion_3_2_Core, 0};
+        
+        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
+    } else {
+        CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
+        
+        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
+    }
+    
 	if (pixelFormat) {
 		CGLCreateContext(pixelFormat, NULL, &cglContext);
 		CGLDestroyPixelFormat(pixelFormat);
