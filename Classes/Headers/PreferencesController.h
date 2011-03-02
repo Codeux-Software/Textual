@@ -5,7 +5,6 @@
 #define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
 #define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
 #define ThemeStyleDidChangeNotification			@"ThemeStyleDidChangeNotification"
-#define SparkleFeedURLChangeNotification		@"SparkleFeedURLChangeNotification"
 #define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
 #define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
 #define InputHistoryGlobalSchemeNotification	@"InputHistoryGlobalSchemeNotification"
