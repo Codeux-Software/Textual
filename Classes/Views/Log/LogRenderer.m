@@ -18,9 +18,6 @@
 
 #define EFFECT_MASK				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR)
 
-#define _DirtyCGFloatsMatch(s,r)				([NSNumber compareCGFloat:s toFloat:r])
-#define _NSCalibratedRBGColor(r, b, g, a)		([NSColor colorWithCalibratedRed:r green:g blue:b alpha:a])
-
 typedef uint32_t attr_t;
 
 static void setFlag(attr_t* attrBuf, attr_t flag, NSInteger start, NSInteger len)
@@ -115,23 +112,25 @@ NSInteger mapColorValue(NSColor *color)
 
 NSColor *mapColorCode(NSInteger colorChar) 
 {
+	/* See NSColorHelper.m under Helpers */
+	
 	switch (colorChar) {
-		case 0:  return _NSCalibratedRBGColor(1.00, 1.00, 1.00, 1.00);
-		case 1:  return _NSCalibratedRBGColor(0.00, 0.00, 0.00, 1.00);
-		case 2:  return _NSCalibratedRBGColor(0.04, 0.52, 0.00, 1.00); 
-		case 3:  return _NSCalibratedRBGColor(0.00, 0.08, 0.54, 1.00); 
-		case 4:  return _NSCalibratedRBGColor(1.00, 0.04, 0.05, 1.00);
-		case 5:  return _NSCalibratedRBGColor(0.55, 0.02, 0.02, 1.00);
-		case 6:  return _NSCalibratedRBGColor(0.55, 0.53, 0.00, 1.00);
-		case 7:  return _NSCalibratedRBGColor(1.00, 0.09, 0.54, 1.00);
-		case 8:  return _NSCalibratedRBGColor(1.00, 0.15, 1.00, 1.00);
-		case 9:  return _NSCalibratedRBGColor(0.00, 0.15, 1.00, 1.00);
-		case 10: return _NSCalibratedRBGColor(0.00, 0.53, 0.53, 1.00);
-		case 11: return _NSCalibratedRBGColor(0.00, 1.00, 1.00, 1.00);
-		case 12: return _NSCalibratedRBGColor(0.07, 0.98, 0.00, 1.00);
-		case 13: return _NSCalibratedRBGColor(1.00, 0.98, 0.00, 1.00);
-		case 14: return _NSCalibratedRBGColor(0.53, 0.53, 0.53, 1.00);
-		case 15: return _NSCalibratedRBGColor(0.80, 0.80, 0.80, 1.00);
+		case 0:  return [NSColor formatterWhiteColor];
+		case 1:  return [NSColor formatterBlackColor];
+		case 2:  return [NSColor formatterNavyBlueColor]; 
+		case 3:  return [NSColor formatterDarkGreenColor];
+		case 4:  return [NSColor formatterRedColor];
+		case 5:  return [NSColor formatterBrownColor];
+		case 6:  return [NSColor formatterPurpleColor];
+		case 7:  return [NSColor formatterOrangeColor];
+		case 8:  return [NSColor formatterYellowColor];
+		case 9:  return [NSColor formatterLimeGreenColor];
+		case 10: return [NSColor formatterTealColor];
+		case 11: return [NSColor formatterAquaCyanColor];
+		case 12: return [NSColor formatterLightBlueColor];
+		case 13: return [NSColor formatterFuchsiaPinkColor];
+		case 14: return [NSColor formatterNormalGrayColor];
+		case 15: return [NSColor formatterLightGrayColor];
 	}
 	
 	return nil;

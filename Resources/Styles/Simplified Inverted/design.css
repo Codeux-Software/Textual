@@ -8,13 +8,14 @@
 }	
 
 body {
-	color: #fff;
+	color: #000000;
 	height: 100%;
  	z-index: 100;
-	font-size: 10px;
+	font-size: 12px;
 	overflow: hidden;
-	overflow-y: visible;g
-	background-color: #000;
+	overflow-y: visible;
+	background-color: #FFFFFF;
+	font-family: "Lucida Grande";
 }
 
 body div#body_home {
@@ -38,53 +39,52 @@ body div#body_home p {
 /* Time */
 		
 body .time {
-	color: #666;
+	color: #999999;
 	text-indent: 0;
 	word-wrap: normal;
 	white-space: nowrap
 	display: inline-block;
-	font-size: 90%;
 }
 
 /* Links */
 
 a {
-  color: #0080FF;
-  border-color: #0080FF;
+  color: #FF7F00;
+  border-color: #FF7F00;
   text-decoration: none;
   border-bottom: dotted 1px;
 }
 
 a:hover {
-  color: #40A0FF;
-  border-color: #40A0FF;
+  color: #BF5F00;
+  border-color: #BF5F00;
 }
+
+/* Topic Bar */
 
 #topic_bar {
   top: 0;
   left: 0;
   right: 0;
-  color: #00ff00;
+  color: #FFFFFF;
   z-index: 400;
-  opacity: 0.85;
-  font: 9px Monaco;
+  opacity: 0.95;
+  font-size: 9px;
   position: fixed;
-  background: #003300;
-  background: -webkit-gradient(linear, left top, left bottom, from(#003300), to(#003300));
+  background: #302B22;
   padding: 2px 0.5em 3px;
-  border-bottom: 0px solid #000;
-  -webkit-box-shadow: 0 1px 5px #00ff00;
-  text-align: center;
+  border-bottom: 1px solid #7C7849;
+  -webkit-box-shadow: 0 1px 5px #888888;
 }
 
 #topic_bar a {
-  color: #0080FF;
-  border-color: #0080FF;
+  color: #FFFF11;
+  border-color: #FFFF11;
 }
 
 #topic_bar a:hover {
-  color: #0080FF;
-  border-color: #0080FF;
+  color: #FF7F00;
+  border-color: #FF7F00;
 }
 
 /* Images */
@@ -107,37 +107,28 @@ div[id=mark] {
   position: relative;
   z-index: 295;
   margin-top: -1px;
-  border-bottom: 1px dotted;
-  border-color: #aaa;
+  border-bottom: 1px dashed;
+  border-color: #BBBBBB;
   -webkit-transition: 0.2s linear;
 }
-
-/* Nickname Colors */
-
-body div[type=privmsg] .sender[type=myself],
-body div[type=action] .sender[type=myself] { 
-	color: #aaa; 
-}
-
-body .sender[type=normal] { color: #FFFFFF; }
 
 /* NOTICE/CTCP/WALLOPS */
 
 body div[type=notice],
 body div[type=ctcp],
 body div[type=wallops] {
-	color: #f00;
+	color: #00FFFF;
   	z-index: 191;
-	background: #400;
+	background: #BBFFFF;
   	position: relative;
  	padding: 2px 5px 2px 5px;
-	border-top: 1px solid #811;
-	border-bottom: 1px solid #811;
+	border-top: 1px solid #77EEEE;
+	border-bottom: 1px solid #77EEEE;
 }
 
 body div[type=notice] .sender {
-	color: #f00;
-	font-weight: normal;
+	color: #00FFFF;
+	font-weight: 700;
 }
 
 /* PRIVMSG */
@@ -150,21 +141,21 @@ body div[type=privmsg][highlight=true],
 body div[type=action][highlight=true] {
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
-	border-top: 1px solid #811;
-	border-bottom: 1px solid #811;
-  	background-color: #400 !important;
+	border-top: 1px solid #6773FF;
+	border-bottom: 1px solid #6773FF;
+  	background-color: #C9D3FF !important;
 }
 
 body div[type=privmsg] .message {
-	color: #aaa;
+	color: #555555;
 }
 
 body div[type=privmsg] p[type=myself] .message {
-	color: #fff;
+	color: #000000;
 }
 
 body div[type=privmsg] .sender {
-	font-weight: normal;
+	font-weight: 700;
 }
 
 /* ACTION */
@@ -174,11 +165,16 @@ body div[type=action]  {
 }
 
 body div[type=action] .message {
-	color: #aaa;
+	color: #555555;
 }
 
 body div[type=action] .sender {
-	font-weight: normal;
+	font-weight: 700;
+}
+
+body div[type=action] p[type=myself] .sender,
+body div[type=action] p[type=myself] .message {
+	color: #4AD309;
 }
 
 body div[type=action] .sender:before {
@@ -199,14 +195,13 @@ body div[type=error],
 body div[type=error_reply],
 body div[type=debug_send],
 body div[type=debug_receive] {
-	color: #777;
+	color: #888888;
   	z-index: 190;
-	background: #222;
+	background: #DDDDDD;
   	position: relative;
- 	font-weight: normal;
-	padding: 2px 5px 2px 5px;
-	border-top: 1px solid #444;
-	border-bottom: 1px solid #444;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid #BBBBBB;
+	border-bottom: 1px solid #BBBBBB;
 }
 
 /* GENERAL EVENT */
@@ -218,21 +213,15 @@ body div[type=quit],
 body div[type=kill],
 body div[type=nick],
 body div[type=mode],
-body div[type=website] {
-	padding: 3px 5px 3px 5px;
-    color: #666;
-	font-weight: normal;
-}
-
+body div[type=website],
 body div[type=topic] {
-	padding: 3px 5px 3px 5px;
-    color: #666;
+ 	padding: 3px 5px 3px 5px;
+    color: #999999;
 }
-
 
 body div[type=join] .message:before {
 	content: "→";
-  	color: #0c0;
+  	color: #FF33FF;
   	margin-right: 3px;
 }
 
@@ -240,19 +229,106 @@ body div[type=kick] .message:before,
 body div[type=part] .message:before,
 body div[type=quit] .message:before {
 	content: "←";
-  	color: #e00;
+  	color: #11FFFF;
   	margin-right: 3px;
 }
 
 body div[type=nick] .message:before {
 	content:"•";
-  	color: #0c0;
+  	color: #FF33FF;
   	margin-right: 3px;
 }
 
 /* Nickname Colors */
 
-body .inline_nickname { color: #21DB00; }
+body .inline_nickname {
+    font-weight: 700;
+}
+
+body div[type=privmsg] .sender[type=myself],
+body div[type=action] .sender[type=myself] { 
+	color: #472000; 
+}
+
+body .sender[type=normal][colornumber='0'], 
+body .inline_nickname[colornumber='0'] { 
+	color: #00FFFF; 
+}
+
+body .sender[type=normal][colornumber='1'], 
+body .inline_nickname[colornumber='1'] { 
+	color: #9C9500; 
+}
+
+body .sender[type=normal][colornumber='2'], 
+body .inline_nickname[colornumber='2'] { 
+	color: #FF45FF; 
+}
+
+body .sender[type=normal][colornumber='3'], 
+body .inline_nickname[colornumber='3'] { 
+	color: #3F7C0D; 
+}
+
+body .sender[type=normal][colornumber='4'], 
+body .inline_nickname[colornumber='4'] { 
+	color: #B2120F; 
+}
+
+body .sender[type=normal][colornumber='5'], 
+body .inline_nickname[colornumber='5'] { 
+	color: #1BDD4D; 
+}
+
+body .sender[type=normal][colornumber='6'],
+body .inline_nickname[colornumber='6'] { 
+	color: #151781; 
+}
+
+body .sender[type=normal][colornumber='7'], 
+body .inline_nickname[colornumber='7'] { 
+	color: #472000; 
+}
+
+body .sender[type=normal][colornumber='8'],
+body .inline_nickname[colornumber='8'] { 
+	color: #8A5E04; 
+}
+
+body .sender[type=normal][colornumber='9'], 
+body .inline_nickname[colornumber='9'] { 
+	color: #6838B4; 
+}
+
+body .sender[type=normal][colornumber='10'], 
+body .inline_nickname[colornumber='10'] { 
+	color: #5A153B; 
+}
+
+body .sender[type=normal][colornumber='11'], 
+body .inline_nickname[colornumber='11'] { 
+	color: #00595F; 
+}
+
+body .sender[type=normal][colornumber='12'], 
+body .inline_nickname[colornumber='12'] { 
+	color: #719818; 
+}
+
+body .sender[type=normal][colornumber='13'], 
+body .inline_nickname[colornumber='13'] { 
+	color: #0044A7; 
+}
+
+body .sender[type=normal][colornumber='14'], 
+body .inline_nickname[colornumber='14'] { 
+	color: #122852; 
+}
+
+body .sender[type=normal][colornumber='15'], 
+body .inline_nickname[colornumber='15'] { 
+	color: #00E989;
+}
 
 /* mIRC Color Codes */
 
