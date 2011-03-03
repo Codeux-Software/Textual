@@ -420,17 +420,34 @@
 		NSMenuItem *formatMenu = [formattingMenu formatterMenu];
 		
 		if (formatMenu) {
+			NSInteger fontIndex = -1;
 			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
 			
 			if (fmtrIndex == -1) {
+				for (NSMenuItem *mitem in [editorMenu itemArray]) {
+					NSMenu *sumenu = [mitem submenu];
+					
+					if (PointerIsEmpty(sumenu) == NO) {
+						for (NSMenuItem *nitem in [sumenu itemArray]) {
+							NSString *naction = NSStringFromSelector([nitem action]);
+							
+							if ([naction isEqualToString:@"orderFrontFontPanel:"]) {
+								fontIndex = [editorMenu indexOfItem:mitem];
+							}
+						}
+					}
+				}
+				
 				[editorMenu addItem:[NSMenuItem separatorItem]];
 				[editorMenu addItem:formatMenu];
+				
+				if (fontIndex >= 0) {
+					[editorMenu removeItemAtIndex:fontIndex];
+				}
 			}
 			
 			[fieldEditor setMenu:editorMenu];
 		}
-		
-		[fieldEditor setUsesFontPanel:NO];
 		
 		return fieldEditor;
 	}
