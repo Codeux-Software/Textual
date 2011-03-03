@@ -7,7 +7,7 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
@@ -32,12 +32,20 @@
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      loadSymbolsForSpecifiedModules = "NO"
       displayScaleIsEnabled = "NO"
       displayScale = "1.00"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release (Trial)">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4CA9456011E1AFBA00D36367"
+            BuildableName = "Textual.app"
+            BlueprintName = "Textual"
+            ReferencedContainer = "container:Textual.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -45,6 +53,7 @@
       displayScaleIsEnabled = "NO"
       displayScale = "1.00"
       shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release (Trial)">
       <BuildableProductRunnable>
@@ -57,6 +66,9 @@
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release (Trial)"
       revealArchiveInOrganizer = "NO">
