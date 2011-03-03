@@ -230,7 +230,9 @@ static NSArray					*encKeys						= nil;
 		}	
 		
 		if (scannedRange.length <= 0) {
-			break;
+			m_scanLocation++;
+			
+			continue;
 		}
 		
 		NSRange longestEnclosure = [self _longestBalancedEnclosureInRange:scannedRange];

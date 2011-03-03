@@ -98,6 +98,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize reconnectTimer;
 @synthesize retryEnabled;
 @synthesize retryTimer;
+@synthesize sendLagcheckToChannel;
 @synthesize sentNick;
 @synthesize serverHasNickServ;
 @synthesize serverHostname;
@@ -111,50 +112,50 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ((self = [super init])) {
 		tryingNickNumber = -1;
 		
-		channels = [NSMutableArray new];
+		channels     = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
 		trackedUsers = [NSMutableDictionary new];
 		
 		isupport = [IRCISupportInfo new];
 		
-		isAway = NO;
+		isAway		   = NO;
 		hasIRCopAccess = NO;
 		
-		reconnectTimer = [Timer new];
+		reconnectTimer			= [Timer new];
 		reconnectTimer.delegate = self;
-		reconnectTimer.reqeat = NO;
+		reconnectTimer.reqeat	= NO;
 		reconnectTimer.selector = @selector(onReconnectTimer:);
 		
-		retryTimer = [Timer new];
+		retryTimer			= [Timer new];
 		retryTimer.delegate = self;
-		retryTimer.reqeat = NO;
+		retryTimer.reqeat	= NO;
 		retryTimer.selector = @selector(onRetryTimer:);
 		
-		autoJoinTimer = [Timer new];
-		autoJoinTimer.delegate = self;
-		autoJoinTimer.reqeat = YES;
-		autoJoinTimer.selector = @selector(onAutoJoinTimer:);
+		autoJoinTimer			= [Timer new];
+		autoJoinTimer.delegate	= self;
+		autoJoinTimer.reqeat	= YES;
+		autoJoinTimer.selector	= @selector(onAutoJoinTimer:);
 		
-		commandQueueTimer = [Timer new];
-		commandQueueTimer.delegate = self;
-		commandQueueTimer.reqeat = NO;
-		commandQueueTimer.selector = @selector(onCommandQueueTimer:);
+		commandQueueTimer			= [Timer new];
+		commandQueueTimer.delegate	= self;
+		commandQueueTimer.reqeat	= NO;
+		commandQueueTimer.selector	= @selector(onCommandQueueTimer:);
 		
-		pongTimer = [Timer new];
-		pongTimer.delegate = self;
-		pongTimer.reqeat = YES;
-		pongTimer.selector = @selector(onPongTimer:);
+		pongTimer			= [Timer new];
+		pongTimer.delegate	= self;
+		pongTimer.reqeat	= YES;
+		pongTimer.selector	= @selector(onPongTimer:);
 		
-		isonTimer = [Timer new];
-		isonTimer.delegate = self;
-		isonTimer.reqeat = YES;
-		isonTimer.selector = @selector(onISONTimer:);
+		isonTimer			= [Timer new];
+		isonTimer.delegate	= self;
+		isonTimer.reqeat	= YES;
+		isonTimer.selector	= @selector(onISONTimer:);
 		
 #ifdef IS_TRIAL_BINARY
-		trialPeriodTimer = [Timer new];
-		trialPeriodTimer.delegate = self;
-		trialPeriodTimer.reqeat = NO;
-		trialPeriodTimer.selector = @selector(onTrialPeriodTimer:);	
+		trialPeriodTimer			= [Timer new];
+		trialPeriodTimer.delegate	= self;
+		trialPeriodTimer.reqeat		= NO;
+		trialPeriodTimer.selector	= @selector(onTrialPeriodTimer:);	
 #endif
 		
 		dispatchQueue = dispatch_queue_create([[NSString stringWithUUID] UTF8String], NULL);
@@ -2383,12 +2384,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 94: // Command: LAGCHECK
+		case 95: // Command: MYLAG
 		{
 			lastLagCheck = CFAbsoluteTimeGetCurrent();
 			
+			if ([cmd isEqualNoCase:IRCII_MYLAG]) {
+				sendLagcheckToChannel = YES;
+			}
+			
 			[self sendCTCPQuery:myNick command:IRCII_LAGCHECK text:[NSString stringWithDouble:lastLagCheck]];
 			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_DEBUG text:TXTLS(@"LAG_CHECK_REQUEST_SENT_MESSAGE")];
-	
+			
 			return YES;
 			break;
 		}
@@ -2837,7 +2843,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			format = [format stringByReplacingOccurrencesOfString:@"%@" withString:@""];	
 		}
 	}
-		
+	
 	return format;
 }
 
@@ -3451,10 +3457,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				text = TXTFLS(@"LAG_CHECK_REQUEST_REPLY_MESSAGE", delta);
 			} else {
-				text = TXTLS(@"LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAG");
+				text = TXTLS(@"LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAGE");
 			}
 			
-			[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_DEBUG text:text]; 
+			if (sendLagcheckToChannel) {
+				[self sendPrivmsgToSelectedChannel:text];
+				
+				sendLagcheckToChannel = NO;
+			} else {
+				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_DEBUG text:text]; 
+			}
 			
 			lastLagCheck = 0;
 		}
@@ -3869,6 +3881,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[world expandClient:self];
 	
+	sendLagcheckToChannel = NO;
 	isLoggedIn = conn.loggedIn = inFirstISONRun = YES;
 	isAway = isConnecting = hasIRCopAccess = inList = NO;
 	
@@ -4727,6 +4740,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self startReconnectTimer];
 	}
 	
+	sendLagcheckToChannel = NO;
 	isConnecting = isConnected = isLoggedIn = isQuitting = NO;
 	hasIRCopAccess = serverHasNickServ = autojoinInitialized = NO;
 	
