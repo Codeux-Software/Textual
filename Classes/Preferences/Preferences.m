@@ -9,7 +9,7 @@
 #pragma mark -
 #pragma mark Version Dictonaries
 
-static NSDictionary *textualPlist = nil;
+static NSDictionary *textualPlist		= nil;
 static NSDictionary *systemVersionPlist = nil;
 
 + (NSDictionary *)textualInfoPlist
@@ -27,7 +27,7 @@ static NSDictionary *systemVersionPlist = nil;
 
 + (void)validateStoreReceipt
 {
-	NSString *receipt = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+	NSString *receipt = [self whereAppStoreReceipt];
 	
 	if (validateReceiptAtPath(receipt) == NO) {
 		exit(173);
@@ -50,13 +50,13 @@ static NSMutableDictionary *commandIndex = nil;
 {
 	commandIndex = [NSMutableDictionary new];
 	
-	[commandIndex setObject:@"3" forKey:IRCCI_AWAY];
-	[commandIndex setObject:@"4" forKey:IRCCI_ERROR];
-	[commandIndex setObject:@"5" forKey:IRCCI_INVITE];
-	[commandIndex setObject:@"6" forKey:IRCCI_ISON];
-	[commandIndex setObject:@"7" forKey:IRCCI_JOIN];
-	[commandIndex setObject:@"8" forKey:IRCCI_KICK];
-	[commandIndex setObject:@"9" forKey:IRCCI_KILL];
+	[commandIndex setObject:@"3"  forKey:IRCCI_AWAY];
+	[commandIndex setObject:@"4"  forKey:IRCCI_ERROR];
+	[commandIndex setObject:@"5"  forKey:IRCCI_INVITE];
+	[commandIndex setObject:@"6"  forKey:IRCCI_ISON];
+	[commandIndex setObject:@"7"  forKey:IRCCI_JOIN];
+	[commandIndex setObject:@"8"  forKey:IRCCI_KICK];
+	[commandIndex setObject:@"9"  forKey:IRCCI_KILL];
 	[commandIndex setObject:@"10" forKey:IRCCI_LIST];
 	[commandIndex setObject:@"11" forKey:IRCCI_MODE];
 	[commandIndex setObject:@"12" forKey:IRCCI_NAMES];
@@ -137,6 +137,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[commandIndex setObject:@"92" forKey:IRCII_SME];
 	[commandIndex setObject:@"93" forKey:IRCII_SMSG];
 	[commandIndex setObject:@"94" forKey:IRCII_LAGCHECK];
+	[commandIndex setObject:@"95" forKey:IRCII_MYLAG];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 
@@ -205,9 +206,19 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Extensions"];	
 }
 
++ (NSString *)whereAppStoreReceipt
+{
+	return [[self whereMainApplicationBundle] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+}
+
 + (NSString *)whereResourcePath 
 {
 	return [[NSBundle mainBundle] resourcePath];
+}
+
++ (NSString *)whereMainApplicationBundle
+{
+	return [[NSBundle mainBundle] bundlePath];
 }
 
 #pragma mark -
@@ -747,7 +758,7 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray *keywords = nil;
+static NSMutableArray *keywords     = nil;
 static NSMutableArray *excludeWords = nil;
 
 + (void)loadKeywords

@@ -52,6 +52,7 @@
 #define IRCCI_MODE				@"MODE"
 #define IRCCI_MSG				@"MSG"
 #define IRCCI_MUTE				@"MUTE"
+#define IRCII_MYLAG				@"MYLAG"
 #define IRCCI_MYVERSION			@"MYVERSION"
 #define IRCCI_NACHAT			@"NACHAT"
 #define IRCCI_NAMES				@"NAMES"
