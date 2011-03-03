@@ -200,7 +200,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual\"";
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -223,7 +223,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual\"";
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -245,7 +245,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual\"";
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -280,7 +280,7 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual\"";
+				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
