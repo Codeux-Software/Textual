@@ -157,15 +157,15 @@
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock
 {
 	if (useSystemSocks) {
-		[[conn invokeOnThread:socketThread] useSystemSocksProxy];
+		[conn useSystemSocksProxy];
 	} else if (useSocks) {
-		[[conn invokeOnThread:socketThread] useSocksProxyVersion:socksVersion 
-															host:proxyHost 
-															port:proxyPort 
-															user:proxyUser 
-														password:proxyPassword];
+		[conn useSocksProxyVersion:socksVersion 
+							  host:proxyHost 
+							  port:proxyPort 
+							  user:proxyUser 
+						  password:proxyPassword];
 	} else if (useSSL) {
-		[[conn invokeOnThread:socketThread] performSelector:@selector(useSSL)];
+		[conn performSelector:@selector(useSSL)];
 	}
 	
 	return YES;
