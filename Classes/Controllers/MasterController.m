@@ -110,28 +110,6 @@
 	[fieldEditor setFieldEditor:YES];
 	fieldEditor.pasteDelegate = self;
 	
-	[fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
-	[fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
-	[fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
-	[fieldEditor setAutomaticQuoteSubstitutionEnabled:[Preferences quoteSubstitutionEnabled]];
-	[fieldEditor setAutomaticLinkDetectionEnabled:[Preferences linkDetectionEnabled]];
-	
-	if ([fieldEditor respondsToSelector:@selector(setAutomaticSpellingCorrectionEnabled:)]) {
-		[fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(setAutomaticDashSubstitutionEnabled:)]) {
-		[fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(setAutomaticDataDetectionEnabled:)]) {
-		[fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(setAutomaticTextReplacementEnabled:)]) {
-		[fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
-	}
-	
 	[text setFocusRingType:NSFocusRingTypeNone];
 	
 	viewTheme	   = [ViewTheme new];
@@ -327,28 +305,6 @@
 	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
 	
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
-	[Preferences setSpellCheckEnabled:[fieldEditor isContinuousSpellCheckingEnabled]];
-	[Preferences setGrammarCheckEnabled:[fieldEditor isGrammarCheckingEnabled]];
-	[Preferences setSmartInsertDeleteEnabled:[fieldEditor smartInsertDeleteEnabled]];
-	[Preferences setQuoteSubstitutionEnabled:[fieldEditor isAutomaticQuoteSubstitutionEnabled]];
-	[Preferences setLinkDetectionEnabled:[fieldEditor isAutomaticLinkDetectionEnabled]];
-	
-	if ([fieldEditor respondsToSelector:@selector(isAutomaticSpellingCorrectionEnabled)]) {
-		[Preferences setSpellingCorrectionEnabled:[fieldEditor isAutomaticSpellingCorrectionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(isAutomaticDashSubstitutionEnabled)]) {
-		[Preferences setDashSubstitutionEnabled:[fieldEditor isAutomaticDashSubstitutionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(isAutomaticDataDetectionEnabled)]) {
-		[Preferences setDataDetectionEnabled:[fieldEditor isAutomaticDataDetectionEnabled]];
-	}
-	
-	if ([fieldEditor respondsToSelector:@selector(isAutomaticSpellingCorrectionEnabled)]) {
-		[Preferences setTextReplacementEnabled:[fieldEditor isAutomaticTextReplacementEnabled]];
-	}
 	
 	[world save];
 	[world terminate];
@@ -884,7 +840,7 @@
 		
 		lowerChoices = choices;
 	} else if (channelMode) {
-		NSMutableArray *channels = [NSMutableArray array];
+		NSMutableArray *channels      = [NSMutableArray array];
 		NSMutableArray *lowerChannels = [NSMutableArray array];
 		
 		IRCClient *u = [world selectedClient];
@@ -900,27 +856,30 @@
 		NSMutableArray *users = [channel.members mutableCopy];
 		[users sortUsingSelector:@selector(compareUsingWeights:)];
 		
-		NSMutableArray *nicks = [NSMutableArray array];
+		NSMutableArray *nicks      = [NSMutableArray array];
 		NSMutableArray *lowerNicks = [NSMutableArray array];
 		
 		for (IRCUser *m in users) {
-			[nicks safeAddObject:m.nick];
+			[nicks      safeAddObject:m.nick];
 			[lowerNicks safeAddObject:[m.nick lowercaseString]];
 		}
 		
-		[nicks safeAddObject:@"NickServ"];
-		[nicks safeAddObject:@"RootServ"];
-		[nicks safeAddObject:@"OperServ"];
-		[nicks safeAddObject:@"HostServ"];
-		[nicks safeAddObject:@"ChanServ"];
-		
+		[nicks      safeAddObject:@"NickServ"];
 		[lowerNicks safeAddObject:@"nickserv"];
+		
+		[nicks      safeAddObject:@"RootServ"];
 		[lowerNicks safeAddObject:@"rootserv"];
+		
+		[nicks      safeAddObject:@"OperServ"];
 		[lowerNicks safeAddObject:@"operserv"];
+		
+		[nicks      safeAddObject:@"HostServ"];
 		[lowerNicks safeAddObject:@"hostserv"];
+		
+		[nicks      safeAddObject:@"ChanServ"];
 		[lowerNicks safeAddObject:@"chanserv"];
 		
-		choices = nicks;
+		choices      = nicks;
 		lowerChoices = lowerNicks;
 		
 		[users drain];

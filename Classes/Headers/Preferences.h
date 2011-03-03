@@ -172,26 +172,6 @@ typedef enum {
 + (NSString *)completionSuffix;
 + (void)setCompletionSuffix:(NSString *)value;
 
-+ (BOOL)spellCheckEnabled;
-+ (BOOL)grammarCheckEnabled;
-+ (BOOL)spellingCorrectionEnabled;
-+ (BOOL)smartInsertDeleteEnabled;
-+ (BOOL)quoteSubstitutionEnabled;
-+ (BOOL)dashSubstitutionEnabled;
-+ (BOOL)linkDetectionEnabled;
-+ (BOOL)dataDetectionEnabled;
-+ (BOOL)textReplacementEnabled;
-
-+ (void)setSpellCheckEnabled:(BOOL)value;
-+ (void)setGrammarCheckEnabled:(BOOL)value;
-+ (void)setSpellingCorrectionEnabled:(BOOL)value;
-+ (void)setSmartInsertDeleteEnabled:(BOOL)value;
-+ (void)setQuoteSubstitutionEnabled:(BOOL)value;
-+ (void)setDashSubstitutionEnabled:(BOOL)value;
-+ (void)setLinkDetectionEnabled:(BOOL)value;
-+ (void)setDataDetectionEnabled:(BOOL)value;
-+ (void)setTextReplacementEnabled:(BOOL)value;
-
 + (BOOL)registeredToGrowl;
 + (void)setRegisteredToGrowl:(BOOL)value;
 
