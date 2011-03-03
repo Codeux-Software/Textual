@@ -23,8 +23,6 @@
 	sheetOverrideEnabled = YES;
 	textField			 = field;
 	
-	[_NSFontManager() setFontMenu:nil];
-	
 	[textField setUsesCustomUndoManager:YES];
 }
 
@@ -32,8 +30,6 @@
 {
 	sheetOverrideEnabled = NO;
 	textField			 = field;
-	
-	[_NSFontManager() setFontMenu:nil];
 	
 	[textField setUsesCustomUndoManager:YES];
 }
