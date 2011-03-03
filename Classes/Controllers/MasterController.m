@@ -805,10 +805,10 @@
 	
 	if (NSObjectIsEmpty(current)) return;
 	
-	NSString *lowerPre = [pre lowercaseString];
+	NSString *lowerPre     = [pre lowercaseString];
 	NSString *lowerCurrent = [current lowercaseString];
 	
-	NSArray *lowerChoices;
+	NSArray		   *lowerChoices;
 	NSMutableArray *choices;
 	
 	if (commandMode) {
@@ -846,11 +846,11 @@
 		IRCClient *u = [world selectedClient];
 		
 		for (IRCChannel *c in u.channels) {
-			[channels safeAddObject:c.name];
+			[channels      safeAddObject:c.name];
 			[lowerChannels safeAddObject:[c.name lowercaseString]];
 		}
 		
-		choices = channels;
+		choices      = channels;
 		lowerChoices = lowerChannels;
 	} else {
 		NSMutableArray *users = [channel.members mutableCopy];
@@ -879,6 +879,9 @@
 		[nicks      safeAddObject:@"ChanServ"];
 		[lowerNicks safeAddObject:@"chanserv"];
 		
+		[nicks      safeAddObject:@"MemoServ"];
+		[lowerNicks safeAddObject:@"Memoserv"];
+		
 		choices      = nicks;
 		lowerChoices = lowerNicks;
 		
@@ -893,7 +896,7 @@
 	for (NSString *s in lowerChoices) {
 		if ([s hasPrefix:lowerPre]) {
 			[currentLowerChoices safeAddObject:s];
-			[currentChoices safeAddObject:[choices safeObjectAtIndex:i]];
+			[currentChoices      safeAddObject:[choices safeObjectAtIndex:i]];
 		}
 		
 		++i;
