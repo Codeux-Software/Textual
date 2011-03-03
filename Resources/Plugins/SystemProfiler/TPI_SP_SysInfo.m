@@ -308,25 +308,31 @@
 
 + (NSString *)graphicsCardInfo
 {
-	CGDirectDisplayID displayID = CGMainDisplayID();
+	CGDirectDisplayID displayID		= CGMainDisplayID();
 	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
     
-	GLint numPixelFormats = 0;
-	CGLContextObj cglContext = 0;
-	CGLPixelFormatObj pixelFormat = NULL;
-	CGLContextObj curr_ctx = CGLGetCurrentContext();
+	GLint numPixelFormats			= 0;
+	CGLContextObj cglContext		= 0;
+	CGLPixelFormatObj pixelFormat	= NULL;
+	CGLContextObj curr_ctx			= CGLGetCurrentContext();
 	
 	DevNullDestroyObject(YES, curr_ctx);
     
+#ifdef _RUNNING_MAC_OS_LION
     if ([Preferences applicationRanOnLion]) {
         CGLPixelFormatAttribute attribs[] = {kCGLPFAOpenGLProfile, kCGLOGLPVersion_3_2_Core, 0};
-        
+		
         CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
     } else {
-        CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
-        
+#endif
+		
+		CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
+		
         CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
+		
+#ifdef _RUNNING_MAC_OS_LION
     }
+#endif 
     
 	if (pixelFormat) {
 		CGLCreateContext(pixelFormat, NULL, &cglContext);
