@@ -815,7 +815,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[self stopReconnectTimer];
 	
-	connectType = mode;
+	connectType    = mode;
 	disconnectType = DISCONNECT_NORMAL;
 	
 	if (conn) {
@@ -824,8 +824,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		conn = nil;
 	}
 	
-	retryEnabled = YES;
-	isConnecting = YES;
+	retryEnabled     = YES;
+	isConnecting     = YES;
 	reconnectEnabled = YES;
 	
 	NSString *host = config.host;
@@ -845,12 +845,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		default: break;
 	}
 	
-	conn = [IRCConnection new];
+	conn		  = [IRCConnection new];
 	conn.delegate = self;
     
-	conn.host = host;
-	conn.port = config.port;
-	conn.useSSL = config.useSSL;
+	conn.host	  = host;
+	conn.port	  = config.port;
+	conn.useSSL   = config.useSSL;
 	conn.encoding = config.encoding;
 	
 	switch (config.proxyType) {
@@ -858,11 +858,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			conn.useSystemSocks = YES;
 		case PROXY_SOCKS4:
 		case PROXY_SOCKS5:
-			conn.useSocks = YES;
-			conn.socksVersion = config.proxyType;
-			conn.proxyHost = config.proxyHost;
-			conn.proxyPort = config.proxyPort;
-			conn.proxyUser = config.proxyUser;
+			conn.useSocks      = YES;
+			conn.socksVersion  = config.proxyType;
+			conn.proxyHost     = config.proxyHost;
+			conn.proxyPort	   = config.proxyPort;
+			conn.proxyUser	   = config.proxyUser;
 			conn.proxyPassword = config.proxyPassword;
 			break;
 		default: break;
@@ -4835,16 +4835,35 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender
 {
+	if (disconnectType == DISCONNECT_BAD_SSL_CERT) {
+		NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:config.guid];
+		
+		if (config.isTrustedConnection == NO) {
+			BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
+																  title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
+														  defaultButton:TXTLS(@"TRUST_BUTTON") 
+														alternateButton:TXTLS(@"CANCEL_BUTTON") 
+														 suppressionKey:suppKey
+														suppressionText:@"-"];
+			
+			[_NSUserDefaults() setBool:status forKey:suppKey];
+			
+			if (status) {
+				config.isTrustedConnection = status;
+				
+				[self connect:CONNECT_BADSSL_CRT_RECONNECT];
+				
+				return;
+			}
+		}
+	}
+	
 	[self changeStateOff];
 }
 
 - (void)ircConnectionDidError:(NSString *)error
 {
-	if (disconnectType == DISCONNECT_BAD_SSL_CERT) {
-		[self connect:CONNECT_BADSSL_CRT_RECONNECT];
-	} else {
-		[self printError:error];
-	}
+	[self printError:error];
 }
 
 - (void)ircConnectionDidReceive:(NSData *)data

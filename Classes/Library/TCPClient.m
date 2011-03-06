@@ -94,6 +94,7 @@
 {
 	if (PointerIsEmpty(conn)) return;
 	
+	[[conn invokeOnThread:socketThread] setDelegate:nil];
 	[[conn invokeOnThread:socketThread] disconnect];
 	
 	[conn autodrain];
@@ -200,49 +201,22 @@
 		NSString *msg    = nil;
 		NSString *domain = [error domain];
 		
-		if ([error code] == -9805) { /* connection closed gracefully */
-			[self onSocketDidDisconnect:sender];
+		if ([conn badSSLCertErrorFound:error]) {
+			IRCClient *client = [delegate delegate];
+			
+			client.disconnectType = DISCONNECT_BAD_SSL_CERT;
 		} else {
-			if ([conn badSSLCertErrorFound:error]) {
-				IRCClient *client = [delegate delegate];
-				
-				NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:client.config.guid];
-				
-				if (client.config.isTrustedConnection == NO) {
-					BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
-																   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
-														   defaultButton:TXTLS(@"TRUST_BUTTON") 
-														 alternateButton:TXTLS(@"CANCEL_BUTTON") 
-														  suppressionKey:suppKey
-														 suppressionText:@"-"];
-					
-					if (status) {
-						client.disconnectType = DISCONNECT_BAD_SSL_CERT;
-					}
-					
-					client.config.isTrustedConnection = status;
-					
-					[_NSUserDefaults() setBool:status forKey:suppKey];
-					
-					if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-						[[delegate invokeOnMainThread] tcpClient:self error:nil];
-					}
-				}
-			} else {
-				if ([domain isEqualToString:NSPOSIXErrorDomain]) {
-					msg = [conn posixErrorStringFromErrno:[error code]];
-				} 
-				
-				if (NSObjectIsEmpty(msg)) {
-					msg = [error localizedDescription];
-				}
-				
-				if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-					[[delegate invokeOnMainThread] tcpClient:self error:msg];
-				}
+			if ([domain isEqualToString:NSPOSIXErrorDomain]) {
+				msg = [conn posixErrorStringFromErrno:[error code]];
+			} 
+			
+			if (NSObjectIsEmpty(msg)) {
+				msg = [error localizedDescription];
 			}
 			
-			[self onSocketDidDisconnect:sender];
+			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
+				[[delegate invokeOnMainThread] tcpClient:self error:msg];
+			}
 		}
 	}
 }
