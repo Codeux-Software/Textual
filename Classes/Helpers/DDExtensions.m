@@ -44,7 +44,7 @@
     return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)invokeOnMainThread;
+- (id)iomt
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
@@ -53,7 +53,25 @@
     return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeOnMainThread;
++ (id)iomt
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+	
+    [grabber setThreadType:INVOCATION_MAIN_THREAD];
+	
+    return [grabber prepareWithInvocationTarget:self];
+}
+
+- (id)invokeOnMainThread
+{
+    DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
+	
+	[grabber setThreadType:INVOCATION_MAIN_THREAD];
+	
+    return [grabber prepareWithInvocationTarget:self];
+}
+
++ (id)invokeOnMainThread
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
@@ -80,7 +98,7 @@
     return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
+- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
@@ -90,7 +108,7 @@
     return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
++ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
 {
     DDInvocationGrabber *grabber = [DDInvocationGrabber invocationGrabber];
 	
