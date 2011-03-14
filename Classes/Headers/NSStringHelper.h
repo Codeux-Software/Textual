@@ -11,6 +11,7 @@
 
 @interface NSString (NSStringHelper)
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
++ (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;

@@ -83,6 +83,12 @@
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
 			   [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 	
+	NSString *arch = [self kernelArchitecture];
+	
+	if (NSObjectIsNotEmpty(arch)) {
+		sysinfo = [sysinfo stringByAppendingFormat:@" (%@ kernel)", arch];
+	}
+	
 	return sysinfo;
 }
 
@@ -472,6 +478,23 @@
 	} else {
 		return nil;
 	}
+}
+
++ (NSString *)kernelArchitecture
+{
+	struct utsname name;
+	
+    if (uname(&name) >= 0) {
+		NSString *machine = [NSString stringWithFormat:@"%s", name.machine];
+		
+		if ([machine isEqualToString:@"x86_64"]) {
+			return @"64-bit";
+		} else {
+			return @"32-bit";
+		}
+	}
+	
+	return nil;
 }
 
 + (NSString *)physicalMemorySize

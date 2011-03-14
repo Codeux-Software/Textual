@@ -12,6 +12,11 @@
 	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autodrain];
 }
 
++ (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
+{
+	return [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
+}
+	
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 {
 	if (range.location == NSNotFound) return nil;
@@ -54,7 +59,7 @@
 	NSString *strChopper = self;
 	
 	for (NSInteger i = 1; i < slnt; i++) {
-		slchar = [strChopper safeSubstringFromIndex:([strChopper length] - 1)];
+		slchar     = [strChopper safeSubstringFromIndex:([strChopper length] - 1)];
 		strChopper = [strChopper safeSubstringToIndex:([strChopper length] - 1)];
 		
 		if ([chars containsObject:slchar] == NO) {
