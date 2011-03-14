@@ -62,8 +62,9 @@ NSData *appleRootCert()
 		list.attr = attributes;
 		
 		SecKeychainItemCopyContent(itemRef, nil, &list, nil, nil);
-		NSData *nameData = [NSData dataWithBytesNoCopy:attributes[0].data length:attributes[0].length freeWhenDone:NO];
-		NSString *name = [[NSString alloc] initWithData:nameData encoding:NSUTF8StringEncoding];
+		
+		NSData   *nameData = [NSData dataWithBytesNoCopy:attributes[0].data length:attributes[0].length freeWhenDone:NO];
+		NSString *name     = [NSString stringWithData:nameData encoding:NSUTF8StringEncoding];
 		
 		if ([name isEqualToString:@"Apple Root CA"]) {
 			CSSM_DATA certData;

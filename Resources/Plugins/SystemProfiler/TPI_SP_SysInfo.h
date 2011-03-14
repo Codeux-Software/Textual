@@ -9,6 +9,7 @@
 + (NSString *)processorL2CacheSize;
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
++ (NSString *)kernelArchitecture;
 + (NSString *)physicalMemorySize;
 + (NSString *)loadAveragesWithCores:(NSInteger)cores;
 + (NSString *)systemUptime;

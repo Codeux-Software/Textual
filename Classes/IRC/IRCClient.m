@@ -4868,15 +4868,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircConnectionDidReceive:(NSData *)data
 {
-	NSString *s = [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
+	NSString *s = [NSString stringWithData:data encoding:encoding];
 	
 	if (PointerIsEmpty(s)) {
-		s = [[[NSString alloc] initWithData:data encoding:config.fallbackEncoding] autodrain];
+		s = [NSString stringWithData:data encoding:config.fallbackEncoding];
 		
 		if (PointerIsEmpty(s)) {
-			s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autodrain];
+			s = [NSString stringWithData:data encoding:NSUTF8StringEncoding];
 			
 			if (PointerIsEmpty(s)) {
+				NSLog(@"NSData decode failure. (%@)", data);
+				
 				return;
 			}
 		}
