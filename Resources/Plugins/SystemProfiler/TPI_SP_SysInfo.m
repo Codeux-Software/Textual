@@ -543,7 +543,7 @@
 		return -1;
 	}
 	
-	return ((vm_stat.active_count + vm_stat.inactive_count + vm_stat.wire_count) * pagesize);
+	return ((vm_stat.active_count + vm_stat.wire_count) * pagesize);
 }
 
 + (TXFSLongInt)totalMemorySize
