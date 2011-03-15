@@ -289,7 +289,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					continue;
 				case 0x03:
 				{
-					NSInteger textColor = -1;
+					NSInteger textColor       = -1;
 					NSInteger backgroundColor = -1;
 					
 					if ((i + 1) < len) {

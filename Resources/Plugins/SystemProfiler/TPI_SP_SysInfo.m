@@ -208,6 +208,37 @@
 	return netstat;
 }
 
++ (NSString *)getSystemMemoryUsage
+{
+	TXFSLongInt totalMemory = [self totalMemorySize];
+	TXFSLongInt freeMemory  = [self freeMemorySize];
+	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
+	
+	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
+	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
+	CGFloat rightCount = (10.0f - memPercent);
+	
+	NSMutableString *result = [NSMutableString string];
+	
+	[result appendFormat:@"%c04", 0x03];
+	
+	for (NSInteger i = 0; i <= memPercent; i++) {
+		[result appendString:@"❙"];
+	}
+	
+	[result appendFormat:@"%c", 0x03];
+	[result appendFormat:@"%c03", 0x03];
+	
+	for (NSInteger i = 0; i <= rightCount; i++) {
+		[result appendString:@"❙"];
+	}
+	
+	[result appendFormat:@"%c", 0x03];
+	
+	return [NSString stringWithFormat:@"\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]",
+			 [self formattedDiskSize:freeMemory], [self formattedDiskSize:usedMemory], [self formattedDiskSize:totalMemory], result];
+}
+
 + (NSString *)getAllVolumesAndSizes
 {
 	// Based off the source code located at:
@@ -439,7 +470,9 @@
 	host_basic_info_data_t hostInfo;
 	mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;
 	
-	host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount);
+	if (host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount) != KERN_SUCCESS) {
+		return nil;
+	}
 	
 	return [NSNumber numberWithUnsignedInt:hostInfo.max_cpus];
 }
@@ -497,16 +530,37 @@
 	return nil;
 }
 
-+ (NSString *)physicalMemorySize
++ (TXFSLongInt)freeMemorySize
+{
+	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
+	
+	vm_size_t              pagesize;
+	vm_statistics_data_t   vm_stat;
+	
+	host_page_size(mach_host_self(), &pagesize);
+	
+	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stat, &infoCount) != KERN_SUCCESS) {
+		return -1;
+	}
+	
+	return ((vm_stat.free_count * pagesize) / 1.073741824);
+}
+
++ (TXFSLongInt)totalMemorySize
 {
 	uint64_t linesize = 0L;
 	size_t len = sizeof(linesize);
 	
 	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		return [self formattedDiskSize:(linesize / 1.073741824)];
-	} else {
-		return nil;
-	}
+		return (linesize / 1.073741824);
+	} 
+	
+	return -1;
+}
+
++ (NSString *)physicalMemorySize
+{
+	return [self formattedDiskSize:[self totalMemorySize]];
 }
 
 @end

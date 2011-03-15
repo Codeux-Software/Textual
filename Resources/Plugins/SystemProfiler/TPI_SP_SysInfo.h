@@ -10,7 +10,10 @@
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
 + (NSString *)kernelArchitecture;
++ (NSString *)getSystemMemoryUsage;
 + (NSString *)physicalMemorySize;
++ (TXFSLongInt)freeMemorySize;
++ (TXFSLongInt)totalMemorySize;
 + (NSString *)loadAveragesWithCores:(NSInteger)cores;
 + (NSString *)systemUptime;
 + (NSString *)diskInfo;
