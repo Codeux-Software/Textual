@@ -543,7 +543,7 @@
 		return -1;
 	}
 	
-	return ((vm_stat.free_count * pagesize) / 1.073741824);
+	return (vm_stat.free_count * pagesize);
 }
 
 + (TXFSLongInt)totalMemorySize
