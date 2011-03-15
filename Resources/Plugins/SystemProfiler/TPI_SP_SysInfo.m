@@ -214,13 +214,9 @@
 	TXFSLongInt usedMemory  = [self usedMemorySize];
 	TXFSLongInt freeMemory  = (totalMemory - usedMemory);
 	
-	NSLog(@"c: %qu %qu %qu", totalMemory, freeMemory, usedMemory);
-	
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
 	CGFloat rightCount = (10.0f - memPercent);
-	
-	NSLog(@"d: %f %f %f", rawPercent, memPercent, rightCount);
 	
 	NSMutableString *result = [NSMutableString string];
 	
