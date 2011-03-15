@@ -211,12 +211,16 @@
 + (NSString *)getSystemMemoryUsage
 {
 	TXFSLongInt totalMemory = [self totalMemorySize];
-	TXFSLongInt freeMemory  = [self freeMemorySize];
-	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
+	TXFSLongInt usedMemory  = [self usedMemorySize];
+	TXFSLongInt freeMemory  = (totalMemory - usedMemory);
+	
+	NSLog(@"c: %qu %qu %qu", totalMemory, freeMemory, usedMemory);
 	
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
 	CGFloat rightCount = (10.0f - memPercent);
+	
+	NSLog(@"d: %f %f %f", rawPercent, memPercent, rightCount);
 	
 	NSMutableString *result = [NSMutableString string];
 	
@@ -530,7 +534,7 @@
 	return nil;
 }
 
-+ (TXFSLongInt)freeMemorySize
++ (TXFSLongInt)usedMemorySize
 {
 	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
 	
@@ -543,7 +547,7 @@
 		return -1;
 	}
 	
-	return (vm_stat.free_count * pagesize);
+	return ((vm_stat.active_count + vm_stat.inactive_count + vm_stat.wire_count) * pagesize);
 }
 
 + (TXFSLongInt)totalMemorySize
