@@ -95,6 +95,62 @@
 	return _NSCalibratedRBGColor(0.80, 0.80, 0.80);
 }
 
++ (NSArray *)possibleFormatterColors
+{
+	NSMutableArray *combo  = [NSMutableArray array];
+	NSMutableArray *colors = [NSMutableArray array];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterWhiteColor], nil];
+	[colors safeInsertObject:combo atIndex:0];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterBlackColor], nil];
+	[colors safeInsertObject:combo atIndex:1];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterNavyBlueColor], _NSCalibratedRBGColor(0.0, 0.47, 0.0), nil];
+	[colors safeInsertObject:combo atIndex:2];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterDarkGreenColor], _NSCalibratedRBGColor(0.03, 0.0, 0.48), nil];
+	[colors safeInsertObject:combo atIndex:3];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterRedColor], _NSCalibratedRBGColor(1.00, 0.00, 0.00), nil];
+	[colors safeInsertObject:combo atIndex:4];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterBrownColor], _NSCalibratedRBGColor(0.46, 0.00, 0.00), nil];
+	[colors safeInsertObject:combo atIndex:5];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterPurpleColor], _NSCalibratedRBGColor(0.46, 0.47, 0.00), nil];
+	[colors safeInsertObject:combo atIndex:6];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterOrangeColor], _NSCalibratedRBGColor(1.00, 0.00, 0.45), nil];
+	[colors safeInsertObject:combo atIndex:7];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterYellowColor], _NSCalibratedRBGColor(1.00, 0.00, 1.00), nil];
+	[colors safeInsertObject:combo atIndex:8];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterLimeGreenColor], _NSCalibratedRBGColor(0.06, 0.00, 1.00), nil];
+	[colors safeInsertObject:combo atIndex:9];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterTealColor], _NSCalibratedRBGColor(0.00, 0.46, 0.46), nil];
+	[colors safeInsertObject:combo atIndex:10];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterAquaCyanColor], nil];
+	[colors safeInsertObject:combo atIndex:11];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterLightBlueColor], _NSCalibratedRBGColor(0.00, 1.00, 0.00), nil];
+	[colors safeInsertObject:combo atIndex:12];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterFuchsiaPinkColor], _NSCalibratedRBGColor(1.00, 1.00, 0.00), nil];
+	[colors safeInsertObject:combo atIndex:13];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterNormalGrayColor], _NSCalibratedRBGColor(0.46, 0.46, 0.46), nil];
+	[colors safeInsertObject:combo atIndex:14];
+	
+	combo = [NSMutableArray arrayWithObjects:[self formatterLightGrayColor], nil];
+	[colors safeInsertObject:combo atIndex:15];
+	
+	return colors;
+}
+
 #pragma mark -
 #pragma mark Hexadeciam Conversion 
 

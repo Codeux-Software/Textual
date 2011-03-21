@@ -19,6 +19,8 @@
 + (NSColor *)formatterNormalGrayColor;
 + (NSColor *)formatterLightGrayColor;
 
++ (NSArray *)possibleFormatterColors;
+
 - (NSString *)hexadecimalValue;
 + (NSColor *)fromCSS:(NSString *)str;
 @end
