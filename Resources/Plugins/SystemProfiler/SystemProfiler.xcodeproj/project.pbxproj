@@ -200,15 +200,12 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/\"";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -223,14 +220,11 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/\"";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -245,14 +239,11 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/\"";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -280,14 +271,11 @@
 					i386,
 					x86_64,
 				);
-				BUNDLE_LOADER = "$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/MacOS/Textual";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../build/$(CONFIGURATION)/Textual.app/Contents/Headers/\"";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";

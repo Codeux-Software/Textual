@@ -1604,7 +1604,6 @@
 				4CAA3BCD12E0ECF300FB83EB /* Headers */,
 				4C3F690F12FD925F00B50CB9 /* Compile Plugins */,
 				4C3F693E12FD95A300B50CB9 /* Copy Plugins */,
-				4C3F691112FD926600B50CB9 /* Code Sign Executable */,
 			);
 			buildRules = (
 			);
@@ -1766,21 +1765,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\"  2> /dev/null\n";
-		};
-		4C3F691112FD926600B50CB9 /* Code Sign Executable */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Code Sign Executable";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -f \"$PROJECT_DIR/CERTIFICATE\" ]; then\nexport CODE_SIGNING_IDENTITY=`cat \"$PROJECT_DIR/CERTIFICATE\"`\n/usr/bin/codesign -f -s \"$CODE_SIGNING_IDENTITY\" \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_PATH\" \nfi";
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n";
 		};
 		4C9CB1CC12AD549E00F107FC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2112,6 +2097,7 @@
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2190,6 +2176,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2236,6 +2223,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2341,6 +2329,7 @@
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
