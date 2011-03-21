@@ -730,6 +730,8 @@
 	
 	[u.config destroyKeychains];
 	
+	[_NSUserDefaults() removeObjectForKey:[@"Preferences.prompts.cert_trust_error." stringByAppendingString:u.config.guid]];
+	
 	[world destroyClient:u];
 	[world save];
 }

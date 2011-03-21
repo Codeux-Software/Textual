@@ -226,8 +226,7 @@
 		[result appendString:@"❙"];
 	}
 	
-	[result appendFormat:@"%c", 0x03];
-	[result appendFormat:@"%c03", 0x03];
+	[result appendFormat:@"%c|%c03", 0x03, 0x03];
 	
 	for (NSInteger i = 0; i <= rightCount; i++) {
 		[result appendString:@"❙"];
@@ -248,9 +247,9 @@
 	
 	NSArray *drives = [_NSFileManager() contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
 	
+	NSInteger objectIndex = 0;
+	
 	for (NSString *name in drives) {
-		NSInteger objectIndex = [drives indexOfObject:name];
-		
 		NSString *fullpath = [LOCAL_VOLUME_DICTIONARY stringByAppendingPathComponent:name];
 		
 		FSRef fsRef;
@@ -285,6 +284,8 @@
 						} else {
 							[result appendFormat:@" — %@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 						}
+						
+						objectIndex++;
 					}
 				}
 			}
