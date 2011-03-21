@@ -71,6 +71,8 @@ NSString *logEscape(NSString *s)
 
 NSInteger mapColorValue(NSColor *color)
 {
+	NSArray *possibleColors = [NSColor possibleFormatterColors];
+	
 	if ([color numberOfComponents] == 4) {
 		CGFloat _redc   = [color redComponent];
 		CGFloat _bluec  = [color blueComponent];
@@ -78,22 +80,24 @@ NSInteger mapColorValue(NSColor *color)
 		CGFloat _alphac = [color alphaComponent];
 		
 		for (NSInteger i = 0; i <= 15; i++) {
-			NSColor *mapped = mapColorCode(i);
+			NSArray *allColors = [possibleColors objectAtIndex:i];
 			
-			if ([mapped numberOfComponents] == 4) {
-				CGFloat redc   = [mapped redComponent];
-				CGFloat bluec  = [mapped blueComponent];
-				CGFloat greenc = [mapped greenComponent];
-				CGFloat alphac = [mapped alphaComponent];
-				
-				if (_DirtyCGFloatsMatch(_redc, redc)     && _DirtyCGFloatsMatch(_bluec, bluec) &&
-					_DirtyCGFloatsMatch(_greenc, greenc) && _DirtyCGFloatsMatch(_alphac, alphac)) {
+			for (NSColor *mapped in allColors) {
+				if ([mapped numberOfComponents] == 4) {
+					CGFloat redc   = [mapped redComponent];
+					CGFloat bluec  = [mapped blueComponent];
+					CGFloat greenc = [mapped greenComponent];
+					CGFloat alphac = [mapped alphaComponent];
 					
-					return i;
-				}
-			} else {
-				if ([color isEqual:mapped]) {
-					return i;
+					if (_DirtyCGFloatsMatch(_redc, redc)     && _DirtyCGFloatsMatch(_bluec, bluec) &&
+						_DirtyCGFloatsMatch(_greenc, greenc) && _DirtyCGFloatsMatch(_alphac, alphac)) {
+						
+						return i;
+					}
+				} else {
+					if ([color isEqual:mapped]) {
+						return i;
+					}
 				}
 			}
 		}
@@ -254,15 +258,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 {
 	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
 	
-	BOOL renderLinks = [inputDictionary boolForKey:@"renderLinks"];
+	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
 	BOOL exactWordMatching = ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT);
 	
-	NSArray *keywords = [inputDictionary arrayForKey:@"keywords"];
+	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
 	
-	NSInteger len = [body length];
+	NSInteger len	= [body length];
 	NSInteger start = 0;
-	NSInteger n = 0;
+	NSInteger n		= 0;
 	
 	attr_t attrBuf[len];
 	attr_t currentAttr = 0;
