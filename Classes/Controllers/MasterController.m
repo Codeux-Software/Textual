@@ -483,6 +483,12 @@
 	} else {
 		[text focus];
 		
+		if ([sender isKindOfClass:[NSString class]]) {
+			if ([sender isEqual:@"reset"]) {
+				return NO;
+			}
+		}
+		
 		return [self fieldEditorTextViewPaste:@"reset"];
 	}
 	
