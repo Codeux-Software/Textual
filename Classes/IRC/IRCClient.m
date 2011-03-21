@@ -788,17 +788,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if ([Preferences autojoinWaitForNickServ] == NO || NSObjectIsEmpty(config.nickPassword)) {
 		[self performAutoJoin];
+		
+		autojoinInitialized = YES;
 	} else {
 		if (serverHasNickServ) {
 			if (autojoinInitialized) {
 				[self performAutoJoin];
+				
+				autojoinInitialized = YES;
 			}
 		} else {
 			[self performAutoJoin];
+			
+			autojoinInitialized = YES;
 		}
 	}
-	
-	autojoinInitialized = YES;
 	
 	[autoJoinTimer stop];
 }
