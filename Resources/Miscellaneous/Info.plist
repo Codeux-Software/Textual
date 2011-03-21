@@ -5,13 +5,13 @@
 	<key>Build Number</key>
 	<string>9214</string>
 	<key>Build Reference</key>
-	<string>2.0.4.1-15-g4437cf4-unstable</string>
+	<string>2.0.4.1-15-g4437cf4-master</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual</string>
+	<string>com.codeux.irc.textual.trial</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.4.1</string>
+	<string>2.0.5</string>
 	<key>CFBundleSignature</key>
 	<string>TXTL</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.4.1</string>
+	<string>2.0.5</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSArchitecturePriority</key>
