@@ -457,6 +457,16 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
 }
 
++ (BOOL)useStrictModeMatching
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.strict_mode_matching"];
+}
+
++ (BOOL)forceReplaceExtensions
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.Plugins.force_replace"];
+}
+
 + (TabActionType)tabAction
 {
 	return [_NSUserDefaults() integerForKey:@"Preferences.General.tab_action"];
@@ -949,6 +959,7 @@ static NSInteger totalRunTime = 0;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
+	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
 	[d setObject:nick forKey:@"Preferences.Identity.nickname"];
 	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
@@ -993,7 +1004,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setInteger:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
 	[d setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
-	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
+	[d setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
 	[d setObject:@"<%@%n>" forKey:@"Preferences.Theme.nick_format"];
 	[d setBool:YES forKey:@"Preferences.Theme.indent_onwordwrap"];
@@ -1008,6 +1019,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
+	[d setBool:NO forKey:@"Preferences.General.strict_mode_matching"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInteger:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
 	[d setInteger:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define DEFAULT_TEXUAL_STYLE @"Simplified Dark"
+
 typedef enum {
 	KEYWORD_MATCH_PARTIAL = 0,
 	KEYWORD_MATCH_EXACT,
@@ -49,6 +51,8 @@ typedef enum {
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
 + (NSNumber *)applicationProcessID;
+
++ (BOOL)forceReplaceExtensions; 
 
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
@@ -105,6 +109,7 @@ typedef enum {
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;
++ (BOOL)useStrictModeMatching;
 
 + (BOOL)autoJoinOnInvite;
 + (BOOL)processChannelModes;

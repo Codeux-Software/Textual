@@ -2330,6 +2330,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					NSLog(@"Silently ignoring failed resource removal.");
 				}
 				
+				NSString *themeName = [ViewTheme extractThemeName:[Preferences themeName]];
+				NSString *themePath = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:themeName];
+				
+				if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
+					[_NSUserDefaults() setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.log_font_name"];
+				}
+				
 				[PopupPrompts dialogWindowWithQuestion:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_MESSAGE")
 												 title:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_TITLE")
 										 defaultButton:TXTLS(@"OK_BUTTON") 

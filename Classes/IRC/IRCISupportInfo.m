@@ -18,6 +18,7 @@
 @synthesize nickLen;
 @synthesize modesCount;
 @synthesize networkName;
+@synthesize supportsExtraModes;
 
 - (id)init
 {
@@ -88,6 +89,8 @@
 				modesCount = [value integerValue];
 			} else if ([key isEqualToString:@"NETWORK"]) {
 				networkName = [value retain];
+			} else if ([key isEqualToString:@"PREFIX"]) {
+				supportsExtraModes = ([value isEqualToString:@"(ohv)@%+"] == NO);
 			}
 		}
 	}
