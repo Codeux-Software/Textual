@@ -2138,11 +2138,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 69: // Command: ECHO
 		case 70: // Command: DEBUG
 		{
-			if ([s isEqualToString:@"raw on"]) {
+			if ([s isEqualNoCase:@"raw on"]) {
 				rawModeEnabled = YES;
 				
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_ENABLED")];
-			} else if ([s isEqualToString:@"raw off"]) {
+			} else if ([s isEqualNoCase:@"raw off"]) {
 				rawModeEnabled = NO;	
 				
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_DISABLED")];
@@ -4371,7 +4371,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			IRCChannel *c = [self findChannel:chname];
 			
-			if (c && c.isActive && c.isNamesInit == NO) {
+			if (c && c.isActive == NO) {
+				c.isActive = YES;
+			}
+			
+			if (c && c.isNamesInit == NO) {
 				NSArray *ary = [trail componentsSeparatedByString:@" "];
 				
 				for (NSString *nick in ary) {
