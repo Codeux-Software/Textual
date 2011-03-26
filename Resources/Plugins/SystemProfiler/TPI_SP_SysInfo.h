@@ -16,6 +16,7 @@
 + (TXFSLongInt)totalMemorySize;
 + (NSString *)loadAveragesWithCores:(NSInteger)cores;
 + (NSString *)systemUptime;
++ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue;
 + (NSString *)diskInfo;
 + (NSString *)getNetworkStats;
 + (NSString *)graphicsCardInfo;
