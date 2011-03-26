@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
+#define MEMORY_DIVISION_MATH 1.07229793
 
 @implementation TPI_SP_SysInfo
 
@@ -59,7 +60,7 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Memory:\002 %@ \002•\002", _memory];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptimeUsingShortValue:YES]];
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
 	if (NSObjectIsNotEmpty(_gpu_model)) {
@@ -334,6 +335,7 @@
 + (NSString *)applicationMemoryUsage
 {
 	struct task_basic_info info;
+	
 	mach_msg_type_number_t size = sizeof(info);
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
@@ -408,7 +410,7 @@
 	}
 }
 
-+ (NSString *)systemUptime
++ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue
 {
 	struct timeval boottime;
 	size_t size = sizeof(boottime);
@@ -417,7 +419,12 @@
 		boottime.tv_sec = 0;
 	}
 	
-	return TXReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec]);
+	return TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec], shortValue);
+}
+
++ (NSString *)systemUptime
+{
+	return [self systemUptimeUsingShortValue:NO];	
 }
 
 + (NSString *)loadAveragesWithCores:(NSInteger)cores
@@ -544,19 +551,24 @@
 		return -1;
 	}
 	
-	return ((vm_stat.active_count + vm_stat.wire_count) * pagesize);
+	return (((vm_stat.active_count + vm_stat.wire_count) * pagesize) / MEMORY_DIVISION_MATH);
 }
 
 + (TXFSLongInt)totalMemorySize
 {
-	uint64_t linesize = 0L;
-	size_t len = sizeof(linesize);
+	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
 	
-	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		return (linesize / 1.073741824);
-	} 
+	vm_size_t              pagesize;
+	vm_statistics_data_t   vm_stat;
 	
-	return -1;
+	host_page_size(mach_host_self(), &pagesize);
+	
+	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stat, &infoCount) != KERN_SUCCESS) {
+		return -1;
+	}
+	
+	return (((vm_stat.free_count + vm_stat.active_count + vm_stat.inactive_count + 
+			  vm_stat.wire_count) * pagesize) / MEMORY_DIVISION_MATH);
 }
 
 + (NSString *)physicalMemorySize

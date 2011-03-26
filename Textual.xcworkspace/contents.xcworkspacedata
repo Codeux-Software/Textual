@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:Textual.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/BlowfishCommandLine/BlowfishCommandLine.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/BragSpam/BragSpam.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj">
+   </FileRef>
+</Workspace>
