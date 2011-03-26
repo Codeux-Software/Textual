@@ -70,7 +70,6 @@ a:hover {
   color: #fff;
   z-index: 400;
   opacity: 0.95;
-  font-size: 9px;
   position: fixed;
   background: #000;
   padding: 2px 0.5em 3px;
@@ -171,6 +170,7 @@ body div[type=action]  {
 body div[type=action] .message {
 	color: #00ff9c;
 }
+
 body div[type=action] .sender {
 	font-weight: 700;
 }
@@ -232,25 +232,30 @@ body div[type=join] .message {
   	color: #b589ff;
   	margin-right: 3px;
 }
+
 body div[type=kick] .message:before {
 	content: "✕";
   	color: #e00;
   	margin-right: 3px;
 }
+
 body div[type=part] .message:before,
 body div[type=quit] .message:before {
 	content: "←";
   	color: #e00;
   	margin-right: 3px;
 }
+
 body div[type=kick] .message {
   	color: #ff3d3d;
   	margin-right: 3px;
 }
+
 body div[type=part] .message {
   	color: #ffae01;
   	margin-right: 3px;
 }
+
 body div[type=quit] .message {
   	color: #ffee7a;
   	margin-right: 3px;
@@ -266,6 +271,7 @@ body div[type=nick] .message {
   	color: #0090ff;
   	margin-right: 3px;
 }
+
 body div[type=mode] .message:before {
 	content:"❖";
   	color: #b4a355;
@@ -276,6 +282,7 @@ body div[type=mode] .message {
   	color: #9c9c9c;
   	margin-right: 3px;
 }
+
 body div[type=topic] .message:before {
 	content:"✦";
   	color: #00a2ff;
@@ -288,6 +295,10 @@ body div[type=topic] .message {
 }
 
 /* Nickname Colors */
+
+body .inline_nickname {
+    font-weight: 700;
+}
 
 body div[type=privmsg] .sender[type=myself],
 body div[type=action] .sender[type=myself] { 

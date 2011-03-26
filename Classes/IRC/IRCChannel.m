@@ -352,10 +352,14 @@
 			case 'v': m.v = value; break;
 		}
 		
-		if ([Preferences useStrictModeMatching] && client.isupport.supportsExtraModes == NO) {
-			m.q = NO;
-			m.a = NO;
-			m.o = YES;
+		if (client.isupport.supportsExtraModes == NO) {
+			if ([Preferences useStrictModeMatching]) {
+				if (m.a || m.q) {
+					m.q = NO;
+					m.a = NO;
+					m.o = YES;
+				}
+			}
 		}
 		
 		[[[members safeObjectAtIndex:n] retain] autodrain];
