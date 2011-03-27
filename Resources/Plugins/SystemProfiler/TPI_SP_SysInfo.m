@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
-#define MEMORY_DIVISION_MATH 1.07229793
+#define MEMORY_DIVISION_SIZE 1.073741824
 
 @implementation TPI_SP_SysInfo
 
@@ -212,8 +212,14 @@
 + (NSString *)getSystemMemoryUsage
 {
 	TXFSLongInt totalMemory = [self totalMemorySize];
-	TXFSLongInt usedMemory  = [self usedMemorySize];
-	TXFSLongInt freeMemory  = (totalMemory - usedMemory);
+	TXFSLongInt freeMemory  = [self freeMemorySize];
+	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
+	
+#if __x86_64__ == 0
+	if (totalMemory > 4294967296) {
+		return @"\002Error:\002 This command requires Textual to run in 64-bit mode on systems with more than 4 GB of memory.";
+	}
+#endif
 	
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
@@ -340,7 +346,15 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:info.resident_size]];
+		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:info.resident_size]];
+		
+#if __x86_64__
+		result = [result stringByAppendingString:@" — (64-bit Mode)"];
+#else 
+		result = [result stringByAppendingString:@" — (32-bit Mode)"];
+#endif
+		
+		return result;
 	} 
 	
 	return nil;
@@ -538,9 +552,9 @@
 	return nil;
 }
 
-+ (TXFSLongInt)usedMemorySize
++ (TXFSLongInt)freeMemorySize
 {
-	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
+	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
 	
 	vm_size_t              pagesize;
 	vm_statistics_data_t   vm_stat;
@@ -551,24 +565,21 @@
 		return -1;
 	}
 	
-	return (((vm_stat.active_count + vm_stat.wire_count) * pagesize) / MEMORY_DIVISION_MATH);
+	TXFSLongInt result = ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
+	
+	return result;
 }
 
 + (TXFSLongInt)totalMemorySize
 {
-	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
+	uint64_t linesize = 0L;
+	size_t len = sizeof(linesize);
 	
-	vm_size_t              pagesize;
-	vm_statistics_data_t   vm_stat;
+	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
+		return (linesize / MEMORY_DIVISION_SIZE);
+	} 
 	
-	host_page_size(mach_host_self(), &pagesize);
-	
-	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stat, &infoCount) != KERN_SUCCESS) {
-		return -1;
-	}
-	
-	return (((vm_stat.free_count + vm_stat.active_count + vm_stat.inactive_count + 
-			  vm_stat.wire_count) * pagesize) / MEMORY_DIVISION_MATH);
+	return -1;
 }
 
 + (NSString *)physicalMemorySize

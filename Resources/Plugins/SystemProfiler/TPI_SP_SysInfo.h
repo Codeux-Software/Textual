@@ -12,7 +12,7 @@
 + (NSString *)kernelArchitecture;
 + (NSString *)getSystemMemoryUsage;
 + (NSString *)physicalMemorySize;
-+ (TXFSLongInt)usedMemorySize;
++ (TXFSLongInt)freeMemorySize;
 + (TXFSLongInt)totalMemorySize;
 + (NSString *)loadAveragesWithCores:(NSInteger)cores;
 + (NSString *)systemUptime;
