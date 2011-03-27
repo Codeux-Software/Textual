@@ -349,9 +349,9 @@
 		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory in ", [self formattedDiskSize:info.resident_size]];
 		
 #if __x86_64__
-		result = [result stringByAppendingString:@" 64-bit mode."];
+		result = [result stringByAppendingString:@"64-bit mode."];
 #else 
-		result = [result stringByAppendingString:@" 32-bit mode."];
+		result = [result stringByAppendingString:@"32-bit mode."];
 #endif
 		
 		return result;
