@@ -7,7 +7,7 @@
 	<key>iMac10,1</key>
 	<string>iMac (Late 2009)</string>
 	<key>iMac11,1</key>
-	<string>iMac (Mid 2010)</string>
+	<string>iMac (Late 2009)</string>
 	<key>iMac11,2</key>
 	<string>iMac (Mid 2010)</string>
 	<key>iMac11,3</key>
@@ -104,16 +104,16 @@
 	<string>Mac Pro (Early 2009)</string>
 	<key>MacPro5,1</key>
 	<string>Mac Pro (Mid 2010)</string>
+	<key>Meta Information</key>
+	<dict>
+		<key>List Souce</key>
+		<string>http://www.everymac.com/systems/by_capability/mac-specs-by-machine-model-machine-id.html</string>
+	</dict>
 	<key>Xserve1,1</key>
 	<string>Xserve (Original)</string>
 	<key>Xserve2,1</key>
 	<string>Xserve (Early 2008)</string>
 	<key>Xserve3,1</key>
 	<string>Xserve (Early 2009)</string>
-	<key>Meta Information</key>
-	<dict>
-		<key>List Souce</key>
-		<string>http://www.everymac.com/systems/by_capability/mac-specs-by-machine-model-machine-id.html</string>
-	</dict>
 </dict>
 </plist>
