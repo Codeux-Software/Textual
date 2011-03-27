@@ -346,12 +346,12 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:info.resident_size]];
+		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory in ", [self formattedDiskSize:info.resident_size]];
 		
 #if __x86_64__
-		result = [result stringByAppendingString:@" — (64-bit Mode)"];
+		result = [result stringByAppendingString:@" 64-bit mode."];
 #else 
-		result = [result stringByAppendingString:@" — (32-bit Mode)"];
+		result = [result stringByAppendingString:@" 32-bit mode."];
 #endif
 		
 		return result;
