@@ -6,6 +6,7 @@
 @synthesize _oldInputValue;
 @synthesize _oldTextColor;
 @synthesize _usesCustomUndoManager;
+@synthesize _spellingAlreadyToggled;
 
 - (void)dealloc
 {
@@ -117,7 +118,7 @@
 		NSMutableAttributedString *oldString = [[self attributedStringValue] mutableCopy];
 		
 		NSString *currentValue = [self stringValue];
-	
+        
 		if ([currentValue hasPrefix:@"/"] == NO && PointerIsEmpty(rtfData) == NO) {
 			newString = [newString initWithRTF:rtfData documentAttributes:nil];
 		} else {
@@ -129,10 +130,10 @@
 		
 		newString = (id)[newString sanitizeNSLinkedAttributedString:[self textColor]];
 		newString = (id)[newString sanitizeIRCCompatibleAttributedString:[self textColor]
-															oldColor:_oldTextColor
-													 backgroundColor:[self backgroundColor]
-														 defaultFont:[self font]];
-	
+                                                                oldColor:_oldTextColor
+                                                         backgroundColor:[self backgroundColor]
+                                                             defaultFont:[self font]];
+        
 		if (selectedRange.length >= 1) {
 			[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
 		} else {
@@ -180,6 +181,41 @@
 		
 		[super setObjectValue:_oldInputValue];
 	}
+    
+#ifdef _RUNNING_MAC_OS_LION
+    if ([Preferences applicationRanOnLion] == NO) {
+#endif
+    
+        /* Force spell checker to validate input value by toggling it off
+         and on when exiting the editing of a word. Dirty fix for bug on 
+         Snow Leopard resulting in only the first word of string value 
+         being validated. */
+        
+        NSRange selectedRange = [self selectedRange];
+        
+        if (selectedRange.location >= 2) {
+            NSString *stringValue  = [self stringValue];
+            UniChar   previousChar = [stringValue characterAtIndex:(selectedRange.location - 1)];
+            
+            if (previousChar) {
+                if (IsAlpha(previousChar) == NO) {
+                    if (_spellingAlreadyToggled == NO) {
+                        _spellingAlreadyToggled = YES;
+                        
+                        NSTextView *editor = (id)[self currentEditor];
+                        
+                        [editor toggleContinuousSpellChecking:nil];
+                        [editor toggleContinuousSpellChecking:nil];
+                    }
+                } else {
+                    _spellingAlreadyToggled = NO;
+                }
+            }
+        }
+        
+#ifdef _RUNNING_MAC_OS_LION
+    }
+#endif
 }
 
 @end
