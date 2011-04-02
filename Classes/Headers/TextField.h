@@ -4,13 +4,17 @@
 @interface TextField : NSTextField
 {
 	id _oldInputValue;
+    
 	NSColor *_oldTextColor;
+    
 	BOOL _usesCustomUndoManager;
+    BOOL _spellingAlreadyToggled;
 }
 
 @property (nonatomic, readonly) id _oldInputValue;
 @property (nonatomic, readonly) NSColor *_oldTextColor;
 @property (nonatomic, readonly) BOOL _usesCustomUndoManager;
+@property (nonatomic, readonly) BOOL _spellingAlreadyToggled;
 
 - (void)setFontColor:(NSColor *)color;
 
