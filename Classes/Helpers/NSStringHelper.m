@@ -669,7 +669,7 @@ BOOL isUnicharDigit(unichar c)
 	if (range.length > [self length]) return;
 	if (range.location > [self length]) return;
 	
-	[self safeDeleteCharactersInRange:range];
+	[self deleteCharactersInRange:range];
 }
 
 - (NSString *)getToken
