@@ -1,4 +1,5 @@
 #import <OpenGL/OpenGL.h>
+#import <OpenGL/gl.h>
 
 #import "TextualApplication.h"
 

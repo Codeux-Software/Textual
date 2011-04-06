@@ -103,7 +103,9 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue)
 			}
 		}
 		
-		[finalResult deleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+		if ([finalResult length] >= 3) {
+			[finalResult safeDeleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+		}
 		
 		return finalResult;
 	}

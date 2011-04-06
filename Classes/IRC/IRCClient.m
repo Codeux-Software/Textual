@@ -497,11 +497,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
-		[base deleteCharactersInRange:currentRange];
+		[base safeDeleteCharactersInRange:currentRange];
 		
 		return [new safeSubstringWithRange:currentRange];
 	} else {
-		[base deleteCharactersInRange:NSMakeRange(0, new.length)];
+		[base safeDeleteCharactersInRange:NSMakeRange(0, new.length)];
 	}
 	
 	*string = base;
@@ -1437,7 +1437,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([s hasPrefix:@"/"]) {
 		cutColon = YES;
 		
-		[s deleteCharactersInRange:NSMakeRange(0, 1)];
+		[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
 	}
 	
 	switch ([Preferences commandUIndex:cmd]) {
@@ -1612,7 +1612,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if ([s hasPrefix:@"\x01"]) {
 					cmd = (([cmd isEqualToString:IRCCI_PRIVMSG]) ? IRCCI_CTCP : IRCCI_CTCPREPLY);
 					
-					[s deleteCharactersInRange:NSMakeRange(0, 1)];
+					[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
 					
 					NSRange r = [s rangeOfString:@"\x01"];
 					
@@ -1620,7 +1620,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						NSInteger len = (s.length - r.location);
 						
 						if (len > 0) {
-							[s deleteCharactersInRange:NSMakeRange(r.location, len)];
+							[s safeDeleteCharactersInRange:NSMakeRange(r.location, len)];
 						}
 					}
 				}
@@ -2107,7 +2107,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				TimerCommand *cmd = [[TimerCommand new] autodrain];
 				
 				if ([s hasPrefix:@"/"]) {
-					[s deleteCharactersInRange:NSMakeRange(0, 1)];
+					[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
 				}
 				
 				cmd.input = s;
