@@ -655,8 +655,8 @@
 								<object class="NSMenuItem" id="728532574">
 									<reference key="NSMenu" ref="100171152"/>
 									<string key="NSTitle">Server Properties…</string>
-									<string key="NSKeyEquiv">u</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv">,</string>
+									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
