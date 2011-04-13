@@ -22,13 +22,14 @@
 @synthesize logFile;
 @synthesize members;
 @synthesize mode;
+@synthesize status;
 @synthesize storedTopic;
 @synthesize topic;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		mode = [IRCChannelMode new];
+		mode    = [IRCChannelMode new];
 		members = [NSMutableArray new];
 	}
 	
@@ -151,20 +152,22 @@
 	forceOutput = NO;
 	errLastJoin = NO;
 	
+	status = IRCChannelJoined;
+	
 	[self reloadMemberList];
 }
 
 - (void)deactivate
 {
-	isActive = NO;
-	
 	[members removeAllObjects];
 	
 	isOp = NO;
 	isHalfOp = NO;
-	
+	isActive = NO;
 	forceOutput = NO;
 	errLastJoin = NO;
+	
+	status = IRCChannelParted;
 	
 	[self reloadMemberList];
 }
@@ -272,8 +275,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autodrain];
-		
+		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -294,8 +296,7 @@
 	NSInteger n = [self indexOfMember:nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autodrain];
-		
+		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -309,14 +310,13 @@
 	if (n >= 0) {
 		IRCUser *m = [members safeObjectAtIndex:n];
 		
-		[[m retain] autodrain];
+		[m adrv];
 		
 		[self removeMember:toNick reload:NO];
 		
 		m.nick = toNick;
 		
-		[[[members safeObjectAtIndex:n] retain] autodrain];
-		
+		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 		
 		[self sortedInsert:m];
@@ -329,8 +329,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[[members safeObjectAtIndex:n] retain] autodrain];
-		
+		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -352,18 +351,7 @@
 			case 'v': m.v = value; break;
 		}
 		
-		if (client.isupport.supportsExtraModes == NO) {
-			if ([Preferences useStrictModeMatching]) {
-				if (m.a || m.q) {
-					m.q = NO;
-					m.a = NO;
-					m.o = YES;
-				}
-			}
-		}
-		
-		[[[members safeObjectAtIndex:n] retain] autodrain];
-		
+		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 		
 		[self sortedInsert:m];

@@ -4,6 +4,12 @@
 
 @class IRCClient;
 
+typedef enum {
+	IRCChannelParted,
+	IRCChannelJoining,
+	IRCChannelJoined,
+} ChannelStatus;
+
 @interface IRCChannel : IRCTreeItem
 {
 	IRCClient *client;
@@ -17,40 +23,43 @@
 	
 	NSString *logDate;
 	
-	BOOL isActive;
 	BOOL isOp;
 	BOOL isHalfOp;
 	BOOL isModeInit;
 	BOOL isNamesInit;
 	BOOL isWhoInit;
+	BOOL isActive;
+	BOOL errLastJoin;
+	
+	ChannelStatus status;
 	
 	BOOL forceOutput;
-	BOOL errLastJoin;
 	
 	FileLogger *logFile;
 }
 
-@property (nonatomic, assign) IRCClient *client;
-@property (nonatomic, readonly) IRCChannelMode *mode;
-@property (nonatomic, readonly) IRCChannelConfig *config;
-@property (nonatomic, readonly) NSMutableArray *members;
-@property (nonatomic, readonly) NSString *channelTypeString;
-@property (nonatomic, retain) NSString *topic;
-@property (nonatomic, retain) NSString *storedTopic;
-@property (nonatomic, retain) NSString *logDate;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isOp;
-@property (nonatomic, assign) BOOL isHalfOp;
-@property (nonatomic, assign) BOOL isModeInit;
-@property (nonatomic, assign) BOOL isNamesInit;
-@property (nonatomic, assign) BOOL isWhoInit;
-@property (nonatomic, assign) BOOL forceOutput;
-@property (nonatomic, assign) BOOL errLastJoin;
-@property (nonatomic, readonly) BOOL isChannel;
-@property (nonatomic, readonly) BOOL isTalk;
-@property (nonatomic, retain) FileLogger *logFile;
-@property (nonatomic, assign) NSString *name;
-@property (nonatomic, readonly) NSString *password;
+@property (assign) IRCClient *client;
+@property (readonly) IRCChannelMode *mode;
+@property (readonly) IRCChannelConfig *config;
+@property (readonly) NSMutableArray *members;
+@property (readonly) NSString *channelTypeString;
+@property (retain) NSString *topic;
+@property (retain) NSString *storedTopic;
+@property (retain) NSString *logDate;
+@property (assign) BOOL isOp;
+@property (assign) BOOL isHalfOp;
+@property (assign) BOOL isModeInit;
+@property (assign) BOOL isNamesInit;
+@property (assign) BOOL isWhoInit;
+@property (assign) BOOL isActive;
+@property (assign) BOOL forceOutput;
+@property (assign) BOOL errLastJoin;
+@property (assign) ChannelStatus status;
+@property (readonly) BOOL isChannel;
+@property (readonly) BOOL isTalk;
+@property (retain) FileLogger *logFile;
+@property (assign) NSString *name;
+@property (readonly) NSString *password;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;

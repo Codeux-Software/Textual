@@ -112,12 +112,12 @@
 	[dic setObject:server forKey:@"host"];
 	[dic setObject:server forKey:@"name"];
 	
-	[dic setObject:[NSNumber numberWithBool:useSSL] forKey:@"ssl"];
-	[dic setObject:[NSNumber numberWithInteger:port] forKey:@"port"];
+	[dic setBool:useSSL forKey:@"ssl"];
+	[dic setInteger:port forKey:@"port"];
+	[dic setBool:NO forKey:@"auto_connect"];
 	[dic setObject:[Preferences defaultNickname] forKey:@"nickname"];
 	[dic setObject:[Preferences defaultUsername] forKey:@"username"];
 	[dic setObject:[Preferences defaultRealname] forKey:@"realname"];
-	[dic setObject:[NSNumber numberWithBool:NO] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
 	
 	if (NSObjectIsNotEmpty(c)) {
@@ -125,8 +125,8 @@
 		
 		if ([c isChannelName]) {
 			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
-								 [NSNumber numberWithBool:YES], @"auto_join", 
-								 [NSNumber numberWithBool:YES], @"growl", nil]];	
+								 NSNumberWithBOOL(YES), @"auto_join", 
+								 NSNumberWithBOOL(YES), @"growl", nil]];	
 		}
 		
 		[dic setObject:channels forKey:@"channels"];

@@ -325,6 +325,7 @@
 		4CD0E6E312F1B78D00C8F016 /* GTMNSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DE12F1B78D00C8F016 /* GTMNSString+HTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD60CC11340B48D0050A57F /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD60CC01340B48D0050A57F /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
 		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -611,6 +612,7 @@
 		4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "Classes/Headers/GTMNSString+URLArguments.h"; sourceTree = SOURCE_ROOT; };
 		4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateReceipt.h; path = Classes/Headers/ValidateReceipt.h; sourceTree = SOURCE_ROOT; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
+		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
@@ -1203,6 +1205,7 @@
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
 				4CD0E5EC12F1B45900C8F016 /* NickCompletionStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */,
+				4CD60CC01340B48D0050A57F /* StaticDefinitions.h */,
 				4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */,
 			);
 			name = Controllers;
@@ -1581,6 +1584,7 @@
 				4CD0E6CE12F1B75300C8F016 /* URLOpener.h in Headers */,
 				4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */,
 				4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */,
+				4CD60CC11340B48D0050A57F /* StaticDefinitions.h in Headers */,
 				4CD0E65412F1B5B500C8F016 /* ViewTheme.h in Headers */,
 				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
@@ -2176,7 +2180,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

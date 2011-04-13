@@ -186,11 +186,13 @@
 					i386,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -207,11 +209,13 @@
 					i386,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -227,11 +231,13 @@
 					i386,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -260,11 +266,13 @@
 					i386,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = "";

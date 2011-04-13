@@ -11,12 +11,12 @@
 	NSGradient *gradient;
 }
 
-@property (nonatomic, assign) id dropDelegate;
-@property (nonatomic, retain) OtherTheme *theme;
-@property (nonatomic, retain) NSColor *bgColor;
-@property (nonatomic, retain) NSColor *topLineColor;
-@property (nonatomic, retain) NSColor *bottomLineColor;
-@property (nonatomic, retain) NSGradient *gradient;
+@property (assign) id dropDelegate;
+@property (retain) OtherTheme *theme;
+@property (retain) NSColor *bgColor;
+@property (retain) NSColor *topLineColor;
+@property (retain) NSColor *bottomLineColor;
+@property (retain) NSGradient *gradient;
 
 - (void)themeChanged;
 @end

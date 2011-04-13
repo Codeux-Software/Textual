@@ -50,7 +50,7 @@ typedef enum {
 + (BOOL)applicationRanOnLion;
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
-+ (NSNumber *)applicationProcessID;
++ (NSInteger)applicationProcessID;
 
 + (BOOL)forceReplaceExtensions; 
 
@@ -109,7 +109,6 @@ typedef enum {
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;
-+ (BOOL)useStrictModeMatching;
 
 + (BOOL)autoJoinOnInvite;
 + (BOOL)processChannelModes;

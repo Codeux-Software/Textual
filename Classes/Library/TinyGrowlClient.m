@@ -64,12 +64,12 @@
 	[dic setObject:title forKey:@"NotificationTitle"];
 	[dic setObject:desc forKey:@"NotificationDescription"];
 	
+	[dic setInteger:priority forKey:@"NotificationPriority"];
 	[dic setObject:[Preferences applicationIcon] forKey:@"NotificationIcon"];
-	[dic setObject:[Preferences applicationProcessID] forKey:@"ApplicationPID"];
-	[dic setObject:[NSNumber numberWithInteger:priority] forKey:@"NotificationPriority"];
+	[dic setInteger:[Preferences applicationProcessID] forKey:@"ApplicationPID"];
 	
 	if (sticky) {
-		[dic setObject:[NSNumber numberWithInteger:1] forKey:@"NotificationSticky"];
+		[dic setInteger:1 forKey:@"NotificationSticky"];
 	}
 	
 	if (context) {

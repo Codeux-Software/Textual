@@ -12,7 +12,7 @@
 #define IRCCI_AWAY				@"AWAY"
 #define IRCCI_BAN				@"BAN"
 #define IRCCI_CHATOPS			@"CHATOPS"
-#define IRCII_CLAG				@"CLAG"
+#define IRCCI_CLAG				@"CLAG"
 #define IRCCI_CLEAR				@"CLEAR"
 #define IRCCI_CLEARALL			@"CLEARALL"
 #define IRCCI_CLIENTINFO		@"CLIENTINFO"
@@ -43,7 +43,7 @@
 #define IRCCI_KICKBAN			@"KICKBAN"
 #define IRCCI_KILL				@"KILL"
 #define IRCCI_LEAVE				@"LEAVE"
-#define IRCII_LAGCHECK			@"LAGCHECK"
+#define IRCCI_LAGCHECK			@"LAGCHECK"
 #define IRCCI_LIST				@"LIST"
 #define IRCCI_LOAD_PLUGINS		@"LOAD_PLUGINS"
 #define IRCCI_LOCOPS			@"LOCOPS"
@@ -52,7 +52,7 @@
 #define IRCCI_MODE				@"MODE"
 #define IRCCI_MSG				@"MSG"
 #define IRCCI_MUTE				@"MUTE"
-#define IRCII_MYLAG				@"MYLAG"
+#define IRCCI_MYLAG				@"MYLAG"
 #define IRCCI_MYVERSION			@"MYVERSION"
 #define IRCCI_NACHAT			@"NACHAT"
 #define IRCCI_NAMES				@"NAMES"
@@ -94,8 +94,8 @@
 #define IRCCI_WHO				@"WHO"
 #define IRCCI_WHOIS				@"WHOIS"
 #define IRCCI_WHOWAS			@"WHOWAS"
-#define IRCII_SME				@"SME"
-#define IRCII_SMSG				@"SMSG"
+#define IRCCI_SME				@"SME"
+#define IRCCI_SMSG				@"SMSG"
 
 #define IRC_BODY_LEN			512
 #define MAX_BODY_LEN			480

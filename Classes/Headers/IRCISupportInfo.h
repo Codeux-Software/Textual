@@ -11,15 +11,23 @@
 	
 	NSString *networkName;
 	
-	BOOL supportsExtraModes;
+	NSString *userModeQPrefix;
+	NSString *userModeAPrefix;
+	NSString *userModeOPrefix;
+	NSString *userModeHPrefix;
+	NSString *userModeVPrefix;
 	
 	unsigned char modes[MODES_SIZE];
 }
 
-@property (nonatomic, readonly) NSInteger nickLen;
-@property (nonatomic, readonly) NSInteger modesCount;
-@property (nonatomic, retain) NSString *networkName;
-@property (nonatomic, assign) BOOL supportsExtraModes;
+@property (readonly) NSInteger nickLen;
+@property (readonly) NSInteger modesCount;
+@property (retain) NSString *networkName;
+@property (retain) NSString *userModeQPrefix;
+@property (retain) NSString *userModeAPrefix;
+@property (retain) NSString *userModeOPrefix;
+@property (retain) NSString *userModeHPrefix;
+@property (retain) NSString *userModeVPrefix;
 
 - (void)reset;
 - (BOOL)update:(NSString *)s;

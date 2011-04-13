@@ -2,7 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define COLOR_NUMBER_MAX	16
+#define COLOR_NUMBER_MAX	30
 
 @interface IRCUser (Private)
 - (void)decayConversation;
@@ -22,6 +22,7 @@
 @synthesize outgoingWeight;
 @synthesize nick;
 @synthesize lastFadedWeights;
+@synthesize supportInfo;
 
 - (id)init
 {
@@ -51,10 +52,10 @@
 		NSString *ident = ((username) ?: @"*");
 		
 		switch ([Preferences banFormat]) {
-			case HMBAN_FORMAT_WHNIN: return [NSString stringWithFormat:@"*!*@%@", address];	
+			case HMBAN_FORMAT_WHNIN:  return [NSString stringWithFormat:@"*!*@%@", address];	
 			case HMBAN_FORMAT_WHAINN: return [NSString stringWithFormat:@"*!%@@%@", ident, address];
 			case HMBAN_FORMAT_WHANNI: return [NSString stringWithFormat:@"%@!*%@", nick, address];
-			case HMBAN_FORMAT_EXACT: return [NSString stringWithFormat:@"%@!%@@%@", nick, ident, address];
+			case HMBAN_FORMAT_EXACT:  return [NSString stringWithFormat:@"%@!%@@%@", nick, ident, address];
 		}
 	}
 	
@@ -63,11 +64,11 @@
 
 - (char)mark
 {
-	if (q) return '~';
-	if (a) return '&';
-	if (o) return '@';
-	if (h) return '%';
-	if (v) return '+';
+	if (q) return [supportInfo.userModeQPrefix safeCharacterAtIndex:0];
+	if (a) return [supportInfo.userModeAPrefix safeCharacterAtIndex:0];
+	if (o) return [supportInfo.userModeOPrefix safeCharacterAtIndex:0];
+	if (h) return [supportInfo.userModeHPrefix safeCharacterAtIndex:0];
+	if (v) return [supportInfo.userModeVPrefix safeCharacterAtIndex:0];
 	
 	return ' ';
 }
@@ -154,7 +155,7 @@
 {
 	if ([other isKindOfClass:[IRCUser class]] == NO) return NO;
 	
-	return ([nick caseInsensitiveCompare:[(IRCUser *)other nick]] == NSOrderedSame);
+	return ([nick caseInsensitiveCompare:[(id)other nick]] == NSOrderedSame);
 }
 
 - (NSComparisonResult)compare:(IRCUser *)other
@@ -184,7 +185,7 @@
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
-	CGFloat mine = self.totalWeight;
+	CGFloat mine   = self.totalWeight;
 	CGFloat others = other.totalWeight;
 
 	if (mine > others) return NSOrderedAscending;

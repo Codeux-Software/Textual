@@ -31,6 +31,8 @@ typedef enum {
 	MEMBER_TYPE_MYSELF,
 } LogMemberType;
 
+#define IRCCommandFromLineType(t)	[LogLine lineTypeString:t]
+
 @interface LogLine : NSObject
 {
 	NSString *time;
@@ -52,18 +54,18 @@ typedef enum {
 	NSArray *excludeWords;
 }
 
-@property (nonatomic, retain) NSString *time;
-@property (nonatomic, retain) NSString *place;
-@property (nonatomic, retain) NSString *nick;
-@property (nonatomic, retain) NSString *body;
-@property (nonatomic, assign) LogLineType lineType;
-@property (nonatomic, assign) LogMemberType memberType;
-@property (nonatomic, retain) NSString *nickInfo;
-@property (nonatomic, retain) NSString *clickInfo;
-@property (nonatomic, assign) BOOL identified;
-@property (nonatomic, assign) NSInteger nickColorNumber;
-@property (nonatomic, retain) NSArray *keywords;
-@property (nonatomic, retain) NSArray *excludeWords;
+@property (retain) NSString *time;
+@property (retain) NSString *place;
+@property (retain) NSString *nick;
+@property (retain) NSString *body;
+@property (assign) LogLineType lineType;
+@property (assign) LogMemberType memberType;
+@property (retain) NSString *nickInfo;
+@property (retain) NSString *clickInfo;
+@property (assign) BOOL identified;
+@property (assign) NSInteger nickColorNumber;
+@property (retain) NSArray *keywords;
+@property (retain) NSArray *excludeWords;
 
 + (NSString *)lineTypeString:(LogLineType)type;
 + (NSString *)memberTypeString:(LogMemberType)type;

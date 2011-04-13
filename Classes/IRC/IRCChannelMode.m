@@ -122,7 +122,7 @@
 		[modeIndexes setInteger:[allModes indexOfObject:m] forKey:mode];
 	}
 	
-	return [allModes safeObjectAtIndex:[[modeIndexes objectForKey:mode] integerValue]];
+	return [allModes safeObjectAtIndex:[modeIndexes integerForKey:mode]];
 }
 
 - (NSString *)format:(BOOL)maskK

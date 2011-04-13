@@ -22,6 +22,8 @@
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars;
 
+- (NSString *)stringCharacterAtIndex:(NSInteger)index;
+
 - (NSString *)nicknameFromHostmask;
 - (NSString *)hostmaskFromRawString;
 
@@ -44,6 +46,8 @@
 - (NSString *)trim;
 
 - (id)attributedStringWithIRCFormatting;
+
+- (UniChar)safeCharacterAtIndex:(NSInteger)index;
 
 - (BOOL)isAlphaNumOnly;
 - (BOOL)isNumericOnly;

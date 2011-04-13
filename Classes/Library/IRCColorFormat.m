@@ -226,13 +226,13 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			if (boldText) {
 				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
 				
-				[result addAttribute:IRCTextFormatterBoldAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
+				[result addAttribute:IRCTextFormatterBoldAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 			}
 			
 			if (italicText) {
 				baseFont = [baseFont convertToItalics];
 				
-				[result addAttribute:IRCTextFormatterItalicAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
+				[result addAttribute:IRCTextFormatterItalicAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 			}
 			
 			[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
@@ -251,7 +251,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		}
 		
 		if (underlineText) {
-			[result addAttribute:IRCTextFormatterUnderlineAttributeName value:[NSNumber numberWithBool:YES] range:effectiveRange];
+			[result addAttribute:IRCTextFormatterUnderlineAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 		}
 		
 		[result removeAttribute:NSBackgroundColorAttributeName				 range:effectiveRange];
@@ -271,7 +271,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 					hasForegroundColor = YES;
 					
 					[result addAttribute:NSForegroundColorAttributeName				  value:foregroundColorD						 range:effectiveRange];
-					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:[NSNumber numberWithInteger:mappedColor] range:effectiveRange];
+					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:NSNumberWithInteger(mappedColor) range:effectiveRange];
 				}
 			}
 		} 
@@ -282,7 +282,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				
 				if (mappedColor >= 0 && mappedColor <= 15) {
 					[result addAttribute:NSBackgroundColorAttributeName				  value:backgroundColorD						 range:effectiveRange];
-					[result addAttribute:IRCTextFormatterBackgroundColorAttributeName value:[NSNumber numberWithInteger:mappedColor] range:effectiveRange];
+					[result addAttribute:IRCTextFormatterBackgroundColorAttributeName value:NSNumberWithInteger(mappedColor) range:effectiveRange];
 				}
 			}
 		}

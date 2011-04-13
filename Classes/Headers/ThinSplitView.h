@@ -13,10 +13,10 @@
 	BOOL inverted;
 }
 
-@property (nonatomic, assign) NSColor *dividerColor;
-@property (nonatomic, assign, setter=setFixedViewIndex:, getter=fixedViewIndex) NSInteger fixedViewIndex;
-@property (nonatomic, assign, setter=setPosition:, getter=position) NSInteger position;
-@property (nonatomic, assign, setter=setInverted:, getter=inverted) BOOL inverted;
-@property (nonatomic, assign, setter=setHidden:, getter=hidden) BOOL hidden;
-@property (nonatomic, setter=setDividerThickness:, getter=myDividerThickness) NSInteger myDividerThickness;
+@property (assign) NSColor *dividerColor;
+@property (assign, setter=setFixedViewIndex:, getter=fixedViewIndex) NSInteger fixedViewIndex;
+@property (assign, setter=setPosition:, getter=position) NSInteger position;
+@property (assign, setter=setInverted:, getter=inverted) BOOL inverted;
+@property (assign, setter=setHidden:, getter=hidden) BOOL hidden;
+@property (setter=setDividerThickness:, getter=myDividerThickness) NSInteger myDividerThickness;
 @end

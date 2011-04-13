@@ -2,58 +2,14 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #ifdef __OBJC__
-	/* System Headers */
 	#include <Cocoa/Cocoa.h>
 	#include <Carbon/Carbon.h>
 	#include <WebKit/WebKit.h>
 	#include <Security/Security.h>
 	#include <SystemConfiguration/SystemConfiguration.h>
 
-	/* Availability Macros */
-	#define _LOAD_MAC_OS_LION_LIBRARIES 1
+	#import "StaticDefinitions.h"
 
-	#if _LOAD_MAC_OS_LION_LIBRARIES
-		#if defined(MAC_OS_X_VERSION_10_7) 
-			#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-				#define _RUNNING_MAC_OS_LION
-			#endif	
-		#endif
-	#endif
-
-	#ifndef NSAppKitVersionNumber10_6
-		#define NSAppKitVersionNumber10_6 1038
-	#endif
-	
-	/* Textual Specific Frameworks */
-	#ifdef LinkTextualIRCFrameworks
-		#import <AutoHyperlinks/AutoHyperlinks.h>
-		#import <BlowfishEncryption/Encryption.h>
-	#endif
-
-	/* Establish Common Pointers */
-	#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
-	#define _NSPasteboard()							[NSPasteboard generalPasteboard]
-	#define _NSFileManager()						[NSFileManager defaultManager]
-	#define _NSFontManager()						[NSFontManager sharedFontManager]
-	#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
-	#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
-	#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
-	#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
-	#define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
-	#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
-
-	/* Miscellaneous functions to handle small tasks */
-	#define CFItemRefToID(s)					(id)s
-	#define PointerIsEmpty(s)					(s == NULL || s == nil)
-	#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
-	#define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
-
-    #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
-
-	/* Item types */
-	typedef unsigned long long TXFSLongInt; // filesizes
-
-    /* Textual Headers */
     #import "GlobalModels.h"
 	#import "NSObjectHelper.h"
 	#import "RegexKitLite.h"
@@ -101,6 +57,7 @@
 	#import "URLOpener.h"
 	#import "GTMDefines.h"
 	#import "SoundPlayer.h"
+	#import "NSNumberHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDataHelper.h"
@@ -110,7 +67,6 @@
 	#import "NSArrayHelper.h"
 	#import "NSWindowHelper.h"
 	#import "NSStringHelper.h"
-	#import "NSNumberHelper.h"
 	#import "IRCColorFormat.h"
 	#import "NSTextFieldHelper.h"
 	#import "GTMNSString+HTML.h"

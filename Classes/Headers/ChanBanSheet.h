@@ -9,9 +9,9 @@
 	IBOutlet ListView *table;
 }
 
-@property (nonatomic, retain) ListView *table;
-@property (nonatomic, retain) NSString *modeString;
-@property (nonatomic, retain) NSMutableArray *list;
+@property (retain) ListView *table;
+@property (retain) NSString *modeString;
+@property (retain) NSMutableArray *list;
 
 - (void)show;
 - (void)clear;

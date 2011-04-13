@@ -180,7 +180,7 @@
 	connected  = YES;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidConnect:self];
+		[[delegate iomt] tcpClientDidConnect:self];
 	}
 }
 
@@ -189,7 +189,7 @@
 	[self close];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidDisconnect:self];
+		[[delegate iomt] tcpClientDidDisconnect:self];
 	}	
 }
 
@@ -202,7 +202,7 @@
 		NSString *domain = [error domain];
 		
 		if ([conn badSSLCertErrorFound:error]) {
-			IRCClient *client = [delegate delegate];
+			IRCClient *client = [delegate performSelector:@selector(delegate)];
 			
 			client.disconnectType = DISCONNECT_BAD_SSL_CERT;
 		} else {
@@ -215,7 +215,7 @@
 			}
 			
 			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-				[[delegate invokeOnMainThread] tcpClient:self error:msg];
+				[[delegate iomt] tcpClient:self error:msg];
 			}
 		}
 	}
@@ -226,7 +226,7 @@
 	[self.buffer appendData:data];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidReceiveData:self];
+		[[delegate iomt] tcpClientDidReceiveData:self];
 	}
 	
 	[conn readDataWithTimeout:(-1) tag:0]; 
@@ -237,7 +237,7 @@
 	--sendQueueSize;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidSendData:self];
+		[[delegate iomt] tcpClientDidSendData:self];
 	}
 }
 

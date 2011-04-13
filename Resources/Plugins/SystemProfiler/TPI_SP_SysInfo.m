@@ -1,8 +1,10 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#import "TPI_SP_SysInfo.h"
+
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
-#define MEMORY_DIVISION_SIZE 1.073741824
+#define MEMORY_DIVISION_SIZE	1.073741824
 
 @implementation TPI_SP_SysInfo
 
@@ -13,19 +15,19 @@
 {
 	NSString *sysinfo = @"System Information:";
 	
-	NSString *_model = [self model];
-	NSString *_cpu_model = [self processor];
-	NSNumber *_cpu_count = [self processorCount];
-	NSString *_cpu_speed = [self processorClockSpeed]; 
-	NSInteger _cpu_count_int = [_cpu_count integerValue];
+	NSString *_model			= [self model];
+	NSString *_cpu_model		= [self processor];
+	NSNumber *_cpu_count		= [self processorCount];
+	NSString *_cpu_speed		= [self processorClockSpeed]; 
+	NSInteger _cpu_count_int	= [_cpu_count integerValue];
+			
+	NSString *_cpu_l2		= [self processorL2CacheSize];
+	NSString *_cpu_l3		= [self processorL3CacheSize];
+	NSString *_memory		= [self physicalMemorySize];
+	NSString *_gpu_model	= [self graphicsCardInfo];
+	NSString *_loadavg		= [self loadAveragesWithCores:_cpu_count_int];
 	
-	NSString *_cpu_l2 = [self processorL2CacheSize];
-	NSString *_cpu_l3 = [self processorL3CacheSize];
-	NSString *_memory = [self physicalMemorySize];
-	NSString *_gpu_model = [self graphicsCardInfo];
-	NSString *_loadavg = [self loadAveragesWithCores:_cpu_count_int];
-	
-	NSBundle *_bundle = [NSBundle bundleForClass:[self class]];
+	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 	
 	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
 	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+" withString:@" "];
@@ -35,7 +37,11 @@
 	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
 		
-		NSString *_exact_model = (([_all_models objectForKey:_model]) ?: _model);	
+		NSString *_exact_model = _model;
+		
+		if ([_all_models containsKey:_model]) {
+			_exact_model = [_all_models objectForKey:_model];
+		}
 		
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Model:\002 %@ \002•\002", _exact_model];
 	}
@@ -283,8 +289,8 @@
 					NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 					
 					if (diskInfo) {
-						TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
-						TXFSLongInt freeSpace = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+						TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+						TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 						
 						if (objectIndex == 0) {
 							[result appendFormat:@"%@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
@@ -371,22 +377,9 @@
 	CGLContextObj curr_ctx			= CGLGetCurrentContext();
 	
 	DevNullDestroyObject(YES, curr_ctx);
-    
-#ifdef _RUNNING_MAC_OS_LION
-    if ([Preferences applicationRanOnLion]) {
-        CGLPixelFormatAttribute attribs[] = {kCGLPFAOpenGLProfile, kCGLOGLPVersion_3_2_Core, 0};
 		
-        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-    } else {
-#endif
-		
-		CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
-		
-        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-		
-#ifdef _RUNNING_MAC_OS_LION
-    }
-#endif 
+	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
+	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
     
 	if (pixelFormat) {
 		CGLCreateContext(pixelFormat, NULL, &cglContext);
@@ -394,16 +387,9 @@
 		CGLSetCurrentContext(cglContext);
 		
 		if (cglContext) {
-			NSString *model   = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
-            NSString *version = [NSString stringWithCString:(const char *)glGetString(GL_VERSION)  encoding:NSASCIIStringEncoding];
-			
-            if ([version contains:@" "]) {
-                version = [version safeSubstringToIndex:[version stringPosition:@" "]];
-            }
+			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
             
-			model = [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
-            
-            return [NSString stringWithFormat:@"%@ (OpenGL v%@)", model, version];
+			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
 		}
 	}	
 	
@@ -415,8 +401,8 @@
 	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
-		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize]     longLongValue];
-		TXFSLongInt freeSpace  = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 		
 		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 	} else {

@@ -408,11 +408,82 @@ body .inline_nickname[colornumber='15'] {
 	color: #76a87f; 
 }
 
-/* mIRC Color Codes */
+body .sender[type=normal][colornumber='16'], 
+body .inline_nickname[colornumber='16'] { 
+	color: #006699;
+}
 
-/* DEVELOPERS DO NOT MODIFY ANY OF THE BELOW MENTIONED CSS ELEMENTS 
- THESE ELEMENTS MUST BE PRESERVED TO MATCH STATIC DEFENITIONS IN THE
- TEXTUAL SOURCE CODE. — DO NOT MODIFY OR DELETE! */
+body .sender[type=normal][colornumber='17'], 
+body .inline_nickname[colornumber='17'] { 
+	color: #993300;
+}
+
+body .sender[type=normal][colornumber='18'], 
+body .inline_nickname[colornumber='18'] { 
+	color: #C66CC;
+}
+
+body .sender[type=normal][colornumber='19'], 
+body .inline_nickname[colornumber='19'] { 
+	color: #FF9999;
+}
+
+body .sender[type=normal][colornumber='20'], 
+body .inline_nickname[colornumber='20'] { 
+	color: #996699;
+}
+
+body .sender[type=normal][colornumber='21'], 
+body .inline_nickname[colornumber='21'] { 
+	color: #3399CC;
+}
+
+body .sender[type=normal][colornumber='22'], 
+body .inline_nickname[colornumber='22'] { 
+	color: #FF0066;
+}
+
+body .sender[type=normal][colornumber='23'], 
+body .inline_nickname[colornumber='23'] { 
+	color: #CC6633;
+}
+
+body .sender[type=normal][colornumber='24'], 
+body .inline_nickname[colornumber='24'] { 
+	color: #CCFF00;
+}
+
+body .sender[type=normal][colornumber='25'], 
+body .inline_nickname[colornumber='25'] { 
+	color: #FFFFCC;
+}
+
+body .sender[type=normal][colornumber='26'], 
+body .inline_nickname[colornumber='26'] { 
+	color: #996666;
+}
+
+body .sender[type=normal][colornumber='27'], 
+body .inline_nickname[colornumber='27'] { 
+	color: #00CC00;
+}
+
+body .sender[type=normal][colornumber='28'], 
+body .inline_nickname[colornumber='28'] { 
+	color: #9933FF;
+}
+
+body .sender[type=normal][colornumber='29'], 
+body .inline_nickname[colornumber='29'] { 
+	color: #99CCCC;
+}
+
+body .sender[type=normal][colornumber='30'], 
+body .inline_nickname[colornumber='30'] { 
+	color: #CC3300;
+}
+
+/* mIRC Color Codes */
 
 .effect[color-number='0'] { color: #ffffff; }
 .effect[color-number='1'] { color: #000000; }
