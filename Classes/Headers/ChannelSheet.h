@@ -26,21 +26,21 @@
 	IBOutlet NSButton *growlCheck;
 }
 
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, retain) NSView *contentView;
-@property (nonatomic, retain) NSView *generalView;
-@property (nonatomic, retain) NSView *encryptView;
-@property (nonatomic, retain) IRCChannelConfig *config;
-@property (nonatomic, retain) NSTextField *nameText;
-@property (nonatomic, retain) NSTextField *passwordText;
-@property (nonatomic, retain) NSTextField *modeText;
-@property (nonatomic, retain) NSTextField *topicText;
-@property (nonatomic, retain) NSTextField *encryptKeyText;
-@property (nonatomic, retain) NSSegmentedControl *tabView;
-@property (nonatomic, retain) NSButton *autoJoinCheck;
-@property (nonatomic, retain) NSButton *ihighlights;
-@property (nonatomic, retain) NSButton *growlCheck;
+@property (assign) NSInteger uid;
+@property (assign) NSInteger cid;
+@property (retain) NSView *contentView;
+@property (retain) NSView *generalView;
+@property (retain) NSView *encryptView;
+@property (retain) IRCChannelConfig *config;
+@property (retain) NSTextField *nameText;
+@property (retain) NSTextField *passwordText;
+@property (retain) NSTextField *modeText;
+@property (retain) NSTextField *topicText;
+@property (retain) NSTextField *encryptKeyText;
+@property (retain) NSSegmentedControl *tabView;
+@property (retain) NSButton *autoJoinCheck;
+@property (retain) NSButton *ihighlights;
+@property (retain) NSButton *growlCheck;
 
 - (void)start;
 - (void)show;

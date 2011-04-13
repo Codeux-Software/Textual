@@ -16,7 +16,7 @@
 {
 	return [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
 }
-	
+
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 {
 	if (range.location == NSNotFound) return nil;
@@ -48,6 +48,28 @@
 	if ([self length] < anIndex || anIndex < 0) return nil;
 	
 	return [self substringToIndex:anIndex];
+}
+
+- (UniChar)safeCharacterAtIndex:(NSInteger)index
+{
+	if ([self length] < index || index < 0) return 0;
+	
+	if (NSObjectIsNotEmpty(self)) {
+		return [self characterAtIndex:index];
+	}
+	
+	return 0;
+}
+
+- (NSString *)stringCharacterAtIndex:(NSInteger)index
+{
+	if (NSObjectIsNotEmpty(self)) {
+		UniChar charValue = [self safeCharacterAtIndex:index];
+		
+		return [NSString stringWithUniChar:charValue];
+	}
+	
+	return nil;
 }
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars

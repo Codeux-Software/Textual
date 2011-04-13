@@ -9,7 +9,7 @@
 	
 	if ([lowerUrl hasSuffix:@".jpg"]
 		|| [lowerUrl hasSuffix:@".jpeg"] || [lowerUrl hasSuffix:@".png"]
-		|| [lowerUrl hasSuffix:@".gif"] || [lowerUrl hasSuffix:@".tif"]
+		|| [lowerUrl hasSuffix:@".gif"]  || [lowerUrl hasSuffix:@".tif"]
 		|| [lowerUrl hasSuffix:@".tiff"] || [lowerUrl hasSuffix:@".bmp"]) {
 		
 		return url;
@@ -32,6 +32,18 @@
 				return [NSString stringWithFormat:@"http://twitpic.com/show/large/%@", s];
 			}
 		}
+	} else if ([host hasSuffix:@"cl.ly"]) {
+		if (NSObjectIsNotEmpty(path)) {
+			NSString *s = [path safeSubstringFromIndex:1];
+			
+			if ([s contains:@"/"]) {
+				s = [s safeSubstringToIndex:[s stringPosition:@"/"]];
+			}
+			
+			if ([s length] == 20) {
+				return [NSString stringWithFormat:@"http://cl.ly/%@/content", s];
+			}
+		}
 	} else if ([host hasSuffix:@"tweetphoto.com"]) {
 		if (NSObjectIsNotEmpty(path)) {
 			return [NSString stringWithFormat:@"http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url encodeURIComponent]];
@@ -39,10 +51,6 @@
 	} else if ([host hasSuffix:@"yfrog.com"]) {
 		if (NSObjectIsNotEmpty(path)) {
 			return [NSString stringWithFormat:@"%@:iphone", url];
-		}
-	} else if ([host hasSuffix:@"cl.ly"]) {
-		if (NSObjectIsNotEmpty(path)) {
-			return [NSString stringWithFormat:@"%@/content", url];
 		}
 	} else if ([host hasSuffix:@"twitgoo.com"]) {
 		if (NSObjectIsNotEmpty(path)) {
@@ -76,7 +84,7 @@
 			NSString *photoId = [ary safeObjectAtIndex:2];
 			
 			if (userId.length && photoId.length > 8 && [photoId isNumericOnly]) {
-				NSString *userIdHead = [userId safeSubstringToIndex:1];
+				NSString *userIdHead  = [userId safeSubstringToIndex:1];
 				NSString *photoIdHead = [photoId safeSubstringToIndex:8];
 				
 				return [NSString stringWithFormat:@"http://img.f.hatena.ne.jp/images/fotolife/%@/%@/%@/%@.jpg", userIdHead, userId, photoIdHead, photoId];
@@ -138,7 +146,6 @@
 			NSString *path = u.path;
 			
 			if ([path hasPrefix:@"/watch/"]) {
-				
 				path = [path safeSubstringFromIndex:7];
 				
 				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {

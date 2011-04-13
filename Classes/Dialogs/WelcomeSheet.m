@@ -74,8 +74,8 @@
 	
 	[dic setObject:chans forKey:@"channels"];
 	[dic setObject:nickText.stringValue forKey:@"nick"];
+	[dic setBool:autoConnectCheck.state forKey:@"autoConnect"];
 	[dic setObject:[hostCombo.stringValue cleanedServerHostmask] forKey:@"host"];
-	[dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
 	
 	if ([delegate respondsToSelector:@selector(WelcomeSheet:onOK:)]) {
 		[delegate WelcomeSheet:self onOK:dic];

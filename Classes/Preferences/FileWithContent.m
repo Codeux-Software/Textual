@@ -19,6 +19,11 @@
 	[super dealloc];
 }
 
+- (NSString *)filename
+{
+	return filename;
+}
+
 - (void)setFilename:(NSString *)value
 {
 	if (filename != value) {

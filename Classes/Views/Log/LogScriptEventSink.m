@@ -61,7 +61,7 @@
 
 - (BOOL)shouldStopDoubleClick:(id)e
 {
-	NSInteger d = DOUBLE_CLICK_RADIUS;
+	NSInteger d  = DOUBLE_CLICK_RADIUS;
 	NSInteger cx = [[e valueForKey:@"clientX"] integerValue];
 	NSInteger cy = [[e valueForKey:@"clientY"] integerValue];
 	

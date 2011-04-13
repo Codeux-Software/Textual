@@ -12,10 +12,10 @@
 	IBOutlet NSPopUpButton *channelPopup;
 }
 
-@property (nonatomic, retain) NSArray *nicks;
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) NSTextField *titleLabel;
-@property (nonatomic, retain) NSPopUpButton *channelPopup;
+@property (retain) NSArray *nicks;
+@property (assign) NSInteger uid;
+@property (retain) NSTextField *titleLabel;
+@property (retain) NSPopUpButton *channelPopup;
 
 - (void)startWithChannels:(NSArray *)channels;
 - (void)invite:(id)sender;

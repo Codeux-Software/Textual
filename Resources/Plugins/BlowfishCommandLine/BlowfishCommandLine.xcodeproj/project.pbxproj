@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CEE0D9E12E09A0800C5096E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0D9D12E09A0800C5096E /* BlowfishEncryption.framework */; };
+		4CE221C913423667007AFFAB /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE221C813423667007AFFAB /* BlowfishEncryption.framework */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4CEE0D9D12E09A0800C5096E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = SOURCE_ROOT; };
+		4CE221C813423667007AFFAB /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -29,8 +29,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
-				4CEE0D9E12E09A0800C5096E /* BlowfishEncryption.framework in Frameworks */,
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
+				4CE221C913423667007AFFAB /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +52,8 @@
 			isa = PBXGroup;
 			children = (
 				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
-				4CEE0D9D12E09A0800C5096E /* BlowfishEncryption.framework */,
 				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				4CE221C813423667007AFFAB /* BlowfishEncryption.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -142,6 +142,10 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -156,6 +160,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = BlowfishCommandLine;
@@ -172,10 +180,15 @@
 					x86_64,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../../Classes/Headers/**",
+					"${PROJECT_DIR}/../../../Frameworks/**",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -191,9 +204,14 @@
 					x86_64,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../../Classes/Headers/**",
+					"${PROJECT_DIR}/../../../Frameworks/**",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -209,9 +227,14 @@
 					x86_64,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../../Classes/Headers/**",
+					"${PROJECT_DIR}/../../../Frameworks/**",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -222,6 +245,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = BlowfishCommandLine;
@@ -238,9 +265,14 @@
 					x86_64,
 				);
 				CONFIGURATION_BUILD_DIR = ../Compiled;
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../../Classes/Headers/**",
+					"${PROJECT_DIR}/../../../Frameworks/**",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -251,6 +283,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Frameworks/Blowfish\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = BlowfishCommandLine;

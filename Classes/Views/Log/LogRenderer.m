@@ -89,8 +89,8 @@ NSInteger mapColorValue(NSColor *color)
 					CGFloat greenc = [mapped greenComponent];
 					CGFloat alphac = [mapped alphaComponent];
 					
-					if (_DirtyCGFloatsMatch(_redc, redc)     && _DirtyCGFloatsMatch(_bluec, bluec) &&
-						_DirtyCGFloatsMatch(_greenc, greenc) && _DirtyCGFloatsMatch(_alphac, alphac)) {
+					if (DirtyCGFloatsMatch(_redc, redc)     && DirtyCGFloatsMatch(_bluec, bluec) &&
+						DirtyCGFloatsMatch(_greenc, greenc) && DirtyCGFloatsMatch(_alphac, alphac)) {
 						
 						return i;
 					}
@@ -150,13 +150,13 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 		if (attr & BOLD_ATTR) {
 			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
 			
-			[body addAttribute:IRCTextFormatterBoldAttributeName value:[NSNumber numberWithBool:YES] range:r];
+			[body addAttribute:IRCTextFormatterBoldAttributeName value:NSNumberWithBOOL(YES) range:r];
 		}
 		
 		if (attr & ITALIC_ATTR) {
 			boldItalic = [boldItalic convertToItalics];
 			
-			[body addAttribute:IRCTextFormatterItalicAttributeName value:[NSNumber numberWithBool:YES] range:r];
+			[body addAttribute:IRCTextFormatterItalicAttributeName value:NSNumberWithBOOL(YES) range:r];
 		}
 		
 		if (boldItalic) {
@@ -164,7 +164,7 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 		}
 		
 		if (attr & UNDERLINE_ATTR) {
-			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:[NSNumber numberWithBool:YES]					range:r];
+			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:NSNumberWithBOOL(YES)					range:r];
 			[body addAttribute:NSUnderlineStyleAttributeName		  value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
 		}
 		
@@ -172,14 +172,14 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 			NSInteger colorCode = (attr & TEXT_COLOR_MASK);
 			
 			[body addAttribute:NSForegroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
-			[body addAttribute:IRCTextFormatterForegroundColorAttributeName value:[NSNumber numberWithInteger:colorCode] range:r];
+			[body addAttribute:IRCTextFormatterForegroundColorAttributeName value:NSNumberWithInteger(colorCode) range:r];
 		}
 		
 		if (attr & BACKGROUND_COLOR_ATTR) {
 			NSInteger colorCode = ((attr & BACKGROUND_COLOR_MASK) >> 4);
 			
 			[body addAttribute:NSBackgroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
-			[body addAttribute:IRCTextFormatterBackgroundColorAttributeName value:[NSNumber numberWithInteger:colorCode] range:r];
+			[body addAttribute:IRCTextFormatterBackgroundColorAttributeName value:NSNumberWithInteger(colorCode) range:r];
 		}
 	}
 	

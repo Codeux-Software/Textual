@@ -7,15 +7,14 @@
 	PluginProtocol *pluginPrimaryClass;
 }
 
-@property (nonatomic, retain) NSBundle *pluginBundle;
-@property (nonatomic, retain) PluginProtocol *pluginPrimaryClass;
+@property (retain) NSBundle *pluginBundle;
+@property (retain) PluginProtocol *pluginPrimaryClass;
 
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle
 				andIRCWorld:(IRCWorld *)world
-		  withUserInputDict:(NSMutableDictionary *)newUserDict
-		withServerInputDict:(NSMutableDictionary *)newServerDict
-	  withUserInputDictRefs:(NSMutableDictionary **)userDict
-	withServerInputDictRefs:(NSMutableDictionary **)serverDict;
+		  withUserInputDict:(NSMutableDictionary **)userDict
+		withServerInputDict:(NSMutableDictionary **)serverDict
+		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict;
 
 @end

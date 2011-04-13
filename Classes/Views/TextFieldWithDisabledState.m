@@ -8,7 +8,7 @@
 	NSColor *color = ((value) ? [NSColor controlTextColor] : [NSColor disabledControlTextColor]);
 	
 	[super setEnabled:value];
-	[self setTextColor:color];
+	[super setTextColor:color];
 }
 
 @end

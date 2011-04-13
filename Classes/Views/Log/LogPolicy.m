@@ -110,7 +110,7 @@
 		[nick autodrain];
 		nick = nil;
 		
-		NSMenuItem *userOptions = [[NSMenuItem new] autodrain];
+		NSMenuItem *userOptions = [NSMenuItem newad];
 		
 		[userOptions setTitle:TXTFLS(@"USER_OPTIONS_MENU_ITEM", menuController.pointedNick)];
 		
@@ -189,7 +189,7 @@
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
-	NSInteger action = [[actionInformation objectForKey:WebActionNavigationTypeKey] integerValue];
+	NSInteger action = [actionInformation integerForKey:WebActionNavigationTypeKey];
 	
 	switch (action) {
 		case WebNavigationTypeLinkClicked:

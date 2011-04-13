@@ -11,10 +11,10 @@
     BOOL _spellingAlreadyToggled;
 }
 
-@property (nonatomic, readonly) id _oldInputValue;
-@property (nonatomic, readonly) NSColor *_oldTextColor;
-@property (nonatomic, readonly) BOOL _usesCustomUndoManager;
-@property (nonatomic, readonly) BOOL _spellingAlreadyToggled;
+@property (readonly) id _oldInputValue;
+@property (readonly) NSColor *_oldTextColor;
+@property (readonly) BOOL _usesCustomUndoManager;
+@property (readonly) BOOL _spellingAlreadyToggled;
 
 - (void)setFontColor:(NSColor *)color;
 

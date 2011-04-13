@@ -134,15 +134,15 @@ static NSMutableDictionary *commandIndex = nil;
 	[commandIndex setObject:@"89" forKey:IRCCI_ADCHAT]; 
 	[commandIndex setObject:@"90" forKey:IRCCI_RESETFILES];
 	[commandIndex setObject:@"91" forKey:IRCCI_LOAD_PLUGINS];
-	[commandIndex setObject:@"92" forKey:IRCII_SME];
-	[commandIndex setObject:@"93" forKey:IRCII_SMSG];
-	[commandIndex setObject:@"94" forKey:IRCII_LAGCHECK];
-	[commandIndex setObject:@"95" forKey:IRCII_MYLAG];
+	[commandIndex setObject:@"92" forKey:IRCCI_SME];
+	[commandIndex setObject:@"93" forKey:IRCCI_SMSG];
+	[commandIndex setObject:@"94" forKey:IRCCI_LAGCHECK];
+	[commandIndex setObject:@"95" forKey:IRCCI_MYLAG];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 
 {
-	return [[commandIndex objectForKey:[command uppercaseString]] integerValue];
+	return [commandIndex integerForKey:[command uppercaseString]];
 }
 
 #pragma mark -
@@ -163,9 +163,9 @@ static NSMutableDictionary *commandIndex = nil;
 	return [textualPlist objectForKey:@"CFBundleName"];
 }
 
-+ (NSNumber *)applicationProcessID
++ (NSInteger)applicationProcessID
 {
-	return [NSNumber numberWithInteger:[[NSProcessInfo processInfo] processIdentifier]];
+	return [[NSProcessInfo processInfo] processIdentifier];
 }
 
 #pragma mark -
@@ -455,11 +455,6 @@ static NSMutableDictionary *commandIndex = nil;
 + (BOOL)countPublicMessagesInIconBadge
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
-}
-
-+ (BOOL)useStrictModeMatching
-{
-	return [_NSUserDefaults() boolForKey:@"Preferences.General.strict_mode_matching"];
 }
 
 + (BOOL)forceReplaceExtensions
@@ -941,30 +936,20 @@ static NSInteger totalRunTime = 0;
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
 	} 
 	
-	// ====================================================== //
-	
 	startUpTime = [[NSDate date] timeIntervalSince1970];
-	
-	NSString *nick = NSUserName();
-	
-	nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-	nick = [TXRegularExpression string:nick replacedByRegex:@"[^a-zA-Z0-9-_]" withString:@""];
-	
-	if (NSObjectIsEmpty(nick)) {
-		nick = @"User";
-	}
 	
 	// ====================================================== //
 	
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
+	[d setBool:YES forKey:@"SpellChecking"];
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
 	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
-	[d setObject:nick forKey:@"Preferences.Identity.nickname"];
 	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
 	[d setBool:NO forKey:@"Preferences.General.rtl_formatting"];
 	[d setBool:YES forKey:@"Preferences.General.display_servmotd"];
+	[d setObject:@"Guest" forKey:@"Preferences.Identity.nickname"];
 	[d setObject:@"textual" forKey:@"Preferences.Identity.username"];
 	[d setObject:@"Textual User" forKey:@"Preferences.Identity.realname"];
 	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
@@ -1019,7 +1004,6 @@ static NSInteger totalRunTime = 0;
 	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
 	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
-	[d setBool:NO forKey:@"Preferences.General.strict_mode_matching"];
 	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
 	[d setInteger:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
 	[d setInteger:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];

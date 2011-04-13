@@ -80,22 +80,36 @@
 	return nil;
 }
 
-- (BOOL)containsKey:(id)anObject
+- (void *)pointerForKey:(NSString *)key
+{
+	id obj = [self objectForKey:key];
+	
+	if ([obj isKindOfClass:[NSValue class]]) {
+		return [obj pointerValue];
+	}
+	
+	return nil;
+}
+
+- (BOOL)containsKey:(NSString *)baseKey
 {	
-	return BOOLValueFromObject([self objectForKey:anObject]);
+	return BOOLValueFromObject([self objectForKey:baseKey]);
 }
 	
-- (BOOL)containsKeyIgnoringCase:(id)anObject
+- (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
 {
-	for (id object in [self allKeys]) {
-		if ([object isKindOfClass:[NSString class]]) {
-			if ([object isEqualNoCase:anObject]) {
-				return YES;
-			}
+	return NSObjectIsNotEmpty([self keyIgnoringCase:baseKey]);
+}
+
+- (NSString *)keyIgnoringCase:(NSString *)baseKey
+{
+	for (NSString *key in [self allKeys]) {
+		if ([key isEqualNoCase:baseKey]) {
+			return key;
 		} 
 	}
 	
-	return [self containsKey:anObject];
+	return nil;
 }
 
 @end
@@ -104,22 +118,27 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	[self setObject:[NSNumber numberWithBool:value] forKey:key];
+	[self setObject:NSNumberWithBOOL(value) forKey:key];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	[self setObject:[NSNumber numberWithInteger:value] forKey:key];
+	[self setObject:NSNumberWithInteger(value) forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	[self setObject:[NSNumber numberWithLongLong:value] forKey:key];
+	[self setObject:NSNumberWithLongLong(value) forKey:key];
 }
 
 - (void)setDouble:(double)value forKey:(NSString *)key
 {
-	[self setObject:[NSNumber numberWithDouble:value] forKey:key];
+	[self setObject:NSNumberWithDouble(value) forKey:key];
+}
+
+- (void)setPointer:(void *)value forKey:(NSString *)key
+{
+	[self setObject:[NSValue valueWithPointer:value] forKey:key];
 }
 
 @end

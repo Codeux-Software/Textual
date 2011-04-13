@@ -5,6 +5,11 @@
 
 @interface PluginProtocol : NSObject
 
+/* Supported Commands */
+- (NSArray *)pluginSupportsUserInputCommands;
+- (NSArray *)pluginSupportsServerInputCommands;
+
+/* Supported Commands Delegates */
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;
@@ -13,12 +18,14 @@
 						 sender:(NSDictionary *)senderDict 
 						message:(NSDictionary *)messageDict;
 
-- (NSArray *)pluginSupportsUserInputCommands;
-- (NSArray *)pluginSupportsServerInputCommands;
+/* Output Rules */
+- (NSDictionary *)pluginOutputDisplayRules;
 
+/* Allocation & Deallocation */
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world;
 - (void)pluginUnloadedFromMemory;
 
+/* Preference Pane */
 - (NSView *)preferencesView;
 - (NSString *)preferencesMenuItemName;
 

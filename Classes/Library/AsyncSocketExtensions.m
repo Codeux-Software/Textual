@@ -12,7 +12,8 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 
 - (void)useSSL
 {
-	IRCClient *client = [[theDelegate delegate] delegate]; // Everything is interconnected
+	IRCConnection *conn   = [theDelegate performSelector:@selector(delegate)];
+	IRCClient     *client = [conn        performSelector:@selector(delegate)];
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
@@ -37,21 +38,21 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	
 	if ([domain isEqualToString:txCFStreamErrorDomainSSL]) {
 		NSArray *errorCodes = [NSArray arrayWithObjects:
-							   [NSNumber numberWithInteger:errSSLBadCert], 
-							   [NSNumber numberWithInteger:errSSLNoRootCert], 
-							   [NSNumber numberWithInteger:errSSLCertExpired],  
-							   [NSNumber numberWithInteger:errSSLPeerBadCert], 
-							   [NSNumber numberWithInteger:errSSLPeerCertRevoked], 
-							   [NSNumber numberWithInteger:errSSLPeerCertExpired], 
-							   [NSNumber numberWithInteger:errSSLPeerCertUnknown], 
-							   [NSNumber numberWithInteger:errSSLUnknownRootCert], 
-							   [NSNumber numberWithInteger:errSSLCertNotYetValid],
-							   [NSNumber numberWithInteger:errSSLXCertChainInvalid], 
-							   [NSNumber numberWithInteger:errSSLPeerUnsupportedCert], 
-							   [NSNumber numberWithInteger:errSSLPeerUnknownCA], 
-							   [NSNumber numberWithInteger:errSSLHostNameMismatch], nil];
+							   NSNumberWithInteger(errSSLBadCert), 
+							   NSNumberWithInteger(errSSLNoRootCert), 
+							   NSNumberWithInteger(errSSLCertExpired),  
+							   NSNumberWithInteger(errSSLPeerBadCert), 
+							   NSNumberWithInteger(errSSLPeerCertRevoked), 
+							   NSNumberWithInteger(errSSLPeerCertExpired), 
+							   NSNumberWithInteger(errSSLPeerCertUnknown), 
+							   NSNumberWithInteger(errSSLUnknownRootCert), 
+							   NSNumberWithInteger(errSSLCertNotYetValid),
+							   NSNumberWithInteger(errSSLXCertChainInvalid), 
+							   NSNumberWithInteger(errSSLPeerUnsupportedCert), 
+							   NSNumberWithInteger(errSSLPeerUnknownCA), 
+							   NSNumberWithInteger(errSSLHostNameMismatch), nil];
 		
-		NSNumber *errorCode = [NSNumber numberWithInteger:code];
+		NSNumber *errorCode = NSNumberWithInteger(code);
 		
 		return [errorCodes containsObject:errorCode];
 	}
@@ -94,8 +95,8 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion5) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
 	}
 	
-	[settings setObject:host								forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
-	[settings setObject:[NSNumber numberWithInteger:port]	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
+	[settings setObject:host	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
+	[settings setInteger:port	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
 	
 	if (NSObjectIsNotEmpty(user))		[settings setObject:user		forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
 	if (NSObjectIsNotEmpty(password))	[settings setObject:password	forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
