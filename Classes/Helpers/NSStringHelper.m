@@ -685,6 +685,15 @@ BOOL isUnicharDigit(unichar c)
 
 @implementation NSMutableString (NSMutableStringHelper)
 
+- (void)safeDeleteCharactersInRange:(NSRange)range
+{
+	if (range.location == NSNotFound) return;
+	if (range.length > [self length]) return;
+	if (range.location > [self length]) return;
+	
+	[self deleteCharactersInRange:range];
+}
+
 - (NSString *)getToken
 {
 	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
@@ -699,7 +708,7 @@ BOOL isUnicharDigit(unichar c)
 			pos++;
 		}
 		
-		[self deleteCharactersInRange:NSMakeRange(0, pos)];
+		[self safeDeleteCharactersInRange:NSMakeRange(0, pos)];
 		
 		return result;
 	}
@@ -760,7 +769,7 @@ BOOL isUnicharDigit(unichar c)
 				right = len;
 			}
 			
-			[self deleteCharactersInRange:NSMakeRange(0, right)];
+			[self safeDeleteCharactersInRange:NSMakeRange(0, right)];
 			
 			return result;
 		}

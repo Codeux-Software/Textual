@@ -101,6 +101,7 @@
 @interface NSMutableString (NSMutableStringHelper)
 - (NSString *)getToken;
 - (NSString *)getIgnoreToken;
+- (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
 
 @interface NSAttributedString (NSAttributedStringHelper)
