@@ -4558,14 +4558,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			IRCChannel *c = [self findChannel:chname];
 			
-			/*if (c && c.isActive == NO && c.status == IRCChannelJoining) {
-			 if (NSObjectIsEmpty(c.members)) {
-			 // Do Stuff Here
-			 }
-			 
-			 c.isActive = YES;
-			 }*/
-			
 			if (c && c.isNamesInit == NO) {
 				NSArray *ary = [trail componentsSeparatedByString:@" "];
 				
