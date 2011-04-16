@@ -24,21 +24,21 @@
 	AddressBook *ignore;
 }
 
-@property (assign) BOOL newItem;
-@property (retain) AddressBook *ignore;
-@property (retain) NSTextField *hostmask;
-@property (retain) NSButton *ignorePublicMsg;
-@property (retain) NSButton *ignorePrivateMsg;
-@property (retain) NSButton *ignoreHighlights;
-@property (retain) NSButton *ignoreNotices;
-@property (retain) NSButton *ignoreCTCP;
-@property (retain) NSButton *ignoreJPQE;
-@property (retain) NSButton *notifyJoins;
-@property (retain) NSButton *notifyWhoisJoins;
-@property (retain) NSButton *ignorePMHighlights;
-@property (retain) NSView *contentView;
-@property (retain) NSView *notificationView;
-@property (retain) NSView *ignoreItemView;
+@property (nonatomic, assign) BOOL newItem;
+@property (nonatomic, retain) AddressBook *ignore;
+@property (nonatomic, retain) NSTextField *hostmask;
+@property (nonatomic, retain) NSButton *ignorePublicMsg;
+@property (nonatomic, retain) NSButton *ignorePrivateMsg;
+@property (nonatomic, retain) NSButton *ignoreHighlights;
+@property (nonatomic, retain) NSButton *ignoreNotices;
+@property (nonatomic, retain) NSButton *ignoreCTCP;
+@property (nonatomic, retain) NSButton *ignoreJPQE;
+@property (nonatomic, retain) NSButton *notifyJoins;
+@property (nonatomic, retain) NSButton *notifyWhoisJoins;
+@property (nonatomic, retain) NSButton *ignorePMHighlights;
+@property (nonatomic, retain) NSView *contentView;
+@property (nonatomic, retain) NSView *notificationView;
+@property (nonatomic, retain) NSView *ignoreItemView;
 
 - (void)onMenuBarItemChanged:(id)sender;
 - (void)start;

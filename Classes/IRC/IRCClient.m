@@ -515,7 +515,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			for (NSString *ruleRegex in ruleData) {
 				if ([TXRegularExpression string:raw isMatchedByRegex:ruleRegex]) {
 					NSArray *regexData = [ruleData arrayForKey:ruleRegex];
-				
+					
 					BOOL console = [regexData boolAtIndex:0];
 					BOOL channel = [regexData boolAtIndex:1];
 					BOOL queries = [regexData boolAtIndex:2];
@@ -989,7 +989,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (NSObjectIsEmpty(password)) password = channel.config.password;
 	if (NSObjectIsEmpty(password)) password = nil;
 	
-	[self send:IRCCI_JOIN, channel.name, password, nil];
+	[self forceJoinChannel:channel.name password:password];
 }
 
 - (void)joinUnlistedChannel:(NSString *)channel password:(NSString *)password
@@ -1001,8 +1001,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return [self joinChannel:chan password:password];
 		}
 		
-		[self send:IRCCI_JOIN, channel, password, nil];
+		[self forceJoinChannel:channel password:password];
 	}
+}
+
+- (void)forceJoinChannel:(NSString *)channel password:(NSString *)password
+{
+	[self send:IRCCI_JOIN, channel, password, nil];
 }
 
 - (void)partUnlistedChannel:(NSString *)channel withComment:(NSString *)comment
@@ -2070,11 +2075,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (c) {
 				NSString *pass = nil;
 				
-				if ([c.mode modeIsDefined:@"k"]) pass = [c.mode modeInfoFor:@"k"].param;
-				if (NSObjectIsEmpty(pass)) pass = nil;
+				if ([c.mode modeIsDefined:@"k"]) {
+					pass = [c.mode modeInfoFor:@"k"].param;
+				}
 				
 				[self partChannel:c];
-				[self joinChannel:c password:pass];
+				[self forceJoinChannel:c.name password:pass];
 			}
 			
 			return YES;
@@ -2481,12 +2487,65 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
+		case 96: // Command: ZLINE
+		case 97: // Command: GLINE
+		case 98: // Command: GZLINE
+		{
+			NSString *peer   = [s getToken];
+			
+			if ([peer hasPrefix:@"-"]) {
+				[self send:cmd, peer, s, nil];
+			} else {
+				NSString *time   = [s getToken];
+				NSString *reason = s;
+				
+				if (peer) {
+					reason = [reason trim];
+					
+					if (NSObjectIsEmpty(reason) && NSObjectIsNotEmpty(time)) {
+						reason = [Preferences IRCopDefaultGlineMessage];
+					}
+					
+					[self send:cmd, peer, time, reason, nil];
+				}
+			}
+			
+			return YES;
+			break;
+		}
+		case 99:  // Command: SHUN
+		case 100: // Command: TEMPSHUN
+		{
+			NSString *peer   = [s getToken];
+			
+			if ([peer hasPrefix:@"-"]) {
+				[self send:cmd, peer, s, nil];
+			} else {
+				NSString *time   = [s getToken];
+				NSString *reason = s;
+				
+				if (peer) {
+					reason = [reason trim];
+					
+					if (NSObjectIsEmpty(reason) && ((NSObjectIsNotEmpty(time) && [cmd isEqualToString:IRCCI_SHUN]) || 
+													[cmd isEqualToString:IRCCI_TEMPSHUN])) {
+						
+						reason = [Preferences IRCopDefaultShunMessage];
+					}
+					
+					[self send:cmd, peer, time, reason, nil];
+				}
+			}
+			
+			return YES;
+			break;
+		}
 		default:
 		{
 			NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
 			
 			BOOL scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-			BOOL pluginFound = BOOLReverseValue(PointerIsEmpty([[world bundlesForUserInput] objectForKey:cmd]));
+			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
 			
 			if (pluginFound && scriptFound) {
 				NSLog(@"Command %@ shared by both a script and plugin. Sending to server because of inability to determine priority.", cmd);
@@ -3163,17 +3222,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[self printDebugInformation:m channel:[world selectedChannelOn:self]];
 }
-	 
+
 - (void)printDebugInformationToConsole:(NSString *)m
 {
 	[self printDebugInformation:m channel:nil];
 }
-	 
+
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
 	[self printBoth:channel type:LINE_TYPE_DEBUG text:m];
 }
-	 
+
 - (void)printErrorReply:(IRCMessage *)m
 {
 	[self printErrorReply:m channel:nil];
@@ -4500,12 +4559,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			IRCChannel *c = [self findChannel:chname];
 			
 			/*if (c && c.isActive == NO && c.status == IRCChannelJoining) {
-				if (NSObjectIsEmpty(c.members)) {
-					// Do Stuff Here
-				}
-				
-				c.isActive = YES;
-			}*/
+			 if (NSObjectIsEmpty(c.members)) {
+			 // Do Stuff Here
+			 }
+			 
+			 c.isActive = YES;
+			 }*/
 			
 			if (c && c.isNamesInit == NO) {
 				NSArray *ary = [trail componentsSeparatedByString:@" "];
@@ -4984,11 +5043,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (config.isTrustedConnection == NO) {
 			BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
-																  title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
-														  defaultButton:TXTLS(@"TRUST_BUTTON") 
-														alternateButton:TXTLS(@"CANCEL_BUTTON") 
-														 suppressionKey:suppKey
-														suppressionText:@"-"];
+														   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
+												   defaultButton:TXTLS(@"TRUST_BUTTON") 
+												 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+												  suppressionKey:suppKey
+												 suppressionText:@"-"];
 			
 			[_NSUserDefaults() setBool:status forKey:suppKey];
 			

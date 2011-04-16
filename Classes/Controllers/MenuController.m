@@ -171,13 +171,13 @@
 			return CONNECTED;
 			break;
 		case 522:	// copy server
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 523:	// delete server
 			return NOT_CONNECTED;
 			break;
 		case 541:	// server property
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 592:	// textual logs
 			return [Preferences logTranscript];
@@ -228,7 +228,7 @@
 			} else {
 				[item setHidden:NO];
 				
-				return BOOLReverseValue(PointerIsEmpty(u));
+				return BOOLValueFromObject(u);
 			}
 			
 			break;
@@ -245,7 +245,7 @@
 			
 			break;
 		case 691:	// add channel - server menu
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 2005:	// invite
 		{

@@ -20,18 +20,18 @@
 	NSString *hostmaskRegex;
 }
 
-@property (assign) NSInteger cid;
-@property (retain) NSString *hostmask;
-@property (assign) BOOL ignorePublicMsg;
-@property (assign) BOOL ignorePrivateMsg;
-@property (assign) BOOL ignoreHighlights;
-@property (assign) BOOL ignoreNotices;
-@property (assign) BOOL ignoreCTCP;
-@property (assign) BOOL ignoreJPQE;
-@property (assign) BOOL notifyJoins;
-@property (retain) NSString *hostmaskRegex;
-@property (assign) BOOL ignorePMHighlights;
-@property (assign) BOOL notifyWhoisJoins;
+@property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, retain) NSString *hostmask;
+@property (nonatomic, assign) BOOL ignorePublicMsg;
+@property (nonatomic, assign) BOOL ignorePrivateMsg;
+@property (nonatomic, assign) BOOL ignoreHighlights;
+@property (nonatomic, assign) BOOL ignoreNotices;
+@property (nonatomic, assign) BOOL ignoreCTCP;
+@property (nonatomic, assign) BOOL ignoreJPQE;
+@property (nonatomic, assign) BOOL notifyJoins;
+@property (nonatomic, retain) NSString *hostmaskRegex;
+@property (nonatomic, assign) BOOL ignorePMHighlights;
+@property (nonatomic, assign) BOOL notifyWhoisJoins;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;

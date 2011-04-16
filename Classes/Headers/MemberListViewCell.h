@@ -9,10 +9,10 @@
 	NSMutableParagraphStyle *nickStyle;
 }
 
-@property (retain) IRCUser *member;
-@property (retain) OtherTheme *theme;
-@property (retain) NSMutableParagraphStyle *markStyle;
-@property (retain) NSMutableParagraphStyle *nickStyle;
+@property (nonatomic, retain) IRCUser *member;
+@property (nonatomic, retain) OtherTheme *theme;
+@property (nonatomic, retain) NSMutableParagraphStyle *markStyle;
+@property (nonatomic, retain) NSMutableParagraphStyle *nickStyle;
 
 + (MemberListViewCell *)initWithTheme:(OtherTheme *)theme;
 - (void)themeChanged;

@@ -49,6 +49,8 @@
 		4C3F693B12FD958500B50CB9 /* BlowfishCommandLine.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C858F2D12E0A01200F3FAE0 /* BlowfishCommandLine.bundle */; };
 		4C3F693C12FD958500B50CB9 /* BragSpam.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C7AD473121AEF830021648A /* BragSpam.bundle */; };
 		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
+		4C4107B51359684400614BBF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4107B31359684400614BBF /* GCDAsyncSocket.m */; };
+		4C4107B71359686200614BBF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4107B61359686200614BBF /* GCDAsyncSocket.h */; };
 		4C5AEF4F12D1B6E400D6B18C /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2412D1B6E400D6B18C /* application.icns */; };
 		4C5AEF5012D1B6E400D6B18C /* DIbadge_Green_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2712D1B6E400D6B18C /* DIbadge_Green_1&2.tiff */; };
 		4C5AEF5112D1B6E400D6B18C /* DIbadge_Green_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2812D1B6E400D6B18C /* DIbadge_Green_3.tiff */; };
@@ -434,6 +436,8 @@
 		4C3761E612095DD700E02C1A /* ScriptsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptsWrapper.m; sourceTree = "<group>"; };
 		4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = Frameworks/Adium/AutoHyperlinks/AutoHyperlinks.framework; sourceTree = "<group>"; };
 		4C400E2F1238A655005BDA9D /* LanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagePreferences.m; sourceTree = "<group>"; };
+		4C4107B31359684400614BBF /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		4C4107B61359686200614BBF /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C4A041612EF1C65009A7988 /* PopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupPrompts.m; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
@@ -612,7 +616,7 @@
 		4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "Classes/Headers/GTMNSString+URLArguments.h"; sourceTree = SOURCE_ROOT; };
 		4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateReceipt.h; path = Classes/Headers/ValidateReceipt.h; sourceTree = SOURCE_ROOT; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
-		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; };
+		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
@@ -645,7 +649,7 @@
 		78A7B5D911745616006B324A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InviteSheet.xib; sourceTree = "<group>"; };
 		78A8C0C311737F660044E7A1 /* MasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterController.m; sourceTree = "<group>"; };
 		78A8C0C511737F660044E7A1 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
-		78A8C0C711737F660044E7A1 /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
+		78A8C0C711737F660044E7A1 /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickCompletionStatus.m; sourceTree = "<group>"; };
 		78A8C0CC11737F660044E7A1 /* ChannelSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelSheet.m; sourceTree = "<group>"; };
 		78A8C0D711737F660044E7A1 /* ModeSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeSheet.m; sourceTree = "<group>"; };
@@ -663,7 +667,7 @@
 		78A8C0F711737F660044E7A1 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
 		78A8C0F911737F660044E7A1 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
 		78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHelper.m; sourceTree = "<group>"; };
-		78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPasteboardHelper.m; sourceTree = "<group>"; };
+		78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NSPasteboardHelper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		78A8C10111737F660044E7A1 /* NSRectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSRectHelper.m; sourceTree = "<group>"; };
 		78A8C10311737F660044E7A1 /* NSStringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHelper.m; sourceTree = "<group>"; };
 		78A8C10511737F660044E7A1 /* NSWindowHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWindowHelper.m; sourceTree = "<group>"; };
@@ -673,7 +677,7 @@
 		78A8C10F11737F660044E7A1 /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannel.m; sourceTree = "<group>"; };
 		78A8C11111737F660044E7A1 /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelConfig.m; sourceTree = "<group>"; };
 		78A8C11311737F660044E7A1 /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelMode.m; sourceTree = "<group>"; };
-		78A8C11511737F660044E7A1 /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClient.m; sourceTree = "<group>"; };
+		78A8C11511737F660044E7A1 /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IRCClient.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		78A8C11711737F660044E7A1 /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
 		78A8C11911737F660044E7A1 /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnection.m; sourceTree = "<group>"; };
 		78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCISupportInfo.m; sourceTree = "<group>"; };
@@ -690,7 +694,7 @@
 		78A8C13C11737F660044E7A1 /* InputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHistory.m; sourceTree = "<group>"; };
 		78A8C13E11737F660044E7A1 /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
 		78A8C14211737F660044E7A1 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
-		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
+		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Timer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; wrapsLines = 0; };
 		78A8C16F11737F660044E7A1 /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -1136,6 +1140,8 @@
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
 				4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */,
 				78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */,
+				4C4107B61359686200614BBF /* GCDAsyncSocket.h */,
+				4C4107B31359684400614BBF /* GCDAsyncSocket.m */,
 			);
 			name = "Socket Control";
 			sourceTree = "<group>";
@@ -1590,6 +1596,7 @@
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
+				4C4107B71359686200614BBF /* GCDAsyncSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1626,6 +1633,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0410;
 				ORGANIZATIONNAME = "Codeux Software";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Textual" */;
@@ -1912,6 +1920,7 @@
 				4C8B8617131A35DE0065B4F9 /* MenuController.m in Sources */,
 				4C8B8618131A35DE0065B4F9 /* NSStringHelper.m in Sources */,
 				4C8B8619131A35DE0065B4F9 /* ModeSheet.m in Sources */,
+				4C4107B51359684400614BBF /* GCDAsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2091,7 +2100,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2116,7 +2124,6 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2134,7 +2141,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
@@ -2157,7 +2163,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Clean Up Resources ";
 				ZERO_LINK = NO;
 			};
@@ -2196,7 +2201,6 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2217,7 +2221,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -2242,7 +2245,6 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2260,7 +2262,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
@@ -2283,7 +2284,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Standard Build";
 				ZERO_LINK = NO;
 			};
@@ -2323,7 +2323,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2348,7 +2347,6 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2369,7 +2367,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Textual;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
@@ -2397,7 +2394,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2424,7 +2420,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";

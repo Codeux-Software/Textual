@@ -3,17 +3,16 @@
 
 static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 
-@implementation AsyncSocket (RLMAsyncSocketExtensions) 
+@implementation GCDAsyncSocket (GCDsyncSocketExtensions)
 
-+ (id)socketWithDelegate:(id)delegate
++ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
 {
-	return [[self alloc] initWithDelegate:delegate];
+	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq];
 }
 
-- (void)useSSL
++ (void)useSSLWithConnection:(id)socket delegate:(id)theDelegate
 {
-	IRCConnection *conn   = [theDelegate performSelector:@selector(delegate)];
-	IRCClient     *client = [conn        performSelector:@selector(delegate)];
+	IRCClient *client = [theDelegate performSelector:@selector(delegate)];
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
@@ -28,10 +27,10 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 		[settings setObject:CFItemRefToID(kCFBooleanFalse)	forKey:CFItemRefToID(kCFStreamSSLValidatesCertificateChain)];
 	}
 	
-	[self startTLS:settings];
+	[socket startTLS:settings];
 }
 
-- (BOOL)badSSLCertErrorFound:(NSError *)error
++ (BOOL)badSSLCertErrorFound:(NSError *)error
 {
 	NSInteger  code   = [error code];
 	NSString  *domain = [error domain];
@@ -60,7 +59,7 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	return NO;
 }
 
-- (NSString *)posixErrorStringFromErrno:(NSInteger)code
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code
 {
 	const char *error = strerror(code);
 	
@@ -69,6 +68,15 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	}
 	
 	return nil;
+}
+
+@end
+
+@implementation AsyncSocket (RLMAsyncSocketExtensions) 
+
++ (id)socketWithDelegate:(id)delegate
+{
+	return [[self alloc] initWithDelegate:delegate];
 }
 
 - (void)useSystemSocksProxy

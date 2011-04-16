@@ -29,13 +29,13 @@
 		<key>Gradient</key>
 		<dict>
 			<key>Top Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Bottom Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Top Line Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Bottom Line Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 		</dict>
 	</dict>
 	<key>Member List</key>
@@ -55,13 +55,13 @@
 		<key>Gradient</key>
 		<dict>
 			<key>Top Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Bottom Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Top Line Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 			<key>Bottom Line Color</key>
-			<string>#699fcf</string>
+			<string>#002e81</string>
 		</dict>
 	</dict>
 	<key>Input Box</key>

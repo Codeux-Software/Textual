@@ -12,8 +12,8 @@
 	BOOL inTimerLoop;
 }
 
-@property (readonly) BOOL inTimerLoop;
-@property (readonly) NSMutableDictionary *keyExchangeData;
+@property (nonatomic, readonly) BOOL inTimerLoop;
+@property (nonatomic, readonly) NSMutableDictionary *keyExchangeData;
 
 - (NSDictionary *)pluginOutputDisplayRules;
 

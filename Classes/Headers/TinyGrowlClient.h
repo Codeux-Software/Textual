@@ -12,11 +12,11 @@
 	NSString *timedOutNotificationName;
 }
 
-@property (assign) id delegate;
-@property (retain) NSArray *allNotifications;
-@property (retain) NSArray *defaultNotifications;
-@property (retain) NSString *clickedNotificationName;
-@property (retain) NSString *timedOutNotificationName;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, retain) NSArray *allNotifications;
+@property (nonatomic, retain) NSArray *defaultNotifications;
+@property (nonatomic, retain) NSString *clickedNotificationName;
+@property (nonatomic, retain) NSString *timedOutNotificationName;
 
 - (void)registerApplication;
 

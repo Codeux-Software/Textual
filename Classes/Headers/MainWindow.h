@@ -6,7 +6,7 @@
 	KeyEventHandler *keyHandler;
 }
 
-@property (retain) KeyEventHandler *keyHandler;
+@property (nonatomic, retain) KeyEventHandler *keyHandler;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;

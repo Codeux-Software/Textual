@@ -8,8 +8,8 @@
 	KeyEventHandler *keyHandler;
 }
 
-@property (assign) id pasteDelegate;
-@property (retain) KeyEventHandler *keyHandler;
+@property (nonatomic, assign) id pasteDelegate;
+@property (nonatomic, retain) KeyEventHandler *keyHandler;
 
 - (void)paste:(id)sender;
 

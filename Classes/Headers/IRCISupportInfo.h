@@ -20,14 +20,14 @@
 	unsigned char modes[MODES_SIZE];
 }
 
-@property (readonly) NSInteger nickLen;
-@property (readonly) NSInteger modesCount;
-@property (retain) NSString *networkName;
-@property (retain) NSString *userModeQPrefix;
-@property (retain) NSString *userModeAPrefix;
-@property (retain) NSString *userModeOPrefix;
-@property (retain) NSString *userModeHPrefix;
-@property (retain) NSString *userModeVPrefix;
+@property (nonatomic, readonly) NSInteger nickLen;
+@property (nonatomic, readonly) NSInteger modesCount;
+@property (nonatomic, retain) NSString *networkName;
+@property (nonatomic, retain) NSString *userModeQPrefix;
+@property (nonatomic, retain) NSString *userModeAPrefix;
+@property (nonatomic, retain) NSString *userModeOPrefix;
+@property (nonatomic, retain) NSString *userModeHPrefix;
+@property (nonatomic, retain) NSString *userModeVPrefix;
 
 - (void)reset;
 - (BOOL)update:(NSString *)s;

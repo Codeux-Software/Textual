@@ -9,9 +9,9 @@
 	NSInteger pos;
 }
 
-@property (retain) id lastHistoryItem;
-@property (retain) NSMutableArray *buf;
-@property (assign) NSInteger pos;
+@property (nonatomic, retain) id lastHistoryItem;
+@property (nonatomic, retain) NSMutableArray *buf;
+@property (nonatomic, assign) NSInteger pos;
 
 - (void)add:(NSAttributedString *)s;
 

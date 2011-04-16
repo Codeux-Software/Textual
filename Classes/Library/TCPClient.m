@@ -12,6 +12,7 @@
 @synthesize connected;
 @synthesize connecting;
 @synthesize delegate;
+@synthesize dispatchQueue;
 @synthesize host;
 @synthesize port;
 @synthesize proxyHost;
@@ -19,7 +20,6 @@
 @synthesize proxyPort;
 @synthesize proxyUser;
 @synthesize sendQueueSize;
-@synthesize socketThread;
 @synthesize socksVersion;
 @synthesize useSocks;
 @synthesize useSSL;
@@ -37,15 +37,15 @@
 - (void)dealloc
 {
 	if (conn) {
-		[[conn invokeOnThread:socketThread] setDelegate:nil];
-		[[conn invokeOnThread:socketThread] disconnect];
+		[conn setDelegate:nil];
+		[conn disconnect];
 		
 		[conn autodrain];
 	}
 	
-	if (socketThread) {
-		[socketThread cancel];
-		[socketThread drain];
+	if (dispatchQueue) {
+		dispatch_release(dispatchQueue);
+		dispatchQueue = NULL;
 	}
 	
 	[buffer drain];
@@ -58,17 +58,34 @@
 	[super dealloc];
 }
 
-- (void)openBackgroundConnection
+- (BOOL)useNewSocketEngine
 {
+	return (useSystemSocks == NO && useSocks == NO && [_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
+}
+
+- (void)createDispatchQueue
+{
+	if ([self useNewSocketEngine]) {
+		NSString *queueName = [NSString stringWithUUID];
+	
+		dispatchQueue = dispatch_queue_create([queueName UTF8String], NULL);
+	}
+}
+
+- (void)open
+{
+	[self createDispatchQueue];
 	[self close];
 	
-	[self.buffer setLength:0];
-	
-	socketThread  = [[NSThread currentThread] retain];
+	[buffer setLength:0];
 	
 	NSError *connError = nil;
 	
-	conn = [AsyncSocket socketWithDelegate:self];
+	if ([self useNewSocketEngine]) {
+		conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:dispatchQueue];
+	} else {
+		conn = [AsyncSocket socketWithDelegate:self];
+	}
 	
 	if ([conn connectToHost:host onPort:port withTimeout:15.0 error:&connError] == NO) {
 		NSLog(@"Silently ignoring connection error: %@", [connError localizedDescription]);
@@ -79,29 +96,17 @@
 	connected  = NO;
 	
 	sendQueueSize = 0;
-	
-	[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:NO];
-	
-	[[NSRunLoop currentRunLoop] run];
-}
-
-- (void)open
-{
-	[[self invokeInBackgroundThread] openBackgroundConnection];
 }
 
 - (void)close
 {
 	if (PointerIsEmpty(conn)) return;
 	
-	[[conn invokeOnThread:socketThread] setDelegate:nil];
-	[[conn invokeOnThread:socketThread] disconnect];
+	[conn setDelegate:nil];
+	[conn disconnect];
 	
 	[conn autodrain];
 	conn = nil;
-	
-	[socketThread cancel];
-	[socketThread drain];
 	
 	active	   = NO;
 	connecting = NO;
@@ -112,10 +117,10 @@
 
 - (NSData *)readLine
 {
-	NSInteger len = [self.buffer length];
+	NSInteger len = [buffer length];
 	if (len < 1) return nil;
 	
-	const char *bytes = [self.buffer bytes];
+	const char *bytes = [buffer bytes];
 	char *p = memchr(bytes, LF, len);
 	
 	if (p == NULL) return nil;
@@ -130,14 +135,14 @@
 		}
 	}
 	
-	NSMutableData *result = [self.buffer autodrain];
+	NSMutableData *result = [buffer autodrain];
 	
 	++p;
 	
 	if (p < (bytes + len)) {
-		self.buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
+		buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
 	} else {
-		self.buffer = [NSMutableData new];
+		buffer = [NSMutableData new];
 	}
 	
 	[result setLength:n];
@@ -151,8 +156,8 @@
 	
 	++sendQueueSize;
 	
-	[[conn invokeOnThread:socketThread] writeData:data withTimeout:15.0 tag:0];
-	[[conn invokeOnThread:socketThread] readDataWithTimeout:(-1)		tag:0];
+	[conn writeData:data withTimeout:15.0 tag:0];
+	[conn readDataWithTimeout:(-1)		  tag:0];
 }
 
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock
@@ -166,7 +171,7 @@
 							  user:proxyUser 
 						  password:proxyPassword];
 	} else if (useSSL) {
-		[conn performSelector:@selector(useSSL)];
+		[GCDAsyncSocket useSSLWithConnection:conn delegate:delegate];
 	}
 	
 	return YES;
@@ -180,7 +185,7 @@
 	connected  = YES;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
-		[[delegate iomt] tcpClientDidConnect:self];
+		[delegate tcpClientDidConnect:self];
 	}
 }
 
@@ -189,25 +194,25 @@
 	[self close];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-		[[delegate iomt] tcpClientDidDisconnect:self];
+		[delegate tcpClientDidDisconnect:self];
 	}	
 }
 
 - (void)onSocket:(AsyncSocket *)sender willDisconnectWithError:(NSError *)error
 {
-	if (PointerIsEmpty(error)) {
+	if (PointerIsEmpty(error) || [error code] == errSSLClosedGraceful) {
 		[self onSocketDidDisconnect:sender];
 	} else {
 		NSString *msg    = nil;
 		NSString *domain = [error domain];
 		
-		if ([conn badSSLCertErrorFound:error]) {
+		if ([GCDAsyncSocket badSSLCertErrorFound:error]) {
 			IRCClient *client = [delegate performSelector:@selector(delegate)];
 			
 			client.disconnectType = DISCONNECT_BAD_SSL_CERT;
 		} else {
 			if ([domain isEqualToString:NSPOSIXErrorDomain]) {
-				msg = [conn posixErrorStringFromErrno:[error code]];
+				msg = [GCDAsyncSocket posixErrorStringFromErrno:[error code]];
 			} 
 			
 			if (NSObjectIsEmpty(msg)) {
@@ -215,7 +220,7 @@
 			}
 			
 			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-				[[delegate iomt] tcpClient:self error:msg];
+				[delegate tcpClient:self error:msg];
 			}
 		}
 	}
@@ -223,10 +228,10 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[self.buffer appendData:data];
+	[buffer appendData:data];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
-		[[delegate iomt] tcpClientDidReceiveData:self];
+		[delegate tcpClientDidReceiveData:self];
 	}
 	
 	[conn readDataWithTimeout:(-1) tag:0]; 
@@ -237,8 +242,29 @@
 	--sendQueueSize;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
-		[[delegate iomt] tcpClientDidSendData:self];
+		[delegate tcpClientDidSendData:self];
 	}
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
+{
+	[[self iomt] onSocketWillConnect:nil];
+	[[self iomt] onSocket:nil didConnectToHost:ahost port:aport];
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+	[[self iomt] onSocket:nil willDisconnectWithError:err];
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+{
+	[[self iomt] onSocket:nil didReadData:data withTag:tag];
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+	[[self iomt] onSocket:nil didWriteDataWithTag:tag];
 }
 
 @end

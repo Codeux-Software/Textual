@@ -8,5 +8,5 @@
 	NSRect lastVisibleRect;
 }
 
-@property (assign, setter=setWebFrame:, getter=webFrame) WebFrameView *webFrame;
+@property (nonatomic, assign, setter=setWebFrame:, getter=webFrame) WebFrameView *webFrame;
 @end
