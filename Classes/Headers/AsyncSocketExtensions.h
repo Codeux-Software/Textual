@@ -3,13 +3,18 @@
 
 @class IRCClient;
 
+@interface GCDAsyncSocket (GCDsyncSocketExtensions)
++ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq;
+
++ (void)useSSLWithConnection:(id)socket delegate:(id)theDelegate;
+
++ (BOOL)badSSLCertErrorFound:(NSError *)error;
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
+@end
+
 @interface AsyncSocket (RLMAsyncSocketExtensions)
 + (id)socketWithDelegate:(id)delegate;
 
-- (BOOL)badSSLCertErrorFound:(NSError *)error;
-- (NSString *)posixErrorStringFromErrno:(NSInteger)code;
-
-- (void)useSSL;
 - (void)useSystemSocksProxy;
 - (void)useSocksProxyVersion:(NSInteger)version 
 						host:(NSString *)host 

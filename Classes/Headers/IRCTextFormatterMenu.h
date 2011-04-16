@@ -14,11 +14,11 @@
 	TextField *textField;
 }
 
-@property (assign) TextField *textField;
-@property (retain) NSMenuItem *formatterMenu;
-@property (retain) NSMenu *foregroundColorMenu;
-@property (retain) NSMenu *backgroundColorMenu;
-@property (assign) BOOL sheetOverrideEnabled;
+@property (nonatomic, assign) TextField *textField;
+@property (nonatomic, retain) NSMenuItem *formatterMenu;
+@property (nonatomic, retain) NSMenu *foregroundColorMenu;
+@property (nonatomic, retain) NSMenu *backgroundColorMenu;
+@property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(NSTextField *)field;
 - (void)enableWindowField:(NSTextField *)field;

@@ -33,27 +33,27 @@
 	BOOL isInFullScreenMode;
 }
 
-@property (assign) IRCWorld *world;
-@property (assign) MainWindow *window;
-@property (assign) InputTextField *text;
-@property (assign) ServerTreeView *tree;
-@property (assign) MasterController *master;
-@property (assign) MemberListView *memberList;
-@property (retain) NSString *pointedUrl;
-@property (retain) NSString *pointedAddress;
-@property (retain) NSString *pointedNick;
-@property (retain) NSString *pointedChannelName;
-@property (retain) NSString *currentSearchPhrase;
-@property (retain) NSMenuItem *closeWindowItem;
-@property (retain) PreferencesController *preferencesController;
-@property (retain) ChannelSheet *channelSheet;
-@property (retain) NickSheet *nickSheet;
-@property (retain) ModeSheet *modeSheet;
-@property (retain) TopicSheet *topicSheet;
-@property (retain) ServerSheet *serverSheet;
-@property (retain) InviteSheet *inviteSheet;
-@property (retain) AboutPanel *aboutPanel;
-@property (assign) BOOL isInFullScreenMode;
+@property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, assign) MainWindow *window;
+@property (nonatomic, assign) InputTextField *text;
+@property (nonatomic, assign) ServerTreeView *tree;
+@property (nonatomic, assign) MasterController *master;
+@property (nonatomic, assign) MemberListView *memberList;
+@property (nonatomic, retain) NSString *pointedUrl;
+@property (nonatomic, retain) NSString *pointedAddress;
+@property (nonatomic, retain) NSString *pointedNick;
+@property (nonatomic, retain) NSString *pointedChannelName;
+@property (nonatomic, retain) NSString *currentSearchPhrase;
+@property (nonatomic, retain) NSMenuItem *closeWindowItem;
+@property (nonatomic, retain) PreferencesController *preferencesController;
+@property (nonatomic, retain) ChannelSheet *channelSheet;
+@property (nonatomic, retain) NickSheet *nickSheet;
+@property (nonatomic, retain) ModeSheet *modeSheet;
+@property (nonatomic, retain) TopicSheet *topicSheet;
+@property (nonatomic, retain) ServerSheet *serverSheet;
+@property (nonatomic, retain) InviteSheet *inviteSheet;
+@property (nonatomic, retain) AboutPanel *aboutPanel;
+@property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
 

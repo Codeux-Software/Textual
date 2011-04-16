@@ -17,14 +17,14 @@
 	IBOutlet NSTextField *informationalText;
 }
 
-@property (assign) NSInteger buttonClicked;
-@property (retain) NSString *finalModalValue;
-@property (retain) NSWindow *dialogWindow;
-@property (retain) NSButton *defaultButton;
-@property (retain) NSButton *alternateButton;
-@property (retain) NSTextField *dialogTitle;
-@property (retain) NSTextField *userInputField;
-@property (retain) NSTextField *informationalText;
+@property (nonatomic, assign) NSInteger buttonClicked;
+@property (nonatomic, retain) NSString *finalModalValue;
+@property (nonatomic, retain) NSWindow *dialogWindow;
+@property (nonatomic, retain) NSButton *defaultButton;
+@property (nonatomic, retain) NSButton *alternateButton;
+@property (nonatomic, retain) NSTextField *dialogTitle;
+@property (nonatomic, retain) NSTextField *userInputField;
+@property (nonatomic, retain) NSTextField *informationalText;
 
 - (void)runModal;
 

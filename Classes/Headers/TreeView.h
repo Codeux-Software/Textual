@@ -6,7 +6,7 @@
 	id keyDelegate;
 }
 
-@property (assign) id keyDelegate;
+@property (nonatomic, assign) id keyDelegate;
 
 - (NSInteger)countSelectedRows;
 - (void)selectItemAtIndex:(NSInteger)index;

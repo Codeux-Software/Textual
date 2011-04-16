@@ -748,7 +748,7 @@ BOOL isUnicharDigit(unichar c)
 			escaped = NO;
 		} else if (c == '\\') {
 			escaped = YES;
-		} else if (useAnchor && c == anchor || useAnchor == NO && c == ' ') {
+		} else if ((useAnchor && c == anchor) || (useAnchor == NO && c == ' ')) {
 			if (useAnchor) {
 				++i;
 			}

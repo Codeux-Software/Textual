@@ -8,8 +8,8 @@
 	NSMutableArray *scripts;
 }
 
-@property (assign) IRCWorld *world;
-@property (retain) NSMutableArray *scripts;
+@property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, retain) NSMutableArray *scripts;
 
 - (void)populateData;
 @end

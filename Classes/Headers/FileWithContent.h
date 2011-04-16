@@ -8,7 +8,7 @@
 	NSString *content;
 }
 
-@property (retain) NSString *filename;
-@property (readonly) NSString *content;
+@property (nonatomic, retain) NSString *filename;
+@property (nonatomic, readonly) NSString *content;
 
 @end

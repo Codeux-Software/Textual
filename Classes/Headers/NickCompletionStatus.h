@@ -7,8 +7,8 @@
 	NSRange range;
 }
 
-@property (retain) NSString *text;
-@property (assign) NSRange range;
+@property (nonatomic, retain) NSString *text;
+@property (nonatomic, assign) NSRange range;
 
 - (void)clear;
 @end

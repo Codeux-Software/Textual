@@ -16,6 +16,7 @@
 	#import "TXRegularExpression.h"
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"
+	#import "GCDAsyncSocket.h"
 	#import "AsyncSocketExtensions.h"
 	#import "TinyGrowlClient.h"
 	#import "GrowlController.h"

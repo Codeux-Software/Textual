@@ -2,25 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Nickname Format</key>
-	<string>%n:</string>
-	<key>Nickname Format Fixed Width</key>
-	<integer>158</integer>
-	<key>Override Channel Font</key>
-	<dict>
-		<key>Font Name</key>
-		<string>HelveticaNeue</string>
-		<key>Font Size</key>
-		<integer>11</integer>
-	</dict>
-	<key>Timestamp Format</key>
-	<string>%A %H:%M:%S</string>
 	<key>Indent Wrapped Messages</key>
 	<dict>
 		<key>New Value</key>
 		<true/>
 		<key>Override Setting</key>
 		<true/>
+	</dict>
+	<key>Nickname Format</key>
+	<string>%@%n:</string>
+	<key>Nickname Format Fixed Width</key>
+	<integer>108</integer>
+	<key>Override Channel Font</key>
+	<dict>
+		<key>Font Name</key>
+		<string>HelveticaNeue</string>
+		<key>Font Size</key>
+		<integer>11</integer>
 	</dict>
 </dict>
 </plist>

@@ -33,7 +33,10 @@
 
 /* Miscellaneous functions to handle small tasks */
 #define CFItemRefToID(s)					(id)s
+
 #define PointerIsEmpty(s)					(s == NULL || s == nil)
+#define PointerIsNotEmpty(s)				BOOLReverseValue(PointerIsEmpty(s))
+
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 

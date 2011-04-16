@@ -21,19 +21,19 @@
 	NSAttributedString *currentInputHistory;
 }
 
-@property (assign) NSInteger uid;
-@property (retain) LogController *log;
-@property (assign) BOOL isKeyword;
-@property (assign) BOOL isUnread;
-@property (assign) BOOL isNewTalk;
-@property (assign) NSInteger keywordCount;
-@property (assign) NSInteger unreadCount;
-@property (readonly) BOOL isActive;
-@property (readonly) BOOL isClient;
-@property (readonly) IRCClient *client;
-@property (readonly) NSString *label;
-@property (readonly) NSString *name;
-@property (retain) InputHistory *inputHistory;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, retain) LogController *log;
+@property (nonatomic, assign) BOOL isKeyword;
+@property (nonatomic, assign) BOOL isUnread;
+@property (nonatomic, assign) BOOL isNewTalk;
+@property (nonatomic, assign) NSInteger keywordCount;
+@property (nonatomic, assign) NSInteger unreadCount;
+@property (nonatomic, readonly) BOOL isActive;
+@property (nonatomic, readonly) BOOL isClient;
+@property (nonatomic, readonly) IRCClient *client;
+@property (nonatomic, readonly) NSString *label;
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, retain) InputHistory *inputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;
