@@ -1797,7 +1797,7 @@
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
