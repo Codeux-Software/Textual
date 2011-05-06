@@ -805,6 +805,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[autoJoinTimer stop];
 	[autoJoinTimer start:AUTOJOIN_DELAY_INTERVAL];
+	NSLog(@"not even started");
 }
 
 - (void)stopAutoJoinTimer
@@ -1120,9 +1121,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if ((targetData.length + passData.length) > MAX_BODY_LEN) {
 			if (NSObjectIsEmpty(prevTarget)) {
 				if (NSObjectIsEmpty(prevPass)) {
-					[self joinUnlistedChannel:prevTarget];
+					[self send:IRCCI_JOIN, prevTarget, nil];
 				} else {
-					[self joinUnlistedChannel:prevTarget password:prevPass];
+					[self send:IRCCI_JOIN, prevTarget, prevPass, nil];
 				}
 				
 				[target setString:c.name];
@@ -1142,9 +1143,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (NSObjectIsNotEmpty(target)) {
 		if (NSObjectIsEmpty(pass)) {
-			[self joinUnlistedChannel:pass];
+			[self send:IRCCI_JOIN, target, nil];
 		} else {
-			[self joinUnlistedChannel:target password:pass];
+			[self send:IRCCI_JOIN, pass, nil];
 		}
 	}
 }
@@ -1160,7 +1161,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
-			if (c.errLastJoin == NO && c.isActive == NO) {
+			if (c.isActive == NO) {
 				[ary safeAddObject:c];
 			}
 		}
@@ -2491,7 +2492,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 97: // Command: GLINE
 		case 98: // Command: GZLINE
 		{
-			NSString *peer   = [s getToken];
+			NSString *peer = [s getToken];
 			
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
@@ -2502,8 +2503,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if (peer) {
 					reason = [reason trim];
 					
-					if (NSObjectIsEmpty(reason) && NSObjectIsNotEmpty(time)) {
+					if (NSObjectIsEmpty(reason)) {
 						reason = [Preferences IRCopDefaultGlineMessage];
+						
+						if ([reason contains:@" "]) {
+							NSInteger spacePos = [reason stringPosition:@" "];
+							
+							if (NSObjectIsEmpty(time)) {
+								time = [reason safeSubstringToIndex:spacePos];
+							}
+							
+							reason = [reason safeSubstringAfterIndex:spacePos];
+						}
 					}
 					
 					[self send:cmd, peer, time, reason, nil];
@@ -2521,19 +2532,45 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
 			} else {
-				NSString *time   = [s getToken];
-				NSString *reason = s;
-				
 				if (peer) {
-					reason = [reason trim];
-					
-					if (NSObjectIsEmpty(reason) && ((NSObjectIsNotEmpty(time) && [cmd isEqualToString:IRCCI_SHUN]) || 
-													[cmd isEqualToString:IRCCI_TEMPSHUN])) {
+					if ([cmd isEqualToString:IRCCI_TEMPSHUN]) {
+						NSString *reason = [s getToken];
 						
-						reason = [Preferences IRCopDefaultShunMessage];
+						reason = [reason trim];
+						
+						if (NSObjectIsEmpty(reason)) {
+							reason = [Preferences IRCopDefaultShunMessage];
+							
+							if ([reason contains:@" "]) {
+								NSInteger spacePos = [reason stringPosition:@" "];
+								
+								reason = [reason safeSubstringAfterIndex:spacePos];
+							}
+						}
+						
+						[self send:cmd, peer, reason, nil];
+					} else {
+						NSString *time   = [s getToken];
+						NSString *reason = s;
+						
+						reason = [reason trim];
+						
+						if (NSObjectIsEmpty(reason)) {
+							reason = [Preferences IRCopDefaultShunMessage];
+							
+							if ([reason contains:@" "]) {
+								NSInteger spacePos = [reason stringPosition:@" "];
+								
+								if (NSObjectIsEmpty(time)) {
+									time = [reason safeSubstringToIndex:spacePos];
+								}
+								
+								reason = [reason safeSubstringAfterIndex:spacePos];
+							}
+						}
+						
+						[self send:cmd, peer, time, reason, nil];
 					}
-					
-					[self send:cmd, peer, time, reason, nil];
 				}
 			}
 			
@@ -3419,6 +3456,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
+		if ([ignoreChecks ignorePrivateMsg] == YES) {
+			return;
+		}
+		
 		if (NSObjectIsEmpty(anick)) {
 			[self printBoth:nil type:type text:text];
 		} else if ([anick isNickname] == NO) {
@@ -3536,10 +3577,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				[self notifyText:GROWL_TALK_NOTICE lineType:type target:c nick:anick text:text];
 			} else {
-				if ([ignoreChecks ignorePrivateMsg] == YES) {
-					return;
-				}
-				
 				BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified];
 				BOOL postevent = NO;
 				
@@ -3577,10 +3614,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (NSObjectIsEmpty(anick) || [anick isNickname] == NO) {
 			[self printBoth:nil type:type text:text];
 		} else {
-			if ([ignoreChecks ignorePublicMsg] == YES) {
-				return;
-			}
-			
 			[self printBoth:nil type:type nick:anick text:text identified:identified];
 		}
 	}
@@ -4071,7 +4104,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[world expandClient:self];
 	
-	sendLagcheckToChannel = NO;
+	sendLagcheckToChannel = serverHasNickServ = NO;
 	isLoggedIn = conn.loggedIn = inFirstISONRun = YES;
 	isAway = isConnecting = hasIRCopAccess = inList = NO;
 	
@@ -4117,6 +4150,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #ifdef IS_TRIAL_BINARY
 	[self startTrialPeriodTimer];
 #endif
+	
+	[self startAutoJoinTimer];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
@@ -4156,8 +4191,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				[world updateTitle];
 			}
-			
-			[self startAutoJoinTimer];
 			
 			break;
 		}

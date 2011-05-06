@@ -156,8 +156,8 @@
 	
 	++sendQueueSize;
 	
-	[conn writeData:data withTimeout:15.0 tag:0];
-	[conn readDataWithTimeout:(-1)		  tag:0];
+	[conn writeData:data withTimeout:15.0	tag:0];
+	[conn readDataWithTimeout:(-1)			tag:0];
 }
 
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock

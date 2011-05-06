@@ -1282,18 +1282,18 @@ typedef enum {
 	[self handler:@selector(tab:) code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	
-	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSControlKeyMask];
-	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSControlKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSCommandKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
-	[self inputHandler:@selector(textFormattingBold:) char:'b' mods:NSControlKeyMask];
-	[self inputHandler:@selector(textFormattingItalic:) char:'i' mods:NSControlKeyMask];
-	[self inputHandler:@selector(textFormattingUnderline:) char:'u' mods:NSControlKeyMask];
-	[self inputHandler:@selector(textFormattingForegroundColor:) char:'c' mods:NSControlKeyMask];
-	[self inputHandler:@selector(textFormattingBackgroundColor:) char:'c' mods:(NSControlKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingBold:) char:'b' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingItalic:) char:'i' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingUnderline:) char:'u' mods:NSCommandKeyMask];
+    [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask)];
+	[self handler:@selector(textFormattingBackgroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)];
 	
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
-	
+
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
 	

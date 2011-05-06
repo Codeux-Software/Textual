@@ -354,6 +354,26 @@
 		[[members safeObjectAtIndex:n] adrv];
 		[members safeRemoveObjectAtIndex:n];
 		
+		if (m.q && NSObjectIsEmpty(client.isupport.userModeQPrefix)) {
+			m.q = NO;
+		}
+		
+		if (m.a && NSObjectIsEmpty(client.isupport.userModeAPrefix)) {
+			m.a = NO;
+		}
+		
+		if (m.o && NSObjectIsEmpty(client.isupport.userModeOPrefix)) {
+			m.o = NO;
+		}
+		
+		if (m.h && NSObjectIsEmpty(client.isupport.userModeHPrefix)) {
+			m.h = NO;
+		}
+		
+		if (m.v && NSObjectIsEmpty(client.isupport.userModeVPrefix)) {
+			m.v = NO;
+		}
+		
 		[self sortedInsert:m];
 		[self reloadMemberList];
 	}

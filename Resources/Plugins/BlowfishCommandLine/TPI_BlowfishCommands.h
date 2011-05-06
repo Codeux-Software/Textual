@@ -6,14 +6,6 @@
 #import "TextualApplication.h"
 
 @interface TPI_BlowfishCommands : NSObject 
-{
-	NSMutableDictionary *keyExchangeData;
-	
-	BOOL inTimerLoop;
-}
-
-@property (nonatomic, readonly) BOOL inTimerLoop;
-@property (nonatomic, readonly) NSMutableDictionary *keyExchangeData;
 
 - (NSDictionary *)pluginOutputDisplayRules;
 
