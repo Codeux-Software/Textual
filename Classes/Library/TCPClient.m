@@ -223,6 +223,8 @@
 				[delegate tcpClient:self error:msg];
 			}
 		}
+		
+		[self onSocketDidDisconnect:sender];
 	}
 }
 
