@@ -9,9 +9,12 @@
 - (NSInteger)integerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
 - (double)doubleForKey:(NSString *)key;
+- (void *)pointerForKey:(NSString *)key;
 
-- (BOOL)containsKey:(id)anObject;
-- (BOOL)containsKeyIgnoringCase:(id)anObject;
+- (BOOL)containsKey:(NSString *)baseKey;
+- (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
+
+- (NSString *)keyIgnoringCase:(NSString *)baseKey;
 @end
 
 @interface NSMutableDictionary (NSMutableDictionaryHelper)
@@ -19,4 +22,5 @@
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;
 - (void)setDouble:(double)value forKey:(NSString *)key;
+- (void)setPointer:(void *)value forKey:(NSString *)key;
 @end

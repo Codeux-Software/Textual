@@ -16,7 +16,7 @@
 {
 	return [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
 }
-	
+
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 {
 	if (range.location == NSNotFound) return nil;
@@ -48,6 +48,28 @@
 	if ([self length] < anIndex || anIndex < 0) return nil;
 	
 	return [self substringToIndex:anIndex];
+}
+
+- (UniChar)safeCharacterAtIndex:(NSInteger)index
+{
+	if ([self length] < index || index < 0) return 0;
+	
+	if (NSObjectIsNotEmpty(self)) {
+		return [self characterAtIndex:index];
+	}
+	
+	return 0;
+}
+
+- (NSString *)stringCharacterAtIndex:(NSInteger)index
+{
+	if (NSObjectIsNotEmpty(self)) {
+		UniChar charValue = [self safeCharacterAtIndex:index];
+		
+		return [NSString stringWithUniChar:charValue];
+	}
+	
+	return nil;
 }
 
 - (NSString *)fastChopEndWithChars:(NSArray *)chars
@@ -663,6 +685,15 @@ BOOL isUnicharDigit(unichar c)
 
 @implementation NSMutableString (NSMutableStringHelper)
 
+- (void)safeDeleteCharactersInRange:(NSRange)range
+{
+	if (range.location == NSNotFound) return;
+	if (range.length > [self length]) return;
+	if (range.location > [self length]) return;
+	
+	[self deleteCharactersInRange:range];
+}
+
 - (NSString *)getToken
 {
 	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
@@ -677,7 +708,7 @@ BOOL isUnicharDigit(unichar c)
 			pos++;
 		}
 		
-		[self deleteCharactersInRange:NSMakeRange(0, pos)];
+		[self safeDeleteCharactersInRange:NSMakeRange(0, pos)];
 		
 		return result;
 	}
@@ -717,7 +748,7 @@ BOOL isUnicharDigit(unichar c)
 			escaped = NO;
 		} else if (c == '\\') {
 			escaped = YES;
-		} else if (useAnchor && c == anchor || useAnchor == NO && c == ' ') {
+		} else if ((useAnchor && c == anchor) || (useAnchor == NO && c == ' ')) {
 			if (useAnchor) {
 				++i;
 			}
@@ -738,7 +769,7 @@ BOOL isUnicharDigit(unichar c)
 				right = len;
 			}
 			
-			[self deleteCharactersInRange:NSMakeRange(0, right)];
+			[self safeDeleteCharactersInRange:NSMakeRange(0, right)];
 			
 			return result;
 		}

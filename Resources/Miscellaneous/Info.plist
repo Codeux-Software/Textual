@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9214</string>
+	<string>9250</string>
 	<key>Build Reference</key>
-	<string>2.0.6-5-g4437cf4-master</string>
+	<string>2.0.6-13-g8e8ebd4-unstable</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -39,8 +39,8 @@
 	<string>public.app-category.social-networking</string>
 	<key>LSArchitecturePriority</key>
 	<array>
-		<string>i386</string>
 		<string>x86_64</string>
+		<string>i386</string>
 	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>

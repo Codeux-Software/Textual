@@ -13,9 +13,8 @@
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle
 				andIRCWorld:(IRCWorld *)world
-		  withUserInputDict:(NSMutableDictionary *)newUserDict
-		withServerInputDict:(NSMutableDictionary *)newServerDict
-	  withUserInputDictRefs:(NSMutableDictionary **)userDict
-	withServerInputDictRefs:(NSMutableDictionary **)serverDict;
+		  withUserInputDict:(NSMutableDictionary **)userDict
+		withServerInputDict:(NSMutableDictionary **)serverDict
+		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict;
 
 @end

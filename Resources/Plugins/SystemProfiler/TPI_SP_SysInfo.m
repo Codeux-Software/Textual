@@ -1,7 +1,10 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#import "TPI_SP_SysInfo.h"
+
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
+#define MEMORY_DIVISION_SIZE	1.073741824
 
 @implementation TPI_SP_SysInfo
 
@@ -12,19 +15,19 @@
 {
 	NSString *sysinfo = @"System Information:";
 	
-	NSString *_model = [self model];
-	NSString *_cpu_model = [self processor];
-	NSNumber *_cpu_count = [self processorCount];
-	NSString *_cpu_speed = [self processorClockSpeed]; 
-	NSInteger _cpu_count_int = [_cpu_count integerValue];
+	NSString *_model			= [self model];
+	NSString *_cpu_model		= [self processor];
+	NSNumber *_cpu_count		= [self processorCount];
+	NSString *_cpu_speed		= [self processorClockSpeed]; 
+	NSInteger _cpu_count_int	= [_cpu_count integerValue];
+			
+	NSString *_cpu_l2		= [self processorL2CacheSize];
+	NSString *_cpu_l3		= [self processorL3CacheSize];
+	NSString *_memory		= [self physicalMemorySize];
+	NSString *_gpu_model	= [self graphicsCardInfo];
+	NSString *_loadavg		= [self loadAveragesWithCores:_cpu_count_int];
 	
-	NSString *_cpu_l2 = [self processorL2CacheSize];
-	NSString *_cpu_l3 = [self processorL3CacheSize];
-	NSString *_memory = [self physicalMemorySize];
-	NSString *_gpu_model = [self graphicsCardInfo];
-	NSString *_loadavg = [self loadAveragesWithCores:_cpu_count_int];
-	
-	NSBundle *_bundle = [NSBundle bundleForClass:[self class]];
+	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 	
 	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
 	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+" withString:@" "];
@@ -34,7 +37,11 @@
 	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
 		
-		NSString *_exact_model = (([_all_models objectForKey:_model]) ?: _model);	
+		NSString *_exact_model = _model;
+		
+		if ([_all_models containsKey:_model]) {
+			_exact_model = [_all_models objectForKey:_model];
+		}
 		
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Model:\002 %@ \002•\002", _exact_model];
 	}
@@ -59,7 +66,7 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Memory:\002 %@ \002•\002", _memory];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptime]];
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptimeUsingShortValue:YES]];
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
 	
 	if (NSObjectIsNotEmpty(_gpu_model)) {
@@ -211,8 +218,14 @@
 + (NSString *)getSystemMemoryUsage
 {
 	TXFSLongInt totalMemory = [self totalMemorySize];
-	TXFSLongInt usedMemory  = [self usedMemorySize];
-	TXFSLongInt freeMemory  = (totalMemory - usedMemory);
+	TXFSLongInt freeMemory  = [self freeMemorySize];
+	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
+	
+#if __x86_64__ == 0
+	if (totalMemory > 4294967296) {
+		return @"\002Error:\002 This command requires Textual to run in 64-bit mode on systems with more than 4 GB of memory.";
+	}
+#endif
 	
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
@@ -276,8 +289,8 @@
 					NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 					
 					if (diskInfo) {
-						TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize] longLongValue];
-						TXFSLongInt freeSpace = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+						TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+						TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 						
 						if (objectIndex == 0) {
 							[result appendFormat:@"%@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
@@ -334,11 +347,20 @@
 + (NSString *)applicationMemoryUsage
 {
 	struct task_basic_info info;
+	
 	mach_msg_type_number_t size = sizeof(info);
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		return [NSString stringWithFormat:@"Textual is currently using %@ of memory.", [self formattedDiskSize:info.resident_size]];
+		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory in ", [self formattedDiskSize:info.resident_size]];
+		
+#if __x86_64__
+		result = [result stringByAppendingString:@"64-bit mode."];
+#else 
+		result = [result stringByAppendingString:@"32-bit mode."];
+#endif
+		
+		return result;
 	} 
 	
 	return nil;
@@ -355,22 +377,9 @@
 	CGLContextObj curr_ctx			= CGLGetCurrentContext();
 	
 	DevNullDestroyObject(YES, curr_ctx);
-    
-#ifdef _RUNNING_MAC_OS_LION
-    if ([Preferences applicationRanOnLion]) {
-        CGLPixelFormatAttribute attribs[] = {kCGLPFAOpenGLProfile, kCGLOGLPVersion_3_2_Core, 0};
 		
-        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-    } else {
-#endif
-		
-		CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
-		
-        CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-		
-#ifdef _RUNNING_MAC_OS_LION
-    }
-#endif 
+	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
+	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
     
 	if (pixelFormat) {
 		CGLCreateContext(pixelFormat, NULL, &cglContext);
@@ -378,16 +387,9 @@
 		CGLSetCurrentContext(cglContext);
 		
 		if (cglContext) {
-			NSString *model   = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
-            NSString *version = [NSString stringWithCString:(const char *)glGetString(GL_VERSION)  encoding:NSASCIIStringEncoding];
-			
-            if ([version contains:@" "]) {
-                version = [version safeSubstringToIndex:[version stringPosition:@" "]];
-            }
+			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
             
-			model = [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
-            
-            return [NSString stringWithFormat:@"%@ (OpenGL v%@)", model, version];
+			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:@""];
 		}
 	}	
 	
@@ -399,8 +401,8 @@
 	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
 	
 	if (diskInfo) {
-		TXFSLongInt totalSpace = [[diskInfo objectForKey:NSFileSystemSize]     longLongValue];
-		TXFSLongInt freeSpace  = [[diskInfo objectForKey:NSFileSystemFreeSize] longLongValue];
+		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 		
 		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
 	} else {
@@ -408,7 +410,7 @@
 	}
 }
 
-+ (NSString *)systemUptime
++ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue
 {
 	struct timeval boottime;
 	size_t size = sizeof(boottime);
@@ -417,7 +419,12 @@
 		boottime.tv_sec = 0;
 	}
 	
-	return TXReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec]);
+	return TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec], shortValue);
+}
+
++ (NSString *)systemUptime
+{
+	return [self systemUptimeUsingShortValue:NO];	
 }
 
 + (NSString *)loadAveragesWithCores:(NSInteger)cores
@@ -531,9 +538,9 @@
 	return nil;
 }
 
-+ (TXFSLongInt)usedMemorySize
++ (TXFSLongInt)freeMemorySize
 {
-	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(integer_t));
+	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
 	
 	vm_size_t              pagesize;
 	vm_statistics_data_t   vm_stat;
@@ -544,7 +551,9 @@
 		return -1;
 	}
 	
-	return ((vm_stat.active_count + vm_stat.wire_count) * pagesize);
+	TXFSLongInt result = ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
+	
+	return result;
 }
 
 + (TXFSLongInt)totalMemorySize
@@ -553,7 +562,7 @@
 	size_t len = sizeof(linesize);
 	
 	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		return (linesize / 1.073741824);
+		return (linesize / MEMORY_DIVISION_SIZE);
 	} 
 	
 	return -1;

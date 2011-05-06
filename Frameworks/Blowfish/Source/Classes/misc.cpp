@@ -1,4 +1,4 @@
-// Copyright (c) 2005-2010 Mathias Karlsson
+// Copyright (c) 2005 - 2010 Mathias Karlsson
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -7,7 +7,7 @@
 //
 // Please see License.txt for further information.
 
-#include "misc.h"
+#include "misc.hpp"
 
 using namespace std;
 

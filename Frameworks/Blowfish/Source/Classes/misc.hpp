@@ -1,4 +1,4 @@
-// Copyright (c) 2005-2010 Mathias Karlsson
+// Copyright (c) 2005 - 2010 Mathias Karlsson
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -6,9 +6,6 @@
 // of the License, or (at your option) any later version.
 //
 // Please see License.txt for further information.
-
-#ifndef MISC_H
-#define MISC_H
 
 #include <string>
 #include <vector>
@@ -34,5 +31,3 @@ void addtab(std::string &s, int add, const int len, const char fillchar = ' ');
 
 void base64encode(std::string src, std::string &dest);
 void base64decode(std::string src, std::string &dest);
-
-#endif

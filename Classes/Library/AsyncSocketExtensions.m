@@ -3,16 +3,16 @@
 
 static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 
-@implementation AsyncSocket (RLMAsyncSocketExtensions) 
+@implementation GCDAsyncSocket (GCDsyncSocketExtensions)
 
-+ (id)socketWithDelegate:(id)delegate
++ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
 {
-	return [[self alloc] initWithDelegate:delegate];
+	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq];
 }
 
-- (void)useSSL
++ (void)useSSLWithConnection:(id)socket delegate:(id)theDelegate
 {
-	IRCClient *client = [[theDelegate delegate] delegate]; // Everything is interconnected
+	IRCClient *client = [theDelegate performSelector:@selector(delegate)];
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
@@ -27,31 +27,31 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 		[settings setObject:CFItemRefToID(kCFBooleanFalse)	forKey:CFItemRefToID(kCFStreamSSLValidatesCertificateChain)];
 	}
 	
-	[self startTLS:settings];
+	[socket startTLS:settings];
 }
 
-- (BOOL)badSSLCertErrorFound:(NSError *)error
++ (BOOL)badSSLCertErrorFound:(NSError *)error
 {
 	NSInteger  code   = [error code];
 	NSString  *domain = [error domain];
 	
 	if ([domain isEqualToString:txCFStreamErrorDomainSSL]) {
 		NSArray *errorCodes = [NSArray arrayWithObjects:
-							   [NSNumber numberWithInteger:errSSLBadCert], 
-							   [NSNumber numberWithInteger:errSSLNoRootCert], 
-							   [NSNumber numberWithInteger:errSSLCertExpired],  
-							   [NSNumber numberWithInteger:errSSLPeerBadCert], 
-							   [NSNumber numberWithInteger:errSSLPeerCertRevoked], 
-							   [NSNumber numberWithInteger:errSSLPeerCertExpired], 
-							   [NSNumber numberWithInteger:errSSLPeerCertUnknown], 
-							   [NSNumber numberWithInteger:errSSLUnknownRootCert], 
-							   [NSNumber numberWithInteger:errSSLCertNotYetValid],
-							   [NSNumber numberWithInteger:errSSLXCertChainInvalid], 
-							   [NSNumber numberWithInteger:errSSLPeerUnsupportedCert], 
-							   [NSNumber numberWithInteger:errSSLPeerUnknownCA], 
-							   [NSNumber numberWithInteger:errSSLHostNameMismatch], nil];
+							   NSNumberWithInteger(errSSLBadCert), 
+							   NSNumberWithInteger(errSSLNoRootCert), 
+							   NSNumberWithInteger(errSSLCertExpired),  
+							   NSNumberWithInteger(errSSLPeerBadCert), 
+							   NSNumberWithInteger(errSSLPeerCertRevoked), 
+							   NSNumberWithInteger(errSSLPeerCertExpired), 
+							   NSNumberWithInteger(errSSLPeerCertUnknown), 
+							   NSNumberWithInteger(errSSLUnknownRootCert), 
+							   NSNumberWithInteger(errSSLCertNotYetValid),
+							   NSNumberWithInteger(errSSLXCertChainInvalid), 
+							   NSNumberWithInteger(errSSLPeerUnsupportedCert), 
+							   NSNumberWithInteger(errSSLPeerUnknownCA), 
+							   NSNumberWithInteger(errSSLHostNameMismatch), nil];
 		
-		NSNumber *errorCode = [NSNumber numberWithInteger:code];
+		NSNumber *errorCode = NSNumberWithInteger(code);
 		
 		return [errorCodes containsObject:errorCode];
 	}
@@ -59,7 +59,7 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	return NO;
 }
 
-- (NSString *)posixErrorStringFromErrno:(NSInteger)code
++ (NSString *)posixErrorStringFromErrno:(NSInteger)code
 {
 	const char *error = strerror(code);
 	
@@ -68,6 +68,15 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	}
 	
 	return nil;
+}
+
+@end
+
+@implementation AsyncSocket (RLMAsyncSocketExtensions) 
+
++ (id)socketWithDelegate:(id)delegate
+{
+	return [[self alloc] initWithDelegate:delegate];
 }
 
 - (void)useSystemSocksProxy
@@ -94,8 +103,8 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion5) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
 	}
 	
-	[settings setObject:host								forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
-	[settings setObject:[NSNumber numberWithInteger:port]	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
+	[settings setObject:host	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
+	[settings setInteger:port	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
 	
 	if (NSObjectIsNotEmpty(user))		[settings setObject:user		forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
 	if (NSObjectIsNotEmpty(password))	[settings setObject:password	forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];

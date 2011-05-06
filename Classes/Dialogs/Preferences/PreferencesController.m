@@ -285,17 +285,17 @@
 		NSInteger n = [*value integerValue];
 		
 		if (n < LINES_MIN) {
-			*value = [NSNumber numberWithInteger:LINES_MIN];
+			*value = NSNumberWithInteger(LINES_MIN);
 		} else if (n > LINES_MAX) {
-			*value = [NSNumber numberWithInteger:LINES_MAX];
+			*value = NSNumberWithInteger(LINES_MAX);
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
 		
 		if (n < INLINE_IMAGE_MIN) {
-			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MIN];
+			*value = NSNumberWithInteger(INLINE_IMAGE_MIN);
 		} else if (INLINE_IMAGE_MAX < n) {
-			*value = [NSNumber numberWithInteger:INLINE_IMAGE_MAX];
+			*value = NSNumberWithInteger(INLINE_IMAGE_MAX);
 		}
 	}
 	
@@ -508,7 +508,7 @@
 	logFont = [[sender convertFont:logFont] retain];
 	
 	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-	[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	[self setValue:NSNumberWithDouble(logFont.pointSize) forKey:@"fontPointSize"];
 	
 	[self onStyleChanged:nil];
 }

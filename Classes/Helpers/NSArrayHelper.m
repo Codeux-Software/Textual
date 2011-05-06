@@ -12,6 +12,94 @@
 	return nil;
 }
 
+- (BOOL)boolAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj respondsToSelector:@selector(boolValue)]) {
+		return [obj boolValue];
+	}
+	
+	return 0;
+}
+
+- (NSArray *)arrayAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj isKindOfClass:[NSArray class]]) {
+		return obj;
+	}
+	
+	return nil;
+}
+
+- (NSString *)stringAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj isKindOfClass:[NSString class]]) {
+		return obj;
+	}
+	
+	return nil;
+}
+
+- (NSDictionary *)dictionaryAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj isKindOfClass:[NSDictionary class]]) {
+		return obj;
+	}
+	
+	return nil;
+}
+
+- (NSInteger)integerAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj respondsToSelector:@selector(integerValue)]) {
+		return [obj integerValue];
+	}
+	
+	return 0;
+}
+
+- (long long)longLongAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj respondsToSelector:@selector(longLongValue)]) {
+		return [obj longLongValue];
+	}
+	
+	return 0;
+}
+
+- (double)doubleAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj respondsToSelector:@selector(doubleValue)]) {
+		return [obj doubleValue];
+	}
+	
+	return 0;
+}
+
+- (void *)pointerAtIndex:(NSInteger)n
+{
+	id obj = [self safeObjectAtIndex:n];
+	
+	if ([obj isKindOfClass:[NSValue class]]) {
+		return [obj pointerValue];
+	}
+	
+	return nil;
+}
+
 - (BOOL)containsObjectIgnoringCase:(id)anObject
 {
 	for (id object in self) {
@@ -48,6 +136,56 @@
 	if (PointerIsEmpty(anObject) == NO) {
 		[self insertObject:anObject atIndex:index];
 	}
+}
+
+- (void)insertBool:(BOOL)value atIndex:(NSUInteger)index
+{
+	[self safeInsertObject:NSNumberWithBOOL(value) atIndex:index];
+}
+
+- (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index
+{
+	[self safeInsertObject:NSNumberWithInteger(value) atIndex:index];
+}
+
+- (void)insertLongLong:(long long)value atIndex:(NSUInteger)index
+{
+	[self safeInsertObject:NSNumberWithLongLong(value) atIndex:index];
+}
+
+- (void)insertDouble:(double)value atIndex:(NSUInteger)index
+{
+	[self safeInsertObject:NSNumberWithDouble(value) atIndex:index];
+}
+
+- (void)insertPointer:(void *)value atIndex:(NSUInteger)index
+{
+	[self safeInsertObject:[NSValue valueWithPointer:value] atIndex:index];
+}
+
+- (void)addBool:(BOOL)value
+{
+	[self safeAddObject:NSNumberWithBOOL(value)];
+}
+
+- (void)addInteger:(NSInteger)value
+{
+	[self safeAddObject:NSNumberWithInteger(value)];
+}
+
+- (void)addLongLong:(long long)value
+{
+	[self safeAddObject:NSNumberWithLongLong(value)];
+}
+	 
+- (void)addDouble:(double)value
+{
+	[self safeAddObject:NSNumberWithDouble(value)];
+}
+
+- (void)addPointer:(void *)value
+{
+	[self safeAddObject:[NSValue valueWithPointer:value]];
 }
 
 @end

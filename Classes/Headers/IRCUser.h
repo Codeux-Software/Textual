@@ -2,8 +2,12 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+@class IRCISupportInfo;
+
 @interface IRCUser : NSObject
 {
+	IRCISupportInfo *supportInfo;
+	
 	NSString *nick;
 	NSString *username;
 	NSString *address;
@@ -24,6 +28,7 @@
 	CFAbsoluteTime lastFadedWeights;
 }
 
+@property (nonatomic, assign) IRCISupportInfo *supportInfo;
 @property (nonatomic, retain) NSString *nick;
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) NSString *address;

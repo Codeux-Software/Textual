@@ -218,7 +218,7 @@
 		
 		if (row >= 0) {
 			if ([dropDelegate respondsToSelector:@selector(memberListViewDropFiles:row:)]) {
-				[dropDelegate memberListViewDropFiles:files row:[NSNumber numberWithInteger:row]];
+				[dropDelegate memberListViewDropFiles:files row:NSNumberWithInteger(row)];
 			}
 			
 			return YES;

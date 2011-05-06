@@ -86,7 +86,7 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInteger:count], topic, [topic attributedStringWithIRCFormatting], nil];
+		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic, [topic attributedStringWithIRCFormatting], nil];
 		
 		NSString *filter = [filterText stringValue];
 		

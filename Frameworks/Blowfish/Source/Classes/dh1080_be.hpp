@@ -1,4 +1,4 @@
-// Copyright (c) 2005-2007 Mathias Karlsson
+// Copyright (c) 2005 - 2007 Mathias Karlsson
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -7,13 +7,10 @@
 //
 // Please see License.txt for further information.
 
-#ifndef DH1080_H
-#define DH1080_H
-
+#include <map>
+#include <string>
 #include <openssl/dh.h>
 #include <openssl/bn.h>
-#include <string>
-#include <map>
 
 class dhclass {
 public:
@@ -41,5 +38,3 @@ extern std::map<std::string, recvkeystruct> recvkeys;
 
 void dh_base64encode(std::string &s);
 void dh_base64decode(std::string &s);
-
-#endif

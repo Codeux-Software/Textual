@@ -31,6 +31,8 @@ typedef enum {
 	MEMBER_TYPE_MYSELF,
 } LogMemberType;
 
+#define IRCCommandFromLineType(t)	[LogLine lineTypeString:t]
+
 @interface LogLine : NSObject
 {
 	NSString *time;

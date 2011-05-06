@@ -14,8 +14,14 @@
 - (void)restorePosition;
 - (void)setNeedsLimitNumberOfLines;
 - (void)writeLine:(NSString *)str attributes:(NSDictionary *)attrs;
+- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs;
 - (NSString *)initialDocument:(NSString *)topic;
 - (NSString *)generateOverrideStyle;
+
+- (DOMDocument *)mainFrameDocument;
+- (DOMNode *)html_head;
+- (DOMElement *)body:(DOMDocument *)doc;
+- (DOMElement *)topic:(DOMDocument *)doc;
 @end
 
 @implementation LogController
@@ -54,10 +60,10 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		bottom = YES;
+		bottom   = YES;
 		maxLines = 300;
 		
-		lines = [NSMutableArray new];
+		lines				   = [NSMutableArray new];
 		highlightedLineNumbers = [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -120,16 +126,16 @@
 	loaded = NO;
 	
 	policy = [LogPolicy new];
-	sink = [LogScriptEventSink new];
+	sink   = [LogScriptEventSink new];
 	
 	policy.menuController = [world menuController];
-	policy.menu = menu;
-	policy.urlMenu = urlMenu;
-	policy.addrMenu = addrMenu;
-	policy.chanMenu = chanMenu;
-	policy.memberMenu = memberMenu;
+	policy.menu			  = menu;
+	policy.urlMenu		  = urlMenu;
+	policy.addrMenu       = addrMenu;
+	policy.chanMenu		  = chanMenu;
+	policy.memberMenu     = memberMenu;
 	
-	sink.owner = self;
+	sink.owner  = self;
 	sink.policy = policy;
 	
 	if (view) {
@@ -143,13 +149,13 @@
 		[(id)view setBackgroundColor:initialBackgroundColor];
 	}
 	
-	view.frameLoadDelegate = self;
-	view.UIDelegate = policy;
-	view.policyDelegate = policy;
+	view.frameLoadDelegate	  = self;
+	view.UIDelegate			  = policy;
+	view.policyDelegate		  = policy;
 	view.resourceLoadDelegate = self;
-	view.keyDelegate = self;
-	view.resizeDelegate = self;
-	view.autoresizingMask = (NSViewWidthSizable | NSViewHeightSizable);
+	view.keyDelegate		  = self;
+	view.resizeDelegate		  = self;
+	view.autoresizingMask	  = (NSViewWidthSizable | NSViewHeightSizable);
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.baseUrl];
 }
@@ -163,51 +169,61 @@
 	}
 }
 
-- (struct DOMHTMLElement *)html_head
+- (BOOL)hasValidBodyStructure
 {
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	return (PointerIsEmpty([self mainFrameDocument]) == NO);
+}
+
+- (DOMDocument *)mainFrameDocument
+{
+	return [view mainFrameDocument];
+}
+
+- (DOMNode *)html_head
+{
+	DOMDocument *doc = [self mainFrameDocument];
 	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
-	DOMHTMLElement *head = (DOMHTMLElement *)[nodes item:0];
+	DOMNode *head = [nodes item:0];
 	
-	return (struct DOMHTMLElement *)head;
+	return head;
 }
 
-- (struct DOMHTMLElement *)body:(DOMHTMLDocument *)doc 
+- (DOMElement *)body:(DOMDocument *)doc 
 {
-	return (struct DOMHTMLElement *)[doc getElementById:@"body_home"];
+	return [doc getElementById:@"body_home"];
 }
 
-- (struct DOMHTMLElement *)topic:(DOMHTMLDocument *)doc 
+- (DOMElement *)topic:(DOMDocument *)doc 
 {
-	return (struct DOMHTMLElement *)[doc getElementById:@"topic_bar"];
+	return [doc getElementById:@"topic_bar"];
 }
 
 - (NSString *)topicValue
 {
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return @"";
 	
-	return [(DOMHTMLElement *)[self topic:doc] innerHTML];
+	return [(id)[self topic:doc] innerHTML];
 }
 
 - (BOOL)setTopicWithoutDelay:(NSString *)topic
 {
 	if (NSObjectIsNotEmpty(topic)) {
-		if ([[self topicValue] isEqualToString:topic]) return YES;
-		
-		NSString *body = [LogRenderer renderBody:topic 
-									  controller:nil
-									  renderType:ASCII_TO_HTML 
-									  properties:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"renderLinks", nil]
-									  resultInfo:NULL];
-		
-		DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-		if (PointerIsEmpty(doc)) return NO;
-		
-		DOMHTMLElement *topic_body = (DOMHTMLElement *)[self topic:doc];
-		if (PointerIsEmpty(topic_body)) return NO;
-		
-		[topic_body setInnerHTML:body];
+		if ([[self topicValue] isEqualToString:topic] == NO) {
+			NSString *body = [LogRenderer renderBody:topic 
+										  controller:nil
+										  renderType:ASCII_TO_HTML 
+										  properties:[NSDictionary dictionaryWithObjectsAndKeys:NSNumberWithBOOL(YES), @"renderLinks", nil]
+										  resultInfo:NULL];
+			
+			DOMDocument *doc = [self mainFrameDocument];
+			if (PointerIsEmpty(doc)) return NO;
+			
+			DOMElement *topic_body = [self topic:doc];
+			if (PointerIsEmpty(topic_body)) return NO;
+			
+			[(id)topic_body setInnerHTML:body];
+		}
 	}
 	
 	return YES;
@@ -224,12 +240,14 @@
 {
 	if (loaded == NO) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *body = [doc body];
+	DOMElement *body = [doc body];
 	
-	[body setValue:[NSNumber numberWithInteger:0] forKey:@"scrollTop"];
+	if (body) {
+		[body setValue:NSNumberWithInteger(0) forKey:@"scrollTop"];
+	}
 }
 
 - (void)moveToBottom
@@ -238,32 +256,38 @@
 	
 	if (loaded == NO) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *body = [doc body];
+	DOMElement *body = [doc body];
 	
-	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+	if (body) {
+		[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+	}
 }
 
 - (BOOL)viewingBottom
 {
-	if (loaded == NO) return YES;
+	if (loaded == NO)   return YES;
 	if (movingToBottom) return YES;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (PointerIsEmpty(doc)) return YES;
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return NO;
 	
 	DOMHTMLElement *body = [doc body];
 	
-	NSInteger viewHeight = view.frame.size.height;
+	if (body) {
+		NSInteger viewHeight = view.frame.size.height;
+		
+		NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
+		NSInteger top    = [[body valueForKey:@"scrollTop"] integerValue];
+		
+		if (viewHeight == 0) return YES;
+		
+		return (top + viewHeight >= height - BOTTOM_EPSILON);
+	}
 	
-	NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
-	NSInteger top = [[body valueForKey:@"scrollTop"] integerValue];
-	
-	if (viewHeight == 0) return YES;
-	
-	return (top + viewHeight >= height - BOTTOM_EPSILON);
+	return NO;
 }
 
 - (void)savePosition
@@ -285,32 +309,35 @@
 	[self savePosition];
 	[self unmark];
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-
-	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
-	DOMHTMLElement *e = (DOMHTMLElement *)[doc createElement:@"div"];
 	
-	[e setAttribute:@"id" value:@"mark"];
+	DOMElement *body = [self body:doc];
 	
-	[body appendChild:e];
-	
-	++count;
-	
-	[self restorePosition];
+	if (body) {
+		DOMElement *e = [doc createElement:@"div"];
+		
+		[e setAttribute:@"id" value:@"mark"];
+		
+		[body appendChild:e];
+		
+		++count;
+		
+		[self restorePosition];
+	}
 }
 
 - (void)unmark
 {
 	if (loaded == NO) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	if (doc == NO) return;
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:@"mark"];
+	DOMElement *e = [doc getElementById:@"mark"];
 	
 	if (e) {
-		[(DOMHTMLElement *)[e parentNode] removeChild:e];
+		[[e parentNode] removeChild:e];
 		
 		--count;
 	}
@@ -320,24 +347,24 @@
 {
 	if (loaded == NO) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:@"mark"];
+	DOMElement *e = [doc getElementById:@"mark"];
 	
 	if (e) {
 		NSInteger y = 0;
-		DOMHTMLElement *t = e;
+		DOMElement *t = e;
 		
 		while (t) {
-			if ([t isKindOfClass:[DOMHTMLElement class]]) {
+			if ([t isKindOfClass:[DOMElement class]]) {
 				y += [[t valueForKey:@"offsetTop"] integerValue];
 			}
 			
-			t = (DOMHTMLElement *)[t parentNode];
+			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:[NSNumber numberWithInteger:(y - 20)] forKey:@"scrollTop"];
+		[[doc body] setValue:NSNumberWithInteger((y - 20)) forKey:@"scrollTop"];
 	}
 }
 
@@ -345,22 +372,22 @@
 {
 	if (loaded == NO) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-
+	
 	WebScriptObject *js_api = [view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
 	}
 	
-	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
+	DOMElement *body = [self body:doc];
 	if (PointerIsEmpty(body)) return;
 	
-	self.html = [body innerHTML];
+	self.html = [(id)body innerHTML];
 	
 	scrollBottom = [self viewingBottom];
-	scrollTop = [[[doc body] valueForKey:@"scrollTop"] integerValue];
+	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
 	
@@ -374,7 +401,7 @@
 	self.html = nil;
 	
 	loaded = NO;
-	count = 0;
+	count  = 0;
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
 	
@@ -401,11 +428,14 @@
 	NSInteger n = (count - maxLines);
 	if (loaded == NO || n <= 0 || count <= 0) return;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
+	DOMElement *body = [self body:doc];
+	if (PointerIsEmpty(body)) return;
+	
 	DOMNodeList *nodeList = [body childNodes];
+	if (PointerIsEmpty(nodeList)) return;
 	
 	n = (nodeList.length - maxLines);
 	
@@ -417,17 +447,17 @@
 		DOMNodeList *nodeList = [body childNodes];
 		
 		if (nodeList.length) {
-			DOMHTMLElement *firstNode = (DOMHTMLElement *)[nodeList item:0];
+			DOMNode *firstNode = [nodeList item:0];
 			
 			if (firstNode) {
 				NSString *lineId = [firstNode valueForKey:@"id"];
 				
 				if (lineId && lineId.length > 4) {
 					NSString *lineNumStr = [lineId safeSubstringFromIndex:4];
-					NSInteger lineNum = [lineNumStr integerValue];
+					NSInteger lineNum    = [lineNumStr integerValue];
 					
 					while (NSObjectIsNotEmpty(highlightedLineNumbers)) {
-						NSInteger i = [[highlightedLineNumbers safeObjectAtIndex:0] integerValue];
+						NSInteger i = [highlightedLineNumbers integerAtIndex:0];
 						
 						if (lineNum <= i) break;
 						
@@ -522,7 +552,7 @@
 		return NO;
 	}
 	
-	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
+	if (line.time)  [s appendFormat:@"<span class=\"time\">%@</span>",  logEscape(line.time)];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	
 	if (line.nick) {
@@ -537,7 +567,7 @@
 	
 	if (isText && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
 		NSString *imagePageUrl = nil;
-		NSString *imageUrl = nil;
+		NSString *imageUrl     = nil;
 		
 		for (NSValue *rangeValue in urlRanges) {
 			NSString *url = [line.body safeSubstringWithRange:[rangeValue rangeValue]];
@@ -554,8 +584,8 @@
 		if (imageUrl) {
 			showInlineImage = YES;
 			
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
+			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>",													 lineTypeString, body];
+			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width:%ipx;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
 		}
 	}
 	
@@ -567,22 +597,22 @@
 	
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 	
-	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
-	[attrs setObject:((highlighted) ? @"true" : @"false") forKey:@"highlight"];
-	[attrs setObject:((isText) ? @"line text" : @"line event") forKey:@"class"];
+	[attrs setObject:[LogLine lineTypeString:type]				forKey:@"type"];
+	[attrs setObject:((highlighted) ? @"true" : @"false")		forKey:@"highlight"];
+	[attrs setObject:((isText) ? @"line text" : @"line event")	forKey:@"class"];
 	
 	if (line.nickInfo) {
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}
 	
-	[self writeLine:s attributes:attrs];
+	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
 	
 	if (highlighted && [Preferences logAllHighlightsToQuery]) {
 		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
 		
-		line.body = TXTFLS(@"IRC_USER_WAS_HIGHLIGHTED", [channel name], line.body);
-		line.keywords = nil;
-		line.excludeWords = nil;
+		line.body			= TXTFLS(@"IRC_USER_WAS_HIGHLIGHTED", [channel name], line.body);
+		line.keywords		= nil;
+		line.excludeWords	= nil;
 		
 		[hlc print:line];
 		[hlc setIsUnread:YES];
@@ -593,6 +623,15 @@
 	return highlighted;
 }
 
+- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
+{
+	while (loaded == NO) {
+		continue;
+	}
+	
+	[[self iomt] writeLine:aHtml attributes:attrs];
+}
+
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
 	[self savePosition];
@@ -600,13 +639,13 @@
 	++lineNumber;
 	++count;
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[[view mainFrame] DOMDocument];
-	if (PointerIsEmpty(doc)) return;
+	DOMDocument *doc  = [self mainFrameDocument];
+	DOMElement  *body = [self body:doc];
+	if (PointerIsEmpty(body)) return;
 	
-	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
-	DOMHTMLElement *div = (DOMHTMLElement *)[doc createElement:@"div"];
+	DOMElement *div = [doc createElement:@"div"];
 	
-	[div setInnerHTML:aHtml];
+	[(id)div setInnerHTML:aHtml];
 	
 	for (NSString *key in attrs) {
 		NSString *value = [attrs objectForKey:key];
@@ -629,12 +668,12 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
-
+	
 	WebScriptObject *js_api = [view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
-						 withArguments:[NSArray arrayWithObjects:[NSNumber numberWithInteger:lineNumber], nil]];  
+					  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(lineNumber), nil]];  
 	}
 }
 
@@ -660,7 +699,6 @@
 	
 	NSString *override_style = [self generateOverrideStyle];
 	
-	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
 	[s appendFormat:@"<html %@>", bodyAttrs];
 	[s appendString:@"<head>"];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
@@ -694,22 +732,23 @@
 {
 	NSString *os = [self generateOverrideStyle];
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
-	DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:@"textual_override_style"];
+	DOMDocument *doc = [self mainFrameDocument];
+	DOMElement  *e   = [doc getElementById:@"textual_override_style"];
 	
 	if (e) {
-		[(DOMHTMLElement *)[e parentNode] removeChild:e];
+		[[e parentNode] removeChild:e];
 	}
 	
 	if (os) {
-		DOMHTMLElement *head = (DOMHTMLElement *)[self html_head];
+		DOMNode *head = [self html_head];
 		
 		if (head) {
-			DOMHTMLElement *style = (DOMHTMLElement *)[doc createElement:@"style"];
+			DOMElement *style = [doc createElement:@"style"];
 			
 			[style setAttribute:@"id" value:@"textual_override_style"];
 			[style setAttribute:@"type" value:@"text/css"];
-			[style setInnerHTML:os];
+			
+			[(id)style setInnerHTML:os];
 			
 			[head appendChild:style];
 		}
@@ -722,16 +761,16 @@
 	
 	OtherTheme *other = world.viewTheme.other;
 	
-	NSString *name = [Preferences themeLogFontName];
+	NSString *name  = [Preferences themeLogFontName];
 	NSInteger rsize = [Preferences themeLogFontSize];
-	double size = ([Preferences themeLogFontSize] * (72.0 / 96.0));
+	double    size  = ([Preferences themeLogFontSize] * (72.0 / 96.0));
 	
 	if (other.overrideChannelFont) {
 		NSFont *channelFont = other.overrideChannelFont;
 		
-		name = [channelFont fontName];
+		name  = [channelFont fontName];
 		rsize = [channelFont pointSize];
-		size = ([channelFont pointSize] * (72.0 / 96.0));
+		size  = ([channelFont pointSize] * (72.0 / 96.0));
 	} 
 	
 	[sf appendString:@"html, body, body[type], body {"];
@@ -743,10 +782,10 @@
 		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) return sf;
 		
 		if ([Preferences indentOnHang]) {
-			NSFont *font = [NSFont fontWithName:name size:round(rsize)];
+			NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
 			
-			NSSize textSize = [TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat) sizeWithAttributes:attributes]; 
+			NSSize    textSize  = [TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat) sizeWithAttributes:attributes]; 
 			NSInteger textWidth = (textSize.width + (6 + other.nicknameFormatFixedWidth));
 			
 			[sf appendString:@"body div#body_home p {"];
@@ -817,7 +856,7 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	loaded = YES;
+	loaded		  = YES;
 	loadingImages = 0;
 	
 	[self setUpScroller];
@@ -829,19 +868,19 @@
 	autoScroller.webFrame = view.mainFrame.frameView;
 	
 	if (html) {
-		DOMHTMLDocument *doc = (DOMHTMLDocument *)[frame DOMDocument];
+		DOMDocument *doc = [frame DOMDocument];
 		
 		if (doc) {
-			DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
+			DOMElement *body = [self body:doc];
 			
-			[body setInnerHTML:html];
+			[(id)body setInnerHTML:html];
 			
 			self.html = nil;
 			
 			if (scrollBottom) {
 				[self moveToBottom];
 			} else if (scrollTop) {
-				[body setValue:[NSNumber numberWithInteger:scrollTop] forKey:@"scrollTop"];
+				[body setValue:NSNumberWithInteger(scrollTop) forKey:@"scrollTop"];
 			}
 		}
 	} else {
@@ -856,14 +895,14 @@
 	
 	[lines removeAllObjects];
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[frame DOMDocument];
+	DOMDocument *doc = [frame DOMDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	DOMHTMLElement *body = (DOMHTMLElement *)[self body:doc];
-	DOMHTMLElement *e = (DOMHTMLElement *)[body firstChild];
+	DOMElement *body = [self body:doc];
+	DOMNode    *e    = [body firstChild];
 	
 	while (e) {
-		DOMHTMLElement *next = (DOMHTMLElement *)[e nextSibling];
+		DOMNode *next = [e nextSibling];
 		
 		if ([e isKindOfClass:[DOMHTMLDivElement class]] == NO && 
 			[e isKindOfClass:[DOMHTMLHRElement class]] == NO) {
@@ -943,21 +982,22 @@
 {
 	NSMutableArray *result = [NSMutableArray array];
 	
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[view mainFrameDocument];
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return [NSArray array];
 	
 	if (doc) {
 		for (NSNumber *n in highlightedLineNumbers) {
 			NSString *key = [NSString stringWithFormat:@"line%d", [n integerValue]];
 			
-			DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:key];
+			DOMElement *e = [doc getElementById:key];
 			
 			if (e) {
-				NSInteger offsetTop = [[e valueForKey:@"offsetTop"] integerValue];
+				NSInteger offsetTop    = [[e valueForKey:@"offsetTop"] integerValue];
 				NSInteger offsetHeight = [[e valueForKey:@"offsetHeight"] integerValue];
 				
 				NSInteger pos = (offsetTop + (offsetHeight / 2));
 				
-				[result safeAddObject:[NSNumber numberWithInteger:pos]];
+				[result safeAddObject:NSNumberWithInteger(pos)];
 			}
 		}
 	}
@@ -968,7 +1008,7 @@
 - (NSColor *)markedScrollerColor:(MarkedScroller *)sender
 {
 	if ([Preferences applicationRanOnLion]) {
-		return [NSColor fromCSS:@"#008aff"];
+		return [NSColor greenColor];
 	}
 	
 	return [NSColor redColor];

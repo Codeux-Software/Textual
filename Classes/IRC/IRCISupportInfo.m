@@ -9,7 +9,7 @@
 - (void)setValue:(NSInteger)value forMode:(unsigned char)m;
 - (NSInteger)valueForMode:(unsigned char)m;
 - (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus;
-- (void)parsePrefix:(NSString *)s;
+- (void)parsePrefix:(NSString *)value;
 - (void)parseChanmodes:(NSString *)s;
 @end
 
@@ -18,20 +18,29 @@
 @synthesize nickLen;
 @synthesize modesCount;
 @synthesize networkName;
-@synthesize supportsExtraModes;
+@synthesize userModeQPrefix;
+@synthesize userModeAPrefix;
+@synthesize userModeOPrefix;
+@synthesize userModeHPrefix;
+@synthesize userModeVPrefix;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[self reset];
 	}
-
+	
 	return self;
 }
 
 - (void)dealloc
 {
 	[networkName drain];
+	[userModeQPrefix drain];
+	[userModeAPrefix drain];
+	[userModeOPrefix drain];
+	[userModeHPrefix drain];
+	[userModeVPrefix drain];
 	
 	[super dealloc];
 }
@@ -89,9 +98,7 @@
 				modesCount = [value integerValue];
 			} else if ([key isEqualToString:@"NETWORK"]) {
 				networkName = [value retain];
-			} else if ([key isEqualToString:@"PREFIX"]) {
-				supportsExtraModes = ([value isEqualToString:@"(ohv)@%+"] == NO);
-			}
+			} 
 		}
 	}
 	
@@ -166,20 +173,43 @@
 	}
 }
 
-- (void)parsePrefix:(NSString *)str
+- (void)parsePrefix:(NSString *)value
 {
-	if ([str hasPrefix:@"("]) {
-		NSRange r = [str rangeOfString:@")"];
+	if ([value contains:@"("] && [value contains:@")"]) {
+		NSInteger endSignPos = [value stringPosition:@")"];
+		NSInteger modeLength = 0;
+		NSInteger charLength = 0;
 		
-		if (r.location != NSNotFound) {
-			str = [str safeSubstringWithRange:NSMakeRange(1, (r.location - 1))];
-			
-			NSInteger len = str.length;
-			
-			for (NSInteger i = 0; i < len; i++) {
-				UniChar c = [str characterAtIndex:i];
+		NSString *nodes;
+		NSString *chars;
+		
+		nodes = [value safeSubstringToIndex:endSignPos];
+		nodes = [nodes safeSubstringFromIndex:1];
+		
+		chars = [value safeSubstringAfterIndex:endSignPos];
+		
+		charLength = [chars length];
+		modeLength = [nodes length];
+		
+		if (charLength == modeLength) {
+			for (NSInteger i = 0; i < charLength; i++) {
+				UniChar  rawKey     = [nodes characterAtIndex:i];
+				NSString *modeKey   = [nodes stringCharacterAtIndex:i];
+				NSString *modeChar  = [chars stringCharacterAtIndex:i];
 				
-				[self setValue:OP_VALUE forMode:c];
+				if ([modeKey isEqualToString:@"q"]) {
+					self.userModeQPrefix = modeChar;
+				} else if ([modeKey isEqualToString:@"a"]) {
+					self.userModeAPrefix = modeChar;
+				} else if ([modeKey isEqualToString:@"o"]) {
+					self.userModeOPrefix = modeChar;
+				} else if ([modeKey isEqualToString:@"h"]) {
+					self.userModeHPrefix = modeChar;
+				} else if ([modeKey isEqualToString:@"v"]) {
+					self.userModeVPrefix = modeChar;
+				}
+				
+				[self setValue:OP_VALUE forMode:rawKey];
 			}
 		}
 	}

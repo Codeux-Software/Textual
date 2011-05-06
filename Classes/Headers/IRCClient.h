@@ -42,7 +42,6 @@ typedef enum {
 	
 	BOOL reconnectEnabled;
 	BOOL rawModeEnabled;
-	BOOL isReconnecting;
 	BOOL retryEnabled;
 	BOOL isConnecting;
 	BOOL isConnected;
@@ -89,8 +88,6 @@ typedef enum {
 	
 	FileLogger *logFile;
 	
-	dispatch_queue_t dispatchQueue;
-	
 #ifdef IS_TRIAL_BINARY
 	Timer *trialPeriodTimer;
 #endif
@@ -120,7 +117,6 @@ typedef enum {
 @property (nonatomic, assign) BOOL rawModeEnabled;
 @property (nonatomic, assign) BOOL retryEnabled;
 @property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isReconnecting;
 @property (nonatomic, assign) BOOL isConnected;
 @property (nonatomic, assign) BOOL isLoggedIn;
 @property (nonatomic, assign) BOOL isQuitting;
@@ -141,7 +137,6 @@ typedef enum {
 @property (nonatomic, retain) Timer *autoJoinTimer;
 @property (nonatomic, retain) Timer *reconnectTimer;
 @property (nonatomic, retain) Timer *commandQueueTimer;
-@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, assign) ConnectMode connectType;
 @property (nonatomic, assign) DisconnectType disconnectType;
 @property (nonatomic, retain) ListDialog *channelListDialog;
@@ -158,6 +153,8 @@ typedef enum {
 - (void)terminate;
 - (void)closeDialogs;
 - (void)preferencesChanged;
+
+- (BOOL)isReconnecting;
 
 - (AddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
@@ -176,7 +173,14 @@ typedef enum {
 - (void)joinChannels:(NSArray *)chans;
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(NSString *)password;
+- (void)joinUnlistedChannel:(NSString *)channel;
+- (void)joinUnlistedChannel:(NSString *)channel password:(NSString *)password;
+- (void)forceJoinChannel:(NSString *)channel password:(NSString *)password;
 - (void)partChannel:(IRCChannel *)channel;
+- (void)partChannel:(IRCChannel *)channel withComment:(NSString *)comment;
+- (void)partUnlistedChannel:(NSString *)channel;
+- (void)partUnlistedChannel:(NSString *)channel withComment:(NSString *)comment;
+
 - (void)sendWhois:(NSString *)nick;
 - (void)changeNick:(NSString *)newNick;
 - (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value;
@@ -219,14 +223,19 @@ typedef enum {
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
+- (void)printDebugInformation:(NSString *)m;
+- (void)printDebugInformationToConsole:(NSString *)m;
+- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel;
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
 
-- (void)notifyEvent:(GrowlNotificationType)type;
-- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text;
-- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype;
+- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyText:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
+
+- (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(LogLineType)type;
 
 @end

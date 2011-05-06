@@ -157,7 +157,7 @@
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBoldEffect
-																  value:[NSNumber numberWithBool:YES]
+																  value:NSNumberWithBOOL(YES)
 																  range:selectedTextRange];
 	
 	[textField setAttributedStringValue:newString];
@@ -174,7 +174,7 @@
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterItalicEffect
-																  value:[NSNumber numberWithBool:YES]
+																  value:NSNumberWithBOOL(YES)
 																  range:selectedTextRange];
 	
 	[textField setAttributedStringValue:newString];
@@ -191,7 +191,7 @@
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-																  value:[NSNumber numberWithBool:YES]
+																  value:NSNumberWithBOOL(YES)
 																  range:selectedTextRange];
 	
 	[textField setAttributedStringValue:newString];
@@ -230,12 +230,12 @@
 			
 			if ([charValue isEqualToString:@" "]) {
 				newString = [newString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-														  value:[NSNumber numberWithInteger:0]
+														  value:NSNumberWithInteger(0)
 														  range:charRange];
 			} else {
 				colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
 				newString = [newString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-														  value:[NSNumber numberWithInteger:colorChar]
+														  value:NSNumberWithInteger(colorChar)
 														  range:charRange];
 			}
 			
@@ -244,7 +244,7 @@
 		}
 	} else {
 		newString = [oldString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												  value:[NSNumber numberWithInteger:[sender tag]]
+												  value:NSNumberWithInteger([sender tag)]
 												  range:selectedTextRange];
 	}
 	
@@ -281,7 +281,7 @@
 			
 			colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
 			newString = [newString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-													  value:[NSNumber numberWithInteger:colorChar]
+													  value:NSNumberWithInteger(colorChar)
 													  range:charRange];
 			
 			charCountIndex++;
@@ -289,7 +289,7 @@
 		}
 	} else {
 		newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-												  value:[NSNumber numberWithInteger:[sender tag]]
+												  value:NSNumberWithInteger([sender tag)]
 												  range:selectedTextRange];
 	}
 	

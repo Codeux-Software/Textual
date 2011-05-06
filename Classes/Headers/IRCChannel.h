@@ -4,6 +4,12 @@
 
 @class IRCClient;
 
+typedef enum {
+	IRCChannelParted,
+	IRCChannelJoining,
+	IRCChannelJoined,
+} ChannelStatus;
+
 @interface IRCChannel : IRCTreeItem
 {
 	IRCClient *client;
@@ -17,15 +23,17 @@
 	
 	NSString *logDate;
 	
-	BOOL isActive;
 	BOOL isOp;
 	BOOL isHalfOp;
 	BOOL isModeInit;
 	BOOL isNamesInit;
 	BOOL isWhoInit;
+	BOOL isActive;
+	BOOL errLastJoin;
+	
+	ChannelStatus status;
 	
 	BOOL forceOutput;
-	BOOL errLastJoin;
 	
 	FileLogger *logFile;
 }
@@ -38,14 +46,15 @@
 @property (nonatomic, retain) NSString *topic;
 @property (nonatomic, retain) NSString *storedTopic;
 @property (nonatomic, retain) NSString *logDate;
-@property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL isOp;
 @property (nonatomic, assign) BOOL isHalfOp;
 @property (nonatomic, assign) BOOL isModeInit;
 @property (nonatomic, assign) BOOL isNamesInit;
 @property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL forceOutput;
 @property (nonatomic, assign) BOOL errLastJoin;
+@property (nonatomic, assign) ChannelStatus status;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, retain) FileLogger *logFile;

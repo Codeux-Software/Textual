@@ -218,10 +218,11 @@
 	
 	// ====================================================== //
 	
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.nicknameFormat)]		      forKey:@"Preferences.Theme.tpoce_nick_format"];
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.timestampFormat)]			  forKey:@"Preferences.Theme.tpoce_timestamp_format"];
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:NSObjectIsEmpty(self.overrideChannelFont)]		  forKey:@"Preferences.Theme.tpoce_channel_font"];
-	[[_NSUserDefaultsController() values] setValue:[NSNumber numberWithBool:BOOLReverseValue(self.overrideMessageIndentWrap)] forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
+	
+	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Preferences.Theme.tpoce_nick_format"];
+	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Preferences.Theme.tpoce_timestamp_format"];
+	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.overrideChannelFont))			forKey:@"Preferences.Theme.tpoce_channel_font"];
+	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.overrideMessageIndentWrap))	forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
 	
 	// ====================================================== //
 	

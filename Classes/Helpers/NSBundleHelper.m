@@ -31,7 +31,7 @@
 									msg.sender.nick, @"senderNickname",
 									msg.sender.user, @"senderUsername",
 									msg.sender.address, @"senderDNSMask", 
-									[NSNumber numberWithBool:msg.sender.isServer], @"senderIsServer", nil];
+									NSNumberWithBOOL(msg.sender.isServer), @"senderIsServer", nil];
 		
 		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
 									 msg.command, @"messageCommand",
@@ -39,7 +39,7 @@
 									 [msg params], @"messageParamaters",
 									 client.config.server, @"messageServer",
 									 client.config.network, @"messageNetwork",
-									 [NSNumber numberWithInteger:[msg numericReply]], @"messageNumericReply", nil];
+									 NSNumberWithInteger([msg numericReply)], @"messageNumericReply", nil];
 		
 		for (TextualPluginItem *plugin in cmdPlugins) {
 			PluginProtocol *bundle = [plugin pluginPrimaryClass];
@@ -88,16 +88,18 @@
 		[self deallocBundlesFromMemory:world];
 	}
 	
-	NSMutableArray *completeBundleIndex = [NSMutableArray new];
+	NSMutableArray *completeBundleIndex		= [NSMutableArray new];
 	NSMutableArray *preferencesBundlesIndex = [NSMutableArray new];
- 	NSMutableDictionary *userInputBundles = [NSMutableDictionary new];
+	
+ 	NSMutableDictionary *userInputBundles	= [NSMutableDictionary new];
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
+	NSMutableDictionary *outputRulesDict	= [NSMutableDictionary new];
 	
 	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {
-			NSString *fullPath = [path stringByAppendingPathComponent:file];
+			NSString *fullPath	 = [path stringByAppendingPathComponent:file];
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
 			TextualPluginItem *plugin = [TextualPluginItem new];
@@ -105,16 +107,15 @@
 			[plugin initWithPluginClass:[currBundle principalClass] 
 							  andBundle:currBundle 
 							andIRCWorld:world
-					  withUserInputDict:userInputBundles 
-					withServerInputDict:serverInputBundles 
-				  withUserInputDictRefs:&userInputBundles 
-				withServerInputDictRefs:&serverInputBundles];
+					  withUserInputDict:&userInputBundles 
+					withServerInputDict:&serverInputBundles
+					 withOuputRulesDict:&outputRulesDict];
 			
 			if ([plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesMenuItemName)] && 
 				[plugin.pluginPrimaryClass respondsToSelector:@selector(preferencesView)]) {
 				
-				NSView *itemView = [plugin.pluginPrimaryClass preferencesView];
-				NSString *itemName = [plugin.pluginPrimaryClass preferencesMenuItemName];
+				NSView   *itemView	= [plugin.pluginPrimaryClass preferencesView];
+				NSString *itemName  = [plugin.pluginPrimaryClass preferencesMenuItemName];
 				
 				if (NSObjectIsNotEmpty(itemName) && itemView) {
 					[preferencesBundlesIndex safeAddObject:plugin];
@@ -129,9 +130,11 @@
 	
 	[world setAllLoadedBundles:completeBundleIndex];
 	[world setBundlesForUserInput:userInputBundles];
+	[world setBundlesWithOutputRules:outputRulesDict];
 	[world setBundlesForServerInput:serverInputBundles];
 	[world setBundlesWithPreferences:preferencesBundlesIndex];
 	
+	[outputRulesDict drain];
 	[userInputBundles drain];
 	[serverInputBundles drain];
 	[completeBundleIndex drain];

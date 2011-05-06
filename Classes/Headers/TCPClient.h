@@ -5,8 +5,7 @@
 
 @interface TCPClient : NSObject
 {
-	AsyncSocket *conn;
-	
+	id conn;
 	id delegate;
 	
 	NSString *host;
@@ -28,6 +27,8 @@
 	BOOL connected;
 	
 	NSMutableData *buffer;
+	
+	dispatch_queue_t dispatchQueue;
 }
 
 @property (nonatomic, retain) NSMutableData *buffer; 
@@ -47,6 +48,7 @@
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 
 - (void)open;
 - (void)close;

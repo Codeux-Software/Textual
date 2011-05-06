@@ -5,17 +5,6 @@
 #define KInternetEventClass	1196773964
 #define KAEGetURL			1196773964
 
-@interface NSTextView (NSTextViewCompatibility)
-- (void)setAutomaticSpellingCorrectionEnabled:(BOOL)v;
-- (BOOL)isAutomaticSpellingCorrectionEnabled;
-- (void)setAutomaticDashSubstitutionEnabled:(BOOL)v;
-- (BOOL)isAutomaticDashSubstitutionEnabled;
-- (void)setAutomaticDataDetectionEnabled:(BOOL)v;
-- (BOOL)isAutomaticDataDetectionEnabled;
-- (void)setAutomaticTextReplacementEnabled:(BOOL)v;
-- (BOOL)isAutomaticTextReplacementEnabled;
-@end
-
 @interface MasterController (Private)
 - (void)setColumnLayout;
 - (void)registerKeyHandlers;
@@ -330,13 +319,13 @@
 		
 		NSInteger port = 6667;
 		
-		NSString *server = nil;
+		NSString *server  = nil;
 		NSString *channel = nil;
 		
 		if ([url contains:@"/"]) {
 			chunks = [url componentsSeparatedByString:@"/"];
 			
-			server = [chunks safeObjectAtIndex:0];
+			server  = [chunks safeObjectAtIndex:0];
 			channel = [chunks safeObjectAtIndex:1];
 			
 			if ([channel contains:@" "]) {
@@ -360,7 +349,7 @@
 			chunks = [server componentsSeparatedByString:@":"];
 			
 			server = [chunks safeObjectAtIndex:0];
-			port = [[chunks safeObjectAtIndex:1] integerValue];
+			port   = [chunks integerAtIndex:1];
 		}
 		
 		[world createConnection:[NSString stringWithFormat:@"%@ %i", server, port] chan:channel];
@@ -576,16 +565,12 @@
 		NSInteger w = [dic integerForKey:@"w"];
 		NSInteger h = [dic integerForKey:@"h"];
 		
-		id spellCheckingValue = [dic objectForKey:@"SpellChecking"];
-		
 		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
+		
+		[fieldEditor setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
 		
 		infoSplitter.position = [dic integerForKey:@"info"];
 		treeSplitter.position = [dic integerForKey:@"tree"];
-		
-		if (spellCheckingValue) {
-			[fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
-		}
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
 		
@@ -626,7 +611,7 @@
 	[dic setInteger:infoSplitter.position forKey:@"info"];
 	[dic setInteger:treeSplitter.position forKey:@"tree"];
 	
-	[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
+	[_NSUserDefaults() setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	
 	[Preferences saveWindowState:dic name:@"MainWindow"];
 	[Preferences sync];
@@ -1279,6 +1264,11 @@ typedef enum {
 	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
+- (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[fieldEditor registerKeyHandler:sel character:c modifiers:mods];
+}
+
 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel character:c modifiers:mods];
@@ -1322,8 +1312,8 @@ typedef enum {
 	for (NSString *s in [config objectForKey:@"channels"]) {
 		if ([s isChannelName]) {
 			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"name", 
-									 [NSNumber numberWithBool:YES], @"auto_join", 
-									 [NSNumber numberWithBool:YES], @"growl", nil]];	
+									 NSNumberWithBOOL(YES), @"auto_join", 
+									 NSNumberWithBOOL(YES), @"growl", nil]];	
 		}
 	}
 	

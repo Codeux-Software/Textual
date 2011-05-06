@@ -78,6 +78,8 @@
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic, assign) NSInteger scrollTop;
 
+- (BOOL)hasValidBodyStructure;
+
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;

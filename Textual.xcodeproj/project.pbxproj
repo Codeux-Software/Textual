@@ -85,6 +85,8 @@
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C78406E1373AACD00D0791F /* GCDAsyncSocket.h */; };
+		4C7840711373AAD400D0791F /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7840701373AAD400D0791F /* GCDAsyncSocket.m */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
 		4C83EBB51311B3DD0016AE76 /* ChanInviteExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -481,6 +483,8 @@
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXRegularExpression.h; path = Classes/Headers/TXRegularExpression.h; sourceTree = SOURCE_ROOT; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
+		4C78406E1373AACD00D0791F /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4C7840701373AAD400D0791F /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
@@ -1134,6 +1138,8 @@
 				29361C4F12B79F1000F84FE9 /* AsyncSocketExtensions.m */,
 				4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */,
 				78A8C13011737F660044E7A1 /* RLMAsyncSocket.m */,
+				4C78406E1373AACD00D0791F /* GCDAsyncSocket.h */,
+				4C7840701373AAD400D0791F /* GCDAsyncSocket.m */,
 			);
 			name = "Socket Control";
 			sourceTree = "<group>";
@@ -1586,6 +1592,7 @@
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
+				4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1797,7 +1804,7 @@
 		};
 		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
@@ -1923,6 +1930,7 @@
 				4C8B8617131A35DE0065B4F9 /* MenuController.m in Sources */,
 				4C8B8618131A35DE0065B4F9 /* NSStringHelper.m in Sources */,
 				4C8B8619131A35DE0065B4F9 /* ModeSheet.m in Sources */,
+				4C7840711373AAD400D0791F /* GCDAsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
