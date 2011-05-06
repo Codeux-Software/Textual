@@ -46,7 +46,6 @@
 @synthesize stylesView;
 @synthesize themeButton;
 @synthesize transcriptFolderButton;
-@synthesize transcriptFolderOpenPanel;
 @synthesize transfersView;
 @synthesize updatesView;
 @synthesize world;
@@ -79,7 +78,6 @@
 	[scriptsView drain];
 	[sounds drain];
 	[stylesView drain];
-	[transcriptFolderOpenPanel drain];
 	[transfersView drain];
 	[updatesView drain];	
 	
@@ -372,7 +370,7 @@
 	
 	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
 	
-	[item setTitle:[path lastPathComponent]];
+	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
 	[item setImage:icon];
 }
 
@@ -388,11 +386,11 @@
 	[d setAllowsMultipleSelection:NO];
 	[d setCanCreateDirectories:YES];
 	
-	[d beginWithCompletionHandler:^(NSInteger returnCode) {
+	[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
 		[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
 		
 		if (returnCode == NSOKButton) {
-			NSURL *pathURL = [[transcriptFolderOpenPanel URLs] safeObjectAtIndex:0];
+			NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
 			NSString *path = [pathURL absoluteString];
 			
 			BOOL isDir;
@@ -406,9 +404,6 @@
 			[self updateTranscriptFolder];
 		}
 	}];
-	
-	[transcriptFolderOpenPanel autodrain];
-	transcriptFolderOpenPanel = nil;
 }
 
 #pragma mark -

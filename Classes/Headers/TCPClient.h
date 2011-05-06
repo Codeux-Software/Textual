@@ -27,12 +27,10 @@
 	BOOL connecting;
 	BOOL connected;
 	
-	NSThread *socketThread;
-	
 	NSMutableData *buffer;
 }
 
-@property (retain) NSMutableData *buffer; 
+@property (nonatomic, retain) NSMutableData *buffer; 
 @property (nonatomic, retain) AsyncSocket *conn;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) NSString *host;
@@ -49,7 +47,6 @@
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, retain) NSThread *socketThread;
 
 - (void)open;
 - (void)close;
