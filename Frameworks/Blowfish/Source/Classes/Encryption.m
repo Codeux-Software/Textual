@@ -1,7 +1,7 @@
-// Copyright (c) 2011 Codeux Software <support at codeux dot com>
+/* Copyright (c) 2011 Codeux Software <support at codeux dot com> */
 
 #import "Encryption.h"
-#import "Blowfish.h"
+#import "blowfish_be.h"
 
 @implementation CSFWBlowfish
 

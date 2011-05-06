@@ -145,10 +145,10 @@
 		NSArray *ary = [context componentsSeparatedByString:@" "];
 		
 		if (ary.count >= 2) {
-			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
-			NSInteger cid = [[ary safeObjectAtIndex:1] integerValue];
+			NSInteger uid = [ary integerAtIndex:0];
+			NSInteger cid = [ary integerAtIndex:1];
 			
-			IRCClient *u = [owner findClientById:uid];
+			IRCClient  *u = [owner findClientById:uid];
 			IRCChannel *c = [owner findChannelByClientId:uid channelId:cid];
 			
 			if (c) {
@@ -157,7 +157,7 @@
 				[owner select:u];
 			}
 		} else if (ary.count == 1) {
-			NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
+			NSInteger uid = [ary integerAtIndex:0];
 			
 			IRCClient *u = [owner findClientById:uid];
 			

@@ -3,6 +3,16 @@
 
 @implementation NSObject (NSObjectHelper)
 
++ (id)newad 
+{
+	return [[[self alloc] init] autodrain];
+}
+
+- (id)adrv
+{
+	return [[self retain] autodrain];
+}
+
 - (oneway void)drain
 {
 	if ([_NSUserDefaults() boolForKey:@"DisableMemoryDeallocation"] == NO) {

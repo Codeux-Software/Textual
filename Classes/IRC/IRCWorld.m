@@ -24,6 +24,7 @@
 @synthesize bundlesForServerInput;
 @synthesize bundlesForUserInput;
 @synthesize bundlesWithPreferences;
+@synthesize bundlesWithOutputRules;
 @synthesize chanMenu;
 @synthesize channelMenu;
 @synthesize chatBox;
@@ -72,6 +73,7 @@
 	[bundlesForServerInput drain];
 	[bundlesForUserInput drain];
 	[bundlesWithPreferences drain];
+	[bundlesWithOutputRules drain];
 	[channelMenu drain];
 	[clients drain];
 	[config drain];
@@ -204,11 +206,14 @@
 	[bundlesForUserInput drain];
 	[bundlesForServerInput drain];
 	[bundlesWithPreferences drain];
+	[bundlesWithOutputRules drain];
 	
-	allLoadedBundles = [NSArray new];
-	bundlesWithPreferences = [NSArray new];
-	bundlesForUserInput = [NSDictionary new];
-	bundlesForServerInput = [NSDictionary new];
+	allLoadedBundles		= [NSArray new];
+	bundlesWithPreferences	= [NSArray new];
+	
+	bundlesForUserInput		= [NSDictionary new];
+	bundlesForServerInput	= [NSDictionary new];
+	bundlesWithOutputRules	= [NSDictionary new];
 }
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
@@ -736,7 +741,7 @@
 
 - (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload
 {
-	IRCClient *c = [[IRCClient new] autodrain];
+	IRCClient *c = [IRCClient newad];
 	
 	c.uid = ++itemId;
 	c.world = self;
@@ -767,7 +772,7 @@
 	IRCChannel *c = [client findChannel:seed.name];
 	if (NSObjectIsNotEmpty(c.name)) return c;
 	
-	c = [[IRCChannel new] autodrain];
+	c = [IRCChannel newad];
 
 	c.uid = ++itemId;
 	c.client = client;
@@ -807,7 +812,7 @@
 
 - (IRCChannel *)createTalk:(NSString *)nick client:(IRCClient *)client
 {
-	IRCChannelConfig *seed = [[IRCChannelConfig new] autodrain];
+	IRCChannelConfig *seed = [IRCChannelConfig newad];
 	
 	seed.name = nick;
 	seed.type = CHANNEL_TYPE_TALK;
@@ -819,11 +824,11 @@
 		
 		IRCUser *m = nil;
 		
-		m = [[IRCUser new] autodrain];
+		m = [IRCUser newad];
 		m.nick = client.myNick;
 		[c addMember:m];
 		
-		m = [[IRCUser new] autodrain];
+		m = [IRCUser newad];
 		m.nick = c.name;
 		[c addMember:m];
 	}
@@ -898,8 +903,7 @@
 
 - (void)destroyClient:(IRCClient *)u
 {
-	[[u retain] autodrain];
-	
+	[u adrv];
 	[u terminate];
 	[u disconnect];
 	
@@ -915,8 +919,7 @@
 
 - (void)destroyChannel:(IRCChannel *)c
 {
-	[[c retain] autodrain];
-	
+	[c adrv];
 	[c terminate];
 	
 	IRCClient *u = c.client;
@@ -993,7 +996,7 @@
 		
 		if ([kind isEqualToString:@"client"]) {
 			if (ary.count >= 2) {
-				NSInteger uid = [[ary safeObjectAtIndex:1] integerValue];
+				NSInteger uid = [ary integerAtIndex:1];
 				
 				IRCClient *u = [self findClientById:uid];
 				
@@ -1003,8 +1006,8 @@
 			}
 		} else if ([kind isEqualToString:@"channel"]) {
 			if (ary.count >= 3) {
-				NSInteger uid = [[ary safeObjectAtIndex:1] integerValue];
-				NSInteger cid = [[ary safeObjectAtIndex:2] integerValue];
+				NSInteger uid = [ary integerAtIndex:1];
+				NSInteger cid = [ary integerAtIndex:2];
 			
 				IRCChannel *c = [self findChannelByClientId:uid channelId:cid];
 				
@@ -1082,6 +1085,8 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
+	[[NSSpellChecker sharedSpellChecker] setIgnoredWords:[NSArray array] inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
+	
 	id nextItem = [tree itemAtRow:[tree selectedRow]];
 	
 	self.selected = nextItem;
@@ -1143,8 +1148,6 @@
 			[text setFilteredAttributedStringValue:newHistory.lastHistoryItem];
 		}
 	}
-	
-	[[NSSpellChecker sharedSpellChecker] closeSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
 	
 	[self updateTitle];
 	[self reloadTree];
@@ -1215,8 +1218,8 @@
 	if ([s contains:@"-"]) {
 		NSArray *ary = [s componentsSeparatedByString:@"-"];
 		
-		NSInteger uid = [[ary safeObjectAtIndex:0] integerValue];
-		NSInteger cid = [[ary safeObjectAtIndex:1] integerValue];
+		NSInteger uid = [ary integerAtIndex:0];
+		NSInteger cid = [ary integerAtIndex:1];
 		
 		return [self findChannelByClientId:uid channelId:cid];
 	} else {		
@@ -1298,7 +1301,7 @@
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		
-		[[i retain] autodrain];
+		[i adrv];
 		
 		[ary removeAllObjects];
 		
@@ -1320,7 +1323,7 @@
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		
-		[[i retain] autodrain];
+		[i adrv];
 		
 		[ary removeAllObjects];
 		

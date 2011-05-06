@@ -3,9 +3,14 @@
 
 @implementation NSPasteboard (NSPasteboardHelper)
 
+- (NSArray *)pasteboardStringType
+{
+	return [NSArray arrayWithObject:NSStringPboardType];
+}
+
 - (BOOL)hasStringContent
 {
-	return BOOLReverseValue(PointerIsEmpty([self availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]));
+	return BOOLValueFromObject([self availableTypeFromArray:[self pasteboardStringType]]);
 }
 
 - (NSString *)stringContent
@@ -15,7 +20,7 @@
 
 - (void)setStringContent:(NSString *)s
 {
-	[self declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+	[self declareTypes:[self pasteboardStringType] owner:nil];
 	[self setString:s forType:NSStringPboardType];
 }
 

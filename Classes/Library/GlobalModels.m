@@ -64,7 +64,7 @@ NSString *TXFormattedTimestamp(NSString *format)
 	return TXFormattedTimestampWithOverride(format, nil);
 }
 
-NSString *TXReadableTime(NSInteger dateInterval) 
+NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue) 
 {
 	NSArray *orderMatrix = [NSArray arrayWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
 	
@@ -95,14 +95,25 @@ NSString *TXReadableTime(NSInteger dateInterval)
 					languageKey = [languageKey stringByAppendingString:@"_PLURAL"];
 				}
 				
-				[finalResult appendFormat:@"%i %@, ", total, TXTLS(languageKey)];
+				if (shortValue) {
+					return [NSString stringWithFormat:@"%i %@", total, TXTLS(languageKey)];
+				} else {
+					[finalResult appendFormat:@"%i %@, ", total, TXTLS(languageKey)];
+				}
 			}
 		}
 		
-		[finalResult deleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+		if ([finalResult length] >= 3) {
+			[finalResult safeDeleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+		}
 		
 		return finalResult;
 	}
 	
 	return nil;
+}
+
+NSString *TXReadableTime(NSInteger dateInterval)
+{
+	return TXSpecialReadableTime(dateInterval, NO);
 }

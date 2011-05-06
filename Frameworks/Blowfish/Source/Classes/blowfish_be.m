@@ -22,7 +22,7 @@
  
 */
 
-#include "Blowfish.h"
+#include "blowfish_be.h"
 
 #define IB 64
 

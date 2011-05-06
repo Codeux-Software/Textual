@@ -490,7 +490,7 @@
 	IRCChannelConfig *conf;
 	
 	if (sel < 0) {
-		conf = [[IRCChannelConfig new] autodrain];
+		conf = [IRCChannelConfig newad];
 	} else {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
 		
@@ -685,7 +685,7 @@
 		} else if ([columnId isEqualToString:@"pass"]) {
 			return c.password;
 		} else if ([columnId isEqualToString:@"join"]) {
-			return [NSNumber numberWithBool:c.autoJoin];
+			return NSNumberWithBOOL(c.autoJoin);
 		}
 	} else {
 		AddressBook *g = [config.ignores safeObjectAtIndex:row];
@@ -732,7 +732,7 @@
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
 	if (sender == channelTable) {
-		NSArray *ary = [NSArray arrayWithObject:[NSNumber numberWithInteger:[rows firstIndex]]];
+		NSArray *ary = [NSArray arrayWithObject:NSNumberWithInteger([rows firstIndex])];
 	
 		[pboard declareTypes:TABLE_ROW_TYPES owner:self];
 		[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
@@ -765,11 +765,11 @@
 			NSMutableArray *ary = config.channels;
 			
 			NSArray *selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
-			NSInteger sel = [[selectedRows safeObjectAtIndex:0] integerValue];
+			NSInteger sel = [selectedRows integerAtIndex:0];
 			
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			
-			[[target retain] autodrain];
+			[target adrv];
 
 			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
 			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autodrain];

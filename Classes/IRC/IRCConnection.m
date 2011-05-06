@@ -245,17 +245,15 @@
 
 - (void)tcpClientDidReceiveData:(TCPClient *)sender
 {
-	dispatch_sync([delegate dispatchQueue], ^{
-		while (1) {
-			NSData *data = [conn readLine];
-			
-			if (NSObjectIsEmpty(data)) break;
-			
-			if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
-				[delegate ircConnectionDidReceive:data];
-			}
+	while (1) {
+		NSData *data = [conn readLine];
+		
+		if (NSObjectIsEmpty(data)) break;
+		
+		if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
+			[delegate ircConnectionDidReceive:data];
 		}
-	});
+	}
 }
 
 - (void)tcpClientDidSendData:(TCPClient *)sender

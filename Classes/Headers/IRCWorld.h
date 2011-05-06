@@ -54,8 +54,10 @@
 	
 	NSArray *allLoadedBundles;
 	NSArray *bundlesWithPreferences;
+	
 	NSDictionary *bundlesForUserInput;
 	NSDictionary *bundlesForServerInput;
+	NSDictionary *bundlesWithOutputRules;
 }
 
 @property (nonatomic, assign) ChatBox *chatBox;
@@ -95,6 +97,7 @@
 @property (nonatomic, retain) NSArray *bundlesWithPreferences;
 @property (nonatomic, retain) NSDictionary *bundlesForUserInput;
 @property (nonatomic, retain) NSDictionary *bundlesForServerInput;
+@property (nonatomic, retain) NSDictionary *bundlesWithOutputRules;
 
 - (void)setup:(IRCWorldConfig *)seed;
 - (void)setupTree;

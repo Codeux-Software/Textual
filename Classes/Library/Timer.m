@@ -27,7 +27,7 @@
 
 - (BOOL)isActive
 {
-	return BOOLReverseValue(PointerIsEmpty(timer));
+	return BOOLValueFromObject(timer);
 }
 
 - (void)start:(NSTimeInterval)interval

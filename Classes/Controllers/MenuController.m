@@ -159,7 +159,7 @@
 		}
 		case 503:	// cancel isReconnecting
 		{
-			BOOL condition = (u && u.isReconnecting);
+			BOOL condition = (u && [u isReconnecting]);
 			
 			[item setHidden:BOOLReverseValue(condition)];
 			
@@ -171,13 +171,13 @@
 			return CONNECTED;
 			break;
 		case 522:	// copy server
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 523:	// delete server
 			return NOT_CONNECTED;
 			break;
 		case 541:	// server property
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 592:	// textual logs
 			return [Preferences logTranscript];
@@ -228,7 +228,7 @@
 			} else {
 				[item setHidden:NO];
 				
-				return BOOLReverseValue(PointerIsEmpty(u));
+				return BOOLValueFromObject(u);
 			}
 			
 			break;
@@ -245,7 +245,7 @@
 			
 			break;
 		case 691:	// add channel - server menu
-			return BOOLReverseValue(PointerIsEmpty(u));
+			return BOOLValueFromObject(u);
 			break;
 		case 2005:	// invite
 		{
@@ -415,7 +415,7 @@
 		}
 	}
 	
-	[[[self invokeOnMainThread] currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+	[[[self iomt] currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 }
 
 - (void)onWantFindPanel:(id)sender
@@ -687,7 +687,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[IRCClientConfig new] autodrain];
+	d.config = [IRCClientConfig newad];
 	d.uid = -1;
 	
 	[d startWithIgnoreTab:NO];
@@ -900,7 +900,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[IRCChannelConfig new] autodrain];
+	d.config = [IRCChannelConfig newad];
 	d.uid = u.uid;
 	d.cid = -1;
 	
@@ -969,12 +969,12 @@
 		if (NO_CHANNEL) return;
 		
 		if (NSObjectIsEmpty(c.config.encryptionKey) && NSObjectIsNotEmpty(sender.config.encryptionKey)) {
-			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED")];
+			[c.client printDebugInformation:TXTLS(@"BLOWFISH_ENCRYPTION_STARTED") channel:c];
 		} else if (NSObjectIsNotEmpty(c.config.encryptionKey) && NSObjectIsEmpty(sender.config.encryptionKey)) {
-			[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED")];
+			[c.client printDebugInformation:TXTLS(@"BLOWFISH_ENCRYPTION_STOPPED") channel:c];
 		} else if (NSObjectIsNotEmpty(c.config.encryptionKey) && NSObjectIsNotEmpty(sender.config.encryptionKey)) {
 			if ([c.config.encryptionKey isEqualToString:sender.config.encryptionKey] == NO) {
-				[c.client printBoth:c type:LINE_TYPE_DEBUG text:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED")];
+				[c.client printDebugInformation:TXTLS(@"BLOWFISH_ENCRYPTION_KEY_CHANGED") channel:c];
 			}
 		}
 		
@@ -1206,7 +1206,7 @@
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
 	if (NSObjectIsNotEmpty(pointedChannelName)) {
-		[u send:IRCCI_JOIN, pointedChannelName, nil];
+		[u joinUnlistedChannel:pointedChannelName];
         
         [pointedChannelName autodrain];
         pointedChannelName = nil;
@@ -1444,7 +1444,7 @@
 										  alternateButton:TXTLS(@"CANCEL_BUTTON") 
 											 defaultInput:nil];
 	
-	[[self invokeOnMainThread] __onWantHostServVhostSet:sender andVhost:vhost];
+	[[self iomt] __onWantHostServVhostSet:sender andVhost:vhost];
 }
 
 - (void)onWantHostServVhostSet:(id)sender

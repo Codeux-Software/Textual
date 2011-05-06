@@ -21,11 +21,6 @@
     [super dealloc];
 }
 
-- (NSInteger)buttonClicked
-{
-	return buttonClicked;
-}
-
 - (NSString *)promptValue
 {
 	return [finalModalValue trim];
