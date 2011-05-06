@@ -49,8 +49,6 @@
 	
 	NSFont *logFont;
 	NSMutableArray *sounds;
-	
-	NSOpenPanel *transcriptFolderOpenPanel;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -85,7 +83,6 @@
 @property (nonatomic, retain) NSMenu *installedScriptsMenu;
 @property (nonatomic, retain) NSTextField *scriptLocationField;
 @property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
-@property (nonatomic, retain) NSOpenPanel *transcriptFolderOpenPanel;
 
 - (id)initWithWorldController:(IRCWorld *)word;
 

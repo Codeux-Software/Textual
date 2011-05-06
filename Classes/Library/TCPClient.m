@@ -19,7 +19,6 @@
 @synthesize proxyPort;
 @synthesize proxyUser;
 @synthesize sendQueueSize;
-@synthesize socketThread;
 @synthesize socksVersion;
 @synthesize useSocks;
 @synthesize useSSL;
@@ -37,15 +36,10 @@
 - (void)dealloc
 {
 	if (conn) {
-		[[conn invokeOnThread:socketThread] setDelegate:nil];
-		[[conn invokeOnThread:socketThread] disconnect];
+		[conn setDelegate:nil];
+		[conn disconnect];
 		
 		[conn autodrain];
-	}
-	
-	if (socketThread) {
-		[socketThread cancel];
-		[socketThread drain];
 	}
 	
 	[buffer drain];
@@ -58,13 +52,11 @@
 	[super dealloc];
 }
 
-- (void)openBackgroundConnection
+- (void)open
 {
 	[self close];
 	
-	[self.buffer setLength:0];
-	
-	socketThread  = [[NSThread currentThread] retain];
+	[buffer setLength:0];
 	
 	NSError *connError = nil;
 	
@@ -79,29 +71,17 @@
 	connected  = NO;
 	
 	sendQueueSize = 0;
-	
-	[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:NO];
-	
-	[[NSRunLoop currentRunLoop] run];
-}
-
-- (void)open
-{
-	[[self invokeInBackgroundThread] openBackgroundConnection];
 }
 
 - (void)close
 {
 	if (PointerIsEmpty(conn)) return;
 	
-	[[conn invokeOnThread:socketThread] setDelegate:nil];
-	[[conn invokeOnThread:socketThread] disconnect];
+	[conn setDelegate:nil];
+	[conn disconnect];
 	
 	[conn autodrain];
 	conn = nil;
-	
-	[socketThread cancel];
-	[socketThread drain];
 	
 	active	   = NO;
 	connecting = NO;
@@ -112,10 +92,10 @@
 
 - (NSData *)readLine
 {
-	NSInteger len = [self.buffer length];
+	NSInteger len = [buffer length];
 	if (len < 1) return nil;
 	
-	const char *bytes = [self.buffer bytes];
+	const char *bytes = [buffer bytes];
 	char *p = memchr(bytes, LF, len);
 	
 	if (p == NULL) return nil;
@@ -130,14 +110,14 @@
 		}
 	}
 	
-	NSMutableData *result = [self.buffer autodrain];
+	NSMutableData *result = [buffer autodrain];
 	
 	++p;
 	
 	if (p < (bytes + len)) {
-		self.buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
+		buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
 	} else {
-		self.buffer = [NSMutableData new];
+		buffer = [NSMutableData new];
 	}
 	
 	[result setLength:n];
@@ -151,8 +131,8 @@
 	
 	++sendQueueSize;
 	
-	[[conn invokeOnThread:socketThread] writeData:data withTimeout:15.0 tag:0];
-	[[conn invokeOnThread:socketThread] readDataWithTimeout:(-1)		tag:0];
+	[conn writeData:data withTimeout:15.0 tag:0];
+	[conn readDataWithTimeout:(-1)		tag:0];
 }
 
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock
@@ -180,7 +160,7 @@
 	connected  = YES;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidConnect:self];
+		[delegate tcpClientDidConnect:self];
 	}
 }
 
@@ -189,7 +169,7 @@
 	[self close];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidDisconnect:self];
+		[delegate tcpClientDidDisconnect:self];
 	}	
 }
 
@@ -215,7 +195,7 @@
 			}
 			
 			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-				[[delegate invokeOnMainThread] tcpClient:self error:msg];
+				[delegate tcpClient:self error:msg];
 			}
 		}
 	}
@@ -223,10 +203,10 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[self.buffer appendData:data];
+	[buffer appendData:data];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidReceiveData:self];
+		[delegate tcpClientDidReceiveData:self];
 	}
 	
 	[conn readDataWithTimeout:(-1) tag:0]; 
@@ -237,7 +217,7 @@
 	--sendQueueSize;
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
-		[[delegate invokeOnMainThread] tcpClientDidSendData:self];
+		[delegate tcpClientDidSendData:self];
 	}
 }
 

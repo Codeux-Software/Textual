@@ -1083,7 +1083,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if (c.isChannel && c.config.autoJoin) {
-			if (c.errLastJoin == NO && c.isActive == NO) {
+			if (c.isActive == NO) {
 				[ary safeAddObject:c];
 			}
 		}
@@ -3251,6 +3251,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
+		if ([ignoreChecks ignorePrivateMsg] == YES) {
+			return;
+		}
+		
 		if (NSObjectIsEmpty(anick)) {
 			[self printBoth:nil type:type text:text];
 		} else if ([anick isNickname] == NO) {
@@ -3368,10 +3372,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				[self notifyText:GROWL_TALK_NOTICE target:c nick:anick text:text];
 			} else {
-				if ([ignoreChecks ignorePrivateMsg] == YES) {
-					return;
-				}
-				
 				BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified];
 				
 				GrowlNotificationType kind = GROWL_TALK_MSG;
@@ -3405,10 +3405,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (NSObjectIsEmpty(anick) || [anick isNickname] == NO) {
 			[self printBoth:nil type:type text:text];
 		} else {
-			if ([ignoreChecks ignorePublicMsg] == YES) {
-				return;
-			}
-			
 			[self printBoth:nil type:type nick:anick text:text identified:identified];
 		}
 	}
@@ -3935,6 +3931,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #ifdef IS_TRIAL_BINARY
 	[self startTrialPeriodTimer];
 #endif
+	
+	[self startAutoJoinTimer];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
@@ -3974,8 +3972,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				[world updateTitle];
 			}
-			
-			[self startAutoJoinTimer];
 			
 			break;
 		}
