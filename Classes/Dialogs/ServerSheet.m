@@ -265,7 +265,7 @@
 	}
 	
 	if (config.altNicks.count > 0) {
-		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
+		altNicksText.stringValue = [config.altNicks componentsJoinedByString:NSWhitespaceCharacter];
 	} else {
 		altNicksText.stringValue = @"";
 	}
@@ -287,7 +287,7 @@
 	proxyPasswordText.stringValue = config.proxyPassword;
 
 	invisibleCheck.state = config.invisibleMode;
-	loginCommandsText.string = [config.loginCommands componentsJoinedByString:@"\n"];
+	loginCommandsText.string = [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
 }
 
 - (void)save
@@ -335,7 +335,7 @@
 	config.realName = realNameText.stringValue;
 	config.nickPassword = nickPasswordText.stringValue;
 	
-	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
+	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:NSWhitespaceCharacter];
 	
 	[config.altNicks removeAllObjects];
 	
@@ -358,7 +358,7 @@
 	config.proxyUser = proxyUserText.stringValue;
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
-	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
+	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:NSNewlineCharacter];
 	
 	[config.loginCommands removeAllObjects];
 	

@@ -79,12 +79,12 @@
 		str = [str safeSubstringToIndex:(str.length - [ISUPPORT_SUFFIX length])];
 	}
 	
-	NSArray *ary = [str split:@" "];
+	NSArray *ary = [str split:NSWhitespaceCharacter];
 	
 	for (NSString *s in ary) {
 		NSRange r = [s rangeOfString:@"="];
 		
-		if (r.location != NSNotFound) {
+		if (NSDissimilarObjects(r.location, NSNotFound)) {
 			NSString *key = [[s safeSubstringToIndex:r.location] uppercaseString];
 			NSString *value = [s safeSubstringFromIndex:NSMaxRange(r)];
 			

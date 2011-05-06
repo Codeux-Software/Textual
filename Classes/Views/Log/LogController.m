@@ -761,17 +761,11 @@
 	
 	OtherTheme *other = world.viewTheme.other;
 	
-	NSString *name  = [Preferences themeLogFontName];
-	NSInteger rsize = [Preferences themeLogFontSize];
-	double    size  = ([Preferences themeLogFontSize] * (72.0 / 96.0));
-	
-	if (other.overrideChannelFont) {
-		NSFont *channelFont = other.overrideChannelFont;
+	NSFont *channelFont = other.channelViewFont;
 		
-		name  = [channelFont fontName];
-		rsize = [channelFont pointSize];
-		size  = ([channelFont pointSize] * (72.0 / 96.0));
-	} 
+	NSString *name  = [channelFont fontName];
+	NSInteger rsize = [channelFont pointSize];
+	NSDoubleN size  = ([channelFont pointSize] * (72.0 / 96.0));
 	
 	[sf appendString:@"html, body, body[type], body {"];
 	[sf appendFormat:@"font-family:'%@';", name];
@@ -779,13 +773,16 @@
 	[sf appendString:@"}"];
 	
 	if ([Preferences rightToLeftFormatting] == NO) {
-		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) return sf;
+		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) {
+			return sf;
+		}
 		
 		if ([Preferences indentOnHang]) {
+			NSString	 *time		 = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat);
 			NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
 			
-			NSSize    textSize  = [TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat) sizeWithAttributes:attributes]; 
+			NSSize    textSize  = [time sizeWithAttributes:attributes]; 
 			NSInteger textWidth = (textSize.width + (6 + other.nicknameFormatFixedWidth));
 			
 			[sf appendString:@"body div#body_home p {"];

@@ -37,8 +37,8 @@
 	if (c.isChannel || c.isTalk) {
 		messageString = [messageString trim];
 		
-		if ([messageString contains:@" "]) {
-			messageString = [messageString substringToIndex:[messageString stringPosition:@" "]];
+		if ([messageString contains:NSWhitespaceCharacter]) {
+			messageString = [messageString substringToIndex:[messageString stringPosition:NSWhitespaceCharacter]];
 		}
 		
 		if ([commandString isEqualToString:@"SETKEY"]) {

@@ -15,8 +15,9 @@
 - (void)updateTheme;
 
 - (void)setUpToolbarItemsAndMenus;
-
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
+
+- (void)changeItemFont:(NSFontManager *)sender;
 @end
 
 @implementation PreferencesController
@@ -37,7 +38,6 @@
 @synthesize IRCopServicesView;
 @synthesize keywordsArrayController;
 @synthesize keywordsTable;
-@synthesize logFont;
 @synthesize logView;
 @synthesize preferenceSelectToolbar;
 @synthesize scriptLocationField;
@@ -73,7 +73,6 @@
 	[identityView drain];
 	[interfaceView drain];
 	[IRCopServicesView drain];
-	[logFont drain];
 	[logView drain];
 	[scriptsController drain];
 	[scriptsView drain];
@@ -101,9 +100,6 @@
 	[self updateTheme];
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
-	
-	[logFont drain];
-	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
 	
 	if ([self.window isVisible] == NO) {
 		[self.window center];
@@ -231,26 +227,6 @@
 #pragma mark -
 #pragma mark KVC Properties
 
-- (void)setFontDisplayName:(NSString *)value
-{
-	[Preferences setThemeLogFontName:value];
-}
-
-- (NSString *)fontDisplayName
-{
-	return [Preferences themeLogFontName];
-}
-
-- (void)setFontPointSize:(CGFloat)value
-{
-	[Preferences setThemeLogFontSize:value];
-}
-
-- (CGFloat)fontPointSize
-{
-	return [Preferences themeLogFontSize];
-}
-
 - (NSInteger)maxLogLines
 {
 	return [Preferences maxLogLines];
@@ -280,6 +256,55 @@
 {
 	[Preferences setInlineImagesMaxWidth:value];
 }
+
+- (NSString *)themeChannelViewFontName
+{
+	return [Preferences themeChannelViewFontName];
+}
+
+- (NSString *)themeMemberListFontName
+{
+	return [Preferences themeMemberListFontName];
+}
+
+- (NSString *)themeChannelListFontName
+{
+	return [Preferences themeChannelListFontName];
+}
+
+- (NSString *)themeInputBoxFontName
+{
+	return [Preferences themeInputBoxFontName];
+}
+
+- (NSDoubleN)themeChannelViewFontSize
+{
+	return [Preferences themeChannelViewFontSize];
+}
+
+- (NSDoubleN)themeMemberListFontSize
+{
+	return [Preferences themeMemberListFontSize];
+}
+
+- (NSDoubleN)themeChannelListFontSize
+{
+	return [Preferences themeChannelListFontSize];
+}
+
+- (NSDoubleN)themeInputBoxFontSize
+{
+	return [Preferences themeInputBoxFontSize];
+}
+
+- (void)setThemeChannelViewFontName:(id)value	{ return; }
+- (void)setThemeMemberListFontName:(id)value	{ return; }
+- (void)setThemeChannelListFontName:(id)value	{ return; }
+- (void)setThemeInputBoxFontName:(id)value		{ return; }
+- (void)setThemeChannelViewFontSize:(id)value	{ return; }
+- (void)setThemeMemberListFontSiz:(id)value		{ return; }
+- (void)setThemeChannelListFontSize:(id)value	{ return; }
+- (void)setThemeInputBoxFontSize:(id)value		{ return; }
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
@@ -378,37 +403,31 @@
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-	if ([transcriptFolderButton selectedTag] != 2) return;
-	
-	NSOpenPanel *d = [NSOpenPanel openPanel];
-	
-	[d setCanChooseFiles:NO];
-	[d setCanChooseDirectories:YES];
-	[d setResolvesAliases:YES];
-	[d setAllowsMultipleSelection:NO];
-	[d setCanCreateDirectories:YES];
-	
-	[d beginWithCompletionHandler:^(NSInteger returnCode) {
-		[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+	if ([transcriptFolderButton selectedTag] == 2) {
+		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
-		if (returnCode == NSOKButton) {
-			NSURL *pathURL = [[transcriptFolderOpenPanel URLs] safeObjectAtIndex:0];
-			NSString *path = [pathURL absoluteString];
+		[d setCanChooseFiles:NO];
+		[d setCanChooseDirectories:YES];
+		[d setResolvesAliases:YES];
+		[d setAllowsMultipleSelection:NO];
+		[d setCanCreateDirectories:YES];
+		
+		[d beginWithCompletionHandler:^(NSInteger returnCode) {
+			[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
 			
-			BOOL isDir;
-			
-			if ([_NSFileManager() fileExistsAtPath:path isDirectory:&isDir] == NO) {
-				[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+			if (returnCode == NSOKButton) {
+				NSURL	 *pathURL = [[transcriptFolderOpenPanel URLs] safeObjectAtIndex:0];
+				NSString *path	  = [pathURL absoluteString];
+				
+				[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+				
+				[self updateTranscriptFolder];
 			}
-			
-			[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
-			
-			[self updateTranscriptFolder];
-		}
-	}];
-	
-	[transcriptFolderOpenPanel autodrain];
-	transcriptFolderOpenPanel = nil;
+		}];
+		
+		[transcriptFolderOpenPanel autodrain];
+		transcriptFolderOpenPanel = nil;
+	}
 }
 
 #pragma mark -
@@ -503,19 +522,93 @@
 
 - (void)onSelectFont:(id)sender
 {
-	[_NSFontManager() setSelectedFont:logFont isMultiple:NO];
-	[_NSFontManager() orderFrontFontPanel:self];
+	selectedFontPanel = [sender tag];
+	
+	NSFont *logfont;
+	
+	/* Tags:
+	 1: Server/Channel List
+	 2: Channel Member List
+	 3: Input Text Field 
+	 4: Channel View
+	 */
+	
+	switch (selectedFontPanel) {
+		case 1: logfont = world.viewTheme.other.treeFont; break;
+		case 2: logfont = world.viewTheme.other.memberListFont; break;
+		case 3: logfont = world.viewTheme.other.inputTextFont; break;
+		case 4: logfont = world.viewTheme.other.channelViewFont; break;
+		default: break;
+	}
+	
+	if (logfont) {		
+		[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
+		[_NSFontManager() orderFrontFontPanel:self];
+		[_NSFontManager() setAction:@selector(changeItemFont:)];
+	}
 }
 
-- (void)changeFont:(id)sender
+- (void)changeItemFont:(NSFontManager *)sender
 {
-	[logFont autodrain];
-	logFont = [[sender convertFont:logFont] retain];
+	OtherTheme *theme = world.viewTheme.other;
 	
-	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-	[self setValue:NSNumberWithDouble(logFont.pointSize) forKey:@"fontPointSize"];
+	switch (selectedFontPanel) {
+		case 1: 
+		{
+			NSFont *newFont = [sender convertFont:theme.treeFont]; 
+			
+			[Preferences setThemeChannelListFontName:[newFont fontName]];
+			[Preferences setThemeChannelListFontSize:[newFont pointSize]];
+			
+			[self setValue:[newFont fontName]						forKey:@"themeChannelListFontName"];
+			[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelListFontSize"];
+			
+			break;
+		}
+		case 2: 
+		{
+			NSFont *newFont = [sender convertFont:theme.memberListFont]; 
+			
+			[Preferences setThemeMemberListFontName:[newFont fontName]];
+			[Preferences setThemeMemberListFontSize:[newFont pointSize]];
+			
+			[self setValue:[newFont fontName]						forKey:@"themeMemberListFontName"];
+			[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeMemberListFontSize"];
+			
+			break;
+		}
+		case 3: 
+		{
+			NSFont *newFont = [sender convertFont:theme.inputTextFont];
+			
+			[Preferences setThemeInputBoxFontName:[newFont fontName]];
+			[Preferences setThemeInputBoxFontSize:[newFont pointSize]];
+			
+			[self setValue:[newFont fontName]						forKey:@"themeInputBoxFontName"];
+			[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeInputBoxFontSize"];
+			
+			break;
+		}
+		case 4:
+		{
+			NSFont *newFont = [sender convertFont:theme.channelViewFont]; break;
+			
+			[Preferences setThemeChannelViewFontName:[newFont fontName]];
+			[Preferences setThemeChannelViewFontSize:[newFont pointSize]];
+			
+			[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
+			[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
+			
+			break;
+		}
+		default: break;
+	}
 	
-	[self onStyleChanged:nil];
+	if (selectedFontPanel == 4) {
+		[self onStyleChanged:nil];
+	} else {
+		[self onLayoutChanged:nil];
+	}
 }
 
 - (void)onOverrideFontChanged:(id)sender
@@ -547,6 +640,12 @@
 {
 	[self onLayoutChanged:nil];
 }
+
+- (void)onFontPreferencesChanged:(id)sender 
+{
+	[self onLayoutChanged:nil];
+}
+
 
 #pragma mark -
 #pragma mark Actions

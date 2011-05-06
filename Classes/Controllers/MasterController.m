@@ -15,33 +15,28 @@
 @synthesize addrMenu;
 @synthesize chanMenu;
 @synthesize channelMenu;
-@synthesize chatBox;
 @synthesize completionStatus;
 @synthesize extrac;
 @synthesize fieldEditor;
 @synthesize formattingMenu;
 @synthesize ghostMode;
 @synthesize growl;
-@synthesize infoSplitter;
 @synthesize inputHistory;
-@synthesize leftTreeBase;
 @synthesize logBase;
 @synthesize logMenu;
 @synthesize memberList;
+@synthesize memberSplitView;
 @synthesize memberMenu;
 @synthesize menu;
-@synthesize rightTreeBase;
-@synthesize rootSplitter;
+@synthesize serverList;
 @synthesize serverMenu;
+@synthesize serverSplitView;
 @synthesize terminating;
 @synthesize text;
-@synthesize tree;
 @synthesize treeMenu;
-@synthesize treeScrollView;
-@synthesize treeSplitter;
 @synthesize urlMenu;
 @synthesize viewTheme;
-@synthesize WelcomeSheetDisplay;
+@synthesize welcomeSheet;
 @synthesize window;
 @synthesize world;
 
@@ -54,7 +49,7 @@
 	[growl drain];
 	[inputHistory drain];
 	[viewTheme drain];
-	[WelcomeSheetDisplay drain];
+	[welcomeSheet drain];
 	[world drain];	
 	
 	[super dealloc];
@@ -77,12 +72,11 @@
 	
 	[Preferences initPreferences];
 	
+	[text setBackgroundColor:[NSColor clearColor]];
+	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
-	[_NSNotificationCenter() addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(themeEnableRightMenu:) name:ThemeSelectedChannelNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(themeDisableRightMenu:) name:ThemeSelectedConsoleNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];
 	
@@ -91,9 +85,6 @@
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
-	rootSplitter.fixedViewIndex = 1;
-	infoSplitter.fixedViewIndex = 1;
 	
 	fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
 	[fieldEditor setFieldEditor:YES];
@@ -104,21 +95,9 @@
 	viewTheme	   = [ViewTheme new];
 	viewTheme.name = [Preferences themeName];
 	
-	tree.theme = viewTheme.other;
-	memberList.theme = viewTheme.other;
-	
-	MemberListViewCell *cell = [MemberListViewCell initWithTheme:viewTheme.other];
-	[[[memberList tableColumns] safeObjectAtIndex:0] setDataCell:cell];
-	
 	[self loadWindowState];
-	[self setColumnLayout];
 	
 	[window setAlphaValue:[Preferences themeTransparency]];
-	[window setBackgroundColor:viewTheme.other.underlyingWindowColor];
-	
-	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
 	
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
@@ -129,12 +108,10 @@
 	
 	world.window = window;
 	world.growl = growl;
-	world.tree = tree;
 	world.master = self;
 	world.extrac = extrac;
 	world.text = text;
 	world.logBase = logBase;
-	world.chatBox = chatBox;
 	world.fieldEditor = fieldEditor;
 	world.memberList = memberList;
 	world.treeMenu = treeMenu;
@@ -145,6 +122,7 @@
 	world.memberMenu = memberMenu;
 	world.viewTheme = viewTheme;
 	world.menuController = menu;
+	world.serverList = serverList;
 	
 	[world setServerMenuItem:serverMenu];
 	[world setChannelMenuItem:channelMenu];
@@ -153,23 +131,20 @@
 	
 	extrac.world = world;
 	
-	tree.dataSource = world;
-	tree.delegate = world;
-	tree.responderDelegate = world;
-	[tree reloadData];
+	serverSplitView.delegate = self;
+	
+	serverList.dataSource = world;
+	serverList.delegate = world;
+	[serverList reloadData];
 	
 	[world setupTree];
 	
 	menu.world = world;
 	menu.window = window;
-	menu.tree = tree;
+	menu.serverList = serverList;
 	menu.memberList = memberList;
 	menu.text = text;
 	menu.master = self;
-	
-	memberList.target = menu;
-	memberList.keyDelegate = world;
-	memberList.dropDelegate = world;
 	
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 	
@@ -198,10 +173,10 @@
 	[window makeKeyAndOrderFront:nil];
 	
 	if (world.clients.count < 1) {
-		WelcomeSheetDisplay = [WelcomeSheet new];
-		WelcomeSheetDisplay.delegate = self;
-		WelcomeSheetDisplay.window = window;
-		[WelcomeSheetDisplay show];
+		welcomeSheet = [WelcomeSheet new];
+		welcomeSheet.delegate = self;
+		welcomeSheet.window = window;
+		[welcomeSheet show];
 	} else {
 		[world autoConnectAfterWakeup:NO];	
 	}
@@ -227,12 +202,12 @@
 		[world updateIcon];
 	}
 	
-	[tree setNeedsDisplay];
+	[serverList setNeedsDisplay];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
-	[tree setNeedsDisplay];
+	[serverList setNeedsDisplay];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -328,8 +303,8 @@
 			server  = [chunks safeObjectAtIndex:0];
 			channel = [chunks safeObjectAtIndex:1];
 			
-			if ([channel contains:@" "]) {
-				channel = [channel safeSubstringToIndex:[channel stringPosition:@" "]];
+			if ([channel contains:NSWhitespaceCharacter]) {
+				channel = [channel safeSubstringToIndex:[channel stringPosition:NSWhitespaceCharacter]];
 			}
 			
 			if ([channel hasPrefix:@"#"] == NO) {
@@ -519,45 +494,22 @@
 	[self sendText:IRCCI_PRIVMSG];
 }
 
-- (void)setColumnLayout
-{
-	infoSplitter.hidden = YES;
-	infoSplitter.inverted = YES;
-	
-	[leftTreeBase addSubview:treeScrollView];
-	
-	if (treeSplitter.position < 1) treeSplitter.position = 130;
-	
-	treeScrollView.frame = leftTreeBase.bounds;
-}
-
-#pragma mark -
-#pragma mark Root Splitter Console Toggle
-
-- (void)themeEnableRightMenu:(NSNotification *)note 
-{
-	rootSplitter.hidden = NO;
-	rootSplitter.inverted = NO;
-}
-
-- (void)themeDisableRightMenu:(NSNotification *)note 
-{
-	rootSplitter.hidden = YES;
-	rootSplitter.inverted = YES;
-	
-	if (rootSplitter.position < 10) {
-		rootSplitter.position = 130;
-	}
-}
-
 #pragma mark -
 #pragma mark Preferences
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
+{
+	return 300;
+}
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
+{
+	return 120;
+}
 
 - (void)loadWindowState
 {
 	NSDictionary *dic = [Preferences loadWindowStateWithName:@"MainWindow"];
-	
-	rootSplitter.position = 130;
 	
 	if (dic) {
 		NSInteger x = [dic integerForKey:@"x"];
@@ -569,8 +521,8 @@
 		
 		[fieldEditor setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
 		
-		infoSplitter.position = [dic integerForKey:@"info"];
-		treeSplitter.position = [dic integerForKey:@"tree"];
+		[serverSplitView setPosition:[dic integerForKey:@"serverList"] ofDividerAtIndex:0];
+		//[memberSplitView setPosition:[dic integerForKey:@"memberList"] ofDividerAtIndex:0];
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
 		
@@ -588,8 +540,8 @@
 			[window setFrame:rect display:YES animate:menu.isInFullScreenMode];
 		}
 		
-		infoSplitter.position = 250;
-		treeSplitter.position = 140;
+		[serverSplitView setPosition:140 ofDividerAtIndex:0];
+		[memberSplitView setPosition:140 ofDividerAtIndex:0];
 	}
 }
 
@@ -608,8 +560,8 @@
 	[dic setInteger:rect.size.width forKey:@"w"];
 	[dic setInteger:rect.size.height forKey:@"h"];
 	
-	[dic setInteger:infoSplitter.position forKey:@"info"];
-	[dic setInteger:treeSplitter.position forKey:@"tree"];
+	[dic setInteger:[serverSplitView currentPosition] forKey:@"serverList"];
+	//[dic setInteger:[memberSplitView currentPosition] forKey:@"memberList"];
 	
 	[_NSUserDefaults() setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	
@@ -622,36 +574,30 @@
 	[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
 }
 
-- (void)themeDidChange:(NSNotification *)note
+- (void)themeStyleDidChange:(NSNotification *)note
 {
 	NSMutableString *sf = [NSMutableString string];
 	
 	[world reloadTheme];
 	
-	[self setColumnLayout];
-	
-	[rootSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	[infoSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	[treeSplitter setDividerColor:viewTheme.other.underlyingWindowColor];
-	
 	if (viewTheme.other.nicknameFormat) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
-		[sf appendString:@"\n"];
+		[sf appendString:NSNewlineCharacter];
 	}
 	
 	if (viewTheme.other.timestampFormat) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT")];
-		[sf appendString:@"\n"];
+		[sf appendString:NSNewlineCharacter];
 	}
 	
-	if (viewTheme.other.overrideChannelFont) {
+	if (viewTheme.other.channelViewFontOverrode) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT")];
-		[sf appendString:@"\n"];
+		[sf appendString:NSNewlineCharacter];
 	}
 	
 	if (viewTheme.other.overrideMessageIndentWrap) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED")];
-		[sf appendString:@"\n"];
+		[sf appendString:NSNewlineCharacter];
 	}
 	
 	sf = (NSMutableString *)[sf trim];
@@ -669,11 +615,6 @@
 							   suppressionKey:@"Preferences.prompts.theme_override_info" 
 							  suppressionText:nil];
 	}
-}
-
-- (void)themeStyleDidChange:(NSNotification *)note
-{
-	[world updateThemeStyle];
 }
 
 - (void)transparencyDidChange:(NSNotification *)note
@@ -723,9 +664,11 @@
 	IRCClient *client = [world selectedClient];
 	IRCChannel *channel = [world selectedChannel];
 	
-	if (PointerIsEmpty(client)) return;
+	if (PointerIsEmpty(client)) {
+		return;
+	}
 	
-	if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
+	if (NSDissimilarObjects([window firstResponder], [window fieldEditor:NO forObject:text])) {
 		[world focusInputText];
 	}
 	
@@ -744,7 +687,7 @@
 	NSString *s = text.stringValue;
 	
 	if ([status.text isEqualToString:s]
-		&& status.range.location != NSNotFound
+		&& NSDissimilarObjects(status.range.location, NSNotFound)
 		&& NSMaxRange(status.range) == selectedRange.location
 		&& selectedRange.length == 0) {
 		
@@ -803,7 +746,7 @@
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = [current characterAtIndex:i];
 		
-		if (c != ' ' && c != ':') {
+		if (NSDissimilarObjects(c, ' ') && NSDissimilarObjects(c, ':')) {
 			;
 		} else {
 			current = [current safeSubstringToIndex:i];
@@ -939,7 +882,7 @@
 	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
 	
 	if ((commandMode || channelMode) || head == NO) {
-		t = [t stringByAppendingString:@" "];
+		t = [t stringByAppendingString:NSWhitespaceCharacter];
 	} else {
 		if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
 			t = [t stringByAppendingString:[Preferences completionSuffix]];
@@ -988,11 +931,11 @@ typedef enum {
 		id sel = world.selected;
 		if (PointerIsEmpty(sel)) return;
 		
-		NSInteger n = [tree rowForItem:sel];
+		NSInteger n = [serverList rowForItem:sel];
 		if (n < 0) return;
 		
 		NSInteger start = n;
-		NSInteger count = [tree numberOfRows];
+		NSInteger count = [serverList numberOfRows];
 		
 		if (count <= 1) return;
 		
@@ -1009,7 +952,7 @@ typedef enum {
 			
 			if (n == start) break;
 			
-			id i = [tree itemAtRow:n];
+			id i = [serverList itemAtRow:n];
 			
 			if (i) {
 				if (target == MOVE_ACTIVE) {
@@ -1341,8 +1284,8 @@ typedef enum {
 
 - (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
 {
-	[WelcomeSheetDisplay drain];
-	WelcomeSheetDisplay = nil;
+	[welcomeSheet drain];
+	welcomeSheet = nil;
 }
 
 @end

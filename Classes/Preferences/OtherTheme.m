@@ -3,14 +3,21 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface OtherTheme (Private)
-- (NSFont *)processFontValue:(NSString *)style_value font_size:(NSInteger)style_size def:(NSFont *)defaultv;
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv;
+- (NSFont *)processFontValue:(NSString *)style_value 
+						size:(NSInteger)style_size 
+					defaultv:(NSFont *)defaultf 
+				   preferred:(NSFont *)pref  
+				 allowCustom:(BOOL)custom
+					overrode:(BOOL *)overr;
 @end
 
 @implementation OtherTheme
 
+@synthesize channelViewFont;
+@synthesize channelViewFontOverrode;
 @synthesize indentWrappedMessages;
 @synthesize inputTextBgColor;
 @synthesize inputTextColor;
@@ -26,7 +33,6 @@
 @synthesize memberListSelTopLineColor;
 @synthesize nicknameFormat;
 @synthesize nicknameFormatFixedWidth;
-@synthesize overrideChannelFont;
 @synthesize overrideMessageIndentWrap;
 @synthesize timestampFormat;
 @synthesize treeActiveColor;
@@ -51,7 +57,7 @@
 
 - (void)setPath:(NSString *)value
 {
-	if (path != value) {
+	if (NSDissimilarObjects(path, value)) {
 		[path drain];
 		path = [value retain];
 	}
@@ -74,7 +80,7 @@
 	[memberListSelTopColor drain];
 	[memberListSelTopLineColor drain];
 	[nicknameFormat drain];
-	[overrideChannelFont drain];
+	[channelViewFont drain];
 	[path drain];
 	[timestampFormat drain];
 	[treeActiveColor drain];
@@ -122,13 +128,28 @@
 	return ((value >= 1) ? value : defaultv);
 }
 
-- (NSFont *)processFontValue:(NSString *)style_value font_size:(NSInteger)style_size def:(NSFont *)defaultv
+- (NSFont *)processFontValue:(NSString *)style_value 
+						size:(NSInteger)style_size 
+					defaultv:(NSFont *)defaultf 
+				   preferred:(NSFont *)pref 
+				 allowCustom:(BOOL)custom
+					overrode:(BOOL *)overr
 {
-	NSFont *theFont = defaultv;
+	NSFont *theFont = pref;
 	
-	if (style_size >= 1.0 && NSObjectIsNotEmpty(style_value)) {
-		if ([NSFont fontIsAvailable:style_value]) {
-			theFont = [NSFont fontWithName:style_value size:style_size];
+	if (custom) {
+		if (NSObjectIsNotEmpty(style_value) && style_size >= 5) {
+			if ([NSFont fontIsAvailable:style_value]) {
+				theFont = [NSFont fontWithName:style_value size:style_size];
+				
+				if (PointerIsNotEmpty(overr)) {
+					*overr = YES;
+				}
+			} else {
+				theFont = defaultf;
+			}
+		} else {
+			theFont = defaultf;
 		}
 	}
 	
@@ -137,6 +158,8 @@
 
 - (void)reload 
 {	
+	self.channelViewFontOverrode = NO;
+	
 	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/userInterface.plist"]];
 	
 	NSDictionary *inputTextFormat = [userInterface objectForKey:@"Input Box"];
@@ -151,8 +174,11 @@
 	self.inputTextBgColor = [self processColorStringValue:[inputTextFormat objectForKey:@"Background Color"] def:@"#000000"];
 	
 	self.inputTextFont = [self processFontValue:[inputTextFormat objectForKey:@"Text Font Style"] 
-								  font_size:[inputTextFormat integerForKey:@"Text Font Size"] 
-										def:[NSFont systemFontOfSize:0]];
+										   size:[inputTextFormat integerForKey:@"Text Font Size"] 
+									   defaultv:[NSFont fontWithName:DEFAULT_TEXTUAL_FONT size:13.0]
+									  preferred:[NSFont fontWithName:[Preferences themeInputBoxFontName] size:[Preferences themeInputBoxFontSize]]
+									allowCustom:[Preferences usesPredeterminedFonts]
+									   overrode:NULL];
 	
 	// ====================================================== //
 	
@@ -174,8 +200,11 @@
 	self.treeSelBottomLineColor = [self processColorStringValue:[serverTreeGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"];
 	
 	self.treeFont = [self processFontValue:[serverListFormat objectForKey:@"Text Font Style"] 
-							 font_size:[serverListFormat integerForKey:@"Text Font Size"] 
-								   def:[NSFont fontWithName:@"Lucida Grande" size:11]];
+									  size:[serverListFormat integerForKey:@"Text Font Size"]
+								  defaultv:[NSFont fontWithName:DEFAULT_TEXTUAL_FONT size:11.0]
+								 preferred:[NSFont fontWithName:[Preferences themeChannelListFontName] size:[Preferences themeChannelListFontSize]]
+							   allowCustom:[Preferences usesPredeterminedFonts]
+								  overrode:NULL];
 	
 	// ====================================================== //
 	
@@ -192,8 +221,11 @@
 	self.memberListSelBottomLineColor = [self processColorStringValue:[memberListGradient objectForKey:@"Bottom Line Color"] def:@"#3f3e4c"];
 	
 	self.memberListFont = [self processFontValue:[memberListFormat objectForKey:@"Text Font Style"] 
-							 font_size:[memberListFormat integerForKey:@"Text Font Size"] 
-								   def:[NSFont fontWithName:@"Lucida Grande" size:11]];
+											size:[memberListFormat integerForKey:@"Text Font Size"] 
+										defaultv:[NSFont fontWithName:DEFAULT_TEXTUAL_FONT size:11.0]
+									   preferred:[NSFont fontWithName:[Preferences themeMemberListFontName] size:[Preferences themeMemberListFontSize]]
+									 allowCustom:[Preferences usesPredeterminedFonts]
+										overrode:NULL];
 	
 	// ====================================================== //
 	
@@ -207,22 +239,24 @@
 	self.nicknameFormat = [self processNSStringValue:[preferencesOverride objectForKey:@"Nickname Format"] def:nil];
 	self.timestampFormat = [self processNSStringValue:[preferencesOverride objectForKey:@"Timestamp Format"] def:nil];
 	
-	self.indentWrappedMessages = [prefOIndentMessages boolForKey:@"New Value"];
+	self.indentWrappedMessages	= [prefOIndentMessages boolForKey:@"New Value"];
 	self.overrideMessageIndentWrap = [prefOIndentMessages boolForKey:@"Override Setting"];
 	
-	self.overrideChannelFont = [self processFontValue:[prefOChannelFont objectForKey:@"Font Name"] 
-											font_size:[prefOChannelFont integerForKey:@"Font Size"] 
-												  def:nil];
+	self.channelViewFont = [self processFontValue:[prefOChannelFont objectForKey:@"Font Name"] 
+											 size:[prefOChannelFont integerForKey:@"Font Size"] 
+										 defaultv:[NSFont fontWithName:[Preferences themeChannelViewFontName] size:[Preferences themeChannelViewFontSize]]
+										preferred:[NSFont fontWithName:DEFAULT_TEXTUAL_FONT size:12.0]
+									  allowCustom:YES
+										 overrode:&channelViewFontOverrode];
 	
 	self.nicknameFormatFixedWidth = [self processIntegerValue:[preferencesOverride integerForKey:@"Nickname Format Fixed Width"] def:0];
 	
 	// ====================================================== //
-	
-	
+	 
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Preferences.Theme.tpoce_nick_format"];
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Preferences.Theme.tpoce_timestamp_format"];
-	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.overrideChannelFont))			forKey:@"Preferences.Theme.tpoce_channel_font"];
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.overrideMessageIndentWrap))	forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
+	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.channelViewFontOverrode))		forKey:@"Preferences.Theme.tpoce_channel_font"];
 	
 	// ====================================================== //
 	

@@ -4,19 +4,14 @@
 
 static NSInteger markWidth = 0;
 
-@implementation MemberListViewCell
+@implementation MemberListCell
 
 @synthesize member;
-@synthesize theme;
 @synthesize nickStyle;
-@synthesize markStyle;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		markStyle = [NSMutableParagraphStyle new];
-		[markStyle setAlignment:NSCenterTextAlignment];
-		
 		nickStyle = [NSMutableParagraphStyle new];
 		[nickStyle setAlignment:NSLeftTextAlignment];
 		[nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -28,7 +23,6 @@ static NSInteger markWidth = 0;
 - (void)dealloc
 {
 	[nickStyle drain];
-	[markStyle drain];
 	[member drain];
 	
 	[super dealloc];
@@ -36,9 +30,8 @@ static NSInteger markWidth = 0;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	MemberListViewCell *c = [[MemberListViewCell allocWithZone:zone] init];
+	MemberListCell *c = [[MemberListCell allocWithZone:zone] init];
 	
-	c.font = self.font;
 	c.member = member;
 	
 	return c;
@@ -46,33 +39,6 @@ static NSInteger markWidth = 0;
 
 - (void)calculateMarkWidth
 {
-	markWidth = 0;
-	
-	NSDictionary *style = [NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
-	NSArray *marks = [NSArray arrayWithObjects:@"~", @"&", @"@", @"%", @"+", @"!", nil];
-	
-	for (NSString *s in marks) {
-		NSSize size = [s sizeWithAttributes:style];
-		NSInteger width = ceil(size.width);
-		
-		if (markWidth < width) {
-			markWidth = width;
-		}
-	}
-}
-
-+ (MemberListViewCell *)initWithTheme:(id)aTheme
-{
-	MemberListViewCell *cell = [MemberListViewCell new];
-	
-	cell.theme = aTheme;
-	
-	return [cell autodrain];
-}
-
-- (void)themeChanged
-{
-	[self calculateMarkWidth];
 }
 
 - (NSAttributedString *)tooltipValue
@@ -165,56 +131,7 @@ static NSInteger markWidth = 0;
 
 - (void)drawWithFrame:(NSRect)frame inView:(NSView *)view
 {
-	NSWindow *window = view.window;
-	NSColor *color = nil;
-	
-	if ([self isHighlighted]) {
-		if (window && [window isMainWindow] && [window firstResponder] == view) {
-			color = (([theme memberListSelColor]) ?: [NSColor alternateSelectedControlTextColor]);
-		} else {
-			color = (([theme memberListSelColor]) ?: [NSColor selectedControlTextColor]);
-		}
-	} else if ([member isOp]) {
-		color = [theme memberListOpColor];
-	} else {
-		color = [theme memberListColor];
-	}
-	
-	NSMutableDictionary *style = [NSMutableDictionary dictionary];
-	[style setObject:markStyle forKey:NSParagraphStyleAttributeName];
-	[style setObject:self.font forKey:NSFontAttributeName];
-	
-	if (color) {
-		[style setObject:color forKey:NSForegroundColorAttributeName];
-	}
-	
-	NSRect rect = frame;
-	
-	rect.origin.x += MARK_LEFT_MARGIN;
-	rect.origin.y -= 1;
-	rect.size.width = markWidth;
-	
-	char mark = [member mark];
-	
-	if (mark != ' ') {
-		NSString *markStr = [NSString stringWithChar:mark];
-		
-		if (mark == '+' || mark == '%' || mark == '&') {
-			rect.origin.y += 1;
-		}
-		
-		[markStr drawInRect:rect withAttributes:style];
-	}
-	
-	[style setObject:nickStyle forKey:NSParagraphStyleAttributeName];
-	
-	NSInteger offset = (MARK_LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN);
-	
-	rect = frame;
-	rect.origin.x += offset;
-	rect.size.width -= offset;
-
-	[[member nick] drawInRect:rect withAttributes:style];
+	markWidth = 2;
 }
 
 @end
