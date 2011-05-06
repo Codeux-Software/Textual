@@ -26,7 +26,7 @@
 
 - (void)setFilename:(NSString *)value
 {
-	if (NSDissimilarObjects(filename, value)) {
+	if (filename != value) {
 		[filename drain];
 		filename = [value retain];
 	}

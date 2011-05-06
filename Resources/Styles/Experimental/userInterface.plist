@@ -8,6 +8,8 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
 		<key>Background Color</key>
 		<string>#333</string>
 		<key>Highlight Color</key>
@@ -40,6 +42,8 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
 		<key>Background Color</key>
 		<string>#333</string>
 		<key>Text Color</key>
@@ -64,6 +68,8 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Monaco</string>
+		<key>Text Font Size</key>
+		<integer>9</integer>
 		<key>Background Color</key>
 		<string>#000</string>
 		<key>Text Color</key>

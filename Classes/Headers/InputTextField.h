@@ -3,6 +3,3 @@
 
 @interface InputTextField : TextField
 @end
-
-@interface InputTextFieldCell : NSTextFieldCell
-@end

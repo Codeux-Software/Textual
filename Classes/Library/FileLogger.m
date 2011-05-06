@@ -33,7 +33,7 @@
 	[self open];
 	
 	if (file) {
-		s = [s stringByAppendingString:NSNewlineCharacter];
+		s = [s stringByAppendingString:@"\n"];
 		
 		NSData *data = [s dataUsingEncoding:client.encoding];
 		

@@ -8,9 +8,9 @@
 		<string>#FFFFFF</string>
 		<key>Text Color</key>
 		<string>#333333</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
 		<key>Text Font Size</key>
+		<integer>0</integer>
+		<key>Text Font Style</key>
 		<string></string>
 	</dict>
 	<key>Member List</key>
@@ -34,10 +34,10 @@
 		<string>#333333</string>
 		<key>Text Color (Selected)</key>
 		<string>#304366</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
 		<key>Text Font Size</key>
 		<integer>11</integer>
+		<key>Text Font Style</key>
+		<string>Lucida Grande</string>
 	</dict>
 	<key>Server List</key>
 	<dict>
@@ -66,10 +66,10 @@
 		<string>#111111</string>
 		<key>New Private Message Color</key>
 		<string>#966030</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
 		<key>Text Font Size</key>
 		<integer>11</integer>
+		<key>Text Font Style</key>
+		<string>Lucida Grande</string>
 		<key>Unread Color</key>
 		<string>#966030</string>
 	</dict>

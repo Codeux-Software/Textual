@@ -11,10 +11,9 @@
 	IRCWorld *world;
 	MainWindow *window;
 	InputTextField *text;
+	ServerTreeView *tree;
 	MasterController *master;
-	
-	ServerList *serverList;
-	NSTableView *memberList;
+	MemberListView *memberList;
 	
 	NSString *pointedUrl;
 	NSString *pointedAddress;
@@ -37,9 +36,9 @@
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) MainWindow *window;
 @property (nonatomic, assign) InputTextField *text;
+@property (nonatomic, assign) ServerTreeView *tree;
 @property (nonatomic, assign) MasterController *master;
-@property (nonatomic, assign) ServerList *serverList;
-@property (nonatomic, assign) NSTableView *memberList;
+@property (nonatomic, assign) MemberListView *memberList;
 @property (nonatomic, retain) NSString *pointedUrl;
 @property (nonatomic, retain) NSString *pointedAddress;
 @property (nonatomic, retain) NSString *pointedNick;
