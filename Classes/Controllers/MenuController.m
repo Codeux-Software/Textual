@@ -481,11 +481,13 @@
 		return;
 	}
 	
-	PreferencesController *pc = [[PreferencesController alloc] initWithWorldController:world];
+	PreferencesController *pc = [PreferencesController alloc];
 	
 	pc.delegate = self;
+	pc.world = world;
 	
 	preferencesController = pc;
+	[preferencesController initWithWorldController:world];
 	[preferencesController show];
 }
 
