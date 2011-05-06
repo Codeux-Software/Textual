@@ -395,13 +395,13 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar e = src[i+1];
-					if (IsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) continue;
+					if (IsIRCColor(e, (d - '0')) == NO && e != ',') continue;
 					i++;
 					
 					if ((e == ',') == NO) {
 						if ((i + 1) >= len) continue;
 						unichar f = src[i+1];
-						if (NSDissimilarObjects(f, ',')) continue;
+						if (f != ',') continue;
 						i++;
 					}
 					
@@ -679,7 +679,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(NSDoubleN)value							{ return [NSString stringWithFormat:@"%d", value]; }
++ (NSString *)stringWithDouble:(double)value							{ return [NSString stringWithFormat:@"%d", value]; }
 
 @end
 
@@ -696,9 +696,9 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)getToken
 {
-	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:NSWhitespaceCharacter]];
+	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
 	
-	if (NSDissimilarObjects(r.location, NSNotFound)) {
+	if (r.location != NSNotFound) {
 		NSString *result = [self safeSubstringToIndex:r.location];
 		
 		NSInteger len = [self length];
@@ -760,7 +760,7 @@ BOOL isUnicharDigit(unichar c)
 			for (right = (i + 1); right < len; ++right) {
 				UniChar c = [self characterAtIndex:right];
 				
-				if (NSDissimilarObjects(c, ' ')) {
+				if (c != ' ') {
 					break;
 				}
 			}

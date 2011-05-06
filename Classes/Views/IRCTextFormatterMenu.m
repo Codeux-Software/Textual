@@ -228,7 +228,7 @@
 			
 			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
 			
-			if ([charValue isEqualToString:NSWhitespaceCharacter]) {
+			if ([charValue isEqualToString:@" "]) {
 				newString = [newString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
 														  value:NSNumberWithInteger(0)
 														  range:charRange];

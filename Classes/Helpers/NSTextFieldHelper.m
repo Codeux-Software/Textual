@@ -8,7 +8,7 @@
 	NSText		*edito = [self currentEditor];
 	NSTextField *field = [self.window selectedTextField];	
 	
-	if (NSDissimilarObjects(field, self)) {
+	if (field != self) {
 		[self.window makeFirstResponder:nil];
 		[self.window makeFirstResponder:self];
 	}

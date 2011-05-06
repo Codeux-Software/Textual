@@ -65,11 +65,11 @@
 			for (NSInteger i = 0; i < (count - 1); ++i) {
 				NSString *s = [params safeObjectAtIndex:i];
 				
-				[d appendString:NSWhitespaceCharacter];
+				[d appendString:@" "];
 				[d appendString:s];
 			}
 			
-			[d appendString:NSWhitespaceCharacter];
+			[d appendString:@" "];
 			
 			NSString *s = [params safeObjectAtIndex:(count - 1)];
 			

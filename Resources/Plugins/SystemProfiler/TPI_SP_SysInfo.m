@@ -29,8 +29,8 @@
 	
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 	
-	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:NSWhitespaceCharacter];
-	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+" withString:NSWhitespaceCharacter];
+	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)" withString:@" "];
+	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+" withString:@" "];
 	
 	_cpu_model = [_cpu_model trim];
 	
@@ -332,7 +332,7 @@
 	}
 }
 
-+ (NSString *)formattedCPUFrequency:(NSDoubleN)rate
++ (NSString *)formattedCPUFrequency:(double)rate
 {
 	if ((rate / 1000000) >= 990) {
 		return [NSString stringWithFormat:@"%.2f GHz", ((rate / 100000000.0) / 10.0)];
@@ -429,7 +429,7 @@
 
 + (NSString *)loadAveragesWithCores:(NSInteger)cores
 {
-	NSDoubleN load_ave[3];
+	double load_ave[3];
 	
 	if (getloadavg(load_ave, 3) == 3) {
 		if (cores > 0) {

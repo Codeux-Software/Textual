@@ -66,9 +66,4 @@ const CGFloat kRotationForItalicText = -14.0;
 	return (createdFont || [systemFonts containsObjectIgnoringCase:fontName]);
 }
 
-- (BOOL)fontMatchesName:(NSString *)fontName
-{
-	return ([[self fontName] isEqualNoCase:fontName]);
-}
-
 @end

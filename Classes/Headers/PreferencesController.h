@@ -45,10 +45,9 @@
 	IBOutlet NSMenu *installedScriptsMenu;
 	IBOutlet NSToolbar *preferenceSelectToolbar;
 	
-	NSInteger selectedFontPanel;
-	
 	ScriptsWrapper *scriptsController;
 	
+	NSFont *logFont;
 	NSMutableArray *sounds;
 	
 	NSOpenPanel *transcriptFolderOpenPanel;
@@ -56,7 +55,10 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, retain) NSFont *logFont;
 @property (nonatomic, retain) ScriptsWrapper *scriptsController;
+@property (nonatomic, assign) NSString *fontDisplayName;
+@property (nonatomic, assign) CGFloat fontPointSize;
 @property (nonatomic, readonly) NSArray *availableSounds;
 @property (nonatomic, readonly) NSMutableArray *sounds;
 @property (nonatomic, retain) NSView *contentView;
@@ -108,7 +110,6 @@
 - (void)onTextDirectionChanged:(id)sender;
 - (void)onNicknameColorsDisabled:(id)sender;
 - (void)onInputHistorySchemeChanged:(id)sender;
-- (void)onFontPreferencesChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
