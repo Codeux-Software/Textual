@@ -805,6 +805,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[autoJoinTimer stop];
 	[autoJoinTimer start:AUTOJOIN_DELAY_INTERVAL];
+	NSLog(@"not even started");
 }
 
 - (void)stopAutoJoinTimer
@@ -1120,9 +1121,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if ((targetData.length + passData.length) > MAX_BODY_LEN) {
 			if (NSObjectIsEmpty(prevTarget)) {
 				if (NSObjectIsEmpty(prevPass)) {
-					[self joinUnlistedChannel:prevTarget];
+					[self send:IRCCI_JOIN, prevTarget, nil];
 				} else {
-					[self joinUnlistedChannel:prevTarget password:prevPass];
+					[self send:IRCCI_JOIN, prevTarget, prevPass, nil];
 				}
 				
 				[target setString:c.name];
@@ -1142,9 +1143,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (NSObjectIsNotEmpty(target)) {
 		if (NSObjectIsEmpty(pass)) {
-			[self joinUnlistedChannel:pass];
+			[self send:IRCCI_JOIN, target, nil];
 		} else {
-			[self joinUnlistedChannel:target password:pass];
+			[self send:IRCCI_JOIN, pass, nil];
 		}
 	}
 }
@@ -4067,7 +4068,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[world expandClient:self];
 	
-	sendLagcheckToChannel = NO;
+	sendLagcheckToChannel = serverHasNickServ = NO;
 	isLoggedIn = conn.loggedIn = inFirstISONRun = YES;
 	isAway = isConnecting = hasIRCopAccess = inList = NO;
 	
