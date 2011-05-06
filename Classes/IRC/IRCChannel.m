@@ -475,7 +475,7 @@
 	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [config.name safeSubstringFromIndex:1]);
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	cell.member = [members safeObjectAtIndex:row];
 }

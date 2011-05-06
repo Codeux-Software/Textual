@@ -8,8 +8,6 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Verdana</string>
-		<key>Text Font Size</key>
-		<integer>10</integer>
 		<key>Background Color</key>
 		<string>#000</string>
 		<key>Highlight Color</key>
@@ -42,8 +40,6 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Verdana</string>
-		<key>Text Font Size</key>
-		<integer>10</integer>
 		<key>Background Color</key>
 		<string>#000</string>
 		<key>Text Color</key>
@@ -68,8 +64,6 @@
 	<dict>
 		<key>Text Font Style</key>
 		<string>Verdana</string>
-		<key>Text Font Size</key>
-		<integer>10</integer>
 		<key>Background Color</key>
 		<string>#000</string>
 		<key>Text Color</key>

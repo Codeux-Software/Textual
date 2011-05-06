@@ -11,7 +11,7 @@
 	NSFont *treeFont;
 	NSFont *inputTextFont;
 	NSFont *memberListFont;
-	NSFont *overrideChannelFont;
+	NSFont *channelViewFont;
 	
 	NSColor *inputTextBgColor;
 	NSColor *inputTextColor;
@@ -44,6 +44,7 @@
 	NSString *nicknameFormat;
 	NSString *timestampFormat;
 	
+	BOOL channelViewFontOverrode;
 	BOOL indentWrappedMessages;
 	BOOL overrideMessageIndentWrap;
 	
@@ -79,7 +80,8 @@
 @property (nonatomic, retain) NSColor *memberListSelBottomColor;
 @property (nonatomic, retain) NSString *nicknameFormat;
 @property (nonatomic, retain) NSString *timestampFormat;
-@property (nonatomic, retain) NSFont *overrideChannelFont;
+@property (nonatomic, retain) NSFont *channelViewFont;
+@property (nonatomic, assign) BOOL channelViewFontOverrode;
 @property (nonatomic, assign) BOOL indentWrappedMessages;
 @property (nonatomic, assign) BOOL overrideMessageIndentWrap;
 @property (nonatomic, assign) NSInteger nicknameFormatFixedWidth;

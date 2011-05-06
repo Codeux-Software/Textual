@@ -71,7 +71,7 @@
 			}
 		}
 		
-		if (hostmask != nhostmask) {
+		if (NSDissimilarObjects(hostmask, nhostmask)) {
 			[hostmask drain];
 			hostmask = [nhostmask retain];
 		}

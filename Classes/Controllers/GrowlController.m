@@ -142,7 +142,7 @@
 	[NSApp activateIgnoringOtherApps:YES];
 	
 	if ([context isKindOfClass:[NSString class]]) {
-		NSArray *ary = [context componentsSeparatedByString:@" "];
+		NSArray *ary = [context componentsSeparatedByString:NSWhitespaceCharacter];
 		
 		if (ary.count >= 2) {
 			NSInteger uid = [ary integerAtIndex:0];

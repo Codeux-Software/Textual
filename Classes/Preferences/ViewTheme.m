@@ -19,7 +19,7 @@
 	if ((self = [super init])) {
 		other = [OtherTheme new];
 		
-		core_js = [FileWithContent new];
+		core_js			 = [FileWithContent new];
 		core_js.filename = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
 	
@@ -43,7 +43,7 @@
 
 - (void)setName:(NSString *)value
 {
-	if (name != value) {
+	if (NSDissimilarObjects(name, value)) {
 		[name drain];
 		name = [value retain];
 	}

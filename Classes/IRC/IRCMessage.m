@@ -117,7 +117,9 @@
 	for (NSInteger i = index; i < params.count; i++) {
 		NSString *e = [params safeObjectAtIndex:i];
 		
-		if (i != index) [s appendString:@" "];
+		if (NSDissimilarObjects(i, index)) {
+			[s appendString:NSWhitespaceCharacter];
+		}
 		
 		[s appendString:e];
 	}
@@ -133,7 +135,7 @@
 	[ms appendString:command];
 	
 	for (NSString *s in params) {
-		[ms appendString:@" "];
+		[ms appendString:NSWhitespaceCharacter];
 		[ms appendString:s];
 	}
 	

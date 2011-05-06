@@ -110,7 +110,7 @@
 
 - (void)reloadTable
 {
-	if (NSObjectIsNotEmpty([filterText stringValue]) && [list count] != [filteredList count]) {
+	if (NSObjectIsNotEmpty([filterText stringValue]) && NSDissimilarObjects([list count], [filteredList count])) {
 		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_SEARCH_RESULTS", [list count], [filteredList count])];
 	} else {
 		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_CHANNELS", [list count])];
@@ -203,7 +203,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 	
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	
-	for (NSUInteger i = [indexes firstIndex]; i != NSNotFound; i = [indexes indexGreaterThanIndex:i]) {
+	for (NSUInteger i = [indexes firstIndex]; NSDissimilarObjects(i, NSNotFound); i = [indexes indexGreaterThanIndex:i]) {
 		NSArray *item = [ary safeObjectAtIndex:i];
 		
 		if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
