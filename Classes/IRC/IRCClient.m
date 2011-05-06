@@ -2492,7 +2492,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 97: // Command: GLINE
 		case 98: // Command: GZLINE
 		{
-			NSString *peer   = [s getToken];
+			NSString *peer = [s getToken];
 			
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
@@ -2503,8 +2503,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if (peer) {
 					reason = [reason trim];
 					
-					if (NSObjectIsEmpty(reason) && NSObjectIsNotEmpty(time)) {
+					if (NSObjectIsEmpty(reason)) {
 						reason = [Preferences IRCopDefaultGlineMessage];
+						
+						if ([reason contains:@" "]) {
+							NSInteger spacePos = [reason stringPosition:@" "];
+							
+							if (NSObjectIsEmpty(time)) {
+								time = [reason safeSubstringToIndex:spacePos];
+							}
+							
+							reason = [reason safeSubstringAfterIndex:spacePos];
+						}
 					}
 					
 					[self send:cmd, peer, time, reason, nil];
@@ -2522,19 +2532,45 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
 			} else {
-				NSString *time   = [s getToken];
-				NSString *reason = s;
-				
 				if (peer) {
-					reason = [reason trim];
-					
-					if (NSObjectIsEmpty(reason) && ((NSObjectIsNotEmpty(time) && [cmd isEqualToString:IRCCI_SHUN]) || 
-													[cmd isEqualToString:IRCCI_TEMPSHUN])) {
+					if ([cmd isEqualToString:IRCCI_TEMPSHUN]) {
+						NSString *reason = [s getToken];
 						
-						reason = [Preferences IRCopDefaultShunMessage];
+						reason = [reason trim];
+						
+						if (NSObjectIsEmpty(reason)) {
+							reason = [Preferences IRCopDefaultShunMessage];
+							
+							if ([reason contains:@" "]) {
+								NSInteger spacePos = [reason stringPosition:@" "];
+								
+								reason = [reason safeSubstringAfterIndex:spacePos];
+							}
+						}
+						
+						[self send:cmd, peer, reason, nil];
+					} else {
+						NSString *time   = [s getToken];
+						NSString *reason = s;
+						
+						reason = [reason trim];
+						
+						if (NSObjectIsEmpty(reason)) {
+							reason = [Preferences IRCopDefaultShunMessage];
+							
+							if ([reason contains:@" "]) {
+								NSInteger spacePos = [reason stringPosition:@" "];
+								
+								if (NSObjectIsEmpty(time)) {
+									time = [reason safeSubstringToIndex:spacePos];
+								}
+								
+								reason = [reason safeSubstringAfterIndex:spacePos];
+							}
+						}
+						
+						[self send:cmd, peer, time, reason, nil];
 					}
-					
-					[self send:cmd, peer, time, reason, nil];
 				}
 			}
 			
