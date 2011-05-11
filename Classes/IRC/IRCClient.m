@@ -1145,7 +1145,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (NSObjectIsEmpty(pass)) {
 			[self send:IRCCI_JOIN, target, nil];
 		} else {
-			[self send:IRCCI_JOIN, pass, nil];
+			[self send:IRCCI_JOIN, target, pass, nil];
 		}
 	}
 }
@@ -1570,7 +1570,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				s = nil;
 			}
 			
-			[self joinUnlistedChannel:targetChannelName];
+			[self send:IRCCI_JOIN, targetChannelName, s, nil];
 			
 			return YES;
 			break;
