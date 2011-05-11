@@ -102,5 +102,5 @@
 #define IRCCI_SME				@"SME"
 #define IRCCI_SMSG				@"SMSG"
 
-#define IRC_BODY_LEN			512
+#define IRC_BODY_LEN			480
 #define MAX_BODY_LEN			480
