@@ -224,7 +224,9 @@
 			}
 		}
 		
-		[self onSocketDidDisconnect:sender];
+		if ([self useNewSocketEngine]) {
+			[self onSocketDidDisconnect:sender];
+		}
 	}
 }
 
