@@ -391,7 +391,7 @@
 		
 		if (returnCode == NSOKButton) {
 			NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
-			NSString *path = [pathURL absoluteString];
+			NSString *path = [pathURL path];
 			
 			BOOL isDir;
 			
