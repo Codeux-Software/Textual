@@ -36,7 +36,7 @@
 - (void)setSound:(NSString *)value
 {
 	if ([value isEqualToString:EMPTY_SOUND]) {
-		value = NSNullObject;
+		value = @"";
 	}
 	
 	if (NSObjectIsNotEmpty(value)) {

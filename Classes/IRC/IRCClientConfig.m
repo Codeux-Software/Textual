@@ -52,20 +52,20 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		channels = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
 		
-		host = NSNullObject;
+		host = @"";
 		port = 6667;
-		password = [NSNullObject retain];
-		nickPassword = [NSNullObject retain];
+		password = [@"" retain];
+		nickPassword = [@"" retain];
 		
-		proxyHost = NSNullObject;
+		proxyHost = @"";
 		proxyPort = 1080;
-		proxyUser = NSNullObject;
-		proxyPassword = NSNullObject;
+		proxyUser = @"";
+		proxyPassword = @"";
 		
 		encoding = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
 		
-		userInfo = NSNullObject;
+		userInfo = @"";
 		
 		name = [TXTLS(@"UNTITLED_CONNECTION_NAME") retain];
 		nick = [[Preferences defaultNickname] retain];
@@ -211,7 +211,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		name = [[dic stringForKey:@"name"] retain];
 	}
 	
-	host = (([[dic stringForKey:@"host"] retain]) ?: NSNullObject);
+	host = (([[dic stringForKey:@"host"] retain]) ?: @"");
 	port = (([dic integerForKey:@"port"]) ?: 6667);
 	
 	if ([dic stringForKey:@"nick"]) {
@@ -234,10 +234,10 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
 	proxyType = [dic integerForKey:@"proxy"];
-	proxyHost = (([[dic stringForKey:@"proxy_host"] retain]) ?: NSNullObject);
+	proxyHost = (([[dic stringForKey:@"proxy_host"] retain]) ?: @"");
 	proxyPort = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-	proxyUser = (([[dic stringForKey:@"proxy_user"] retain]) ?: NSNullObject);
-	proxyPassword = (([[dic stringForKey:@"proxy_password"] retain]) ?: NSNullObject);
+	proxyUser = (([[dic stringForKey:@"proxy_user"] retain]) ?: @"");
+	proxyPassword = (([[dic stringForKey:@"proxy_password"] retain]) ?: @"");
 	
 	autoConnect = [dic boolForKey:@"auto_connect"];
 	autoReconnect = [dic boolForKey:@"auto_reconnect"];
@@ -255,7 +255,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
 	}
 	
-	userInfo = (([[dic stringForKey:@"userinfo"] retain]) ?: NSNullObject);
+	userInfo = (([[dic stringForKey:@"userinfo"] retain]) ?: @"");
 	invisibleMode = [dic boolForKey:@"invisible"];
 	
 	isTrustedConnection = [dic boolForKey:@"trustedConnection"];

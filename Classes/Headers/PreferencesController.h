@@ -47,12 +47,16 @@
 	
 	ScriptsWrapper *scriptsController;
 	
+	NSFont *logFont;
 	NSMutableArray *sounds;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, retain) NSFont *logFont;
 @property (nonatomic, retain) ScriptsWrapper *scriptsController;
+@property (nonatomic, assign) NSString *fontDisplayName;
+@property (nonatomic, assign) CGFloat fontPointSize;
 @property (nonatomic, readonly) NSArray *availableSounds;
 @property (nonatomic, readonly) NSMutableArray *sounds;
 @property (nonatomic, retain) NSView *contentView;
@@ -84,16 +88,25 @@
 
 - (void)show;
 
-- (IBAction)onAddKeyword:(id)sender;
-- (IBAction)onAddExcludeWord:(id)sender;
+- (void)onAddKeyword:(id)sender;
+- (void)onAddExcludeWord:(id)sender;
 
-- (IBAction)onSelectFont:(id)sender;
-- (IBAction)onStyleChanged:(id)sender;
-- (IBAction)onPrefPaneSelected:(id)sender;
-- (IBAction)onOpenPathToThemes:(id)sender;
-- (IBAction)onOpenPathToScripts:(id)sender;
-- (IBAction)onChangedTransparency:(id)sender;
-- (IBAction)onTranscriptFolderChanged:(id)sender;
+- (void)onTranscriptFolderChanged:(id)sender;
+- (void)onChangedTheme:(id)sender;
+- (void)onStyleChanged:(id)sender;
+- (void)onSelectFont:(id)sender;
+- (void)onOverrideFontChanged:(id)sender;
+- (void)onChangedTransparency:(id)sender;
+- (void)onTimestampFormatChanged:(id)sender;
+- (void)onHnagingTextChange:(id)sender;
+- (void)onPrefPaneSelected:(id)sender;
+- (void)onWindowsWantsClosure:(id)sender;
+- (void)onOpenPathToThemes:(id)sender;
+- (void)onOpenPathToScripts:(id)sender;
+- (void)onLayoutChanged:(id)sender;
+- (void)onTextDirectionChanged:(id)sender;
+- (void)onNicknameColorsDisabled:(id)sender;
+- (void)onInputHistorySchemeChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)

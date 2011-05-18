@@ -17,7 +17,7 @@
 	NSString *password = nil;
 	NSString *tempPort = nil;
 	
-	if ([s contains:NSWhitespaceCharacter] == NO) {
+	if ([s contains:@" "] == NO) {
 		if ([s contains:@":"]) {
 			chunks = [s componentsSeparatedByString:@":"];
 			
@@ -34,7 +34,7 @@
 			server = s;
 		}
 	} else {
-		chunks = [s componentsSeparatedByString:NSWhitespaceCharacter];
+		chunks = [s componentsSeparatedByString:@" "];
 		
 		if ([[[chunks safeObjectAtIndex:0] uppercaseString] isEqualToString:@"-SSL"]) {
 			useSSL = YES;

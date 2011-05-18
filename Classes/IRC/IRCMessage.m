@@ -15,7 +15,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[self parseLine:NSNullObject];
+		[self parseLine:@""];
 	}
 
 	return self;
@@ -45,7 +45,7 @@
 	[command drain];
 	[params drain];
 	
-	command = NSNullObject;
+	command = @"";
 	sender = [IRCPrefix new];
 	params = [NSMutableArray new];
 	
@@ -97,7 +97,7 @@
 	if (index < params.count) {
 		return [params safeObjectAtIndex:index];
 	} else {
-		return NSNullObject;
+		return @"";
 	}
 }
 
@@ -117,9 +117,7 @@
 	for (NSInteger i = index; i < params.count; i++) {
 		NSString *e = [params safeObjectAtIndex:i];
 		
-		if (NSDissimilarObjects(i, index)) {
-			[s appendString:NSWhitespaceCharacter];
-		}
+		if (i != index) [s appendString:@" "];
 		
 		[s appendString:e];
 	}
@@ -135,7 +133,7 @@
 	[ms appendString:command];
 	
 	for (NSString *s in params) {
-		[ms appendString:NSWhitespaceCharacter];
+		[ms appendString:@" "];
 		[ms appendString:s];
 	}
 	

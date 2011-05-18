@@ -265,9 +265,9 @@
 	}
 	
 	if (config.altNicks.count > 0) {
-		altNicksText.stringValue = [config.altNicks componentsJoinedByString:NSWhitespaceCharacter];
+		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	} else {
-		altNicksText.stringValue = NSNullObject;
+		altNicksText.stringValue = @"";
 	}
 	
 	passwordText.stringValue = config.password;
@@ -287,7 +287,7 @@
 	proxyPasswordText.stringValue = config.proxyPassword;
 
 	invisibleCheck.state = config.invisibleMode;
-	loginCommandsText.string = [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
+	loginCommandsText.string = [config.loginCommands componentsJoinedByString:@"\n"];
 }
 
 - (void)save
@@ -335,7 +335,7 @@
 	config.realName = realNameText.stringValue;
 	config.nickPassword = nickPasswordText.stringValue;
 	
-	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:NSWhitespaceCharacter];
+	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
 	
 	[config.altNicks removeAllObjects];
 	
@@ -358,7 +358,7 @@
 	config.proxyUser = proxyUserText.stringValue;
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
-	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:NSNewlineCharacter];
+	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
 	
 	[config.loginCommands removeAllObjects];
 	
@@ -495,7 +495,7 @@
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
 		
 		conf = [[c mutableCopy] autodrain];
-		conf.name = NSNullObject;
+		conf.name = @"";
 	}
 	
 	[channelSheet drain];

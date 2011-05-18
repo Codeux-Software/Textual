@@ -23,11 +23,11 @@
 		autoJoin = YES;
 		growl = YES;
 		
-		name = NSNullObject;
-		mode = NSNullObject;
-		topic = NSNullObject;
-		password = NSNullObject;
-		encryptionKey = NSNullObject;
+		name = @"";
+		mode = @"";
+		topic = @"";
+		password = @"";
+		encryptionKey = @"";
 	}
 
 	return self;
@@ -39,16 +39,16 @@
 	
 	type = [dic integerForKey:@"type"];
 	
-	name = (([[dic stringForKey:@"name"] retain]) ?: NSNullObject);
-	password = (([[dic stringForKey:@"password"] retain]) ?: NSNullObject);
+	name = (([[dic stringForKey:@"name"] retain]) ?: @"");
+	password = (([[dic stringForKey:@"password"] retain]) ?: @"");
 	
 	growl = [dic boolForKey:@"growl"];
 	autoJoin = [dic boolForKey:@"auto_join"];
 	ihighlights = [dic boolForKey:@"ignore_highlights"];
 	
-	mode = (([[dic stringForKey:@"mode"] retain]) ?: NSNullObject);
-	topic = (([[dic stringForKey:@"topic"] retain]) ?: NSNullObject);
-	encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: NSNullObject);
+	mode = (([[dic stringForKey:@"mode"] retain]) ?: @"");
+	topic = (([[dic stringForKey:@"topic"] retain]) ?: @"");
+	encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: @"");
 	
 	return self;
 }

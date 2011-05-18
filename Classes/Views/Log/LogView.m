@@ -11,9 +11,9 @@
 	if (keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
-		BOOL ctrl = (m && NSDissimilarObjects(NSControlKeyMask, 0));
-		BOOL alt  = (m && NSDissimilarObjects(NSAlternateKeyMask, 0));
-		BOOL cmd  = (m && NSDissimilarObjects(NSCommandKeyMask, 0));
+		BOOL cmd = ((m & NSCommandKeyMask) != 0);
+		BOOL ctrl = ((m & NSControlKeyMask) != 0);
+		BOOL alt = ((m & NSAlternateKeyMask) != 0);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
 			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
@@ -48,13 +48,13 @@
 - (NSString *)contentString
 {
 	DOMHTMLDocument *doc = (DOMHTMLDocument *)[self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return NSNullObject;
+	if (PointerIsEmpty(doc)) return @"";
 	
 	DOMElement *body = [doc body];
-	if (PointerIsEmpty(body)) return NSNullObject;
+	if (PointerIsEmpty(body)) return @"";
 	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	if (PointerIsEmpty(root)) return NSNullObject;
+	if (PointerIsEmpty(root)) return @"";
 	
 	return [root outerHTML];
 }

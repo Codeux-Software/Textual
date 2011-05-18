@@ -160,23 +160,23 @@
 
 - (NSComparisonResult)compare:(IRCUser *)other
 {
-	if (NSDissimilarObjects(q, other.q)) {
+	if (q != other.q) {
 		return ((q) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (q) {
 		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(a, other.a)) {
+	} else if (a != other.a) {
 		return ((a) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (a) {
 		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(o, other.o)) {
+	} else if (o != other.o) {
 		return ((o) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (o) {
 		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(h, other.h)) {
+	} else if (h != other.h) {
 		return ((h) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (h) {
 		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(v, other.v)) {
+	} else if (v != other.v) {
 		return ((v) ? NSOrderedAscending : NSOrderedDescending);
 	} else {
 		return [nick caseInsensitiveCompare:other.nick];

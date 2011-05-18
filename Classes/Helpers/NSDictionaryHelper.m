@@ -36,7 +36,7 @@
 	return 0;
 }
 
-- (NSDoubleN)doubleForKey:(NSString *)key
+- (double)doubleForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
 	
@@ -131,7 +131,7 @@
 	[self setObject:NSNumberWithLongLong(value) forKey:key];
 }
 
-- (void)setDouble:(NSDoubleN)value forKey:(NSString *)key
+- (void)setDouble:(double)value forKey:(NSString *)key
 {
 	[self setObject:NSNumberWithDouble(value) forKey:key];
 }
