@@ -50,7 +50,7 @@
 		}
 	} else {
 		if (customManager) {
-			_oldInputValue = [@"" retain];
+			_oldInputValue = [NSNullObject retain];
 			
 			[[self undoManager] removeAllActionsWithTarget:self];
 			[[self.window selectedFieldEditor] setAllowsUndo:NO];
@@ -71,7 +71,7 @@
 		NSUndoManager *undoMan = [self undoManager];
 		
 		if ([undoMan canUndo] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:@"" recordUndo:YES];
+			[[undoMan prepareWithInvocationTarget:self] setObjectValue:NSNullObject recordUndo:YES];
 		}
 		
 		if (undo && [obj isEqual:_oldInputValue] == NO) {
@@ -165,7 +165,7 @@
 		NSUndoManager *undoMan = [self undoManager];
 		
 		if ([undoMan canUndo] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:@"" recordUndo:YES];
+			[[undoMan prepareWithInvocationTarget:self] setObjectValue:NSNullObject recordUndo:YES];
 		}
 		
 		id newValue = [self objectValue];

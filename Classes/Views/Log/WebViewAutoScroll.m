@@ -47,7 +47,7 @@
 {
 	NSClipView *clipView = [[[webFrame documentView] enclosingScrollView] contentView];
 	
-	if (clipView != [aNotification object]) {
+	if (NSDissimilarObjects(clipView, [aNotification object])) {
 		return;
 	}
 	
@@ -58,7 +58,7 @@
 {
 	NSView *view = [aNotification object];
 	
-	if (view != webFrame && view != [webFrame documentView]) {
+	if (NSDissimilarObjects(view, webFrame) && NSDissimilarObjects(view, [webFrame documentView])) {
 		return;
 	}
 	

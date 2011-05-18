@@ -11,7 +11,6 @@
 @synthesize position;
 @synthesize inverted;
 @synthesize hidden;
-@synthesize dividerColor;
 @synthesize myDividerThickness;
 
 - (void)setUp
@@ -143,11 +142,7 @@
 {
 	if (hidden) return;
 	
-	if (PointerIsEmpty(dividerColor)) {
-		[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
-	} else {
-		[dividerColor set];
-	}
+	[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
 	
 	if ([self isVertical]) {
 		NSRectFill(rect);
@@ -245,7 +240,7 @@
 		}
 	}
 	
-	[fixedView setFrame:fixedFrame];
+	[fixedView  setFrame:fixedFrame];
 	[flyingView setFrame:flyingFrame];
 	
 	[self setNeedsDisplay:YES];

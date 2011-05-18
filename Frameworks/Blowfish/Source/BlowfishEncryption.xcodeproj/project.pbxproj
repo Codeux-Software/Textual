@@ -299,6 +299,7 @@
 					x86_64,
 					i386,
 				);
+				CONFIGURATION_BUILD_DIR = ..;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -318,6 +319,7 @@
 					x86_64,
 					i386,
 				);
+				CONFIGURATION_BUILD_DIR = ..;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

@@ -520,22 +520,22 @@ static NSMutableDictionary *commandIndex = nil;
 	[_NSUserDefaults() setObject:value forKey:@"Preferences.Theme.name"];
 }
 
-+ (NSString *)themeLogFontName
++ (NSString *)themeChannelViewFontName
 {
 	return [_NSUserDefaults() objectForKey:@"Preferences.Theme.log_font_name"];
 }
 
-+ (void)setThemeLogFontName:(NSString *)value
++ (void)setThemeChannelViewFontName:(NSString *)value
 {
 	[_NSUserDefaults() setObject:value forKey:@"Preferences.Theme.log_font_name"];
 }
 
-+ (double)themeLogFontSize
++ (NSDoubleN)themeChannelViewFontSize
 {
 	return [_NSUserDefaults() doubleForKey:@"Preferences.Theme.log_font_size"];
 }
 
-+ (void)setThemeLogFontSize:(double)value
++ (void)setThemeChannelViewFontSize:(NSDoubleN)value
 {
 	[_NSUserDefaults() setDouble:value forKey:@"Preferences.Theme.log_font_size"];
 }
@@ -555,7 +555,7 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() objectForKey:@"Preferences.Theme.timestamp_format"];
 }
 
-+ (double)themeTransparency
++ (NSDoubleN)themeTransparency
 {
 	return [_NSUserDefaults() doubleForKey:@"Preferences.Theme.transparency"];
 }
@@ -909,10 +909,10 @@ static NSInteger totalRunTime = 0;
 	[NSThread sleepForTimeInterval:1.5];
 	
     CFURLRef ircAppURL = NULL;
-    OSStatus status = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
+    OSStatus status    = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
 	
 	if (status == noErr) {
-		NSBundle *mainBundle = [NSBundle mainBundle];
+		NSBundle *mainBundle		  = [NSBundle mainBundle];
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:(NSURL *)ircAppURL];
 		
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {
@@ -948,77 +948,83 @@ static NSInteger totalRunTime = 0;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 	[d setBool:YES forKey:@"SpellChecking"];
-	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
-	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
-	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
-	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
-	[d setBool:NO forKey:@"Preferences.General.rtl_formatting"];
-	[d setBool:YES forKey:@"Preferences.General.display_servmotd"];
-	[d setObject:@"Guest" forKey:@"Preferences.Identity.nickname"];
-	[d setObject:@"textual" forKey:@"Preferences.Identity.username"];
-	[d setObject:@"Textual User" forKey:@"Preferences.Identity.realname"];
-	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
-	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
-	[d setBool:NO forKey:@"Preferences.General.handle_server_notices"];
-	[d setObject:@"ircop alert" forKey:@"Preferences.General.ircop_alert_match"];
-	[d setBool:NO forKey:@"Preferences.FloodControl.enabled"];
-	[d setInteger:2 forKey:@"Preferences.FloodControl.timer"];
-	[d setInteger:2 forKey:@"Preferences.FloodControl.maxmsg"];
-	[d setInteger:5 forKey:@"Preferences.General.autojoin_maxchans"];
-	[d setBool:NO forKey:@"Preferences.General.handle_operalerts"];
-	[d setBool:NO forKey:@"Preferences.General.process_channel_modes"];
-	[d setBool:NO forKey:@"Preferences.General.clear_only_active"];
-	[d setBool:NO forKey:@"Preferences.General.rejoin_onkick"];
-	[d setBool:NO forKey:@"Preferences.General.autojoin_oninvite"];
-	[d setBool:NO forKey:@"Preferences.General.amsg_allconnections"];
-	[d setBool:NO forKey:@"Preferences.General.away_allconnections"];
-	[d setBool:NO forKey:@"Preferences.General.nick_allconnections"];
-	[d setObject:TXTLS(@"SHUN_REASON") forKey:@"Preferences.General.ircop_shun_message"];
-	[d setObject:TXTLS(@"KILL_REASON") forKey:@"Preferences.General.ircop_kill_message"];
-	[d setObject:TXTLS(@"GLINE_REASON") forKey:@"Preferences.General.ircop_gline_message"];
-	[d setObject:TXTLS(@"KICK_REASON") forKey:@"Preferences.General.kick_message"];
-	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
-	[d setBool:NO forKey:@"Preferences.General.connect_on_doubleclick"];
-	[d setBool:NO forKey:@"Preferences.General.disconnect_on_doubleclick"];
-	[d setBool:NO forKey:@"Preferences.General.join_on_doubleclick"];
-	[d setBool:NO forKey:@"Preferences.General.leave_on_doubleclick"];
-	[d setBool:YES forKey:@"Preferences.General.log_transcript"];
-	[d setBool:NO forKey:@"Preferences.General.open_browser_in_background"];
-	[d setBool:NO forKey:@"Preferences.General.show_inline_images"];
-	[d setBool:YES forKey:@"Preferences.General.use_growl"];
-	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
-	[d setObject:@"Glass" forKey:@"eventHighlightSound"];
-	[d setInteger:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
-	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
-	[d setInteger:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
-	[d setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
-	[d setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.log_font_name"];
-	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
-	[d setObject:@"<%@%n>" forKey:@"Preferences.Theme.nick_format"];
+	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
+	[d setBool:YES forKey:@"Preferences.General.log_transcript"];
+	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
+	[d setBool:YES forKey:@"Preferences.General.use_growl"];
+	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
+	[d setBool:YES forKey:@"Preferences.General.display_servmotd"];
+	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
+	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
 	[d setBool:YES forKey:@"Preferences.Theme.indent_onwordwrap"];
-	[d setObject:@"[%H:%M:%S]" forKey:@"Preferences.Theme.timestamp_format"];
-	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
-	[d setBool:NO forKey:@"Preferences.General.log_highlights"];
-	[d setBool:NO forKey:@"Preferences.General.nickserv_delay_autojoin"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
-	[d setBool:NO forKey:@"Preferences.Theme.inputhistory_per_channel"];
-	[d setInteger:300 forKey:@"Preferences.General.max_log_lines"];
-	[d setInteger:300 forKey:@"Preferences.General.inline_image_width"];
-	[d setBool:NO forKey:@"Preferences.General.dockbadge_countpub"];
-	[d setBool:NO forKey:@"Preferences.General.disable_nickname_colors"];
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
-	[d setObject:@"~/Documents/Textual Logs" forKey:@"Preferences.General.transcript_folder"];
-	[d setInteger:HMBAN_FORMAT_WHAINN forKey:@"Preferences.General.banformat"];
-	[d setInteger:NOTICES_SENDTO_CONSOLE forKey:@"Preferences.General.notices_sendto_location"];
-	[d setInteger:USERDC_ACTION_QUERY forKey:@"Preferences.General.user_doubleclick_action"];
-	[d setInteger:CMDWKEY_SHORTCUT_CLOSE forKey:@"Preferences.General.keyboard_cmdw_response"];
+	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
+	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
+	[d setBool:NO  forKey:@"Preferences.General.copyonselect"];
+	[d setBool:NO  forKey:@"Preferences.General.strip_formatting"];
+	[d setBool:NO  forKey:@"Preferences.General.rtl_formatting"];
+	[d setBool:NO  forKey:@"Preferences.General.handle_server_notices"];
+	[d setBool:NO  forKey:@"Preferences.General.handle_operalerts"];
+	[d setBool:NO  forKey:@"Preferences.General.process_channel_modes"];
+	[d setBool:NO  forKey:@"Preferences.General.clear_only_active"];
+	[d setBool:NO  forKey:@"Preferences.General.rejoin_onkick"];
+	[d setBool:NO  forKey:@"Preferences.General.autojoin_oninvite"];
+	[d setBool:NO  forKey:@"Preferences.General.amsg_allconnections"];
+	[d setBool:NO  forKey:@"Preferences.General.away_allconnections"];
+	[d setBool:NO  forKey:@"Preferences.General.nick_allconnections"];
+	[d setBool:NO  forKey:@"Preferences.FloodControl.enabled"];
+	[d setBool:NO  forKey:@"Preferences.General.connect_on_doubleclick"];
+	[d setBool:NO  forKey:@"Preferences.General.disconnect_on_doubleclick"];
+	[d setBool:NO  forKey:@"Preferences.General.join_on_doubleclick"];
+	[d setBool:NO  forKey:@"Preferences.General.leave_on_doubleclick"];
+	[d setBool:NO  forKey:@"Preferences.General.open_browser_in_background"];
+	[d setBool:NO  forKey:@"Preferences.General.show_inline_images"];
+	[d setBool:NO  forKey:@"Preferences.General.log_highlights"];
+	[d setBool:NO  forKey:@"Preferences.General.nickserv_delay_autojoin"];
+	[d setBool:NO  forKey:@"Preferences.Theme.inputhistory_per_channel"];
+	[d setBool:NO  forKey:@"Preferences.General.dockbadge_countpub"];
+	[d setBool:NO  forKey:@"Preferences.General.disable_nickname_colors"];
+	
+	[d setObject:@"Glass"						forKey:@"eventHighlightSound"];
+	[d setObject:@"ircop alert"					forKey:@"Preferences.General.ircop_alert_match"];
+	[d setObject:@"Guest"						forKey:@"Preferences.Identity.nickname"];
+	[d setObject:@"textual"						forKey:@"Preferences.Identity.username"];
+	[d setObject:@"Textual User"				forKey:@"Preferences.Identity.realname"];
+	[d setObject:TXTLS(@"SHUN_REASON")			forKey:@"Preferences.General.ircop_shun_message"];
+	[d setObject:TXTLS(@"KILL_REASON")			forKey:@"Preferences.General.ircop_kill_message"];
+	[d setObject:TXTLS(@"GLINE_REASON")			forKey:@"Preferences.General.ircop_gline_message"];
+	[d setObject:TXTLS(@"KICK_REASON")			forKey:@"Preferences.General.kick_message"];
+	[d setObject:DEFAULT_TEXTUAL_STYLE			forKey:@"Preferences.Theme.name"];
+	[d setObject:DEFAULT_TEXTUAL_FONT			forKey:@"Preferences.Theme.log_font_name"];
+	[d setObject:@"<%@%n>"						forKey:@"Preferences.Theme.nick_format"];
+	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
+	[d setObject:@"~/Documents/Textual Logs"	forKey:@"Preferences.General.transcript_folder"];
+	
+	[d setInteger:2							forKey:@"Preferences.FloodControl.timer"];
+	[d setInteger:2							forKey:@"Preferences.FloodControl.maxmsg"];
+	[d setInteger:5							forKey:@"Preferences.General.autojoin_maxchans"];
+	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];
+	[d setInteger:300						forKey:@"Preferences.General.inline_image_width"];
+	[d setInteger:TAB_COMPLETE_NICK			forKey:@"Preferences.General.tab_action"];
+	[d setInteger:KEYWORD_MATCH_EXACT		forKey:@"Preferences.Keyword.matching_method"];
+	[d setInteger:HMBAN_FORMAT_WHAINN		forKey:@"Preferences.General.banformat"];
+	[d setInteger:NOTICES_SENDTO_CONSOLE	forKey:@"Preferences.General.notices_sendto_location"];
+	[d setInteger:USERDC_ACTION_QUERY		forKey:@"Preferences.General.user_doubleclick_action"];
+	[d setInteger:CMDWKEY_SHORTCUT_CLOSE	forKey:@"Preferences.General.keyboard_cmdw_response"];
+	
+	[d setDouble:12.0 forKey:@"Preferences.Theme.log_font_size"];
+	[d setDouble:1.0  forKey:@"Preferences.Theme.transparency"];
+	
+	// ====================================================== //
     
 	[_NSUserDefaults() registerDefaults:d];
 	
-	[_NSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"keywords"     options:NSKeyValueObservingOptionNew context:NULL];
-	[_NSUserDefaults() addObserver:(NSObject *)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
+	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"keywords"     options:NSKeyValueObservingOptionNew context:NULL];
+	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
 	if (NSObjectIsEmpty(systemVersionPlist)) systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
@@ -1032,15 +1038,19 @@ static NSInteger totalRunTime = 0;
 	[self loadExcludeWords];
 	[self populateCommandIndex];
 	
-	if ([NSFont fontIsAvailable:[Preferences themeLogFontName]] == NO) {
-		[_NSUserDefaults() setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
+	/* Font Check */
+	
+	if ([NSFont fontIsAvailable:[Preferences themeChannelViewFontName]] == NO) {
+		[_NSUserDefaults() setObject:DEFAULT_TEXTUAL_FONT forKey:@"Preferences.Theme.log_font_name"];
 	}
+	
+	/* Theme Check */
 
 	NSString *themeName = [ViewTheme extractThemeName:[Preferences themeName]];
 	NSString *themePath = [[Preferences whereThemesPath] stringByAppendingPathComponent:themeName];
 	
 	if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-		[_NSUserDefaults() setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
+		[_NSUserDefaults() setObject:DEFAULT_TEXTUAL_STYLE forKey:@"Preferences.Theme.name"];
 	}
 }
 

@@ -15,8 +15,9 @@
 - (void)updateTheme;
 
 - (void)setUpToolbarItemsAndMenus;
-
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
+
+- (void)changeItemFont:(NSFontManager *)sender;
 @end
 
 @implementation PreferencesController
@@ -37,7 +38,6 @@
 @synthesize IRCopServicesView;
 @synthesize keywordsArrayController;
 @synthesize keywordsTable;
-@synthesize logFont;
 @synthesize logView;
 @synthesize preferenceSelectToolbar;
 @synthesize scriptLocationField;
@@ -55,8 +55,8 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 		
-		world = word;
-		scriptsController = [ScriptsWrapper new];
+		world				= word;
+		scriptsController	= [ScriptsWrapper new];
 	}
 	
 	return self;
@@ -72,7 +72,6 @@
 	[identityView drain];
 	[interfaceView drain];
 	[IRCopServicesView drain];
-	[logFont drain];
 	[logView drain];
 	[scriptsController drain];
 	[scriptsView drain];
@@ -100,9 +99,6 @@
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
-	[logFont drain];
-	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
-	
 	if ([self.window isVisible] == NO) {
 		[self.window center];
 	}
@@ -111,11 +107,6 @@
 	
 	[self setUpToolbarItemsAndMenus];
 	[self firstPane:generalView selectedItem:0];
-}
-
-- (void)onWindowsWantsClosure:(id)sender 
-{
-	[self.window close];
 }
 
 #pragma mark -
@@ -152,39 +143,17 @@
 - (void)onPrefPaneSelected:(id)sender 
 {
 	switch ([sender tag]) {
-		case 0:
-			[self firstPane:generalView selectedItem:0];
-			break;
-		case 1:
-			[self firstPane:highlightView selectedItem:1];
-			break;
-		case 2:
-			[self firstPane:interfaceView selectedItem:2];
-			break;
-		case 3:
-			[self firstPane:alertsView selectedItem:3];
-			break;
-		case 4:
-			[self firstPane:stylesView selectedItem:4];
-			break;
-		case 5:
-			[self firstPane:logView selectedItem:11];
-			break;
-		case 6:
-			[self firstPane:floodControlView selectedItem:11];
-			break;
-		case 7:
-			[self firstPane:IRCopServicesView selectedItem:11];
-			break;
-		case 8: 
-			[self firstPane:channelManagementView selectedItem:11];
-			break;
-		case 9:
-			[self firstPane:identityView selectedItem:9];
-			break;
-		case 10:
-			[self firstPane:scriptsView selectedItem:10];
-			break;
+		case 0: [self firstPane:generalView selectedItem:0]; break;
+		case 1: [self firstPane:highlightView selectedItem:1]; break;
+		case 2: [self firstPane:interfaceView selectedItem:2]; break;
+		case 3: [self firstPane:alertsView selectedItem:3]; break;
+		case 4: [self firstPane:stylesView selectedItem:4]; break;
+		case 5: [self firstPane:logView selectedItem:11]; break;
+		case 6: [self firstPane:floodControlView selectedItem:11]; break;
+		case 7: [self firstPane:IRCopServicesView selectedItem:11]; break;
+		case 8: [self firstPane:channelManagementView selectedItem:11]; break;
+		case 9: [self firstPane:identityView selectedItem:9]; break;
+		case 10: [self firstPane:scriptsView selectedItem:10]; break;
 		default:
 		{
 			TextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
@@ -208,9 +177,9 @@
 {							   
 	NSRect windowFrame = [self.window frame];
 	
-	windowFrame.size.width = [view frame].size.width;
+	windowFrame.size.width	= [view frame].size.width;
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
-	windowFrame.origin.y = NSMaxY([self.window frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
+	windowFrame.origin.y	= NSMaxY([self.window frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	
 	if (NSObjectIsNotEmpty([contentView subviews])) {
 		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
@@ -228,26 +197,6 @@
 
 #pragma mark -
 #pragma mark KVC Properties
-
-- (void)setFontDisplayName:(NSString *)value
-{
-	[Preferences setThemeLogFontName:value];
-}
-
-- (NSString *)fontDisplayName
-{
-	return [Preferences themeLogFontName];
-}
-
-- (void)setFontPointSize:(CGFloat)value
-{
-	[Preferences setThemeLogFontSize:value];
-}
-
-- (CGFloat)fontPointSize
-{
-	return [Preferences themeLogFontSize];
-}
 
 - (NSInteger)maxLogLines
 {
@@ -279,6 +228,19 @@
 	[Preferences setInlineImagesMaxWidth:value];
 }
 
+- (NSString *)themeChannelViewFontName
+{
+	return [Preferences themeChannelViewFontName];
+}
+
+- (NSDoubleN)themeChannelViewFontSize
+{
+	return [Preferences themeChannelViewFontSize];
+}
+
+- (void)setThemeChannelViewFontName:(id)value	{ return; }
+- (void)setThemeChannelViewFontSize:(id)value	{ return; }
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
@@ -309,8 +271,8 @@
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
 	
-	NSArray *directoryContents = [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds" error:NULL];
-	NSArray *homeDirectoryContents = [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath] error:NULL];
+	NSArray *directoryContents		= [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds"								error:NULL];
+	NSArray *homeDirectoryContents	= [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath]	error:NULL];
 	
 	[sound_list safeAddObject:EMPTY_SOUND];
 	
@@ -376,34 +338,28 @@
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-	if ([transcriptFolderButton selectedTag] != 2) return;
-	
-	NSOpenPanel *d = [NSOpenPanel openPanel];
-	
-	[d setCanChooseFiles:NO];
-	[d setCanChooseDirectories:YES];
-	[d setResolvesAliases:YES];
-	[d setAllowsMultipleSelection:NO];
-	[d setCanCreateDirectories:YES];
-	
-	[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
-		[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+	if ([transcriptFolderButton selectedTag] == 2) {
+		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
-		if (returnCode == NSOKButton) {
-			NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
-			NSString *path = [pathURL path];
+		[d setCanChooseFiles:NO];
+		[d setCanChooseDirectories:YES];
+		[d setResolvesAliases:YES];
+		[d setAllowsMultipleSelection:NO];
+		[d setCanCreateDirectories:YES];
+		
+		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
+			[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
 			
-			BOOL isDir;
-			
-			if ([_NSFileManager() fileExistsAtPath:path isDirectory:&isDir] == NO) {
-				[_NSFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+			if (returnCode == NSOKButton) {
+				NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
+				NSString *path = [pathURL path];
+				
+				[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+				
+				[self updateTranscriptFolder];
 			}
-			
-			[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
-			
-			[self updateTranscriptFolder];
-		}
-	}];
+		}];
+	}
 }
 
 #pragma mark -
@@ -440,7 +396,7 @@
 			NSInteger i = 0;
 			
 			for (NSString *f in files) {
-				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autodrain];
+				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:NSNullObject] autodrain];
 				
 				[item setTag:tag];
 				[themeButton.menu addItem:item];
@@ -493,54 +449,36 @@
 	
 	[Preferences setThemeName:newThemeName];
 	
-	[self onLayoutChanged:nil];
+	[self onStyleChanged:nil];
 }
 
 - (void)onSelectFont:(id)sender
 {
-	[_NSFontManager() setSelectedFont:logFont isMultiple:NO];
+	NSFont *logfont = world.viewTheme.other.channelViewFont;
+		
+	[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
 	[_NSFontManager() orderFrontFontPanel:self];
+	[_NSFontManager() setAction:@selector(changeItemFont:)];
 }
 
-- (void)changeFont:(id)sender
+- (void)changeItemFont:(NSFontManager *)sender
 {
-	[logFont autodrain];
-	logFont = [[sender convertFont:logFont] retain];
+	OtherTheme *theme = world.viewTheme.other;
 	
-	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-	[self setValue:NSNumberWithDouble(logFont.pointSize) forKey:@"fontPointSize"];
+	NSFont *newFont = [sender convertFont:theme.channelViewFont];
+			
+	[Preferences setThemeChannelViewFontName:[newFont fontName]];
+	[Preferences setThemeChannelViewFontSize:[newFont pointSize]];
+			
+	[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
+	[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
 	
-	[self onStyleChanged:nil];
-}
-
-- (void)onOverrideFontChanged:(id)sender
-{
 	[self onStyleChanged:nil];
 }
 
 - (void)onChangedTransparency:(id)sender
 {
 	[_NSNotificationCenter() postNotificationName:TransparencyDidChangeNotification object:nil userInfo:nil];
-}
-
-- (void)onTimestampFormatChanged:(id)sender
-{
-	[self onStyleChanged:nil];
-}
-
-- (void)onHnagingTextChange:(id)sender 
-{
-	[self onStyleChanged:nil];
-}
-
-- (void)onTextDirectionChanged:(id)sender
-{
-	[self onLayoutChanged:nil];
-}
-
-- (void)onNicknameColorsDisabled:(id)sender
-{
-	[self onLayoutChanged:nil];
 }
 
 #pragma mark -
@@ -573,11 +511,6 @@
 	[_NSNotificationCenter() postNotificationName:InputHistoryGlobalSchemeNotification object:nil userInfo:nil];
 }
 
-- (void)onLayoutChanged:(id)sender
-{
-	[_NSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
-}
-
 - (void)onStyleChanged:(id)sender
 {
 	[_NSNotificationCenter() postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
@@ -592,7 +525,6 @@
 {
 	[_NSWorkspace() openFile:[Preferences whereApplicationSupportPath]];
 }
-
 
 #pragma mark -
 #pragma mark NSWindow Delegate
