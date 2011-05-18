@@ -57,7 +57,7 @@
 		case LINE_TYPE_DEBUG: return @"debug_send";
 	}
 	
-	return @"";
+	return NSNullObject;
 }
 
 + (NSString *)memberTypeString:(LogMemberType)type
@@ -67,7 +67,7 @@
 		case MEMBER_TYPE_MYSELF: return @"myself";
 	}
 	
-	return @"";
+	return NSNullObject;
 }
 
 @end

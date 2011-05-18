@@ -20,8 +20,8 @@
 	if (c.isChannel || c.isTalk) {
 		messageString = [messageString trim];
 		
-		if ([messageString contains:@" "]) {
-			messageString = [messageString substringToIndex:[messageString stringPosition:@" "]];
+		if ([messageString contains:NSWhitespaceCharacter]) {
+			messageString = [messageString substringToIndex:[messageString stringPosition:NSWhitespaceCharacter]];
 		}
 		
 		if ([commandString isEqualToString:@"SETKEY"]) {
@@ -55,7 +55,7 @@
 				[[client iomt] printDebugInformation:TXTLS(@"BLOWFISH_ENCRYPTION_NO_KEY") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-			NSLog(@"Key exchange is currently not supported.");
+			[[client iomt] printDebugInformation:TXTLS(@"BLOWFISH_KEY_EXCHANGE_NOT_READY_YET") channel:c];
 		}
 	}
 }

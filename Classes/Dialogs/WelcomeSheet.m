@@ -91,7 +91,7 @@
 
 - (void)onAddChannel:(id)sender
 {
-	[channels safeAddObject:@""];
+	[channels safeAddObject:NSNullObject];
 	
 	[channelTable reloadData];
 	

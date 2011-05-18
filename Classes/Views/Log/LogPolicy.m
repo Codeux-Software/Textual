@@ -167,10 +167,10 @@
 			}
 			
 			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
-															   action:@selector(onCopyLogAsHtml:) keyEquivalent:@""] autodrain];
+															   action:@selector(onCopyLogAsHtml:) keyEquivalent:NSNullObject] autodrain];
 			
 			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
-																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:@""] autodrain];
+																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:NSNullObject] autodrain];
 			
 			[copyHTML setTarget:menuController];
 			[reloadTheme setTarget:menuController];
