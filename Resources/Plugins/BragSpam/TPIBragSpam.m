@@ -49,13 +49,13 @@
 			for (IRCUser *m in ch.members) {
 				if ([m isEqual:myself]) continue;
 				
-				if (myself.q && m.q == NO) {
+				if (myself.q && !m.q) {
 					addUser = YES;
-				} else if (myself.a && m.q == NO && m.a == NO) {
+				} else if (myself.a && !m.q && !m.a) {
 					addUser = YES;
-				} else if (myself.o && m.q == NO && m.a == NO && m.o == NO) {
+				} else if (myself.o && !m.q && !m.a && !m.o) {
 					addUser = YES;
-				} else if (myself.h && m.q == NO && m.a == NO && m.o == NO && m.h == NO) {
+				} else if (myself.h && !m.q && !m.a && !m.o && !m.h) {
 				    addUser = YES;	
 				}
 				

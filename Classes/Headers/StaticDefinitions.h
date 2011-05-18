@@ -1,5 +1,5 @@
 /* Availability Macros */
-#define _LOAD_MAC_OS_LION_LIBRARIES 1
+#define _LOAD_MAC_OS_LION_LIBRARIES 0
 
 #if _LOAD_MAC_OS_LION_LIBRARIES
 	#if defined(MAC_OS_X_VERSION_10_7) 
@@ -33,26 +33,20 @@
 
 /* Miscellaneous functions to handle small tasks */
 #define CFItemRefToID(s)					(id)s
+
 #define PointerIsEmpty(s)					(s == NULL || s == nil)
 #define PointerIsNotEmpty(s)				BOOLReverseValue(PointerIsEmpty(s))
+
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
+
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
-#define NSDissimilarObjects(o,n)			(o != n)
 
 /* Item types */
 typedef unsigned long long TXFSLongInt; // filesizes
-typedef double NSDoubleN;
 
 /* Number Handling */
 #define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
 #define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
 #define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
 #define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
-#define NSNumberInRange(n,s,e)				(n >= s && n <= e)
-
-/* Everything Else */
-
-#define NSNullObject				@""
-#define NSWhitespaceCharacter		@" "
-#define NSNewlineCharacter			@"\n"

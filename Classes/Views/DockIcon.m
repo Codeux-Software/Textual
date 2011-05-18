@@ -1,8 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define _NSMainScreen()		[NSScreen mainScreen]
-
 @interface DockIcon (Private)
 + (NSString *)badgeFilename:(NSInteger)count;
 @end
@@ -18,27 +16,26 @@
 
 + (void)drawWithHilightCount:(NSInteger)highlight_count messageCount:(NSInteger)message_count 
 {
-	if ([_NSMainScreen() userSpaceScaleFactor] == 1.0) {
-		NSSize					   textSize;
+	if ([[NSString stringWithFloat:[[NSScreen mainScreen] userSpaceScaleFactor]] hasPrefix:@"1.0"]) {
+		NSSize textSize;
 		NSMutableAttributedString *textString;
 		
 		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-		
-		[attrs setObject:[NSColor whiteColor]						  forKey:NSForegroundColorAttributeName];
+		[attrs setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 		[attrs setObject:[NSFont fontWithName:@"Helvetica" size:22.0] forKey:NSFontAttributeName];
 		
-		message_count   = ((message_count > 9999) ? 9999 : message_count);
+		message_count = ((message_count > 9999) ? 9999 : message_count);
 		highlight_count = ((highlight_count > 9999) ? 9999 : highlight_count);
 		
-		NSImage *appIcon	= [[NSImage imageNamed:@"NSApplicationIcon"] copy];
-		NSImage *redBadge	= [NSImage imageNamed:[NSString stringWithFormat:@"DIbadge_Red_%@", [self badgeFilename:message_count]]];
-		NSImage *greenBadge = [NSImage imageNamed:[NSString stringWithFormat:@"DIbadge_Green_%@", [self badgeFilename:highlight_count]]];
+		NSImage *appIcon = [[NSImage imageNamed:@"NSApplicationIcon"] copy];
+		NSImage *redBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"DIbadge_Red_%@", [self badgeFilename:message_count]]]];
+		NSImage *greenBadge = [[NSImage alloc] initWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"DIbadge_Green_%@", [self badgeFilename:highlight_count]]]];
 		
 		[appIcon lockFocus];
 		
 		if (message_count >= 1) {
 			textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:message_count] attributes:attrs];
-			textSize   = [textString size];
+			textSize = [textString size];
 			
 			[redBadge compositeToPoint:NSMakePoint((appIcon.size.width - redBadge.size.width), 
 												   (appIcon.size.height - redBadge.size.height)) operation:NSCompositeSourceOver];
@@ -50,7 +47,7 @@
 			
 			if (highlight_count >= 1) {
 				textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:highlight_count] attributes:attrs];
-				textSize   = [textString size];
+				textSize = [textString size];
 			
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
 														 (appIcon.size.height - greenBadge.size.height - (redBadge.size.height - 5))) 
@@ -64,7 +61,7 @@
 		} else {
 			if (highlight_count >= 1) {
 				textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:highlight_count] attributes:attrs];
-				textSize   = [textString size];
+				textSize = [textString size];
 				
 				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
 														 (appIcon.size.height - greenBadge.size.height)) operation:NSCompositeSourceOver];
@@ -81,6 +78,8 @@
 		[NSApp setApplicationIconImage:appIcon];
 		
 		[appIcon drain];
+		[redBadge drain];
+		[greenBadge drain];
 	}
 }
 
