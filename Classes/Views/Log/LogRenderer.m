@@ -51,7 +51,7 @@ static NSInteger getNextAttributeRange(attr_t* attrBuf, NSInteger start, NSInteg
 	for (NSInteger i = start; i < len; ++i) {
 		attr_t t = attrBuf[i];
 		
-		if (NSDissimilarObjects(t, target)) {
+		if (t != target) {
 			return i - start;
 		}
 	}

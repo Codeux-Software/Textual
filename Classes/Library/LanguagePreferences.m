@@ -14,7 +14,6 @@ static NSDictionary *themeLocalizations = nil;
 	
 	if ([_NSFileManager() fileExistsAtPath:filepath]) {
 		NSDictionary *localkeys = [NSDictionary dictionaryWithContentsOfFile:filepath];
-	
 		[localkeys retain];
 			
 		if (localkeys) {
@@ -30,9 +29,7 @@ static NSDictionary *themeLocalizations = nil;
 	} else {
 		NSString *localstring = [themeLocalizations objectForKey:key];
 		
-		if (localstring) {
-			return [localstring reservedCharactersToIRCFormatting];
-		}
+		if (localstring) return [localstring reservedCharactersToIRCFormatting];
 		
 		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);
 	}

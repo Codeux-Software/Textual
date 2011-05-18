@@ -15,8 +15,7 @@
 	BOOL isNewTalk;
 	
 	NSInteger keywordCount;
-	NSInteger dockUnreadCount;
-	NSInteger treeUnreadCount;
+	NSInteger unreadCount;
 	
 	InputHistory *inputHistory;
 	NSAttributedString *currentInputHistory;
@@ -28,8 +27,7 @@
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, assign) BOOL isNewTalk;
 @property (nonatomic, assign) NSInteger keywordCount;
-@property (nonatomic, assign) NSInteger dockUnreadCount;
-@property (nonatomic, assign) NSInteger treeUnreadCount;
+@property (nonatomic, assign) NSInteger unreadCount;
 @property (nonatomic, readonly) BOOL isActive;
 @property (nonatomic, readonly) BOOL isClient;
 @property (nonatomic, readonly) IRCClient *client;
