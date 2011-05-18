@@ -2,25 +2,19 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface MasterController : NSObject
+@interface MasterController : NSObject <NSSplitViewDelegate>
 {
-	IBOutlet ChatBox *chatBox;
+	IBOutlet ThinSplitView *serverSplitView;
+	IBOutlet ThinSplitView *memberSplitView;
+	
 	IBOutlet MainWindow *window;
 	IBOutlet MenuController *menu;
 	IBOutlet InputTextField *text;
-	IBOutlet ServerTreeView *tree;
-	IBOutlet MemberListView *memberList;
+	
+	IBOutlet MemberList *memberList;
+	IBOutlet ServerList *serverList;
 	
 	IBOutlet NSBox *logBase;
-	
-	IBOutlet NSScrollView *treeScrollView;
-	
-	IBOutlet NSView *leftTreeBase;
-	IBOutlet NSView *rightTreeBase;
-	
-	IBOutlet ThinSplitView *rootSplitter;
-	IBOutlet ThinSplitView *infoSplitter;
-	IBOutlet ThinSplitView *treeSplitter;
 	
 	IBOutlet NSMenuItem *serverMenu;
 	IBOutlet NSMenuItem *channelMenu;
@@ -38,9 +32,9 @@
 	IRCExtras *extrac;
 	ViewTheme *viewTheme;
 	GrowlController *growl;
+	WelcomeSheet *welcomeSheet;
 	InputHistory *inputHistory;
 	FieldEditorTextView *fieldEditor;
-	WelcomeSheet *WelcomeSheetDisplay;
 	NickCompletionStatus *completionStatus;
 	
 	BOOL ghostMode;
@@ -49,19 +43,14 @@
 
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
-@property (nonatomic, retain) ChatBox *chatBox;
+@property (nonatomic, retain) NSBox *logBase;
 @property (nonatomic, retain) MainWindow *window;
 @property (nonatomic, retain) MenuController *menu;
 @property (nonatomic, retain) InputTextField *text;
-@property (nonatomic, retain) ServerTreeView *tree;
-@property (nonatomic, retain) MemberListView *memberList;
-@property (nonatomic, retain) NSBox *logBase;
-@property (nonatomic, retain) NSScrollView *treeScrollView;
-@property (nonatomic, retain) NSView *leftTreeBase;
-@property (nonatomic, retain) NSView *rightTreeBase;
-@property (nonatomic, retain) ThinSplitView *rootSplitter;
-@property (nonatomic, retain) ThinSplitView *infoSplitter;
-@property (nonatomic, retain) ThinSplitView *treeSplitter;
+@property (nonatomic, retain) ServerList *serverList;
+@property (nonatomic, retain) MemberList *memberList;
+@property (nonatomic, retain) ThinSplitView *serverSplitView;
+@property (nonatomic, retain) ThinSplitView *memberSplitView;
 @property (nonatomic, retain) NSMenuItem *serverMenu;
 @property (nonatomic, retain) NSMenuItem *channelMenu;
 @property (nonatomic, retain) NSMenu *logMenu;
@@ -74,9 +63,9 @@
 @property (nonatomic, retain) IRCExtras *extrac;
 @property (nonatomic, retain) ViewTheme *viewTheme;
 @property (nonatomic, retain) GrowlController *growl;
+@property (nonatomic, retain) WelcomeSheet *welcomeSheet;
 @property (nonatomic, retain) InputHistory *inputHistory;
 @property (nonatomic, retain) FieldEditorTextView *fieldEditor;
-@property (nonatomic, retain) WelcomeSheet *WelcomeSheetDisplay;
 @property (nonatomic, retain) IRCTextFormatterMenu *formattingMenu;
 @property (nonatomic, retain) NickCompletionStatus *completionStatus;
 

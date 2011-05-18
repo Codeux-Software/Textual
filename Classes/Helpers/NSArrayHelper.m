@@ -78,7 +78,7 @@
 	return 0;
 }
 
-- (double)doubleAtIndex:(NSInteger)n
+- (NSDoubleN)doubleAtIndex:(NSInteger)n
 {
 	id obj = [self safeObjectAtIndex:n];
 	
@@ -153,7 +153,7 @@
 	[self safeInsertObject:NSNumberWithLongLong(value) atIndex:index];
 }
 
-- (void)insertDouble:(double)value atIndex:(NSUInteger)index
+- (void)insertDouble:(NSDoubleN)value atIndex:(NSUInteger)index
 {
 	[self safeInsertObject:NSNumberWithDouble(value) atIndex:index];
 }
@@ -178,7 +178,7 @@
 	[self safeAddObject:NSNumberWithLongLong(value)];
 }
 	 
-- (void)addDouble:(double)value
+- (void)addDouble:(NSDoubleN)value
 {
 	[self safeAddObject:NSNumberWithDouble(value)];
 }
@@ -198,7 +198,7 @@
 	
 	NSUInteger current_index = [self lastIndex];
 	
-	while (current_index != NSNotFound) {
+	while (NSDissimilarObjects(current_index, NSNotFound)) {
 		[ary addObject:[NSNumber numberWithUnsignedInteger:current_index]];
 		
 		current_index = [self indexLessThanIndex:current_index];

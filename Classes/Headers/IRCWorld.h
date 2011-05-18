@@ -7,17 +7,17 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	ChatBox *chatBox;
 	MainWindow *window;
 	ViewTheme *viewTheme;
-	ServerTreeView *tree;
 	InputTextField *text;
 	GrowlController *growl;
 	LogController *dummyLog;
 	MasterController *master;
-	MemberListView *memberList;
 	MenuController *menuController;
 	FieldEditorTextView *fieldEditor;
+	
+	ServerList *serverList;
+	MemberList *memberList;
 	
 	NSBox *logBase;
 	
@@ -43,7 +43,6 @@
 	NSInteger itemId;
 	
 	BOOL soundMuted;
-	BOOL reloadingTree;
 	
 	IRCExtras *extrac;
 	
@@ -60,15 +59,14 @@
 	NSDictionary *bundlesWithOutputRules;
 }
 
-@property (nonatomic, assign) ChatBox *chatBox;
+@property (nonatomic, assign) ServerList *serverList;
+@property (nonatomic, assign) MemberList *memberList;
 @property (nonatomic, assign) MainWindow *window;
 @property (nonatomic, assign) ViewTheme *viewTheme;
-@property (nonatomic, assign) ServerTreeView *tree;
 @property (nonatomic, assign) InputTextField *text;
 @property (nonatomic, assign) GrowlController *growl;
 @property (nonatomic, assign) MasterController *master;
 @property (nonatomic, retain) LogController *dummyLog;
-@property (nonatomic, assign) MemberListView *memberList;
 @property (nonatomic, assign) MenuController *menuController;
 @property (nonatomic, assign) FieldEditorTextView *fieldEditor;
 @property (nonatomic, assign) NSBox *logBase;
@@ -88,7 +86,6 @@
 @property (nonatomic, assign) NSMutableArray *clients;
 @property (nonatomic, assign) NSInteger itemId;
 @property (nonatomic, assign) BOOL soundMuted;
-@property (nonatomic, assign) BOOL reloadingTree;
 @property (nonatomic, assign) IRCExtras *extrac;
 @property (nonatomic, retain) IRCTreeItem *selected;
 @property (nonatomic, assign) NSInteger previousSelectedClientId;
@@ -148,7 +145,6 @@
 
 - (void)preferencesChanged;
 - (void)reloadTheme;
-- (void)updateThemeStyle;
 - (void)changeTextSize:(BOOL)bigger;
 
 - (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload;

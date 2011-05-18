@@ -17,9 +17,9 @@
 @property (nonatomic, readonly) BOOL _spellingAlreadyToggled;
 
 - (void)setFontColor:(NSColor *)color;
+- (void)setUsesCustomUndoManager:(BOOL)customManager;
 
 - (void)removeAllUndoActions;
-- (void)setUsesCustomUndoManager:(BOOL)customManager;
 
 - (void)pasteFilteredAttributedString:(NSRange)selectedRange;
 

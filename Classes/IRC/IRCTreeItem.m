@@ -9,9 +9,10 @@
 @synthesize isKeyword;
 @synthesize isUnread;
 @synthesize isNewTalk;
-@synthesize unreadCount;
 @synthesize keywordCount;
 @synthesize inputHistory;
+@synthesize treeUnreadCount;
+@synthesize dockUnreadCount;
 
 - (void)dealloc
 {
@@ -48,7 +49,8 @@
 
 - (void)resetState
 {
-	keywordCount = unreadCount = 0;
+	dockUnreadCount = treeUnreadCount = 0;
+	keywordCount = 0;
 	isKeyword = isUnread = isNewTalk = NO;
 }
 
@@ -64,12 +66,12 @@
 
 - (NSString *)label
 {
-	return @"";
+	return NSNullObject;
 }
 
 - (NSString *)name
 {
-	return @"";
+	return NSNullObject;
 }
 
 @end
