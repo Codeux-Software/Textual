@@ -84,7 +84,7 @@
 
 - (NSString *)password
 {
-	return ((config.password) ?: @"");
+	return ((config.password) ?: NSNullObject);
 }
 
 - (BOOL)isChannel
@@ -216,7 +216,7 @@
 			logDate = [comp retain];
 		}
 		
-		NSString *nickStr = @"";
+		NSString *nickStr = NSNullObject;
 		
 		if (line.nick) {
 			nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
@@ -483,11 +483,6 @@
 	return members.count;
 }
 
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
-{
-	return ([client.world.viewTheme.other.memberListFont pointSize] + 3.0); // Long callback
-}
-
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	IRCUser *user = [members safeObjectAtIndex:row];
@@ -495,7 +490,7 @@
 	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [config.name safeSubstringFromIndex:1]);
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	cell.member = [members safeObjectAtIndex:row];
 }

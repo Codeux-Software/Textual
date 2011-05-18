@@ -2,7 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define DEFAULT_TEXUAL_STYLE @"Simplified Dark"
+#define DEFAULT_TEXTUAL_STYLE @"user:Simplified Dark"
+#define DEFAULT_TEXTUAL_FONT  @"Lucida Grande"
 
 typedef enum {
 	KEYWORD_MATCH_PARTIAL = 0,
@@ -33,10 +34,10 @@ typedef enum {
 } CmdW_Shortcut_ResponseType;
 
 typedef enum {
-	HMBAN_FORMAT_WHNIN = 0, // With Hostmask, No Username/Nickname
+	HMBAN_FORMAT_WHNIN  = 0, // With Hostmask, No Username/Nickname
 	HMBAN_FORMAT_WHAINN = 1, // With Hostmask and Username, No Nickname
 	HMBAN_FORMAT_WHANNI = 2, // With Hostmask and Nickname, No Username
-	HMBAN_FORMAT_EXACT = 4, // Exact Match
+	HMBAN_FORMAT_EXACT  = 4, // Exact Match
 } HostmaskBanFormat;
 
 @interface Preferences : NSObject
@@ -143,15 +144,15 @@ typedef enum {
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 
 + (NSString *)themeName;
-+ (NSString *)themeLogFontName;
++ (NSString *)themeChannelViewFontName;
 + (NSString *)themeNickFormat;
 + (NSString *)themeTimestampFormat;
-+ (double)themeTransparency;
-+ (double)themeLogFontSize;
++ (NSDoubleN)themeTransparency;
++ (NSDoubleN)themeChannelViewFontSize;
 
 + (void)setThemeName:(NSString *)value;
-+ (void)setThemeLogFontName:(NSString *)value;
-+ (void)setThemeLogFontSize:(double)value;
++ (void)setThemeChannelViewFontName:(NSString *)value;
++ (void)setThemeChannelViewFontSize:(NSDoubleN)value;
 
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;

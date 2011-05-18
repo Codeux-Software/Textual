@@ -96,7 +96,7 @@
 
 "THEME_CHANGE_OVERRIDE_PROMPT_TITLE" = "Preferred Selection";
 "THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE" = "The newly selected style \"%@\" has chosen to override the following preferences with ones that it prefers for best viewing:\n\n%@";
-"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT" = "• Channel Font";
+"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT" = "• Channel View Font";
 "THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT" = "• Nickname Format";
 "THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT" = "• Timestamp Format";
 "THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED" = "• Indent Wrapped Text";
@@ -114,6 +114,7 @@
 "BLOWFISH_KEY_EXCHANGE_ALREADY_EXISTS" = "A key exchange request already exists for %@. Please wait for the current one to expire before requesting a new one.";
 "BLOWFISH_KEY_EXCHANGE_TIMED_OUT" = "Key exchange request for %@ has expired.";
 "BLOWFISH_KEY_EXCHANGE_RESPONSE_PENDING" = "Received key exchange request from %@. Processing …";
+"BLOWFISH_KEY_EXCHANGE_NOT_READY_YET" = "Key exchange is currently not supported.";
 
 "IRC_IS_RECONNECTING" = "Reconnecting…";
 "IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";

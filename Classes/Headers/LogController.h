@@ -9,7 +9,6 @@
 	LogView *view;
 	LogPolicy *policy;
 	WebScriptObject *js;
-	MarkedScroller *scroller;
 	LogScriptEventSink *sink;
 	WebViewAutoScroll *autoScroller;
 
@@ -32,6 +31,7 @@
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
+	BOOL processingMessageQueue;
 	BOOL needsLimitNumberOfLines;
 	
 	NSInteger count;
@@ -41,16 +41,17 @@
 	NSInteger loadingImages;
 	
 	NSMutableArray *lines;
+	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
 
 	NSString *html;
 }
 
-@property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
 @property (nonatomic, assign) IRCChannel *channel;
+@property (nonatomic, assign) BOOL loaded;
 @property (nonatomic, retain) NSMenu *menu;
 @property (nonatomic, retain) NSMenu *urlMenu;
 @property (nonatomic, retain) NSMenu *addrMenu;
@@ -62,7 +63,6 @@
 @property (nonatomic, readonly) BOOL viewingBottom;
 @property (nonatomic, retain) LogPolicy *policy;
 @property (nonatomic, retain) LogScriptEventSink *sink;
-@property (nonatomic, retain) MarkedScroller *scroller;
 @property (nonatomic, retain) WebScriptObject *js;
 @property (nonatomic, retain) WebViewAutoScroll *autoScroller;
 @property (nonatomic, assign) BOOL becameVisible;
@@ -72,11 +72,13 @@
 @property (nonatomic, assign) NSInteger lineNumber;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) BOOL loaded;
+@property (nonatomic, assign) BOOL processingMessageQueue;
 @property (nonatomic, assign) NSInteger loadingImages;
 @property (nonatomic, retain) NSString *html;
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic, assign) NSInteger scrollTop;
+@property (nonatomic, retain) NSMutableArray *messageQueue;
+@property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
 
 - (BOOL)hasValidBodyStructure;
 

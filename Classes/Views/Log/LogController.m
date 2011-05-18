@@ -13,11 +13,10 @@
 - (void)savePosition;
 - (void)restorePosition;
 - (void)setNeedsLimitNumberOfLines;
-- (void)writeLine:(NSString *)str attributes:(NSDictionary *)attrs;
-- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs;
+- (void)processMessageQueue;
+- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs ignoringQueue:(BOOL)ignoreQueue;
 - (NSString *)initialDocument:(NSString *)topic;
 - (NSString *)generateOverrideStyle;
-
 - (DOMDocument *)mainFrameDocument;
 - (DOMNode *)html_head;
 - (DOMElement *)body:(DOMDocument *)doc;
@@ -45,12 +44,13 @@
 @synthesize maxLines;
 @synthesize memberMenu;
 @synthesize menu;
+@synthesize messageQueue;
 @synthesize movingToBottom;
 @synthesize needsLimitNumberOfLines;
 @synthesize policy;
+@synthesize processingMessageQueue;
 @synthesize scrollBottom;
 @synthesize scrollTop;
-@synthesize scroller;
 @synthesize sink;
 @synthesize theme;
 @synthesize urlMenu;
@@ -64,6 +64,7 @@
 		maxLines = 300;
 		
 		lines				   = [NSMutableArray new];
+		messageQueue		   = [NSMutableArray new];
 		highlightedLineNumbers = [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -87,8 +88,8 @@
 	[lines drain];
 	[memberMenu drain];
 	[menu drain];
+	[messageQueue drain];
 	[policy drain];
-	[scroller drain];
 	[sink drain];
 	[theme drain];
 	[urlMenu drain];
@@ -145,10 +146,6 @@
 	
 	view = [[LogView alloc] initWithFrame:NSZeroRect];
 	
-	if ([view respondsToSelector:@selector(setBackgroundColor:)]) {
-		[(id)view setBackgroundColor:initialBackgroundColor];
-	}
-	
 	view.frameLoadDelegate	  = self;
 	view.UIDelegate			  = policy;
 	view.policyDelegate		  = policy;
@@ -158,6 +155,28 @@
 	view.autoresizingMask	  = (NSViewWidthSizable | NSViewHeightSizable);
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.baseUrl];
+}
+
+- (void)processMessageQueue
+{	
+	if (processingMessageQueue == NO && NSObjectIsNotEmpty(messageQueue)) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];
+		
+		processingMessageQueue = YES;
+		
+		if (NSObjectIsNotEmpty(messageQueue)) {
+			for (NSArray *message in messageQueue) {
+				NSString	 *mhtml	 = [message safeObjectAtIndex:0];
+				NSDictionary *mattrs = [message dictionaryAtIndex:1];
+				
+				[self writeLine:mhtml attributes:mattrs ignoringQueue:YES];
+				
+				[messageQueue removeObject:messageQueue];
+			}
+		}
+		
+		processingMessageQueue = NO;
+	}
 }
 
 - (void)notifyDidBecomeVisible
@@ -201,7 +220,7 @@
 - (NSString *)topicValue
 {
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return @"";
+	if (PointerIsEmpty(doc)) return NSNullObject;
 	
 	return [(id)[self topic:doc] innerHTML];
 }
@@ -390,8 +409,6 @@
 	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
-	
-	[scroller setNeedsDisplay];
 }
 
 - (void)clear
@@ -404,8 +421,6 @@
 	count  = 0;
 	
 	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
-	
-	[scroller setNeedsDisplay];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -473,8 +488,6 @@
 	count -= n;
 	
 	if (count < 0) count = 0;
-	
-	[scroller setNeedsDisplay];
 }
 
 - (void)setNeedsLimitNumberOfLines
@@ -605,7 +618,7 @@
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}
 	
-	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
+	[self writeLine:s attributes:attrs ignoringQueue:NO];
 	
 	if (highlighted && [Preferences logAllHighlightsToQuery]) {
 		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
@@ -623,16 +636,7 @@
 	return highlighted;
 }
 
-- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
-{
-	while (loaded == NO) {
-		continue;
-	}
-	
-	[[self iomt] writeLine:aHtml attributes:attrs];
-}
-
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
+- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs ignoringQueue:(BOOL)ignoreQueue
 {
 	[self savePosition];
 	
@@ -641,7 +645,20 @@
 	
 	DOMDocument *doc  = [self mainFrameDocument];
 	DOMElement  *body = [self body:doc];
-	if (PointerIsEmpty(body)) return;
+	
+	if (PointerIsEmpty(body)) {
+		NSArray *queueEntry = [NSArray arrayWithObjects:aHtml, attrs, nil];
+		
+		[messageQueue safeAddObject:queueEntry];
+		
+		if (NSObjectIsEmpty(messageQueue)) {
+			[self performSelector:@selector(processingMessageQueue) withObject:nil afterDelay:3.0];
+		}
+		
+		return;
+	} else {
+		[self processingMessageQueue];
+	}
 	
 	DOMElement *div = [doc createElement:@"div"];
 	
@@ -663,10 +680,6 @@
 	
 	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
 		[highlightedLineNumbers safeAddObject:[NSNumber numberWithInt:lineNumber]];
-	}
-	
-	if (scroller) {
-		[scroller setNeedsDisplay];
 	}
 	
 	WebScriptObject *js_api = [view js_api];
@@ -761,17 +774,11 @@
 	
 	OtherTheme *other = world.viewTheme.other;
 	
-	NSString *name  = [Preferences themeLogFontName];
-	NSInteger rsize = [Preferences themeLogFontSize];
-	double    size  = ([Preferences themeLogFontSize] * (72.0 / 96.0));
-	
-	if (other.overrideChannelFont) {
-		NSFont *channelFont = other.overrideChannelFont;
+	NSFont *channelFont = other.channelViewFont;
 		
-		name  = [channelFont fontName];
-		rsize = [channelFont pointSize];
-		size  = ([channelFont pointSize] * (72.0 / 96.0));
-	} 
+	NSString *name  = [channelFont fontName];
+	NSInteger rsize = [channelFont pointSize];
+	NSDoubleN size  = ([channelFont pointSize] * (72.0 / 96.0));
 	
 	[sf appendString:@"html, body, body[type], body {"];
 	[sf appendFormat:@"font-family:'%@';", name];
@@ -779,13 +786,16 @@
 	[sf appendString:@"}"];
 	
 	if ([Preferences rightToLeftFormatting] == NO) {
-		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) return sf;
+		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) {
+			return sf;
+		}
 		
 		if ([Preferences indentOnHang]) {
+			NSString	 *time		 = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat);
 			NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
 			
-			NSSize    textSize  = [TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat) sizeWithAttributes:attributes]; 
+			NSSize    textSize  = [time sizeWithAttributes:attributes]; 
 			NSInteger textWidth = (textSize.width + (6 + other.nicknameFormatFixedWidth));
 			
 			[sf appendString:@"body div#body_home p {"];
@@ -825,22 +835,12 @@
 		[(id)scrollView setAllowsHorizontalScrolling:NO];
 	}
 	
-	NSScroller *old = [scrollView verticalScroller];
-	
-	if (old && [old isKindOfClass:[MarkedScroller class]] == NO) {
-		if (scroller) {
-			[scroller removeFromSuperview];
-			[scroller drain];
-		}
-		
-		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
-		scroller.dataSource = self;
-		
-		[scroller setDoubleValue:[old doubleValue]];
-		[scroller setKnobProportion:[old knobProportion]];
-		
-		[scrollView setVerticalScroller:scroller];
+#ifdef _RUNNING_MAC_OS_LION
+	if ([Preferences applicationRanOnLion]) {
+		[scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
+		[scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
 	}
+#endif
 }
 
 #pragma mark -
@@ -973,45 +973,6 @@
 - (void)logViewDidResize
 {
 	[self restorePosition];
-}
-
-#pragma mark -
-#pragma mark MarkedScroller Delegate
-
-- (NSArray *)markedScrollerPositions:(MarkedScroller *)sender
-{
-	NSMutableArray *result = [NSMutableArray array];
-	
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return [NSArray array];
-	
-	if (doc) {
-		for (NSNumber *n in highlightedLineNumbers) {
-			NSString *key = [NSString stringWithFormat:@"line%d", [n integerValue]];
-			
-			DOMElement *e = [doc getElementById:key];
-			
-			if (e) {
-				NSInteger offsetTop    = [[e valueForKey:@"offsetTop"] integerValue];
-				NSInteger offsetHeight = [[e valueForKey:@"offsetHeight"] integerValue];
-				
-				NSInteger pos = (offsetTop + (offsetHeight / 2));
-				
-				[result safeAddObject:NSNumberWithInteger(pos)];
-			}
-		}
-	}
-	
-	return result;
-}
-
-- (NSColor *)markedScrollerColor:(MarkedScroller *)sender
-{
-	if ([Preferences applicationRanOnLion]) {
-		return [NSColor greenColor];
-	}
-	
-	return [NSColor redColor];
 }
 
 @end
