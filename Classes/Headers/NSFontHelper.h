@@ -5,6 +5,5 @@
 - (NSFont *)convertToItalics;
 - (BOOL)fontMatchesFont:(NSFont *)otherFont;
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait;
-- (BOOL)fontMatchesName:(NSString *)fontName;
 + (BOOL)fontIsAvailable:(NSString *)fontName;
 @end

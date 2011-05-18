@@ -36,17 +36,17 @@
 @synthesize pointedNick;
 @synthesize pointedUrl;
 @synthesize preferencesController;
-@synthesize serverList;
 @synthesize serverSheet;
 @synthesize text;
 @synthesize topicSheet;
+@synthesize tree;
 @synthesize window;
 @synthesize world;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		currentSearchPhrase = NSNullObject;
+		currentSearchPhrase = @"";
 	}
 	
 	return self;
@@ -91,8 +91,8 @@
 		
 		[[[[[item menu] itemWithTag:5422] submenu] itemWithTag:542] setEnabled:[Preferences logTranscript]];
 	} else {
-		[[[item menu] itemWithTag:936] setHidden:BOOLReverseValue(c.isTalk)];
-		[[[item menu] itemWithTag:937] setHidden:BOOLReverseValue(c.isTalk)];
+		[[[item menu] itemWithTag:936] setHidden:!c.isTalk];
+		[[[item menu] itemWithTag:937] setHidden:!c.isTalk];
 		
 		[[[item menu] itemWithTag:5422] setEnabled:NO]; 
 		[[[item menu] itemWithTag:5422] setHidden:YES]; 
@@ -254,7 +254,7 @@
 			NSInteger count = 0;
 			
 			for (IRCChannel *e in u.channels) {
-				if (NSDissimilarObjects(c, e) && e.isChannel) {
+				if (e != c && e.isChannel) {
 					++count;
 				}
 			}
@@ -407,7 +407,7 @@
 	
 	if (NSObjectIsEmpty(newPhrase)) {
 		[currentSearchPhrase drain];
-		currentSearchPhrase = NSNullObject;
+		currentSearchPhrase = @"";
 	} else {
 		if ([newPhrase isNotEqualTo:currentSearchPhrase]) {
 			[currentSearchPhrase drain];
@@ -1007,7 +1007,7 @@
 }
 
 - (void)memberListDoubleClicked:(id)sender
-{/*
+{
 	MemberListView *view = sender;
 	
 	NSPoint pt;
@@ -1031,7 +1031,7 @@
 				[self onMemberTalk:nil];
 				break;
 		}
-	}*/
+	}
 }
 
 - (void)onMemberWhois:(id)sender
@@ -1076,7 +1076,7 @@
 	}
 	
 	for (IRCChannel *e in u.channels) {
-		if (NSDissimilarObjects(c, e) && e.isChannel) {
+		if (c != e && e.isChannel) {
 			[channels safeAddObject:e.name];
 		}
 	}
@@ -1243,7 +1243,7 @@
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	NSString *opString = NSNullObject;
+	NSString *opString = @"";
 	NSInteger currentIndex = 0;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1254,7 +1254,7 @@
 		if (currentIndex == MAXIMUM_SETS_PER_MODE) {
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
 			
-			opString = NSNullObject;
+			opString = @"";
 			currentIndex = 0;
 		}
 	}

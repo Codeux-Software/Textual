@@ -54,7 +54,7 @@
 	if ([mode modeInfoFor:@"k"].plus) {
 		[kText setStringValue:[mode modeInfoFor:@"k"].param];
 	} else {
-		[kText setStringValue:NSNullObject];
+		[kText setStringValue:@""];
 	}
 	
 	NSInteger lCount = [[mode modeInfoFor:@"l"].param integerValue];
