@@ -1020,8 +1020,8 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(ServerListCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
-	cell.parent = serverList;
-	cell.cellItem = item;
+	cell.parent	= serverList;
+	cell.cellItem	= item;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
@@ -1253,11 +1253,6 @@
 - (void)memberListViewKeyDown:(NSEvent *)e
 {
 	[self logKeyDown:e];
-}
-
-- (void)memberListViewDropFiles:(NSArray *)files row:(NSNumber *)row
-{
-	return;
 }
 
 - (void)serverListKeyDown:(NSEvent *)e

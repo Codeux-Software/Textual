@@ -1,6 +1,8 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define NSCalibratedRBGColor(r, b, g)		([NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0])
+
 @interface NSColor (NSColorHelper)
 + (NSColor *)formatterWhiteColor;
 + (NSColor *)formatterBlackColor;

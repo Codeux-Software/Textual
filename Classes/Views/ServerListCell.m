@@ -147,9 +147,12 @@
 		
 		IRCChannel *channel = cellItem.log.channel;
 		
+		NSAttributedString			*stringValue	= [self attributedStringValue];	
+		NSMutableAttributedString	*newValue		= [stringValue mutableCopy];
+		
+		NSShadow *itemShadow = [NSShadow new];
+		
 		if ([parent isGroupItem:cellItem] == NO) {
-			NSAttributedString *stringValue	= [self attributedStringValue];
-			
 			if (channel.isTalk) {
 				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
 			} else {
@@ -172,14 +175,41 @@
 					
 					cellFrame.size.width -= (badgeRect.size.width + (BADGE_MARGIN * 2));
 				}
+				
+				cellFrame.origin.y += 3;
+				
+				[itemShadow setShadowOffset:NSMakeSize(1, -1)];
+				[itemShadow setShadowColor:[NSColor whiteColor]];	
+				
+				[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+				[newValue drawInRect:cellFrame];
+			} else {
+				cellFrame.origin.y += 3;
+				
+				[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+				[itemShadow setShadowBlurRadius:2.0];
+				[itemShadow setShadowColor:[NSColor darkGrayColor]];
+				
+				[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+				[newValue drawInRect:cellFrame];
+			}
+		} else {
+			cellFrame.origin.y += 4;
+			
+			[itemShadow setShadowOffset:NSMakeSize(1, -1)];
+			
+			if (NSDissimilarObjects(selectedRow, rowIndex)) {
+				[itemShadow setShadowColor:[NSColor whiteColor]];	
+			} else {
+				[itemShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]];
 			}
 			
-			cellFrame.origin.y += 3;
-			
-			[stringValue drawInRect:cellFrame];
-		} else {
-			[super drawWithFrame:cellFrame inView:controlView];		
+			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+			[newValue drawInRect:cellFrame];
 		}
+		
+		[newValue drain];
+		[itemShadow drain];
 	}
 }
 
