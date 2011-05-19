@@ -60,6 +60,10 @@
 
 - (void)awakeFromNib
 {
+#ifdef _RUNNING_MAC_OS_LION
+	[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+#endif
+	
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		ghostMode = YES;
 	}
@@ -513,8 +517,8 @@
 		
 		[fieldEditor setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
 		
-		serverSplitView.position = [dic integerForKey:@"serverList"];
-		memberSplitView.position = [dic integerForKey:@"memberList"];
+		serverSplitView.position = (([dic integerForKey:@"serverList"]) ?: 170);
+		memberSplitView.position = (([dic integerForKey:@"memberList"]) ?: 170);
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
 		

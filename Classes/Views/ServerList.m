@@ -26,9 +26,16 @@
 	id childItem  = [self itemAtRow:row];
 	
 	if ([self isGroupItem:childItem] == NO) {
-		superFrame.origin.x   += 25;
-		superFrame.size.width -= 25;
-	} 
+		if ([Preferences applicationRanOnLion]) {
+			superFrame.origin.x   += 25;
+			superFrame.size.width -= 25;
+		}
+	} else {
+		if ([Preferences applicationRanOnLion] == NO) {
+			superFrame.origin.x += 5;
+			superFrame.size.width -= 5;
+		}
+	}
 	
 	return superFrame;
 }
