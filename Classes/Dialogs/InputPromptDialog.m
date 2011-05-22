@@ -48,14 +48,13 @@
 {
 	NSRect infoTextFrame = [informationalText frame];
 	
-	NSLayoutManager *layoutManager = [NSLayoutManager new];
-	
-	NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:[informationalText stringValue]];
-	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(298.0, FLT_MAX)];
+	NSLayoutManager *layoutManager	= [NSLayoutManager new];
+	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithString:[informationalText stringValue]];
+	NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(298.0, FLT_MAX)];
 	
 	[layoutManager addTextContainer:textContainer];
-	[textStorage addLayoutManager:layoutManager];
 	
+	[textStorage addLayoutManager:layoutManager];
 	[textStorage addAttribute:NSFontAttributeName 
 						value:[NSFont fontWithName:@"Lucida Grande" size:11.0] 
 						range:NSMakeRange(0, [textStorage length])];
@@ -64,13 +63,13 @@
 	
 	[layoutManager glyphRangeForTextContainer:textContainer];
 	
-	NSInteger newHeight = ([layoutManager usedRectForTextContainer:textContainer].size.height + 5);
-	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
+	NSInteger newHeight		= ([layoutManager usedRectForTextContainer:textContainer].size.height + 5);
+	NSInteger heightDiff	= (infoTextFrame.size.height - newHeight);
 	
 	NSRect windowFrame = [dialogWindow frame];
 	
-	infoTextFrame.size.height = (newHeight + 3);
-	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + 3);
+	infoTextFrame.size.height	= (newHeight + 3);
+	windowFrame.size.height		= ((windowFrame.size.height - heightDiff) + 3);
 	
 	[dialogWindow setFrame:windowFrame display:NO animate:NO];
 	[dialogWindow makeKeyAndOrderFront:nil];

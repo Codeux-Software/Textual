@@ -2,8 +2,12 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define KInternetEventClass	1196773964
-#define KAEGetURL			1196773964
+#define KInternetEventClass		1196773964
+#define KAEGetURL				1196773964
+
+#define maximumSplitViewWidth	300
+#define minimumSplitViewWidth	120
+#define defaultSplitViewWidth	170
 
 @interface MasterController (Private)
 - (void)setColumnLayout;
@@ -12,6 +16,7 @@
 
 @implementation MasterController
 
+@synthesize addServerButton;
 @synthesize addrMenu;
 @synthesize chanMenu;
 @synthesize channelMenu;
@@ -26,6 +31,7 @@
 @synthesize logMenu;
 @synthesize memberList;
 @synthesize memberSplitView;
+@synthesize memberSplitViewOldPosition;
 @synthesize memberMenu;
 @synthesize menu;
 @synthesize serverList;
@@ -133,6 +139,7 @@
 	extrac.world = world;
 	
 	serverSplitView.delegate = self;
+	memberSplitView.delegate = self;
 	
 	serverList.dataSource	= world;
 	serverList.delegate		= world;
@@ -490,17 +497,81 @@
 	[self sendText:IRCCI_PRIVMSG];
 }
 
+- (void)showMemberListSplitView:(BOOL)showList
+{
+	memberSplitViewOldPosition = memberSplitView.position;
+	
+	if (showList) {
+		NSView *rightView = [[memberSplitView subviews] safeObjectAtIndex:1];
+		
+		memberSplitView.hidden	 = NO;
+		memberSplitView.inverted = NO;
+		
+		if ([memberSplitView isSubviewCollapsed:rightView] == NO) {
+			if (memberSplitViewOldPosition < minimumSplitViewWidth) {
+				memberSplitViewOldPosition = minimumSplitViewWidth;
+			}
+			
+			memberSplitView.position = memberSplitViewOldPosition;
+		}
+	} else {
+		if (memberSplitView.hidden == NO) {
+			memberSplitView.hidden   = YES;
+			memberSplitView.inverted = YES;
+		}
+	}
+}
+
 #pragma mark -
 #pragma mark Preferences
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
 {
-	return 300;
+	if ([splitView isEqual:memberSplitView]) {
+		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
+		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		
+		NSInteger leftWidth  = [leftSide bounds].size.width;
+		NSInteger rightWidth = [rightSide bounds].size.width;
+		
+		return ((leftWidth + rightWidth) - minimumSplitViewWidth);
+	}
+	
+	return maximumSplitViewWidth;
 }
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
 {
-	return 120;
+	if ([splitView isEqual:memberSplitView]) {
+		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
+		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		
+		NSInteger leftWidth  = [leftSide bounds].size.width;
+		NSInteger rightWidth = [rightSide bounds].size.width;
+		
+		return ((leftWidth + rightWidth) - maximumSplitViewWidth);
+	}
+	
+	return minimumSplitViewWidth;
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
+{
+	if ([splitView isEqual:memberSplitView]) {
+		NSView *leftSide = [[splitView subviews] objectAtIndex:0];
+	
+		if ([leftSide isEqual:subview]) {
+			return NO;
+		}
+	} else if ([splitView isEqual:serverSplitView]) {
+		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		
+		if ([rightSide isEqual:subview] || NSObjectIsEmpty(world.clients)) {
+			return NO;		
+		} 
+	}
+	
+	return YES;
 }
 
 - (void)loadWindowState
@@ -517,8 +588,16 @@
 		
 		[fieldEditor setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
 		
-		serverSplitView.position = (([dic integerForKey:@"serverList"]) ?: 170);
-		memberSplitView.position = (([dic integerForKey:@"memberList"]) ?: 170);
+		serverSplitView.position = [dic integerForKey:@"serverList"];
+		memberSplitView.position = [dic integerForKey:@"memberList"];
+		
+		if (serverSplitView.position < minimumSplitViewWidth) {
+			serverSplitView.position = defaultSplitViewWidth;
+		}
+		
+		if (memberSplitView.position < minimumSplitViewWidth) {
+			memberSplitView.position = defaultSplitViewWidth;
+		}
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
 		
@@ -539,6 +618,8 @@
 		serverSplitView.position = 170;
 		memberSplitView.position = 170;
 	}
+	
+	memberSplitViewOldPosition = memberSplitView.position;
 }
 
 - (void)saveWindowState
@@ -551,10 +632,22 @@
 	
 	NSRect rect = window.frame;
 	
-	[dic setInteger:rect.origin.x forKey:@"x"];
-	[dic setInteger:rect.origin.y forKey:@"y"];
-	[dic setInteger:rect.size.width forKey:@"w"];
-	[dic setInteger:rect.size.height forKey:@"h"];
+	[dic setInteger:rect.origin.x		forKey:@"x"];
+	[dic setInteger:rect.origin.y		forKey:@"y"];
+	[dic setInteger:rect.size.width		forKey:@"w"];
+	[dic setInteger:rect.size.height	forKey:@"h"];
+	
+	if (serverSplitView.position < minimumSplitViewWidth) {
+		serverSplitView.position = defaultSplitViewWidth;
+	}
+	
+	if (memberSplitView.position < minimumSplitViewWidth) {
+		if (memberSplitViewOldPosition < minimumSplitViewWidth) {
+			memberSplitView.position = defaultSplitViewWidth;
+		} else {
+			memberSplitView.position = memberSplitViewOldPosition;
+		}
+	}
 	
 	[dic setInteger:serverSplitView.position forKey:@"serverList"];
 	[dic setInteger:memberSplitView.position forKey:@"memberList"];
@@ -594,6 +687,12 @@
 	if (viewTheme.other.overrideMessageIndentWrap) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_INDENT_WRAPPED")];
 		[sf appendString:NSNewlineCharacter];
+	}
+	
+	if ([Preferences rightToLeftFormatting]) {
+		[text setBaseWritingDirection:NSWritingDirectionRightToLeft];
+	} else {
+		[text setBaseWritingDirection:NSWritingDirectionNatural];
 	}
 	
 	sf = (NSMutableString *)[sf trim];

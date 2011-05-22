@@ -2,9 +2,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define IGNORE_TAB_INDEX		3
-#define WINDOW_TOOLBAR_HEIGHT	30
-
 #define TABLE_ROW_TYPE			@"row"
 #define TABLE_ROW_TYPES			[NSArray arrayWithObject:TABLE_ROW_TYPE]
 
@@ -16,11 +13,19 @@
 - (void)reloadChannelTable;
 - (void)updateIgnoresPage;
 - (void)reloadIgnoreTable;
-- (void)firstPane:(NSView *)view;
+- (void)focusView:(NSView *)view atRow:(NSInteger)row;
 @end
 
 @implementation ServerSheet
 
+@synthesize generalView;
+@synthesize identityView;
+@synthesize messagesView;
+@synthesize encodingView;
+@synthesize autojoinView;
+@synthesize ignoresView;
+@synthesize commandsView;
+@synthesize proxyServerView;
 @synthesize addChannelButton;
 @synthesize addIgnoreButton;
 @synthesize altNicksText;
@@ -33,23 +38,20 @@
 @synthesize contentView;
 @synthesize deleteChannelButton;
 @synthesize deleteIgnoreButton;
-@synthesize detailsView;
 @synthesize editChannelButton;
 @synthesize editIgnoreButton;
 @synthesize encodingCombo;
 @synthesize fallbackEncodingCombo;
-@synthesize generalView;
 @synthesize hostCombo;
 @synthesize ignoreSheet;
-@synthesize ignoresView;
 @synthesize ignoreTable;
 @synthesize invisibleCheck;
+@synthesize addIgnoreMenu;
 @synthesize leavingCommentText;
 @synthesize loginCommandsText;
 @synthesize nameText;
 @synthesize nickPasswordText;
 @synthesize nickText;
-@synthesize onloginView;
 @synthesize passwordText;
 @synthesize portText;
 @synthesize proxyCombo;
@@ -62,12 +64,23 @@
 @synthesize sslCheck;
 @synthesize tabView;
 @synthesize uid;
-@synthesize userInfoText;
 @synthesize usernameText;
 
 - (id)init
 {
 	if ((self = [super init])) {
+		tabViewList = [NSMutableArray new];
+		
+		[tabViewList addObject:[NSArray arrayWithObjects:@"GENERAL",				@"1", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"IDENTITY",				@"2", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"MESSAGES",				@"3", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"ENCODING",				@"4", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"AUTOJOIN",				@"5", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"IGNORES",				@"6", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"COMMANDS",				@"7", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"PROXY",					@"8", nil]];
+		
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
 		serverList = [NSDictionary dictionaryWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
@@ -78,6 +91,10 @@
 		for (NSString *key in sortedKeys) {
 			[hostCombo addItemWithObjectValue:key];
 		}
+		
+		[leavingCommentText		setFont:[NSFont systemFontOfSize:13.0]];
+		[sleepQuitMessageText	setFont:[NSFont systemFontOfSize:13.0]];
+		[loginCommandsText		setFont:[NSFont systemFontOfSize:13.0]];
 	}
 
 	return self;
@@ -88,10 +105,15 @@
 	[config drain];
 	[serverList drain];
 	[ignoreSheet drain];
-	[generalView drain];
-	[detailsView drain];
-	[onloginView drain];
+	[identityView drain];
+	[messagesView drain];
+	[encodingView drain];
+	[autojoinView drain];
 	[ignoresView drain];
+	[commandsView drain];
+	[proxyServerView drain];
+	[ignoresView drain];
+	[tabViewList drain];
 	[channelSheet drain];
 	
 	[super dealloc];
@@ -125,50 +147,6 @@
 }
 
 #pragma mark -
-#pragma mark NSToolbar Delegates
-
-- (void)onMenuBarItemChanged:(id)sender 
-{
-	switch ([sender indexOfSelectedItem]) {
-		case 0:
-			[self firstPane:generalView];
-			break;
-		case 1:
-			[self firstPane:detailsView];
-			break;
-		case 2:
-			[self firstPane:onloginView];
-			break;
-		case 3:
-			[self firstPane:ignoresView];
-			break;
-		default:
-			[self firstPane:generalView];
-			break;
-	}
-} 
-
-- (void)firstPane:(NSView *)view 
-{
-	NSRect windowFrame = [sheet frame];
-	
-	windowFrame.size.width = [view frame].size.width;
-	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
-	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
-	
-	if (NSObjectIsNotEmpty([contentView subviews])) {
-		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
-	}
-	
-	[sheet setFrame:windowFrame display:YES animate:YES];
-	
-	[contentView setFrame:[view frame]];
-	[contentView addSubview:view];	
-	
-	[sheet recalculateKeyViewLoop];
-}
-
-#pragma mark -
 #pragma mark Initalization Handler
 
 - (void)startWithIgnoreTab:(NSString *)imask
@@ -192,7 +170,7 @@
 	[self reloadIgnoreTable];
 	
 	if (NSObjectIsNotEmpty(imask)) {
-		[self showWithDefaultView:ignoresView andSegment:3];
+		[self showWithDefaultView:ignoresView andSegment:5];
 		
 		if ([imask isEqualToString:@"-"] == NO) {
 			[ignoreSheet drain];
@@ -222,9 +200,19 @@
 - (void)showWithDefaultView:(NSView *)view andSegment:(NSInteger)segment
 {
 	[self startSheet];
-	[self firstPane:view];
+	[self focusView:view atRow:segment];
+}
+
+- (void)focusView:(NSView *)view atRow:(NSInteger)row
+{
+	if (NSObjectIsNotEmpty([contentView subviews])) {
+		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
+	}
 	
-	[tabView setSelectedSegment:segment];
+	[contentView addSubview:view];
+	[tabView selectItemAtIndex:row];
+	
+	[self.window recalculateKeyViewLoop];
 }
 
 - (void)close
@@ -236,16 +224,17 @@
 
 - (void)load
 {
-	nameText.stringValue = config.name;
-	bouncerModeCheck.state = config.bouncerMode;
-	autoConnectCheck.state = config.autoConnect;
-	autoReconnectCheck.state = config.autoReconnect;
+	/* General */
+	nameText.stringValue		= config.name;
+	hostCombo.stringValue		= (([self hostFoundInServerList:config.host]) ?: config.host);
+	passwordText.stringValue	= config.password;
+	portText.integerValue		= config.port;
+	sslCheck.state				= config.useSSL;
+	bouncerModeCheck.state		= config.bouncerMode;
+	autoConnectCheck.state		= config.autoConnect;
+	autoReconnectCheck.state	= config.autoReconnect;
 	
-	hostCombo.stringValue = (([self hostFoundInServerList:config.host]) ?: config.host);
-	
-	sslCheck.state = config.useSSL;
-	portText.integerValue = config.port;
-
+	/* Identity */
 	if (NSObjectIsEmpty(config.nick)) {
 		nickText.stringValue = [Preferences defaultNickname];
 	} else {
@@ -270,37 +259,41 @@
 		altNicksText.stringValue = NSNullObject;
 	}
 	
-	passwordText.stringValue = config.password;
 	nickPasswordText.stringValue = config.nickPassword;
-
-	sleepQuitMessageText.stringValue = config.sleepQuitMessage;
-	leavingCommentText.stringValue = config.leavingComment;
-	userInfoText.stringValue = config.userInfo;
-
-	[encodingCombo selectItemWithTag:config.encoding];
-	[fallbackEncodingCombo selectItemWithTag:config.fallbackEncoding];
 	
+	/* Messages */
+	sleepQuitMessageText.string = config.sleepQuitMessage;
+	leavingCommentText.string	= config.leavingComment;
+	
+	/* Encoding */
+	[encodingCombo			selectItemWithTag:config.encoding];
+	[fallbackEncodingCombo	selectItemWithTag:config.fallbackEncoding];
+	
+	/* Proxy Server */
 	[proxyCombo selectItemWithTag:config.proxyType];
-	proxyHostText.stringValue = config.proxyHost;
-	proxyPortText.integerValue = config.proxyPort;
-	proxyUserText.stringValue = config.proxyUser;
-	proxyPasswordText.stringValue = config.proxyPassword;
-
-	invisibleCheck.state = config.invisibleMode;
-	loginCommandsText.string = [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
+	
+	proxyHostText.stringValue		= config.proxyHost;
+	proxyPortText.integerValue		= config.proxyPort;
+	proxyUserText.stringValue		= config.proxyUser;
+	proxyPasswordText.stringValue	= config.proxyPassword;
+	
+	/* Connect Commands */
+	invisibleCheck.state		= config.invisibleMode;
+	loginCommandsText.string	= [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
 }
 
 - (void)save
 {
-	config.autoConnect = autoConnectCheck.state;
-	config.autoReconnect = autoReconnectCheck.state;
-	config.bouncerMode = bouncerModeCheck.state;
+	/* General */
+	config.autoConnect		= autoConnectCheck.state;
+	config.autoReconnect	= autoReconnectCheck.state;
+	config.bouncerMode		= bouncerModeCheck.state;
 	
-	NSString *realHost = nil;
-	NSString *hostname = [hostCombo.stringValue cleanedServerHostmask];
+	NSString *realHost		= nil;
+	NSString *hostname		= [hostCombo.stringValue cleanedServerHostmask];
 	
 	if (NSObjectIsEmpty(hostname)) {
-		config.host = @"unknown.host.com";
+		config.host = @"localhost";
 	} else {
 		realHost = [self nameMatchesServerInList:hostname];
 		
@@ -329,11 +322,12 @@
 	
 	config.useSSL = sslCheck.state;
 	
-	config.nick = nickText.stringValue;
-	config.password = passwordText.stringValue;
-	config.username = usernameText.stringValue;
-	config.realName = realNameText.stringValue;
-	config.nickPassword = nickPasswordText.stringValue;
+	/* Identity */
+	config.nick				= nickText.stringValue;
+	config.password			= passwordText.stringValue;
+	config.username			= usernameText.stringValue;
+	config.realName			= realNameText.stringValue;
+	config.nickPassword		= nickPasswordText.stringValue;
 	
 	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:NSWhitespaceCharacter];
 	
@@ -345,19 +339,22 @@
 		}
 	}
 	
-	config.sleepQuitMessage = sleepQuitMessageText.stringValue;
-	config.leavingComment = leavingCommentText.stringValue;
-	config.userInfo = userInfoText.stringValue;
+	/* Messages */
+	config.sleepQuitMessage = sleepQuitMessageText.string;
+	config.leavingComment = leavingCommentText.string;
 	
+	/* Encoding */
 	config.encoding = encodingCombo.selectedTag;
 	config.fallbackEncoding = fallbackEncodingCombo.selectedTag;
 	
+	/* Proxy Server */
 	config.proxyType = proxyCombo.selectedTag;
 	config.proxyHost = proxyHostText.stringValue;
 	config.proxyPort = proxyPortText.intValue;
 	config.proxyUser = proxyUserText.stringValue;
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
+	/* Connect Commands */
 	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:NSNewlineCharacter];
 	
 	[config.loginCommands removeAllObjects];
@@ -388,14 +385,13 @@
 {
 	NSInteger i = [channelTable selectedRow];
 	
-	BOOL count = (i >= 0);
+	BOOL count   = (i >= 0);
 	BOOL bouncer = BOOLReverseValue([bouncerModeCheck state]);
-	
 	BOOL enabled = (count && bouncer);
 	
-	[addChannelButton setEnabled:bouncer];
-	[editChannelButton setEnabled:enabled];
-	[deleteChannelButton setEnabled:enabled];
+	[addChannelButton		setEnabled:bouncer];
+	[editChannelButton		setEnabled:enabled];
+	[deleteChannelButton	setEnabled:enabled];
 }
 
 - (void)reloadChannelTable
@@ -410,7 +406,7 @@
 	
 	BOOL enabled = (i >= 0);
 	
-	[editIgnoreButton setEnabled:enabled];
+	[editIgnoreButton	setEnabled:enabled];
 	[deleteIgnoreButton setEnabled:enabled];
 }
 
@@ -469,10 +465,10 @@
 	
 	BOOL enabled = (tag == PROXY_SOCKS4 || tag == PROXY_SOCKS5);
 	
-	[proxyHostText setEnabled:enabled];
-	[proxyPortText setEnabled:enabled];
-	[proxyUserText setEnabled:enabled];
-	[proxyPasswordText setEnabled:enabled];
+	[proxyHostText		setEnabled:enabled];
+	[proxyPortText		setEnabled:enabled];
+	[proxyUserText		setEnabled:enabled];
+	[proxyPasswordText	setEnabled:enabled];
 }
 
 - (void)bouncerModeChanged:(id)sender
@@ -586,6 +582,16 @@
 #pragma mark -
 #pragma mark Ignore Actions
 
+- (void)showAddIgnoreMenu:(id)sender
+{
+	NSRect tableRect = [ignoreTable frame];
+	
+	tableRect.origin.y += (tableRect.size.height);
+	tableRect.origin.y += 34;
+						
+	[addIgnoreMenu popUpMenuPositioningItem:nil atLocation:tableRect.origin
+														  inView:ignoreTable];
+}
 - (void)addIgnore:(id)sender
 {
 	[ignoreSheet drain];
@@ -596,6 +602,13 @@
 	ignoreSheet.window = sheet;
 	ignoreSheet.ignore = [AddressBook new];
 	ignoreSheet.newItem = YES;
+	
+	if ([sender tag] == 4) {
+		ignoreSheet.ignore.entryType = ADDRESS_BOOK_TRACKING_ENTRY;
+	} else {
+		ignoreSheet.ignore.entryType = ADDRESS_BOOK_IGNORE_ENTRY;
+	}
+	
 	[ignoreSheet start];
 }
 
@@ -668,6 +681,8 @@
 {
 	if (sender == channelTable) {
 		return config.channels.count;
+	} else if (sender == tabView) {
+		return tabViewList.count;
 	} else {
 		return config.ignores.count;
 	}
@@ -675,10 +690,10 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
+	NSString *columnId = [column identifier];
+	
 	if (sender == channelTable) {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:row];
-		
-		NSString *columnId = [column identifier];
 		
 		if ([columnId isEqualToString:@"name"]) {
 			return c.name;
@@ -687,13 +702,48 @@
 		} else if ([columnId isEqualToString:@"join"]) {
 			return NSNumberWithBOOL(c.autoJoin);
 		}
+	} else if (sender == tabView) {
+		NSArray *tabInfo = [tabViewList safeObjectAtIndex:row];
+		
+		NSString *keyhead = [tabInfo safeObjectAtIndex:0];
+		
+		if ([keyhead isEqualToString:ListSeparatorCellIndex] == NO) {
+			NSString *langkey = [NSString stringWithFormat:@"SERVER_SHEET_NAVIGATION_LIST_%@", keyhead];
+		
+			return TXTLS(langkey);
+		} else {
+			return ListSeparatorCellIndex;
+		}
 	} else {
 		AddressBook *g = [config.ignores safeObjectAtIndex:row];
 		
-		return g.hostmask;
+		if ([columnId isEqualToString:@"type"]) {
+			if (g.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
+				return TXTLS(@"ADDRESS_BOOK_ENTRY_IGNORE_TYPE");
+			} else {
+				return TXTLS(@"ADDRESS_BOOK_EMTRY_TRACKING_TYPE");
+			}
+		} else {
+			return g.hostmask;
+		}
 	}
 	
 	return nil;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row
+{
+	if (tableView == tabView) {
+		NSArray *tabInfo = [tabViewList safeObjectAtIndex:row];
+		
+		NSString *keyhead = [tabInfo safeObjectAtIndex:0];
+		
+		if ([keyhead isEqualToString:ListSeparatorCellIndex]) {
+			return NO;
+		}
+	}
+	
+	return YES;
 }
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -715,6 +765,20 @@
 	
 	if (sender == channelTable) {
 		[self updateChannelsPage];
+	} else if (sender == tabView) {
+		NSInteger row = [tabView selectedRow];
+		
+		switch (row) {
+			case 0: [self focusView:generalView		atRow:0]; break;
+			case 1: [self focusView:identityView	atRow:1]; break;
+			case 2: [self focusView:messagesView	atRow:2]; break;
+			case 3: [self focusView:encodingView	atRow:3]; break;
+			case 4: [self focusView:autojoinView	atRow:4]; break;
+			case 5: [self focusView:ignoresView		atRow:5]; break;
+			case 6: [self focusView:commandsView	atRow:6]; break;
+			case 8: [self focusView:proxyServerView atRow:8]; break;
+			default: break;
+		}
 	} else {
 		[self updateIgnoresPage];
 	}
@@ -724,6 +788,8 @@
 {
 	if (sender == channelTable) {
 		[self editChannel:nil];
+	} else if (sender == tabView) {
+		// ...
 	} else {
 		[self editIgnore:nil];
 	}
@@ -764,17 +830,17 @@
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
 			NSMutableArray *ary = config.channels;
 			
-			NSArray *selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
-			NSInteger sel = [selectedRows integerAtIndex:0];
+			NSArray  *selectedRows	= [pboard propertyListForType:TABLE_ROW_TYPE];
+			NSInteger sel			= [selectedRows integerAtIndex:0];
 			
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			
 			[target adrv];
 
-			NSMutableArray *low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
+			NSMutableArray *low  = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
 			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autodrain];
 			
-			[low removeObjectIdenticalTo:target];
+			[low  removeObjectIdenticalTo:target];
 			[high removeObjectIdenticalTo:target];
 			
 			[ary removeAllObjects];

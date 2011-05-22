@@ -26,6 +26,8 @@
 	IBOutlet NSMenu *chanMenu;
 	IBOutlet NSMenu *memberMenu;
 	
+	IBOutlet NSButton *addServerButton;
+	
 	IBOutlet IRCTextFormatterMenu *formattingMenu;
 	
 	IRCWorld *world;
@@ -39,6 +41,8 @@
 	
 	BOOL ghostMode;
 	BOOL terminating;
+	
+	NSInteger memberSplitViewOldPosition;
 }
 
 @property (nonatomic, assign) BOOL ghostMode;
@@ -53,6 +57,7 @@
 @property (nonatomic, retain) ThinSplitView *memberSplitView;
 @property (nonatomic, retain) NSMenuItem *serverMenu;
 @property (nonatomic, retain) NSMenuItem *channelMenu;
+@property (nonatomic, retain) NSButton *addServerButton;
 @property (nonatomic, retain) NSMenu *logMenu;
 @property (nonatomic, retain) NSMenu *urlMenu;
 @property (nonatomic, retain) NSMenu *treeMenu;
@@ -68,9 +73,11 @@
 @property (nonatomic, retain) FieldEditorTextView *fieldEditor;
 @property (nonatomic, retain) IRCTextFormatterMenu *formattingMenu;
 @property (nonatomic, retain) NickCompletionStatus *completionStatus;
+@property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 
 - (void)loadWindowState;
 - (void)saveWindowState;
+- (void)showMemberListSplitView:(BOOL)showList;
 
 - (void)textEntered:(id)sender;
 

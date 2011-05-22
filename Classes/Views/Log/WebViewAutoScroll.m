@@ -6,7 +6,7 @@
 {
 	NSRect visibleRect = [aView visibleRect];
 	
-	visibleRect.origin.y = NSHeight([aView frame]) - NSHeight(visibleRect);
+	visibleRect.origin.y = (NSHeight([aView frame]) - NSHeight(visibleRect));
 	
 	[aView scrollRectToVisible:visibleRect];
 }
@@ -35,7 +35,7 @@
 		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
 		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
-		lastFrame = [[webFrame documentView] frame];
+		lastFrame		= [[webFrame documentView] frame];
 		lastVisibleRect = [[webFrame documentView] visibleRect];
 	} else {
 		[_NSNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];

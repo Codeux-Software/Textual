@@ -2,78 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Input Box</key>
-	<dict>
-		<key>Background Color</key>
-		<string>#000000</string>
-		<key>Text Color</key>
-		<string>#ccc</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
-		<key>Text Font Size</key>
-		<integer>13</integer>
-	</dict>
-	<key>Member List</key>
-	<dict>
-		<key>Background Color</key>
-		<string>#1e1e27</string>
-		<key>Gradient</key>
-		<dict>
-			<key>Bottom Color</key>
-			<string>#201f27</string>
-			<key>Bottom Line Color</key>
-			<string>#3f3e4c</string>
-			<key>Top Color</key>
-			<string>#3f3e4c</string>
-			<key>Top Line Color</key>
-			<string>#3f3e4c</string>
-		</dict>
-		<key>Op Text Color</key>
-		<string>#dedede</string>
-		<key>Text Color</key>
-		<string>#ccc</string>
-		<key>Text Color (Selected)</key>
-		<string>#cfbc99</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
-		<key>Text Font Size</key>
-		<integer>11</integer>
-	</dict>
-	<key>Server List</key>
-	<dict>
-		<key>Active Color</key>
-		<string>#fff</string>
-		<key>Active Color (Selected)</key>
-		<string>#cfbc99</string>
-		<key>Background Color</key>
-		<string>#1e1e27</string>
-		<key>Gradient</key>
-		<dict>
-			<key>Bottom Color</key>
-			<string>#201f27</string>
-			<key>Bottom Line Color</key>
-			<string>#3f3e4c</string>
-			<key>Top Color</key>
-			<string>#3f3e4c</string>
-			<key>Top Line Color</key>
-			<string>#3f3e4c</string>
-		</dict>
-		<key>Highlight Color</key>
-		<string>#007f00</string>
-		<key>Inactive Color</key>
-		<string>#ccc</string>
-		<key>Inactive Color (Selected)</key>
-		<string>#eee</string>
-		<key>New Private Message Color</key>
-		<string>#699fcf</string>
-		<key>Text Font Style</key>
-		<string>Lucida Grande</string>
-		<key>Text Font Size</key>
-		<integer>11</integer>
-		<key>Unread Color</key>
-		<string>#699fcf</string>
-	</dict>
 	<key>Underlying Window Color</key>
-	<string>#f5f0e9</string>
+	<string>#000000</string>
+	<key>Rendering Engine Version</key>
+	<real>2.1</real>
 </dict>
 </plist>

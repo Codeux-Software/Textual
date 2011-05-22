@@ -26,11 +26,6 @@ void DevNullDestroyObject(BOOL condition, ...)
 	return;
 }
 
-NSInteger TXRandomThousandNumber(void)
-{
-	return ((1 + arc4random()) % (9999 + 1));
-}
-
 NSString *TXTLS(NSString *key)
 {
 	return [LanguagePreferences localizedStringWithKey:key];
@@ -116,4 +111,16 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue)
 NSString *TXReadableTime(NSInteger dateInterval)
 {
 	return TXSpecialReadableTime(dateInterval, NO);
+}
+
+NSInteger TXRandomNumber(NSInteger maxset)
+{
+	return ((1 + arc4random()) % (maxset + 1));
+}
+
+NSString *TXFormattedNumber(NSInteger number)
+{
+	NSNumber *numberbar = [NSNumber numberWithInteger:number];
+	
+	return [NSNumberFormatter localizedStringFromNumber:numberbar numberStyle:kCFNumberFormatterDecimalStyle];
 }

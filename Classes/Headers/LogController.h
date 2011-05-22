@@ -24,8 +24,6 @@
 	
 	ViewTheme *theme;
 	
-	NSColor *initialBackgroundColor;
-	
 	BOOL bottom;
 	BOOL loaded;
 	BOOL scrollBottom;
@@ -58,7 +56,6 @@
 @property (nonatomic, retain) NSMenu *chanMenu;
 @property (nonatomic, retain) NSMenu *memberMenu;
 @property (nonatomic, retain) ViewTheme *theme;
-@property (nonatomic, retain) NSColor *initialBackgroundColor;
 @property (nonatomic, assign, setter=setMaxLines:, getter=maxLines) NSInteger maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
 @property (nonatomic, retain) LogPolicy *policy;
@@ -80,8 +77,6 @@
 @property (nonatomic, retain) NSMutableArray *messageQueue;
 @property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
 
-- (BOOL)hasValidBodyStructure;
-
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
@@ -96,8 +91,6 @@
 - (void)goToMark;
 
 - (void)reloadTheme;
-- (void)applyOverrideStyle;
-
 - (void)clear;
 
 - (void)changeTextSize:(BOOL)bigger;

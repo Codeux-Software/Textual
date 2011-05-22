@@ -7,10 +7,10 @@
 
 @implementation ThinSplitView
 
-@synthesize fixedViewIndex;
+@synthesize hidden;
 @synthesize position;
 @synthesize inverted;
-@synthesize hidden;
+@synthesize fixedViewIndex;
 @synthesize myDividerThickness;
 
 - (void)setUp

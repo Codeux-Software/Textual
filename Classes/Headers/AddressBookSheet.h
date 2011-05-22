@@ -4,6 +4,7 @@
 @interface AddressBookSheet : SheetBase
 {
 	IBOutlet NSTextField *hostmask;
+	IBOutlet NSTextField *nickname;
 	
 	IBOutlet NSButton *ignorePublicMsg;
 	IBOutlet NSButton *ignorePrivateMsg;
@@ -15,9 +16,8 @@
 	IBOutlet NSButton *notifyWhoisJoins;
 	IBOutlet NSButton *ignorePMHighlights;
 	
-	IBOutlet NSView *contentView;
-	IBOutlet NSView *notificationView;
-	IBOutlet NSView *ignoreItemView;
+	IBOutlet NSWindow *ignoreWindow;
+	IBOutlet NSWindow *notifyWindow;
 	
 	BOOL newItem;
 	
@@ -27,6 +27,7 @@
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, retain) AddressBook *ignore;
 @property (nonatomic, retain) NSTextField *hostmask;
+@property (nonatomic, retain) NSTextField *nickname;
 @property (nonatomic, retain) NSButton *ignorePublicMsg;
 @property (nonatomic, retain) NSButton *ignorePrivateMsg;
 @property (nonatomic, retain) NSButton *ignoreHighlights;
@@ -36,11 +37,9 @@
 @property (nonatomic, retain) NSButton *notifyJoins;
 @property (nonatomic, retain) NSButton *notifyWhoisJoins;
 @property (nonatomic, retain) NSButton *ignorePMHighlights;
-@property (nonatomic, retain) NSView *contentView;
-@property (nonatomic, retain) NSView *notificationView;
-@property (nonatomic, retain) NSView *ignoreItemView;
+@property (nonatomic, retain) NSWindow *ignoreWindow;
+@property (nonatomic, retain) NSWindow *notifyWindow;
 
-- (void)onMenuBarItemChanged:(id)sender;
 - (void)start;
 @end
 

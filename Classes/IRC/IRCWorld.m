@@ -8,8 +8,8 @@
 #define TREE_DRAG_ITEM_TYPE     @"tree"
 #define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
 
-#define TREE_CLIENT_HEIGHT		23.0
-#define TREE_CHANNEL_HEIGHT		19.0
+#define TREE_CLIENT_HEIGHT		24.0
+#define TREE_CHANNEL_HEIGHT		20.0
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;
@@ -316,9 +316,17 @@
 
 - (void)reloadTree
 {
+	if (reloadingTree) {
+		[serverList setNeedsDisplay];
+		
+		return;
+	}
+	
+	reloadingTree = YES;
+	
 	[serverList reloadData];
-	[serverList setNeedsDisplay];
-	[serverList display];
+	
+	reloadingTree = NO;
 }
 
 - (void)expandClient:(IRCClient *)client
@@ -432,10 +440,8 @@
 		}
 		
 		[window setTitle:title];
-		
-		[_NSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 	} else {		
-		IRCClient *u = sel.client;
+		IRCClient  *u = sel.client;
 		IRCChannel *c = (IRCChannel *)sel;
 		
 		NSMutableString *title = [NSMutableString string];
@@ -448,7 +454,9 @@
 			}
 		}
 		
-		if (NSObjectIsNotEmpty(title)) [title appendString:@" — "];
+		if (NSObjectIsNotEmpty(title)) {
+			[title appendString:@" — "];
+		}
 		
 		if (NSObjectIsNotEmpty(c.name)) {
 			[title appendString:c.name];
@@ -462,10 +470,6 @@
 			if ([modes length] >= 2) {
 				[title appendFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), modes];
 			}
-			
-			[_NSNotificationCenter() postNotificationName:ThemeSelectedChannelNotification object:nil userInfo:nil];
-		} else {
-			[_NSNotificationCenter() postNotificationName:ThemeSelectedConsoleNotification object:nil userInfo:nil];
 		}
 		
 		[window setTitle:title];
@@ -606,6 +610,8 @@
 
 - (void)reloadTheme
 {
+	viewTheme.name = [Preferences themeName];
+	
 	NSMutableArray *logs = [NSMutableArray array];
 	
 	for (IRCClient *u in clients) {
@@ -617,7 +623,7 @@
 	}
 	
 	for (LogController *log in logs) {
-		[log applyOverrideStyle];
+		[log reloadTheme];
 	}
 }
 
@@ -881,10 +887,8 @@
 	c.maxLines = [Preferences maxLogLines];
 	
 	c.theme = viewTheme;
-	c.initialBackgroundColor = [NSColor whiteColor];
 	
 	[c setUp];
-	
 	[c.view setHostWindow:window];
 	
 	return [c autodrain];
@@ -971,13 +975,6 @@
 			}
 		}
 	}
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(IRCTreeItem *)item
-{
-	if (PointerIsEmpty(item)) return NO;
-	
-	return item.isClient;
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
@@ -1088,6 +1085,12 @@
 		if (NSObjectIsNotEmpty(newHistory.lastHistoryItem)) {
 			[text setFilteredAttributedStringValue:newHistory.lastHistoryItem];
 		}
+	}
+	
+	if (selected.isClient || selected.log.channel.isTalk) {
+		[master showMemberListSplitView:NO];
+	} else {
+		[master showMemberListSplitView:YES];
 	}
 	
 	[self updateTitle];

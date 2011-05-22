@@ -62,6 +62,7 @@
 		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4C4107B51359684400614BBF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4107B31359684400614BBF /* GCDAsyncSocket.m */; };
 		4C4107B71359686200614BBF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4107B61359686200614BBF /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C4B768A138973840061A00B /* AddTemplateWithDisclosureTriangle.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */; };
 		4C5AEF4F12D1B6E400D6B18C /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2412D1B6E400D6B18C /* application.icns */; };
 		4C5AEF5012D1B6E400D6B18C /* DIbadge_Green_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2712D1B6E400D6B18C /* DIbadge_Green_1&2.tiff */; };
 		4C5AEF5112D1B6E400D6B18C /* DIbadge_Green_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2812D1B6E400D6B18C /* DIbadge_Green_3.tiff */; };
@@ -97,6 +98,8 @@
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6DD1761388803B00280797 /* NSSplitViewHelper.h */; };
+		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
 		4C7642291382B990001B23F4 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -208,6 +211,8 @@
 		4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
+		4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA0C73E1389209F002689FD /* ListSeparatorCell.h */; };
+		4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C740138920B2002689FD /* ListSeparatorCell.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
@@ -337,6 +342,7 @@
 		4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD60CC11340B48D0050A57F /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD60CC01340B48D0050A57F /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
+		4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */; };
 		4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDFE2F7136F664A0039300A /* ThinSplitView.m */; };
 		4CDFE2FA136F66660039300A /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDFE2F9136F66660039300A /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -390,7 +396,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4C3F693E12FD95A300B50CB9 /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
@@ -399,7 +405,7 @@
 				4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */,
 			);
 			name = "Copy Plugins";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -459,6 +465,7 @@
 		4C4107B61359686200614BBF /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C4A041612EF1C65009A7988 /* PopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupPrompts.m; sourceTree = "<group>"; };
+		4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AddTemplateWithDisclosureTriangle.tif; sourceTree = "<group>"; };
 		4C5938E511D0E0790094B049 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C59393011D0E6CF0094B049 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C5AEF1A12D1B6A900D6B18C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -504,6 +511,8 @@
 		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXRegularExpression.h; path = Classes/Headers/TXRegularExpression.h; sourceTree = SOURCE_ROOT; };
+		4C6DD1761388803B00280797 /* NSSplitViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSSplitViewHelper.h; path = Classes/Headers/NSSplitViewHelper.h; sourceTree = SOURCE_ROOT; };
+		4C6DD1791388804E00280797 /* NSSplitViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSSplitViewHelper.m; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
@@ -523,6 +532,8 @@
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
+		4CA0C73E1389209F002689FD /* ListSeparatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSeparatorCell.h; sourceTree = "<group>"; };
+		4CA0C740138920B2002689FD /* ListSeparatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSeparatorCell.m; sourceTree = "<group>"; };
 		4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Classes/Headers/TextualApplication.h; sourceTree = SOURCE_ROOT; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA999D011FCF7180040D8E7 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
@@ -640,6 +651,7 @@
 		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
+		4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "status-channel-connecting.tif"; sourceTree = "<group>"; };
 		4CDFE2F7136F664A0039300A /* ThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinSplitView.m; sourceTree = "<group>"; };
 		4CDFE2F9136F66660039300A /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = Classes/Headers/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
@@ -943,11 +955,12 @@
 			path = "Toolbar Icons";
 			sourceTree = "<group>";
 		};
-		4C47AA6D135B18C500C83CCA /* Attached Bubbles */ = {
+		4C4B7688138973830061A00B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */,
 			);
-			name = "Attached Bubbles";
+			path = "User Interface";
 			sourceTree = "<group>";
 		};
 		4C5938DE11D0E0660094B049 /* Keychain Control */ = {
@@ -977,8 +990,9 @@
 				4C5AEF2312D1B6E400D6B18C /* Application */,
 				4C5AEF2512D1B6E400D6B18C /* Dock Icon Badges */,
 				4C5AEF3012D1B6E400D6B18C /* IRC Formatting Colors */,
-				4C8C0DB41367DA5B0055C793 /* Status Badges */,
 				4C329C9512D1BD20001990A9 /* Preferences */,
+				4C8C0DB41367DA5B0055C793 /* Status Badges */,
+				4C4B7688138973830061A00B /* User Interface */,
 			);
 			name = Images;
 			path = Resources/Images;
@@ -1161,6 +1175,7 @@
 		4C8C0DB41367DA5B0055C793 /* Status Badges */ = {
 			isa = PBXGroup;
 			children = (
+				4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */,
 				4C8C0DB51367DA5B0055C793 /* status-channel-active.tif */,
 				4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */,
 			);
@@ -1347,6 +1362,8 @@
 				78A8C10111737F660044E7A1 /* NSRectHelper.m */,
 				4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */,
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
+				4C6DD1761388803B00280797 /* NSSplitViewHelper.h */,
+				4C6DD1791388804E00280797 /* NSSplitViewHelper.m */,
 				4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */,
 				4CCA5B6212FAC25A00707F36 /* NSTextFieldHelper.m */,
 				4CD0E6B812F1B70300C8F016 /* NSWindowHelper.h */,
@@ -1456,7 +1473,6 @@
 		78A8C17011737F660044E7A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4C47AA6D135B18C500C83CCA /* Attached Bubbles */,
 				78A8C18211737F660044E7A1 /* Channel View */,
 				78A8C19311737F660044E7A1 /* Member List */,
 				4CCB939A13689A2200085C3E /* Server List */,
@@ -1469,6 +1485,8 @@
 				78A8C17811737F660044E7A1 /* InputTextField.m */,
 				4CD0E67312F1B63D00C8F016 /* ListView.h */,
 				78A8C18111737F660044E7A1 /* ListView.m */,
+				4CA0C73E1389209F002689FD /* ListSeparatorCell.h */,
+				4CA0C740138920B2002689FD /* ListSeparatorCell.m */,
 				4CD0E67412F1B63D00C8F016 /* MainWindow.h */,
 				78A8C19011737F660044E7A1 /* MainWindow.m */,
 				4CD0E67712F1B63D00C8F016 /* TextField.h */,
@@ -1638,6 +1656,8 @@
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
+				4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */,
+				4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1804,6 +1824,8 @@
 				4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */,
 				4C8C0DB81367DA5B0055C793 /* status-channel-active.tif in Resources */,
 				4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */,
+				4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */,
+				4C4B768A138973840061A00B /* AddTemplateWithDisclosureTriangle.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1812,7 +1834,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4C3F690F12FD925F00B50CB9 /* Compile Plugins */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1820,7 +1842,7 @@
 			name = "Compile Plugins";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n";
 		};
@@ -1977,6 +1999,8 @@
 				4CB91A4513680C4B005E00E8 /* NSOutlineViewHelper.m in Sources */,
 				4CCB939913689A1B00085C3E /* ServerListCell.m in Sources */,
 				4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */,
+				4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */,
+				4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2198,7 +2222,7 @@
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2225,6 +2249,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2232,6 +2257,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2275,7 +2301,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2306,6 +2332,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2313,6 +2340,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2321,7 +2349,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2348,6 +2376,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2355,6 +2384,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2424,7 +2454,7 @@
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2454,6 +2484,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2461,6 +2492,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;

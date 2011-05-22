@@ -230,7 +230,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			}
 			
 			if (italicText) {
-				baseFont = [baseFont convertToItalics];
+				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
 				
 				[result addAttribute:IRCTextFormatterItalicAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 			}
@@ -341,7 +341,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
 				}
 				
-				baseFont = [baseFont convertToItalics];
+				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
 				
 				if (baseFont) {
 					[result addAttribute:NSFontAttributeName				 value:baseFont range:limitRange];

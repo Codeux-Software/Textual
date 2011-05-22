@@ -11,9 +11,9 @@
 	if (keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
-		BOOL ctrl = (m && NSDissimilarObjects(NSControlKeyMask, 0));
-		BOOL alt  = (m && NSDissimilarObjects(NSAlternateKeyMask, 0));
-		BOOL cmd  = (m && NSDissimilarObjects(NSCommandKeyMask, 0));
+		BOOL ctrl = (m & NSControlKeyMask);
+		BOOL cmd  = (m & NSCommandKeyMask);
+		BOOL alt  = (m & NSAlternateKeyMask);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
 			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {

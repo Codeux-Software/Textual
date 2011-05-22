@@ -1,9 +1,16 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+typedef enum {
+	ADDRESS_BOOK_IGNORE_ENTRY,
+	ADDRESS_BOOK_TRACKING_ENTRY
+} AddressBookEntryType;
+
 @interface AddressBook : NSObject
 {
 	NSInteger cid;
+	
+	AddressBookEntryType entryType;
 	 
 	NSString *hostmask;
 	
@@ -32,6 +39,7 @@
 @property (nonatomic, retain) NSString *hostmaskRegex;
 @property (nonatomic, assign) BOOL ignorePMHighlights;
 @property (nonatomic, assign) BOOL notifyWhoisJoins;
+@property (nonatomic, assign) AddressBookEntryType entryType;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;

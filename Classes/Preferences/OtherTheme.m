@@ -23,6 +23,8 @@
 @synthesize nicknameFormatFixedWidth;
 @synthesize overrideMessageIndentWrap;
 @synthesize timestampFormat;
+@synthesize underlyingWindowColor;
+@synthesize renderingEngineVersion;
 
 - (NSString *)path
 {
@@ -45,6 +47,7 @@
 	[nicknameFormat drain];
 	[channelViewFont drain];
 	[timestampFormat drain];
+	[underlyingWindowColor drain];
 	
 	[super dealloc];
 }
@@ -108,6 +111,17 @@
 {	
 	self.channelViewFontOverrode = NO;
 	
+	// ====================================================== //
+	
+	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/userInterface.plist"]];
+	
+	self.renderingEngineVersion = [userInterface doubleForKey:@"Rendering Engine Version"];
+	self.underlyingWindowColor	= [self processColorStringValue:[userInterface objectForKey:@"Underlying Window Color"]
+														   def:@"#000000"];
+	
+	
+	// ====================================================== //
+	
 	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
 	
 	NSDictionary *prefOChannelFont    = [preferencesOverride objectForKey:@"Override Channel Font"];
@@ -131,7 +145,7 @@
 	self.nicknameFormatFixedWidth = [self processIntegerValue:[preferencesOverride integerForKey:@"Nickname Format Fixed Width"] def:0];
 	
 	// ====================================================== //
-	 
+	
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Preferences.Theme.tpoce_nick_format"];
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Preferences.Theme.tpoce_timestamp_format"];
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.overrideMessageIndentWrap))	forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
@@ -139,6 +153,7 @@
 	
 	// ====================================================== //
 	
+	userInterface = nil;
 	prefOChannelFont = nil;
 	prefOIndentMessages = nil;
 	preferencesOverride = nil;

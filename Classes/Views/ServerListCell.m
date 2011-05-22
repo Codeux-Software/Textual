@@ -4,7 +4,7 @@
 /* This class is based off the open source PXSourceList toolkit developed by Alex Rozanski */
 
 #define ICON_SPACING							5.0
-#define ROW_RIGHT_MARGIN						5.0	
+#define ROW_RIGHT_MARGIN						-5.0	
 #define MIN_BADGE_WIDTH							22.0
 #define BADGE_HEIGHT							14.0		
 #define BADGE_MARGIN							5.0
@@ -27,7 +27,7 @@
 	
 	if ([iconName isEqualNoCase:@"NSUserGroup"]) {
 		extraMath = 1;
-	}
+	} 
 	
 	NSSize iconSize = NSMakeSize(16, 16);
 	NSRect iconRect = NSMakeRect( (NSMinX(cellFrame) - iconSize.width - ICON_SPACING),
@@ -60,6 +60,14 @@
 
 - (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount
 {
+	NSString *messageCountString;
+	
+	if ([_NSUserDefaults() boolForKey:@"ForceServerListBadgeLocalization"]) {
+		messageCountString = TXFormattedNumber(messageCount);
+	} else {
+		messageCountString = [NSString stringWithInteger:messageCount];
+	}
+	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	
 	NSColor *textColor = [NSColor whiteColor];
@@ -67,7 +75,7 @@
 	[attributes setObject:BADGE_FONT forKey:NSFontAttributeName];
 	[attributes setObject:textColor  forKey:NSForegroundColorAttributeName];
 	
-	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:[NSString stringWithInteger:messageCount]
+	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
 																   attributes:attributes];
 	
 	return [mcstring autodrain];
@@ -138,13 +146,34 @@
 #pragma mark -
 #pragma mark Cell Drawing
 
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSInteger selectedRow = [parent selectedRow];
 	
 	if (cellItem) {
+		BOOL showDebugDataForCell = NO;
+		
+		/* Hidden setting used for debugging. There is no
+		 problem if a normal user finds it and uses it. */
+		if ([_NSUserDefaults() boolForKey:@"ForceRandomServerListBadges"]) {
+			id parentObject = [parent parentForItem:cellItem];
+			
+			NSInteger groupIndex  = 0;
+			NSInteger parentIndex = [parent rowForItem:parentObject];
+			
+			NSArray  *groups = [parent groupItems];
+			NSNumber *groupn = [NSNumber numberWithInteger:parentIndex];
+			
+			groupIndex = [groups indexOfObject:groupn];
+			
+			if (groupIndex == 1) { // Only show debug data for second group
+				showDebugDataForCell = YES;
+			}
+		}
+		
 		NSInteger rowIndex = [parent rowForItem:cellItem];
 		
+		IRCClient  *client  = cellItem.log.client;
 		IRCChannel *channel = cellItem.log.channel;
 		
 		NSAttributedString			*stringValue	= [self attributedStringValue];	
@@ -153,58 +182,73 @@
 		NSShadow *itemShadow = [NSShadow new];
 		
 		if ([parent isGroupItem:cellItem] == NO) {
-			if (channel.isTalk) {
-				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
-			} else {
-				if (channel.isActive) {
+			if (client.isConnecting) {
+				[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
+			} else if (channel.isChannel) {
+				if (channel.isActive || showDebugDataForCell) {
 					[self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
 				} else {
 					[self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
-				}
+				} 
+			} else {
+				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
 			}
 			
 			if (NSDissimilarObjects(selectedRow, rowIndex)) {
-				NSInteger unreadCount = cellItem.treeUnreadCount;
+				NSInteger unreadCount  = cellItem.treeUnreadCount;
+				NSInteger keywordCount = cellItem.keywordCount;
+				
+				if (showDebugDataForCell) {
+					unreadCount = TXRandomNumber(999);
+					
+					if (unreadCount < 100) {
+						keywordCount = 1;
+					}
+				}
 				
 				if (unreadCount >= 1) {
 					NSAttributedString *mcstring = [self messageCountBadgeText:unreadCount];
 					
 					NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
 					
-					[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:(cellItem.keywordCount >= 1)];
+					[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:(keywordCount >= 1)];
 					
-					cellFrame.size.width -= (badgeRect.size.width + (BADGE_MARGIN * 2));
+					cellFrame.size.width -= badgeRect.size.width;
 				}
 				
-				cellFrame.origin.y += 3;
-				
-				[itemShadow setShadowOffset:NSMakeSize(1, -1)];
 				[itemShadow setShadowColor:[NSColor whiteColor]];	
-				
-				[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
-				[newValue drawInRect:cellFrame];
 			} else {
-				cellFrame.origin.y += 3;
-				
-				[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-				[itemShadow setShadowBlurRadius:2.0];
 				[itemShadow setShadowColor:[NSColor darkGrayColor]];
-				
-				[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
-				[newValue drawInRect:cellFrame];
 			}
+			
+			cellFrame.origin.y += 3;
+			
+			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+			
+			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+			[newValue drawInRect:cellFrame];
 		} else {
-			cellFrame.origin.y += 4;
+			cellFrame.origin.y += 6;
+			
+			NSColor *controlColor	= [NSColor outlineViewHeaderTextColor];
+			NSFont  *groupFont		= [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
 			
 			[itemShadow setShadowOffset:NSMakeSize(1, -1)];
 			
 			if (NSDissimilarObjects(selectedRow, rowIndex)) {
 				[itemShadow setShadowColor:[NSColor whiteColor]];	
 			} else {
+				controlColor = [NSColor alternateSelectedControlTextColor];
+				
 				[itemShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]];
 			}
 			
-			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+			NSRange textRange = NSMakeRange(0, [newValue length]);
+			
+			[newValue addAttribute:NSFontAttributeName				value:groupFont		range:textRange];
+			[newValue addAttribute:NSShadowAttributeName			value:itemShadow	range:textRange];
+			[newValue addAttribute:NSForegroundColorAttributeName	value:controlColor	range:textRange];
+			
 			[newValue drawInRect:cellFrame];
 		}
 		

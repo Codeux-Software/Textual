@@ -38,13 +38,15 @@
 - (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
 {
 	if ([Preferences copyOnSelect]) {
-		if (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) return;
+		if (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) {
+			return;
+		}
 		
 		if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 			DOMRange *range = [sender selectedDOMRange];
 			
 			if (PointerIsEmpty(range)) return;
-			if ([(LogView *)sender hasSelection] == NO) return;
+			if ([(id)sender hasSelection] == NO) return;
 			
 			[NSApp sendAction:@selector(copy:) to:[[NSApp mainWindow] firstResponder] from:self];
 			
@@ -120,7 +122,9 @@
 		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
-			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) continue;
+			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) {
+				continue;
+			}
 			
 			[ary safeAddObject:[[item copy] autodrain]];
 		}
@@ -172,7 +176,7 @@
 			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
 																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:NSNullObject] autodrain];
 			
-			[copyHTML setTarget:menuController];
+			[copyHTML	 setTarget:menuController];
 			[reloadTheme setTarget:menuController];
 		
 			[ary safeAddObject:copyHTML];

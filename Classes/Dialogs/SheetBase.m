@@ -18,9 +18,14 @@
 
 - (void)startSheet
 {
+	[self startSheetWithWindow:window];
+}
+
+- (void)startSheetWithWindow:(NSWindow *)awindow
+{
 	[[window fieldEditor:NO forObject:nil] setFieldEditor:NO];
 	
-	[NSApp beginSheet:sheet modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	[NSApp beginSheet:sheet modalForWindow:awindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)endSheet

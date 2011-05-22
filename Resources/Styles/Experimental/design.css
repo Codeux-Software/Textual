@@ -14,7 +14,7 @@ body {
  	z-index: 100;
 	overflow: hidden;
 	overflow-y: visible;
-	background-color: #000;
+	background-color: #000000;
 }
 
 body .sender, body .place {

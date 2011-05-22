@@ -1,12 +1,9 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define WINDOW_TOOLBAR_HEIGHT 163
-
 @interface AddressBookSheet (Private)
 - (void)updateButtons;
 - (void)reloadChannelTable;
-- (void)firstPane:(NSView *)view;
 @end
 
 @implementation AddressBookSheet
@@ -14,6 +11,7 @@
 @synthesize ignore;
 @synthesize newItem;
 @synthesize hostmask;
+@synthesize nickname;
 @synthesize ignorePublicMsg;
 @synthesize ignorePrivateMsg;
 @synthesize ignoreHighlights;
@@ -22,10 +20,9 @@
 @synthesize ignoreJPQE;
 @synthesize notifyJoins;
 @synthesize notifyWhoisJoins;
-@synthesize contentView;
-@synthesize notificationView;
-@synthesize ignoreItemView;
 @synthesize ignorePMHighlights;
+@synthesize ignoreWindow;
+@synthesize notifyWindow;
 
 - (id)init
 {
@@ -39,80 +36,56 @@
 - (void)dealloc
 {
 	[ignore drain];
-	[ignoreItemView drain];
-	[notificationView drain];
 	
 	[super dealloc];
 }
 
-- (void)onMenuBarItemChanged:(id)sender 
-{
-	switch ([sender indexOfSelectedItem]) {
-		case 0:
-			[self firstPane:notificationView];
-			break;
-		case 1:
-			[self firstPane:ignoreItemView];
-			break;
-		default:
-			[self firstPane:notificationView];
-			break;
-	}
-} 
-
-- (void)firstPane:(NSView *)view 
-{
-	NSRect windowFrame = [sheet frame];
-	
-	windowFrame.size.width = [view frame].size.width;
-	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
-	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
-	
-	if (NSObjectIsNotEmpty([contentView subviews])) {
-		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
-	}
-	
-	[sheet setFrame:windowFrame display:YES animate:YES];
-	
-	[contentView setFrame:[view frame]];
-	[contentView addSubview:view];	
-	
-	[sheet recalculateKeyViewLoop];
-}
-
 - (void)start
 {
-	if (NSObjectIsNotEmpty(ignore.hostmask)) {
-		[hostmask setStringValue:ignore.hostmask];
-	} 
+	if (ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
+		self.sheet = ignoreWindow;
+		
+		if (NSObjectIsNotEmpty(ignore.hostmask)) {
+			[hostmask setStringValue:ignore.hostmask];
+		} 
+	} else {
+		self.sheet = notifyWindow;
+		
+		if (NSObjectIsNotEmpty(ignore.hostmask)) {
+			[nickname setStringValue:ignore.hostmask];
+		} 
+	}
 	
-	[ignorePublicMsg setState:ignore.ignorePublicMsg];
-	[ignorePrivateMsg setState:ignore.ignorePrivateMsg];
-	[ignoreHighlights setState:ignore.ignoreHighlights];
-	[ignoreNotices setState:ignore.ignoreNotices];
-	[ignoreCTCP setState:ignore.ignoreCTCP];
-	[ignoreJPQE setState:ignore.ignoreJPQE];
-	[notifyJoins setState:ignore.notifyJoins];
-	[notifyWhoisJoins setState:ignore.notifyWhoisJoins];
+	[ignorePublicMsg	setState:ignore.ignorePublicMsg];
+	[ignorePrivateMsg	setState:ignore.ignorePrivateMsg];
+	[ignoreHighlights	setState:ignore.ignoreHighlights];
+	[ignoreNotices		setState:ignore.ignoreNotices];
+	[ignoreCTCP			setState:ignore.ignoreCTCP];
+	[ignoreJPQE			setState:ignore.ignoreJPQE];
+	[notifyJoins		setState:ignore.notifyJoins];
+	[notifyWhoisJoins	setState:ignore.notifyWhoisJoins];
 	[ignorePMHighlights setState:ignore.ignorePMHighlights];
 	
 	[self startSheet];
-	[self firstPane:ignoreItemView];
 }
 
 - (void)ok:(id)sender
 {
-	ignore.hostmask = [hostmask stringValue];
+	if (ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
+		ignore.hostmask = [hostmask stringValue];
+	} else {
+		ignore.hostmask = [nickname stringValue];
+	}
 	
-	ignore.ignorePublicMsg = [ignorePublicMsg state];
-	ignore.ignorePrivateMsg = [ignorePrivateMsg state];
-	ignore.ignoreHighlights = [ignoreHighlights state];
-	ignore.ignoreNotices = [ignoreNotices state];
-	ignore.ignoreCTCP = [ignoreCTCP state];
-	ignore.ignoreJPQE = [ignoreJPQE state];
-	ignore.notifyJoins = [notifyJoins state];
-	ignore.notifyWhoisJoins = [notifyWhoisJoins state];
-	ignore.ignorePMHighlights = [ignorePMHighlights state];
+	ignore.ignorePublicMsg		= [ignorePublicMsg state];
+	ignore.ignorePrivateMsg		= [ignorePrivateMsg state];
+	ignore.ignoreHighlights		= [ignoreHighlights state];
+	ignore.ignoreNotices		= [ignoreNotices state];
+	ignore.ignoreCTCP			= [ignoreCTCP state];
+	ignore.ignoreJPQE			= [ignoreJPQE state];
+	ignore.notifyJoins			= [notifyJoins state];
+	ignore.notifyWhoisJoins		= [notifyWhoisJoins state];
+	ignore.ignorePMHighlights	= [ignorePMHighlights state];
 	
 	[ignore processHostMaskRegex];
 	

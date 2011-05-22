@@ -3,7 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
-#define ThemeDidChangeNotification				@"ThemeDidChangeNotification"
 #define ThemeStyleDidChangeNotification			@"ThemeStyleDidChangeNotification"
 #define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
 #define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
@@ -89,6 +88,7 @@
 
 - (IBAction)onSelectFont:(id)sender;
 - (IBAction)onStyleChanged:(id)sender;
+- (IBAction)onChangedTheme:(id)sender;
 - (IBAction)onPrefPaneSelected:(id)sender;
 - (IBAction)onOpenPathToThemes:(id)sender;
 - (IBAction)onOpenPathToScripts:(id)sender;
