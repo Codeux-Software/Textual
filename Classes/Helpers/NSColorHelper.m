@@ -4,6 +4,19 @@
 @implementation NSColor (NSColorHelper)
 
 #pragma mark -
+#pragma mark Custom Methods
+
+/* Create our own implementation of Lion only selectors 
+ so that they can be used on Snow Leopard with ease. */
+
++ (NSColor *)colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha 
+{
+	CGFloat comps[] = {red, green, blue, alpha};
+	
+	return [NSColor colorWithColorSpace:[NSColorSpace sRGBColorSpace] components:comps count:4];
+}
+
+#pragma mark -
 #pragma mark IRC Text Formatting Color Codes
 
 + (NSColor *)formatterWhiteColor
@@ -185,8 +198,8 @@
 			NSInteger b = (n & 0xff);
 			
 			return NSCalibratedRBGColor((r / 255.99999f), 
-										 (b / 255.99999f), 
-										 (g / 255.99999f));
+										(b / 255.99999f), 
+										(g / 255.99999f));
 		} else if (len == 3) {
 			long n = strtol([s UTF8String], NULL, 16);
 			
@@ -195,12 +208,20 @@
 			NSInteger b = (n & 0xf);
 			
 			return NSCalibratedRBGColor((r / 15.0), 
-										 (b / 15.0), 
-										 (g / 15.0));
+										(b / 15.0), 
+										(g / 15.0));
 		}
 	}
 	
 	return nil;
+}
+
+#pragma mark -
+#pragma mark Other Colors
+
++ (NSColor *)outlineViewHeaderTextColor
+{
+	return [self colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
 }
 
 @end

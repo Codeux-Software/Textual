@@ -37,14 +37,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize realName;
 @synthesize server;
 @synthesize sleepQuitMessage;
-@synthesize userInfo;
 @synthesize username;
 @synthesize useSSL;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		cuid = TXRandomThousandNumber();
+		cuid = TXRandomNumber(9999);
 		guid = [[NSString stringWithUUID] retain];
 		
 		ignores = [NSMutableArray new];
@@ -64,8 +63,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 		encoding = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
-		
-		userInfo = NSNullObject;
 		
 		name = [TXTLS(@"UNTITLED_CONNECTION_NAME") retain];
 		nick = [[Preferences defaultNickname] retain];
@@ -255,9 +252,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
 	}
 	
-	userInfo = (([[dic stringForKey:@"userinfo"] retain]) ?: NSNullObject);
 	invisibleMode = [dic boolForKey:@"invisible"];
-	
+
 	isTrustedConnection = [dic boolForKey:@"trustedConnection"];
 	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
@@ -297,7 +293,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[realName drain];
 	[server drain];
 	[sleepQuitMessage drain];
-	[userInfo drain];
 	[username drain];	
 	
 	[super dealloc];
@@ -333,7 +328,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if (proxyPassword) [dic setObject:proxyPassword forKey:@"proxy_password"];
 	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
 	if (sleepQuitMessage) [dic setObject:sleepQuitMessage forKey:@"sleep_quit_message"];
-	if (userInfo) [dic setObject:userInfo forKey:@"userinfo"];
 	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];

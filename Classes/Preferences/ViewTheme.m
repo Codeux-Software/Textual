@@ -54,8 +54,8 @@
 - (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
 	if (name) {
-		NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
-		NSString *filename = [ViewTheme extractThemeName:[Preferences themeName]];
+		NSString *kind		= [ViewTheme extractThemeSource:[Preferences themeName]];
+		NSString *filename	= [ViewTheme extractThemeName:[Preferences themeName]];
 		
 		if (NSObjectIsNotEmpty(kind) && NSObjectIsNotEmpty(filename)) {
 			if ([kind isEqualToString:@"resource"]) {
@@ -68,7 +68,9 @@
 				if ([kind isEqualToString:@"resource"] == NO) {
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 					
-					if (reload) [self reload];
+					if (reload) {
+						[self reload];
+					}
 				}
 			}
 			

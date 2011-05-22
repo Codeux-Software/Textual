@@ -19,8 +19,10 @@
 @property (nonatomic, retain) NSButton *cancelButton;
 
 - (void)startSheet;
+- (void)startSheetWithWindow:(NSWindow *)awindow;
+
 - (void)endSheet;
 
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
+- (IBAction)ok:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end

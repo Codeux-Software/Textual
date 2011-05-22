@@ -5,39 +5,50 @@
 
 @synthesize keyDelegate;
 
-- (NSRect)rectOfRow:(NSInteger)row
-{
-	NSRect rect = [super rectOfRow:row];
-	
-	id childItem  = [self itemAtRow:row];
-	
-	if ([self isGroupItem:childItem] == NO) {
-		rect.origin.y    += 4;
-		rect.size.height += 1;
-	} 
-	
-	return rect;
-}
-
 - (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row 
 {
-	NSRect superFrame = [super frameOfCellAtColumn:column row:row];
+	NSRect nrect = [super frameOfCellAtColumn:column row:row];
 	
-	id childItem  = [self itemAtRow:row];
+	id childItem = [self itemAtRow:row];
 	
 	if ([self isGroupItem:childItem] == NO) {
 		if ([Preferences applicationRanOnLion]) {
-			superFrame.origin.x   += 25;
-			superFrame.size.width -= 25;
+			nrect.origin.x   += 20;
+			nrect.size.width -= 20;
+		} else {
+			nrect.origin.x   += 30;
+			nrect.size.width -= 30;
 		}
 	} else {
-		if ([Preferences applicationRanOnLion] == NO) {
-			superFrame.origin.x += 5;
-			superFrame.size.width -= 5;
-		}
+		nrect.origin.x   += 3;
+		nrect.size.width -= 3;
+	} 
+	
+	return nrect;
+}
+
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	MasterController *master = [keyDelegate master];
+	MenuController   *menucl = [master menu];
+	
+	if (NSObjectIsEmpty([keyDelegate clients])) { 
+		[master.addServerButton setHidden:NO];
+		[master.addServerButton setTarget:menucl];
+		[master.addServerButton setAction:@selector(onAddServer:)];
+		
+		NSRect winRect = [master.serverSplitView frame];
+		NSRect oldRect = [master.addServerButton frame];
+		
+		oldRect.origin = NSMakePoint((NSMidX(clipRect) - (oldRect.size.width / 2.0)), 
+									 (NSMidY(winRect) - (oldRect.size.height / 2.0)));
+		
+		[master.addServerButton setFrame:oldRect];
+	} else {
+		[master.addServerButton setHidden:YES];
 	}
 	
-	return superFrame;
+	[super drawBackgroundInClipRect:clipRect];
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)e

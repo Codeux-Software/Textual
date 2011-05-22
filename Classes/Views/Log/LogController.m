@@ -21,6 +21,7 @@
 - (DOMNode *)html_head;
 - (DOMElement *)body:(DOMDocument *)doc;
 - (DOMElement *)topic:(DOMDocument *)doc;
+- (void)loadAlternateHTML:(NSString *)newHTML;
 @end
 
 @implementation LogController
@@ -35,7 +36,6 @@
 @synthesize count;
 @synthesize highlightedLineNumbers;
 @synthesize html;
-@synthesize initialBackgroundColor;
 @synthesize js;
 @synthesize lineNumber;
 @synthesize lines;
@@ -83,7 +83,6 @@
 	[chanMenu drain];
 	[highlightedLineNumbers drain];
 	[html drain];
-	[initialBackgroundColor drain];
 	[js drain];
 	[lines drain];
 	[memberMenu drain];
@@ -154,7 +153,7 @@
 	view.resizeDelegate		  = self;
 	view.autoresizingMask	  = (NSViewWidthSizable | NSViewHeightSizable);
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument:nil] baseURL:theme.baseUrl];
+	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
 - (void)processMessageQueue
@@ -179,6 +178,13 @@
 	}
 }
 
+- (void)loadAlternateHTML:(NSString *)newHTML
+{
+	[(id)view setBackgroundColor:theme.other.underlyingWindowColor];
+	
+	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
+}
+
 - (void)notifyDidBecomeVisible
 {
 	if (becameVisible == NO) {
@@ -188,11 +194,6 @@
 	}
 }
 
-- (BOOL)hasValidBodyStructure
-{
-	return (PointerIsEmpty([self mainFrameDocument]) == NO);
-}
-
 - (DOMDocument *)mainFrameDocument
 {
 	return [view mainFrameDocument];
@@ -200,9 +201,9 @@
 
 - (DOMNode *)html_head
 {
-	DOMDocument *doc = [self mainFrameDocument];
-	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
-	DOMNode *head = [nodes item:0];
+	DOMDocument *doc	= [self mainFrameDocument];
+	DOMNodeList *nodes	= [doc getElementsByTagName:@"head"];
+	DOMNode		*head	= [nodes item:0];
 	
 	return head;
 }
@@ -408,7 +409,7 @@
 	scrollBottom = [self viewingBottom];
 	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
+	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
 
 - (void)clear
@@ -420,7 +421,7 @@
 	loaded = NO;
 	count  = 0;
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument:[self topicValue]] baseURL:theme.baseUrl];
+	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -652,7 +653,7 @@
 		[messageQueue safeAddObject:queueEntry];
 		
 		if (NSObjectIsEmpty(messageQueue)) {
-			[self performSelector:@selector(processingMessageQueue) withObject:nil afterDelay:3.0];
+			[self performSelector:@selector(processingMessageQueue) withObject:nil afterDelay:2.0];
 		}
 		
 		return;
@@ -712,60 +713,41 @@
 	
 	NSString *override_style = [self generateOverrideStyle];
 	
-	[s appendFormat:@"<html %@>", bodyAttrs];
-	[s appendString:@"<head>"];
+	[s appendFormat:@"<html %@><head>", bodyAttrs];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
 	
 	NSTimeInterval ti = [NSDate timeIntervalSinceReferenceDate];
 	
 	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?%d\" />", ti];
-	[s appendFormat:@"<script type=\"text/javascript\">\n%@\n</script>", [[theme core_js] content]];
+	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", theme.core_js.filename];
 	[s appendFormat:@"<script src=\"scripts.js?%d\" type=\"text/javascript\"></script>", ti];
 	
 	if (override_style) {
 		[s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
 	}
 	
-	[s appendString:@"</head>"];
-	[s appendFormat:@"<body %@>", bodyAttrs];
-	[s appendString:@"<div id=\"body_home\"></div>"];
+	[s appendFormat:@"</head><body %@>", bodyAttrs];
 	
-	if (NSObjectIsNotEmpty(topic)) {
-		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
+	if (NSObjectIsNotEmpty(html)) {
+		[s appendFormat:@"<div id=\"body_home\">%@</div>", html];
 	} else {
-		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"NO_TOPIC_DEFAULT_TOPIC")];
+		[s appendString:@"<div id=\"body_home\"></div>"];
+	}
+	
+	if (channel && (channel.isChannel || channel.isTalk)) {
+		if (NSObjectIsNotEmpty(topic)) {
+			[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
+		} else {
+			[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"NO_TOPIC_DEFAULT_TOPIC")];
+		}
 	}
 	
 	[s appendString:@"</html>"];
 	
+	[html drain];
+	html = nil;
+	
 	return s;
-}
-
-- (void)applyOverrideStyle
-{
-	NSString *os = [self generateOverrideStyle];
-	
-	DOMDocument *doc = [self mainFrameDocument];
-	DOMElement  *e   = [doc getElementById:@"textual_override_style"];
-	
-	if (e) {
-		[[e parentNode] removeChild:e];
-	}
-	
-	if (os) {
-		DOMNode *head = [self html_head];
-		
-		if (head) {
-			DOMElement *style = [doc createElement:@"style"];
-			
-			[style setAttribute:@"id" value:@"textual_override_style"];
-			[style setAttribute:@"type" value:@"text/css"];
-			
-			[(id)style setInnerHTML:os];
-			
-			[head appendChild:style];
-		}
-	}
 }
 
 - (NSString *)generateOverrideStyle
@@ -775,7 +757,7 @@
 	OtherTheme *other = world.viewTheme.other;
 	
 	NSFont *channelFont = other.channelViewFont;
-		
+	
 	NSString *name  = [channelFont fontName];
 	NSInteger rsize = [channelFont pointSize];
 	NSDoubleN size  = ([channelFont pointSize] * (72.0 / 96.0));

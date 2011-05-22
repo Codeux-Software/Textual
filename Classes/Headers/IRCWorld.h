@@ -43,6 +43,7 @@
 	NSInteger itemId;
 	
 	BOOL soundMuted;
+	BOOL reloadingTree;
 	
 	IRCExtras *extrac;
 	

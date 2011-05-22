@@ -3,10 +3,7 @@
 @interface MemberListCell : NSTextFieldCell
 {
 	IRCUser *member;
-	
-	NSMutableParagraphStyle *nickStyle;
 }
 
-@property (nonatomic, retain) IRCUser *member;
-@property (nonatomic, readonly) NSMutableParagraphStyle *nickStyle;
+@property (nonatomic, assign) IRCUser *member;
 @end

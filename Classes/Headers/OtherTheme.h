@@ -6,6 +6,8 @@
 {	
 	NSString *path;
 	
+	NSColor *underlyingWindowColor;
+	
 	NSFont *channelViewFont;
 	
 	NSString *nicknameFormat;
@@ -16,6 +18,7 @@
 	BOOL channelViewFontOverrode;
 	
 	NSInteger nicknameFormatFixedWidth;
+	NSDoubleN renderingEngineVersion;
 }
 
 @property (nonatomic, retain, getter=path, setter=setPath:) NSString *path;
@@ -26,6 +29,8 @@
 @property (nonatomic, assign) BOOL overrideMessageIndentWrap;
 @property (nonatomic, assign) BOOL channelViewFontOverrode;
 @property (nonatomic, assign) NSInteger nicknameFormatFixedWidth;
+@property (nonatomic, retain) NSColor *underlyingWindowColor;
+@property (nonatomic, assign) NSDoubleN renderingEngineVersion;
 
 - (void)reload;
 

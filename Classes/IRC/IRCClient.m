@@ -901,6 +901,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	[conn open];
+	
+	[self reloadTree];
 }
 
 - (void)disconnect
@@ -2993,11 +2995,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		[t setIsUnread:YES];
 		
-		if ([NSApp isActive] == NO) {
-			[world.serverList setNeedsDisplay:YES];
-		} else {
-			[self reloadTree];
-		}
+		[self reloadTree];
 	}
 }
 
@@ -3678,7 +3676,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			[self sendCTCPReply:nick command:command text:text];
 		} else if ([command isEqualToString:IRCCI_USERINFO]) {
-			[self sendCTCPReply:nick command:command text:((config.userInfo) ?: NSNullObject)];
+			[self sendCTCPReply:nick command:command text:NSNullObject];
 		} else if ([command isEqualToString:IRCCI_CLIENTINFO]) {
 			[self sendCTCPReply:nick command:command text:TXTLS(@"IRC_CTCP_CLIENT_INFO")];
 		} else if ([command isEqualToString:IRCCI_LAGCHECK]) {
@@ -4599,6 +4597,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						[self printUnknownReply:m];	
 					}
 				}
+			} else {
+				[self printUnknownReply:m];	
 			}
 			
 			break;

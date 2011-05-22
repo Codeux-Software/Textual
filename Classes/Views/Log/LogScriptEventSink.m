@@ -72,7 +72,7 @@
 	if ((x - d) <= cx && cx <= (x + d) && 
 		(y - d) <= cy && cy <= (y + d)) {
 		
-		if (now < (lastClickTime + 0.5)) {
+		if (now < (lastClickTime + [NSEvent doubleClickInterval])) {
 			res = YES;
 		}
 	}

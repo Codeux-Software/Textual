@@ -13,8 +13,8 @@ body {
  	z-index: 100;
 	font-size: 10px;
 	overflow: hidden;
-	overflow-y: visible;g
-	background-color: #000;
+	overflow-y: visible;
+	background-color: #000000;
 }
 
 body div#body_home {

@@ -10,14 +10,19 @@
 	IRCClientConfig *config;
 	
 	NSDictionary *serverList;
+	NSMutableArray *tabViewList;
 	
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *generalView;
-	IBOutlet NSView *detailsView;
-	IBOutlet NSView *onloginView;
+	IBOutlet NSView *identityView;
+	IBOutlet NSView *messagesView;
+	IBOutlet NSView *encodingView;
+	IBOutlet NSView *autojoinView;
 	IBOutlet NSView *ignoresView;
+	IBOutlet NSView *commandsView;
+	IBOutlet NSView *proxyServerView;
 	
-	IBOutlet NSSegmentedControl *tabView;
+	IBOutlet ListView *tabView;
 	
 	IBOutlet NSTextField *nameText;
 	IBOutlet NSButton *autoReconnectCheck;
@@ -35,9 +40,8 @@
 	IBOutlet NSTextField *nickPasswordText;
 	IBOutlet NSTextField *altNicksText;
 	
-	IBOutlet NSTextField *sleepQuitMessageText;
-	IBOutlet NSTextField *leavingCommentText;
-	IBOutlet NSTextField *userInfoText;
+	IBOutlet NSTextView *sleepQuitMessageText;
+	IBOutlet NSTextView *leavingCommentText;
 	
 	IBOutlet NSPopUpButton *encodingCombo;
 	IBOutlet NSPopUpButton *fallbackEncodingCombo;
@@ -60,6 +64,7 @@
 	IBOutlet NSButton *addIgnoreButton;
 	IBOutlet NSButton *editIgnoreButton;
 	IBOutlet NSButton *deleteIgnoreButton;
+	IBOutlet NSMenu *addIgnoreMenu;
 	
 	ChannelSheet *channelSheet;
 	AddressBookSheet *ignoreSheet;
@@ -70,10 +75,14 @@
 @property (nonatomic, assign) IRCClient *client;
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *generalView;
-@property (nonatomic, retain) NSView *detailsView;
-@property (nonatomic, retain) NSView *onloginView;
+@property (nonatomic, retain) NSView *identityView;
+@property (nonatomic, retain) NSView *messagesView;
+@property (nonatomic, retain) NSView *encodingView;
+@property (nonatomic, retain) NSView *autojoinView;
 @property (nonatomic, retain) NSView *ignoresView;
-@property (nonatomic, retain) NSSegmentedControl *tabView;
+@property (nonatomic, retain) NSView *commandsView;
+@property (nonatomic, retain) NSView *proxyServerView;
+@property (nonatomic, retain) ListView *tabView;
 @property (nonatomic, retain) NSTextField *nameText;
 @property (nonatomic, retain) NSButton *autoReconnectCheck;
 @property (nonatomic, retain) NSButton *autoConnectCheck;
@@ -86,9 +95,8 @@
 @property (nonatomic, retain) NSTextField *realNameText;
 @property (nonatomic, retain) NSTextField *nickPasswordText;
 @property (nonatomic, retain) NSTextField *altNicksText;
-@property (nonatomic, retain) NSTextField *sleepQuitMessageText;
-@property (nonatomic, retain) NSTextField *leavingCommentText;
-@property (nonatomic, retain) NSTextField *userInfoText;
+@property (nonatomic, retain) NSTextView *sleepQuitMessageText;
+@property (nonatomic, retain) NSTextView *leavingCommentText;
 @property (nonatomic, retain) NSPopUpButton *encodingCombo;
 @property (nonatomic, retain) NSPopUpButton *fallbackEncodingCombo;
 @property (nonatomic, retain) NSPopUpButton *proxyCombo;
@@ -106,6 +114,7 @@
 @property (nonatomic, retain) NSButton *addIgnoreButton;
 @property (nonatomic, retain) NSButton *editIgnoreButton;
 @property (nonatomic, retain) NSButton *deleteIgnoreButton;
+@property (nonatomic, retain) NSMenu *addIgnoreMenu;
 @property (nonatomic, retain) ChannelSheet *channelSheet;
 @property (nonatomic, retain) AddressBookSheet *ignoreSheet;
 
@@ -116,24 +125,23 @@
 
 - (void)close;
 
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
+- (IBAction)ok:(id)sender;
+- (IBAction)cancel:(id)sender;
 
-- (void)hostComboChanged:(id)sender;
+- (IBAction)hostComboChanged:(id)sender;
 
-- (void)encodingChanged:(id)sender;
-- (void)proxyChanged:(id)sender;
-- (void)bouncerModeChanged:(id)sender;
+- (IBAction)encodingChanged:(id)sender;
+- (IBAction)proxyChanged:(id)sender;
+- (IBAction)bouncerModeChanged:(id)sender;
 
-- (void)addChannel:(id)sender;
-- (void)editChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)editChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
 
-- (void)addIgnore:(id)sender;
-- (void)editIgnore:(id)sender;
-- (void)deleteIgnore:(id)sender;
-
-- (void)onMenuBarItemChanged:(id)sender;
+- (IBAction)addIgnore:(id)sender;
+- (IBAction)editIgnore:(id)sender;
+- (IBAction)deleteIgnore:(id)sender;
+- (IBAction)showAddIgnoreMenu:(id)sender;
 @end
 
 @interface NSObject (ServerSheetDelegate)

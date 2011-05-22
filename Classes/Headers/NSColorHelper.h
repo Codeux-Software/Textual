@@ -25,4 +25,7 @@
 
 - (NSString *)hexadecimalValue;
 + (NSColor *)fromCSS:(NSString *)str;
+
++ (NSColor *)outlineViewHeaderTextColor;
++ (NSColor *)colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end

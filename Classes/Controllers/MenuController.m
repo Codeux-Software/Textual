@@ -588,20 +588,12 @@
 
 - (void)onIncreaseFontSize:(id)sender
 {
-	IRCTreeItem *sel = world.selected;
-	
-	if (PointerIsEmpty(sel)) return;
-	
-	[sel.log changeTextSize:YES];
+	[world changeTextSize:YES];
 }
 
 - (void)onDecreaseFontSize:(id)sender
 {
-	IRCTreeItem *sel = world.selected;
-	
-	if (PointerIsEmpty(sel)) return;
-	
-	[sel.log changeTextSize:NO];
+	[world changeTextSize:NO];
 }
 
 - (void)onMarkAllAsRead:(id)sender
@@ -1616,7 +1608,7 @@
 
 - (void)onWantThemeForceReloaded:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+	[_NSNotificationCenter() postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
 }
 
 - (void)onWantChannelModerated:(id)sender
