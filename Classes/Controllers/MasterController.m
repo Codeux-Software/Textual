@@ -382,6 +382,28 @@
 	menu.isInFullScreenMode = NO;
 }
 
+- (NSSize)windowWillResize:(NSWindow *)awindow toSize:(NSSize)newSize
+{
+	if (NSDissimilarObjects(awindow, window)) {
+		return newSize; 
+	} else {
+		if (menu.isInFullScreenMode) {
+			return [awindow frame].size;
+		} else {
+			return newSize;
+		}
+	}
+}
+
+- (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
+{
+	if (NSDissimilarObjects(window, awindow)) {
+		return YES;
+	} else {
+		return BOOLReverseValue(menu.isInFullScreenMode);
+	}
+}
+
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
 	if (client == text) {
@@ -1314,23 +1336,23 @@ typedef enum {
 
 - (void)registerKeyHandlers
 {
-	[window setKeyHandlerTarget:self];
-	[fieldEditor setKeyHandlerTarget:self];
+	[window			setKeyHandlerTarget:self];
+	[fieldEditor	setKeyHandlerTarget:self];
 	
-	[self handler:@selector(tab:) code:KEY_TAB mods:0];
-	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
+	[self handler:@selector(tab:)		code:KEY_TAB mods:0];
+	[self handler:@selector(shiftTab:)	code:KEY_TAB mods:NSShiftKeyMask];
 	
-	[self handler:@selector(sendMsgAction:) code:KEY_ENTER mods:NSCommandKeyMask];
+	[self handler:@selector(sendMsgAction:) code:KEY_ENTER	mods:NSCommandKeyMask];
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
-	[self handler:@selector(textFormattingBold:) char:'b' mods:NSCommandKeyMask];
-	[self handler:@selector(textFormattingUnderline:) char:'u' mods:NSCommandKeyMask];
-	[self handler:@selector(textFormattingItalic:) char:'i' mods:(NSCommandKeyMask | NSShiftKeyMask)];
+	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSShiftKeyMask)];
     [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask)];
 	[self handler:@selector(textFormattingBackgroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)];
 	
-	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
-	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryUp:)	char:'p' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryDown:)	char:'n' mods:NSControlKeyMask];
 
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];

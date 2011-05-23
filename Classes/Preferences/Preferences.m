@@ -964,6 +964,8 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
+	[d setBool:NO  forKey:@"ForceRandomServerListBadges"];
+	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];
 	[d setBool:NO  forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO  forKey:@"Preferences.General.strip_formatting"];
 	[d setBool:NO  forKey:@"Preferences.General.rtl_formatting"];

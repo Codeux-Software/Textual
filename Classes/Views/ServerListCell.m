@@ -182,14 +182,16 @@
 		NSShadow *itemShadow = [NSShadow new];
 		
 		if ([parent isGroupItem:cellItem] == NO) {
-			if (client.isConnecting) {
-				[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
-			} else if (channel.isChannel) {
-				if (channel.isActive || showDebugDataForCell) {
-					[self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
+			if (channel.isChannel) {
+				if (client.isConnecting) {
+					[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
 				} else {
-					[self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
-				} 
+					if (channel.isActive || showDebugDataForCell) {
+						[self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
+					} else {
+						[self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
+					} 
+				}
 			} else {
 				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
 			}

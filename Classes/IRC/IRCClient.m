@@ -2988,7 +2988,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	[t setTreeUnreadCount:([t treeUnreadCount] + 1)];
+	if (NSDissimilarObjects(world.selected, t)) {
+		[t setTreeUnreadCount:([t treeUnreadCount] + 1)];
+	}
 	
 	if ([NSApp isActive] && world.selected == t) {
 		return;
@@ -4567,9 +4569,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (c) {
 				if (c.isWhoInit) {
-					NSString *nick = [m paramAt:5];
-					NSString *hostmask = [m paramAt:3];
-					NSString *username = [m paramAt:2];
+					NSString *nick		= [m paramAt:5];
+					NSString *hostmask	= [m paramAt:3];
+					NSString *username	= [m paramAt:2];
 					
 					IRCUser *u = [c findMember:nick];
 					
@@ -4581,10 +4583,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					} else {
 						IRCUser *u = [IRCUser newad];
 						
-						u.nick = nick;
-						u.username = username;
-						u.address = hostmask;
-						u.supportInfo = isupport;
+						u.nick			= nick;
+						u.username		= username;
+						u.address		= hostmask;
+						u.supportInfo	= isupport;
 						
 						[c addMember:u];
 					}
@@ -4593,9 +4595,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						[self printUnknownReply:m];	
 					}
 				} else {
-					if (c.isActive == NO) {
-						[self printUnknownReply:m];	
-					}
+					[self printUnknownReply:m];	
 				}
 			} else {
 				[self printUnknownReply:m];	
