@@ -24,12 +24,7 @@
 
 - (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u
 {
-	[[log view] close];
-	 
-	[log drain];
-	log = nil;
-	
-	log = [[world createLogWithClient:u channel:c] retain];
+	[log clear];
 }
 
 - (IRCClient *)client
