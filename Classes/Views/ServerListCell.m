@@ -182,7 +182,7 @@
 		NSShadow *itemShadow = [NSShadow new];
 		
 		if ([parent isGroupItem:cellItem] == NO) {
-			if (channel.isChannel) {
+			if (channel.config.type == CHANNEL_TYPE_CHANNEL && NSDissimilarObjects(channel.config.type, CHANNEL_TYPE_TALK)) {
 				if (client.isConnecting) {
 					[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
 				} else {
