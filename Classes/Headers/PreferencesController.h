@@ -4,8 +4,6 @@
 
 #define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
 #define ThemeStyleDidChangeNotification			@"ThemeStyleDidChangeNotification"
-#define ThemeSelectedConsoleNotification		@"ThemeSelectedConsoleNotification"
-#define ThemeSelectedChannelNotification		@"ThemeSelectedChannelNotification"
 #define InputHistoryGlobalSchemeNotification	@"InputHistoryGlobalSchemeNotification"
 
 @interface PreferencesController : NSWindowController

@@ -1017,7 +1017,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(ServerListCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
-	cell.parent	= serverList;
+	cell.parent		= serverList;
 	cell.cellItem	= item;
 }
 
