@@ -14,10 +14,10 @@
 	if ([self isGroupItem:childItem] == NO) {
 		if ([Preferences applicationRanOnLion]) {
 			nrect.origin.x   += 20;
-			nrect.size.width -= 20;
+			nrect.size.width -= 10;
 		} else {
 			nrect.origin.x   += 30;
-			nrect.size.width -= 30;
+			nrect.size.width -= 20;
 		}
 	} else {
 		nrect.origin.x   += 3;
@@ -27,8 +27,10 @@
 	return nrect;
 }
 
-- (void)drawBackgroundInClipRect:(NSRect)clipRect
+- (void)toggleAddServerButton
 {
+	NSRect clipRect = [self frame];
+	
 	MasterController *master = [keyDelegate master];
 	MenuController   *menucl = [master menu];
 	
@@ -47,8 +49,6 @@
 	} else {
 		[master.addServerButton setHidden:YES];
 	}
-	
-	[super drawBackgroundInClipRect:clipRect];
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)e

@@ -6,14 +6,20 @@
 #pragma mark -
 #pragma mark Custom Methods
 
-/* Create our own implementation of Lion only selectors 
- so that they can be used on Snow Leopard with ease. */
-
-+ (NSColor *)colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha 
++ (NSColor *)_colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha 
 {
 	CGFloat comps[] = {red, green, blue, alpha};
 	
 	return [NSColor colorWithColorSpace:[NSColorSpace sRGBColorSpace] components:comps count:4];
+}
+
++ (NSColor *)_colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+{
+	if (red   > 1.0) red   = (red   / 255.99999f);
+	if (green > 1.0) green = (green / 255.99999f);
+	if (blue  > 1.0) blue  = (blue  / 255.99999f);
+	
+	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 }
 
 #pragma mark -
@@ -197,9 +203,7 @@
 			NSInteger g = ((n >> 8) & 0xff);
 			NSInteger b = (n & 0xff);
 			
-			return NSCalibratedRBGColor((r / 255.99999f), 
-										(b / 255.99999f), 
-										(g / 255.99999f));
+			return NSCalibratedRBGColor(r, b, g);
 		} else if (len == 3) {
 			long n = strtol([s UTF8String], NULL, 16);
 			
@@ -221,7 +225,7 @@
 
 + (NSColor *)outlineViewHeaderTextColor
 {
-	return [self colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
+	return [self _colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
 }
 
 @end
