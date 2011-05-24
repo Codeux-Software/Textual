@@ -308,6 +308,28 @@
 #pragma mark -
 #pragma mark NSWorkspace Notifications
 
+- (NSSize)windowWillResize:(NSWindow *)awindow toSize:(NSSize)newSize
+{
+	if (awindow != window) {
+		return newSize; 
+	} else {
+		if (menu.isInFullScreenMode) {
+			return [awindow frame].size;
+		} else {
+			return newSize;
+		}
+	}
+}
+
+- (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
+{
+	if (window != awindow) {
+		return YES;
+	} else {
+		return BOOLReverseValue(menu.isInFullScreenMode);
+	}
+}
+
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
 	NSString *url = [[[event descriptorAtIndex:1] stringValue] decodeURIFragement];
