@@ -1579,11 +1579,15 @@
 			[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
 			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
 			
+			[window setShowsResizeIndicator:NO];
+			
 			[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
 		} else {
 			[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
 			[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
 			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
+			
+			[window setShowsResizeIndicator:YES];
 			
 			[master loadWindowState];
 			
