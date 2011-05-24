@@ -3,11 +3,11 @@
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
 
-#define LION_ACTIVE_START_GRADIENT			[NSColor colorWithCalibratedRed:(109.0/255.0) green:(109.0/255.0) blue:(109.0/255.0) alpha:1]
-#define LION_ACTIVE_STOP_GRADIENT			[NSColor colorWithCalibratedRed:(122.0/255.0) green:(122.0/255.0) blue:(122.0/255.0) alpha:1]
+#define LION_ACTIVE_START_GRADIENT			[NSColor _colorWithCalibratedRed:109.0 green:109.0 blue:109.0 alpha:1]
+#define LION_ACTIVE_STOP_GRADIENT			[NSColor _colorWithCalibratedRed:122.0 green:122.0 blue:122.0 alpha:1]
 #define LION_INACTIVE_START_GRADIENT		[NSColor colorWithCalibratedWhite:0.55 alpha:1.0]
 #define LION_INACTIVE_STOP_GRADIENT			[NSColor colorWithCalibratedWhite:0.558 alpha:1.0]
-#define LION_BODY_GRADIENT_START			[NSColor colorWithCalibratedRed:(221.0/255.0) green:(221.0/255.0) blue:(221.0/255.0) alpha:1]
+#define LION_BODY_GRADIENT_START			[NSColor _colorWithCalibratedRed:221.0 green:221.0 blue:221.0 alpha:1]
 #define LION_BODY_GRADIENT_STOP				[NSColor whiteColor]
 
 #define InputTextFieldWidthPadding			4.0

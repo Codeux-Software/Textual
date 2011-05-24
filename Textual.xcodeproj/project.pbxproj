@@ -340,6 +340,10 @@
 		4CD0E6E312F1B78D00C8F016 /* GTMNSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DE12F1B78D00C8F016 /* GTMNSString+HTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6E412F1B78D00C8F016 /* GTMNSString+URLArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6ED12F1B7BD00C8F016 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD3CA46138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA42138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif */; };
+		4CD3CA47138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA43138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif */; };
+		4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA44138B9768002FD1E3 /* ServerCellSelection_Graphite.tif */; };
+		4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA45138B9768002FD1E3 /* ServerCellSelection_Aqua.tif */; };
 		4CD60CC11340B48D0050A57F /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD60CC01340B48D0050A57F /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
 		4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */; };
@@ -648,6 +652,10 @@
 		4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+URLArguments.h"; path = "Classes/Headers/GTMNSString+URLArguments.h"; sourceTree = SOURCE_ROOT; };
 		4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateReceipt.h; path = Classes/Headers/ValidateReceipt.h; sourceTree = SOURCE_ROOT; };
 		4CD1733C120EB20600F03B37 /* TextualPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextualPluginItem.m; sourceTree = "<group>"; };
+		4CD3CA42138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ChannelCellSelection_Aqua.tif; sourceTree = "<group>"; };
+		4CD3CA43138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ChannelCellSelection_Graphite.tif; sourceTree = "<group>"; };
+		4CD3CA44138B9768002FD1E3 /* ServerCellSelection_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ServerCellSelection_Graphite.tif; sourceTree = "<group>"; };
+		4CD3CA45138B9768002FD1E3 /* ServerCellSelection_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ServerCellSelection_Aqua.tif; sourceTree = "<group>"; };
 		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
@@ -958,6 +966,10 @@
 		4C4B7688138973830061A00B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				4CD3CA42138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif */,
+				4CD3CA43138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif */,
+				4CD3CA44138B9768002FD1E3 /* ServerCellSelection_Graphite.tif */,
+				4CD3CA45138B9768002FD1E3 /* ServerCellSelection_Aqua.tif */,
 				4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */,
 			);
 			path = "User Interface";
@@ -1826,6 +1838,10 @@
 				4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */,
 				4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */,
 				4C4B768A138973840061A00B /* AddTemplateWithDisclosureTriangle.tif in Resources */,
+				4CD3CA46138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif in Resources */,
+				4CD3CA47138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif in Resources */,
+				4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */,
+				4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

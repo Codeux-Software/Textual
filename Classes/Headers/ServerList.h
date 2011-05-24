@@ -7,6 +7,8 @@
 }
 
 @property (nonatomic, assign) id keyDelegate;
+
+- (void)toggleAddServerButton;
 @end
 
 @interface NSObject (ServerListDelegate)

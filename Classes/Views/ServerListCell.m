@@ -4,14 +4,14 @@
 /* This class is based off the open source PXSourceList toolkit developed by Alex Rozanski */
 
 #define ICON_SPACING							5.0
-#define ROW_RIGHT_MARGIN						-5.0	
+#define ROW_RIGHT_MARGIN					    5.0	
 #define MIN_BADGE_WIDTH							22.0
 #define BADGE_HEIGHT							14.0		
 #define BADGE_MARGIN							5.0
 
 #define BADGE_FONT								[_NSFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:10.5]
-#define BADGE_MESSAGE_BACKGROUND_COLOR			[NSColor colorWithCalibratedRed:(152/255.0) green:(168/255.0) blue:(202/255.0) alpha:1]
-#define BADGE_HIGHLIGHT_BACKGROUND_COLOR		[NSColor colorWithCalibratedRed:(210/255.0) green:(15/255.0) blue:(15/255.0) alpha:1]
+#define BADGE_MESSAGE_BACKGROUND_COLOR			[NSColor _colorWithCalibratedRed:152 green:168 blue:202 alpha:1]
+#define BADGE_HIGHLIGHT_BACKGROUND_COLOR		[NSColor _colorWithCalibratedRed:210 green:15  blue:15  alpha:1]
 
 @implementation ServerListCell
 
@@ -146,47 +146,73 @@
 #pragma mark -
 #pragma mark Cell Drawing
 
+- (NSColor *)highlightColorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	return nil;
+}
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSInteger selectedRow = [parent selectedRow];
 	
 	if (cellItem) {
-		BOOL showDebugDataForCell = NO;
-		
-		/* Hidden setting used for debugging. There is no
-		 problem if a normal user finds it and uses it. */
-		if ([_NSUserDefaults() boolForKey:@"ForceRandomServerListBadges"]) {
-			id parentObject = [parent parentForItem:cellItem];
-			
-			NSInteger groupIndex  = 0;
-			NSInteger parentIndex = [parent rowForItem:parentObject];
-			
-			NSArray  *groups = [parent groupItems];
-			NSNumber *groupn = [NSNumber numberWithInteger:parentIndex];
-			
-			groupIndex = [groups indexOfObject:groupn];
-			
-			if (groupIndex == 1) { // Only show debug data for second group
-				showDebugDataForCell = YES;
-			}
-		}
-		
 		NSInteger rowIndex = [parent rowForItem:cellItem];
+		
+		BOOL isGroupItem = [parent isGroupItem:cellItem];
+		BOOL isSelected  = (rowIndex == selectedRow);
 		
 		IRCClient  *client  = cellItem.log.client;
 		IRCChannel *channel = cellItem.log.channel;
+		
+		/* Draw Background */
+		
+		if (isSelected && [NSApp isActive]) {
+			/* We draw selected cells using images because the color
+			 that Apple uses for cells when the table is not in focus
+			 looks ugly in this developer's opinion. */
+			
+			NSRect backgroundRect = cellFrame;
+			NSRect parentRect	  = [parent frame];
+			
+			backgroundRect.origin.x   = parentRect.origin.x;
+			backgroundRect.size.width = parentRect.size.width;
+			
+			NSString *backgroundImage;
+			
+			if (channel.isChannel || channel.isTalk) {
+				backgroundImage = @"ChannelCellSelection";
+			} else {
+				backgroundImage = @"ServerCellSelection";
+			}
+			
+			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite.tif"];
+			} else {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua.tif"];
+			}
+			
+			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
+			
+			[origBackgroundImage drawInRect:backgroundRect
+								   fromRect:NSZeroRect
+								  operation:NSCompositeSourceOver
+								   fraction:1
+							 respectFlipped:YES hints:nil];
+		}
+		
+		/* Draw Badges, Text, and Status Icon */
 		
 		NSAttributedString			*stringValue	= [self attributedStringValue];	
 		NSMutableAttributedString	*newValue		= [stringValue mutableCopy];
 		
 		NSShadow *itemShadow = [NSShadow new];
 		
-		if ([parent isGroupItem:cellItem] == NO) {
-			if (channel.config.type == CHANNEL_TYPE_CHANNEL && NSDissimilarObjects(channel.config.type, CHANNEL_TYPE_TALK)) {
+		if (isGroupItem == NO) {
+			if (channel.isChannel) {
 				if (client.isConnecting) {
 					[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
 				} else {
-					if (channel.isActive || showDebugDataForCell) {
+					if (channel.isActive) {
 						[self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
 					} else {
 						[self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
@@ -196,17 +222,9 @@
 				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
 			}
 			
-			if (NSDissimilarObjects(selectedRow, rowIndex)) {
+			if (isSelected == NO) {
 				NSInteger unreadCount  = cellItem.treeUnreadCount;
 				NSInteger keywordCount = cellItem.keywordCount;
-				
-				if (showDebugDataForCell) {
-					unreadCount = TXRandomNumber(999);
-					
-					if (unreadCount < 100) {
-						keywordCount = 1;
-					}
-				}
 				
 				if (unreadCount >= 1) {
 					NSAttributedString *mcstring = [self messageCountBadgeText:unreadCount];
@@ -256,6 +274,10 @@
 		
 		[newValue drain];
 		[itemShadow drain];
+		
+		if (rowIndex == 0) {
+			[parent toggleAddServerButton];
+		}
 	}
 }
 
