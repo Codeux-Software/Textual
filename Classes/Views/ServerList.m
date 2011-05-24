@@ -16,8 +16,8 @@
 			nrect.origin.x   += 20;
 			nrect.size.width -= 10;
 		} else {
-			nrect.origin.x   += 30;
-			nrect.size.width -= 20;
+			nrect.origin.x   += 25;
+			nrect.size.width -= 25;
 		}
 	} else {
 		nrect.origin.x   += 3;
