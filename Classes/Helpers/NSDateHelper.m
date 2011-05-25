@@ -5,7 +5,12 @@
  
 + (NSInteger)secondsSinceUnixTimestamp:(NSInteger)stamp
 {
-	return ([[NSDate date] timeIntervalSince1970] - stamp);
+	return ([self epochTime] - stamp);
+}
+
++ (NSInteger)epochTime
+{
+	return [[NSDate date] timeIntervalSince1970];
 }
 
 @end

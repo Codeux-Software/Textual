@@ -132,7 +132,7 @@
 				NSDictionary *attributes = [_NSFileManager() attributesOfItemAtPath:sdest error:nil];
 				
 				if (attributes) {
-					NSTimeInterval creationDate = [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
+					NSTimeInterval creationDate		= [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
 					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
 					
 					if (creationDate == modificationDate || creationDate < 1 || force_reset) {

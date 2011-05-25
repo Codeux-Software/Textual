@@ -7,13 +7,13 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	MainWindow *window;
-	ViewTheme *viewTheme;
-	InputTextField *text;
-	GrowlController *growl;
-	LogController *dummyLog;
-	MasterController *master;
-	MenuController *menuController;
+	MainWindow			*window;
+	ViewTheme			*viewTheme;
+	InputTextField		*text;
+	GrowlController		*growl;
+	LogController		*dummyLog;
+	MasterController	*master;
+	MenuController		*menuController;
 	FieldEditorTextView *fieldEditor;
 	
 	ServerList *serverList;
@@ -39,6 +39,7 @@
 	IRCWorldConfig *config;
 	
 	NSMutableArray *clients;
+	NSMutableArray *highlights;
 	
 	NSInteger itemId;
 	
@@ -60,6 +61,7 @@
 	NSDictionary *bundlesWithOutputRules;
 }
 
+@property (nonatomic, retain) NSMutableArray *highlights;
 @property (nonatomic, assign) ServerList *serverList;
 @property (nonatomic, assign) MemberList *memberList;
 @property (nonatomic, assign) MainWindow *window;
@@ -142,6 +144,7 @@
 - (void)updateClientTitle:(IRCClient *)client;
 - (void)updateChannelTitle:(IRCChannel *)channel;
 
+- (void)addHighlightInChannel:(IRCChannel *)channel byUser:(NSString *)nickname withMessage:(NSString *)message;
 - (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
 
 - (void)preferencesChanged;

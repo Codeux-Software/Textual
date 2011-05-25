@@ -37,7 +37,6 @@
 	NSInteger lineNumber;
 	NSInteger loadingImages;
 	
-	NSMutableArray *lines;
 	NSMutableArray *highlightedLineNumbers;
 
 	NSString *html;
@@ -63,7 +62,6 @@
 @property (nonatomic, assign) BOOL becameVisible;
 @property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL movingToBottom;
-@property (nonatomic, retain) NSMutableArray *lines;
 @property (nonatomic, assign) NSInteger lineNumber;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;

@@ -941,7 +941,7 @@ static NSInteger totalRunTime = 0;
 		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
 	} 
 	
-	startUpTime = [[NSDate date] timeIntervalSince1970];
+	startUpTime = [NSDate epochTime];
 	
 	// ====================================================== //
 	

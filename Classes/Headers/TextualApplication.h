@@ -111,6 +111,7 @@
 	#import "InputPromptDialog.h"
 	#import "ChanBanExceptionSheet.h"
 	#import "ChanInviteExceptionSheet.h"
+	#import "HighlightSheet.h"
 	#import "IRCPrefix.h"
 	#import "IRCChannel.h"
 	#import "IRCMessage.h"

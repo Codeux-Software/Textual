@@ -29,6 +29,7 @@
 	InviteSheet *inviteSheet;
 	ServerSheet *serverSheet;
 	ChannelSheet *channelSheet;
+	HighlightSheet *highlightSheet;
 	PreferencesController *preferencesController;
 	
 	BOOL isInFullScreenMode;
@@ -54,6 +55,7 @@
 @property (nonatomic, retain) ServerSheet *serverSheet;
 @property (nonatomic, retain) InviteSheet *inviteSheet;
 @property (nonatomic, retain) AboutPanel *aboutPanel;
+@property (nonatomic, retain) HighlightSheet *highlightSheet;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
@@ -69,6 +71,7 @@
 - (void)onSearchWeb:(id)sender;
 - (void)onCopyLogAsHtml:(id)sender;
 
+- (void)showHighlightSheet:(id)sender;
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
 
 - (void)onMarkScrollback:(id)sender;

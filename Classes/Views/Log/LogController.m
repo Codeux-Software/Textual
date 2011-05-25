@@ -38,7 +38,6 @@
 @synthesize html;
 @synthesize js;
 @synthesize lineNumber;
-@synthesize lines;
 @synthesize loaded;
 @synthesize loadingImages;
 @synthesize maxLines;
@@ -61,7 +60,6 @@
 		bottom   = YES;
 		maxLines = 300;
 		
-		lines				   = [NSMutableArray new];
 		highlightedLineNumbers = [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -81,7 +79,6 @@
 	[highlightedLineNumbers drain];
 	[html drain];
 	[js drain];
-	[lines drain];
 	[memberMenu drain];
 	[menu drain];
 	[policy drain];
@@ -522,12 +519,6 @@
 		body = line.body;
 	}
 	
-	if (loaded == NO) {
-		[lines safeAddObject:line];
-		
-		return highlighted;
-	}
-	
 	NSMutableString *s = [NSMutableString string];
 	
 	if (line.memberType == MEMBER_TYPE_MYSELF) {
@@ -572,7 +563,7 @@
 		if (imageUrl) {
 			showInlineImage = YES;
 			
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>",													 lineTypeString, body];
+			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>",												    lineTypeString, body];
 			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width:%ipx;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
 		}
 	}
@@ -595,12 +586,26 @@
 	
 	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
 	
+	if (highlighted) {
+		[world addHighlightInChannel:channel byUser:line.nickInfo withMessage:line.body];
+	}
+	
 	return highlighted;
 }
 	  
 - (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
+	NSInteger loopProtect = 0;
+	
 	while ([view isLoading]) {
+		[NSThread sleepForTimeInterval:0.1];
+		
+		loopProtect++;
+		
+		if (loopProtect >= 30) {
+			break;
+		}
+		
 		continue;
 	}
 	
@@ -616,8 +621,7 @@
 	
 	DOMDocument *doc  = [self mainFrameDocument];
 	DOMElement  *body = [self body:doc];
-	
-	DOMElement *div = [doc createElement:@"div"];
+	DOMElement  *div  = [doc createElement:@"div"];
 	
 	[(id)div setInnerHTML:aHtml];
 	
@@ -826,12 +830,6 @@
 		
 		bottom = YES;
 	}
-	
-	for (LogLine *line in lines) {
-		[self print:line];
-	}
-	
-	[lines removeAllObjects];
 	
 	DOMDocument *doc = [frame DOMDocument];
 	if (PointerIsEmpty(doc)) return;
