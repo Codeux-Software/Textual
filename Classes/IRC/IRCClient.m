@@ -69,6 +69,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize disconnectType;
 @synthesize encoding;
 @synthesize hasIRCopAccess;
+@synthesize highlights;
 @synthesize identifyCTCP;
 @synthesize identifyMsg;
 @synthesize inChanBanList;
@@ -111,6 +112,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		tryingNickNumber = -1;
 		
 		channels     = [NSMutableArray new];
+		highlights   = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
 		trackedUsers = [NSMutableDictionary new];
 		
@@ -173,6 +175,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[config drain];
 	[conn autodrain];
 	[conn close];
+	[highlights drain];
 	[inputNick drain];
 	[inviteExceptionSheet drain];
 	[isonTimer stop];

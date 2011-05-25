@@ -92,6 +92,7 @@
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onChangedTransparency:(id)sender;
 - (void)onTranscriptFolderChanged:(id)sender;
+- (void)onHighlightLoggingChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)

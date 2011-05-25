@@ -39,7 +39,6 @@
 	IRCWorldConfig *config;
 	
 	NSMutableArray *clients;
-	NSMutableArray *highlights;
 	
 	NSInteger itemId;
 	
@@ -61,7 +60,6 @@
 	NSDictionary *bundlesWithOutputRules;
 }
 
-@property (nonatomic, retain) NSMutableArray *highlights;
 @property (nonatomic, assign) ServerList *serverList;
 @property (nonatomic, assign) MemberList *memberList;
 @property (nonatomic, assign) MainWindow *window;
