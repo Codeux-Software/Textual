@@ -13,8 +13,8 @@
 - (void)savePosition;
 - (void)restorePosition;
 - (void)setNeedsLimitNumberOfLines;
-- (void)processMessageQueue;
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs ignoringQueue:(BOOL)ignoreQueue;
+- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs;
+- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs;
 - (NSString *)initialDocument:(NSString *)topic;
 - (NSString *)generateOverrideStyle;
 - (DOMDocument *)mainFrameDocument;
@@ -44,11 +44,9 @@
 @synthesize maxLines;
 @synthesize memberMenu;
 @synthesize menu;
-@synthesize messageQueue;
 @synthesize movingToBottom;
 @synthesize needsLimitNumberOfLines;
 @synthesize policy;
-@synthesize processingMessageQueue;
 @synthesize scrollBottom;
 @synthesize scrollTop;
 @synthesize sink;
@@ -64,7 +62,6 @@
 		maxLines = 300;
 		
 		lines				   = [NSMutableArray new];
-		messageQueue		   = [NSMutableArray new];
 		highlightedLineNumbers = [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -87,7 +84,6 @@
 	[lines drain];
 	[memberMenu drain];
 	[menu drain];
-	[messageQueue drain];
 	[policy drain];
 	[sink drain];
 	[theme drain];
@@ -154,28 +150,6 @@
 	view.autoresizingMask	  = (NSViewWidthSizable | NSViewHeightSizable);
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
-}
-
-- (void)processMessageQueue
-{	
-	if (processingMessageQueue == NO && NSObjectIsNotEmpty(messageQueue)) {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		
-		processingMessageQueue = YES;
-		
-		if (NSObjectIsNotEmpty(messageQueue)) {
-			for (NSArray *message in messageQueue) {
-				NSString	 *mhtml	 = [message safeObjectAtIndex:0];
-				NSDictionary *mattrs = [message dictionaryAtIndex:1];
-				
-				[self writeLine:mhtml attributes:mattrs ignoringQueue:YES];
-				
-				[messageQueue removeObject:messageQueue];
-			}
-		}
-		
-		processingMessageQueue = NO;
-	}
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
@@ -619,25 +593,21 @@
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}
 	
-	[self writeLine:s attributes:attrs ignoringQueue:NO];
-	
-	if (highlighted && [Preferences logAllHighlightsToQuery]) {
-		IRCChannel *hlc = [client findChannelOrCreate:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE") useTalk:YES];
-		
-		line.body			= TXTFLS(@"IRC_USER_WAS_HIGHLIGHTED", [channel name], line.body);
-		line.keywords		= nil;
-		line.excludeWords	= nil;
-		
-		[hlc print:line];
-		[hlc setIsUnread:YES];
-		
-		[world reloadTree];
-	}
+	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
 	
 	return highlighted;
 }
+	  
+- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
+{
+	while ([view isLoading]) {
+		continue;
+	}
+	
+	[[self iomt] writeLine:aHtml attributes:attrs];
+}
 
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs ignoringQueue:(BOOL)ignoreQueue
+- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs 
 {
 	[self savePosition];
 	
@@ -646,20 +616,6 @@
 	
 	DOMDocument *doc  = [self mainFrameDocument];
 	DOMElement  *body = [self body:doc];
-	
-	if (PointerIsEmpty(body)) {
-		NSArray *queueEntry = [NSArray arrayWithObjects:aHtml, attrs, nil];
-		
-		[messageQueue safeAddObject:queueEntry];
-		
-		if (NSObjectIsEmpty(messageQueue)) {
-			[self performSelector:@selector(processingMessageQueue) withObject:nil afterDelay:2.0];
-		}
-		
-		return;
-	} else {
-		[self processingMessageQueue];
-	}
 	
 	DOMElement *div = [doc createElement:@"div"];
 	

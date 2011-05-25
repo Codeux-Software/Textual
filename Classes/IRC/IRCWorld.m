@@ -395,8 +395,8 @@
 
 - (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
-	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
+	if ([Preferences stopGrowlOnActive] && [window isOnCurrentWorkspace]) return;
 	
 	[growl notify:type title:title desc:desc context:context];
 }

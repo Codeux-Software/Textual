@@ -164,9 +164,11 @@
 		IRCClient  *client  = cellItem.log.client;
 		IRCChannel *channel = cellItem.log.channel;
 		
+		NSWindow *parentWindow = [parent.keyDelegate window];
+		
 		/* Draw Background */
 		
-		if (isSelected && [NSApp isActive]) {
+		if (isSelected && [parentWindow isOnCurrentWorkspace]) {
 			/* We draw selected cells using images because the color
 			 that Apple uses for cells when the table is not in focus
 			 looks ugly in this developer's opinion. */

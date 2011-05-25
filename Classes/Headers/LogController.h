@@ -29,7 +29,6 @@
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
-	BOOL processingMessageQueue;
 	BOOL needsLimitNumberOfLines;
 	
 	NSInteger count;
@@ -39,7 +38,6 @@
 	NSInteger loadingImages;
 	
 	NSMutableArray *lines;
-	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
 
 	NSString *html;
@@ -69,12 +67,10 @@
 @property (nonatomic, assign) NSInteger lineNumber;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) BOOL processingMessageQueue;
 @property (nonatomic, assign) NSInteger loadingImages;
 @property (nonatomic, retain) NSString *html;
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic, assign) NSInteger scrollTop;
-@property (nonatomic, retain) NSMutableArray *messageQueue;
 @property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
 
 - (void)setUp;
