@@ -41,6 +41,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+	NSWindow *parentWindow = [self window];
+	
 	NSRect cellBounds		= [self bounds];
 	NSRect hightlightFrame	= NSMakeRect(0.0, 10.0, cellBounds.size.width, (cellBounds.size.height - 10.0));
 	
@@ -55,7 +57,7 @@
 	NSGradient   *gradient;
 	NSBezierPath *gradientPath = [NSBezierPath bezierPathWithRoundedRect:blackOutlineFrame xRadius:3.6 yRadius:3.6];
 	
-	if ([NSApp isActive]) {
+	if ([parentWindow isOnCurrentWorkspace]) {
 		gradient = [[NSGradient alloc] initWithStartingColor:LION_ACTIVE_START_GRADIENT endingColor:LION_ACTIVE_STOP_GRADIENT];
 	} else {
 		gradient = [[NSGradient alloc] initWithStartingColor:LION_INACTIVE_START_GRADIENT endingColor:LION_INACTIVE_STOP_GRADIENT];

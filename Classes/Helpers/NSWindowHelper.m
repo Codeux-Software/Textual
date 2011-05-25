@@ -88,7 +88,7 @@
 
 - (BOOL)isOnCurrentWorkspace
 {
-	return [self isOnActiveSpace];
+	return ([self isOnActiveSpace] && [self isVisible] && [NSApp keyWindow] == self);
 }
 
 @end

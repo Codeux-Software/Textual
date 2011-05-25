@@ -2817,8 +2817,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 	
-	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return YES;
 	if ([Preferences growlEnabledForEvent:type] == NO) return YES;
+	if ([Preferences stopGrowlOnActive] && [world.window isOnCurrentWorkspace]) return YES;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
 	
 	IRCChannel *channel = nil;
@@ -2869,8 +2869,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 	
-	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return YES;
 	if ([Preferences growlEnabledForEvent:type] == NO) return YES;
+	if ([Preferences stopGrowlOnActive] && [world.window isOnCurrentWorkspace]) return YES;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
 	
 	IRCChannel *channel = nil;
@@ -2928,6 +2928,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)setKeywordState:(id)t
 {
+	BOOL isActiveWindow = [world.window isOnCurrentWorkspace];
+	
 	if ([t isKindOfClass:[IRCChannel class]]) {
 		if ([t isChannel] == YES || [t isTalk] == YES) {
 			if (NSDissimilarObjects(world.selected, t) || [[NSApp mainWindow] isOnCurrentWorkspace] == NO) {
@@ -2938,7 +2940,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	if ([t isUnread] || ([NSApp isActive] && world.selected == t)) {
+	if ([t isUnread] || (isActiveWindow && world.selected == t)) {
 		return;
 	}
 	
@@ -2946,14 +2948,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[self reloadTree];
 	
-	if ([NSApp isActive] == NO) {
+	if (isActiveWindow == NO) {
 		[NSApp requestUserAttention:NSInformationalRequest];
 	}
 }
 
 - (void)setNewTalkState:(id)t
 {
-	if ([t isUnread] || ([NSApp isActive] && world.selected == t)) {
+	BOOL isActiveWindow = [world.window isOnCurrentWorkspace];
+	
+	if ([t isUnread] || (isActiveWindow && world.selected == t)) {
 		return;
 	}
 	
@@ -2961,7 +2965,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[self reloadTree];
 	
-	if ([NSApp isActive] == NO) {
+	if (isActiveWindow == NO) {
 		[NSApp requestUserAttention:NSInformationalRequest];
 	}
 	
@@ -2970,6 +2974,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)setUnreadState:(id)t
 {
+	BOOL isActiveWindow = [world.window isOnCurrentWorkspace];
+	
 	if ([t isKindOfClass:[IRCChannel class]]) {
 		if ([Preferences countPublicMessagesInIconBadge] == NO) {
 			if ([t isTalk] == YES && [t isClient] == NO) {
@@ -2992,7 +2998,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[t setTreeUnreadCount:([t treeUnreadCount] + 1)];
 	}
 	
-	if ([NSApp isActive] && world.selected == t) {
+	if (isActiveWindow && world.selected == t) {
 		return;
 	} else {
 		[t setIsUnread:YES];
