@@ -182,7 +182,7 @@
 
 "ABOUT_WINDOW_BUILD_NUMBER" = "Version %@";
 
-"CHANNEL_LIST_NETWORK_NAME" = "%@ Channel List";
+"CHANNEL_LIST_NETWORK_NAME" = "Channel List for \"%@\"";
 
 "USER_TRACKING_HOSTMASK_CONNECTED" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected."; // ircop 
 "USER_TRACKING_NICKNAME_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available."; // normal user 

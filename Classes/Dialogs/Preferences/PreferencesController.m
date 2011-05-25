@@ -526,6 +526,14 @@
 	[_NSWorkspace() openFile:[Preferences whereApplicationSupportPath]];
 }
 
+- (void)onHighlightLoggingChanged:(id)sender
+{
+	if ([Preferences logAllHighlightsToQuery] == NO) {
+		for (IRCClient *u in world.clients) {
+			[u.highlights removeAllObjects];
+		}
+	}
+}
 #pragma mark -
 #pragma mark NSWindow Delegate
 

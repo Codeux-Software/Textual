@@ -837,11 +837,15 @@
 {
 	if (highlightSheet) return;
 	
+	IRCClient *u = [world selectedClient];
+	
+	if (NO_CLIENT) return;
+	
 	HighlightSheet *d = [HighlightSheet new];
 	
 	d.delegate = self;
 	d.window = window;
-	d.list = world.highlights;
+	d.list = u.highlights;
 	
 	[d show];
 	

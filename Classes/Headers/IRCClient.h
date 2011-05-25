@@ -28,6 +28,7 @@ typedef enum {
 	IRCChannel *lastSelectedChannel;
 	
 	NSMutableArray *channels;
+	NSMutableArray *highlights;
 	NSMutableArray *commandQueue;
 	
 	NSMutableDictionary *trackedUsers;
@@ -100,6 +101,7 @@ typedef enum {
 @property (nonatomic, retain) IRCChannel *whoisChannel;
 @property (nonatomic, retain) IRCChannel *lastSelectedChannel;
 @property (nonatomic, retain) NSMutableArray *channels;
+@property (nonatomic, retain) NSMutableArray *highlights;
 @property (nonatomic, retain) NSMutableArray *commandQueue;
 @property (nonatomic, retain) NSMutableDictionary *trackedUsers;
 @property (nonatomic, assign) CFAbsoluteTime lastLagCheck;

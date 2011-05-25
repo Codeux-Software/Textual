@@ -36,7 +36,6 @@
 @synthesize extrac;
 @synthesize fieldEditor;
 @synthesize growl;
-@synthesize highlights;
 @synthesize itemId;
 @synthesize logBase;
 @synthesize logMenu;
@@ -61,8 +60,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		clients		= [NSMutableArray new];
-		highlights	= [NSMutableArray new];
+		clients	= [NSMutableArray new];
 	}
 	
 	return self;
@@ -223,14 +221,14 @@
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
 		NSArray  *entry = [NSArray arrayWithObjects:channel.name, nickname, time, [message attributedStringWithIRCFormatting], nil];
 		
-		[highlights safeAddObject:entry];
+		[channel.client.highlights safeAddObject:entry];
 		
 		if (menuController.highlightSheet) {
 			[menuController.highlightSheet.table reloadData];
 		}
 	} else {
-		if (NSObjectIsNotEmpty(highlights)) {
-			[highlights removeAllObjects];
+		if (NSObjectIsNotEmpty(channel.client.highlights)) {
+			[channel.client.highlights removeAllObjects];
 		}
 	}
 }
