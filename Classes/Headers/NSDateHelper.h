@@ -2,5 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface NSDate (NSDateHelper)
++ (NSInteger)epochTime;
 + (NSInteger)secondsSinceUnixTimestamp:(NSInteger)stamp;
 @end

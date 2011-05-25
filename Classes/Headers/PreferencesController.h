@@ -81,17 +81,17 @@
 
 - (void)show;
 
-- (IBAction)onAddKeyword:(id)sender;
-- (IBAction)onAddExcludeWord:(id)sender;
+- (void)onAddKeyword:(id)sender;
+- (void)onAddExcludeWord:(id)sender;
 
-- (IBAction)onSelectFont:(id)sender;
-- (IBAction)onStyleChanged:(id)sender;
-- (IBAction)onChangedTheme:(id)sender;
-- (IBAction)onPrefPaneSelected:(id)sender;
-- (IBAction)onOpenPathToThemes:(id)sender;
-- (IBAction)onOpenPathToScripts:(id)sender;
-- (IBAction)onChangedTransparency:(id)sender;
-- (IBAction)onTranscriptFolderChanged:(id)sender;
+- (void)onSelectFont:(id)sender;
+- (void)onStyleChanged:(id)sender;
+- (void)onChangedTheme:(id)sender;
+- (void)onPrefPaneSelected:(id)sender;
+- (void)onOpenPathToThemes:(id)sender;
+- (void)onOpenPathToScripts:(id)sender;
+- (void)onChangedTransparency:(id)sender;
+- (void)onTranscriptFolderChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)

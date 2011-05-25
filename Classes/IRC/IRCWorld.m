@@ -36,6 +36,7 @@
 @synthesize extrac;
 @synthesize fieldEditor;
 @synthesize growl;
+@synthesize highlights;
 @synthesize itemId;
 @synthesize logBase;
 @synthesize logMenu;
@@ -60,7 +61,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		clients = [NSMutableArray new];
+		clients		= [NSMutableArray new];
+		highlights	= [NSMutableArray new];
 	}
 	
 	return self;
@@ -211,6 +213,26 @@
 	bundlesForUserInput		= [NSDictionary new];
 	bundlesForServerInput	= [NSDictionary new];
 	bundlesWithOutputRules	= [NSDictionary new];
+}
+
+- (void)addHighlightInChannel:(IRCChannel *)channel byUser:(NSString *)nickname withMessage:(NSString *)message
+{
+	if ([Preferences logAllHighlightsToQuery]) {
+		message = [message trim];
+		
+		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
+		NSArray  *entry = [NSArray arrayWithObjects:channel.name, nickname, time, [message attributedStringWithIRCFormatting], nil];
+		
+		[highlights safeAddObject:entry];
+		
+		if (menuController.highlightSheet) {
+			[menuController.highlightSheet.table reloadData];
+		}
+	} else {
+		if (NSObjectIsNotEmpty(highlights)) {
+			[highlights removeAllObjects];
+		}
+	}
 }
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp

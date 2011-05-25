@@ -350,6 +350,9 @@
 		4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDFE2F7136F664A0039300A /* ThinSplitView.m */; };
 		4CDFE2FA136F66660039300A /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDFE2F9136F66660039300A /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFB1053138CE8E0007B8F2E /* HighlightSheet.xib */; };
+		4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; };
+		4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -666,6 +669,9 @@
 		4CF1682D11DC7CAA00B60505 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanSheet.xib; sourceTree = "<group>"; };
 		4CFA00C712F4EE2900A9EC74 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectHelper.h; path = Classes/Headers/NSObjectHelper.h; sourceTree = SOURCE_ROOT; };
+		4CFB1054138CE8E0007B8F2E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/HighlightSheet.xib; sourceTree = "<group>"; };
+		4CFB1056138CEA96007B8F2E /* HighlightSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HighlightSheet.h; path = Classes/Headers/HighlightSheet.h; sourceTree = SOURCE_ROOT; };
+		4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightSheet.m; sourceTree = "<group>"; };
 		4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
 		4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInvocationGrabber.m; sourceTree = "<group>"; };
 		4CFF3BD711CC715A00FF2930 /* DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDExtensions.m; sourceTree = "<group>"; };
@@ -841,6 +847,7 @@
 				4CF1683011DC7CB500B60505 /* ChanBanSheet.xib */,
 				4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */,
+				4CFB1053138CE8E0007B8F2E /* HighlightSheet.xib */,
 				4C62C7581221D385002DCB9A /* InputPromptDialog.xib */,
 				78A7B5D811745616006B324A /* InviteSheet.xib */,
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
@@ -1307,6 +1314,8 @@
 				4C83EBAE1311B3BC0016AE76 /* ChanInviteExceptionSheet.m */,
 				4CD0E62D12F1B53300C8F016 /* ChannelSheet.h */,
 				78A8C0CC11737F660044E7A1 /* ChannelSheet.m */,
+				4CFB1056138CEA96007B8F2E /* HighlightSheet.h */,
+				4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */,
 				4CD0E62E12F1B53300C8F016 /* InputPromptDialog.h */,
 				4C8A729B1221E98C00FD9773 /* InputPromptDialog.m */,
 				4CD0E62F12F1B53300C8F016 /* InviteSheet.h */,
@@ -1670,6 +1679,7 @@
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
 				4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */,
 				4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */,
+				4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1842,6 +1852,7 @@
 				4CD3CA47138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif in Resources */,
 				4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */,
 				4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */,
+				4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2017,6 +2028,7 @@
 				4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */,
 				4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */,
 				4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */,
+				4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2095,6 +2107,14 @@
 				4CF1682D11DC7CAA00B60505 /* English */,
 			);
 			name = ChanBanSheet.xib;
+			sourceTree = "<group>";
+		};
+		4CFB1053138CE8E0007B8F2E /* HighlightSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CFB1054138CE8E0007B8F2E /* English */,
+			);
+			name = HighlightSheet.xib;
 			sourceTree = "<group>";
 		};
 		78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */ = {

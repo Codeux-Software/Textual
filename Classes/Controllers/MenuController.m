@@ -25,6 +25,7 @@
 @synthesize channelSheet;
 @synthesize closeWindowItem;
 @synthesize currentSearchPhrase;
+@synthesize highlightSheet;
 @synthesize inviteSheet;
 @synthesize isInFullScreenMode;
 @synthesize master;
@@ -57,6 +58,7 @@
 	[aboutPanel drain];
 	[channelSheet drain];
 	[currentSearchPhrase drain];
+	[highlightSheet sheet];
 	[inviteSheet drain];
 	[modeSheet drain];
 	[nickSheet drain];
@@ -168,21 +170,32 @@
 		}
 		case 511:	// nick
 		case 519:	// channel list
+		{
 			return CONNECTED;
 			break;
+		}
 		case 522:	// copy server
+		{
 			return BOOLValueFromObject(u);
 			break;
+		}
 		case 523:	// delete server
+		{
 			return NOT_CONNECTED;
 			break;
+		}
 		case 541:	// server property
+		{
 			return BOOLValueFromObject(u);
 			break;
+		}
 		case 592:	// textual logs
+		{
 			return [Preferences logTranscript];
 			break;
+		}
 		case 601:	// join
+		{
 			[self validateChannelMenuSubmenus:item];
 			
 			if (IS_QUERY) {
@@ -202,7 +215,9 @@
 			}
 			
 			break;
+		}
 		case 602:	// leave
+		{
 			if (IS_QUERY) {
 				[item setHidden:YES];
 				
@@ -214,13 +229,19 @@
 			}
 			
 			break;
+		}
 		case 611:	// mode
+		{
 			return ACTIVE;
 			break;
+		}
 		case 612:	// topic
+		{
 			return ACTIVE;
 			break;
+		}
 		case 651:	// add channel
+		{
 			if (IS_QUERY) {
 				[item setHidden:YES];
 				
@@ -232,7 +253,9 @@
 			}
 			
 			break;
+		}
 		case 652:	// delete channel
+		{
 			if (IS_QUERY) {
 				[item setTitle:TXTLS(@"DELETE_QUERY_MENU_ITEM")];
 				
@@ -244,9 +267,12 @@
 			}
 			
 			break;
+		}
 		case 691:	// add channel - server menu
+		{
 			return BOOLValueFromObject(u);
 			break;
+		}
 		case 2005:	// invite
 		{
 			if (NOT_CONNECTED || [self checkSelectedMembers:item] == NO) return NO;
@@ -263,6 +289,7 @@
 			break;
 		}
 		case 5421: // query logs
+		{
 			if (IS_QUERY) {
 				[item setHidden:NO];
 				
@@ -278,6 +305,7 @@
 			}
 			
 			break;
+		}
 		case 9631: // close window
 		{
 			if ([window isKeyWindow]) {
@@ -327,9 +355,16 @@
 			
 			return YES;
 		}
+		case 593: // Highlights
+		{
+			return ([Preferences logAllHighlightsToQuery] && CONNECTED);
+			break;
+		}
 		default:
+		{
 			return YES;
 			break;
+		}
 	}
 	
 	return YES;
@@ -798,6 +833,27 @@
 	}
 }
 
+- (void)showHighlightSheet:(id)sender
+{
+	if (highlightSheet) return;
+	
+	HighlightSheet *d = [HighlightSheet new];
+	
+	d.delegate = self;
+	d.window = window;
+	d.list = world.highlights;
+	
+	[d show];
+	
+	highlightSheet = d;
+}
+
+- (void)highlightSheetWillClose:(HighlightSheet *)sender
+{
+	[highlightSheet drain];
+	highlightSheet = nil;
+}
+
 - (void)onTopic:(id)sender
 {
 	if (topicSheet) return;
@@ -1000,30 +1056,30 @@
 
 - (void)memberListDoubleClicked:(id)sender
 {/*
-	MemberListView *view = sender;
-	
-	NSPoint pt;
-	NSInteger n;
-	
-	pt = [window mouseLocationOutsideOfEventStream];
-	pt = [view convertPoint:pt fromView:nil];
-	
-	n = [view rowAtPoint:pt];
-	
-	if (n >= 0) {
-		if (NSObjectIsNotEmpty([view selectedRowIndexes])) {
-			[view selectItemAtIndex:n];
-		}
-		
-		switch ([Preferences userDoubleClickOption]) {
-			case USERDC_ACTION_WHOIS: 
-				[self whoisSelectedMembers:nil deselect:NO];
-				break;
-			case USERDC_ACTION_QUERY: 
-				[self onMemberTalk:nil];
-				break;
-		}
-	}*/
+  MemberListView *view = sender;
+  
+  NSPoint pt;
+  NSInteger n;
+  
+  pt = [window mouseLocationOutsideOfEventStream];
+  pt = [view convertPoint:pt fromView:nil];
+  
+  n = [view rowAtPoint:pt];
+  
+  if (n >= 0) {
+  if (NSObjectIsNotEmpty([view selectedRowIndexes])) {
+  [view selectItemAtIndex:n];
+  }
+  
+  switch ([Preferences userDoubleClickOption]) {
+  case USERDC_ACTION_WHOIS: 
+  [self whoisSelectedMembers:nil deselect:NO];
+  break;
+  case USERDC_ACTION_QUERY: 
+  [self onMemberTalk:nil];
+  break;
+  }
+  }*/
 }
 
 - (void)onMemberWhois:(id)sender

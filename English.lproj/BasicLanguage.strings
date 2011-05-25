@@ -42,6 +42,8 @@
 "UNDO_TYPING_MENU_ITEM" = "Typing";
 "UNDO_FORMATTING_MENU_ITEM" = "Formatting";
 
+"TIME_AGO" = "%@ Ago";
+
 "OK_BUTTON" = "OK";
 "NO_BUTTON" = "No";
 "YES_BUTTON" = "Yes";

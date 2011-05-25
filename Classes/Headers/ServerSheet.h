@@ -125,23 +125,23 @@
 
 - (void)close;
 
-- (IBAction)ok:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (void)ok:(id)sender;
+- (void)cancel:(id)sender;
 
-- (IBAction)hostComboChanged:(id)sender;
+- (void)hostComboChanged:(id)sender;
 
-- (IBAction)encodingChanged:(id)sender;
-- (IBAction)proxyChanged:(id)sender;
-- (IBAction)bouncerModeChanged:(id)sender;
+- (void)encodingChanged:(id)sender;
+- (void)proxyChanged:(id)sender;
+- (void)bouncerModeChanged:(id)sender;
 
-- (IBAction)addChannel:(id)sender;
-- (IBAction)editChannel:(id)sender;
-- (IBAction)deleteChannel:(id)sender;
+- (void)addChannel:(id)sender;
+- (void)editChannel:(id)sender;
+- (void)deleteChannel:(id)sender;
 
-- (IBAction)addIgnore:(id)sender;
-- (IBAction)editIgnore:(id)sender;
-- (IBAction)deleteIgnore:(id)sender;
-- (IBAction)showAddIgnoreMenu:(id)sender;
+- (void)addIgnore:(id)sender;
+- (void)editIgnore:(id)sender;
+- (void)deleteIgnore:(id)sender;
+- (void)showAddIgnoreMenu:(id)sender;
 @end
 
 @interface NSObject (ServerSheetDelegate)

@@ -23,6 +23,6 @@
 
 - (void)endSheet;
 
-- (IBAction)ok:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (void)ok:(id)sender;
+- (void)cancel:(id)sender;
 @end
