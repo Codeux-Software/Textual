@@ -211,7 +211,7 @@
 		
 		if (isGroupItem == NO) {
 			if (channel.isChannel) {
-				if (client.isConnecting) {
+				if (client.isConnecting || channel.status == IRCChannelJoining) {
 					[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
 				} else {
 					if (channel.isActive) {
@@ -276,10 +276,6 @@
 		
 		[newValue drain];
 		[itemShadow drain];
-		
-		if (rowIndex == 0) {
-			[parent toggleAddServerButton];
-		}
 	}
 }
 

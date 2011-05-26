@@ -83,4 +83,11 @@
 	}
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+	[super drawRect:dirtyRect];
+	
+	[self toggleAddServerButton];
+}
+
 @end
