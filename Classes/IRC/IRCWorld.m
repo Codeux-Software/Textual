@@ -221,7 +221,8 @@
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
 		NSArray  *entry = [NSArray arrayWithObjects:channel.name, nickname, time, [message attributedStringWithIRCFormatting], nil];
 		
-		[channel.client.highlights safeAddObject:entry];
+		/* We insert at head so that latest is always at top. */
+		[channel.client.highlights insertObject:entry atIndex:0];
 		
 		if (menuController.highlightSheet) {
 			[menuController.highlightSheet.table reloadData];

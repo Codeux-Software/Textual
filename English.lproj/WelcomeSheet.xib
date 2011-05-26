@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11A390</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1510</string>
-		<string key="IBDocument.AppKitVersion">1110.91</string>
-		<string key="IBDocument.HIToolboxVersion">544.00</string>
+		<string key="IBDocument.SystemVersion">11A459e</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1565</string>
+		<string key="IBDocument.AppKitVersion">1121.2</string>
+		<string key="IBDocument.HIToolboxVersion">557.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1510</string>
+			<string key="NS.object.0">1565</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -162,7 +162,7 @@
 										<object class="NSTableView" id="465506301">
 											<reference key="NSNextResponder" ref="443249184"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{231, 157}</string>
+											<string key="NSFrameSize">{231, 156}</string>
 											<reference key="NSSuperview" ref="443249184"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="37333325"/>
@@ -242,7 +242,7 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</object>
-									<string key="NSFrame">{{1, 1}, {231, 157}}</string>
+									<string key="NSFrame">{{1, 1}, {231, 156}}</string>
 									<reference key="NSSuperview" ref="908567034"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="465506301"/>
@@ -274,7 +274,7 @@
 									<double key="NSPercent">0.99553573131561279</double>
 								</object>
 							</object>
-							<string key="NSFrame">{{114, 151}, {233, 159}}</string>
+							<string key="NSFrame">{{114, 152}, {233, 158}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="443249184"/>
@@ -337,7 +337,6 @@
 							<string key="NSFrame">{{244, 12}, {138, 32}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="43017797">
 								<int key="NSCellFlags">67239424</int>
@@ -378,7 +377,7 @@
 						<object class="NSButton" id="7880712">
 							<reference key="NSNextResponder" ref="986584432"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{114, 122}, {23, 23}}</string>
+							<string key="NSFrame">{{114, 126}, {23, 23}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="590369024"/>
@@ -404,7 +403,7 @@
 						<object class="NSButton" id="590369024">
 							<reference key="NSNextResponder" ref="986584432"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{136, 122}, {23, 23}}</string>
+							<string key="NSFrame">{{136, 126}, {23, 23}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="736831823"/>
@@ -508,7 +507,7 @@
 						<object class="NSBox" id="1072408873">
 							<reference key="NSNextResponder" ref="986584432"/>
 							<int key="NSvFlags">12</int>
-							<string key="NSFrame">{{12, 405}, {378, 5}}</string>
+							<string key="NSFrame">{{13, 405}, {378, 5}}</string>
 							<string key="NSBounds">{{1.5, 0}, {378, 5}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
@@ -533,7 +532,7 @@
 						<object class="NSTextField" id="692171969">
 							<reference key="NSNextResponder" ref="986584432"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{111, 60}, {265, 52}}</string>
+							<string key="NSFrame">{{111, 75}, {265, 39}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="84912286"/>
@@ -541,7 +540,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="218068683">
 								<int key="NSCellFlags">69336577</int>
 								<int key="NSCellFlags2">4194304</int>
-								<string key="NSContents">Additional settings including NickServ password, ident, real name, etc. can be edited later by right clicking the server and selecting "Server Properties".</string>
+								<string key="NSContents">Additional settings including NickServ password, username, real name, etc. can be edited later by right clicking a server and selecting "Server Properties."</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">10</double>
@@ -563,7 +562,7 @@
 						<object class="NSBox" id="736831823">
 							<reference key="NSNextResponder" ref="986584432"/>
 							<int key="NSvFlags">12</int>
-							<string key="NSFrame">{{12, 58}, {378, 5}}</string>
+							<string key="NSFrame">{{13, 58}, {378, 5}}</string>
 							<string key="NSBounds">{{1.5, 0}, {378, 5}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
@@ -605,14 +604,15 @@
 							</object>
 						</object>
 					</object>
-					<string key="NSFrame">{{7, 11}, {402, 533}}</string>
+					<string key="NSFrameSize">{402, 533}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="982489368"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMinSize">{402, 551}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
+				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -819,10 +819,10 @@
 							<reference ref="186566632"/>
 							<reference ref="271099671"/>
 							<reference ref="84912286"/>
-							<reference ref="7880712"/>
-							<reference ref="590369024"/>
 							<reference ref="736831823"/>
 							<reference ref="692171969"/>
+							<reference ref="7880712"/>
+							<reference ref="590369024"/>
 						</object>
 						<reference key="parent" ref="403775946"/>
 					</object>

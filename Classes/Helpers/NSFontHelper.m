@@ -16,7 +16,7 @@ const CGFloat kRotationForItalicText = -14.0;
 		NSAffineTransform *fontTransform	= [NSAffineTransform transform];    
 		NSAffineTransform *italicTransform	= [NSAffineTransform transform];  
 		
-		[fontTransform scaleBy:[NSFont systemFontSizeForControlSize:NSRegularControlSize]];           
+		[fontTransform scaleBy:[self pointSize]];           
 		
 		NSAffineTransformStruct italicTransformData;   
 		
