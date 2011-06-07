@@ -625,7 +625,17 @@
 
 - (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
-	while (loaded == NO) {
+	NSInteger loopProtect = 0;
+	
+	while ([view isLoading]) {
+		[NSThread sleepForTimeInterval:0.1];
+		
+		loopProtect++;
+		
+		if (loopProtect >= 30) {
+			break;
+		}
+		
 		continue;
 	}
 	

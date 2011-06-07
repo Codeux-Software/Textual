@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual.trial</string>
+	<string>com.codeux.irc.textual</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
