@@ -85,7 +85,7 @@
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C78406E1373AACD00D0791F /* GCDAsyncSocket.h */; };
+		4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C78406E1373AACD00D0791F /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7840711373AAD400D0791F /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7840701373AAD400D0791F /* GCDAsyncSocket.m */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
@@ -1480,6 +1480,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */,
 				4CD0E64612F1B58600C8F016 /* AboutPanel.h in Headers */,
 				4CD0E61C12F1B4E200C8F016 /* AddressBook.h in Headers */,
 				4CD0E63412F1B53300C8F016 /* AddressBookSheet.h in Headers */,
@@ -1592,7 +1593,6 @@
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
-				4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
