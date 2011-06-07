@@ -5,13 +5,13 @@
 	<key>Build Number</key>
 	<string>9267</string>
 	<key>Build Reference</key>
-	<string>2.0.7-7-g497cb74-master</string>
+	<string>2.0.7-8-gc31ed0e-master</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual.trial</string>
+	<string>com.codeux.irc.textual</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
