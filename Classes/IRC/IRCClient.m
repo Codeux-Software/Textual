@@ -805,7 +805,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[autoJoinTimer stop];
 	[autoJoinTimer start:AUTOJOIN_DELAY_INTERVAL];
-	NSLog(@"not even started");
 }
 
 - (void)stopAutoJoinTimer
