@@ -19,7 +19,6 @@
 @synthesize ignoreCTCP;
 @synthesize ignoreJPQE;
 @synthesize notifyJoins;
-@synthesize notifyWhoisJoins;
 @synthesize ignorePMHighlights;
 @synthesize ignoreWindow;
 @synthesize notifyWindow;
@@ -63,7 +62,6 @@
 	[ignoreCTCP			setState:ignore.ignoreCTCP];
 	[ignoreJPQE			setState:ignore.ignoreJPQE];
 	[notifyJoins		setState:ignore.notifyJoins];
-	[notifyWhoisJoins	setState:ignore.notifyWhoisJoins];
 	[ignorePMHighlights setState:ignore.ignorePMHighlights];
 	
 	[self startSheet];
@@ -84,7 +82,6 @@
 	ignore.ignoreCTCP			= [ignoreCTCP state];
 	ignore.ignoreJPQE			= [ignoreJPQE state];
 	ignore.notifyJoins			= [notifyJoins state];
-	ignore.notifyWhoisJoins		= [notifyWhoisJoins state];
 	ignore.ignorePMHighlights	= [ignorePMHighlights state];
 	
 	[ignore processHostMaskRegex];

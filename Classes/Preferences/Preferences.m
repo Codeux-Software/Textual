@@ -613,28 +613,18 @@ static NSMutableDictionary *commandIndex = nil;
 + (NSString *)titleForEvent:(GrowlNotificationType)event
 {
 	switch (event) {
-		case GROWL_HIGHLIGHT:
-			return TXTLS(@"GROWL_HIGHLIGHT");
-		case GROWL_NEW_TALK:
-			return TXTLS(@"GROWL_NEW_TALK");
-		case GROWL_CHANNEL_MSG:
-			return TXTLS(@"GROWL_CHANNEL_MSG");
-		case GROWL_CHANNEL_NOTICE:
-			return TXTLS(@"GROWL_CHANNEL_NOTICE");
-		case GROWL_TALK_MSG:
-			return TXTLS(@"GROWL_TALK_MSG");
-		case GROWL_TALK_NOTICE:
-			return TXTLS(@"GROWL_TALK_NOTICE");
-		case GROWL_KICKED:
-			return TXTLS(@"GROWL_KICKED");
-		case GROWL_INVITED:
-			return TXTLS(@"GROWL_INVITED");
-		case GROWL_LOGIN:
-			return TXTLS(@"GROWL_LOGIN");
-		case GROWL_DISCONNECT:
-			return TXTLS(@"GROWL_DISCONNECT");
-		case GROWL_ADDRESS_BOOK_MATCH:
-			return TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
+		case GROWL_HIGHLIGHT:			return TXTLS(@"GROWL_HIGHLIGHT");
+		case GROWL_NEW_TALK:			return TXTLS(@"GROWL_NEW_TALK");
+		case GROWL_CHANNEL_MSG:			return TXTLS(@"GROWL_CHANNEL_MSG");
+		case GROWL_CHANNEL_NOTICE:		return TXTLS(@"GROWL_CHANNEL_NOTICE");
+		case GROWL_TALK_MSG:			return TXTLS(@"GROWL_TALK_MSG");
+		case GROWL_TALK_NOTICE:			return TXTLS(@"GROWL_TALK_NOTICE");
+		case GROWL_KICKED:				return TXTLS(@"GROWL_KICKED");
+		case GROWL_INVITED:				return TXTLS(@"GROWL_INVITED");
+		case GROWL_LOGIN:				return TXTLS(@"GROWL_LOGIN");
+		case GROWL_DISCONNECT:			return TXTLS(@"GROWL_DISCONNECT");
+		case GROWL_ADDRESS_BOOK_MATCH:	return TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
+		default: return nil;
 	}
 	
 	return nil;
@@ -643,28 +633,18 @@ static NSMutableDictionary *commandIndex = nil;
 + (NSString *)keyForEvent:(GrowlNotificationType)event
 {
 	switch (event) {
-		case GROWL_HIGHLIGHT:
-			return @"eventHighlight";
-		case GROWL_NEW_TALK:
-			return @"eventNewtalk";
-		case GROWL_CHANNEL_MSG:
-			return @"eventChannelText";
-		case GROWL_CHANNEL_NOTICE:
-			return @"eventChannelNotice";
-		case GROWL_TALK_MSG:
-			return @"eventTalkText";
-		case GROWL_TALK_NOTICE:
-			return @"eventTalkNotice";
-		case GROWL_KICKED:
-			return @"eventKicked";
-		case GROWL_INVITED:
-			return @"eventInvited";
-		case GROWL_LOGIN:
-			return @"eventLogin";
-		case GROWL_DISCONNECT:
-			return @"eventDisconnect";
-		case GROWL_ADDRESS_BOOK_MATCH:
-			return @"eventAddressBookMatch";
+		case GROWL_HIGHLIGHT:			return @"eventHighlight";
+		case GROWL_NEW_TALK:			return @"eventNewtalk";
+		case GROWL_CHANNEL_MSG:			return @"eventChannelText";
+		case GROWL_CHANNEL_NOTICE:		return @"eventChannelNotice";
+		case GROWL_TALK_MSG:			return @"eventTalkText";
+		case GROWL_TALK_NOTICE:			return @"eventTalkNotice";
+		case GROWL_KICKED:				return @"eventKicked";
+		case GROWL_INVITED:				return @"eventInvited";
+		case GROWL_LOGIN:				return @"eventLogin";
+		case GROWL_DISCONNECT:			return @"eventDisconnect";
+		case GROWL_ADDRESS_BOOK_MATCH:	return @"eventAddressBookMatch";
+		default: return nil;
 	}
 	
 	return nil;
@@ -672,56 +652,104 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)soundForEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return nil;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"Sound"];
 	
 	return [_NSUserDefaults() objectForKey:key];
 }
 
 + (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"Sound"];
 	
 	[_NSUserDefaults() setObject:value forKey:key];
 }
 
 + (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return NO;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"Growl"];
 	
 	return [_NSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"Growl"];
 	
 	[_NSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)growlStickyForEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return NO;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"GrowlSticky"];
 	
 	return [_NSUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"GrowlSticky"];
 	
 	[_NSUserDefaults() setBool:value forKey:key];
 }
 
 + (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return NO;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"DisableWhileAway"];
 	
 	return [_NSUserDefaults() boolForKey:key];
 }
 
 + (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
 {
-	NSString *key = [[self keyForEvent:event] stringByAppendingString:@"DisableWhileAway"];
+	NSString *okey = [self keyForEvent:event];
+	
+	if (NSObjectIsEmpty(okey)) {
+		return;
+	}
+	
+	NSString *key = [okey stringByAppendingString:@"DisableWhileAway"];
 	
 	[_NSUserDefaults() setBool:value forKey:key];
 }
@@ -923,7 +951,7 @@ static NSInteger totalRunTime = 0;
 											title:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_TITLE")
 									defaultButton:TXTLS(@"YES_BUTTON") 
 								  alternateButton:TXTLS(@"NO_BUTTON") 
-								   suppressionKey:@"Preferences.prompts.default_irc_client" 
+								   suppressionKey:@"default_irc_client" 
 								  suppressionText:nil];
 		}
 	}
@@ -950,6 +978,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"SpellChecking"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
+	[d setBool:YES forKey:@"eventAddressBookMatch"];
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
 	[d setBool:YES forKey:@"Preferences.General.log_transcript"];
 	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];

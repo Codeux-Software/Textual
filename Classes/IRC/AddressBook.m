@@ -14,7 +14,6 @@
 @synthesize ignoreJPQE;
 @synthesize hostmaskRegex;
 @synthesize notifyJoins;
-@synthesize notifyWhoisJoins;
 @synthesize ignorePMHighlights;
 
 - (void)dealloc
@@ -39,7 +38,6 @@
 		ignoreCTCP			= [dic boolForKey:@"ignoreCTCP"];
 		ignoreJPQE			= [dic boolForKey:@"ignoreJPQE"];
 		notifyJoins			= [dic boolForKey:@"notifyJoins"];
-		notifyWhoisJoins	= [dic boolForKey:@"notifyWhoisJoins"];
 		ignorePMHighlights	= [dic boolForKey:@"ignorePMHighlights"];
 		
 		entryType = [dic integerForKey:@"entryType"];
@@ -62,7 +60,7 @@
 		hostmask = nil;
 		
 		hostmask	  = [nickname retain];
-		hostmaskRegex = [[NSString stringWithFormat:@"^%@$", nickname] retain];
+		hostmaskRegex = [[NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", nickname] retain];
 	} else {
 		if (NSObjectIsEmpty(hostmaskRegex)) {
 			NSString *nhostmask = hostmask;
@@ -131,7 +129,6 @@
 	[dic setBool:ignoreCTCP			forKey:@"ignoreCTCP"];
 	[dic setBool:ignoreJPQE			forKey:@"ignoreJPQE"];
 	[dic setBool:notifyJoins		forKey:@"notifyJoins"];
-	[dic setBool:notifyWhoisJoins	forKey:@"notifyWhoisJoins"];
 	[dic setInteger:entryType		forKey:@"entryType"];
 	
 	return dic;

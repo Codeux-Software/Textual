@@ -656,6 +656,14 @@ BOOL isUnicharDigit(unichar c)
 	return [self trim];
 }
 
+- (BOOL)isIPv6Address
+{
+	/* Basic matching. No need to overcomplicate it ... yet. */
+	NSArray *matches = [self componentsSeparatedByString:@":"];
+	
+	return ([matches count] >= 2 && [matches count] <= 7);
+}
+
 @end
 
 @implementation NSString (NSStringNumberHelper)

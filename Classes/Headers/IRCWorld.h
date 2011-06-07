@@ -142,7 +142,7 @@
 - (void)updateClientTitle:(IRCClient *)client;
 - (void)updateChannelTitle:(IRCChannel *)channel;
 
-- (void)addHighlightInChannel:(IRCChannel *)channel byUser:(NSString *)nickname withMessage:(NSString *)message;
+- (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message;
 - (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
 
 - (void)preferencesChanged;

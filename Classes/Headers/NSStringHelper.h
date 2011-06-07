@@ -72,6 +72,7 @@
 - (NSString *)decodeURIFragement;
 
 - (BOOL)isNickname;
+- (BOOL)isIPv6Address;
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
 

@@ -17,7 +17,7 @@
 	if ((self = [super init])) {
 		registered = [Preferences registeredToGrowl];
 	}
-
+	
 	return self;
 }
 
@@ -65,52 +65,74 @@
 	BOOL sticky = [Preferences growlStickyForEvent:type];
 	
 	switch (type) {
-		case GROWL_ADDRESS_BOOK_MATCH:
-			priority = 1;
-			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
-			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
-			break;
 		case GROWL_HIGHLIGHT:
+		{
 			priority = 1;
 			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
 			title = TXTFLS(@"GROWL_MSG_HIGHLIGHT_TITLE", title);
 			break;
+		}
 		case GROWL_NEW_TALK:
+		{
 			priority = 1;
 			kind =  TXTLS(@"GROWL_MSG_NEW_TALK");
 			title = TXTLS(@"GROWL_MSG_NEW_TALK_TITLE");
 			break;
+		}
 		case GROWL_CHANNEL_MSG:
+		{
 			kind =  TXTLS(@"GROWL_MSG_CHANNEL_MSG");
 			break;
+		}
 		case GROWL_CHANNEL_NOTICE:
+		{
 			kind =  TXTLS(@"GROWL_MSG_CHANNEL_NOTICE");
 			title = TXTFLS(@"GROWL_MSG_CHANNEL_NOTICE_TITLE", title);
 			break;
+		}
 		case GROWL_TALK_MSG:
+		{
 			kind =  TXTLS(@"GROWL_MSG_TALK_MSG");
 			title = TXTLS(@"GROWL_MSG_TALK_MSG_TITLE");
 			break;
+		}
 		case GROWL_TALK_NOTICE:
+		{
 			kind =  TXTLS(@"GROWL_MSG_TALK_NOTICE");
 			title = TXTLS(@"GROWL_MSG_TALK_NOTICE_TITLE");
 			break;
+		}
 		case GROWL_KICKED:
+		{
 			kind =  TXTLS(@"GROWL_MSG_KICKED");
 			title = TXTFLS(@"GROWL_MSG_KICKED_TITLE", title);
 			break;
+		}
 		case GROWL_INVITED:
+		{
 			kind =  TXTLS(@"GROWL_MSG_INVITED");
 			title = TXTFLS(@"GROWL_MSG_INVITED_TITLE", title);
 			break;
+		}
 		case GROWL_LOGIN:
+		{
 			kind =  TXTLS(@"GROWL_MSG_LOGIN");
 			title = TXTFLS(@"GROWL_MSG_LOGIN_TITLE", title);
 			break;
+		}
 		case GROWL_DISCONNECT:
+		{
 			kind =  TXTLS(@"GROWL_MSG_DISCONNECT");
 			title = TXTFLS(@"GROWL_MSG_DISCONNECT_TITLE", title);
 			break;
+		}
+		case GROWL_ADDRESS_BOOK_MATCH: 
+		{
+			NSLog(@"%@", desc);
+			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
+			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
+			break;
+		}
 	}
 	
 	[growl notifyWithType:kind title:title description:desc clickContext:context sticky:sticky priority:priority icon:nil];

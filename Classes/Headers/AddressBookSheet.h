@@ -13,7 +13,6 @@
 	IBOutlet NSButton *ignoreCTCP;
 	IBOutlet NSButton *ignoreJPQE;
 	IBOutlet NSButton *notifyJoins;
-	IBOutlet NSButton *notifyWhoisJoins;
 	IBOutlet NSButton *ignorePMHighlights;
 	
 	IBOutlet NSWindow *ignoreWindow;
@@ -35,7 +34,6 @@
 @property (nonatomic, retain) NSButton *ignoreCTCP;
 @property (nonatomic, retain) NSButton *ignoreJPQE;
 @property (nonatomic, retain) NSButton *notifyJoins;
-@property (nonatomic, retain) NSButton *notifyWhoisJoins;
 @property (nonatomic, retain) NSButton *ignorePMHighlights;
 @property (nonatomic, retain) NSWindow *ignoreWindow;
 @property (nonatomic, retain) NSWindow *notifyWindow;

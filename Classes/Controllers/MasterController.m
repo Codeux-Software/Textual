@@ -680,11 +680,6 @@
 	[Preferences sync];
 }
 
-- (void)themeOverrideAlertSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{	
-	[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.theme_override_info"];
-}
-
 - (void)themeStyleDidChange:(NSNotification *)note
 {
 	NSMutableString *sf = [NSMutableString string];
@@ -723,8 +718,8 @@
 		NSString *theme = [ViewTheme extractThemeName:[Preferences themeName]];
 		
 		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
-									   target:self 
-									   action:@selector(themeOverrideAlertSheetCallback:returnCode:contextInfo:) 
+									   target:[PopupPrompts class]
+									   action:@selector(popupPromptNULLSelector:) 
 										 body:TXTFLS(@"THEME_CHANGE_OVERRIDE_PROMPT_MESSAGE", theme, sf)
 										title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
 								defaultButton:TXTLS(@"OK_BUTTON")

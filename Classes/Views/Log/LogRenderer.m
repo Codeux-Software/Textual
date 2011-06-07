@@ -284,6 +284,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (c < 0x20) {
 			switch (c) {
 				case 0x02:
+				{
 					if (currentAttr & BOLD_ATTR) {
 						currentAttr &= ~BOLD_ATTR;
 					} else {
@@ -291,6 +292,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					}
 					
 					continue;
+				}
 				case 0x03:
 				{
 					NSInteger textColor       = -1;
@@ -368,9 +370,12 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					continue;
 				}
 				case 0x0F:
+				{
 					currentAttr = 0;
 					continue;
+				}
 				case 0x16:
+				{
 					if (currentAttr & ITALIC_ATTR) {
 						currentAttr &= ~ITALIC_ATTR;
 					} else {
@@ -378,7 +383,9 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					}
 					
 					continue;
+				}
 				case 0x1F:
+				{
 					if (currentAttr & UNDERLINE_ATTR) {
 						currentAttr &= ~UNDERLINE_ATTR;
 					} else {
@@ -386,6 +393,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					}
 					
 					continue;
+				}
 			}
 		}
 		

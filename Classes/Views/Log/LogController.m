@@ -111,6 +111,11 @@
 	}
 }
 
+- (BOOL)modernRenderingEngineEnabled
+{
+	return (theme.other.renderingEngineVersion == 2.1);
+}
+
 #pragma mark -
 #pragma mark Utilities
 
@@ -522,7 +527,11 @@
 	NSMutableString *s = [NSMutableString string];
 	
 	if (line.memberType == MEMBER_TYPE_MYSELF) {
-		[s appendFormat:@"<p type=\"%@\">", [LogLine memberTypeString:line.memberType]];
+		if ([self modernRenderingEngineEnabled]) {
+			[s appendFormat:@"<span type=\"%@\">", [LogLine memberTypeString:line.memberType]];
+		} else {
+			[s appendFormat:@"<p type=\"%@\">", [LogLine memberTypeString:line.memberType]];
+		}
 	} else {
 		[s appendFormat:@"<p>"];
 	}
@@ -587,7 +596,20 @@
 	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
 	
 	if (highlighted) {
-		[world addHighlightInChannel:channel byUser:line.nickInfo withMessage:line.body];
+		NSString *messageBody;
+		NSString *nicknameBody = [line.nick trim];
+		
+		if (type == LINE_TYPE_ACTION) {
+			if ([nicknameBody hasSuffix:@":"]) {
+				messageBody = [NSString stringWithFormat:@"• %@ %@", nicknameBody, line.body];
+			} else {
+				messageBody = [NSString stringWithFormat:@"• %@: %@", nicknameBody, line.body];
+			}
+		} else {
+			messageBody = [NSString stringWithFormat:@"%@ %@", nicknameBody, line.body];
+		}
+		
+		[world addHighlightInChannel:channel withMessage:messageBody];
 	}
 	
 	return highlighted;

@@ -3,7 +3,7 @@
 
 @interface HighlightSheet : SheetBase
 {
-	IBOutlet ListView    *table;
+	IBOutlet ListView *table;
 	IBOutlet NSTextField *header;
 	
 	NSMutableArray *list;

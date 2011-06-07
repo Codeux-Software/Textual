@@ -8,7 +8,7 @@
 {
 	IRCISupportInfo *isupport;
 	
-	NSMutableArray *allModes;
+	NSMutableArray		*allModes;
 	NSMutableDictionary *modeIndexes;
 }
 

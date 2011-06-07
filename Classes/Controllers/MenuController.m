@@ -750,7 +750,7 @@
 												   title:TXTLS(@"WANT_SERVER_DELETE_TITLE")
 										   defaultButton:TXTLS(@"OK_BUTTON") 
 										 alternateButton:TXTLS(@"CANCEL_BUTTON")
-										  suppressionKey:@"Preferences.prompts.delete_server"
+										  suppressionKey:@"delete_server"
 										 suppressionText:nil];
 	
 	if (result == NO) {
@@ -972,7 +972,7 @@
 													   title:TXTLS(@"WANT_CHANNEL_DELETE_TITLE") 
 											   defaultButton:TXTLS(@"OK_BUTTON") 
 											 alternateButton:TXTLS(@"CANCEL_BUTTON") 
-											  suppressionKey:@"Preferences.prompts.delete_channel"
+											  suppressionKey:@"delete_channel"
 											 suppressionText:nil];
 		
 		if (result == NO) {
@@ -1441,8 +1441,9 @@
 	} else {
 		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE")
 										 title:TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE")
-								 defaultButton:TXTLS(@"OK_BUTTON") alternateButton:nil 
-								suppressionKey:nil suppressionText:nil];
+								 defaultButton:TXTLS(@"OK_BUTTON") 
+							   alternateButton:nil suppressionKey:nil 
+							   suppressionText:nil];
 	}
 }
 
@@ -1460,8 +1461,9 @@
 	} else {
 		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE")
 										 title:TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE")
-								 defaultButton:TXTLS(@"OK_BUTTON") alternateButton:nil 
-								suppressionKey:nil suppressionText:nil];
+								 defaultButton:TXTLS(@"OK_BUTTON") 
+							   alternateButton:nil suppressionKey:nil 
+							   suppressionText:nil];
 	}
 }
 
@@ -1556,7 +1558,7 @@
 			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
 			break;
 		case 110:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"http://codeux.com/textual/forum/"]];
+			[_NSWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/forum/"]];
 			break;
 	}
 }

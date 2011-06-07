@@ -128,7 +128,7 @@
 - (void)ok:(id)sender;
 - (void)cancel:(id)sender;
 
-- (void)hostComboChanged:(id)sender;
+- (IBAction)hostComboChanged:(id)sender;
 
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
