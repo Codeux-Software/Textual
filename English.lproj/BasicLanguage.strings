@@ -6,7 +6,6 @@
 "GLINE_REASON" = "35d Your behavior is not conducive to the desired environment.";
 
 "NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";
-"HIGHLIGHTS_LOG_WINDOW_TITLE" = "Highlights";
 "NOTIFICATION_WINDOW_TITLE" = "Notifications";
 "SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
 "UNTITLED_CONNECTION_NAME" = "Untitled Connection";
@@ -129,7 +128,6 @@
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
 "IRC_CONNECTED_TO_SERVER" = "Connected to host.";
-"IRC_CHANNEL_NAMES_LIST" = "Names for %1$@: %2$@";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_AWAY_COMMAND_DEFAULT_REASON" = "Be back later.";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
@@ -184,6 +182,9 @@
 
 "CHANNEL_LIST_NETWORK_NAME" = "Channel List for \"%@\"";
 
+"IPV6_SERVER_ADDRESS_WARNING_TITLE" = "IPv6 Address";
+"IPV6_SERVER_ADDRESS_WARNING_MESSAGE" = "Raw IPv6 server addresses are not currently supported by Textual. Please use a named base address like \"irc.example.com\" in order to connect to a server that supports IPv6.";
+
 "USER_TRACKING_HOSTMASK_CONNECTED" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected."; // ircop 
 "USER_TRACKING_NICKNAME_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available."; // normal user 
 "USER_TRACKING_HOSTMASK_NOW_AVAILABLE" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" has become available."; // normal user 
@@ -209,7 +210,7 @@
 
 "ACCESSIBILITY_MEMBER_LIST_DESCRIPTION" = "User %@ selected in member list of channel pound %@.";
 
-"GROWL_ADDRESS_BOOK_MATCH" = "Address Book Match";
+"GROWL_ADDRESS_BOOK_MATCH" = "Address Book Notification";
 "GROWL_CHANNEL_NOTICE" = "Channel Notice";
 "GROWL_NEW_TALK" = "New Private Message";
 "GROWL_CHANNEL_MSG" = "Channel Message";
@@ -261,6 +262,6 @@
 "GROWL_MSG_CHANNEL_MSG" = "Channel message received";
 "GROWL_MSG_CHANNEL_NOTICE" = "Channel notice received";
 "GROWL_MSG_CHANNEL_NOTICE_TITLE" = "Notice: %@";
-"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Match";
+"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE" = "Address Book Notification";
 
 "ALL_DOMAIN_EXTENSIONS" = "(?:ac|ad|aero|ae|af|ag|ai|al|am|an|ao|aq|arpa|ar|asia|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|biz|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|cat|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|coop|com|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|info|int|in|io|iq|ir|is|it|je|jm|jobs|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mil|mk|ml|mm|mn|mobi|mo|mp|mq|mr|ms|mt|museum|mu|mv|mw|mx|my|mz|name|na|nc|net|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pro|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tel|tf|tg|th|tj|tk|tl|tm|tn|to|tp|travel|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|xn--0zwm56d|xn--11b5bs3a9aj6g|xn--80akhbyknj4f|xn--9t4b11yi5a|xn--deba0ad|xn--g6w251d|xn--hgbk6aj7f53bba|xn--hlcj6aya9esc7a|xn--jxalpdlp|xn--kgbechtv|xn--zckzah|ye|yt|yu|za|zm|zw)";

@@ -21,7 +21,6 @@ typedef enum {
 	BOOL ignoreCTCP;
 	BOOL ignoreJPQE;
 	BOOL notifyJoins;
-	BOOL notifyWhoisJoins;
 	BOOL ignorePMHighlights;
 	
 	NSString *hostmaskRegex;
@@ -38,7 +37,6 @@ typedef enum {
 @property (nonatomic, assign) BOOL notifyJoins;
 @property (nonatomic, retain) NSString *hostmaskRegex;
 @property (nonatomic, assign) BOOL ignorePMHighlights;
-@property (nonatomic, assign) BOOL notifyWhoisJoins;
 @property (nonatomic, assign) AddressBookEntryType entryType;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

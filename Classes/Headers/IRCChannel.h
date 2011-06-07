@@ -26,14 +26,10 @@ typedef enum {
 	BOOL isOp;
 	BOOL isHalfOp;
 	BOOL isModeInit;
-	BOOL isNamesInit;
-	BOOL isWhoInit;
 	BOOL isActive;
 	BOOL errLastJoin;
 	
 	ChannelStatus status;
-	
-	BOOL forceOutput;
 	
 	FileLogger *logFile;
 }
@@ -49,10 +45,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL isOp;
 @property (nonatomic, assign) BOOL isHalfOp;
 @property (nonatomic, assign) BOOL isModeInit;
-@property (nonatomic, assign) BOOL isNamesInit;
-@property (nonatomic, assign) BOOL isWhoInit;
 @property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL forceOutput;
 @property (nonatomic, assign) BOOL errLastJoin;
 @property (nonatomic, assign) ChannelStatus status;
 @property (nonatomic, readonly) BOOL isChannel;

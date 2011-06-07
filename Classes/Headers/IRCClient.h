@@ -52,12 +52,11 @@ typedef enum {
 	BOOL serverHasNickServ;
 	BOOL autojoinInitialized;
 	
-	BOOL inList;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
-	BOOL inChanBanList;
+	BOOL inWhoInfoRun;
+	BOOL inWhoWasRun;
 	BOOL inFirstISONRun;
-	BOOL inWhoWasRequest;
 	
 	CFAbsoluteTime lastLagCheck;
 	
@@ -108,12 +107,11 @@ typedef enum {
 @property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign) BOOL inList;
+@property (nonatomic, assign) BOOL inWhoInfoRun;
+@property (nonatomic, assign) BOOL inWhoWasRun;
 @property (nonatomic, assign) BOOL identifyMsg;
 @property (nonatomic, assign) BOOL identifyCTCP;
-@property (nonatomic, assign) BOOL inChanBanList;
 @property (nonatomic, assign) BOOL inFirstISONRun;
-@property (nonatomic, assign) BOOL inWhoWasRequest;
 @property (nonatomic, assign) BOOL hasIRCopAccess;
 @property (nonatomic, assign) BOOL reconnectEnabled;
 @property (nonatomic, assign) BOOL rawModeEnabled;

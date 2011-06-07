@@ -312,7 +312,6 @@
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
 		
 		sounds = ary;
 	}

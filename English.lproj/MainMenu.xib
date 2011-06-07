@@ -183,7 +183,6 @@
 								</object>
 							</array>
 							<string key="NSName">_NSAppleMenu</string>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="188852092">
@@ -208,7 +207,6 @@
 									<int key="NSTag">9631</int>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="568014952">
@@ -423,7 +421,6 @@
 									<int key="NSTag">331</int>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="680857465">
@@ -513,7 +510,6 @@
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="22865942">
@@ -671,7 +667,6 @@
 									<int key="NSTag">541</int>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="575385311">
@@ -870,7 +865,6 @@
 															<reference key="NSMixedImage" ref="852898728"/>
 														</object>
 													</array>
-													<bool key="NSMenuExcludeMarkColumn">YES</bool>
 												</object>
 											</object>
 											<object class="NSMenuItem" id="540413936">
@@ -931,11 +925,9 @@
 											</object>
 										</array>
 										<bool key="NSNoAutoenable">YES</bool>
-										<bool key="NSMenuExcludeMarkColumn">YES</bool>
 									</object>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="689204340">
@@ -1011,7 +1003,6 @@
 												<int key="NSTag">50004</int>
 											</object>
 										</array>
-										<bool key="NSMenuExcludeMarkColumn">YES</bool>
 									</object>
 								</object>
 								<object class="NSMenuItem" id="566374724">
@@ -1106,7 +1097,6 @@
 												<int key="NSTag">50010</int>
 											</object>
 										</array>
-										<bool key="NSMenuExcludeMarkColumn">YES</bool>
 									</object>
 								</object>
 								<object class="NSMenuItem" id="464431382">
@@ -1140,7 +1130,6 @@
 									<int key="NSTag">50011</int>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="158979937">
@@ -1421,7 +1410,6 @@
 								</object>
 							</array>
 							<string key="NSName">_NSHelpMenu</string>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 				</array>
@@ -2441,7 +2429,6 @@
 									<int key="NSTag">2105</int>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="590917589">
@@ -2499,12 +2486,10 @@
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 				</array>
 				<string key="NSName"/>
-				<bool key="NSMenuExcludeMarkColumn">YES</bool>
 			</object>
 			<object class="NSMenu" id="66757708">
 				<string key="NSTitle">Menu</string>
@@ -2803,7 +2788,6 @@
 															<reference key="NSMixedImage" ref="852898728"/>
 														</object>
 													</array>
-													<bool key="NSMenuExcludeMarkColumn">YES</bool>
 												</object>
 											</object>
 											<object class="NSMenuItem" id="588663008">
@@ -2864,11 +2848,9 @@
 											</object>
 										</array>
 										<bool key="NSNoAutoenable">YES</bool>
-										<bool key="NSMenuExcludeMarkColumn">YES</bool>
 									</object>
 								</object>
 							</array>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="224753435">
@@ -2883,7 +2865,6 @@
 					</object>
 				</array>
 				<string key="NSName"/>
-				<bool key="NSMenuExcludeMarkColumn">YES</bool>
 			</object>
 			<object class="NSMenu" id="1033730691">
 				<string key="NSTitle">Menu</string>
@@ -7232,7 +7213,6 @@
 				<string key="2202.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2203.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2205.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2206.CustomClassName">MemberList</string>
 				<string key="2206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2210.CustomClassName">MemberListCell</string>
 				<string key="2235.CustomClassName">InputTextField</string>
@@ -7575,17 +7555,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MenuController</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">showHighlightSheet:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">showHighlightSheet:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">showHighlightSheet:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">closeWindowItem</string>
 						<string key="NS.object.0">NSMenuItem</string>

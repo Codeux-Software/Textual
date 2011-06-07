@@ -79,7 +79,7 @@
 											<string key="NSFrameSize">{788, 380}</string>
 											<reference key="NSSuperview" ref="363273225"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="934369256"/>
+											<reference key="NSNextKeyView" ref="862570851"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="669307043">
 												<reference key="NSNextResponder" ref="934369256"/>
@@ -87,10 +87,10 @@
 												<string key="NSFrameSize">{788, 17}</string>
 												<reference key="NSSuperview" ref="934369256"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="972454244"/>
+												<reference key="NSNextKeyView" ref="363273225"/>
 												<reference key="NSTableView" ref="570480994"/>
 											</object>
-											<object class="_NSCornerView" key="NSCornerView" id="972454244">
+											<object class="_NSCornerView" key="NSCornerView">
 												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">-2147483392</int>
 												<string key="NSFrame">{{773, 0}, {16, 17}}</string>
@@ -291,7 +291,7 @@
 							<string key="NSFrame">{{-1, 45}, {790, 398}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="363273225"/>
+							<reference key="NSNextKeyView" ref="934369256"/>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="862570851"/>
 							<reference key="NSHScroller" ref="17276569"/>
@@ -305,6 +305,7 @@
 							<string key="NSFrame">{{685, 6}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="365165194">
 								<int key="NSCellFlags">67239424</int>
@@ -323,7 +324,7 @@
 						<object class="NSButton" id="342295313">
 							<reference key="NSNextResponder" ref="797869287"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{589, 6}, {96, 32}}</string>
+							<string key="NSFrame">{{574, 6}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="868743281"/>
@@ -331,7 +332,7 @@
 							<object class="NSButtonCell" key="NSCell" id="348992057">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Update</string>
+								<string key="NSContents">Update List</string>
 								<reference key="NSSupport" ref="240276414"/>
 								<reference key="NSControlView" ref="342295313"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -440,6 +441,7 @@
 							<string key="NSFrame">{{16, 453}, {403.44400000000002, 17}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="97185596"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="511837676">
 								<int key="NSCellFlags">68288064</int>
@@ -459,7 +461,7 @@
 					<string key="NSFrameSize">{788, 480}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="97185596"/>
+					<reference key="NSNextKeyView" ref="729303262"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{788, 502}</string>
@@ -620,11 +622,11 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="868743281"/>
-							<reference ref="342295313"/>
 							<reference ref="69042482"/>
 							<reference ref="97185596"/>
 							<reference ref="729303262"/>
 							<reference ref="138846731"/>
+							<reference ref="342295313"/>
 						</object>
 						<reference key="parent" ref="457014062"/>
 					</object>

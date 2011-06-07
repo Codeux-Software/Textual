@@ -6,6 +6,7 @@
 @synthesize uid;
 @synthesize cid;
 @synthesize text;
+@synthesize header;
 
 - (id)init
 {
@@ -18,10 +19,18 @@
 
 - (void)start:(NSString *)topic
 {
-	[[[delegate master] formattingMenu] enableSheetField:text];
+	MenuController *menu = delegate;
 	
+	IRCChannel *c = [menu.world selectedChannel];
+	
+	NSString *nheader;
+	
+	nheader = [header stringValue];
+	nheader = [NSString stringWithFormat:nheader, c.name];
+	
+	[header setStringValue:nheader];
+	[menu.master.formattingMenu enableSheetField:text];
 	[text setFilteredAttributedStringValue:[topic attributedStringWithIRCFormatting]];
-	
 	[self startSheet];
 }
 

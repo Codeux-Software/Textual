@@ -82,14 +82,14 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	NSRect columnRect = [tableView rectOfColumn:2];
+	NSRect columnRect = [tableView rectOfColumn:1];
 	
 	columnRect.size.width -= 100; // Why does this work?
 	
 	NSArray *data = [list safeObjectAtIndex:row];
 	
 	NSLayoutManager *layoutManager	= [NSLayoutManager new];
-	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithAttributedString:[data safeObjectAtIndex:3]];
+	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithAttributedString:[data safeObjectAtIndex:2]];
 	NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(columnRect.size.width, FLT_MAX)];
 	
 	[layoutManager addTextContainer:textContainer];
@@ -110,14 +110,12 @@
     
     if ([col isEqualToString:@"chan"]) {
 		return [item safeObjectAtIndex:0];
-    } else if ([col isEqualToString:@"owner"]) {
-		return [item safeObjectAtIndex:1];
 	} else if ([col isEqualToString:@"time"]) {
-		NSInteger time = [item integerAtIndex:2];
+		NSInteger time = [item integerAtIndex:1];
 		
 		return TXTFLS(@"TIME_AGO", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:time], YES));
     } else {
-		return [item safeObjectAtIndex:3];
+		return [item safeObjectAtIndex:2];
     }
 }
 

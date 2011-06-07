@@ -3,6 +3,111 @@
 
 @implementation PopupPrompts
 
+#pragma mark -
+#pragma mark Alert Sheets
+
+@synthesize _targetClass;
+@synthesize _actionSelector;
+@synthesize _suppressionKey;
+
+- (void)sheetWindowWithQuestion:(NSWindow *)window
+						 target:(id)targetClass
+						 action:(SEL)actionSelector
+						   body:(NSString *)bodyText 
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate
+				 suppressionKey:(NSString *)suppressKey
+				suppressionText:(NSString *)suppressText
+{
+	BOOL useSupression = NO;
+	
+	NSString *__suppressionKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	
+	if (NSObjectIsNotEmpty(suppressKey)) {
+		useSupression = YES;
+		
+		if ([_NSUserDefaults() boolForKey:__suppressionKey] == YES && [suppressText isEqualToString:@"-"] == NO) {
+			return;
+		}
+	}
+	
+	if (useSupression) {
+		if (NSObjectIsEmpty(suppressText)) {
+			suppressText = TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE");
+		}
+	} else {
+		suppressText = nil;
+	}
+	
+	NSAlert *alert = [NSAlert new];
+	
+	[alert setAlertStyle:NSInformationalAlertStyle];
+	
+	[alert setMessageText:titleText];
+	[alert setInformativeText:bodyText];
+	[alert addButtonWithTitle:buttonDefault];
+	[alert addButtonWithTitle:buttonAlternate];
+	[alert setShowsSuppressionButton:useSupression];
+	
+	[[alert suppressionButton] setTitle:suppressText];
+	
+	_targetClass	= targetClass;
+	_actionSelector = actionSelector;
+	_suppressionKey = [__suppressionKey retain];
+	
+	[alert beginSheetModalForWindow:window modalDelegate:self
+					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:) contextInfo:nil];
+	
+	[alert drain];
+}
+
+- (void)_sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{	
+	if (NSObjectIsNotEmpty(_suppressionKey)) {
+		NSButton *button = [alert suppressionButton];
+		
+		[_NSUserDefaults() setBool:[button state] forKey:_suppressionKey];
+	}
+	
+	if ([_targetClass isKindOfClass:[self class]]) {
+		return;
+	}
+	
+	[_targetClass performSelector:_actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
+}
+
++ (void)sheetWindowWithQuestion:(NSWindow *)window
+						 target:(id)targetClass
+						 action:(SEL)actionSelector
+						   body:(NSString *)bodyText 
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate
+				 suppressionKey:(NSString *)suppressKey
+				suppressionText:(NSString *)suppressText
+{
+	PopupPrompts *prompt = [PopupPrompts new];
+	
+	[prompt sheetWindowWithQuestion:window 
+							 target:targetClass 
+							 action:actionSelector 
+							   body:bodyText 
+							  title:titleText 
+					  defaultButton:buttonDefault 
+					alternateButton:buttonAlternate 
+					 suppressionKey:suppressKey 
+					suppressionText:suppressText];
+}
+
++ (void)popupPromptNULLSelector:(NSInteger)returnCode 
+{
+	return;
+}
+
+#pragma mark -
+#pragma mark Alert Dialogs
+
 + (BOOL)dialogWindowWithQuestion:(NSString *)bodyText 
 						   title:(NSString *)titleText
 				   defaultButton:(NSString *)buttonDefault
@@ -12,10 +117,12 @@
 {
 	BOOL useSupression = NO;
 	
+	NSString *_suppressKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	
 	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
 		useSupression = YES;
 		
-		if ([_NSUserDefaults() boolForKey:suppressKey] == YES) {
+		if ([_NSUserDefaults() boolForKey:_suppressKey] == YES) {
 			return YES;
 		}
 	}
@@ -31,12 +138,16 @@
 	[alert setShowsSuppressionButton:useSupression];
 	
 	if (useSupression) {
-		[button setTitle:((suppressText) ?: TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE"))];
+		if (NSObjectIsEmpty(suppressText)) {
+			suppressText = TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE");
+		}
+		
+		[button setTitle:suppressText];
 	}
 	
 	if ([alert runModal] == NSAlertDefaultReturn) {
 		if (useSupression) {
-			[_NSUserDefaults() setBool:[button state] forKey:suppressKey];
+			[_NSUserDefaults() setBool:[button state] forKey:_suppressKey];
 		}
 		
 		return YES;
@@ -71,44 +182,6 @@
 	}
 	
 	return nil;
-}
-
-+ (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(id)targetClass
-						 action:(SEL)actionSelector
-						   body:(NSString *)bodyText 
-						  title:(NSString *)titleText
-				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText
-{
-	BOOL useSupression = NO;
-	
-	if (NSObjectIsNotEmpty(suppressKey)) {
-		useSupression = YES;
-		
-		if ([_NSUserDefaults() boolForKey:suppressKey] == YES && [suppressText isEqualToString:@"-"] == NO) {
-			return;
-		}
-	}
-	
-	NSAlert *alert = [NSAlert new];
-	
-	[alert setAlertStyle:NSInformationalAlertStyle];
-	
-	[alert setMessageText:titleText];
-	[alert setInformativeText:bodyText];
-	[alert addButtonWithTitle:buttonDefault];
-	[alert addButtonWithTitle:buttonAlternate];
-	[alert setShowsSuppressionButton:useSupression];
-	
-	[[alert suppressionButton] setTitle:((suppressText) ?: TXTLS(@"SUPPRESSION_BUTTON_DEFAULT_TITLE"))];
-	
-	[alert beginSheetModalForWindow:window modalDelegate:targetClass 
-					 didEndSelector:actionSelector contextInfo:nil];
-	
-	[alert drain];
 }
 
 @end

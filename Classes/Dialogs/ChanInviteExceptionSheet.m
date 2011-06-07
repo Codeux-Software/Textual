@@ -10,6 +10,7 @@
 
 @synthesize list;
 @synthesize table;
+@synthesize header;
 @synthesize modeString;
 
 - (id)init
@@ -33,6 +34,16 @@
 
 - (void)show
 {
+	IRCClient  *u = delegate;
+	IRCChannel *c = [u.world selectedChannel];
+	
+	NSString *nheader;
+	
+	nheader = [header stringValue];
+	nheader = [NSString stringWithFormat:nheader, c.name];
+	
+	[header setStringValue:nheader];
+	
     [self startSheet];
 }
 
@@ -90,7 +101,7 @@
 		}
 	}
 	
-	modeString = [str stringByAppendingString:trail];
+	modeString = (id)[str stringByAppendingString:trail];
 	[modeString retain];
     
 	[self ok:sender];

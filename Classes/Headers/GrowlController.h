@@ -5,26 +5,26 @@
 @class IRCWorld;
 
 typedef enum {
-	GROWL_HIGHLIGHT,
-	GROWL_NEW_TALK,
-	GROWL_CHANNEL_MSG,
-	GROWL_CHANNEL_NOTICE,
-	GROWL_TALK_MSG,
-	GROWL_TALK_NOTICE,
-	GROWL_KICKED,
-	GROWL_INVITED,
-	GROWL_LOGIN,
-	GROWL_DISCONNECT,
-	GROWL_ADDRESS_BOOK_MATCH,
+	GROWL_HIGHLIGHT				= 1000,
+	GROWL_NEW_TALK				= 1001,
+	GROWL_CHANNEL_MSG			= 1002,
+	GROWL_CHANNEL_NOTICE		= 1003,
+	GROWL_TALK_MSG				= 1004,
+	GROWL_TALK_NOTICE			= 1005,
+	GROWL_KICKED				= 1006,
+	GROWL_INVITED				= 1007,
+	GROWL_LOGIN					= 1008,
+	GROWL_DISCONNECT			= 1009,
+	GROWL_ADDRESS_BOOK_MATCH	= 1010,
 } GrowlNotificationType;
 
 @interface GrowlController : NSObject
 {
-	IRCWorld *owner;
+	IRCWorld		*owner;
 	TinyGrowlClient *growl;
 	
-	id lastClickedContext;
-	CFAbsoluteTime lastClickedTime;
+	id				lastClickedContext;
+	CFAbsoluteTime	lastClickedTime;
 	
 	BOOL registered;
 }

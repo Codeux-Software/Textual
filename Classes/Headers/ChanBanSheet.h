@@ -3,15 +3,17 @@
 
 @interface ChanBanSheet : SheetBase
 {
-	NSString *modeString;
-	NSMutableArray *list;
+	NSMutableArray  *list;
+	NSMutableString *modeString;
 	
 	IBOutlet ListView *table;
+	IBOutlet NSTextField *header;
 }
 
 @property (nonatomic, retain) ListView *table;
-@property (nonatomic, retain) NSString *modeString;
+@property (nonatomic, retain) NSTextField *header;
 @property (nonatomic, retain) NSMutableArray *list;
+@property (nonatomic, retain) NSMutableString *modeString;
 
 - (void)show;
 - (void)clear;

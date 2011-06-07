@@ -213,13 +213,13 @@
 	bundlesWithOutputRules	= [NSDictionary new];
 }
 
-- (void)addHighlightInChannel:(IRCChannel *)channel byUser:(NSString *)nickname withMessage:(NSString *)message
+- (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message
 {
 	if ([Preferences logAllHighlightsToQuery]) {
 		message = [message trim];
 		
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
-		NSArray  *entry = [NSArray arrayWithObjects:channel.name, nickname, time, [message attributedStringWithIRCFormatting], nil];
+		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time, [message attributedStringWithIRCFormatting], nil];
 		
 		/* We insert at head so that latest is always at top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
@@ -317,12 +317,9 @@
 		
 		for (IRCClient *u in clients) {
 			for (IRCChannel *c in u.channels) {
-				if ([c.name isEqualToString:TXTLS(@"NOTIFICATION_WINDOW_TITLE")] == NO &&
-					[c.name isEqualToString:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")] == NO && 
-					[c.name isEqualToString:TXTLS(@"HIGHLIGHTS_LOG_WINDOW_TITLE")] == NO) {
-					
-					messageCount += [c dockUnreadCount];
-					highlightCount += [c keywordCount];
+				if ([c.name isEqualToString:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")] == NO) {
+					messageCount	+= [c dockUnreadCount];
+					highlightCount	+= [c keywordCount];
 				}
 			}
 		}

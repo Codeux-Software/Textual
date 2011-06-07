@@ -11,13 +11,10 @@
 @synthesize client;
 @synthesize config;
 @synthesize errLastJoin;
-@synthesize forceOutput;
 @synthesize isActive;
 @synthesize isHalfOp;
 @synthesize isModeInit;
-@synthesize isNamesInit;
 @synthesize isOp;
-@synthesize isWhoInit;
 @synthesize logDate;
 @synthesize logFile;
 @synthesize members;
@@ -146,10 +143,7 @@
 	
 	self.topic = nil;
 	
-	isWhoInit = NO;
 	isModeInit = NO;
-	isNamesInit = NO;
-	forceOutput = NO;
 	errLastJoin = NO;
 	
 	status = IRCChannelJoined;
@@ -164,7 +158,6 @@
 	isOp = NO;
 	isHalfOp = NO;
 	isActive = NO;
-	forceOutput = NO;
 	errLastJoin = NO;
 	
 	status = IRCChannelParted;

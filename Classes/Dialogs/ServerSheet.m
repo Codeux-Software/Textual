@@ -376,6 +376,15 @@
 	
 	NSInteger port = [portText integerValue];
 	
+	if ([host isIPv6Address]) {
+		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"IPV6_SERVER_ADDRESS_WARNING_MESSAGE")
+										 title:TXTLS(@"IPV6_SERVER_ADDRESS_WARNING_TITLE")
+								 defaultButton:TXTLS(@"OK_BUTTON")
+							   alternateButton:nil
+								suppressionKey:@"ipv6_address_warning"
+							   suppressionText:nil];
+	}
+	
 	BOOL enabled = (NSObjectIsNotEmpty(name) && NSObjectIsNotEmpty(host) && [host isEqualToString:@"-"] == NO && port > 0 && NSObjectIsNotEmpty(nick));
 	
 	[okButton setEnabled:enabled];
@@ -442,11 +451,6 @@
 - (void)cancel:(id)sender
 {
 	[self endSheet];
-}
-
-- (void)controlTextDidChange:(NSNotification *)note
-{
-	[self updateConnectionPage];
 }
 
 - (void)hostComboChanged:(id)sender
