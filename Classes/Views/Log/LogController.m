@@ -725,7 +725,12 @@
 	
 	[s appendString:@"</head>"];
 	[s appendFormat:@"<body %@>", bodyAttrs];
-	[s appendString:@"<div id=\"body_home\"></div>"];
+	
+	if (NSObjectIsNotEmpty(html)) {
+		[s appendFormat:@"<div id=\"body_home\">%@</div>", html];
+	} else {
+		[s appendString:@"<div id=\"body_home\"></div>"];
+	}
 	
 	if (NSObjectIsNotEmpty(topic)) {
 		[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
