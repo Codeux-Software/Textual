@@ -805,6 +805,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[autoJoinTimer stop];
 	[autoJoinTimer start:AUTOJOIN_DELAY_INTERVAL];
+	NSLog(@"not even started");
 }
 
 - (void)stopAutoJoinTimer
@@ -1286,51 +1287,96 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)executeTextualCmdScript:(NSDictionary *)details 
 {
-	if ([details containsKey:@"path"] == NO) {
+	if ([details containsKey:@"path"] == NO)
+    {
 		return;
 	}
+    NSString *scriptPath = [[NSString alloc] initWithString:[details valueForKey:@"path"]];
+    if ([scriptPath contains:@".scpt"])
+    {
+        NSDictionary *errors = [NSDictionary dictionary];
 	
-	NSDictionary *errors = [NSDictionary dictionary];
+        NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[details objectForKey:@"path"]] error:&errors];
 	
-	NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[details objectForKey:@"path"]] error:&errors];
-	
-	if (appleScript) {
-		NSAppleEventDescriptor *firstParameter = [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
-		NSAppleEventDescriptor *parameters = [NSAppleEventDescriptor listDescriptor];
+        if (appleScript) 
+        {
+            NSAppleEventDescriptor *firstParameter = [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
+            NSAppleEventDescriptor *parameters = [NSAppleEventDescriptor listDescriptor];
 		
-        [parameters insertDescriptor:firstParameter atIndex:1];
+            [parameters insertDescriptor:firstParameter atIndex:1];
 		
-		ProcessSerialNumber psn = { 0, kCurrentProcess };
+            ProcessSerialNumber psn = { 0, kCurrentProcess };
         
-		NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
-																						bytes:&psn
+            NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
+                                                                                        bytes:&psn
 																					   length:sizeof(ProcessSerialNumber)];
-		NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:@"textualcmd"];
-		NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
+            NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:@"textualcmd"];
+            NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
 																				 eventID:kASSubroutineEvent
 																		targetDescriptor:target
 																				returnID:kAutoGenerateReturnID
 																		   transactionID:kAnyTransactionID];
 		
-		[event setParamDescriptor:handler forKeyword:keyASSubroutineName];
-		[event setParamDescriptor:parameters forKeyword:keyDirectObject];
+            [event setParamDescriptor:handler forKeyword:keyASSubroutineName];
+            [event setParamDescriptor:parameters forKeyword:keyDirectObject];
 		
-		NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
+            NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
 		
-		if (errors && PointerIsEmpty(result)) {
-			NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);
-		} else {	
-			NSString *finalResult = [[result stringValue] trim];
-			
-			if (NSObjectIsNotEmpty(finalResult)) {
-				[[world iomt] inputText:finalResult command:IRCCI_PRIVMSG];
-			}
-		}
-	} else {
+            if (errors && PointerIsEmpty(result)) 
+            {
+                NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);
+            } 
+            else 
+            {	
+                NSString *finalResult = [[result stringValue] trim];
+                if (NSObjectIsNotEmpty(finalResult)) 
+                {
+                    [[world iomt] inputText:finalResult command:IRCCI_PRIVMSG];
+                }
+            }
+        } 
+        else 
+        {
 		NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);	
-	}
+        }
 	
-	[appleScript drain];
+        [appleScript drain];
+    }
+    else // not applescript, so we're just going to execute it via NSTask and take output (need shebang line)
+    {
+        NSMutableArray *args = [[NSMutableArray alloc] init];
+        for (NSString *i in [[details valueForKey:@"input"] componentsSeparatedByString:@" "])
+        {
+            [args addObject:i];
+        }
+        NSTask *scriptTask = [[NSTask alloc] init];
+        NSFileManager *manager = [NSFileManager defaultManager];
+        
+        if (![manager isExecutableFileAtPath:scriptPath]) // cbf to deal with setAttributes
+        {
+            NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", scriptPath, nil];
+            NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
+            [chmod waitUntilExit];
+        }
+        
+        [scriptTask setLaunchPath:scriptPath];
+        [scriptTask setArguments:args];
+        
+        NSPipe *outputPipe = [NSPipe pipe];
+        [scriptTask setStandardOutput:outputPipe];
+        
+        NSFileHandle *filehandle = [outputPipe fileHandleForReading];
+        
+        [scriptTask launch];
+        [scriptTask waitUntilExit];
+        
+        NSData *outdata = [filehandle readDataToEndOfFile];
+        NSString *outputString = [[NSString alloc] initWithData:outdata encoding:NSUTF8StringEncoding];
+        if (NSObjectIsNotEmpty(outputString))
+        {
+            [[world iomt] inputText:outputString command:IRCCI_PRIVMSG];
+        }
+    }
 }
 
 - (void)processBundlesUserMessage:(NSArray *)info
@@ -2551,8 +2597,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					} else {
 						NSString *time   = [s getToken];
 						NSString *reason = s;
-						
-						reason = [reason trim];
+						 						reason = [reason trim];
 						
 						if (NSObjectIsEmpty(reason)) {
 							reason = [Preferences IRCopDefaultShunMessage];
@@ -2578,9 +2623,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		default:
 		{
-			NSString *scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.scpt", [cmd lowercaseString]]];
+            // Using an array of extensions instead of .scpt hardcoded
+            // I just added extensions for languages most people care about. Threw a blank extension in there just
+            // in case, the script writer needs to use a shebang line anyway if it's interpreted.
+            NSArray *extensions = [[NSArray alloc] initWithObjects:@".scpt", @".py", @".pyc",
+                                   @".rb", @".pl", @"", nil];
+			NSMutableString *scriptPath = [[NSMutableString alloc] init];
+            BOOL scriptFound;
+            for (NSString *i in extensions)
+            {
+                scriptPath = [[[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", [cmd lowercaseString], i]] mutableCopy];
+                scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
+                if (scriptFound == YES)
+                {
+                    break;
+                }
+            }
 			
-			BOOL scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
 			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
 			
 			if (pluginFound && scriptFound) {

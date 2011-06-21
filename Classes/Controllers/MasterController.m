@@ -859,13 +859,13 @@
 		}
 		
 		for (NSString *file in resourceFiles) {
-			if ([file hasSuffix:@".scpt"]) {
-				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
+			NSArray *parts = [[NSArray alloc] initWithArray:[file componentsSeparatedByString:@"."]];
+            NSString *cmdl = [[parts stringAtIndex:0] lowercaseString];
 				
-				if ([choices containsObject:cmdl] == NO) {
-					[choices safeAddObject:cmdl];
-				}
-			}
+            if ([choices containsObject:cmdl] == NO) 
+            {
+                [choices safeAddObject:cmdl];
+            }
 		}
 		
 		lowerChoices = choices;

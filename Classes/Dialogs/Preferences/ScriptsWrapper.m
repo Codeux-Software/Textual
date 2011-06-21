@@ -18,15 +18,17 @@
 - (void)populateData;
 {			
 	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-	
-	for (NSString *file in resourceFiles) {
-		if ([file hasSuffix:@".scpt"]) {
-			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
+    NSMutableArray *nameParts = [[NSMutableArray alloc] init];
+	for (NSString *file in resourceFiles)
+    {
+        nameParts = [[file componentsSeparatedByString:@"."] mutableCopy];
+        NSString *script = [[nameParts stringAtIndex:0] lowercaseString];
 			
-			if ([scripts containsObject:script] == NO) {
-				[scripts safeAddObject:script];
-			}
-		}
+        if ([scripts containsObject:script] == NO) 
+        {
+            [scripts safeAddObject:script];
+        }
+		 
 	}
 
 	for (NSString *cmd in world.bundlesForUserInput) {
