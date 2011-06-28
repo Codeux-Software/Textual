@@ -10,6 +10,7 @@
 #define BADGE_TEXT_COLOR_TS                         [NSColor _colorWithCalibratedRed:158 green:169 blue:197 alpha:1]
 #define BADGE_TEXT_COLOR_NS                         [NSColor whiteColor]
 
+#define BADGE_SHADOW_COLOR                          [NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
 #define BADGE_MESSAGE_BACKGROUND_COLOR_TS           [NSColor whiteColor]
 
 #define BADGE_MESSAGE_BACKGROUND_COLOR_MODE_Q		[NSColor _colorWithCalibratedRed:186 green:0   blue:0   alpha:1]
@@ -64,8 +65,6 @@
                             (NSMidY(badgeFrame) - (BADGE_HEIGHT / 2.0)),
                             BADGE_WIDTH, BADGE_HEIGHT);
     
-	NSColor *backgroundColor = [NSColor whiteColor];
-    
     NSBezierPath *badgePath = nil;
     
 	if (selected == NO) {
@@ -78,11 +77,13 @@
                                                     xRadius:4.0
                                                     yRadius:4.0];
         
-        [backgroundColor set];
+        [BADGE_SHADOW_COLOR set];
         [badgePath fill];
 	} else {
         badgeFrame.size.width += 1;
     }
+    
+    NSColor *backgroundColor;
     
     if (selected == NO) {
         if (mcstring == '~') {

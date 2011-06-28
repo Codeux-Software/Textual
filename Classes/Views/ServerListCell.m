@@ -20,9 +20,11 @@
 #define BADGE_FONT                                  [_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5]
 #define BADGE_TEXT_COLOR_TS                         [NSColor _colorWithCalibratedRed:158 green:169 blue:197 alpha:1]
 #define BADGE_TEXT_COLOR_NS                         [NSColor whiteColor]
+#define BADGE_SHADOW_COLOR                          [NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
 #define BADGE_MESSAGE_BACKGROUND_COLOR_TS           [NSColor whiteColor]
-#define BADGE_MESSAGE_BACKGROUND_COLOR              [NSColor _colorWithCalibratedRed:152 green:168 blue:202 alpha:1]
 #define BADGE_HIGHLIGHT_BACKGROUND_COLOR            [NSColor _colorWithCalibratedRed:210 green:15  blue:15  alpha:1]
+#define BADGE_MESSAGE_BACKGROUND_COLOR_AQUA         [NSColor _colorWithCalibratedRed:152 green:168 blue:202 alpha:1]
+#define BADGE_MESSAGE_BACKGROUND_COLOR_GRAPHITE     [NSColor _colorWithCalibratedRed:132 green:147 blue:163 alpha:1]
 
 #define SERVER_CELL_FONT                            [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0]
 #define SERVER_CELL_FONT_COLOR                      [NSColor outlineViewHeaderTextColor]
@@ -144,8 +146,6 @@
     
 	NSSize messageCountSize = [mcstring size];
 	NSRect shadowFrame;
-    
-	NSColor *backgroundColor = [NSColor whiteColor];
 	
     if (isSelected == NO) {
         shadowFrame = badgeFrame;
@@ -155,9 +155,11 @@
                                                     xRadius:(BADGE_HEIGHT / 2.0)
                                                     yRadius:(BADGE_HEIGHT / 2.0)];
         
-        [backgroundColor set];
+        [BADGE_SHADOW_COLOR set];
         [badgePath fill];
     }
+    
+    NSColor *backgroundColor;
 	
 	if (highlight) {
 		backgroundColor = BADGE_HIGHLIGHT_BACKGROUND_COLOR;
@@ -165,7 +167,11 @@
         if (isSelected) {
             backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR_TS;
         } else {
-            backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR;
+            if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+                backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR_GRAPHITE;
+            } else {
+                backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR_AQUA;
+            }
         }
 	}
 	
