@@ -29,28 +29,28 @@
 		password = NSNullObject;
 		encryptionKey = NSNullObject;
 	}
-
+    
 	return self;
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	[self init];
-	
-	type = [dic integerForKey:@"type"];
-	
-	name = (([[dic stringForKey:@"name"] retain]) ?: NSNullObject);
-	password = (([[dic stringForKey:@"password"] retain]) ?: NSNullObject);
-	
-	growl = [dic boolForKey:@"growl"];
-	autoJoin = [dic boolForKey:@"auto_join"];
-	ihighlights = [dic boolForKey:@"ignore_highlights"];
-	
-	mode = (([[dic stringForKey:@"mode"] retain]) ?: NSNullObject);
-	topic = (([[dic stringForKey:@"topic"] retain]) ?: NSNullObject);
-	encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: NSNullObject);
-	
-	return self;
+    
+    type = [dic integerForKey:@"type"];
+    
+    name = (([[dic stringForKey:@"name"] retain]) ?: NSNullObject);
+    password = (([[dic stringForKey:@"password"] retain]) ?: NSNullObject);
+    
+    growl = [dic boolForKey:@"growl"];
+    autoJoin = [dic boolForKey:@"auto_join"];
+    ihighlights = [dic boolForKey:@"ignore_highlights"];
+    
+    mode = (([[dic stringForKey:@"mode"] retain]) ?: NSNullObject);
+    topic = (([[dic stringForKey:@"topic"] retain]) ?: NSNullObject);
+    encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: NSNullObject);
+    
+    return self;
 }
 
 - (void)dealloc

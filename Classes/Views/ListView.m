@@ -11,6 +11,19 @@
 	return [[self selectedRowIndexes] count];
 }
 
+- (NSArray *)selectedRows
+{
+    NSMutableArray *allRows = [NSMutableArray array];
+    
+    NSIndexSet *indexes = [self selectedRowIndexes];
+	
+	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+		[allRows safeAddObject:index];
+	}
+    
+    return allRows;
+}
+
 - (void)selectItemAtIndex:(NSInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];

@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define TREE_USERLIST_HEIGHT    16.0
+
 @interface IRCChannel (Private)
 - (void)closeLogFile;
 @end
@@ -476,6 +478,11 @@
 	return members.count;
 }
 
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    return TREE_USERLIST_HEIGHT;
+}
+
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	IRCUser *user = [members safeObjectAtIndex:row];
@@ -485,7 +492,9 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	cell.member = [members safeObjectAtIndex:row];
+    cell.cellItem   = cell;
+    cell.parent     = client.world.memberList;
+	cell.member     = [members safeObjectAtIndex:row];
 }
 
 @end

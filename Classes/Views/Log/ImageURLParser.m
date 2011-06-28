@@ -159,7 +159,22 @@
 			
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
 		}
-	}
+	} else {
+		if (NSObjectIsNotEmpty(path)) {
+			NSString *s = [path safeSubstringFromIndex:1];
+			
+			if ([s contains:@"/"]) {
+				s = [s safeSubstringToIndex:[s stringPosition:@"/"]];
+			}
+			
+            /* Attempt to match cl.ly custom domains. */
+			if ([s length] == 20) {
+                if ([TXRegularExpression string:s isMatchedByRegex:@"([a-zA-Z0-9]{20})"]) {
+                    return [NSString stringWithFormat:@"http://%@/%@/content", host, s];
+                }
+			}
+		}
+    }
 	
 	return nil;
 }

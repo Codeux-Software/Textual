@@ -41,6 +41,9 @@
 "UNDO_TYPING_MENU_ITEM" = "Typing";
 "UNDO_FORMATTING_MENU_ITEM" = "Formatting";
 
+"TEXT_FORMATTER_BODY_LENGTH_WARNING_TITLE" = "Excessive Text Length";
+"TEXT_FORMATTER_BODY_LENGTH_WARNING_MESSAGE" = "The text being formatted is larger than a normal IRC message. As a result it will be split into multiple lines. Formatting for the lines after the first may be lost in some circumstances due to the fact of this occurrence. Would you like to continue?";
+
 "TIME_AGO" = "%@ Ago";
 
 "OK_BUTTON" = "OK";
@@ -183,7 +186,7 @@
 "CHANNEL_LIST_NETWORK_NAME" = "Channel List for \"%@\"";
 
 "IPV6_SERVER_ADDRESS_WARNING_TITLE" = "IPv6 Address";
-"IPV6_SERVER_ADDRESS_WARNING_MESSAGE" = "Raw IPv6 server addresses are not currently supported by Textual. Please use a named base address like \"irc.example.com\" in order to connect to a server that supports IPv6.";
+"IPV6_SERVER_ADDRESS_WARNING_MESSAGE" = "Raw IPv6 server addresses are not currently supported by Textual. Please use a named base address similar to one like \"irc.example.com\" in order to connect to a server that supports IPv6.";
 
 "USER_TRACKING_HOSTMASK_CONNECTED" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected."; // ircop 
 "USER_TRACKING_NICKNAME_AVAILABLE" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available."; // normal user 

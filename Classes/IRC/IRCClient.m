@@ -1074,6 +1074,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	for (IRCChannel *c in chans) {
 		NSMutableString *prevTarget = [[target mutableCopy] autodrain];
 		NSMutableString *prevPass   = [[pass mutableCopy] autodrain];
+        
+        c.status = IRCChannelJoining;
 		
 		if (NSObjectIsNotEmpty(target)) [target appendString:@","];
 		
@@ -1183,6 +1185,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (NSObjectIsNotEmpty(ary)) {
 		[self quickJoin:ary];
 	}
+    
+    [world reloadTree];
 }
 
 #pragma mark -
@@ -2974,7 +2978,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	if (NSDissimilarObjects(world.selected, t)) {
+    if (isActiveWindow == NO || (NSDissimilarObjects(world.selected, t) && isActiveWindow)) {
 		[t setTreeUnreadCount:([t treeUnreadCount] + 1)];
 	}
 	
@@ -3314,7 +3318,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (NSString *)label
 {
-	return [config.name uppercaseString];
+	return config.name;
 }
 
 #pragma mark -
@@ -3758,6 +3762,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (autojoinInitialized == NO && [autoJoinTimer isActive] == NO) {
 			[world select:c];
+            [world.serverList expandItem:c];
 		}
 		
 		if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
@@ -3765,7 +3770,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	if ([c findMember:nick] == NO) {
+	if (PointerIsEmpty([c findMember:nick])) {
 		IRCUser *u = [IRCUser newad];
 		
 		u.o           = njoin;
@@ -4816,10 +4821,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 433:	// ERR_NICKNAMEINUSE
 		case 437:   // ERR_NICKTEMPUNAVAIL
+        {
 			if (isLoggedIn) break;
 			
 			[self receiveNickCollisionError:m];
 			break;
+        }
 		case 402:   // ERR_NOSUCHSERVER
 		{
 			NSString *text = TXTFLS(@"IRC_HAD_RAW_ERROR", m.numericReply, [m sequence:1]);
@@ -4927,6 +4934,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[conn autodrain];
 	conn = nil;
+    
+    for (IRCChannel *c in channels) {
+        c.status = IRCChannelParted;
+    }
 	
 	[self clearCommandQueue];
 	[self stopRetryTimer];

@@ -3,3 +3,7 @@
 
 @interface MemberList : ListView
 @end
+
+@interface NSObject (MemberListViewDelegate)
+- (void)memberListViewKeyDown:(NSEvent *)e;
+@end

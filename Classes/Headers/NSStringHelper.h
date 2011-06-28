@@ -106,6 +106,8 @@
 @end
 
 @interface NSAttributedString (NSAttributedStringHelper)
+- (NSDictionary *)attributes;
+
 + (NSAttributedString *)emptyString;
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;

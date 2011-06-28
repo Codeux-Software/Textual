@@ -6,7 +6,6 @@
 @interface ServerListCell : NSTextFieldCell 
 {
 	ServerList *parent;
-	
 	IRCTreeItem *cellItem;
 }
 

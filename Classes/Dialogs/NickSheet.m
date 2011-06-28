@@ -6,7 +6,7 @@
 
 @synthesize uid;
 @synthesize currentText;
-@synthesize newText;
+@synthesize nicknameNewInfo;
 
 - (id)init
 {
@@ -19,10 +19,10 @@
 
 - (void)start:(NSString *)nick
 {
-	[newText setStringValue:nick];
+	[nicknameNewInfo setStringValue:nick];
 	[currentText setStringValue:nick];
 	
-	[sheet makeFirstResponder:newText];
+	[sheet makeFirstResponder:nicknameNewInfo];
 	
 	[self startSheet];
 }
@@ -30,7 +30,7 @@
 - (void)ok:(id)sender
 {
 	if ([delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-		[delegate nickSheet:self didInputNick:newText.stringValue];
+		[delegate nickSheet:self didInputNick:nicknameNewInfo.stringValue];
 	}
 	
 	[super ok:sender];

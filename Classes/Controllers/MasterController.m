@@ -143,6 +143,7 @@
 	
 	serverList.dataSource	= world;
 	serverList.delegate		= world;
+    memberList.keyDelegate  = world;
 	serverList.keyDelegate  = world;
 	[serverList reloadData];
 	
@@ -211,12 +212,20 @@
 		[world updateIcon];
 	}
 	
-	[serverList setNeedsDisplay];
+    [world reloadTree];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
-	[serverList setNeedsDisplay];
+	id sel = world.selected;
+    
+	if (sel) {
+		[sel resetState];
+		
+		[world updateIcon];
+	}
+    
+    [world reloadTree];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag

@@ -13,15 +13,16 @@
 	
 	if ([self isGroupItem:childItem] == NO) {
 		if ([Preferences applicationRanOnLion]) {
-			nrect.origin.x   += 20;
-			nrect.size.width -= 10;
+			nrect.origin.x   += 35;
+			nrect.size.width  = ([self frame].size.width - 35);
 		} else {
-			nrect.origin.x   += 25;
-			nrect.size.width -= 25;
+			nrect.origin.x   += 35;
+			nrect.size.width -= 35;
 		}
 	} else {
-		nrect.origin.x   += 3;
-		nrect.size.width -= 3;
+		nrect.origin.x   += 15;
+		nrect.size.width -= 15
+        ;
 	} 
 	
 	return nrect;

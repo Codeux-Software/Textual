@@ -109,7 +109,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "BlowfishCommandLine" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -185,6 +185,7 @@
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -207,6 +208,7 @@
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -229,6 +231,7 @@
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -266,6 +269,7 @@
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

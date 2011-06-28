@@ -185,7 +185,7 @@
 #ifdef _RUNNING_MAC_OS_LION
     if ([Preferences applicationRanOnLion] == NO) {
 #endif
-    
+        
         /* Force spell checker to validate input value by toggling it off
          and on when exiting the editing of a word. Dirty fix for bug on 
          Snow Leopard resulting in only the first word of string value 

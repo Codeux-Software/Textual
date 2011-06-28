@@ -22,7 +22,7 @@ NSString *kReceiptHash = @"Hash";
 
 #define BASE_BUNDLE_ID @"com.codeux.irc.textual"
 
-NSData *appleRootCert()
+NSData *appleRootCert()         
 {
 	OSStatus status;
 	SecKeychainRef keychain = nil;
@@ -354,7 +354,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	NSString *bundleVersion = nil;
 	NSString *bundleIdentifer = nil;
 	
-	guidData = (NSData *)copy_mac_address();
+	guidData = (id)copy_mac_address();
 	[guidData autodrain];
 
 	if (PointerIsEmpty(guidData)) return NO;

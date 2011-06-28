@@ -147,6 +147,20 @@
 	return [self propertyIsSet:IRCTextFormatterBackgroundColorEffect];
 }
 
+- (BOOL)isFormattingSafeInRange:(NSRange)range
+{
+    if (range.length > IRC_BODY_LEN) {
+        return [PopupPrompts dialogWindowWithQuestion:TXTLS(@"TEXT_FORMATTER_BODY_LENGTH_WARNING_MESSAGE") 
+                                                title:TXTLS(@"TEXT_FORMATTER_BODY_LENGTH_WARNING_TITLE")
+                                        defaultButton:TXTLS(@"CONTINUE_BUTTON")
+                                      alternateButton:TXTLS(@"CANCEL_BUTTON")
+                                       suppressionKey:@"formatterLengthWarning"
+                                      suppressionText:nil];
+    }
+    
+    return YES;
+}
+
 #pragma mark -
 #pragma mark Add Formatting
 
@@ -154,6 +168,10 @@
 {
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+    
+    if ([self isFormattingSafeInRange:selectedTextRange] == NO) {
+        return;
+    }
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBoldEffect
@@ -171,6 +189,10 @@
 {
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+    
+    if ([self isFormattingSafeInRange:selectedTextRange] == NO) {
+        return;
+    }
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterItalicEffect
@@ -188,6 +210,10 @@
 {
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+    
+    if ([self isFormattingSafeInRange:selectedTextRange] == NO) {
+        return;
+    }
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
@@ -205,6 +231,10 @@
 {
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+    
+    if ([self isFormattingSafeInRange:selectedTextRange] == NO) {
+        return;
+    }
 	
 	NSAttributedString *oldString = [textField attributedStringValue];
 	NSAttributedString *newString = oldString;
@@ -245,147 +275,151 @@
 	} else {
 		newString = [oldString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
 												  value:NSNumberWithInteger([sender tag)]
-												  range:selectedTextRange];
-	}
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-- (void)insertBackgroundColorCharIntoTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = oldString;
-	
-	if ([sender tag] == 100) { 
-		NSRange charRange;
-		
-		NSInteger colorChar = 0;
-		NSInteger charCountIndex = 0;
-		NSInteger rainbowArrayIndex = 0;
-		
-		NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"6", @"2", @"12", @"9", @"8", @"7", @"4", nil];
-		
-		while (1 == 1) {
-			if (charCountIndex >= selectedTextRange.length) break;
-			
-			charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-			
-			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
-			
-			colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
-			newString = [newString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-													  value:NSNumberWithInteger(colorChar)
-													  range:charRange];
-			
-			charCountIndex++;
-			rainbowArrayIndex++;
-		}
-	} else {
-		newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-												  value:NSNumberWithInteger([sender tag)]
-												  range:selectedTextRange];
-	}
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
+                                                                            range:selectedTextRange];
+                                                                            }
+                                                                            
+                                                                            [textField setAttributedStringValue:newString];
+                                                                            
+                                                                            if ([textField respondsToSelector:@selector(focus)]) {
+                                                                                [textField performSelector:@selector(focus)];
+                                                                            }
+                                                                            }
+                                                                            
+                                                                            - (void)insertBackgroundColorCharIntoTextBox:(id)sender
+        {
+            NSRange selectedTextRange = [textField selectedRange];
+            if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+            
+            if ([self isFormattingSafeInRange:selectedTextRange] == NO) {
+                return;
+            }
+            
+            NSAttributedString *oldString = [textField attributedStringValue];
+            NSAttributedString *newString = oldString;
+            
+            if ([sender tag] == 100) { 
+                NSRange charRange;
+                
+                NSInteger colorChar = 0;
+                NSInteger charCountIndex = 0;
+                NSInteger rainbowArrayIndex = 0;
+                
+                NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"6", @"2", @"12", @"9", @"8", @"7", @"4", nil];
+                
+                while (1 == 1) {
+                    if (charCountIndex >= selectedTextRange.length) break;
+                    
+                    charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
+                    
+                    if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
+                    
+                    colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
+                    newString = [newString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                                              value:NSNumberWithInteger(colorChar)
+                                                              range:charRange];
+                    
+                    charCountIndex++;
+                    rainbowArrayIndex++;
+                }
+            } else {
+                newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                                          value:NSNumberWithInteger([sender tag)]
+                                                                                    range:selectedTextRange];
+                                                                                    }
+                                                                                    
+                                                                                    [textField setAttributedStringValue:newString];
+                                                                                    
+                                                                                    if ([textField respondsToSelector:@selector(focus)]) {
+                                                                                        [textField performSelector:@selector(focus)];
+                                                                                    }
+                                                                                    }
+                                                                                    
 #pragma mark -
 #pragma mark Remove Formatting
-
-- (void)removeBoldCharFromTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
-																	 range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-- (void)removeItalicCharFromTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
-																	 range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-- (void)removeUnderlineCharFromTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-																	 range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-- (void)removeForegroundColorCharFromTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = nil;
-	
-	newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												 range:selectedTextRange];
-	
-	newString = [newString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect 
-												 range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-- (void)removeBackgroundColorCharFromTextBox:(id)sender
-{
-	NSRange selectedTextRange = [textField selectedRange];
-	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
-	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-																	 range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
-	
-	if ([textField respondsToSelector:@selector(focus)]) {
-		[textField performSelector:@selector(focus)];
-	}
-}
-
-@end
+                                                                                    
+                                                                                    - (void)removeBoldCharFromTextBox:(id)sender
+                {
+                    NSRange selectedTextRange = [textField selectedRange];
+                    if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+                    
+                    NSAttributedString *oldString = [textField attributedStringValue];
+                    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
+                                                                                     range:selectedTextRange];
+                    
+                    [textField setAttributedStringValue:newString];
+                    
+                    if ([textField respondsToSelector:@selector(focus)]) {
+                        [textField performSelector:@selector(focus)];
+                    }
+                }
+                                                                                    
+                                                                                    - (void)removeItalicCharFromTextBox:(id)sender
+                {
+                    NSRange selectedTextRange = [textField selectedRange];
+                    if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+                    
+                    NSAttributedString *oldString = [textField attributedStringValue];
+                    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
+                                                                                     range:selectedTextRange];
+                    
+                    [textField setAttributedStringValue:newString];
+                    
+                    if ([textField respondsToSelector:@selector(focus)]) {
+                        [textField performSelector:@selector(focus)];
+                    }
+                }
+                                                                                    
+                                                                                    - (void)removeUnderlineCharFromTextBox:(id)sender
+                {
+                    NSRange selectedTextRange = [textField selectedRange];
+                    if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+                    
+                    NSAttributedString *oldString = [textField attributedStringValue];
+                    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
+                                                                                     range:selectedTextRange];
+                    
+                    [textField setAttributedStringValue:newString];
+                    
+                    if ([textField respondsToSelector:@selector(focus)]) {
+                        [textField performSelector:@selector(focus)];
+                    }
+                }
+                                                                                    
+                                                                                    - (void)removeForegroundColorCharFromTextBox:(id)sender
+                {
+                    NSRange selectedTextRange = [textField selectedRange];
+                    if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+                    
+                    NSAttributedString *oldString = [textField attributedStringValue];
+                    NSAttributedString *newString = nil;
+                    
+                    newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
+                                                                 range:selectedTextRange];
+                    
+                    newString = [newString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect 
+                                                                 range:selectedTextRange];
+                    
+                    [textField setAttributedStringValue:newString];
+                    
+                    if ([textField respondsToSelector:@selector(focus)]) {
+                        [textField performSelector:@selector(focus)];
+                    }
+                }
+                                                                                    
+                                                                                    - (void)removeBackgroundColorCharFromTextBox:(id)sender
+                {
+                    NSRange selectedTextRange = [textField selectedRange];
+                    if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
+                    
+                    NSAttributedString *oldString = [textField attributedStringValue];
+                    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                                                                     range:selectedTextRange];
+                    
+                    [textField setAttributedStringValue:newString];
+                    
+                    if ([textField respondsToSelector:@selector(focus)]) {
+                        [textField performSelector:@selector(focus)];
+                    }
+                }
+                                                                                    
+                                                                                    @end

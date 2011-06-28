@@ -89,7 +89,7 @@
 				code = (c & 0x07);
 				range = NSMakeRange(0x10000, (0x110000 - 0x10000));
 			} else {
-				return NO;
+				return nil;
 			}
 		} else if (0x80 <= c && c <= 0xBF) {
 			code = (code << 6) | (c & 0x3F);

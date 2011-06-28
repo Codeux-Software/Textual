@@ -62,6 +62,7 @@
 		4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */; };
 		4C4107B51359684400614BBF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4107B31359684400614BBF /* GCDAsyncSocket.m */; };
 		4C4107B71359686200614BBF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4107B61359686200614BBF /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C45522113B4C4DF0041528F /* toolbarFeaturedTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C45522013B4C4DF0041528F /* toolbarFeaturedTemplate.pdf */; };
 		4C4B768A138973840061A00B /* AddTemplateWithDisclosureTriangle.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */; };
 		4C5AEF4F12D1B6E400D6B18C /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2412D1B6E400D6B18C /* application.icns */; };
 		4C5AEF5012D1B6E400D6B18C /* DIbadge_Green_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4C5AEF2712D1B6E400D6B18C /* DIbadge_Green_1&2.tiff */; };
@@ -98,7 +99,7 @@
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6DD1761388803B00280797 /* NSSplitViewHelper.h */; };
+		4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6DD1761388803B00280797 /* NSSplitViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
 		4C7642291382B990001B23F4 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
@@ -211,7 +212,7 @@
 		4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
-		4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA0C73E1389209F002689FD /* ListSeparatorCell.h */; };
+		4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA0C73E1389209F002689FD /* ListSeparatorCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C740138920B2002689FD /* ListSeparatorCell.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
@@ -346,12 +347,12 @@
 		4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA45138B9768002FD1E3 /* ServerCellSelection_Aqua.tif */; };
 		4CD60CC11340B48D0050A57F /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD60CC01340B48D0050A57F /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDC703E122C6C48004F8B35 /* ChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDC703C122C6C48004F8B35 /* ChanBanExceptionSheet.xib */; };
-		4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */; };
 		4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDFE2F7136F664A0039300A /* ThinSplitView.m */; };
 		4CDFE2FA136F66660039300A /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDFE2F9136F66660039300A /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEFC05213B4397B00574D3B /* MemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C996C1369D74C00C1A916 /* MemberList.m */; };
 		4CFA00CC12F4EE4400A9EC74 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFB1053138CE8E0007B8F2E /* HighlightSheet.xib */; };
-		4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; };
+		4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */; };
 /* End PBXBuildFile section */
 
@@ -470,6 +471,7 @@
 		4C400E2F1238A655005BDA9D /* LanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagePreferences.m; sourceTree = "<group>"; };
 		4C4107B31359684400614BBF /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4C4107B61359686200614BBF /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Classes/Headers/GCDAsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		4C45522013B4C4DF0041528F /* toolbarFeaturedTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = toolbarFeaturedTemplate.pdf; sourceTree = "<group>"; };
 		4C49192611FF723D0065E5D5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C4A041612EF1C65009A7988 /* PopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupPrompts.m; sourceTree = "<group>"; };
 		4C4B7689138973830061A00B /* AddTemplateWithDisclosureTriangle.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AddTemplateWithDisclosureTriangle.tif; sourceTree = "<group>"; };
@@ -662,7 +664,6 @@
 		4CD60CC01340B48D0050A57F /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4CDC7039122C6B0F004F8B35 /* ChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanExceptionSheet.m; sourceTree = "<group>"; };
 		4CDC703D122C6C48004F8B35 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChanBanExceptionSheet.xib; sourceTree = "<group>"; };
-		4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "status-channel-connecting.tif"; sourceTree = "<group>"; };
 		4CDFE2F7136F664A0039300A /* ThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinSplitView.m; sourceTree = "<group>"; };
 		4CDFE2F9136F66660039300A /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinSplitView.h; path = Classes/Headers/ThinSplitView.h; sourceTree = SOURCE_ROOT; };
 		4CF1681811DC7B9200B60505 /* ChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanBanSheet.m; sourceTree = "<group>"; };
@@ -974,6 +975,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD3CA42138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif */,
+				4C45522013B4C4DF0041528F /* toolbarFeaturedTemplate.pdf */,
 				4CD3CA43138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif */,
 				4CD3CA44138B9768002FD1E3 /* ServerCellSelection_Graphite.tif */,
 				4CD3CA45138B9768002FD1E3 /* ServerCellSelection_Aqua.tif */,
@@ -1194,7 +1196,6 @@
 		4C8C0DB41367DA5B0055C793 /* Status Badges */ = {
 			isa = PBXGroup;
 			children = (
-				4CDF488F1388778500D8C3EF /* status-channel-connecting.tif */,
 				4C8C0DB51367DA5B0055C793 /* status-channel-active.tif */,
 				4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */,
 			);
@@ -1676,10 +1677,10 @@
 				4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */,
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
-				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
 				4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */,
 				4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */,
 				4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */,
+				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1717,7 +1718,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Codeux Software";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Textual" */;
@@ -1846,13 +1847,13 @@
 				4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */,
 				4C8C0DB81367DA5B0055C793 /* status-channel-active.tif in Resources */,
 				4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */,
-				4CDF48901388778500D8C3EF /* status-channel-connecting.tif in Resources */,
 				4C4B768A138973840061A00B /* AddTemplateWithDisclosureTriangle.tif in Resources */,
 				4CD3CA46138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif in Resources */,
 				4CD3CA47138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif in Resources */,
 				4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */,
 				4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */,
 				4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */,
+				4C45522113B4C4DF0041528F /* toolbarFeaturedTemplate.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2026,6 +2027,7 @@
 				4CB91A4513680C4B005E00E8 /* NSOutlineViewHelper.m in Sources */,
 				4CCB939913689A1B00085C3E /* ServerListCell.m in Sources */,
 				4CDFE2F8136F664A0039300A /* ThinSplitView.m in Sources */,
+				4CEFC05213B4397B00574D3B /* MemberList.m in Sources */,
 				4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */,
 				4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */,
 				4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */,
@@ -2242,14 +2244,15 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2474,14 +2477,15 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2549,13 +2553,14 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2574,14 +2579,15 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
