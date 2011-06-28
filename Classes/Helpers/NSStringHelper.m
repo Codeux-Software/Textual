@@ -647,13 +647,20 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)cleanedServerHostmask
 {
-	NSInteger stringPos = [self stringPosition:@":"];
+    /* We do not want ports in server address. */
+    self = [self trim];
+    
+    if ([self isIPv6Address] == NO) {
+        if ([TXRegularExpression string:self isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"]) {
+            NSInteger stringPos = [self stringPosition:@":"];
+            
+            if (stringPos > 0) {
+                self = [self safeSubstringToIndex:stringPos];
+            }
+        }
+    }
 	
-	if (stringPos > 0) {
-		self = [self safeSubstringToIndex:stringPos];
-	}
-	
-	return [self trim];
+	return self;
 }
 
 - (BOOL)isIPv6Address
@@ -793,6 +800,11 @@ BOOL isUnicharDigit(unichar c)
 @end
 
 @implementation NSAttributedString (NSAttributedStringHelper)
+
+- (NSDictionary *)attributes
+{
+    return [self safeAttributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
+}
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
 {

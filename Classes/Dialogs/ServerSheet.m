@@ -29,6 +29,7 @@
 @synthesize addChannelButton;
 @synthesize addIgnoreButton;
 @synthesize altNicksText;
+@synthesize prefersIPv6Check;
 @synthesize autoConnectCheck;
 @synthesize autoReconnectCheck;
 @synthesize channelSheet;
@@ -233,6 +234,7 @@
 	bouncerModeCheck.state		= config.bouncerMode;
 	autoConnectCheck.state		= config.autoConnect;
 	autoReconnectCheck.state	= config.autoReconnect;
+    prefersIPv6Check.state      = config.prefersIPv6;
 	
 	/* Identity */
 	if (NSObjectIsEmpty(config.nick)) {
@@ -288,6 +290,7 @@
 	config.autoConnect		= autoConnectCheck.state;
 	config.autoReconnect	= autoReconnectCheck.state;
 	config.bouncerMode		= bouncerModeCheck.state;
+    config.prefersIPv6      = prefersIPv6Check.state;
 	
 	NSString *realHost		= nil;
 	NSString *hostname		= [hostCombo.stringValue cleanedServerHostmask];
@@ -375,15 +378,6 @@
 	NSString *nick = [nickText stringValue];
 	
 	NSInteger port = [portText integerValue];
-	
-	if ([host isIPv6Address]) {
-		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"IPV6_SERVER_ADDRESS_WARNING_MESSAGE")
-										 title:TXTLS(@"IPV6_SERVER_ADDRESS_WARNING_TITLE")
-								 defaultButton:TXTLS(@"OK_BUTTON")
-							   alternateButton:nil
-								suppressionKey:@"ipv6_address_warning"
-							   suppressionText:nil];
-	}
 	
 	BOOL enabled = (NSObjectIsNotEmpty(name) && NSObjectIsNotEmpty(host) && [host isEqualToString:@"-"] == NO && port > 0 && NSObjectIsNotEmpty(nick));
 	

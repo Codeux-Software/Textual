@@ -5,8 +5,12 @@
 
 @interface MemberListCell : NSTextFieldCell
 {
+    id cellItem;
 	IRCUser *member;
+    MemberList *parent;
 }
 
+@property (nonatomic, assign) id cellItem;
 @property (nonatomic, assign) IRCUser *member;
+@property (nonatomic, assign) MemberList *parent;
 @end

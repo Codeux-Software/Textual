@@ -11,6 +11,7 @@
 @property (nonatomic, assign) id textDelegate;
 
 - (NSInteger)countSelectedRows;
+- (NSArray *)selectedRows;
 - (void)selectItemAtIndex:(NSInteger)index;
 - (void)selectRows:(NSArray *)indices;
 - (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend;

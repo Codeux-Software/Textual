@@ -10,23 +10,23 @@
 	if ((self = [super init])) {
 		clients = [NSMutableArray new];
 	}
-
+    
 	return self;
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	[self init];
-	
-	NSArray *ary = [dic arrayForKey:@"clients"];
-	
-	for (NSDictionary *e in ary) {
-		IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autodrain];
-	
-		[clients safeAddObject:c];
-	}
-	
-	return self;
+    
+    NSArray *ary = [dic arrayForKey:@"clients"];
+    
+    for (NSDictionary *e in ary) {
+        IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autodrain];
+        
+        [clients safeAddObject:c];
+    }
+    
+    return self;
 }
 
 - (void)dealloc

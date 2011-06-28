@@ -19,6 +19,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize guid;
 @synthesize host;
 @synthesize ignores;
+@synthesize prefersIPv6;
 @synthesize invisibleMode;
 @synthesize isTrustedConnection;
 @synthesize leavingComment;
@@ -60,6 +61,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		proxyPort = 1080;
 		proxyUser = NSNullObject;
 		proxyPassword = NSNullObject;
+        
+        prefersIPv6 = YES;
 		
 		encoding = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
@@ -252,8 +255,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
 	}
 	
+    prefersIPv6 = [dic boolForKey:@"prefersIPv6"];
 	invisibleMode = [dic boolForKey:@"invisible"];
-
 	isTrustedConnection = [dic boolForKey:@"trustedConnection"];
 	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
@@ -309,6 +312,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setInteger:fallbackEncoding forKey:@"fallback_encoding"];
 	
 	[dic setBool:useSSL forKey:@"ssl"];
+    [dic setBool:prefersIPv6 forKey:@"prefersIPv6"];
 	[dic setBool:autoConnect forKey:@"auto_connect"];
 	[dic setBool:autoReconnect forKey:@"auto_reconnect"];
 	[dic setBool:bouncerMode forKey:@"bouncer_mode"];

@@ -14,7 +14,7 @@ body {
 	font-size: 9px;
 	overflow: hidden;
 	overflow-y: visible;
-	background-color: #000000;
+	background-color: #000;
 	font-family: "Lucida Grande";
 }
 
@@ -387,77 +387,77 @@ body .inline_nickname[colornumber='15'] {
 
 body .sender[type=normal][colornumber='16'], 
 body .inline_nickname[colornumber='16'] { 
-	color: #006699;
+	color: #706616;
 }
 
 body .sender[type=normal][colornumber='17'], 
 body .inline_nickname[colornumber='17'] { 
-	color: #993300;
+	color: #46799c;
 }
 
 body .sender[type=normal][colornumber='18'], 
 body .inline_nickname[colornumber='18'] { 
-	color: #CC66CC;
+	color: #80372e;
 }
 
 body .sender[type=normal][colornumber='19'], 
 body .inline_nickname[colornumber='19'] { 
-	color: #FF9999;
+	color: #8F478E;
 }
 
 body .sender[type=normal][colornumber='20'], 
 body .inline_nickname[colornumber='20'] { 
-	color: #996699;
+	color: #5b9e4c;
 }
 
 body .sender[type=normal][colornumber='21'], 
 body .inline_nickname[colornumber='21'] { 
-	color: #3399CC;
+	color: #13826c;
 }
 
 body .sender[type=normal][colornumber='22'], 
 body .inline_nickname[colornumber='22'] { 
-	color: #FF0066;
+	color: #b13637;
 }
 
 body .sender[type=normal][colornumber='23'], 
 body .inline_nickname[colornumber='23'] { 
-	color: #CC6633;
+	color: #e45d59;
 }
 
 body .sender[type=normal][colornumber='24'], 
 body .inline_nickname[colornumber='24'] { 
-	color: #CCFF00;
+	color: #1b51ae;
 }
 
 body .sender[type=normal][colornumber='25'], 
 body .inline_nickname[colornumber='25'] { 
-	color: #FFFFCC;
+	color: #4855ac;
 }
 
 body .sender[type=normal][colornumber='26'], 
 body .inline_nickname[colornumber='26'] { 
-	color: #996666;
+	color: #7f1d86;
 }
 
 body .sender[type=normal][colornumber='27'], 
 body .inline_nickname[colornumber='27'] { 
-	color: #00CC00;
+	color: #73643f;
 }
 
 body .sender[type=normal][colornumber='28'], 
 body .inline_nickname[colornumber='28'] { 
-	color: #9933FF;
+	color: #0b9578;
 }
 
 body .sender[type=normal][colornumber='29'], 
 body .inline_nickname[colornumber='29'] { 
-	color: #99CCCC;
+	color: #569c96;
 }
 
 body .sender[type=normal][colornumber='30'], 
 body .inline_nickname[colornumber='30'] { 
-	color: #CC3300;
+	color: #08465f;
 }
 
 /* mIRC Color Codes */

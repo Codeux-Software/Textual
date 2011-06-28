@@ -83,6 +83,10 @@
 	
 	if ([self useNewSocketEngine]) {
 		conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:dispatchQueue];
+        
+        IRCClient *clin = [delegate delegate];
+        
+        [conn setPreferIPv4OverIPv6:BOOLReverseValue(clin.config.prefersIPv6)];
 	} else {
 		conn = [AsyncSocket socketWithDelegate:self];
 	}

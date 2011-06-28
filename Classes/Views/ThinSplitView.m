@@ -180,11 +180,19 @@
 
 - (void)adjustSubviews
 {
-	if ([[self subviews] count] != 2) {
+    NSArray *subviews_ = [self subviews];
+    
+	if (NSDissimilarObjects([subviews_ count], 2)) {
 		[super adjustSubviews];
 		
 		return;
 	}
+    
+    if ([self isSubviewCollapsed:[subviews_ objectAtIndex:fixedViewIndex]]) {
+        [super adjustSubviews];
+        
+        return;
+    }
 	
 	NSSize size = self.frame.size;
 	

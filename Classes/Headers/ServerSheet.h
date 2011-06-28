@@ -28,6 +28,7 @@
 	IBOutlet NSButton *autoReconnectCheck;
 	IBOutlet NSButton *autoConnectCheck;
 	IBOutlet NSButton *bouncerModeCheck;
+    IBOutlet NSButton *prefersIPv6Check;
 	
 	IBOutlet NSComboBox *hostCombo;
 	IBOutlet NSTextField *portText;
@@ -84,6 +85,7 @@
 @property (nonatomic, retain) NSView *proxyServerView;
 @property (nonatomic, retain) ListView *tabView;
 @property (nonatomic, retain) NSTextField *nameText;
+@property (nonatomic, retain) NSButton *prefersIPv6Check;
 @property (nonatomic, retain) NSButton *autoReconnectCheck;
 @property (nonatomic, retain) NSButton *autoConnectCheck;
 @property (nonatomic, retain) NSComboBox *hostCombo;

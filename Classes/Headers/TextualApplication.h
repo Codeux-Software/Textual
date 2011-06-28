@@ -80,8 +80,6 @@
 	#import "DDExtensions.h"
 	#import "GTMNSString+URLArguments.h"
 	#import "IRCUser.h"
-	#import "MemberList.h"
-	#import "MemberListCell.h"
 	#import "IRCTextFormatterMenu.h"
 	#import "IRCExtras.h"
 	#import "IRCTreeItem.h"

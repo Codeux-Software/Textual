@@ -1,17 +1,46 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-/* This class is based off the open source PXSourceList toolkit developed by Alex Rozanski */
+/* This class and the one for the user list is based off the open source PXSourceList 
+ toolkit developed by Alex Rozanski. The implemtnation is fairly dirty and uses a lot
+ of hard coded math/numbers so not recommended to try and use in your own app. 
+ 
+ Let's hope I can even remember how this works six months from now. — Mikey 
+ 
+ Also, I did so much custom drawing in this class and the user list because I enjoyed
+ the shadows and such that Lion added to table views so I wanted that to be experienced
+ on both Snow Leopard and Lion. */
 
-#define ICON_SPACING							5.0
-#define ROW_RIGHT_MARGIN					    5.0	
-#define MIN_BADGE_WIDTH							22.0
-#define BADGE_HEIGHT							14.0		
-#define BADGE_MARGIN							5.0
+#define ICON_SPACING                                5.0
+#define BADGE_RIGHT_MARGIN                          5.0		
+#define BADGE_INSIDE_MARGIN                         5.0
+#define MIN_BADGE_WIDTH                             22.0
+#define BADGE_HEIGHT                                14.0	
 
-#define BADGE_FONT								[_NSFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:10.5]
-#define BADGE_MESSAGE_BACKGROUND_COLOR			[NSColor _colorWithCalibratedRed:152 green:168 blue:202 alpha:1]
-#define BADGE_HIGHLIGHT_BACKGROUND_COLOR		[NSColor _colorWithCalibratedRed:210 green:15  blue:15  alpha:1]
+#define BADGE_FONT                                  [_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5]
+#define BADGE_TEXT_COLOR_TS                         [NSColor _colorWithCalibratedRed:158 green:169 blue:197 alpha:1]
+#define BADGE_TEXT_COLOR_NS                         [NSColor whiteColor]
+#define BADGE_MESSAGE_BACKGROUND_COLOR_TS           [NSColor whiteColor]
+#define BADGE_MESSAGE_BACKGROUND_COLOR              [NSColor _colorWithCalibratedRed:152 green:168 blue:202 alpha:1]
+#define BADGE_HIGHLIGHT_BACKGROUND_COLOR            [NSColor _colorWithCalibratedRed:210 green:15  blue:15  alpha:1]
+
+#define SERVER_CELL_FONT                            [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0]
+#define SERVER_CELL_FONT_COLOR                      [NSColor outlineViewHeaderTextColor]
+#define SERVER_CELL_SELECTION_FONT_COLOR            [NSColor whiteColor]
+#define SERVER_CELL_SELECTION_SHADOW_COLOR_AW       [NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
+#define SERVER_CELL_SELECTION_SHADOW_COLOR_IA       [NSColor colorWithCalibratedWhite:0.00 alpha:0.20]
+#define SERVER_CELL_SHADOW_COLOR_AW                 [NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
+#define SERVER_CELL_SHADOW_COLOR_NA                 [NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
+
+#define CHANNEL_CELL_FONT                           [NSFont fontWithName:@"LucidaGrande" size:11.0]
+#define CHANNEL_CELL_FONT_COLOR                     [NSColor blackColor]
+#define CHANNEL_CELL_SELECTION_FONT_COLOR           [NSColor whiteColor]
+#define CHANNEL_CELL_SELECTION_FONT                 [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0]
+#define CHANNEL_CELL_SHADOW_COLOR                   [NSColor _colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.5]
+#define CHANNEL_CELL_SELECTION_SHADOW_COLOR_AW      [NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
+#define CHANNEL_CELL_SELECTION_SHADOW_COLOR_IA      [NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
+
+#define GRAPHITE_SELECTION_COLOR_AW                 [NSColor _colorWithCalibratedRed:17 green:73 blue:126 alpha:1.00]
 
 @implementation ServerListCell
 
@@ -58,7 +87,7 @@
 #pragma mark -
 #pragma mark Status Badge
 
-- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount
+- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount selected:(BOOL)isSelected
 {
 	NSString *messageCountString;
 	
@@ -70,7 +99,11 @@
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	
-	NSColor *textColor = [NSColor whiteColor];
+	NSColor *textColor = BADGE_TEXT_COLOR_NS;
+    
+    if (isSelected) {
+        textColor = BADGE_TEXT_COLOR_TS;
+    }
 	
 	[attributes setObject:BADGE_FONT forKey:NSFontAttributeName];
 	[attributes setObject:textColor  forKey:NSForegroundColorAttributeName];
@@ -81,14 +114,14 @@
 	return [mcstring autodrain];
 }
 
-- (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring
+- (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring 
 {
 	NSRect badgeFrame;
 	
 	NSSize    messageCountSize  = [mcstring size];
-	NSInteger messageCountWidth = (messageCountSize.width + (BADGE_MARGIN * 2));
+	NSInteger messageCountWidth = (messageCountSize.width + (BADGE_INSIDE_MARGIN * 2));
 	
-	badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (ROW_RIGHT_MARGIN + messageCountWidth)),
+	badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (BADGE_RIGHT_MARGIN + messageCountWidth)),
 							(NSMidY(cellFrame) - (BADGE_HEIGHT / 2.0)),
 							messageCountWidth, BADGE_HEIGHT);
 	
@@ -102,28 +135,38 @@
 	return badgeFrame;
 }
 
-- (NSInteger)drawMessageCountBadge:(NSAttributedString *)mcstring inCell:(NSRect)badgeFrame withHighlighgt:(BOOL)highlight
+- (NSInteger)drawMessageCountBadge:(NSAttributedString *)mcstring 
+                            inCell:(NSRect)badgeFrame 
+                    withHighlighgt:(BOOL)highlight
+                          selected:(BOOL)isSelected
 {
+    NSBezierPath *badgePath;
+    
 	NSSize messageCountSize = [mcstring size];
-	
+	NSRect shadowFrame;
+    
 	NSColor *backgroundColor = [NSColor whiteColor];
 	
-	NSRect shadowFrame;
-	
-	shadowFrame = badgeFrame;
-	shadowFrame.origin.y += 1;
-	
-	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
-															  xRadius:(BADGE_HEIGHT / 2.0)
-															  yRadius:(BADGE_HEIGHT / 2.0)];
-	
-	[backgroundColor set];
-	[badgePath fill];
+    if (isSelected == NO) {
+        shadowFrame = badgeFrame;
+        shadowFrame.origin.y += 1;
+        
+        badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
+                                                    xRadius:(BADGE_HEIGHT / 2.0)
+                                                    yRadius:(BADGE_HEIGHT / 2.0)];
+        
+        [backgroundColor set];
+        [badgePath fill];
+    }
 	
 	if (highlight) {
 		backgroundColor = BADGE_HIGHLIGHT_BACKGROUND_COLOR;
 	} else {
-		backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR;
+        if (isSelected) {
+            backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR_TS;
+        } else {
+            backgroundColor = BADGE_MESSAGE_BACKGROUND_COLOR;
+        }
 	}
 	
 	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame
@@ -146,6 +189,11 @@
 #pragma mark -
 #pragma mark Cell Drawing
 
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+    return NSZeroRect;
+}
+
 - (NSColor *)highlightColorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	return nil;
@@ -158,17 +206,18 @@
 	if (cellItem) {
 		NSInteger rowIndex = [parent rowForItem:cellItem];
 		
+		NSWindow *parentWindow = [parent.keyDelegate window];
+        
 		BOOL isGroupItem = [parent isGroupItem:cellItem];
 		BOOL isSelected  = (rowIndex == selectedRow);
-		
-		IRCClient  *client  = cellItem.log.client;
+		BOOL isKeyWindow = [parentWindow isOnCurrentWorkspace];
+        BOOL isGraphite  = ([NSColor currentControlTint] == NSGraphiteControlTint);
+        
 		IRCChannel *channel = cellItem.log.channel;
 		
-		NSWindow *parentWindow = [parent.keyDelegate window];
-		
 		/* Draw Background */
-		
-		if (isSelected && [parentWindow isOnCurrentWorkspace]) {
+        
+		if (isSelected && isKeyWindow) {
 			/* We draw selected cells using images because the color
 			 that Apple uses for cells when the table is not in focus
 			 looks ugly in this developer's opinion. */
@@ -187,7 +236,7 @@
 				backgroundImage = @"ServerCellSelection";
 			}
 			
-			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+			if (isGraphite) {
 				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite.tif"];
 			} else {
 				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua.tif"];
@@ -211,58 +260,91 @@
 		
 		if (isGroupItem == NO) {
 			if (channel.isChannel) {
-				if (client.isConnecting || channel.status == IRCChannelJoining) {
-					[self drawStatusBadge:@"status-channel-connecting.tif" inCell:cellFrame];
-				} else {
-					if (channel.isActive) {
-						[self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
-					} else {
-						[self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
-					} 
-				}
+                if (channel.isActive) {
+                    [self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
+                } else {
+                    [self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
+                } 
 			} else {
 				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
 			}
 			
+            BOOL drawMessageBadge = (isSelected == NO ||
+                                     (isKeyWindow == NO && isSelected));
+            
+            NSInteger unreadCount  = cellItem.treeUnreadCount;
+            NSInteger keywordCount = cellItem.keywordCount;
+            
+            BOOL isHighlight = (keywordCount >= 1);
+            
+            if (unreadCount >= 1 && drawMessageBadge) {
+                NSAttributedString *mcstring  = [self messageCountBadgeText:unreadCount selected:(isSelected && isHighlight == NO)];
+                NSRect              badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
+                
+                [self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:isHighlight selected:isSelected];
+                
+                cellFrame.size.width -= (badgeRect.size.width + (BADGE_RIGHT_MARGIN * 2));
+            }
+            
+            
 			if (isSelected == NO) {
-				NSInteger unreadCount  = cellItem.treeUnreadCount;
-				NSInteger keywordCount = cellItem.keywordCount;
-				
-				if (unreadCount >= 1) {
-					NSAttributedString *mcstring = [self messageCountBadgeText:unreadCount];
-					
-					NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
-					
-					[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:(keywordCount >= 1)];
-					
-					cellFrame.size.width -= badgeRect.size.width;
-				}
-				
-				[itemShadow setShadowColor:[NSColor whiteColor]];	
+                [itemShadow setShadowOffset:NSMakeSize(0, -1)];
+                [itemShadow setShadowColor:CHANNEL_CELL_SHADOW_COLOR];
 			} else {
-				[itemShadow setShadowColor:[NSColor darkGrayColor]];
-			}
+                [itemShadow setShadowBlurRadius:2.0];
+                [itemShadow setShadowOffset:NSMakeSize(1, -1)];
+                
+                if (isKeyWindow) {
+                    if (isGraphite) {
+                        [itemShadow setShadowColor:GRAPHITE_SELECTION_COLOR_AW];
+                    } else {
+                        [itemShadow setShadowColor:CHANNEL_CELL_SELECTION_SHADOW_COLOR_AW];
+                    }
+                } else {
+                    [itemShadow setShadowColor:CHANNEL_CELL_SELECTION_SHADOW_COLOR_IA];
+                }
+            }
 			
-			cellFrame.origin.y += 3;
+			cellFrame.origin.y += 2;
+            
+			NSRange textRange = NSMakeRange(0, [newValue length]);
 			
-			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-			
-			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:NSMakeRange(0, [newValue length])];
+            if (isSelected) {
+                [newValue addAttribute:NSFontAttributeName              value:CHANNEL_CELL_SELECTION_FONT       range:textRange];
+                [newValue addAttribute:NSForegroundColorAttributeName	value:CHANNEL_CELL_SELECTION_FONT_COLOR range:textRange];
+            } else {
+                [newValue addAttribute:NSFontAttributeName              value:CHANNEL_CELL_FONT         range:textRange];
+                [newValue addAttribute:NSForegroundColorAttributeName   value:CHANNEL_CELL_FONT_COLOR	range:textRange];
+            }
+            
+            [newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
 			[newValue drawInRect:cellFrame];
 		} else {
-			cellFrame.origin.y += 6;
+			cellFrame.origin.y += 4;
 			
-			NSColor *controlColor	= [NSColor outlineViewHeaderTextColor];
-			NSFont  *groupFont		= [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+			NSColor *controlColor	= SERVER_CELL_FONT_COLOR;
+			NSFont  *groupFont		= SERVER_CELL_FONT;
 			
 			[itemShadow setShadowOffset:NSMakeSize(1, -1)];
 			
-			if (NSDissimilarObjects(selectedRow, rowIndex)) {
-				[itemShadow setShadowColor:[NSColor whiteColor]];	
-			} else {
-				controlColor = [NSColor alternateSelectedControlTextColor];
+			if (isSelected) {
+				controlColor = SERVER_CELL_SELECTION_FONT_COLOR;
 				
-				[itemShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]];
+                if (isKeyWindow) {
+                    if (isGraphite) {
+                        [itemShadow setShadowColor:GRAPHITE_SELECTION_COLOR_AW];
+                    } else {
+                        [itemShadow setShadowColor:SERVER_CELL_SELECTION_SHADOW_COLOR_AW];
+                    }
+                } else {
+                    [itemShadow setShadowColor:SERVER_CELL_SELECTION_SHADOW_COLOR_IA];
+                }
+			} else {
+                if (isKeyWindow) {
+                    [itemShadow setShadowColor:SERVER_CELL_SHADOW_COLOR_AW];
+                } else {
+                    [itemShadow setShadowColor:SERVER_CELL_SHADOW_COLOR_NA];
+                }
 			}
 			
 			NSRange textRange = NSMakeRange(0, [newValue length]);

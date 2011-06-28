@@ -8,8 +8,8 @@
 #define TREE_DRAG_ITEM_TYPE     @"tree"
 #define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
 
-#define TREE_CLIENT_HEIGHT		24.0
-#define TREE_CHANNEL_HEIGHT		20.0
+#define TREE_CLIENT_HEIGHT		21.0
+#define TREE_CHANNEL_HEIGHT		18.0
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;

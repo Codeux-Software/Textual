@@ -938,10 +938,10 @@ static NSInteger totalRunTime = 0;
 	
     CFURLRef ircAppURL = NULL;
     OSStatus status    = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
-	
+
 	if (status == noErr) {
 		NSBundle *mainBundle		  = [NSBundle mainBundle];
-		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:(NSURL *)ircAppURL];
+		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:CFItemRefToID(ircAppURL)];
 		
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {
 			[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow]

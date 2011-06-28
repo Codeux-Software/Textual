@@ -1,11 +1,11 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-NSString *IRCTextFormatterBoldAttributeName = @"IRCTextFormatterBold";
-NSString *IRCTextFormatterItalicAttributeName = @"IRCTextFormatterItalic";
-NSString *IRCTextFormatterUnderlineAttributeName = @"IRCTextFormatterUnderline";
-NSString *IRCTextFormatterForegroundColorAttributeName = @"IRCTextFormatterForegroundColor";
-NSString *IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatterBackgroundColor";
+NSString *IRCTextFormatterBoldAttributeName             = @"IRCTextFormatterBold";
+NSString *IRCTextFormatterItalicAttributeName           = @"IRCTextFormatterItalic";
+NSString *IRCTextFormatterUnderlineAttributeName        = @"IRCTextFormatterUnderline";
+NSString *IRCTextFormatterForegroundColorAttributeName  = @"IRCTextFormatterForegroundColor";
+NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBackgroundColor";
 NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefaultFontColor";
 
 @implementation NSAttributedString (IRCTextFormatter)
@@ -33,13 +33,13 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		
 		BOOL color = (foregroundColor >= 0 && foregroundColor <= 15);
 		
-		BOOL boldText = [dict boolForKey:IRCTextFormatterBoldAttributeName];
-		BOOL italicText = [dict boolForKey:IRCTextFormatterItalicAttributeName];
-		BOOL underlineText = [dict boolForKey:IRCTextFormatterUnderlineAttributeName];
+		BOOL boldText       = [dict boolForKey:IRCTextFormatterBoldAttributeName];
+		BOOL italicText     = [dict boolForKey:IRCTextFormatterItalicAttributeName];
+		BOOL underlineText  = [dict boolForKey:IRCTextFormatterUnderlineAttributeName];
 		
-		if (underlineText) [result appendFormat:@"%c", 0x1F];
-		if (italicText) [result appendFormat:@"%c", 0x16];
-		if (boldText) [result appendFormat:@"%c", 0x02];
+		if (underlineText)  [result appendFormat:@"%c", 0x1F];
+		if (italicText)     [result appendFormat:@"%c", 0x16];
+		if (boldText)       [result appendFormat:@"%c", 0x02];
 		
 		if (color) {
 			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
@@ -51,10 +51,10 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		
 		[result appendString:[realBody safeSubstringWithRange:effectiveRange]];
 		
-		if (color) [result appendFormat:@"%c", 0x03];
-		if (boldText) [result appendFormat:@"%c", 0x02];
-		if (italicText) [result appendFormat:@"%c", 0x16];
-		if (underlineText) [result appendFormat:@"%c", 0x1F];
+		if (color)          [result appendFormat:@"%c", 0x03];
+		if (boldText)       [result appendFormat:@"%c", 0x02];
+		if (italicText)     [result appendFormat:@"%c", 0x16];
+		if (underlineText)  [result appendFormat:@"%c", 0x1F];
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
 								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));

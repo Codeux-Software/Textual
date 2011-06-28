@@ -1059,31 +1059,31 @@
 }
 
 - (void)memberListDoubleClicked:(id)sender
-{/*
-  MemberListView *view = sender;
-  
-  NSPoint pt;
-  NSInteger n;
-  
-  pt = [window mouseLocationOutsideOfEventStream];
-  pt = [view convertPoint:pt fromView:nil];
-  
-  n = [view rowAtPoint:pt];
-  
-  if (n >= 0) {
-  if (NSObjectIsNotEmpty([view selectedRowIndexes])) {
-  [view selectItemAtIndex:n];
-  }
-  
-  switch ([Preferences userDoubleClickOption]) {
-  case USERDC_ACTION_WHOIS: 
-  [self whoisSelectedMembers:nil deselect:NO];
-  break;
-  case USERDC_ACTION_QUERY: 
-  [self onMemberTalk:nil];
-  break;
-  }
-  }*/
+{
+    MemberList *view = sender;
+    
+    NSPoint pt;
+    NSInteger n;
+    
+    pt = [window mouseLocationOutsideOfEventStream];
+    pt = [view convertPoint:pt fromView:nil];
+    
+    n = [view rowAtPoint:pt];
+    
+    if (n >= 0) {
+        if (NSObjectIsNotEmpty([view selectedRowIndexes])) {
+            [view selectItemAtIndex:n];
+        }
+        
+        switch ([Preferences userDoubleClickOption]) {
+            case USERDC_ACTION_WHOIS: 
+                [self whoisSelectedMembers:nil deselect:NO];
+                break;
+            case USERDC_ACTION_QUERY: 
+                [self onMemberTalk:nil];
+                break;
+        }
+    }
 }
 
 - (void)onMemberWhois:(id)sender

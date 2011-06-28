@@ -7,12 +7,12 @@
 	NSInteger uid;
 	
 	IBOutlet NSTextField *currentText;
-	IBOutlet NSTextField *newText;
+	IBOutlet NSTextField *nicknameNewInfo;
 }
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, retain) NSTextField *currentText;
-@property (nonatomic, retain) NSTextField *newText;
+@property (nonatomic, retain) NSTextField *nicknameNewInfo;
 
 - (void)start:(NSString *)nick;
 @end

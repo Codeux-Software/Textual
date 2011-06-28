@@ -38,6 +38,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	BOOL autoConnect;
 	BOOL autoReconnect;
+    BOOL prefersIPv6;
 	BOOL bouncerMode;
 	BOOL invisibleMode;
 	BOOL isTrustedConnection;
@@ -73,6 +74,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
 @property (nonatomic, assign) BOOL bouncerMode;
+@property (nonatomic, assign) BOOL prefersIPv6;
 @property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, assign) NSStringEncoding fallbackEncoding;
