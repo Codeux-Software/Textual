@@ -18,14 +18,13 @@
 - (void)populateData;
 {			
 	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-	
+
 	for (NSString *file in resourceFiles) {
-		if ([file hasSuffix:@".scpt"]) {
-			NSString *script = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
-			
-			if ([scripts containsObject:script] == NO) {
-				[scripts safeAddObject:script];
-			}
+        NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
+        NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
+        
+        if ([scripts containsObject:script] == NO) {
+            [scripts safeAddObject:script];
 		}
 	}
 

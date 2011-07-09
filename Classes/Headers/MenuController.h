@@ -71,6 +71,8 @@
 - (void)onSearchWeb:(id)sender;
 - (void)onCopyLogAsHtml:(id)sender;
 
+- (void)toggleDeveloperMode:(id)sender;
+
 - (void)showHighlightSheet:(id)sender;
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
 

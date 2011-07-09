@@ -210,13 +210,16 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		NSMutableString *s = [NSMutableString string];
 		
 		if (attr & CONVERSATION_TRKR_ATTR) {
-			IRCUser *user = [log.channel findMember:content options:NSCaseInsensitiveSearch];
+            IRCClient   *client = log.client;
+			IRCUser     *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
 			
 			if (PointerIsEmpty(user) == NO) {
-				matchedUser = YES;
+                if ([user.nick isEqualNoCase:client.myNick] == NO) {
+                    matchedUser = YES;
 				
-				[s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
-			} 
+                    [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
+                } 
+            }
 		}
 		
 		if (attr & EFFECT_MASK) {

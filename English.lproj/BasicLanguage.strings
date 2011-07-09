@@ -174,7 +174,7 @@
 "LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";
 
 "LAG_CHECK_REQUEST_SENT_MESSAGE" = "Waiting for response from lag check …";
-"LAG_CHECK_REQUEST_REPLY_MESSAGE" = "Received lag check reply. Time elapsed: %1.5f seconds.";
+"LAG_CHECK_REQUEST_REPLY_MESSAGE" = "Received lag check reply from %@. Time elapsed: %1.5f seconds.";
 "LAG_CHECK_REQUEST_UNKNOWN_REPLY_MESSAGE" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
 
 "INVITE_SHEET_TWO_PEOPLE" = "%1$@ and %2$@";

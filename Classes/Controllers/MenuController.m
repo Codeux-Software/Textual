@@ -103,8 +103,8 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient   *u = [world selectedClient];
+	IRCChannel  *c = [world selectedChannel];
 	
 	NSInteger tag = item.tag;
 	
@@ -360,6 +360,16 @@
 			return ([Preferences logAllHighlightsToQuery] && CONNECTED);
 			break;
 		}
+        case 54092: // Developer Mode
+        {
+            if ([_NSUserDefaults() boolForKey:DeveloperEnvironmentToken] == YES) {
+                [item setState:NSOnState];
+            } else {  
+                [item setState:NSOffState];
+            }
+            
+            return YES;
+        }
 		default:
 		{
 			return YES;
@@ -1693,6 +1703,19 @@
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
+}
+
+- (void)toggleDeveloperMode:(id)sender
+{
+    if ([sender state] == NSOnState) {
+        [_NSUserDefaults() setBool:NO   forKey:DeveloperEnvironmentToken];
+        
+        [sender setState:NSOffState];
+    } else {
+        [_NSUserDefaults() setBool:YES  forKey:DeveloperEnvironmentToken];
+        
+        [sender setState:NSOnState];
+    }
 }
 
 @end

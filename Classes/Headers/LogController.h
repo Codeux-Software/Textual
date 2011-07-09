@@ -21,6 +21,8 @@
 	NSMenu *addrMenu;
 	NSMenu *chanMenu;
 	NSMenu *memberMenu;
+    
+    NSInteger messageQueueCount;
 	
 	ViewTheme *theme;
 	
@@ -42,10 +44,12 @@
 	NSString *html;
 }
 
+@property (assign) NSInteger messageQueueCount;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
 @property (nonatomic, assign) IRCChannel *channel;
+@property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL loaded;
 @property (nonatomic, retain) NSMenu *menu;
 @property (nonatomic, retain) NSMenu *urlMenu;
@@ -56,11 +60,10 @@
 @property (nonatomic, assign, setter=setMaxLines:, getter=maxLines) NSInteger maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
 @property (nonatomic, retain) LogPolicy *policy;
-@property (nonatomic, retain) LogScriptEventSink *sink;
 @property (nonatomic, retain) WebScriptObject *js;
+@property (nonatomic, retain) LogScriptEventSink *sink;
 @property (nonatomic, retain) WebViewAutoScroll *autoScroller;
 @property (nonatomic, assign) BOOL becameVisible;
-@property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL movingToBottom;
 @property (nonatomic, assign) NSInteger lineNumber;
 @property (nonatomic, assign) NSInteger count;

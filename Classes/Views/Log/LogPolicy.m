@@ -5,8 +5,6 @@
 #define WebMenuItemTagInspectElement	2024
 #define WebMenuItemTagIRCopServices		42354
 
-#define DeveloperEnvironmentToken		@"TextualDeveloperEnvironment"
-
 @implementation LogPolicy
 
 @synthesize menuController;

@@ -1,5 +1,5 @@
 /* Availability Macros */
-#define _LOAD_MAC_OS_LION_LIBRARIES 0
+#define _LOAD_MAC_OS_LION_LIBRARIES 1
 
 #if _LOAD_MAC_OS_LION_LIBRARIES
 	#if defined(MAC_OS_X_VERSION_10_7) 
@@ -55,3 +55,5 @@ typedef unsigned long long	TXFSLongInt; // filesizes
 #define NSNullObject				@""
 #define NSWhitespaceCharacter		@" "
 #define NSNewlineCharacter			@"\n"
+
+#define DeveloperEnvironmentToken		@"TextualDeveloperEnvironment"

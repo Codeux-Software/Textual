@@ -130,7 +130,6 @@
     [modeString drawAtPoint:badgeTextPoint];
 }
 
-
 #pragma mark -
 #pragma mark Cell Drawing
 
