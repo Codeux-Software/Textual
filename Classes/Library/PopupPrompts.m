@@ -10,6 +10,13 @@
 @synthesize _actionSelector;
 @synthesize _suppressionKey;
 
+- (void)dealloc
+{
+    [_suppressionKey drain];
+    
+    [super dealloc];
+}
+
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
 						 action:(SEL)actionSelector
@@ -22,9 +29,11 @@
 {
 	BOOL useSupression = NO;
 	
-	NSString *__suppressionKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	NSString *__suppressionKey = @"";
 	
 	if (NSObjectIsNotEmpty(suppressKey)) {
+        __suppressionKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+        
 		useSupression = YES;
 		
 		if ([_NSUserDefaults() boolForKey:__suppressionKey] == YES && [suppressText isEqualToString:@"-"] == NO) {
@@ -75,6 +84,8 @@
 	}
 	
 	[_targetClass performSelector:_actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
+    
+    [self drain];
 }
 
 + (void)sheetWindowWithQuestion:(NSWindow *)window
@@ -117,9 +128,11 @@
 {
 	BOOL useSupression = NO;
 	
-	NSString *_suppressKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	NSString *_suppressKey = @"";
 	
 	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
+        _suppressKey = [PopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+        
 		useSupression = YES;
 		
 		if ([_NSUserDefaults() boolForKey:_suppressKey] == YES) {

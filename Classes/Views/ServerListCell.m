@@ -56,7 +56,7 @@
 {
 	NSInteger extraMath = 0;
 	
-	if ([iconName isEqualNoCase:@"NSUserGroup"]) {
+	if ([iconName isEqualNoCase:@"NSUser"]) {
 		extraMath = 1;
 	} 
 	
@@ -272,7 +272,7 @@
                     [self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
                 } 
 			} else {
-				[self drawStatusBadge:@"NSUserGroup" inCell:cellFrame];
+				[self drawStatusBadge:@"NSUser" inCell:cellFrame];
 			}
 			
             BOOL drawMessageBadge = (isSelected == NO ||

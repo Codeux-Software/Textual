@@ -28,6 +28,7 @@
 @synthesize delegate;
 @synthesize excludeWordsArrayController;
 @synthesize excludeWordsTable;
+@synthesize experimentalSettingsView;
 @synthesize floodControlView;
 @synthesize generalView;
 @synthesize highlightView;
@@ -154,6 +155,7 @@
 		case 8: [self firstPane:channelManagementView selectedItem:11]; break;
 		case 9: [self firstPane:identityView selectedItem:9]; break;
 		case 10: [self firstPane:scriptsView selectedItem:10]; break;
+        case 11: [self firstPane:experimentalSettingsView selectedItem:11]; break;
 		default:
 		{
 			TextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
@@ -533,12 +535,14 @@
 		}
 	}
 }
+
 #pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note
 {
 	[Preferences cleanUpWords];
+    [Preferences sync];
 	
 	[_NSUserDefaults() synchronize];
 	

@@ -34,7 +34,6 @@
 @synthesize channel;
 @synthesize client;
 @synthesize count;
-@synthesize highlightedLineNumbers;
 @synthesize html;
 @synthesize js;
 @synthesize lineNumber;
@@ -44,7 +43,9 @@
 @synthesize memberMenu;
 @synthesize menu;
 @synthesize movingToBottom;
+@synthesize highlightedLineNumbers;
 @synthesize needsLimitNumberOfLines;
+@synthesize messageQueueCount;
 @synthesize policy;
 @synthesize scrollBottom;
 @synthesize scrollTop;
@@ -57,8 +58,9 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		bottom   = YES;
-		maxLines = 300;
+		bottom              = YES;
+		maxLines            = 300;
+        messageQueueCount   = 0;
 		
 		highlightedLineNumbers = [NSMutableArray new];
 		
@@ -384,6 +386,8 @@
 	
 	scrollBottom = [self viewingBottom];
 	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
+    
+    messageQueueCount = 0;
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -396,6 +400,8 @@
 	
 	loaded = NO;
 	count  = 0;
+    
+    messageQueueCount = 0;
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -614,24 +620,52 @@
 	
 	return highlighted;
 }
+
+- (void)holdWriteThread
+{
+    
+}
 	  
 - (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
+    NSInteger queueIndex  = messageQueueCount;
 	NSInteger loopProtect = 0;
-	
-	while ([view isLoading]) {
+    
+    while (1 == 1) {
 		[NSThread sleepForTimeInterval:0.1];
 		
 		loopProtect++;
 		
-		if (loopProtect >= 30) {
+		if (loopProtect > 30) {
 			break;
 		}
-		
-		continue;
-	}
-	
-	[[self iomt] writeLine:aHtml attributes:attrs];
+        
+        if ([view isLoading]) {
+            continue;
+        } else {
+            if (messageQueueCount >= 1) {
+                if (messageQueueCount > queueIndex) {
+                    continue;
+                } else {
+                    if (messageQueueCount == queueIndex) {
+                        return [[self iomt] writeLine:aHtml attributes:attrs];
+                        
+                        messageQueueCount = (queueIndex - 1);
+                        
+                        if (messageQueueCount < 0) {
+                            messageQueueCount = 0;
+                        }
+                        
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                return [[self iomt] writeLine:aHtml attributes:attrs];
+            }
+        }
+    }
 }
 
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs 

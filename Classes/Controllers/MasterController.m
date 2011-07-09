@@ -901,15 +901,14 @@
 		}
 		
 		for (NSString *file in resourceFiles) {
-			if ([file hasSuffix:@".scpt"]) {
-				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
-				
-				if ([choices containsObject:cmdl] == NO) {
-					[choices safeAddObject:cmdl];
-				}
-			}
+			NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+            NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+            
+            if ([choices containsObject:cmdl] == NO) {
+                [choices safeAddObject:cmdl];
+            }
 		}
-		
+        
 		lowerChoices = choices;
 	} else if (channelMode) {
 		NSMutableArray *channels      = [NSMutableArray array];

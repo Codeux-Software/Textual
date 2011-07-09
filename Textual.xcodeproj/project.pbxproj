@@ -2293,6 +2293,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2376,6 +2377,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2420,6 +2422,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2529,6 +2532,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
