@@ -13,8 +13,7 @@
 - (void)savePosition;
 - (void)restorePosition;
 - (void)setNeedsLimitNumberOfLines;
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs;
-- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs;
+- (BOOL)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs queue:(BOOL)skipQueue;
 - (NSString *)initialDocument:(NSString *)topic;
 - (NSString *)generateOverrideStyle;
 - (DOMDocument *)mainFrameDocument;
@@ -45,7 +44,7 @@
 @synthesize movingToBottom;
 @synthesize highlightedLineNumbers;
 @synthesize needsLimitNumberOfLines;
-@synthesize messageQueueCount;
+@synthesize heldMessageQueue;
 @synthesize policy;
 @synthesize scrollBottom;
 @synthesize scrollTop;
@@ -60,9 +59,9 @@
 	if ((self = [super init])) {
 		bottom              = YES;
 		maxLines            = 300;
-        messageQueueCount   = 0;
 		
-		highlightedLineNumbers = [NSMutableArray new];
+		highlightedLineNumbers  = [NSMutableArray new];
+        heldMessageQueue        = [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
 		[[WebPreferences standardPreferences] setUsesPageCache:NO];
@@ -79,6 +78,7 @@
 	[autoScroller drain];
 	[chanMenu drain];
 	[highlightedLineNumbers drain];
+    [heldMessageQueue drain];
 	[html drain];
 	[js drain];
 	[memberMenu drain];
@@ -383,11 +383,11 @@
 	if (PointerIsEmpty(body)) return;
 	
 	self.html = [(id)body innerHTML];
+    
+    [heldMessageQueue removeAllObjects];
 	
 	scrollBottom = [self viewingBottom];
 	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
-    
-    messageQueueCount = 0;
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -397,11 +397,11 @@
 	if (loaded == NO) return;
 	
 	self.html = nil;
+    
+    [heldMessageQueue removeAllObjects];
 	
 	loaded = NO;
 	count  = 0;
-    
-    messageQueueCount = 0;
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -598,9 +598,9 @@
 	if (line.nickInfo) {
 		[attrs setObject:line.nickInfo forKey:@"nick"];
 	}
-	
-	[[self invokeInBackgroundThread] writeLineInBackground:s attributes:attrs];
-	
+    
+    [self writeLine:s attributes:attrs queue:NO];
+    
 	if (highlighted) {
 		NSString *messageBody;
 		NSString *nicknameBody = [line.nick trim];
@@ -621,55 +621,58 @@
 	return highlighted;
 }
 
-- (void)holdWriteThread
+- (void)startMessageQueueTimer
 {
-    
-}
-	  
-- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs
-{
-    NSInteger queueIndex  = messageQueueCount;
-	NSInteger loopProtect = 0;
+    NSInteger loopProtect = 0;
     
     while (1 == 1) {
-		[NSThread sleepForTimeInterval:0.1];
-		
-		loopProtect++;
-		
-		if (loopProtect > 30) {
-			break;
-		}
+        loopProtect++;
         
-        if ([view isLoading]) {
-            continue;
-        } else {
-            if (messageQueueCount >= 1) {
-                if (messageQueueCount > queueIndex) {
-                    continue;
-                } else {
-                    if (messageQueueCount == queueIndex) {
-                        return [[self iomt] writeLine:aHtml attributes:attrs];
-                        
-                        messageQueueCount = (queueIndex - 1);
-                        
-                        if (messageQueueCount < 0) {
-                            messageQueueCount = 0;
-                        }
-                        
-                        break;
-                    } else {
-                        break;
-                    }
-                }
-            } else {
-                return [[self iomt] writeLine:aHtml attributes:attrs];
-            }
+        if (loopProtect >= 60) {
+            break;
+        }
+        
+        [NSThread sleepForTimeInterval:0.1];
+        
+        BOOL testResult = [[self iomt] writeLine:@"-" attributes:nil queue:NO];
+        
+        if (testResult == YES) {
+            break;
         }
     }
 }
 
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs 
+- (BOOL)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs queue:(BOOL)skipQueue
 {
+    BOOL isNilJob = ([aHtml isEqualToString:@"-"] && attrs == nil);
+    
+    if (skipQueue == NO) {
+        if ([view isLoading]) {
+            if (isNilJob) {
+                return NO;
+            }
+            
+            NSArray *entry = [NSArray arrayWithObjects:aHtml, attrs, nil];
+            
+            [heldMessageQueue safeAddObject:entry];
+            
+            if ([heldMessageQueue count] == 1) {
+                [[self invokeInBackgroundThread] startMessageQueueTimer];
+            }
+        } else {
+            for (NSArray *entry in heldMessageQueue) {
+                [self writeLine:[entry safeObjectAtIndex:0] 
+                     attributes:[entry safeObjectAtIndex:1] queue:YES];
+            }
+            
+            [heldMessageQueue removeAllObjects];
+        }
+    }
+    
+    if (isNilJob) {
+        return NO;
+    }
+    
 	[self savePosition];
 	
 	++lineNumber;
@@ -705,6 +708,8 @@
 		[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
 					  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(lineNumber), nil]];  
 	}
+    
+    return YES;
 }
 
 - (NSString *)initialDocument:(NSString *)topic

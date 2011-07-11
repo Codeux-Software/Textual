@@ -63,6 +63,7 @@
 @synthesize realNameText;
 @synthesize sleepQuitMessageText;
 @synthesize sslCheck;
+@synthesize saslCheck;
 @synthesize tabView;
 @synthesize uid;
 @synthesize usernameText;
@@ -152,6 +153,8 @@
 
 - (void)startWithIgnoreTab:(NSString *)imask
 {
+    /* TODO: ADD ABILITY TO SHOW NEW IGNORE DIALOG ON EMPTY "IGNORE" COMMAND. */
+    
 	[channelTable setTarget:self];
 	[channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 	[channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
@@ -231,6 +234,7 @@
 	passwordText.stringValue	= config.password;
 	portText.integerValue		= config.port;
 	sslCheck.state				= config.useSSL;
+    saslCheck.state             = config.useSASL;
 	bouncerModeCheck.state		= config.bouncerMode;
 	autoConnectCheck.state		= config.autoConnect;
 	autoReconnectCheck.state	= config.autoReconnect;
@@ -324,6 +328,7 @@
 	}
 	
 	config.useSSL = sslCheck.state;
+    config.useSASL = saslCheck.state;
 	
 	/* Identity */
 	config.nick				= nickText.stringValue;

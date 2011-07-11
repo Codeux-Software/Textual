@@ -21,8 +21,6 @@
 	NSMenu *addrMenu;
 	NSMenu *chanMenu;
 	NSMenu *memberMenu;
-    
-    NSInteger messageQueueCount;
 	
 	ViewTheme *theme;
 	
@@ -40,11 +38,12 @@
 	NSInteger loadingImages;
 	
 	NSMutableArray *highlightedLineNumbers;
+    NSMutableArray *heldMessageQueue;
 
 	NSString *html;
 }
 
-@property (assign) NSInteger messageQueueCount;
+@property (nonatomic, retain) NSMutableArray *heldMessageQueue;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
