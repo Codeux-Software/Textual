@@ -33,6 +33,7 @@
 	IBOutlet NSComboBox *hostCombo;
 	IBOutlet NSTextField *portText;
 	IBOutlet NSButton *sslCheck;
+    IBOutlet NSButton *saslCheck;
 	
 	IBOutlet NSTextField *nickText;
 	IBOutlet NSTextField *passwordText;
@@ -90,6 +91,7 @@
 @property (nonatomic, retain) NSButton *autoConnectCheck;
 @property (nonatomic, retain) NSComboBox *hostCombo;
 @property (nonatomic, retain) NSButton *sslCheck;
+@property (nonatomic, retain) NSButton *saslCheck;
 @property (nonatomic, retain) NSTextField *portText;
 @property (nonatomic, retain) NSTextField *nickText;
 @property (nonatomic, retain) NSTextField *passwordText;

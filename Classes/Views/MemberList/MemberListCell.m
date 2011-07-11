@@ -77,13 +77,20 @@
                                                     xRadius:4.0
                                                     yRadius:4.0];
         
-        [BADGE_SHADOW_COLOR set];
-        [badgePath fill];
+        NSColor *shadow = BADGE_SHADOW_COLOR;
+        
+        if (shadow) {
+            [shadow set];
+            
+            if (badgePath) {
+                [badgePath fill];
+            }
+        }
 	} else {
         badgeFrame.size.width += 1;
     }
     
-    NSColor *backgroundColor;
+    NSColor *backgroundColor = [NSColor whiteColor];
     
     if (selected == NO) {
         if (mcstring == '~') {
@@ -109,8 +116,13 @@
 												xRadius:4.0
 												yRadius:4.0];
 	
-	[backgroundColor set];
-	[badgePath fill];
+    if (backgroundColor) {
+        [backgroundColor set];
+        
+        if (badgePath) {
+            [badgePath fill];
+        }
+    }
     
     NSAttributedString *modeString;
     

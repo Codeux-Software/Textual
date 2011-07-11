@@ -43,8 +43,8 @@
 @synthesize memberList;
 @synthesize memberMenu;
 @synthesize menuController;
-@synthesize messagesReceived;
 @synthesize messagesSent;
+@synthesize messagesReceived;
 @synthesize previousSelectedChannelId;
 @synthesize previousSelectedClientId;
 @synthesize selected;
@@ -195,7 +195,7 @@
 }
 
 #pragma mark -
-#pragma mark Utilities
+#pragma mark Utilities}
 
 - (void)resetLoadedBundles
 {
@@ -1053,6 +1053,7 @@
 		
 		memberList.dataSource = nil;
 		memberList.delegate = nil;
+        
 		[memberList reloadData];
 		
 		serverList.menu = treeMenu;

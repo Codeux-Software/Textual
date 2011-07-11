@@ -21,7 +21,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSInteger port;
 	NSString *server;
 	NSString *network;
+    
 	BOOL useSSL;
+    BOOL useSASL;
 	
 	NSString *nick;
 	NSString *password;
@@ -60,6 +62,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, retain) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
+@property (nonatomic, assign) BOOL useSASL;
 @property (nonatomic, retain) NSString *nick;
 @property (nonatomic, retain) NSString *password;
 @property (nonatomic, retain) NSString *username;

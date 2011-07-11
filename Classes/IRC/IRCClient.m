@@ -1273,17 +1273,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
     
     if ([scriptPath hasSuffix:@".scpt"]) {	
         NSDictionary *errors = [NSDictionary dictionary];
-	
+        
         NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:scriptPath] error:&errors];
-	
+        
         if (appleScript) {
             NSAppleEventDescriptor *firstParameter = [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
             NSAppleEventDescriptor *parameters = [NSAppleEventDescriptor listDescriptor];
-		
+            
             [parameters insertDescriptor:firstParameter atIndex:1];
-		
+            
             ProcessSerialNumber psn = { 0, kCurrentProcess };
-        
+            
             NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
                                                                                             bytes:&psn
                                                                                            length:sizeof(ProcessSerialNumber)];
@@ -1293,12 +1293,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
                                                                             targetDescriptor:target
                                                                                     returnID:kAutoGenerateReturnID
                                                                                transactionID:kAnyTransactionID];
-		
+            
             [event setParamDescriptor:handler forKeyword:keyASSubroutineName];
             [event setParamDescriptor:parameters forKeyword:keyDirectObject];
-		
+            
             NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
-		
+            
             if (errors && PointerIsEmpty(result)) {
                 NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);
             } else {	
@@ -1311,7 +1311,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         } else {
             NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);	
         }
-	
+        
         [appleScript drain];
     } else {
         NSMutableArray  *args  = [NSMutableArray array];
@@ -1327,7 +1327,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         if ([_NSFileManager() isExecutableFileAtPath:scriptPath] == NO) {
             NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", scriptPath, nil];
             NSTask  *chmod          = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
-          
+            
             [chmod waitUntilExit];
         }
         
@@ -1342,7 +1342,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         
         NSData   *outputData    = [filehandle readDataToEndOfFile];
         NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
-       
+        
         if (NSObjectIsNotEmpty(outputString)) {
             [[world iomt] inputText:outputString command:IRCCI_PRIVMSG];
         }
@@ -2601,7 +2601,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             for (NSString *i in extensions) {
                 scriptPath  = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", [cmd lowercaseString], i]];
                 scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-               
+                
                 if (scriptFound == YES) {
                     break;
                 }
@@ -3460,8 +3460,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		[self decryptIncomingMessage:&text channel:c];
 		
-		if (type == LINE_TYPE_NOTICE) {
-			[self setUnreadState:c];
+		if (type == LINE_TYPE_NOTICE) {     
 			[self printBoth:c type:type nick:anick text:text identified:identified];
 			[self notifyText:GROWL_CHANNEL_NOTICE lineType:type target:c nick:anick text:text];
 		} else {
@@ -4141,6 +4140,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)receiveError:(IRCMessage *)m
 {
 	[self printError:m.sequence];
+}
+
+- (void)receiveCapacityOrAuthenticationRequest:(IRCMessage *)m
+{
+    
 }
 
 - (void)receivePing:(IRCMessage *)m
@@ -4841,6 +4845,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
+        case 903:
+        case 904:
+        case 905:
+        case 906:
+        case 907:
+        {
+            
+            break;
+        }
 		default:
 		{
 			if ([world.bundlesForServerInput containsKey:[NSString stringWithInteger:m.numericReply]]) {
@@ -5163,68 +5176,101 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		switch ([Preferences commandUIndex:cmd]) {	
 			case 4: // Command: ERROR
+            {
 				[self receiveError:m];
 				break;
+            }
 			case 5: // Command: INVITE
+            {
 				[self receiveInvite:m];
 				break;
+            }
 			case 7: // Command: JOIN
+            {
 				[self receiveJoin:m];
 				break;
+            }
 			case 8: // Command: KICK
+            {
 				[self receiveKick:m];
 				break;
+            }
 			case 9: // Command: KILL
+            {
 				[self receiveKill:m];
 				break;
+            }
 			case 11: // Command: MODE
+            {
 				[self receiveMode:m];
 				break;
+            }
 			case 13: // Command: NICK
+            {
 				[self receiveNick:m];
 				break;
+            }
 			case 14: // Command: NOTICE
 			case 19: // Command: PRIVMSG
+            {
 				[self receivePrivmsgAndNotice:m];
 				break;
+            }
 			case 15: // Command: PART
+                
+            {
 				[self receivePart:m];
 				break;
-			case 17: // Command: PING
-				[self receivePing:m];
-				break;
-			case 20: // Command: QUIT
-				[self receiveQuit:m];
-				break;
-			case 21: // Command: TOPIC
-				[self receiveTopic:m];
-				break;
-			case 80: // Command: WALLOPS
-			case 85: // Command: CHATOPS
-			case 86: // Command: GLOBOPS
-			case 87: // Command: LOCOPS
-			case 88: // Command: NACHAT
-			case 89: // Command: ADCHAT
-				[m.params safeInsertObject:m.sender.nick atIndex:0];
-				
-				NSString *text = [m.params safeObjectAtIndex:1];
-				
-				[m.params safeRemoveObjectAtIndex:1];
-				[m.params safeInsertObject:[NSString stringWithFormat:@"[%@]: %@", m.command, text] atIndex:1];
-				
-				m.command = IRCCI_NOTICE;
-				
-				[self receivePrivmsgAndNotice:m];
-				
-				break;
-		}
-	}
-	
-	if ([[world bundlesForServerInput] containsKey:cmd]) {
-		[[self invokeInBackgroundThread] processBundlesServerMessage:m];
-	}
-	
-	[world updateTitle];
+            }
+            case 17: // Command: PING
+            {
+                [self receivePing:m];
+                break;
+            }
+            case 20: // Command: QUIT
+            {
+                [self receiveQuit:m];
+                break;
+            }
+            case 21: // Command: TOPIC
+            {
+                [self receiveTopic:m];
+                break;
+            }
+            case 80: // Command: WALLOPS
+            case 85: // Command: CHATOPS
+            case 86: // Command: GLOBOPS
+            case 87: // Command: LOCOPS
+            case 88: // Command: NACHAT
+            case 89: // Command: ADCHAT
+            {
+                [m.params safeInsertObject:m.sender.nick atIndex:0];
+                
+                NSString *text = [m.params safeObjectAtIndex:1];
+                
+                [m.params safeRemoveObjectAtIndex:1];
+                [m.params safeInsertObject:[NSString stringWithFormat:@"[%@]: %@", m.command, text] atIndex:1];
+                
+                m.command = IRCCI_NOTICE;
+                
+                [self receivePrivmsgAndNotice:m];
+                
+                break;
+            }
+            case 101: // Command: AUTHENTICATE
+            case 102: // Command: CAP
+            {
+                [self receiveCapacityOrAuthenticationRequest:m];
+                break;
+            }
+        }
+    }
+    
+    if ([[world bundlesForServerInput] containsKey:cmd]) {
+        [[self invokeInBackgroundThread] processBundlesServerMessage:m];
+    }
+    
+    [world updateTitle];
 }
 
 - (void)ircConnectionWillSend:(NSString *)line
