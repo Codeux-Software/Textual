@@ -260,6 +260,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	
 	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
 	BOOL exactWordMatching = ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT);
+    BOOL regexWordMatching = ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_REGEX);
 	
 	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
@@ -444,78 +445,113 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 			}
 		}
-		
-		for (NSString *keyword in keywords) {
-			start = 0;
-			
-			while (start < len) {
-				NSRange r = [body rangeOfString:keyword 
-										options:NSCaseInsensitiveSearch 
-										  range:NSMakeRange(start, (len - start))];
-				
-				if (r.location == NSNotFound) {
-					break;
-				}
-				
-				BOOL enabled = YES;
-				
-				for (NSValue *e in excludeRanges) {
-					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
-						enabled = NO;
-						
-						break;
-					}
-				}
-				
-				if (exactWordMatching) {
-					if (enabled) {
-						UniChar c = [body characterAtIndex:r.location];
-						
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							NSInteger prev = (r.location - 1);
-							
-							if (0 <= prev && prev < len) {
-								UniChar c = [body characterAtIndex:prev];
-								
-								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-									enabled = NO;
-								}
-							}
-						}
-					}
-					
-					if (enabled) {
-						UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-						
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							NSInteger next = NSMaxRange(r);
-							
-							if (next < len) {
-								UniChar c = [body characterAtIndex:next];
-								
-								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-									enabled = NO;
-								}
-							}
-						}
-					}
-				}
-				
-				if (enabled) {
-					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-						setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
-						
-						foundKeyword = YES;
-						
-						break;
-					}
-				}
-				
-				start = (NSMaxRange(r) + 1);
-			}
-			
-			if (foundKeyword) break;
-		}
+        
+        if (regexWordMatching) {
+            for (NSString *keyword in keywords) {
+                NSRange matchRange = [TXRegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
+                
+                if (matchRange.location == NSNotFound) {
+                    continue;
+                } else {
+                    BOOL enabled = YES;
+                    
+                    for (NSValue *e in excludeRanges) {
+                        if (NSIntersectionRange(matchRange, [e rangeValue]).length > 0) {
+                            enabled = NO;
+                            
+                            break;
+                        }
+                    }
+                    
+                    if (enabled) {
+                        setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, matchRange.location, matchRange.length);
+                            
+                        foundKeyword = YES;
+                            
+                        break;
+                    }
+                }
+            }
+        } else {
+            for (NSString *keyword in keywords) {
+                start = 0;
+                
+                while (start < len) {
+                    NSRange r = [body rangeOfString:keyword 
+                                            options:NSCaseInsensitiveSearch 
+                                              range:NSMakeRange(start, (len - start))];
+                    
+                    if (r.location == NSNotFound) {
+                        break;
+                    }
+                    
+                    BOOL enabled = YES;
+                    
+                    for (NSValue *e in excludeRanges) {
+                        if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+                            enabled = NO;
+                            
+                            break;
+                        }
+                    }
+                    
+                    if (exactWordMatching) {
+                        if (enabled) {
+                            UniChar c = [body characterAtIndex:r.location];
+                            
+                            if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+                                NSInteger prev = (r.location - 1);
+                                
+                                if (0 <= prev && prev < len) {
+                                    UniChar c = [body characterAtIndex:prev];
+                                    
+                                    if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+                                        enabled = NO;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (enabled) {
+                            UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+                            
+                            if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+                                NSInteger next = NSMaxRange(r);
+                                
+                                if (next < len) {
+                                    UniChar c = [body characterAtIndex:next];
+                                    
+                                    if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+                                        enabled = NO;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (enabled) {
+                        if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+                            setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
+                            
+                            foundKeyword = YES;
+                            
+                            break;
+                        }
+                    }
+                    
+                    start = (NSMaxRange(r) + 1);
+                }
+                
+                if (foundKeyword) break;
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
 		
 		[resultInfo setBool:foundKeyword forKey:@"wordMatchFound"];
 		

@@ -29,6 +29,9 @@
 	IBOutlet NSView *floodControlView;
 	IBOutlet NSView *IRCopServicesView;
 	IBOutlet NSView *channelManagementView;
+    
+    IBOutlet NSButton *highlightNicknameButton;
+    IBOutlet NSButton *addExcludeWordButton;
 	
 	IBOutlet NSTableView *keywordsTable;
 	IBOutlet NSTableView *excludeWordsTable;
@@ -73,6 +76,8 @@
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *IRCopServicesView;
 @property (nonatomic, retain) NSView *channelManagementView;
+@property (nonatomic, retain) NSButton *highlightNicknameButton;
+@property (nonatomic, retain) NSButton *addExcludeWordButton;
 @property (nonatomic, retain) NSTableView *keywordsTable;
 @property (nonatomic, retain) NSTableView *excludeWordsTable;
 @property (nonatomic, retain) NSTableView *installedScriptsTable;
@@ -91,6 +96,7 @@
 - (void)onAddKeyword:(id)sender;
 - (void)onAddExcludeWord:(id)sender;
 
+- (void)onHighlightTypeChanged:(id)sender;
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onChangedTheme:(id)sender;
 - (void)onStyleChanged:(id)sender;

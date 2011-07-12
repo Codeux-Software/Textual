@@ -867,7 +867,19 @@
 				}
 			}
 		}
+        
+        resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
 		
+		for (NSString *file in resourceFiles) {
+			if ([file hasSuffix:@".scpt"]) {
+				NSString *cmdl = [[file safeSubstringToIndex:([file length] - 5)] lowercaseString];
+				
+				if ([choices containsObject:cmdl] == NO) {
+					[choices safeAddObject:cmdl];
+				}
+			}
+		}
+        
 		lowerChoices = choices;
 	} else if (channelMode) {
 		NSMutableArray *channels      = [NSMutableArray array];

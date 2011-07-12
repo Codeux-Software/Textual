@@ -82,7 +82,8 @@
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-	NSString *path = [Preferences wherePluginsPath];
+	NSString *path_1 = [Preferences wherePluginsPath];
+	NSString *path_2 = [Preferences wherePluginsLocalPath];
 	
 	if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
 		[self deallocBundlesFromMemory:world];
@@ -95,11 +96,19 @@
 	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
 	NSMutableDictionary *outputRulesDict	= [NSMutableDictionary new];
 	
-	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+	NSArray *resourceFiles_1 = [_NSFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
+	NSArray *resourceFiles_2 = [_NSFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
+    
+    NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {
-			NSString *fullPath	 = [path stringByAppendingPathComponent:file];
+			NSString *fullPath	 = [path_2 stringByAppendingPathComponent:file];
+            
+            if ([_NSFileManager() fileExistsAtPath:fullPath] == NO) {
+                fullPath = [path_2 stringByAppendingPathComponent:file];
+            }
+            
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
 			TextualPluginItem *plugin = [TextualPluginItem new];

@@ -512,7 +512,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"(#\\w\\w+)"];
+	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"#([a-zA-Z0-9\\#\\-]+)"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
