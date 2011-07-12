@@ -81,6 +81,7 @@
 		4C5AF37012D1BA9800D6B18C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5AF36F12D1BA9800D6B18C /* IOKit.framework */; };
 		4C5AF37612D1BB3900D6B18C /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
+		4C66C2D513CD05DA0059AD32 /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C66C2D413CD05DA0059AD32 /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C66E88F12DF6A1D00446250 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C67A81112F38268002E308B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -478,6 +479,7 @@
 		4C5AF38612D1BBC500D6B18C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Miscellaneous/Info.plist; sourceTree = "<group>"; };
 		4C5D331D11F96DA100DBC4A8 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = "<group>"; };
 		4C62C7551221D37B002DCB9A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InputPromptDialog.xib; sourceTree = "<group>"; };
+		4C66C2D413CD05DA0059AD32 /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = Classes/Headers/StaticDefinitions.h; sourceTree = SOURCE_ROOT; };
 		4C66E88412DF69E500446250 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
@@ -1209,6 +1211,7 @@
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
 				4CD0E5EC12F1B45900C8F016 /* NickCompletionStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletionStatus.m */,
+				4C66C2D413CD05DA0059AD32 /* StaticDefinitions.h */,
 				4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */,
 			);
 			name = Controllers;
@@ -1480,6 +1483,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C66C2D513CD05DA0059AD32 /* StaticDefinitions.h in Headers */,
 				4C78406F1373AACD00D0791F /* GCDAsyncSocket.h in Headers */,
 				4CD0E64612F1B58600C8F016 /* AboutPanel.h in Headers */,
 				4CD0E61C12F1B4E200C8F016 /* AddressBook.h in Headers */,
@@ -2121,7 +2125,7 @@
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2154,6 +2158,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2197,7 +2202,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2234,6 +2239,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2242,7 +2248,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2275,6 +2281,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2345,7 +2352,7 @@
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2381,6 +2388,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;

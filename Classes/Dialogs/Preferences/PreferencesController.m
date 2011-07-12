@@ -45,7 +45,9 @@
 @synthesize scriptsView;
 @synthesize stylesView;
 @synthesize themeButton;
+@synthesize highlightNicknameButton;
 @synthesize transcriptFolderButton;
+@synthesize addExcludeWordButton;
 @synthesize transfersView;
 @synthesize updatesView;
 @synthesize world;
@@ -110,6 +112,7 @@
 	[self.window makeKeyAndOrderFront:nil];
 	
 	[self setUpToolbarItemsAndMenus];
+    [self onHighlightTypeChanged:nil];
 	[self firstPane:generalView selectedItem:0];
 }
 
@@ -545,6 +548,25 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)onHighlightTypeChanged:(id)sender 
+{
+    if ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_REGEX) {
+        [highlightNicknameButton setEnabled:NO];
+        [addExcludeWordButton setEnabled:YES];
+        [excludeWordsTable setEnabled:YES];
+    } else {
+        [highlightNicknameButton setEnabled:YES];
+        
+        if ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_PARTIAL) {
+            [addExcludeWordButton setEnabled:YES];
+            [excludeWordsTable setEnabled:YES];
+        } else {
+            [addExcludeWordButton setEnabled:NO];
+            [excludeWordsTable setEnabled:NO];
+        }
+    }
+}
 
 - (void)editTable:(NSTableView *)table
 {

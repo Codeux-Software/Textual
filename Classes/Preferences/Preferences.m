@@ -462,11 +462,6 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
 }
 
-+ (BOOL)forceReplaceExtensions
-{
-	return [_NSUserDefaults() boolForKey:@"Preferences.Plugins.force_replace"];
-}
-
 + (TabActionType)tabAction
 {
 	return [_NSUserDefaults() integerForKey:@"Preferences.General.tab_action"];
@@ -949,7 +944,6 @@ static NSInteger totalRunTime = 0;
 	
 	[d setBool:YES forKey:@"SpellChecking"];
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
-	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
 	[d setBool:NO forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO forKey:@"Preferences.General.strip_formatting"];
 	[d setBool:NO forKey:@"Preferences.General.rtl_formatting"];
@@ -993,7 +987,7 @@ static NSInteger totalRunTime = 0;
 	[d setInteger:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setInteger:KEYWORD_MATCH_EXACT forKey:@"Preferences.Keyword.matching_method"];
-	[d setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
+	[d setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.name"];
 	[d setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
 	[d setObject:@"<%@%n>" forKey:@"Preferences.Theme.nick_format"];
@@ -1040,7 +1034,15 @@ static NSInteger totalRunTime = 0;
 	NSString *themePath = [[Preferences whereThemesPath] stringByAppendingPathComponent:themeName];
 	
 	if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-		[_NSUserDefaults() setObject:@"user:Simplified Dark" forKey:@"Preferences.Theme.name"];
+        themePath = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:themeName];
+      
+        if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
+            [_NSUserDefaults() setObject:DEFAULT_TEXUAL_STYLE forKey:@"Preferences.Theme.name"];
+        } else {
+            NSString *newName = [NSString stringWithFormat:@"resource:%@", themeName];
+            
+            [_NSUserDefaults() setObject:newName forKey:@"Preferences.Theme.name"];
+        }
 	}
 }
 
