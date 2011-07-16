@@ -25,7 +25,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -46,8 +46,8 @@
         } else {
             return [haystack isMatchedByRegex:needle];
         }
-
-#ifdef _RUNNING_MAC_OS_LION
+        
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	}
 #endif
 }
@@ -61,7 +61,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -83,14 +83,14 @@
             return [haystack rangeOfRegex:needle];
         }
 		
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	}
 #endif
 }
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRange strRange = NSMakeRange(0, [haystack length]);
 		
@@ -104,11 +104,11 @@
 		
 		return [haystack stringByReplacingOccurrencesOfRegex:needle withString:puppy];
 		
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	}
 #endif
 }
-	
+
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
 	return [self matchesInString:haystack withRegex:needle withoutCase:NO];
@@ -118,7 +118,7 @@
 {
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	if ([self useNewRegularExpressionEngine]) {
 		NSRegularExpression *regex;
         
@@ -150,7 +150,7 @@
             return [haystack componentsSeparatedByRegex:needle];
         }
 		
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _USES_MODERN_REGULAR_EXPRESSION
 	}
 #endif	
 }

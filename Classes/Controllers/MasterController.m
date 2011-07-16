@@ -885,9 +885,6 @@
 	
 	if (commandMode) {
 		choices = [NSMutableArray array];
-		
-		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-		
 		for (NSString *command in [[Preferences commandIndexList] allKeys]) {
 			[choices safeAddObject:[command lowercaseString]];
 		}
@@ -899,6 +896,19 @@
 				[choices safeAddObject:cmdl];
 			}
 		}
+		
+		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+		
+		for (NSString *file in resourceFiles) {
+			NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+            NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+            
+            if ([choices containsObject:cmdl] == NO) {
+                [choices safeAddObject:cmdl];
+            }
+		}
+        
+        resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
 		
 		for (NSString *file in resourceFiles) {
 			NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
@@ -1349,7 +1359,7 @@ typedef enum {
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
 	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
-	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSShiftKeyMask)];
 	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSShiftKeyMask)];
     [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask)];
 	[self handler:@selector(textFormattingBackgroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)];

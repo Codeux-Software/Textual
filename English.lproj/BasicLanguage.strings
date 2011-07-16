@@ -23,11 +23,6 @@
 "CHANNEL_APPLICATION_TITLE_USERS" = " (%i Users)";
 "CHANNEL_APPLICATION_TITLE_MODES" = " (%@)";
 
-"RESOURCES_FILE_RESET_WARNING_TITLE" = "Reset Resources";
-"RESOURCES_FILE_RESET_WARNING_MESSAGE" = "Execution of this command will erase the contents of the folder \"%@\" which contains cached files used by the Textual IRC Client. Are you sure you wish to continue with this action? There is no undo.\n\nIMPORTANT: This folder does contain any custom addons such as scripts, plugins, and styles you may have created. Please backup before continuing.";
-"RESOURCES_FILE_RESET_QUITTING_TITLE" = "Action Completed";
-"RESOURCES_FILE_RESET_QUITTING_MESSAGE" = "Textual will now quit to apply changes. Relaunch when ready for use.";
-
 "SOUND_IS_NOT_MUTED" = "Sound is not muted.";
 "SOUND_HAS_BEEN_MUTED" = "Sound has been muted.";
 "SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
@@ -63,6 +58,10 @@
 
 "WANT_QUIT_TITLE" = "Do you want to quit Textual?";
 "WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";
+
+"SELF_BAN_DETECTED_MESSAGE" = "Textual has prevented you from banning yourself from %@.";
+
+"PLUGIN_COMMAND_CLASH_ERROR_MESSAGE" = "The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
 
 "WANT_SERVER_DELETE_TITLE" = "Do you want to delete the selection?";
 "WANT_SERVER_DELETE_MESSAGE" = "There is no undo and all data related to this server will be erased.";

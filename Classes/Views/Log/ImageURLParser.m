@@ -6,21 +6,25 @@
 + (NSString *)imageURLForURL:(NSString *)url
 {
 	NSString *lowerUrl = [url lowercaseString];
+    
+	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
+	
+	NSString *host = [u.host lowercaseString];
+	NSString *path = u.path;
 	
 	if ([lowerUrl hasSuffix:@".jpg"]
 		|| [lowerUrl hasSuffix:@".jpeg"] || [lowerUrl hasSuffix:@".png"]
 		|| [lowerUrl hasSuffix:@".gif"]  || [lowerUrl hasSuffix:@".tif"]
 		|| [lowerUrl hasSuffix:@".tiff"] || [lowerUrl hasSuffix:@".bmp"]) {
 		
+        if ([host hasSuffix:@"wikipedia.org"]) {
+            return nil;
+        }
+        
 		return url;
 	}
 	
-	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
-	
-	NSString *host = [u.host lowercaseString];
-	NSString *path = u.path;
-	
-	if ([host hasSuffix:@"twitpic.com"]) {
+    if ([host hasSuffix:@"twitpic.com"]) {
 		if (NSObjectIsNotEmpty(path)) {
 			NSString *s = [path safeSubstringFromIndex:1];
 			

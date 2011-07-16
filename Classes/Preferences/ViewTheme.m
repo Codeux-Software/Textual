@@ -19,7 +19,7 @@
 	if ((self = [super init])) {
 		other = [OtherTheme new];
 		
-		core_js			 = [FileWithContent new];
+		core_js = [FileWithContent new];
 		core_js.filename = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
 	
@@ -43,7 +43,7 @@
 
 - (void)setName:(NSString *)value
 {
-	if (NSDissimilarObjects(name, value)) {
+	if (name != value) {
 		[name drain];
 		name = [value retain];
 	}
@@ -54,8 +54,8 @@
 - (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
 	if (name) {
-		NSString *kind		= [ViewTheme extractThemeSource:[Preferences themeName]];
-		NSString *filename	= [ViewTheme extractThemeName:[Preferences themeName]];
+		NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
+		NSString *filename = [ViewTheme extractThemeName:[Preferences themeName]];
 		
 		if (NSObjectIsNotEmpty(kind) && NSObjectIsNotEmpty(filename)) {
 			if ([kind isEqualToString:@"resource"]) {
@@ -68,9 +68,7 @@
 				if ([kind isEqualToString:@"resource"] == NO) {
 					path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 					
-					if (reload) {
-						[self reload];
-					}
+					if (reload) [self reload];
 				}
 			}
 			
@@ -100,76 +98,18 @@
 	[other reload];
 }
 
-+ (void)copyItemsUsingRecursionFrom:(NSString *)location to:(NSString *)dest whileForcing:(BOOL)force_reset
++ (void)createDirectoryAtLocation:(NSString *)dest 
 {
-	BOOL isDirectory = NO;
-	
-	NSDate *oneDayAgo = [NSDate dateWithTimeIntervalSinceNow:-86400];
-	
 	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
 		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
-	
-	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:location error:NULL];
-	
-	for (NSString *file in resourceFiles) {
-		NSString *sdest = [dest stringByAppendingPathComponent:file];
-		NSString *source = [location stringByAppendingPathComponent:file];
-		
-		[_NSFileManager() fileExistsAtPath:source isDirectory:&isDirectory];
-		[_NSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
-							ofItemAtPath:source
-								   error:NULL];
-		
-		BOOL resetAttrInfo = NO;
-		
-		if ([_NSFileManager() fileExistsAtPath:sdest]) {
-			if (isDirectory) {
-				resetAttrInfo = YES;
-				
-				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
-			} else {
-				NSDictionary *attributes = [_NSFileManager() attributesOfItemAtPath:sdest error:nil];
-				
-				if (attributes) {
-					NSTimeInterval creationDate		= [[attributes objectForKey:NSFileCreationDate] timeIntervalSince1970];
-					NSTimeInterval modificationDate = [[attributes objectForKey:NSFileModificationDate] timeIntervalSince1970];
-					
-					if (creationDate == modificationDate || creationDate < 1 || force_reset) {
-						[_NSFileManager() removeItemAtPath:sdest error:NULL];
-						
-						resetAttrInfo = [_NSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
-					}
-				}
-			}
-		} else {
-			if (isDirectory) {
-				resetAttrInfo = YES;
-				
-				[self copyItemsUsingRecursionFrom:source to:sdest whileForcing:force_reset];
-			} else {
-				resetAttrInfo = [_NSFileManager() copyItemAtPath:source toPath:sdest error:NULL];
-			}
-		}
-		
-		if (resetAttrInfo || force_reset) {
-			[_NSFileManager() setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:oneDayAgo, NSFileCreationDate, oneDayAgo, NSFileModificationDate, nil]
-								ofItemAtPath:sdest 
-									   error:NULL];
-		}
-	}	
 }
 
 + (void)createUserDirectory:(BOOL)force_reset
 {
-	[self copyItemsUsingRecursionFrom:[Preferences whereScriptsLocalPath] to:[Preferences whereScriptsPath] whileForcing:force_reset];
-	
-	if ([Preferences forceReplaceExtensions]) {
-		force_reset = YES;
-	}
-	
-	[self copyItemsUsingRecursionFrom:[Preferences whereThemesLocalPath]  to:[Preferences whereThemesPath]  whileForcing:force_reset];
-	[self copyItemsUsingRecursionFrom:[Preferences wherePluginsLocalPath] to:[Preferences wherePluginsPath] whileForcing:force_reset];
+	[self createDirectoryAtLocation:[Preferences whereScriptsPath]];
+	[self createDirectoryAtLocation:[Preferences whereThemesPath]];
+	[self createDirectoryAtLocation:[Preferences wherePluginsPath]];
 }
 
 + (NSString *)buildResourceFilename:(NSString *)name
@@ -194,7 +134,7 @@
 {
 	if ([source hasPrefix:@"user:"] == NO && 
 		[source hasPrefix:@"resource:"] == NO) return nil;
-
+    
 	return [source safeSubstringAfterIndex:[source stringPosition:@":"]];	
 }
 

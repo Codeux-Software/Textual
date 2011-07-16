@@ -212,6 +212,7 @@ body div[type=quit],
 body div[type=kill],
 body div[type=nick],
 body div[type=mode],
+body div[type=website],
 body div[type=topic] {
  	padding: 3px 5px 3px 5px;
     color: #aaa;

@@ -500,8 +500,10 @@
 	BOOL showInlineImage = NO;
 	
 	BOOL isText			 = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
-	BOOL drawLinks		 = BOOLReverseValue([[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
+	BOOL isNormalMsg     = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION);
+    BOOL drawLinks		 = BOOLReverseValue([[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
 	
+    
 	NSArray *urlRanges = [NSArray array];
 	
 	if (rawHTML == NO) {
@@ -519,7 +521,7 @@
 		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 		
 		body = [LogRenderer renderBody:line.body
-							controller:((type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) ? self : nil) 
+							controller:((isNormalMsg) ? self : nil) 
 							renderType:ASCII_TO_HTML 
 							properties:inputDictionary 
 							resultInfo:&outputDictionary];
@@ -559,35 +561,46 @@
 		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
 	}
 	
-	if (isText && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
-		NSString *imagePageUrl = nil;
-		NSString *imageUrl     = nil;
-		
-		for (NSValue *rangeValue in urlRanges) {
-			NSString *url = [line.body safeSubstringWithRange:[rangeValue rangeValue]];
-			
-			imageUrl = [ImageURLParser imageURLForURL:url];
-			
-			if (imageUrl) {
-				imagePageUrl = url;
-				
-				break;
-			}
-		}
-		
-		if (imageUrl) {
-			showInlineImage = YES;
-			
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>",												    lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width:%ipx;\"/></a></span>", imagePageUrl, imageUrl, [Preferences inlineImagesMaxWidth]];
-		}
+    [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
+    
+	if (isNormalMsg && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
+        if (([channel isChannel] && channel.config.inlineImages == NO) || [channel isTalk]) {
+            NSString *imageUrl  = nil;
+            NSString *lineBreak = nil;
+            
+            NSMutableArray *postedUrls = [NSMutableArray array];
+            
+            for (NSValue *rangeValue in urlRanges) {
+                NSString *url = [line.body safeSubstringWithRange:[rangeValue rangeValue]];
+                
+                imageUrl = [ImageURLParser imageURLForURL:url];
+                
+                if (imageUrl) {
+                    if ([postedUrls containsObject:imageUrl]) {
+                        continue;
+                    } else {
+                        [postedUrls safeAddObject:imageUrl];
+                    }
+                    
+                    showInlineImage = YES;
+                    
+                    if (NSObjectIsNotEmpty(lineBreak)) {
+                        lineBreak = @"<br />";
+                    } else {
+                        lineBreak = @"<br /><br /";
+                    }
+                    
+                    [s appendFormat:@"%@<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\"/></a></span>", lineBreak, url, imageUrl, [Preferences inlineImagesMaxWidth]];
+                }
+            }
+            
+            if (showInlineImage) {
+                [s appendString:@"<br />"];
+            }
+        }
 	}
-	
-	if (showInlineImage == NO) {
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
-	}
-	
-	[s appendFormat:@"</p>"];
+    
+	[s appendFormat:@"</span></p>"];
 	
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 	

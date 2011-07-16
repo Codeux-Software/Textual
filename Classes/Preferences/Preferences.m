@@ -132,7 +132,6 @@ static NSMutableDictionary *commandIndex = nil;
 	[commandIndex setObject:@"87"  forKey:IRCCI_LOCOPS]; 
 	[commandIndex setObject:@"88"  forKey:IRCCI_NACHAT]; 
 	[commandIndex setObject:@"89"  forKey:IRCCI_ADCHAT]; 
-	[commandIndex setObject:@"90"  forKey:IRCCI_RESETFILES];
 	[commandIndex setObject:@"91"  forKey:IRCCI_LOAD_PLUGINS];
 	[commandIndex setObject:@"92"  forKey:IRCCI_SME];
 	[commandIndex setObject:@"93"  forKey:IRCCI_SMSG];
@@ -462,11 +461,6 @@ static NSMutableDictionary *commandIndex = nil;
 + (BOOL)countPublicMessagesInIconBadge
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.dockbadge_countpub"];
-}
-
-+ (BOOL)forceReplaceExtensions
-{
-	return [_NSUserDefaults() boolForKey:@"Preferences.Plugins.force_replace"];
 }
 
 + (TabActionType)tabAction
@@ -982,11 +976,9 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
 	[d setBool:YES forKey:@"eventAddressBookMatch"];
 	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
-	[d setBool:YES forKey:@"Preferences.General.log_transcript"];
 	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
 	[d setBool:YES forKey:@"Preferences.General.use_growl"];
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
-	[d setBool:YES forKey:@"Preferences.Plugins.force_replace"];
 	[d setBool:YES forKey:@"Preferences.General.display_servmotd"];
 	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
 	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
@@ -996,6 +988,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
+	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];
 	[d setBool:NO  forKey:@"Preferences.General.copyonselect"];
 	[d setBool:NO  forKey:@"Preferences.General.strip_formatting"];
@@ -1083,7 +1076,15 @@ static NSInteger totalRunTime = 0;
 	NSString *themePath = [[Preferences whereThemesPath] stringByAppendingPathComponent:themeName];
 	
 	if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-		[_NSUserDefaults() setObject:DEFAULT_TEXTUAL_STYLE forKey:@"Preferences.Theme.name"];
+        themePath = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:themeName];
+        
+        if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
+            [_NSUserDefaults() setObject:DEFAULT_TEXTUAL_STYLE forKey:@"Preferences.Theme.name"];
+        } else {
+            NSString *newName = [NSString stringWithFormat:@"resource:%@", themeName];
+            
+            [_NSUserDefaults() setObject:newName forKey:@"Preferences.Theme.name"];
+        }
 	}
 }
 

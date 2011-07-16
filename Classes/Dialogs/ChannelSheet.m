@@ -29,6 +29,9 @@
 @synthesize contentView;
 @synthesize generalView;
 @synthesize encryptView;
+@synthesize defaultsView;
+@synthesize inlineImagesCheck;
+@synthesize JPQActivityCheck;
 
 - (id)init
 {
@@ -60,6 +63,9 @@
 		case 1:
 			[self firstPane:encryptView];
 			break;
+        case 2:
+            [self firstPane:defaultsView];
+            break;
 		default:
 			[self firstPane:generalView];
 			break;
@@ -122,6 +128,8 @@
 	growlCheck.state = config.growl;
 	autoJoinCheck.state = config.autoJoin;
 	ihighlights.state = config.ihighlights;
+    JPQActivityCheck.state = config.iJPQActivity;
+    inlineImagesCheck.state = config.inlineImages;
 }
 
 - (void)save
@@ -135,6 +143,8 @@
 	config.growl = growlCheck.state;
 	config.autoJoin = autoJoinCheck.state;
     config.ihighlights = ihighlights.state;
+    config.iJPQActivity = JPQActivityCheck.state;
+    config.inlineImages = inlineImagesCheck.state;
 	
 	if ([config.name isChannelName] == NO) {
 		config.name = [@"#" stringByAppendingString:config.name];
