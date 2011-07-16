@@ -19,6 +19,8 @@
 		
         if ([host hasSuffix:@"wikipedia.org"]) {
             return nil;
+        } else if ([url hasPrefix:@"http://fukung.net/v/"]) {
+            url = [url stringByReplacingOccurrencesOfString:@"http://fukung.net/v/" withString:@"http://media.fukung.net/images/"];
         }
         
 		return url;
