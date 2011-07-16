@@ -587,7 +587,7 @@
                     if (NSObjectIsNotEmpty(lineBreak)) {
                         lineBreak = @"<br />";
                     } else {
-                        lineBreak = @"<br /><br /";
+                        lineBreak = @"<br /><br />";
                     }
                     
                     [s appendFormat:@"%@<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\" /></a>", lineBreak, url, imageUrl, [Preferences inlineImagesMaxWidth]];
