@@ -209,9 +209,9 @@
 		4C8B8619131A35DE0065B4F9 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D711737F660044E7A1 /* ModeSheet.m */; };
 		4C8C0DB81367DA5B0055C793 /* status-channel-active.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C0DB51367DA5B0055C793 /* status-channel-active.tif */; };
 		4C8C0DBA1367DA5B0055C793 /* status-channel-inactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */; };
+		4C8CFF2B13D24C3C002BD81B /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */; };
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
-		4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA0C73E1389209F002689FD /* ListSeparatorCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C740138920B2002689FD /* ListSeparatorCell.m */; };
 		4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
@@ -403,7 +403,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4C3F693E12FD95A300B50CB9 /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
@@ -412,7 +412,7 @@
 				4C3F693D12FD958500B50CB9 /* SystemProfiler.bundle in Copy Plugins */,
 			);
 			name = "Copy Plugins";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -534,12 +534,12 @@
 		4C8C0DB51367DA5B0055C793 /* status-channel-active.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "status-channel-active.tif"; sourceTree = "<group>"; };
 		4C8C0DB71367DA5B0055C793 /* status-channel-inactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "status-channel-inactive.tif"; sourceTree = "<group>"; };
 		4C8CCEA511952E1A001A07FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListSeparatorCell.h; path = Classes/Headers/ListSeparatorCell.h; sourceTree = SOURCE_ROOT; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
-		4CA0C73E1389209F002689FD /* ListSeparatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSeparatorCell.h; sourceTree = "<group>"; };
 		4CA0C740138920B2002689FD /* ListSeparatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSeparatorCell.m; sourceTree = "<group>"; };
 		4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Classes/Headers/TextualApplication.h; sourceTree = SOURCE_ROOT; };
 		4CA945EF11E1AFBA00D36367 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1504,7 +1504,7 @@
 				78A8C17811737F660044E7A1 /* InputTextField.m */,
 				4CD0E67312F1B63D00C8F016 /* ListView.h */,
 				78A8C18111737F660044E7A1 /* ListView.m */,
-				4CA0C73E1389209F002689FD /* ListSeparatorCell.h */,
+				4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */,
 				4CA0C740138920B2002689FD /* ListSeparatorCell.m */,
 				4CD0E67412F1B63D00C8F016 /* MainWindow.h */,
 				78A8C19011737F660044E7A1 /* MainWindow.m */,
@@ -1675,9 +1675,9 @@
 				4CD0E63D12F1B53300C8F016 /* WelcomeSheet.h in Headers */,
 				4CC33B8213177EB100BDBCA0 /* RegexKitLite.h in Headers */,
 				4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */,
-				4CA0C73F1389209F002689FD /* ListSeparatorCell.h in Headers */,
 				4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
+				4C8CFF2B13D24C3C002BD81B /* ListSeparatorCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1858,7 +1858,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4C3F690F12FD925F00B50CB9 /* Compile Plugins */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1866,7 +1866,7 @@
 			name = "Compile Plugins";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n";
 		};

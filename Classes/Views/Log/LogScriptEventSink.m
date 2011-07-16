@@ -85,6 +85,10 @@
 	return res;
 }
 
+- (void)hideInlineImage:(NSString *)url parent:(NSString *)lineNumber 
+{
+}
+
 - (void)setUrl:(NSString *)s
 {
 	[policy setUrl:[s gtm_stringByUnescapingFromHTML]];

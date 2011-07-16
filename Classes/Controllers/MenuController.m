@@ -1422,8 +1422,12 @@
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, [Preferences IRCopDefaultGlineMessage]]];
-	}
+        if ([m.nick isEqualNoCase:u.myNick]) {
+            [u printDebugInformation:TXTFLS(@"SELF_BAN_DETECTED_MESSAGE", u.serverHostname) channel:c];
+        } else {
+            [u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, [Preferences IRCopDefaultGlineMessage]]];
+        }
+    }
 	
 	[self deselectMembers:sender];
 }

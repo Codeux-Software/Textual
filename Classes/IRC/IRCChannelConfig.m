@@ -13,12 +13,16 @@
 @synthesize topic;
 @synthesize ihighlights;
 @synthesize encryptionKey;
+@synthesize iJPQActivity;
+@synthesize inlineImages;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		type = CHANNEL_TYPE_CHANNEL;
 		
+        inlineImages = NO;
+        iJPQActivity = NO;
         ihighlights = NO;
 		autoJoin = YES;
 		growl = YES;
@@ -45,6 +49,8 @@
     growl = [dic boolForKey:@"growl"];
     autoJoin = [dic boolForKey:@"auto_join"];
     ihighlights = [dic boolForKey:@"ignore_highlights"];
+    inlineImages = [dic boolForKey:@"disable_images"];
+    iJPQActivity = [dic boolForKey:@"ignore_join,leave"];
     
     mode = (([[dic stringForKey:@"mode"] retain]) ?: NSNullObject);
     topic = (([[dic stringForKey:@"topic"] retain]) ?: NSNullObject);
@@ -73,6 +79,8 @@
 	[dic setBool:growl forKey:@"growl"];
 	[dic setBool:autoJoin forKey:@"auto_join"];
     [dic setBool:ihighlights forKey:@"ignore_highlights"];
+    [dic setBool:inlineImages forKey:@"disable_images"];
+    [dic setBool:iJPQActivity forKey:@"ignore_join,leave"];
 	
 	if (name) [dic setObject:name forKey:@"name"];
 	if (password) [dic setObject:password forKey:@"password"];

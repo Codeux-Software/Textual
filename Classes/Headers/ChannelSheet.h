@@ -12,6 +12,7 @@
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *generalView;
 	IBOutlet NSView *encryptView;
+    IBOutlet NSView *defaultsView;
  	
 	IBOutlet NSTextField *nameText;
 	IBOutlet NSTextField *passwordText;
@@ -24,6 +25,8 @@
     IBOutlet NSButton *ihighlights;
 	IBOutlet NSButton *autoJoinCheck;
 	IBOutlet NSButton *growlCheck;
+    IBOutlet NSButton *inlineImagesCheck;
+    IBOutlet NSButton *JPQActivityCheck;
 }
 
 @property (nonatomic, assign) NSInteger uid;
@@ -31,6 +34,7 @@
 @property (nonatomic, retain) NSView *contentView;
 @property (nonatomic, retain) NSView *generalView;
 @property (nonatomic, retain) NSView *encryptView;
+@property (nonatomic, retain) NSView *defaultsView;
 @property (nonatomic, retain) IRCChannelConfig *config;
 @property (nonatomic, retain) NSTextField *nameText;
 @property (nonatomic, retain) NSTextField *passwordText;
@@ -41,6 +45,8 @@
 @property (nonatomic, retain) NSButton *autoJoinCheck;
 @property (nonatomic, retain) NSButton *ihighlights;
 @property (nonatomic, retain) NSButton *growlCheck;
+@property (nonatomic, retain) NSButton *inlineImagesCheck;
+@property (nonatomic, retain) NSButton *JPQActivityCheck;
 
 - (void)start;
 - (void)show;

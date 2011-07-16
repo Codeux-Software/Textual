@@ -75,7 +75,6 @@
 #define IRCCI_RAW				@"RAW"
 #define IRCCI_REJOIN			@"REJOIN"
 #define IRCCI_REMOVE			@"REMOVE"
-#define IRCCI_RESETFILES		@"RESETFILES"
 #define IRCCI_SEND				@"SEND"
 #define IRCCI_SERVER			@"SERVER"
 #define IRCCI_SHUN				@"SHUN"

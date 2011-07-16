@@ -977,7 +977,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		
 		[self forceJoinChannel:channel password:password];
-	}
+	} else {
+        if ([channel isEqualToString:@"0"]) {
+            [self forceJoinChannel:channel password:password];
+        }
+    }
 }
 
 - (void)forceJoinChannel:(NSString *)channel password:(NSString *)password
@@ -1578,7 +1582,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			} else {
 				targetChannelName = [s getToken];
 				
-				if ([targetChannelName isChannelName] == NO) {
+				if ([targetChannelName isChannelName] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
 			}
@@ -2418,35 +2422,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
-		case 90: // Command: RESETFILES
-		{
-			NSString *path = [Preferences whereApplicationSupportPath];
-			
-			BOOL doAction = [PopupPrompts dialogWindowWithQuestion:TXTFLS(@"RESOURCES_FILE_RESET_WARNING_MESSAGE", path)
-															 title:TXTLS(@"RESOURCES_FILE_RESET_WARNING_TITLE")
-													 defaultButton:TXTLS(@"CONTINUE_BUTTON")
-												   alternateButton:TXTLS(@"CANCEL_BUTTON")
-													suppressionKey:nil suppressionText:nil];
-			
-			if (doAction) {
-				if ([_NSFileManager() removeItemAtPath:path error:NULL] == NO) {
-					NSLog(@"Silently ignoring failed resource removal.");
-				}
-				
-				[PopupPrompts dialogWindowWithQuestion:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_MESSAGE")
-												 title:TXTLS(@"RESOURCES_FILE_RESET_QUITTING_TITLE")
-										 defaultButton:TXTLS(@"OK_BUTTON") 
-									   alternateButton:nil suppressionKey:nil 
-									   suppressionText:nil];
-				
-				world.master.terminating = YES; 
-				
-				[NSApp terminate:nil];
-			}
-			
-			return YES;
-			break;
-		}
 		case 74: // Command: MUTE
 		{
 			if (world.soundMuted) {
@@ -2595,22 +2570,34 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{   
             NSArray  *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
             NSString *scriptPath = [NSString string];
+            NSString *command    = [cmd lowercaseString];
             
             BOOL scriptFound;
             
             for (NSString *i in extensions) {
-                scriptPath  = [[Preferences whereScriptsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", [cmd lowercaseString], i]];
+                NSString *filename = [NSString stringWithFormat:@"%@%@", cmd, i];
+                
+                scriptPath  = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
                 scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
                 
                 if (scriptFound == YES) {
                     break;
+                } else {
+                    scriptPath  = [[Preferences whereScriptsLocalPath] stringByAppendingPathComponent:filename];
+                    scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
+                    
+                    if (scriptFound == YES) {
+                        break;
+                    } else {
+                        continue;
+                    }
                 }
             }
             
 			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
 			
 			if (pluginFound && scriptFound) {
-				NSLog(@"Command %@ shared by both a script and plugin. Sending to server because of inability to determine priority.", cmd);
+				NSLog(TXTLS(@"PLUGIN_COMMAND_CLASH_ERROR_MESSAGE") ,cmd);
 			} else {
 				if (pluginFound) {
 					[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
@@ -3206,13 +3193,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				keywords     = [Preferences keywords];
 				excludeWords = [Preferences excludeWords];
 				
-				if ([Preferences keywordCurrentNick]) {
-					NSMutableArray *ary = [[keywords mutableCopy] autodrain];
-					
-					[ary safeInsertObject:myNick atIndex:0];
-					
-					keywords = ary;
-				}
+                if ([Preferences keywordMatchingMethod] != KEYWORD_MATCH_REGEX) {
+                    if ([Preferences keywordCurrentNick]) {
+                        NSMutableArray *ary = [[keywords mutableCopy] autodrain];
+                        
+                        [ary safeInsertObject:myNick atIndex:0];
+                        
+                        keywords = ary;
+                    }
+                }
 			}
 		}
 	}
@@ -3829,31 +3818,35 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c addMember:u];
 	}
 	
+    AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
+                                                     withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyJoins", nil]];
+    
+    if ([ignoreChecks ignoreJPQE] == YES && myself == NO) {
+        return;
+    }
+    
+    if (hasIRCopAccess == NO) {
+        if ([ignoreChecks notifyJoins] == YES) {
+            NSString *tracker = [ignoreChecks trackingNickname];
+            
+            BOOL ison = [trackedUsers boolForKey:tracker];
+            
+            if (ison == NO) {					
+                [self handleUserTrackingNotification:ignoreChecks 
+                                            nickname:m.sender.nick 
+                                            hostmask:[m.sender.raw hostmaskFromRawString] 
+                                            langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
+                
+                [trackedUsers setBool:YES forKey:tracker];
+            }
+        }
+    }
+    
 	if ([Preferences showJoinLeave]) {
-		AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-														 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyJoins", nil]];
-		
-		if ([ignoreChecks ignoreJPQE] == YES && myself == NO) {
-			return;
-		}
-		
-		if (hasIRCopAccess == NO) {
-			if ([ignoreChecks notifyJoins] == YES) {
-				NSString *tracker = [ignoreChecks trackingNickname];
-				
-				BOOL ison = [trackedUsers boolForKey:tracker];
-				
-				if (ison == NO) {					
-					[self handleUserTrackingNotification:ignoreChecks 
-												nickname:m.sender.nick 
-												hostmask:[m.sender.raw hostmaskFromRawString] 
-												langitem:@"USER_TRACKING_HOSTMASK_NOW_AVAILABLE"];
-					
-					[trackedUsers setBool:YES forKey:tracker];
-				}
-			}
-		}
-		
+        if (c.config.iJPQActivity) {
+            return;
+        }
+        
 		NSString *text = TXTFLS(@"IRC_USER_JOINED_CHANNEL", nick, m.sender.user, m.sender.address);
 		
 		[self printBoth:c type:LINE_TYPE_JOIN text:text];
@@ -3878,6 +3871,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c removeMember:nick];
 		
 		if ([Preferences showJoinLeave]) {
+            if (c.config.iJPQActivity) {
+                return;
+            }
+            
 			AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
 															 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 			
@@ -3909,6 +3906,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c removeMember:target];
 		
 		if ([Preferences showJoinLeave]) {
+            if (c.config.iJPQActivity) {
+                return;
+            }
+            
 			AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
 															 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 			
@@ -3979,7 +3980,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if ([c findMember:nick]) {
-			if ([Preferences showJoinLeave]) {
+			if ([Preferences showJoinLeave] && c.config.iJPQActivity == NO) {
 				[self printChannel:c type:LINE_TYPE_QUIT text:text];
 			}
 			
