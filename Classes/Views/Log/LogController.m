@@ -590,7 +590,7 @@
                         lineBreak = @"<br /><br /";
                     }
                     
-                    [s appendFormat:@"%@<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\"/></a></span>", lineBreak, url, imageUrl, [Preferences inlineImagesMaxWidth]];
+                    [s appendFormat:@"%@<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\" /></a>", lineBreak, url, imageUrl, [Preferences inlineImagesMaxWidth]];
                 }
             }
             
