@@ -59,7 +59,7 @@
 "WANT_QUIT_TITLE" = "Do you want to quit Textual?";
 "WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";
 
-"SELF_BAN_DETECTED_MESSAGE" = "Textual has prevented you from banning yourself from %@.";
+"SELF_BAN_DETECTED_MESSAGE" = "Textual has prevented you from banning yourself on %@.";
 
 "PLUGIN_COMMAND_CLASH_ERROR_MESSAGE" = "The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
 

@@ -59,7 +59,7 @@ Textual = {
 		app.nicknameDoubleClicked();
 	},
     
-    hide_inline_image(): function() { 
+    hide_inline_image: function() { 
         // something will go here 
     },
 }
