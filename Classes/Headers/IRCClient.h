@@ -41,6 +41,7 @@ typedef enum {
 	
 	BOOL sendLagcheckToChannel;
 	
+    BOOL isIdentifiedWithSASL;
 	BOOL reconnectEnabled;
 	BOOL rawModeEnabled;
 	BOOL retryEnabled;
@@ -123,6 +124,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL serverHasNickServ;
 @property (nonatomic, assign) BOOL autojoinInitialized;
 @property (nonatomic, assign) BOOL sendLagcheckToChannel;
+@property (nonatomic, assign) BOOL isIdentifiedWithSASL;
 @property (nonatomic, retain) FileLogger *logFile;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, retain) NSString *logDate;
