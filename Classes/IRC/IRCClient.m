@@ -96,8 +96,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize reconnectTimer;
 @synthesize retryEnabled;
 @synthesize retryTimer;
-@synthesize sendLagcheckToChannel;
 @synthesize sentNick;
+@synthesize sendLagcheckToChannel;
+@synthesize isIdentifiedWithSASL;
 @synthesize serverHasNickServ;
 @synthesize serverHostname;
 @synthesize trackedUsers;
@@ -2575,7 +2576,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             BOOL scriptFound;
             
             for (NSString *i in extensions) {
-                NSString *filename = [NSString stringWithFormat:@"%@%@", cmd, i];
+                NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
                 
                 scriptPath  = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
                 scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
@@ -3593,7 +3594,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"]) {
-						if (NSObjectIsNotEmpty(config.nickPassword)) {
+						if (NSObjectIsNotEmpty(config.nickPassword) && isIdentifiedWithSASL == NO) {
 							serverHasNickServ = YES;
 							
 							[self send:IRCCI_PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
@@ -4145,7 +4146,63 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)receiveCapacityOrAuthenticationRequest:(IRCMessage *)m
 {
+    /* Implementation based off Colloquy's own. */
     
+    NSString *command = [m command];
+    NSString *star    = [m paramAt:0];
+    NSString *base    = [m paramAt:1];
+    NSString *action  = [m sequence:2];
+    
+    star   = [star trim];
+    action = [action trim];
+    
+    if ([command isEqualNoCase:IRCCI_CAP]) {
+        if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
+            NSArray *caps = [action componentsSeparatedByString:NSWhitespaceCharacter];
+            
+            for (NSString *cap in caps) {
+                if ([cap isEqualNoCase:@"SASL"]) {
+                    if ([base isEqualNoCase:@"LS"]) {
+                         [self send:IRCCI_CAP, @"REQ", @"sasl", nil];
+                    } else {
+                        [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+                    }
+                } else if ([cap isEqualNoCase:@"MULTI-PREFIX"]) {
+                    if ([base isEqualNoCase:@"LS"]) {
+                        [self send:IRCCI_CAP, @"REQ", @"multi-prefix", nil];
+                    } else {
+                        
+                    }
+                }
+                
+                return;
+            }
+        }
+    } else {
+        if ([star isEqualToString:@"+"]) {
+            NSData *usernameData = [config.nick dataUsingEncoding:config.encoding allowLossyConversion:YES];
+            
+            NSMutableData *authenticateData = [usernameData mutableCopy];
+            [authenticateData appendBytes:"\0" length:1];
+            [authenticateData appendData:usernameData];
+            [authenticateData appendBytes:"\0" length:1];
+            [authenticateData appendData:[config.nickPassword dataUsingEncoding:config.encoding allowLossyConversion:YES]];
+            
+            NSString *authString = [authenticateData base64EncodingWithLineLength:400];
+            
+            NSArray *authStrings = [authString componentsSeparatedByString:@"\n"];
+            
+            for (NSString *string in authStrings) {
+                [self send:IRCCI_AUTHENTICATE, string, nil];
+            }
+            
+            if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
+                [self send:IRCCI_AUTHENTICATE, @"+", nil];
+            }
+        } else {
+            [self send:IRCCI_CAP, @"END", nil];
+        }
+    }
 }
 
 - (void)receivePing:(IRCMessage *)m
@@ -4226,7 +4283,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	switch (n) {
-		case 1:
+		case 1: 
 		{
 			[self receiveInit:m];
 			[self printReply:m];
@@ -4245,7 +4302,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 5:		// RPL_ISUPPORT
+		case 5:
 		{
 			[isupport update:[m sequence:1]];
 			
@@ -4278,7 +4335,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 221:	// RPL_UMODEIS
+		case 221:
 		{
 			NSString *modeStr = [m paramAt:1];
 			
@@ -4288,7 +4345,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 290:	// RPL_CAPAB on freenode
+		case 290:
 		{
 			NSString *kind = [[m paramAt:1] lowercaseString];
 			
@@ -4302,7 +4359,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 301:	// RPL_AWAY
+		case 301:
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *comment = [m paramAt:2];
@@ -4360,7 +4417,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 338:	// RPL_WHOISCONNECTFROM
+		case 338:
 		{
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 			
@@ -4372,8 +4429,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 311:	// RPL_WHOISUSER
-		case 314:   // RPL_WHOWASUSER
+		case 311:
+		case 314:
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *username = [m paramAt:2];
@@ -4402,7 +4459,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 312:	// RPL_WHOISSERVER
+		case 312:
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *server = [m paramAt:2];
@@ -4424,7 +4481,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 317:	// RPL_WHOISIDLE
+		case 317:
 		{
 			NSString *nick = [m paramAt:1];
 			
@@ -4444,7 +4501,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 319:	// RPL_WHOISCHANNELS
+		case 319:
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *trail = [[m paramAt:2] trim];
@@ -4459,13 +4516,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 318:	// RPL_ENDOFWHOIS
+		case 318:
 		{
 			whoisChannel = nil;
 			
 			break;
 		}
-		case 324:	// RPL_CHANNELMODEIS
+		case 324:
 		{
 			NSString *chname = [m paramAt:1];
 			NSString *modeStr = [m sequence:2];
@@ -4489,7 +4546,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 332:	// RPL_TOPIC
+		case 332:
 		{
 			NSString *chname = [m paramAt:1];
 			NSString *topic = [m paramAt:2];
@@ -4531,7 +4588,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 341:	// RPL_INVITING
+		case 341:
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *chname = [m paramAt:2];
@@ -4540,7 +4597,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 303:	// RPL_ISON
+		case 303:
 		{
 			if (hasIRCopAccess) {
 				[self printUnknownReply:m];
@@ -4586,7 +4643,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 315:	// RPL_WHOEND
+		case 315:
 		{
 			NSString *chname = [m paramAt:1];
 			
@@ -4604,7 +4661,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 352:	// RPL_WHOENTRY
+		case 352:
 		{
 			NSString *chname = [m paramAt:1];
 			
@@ -4640,7 +4697,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 353:	// RPL_NAMREPLY
+		case 353:
 		{
 			NSString *chname = [m paramAt:2];
 			NSString *trail  = [m paramAt:3];
@@ -4692,7 +4749,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 366:	// RPL_ENDOFNAMES
+		case 366:
 		{
 			NSString *chname = [m paramAt:1];
 			
@@ -4744,7 +4801,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 322:	// RPL_LIST
+		case 322:
 		{
 			NSString *chname = [m paramAt:1];
 			NSString *countStr = [m paramAt:2];
@@ -4846,12 +4903,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
+        case 900:
+        {
+            isIdentifiedWithSASL = YES;
+            
+            [self printBoth:self type:LINE_TYPE_REPLY text:[m sequence:3]];
+            
+            break;
+        }
         case 903:
         case 904:
         case 905:
         case 906:
         case 907:
         {
+            [self printReply:m];
+            
+            [self send:IRCCI_CAP, @"END", nil];
             
             break;
         }
@@ -5013,7 +5081,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self startReconnectTimer];
 	}
 	
-	sendLagcheckToChannel = NO;
+	sendLagcheckToChannel = isIdentifiedWithSASL = NO;
 	isConnecting = isConnected = isLoggedIn = isQuitting = NO;
 	hasIRCopAccess = serverHasNickServ = autojoinInitialized = NO;
 	
@@ -5027,12 +5095,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *disconnectTXTLString = nil;
 	
 	switch (disconnectType) {
-		case DISCONNECT_NORMAL:
-			disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER";
-			break;
-		case DISCONNECT_TRIAL_PERIOD:
-			disconnectTXTLString = @"TRIAL_BUILD_NETWORK_DISCONNECTED";
-			break;
+		case DISCONNECT_NORMAL: disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER"; break;
+		case DISCONNECT_TRIAL_PERIOD: disconnectTXTLString = @"TRIAL_BUILD_NETWORK_DISCONNECTED";break;
 		default: break;
 	}
 	
@@ -5092,10 +5156,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *user = config.username;
 	NSString *realName = config.realName;
 	
-	if (NSObjectIsEmpty(user)) user = config.nick;
-	if (NSObjectIsEmpty(realName)) realName = config.nick;
+	if (NSObjectIsEmpty(user)) {
+        user = config.nick;
+    }
+    
+	if (NSObjectIsEmpty(realName)) {
+        realName = config.nick;
+    }
+    
+    if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
+        [self send:IRCCI_CAP, @"REQ", @"sasl multi-prefix", nil];
+    }
 	
-	if (NSObjectIsNotEmpty(config.password)) [self send:IRCCI_PASS, config.password, nil];
+	if (NSObjectIsNotEmpty(config.password)) {
+        [self send:IRCCI_PASS, config.password, nil];
+    }
 	
 	[self send:IRCCI_NICK, sentNick, nil];
 	
