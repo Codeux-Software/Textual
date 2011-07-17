@@ -916,12 +916,12 @@ static NSInteger totalRunTime = 0;
 #pragma mark -
 #pragma mark Initialization
 
-+ (void)defaultIRCClientSheetCallback:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
++ (void)defaultIRCClientSheetCallback:(NSNumber *)returnCode 
 {	
-	[_NSUserDefaults() setBool:[[alert suppressionButton] state] forKey:@"Preferences.prompts.default_irc_client"];
-	
-	if (returnCode == NSAlertFirstButtonReturn) {
-		NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSInteger _returnCode = [returnCode integerValue];
+    
+	if (_returnCode == NSAlertFirstButtonReturn) {
+		NSString *bundleID    = [[NSBundle mainBundle] bundleIdentifier];
 		OSStatus changeResult = LSSetDefaultHandlerForURLScheme((CFStringRef)@"irc", (CFStringRef)bundleID);
 		
 		if (changeResult == noErr) return;
@@ -942,7 +942,7 @@ static NSInteger totalRunTime = 0;
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {
 			[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow]
 										   target:self
-										   action:@selector(defaultIRCClientSheetCallback:returnCode:contextInfo:)
+										   action:@selector(defaultIRCClientSheetCallback:)
 											 body:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_MESSAGE")
 											title:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_TITLE")
 									defaultButton:TXTLS(@"YES_BUTTON") 
