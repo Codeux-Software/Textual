@@ -7,106 +7,87 @@
 
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)c
 {	
-	BOOL useSSL = NO;
-	
-	NSArray *chunks;
-	
 	NSInteger port = 6667;
 	
 	NSString *server   = nil;
 	NSString *password = nil;
-	NSString *tempPort = nil;
-	
-	if ([s contains:NSWhitespaceCharacter] == NO) {
-		if ([s contains:@":"]) {
-			chunks = [s componentsSeparatedByString:@":"];
-			
-			server = [chunks safeObjectAtIndex:0];
-			tempPort = [chunks safeObjectAtIndex:1];
-			
-			if ([tempPort hasPrefix:@"+"]) {
-				useSSL = YES;
-				tempPort = [tempPort safeSubstringFromIndex:1];
-			}
-			
-			port = [tempPort integerValue];
-		} else {
-			server = s;
-		}
-	} else {
-		chunks = [s componentsSeparatedByString:NSWhitespaceCharacter];
-		
-		if ([[[chunks safeObjectAtIndex:0] uppercaseString] isEqualToString:@"-SSL"]) {
-			useSSL = YES;
-			
-			server = [chunks safeObjectAtIndex:1];
-			
-			if ([server contains:@":"]) {
-				chunks = [server componentsSeparatedByString:@":"];
-				
-				tempPort = [chunks safeObjectAtIndex:1];
-				
-				if ([tempPort hasPrefix:@"+"]) {
-					tempPort = [tempPort safeSubstringFromIndex:1];
-				}
-				
-				port = [tempPort integerValue];
-				
-				if ([chunks count] > 2) {
-					password = [chunks safeObjectAtIndex:2];
-				}
-			} else {
-				if ([chunks count] > 2) {
-					tempPort = [chunks safeObjectAtIndex:2];
-					
-					if ([tempPort hasPrefix:@"+"]) {
-						tempPort = [tempPort safeSubstringFromIndex:1];
-					}
-					
-					port = [tempPort integerValue];
-				}
-				
-				if ([chunks count] > 3) {
-					password = [chunks safeObjectAtIndex:3];
-				}
-			}
-		} else {
-			server = [chunks safeObjectAtIndex:0];
-			
-			if ([server contains:@":"]) {
-				chunks = [server componentsSeparatedByString:@":"];
-				
-				tempPort = [chunks safeObjectAtIndex:1];
-				
-				if ([tempPort hasPrefix:@"+"]) {
-					useSSL = YES;
-					tempPort = [tempPort safeSubstringFromIndex:1];
-				}
-				
-				port = [tempPort integerValue];
-				
-				if ([chunks count] > 1) {
-					password = [chunks safeObjectAtIndex:1];
-				}
-			} else {
-				if ([chunks count] > 1) {
-					NSString *tempPort = [chunks safeObjectAtIndex:1];
-					
-					if ([tempPort hasPrefix:@"+"]) {
-						useSSL = YES;
-						tempPort = [tempPort safeSubstringFromIndex:1];
-					}
-					
-					port = [tempPort integerValue];
-				}
-				
-				if ([chunks count] > 2) {
-					password = [chunks safeObjectAtIndex:2];
-				}
-			}
-		}
-	}
-	
+    NSString *tempval  = nil;
+    
+    BOOL useSSL = NO;
+    
+    NSMutableString *base = [s mutableCopy];
+    
+    tempval = [base getToken];
+    
+    /* Secure Socket Layer */
+    if ([tempval isEqualNoCase:@"-SSL"]) {
+        useSSL = YES;
+        
+        tempval = [base getToken];
+    }
+    
+    /* Server Address */
+    if ([tempval hasPrefix:@"["]) {
+        if ([tempval contains:@"]"]) {
+            NSUInteger startPos = ([tempval stringPosition:@"["] + 1);
+            NSUInteger endPos   =  [tempval stringPosition:@"]"];
+          
+            NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
+            
+            server  = [tempval safeSubstringWithRange:servRange];
+            tempval = [tempval safeSubstringAfterIndex:endPos];
+        } else {
+            return;
+        }
+    } else {
+        if ([tempval contains:@":"]) {
+            NSUInteger cutPos = [tempval stringPosition:@":"];
+        
+            server  = [tempval safeSubstringToIndex:cutPos];
+            tempval = [tempval safeSubstringFromIndex:cutPos];
+        } else {
+            server  = tempval;
+            tempval = nil;
+        }
+    }
+    
+    /* Server Port */
+    if ([tempval hasPrefix:@":"]) {
+        NSInteger chopIndex = 1;
+        
+        if ([tempval hasPrefix:@":+"]) {
+            chopIndex = 2;
+            
+            useSSL = YES;
+        }
+        
+        tempval = [tempval safeSubstringFromIndex:chopIndex];
+        
+        if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+            port = [tempval integerValue];
+        }
+    } else {
+        if (NSObjectIsNotEmpty(base)) {
+            tempval = [base getToken];
+                        
+            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+                port = [tempval integerValue];
+            }
+        }
+    }
+
+    /* Server Password */
+    if (NSObjectIsNotEmpty(base)) {
+        tempval = [base getToken];
+        
+        password = tempval;
+    }
+    
+    /* Add Server */
+    if (NSObjectIsEmpty(server)) {
+        return;
+    }
+    
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setObject:server forKey:@"host"];
@@ -125,15 +106,15 @@
 		
 		if ([c isChannelName]) {
 			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
-								 NSNumberWithBOOL(YES), @"auto_join", 
-								 NSNumberWithBOOL(YES), @"growl", nil]];	
+                                     NSNumberWithBOOL(YES), @"auto_join", 
+                                     NSNumberWithBOOL(YES), @"growl", nil]];	
 		}
 		
 		[dic setObject:channels forKey:@"channels"];
 	}
 	
 	IRCClientConfig *cf = [[[IRCClientConfig alloc] initWithDictionary:dic] autodrain];
-
+    
 	if (NSObjectIsNotEmpty(password)) {
 		cf.password = password;
 	}	
