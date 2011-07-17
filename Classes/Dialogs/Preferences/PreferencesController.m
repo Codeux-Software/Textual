@@ -541,7 +541,17 @@
 
 - (void)onOpenPathToThemes:(id)sender
 {
-	[_NSWorkspace() openFile:[Preferences whereThemesPath]];
+	NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
+	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
+    NSString *path = nil;
+    
+    if ([kind isEqualNoCase:@"resource"]) {
+        path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:name];
+    } else {
+        path = [[Preferences whereThemesPath] stringByAppendingPathComponent:name];
+    }
+    
+	[_NSWorkspace() openFile:path];
 }
 
 - (void)onOpenPathToScripts:(id)sender
