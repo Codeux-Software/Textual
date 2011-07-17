@@ -153,7 +153,8 @@
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (IRCChannel *)createTalk:(NSString *)nick client:(IRCClient *)client;
 
-- (void)destroyChannel:(IRCChannel *)channel;
+- (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart;
+- (void)destroyChannel:(IRCChannel *)c;
 - (void)destroyClient:(IRCClient *)client;
 
 - (void)logKeyDown:(NSEvent *)e;

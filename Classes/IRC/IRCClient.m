@@ -4,7 +4,7 @@
 
 #include <arpa/inet.h>
 
-#define PONG_INTERVAL				150
+#define PONG_INTERVAL				300
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
 #define ISON_CHECK_INTERVAL			30
@@ -104,6 +104,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize trackedUsers;
 @synthesize tryingNickNumber;
 @synthesize whoisChannel;
+@synthesize inSASLRequest;
 @synthesize world;
 
 - (id)init
@@ -4159,17 +4160,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
     if ([command isEqualNoCase:IRCCI_CAP]) {
         if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
             NSArray *caps = [action componentsSeparatedByString:NSWhitespaceCharacter];
-            
+          
             for (NSString *cap in caps) {
                 if ([cap isEqualNoCase:@"SASL"]) {
                     if ([base isEqualNoCase:@"LS"]) {
                         [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
                     } else {
                         [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+                        
+                        inSASLRequest = YES;
                     }
                 } 
-                
-                return;
             }
         }
     } else {
@@ -4178,7 +4179,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             
             NSMutableData *authenticateData = [usernameData mutableCopy];
             [authenticateData appendBytes:"\0" length:1];
-            [authenticateData appendData:[config.username dataUsingEncoding:config.encoding allowLossyConversion:YES]];
+            [authenticateData appendData:usernameData];
             [authenticateData appendBytes:"\0" length:1];
             [authenticateData appendData:[config.nickPassword dataUsingEncoding:config.encoding allowLossyConversion:YES]];
             
@@ -4393,13 +4394,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 307: // RPL_WHOISGENERAL
-		case 310: // RPL_WHOISGENERAL
-		case 313: // RPL_WHOISGENERAL
-		case 335: // RPL_WHOISGENERAL
-		case 378: // RPL_WHOISGENERAL
-		case 379: // RPL_WHOISGENERAL
-		case 671: // RPL_WHOISGENERAL
+		case 307:
+		case 310:
+		case 313:
+		case 335:
+		case 378:
+		case 379:
+		case 671:
 		{
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
 			
@@ -4911,9 +4912,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
         case 906:
         case 907:
         {
-            [self printReply:m];
+            if (n == 903) { // success 
+                [self printBoth:self type:LINE_TYPE_NOTICE text:[m sequence:1]];
+            } else {
+                [self printReply:m];
+            }
             
-            [self send:IRCCI_CAP, @"END", nil];
+            if (inSASLRequest) {
+                inSASLRequest = NO;
+                
+                [self send:IRCCI_CAP, @"END", nil];
+            }
             
             break;
         }
@@ -5159,7 +5168,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     }
     
     if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
-        [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
+        [self send:IRCCI_CAP, @"LS", nil];
     }
 	
 	if (NSObjectIsNotEmpty(config.password)) {

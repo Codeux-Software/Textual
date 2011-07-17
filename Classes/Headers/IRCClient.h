@@ -56,6 +56,7 @@ typedef enum {
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	BOOL inWhoInfoRun;
+    BOOL inSASLRequest;
 	BOOL inWhoWasRun;
 	BOOL inFirstISONRun;
 	
@@ -121,6 +122,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL isConnected;
 @property (nonatomic, assign) BOOL isLoggedIn;
 @property (nonatomic, assign) BOOL isQuitting;
+@property (nonatomic, assign) BOOL inSASLRequest;
 @property (nonatomic, assign) BOOL serverHasNickServ;
 @property (nonatomic, assign) BOOL autojoinInitialized;
 @property (nonatomic, assign) BOOL sendLagcheckToChannel;

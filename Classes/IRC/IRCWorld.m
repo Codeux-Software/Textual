@@ -864,12 +864,17 @@
 
 - (void)destroyChannel:(IRCChannel *)c
 {
+    [self destroyChannel:c part:YES];
+}
+
+- (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart
+{
 	[c adrv];
 	[c terminate];
 	
 	IRCClient *u = c.client;
 	
-	if (c.isChannel) {
+	if (c.isChannel && forcePart) {
 		if (u.isLoggedIn && c.isActive) {
 			[u partChannel:c];
 		}
