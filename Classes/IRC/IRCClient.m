@@ -4163,7 +4163,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             for (NSString *cap in caps) {
                 if ([cap isEqualNoCase:@"SASL"]) {
                     if ([base isEqualNoCase:@"LS"]) {
-                         [self send:IRCCI_CAP, @"REQ", @"sasl", nil];
+                        [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
                     } else {
                         [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
                     }
@@ -5159,7 +5159,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     }
     
     if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
-        [self send:IRCCI_CAP, @"REQ", @"sasl", nil];
+        [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
     }
 	
 	if (NSObjectIsNotEmpty(config.password)) {
