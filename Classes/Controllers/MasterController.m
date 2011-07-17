@@ -590,7 +590,7 @@
 {
 	if ([splitView isEqual:memberSplitView]) {
 		NSView *leftSide = [[splitView subviews] objectAtIndex:0];
-	
+        
 		if ([leftSide isEqual:subview]) {
 			return NO;
 		}
@@ -899,25 +899,29 @@
 		
 		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
 		
-		for (NSString *file in resourceFiles) {
-			NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-            NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-            
-            if ([choices containsObject:cmdl] == NO) {
-                [choices safeAddObject:cmdl];
+        if (NSObjectIsNotEmpty(resourceFiles)) {
+            for (NSString *file in resourceFiles) {
+                NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+                NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+                
+                if ([choices containsObject:cmdl] == NO) {
+                    [choices safeAddObject:cmdl];
+                }
             }
 		}
         
         resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
-		
-		for (NSString *file in resourceFiles) {
-			NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-            NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-            
-            if ([choices containsObject:cmdl] == NO) {
-                [choices safeAddObject:cmdl];
+        
+        if (NSObjectIsNotEmpty(resourceFiles)) {
+            for (NSString *file in resourceFiles) {
+                NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+                NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+                
+                if ([choices containsObject:cmdl] == NO) {
+                    [choices safeAddObject:cmdl];
+                }
             }
-		}
+        }
         
 		lowerChoices = choices;
 	} else if (channelMode) {
@@ -1366,7 +1370,7 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:)	char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:)	char:'n' mods:NSControlKeyMask];
-
+    
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
 	

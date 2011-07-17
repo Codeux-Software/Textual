@@ -9,36 +9,40 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		 scripts = [NSMutableArray new];
+        scripts = [NSMutableArray new];
 	}
-
+    
 	return self;
 }
 
 - (void)populateData;
 {			
 	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-
-	for (NSString *file in resourceFiles) {
-        NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
-        NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
-        
-        if ([scripts containsObject:script] == NO) {
-            [scripts safeAddObject:script];
-		}
-	}
+    
+    if (NSObjectIsNotEmpty(resourceFiles)) {
+        for (NSString *file in resourceFiles) {
+            NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
+            NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
+            
+            if ([scripts containsObject:script] == NO) {
+                [scripts safeAddObject:script];
+            }
+        }
+    }
     
     resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
     
-	for (NSString *file in resourceFiles) {
-        NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
-        NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
-        
-        if ([scripts containsObject:script] == NO) {
-            [scripts safeAddObject:script];
-		}
-	}
-
+    if (NSObjectIsNotEmpty(resourceFiles)) {
+        for (NSString *file in resourceFiles) {
+            NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
+            NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
+            
+            if ([scripts containsObject:script] == NO) {
+                [scripts safeAddObject:script];
+            }
+        }
+    }
+    
 	for (NSString *cmd in world.bundlesForUserInput) {
 		cmd = [cmd lowercaseString];
 		

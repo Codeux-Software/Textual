@@ -4178,7 +4178,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             
             NSMutableData *authenticateData = [usernameData mutableCopy];
             [authenticateData appendBytes:"\0" length:1];
-            [authenticateData appendData:usernameData];
+            [authenticateData appendData:[config.username dataUsingEncoding:config.encoding allowLossyConversion:YES]];
             [authenticateData appendBytes:"\0" length:1];
             [authenticateData appendData:[config.nickPassword dataUsingEncoding:config.encoding allowLossyConversion:YES]];
             
