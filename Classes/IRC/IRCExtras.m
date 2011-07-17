@@ -5,6 +5,119 @@
 
 @synthesize world;
 
+- (void)parseIRCProtocolURI:(NSString *)location 
+{
+    location = [location decodeURIFragement];
+    
+	NSInteger port = 6667;
+	
+	NSString *server  = nil;
+    NSString *target  = nil;
+    NSString *tempval = nil;
+    
+    BOOL useSSL = NO;
+    
+    if ([location hasPrefix:@"irc://"]) {
+        location = [location safeSubstringFromIndex:6];
+        
+        if ([location contains:@"/"] == NO) {
+            location = [NSString stringWithFormat:@"%@/", location];
+        }
+        
+        NSInteger slashPos = [location stringPosition:@"/"];
+        
+        tempval = [location safeSubstringToIndex:slashPos];
+        
+        /* Server Address */
+        if ([tempval hasPrefix:@"["]) {
+            if ([tempval contains:@"]"]) {
+                NSInteger startPos = ([tempval stringPosition:@"["] + 1);
+                NSInteger endPos   =  [tempval stringPosition:@"]"];
+                
+                NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
+                
+                server  = [tempval safeSubstringWithRange:servRange];
+                tempval = [tempval safeSubstringAfterIndex:endPos];
+            } else {
+                return;
+            }
+        } else {
+            if ([tempval contains:@":"]) {
+                NSInteger cutPos = [tempval stringPosition:@":"];
+                
+                server  = [tempval safeSubstringToIndex:cutPos];
+                tempval = [tempval safeSubstringFromIndex:cutPos];
+            } else {
+                server  = tempval;
+                tempval = nil;
+            }
+        }
+        
+        /* Server Port */
+        if ([tempval hasPrefix:@":"]) {
+            NSInteger chopIndex = 1;
+            
+            if ([tempval hasPrefix:@":+"]) {
+                chopIndex = 2;
+                
+                useSSL = YES;
+            }
+            
+            tempval = [tempval safeSubstringFromIndex:chopIndex];
+            
+            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+                port = [tempval integerValue];
+            }
+        }
+        
+        tempval = [location safeSubstringAfterIndex:slashPos];
+        
+        if (NSObjectIsNotEmpty(tempval)) {
+            if ([tempval contains:@","]) {
+                NSArray         *items  = [tempval componentsSeparatedByString:@","];
+                NSMutableArray  *mitems = [items mutableCopy];
+                
+                target = [mitems safeObjectAtIndex:0];
+                
+                if ([target hasPrefix:@"#"] == NO) {
+                    target = [NSString stringWithFormat:@"#%@", target];
+                }
+                
+                [mitems removeObjectAtIndex:0];
+                
+                for (NSString *setting in mitems) {
+                    if ([setting isEqualNoCase:@"needssl"]) {
+                        useSSL = YES;
+                    }
+                }
+                
+                [mitems drain];
+            } else {
+                target = tempval;
+                
+                if ([target hasPrefix:@"#"] == NO) {
+                    target = [NSString stringWithFormat:@"#%@", target];
+                }
+            }
+        }
+    }
+    
+    /* Add Server */
+    if (NSObjectIsEmpty(server)) {
+        return;
+    }
+    
+    NSMutableString *servsubmit = [NSMutableString string];
+    
+    if (useSSL) {
+        [servsubmit appendString:@"-SSL "];
+    }
+    
+    [servsubmit appendFormat:@"%@:%d", server, port];
+    
+    [self createConnectionAndJoinChannel:servsubmit chan:target];
+}
+
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)c
 {	
 	NSInteger port = 6667;
@@ -29,9 +142,9 @@
     /* Server Address */
     if ([tempval hasPrefix:@"["]) {
         if ([tempval contains:@"]"]) {
-            NSUInteger startPos = ([tempval stringPosition:@"["] + 1);
-            NSUInteger endPos   =  [tempval stringPosition:@"]"];
-          
+            NSInteger startPos = ([tempval stringPosition:@"["] + 1);
+            NSInteger endPos   =  [tempval stringPosition:@"]"];
+            
             NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
             
             server  = [tempval safeSubstringWithRange:servRange];
@@ -41,8 +154,8 @@
         }
     } else {
         if ([tempval contains:@":"]) {
-            NSUInteger cutPos = [tempval stringPosition:@":"];
-        
+            NSInteger cutPos = [tempval stringPosition:@":"];
+            
             server  = [tempval safeSubstringToIndex:cutPos];
             tempval = [tempval safeSubstringFromIndex:cutPos];
         } else {
@@ -69,13 +182,13 @@
     } else {
         if (NSObjectIsNotEmpty(base)) {
             tempval = [base getToken];
-                        
+            
             if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
                 port = [tempval integerValue];
             }
         }
     }
-
+    
     /* Server Password */
     if (NSObjectIsNotEmpty(base)) {
         tempval = [base getToken];

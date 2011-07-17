@@ -338,7 +338,7 @@ BOOL isUnicharDigit(unichar c)
 	return [self stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 }
 
-- (NSUInteger)stringPosition:(NSString *)needle
+- (NSInteger)stringPosition:(NSString *)needle
 {
 	NSRange r = [self rangeOfString:needle];
 	if (r.location == NSNotFound) return -1;
@@ -346,7 +346,7 @@ BOOL isUnicharDigit(unichar c)
 	return r.location;
 }
 
-- (NSUInteger)stringPositionIgnoringCase:(NSString *)needle
+- (NSInteger)stringPositionIgnoringCase:(NSString *)needle
 {
 	NSRange r = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
 	if (r.location == NSNotFound) return -1;
