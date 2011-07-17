@@ -4167,13 +4167,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                     } else {
                         [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
                     }
-                } else if ([cap isEqualNoCase:@"MULTI-PREFIX"]) {
-                    if ([base isEqualNoCase:@"LS"]) {
-                        [self send:IRCCI_CAP, @"REQ", @"multi-prefix", nil];
-                    } else {
-                        
-                    }
-                }
+                } 
                 
                 return;
             }
@@ -5165,7 +5159,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     }
     
     if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
-        [self send:IRCCI_CAP, @"REQ", @"sasl multi-prefix", nil];
+        [self send:IRCCI_CAP, @"REQ", @"sasl", nil];
     }
 	
 	if (NSObjectIsNotEmpty(config.password)) {
