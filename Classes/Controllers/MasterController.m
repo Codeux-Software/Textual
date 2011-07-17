@@ -301,50 +301,9 @@
 
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-	NSString *url = [[[event descriptorAtIndex:1] stringValue] decodeURIFragement];
+	NSString *url = [[event descriptorAtIndex:1] stringValue];
 	
-	if ([url hasPrefix:@"irc://"]) {
-		url = [url safeSubstringFromIndex:6];
-		
-		NSArray *chunks = nil;
-		
-		NSInteger port = 6667;
-		
-		NSString *server  = nil;
-		NSString *channel = nil;
-		
-		if ([url contains:@"/"]) {
-			chunks = [url componentsSeparatedByString:@"/"];
-			
-			server  = [chunks safeObjectAtIndex:0];
-			channel = [chunks safeObjectAtIndex:1];
-			
-			if ([channel contains:NSWhitespaceCharacter]) {
-				channel = [channel safeSubstringToIndex:[channel stringPosition:NSWhitespaceCharacter]];
-			}
-			
-			if ([channel hasPrefix:@"#"] == NO) {
-				channel = [@"#" stringByAppendingString:channel];
-			}
-			
-			if ([channel contains:@","]) {
-				chunks = [channel componentsSeparatedByString:@","];
-				
-				channel = [chunks safeObjectAtIndex:0];
-			}
-		} else {
-			server = url;
-		}
-		
-		if ([server contains:@":"]) {
-			chunks = [server componentsSeparatedByString:@":"];
-			
-			server = [chunks safeObjectAtIndex:0];
-			port   = [chunks integerAtIndex:1];
-		}
-		
-		[world createConnection:[NSString stringWithFormat:@"%@ %i", server, port] chan:channel];
-	}
+    [extrac parseIRCProtocolURI:url];
 }
 
 - (void)computerWillSleep:(NSNotification *)note

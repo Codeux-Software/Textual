@@ -10,5 +10,6 @@
 
 @property (nonatomic, assign) IRCWorld *world;
 
+- (void)parseIRCProtocolURI:(NSString *)location;
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel;
 @end

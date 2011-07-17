@@ -37,8 +37,8 @@
 - (NSInteger)findCharacter:(UniChar)c;
 - (NSInteger)findCharacter:(UniChar)c start:(NSInteger)start;
 
-- (NSUInteger)stringPosition:(NSString *)needle;
-- (NSUInteger)stringPositionIgnoringCase:(NSString *)needle;
+- (NSInteger)stringPosition:(NSString *)needle;
+- (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
 - (NSArray *)split:(NSString *)delimiter;
 - (NSArray *)splitIntoLines;
