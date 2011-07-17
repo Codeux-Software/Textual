@@ -1232,7 +1232,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (PointerIsEmpty(chan) == NO && *message) {
 			if ([chan isChannel] || [chan isTalk]) {
 				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey];
+					NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey encoding:config.encoding];
 					
 					if ([newstr length] < 5) {
 						[self printDebugInformation:TXTLS(@"BLOWFISH_ENCRYPT_FAILED") channel:chan];
@@ -1255,7 +1255,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (PointerIsEmpty(chan) == NO && *message) {
 			if ([chan isChannel] || [chan isTalk]) {
 				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey];
+					NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey encoding:config.encoding];
 					
 					if (NSObjectIsNotEmpty(newstr)) {
 						*message = newstr;
