@@ -47,6 +47,7 @@
 @synthesize messagesReceived;
 @synthesize previousSelectedChannelId;
 @synthesize previousSelectedClientId;
+@synthesize messageQueue;
 @synthesize selected;
 @synthesize serverMenu;
 @synthesize soundMuted;
@@ -61,6 +62,8 @@
 {
 	if ((self = [super init])) {
 		clients	= [NSMutableArray new];
+        
+        messageQueue = dispatch_queue_create("messageQueue", NULL);
 	}
 	
 	return self;
@@ -82,6 +85,9 @@
 	[extrac drain];
 	[selected drain];
 	[serverMenu drain];	
+    
+    dispatch_release(messageQueue);
+    messageQueue = NULL;
 	
 	[super dealloc];
 }
