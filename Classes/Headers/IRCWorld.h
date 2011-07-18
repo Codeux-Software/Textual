@@ -58,8 +58,11 @@
 	NSDictionary *bundlesForUserInput;
 	NSDictionary *bundlesForServerInput;
 	NSDictionary *bundlesWithOutputRules;
+    
+    dispatch_queue_t messageQueue;
 }
 
+@property (nonatomic, assign) dispatch_queue_t messageQueue;
 @property (nonatomic, assign) ServerList *serverList;
 @property (nonatomic, assign) MemberList *memberList;
 @property (nonatomic, assign) MainWindow *window;
