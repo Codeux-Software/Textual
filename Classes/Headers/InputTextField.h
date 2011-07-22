@@ -11,11 +11,6 @@
     SEL _actonSelector;
 }
 
-- (NSScrollView *)scrollView;
-
-- (NSFont *)defaultFont;
-- (NSColor *)defaultFontColor;
-
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 @end
 
