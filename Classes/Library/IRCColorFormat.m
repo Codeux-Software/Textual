@@ -6,7 +6,6 @@ NSString *IRCTextFormatterItalicAttributeName           = @"IRCTextFormatterItal
 NSString *IRCTextFormatterUnderlineAttributeName        = @"IRCTextFormatterUnderline";
 NSString *IRCTextFormatterForegroundColorAttributeName  = @"IRCTextFormatterForegroundColor";
 NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBackgroundColor";
-NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefaultFontColor";
 
 @implementation NSAttributedString (IRCTextFormatter)
 
@@ -101,16 +100,6 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				
 				break;
 			}
-			case IRCTextFormatterDefaultFontColorEffect:
-			{
-				BOOL result = BOOLValueFromObject([dict objectForKey:IRCTextFormatterDefaultFontColorAttributeName]);
-				
-				if (result) {
-					return YES;
-				}
-				
-				break;
-			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
 				BOOL result = BOOLValueFromObject([dict objectForKey:NSForegroundColorAttributeName]);
@@ -149,71 +138,20 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 #pragma mark -
 #pragma mark Pasted String Sanitization
 
-- (NSAttributedString *)sanitizeNSLinkedAttributedString:(NSColor *)defaultColor
+- (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
+                                        color:(NSColor *)defaultColor
+                                       source:(TextField **)sourceField
+                                        range:(NSRange)limitRange    
 {
-	NSMutableAttributedString *result = [self mutableCopy];
-	
-	NSRange limitRange;
 	NSRange effectiveRange;
+    
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 	
-	limitRange = NSMakeRange(0, [result length]);
-	
-	while (limitRange.length >= 1) {
-		id nextURL = [result safeAttribute:NSLinkAttributeName atIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
-		
-		if (nextURL) {
-			if ([nextURL isKindOfClass:[NSURL class]]) {
-				nextURL = [nextURL absoluteString];
-			}
-			
-			[result removeAttribute:NSLinkAttributeName range:effectiveRange];
-			
-			/* We only replace the link title with its actual destination when
-			 it is equal to the entire length of the newly pasted string. If the
-			 link is part of a text blob, then we do not care about its location. */
-			
-			if (effectiveRange.location == 0 && effectiveRange.length == [self length]) {
-				[result replaceCharactersInRange:effectiveRange withString:nextURL];
-				
-				effectiveRange.length = [(NSString *)nextURL length];
-				
-				break;
-			} 
-				
-			[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
-		}
-		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
-	}
-	
-	return [result autodrain];
-}
-
-- (NSAttributedString *)sanitizeIRCCompatibleAttributedString:(NSColor *)defaultColor 
-													 oldColor:(NSColor *)auxiliaryColor 
-											  backgroundColor:(NSColor *)backgroundColor
-												  defaultFont:(NSFont *)defaultFont
-{
-	NSMutableAttributedString *result = [self mutableCopy];
-	
-	NSArray *attrMatrix = [self stringSanitizationValidAttributesMatrix];
-	
-	NSRange limitRange;
-	NSRange effectiveRange;
-	
-	limitRange = NSMakeRange(0, [result length]);
+	limitRange = NSMakeRange(0, [self length]);
 	
 	while (limitRange.length >= 1) {
 		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
-		
-		/* Remove unwanted attributes. */
-		for (NSString *attr in dict) {
-			if ([attrMatrix containsObject:attr] == NO) {
-				[result removeAttribute:attr range:effectiveRange];
-			}
-		}
-	
+        
 		/* Manage font settings */
 		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
 		
@@ -225,88 +163,55 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		if (baseFont) {
 			if (boldText) {
 				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-				
-				[result addAttribute:IRCTextFormatterBoldAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 			}
 			
 			if (italicText) {
 				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
-				
-				[result addAttribute:IRCTextFormatterItalicAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
 			}
 			
-			[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
+            [attrs setObject:baseFont forKey:NSFontAttributeName];
 		}
-	
+        
 		/* Process other attributes */
 		NSColor *foregroundColorD = [dict objectForKey:NSForegroundColorAttributeName];
 		NSColor *backgroundColorD = [dict objectForKey:NSBackgroundColorAttributeName];
-		NSColor *oldFontColor     = [dict objectForKey:IRCTextFormatterDefaultFontColorAttributeName];
 		
-		BOOL underlineText		  = ([dict integerForKey:NSUnderlineStyleAttributeName] >= 1);
+		BOOL underlineText		  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		BOOL hasForegroundColor   = NO;
-		 
-		if (PointerIsEmpty(auxiliaryColor) == NO) {
-			oldFontColor = auxiliaryColor;
-		}
 		
 		if (underlineText) {
-			[result addAttribute:IRCTextFormatterUnderlineAttributeName value:NSNumberWithBOOL(YES) range:effectiveRange];
+            [attrs setObject:[NSNumber numberWithInt:NSSingleUnderlineStyle] forKey:NSUnderlineStyleAttributeName];
 		}
-		
-		[result removeAttribute:NSBackgroundColorAttributeName				 range:effectiveRange];
-		[result removeAttribute:NSForegroundColorAttributeName				 range:effectiveRange];
-		[result removeAttribute:IRCTextFormatterBackgroundColorAttributeName range:effectiveRange];
-		[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
-		
-		[result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
 		
 		if (foregroundColorD) {
-			if ([foregroundColorD isEqual:defaultColor] == NO && [foregroundColorD isEqual:backgroundColor] == NO &&
-				[foregroundColorD isEqual:oldFontColor] == NO) {
-				
-				NSInteger mappedColor = mapColorValue(foregroundColorD);
-				
-				if (mappedColor >= 0 && mappedColor <= 15) {
-					hasForegroundColor = YES;
-					
-					[result addAttribute:NSForegroundColorAttributeName				  value:foregroundColorD						 range:effectiveRange];
-					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:NSNumberWithInteger(mappedColor) range:effectiveRange];
-				}
-			}
-		} 
+            NSInteger mappedColor = mapColorValue(foregroundColorD);
+            
+            if (mappedColor >= 0 && mappedColor <= 15) {
+                hasForegroundColor = YES;
+                
+                [attrs setObject:foregroundColorD forKey:NSForegroundColorAttributeName];
+            } else {
+                [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
+            }
+		} else {
+            [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
+        }
 		
-		if (backgroundColorD) {
-			if ([backgroundColorD isEqual:backgroundColor] == NO && [backgroundColorD isEqual:defaultColor] == NO && hasForegroundColor) {
-				NSInteger mappedColor = mapColorValue(backgroundColorD);
-				
-				if (mappedColor >= 0 && mappedColor <= 15) {
-					[result addAttribute:NSBackgroundColorAttributeName				  value:backgroundColorD						 range:effectiveRange];
-					[result addAttribute:IRCTextFormatterBackgroundColorAttributeName value:NSNumberWithInteger(mappedColor) range:effectiveRange];
-				}
-			}
+		if (backgroundColorD && hasForegroundColor) {
+			NSInteger mappedColor = mapColorValue(backgroundColorD);
+            
+            if (mappedColor >= 0 && mappedColor <= 15) {
+                [attrs setObject:backgroundColorD forKey:NSBackgroundColorAttributeName];
+            }
 		}
+        
+        if (NSObjectIsNotEmpty(attrs)) {
+            [*sourceField setAttributes:attrs inRange:effectiveRange];
+        }
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
-	
-	[result addAttribute:NSFontAttributeName						   value:defaultFont  range:NSMakeRange(0, [result length])];
-	[result addAttribute:IRCTextFormatterDefaultFontColorAttributeName value:defaultColor range:NSMakeRange(0, [result length])];
-	
-	return [result autodrain];
-}
-
-- (NSArray *)stringSanitizationValidAttributesMatrix
-{
-	return [NSArray arrayWithObjects:
-			NSFontAttributeName,
-			NSForegroundColorAttributeName, 
-			NSBackgroundColorAttributeName, 
-			NSUnderlineStyleAttributeName, 
-			IRCTextFormatterDefaultFontColorAttributeName, 
-			IRCTextFormatterForegroundColorAttributeName, 
-			IRCTextFormatterBackgroundColorAttributeName, nil];
 }
 
 #pragma mark -
@@ -316,8 +221,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 {
 	NSMutableAttributedString *result = [self mutableCopy];
 	
-	NSFont  *baseFont  = [self safeAttribute:NSFontAttributeName			atIndex:limitRange.location effectiveRange:NULL];
-	NSColor *fontColor = [self safeAttribute:NSForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
+	NSFont *baseFont = [self safeAttribute:NSFontAttributeName atIndex:limitRange.location effectiveRange:NULL];
 	
 	if (baseFont) {
 		switch (effect) {
@@ -336,12 +240,9 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 			}
 			case IRCTextFormatterItalicEffect:
 			{
-				if ([baseFont fontTraitSet:NSBoldFontMask]) {
-					baseFont = [NSFont fontWithName:[baseFont fontName] size:[baseFont pointSize]];
-					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
+				if ([baseFont fontTraitSet:NSItalicFontMask] == NO) {
+					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
 				}
-				
-				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
 				
 				if (baseFont) {
 					[result addAttribute:NSFontAttributeName				 value:baseFont range:limitRange];
@@ -364,12 +265,6 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				if (colorCode >= 0 && colorCode <= 15) {
 					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:value					range:limitRange];
 					[result addAttribute:NSForegroundColorAttributeName				  value:mapColorCode(colorCode) range:limitRange];
-					
-					if ([self IRCFormatterAttributeSetInRange:IRCTextFormatterDefaultFontColorEffect range:limitRange] == NO) {
-						if (fontColor) {
-							[result addAttribute:IRCTextFormatterDefaultFontColorAttributeName value:fontColor range:limitRange];
-						}
-					}
 				}
 				
 				break;
@@ -379,7 +274,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				NSNumber *foregroundColor = [self safeAttribute:IRCTextFormatterForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
 				
 				if (foregroundColor) {
-					NSInteger backColor  = [value integerValue];
+					NSInteger backColor  = [value           integerValue];
 					NSInteger frontColor = [foregroundColor integerValue];
 					
 					if (backColor >= 0 && backColor <= 15 && frontColor >= 0 && frontColor <= 15) {
@@ -390,17 +285,13 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				
 				break;
 			}
-			case IRCTextFormatterDefaultFontColorEffect:
-			{
-				[result addAttribute:IRCTextFormatterDefaultFontColorAttributeName value:value range:limitRange];
-			}
 		}
 	}
 	
 	return [result autodrain];
 }
 
-- (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange;
+- (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange color:(NSColor *)defaultColor
 {
 	NSMutableAttributedString *result = [self mutableCopy];
 	
@@ -435,17 +326,15 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				{
 					BOOL italicText = [dict boolForKey:IRCTextFormatterItalicAttributeName];
 					
-					if (italicText) {
-						baseFont = [NSFont fontWithName:[baseFont fontName] size:[baseFont pointSize]];
-						
-						if ([baseFont fontTraitSet:NSBoldFontMask]) {
-							baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-						}
+					if ([baseFont fontTraitSet:NSItalicFontMask]) {
+						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSItalicFontMask];
 						
 						if (baseFont) {
 							[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
 						}
-						
+					}
+					
+					if (italicText) {
 						[result removeAttribute:IRCTextFormatterItalicAttributeName range:effectiveRange];
 					}
 					
@@ -462,12 +351,8 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 				{
 					[result removeAttribute:NSForegroundColorAttributeName				 range:effectiveRange];
 					[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
-					
-					NSColor *defaultFontColor = [dict objectForKey:IRCTextFormatterDefaultFontColorAttributeName];
-					
-					if (defaultFontColor) {
-						[result addAttribute:NSForegroundColorAttributeName value:defaultFontColor range:effectiveRange];
-					}
+                    
+                    [result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
 					
 					break;
 				}
@@ -483,7 +368,7 @@ NSString *IRCTextFormatterDefaultFontColorAttributeName = @"IRCTextFormatterDefa
 		}
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
 	return [result autodrain];

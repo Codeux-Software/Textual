@@ -8,7 +8,7 @@
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
 #define ISON_CHECK_INTERVAL			30
-#define TRIAL_PERIOD_INTERVAL		1800
+#define TRIAL_PERIOD_INTERVAL		7200
 #define AUTOJOIN_DELAY_INTERVAL		2
 
 static NSDateFormatter *dateTimeFormatter = nil;
@@ -2399,15 +2399,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (isConnected) [self quit];
 			
-			[self connect];
+			[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
 			
 			return YES;
 			break;
 		}
 		case 84: // Command: MYVERSION
 		{
-			NSString *ref = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
-			
+			NSString *ref  = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
 			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_INFO"), 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
@@ -4160,7 +4159,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     if ([command isEqualNoCase:IRCCI_CAP]) {
         if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
             NSArray *caps = [action componentsSeparatedByString:NSWhitespaceCharacter];
-          
+            
             for (NSString *cap in caps) {
                 if ([cap isEqualNoCase:@"SASL"]) {
                     if ([base isEqualNoCase:@"LS"]) {

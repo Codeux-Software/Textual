@@ -1,32 +1,33 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@implementation NSTextField (NSTextFieldHelper)
+@implementation NSTextView (NSTextViewHelper)
+
+- (BOOL)isFocused
+{
+    return BOOLReverseValue(NSDissimilarObjects([self.window firstResponder], self));
+}
 
 - (void)focus
 {
-	NSText		*edito = [self currentEditor];
-	NSTextField *field = [self.window selectedTextField];	
-	
-	if (NSDissimilarObjects(field, self)) {
-		[self.window makeFirstResponder:nil];
-		[self.window makeFirstResponder:self];
-	}
-	
-	NSRange newRange = NSMakeRange([self stringLength], 0);
-	
-	[edito setSelectedRange:newRange];
-	[edito scrollRangeToVisible:newRange];
+    if ([self isFocused] == NO) {
+        [self.window makeFirstResponder:self];
+        
+        NSRange newRange = NSMakeRange([self stringLength], 0);
+        
+        [self setSelectedRange:newRange];
+        [self scrollRangeToVisible:newRange];
+    }
+}
+
+- (NSRange)fullSelectionRange
+{
+    return NSMakeRange(0, [self stringLength]);
 }
 
 - (NSInteger)stringLength
 {
-	return [[self stringValue] length];
-}
-
-- (NSRange)selectedRange
-{
-	return [[self currentEditor] selectedRange];
+    return [self.string length];
 }
 
 @end

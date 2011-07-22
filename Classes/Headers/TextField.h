@@ -1,31 +1,30 @@
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
+// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface TextField : NSTextField
+@class KeyEventHandler;
+
+@interface TextField : NSTextView 
 {
-	id _oldInputValue;
+    BOOL _fontResetRequired;
+    BOOL _lastChangeWasPaste;
     
-	NSColor *_oldTextColor;
-    
-	BOOL _usesCustomUndoManager;
-    BOOL _spellingAlreadyToggled;
+	KeyEventHandler *_keyHandler;
 }
 
-@property (nonatomic, readonly) id _oldInputValue;
-@property (nonatomic, readonly) NSColor *_oldTextColor;
-@property (nonatomic, readonly) BOOL _usesCustomUndoManager;
-@property (nonatomic, readonly) BOOL _spellingAlreadyToggled;
+- (void)setKeyHandlerTarget:(id)target;
+- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
+- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 
-- (void)setFontColor:(NSColor *)color;
-- (void)setUsesCustomUndoManager:(BOOL)customManager;
+- (NSAttributedString *)attributedStringValue;
+- (void)setAttributedStringValue:(NSAttributedString *)string;
 
-- (void)removeAllUndoActions;
+- (NSString *)stringValue;
+- (void)setStringValue:(NSString *)string;
 
-- (void)pasteFilteredAttributedString:(NSRange)selectedRange;
+- (void)removeAttribute:(id)attr inRange:(NSRange)local;
+- (void)setAttributes:(id)attrs inRange:(NSRange)local;
 
-- (void)setStringValue:(NSString *)aString;
-- (void)setAttributedStringValue:(NSAttributedString *)obj;
-- (void)setFilteredAttributedStringValue:(NSAttributedString *)string;
-
-- (void)setObjectValue:(id)obj recordUndo:(BOOL)undo;
+- (void)toggleFontResetStatus:(BOOL)status;
+- (void)resetTextFieldFont:(id)defaultFont color:(id)defaultColor;
+- (void)textDidChange:(id)sender pasted:(BOOL)paste range:(NSRange)erange;
 @end
