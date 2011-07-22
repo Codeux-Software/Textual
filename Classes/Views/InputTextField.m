@@ -3,7 +3,6 @@
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
 
-#define LION_TEXT_COLOR                     [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
 #define LION_ACTIVE_START_GRADIENT			[NSColor _colorWithCalibratedRed:109.0 green:109.0 blue:109.0 alpha:1]
 #define LION_ACTIVE_STOP_GRADIENT			[NSColor _colorWithCalibratedRed:122.0 green:122.0 blue:122.0 alpha:1]
 #define LION_INACTIVE_START_GRADIENT		[NSColor colorWithCalibratedWhite:0.55 alpha:1.0]
@@ -11,13 +10,9 @@
 #define LION_BODY_GRADIENT_START			[NSColor _colorWithCalibratedRed:221.0 green:221.0 blue:221.0 alpha:1]
 #define LION_BODY_GRADIENT_STOP				[NSColor whiteColor]
 
-#define InputTextFieldWidthPadding			1.0
-#define InputTextFieldHeightPadding			6.0
 #define InputTextFiedMaxHeight				404.0
 #define InputBoxDefaultHeight				26.0
 #define InputBoxReszieHeightMultiplier		14.0
-
-#define InputTextFieldDefaultFont           [NSFont fontWithName:@"Helvetica" size:12.0]
 
 @implementation InputTextField
 
@@ -29,17 +24,19 @@
     self = [super initWithCoder:coder];
 	
 	if (self) {
+        self.delegate = self;
+        
         NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
         
         /* Default Value */
-        [attrs setObject:InputTextFieldDefaultFont forKey:NSFontAttributeName];
-        [attrs setObject:[NSColor grayColor]       forKey:NSForegroundColorAttributeName];
+        [attrs setObject:DefaultTextFieldFont forKey:NSFontAttributeName];
+        [attrs setObject:[NSColor grayColor]  forKey:NSForegroundColorAttributeName];
         
         _placeholderString = [NSAttributedString alloc];
         _placeholderString = [_placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
         
         /* Set Text Color */
-        [attrs setObject:LION_TEXT_COLOR forKey:NSForegroundColorAttributeName];
+        [attrs setObject:DefaultTextFieldFontColor forKey:NSForegroundColorAttributeName];
         
         NSAttributedString *temps;
         
@@ -50,20 +47,6 @@
         [self setStringValue:NSNullObject];
         
         [temps drain];
-        
-        /* Finish Initalization */
-        self.delegate = self;
-        
-		[self setDrawsBackground:NO];
-		[self setFont:InputTextFieldDefaultFont];
-		
-		if ([Preferences rightToLeftFormatting]) {
-			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
-		} else {
-			[self setBaseWritingDirection:NSWritingDirectionNatural];
-		}
-        
-        [super setTextContainerInset:NSMakeSize(InputTextFieldWidthPadding, InputTextFieldHeightPadding)];
     }
 	
     return self;
@@ -76,21 +59,6 @@
     [super dealloc];
 }
 
-- (NSFont *)defaultFont
-{
-    return InputTextFieldDefaultFont;
-}
-
-- (NSColor *)defaultFontColor
-{
-    return LION_TEXT_COLOR;
-}
-
-- (NSScrollView *)scrollView
-{
-    return [self.superview.superview.superview.subviews objectAtIndex:2];
-}
-
 - (NSView *)splitterView
 {
     return [self.superview.superview.superview.subviews objectAtIndex:0];
@@ -98,8 +66,6 @@
 
 - (void)resetTextFieldCellSize
 {
-	/* TODO: Fix italic text font size. */
-	
 	NSWindow     *mainWindow = [self window];
 	NSView       *superView	 = [self splitterView];
     NSScrollView *scroller   = [self scrollView];
@@ -212,6 +178,9 @@
 {
     if (aSelector == @selector(insertNewline:)) {
         [_actionTarget performSelector:_actonSelector];
+        
+        [self toggleFontResetStatus:YES];
+        [self resetTextFieldCellSize];
         
         return YES;
     }

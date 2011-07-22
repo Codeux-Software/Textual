@@ -577,8 +577,8 @@
 	id t = [win firstResponder];
 	if (PointerIsEmpty(t)) return;
 	
-	if (win == window && [window hasAttachedSheet] == NO) {
-		[text paste:self];
+    if ([t respondsToSelector:@selector(requriesSpecialPaste)]) {
+		[t paste:self];
 	} else {
 		if ([t respondsToSelector:@selector(paste:)]) {
 			BOOL validated = YES;

@@ -30,4 +30,9 @@
     return [self.string length];
 }
 
+- (NSScrollView *)scrollView
+{
+    return (id)self.superview.superview;
+}
+
 @end

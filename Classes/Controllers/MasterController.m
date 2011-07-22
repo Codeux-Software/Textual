@@ -94,6 +94,8 @@
 	
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
+    [text setFieldEditor:YES];
+    
 	serverSplitView.fixedViewIndex = 0;
 	memberSplitView.fixedViewIndex = 1;
 	
@@ -373,26 +375,20 @@
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-    /*
-	if (client == [text scrollView]) {
-		NSMenu	   *editorMenu = [fieldEditor menu];
-		NSMenuItem *formatMenu = [formattingMenu formatterMenu];
-		
-		if (formatMenu) {
-			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
-			
-			if (fmtrIndex == -1) {
-				[editorMenu addItem:[NSMenuItem separatorItem]];
-				[editorMenu addItem:formatMenu];
-			}
-			
-			[fieldEditor setMenu:editorMenu];
-		}
-		
-		return fieldEditor;
-	}
-	
-	return nil;*/
+    NSMenu	   *editorMenu = [text menu];
+    NSMenuItem *formatMenu = [formattingMenu formatterMenu];
+    
+    if (formatMenu) {
+        NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
+        
+        if (fmtrIndex == -1) {
+            [editorMenu addItem:[NSMenuItem separatorItem]];
+            [editorMenu addItem:formatMenu];
+        }
+        
+        [text setMenu:editorMenu];
+    }
+    
     return text;
 }
 
