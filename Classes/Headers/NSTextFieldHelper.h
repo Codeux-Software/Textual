@@ -6,4 +6,5 @@
 - (BOOL)isFocused;
 - (NSRange)fullSelectionRange;
 - (NSInteger)stringLength;
+- (NSScrollView *)scrollView;
 @end

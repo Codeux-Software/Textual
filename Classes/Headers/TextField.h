@@ -1,6 +1,11 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define DefaultTextFieldFontColor           [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
+#define DefaultTextFieldFont                [NSFont fontWithName:@"Helvetica" size:12.0]
+#define DefaultTextFieldWidthPadding		1.0
+#define DefaultTextFieldHeightPadding		6.0
+
 @class KeyEventHandler;
 
 @interface TextField : NSTextView 
@@ -10,6 +15,8 @@
     
 	KeyEventHandler *_keyHandler;
 }
+
+- (BOOL)requriesSpecialPaste;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;

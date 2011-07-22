@@ -10,12 +10,29 @@
 	[super dealloc];
 }
 
+- (id)initWithCoder:(NSCoder *)coder 
+{
+    self = [super initWithCoder:coder];
+	
+	if (self) {
+		if ([Preferences rightToLeftFormatting]) {
+			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
+		} else {
+			[self setBaseWritingDirection:NSWritingDirectionNatural];
+		}
+        
+        [super setTextContainerInset:NSMakeSize(DefaultTextFieldWidthPadding, DefaultTextFieldHeightPadding)];
+        
+        if (PointerIsEmpty(_keyHandler)) {
+            _keyHandler = [KeyEventHandler new];
+        }
+    }
+	
+    return self;
+}
+
 - (void)setKeyHandlerTarget:(id)target
 {
-    if (PointerIsEmpty(_keyHandler)) {
-         _keyHandler = [KeyEventHandler new];
-    }
-    
 	[_keyHandler setTarget:target];
 }
 
@@ -96,27 +113,16 @@
 {
     NSAttributedString *string = [self attributedStringValue];
     
-    NSFont  *defaultFont;
-    NSColor *defaultColor;
-    
-    if ([sender respondsToSelector:@selector(defaultFont)]) {
-        defaultFont = [sender defaultFont];
-    }
-    
-    if ([sender respondsToSelector:@selector(defaultFontColor)]) {
-        defaultColor = [sender defaultFontColor];
-    }
-    
     if (NSObjectIsEmpty(string) && paste == NO) {
         _fontResetRequired = YES;
     }
     
     if (_fontResetRequired && paste == NO) {
         if ([string length] >= 1) {
-            [self resetTextFieldFont:defaultFont color:defaultColor];
+            [self resetTextFieldFont:DefaultTextFieldFont color:DefaultTextFieldFontColor];
         }
     } else {
-        [string sanitizeIRCCompatibleAttributedString:defaultFont color:defaultColor source:&self range:erange];
+        [string sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont color:DefaultTextFieldFontColor source:&self range:erange];
     }
 }
 
@@ -139,6 +145,11 @@
     [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
     
     [self setAttributes:attrs inRange:local];
+}
+
+- (BOOL)requriesSpecialPaste
+{
+    return YES;
 }
 
 @end
