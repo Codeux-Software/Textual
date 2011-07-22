@@ -108,7 +108,7 @@
         }
     } 
     
-    if (mcstring == ' ') {
+    if (mcstring == ' ' && [_NSUserDefaults() boolForKey:@"Preferences.General.use_nomode_symbol"]) {
         mcstring = 'x';
     }
     

@@ -1,8 +1,23 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@interface InputTextField : TextField
+@class TextField;
+
+@interface InputTextField : TextField <NSTextViewDelegate>
+{
+    NSAttributedString *_placeholderString;
+    
+    id _actionTarget;
+    SEL _actonSelector;
+}
+
+- (NSScrollView *)scrollView;
+
+- (NSFont *)defaultFont;
+- (NSColor *)defaultFontColor;
+
+- (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 @end
 
-@interface InputTextFieldCell : NSTextFieldCell 
+@interface InputTextFieldScroller : NSScrollView 
 @end

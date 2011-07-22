@@ -28,9 +28,11 @@
 	nheader = [header stringValue];
 	nheader = [NSString stringWithFormat:nheader, c.name];
 	
-	[header setStringValue:nheader];
 	[menu.master.formattingMenu enableSheetField:text];
-	[text setFilteredAttributedStringValue:[topic attributedStringWithIRCFormatting]];
+    
+	[header setStringValue:nheader];
+	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting]];
+    
 	[self startSheet];
 }
 

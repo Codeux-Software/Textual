@@ -6,12 +6,11 @@
 "GLINE_REASON" = "35d Your behavior is not conducive to the desired environment.";
 
 "NO_TOPIC_DEFAULT_TOPIC" = "(No Topic)";
-"NOTIFICATION_WINDOW_TITLE" = "Notifications";
 "SERVER_NOTICES_WINDOW_TITLE" = "Server Notices";
 "UNTITLED_CONNECTION_NAME" = "Untitled Connection";
 
-"LOG_PATH_DOESNT_EXIST_TITLE" = "Logs Do Not Exist";
-"LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found to display.";
+"LOG_PATH_DOESNT_EXIST_TITLE" = "No Logs Found";
+"LOG_PATH_DOESNT_EXIST_MESSAGE" = "No logs were found for this chat session.";
 
 "INPUT_REQUIRED_TO_CONTINUE" = "Input Required to Continue";
 
@@ -28,7 +27,7 @@
 "SOUND_IS_ALREADY_MUTED" = "Sound is already muted.";
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 
-"DEFAULT_QPS_MESSAGE" = "Textual IRC Client: http://www.textualapp.com/";
+"DEFAULT_QPS_MESSAGE" = "[Textual IRC Client: http://www.textualapp.com/]";
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "DCC_REQUEST_ERROR_MESSAGE" = "The Textual IRC Client has received a DCC request that could not be processed.";
@@ -51,14 +50,14 @@
 
 "FIND_SEARCH_PRHASE_PROMPT_TITLE" = "Search for Message";
 "FIND_SEARCH_PHRASE_PROMPT_BUTTON" = "Search";
-"FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⇧⌘G to return to the previous.";
+"FIND_SEARCH_PHRASE_PROPMT_MESSAGE" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
 
 "WANT_QUIT_TITLE" = "Do you want to quit Textual?";
-"WANT_QUIT_MESSAGE" = "Quitting will disconnect you from all IRC networks until you restart Textual.";
+"WANT_QUIT_MESSAGE" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 
 "SELF_BAN_DETECTED_MESSAGE" = "Textual has prevented you from banning yourself on %@.";
 
-"PLUGIN_COMMAND_CLASH_ERROR_MESSAGE" = "The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
+"PLUGIN_COMMAND_CLASH_ERROR_MESSAGE" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
 
 "WANT_SERVER_DELETE_TITLE" = "Do you want to delete the selection?";
 "WANT_SERVER_DELETE_MESSAGE" = "There is no undo and all data related to this server will be erased.";
@@ -67,22 +66,10 @@
 "WANT_CHANNEL_DELETE_MESSAGE" = "There is no undo and all data related to this channel will be erased.";
 
 "DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
-"DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is currently not set as the default IRC client for this copy of Mac OS X. Set it?";
- 
-"USER_HOSTMASK_HOVER_TOOLTIP_NICKNAME" = " Nickname:   ";
-"USER_HOSTMASK_HOVER_TOOLTIP_USERNAME" = " Username:   ";
-"USER_HOSTMASK_HOVER_TOOLTIP_HOSTMASK" = " Hostmask:   ";
-"USER_HOSTMASK_HOVER_TOOLTIP_PRIVILEGES" = " Privileges:   ";
-
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_NA" = "No Privileges";
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_V" = "Voice";
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_H" = "Half-op";
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_O" = "Operator";
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_A" = "Super Admin";
-"USER_HOSTMASK_HOVER_TOOLTIP_MODE_Q" = "Channel Owner";
+"DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 
 "TRIAL_BUILD_INTRO_DIALOG_TITLE" = "Welcome to the Textual IRC Client!";
-"TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC networks that you are connected to every thirty minutes. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
+"TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
 "TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
 
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
@@ -116,26 +103,25 @@
 "BLOWFISH_KEY_EXCHANGE_RESPONSE_PENDING" = "Received key exchange request from %@. Processing …";
 "BLOWFISH_KEY_EXCHANGE_NOT_READY_YET" = "Key exchange is currently not supported.";
 
-"IRC_IS_RECONNECTING" = "Reconnecting…";
-"IRC_HAD_RAW_ERROR" = "Error(%1$d): %2$@";
+"IRC_IS_RECONNECTING" = "Reconnecting …";
+"IRC_HAD_RAW_ERROR" = "Message(%1$d): %2$@";
 "IRC_USER_IS_AWAY" = "%1$@ is away (%2$@)";
-"IRC_USER_WAS_HIGHLIGHTED" = "From %@: %@";
-"IRC_IS_RETRYING_CONNECTION" = "Retrying…";
+"IRC_IS_RETRYING_CONNECTION" = "Retrying …";
 "IRC_USER_WHOIS_CHANNELS" = "%1$@ is on %2$@";
 "IRC_CHANNEL_HAS_MODES" = "Mode is \002%@\002";
 "IRC_YOU_HAVE_UMODES" = "Your user mode is %@";
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
-"IRC_CONNECTED_TO_SERVER" = "Connected to host.";
+"IRC_CONNECTED_TO_SERVER" = "Connection to host completed.";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_AWAY_COMMAND_DEFAULT_REASON" = "Be back later.";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
-"IRC_IS_CONNECTING" = "Connecting to %1$@ on port %2$i";
+"IRC_IS_CONNECTING" = "Connecting to [%1$@] on port %2$i";
 "IRC_USER_INVITED_OTHER_USER" = "Inviting %@ to join …";
 "IRC_RECIEVED_CTCP_REPLY" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "IRC_RECIEVED_CTCP_REQUEST" = "\002-CTCP-\002 %1$@ from %2$@";
 "IRC_CHANNEL_HAS_TOPIC_AUTHOR" = "Set by \002%1$@\002 on %2$@";
-"IRC_USER_HAS_GOOD_LIFE" = "You are now an IRC operator on %@";
+"IRC_USER_HAS_GOOD_LIFE" = "You are now an IRC Operator on %@";
 "IRC_USER_DISCONNECTED" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "IRC_SCRIPT_EXECUTION_FAILURE" = "Script Execution Failure: %@";
 "IRC_USER_CHANGED_NICKNAME" = "%1$@ is now known as \002%2$@\002";
@@ -143,7 +129,7 @@
 "IRC_WEIGHTS_COMMAND_RESULT" = "%@ - sent: %f receive: %f total: %f";
 "IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC_HAS_IGNORED_CTCP" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
-"IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME UPTIME";
+"IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME";
 "IRC_USER_WHOWAS_CONNECTED_FROM" = "%1$@ was connected to %2$@ on %3$@";
 "IRC_USER_PARTED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) left the channel.";
 "IRC_RECIEVED_CTCP_PING_REPLY" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
@@ -153,8 +139,9 @@
 "IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and realname %4$@";
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
-"IRC_PING_TIMEOUT" = "No response from server in last several minutes. Breaking connection.";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
+
+"INPUT_TEXT_FIELD_PLACE_HOLDER" = "Send Message …";
 
 "IRC_HAS_NETWORK_NAME" = "%@ IRC Network";
 

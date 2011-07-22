@@ -39,7 +39,7 @@
 									 [msg params], @"messageParamaters",
 									 client.config.server, @"messageServer",
 									 client.config.network, @"messageNetwork",
-									 NSNumberWithInteger([msg numericReply)], @"messageNumericReply", nil];
+									 NSNumberWithInteger([msg numericReply]), @"messageNumericReply", nil];
 		
 		for (TextualPluginItem *plugin in cmdPlugins) {
 			PluginProtocol *bundle = [plugin pluginPrimaryClass];
@@ -82,31 +82,38 @@
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-	NSString *path_1 = [Preferences wherePluginsPath];
-	NSString *path_2 = [Preferences wherePluginsLocalPath];
-	
-	if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
-		[self deallocBundlesFromMemory:world];
-	}
-	
-	NSMutableArray *completeBundleIndex		= [NSMutableArray new];
-	NSMutableArray *preferencesBundlesIndex = [NSMutableArray new];
-	
- 	NSMutableDictionary *userInputBundles	= [NSMutableDictionary new];
-	NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
-	NSMutableDictionary *outputRulesDict	= [NSMutableDictionary new];
-	
-	NSArray *resourceFiles_1 = [_NSFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
-	NSArray *resourceFiles_2 = [_NSFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
+    NSString *path_1 = [Preferences wherePluginsPath];
+    NSString *path_2 = [Preferences wherePluginsLocalPath];
+    
+    if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
+        [self deallocBundlesFromMemory:world];
+    }
+    
+    NSMutableArray *completeBundleIndex		= [NSMutableArray new];
+    NSMutableArray *preferencesBundlesIndex = [NSMutableArray new];
+    NSMutableArray *resourceBundles         = [NSMutableArray array];
+    
+    NSMutableDictionary *userInputBundles	= [NSMutableDictionary new];
+    NSMutableDictionary *serverInputBundles = [NSMutableDictionary new];
+    NSMutableDictionary *outputRulesDict	= [NSMutableDictionary new];
+    
+    NSArray *resourceFiles_1 = [_NSFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
+    NSArray *resourceFiles_2 = [_NSFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
     
     NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
     
-	for (NSString *file in resourceFiles) {
-		if ([file hasSuffix:@".bundle"]) {
-			NSString *fullPath = [path_2 stringByAppendingPathComponent:file];
+    for (NSString *file in resourceFiles) {
+        if ([resourceBundles containsObject:file] == NO) {
+            [resourceBundles addObject:file];
+        }
+    }
+    
+    for (NSString *file in resourceBundles) {
+        if ([file hasSuffix:@".bundle"]) {
+            NSString *fullPath = [path_1 stringByAppendingPathComponent:file];
             
             if ([_NSFileManager() fileExistsAtPath:fullPath] == NO) {
-                fullPath = [path_1 stringByAppendingPathComponent:file];
+                fullPath = [path_2 stringByAppendingPathComponent:file];
             }
             
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 

@@ -22,16 +22,12 @@
 {
 	sheetOverrideEnabled = YES;
 	textField			 = field;
-	
-	[textField setUsesCustomUndoManager:YES];
 }
 
 - (void)enableWindowField:(TextField *)field
 {
 	sheetOverrideEnabled = NO;
 	textField			 = field;
-	
-	[textField setUsesCustomUndoManager:YES];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
@@ -310,7 +306,8 @@
     
     NSAttributedString *oldString = [textField attributedStringValue];
     NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
-                                                                     range:selectedTextRange];
+                                                                     range:selectedTextRange
+                                                                     color:[textField textColor]];
     
     [textField setAttributedStringValue:newString];
     
@@ -326,7 +323,8 @@
     
     NSAttributedString *oldString = [textField attributedStringValue];
     NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
-                                                                     range:selectedTextRange];
+                                                                     range:selectedTextRange
+                                                                     color:[textField textColor]];
     
     [textField setAttributedStringValue:newString];
     
@@ -342,7 +340,8 @@
     
     NSAttributedString *oldString = [textField attributedStringValue];
     NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-                                                                     range:selectedTextRange];
+                                                                     range:selectedTextRange
+                                                                     color:[textField textColor]];
     
     [textField setAttributedStringValue:newString];
     
@@ -360,10 +359,12 @@
     NSAttributedString *newString = nil;
     
     newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-                                                 range:selectedTextRange];
+                                                 range:selectedTextRange
+                                                 color:[textField textColor]];
     
     newString = [newString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect 
-                                                 range:selectedTextRange];
+                                                 range:selectedTextRange
+                                                 color:[textField textColor]];
     
     [textField setAttributedStringValue:newString];
     
@@ -379,7 +380,8 @@
     
     NSAttributedString *oldString = [textField attributedStringValue];
     NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                                                     range:selectedTextRange];
+                                                                     range:selectedTextRange
+                                                                     color:[textField textColor]];
     
     [textField setAttributedStringValue:newString];
     

@@ -7,6 +7,15 @@
 
 @implementation NSString (NSStringHelper)
 
+/* Private Header */
+BOOL isSurrogate(UniChar c);
+BOOL isHighSurrogate(UniChar c);
+BOOL isLowSurrogate(UniChar c);
+BOOL isUnicharDigit(unichar c);
+
+NSInteger ctoi(unsigned char c);
+
+/* Helper Methods */
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autodrain];

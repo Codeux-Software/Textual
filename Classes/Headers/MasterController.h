@@ -36,7 +36,6 @@
 	GrowlController *growl;
 	WelcomeSheet *welcomeSheet;
 	InputHistory *inputHistory;
-	FieldEditorTextView *fieldEditor;
 	NickCompletionStatus *completionStatus;
 	
 	BOOL ghostMode;
@@ -70,7 +69,6 @@
 @property (nonatomic, retain) GrowlController *growl;
 @property (nonatomic, retain) WelcomeSheet *welcomeSheet;
 @property (nonatomic, retain) InputHistory *inputHistory;
-@property (nonatomic, retain) FieldEditorTextView *fieldEditor;
 @property (nonatomic, retain) IRCTextFormatterMenu *formattingMenu;
 @property (nonatomic, retain) NickCompletionStatus *completionStatus;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
@@ -79,7 +77,7 @@
 - (void)saveWindowState;
 - (void)showMemberListSplitView:(BOOL)showList;
 
-- (void)textEntered:(id)sender;
+- (void)textEntered;
 
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;

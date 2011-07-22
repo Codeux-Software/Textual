@@ -236,6 +236,10 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
+    if (PointerIsEmpty(delegate)) {
+        return;
+    }
+    
 	[buffer appendData:data];
 	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
@@ -249,6 +253,10 @@
 {
 	--sendQueueSize;
 	
+    if (PointerIsEmpty(delegate)) {
+        return;
+    }
+    
 	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
 		[delegate tcpClientDidSendData:self];
 	}

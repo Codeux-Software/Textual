@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 @interface NSPasteboard (NSPasteboardHelper)
-- (BOOL)hasStringContent;
 - (NSString *)stringContent;
 - (void)setStringContent:(NSString *)s;
 @end

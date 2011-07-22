@@ -30,6 +30,10 @@
 
 - (void)writeLine:(NSString *)s
 {
+    if (client.isConnected == NO) {
+        return;
+    }
+    
 	[self open];
 	
 	if (file) {
