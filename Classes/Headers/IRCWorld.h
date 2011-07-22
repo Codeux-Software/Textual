@@ -14,7 +14,6 @@
 	LogController		*dummyLog;
 	MasterController	*master;
 	MenuController		*menuController;
-	FieldEditorTextView *fieldEditor;
 	
 	ServerList *serverList;
 	MemberList *memberList;
@@ -72,7 +71,6 @@
 @property (nonatomic, assign) MasterController *master;
 @property (nonatomic, retain) LogController *dummyLog;
 @property (nonatomic, assign) MenuController *menuController;
-@property (nonatomic, assign) FieldEditorTextView *fieldEditor;
 @property (nonatomic, assign) NSBox *logBase;
 @property (nonatomic, assign) NSMenu *logMenu;
 @property (nonatomic, assign) NSMenu *urlMenu;

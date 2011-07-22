@@ -8,11 +8,6 @@
 	return [NSArray arrayWithObject:NSStringPboardType];
 }
 
-- (BOOL)hasStringContent
-{
-	return BOOLValueFromObject([self availableTypeFromArray:[self pasteboardStringType]]);
-}
-
 - (NSString *)stringContent
 {
 	return [self stringForType:NSStringPboardType];

@@ -111,7 +111,7 @@
 	switch (tag) {
 		case 313:	// paste
 		{
-			if ([_NSPasteboard() hasStringContent] == NO) {
+			if (NSObjectIsEmpty([_NSPasteboard() stringContent])) {
 				return NO;
 			}
 			
@@ -577,10 +577,8 @@
 	id t = [win firstResponder];
 	if (PointerIsEmpty(t)) return;
 	
-	if (win == window || [window attachedSheet] == win) {
-		NSText *e = [window fieldEditor:NO forObject:text];
-		
-		[e paste:nil];
+	if (win == window && [window hasAttachedSheet] == NO) {
+		[text paste:self];
 	} else {
 		if ([t respondsToSelector:@selector(paste:)]) {
 			BOOL validated = YES;

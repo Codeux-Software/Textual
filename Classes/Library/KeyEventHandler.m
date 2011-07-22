@@ -86,8 +86,8 @@
 	NSMutableDictionary *codeMap = [codeHandlerMap objectForKey:modsKey];
 	
 	if (codeMap) {
-		NSString *selectorName = [codeMap objectForKey:NSNumberWithInteger([e keyCode)]];
-		
+		NSString *selectorName = [codeMap objectForKey:NSNumberWithInteger([e keyCode])];
+
 		if (selectorName) {
 			[target performSelector:NSSelectorFromString(selectorName) withObject:e];
 			
@@ -101,7 +101,7 @@
 		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
 		
 		if (NSObjectIsNotEmpty(str)) {
-			NSString *selectorName = [characterMap objectForKey:NSNumberWithInteger([str characterAtIndex:0)]];
+			NSString *selectorName = [characterMap objectForKey:NSNumberWithInteger([str characterAtIndex:0])];
 			
 			if (selectorName) {
 				[target performSelector:NSSelectorFromString(selectorName) withObject:e];

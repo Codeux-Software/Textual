@@ -22,6 +22,10 @@ NSString *kReceiptHash = @"Hash";
 
 #define BASE_BUNDLE_ID @"com.codeux.irc.textual"
 
+NSData *appleRootCert(void);
+CFDataRef copy_mac_address(void);
+NSDictionary *dictionaryWithAppStoreReceipt(NSString *path);
+
 NSData *appleRootCert()         
 {
 	OSStatus status;

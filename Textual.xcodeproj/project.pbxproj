@@ -100,6 +100,8 @@
 		4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6DD1771388803B00280797 /* NSSplitViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6DD1761388803B00280797 /* NSSplitViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
+		4C70B46513D9A14F004D7619 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B46313D9A14F004D7619 /* TextField.m */; };
+		4C70B46713D9A222004D7619 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C70B46613D9A222004D7619 /* TextField.h */; };
 		4C7642291382B990001B23F4 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C796DE412F8FC26008EF597 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -130,7 +132,6 @@
 		4C8B85C5131A35DE0065B4F9 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11F11737F660044E7A1 /* IRCPrefix.m */; };
 		4C8B85C6131A35DE0065B4F9 /* AboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7E561311B0386200B5DE98 /* AboutPanel.m */; };
 		4C8B85C7131A35DE0065B4F9 /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA999D011FCF7180040D8E7 /* OtherTheme.m */; };
-		4C8B85C8131A35DE0065B4F9 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19F11737F660044E7A1 /* TextField.m */; };
 		4C8B85C9131A35DE0065B4F9 /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E011737F660044E7A1 /* SoundWrapper.m */; };
 		4C8B85CA131A35DE0065B4F9 /* IRCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */; };
 		4C8B85CB131A35DE0065B4F9 /* ChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelSheet.m */; };
@@ -196,7 +197,6 @@
 		4C8B860C131A35DE0065B4F9 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18411737F660044E7A1 /* LogController.m */; };
 		4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
 		4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10911737F660044E7A1 /* UnicodeHelper.m */; };
-		4C8B860F131A35DE0065B4F9 /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17611737F660044E7A1 /* FieldEditorTextView.m */; };
 		4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
 		4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
@@ -296,11 +296,9 @@
 		4CD0E66612F1B5DE00C8F016 /* LogView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65E12F1B5DE00C8F016 /* LogView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E66712F1B5DE00C8F016 /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65F12F1B5DE00C8F016 /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E66E12F1B60400C8F016 /* MemberListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E66C12F1B60400C8F016 /* MemberListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E67C12F1B63D00C8F016 /* FieldEditorTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67112F1B63D00C8F016 /* FieldEditorTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E67D12F1B63D00C8F016 /* InputTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67212F1B63D00C8F016 /* InputTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E67E12F1B63D00C8F016 /* ListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67312F1B63D00C8F016 /* ListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E67F12F1B63D00C8F016 /* MainWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67412F1B63D00C8F016 /* MainWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E68212F1B63D00C8F016 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67712F1B63D00C8F016 /* TextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68912F1B66900C8F016 /* DockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69912F1B6B000C8F016 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -521,6 +519,8 @@
 		4C6DD1761388803B00280797 /* NSSplitViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSSplitViewHelper.h; path = Classes/Headers/NSSplitViewHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6DD1791388804E00280797 /* NSSplitViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSSplitViewHelper.m; sourceTree = "<group>"; };
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
+		4C70B46313D9A14F004D7619 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
+		4C70B46613D9A222004D7619 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = Classes/Headers/TextField.h; sourceTree = SOURCE_ROOT; };
 		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
@@ -610,11 +610,9 @@
 		4CD0E65E12F1B5DE00C8F016 /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogView.h; path = Classes/Headers/LogView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E65F12F1B5DE00C8F016 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewAutoScroll.h; path = Classes/Headers/WebViewAutoScroll.h; sourceTree = SOURCE_ROOT; };
 		4CD0E66C12F1B60400C8F016 /* MemberListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberListCell.h; path = Classes/Headers/MemberListCell.h; sourceTree = SOURCE_ROOT; };
-		4CD0E67112F1B63D00C8F016 /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldEditorTextView.h; path = Classes/Headers/FieldEditorTextView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67212F1B63D00C8F016 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputTextField.h; path = Classes/Headers/InputTextField.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67312F1B63D00C8F016 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListView.h; path = Classes/Headers/ListView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67412F1B63D00C8F016 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = Classes/Headers/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		4CD0E67712F1B63D00C8F016 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = Classes/Headers/TextField.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldWithDisabledState.h; path = Classes/Headers/TextFieldWithDisabledState.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68912F1B66900C8F016 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = Classes/Headers/DockIcon.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLMAsyncSocket.h; path = Classes/Headers/RLMAsyncSocket.h; sourceTree = SOURCE_ROOT; };
@@ -746,7 +744,6 @@
 		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; wrapsLines = 0; };
 		78A8C16F11737F660044E7A1 /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
-		78A8C17611737F660044E7A1 /* FieldEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldEditorTextView.m; sourceTree = "<group>"; };
 		78A8C17811737F660044E7A1 /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
 		78A8C18111737F660044E7A1 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
 		78A8C18411737F660044E7A1 /* LogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogController.m; sourceTree = "<group>"; };
@@ -757,7 +754,6 @@
 		78A8C18E11737F660044E7A1 /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
 		78A8C19011737F660044E7A1 /* MainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
 		78A8C19711737F660044E7A1 /* MemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListCell.m; sourceTree = "<group>"; };
-		78A8C19F11737F660044E7A1 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWithDisabledState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1498,18 +1494,16 @@
 				4C26FB8312FA6B680094F17E /* Text Formatting */,
 				4CD0E68912F1B66900C8F016 /* DockIcon.h */,
 				29847DE31297B41900D495D5 /* DockIcon.m */,
-				4CD0E67112F1B63D00C8F016 /* FieldEditorTextView.h */,
-				78A8C17611737F660044E7A1 /* FieldEditorTextView.m */,
 				4CD0E67212F1B63D00C8F016 /* InputTextField.h */,
 				78A8C17811737F660044E7A1 /* InputTextField.m */,
+				4C70B46613D9A222004D7619 /* TextField.h */,
+				4C70B46313D9A14F004D7619 /* TextField.m */,
 				4CD0E67312F1B63D00C8F016 /* ListView.h */,
 				78A8C18111737F660044E7A1 /* ListView.m */,
 				4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */,
 				4CA0C740138920B2002689FD /* ListSeparatorCell.m */,
 				4CD0E67412F1B63D00C8F016 /* MainWindow.h */,
 				78A8C19011737F660044E7A1 /* MainWindow.m */,
-				4CD0E67712F1B63D00C8F016 /* TextField.h */,
-				78A8C19F11737F660044E7A1 /* TextField.m */,
 				4CDFE2F9136F66660039300A /* ThinSplitView.h */,
 				4CDFE2F7136F664A0039300A /* ThinSplitView.m */,
 				4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */,
@@ -1580,7 +1574,6 @@
 				4CD0E6C012F1B70300C8F016 /* DDExtensions.h in Headers */,
 				4CD0E6DA12F1B78200C8F016 /* DDInvocationGrabber.h in Headers */,
 				4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */,
-				4CD0E67C12F1B63D00C8F016 /* FieldEditorTextView.h in Headers */,
 				4CD0E69B12F1B6B000C8F016 /* FileLogger.h in Headers */,
 				4CD0E65112F1B5B500C8F016 /* FileWithContent.h in Headers */,
 				4CD0E69912F1B6B000C8F016 /* RLMAsyncSocket.h in Headers */,
@@ -1657,7 +1650,6 @@
 				4CD0E6CC12F1B75300C8F016 /* SoundPlayer.h in Headers */,
 				4CD0E62612F1B4FB00C8F016 /* SoundWrapper.h in Headers */,
 				4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */,
-				4CD0E68212F1B63D00C8F016 /* TextField.h in Headers */,
 				4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */,
 				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
 				4CD0E6D512F1B77300C8F016 /* TextualPluginItem.h in Headers */,
@@ -1678,6 +1670,7 @@
 				4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */,
 				4C6C44FE13178C6A00815D4E /* TXRegularExpression.h in Headers */,
 				4C8CFF2B13D24C3C002BD81B /* ListSeparatorCell.h in Headers */,
+				4C70B46713D9A222004D7619 /* TextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1941,7 +1934,6 @@
 				4C8B85C5131A35DE0065B4F9 /* IRCPrefix.m in Sources */,
 				4C8B85C6131A35DE0065B4F9 /* AboutPanel.m in Sources */,
 				4C8B85C7131A35DE0065B4F9 /* OtherTheme.m in Sources */,
-				4C8B85C8131A35DE0065B4F9 /* TextField.m in Sources */,
 				4C8B85C9131A35DE0065B4F9 /* SoundWrapper.m in Sources */,
 				4C8B85CA131A35DE0065B4F9 /* IRCTextFormatterMenu.m in Sources */,
 				4C8B85CB131A35DE0065B4F9 /* ChannelSheet.m in Sources */,
@@ -2007,7 +1999,6 @@
 				4C8B860C131A35DE0065B4F9 /* LogController.m in Sources */,
 				4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */,
 				4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */,
-				4C8B860F131A35DE0065B4F9 /* FieldEditorTextView.m in Sources */,
 				4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */,
 				4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */,
 				4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */,
@@ -2027,6 +2018,7 @@
 				4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */,
 				4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */,
 				4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */,
+				4C70B46513D9A14F004D7619 /* TextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2248,7 +2240,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2293,7 +2285,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.7;
+				SDKROOT = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2377,7 +2369,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.7;
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2422,7 +2414,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.7;
+				SDKROOT = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2484,7 +2476,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2532,7 +2524,7 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.7;
+				SDKROOT = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -2560,7 +2552,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};
@@ -2587,7 +2579,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 			};

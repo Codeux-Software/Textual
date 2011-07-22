@@ -18,6 +18,8 @@
 
 #define EFFECT_MASK				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR)
 
+NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context);
+
 typedef uint32_t attr_t;
 
 static void setFlag(attr_t* attrBuf, attr_t flag, NSInteger start, NSInteger len)

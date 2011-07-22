@@ -20,8 +20,8 @@
 @property (nonatomic, retain) NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
-- (void)enableSheetField:(NSTextField *)field;
-- (void)enableWindowField:(NSTextField *)field;
+- (void)enableSheetField:(TextField *)field;
+- (void)enableWindowField:(TextField *)field;
 
 - (BOOL)boldSet;
 - (BOOL)italicSet;

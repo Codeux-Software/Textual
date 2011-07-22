@@ -34,7 +34,6 @@
 @synthesize config;
 @synthesize dummyLog;
 @synthesize extrac;
-@synthesize fieldEditor;
 @synthesize growl;
 @synthesize itemId;
 @synthesize logBase;
@@ -1052,7 +1051,7 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-	[[NSSpellChecker sharedSpellChecker] setIgnoredWords:[NSArray array] inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
+	[[NSSpellChecker sharedSpellChecker] setIgnoredWords:[NSArray array] inSpellDocumentWithTag:[text spellCheckerDocumentTag]];
 	
 	id nextItem = [serverList itemAtRow:[serverList selectedRow]];
 	
@@ -1113,7 +1112,7 @@
 		[text setStringValue:NSNullObject];
 		
 		if (NSObjectIsNotEmpty(newHistory.lastHistoryItem)) {
-			[text setFilteredAttributedStringValue:newHistory.lastHistoryItem];
+			[text setAttributedStringValue:newHistory.lastHistoryItem];
 		}
 	}
 	

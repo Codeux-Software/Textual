@@ -1,221 +1,144 @@
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
+// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
 @implementation TextField
 
-@synthesize _oldInputValue;
-@synthesize _oldTextColor;
-@synthesize _usesCustomUndoManager;
-@synthesize _spellingAlreadyToggled;
-
 - (void)dealloc
 {
-	if (_usesCustomUndoManager) {
-		[_oldInputValue drain];
-	}
-	
-	[_oldTextColor drain];
+	[_keyHandler drain];
 	
 	[super dealloc];
 }
 
-- (void)setFontColor:(NSColor *)color
+- (void)setKeyHandlerTarget:(id)target
 {
-	[_oldTextColor drain];
-	_oldTextColor = nil;
-	
-	_oldTextColor = [[self textColor] retain];
-	
-	[self setTextColor:color];
-}
-
-- (void)removeAllUndoActions
-{
-	if (_usesCustomUndoManager) {
-		[[self undoManager] removeAllActions];
-	}
-}
-
-- (void)setUsesCustomUndoManager:(BOOL)customManager
-{
-	if (_usesCustomUndoManager) {
-		if (customManager == NO) {
-			[_oldInputValue drain];
-			_oldInputValue = nil;
-			
-			[[self undoManager] removeAllActionsWithTarget:self];
-			[[self.window selectedFieldEditor] setAllowsUndo:YES];
-			
-			_usesCustomUndoManager = NO;
-		}
-	} else {
-		if (customManager) {
-			_oldInputValue = [NSNullObject retain];
-			
-			[[self undoManager] removeAllActionsWithTarget:self];
-			[[self.window selectedFieldEditor] setAllowsUndo:NO];
-			
-			_usesCustomUndoManager = YES;
-		}
-	}
-}
-
-- (void)setObjectValue:(id)obj recordUndo:(BOOL)undo
-{
-	if (_usesCustomUndoManager) {
-		[_oldInputValue drain];
-		_oldInputValue = nil;
-		
-		_oldInputValue = [[self objectValue] retain];
-		
-		NSUndoManager *undoMan = [self undoManager];
-		
-		if ([undoMan canUndo] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:NSNullObject recordUndo:YES];
-		}
-		
-		if (undo && [obj isEqual:_oldInputValue] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:_oldInputValue recordUndo:YES];
-		}
-	}
-	
-	[super setObjectValue:obj];
-}
-
-- (void)setStringValue:(NSString *)aString
-{
-	[self setObjectValue:aString recordUndo:YES];
-}
-
-- (void)setAttributedStringValue:(NSAttributedString *)obj
-{
-	[self setObjectValue:obj recordUndo:YES];
-}
-
-- (void)setFilteredAttributedStringValue:(NSAttributedString *)string
-{
-	string = [string sanitizeIRCCompatibleAttributedString:[self textColor] 
-												  oldColor:_oldTextColor 
-										   backgroundColor:[self backgroundColor] 
-											   defaultFont:[self font]];
-	
-	string = [string attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-	
-	[super setObjectValue:string];
-}
-
-- (void)pasteFilteredAttributedString:(NSRange)selectedRange
-{
-	NSText *currentEditor = [self currentEditor];
-	
-	NSString *rawData = [_NSPasteboard() stringContent];
-	NSData   *rtfData = [_NSPasteboard() dataForType:NSRTFPboardType];
-	
-	if (PointerIsEmpty(rtfData) == NO || PointerIsEmpty(rawData) == NO) {
-		NSRange frontChop;
-		
-		NSMutableAttributedString *newString = [NSMutableAttributedString alloc];
-		NSMutableAttributedString *oldString = [[self attributedStringValue] mutableCopy];
-		
-		NSString *currentValue = [self stringValue];
-        
-		if ([currentValue hasPrefix:@"/"] == NO && PointerIsEmpty(rtfData) == NO) {
-			newString = [newString initWithRTF:rtfData documentAttributes:nil];
-		} else {
-			newString = [newString initWithString:rawData];
-		}
-		
-		[newString autodrain];
-		[oldString autodrain];
-		
-		newString = (id)[newString sanitizeNSLinkedAttributedString:[self textColor]];
-		newString = (id)[newString sanitizeIRCCompatibleAttributedString:[self textColor]
-                                                                oldColor:_oldTextColor
-                                                         backgroundColor:[self backgroundColor]
-                                                             defaultFont:[self font]];
-        
-		if (selectedRange.length >= 1) {
-			[oldString replaceCharactersInRange:selectedRange withString:[newString string]];
-		} else {
-			[oldString insertAttributedString:newString atIndex:selectedRange.location];
-		}
-		
-		oldString = (id)[oldString attributedStringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet] frontChop:&frontChop];
-		
-		[self setObjectValue:oldString recordUndo:YES];
-		
-		selectedRange.length    = 0;
-		selectedRange.location += [newString length];
-		
-		if (frontChop.length >= 1) {
-			selectedRange.location -= frontChop.location;
-		}
-		
-		if (selectedRange.location <= [oldString length]) {
-			[currentEditor setSelectedRange:selectedRange];
-		} else {
-			[self focus];
-		}
-	}
-}
-
-- (void)textDidChange:(NSNotification *)notification
-{
-	if (_usesCustomUndoManager) {
-		NSUndoManager *undoMan = [self undoManager];
-		
-		if ([undoMan canUndo] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:NSNullObject recordUndo:YES];
-		}
-		
-		id newValue = [self objectValue];
-		
-		if ([newValue isEqual:_oldInputValue] == NO) {
-			[[undoMan prepareWithInvocationTarget:self] setObjectValue:_oldInputValue recordUndo:YES];
-		}
-		
-		[_oldInputValue drain];
-		_oldInputValue = nil;
-		
-		_oldInputValue = [[self objectValue] retain];
-		
-		[super setObjectValue:_oldInputValue];
-	}
-    
-#ifdef _RUNNING_MAC_OS_LION
-    if ([Preferences applicationRanOnLion] == NO) {
-#endif
-        
-        /* Force spell checker to validate input value by toggling it off
-         and on when exiting the editing of a word. Dirty fix for bug on 
-         Snow Leopard resulting in only the first word of string value 
-         being validated. */
-        
-        NSRange selectedRange = [self selectedRange];
-        
-        if (selectedRange.location >= 2) {
-            NSString *stringValue  = [self stringValue];
-            UniChar   previousChar = [stringValue characterAtIndex:(selectedRange.location - 1)];
-            
-            if (previousChar) {
-                if (IsAlpha(previousChar) == NO) {
-                    if (_spellingAlreadyToggled == NO) {
-                        _spellingAlreadyToggled = YES;
-                        
-                        NSTextView *editor = (id)[self currentEditor];
-                        
-                        [editor toggleContinuousSpellChecking:nil];
-                        [editor toggleContinuousSpellChecking:nil];
-                    }
-                } else {
-                    _spellingAlreadyToggled = NO;
-                }
-            }
-        }
-        
-#ifdef _RUNNING_MAC_OS_LION
+    if (PointerIsEmpty(_keyHandler)) {
+         _keyHandler = [KeyEventHandler new];
     }
-#endif
+    
+	[_keyHandler setTarget:target];
+}
+
+- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
+{
+	[_keyHandler registerSelector:selector key:code modifiers:mods];
+}
+
+- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
+{
+	[_keyHandler registerSelector:selector character:c modifiers:mods];
+}
+
+- (void)keyDown:(NSEvent *)e
+{
+	if ([_keyHandler processKeyEvent:e]) {
+		return;
+	}
+	
+	[super keyDown:e];
+}
+
+- (NSAttributedString *)attributedStringValue
+{
+    return [self.attributedString.copy autodrain];
+}
+
+- (void)setAttributedStringValue:(NSAttributedString *)string
+{
+	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
+    
+    [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
+}
+
+- (NSString *)stringValue
+{
+    return [self string];
+}
+
+- (void)setStringValue:(NSString *)string
+{
+    [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
+}
+
+- (void)removeAttribute:(id)attr inRange:(NSRange)local
+{
+    [self.textStorage removeAttribute:attr range:local];
+}
+
+- (void)setAttributes:(id)attrs inRange:(NSRange)local
+{
+    [self.textStorage setAttributes:attrs range:local];
+}
+
+- (void)paste:(id)sender
+{
+    NSRange selectedRange = [self selectedRange];
+    
+    [super paste:self];
+    
+    NSString *pasteboard = [_NSPasteboard() stringContent];
+    
+    [self toggleFontResetStatus:NO];
+    
+    if (selectedRange.length == 0) {
+        NSRange newRange;
+        
+        newRange.location = selectedRange.location;
+        newRange.length   = [pasteboard length];
+        
+        [self textDidChange:sender pasted:YES range:newRange];
+    } else {
+        [self textDidChange:sender pasted:YES range:selectedRange];
+    }
+}
+
+- (void)textDidChange:(id)sender pasted:(BOOL)paste range:(NSRange)erange
+{
+    NSAttributedString *string = [self attributedStringValue];
+    
+    NSFont  *defaultFont;
+    NSColor *defaultColor;
+    
+    if ([sender respondsToSelector:@selector(defaultFont)]) {
+        defaultFont = [sender defaultFont];
+    }
+    
+    if ([sender respondsToSelector:@selector(defaultFontColor)]) {
+        defaultColor = [sender defaultFontColor];
+    }
+    
+    if (NSObjectIsEmpty(string) && paste == NO) {
+        _fontResetRequired = YES;
+    }
+    
+    if (_fontResetRequired && paste == NO) {
+        if ([string length] >= 1) {
+            [self resetTextFieldFont:defaultFont color:defaultColor];
+        }
+    } else {
+        [string sanitizeIRCCompatibleAttributedString:defaultFont color:defaultColor source:&self range:erange];
+    }
+}
+
+- (void)toggleFontResetStatus:(BOOL)status
+{
+    _fontResetRequired = status;
+}
+
+- (void)resetTextFieldFont:(id)defaultFont color:(id)defaultColor
+{
+    NSRange local = [self fullSelectionRange];
+    
+    [self removeAttribute:NSForegroundColorAttributeName inRange:local];
+    [self removeAttribute:NSBackgroundColorAttributeName inRange:local];
+    [self removeAttribute:NSUnderlineStyleAttributeName  inRange:local];
+    
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+    
+    [attrs setObject:defaultFont  forKey:NSFontAttributeName];
+    [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
+    
+    [self setAttributes:attrs inRange:local];
 }
 
 @end

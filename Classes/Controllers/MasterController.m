@@ -22,7 +22,6 @@
 @synthesize channelMenu;
 @synthesize completionStatus;
 @synthesize extrac;
-@synthesize fieldEditor;
 @synthesize formattingMenu;
 @synthesize ghostMode;
 @synthesize growl;
@@ -50,7 +49,6 @@
 {
 	[completionStatus drain];
 	[extrac drain];
-	[fieldEditor drain];
 	[formattingMenu drain];
 	[growl drain];
 	[inputHistory drain];
@@ -73,6 +71,10 @@
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		ghostMode = YES;
 	}
+    
+#if defined(DEBUG)
+    ghostMode = YES; // Do not use autoconnect during debug
+#endif
 	
 	[window makeMainWindow];
 	
@@ -92,10 +94,6 @@
 	
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
-	fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
-	[fieldEditor setFieldEditor:YES];
-	fieldEditor.pasteDelegate = self;
-	
 	serverSplitView.fixedViewIndex = 0;
 	memberSplitView.fixedViewIndex = 1;
 	
@@ -106,6 +104,8 @@
 	
 	[window setAlphaValue:[Preferences themeTransparency]];
 	
+    [text setReturnActionWithSelector:@selector(textEntered) owner:self];
+    
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
 	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autodrain];
@@ -119,7 +119,6 @@
 	world.extrac			= extrac;
 	world.text				= text;
 	world.logBase			= logBase;
-	world.fieldEditor		= fieldEditor;
 	world.memberList		= memberList;
 	world.treeMenu			= treeMenu;
 	world.logMenu			= logMenu;
@@ -374,35 +373,17 @@
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-	if (client == text) {
+    /*
+	if (client == [text scrollView]) {
 		NSMenu	   *editorMenu = [fieldEditor menu];
 		NSMenuItem *formatMenu = [formattingMenu formatterMenu];
 		
 		if (formatMenu) {
-			NSInteger fontIndex = -1;
 			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
 			
 			if (fmtrIndex == -1) {
-				for (NSMenuItem *mitem in [editorMenu itemArray]) {
-					NSMenu *sumenu = [mitem submenu];
-					
-					if (PointerIsEmpty(sumenu) == NO) {
-						for (NSMenuItem *nitem in [sumenu itemArray]) {
-							NSString *naction = NSStringFromSelector([nitem action]);
-							
-							if ([naction isEqualToString:@"orderFrontFontPanel:"]) {
-								fontIndex = [editorMenu indexOfItem:mitem];
-							}
-						}
-					}
-				}
-				
 				[editorMenu addItem:[NSMenuItem separatorItem]];
 				[editorMenu addItem:formatMenu];
-				
-				if (fontIndex >= 0) {
-					[editorMenu removeItemAtIndex:fontIndex];
-				}
 			}
 			
 			[fieldEditor setMenu:editorMenu];
@@ -411,47 +392,8 @@
 		return fieldEditor;
 	}
 	
-	return nil;
-}
-
-#pragma mark -
-#pragma mark FieldEditorTextView Delegates
-
-- (BOOL)fieldEditorTextViewPaste:(id)sender
-{
-	id field = [window selectedTextField];
-	
-	if (PointerIsEmpty(field) == NO) {
-		if ([sender isKindOfClass:[NSString class]]) {
-			if ([sender isEqual:@"reset"]) {
-				[field focus];
-			}
-		}
-		
-		NSRange selectedRang = [field selectedRange];
-		
-		if ([field allowsEditingTextAttributes]) {
-			if ([field respondsToSelector:@selector(pasteFilteredAttributedString:)]) {
-				TextField *tfield = field;
-				
-				[tfield pasteFilteredAttributedString:selectedRang];
-				
-				return YES;
-			}
-		}
-	} else {
-		[text focus];
-		
-		if ([sender isKindOfClass:[NSString class]]) {
-			if ([sender isEqual:@"reset"]) {
-				return NO;
-			}
-		}
-		
-		return [self fieldEditorTextViewPaste:@"reset"];
-	}
-	
-	return NO;
+	return nil;*/
+    return text;
 }
 
 #pragma mark -
@@ -464,8 +406,6 @@
 	NSString *s = [as attributedStringToASCIIFormatting];
 	
 	[text setAttributedStringValue:[NSAttributedString emptyString]];
-	[text setTextColor:[text textColor]];
-	[text removeAllUndoActions];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		world.selected.inputHistory.lastHistoryItem = nil;
@@ -482,7 +422,7 @@
 	}
 }
 
-- (void)textEntered:(id)sender
+- (void)textEntered
 {
 	[self sendText:IRCCI_PRIVMSG];
 }
@@ -576,7 +516,7 @@
 		
 		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
 		
-		[fieldEditor setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
+		[text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
 		
 		serverSplitView.position = [dic integerForKey:@"serverList"];
 		memberSplitView.position = [dic integerForKey:@"memberList"];
@@ -642,7 +582,7 @@
 	[dic setInteger:serverSplitView.position forKey:@"serverList"];
 	[dic setInteger:memberSplitView.position forKey:@"memberList"];
 	
-	[_NSUserDefaults() setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
+	[_NSUserDefaults() setBool:[text isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
 	
 	[Preferences saveWindowState:dic name:@"MainWindow"];
 	[Preferences sync];
@@ -763,8 +703,8 @@
 	}
 	
 	NickCompletionStatus *status = completionStatus;
-	
-	NSString *s = text.stringValue;
+    
+	NSString *s = [text stringValue];
 	
 	if ([status.text isEqualToString:s]
 		&& NSDissimilarObjects(status.range.location, NSNotFound)
@@ -972,7 +912,7 @@
 		t = [currentChoices safeObjectAtIndex:index];
 	}
 	
-	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[fieldEditor spellCheckerDocumentTag]];
+	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[text spellCheckerDocumentTag]];
 	
 	if ((commandMode || channelMode) || head == NO) {
 		t = [t stringByAppendingString:NSWhitespaceCharacter];
@@ -1000,7 +940,7 @@
 	} else {
 		selectedRange.length = (t.length - pre.length);
 		
-		status.text = text.stringValue;
+		status.text = [text stringValue];
 		status.range = selectedRange;
 	}
 }
@@ -1212,7 +1152,7 @@ typedef enum {
 	NSAttributedString *s = [inputHistory up:[text attributedStringValue]];
 	
 	if (s) {
-		[text setFilteredAttributedStringValue:s];
+        [text setAttributedStringValue:s];
 		
 		[world focusInputText];
 	}
@@ -1223,7 +1163,7 @@ typedef enum {
 	NSAttributedString *s = [inputHistory down:[text attributedStringValue]];
 	
 	if (s) {
-		[text setFilteredAttributedStringValue:s];
+        [text setAttributedStringValue:s];
 		
 		[world focusInputText];
 	}
@@ -1268,7 +1208,7 @@ typedef enum {
 		
 		[formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
 														  atLocation:fieldRect.origin
-															  inView:[formattingMenu.textField currentEditor]];
+															  inView:formattingMenu.textField];
 	}
 }
 
@@ -1285,7 +1225,7 @@ typedef enum {
 			
 			[formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
 															  atLocation:fieldRect.origin
-																  inView:[formattingMenu.textField currentEditor]];
+																  inView:formattingMenu.textField];
 		}
 	}
 }
@@ -1297,12 +1237,12 @@ typedef enum {
 
 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
+	[text registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[fieldEditor registerKeyHandler:sel character:c modifiers:mods];
+	[text registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
@@ -1312,8 +1252,8 @@ typedef enum {
 
 - (void)registerKeyHandlers
 {
-	[window			setKeyHandlerTarget:self];
-	[fieldEditor	setKeyHandlerTarget:self];
+	[window		setKeyHandlerTarget:self];
+	[text       setKeyHandlerTarget:self];
 	
 	[self handler:@selector(tab:)		code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:)	code:KEY_TAB mods:NSShiftKeyMask];

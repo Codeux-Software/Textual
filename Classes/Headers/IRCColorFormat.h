@@ -8,7 +8,6 @@ TEXTUAL_EXTERN NSString *IRCTextFormatterItalicAttributeName;
 TEXTUAL_EXTERN NSString *IRCTextFormatterUnderlineAttributeName;
 TEXTUAL_EXTERN NSString *IRCTextFormatterForegroundColorAttributeName;
 TEXTUAL_EXTERN NSString *IRCTextFormatterBackgroundColorAttributeName;
-TEXTUAL_EXTERN NSString *IRCTextFormatterDefaultFontColorAttributeName;
 
 typedef enum {
 	IRCTextFormatterBoldEffect,
@@ -16,22 +15,18 @@ typedef enum {
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
 	IRCTextFormatterBackgroundColorEffect,
-	IRCTextFormatterDefaultFontColorEffect,
 } IRCTextFormatterEffectType; 
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;
 
-- (NSArray *)stringSanitizationValidAttributesMatrix;
-
-- (NSAttributedString *)sanitizeNSLinkedAttributedString:(NSColor *)defaultColor;
-- (NSAttributedString *)sanitizeIRCCompatibleAttributedString:(NSColor *)defaultColor 
-													 oldColor:(NSColor *)auxiliaryColor 
-											  backgroundColor:(NSColor *)backgroundColor
-												  defaultFont:(NSFont *)defaultFont;
+- (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
+                                        color:(NSColor *)defaultColor
+                                       source:(TextField **)sourceField
+                                        range:(NSRange)limitRange;    
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange;
 
-- (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange;
 - (NSAttributedString *)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect value:(id)value range:(NSRange)limitRange;
+- (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange color:(NSColor *)defaultColor;
 @end
