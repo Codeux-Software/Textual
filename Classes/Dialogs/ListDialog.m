@@ -29,6 +29,8 @@
 		
 		sortKey = 1;
 		sortOrder = NSOrderedDescending;
+        
+        [table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	}
 	
 	return self;
@@ -86,7 +88,7 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic, [topic attributedStringWithIRCFormatting], nil];
+		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic, [topic attributedStringWithIRCFormatting:DefaultListViewFont], nil];
 		
 		NSString *filter = [filterText stringValue];
 		

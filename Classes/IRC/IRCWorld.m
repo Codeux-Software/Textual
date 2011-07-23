@@ -224,7 +224,7 @@
 		message = [message trim];
 		
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
-		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time, [message attributedStringWithIRCFormatting], nil];
+		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time, [message attributedStringWithIRCFormatting:DefaultListViewFont], nil];
 		
 		/* We insert at head so that latest is always at top. */
 		[channel.client.highlights insertObject:entry atIndex:0];

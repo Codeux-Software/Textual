@@ -31,7 +31,7 @@
 	[menu.master.formattingMenu enableSheetField:text];
     
 	[header setStringValue:nheader];
-	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting]];
+	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting:DefaultTextFieldFont]];
     
 	[self startSheet];
 }
