@@ -32,7 +32,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	if ([[textField window] hasAttachedSheet] && sheetOverrideEnabled == NO) {
+	if ([textField.window attachedSheet] && sheetOverrideEnabled == NO) {
 		return NO;
 	}
 	
@@ -155,6 +155,8 @@
                                                         value:NSNumberWithBOOL(YES)
                                                         range:selectedTextRange
                                                        source:&textField];
+    
+    [textField toggleFontResetStatus:NO];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -170,6 +172,8 @@
                                                         value:NSNumberWithBOOL(YES)
                                                         range:selectedTextRange
                                                        source:&textField];
+    
+    [textField toggleFontResetStatus:NO];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -185,6 +189,8 @@
                                                         value:NSNumberWithBOOL(YES)
                                                         range:selectedTextRange
                                                        source:&textField];
+    
+    [textField toggleFontResetStatus:NO];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -245,6 +251,8 @@
                                                            source:&textField];
     }
     
+    [textField toggleFontResetStatus:NO];
+    
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
     }
@@ -294,6 +302,8 @@
                                                            source:&textField];
     }
     
+    [textField toggleFontResetStatus:NO];
+    
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
     }
@@ -312,6 +322,8 @@
                                                            color:DefaultTextFieldFontColor
                                                           source:&textField];
     
+    [textField toggleFontResetStatus:NO];
+    
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
     }
@@ -326,6 +338,8 @@
                                                            range:selectedTextRange
                                                            color:DefaultTextFieldFontColor
                                                           source:&textField];
+    
+    [textField toggleFontResetStatus:NO];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -342,6 +356,8 @@
                                                            color:DefaultTextFieldFontColor
                                                           source:&textField];
     
+    [textField toggleFontResetStatus:NO];
+    
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
     }
@@ -357,6 +373,8 @@
                                                            color:DefaultTextFieldFontColor
                                                           source:&textField];
     
+    [textField toggleFontResetStatus:NO];
+    
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
     }
@@ -371,6 +389,8 @@
                                                            range:selectedTextRange
                                                            color:DefaultTextFieldFontColor
                                                           source:&textField];
+    
+    [textField toggleFontResetStatus:NO];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
