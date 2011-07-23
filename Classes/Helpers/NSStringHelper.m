@@ -363,13 +363,15 @@ BOOL isUnicharDigit(unichar c)
 	return r.location;
 }
 
-- (id)attributedStringWithIRCFormatting
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont
 {
 	if ([Preferences removeAllFormatting]) {
 		return [self stripEffects];
 	}
+    
+    NSDictionary *input = [NSDictionary dictionaryWithObjectsAndKeys:defaultFont, @"attributedStringFont", nil];
 	
-	return [LogRenderer renderBody:self controller:nil renderType:ASCII_TO_ATTRIBUTED_STRING properties:nil resultInfo:NULL];
+	return [LogRenderer renderBody:self controller:nil renderType:ASCII_TO_ATTRIBUTED_STRING properties:input resultInfo:NULL];
 }
 
 - (NSString *)stripEffects

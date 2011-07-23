@@ -578,20 +578,34 @@
 	if (PointerIsEmpty(t)) return;
 	
     if ([t respondsToSelector:@selector(requriesSpecialPaste)]) {
-		[t paste:self];
-	} else {
-		if ([t respondsToSelector:@selector(paste:)]) {
-			BOOL validated = YES;
-			
-			if ([t respondsToSelector:@selector(validateMenuItem:)]) {
-				validated = [t validateMenuItem:sender];
-			}
-			
-			if (validated) {
-				[t paste:sender];
-			}
-		}
-	}
+        if ([window attachedSheet]) {
+            [t paste:self];
+        } else {
+            [text focus];
+            [text paste:self];
+        }
+    } else {
+        if (window == [NSApp keyWindow]) {
+            if (PointerIsEmpty([window attachedSheet])) {
+                [text focus];
+                [text paste:self];
+                
+                return;
+            }
+        }
+        
+        if ([t respondsToSelector:@selector(paste:)]) {
+            BOOL validated = YES;
+            
+            if ([t respondsToSelector:@selector(validateMenuItem:)]) {
+                validated = [t validateMenuItem:sender];
+            }
+            
+            if (validated) {
+                [t paste:sender];
+            }
+        }
+    }
 }
 
 - (void)onSearchWeb:(id)sender

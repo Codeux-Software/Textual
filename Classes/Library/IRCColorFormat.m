@@ -1,12 +1,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-NSString *IRCTextFormatterBoldAttributeName             = @"IRCTextFormatterBold";
-NSString *IRCTextFormatterItalicAttributeName           = @"IRCTextFormatterItalic";
-NSString *IRCTextFormatterUnderlineAttributeName        = @"IRCTextFormatterUnderline";
-NSString *IRCTextFormatterForegroundColorAttributeName  = @"IRCTextFormatterForegroundColor";
-NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBackgroundColor";
-
 @implementation NSAttributedString (IRCTextFormatter)
 
 #pragma mark -
@@ -24,17 +18,19 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 	while (limitRange.length > 0) {
 		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
-		NSNumber *foregroundNumber = [dict objectForKey:IRCTextFormatterForegroundColorAttributeName];
-		NSNumber *backgroundNumber = [dict objectForKey:IRCTextFormatterBackgroundColorAttributeName];
-		
-		NSInteger foregroundColor = ((foregroundNumber) ? [foregroundNumber integerValue] : -1);
-		NSInteger backgroundColor = ((backgroundNumber) ? [backgroundNumber integerValue] : -1);
+		NSInteger foregroundColor = mapColorValue([dict objectForKey:NSForegroundColorAttributeName]);
+		NSInteger backgroundColor = mapColorValue([dict objectForKey:NSBackgroundColorAttributeName]);
+        
+        NSNumber *foregroundNumber = NSNumberWithInteger(foregroundColor);
+        NSNumber *backgroundNumber = NSNumberWithInteger(backgroundColor);
 		
 		BOOL color = (foregroundColor >= 0 && foregroundColor <= 15);
+        
+        NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
 		
-		BOOL boldText       = [dict boolForKey:IRCTextFormatterBoldAttributeName];
-		BOOL italicText     = [dict boolForKey:IRCTextFormatterItalicAttributeName];
-		BOOL underlineText  = [dict boolForKey:IRCTextFormatterUnderlineAttributeName];
+		BOOL boldText       = [baseFont fontTraitSet:NSBoldFontMask];
+		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
+		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
 		if (underlineText)  [result appendFormat:@"%c", 0x1F];
 		if (italicText)     [result appendFormat:@"%c", 0x16];
@@ -72,27 +68,23 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 		switch (effect) {
 			case IRCTextFormatterBoldEffect: 
 			{
-				BOOL result = [dict boolForKey:IRCTextFormatterBoldAttributeName];
+                NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
 				
-				if (result) {
-					return YES;
-				}
+                return [baseFont fontTraitSet:NSBoldFontMask];
 				
 				break;
 			}
 			case IRCTextFormatterItalicEffect: 
 			{
-				BOOL result = [dict boolForKey:IRCTextFormatterItalicAttributeName];
+                NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
 				
-				if (result) {
-					return YES;
-				}
+                return [baseFont fontTraitSet:NSItalicFontMask];
 				
 				break;
 			}
 			case IRCTextFormatterUnderlineEffect:
 			{
-				BOOL result = [dict boolForKey:IRCTextFormatterUnderlineAttributeName];
+				BOOL result = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 				
 				if (result) {
 					return YES;
@@ -102,17 +94,11 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
-				BOOL result = BOOLValueFromObject([dict objectForKey:NSForegroundColorAttributeName]);
+				NSInteger foregroundColor = mapColorValue([dict objectForKey:NSForegroundColorAttributeName]);
 				
-				NSNumber *foregroundNumber = [dict objectForKey:IRCTextFormatterForegroundColorAttributeName];
-				
-				if (foregroundNumber && result) {
-					NSInteger foregroundColor = [foregroundNumber integerValue];
-					
-					if (foregroundColor >= 0 && foregroundColor <= 15) {
-						return YES;
-					}
-				}
+                if (foregroundColor >= 0 && foregroundColor <= 15) {
+                    return YES;
+                }
 				
 				break;
 			}
@@ -126,6 +112,7 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 				
 				break;
 			} 
+            default: return NO; break;
 		}
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
@@ -197,13 +184,21 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
             [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
         }
 		
-		if (backgroundColorD && hasForegroundColor) {
-			NSInteger mappedColor = mapColorValue(backgroundColorD);
-            
-            if (mappedColor >= 0 && mappedColor <= 15) {
-                [attrs setObject:backgroundColorD forKey:NSBackgroundColorAttributeName];
+		if (backgroundColorD) {
+            if (hasForegroundColor) {
+                NSInteger mappedColor = mapColorValue(backgroundColorD);
+                
+                if (mappedColor >= 0 && mappedColor <= 15) {
+                    [attrs setObject:backgroundColorD forKey:NSBackgroundColorAttributeName];
+                } else {
+                    [attrs removeObjectForKey:NSBackgroundColorAttributeName];
+                }
+            } else {
+                [attrs removeObjectForKey:NSBackgroundColorAttributeName];
             }
-		}
+		} else {
+            [attrs removeObjectForKey:NSBackgroundColorAttributeName];
+        }
         
         if (NSObjectIsNotEmpty(attrs)) {
             [*sourceField setAttributes:attrs inRange:effectiveRange];
@@ -217,149 +212,143 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 #pragma mark -
 #pragma mark Adding/Removing Formatting
 
-- (NSAttributedString *)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect value:(id)value range:(NSRange)limitRange
-{
-	NSMutableAttributedString *result = [self mutableCopy];
-	
-	NSFont *baseFont = [self safeAttribute:NSFontAttributeName atIndex:limitRange.location effectiveRange:NULL];
-	
-	if (baseFont) {
-		switch (effect) {
-			case IRCTextFormatterBoldEffect:
-			{
-				if ([baseFont fontTraitSet:NSBoldFontMask] == NO) {
-					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-				}
-				
-				if (baseFont) {
-					[result addAttribute:NSFontAttributeName			   value:baseFont range:limitRange];
-					[result addAttribute:IRCTextFormatterBoldAttributeName value:value	  range:limitRange];
-				}
-				
-				break;
-			}
-			case IRCTextFormatterItalicEffect:
-			{
-				if ([baseFont fontTraitSet:NSItalicFontMask] == NO) {
-					baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
-				}
-				
-				if (baseFont) {
-					[result addAttribute:NSFontAttributeName				 value:baseFont range:limitRange];
-					[result addAttribute:IRCTextFormatterItalicAttributeName value:value	range:limitRange];
-				}
-				
-				break;
-			}
-			case IRCTextFormatterUnderlineEffect:
-			{
-				[result addAttribute:IRCTextFormatterUnderlineAttributeName value:value											  range:limitRange];
-				[result addAttribute:NSUnderlineStyleAttributeName			value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:limitRange];
-				
-				break;
-			}
-			case IRCTextFormatterForegroundColorEffect:
-			{
-				NSInteger colorCode = [value integerValue];
-				
-				if (colorCode >= 0 && colorCode <= 15) {
-					[result addAttribute:IRCTextFormatterForegroundColorAttributeName value:value					range:limitRange];
-					[result addAttribute:NSForegroundColorAttributeName				  value:mapColorCode(colorCode) range:limitRange];
-				}
-				
-				break;
-			}
-			case IRCTextFormatterBackgroundColorEffect:
-			{
-				NSNumber *foregroundColor = [self safeAttribute:IRCTextFormatterForegroundColorAttributeName atIndex:limitRange.location effectiveRange:NULL];
-				
-				if (foregroundColor) {
-					NSInteger backColor  = [value           integerValue];
-					NSInteger frontColor = [foregroundColor integerValue];
-					
-					if (backColor >= 0 && backColor <= 15 && frontColor >= 0 && frontColor <= 15) {
-						[result addAttribute:IRCTextFormatterBackgroundColorAttributeName value:value					range:limitRange];
-						[result addAttribute:NSBackgroundColorAttributeName				  value:mapColorCode(backColor) range:limitRange];
-					}
-				}
-				
-				break;
-			}
-		}
-	}
-	
-	return [result autodrain];
-}
-
-- (NSAttributedString *)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange color:(NSColor *)defaultColor
-{
-	NSMutableAttributedString *result = [self mutableCopy];
-	
+- (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
+                           value:(id)value 
+                           range:(NSRange)limitRange 
+                          source:(TextField **)sourceField
+{	
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
 		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
+        
+        NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+        
+        switch (effect) {
+            case IRCTextFormatterBoldEffect:
+            {
+                if ([baseFont fontTraitSet:NSBoldFontMask] == NO) {
+                    baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
+                }
+                
+                if (baseFont) {
+                    [newDict setObject:baseFont forKey:NSFontAttributeName];
+                }
+                
+                break;
+            }
+            case IRCTextFormatterItalicEffect:
+            {
+                if ([baseFont fontTraitSet:NSItalicFontMask] == NO) {
+                    baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
+                }
+                
+                if (baseFont) {
+                    [newDict setObject:baseFont forKey:NSFontAttributeName];
+                }
+                
+                break;
+            }
+            case IRCTextFormatterUnderlineEffect:
+            {
+                [newDict setObject:[NSNumber numberWithInt:NSSingleUnderlineStyle] forKey:NSUnderlineStyleAttributeName];
+                
+                break;
+            }
+            case IRCTextFormatterForegroundColorEffect:
+            {
+                NSInteger colorCode = [value integerValue];
+                
+                if (colorCode >= 0 && colorCode <= 15) {
+                    [newDict setObject:mapColorCode(colorCode) forKey:NSForegroundColorAttributeName];
+                }
+                
+                break;
+            }
+            case IRCTextFormatterBackgroundColorEffect:
+            {
+                NSInteger colorCode = [value integerValue];
+                
+                if (colorCode >= 0 && colorCode <= 15) {
+                    [newDict setObject:mapColorCode(colorCode) forKey:NSBackgroundColorAttributeName];
+                }
+                
+                break;
+            }
+            default: break;
+        }
+        
+        [*sourceField setAttributes:newDict inRange:effectiveRange];
+		
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+    }
+}
+
+- (void)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
+                              range:(NSRange)limitRange 
+                              color:(NSColor *)defaultColor
+                             source:(TextField **)sourceField
+{	
+	NSRange effectiveRange;
+	
+	while (limitRange.length >= 1) {
+		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		
+		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
+        
+        NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
 		
 		if (baseFont) {
 			switch (effect) {
 				case IRCTextFormatterBoldEffect:
 				{
-					BOOL boldText = [dict boolForKey:IRCTextFormatterBoldAttributeName];
-					
 					if ([baseFont fontTraitSet:NSBoldFontMask]) {
 						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSBoldFontMask];
 						
 						if (baseFont) {
-							[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
+							[newDict setObject:baseFont forKey:NSFontAttributeName];
+                            
+                            [*sourceField setAttributes:newDict inRange:effectiveRange];
 						}
-					}
-					
-					if (boldText) {
-						[result removeAttribute:IRCTextFormatterBoldAttributeName range:effectiveRange];
 					}
 					
 					break;
 				}
 				case IRCTextFormatterItalicEffect:
 				{
-					BOOL italicText = [dict boolForKey:IRCTextFormatterItalicAttributeName];
-					
 					if ([baseFont fontTraitSet:NSItalicFontMask]) {
 						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSItalicFontMask];
 						
 						if (baseFont) {
-							[result addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
+							[newDict setObject:baseFont forKey:NSFontAttributeName];
+                            
+                            [*sourceField setAttributes:newDict inRange:effectiveRange];
 						}
-					}
-					
-					if (italicText) {
-						[result removeAttribute:IRCTextFormatterItalicAttributeName range:effectiveRange];
 					}
 					
 					break;
 				}
 				case IRCTextFormatterUnderlineEffect:
 				{
-					[result removeAttribute:NSUnderlineStyleAttributeName		   range:effectiveRange];
-					[result removeAttribute:IRCTextFormatterUnderlineAttributeName range:effectiveRange];
+                    [*sourceField removeAttribute:NSUnderlineStyleAttributeName inRange:effectiveRange];
 					
 					break;
 				}
 				case IRCTextFormatterForegroundColorEffect:
 				{
-					[result removeAttribute:NSForegroundColorAttributeName				 range:effectiveRange];
-					[result removeAttribute:IRCTextFormatterForegroundColorAttributeName range:effectiveRange];
+                    [newDict setObject:defaultColor forKey:NSForegroundColorAttributeName];
                     
-                    [result addAttribute:NSForegroundColorAttributeName value:defaultColor range:effectiveRange];
+                    [*sourceField setAttributes:newDict inRange:effectiveRange];
+                    [*sourceField removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
 					
 					break;
 				}
 				case IRCTextFormatterBackgroundColorEffect:
 				{
-					[result removeAttribute:NSBackgroundColorAttributeName				 range:effectiveRange];
-					[result removeAttribute:IRCTextFormatterBackgroundColorAttributeName range:effectiveRange];
+                    [*sourceField removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
 					
 					break;
 				}
@@ -370,8 +359,6 @@ NSString *IRCTextFormatterBackgroundColorAttributeName  = @"IRCTextFormatterBack
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
                                  (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
-	
-	return [result autodrain];
 }
 
 @end

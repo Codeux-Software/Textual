@@ -151,12 +151,10 @@
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBoldEffect
-																  value:NSNumberWithBOOL(YES)
-																  range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
+    [textField.attributedStringValue setIRCFormatterAttribute:IRCTextFormatterBoldEffect
+                                                        value:NSNumberWithBOOL(YES)
+                                                        range:selectedTextRange
+                                                       source:&textField];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -168,12 +166,10 @@
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterItalicEffect
-																  value:NSNumberWithBOOL(YES)
-																  range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
+	[textField.attributedStringValue setIRCFormatterAttribute:IRCTextFormatterItalicEffect
+                                                        value:NSNumberWithBOOL(YES)
+                                                        range:selectedTextRange
+                                                       source:&textField];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -185,12 +181,10 @@
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = [oldString setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-																  value:NSNumberWithBOOL(YES)
-																  range:selectedTextRange];
-	
-	[textField setAttributedStringValue:newString];
+    [textField.attributedStringValue setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
+                                                        value:NSNumberWithBOOL(YES)
+                                                        range:selectedTextRange
+                                                       source:&textField];
 	
 	if ([textField respondsToSelector:@selector(focus)]) {
 		[textField performSelector:@selector(focus)];
@@ -202,49 +196,54 @@
 	NSRange selectedTextRange = [textField selectedRange];
 	if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
 	
-	NSAttributedString *oldString = [textField attributedStringValue];
-	NSAttributedString *newString = oldString;
-	
-	if ([sender tag] == 100) { 
-		NSString *charValue = nil;
+	if ([sender tag] == 100) { 		
+        NSAttributedString *oldString = textField.attributedStringValue;
+        
+        NSString *charValue = nil;
 		
 		NSRange charRange;
 		
-		NSInteger colorChar = 0;
-		NSInteger charCountIndex = 0;
+		NSInteger colorChar         = 0;
+		NSInteger charCountIndex    = 0;
 		NSInteger rainbowArrayIndex = 0;
 		
 		NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"4", @"7", @"8", @"3", @"12", @"2", @"6", nil];
 		
 		while (1 == 1) {
-			if (charCountIndex >= selectedTextRange.length) break;
+			if (charCountIndex >= selectedTextRange.length) {
+                break;
+            }
 			
 			charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-			charValue = [[textField stringValue] safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
+			charValue = [textField.stringValue safeSubstringWithRange:NSMakeRange(charCountIndex, 1)];
 			
-			if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
+			if (rainbowArrayIndex > 6) {
+                rainbowArrayIndex = 0;
+            }
 			
 			if ([charValue isEqualToString:NSWhitespaceCharacter]) {
-				newString = [newString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-														  value:NSNumberWithInteger(0)
-														  range:charRange];
+				[oldString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
+                                              value:NSNumberWithInteger(0)
+                                              range:charRange
+                                             source:&textField];
 			} else {
-				colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
-				newString = [newString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-														  value:NSNumberWithInteger(colorChar)
-														  range:charRange];
+                colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
+				
+                [oldString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
+                                              value:NSNumberWithInteger(colorChar)
+                                              range:charRange
+                                             source:&textField];
 			}
 			
 			charCountIndex++;
 			rainbowArrayIndex++;
 		}
 	} else {
-		newString = [oldString setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												  value:NSNumberWithInteger([sender tag])
-                                                  range:selectedTextRange];
+		[textField.attributedStringValue setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
+                                                            value:NSNumberWithInteger([sender tag])
+                                                            range:selectedTextRange
+                                                           source:&textField];
     }
-    
-    [textField setAttributedStringValue:newString];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -256,40 +255,44 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = oldString;
-    
     if ([sender tag] == 100) { 
+        NSAttributedString *oldString = textField.attributedStringValue;
+        
         NSRange charRange;
         
-        NSInteger colorChar = 0;
-        NSInteger charCountIndex = 0;
+        NSInteger colorChar         = 0;
+        NSInteger charCountIndex    = 0;
         NSInteger rainbowArrayIndex = 0;
         
         NSMutableArray *colorCodes = [NSMutableArray arrayWithObjects:@"6", @"2", @"12", @"9", @"8", @"7", @"4", nil];
         
         while (1 == 1) {
-            if (charCountIndex >= selectedTextRange.length) break;
+            if (charCountIndex >= selectedTextRange.length) {
+                break;
+            }
             
             charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
             
-            if (rainbowArrayIndex > 6) rainbowArrayIndex = 0;
+            if (rainbowArrayIndex > 6) {
+                rainbowArrayIndex = 0;
+            }
             
-            colorChar = [[colorCodes safeObjectAtIndex:rainbowArrayIndex] integerValue];
-            newString = [newString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                                      value:NSNumberWithInteger(colorChar)
-                                                      range:charRange];
+            colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
+            
+            [oldString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                          value:NSNumberWithInteger(colorChar)
+                                          range:charRange
+                                         source:&textField];
             
             charCountIndex++;
             rainbowArrayIndex++;
         }
     } else {
-        newString = [oldString setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                                  value:NSNumberWithInteger([sender tag])
-                                                  range:selectedTextRange];
+        [textField.attributedStringValue setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                                            value:NSNumberWithInteger([sender tag])
+                                                            range:selectedTextRange
+                                                           source:&textField];
     }
-    
-    [textField setAttributedStringValue:newString];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -304,12 +307,10 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
-                                                                     range:selectedTextRange
-                                                                     color:[textField textColor]];
-    
-    [textField setAttributedStringValue:newString];
+    [textField.attributedStringValue removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
+                                                           range:selectedTextRange
+                                                           color:DefaultTextFieldFontColor
+                                                          source:&textField];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -321,12 +322,10 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
-                                                                     range:selectedTextRange
-                                                                     color:[textField textColor]];
-    
-    [textField setAttributedStringValue:newString];
+    [textField.attributedStringValue removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
+                                                           range:selectedTextRange
+                                                           color:DefaultTextFieldFontColor
+                                                          source:&textField];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -338,12 +337,10 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-                                                                     range:selectedTextRange
-                                                                     color:[textField textColor]];
-    
-    [textField setAttributedStringValue:newString];
+    [textField.attributedStringValue removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
+                                                           range:selectedTextRange
+                                                           color:DefaultTextFieldFontColor
+                                                          source:&textField];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -355,18 +352,10 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = nil;
-    
-    newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-                                                 range:selectedTextRange
-                                                 color:[textField textColor]];
-    
-    newString = [newString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect 
-                                                 range:selectedTextRange
-                                                 color:[textField textColor]];
-    
-    [textField setAttributedStringValue:newString];
+    [textField.attributedStringValue removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
+                                                           range:selectedTextRange
+                                                           color:DefaultTextFieldFontColor
+                                                          source:&textField];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];
@@ -378,12 +367,10 @@
     NSRange selectedTextRange = [textField selectedRange];
     if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) return;
     
-    NSAttributedString *oldString = [textField attributedStringValue];
-    NSAttributedString *newString = [oldString removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                                                     range:selectedTextRange
-                                                                     color:[textField textColor]];
-    
-    [textField setAttributedStringValue:newString];
+    [textField.attributedStringValue removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
+                                                           range:selectedTextRange
+                                                           color:DefaultTextFieldFontColor
+                                                          source:&textField];
     
     if ([textField respondsToSelector:@selector(focus)]) {
         [textField performSelector:@selector(focus)];

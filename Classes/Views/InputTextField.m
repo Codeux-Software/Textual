@@ -176,6 +176,8 @@
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
 {
+    NSLog(@"%@", NSStringFromSelector(aSelector));
+    
     if (aSelector == @selector(insertNewline:)) {
         [_actionTarget performSelector:_actonSelector];
         
