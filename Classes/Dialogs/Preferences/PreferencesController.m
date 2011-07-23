@@ -519,14 +519,14 @@
 {
 	[keywordsArrayController add:nil];
 	
-	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0];
+	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.3];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
 	[excludeWordsArrayController add:nil];
 	
-	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
+	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.3];
 }
 
 - (void)onInputHistorySchemeChanged:(id)sender
