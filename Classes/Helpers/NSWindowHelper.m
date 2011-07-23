@@ -50,42 +50,6 @@
 	}	
 }
 
-- (id)selectedFieldEditor
-{
-	id responder = [self firstResponder];
-	
-	if ([self attachedSheet]) {
-		responder = [[self attachedSheet] firstResponder];
-	}
-	
-	if ([responder isKindOfClass:[NSTextView class]]) {
-		return responder;
-	}
-	
-	return nil;
-}
-
-- (id)selectedTextField
-{
-	id field	 = nil;
-	id responder = [self selectedFieldEditor];
-	
-	if ([responder respondsToSelector:@selector(delegate)]) {
-		field = [responder delegate];
-		
-		if ([field respondsToSelector:@selector(setStringValue:)]) {
-			return field;
-		}
-	}
-	
-	return nil;
-}
-
-- (BOOL)hasAttachedSheet
-{
-	return BOOLValueFromObject([self attachedSheet]);
-}
-
 - (BOOL)isOnCurrentWorkspace
 {
 	return ([self isOnActiveSpace] && [self isVisible] && [NSApp keyWindow] == self);

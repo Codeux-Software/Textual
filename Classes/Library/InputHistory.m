@@ -30,7 +30,7 @@
 	pos = buf.count;
 	
 	if (NSObjectIsEmpty(s)) return;
-	if ([[[buf lastObject] string] isEqualToString:[s string]]) return;
+	if ([buf.lastObject isEqualToAttributedString:s]) return;
 	
 	[buf safeAddObject:s];
 	
@@ -50,7 +50,7 @@
 			cur = [buf safeObjectAtIndex:pos];
 		}
 		
-		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
+		if (NSObjectIsEmpty(cur) || [cur isEqualToAttributedString:s] == NO) {
 			[buf safeAddObject:s];
 			
 			if (buf.count > INPUT_HISTORY_MAX) {
@@ -88,7 +88,7 @@
 		cur = [buf safeObjectAtIndex:pos];
 	}
 
-	if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
+	if (NSObjectIsEmpty(cur) || [cur isEqualToAttributedString:s] == NO) {
 		[self add:s];
 		
 		return [NSAttributedString emptyString];

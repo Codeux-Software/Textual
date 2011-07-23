@@ -142,46 +142,43 @@ NSColor *mapColorCode(NSInteger colorChar)
 	return nil;
 }
 
-static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len)
+static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len, NSFont *font)
 {
 	NSRange r = NSMakeRange(start, len);
 	
 	if (attr & EFFECT_MASK) {
-		NSFont *boldItalic = [NSFont fontWithName:@"Lucida Grande" size:12.0];
+		NSFont *boldItalic = font;
 		
 		if (attr & BOLD_ATTR) {
 			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
-			
-			[body addAttribute:IRCTextFormatterBoldAttributeName value:NSNumberWithBOOL(YES) range:r];
 		}
 		
 		if (attr & ITALIC_ATTR) {
-			boldItalic = [boldItalic convertToItalics];
-			
-			[body addAttribute:IRCTextFormatterItalicAttributeName value:NSNumberWithBOOL(YES) range:r];
-		}
+			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSItalicFontMask];
+            
+            if ([boldItalic fontTraitSet:NSItalicFontMask] == NO) {
+                boldItalic = [boldItalic convertToItalics];
+            }
+        }
 		
 		if (boldItalic) {
 			[body addAttribute:NSFontAttributeName value:boldItalic range:r];
 		}
 		
 		if (attr & UNDERLINE_ATTR) {
-			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:NSNumberWithBOOL(YES)					range:r];
-			[body addAttribute:NSUnderlineStyleAttributeName		  value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
+			[body addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
 		}
 		
 		if (attr & TEXT_COLOR_ATTR) {
 			NSInteger colorCode = (attr & TEXT_COLOR_MASK);
 			
-			[body addAttribute:NSForegroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
-			[body addAttribute:IRCTextFormatterForegroundColorAttributeName value:NSNumberWithInteger(colorCode) range:r];
+			[body addAttribute:NSForegroundColorAttributeName value:mapColorCode(colorCode) range:r];
 		}
 		
 		if (attr & BACKGROUND_COLOR_ATTR) {
 			NSInteger colorCode = ((attr & BACKGROUND_COLOR_MASK) >> 4);
 			
-			[body addAttribute:NSBackgroundColorAttributeName				value:mapColorCode(colorCode)				 range:r];
-			[body addAttribute:IRCTextFormatterBackgroundColorAttributeName value:NSNumberWithInteger(colorCode) range:r];
+			[body addAttribute:NSBackgroundColorAttributeName value:mapColorCode(colorCode) range:r];
 		}
 	}
 	
@@ -269,6 +266,8 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	
 	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
+    
+    NSFont *attributedStringFont = [inputDictionary objectForKey:@"attributedStringFont"];
 	
 	NSInteger len	= [body length];
 	NSInteger start = 0;
@@ -691,7 +690,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		attr_t t = attrBuf[start];
 		
 		if (drawingType == ASCII_TO_ATTRIBUTED_STRING) {
-			result = renderAttributedRange(result, t, start, n);	
+			result = renderAttributedRange(result, t, start, n, attributedStringFont);	
 		} else {
 			[result appendString:renderRange(body, t, start, n, log)];
 		}
