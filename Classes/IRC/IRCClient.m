@@ -450,41 +450,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return nil;
 }
 
-- (NSString *)truncateTextForIRC:(NSMutableString **)string lineType:(LogLineType)type channel:(NSString *)chan 
-{
-	NSMutableString *base = *string;
-	
-	NSString *new  = [base copy];
-	
-	NSInteger stringl  = new.length;
-	NSInteger baseMath = (chan.length + myHost.length + 14); 
-	
-	[new autodrain];
-	
-	if ((stringl + baseMath) > IRC_BODY_LEN) {
-		stringl = (IRC_BODY_LEN - baseMath);
-		
-		new = [new safeSubstringToIndex:stringl];
-		
-		NSRange currentRange  = NSMakeRange(0, stringl);
-		NSRange maxSpaceRange = NSMakeRange((stringl - 40), 40); 
-		NSRange spaceRange    = [new rangeOfString:NSWhitespaceCharacter options:NSBackwardsSearch range:maxSpaceRange]; 
-		
-		if (NSDissimilarObjects(spaceRange.location, NSNotFound)) {
-			currentRange.length = (stringl - (stringl - spaceRange.location));
-		}
-		
-		[base safeDeleteCharactersInRange:currentRange];
-		
-		return [new safeSubstringWithRange:currentRange];
-	} else {
-		[base safeDeleteCharactersInRange:NSMakeRange(0, new.length)];
-	}
-	
-	*string = base;
-	
-	return new;
-}
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(LogLineType)type
 {
@@ -1323,7 +1288,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         NSMutableArray  *args  = [NSMutableArray array];
         NSString        *input = [details valueForKey:@"input"];
         
-        for (NSString *i in [input componentsSeparatedByString:@" "]) {
+        for (NSString *i in [input componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]) {
             [args addObject:i];
         }
         
@@ -1377,7 +1342,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Sending Text
 
-- (BOOL)inputText:(NSString *)str command:(NSString *)command
+- (BOOL)inputText:(id)str command:(NSString *)command
 {
 	if (isConnected == NO) {
 		if (NSObjectIsEmpty(str)) {
@@ -1387,29 +1352,39 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	id sel = world.selected;
 	
-	if (PointerIsEmpty(sel)) return NO;
+	if (PointerIsEmpty(sel)) {
+        return NO;
+    }
 	
-	NSArray *lines = [str splitIntoLines];
+    if ([str isKindOfClass:[NSString class]]) {
+        str = [NSAttributedString emptyStringWithBase:str];
+    }
+    
+    NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 	
-	for (NSString *s in lines) {
-		if (NSObjectIsEmpty(s)) continue;
+	for (NSAttributedString *s in lines) {
+		if (NSObjectIsEmpty(s)) {
+            continue;
+        }
+        
+        NSRange chopRange = NSMakeRange(1, (s.string.length - 1));
 		
 		if ([sel isClient]) {
-			if ([s hasPrefix:@"/"]) {
-				s = [s safeSubstringFromIndex:1];
+			if ([s.string hasPrefix:@"/"]) {
+                s = [s attributedSubstringFromRange:chopRange];
 			}
 			
 			[self sendCommand:s];
 		} else {
 			IRCChannel *channel = (IRCChannel *)sel;
 			
-			if ([s hasPrefix:@"/"] && [s hasPrefix:@"//"] == NO) {
-				s = [s safeSubstringFromIndex:1];
+			if ([s.string hasPrefix:@"/"] && [s.string hasPrefix:@"//"] == NO) {
+                s = [s attributedSubstringFromRange:chopRange];
 				
 				[self sendCommand:s];
 			} else {
-				if ([s hasPrefix:@"/"]) {
-					s = [s safeSubstringFromIndex:1];
+				if ([s.string hasPrefix:@"/"]) {
+                    s = [s attributedSubstringFromRange:chopRange];
 				}
 				
 				[self sendText:s command:command channel:channel];
@@ -1422,12 +1397,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
 {
-	[self sendText:message command:IRCCI_PRIVMSG channel:[world selectedChannelOn:self]];
+    NSAttributedString *new = [NSAttributedString emptyStringWithBase:message];
+    
+	[self sendText:new command:IRCCI_PRIVMSG channel:[world selectedChannelOn:self]];
 }
 
-- (void)sendText:(NSString *)str command:(NSString *)command channel:(IRCChannel *)channel
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel
 {
-	if (NSObjectIsEmpty(str)) return;
+	if (NSObjectIsEmpty(str)) {
+        return;
+    }
 	
 	LogLineType type;
 	
@@ -1440,18 +1419,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if ([[world bundlesForUserInput] containsKey:command]) {
-		[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:str, nil, nil]];
+		[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:str.string, nil, nil]];
 	}
 	
-	NSArray *lines = [str splitIntoLines];
+	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 	
-	for (NSString *line in lines) {
-		if (NSObjectIsEmpty(line)) continue;
+	for (NSAttributedString *line in lines) {
+		if (NSObjectIsEmpty(line)) {
+            continue;
+        }
 		
-		NSMutableString *str = [line mutableCopy];
+        NSMutableAttributedString *str = [line mutableCopy];
 		
 		while (NSObjectIsNotEmpty(str)) {
-			NSString *newstr = [self truncateTextForIRC:&str lineType:type channel:channel.name];
+            NSString *newstr = [str attributedStringToASCIIFormatting:&str lineType:type channel:channel.name hostmask:myHost];
 			
 			[self printBoth:channel type:type nick:myNick text:newstr identified:YES];
 			
@@ -1463,6 +1444,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (type == LINE_TYPE_ACTION) {
 				cmd = IRCCI_PRIVMSG;
+                
 				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCCI_ACTION, newstr, 0x01];
 			} else if (type == LINE_TYPE_PRIVMSG) {
 				[channel detectOutgoingConversation:newstr];
@@ -1506,26 +1488,38 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self sendCTCPQuery:target command:IRCCI_PING text:[NSString stringWithFloat:CFAbsoluteTimeGetCurrent()]];
 }
 
-- (BOOL)sendCommand:(NSString *)s
+- (BOOL)sendCommand:(id)str
 {
-	return [self sendCommand:s completeTarget:YES target:nil];
+	return [self sendCommand:str completeTarget:YES target:nil];
 }
 
-- (BOOL)sendCommand:(NSString *)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName
+- (BOOL)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName
 {
-	NSMutableString *s = [[str mutableCopy] autodrain];
+    NSMutableAttributedString *s;
+    
+    s = [NSMutableAttributedString alloc];
+    
+    if ([str isKindOfClass:[NSString class]]) {
+        s = [s initWithString:str];
+    } else {
+        if ([str isKindOfClass:[NSAttributedString class]]) {
+            s = [s initWithAttributedString:str];
+        }
+    }
+    
+    s = [s autodrain];
 	
-	NSString *cmd = [[s getToken] uppercaseString];
+	NSString *cmd = [s.getToken.string uppercaseString];
 	
 	if (NSObjectIsEmpty(cmd)) return NO;
 	if (NSObjectIsEmpty(str)) return NO;
 	
-	IRCClient *u = [world selectedClient];
+	IRCClient  *u = [world selectedClient];
 	IRCChannel *c = [world selectedChannel];
 	
 	IRCChannel *selChannel = nil;
 	
-	if ([cmd isEqualToString:IRCCI_MODE] && ([s hasPrefix:@"+"] || [s hasPrefix:@"-"]) == NO) {
+	if ([cmd isEqualToString:IRCCI_MODE] && ([s.string hasPrefix:@"+"] || [s.string hasPrefix:@"-"]) == NO) {
 		// do not complete for /mode #chname ...
 	} else if (completeTarget && targetChannelName) {
 		selChannel = [self findChannel:targetChannelName];
@@ -1535,29 +1529,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	BOOL cutColon = NO;
 	
-	if ([s hasPrefix:@"/"]) {
+	if ([s.string hasPrefix:@"/"]) {
 		cutColon = YES;
 		
-		[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
+        [s deleteCharactersInRange:NSMakeRange(0, 1)];
 	}
 	
 	switch ([Preferences commandUIndex:cmd]) {
 		case 3: // Command: AWAY
 		{
+            NSString *msg = s.string;
+            
 			if (NSObjectIsEmpty(s) && cutColon == NO) {
-				s = ((isAway == NO) ? (NSMutableString *)TXTLS(@"IRC_AWAY_COMMAND_DEFAULT_REASON") : nil);
+                if (isAway == NO) {
+                    msg = TXTLS(@"IRC_AWAY_COMMAND_DEFAULT_REASON");
+                }
 			}
 			
 			if ([Preferences awayAllConnections]) {
 				for (IRCClient *u in [world clients]) {
-					if (isConnected == NO) continue;
+					if (u.isConnected == NO) continue;
 					
-					[[u client] send:cmd, s, nil];
+					[u.client send:cmd, msg, nil];
 				}
 			} else {
 				if (isConnected == NO) return NO;
 				
-				[self send:cmd, s, nil];
+				[self send:cmd, msg, nil];
 			}
 			
 			return YES;
@@ -1565,13 +1563,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 5: // Command: INVITE
 		{
-			targetChannelName = [s getToken];
+            if (NSObjectIsEmpty(s)) {
+                return NO;
+            }
+            
+			targetChannelName = s.getToken.string;
 			
-			if (NSObjectIsEmpty(s) && cutColon == NO) {
-				s = nil;
-			}
-			
-			[self send:cmd, [targetChannelName trim], [s trim], nil];
+			if (NSObjectIsEmpty(s)) {
+                [self send:cmd, targetChannelName, myNick, nil];
+			} else {
+                [self send:cmd, targetChannelName, [s.string trim], nil];
+            }
 			
 			return YES;
 			break;
@@ -1582,15 +1584,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (selChannel && selChannel.isChannel && NSObjectIsEmpty(s)) {
 				targetChannelName = selChannel.name;
 			} else {
-				targetChannelName = [s getToken];
+                if (NSObjectIsEmpty(s)) {
+                    return NO;
+                }
+                
+				targetChannelName = s.getToken.string;
 				
 				if ([targetChannelName isChannelName] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
-			}
-			
-			if (NSObjectIsEmpty(s) && cutColon == NO) {
-				s = nil;
 			}
 			
 			[self send:IRCCI_JOIN, targetChannelName, s, nil];
@@ -1600,16 +1602,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 8: // Command: KICK
 		{
-			if (selChannel && selChannel.isChannel && [s isModeChannelName] == NO) {
+			if (selChannel && selChannel.isChannel) {
 				targetChannelName = selChannel.name;
 			} else {
-				targetChannelName = [s getToken];
+                if (NSObjectIsEmpty(s)) {
+                    return NO;
+                }
+                
+				targetChannelName = s.getToken.string;
 			}
 			
-			NSString *peer = [s getToken];
+			NSString *peer = s.getToken.string;
 			
 			if (peer) {
-				NSString *reason = [s trim];
+				NSString *reason = [s.string trim];
 				
 				if (NSObjectIsEmpty(reason)) {
 					reason = [Preferences defaultKickMessage];
@@ -1623,10 +1629,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 9: // Command: KILL
 		{
-			NSString *peer = [s getToken];
+			NSString *peer = s.getToken.string;
 			
 			if (peer) {
-				NSString *reason = [s trim];
+				NSString *reason = [s.string trim];
 				
 				if (NSObjectIsEmpty(reason)) {
 					reason = [Preferences IRCopDefaultKillMessage];
@@ -1651,13 +1657,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 13: // Command: NICK
 		{
-			NSString *newnick = [s getToken];
+			NSString *newnick = s.getToken.string;
 			
 			if ([Preferences nickAllConnections]) {
 				for (IRCClient *u in [world clients]) {
 					if ([u isConnected] == NO) continue;
 					
-					[[u client] changeNick:newnick];
+					[u.client changeNick:newnick];
 				}
 			} else {
 				if (isConnected == NO) return NO;
@@ -1678,22 +1684,26 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 92: // Command: SME
 		case 93: // Command: SMSG
 		{
-			BOOL opMsg = NO;
-			BOOL secretMsg = NO;
+			BOOL opMsg      = NO;
+			BOOL secretMsg  = NO;
 			
 			if ([cmd isEqualToString:IRCCI_MSG]) {
 				cmd = IRCCI_PRIVMSG;
 			} else if ([cmd isEqualToString:IRCCI_OMSG]) {
 				opMsg = YES;
+                
 				cmd = IRCCI_PRIVMSG;
 			} else if ([cmd isEqualToString:IRCCI_ONOTICE]) {
 				opMsg = YES;
+                
 				cmd = IRCCI_NOTICE;
 			} else if ([cmd isEqualToString:IRCCI_SME]) {
 				secretMsg = YES;
+                
 				cmd = IRCCI_ME;
 			} else if ([cmd isEqualToString:IRCCI_SMSG]) {
 				secretMsg = YES;
+                
 				cmd = IRCCI_PRIVMSG;
 			} 
 			
@@ -1702,13 +1712,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[cmd isEqualToString:IRCCI_ACTION]) {
 				
 				if (opMsg) {
-					if (selChannel && selChannel.isChannel && [s isChannelName] == NO) {
+					if (selChannel && selChannel.isChannel && [s.string isChannelName] == NO) {
 						targetChannelName = selChannel.name;
 					} else {
-						targetChannelName = [s getToken];
+						targetChannelName = s.getToken.string;
 					}
 				} else {
-					targetChannelName = [s getToken];
+					targetChannelName = s.getToken.string;
 				}
 			} else if ([cmd isEqualToString:IRCCI_ME]) {
 				cmd = IRCCI_ACTION;
@@ -1716,46 +1726,49 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if (selChannel) {
 					targetChannelName = selChannel.name;
 				} else {
-					targetChannelName = [s getToken];
+					targetChannelName = s.getToken.string;
 				}
 			}
 			
 			if ([cmd isEqualToString:IRCCI_PRIVMSG] || [cmd isEqualToString:IRCCI_NOTICE]) {
-				if ([s hasPrefix:@"\x01"]) {
+				if ([s.string hasPrefix:@"\x01"]) {
 					cmd = (([cmd isEqualToString:IRCCI_PRIVMSG]) ? IRCCI_CTCP : IRCCI_CTCPREPLY);
 					
-					[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
+                    [s deleteCharactersInRange:NSMakeRange(0, 1)];
 					
-					NSRange r = [s rangeOfString:@"\x01"];
+					NSRange r = [s.string rangeOfString:@"\x01"];
 					
 					if (NSDissimilarObjects(r.location, NSNotFound)) {
 						NSInteger len = (s.length - r.location);
 						
 						if (len > 0) {
-							[s safeDeleteCharactersInRange:NSMakeRange(r.location, len)];
+                            [s deleteCharactersInRange:NSMakeRange(r.location, len)];
 						}
 					}
 				}
 			}
 			
 			if ([cmd isEqualToString:IRCCI_CTCP]) {
-				NSMutableString *t = [[s mutableCopy] autodrain];
-				NSString *subCommand = [[t getToken] uppercaseString];
+                NSMutableAttributedString *t = [s.mutableCopy autodrain];
+				
+                NSString *subCommand = [t.getToken.string uppercaseString];
 				
 				if ([subCommand isEqualToString:IRCCI_ACTION]) {
 					cmd = IRCCI_ACTION;
+                    
 					s = t;
-					targetChannelName = [s getToken];
+                    
+					targetChannelName = s.getToken.string;
 				} else {
-					NSString *subCommand = [[s getToken] uppercaseString];
+					NSString *subCommand = [s.getToken.string uppercaseString];
 					
 					if (NSObjectIsNotEmpty(subCommand)) {
-						targetChannelName = [s getToken];
+						targetChannelName = s.getToken.string;
 						
 						if ([subCommand isEqualToString:IRCCI_PING]) {
 							[self sendCTCPPing:targetChannelName];
 						} else {
-							[self sendCTCPQuery:targetChannelName command:subCommand text:s];
+							[self sendCTCPQuery:targetChannelName command:subCommand text:s.string];
 						}
 					}
 					
@@ -1764,11 +1777,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if ([cmd isEqualToString:IRCCI_CTCPREPLY]) {
-				targetChannelName = [s getToken];
+				targetChannelName = s.getToken.string;
 				
-				NSString *subCommand = [s getToken];
+				NSString *subCommand = s.getToken.string;
 				
-				[self sendCTCPReply:targetChannelName command:subCommand text:s];
+				[self sendCTCPReply:targetChannelName command:subCommand text:s.string];
 				
 				return YES;
 			}
@@ -1777,7 +1790,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[cmd isEqualToString:IRCCI_NOTICE] || 
 				[cmd isEqualToString:IRCCI_ACTION]) {
 				
-				if (NSObjectIsEmpty(s)) return NO;
+				if (NSObjectIsEmpty(s))                 return NO;
 				if (NSObjectIsEmpty(targetChannelName)) return NO;
 				
 				LogLineType type;
@@ -1789,18 +1802,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				} else {
 					type = LINE_TYPE_PRIVMSG;
 				}
-				
+                
 				while (NSObjectIsNotEmpty(s)) {
 					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
-					NSString *t = [self truncateTextForIRC:&s lineType:type channel:targetChannelName];
+                    
+                    NSString *t = [str attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:myHost];
 					
 					for (NSString *chname in targets) {
-						if (NSObjectIsEmpty(chname)) continue;
+						if (NSObjectIsEmpty(chname)) {
+                            continue;
+                        }
 						
 						BOOL opPrefix = NO;
 						
 						if ([chname hasPrefix:@"@"]) {
 							opPrefix = YES;
+                            
 							chname = [chname safeSubstringFromIndex:1];
 						}
 						
@@ -1855,18 +1872,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 15: // Command: PART
 		case 52: // Command: LEAVE
 		{
-			if (selChannel && selChannel.isChannel && [s isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [s.string isChannelName] == NO) {
 				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isTalk && [s isChannelName] == NO) {
+			} else if (selChannel && selChannel.isTalk && [s.string isChannelName] == NO) {
 				[world destroyChannel:selChannel];
 				
 				return YES;
 			} else {
-				targetChannelName = [s getToken];
+				targetChannelName = s.getToken.string;
 			}
 			
 			if (targetChannelName) {
-				NSString *reason = [s trim];
+				NSString *reason = [s.string trim];
 				
 				if (NSObjectIsEmpty(s) && cutColon == NO) {
 					reason = [config leavingComment];
@@ -1880,7 +1897,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 20: // Command: QUIT
 		{
-			[self quit:[s trim]];
+			[self quit:s.string.trim];
 			
 			return YES;
 			break;
@@ -1888,21 +1905,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 21: // Command: TOPIC
 		case 61: // Command: T
 		{
-			if (selChannel && selChannel.isChannel && [s isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [s.string isChannelName] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
-				targetChannelName = [s getToken];
+				targetChannelName = s.getToken.string;
 			}
 			
 			if (targetChannelName) {
-				if (NSObjectIsEmpty(s) && cutColon == NO) {
-					s = nil;
+                NSString *topic = s.string;
+                
+				if (NSObjectIsEmpty(topic)) {
+					topic = nil;
 				}
 				
 				IRCChannel *c = [self findChannel:targetChannelName];
 				
-				if ([self encryptOutgoingMessage:&s channel:c] == YES) {
-					[self send:IRCCI_TOPIC, targetChannelName, s, nil];
+				if ([self encryptOutgoingMessage:&topic channel:c] == YES) {
+					[self send:IRCCI_TOPIC, targetChannelName, topic, nil];
 				}
 			}
 			
@@ -1913,17 +1932,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			inWhoInfoRun = YES;
 			
-			[self send:IRCCI_WHO, s, nil];
+			[self send:IRCCI_WHO, s.string, nil];
 			
 			return YES;
 			break;
 		}
 		case 24: // Command: WHOIS
 		{
-			if ([s contains:NSWhitespaceCharacter]) {
-				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, s]];
+			if ([s.string contains:NSWhitespaceCharacter]) {
+				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, s.string]];
 			} else {
-				[self send:IRCCI_WHOIS, s, s, nil];
+				[self send:IRCCI_WHOIS, s.string, s.string, nil];
 			}
 			
 			return YES;
@@ -1931,15 +1950,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 32: // Command: CTCP
 		{ 
-			NSString *subCommand = [[s getToken] uppercaseString];
+			NSString *subCommand = [s.getToken.string uppercaseString];
 			
 			if (NSObjectIsNotEmpty(subCommand)) {
-				targetChannelName = [s getToken];
+				targetChannelName = s.getToken.string;
 				
 				if ([subCommand isEqualToString:IRCCI_PING]) {
 					[self sendCTCPPing:targetChannelName];
 				} else {
-					[self sendCTCPQuery:targetChannelName command:subCommand text:s];
+					[self sendCTCPQuery:targetChannelName command:subCommand text:s.string];
 				}
 			}
 			
@@ -1948,11 +1967,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 33: // Command: CTCPREPLY
 		{
-			targetChannelName = [s getToken];
+			targetChannelName = s.getToken.string;
 			
-			NSString *subCommand = [s getToken];
+			NSString *subCommand = s.getToken.string;
 			
-			[self sendCTCPReply:targetChannelName command:subCommand text:s];
+			[self sendCTCPReply:targetChannelName command:subCommand text:s.string];
 			
 			return YES;
 			break;
@@ -1961,10 +1980,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 64: // Command: UNBAN
 		{
 			if (c) {
-				NSString *peer = [s getToken];
+				NSString *peer = s.getToken.string;
 				
 				if (peer) {
 					IRCUser *user = [c findMember:peer];
+                    
 					NSString *host = ((user) ? [user banMask] : peer);
 					
 					if ([cmd isEqualToString:IRCCI_BAN]) {
@@ -1993,46 +2013,51 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if ([cmd isEqualToString:IRCCI_MODE]) {
-				if (selChannel && selChannel.isChannel && [s isModeChannelName] == NO) {
+				if (selChannel && selChannel.isChannel && [s.string isModeChannelName] == NO) {
 					targetChannelName = selChannel.name;
-				} else if (([s hasPrefix:@"+"] || [s hasPrefix:@"-"]) == NO) {
-					targetChannelName = [s getToken];
+				} else if (([s.string hasPrefix:@"+"] || [s.string hasPrefix:@"-"]) == NO) {
+					targetChannelName = s.getToken.string;
 				}
 			} else if ([cmd isEqualToString:IRCCI_UMODE]) {
-				[s insertString:NSWhitespaceCharacter atIndex:0];
-				[s insertString:myNick atIndex:0];
+                [s insertAttributedString:[NSAttributedString emptyStringWithBase:NSWhitespaceCharacter] atIndex:0];
+                [s insertAttributedString:[NSAttributedString emptyStringWithBase:myNick]                atIndex:0];
 			} else {
-				if (selChannel && selChannel.isChannel && [s isModeChannelName] == NO) {
+				if (selChannel && selChannel.isChannel && [s.string isModeChannelName] == NO) {
 					targetChannelName = selChannel.name;
 				} else {
-					targetChannelName = [s getToken];
+					targetChannelName = s.getToken.string;
 				}
 				
 				NSString *sign;
 				
 				if ([cmd hasPrefix:@"DE"] || [cmd hasPrefix:@"UN"]) {
 					sign = @"-";
+                    
 					cmd = [cmd safeSubstringFromIndex:2];
 				} else {
 					sign = @"+";
 				}
 				
-				NSArray *params = [s componentsSeparatedByString:NSWhitespaceCharacter];
+				NSArray *params = [s.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 				
 				if (NSObjectIsEmpty(params)) {
 					return YES;
 				} else {
 					NSMutableString *ms = [NSMutableString stringWithString:sign];
-					NSString *modeCharStr = [[cmd safeSubstringToIndex:1] lowercaseString];
+                    
+					NSString *modeCharStr;
 					
+                    modeCharStr = [cmd safeSubstringToIndex:1];
+                    modeCharStr = [modeCharStr lowercaseString];
+                    
 					for (NSInteger i = (params.count - 1); i >= 0; --i) {
 						[ms appendString:modeCharStr];
 					}
 					
 					[ms appendString:NSWhitespaceCharacter];
-					[ms appendString:s];
+					[ms appendString:s.string];
 					
-					[s setString:ms];
+                    [s setAttributedString:[NSAttributedString emptyStringWithBase:ms]];
 				}
 			}
 			
@@ -2047,7 +2072,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (NSObjectIsNotEmpty(s)) {
 				[line appendString:NSWhitespaceCharacter];
-				[line appendString:s];
+				[line appendString:s.string];
 			}
 			
 			[self sendLine:line];
@@ -2080,7 +2105,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 43: // Command: CLOSE
 		case 77: // Command: REMOVE
 		{
-			NSString *nick = [s getToken];
+			NSString *nick = s.getToken.string;
 			
 			if (NSObjectIsNotEmpty(nick)) {
 				c = [self findChannel:nick];
@@ -2117,7 +2142,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (NSObjectIsEmpty(s)) {
 				[world.menuController showServerPropertyDialog:self ignore:@"-"];
 			} else {
-				NSString *n = [s getToken];
+				NSString *n = s.getToken.string;
+                
 				IRCUser  *u = [c findMember:n];
 				
 				if (PointerIsEmpty(u)) {
@@ -2131,14 +2157,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				AddressBook *g = [AddressBook newad];
 				
 				g.hostmask = hostmask;
-				g.ignorePublicMsg = YES;
-				g.ignorePrivateMsg = YES;
-				g.ignoreHighlights = YES;
-				g.ignorePMHighlights = YES;
-				g.ignoreNotices = YES;
-				g.ignoreCTCP = YES;
-				g.ignoreJPQE = YES;
-				g.notifyJoins = NO;
+                
+				g.ignorePublicMsg       = YES;
+				g.ignorePrivateMsg      = YES;
+				g.ignoreHighlights      = YES;
+				g.ignorePMHighlights    = YES;
+				g.ignoreNotices         = YES;
+				g.ignoreCTCP            = YES;
+				g.ignoreJPQE            = YES;
+				g.notifyJoins           = NO;
 				
 				[g processHostMaskRegex];
 				
@@ -2148,12 +2175,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					for (AddressBook *e in config.ignores) {
 						if ([g.hostmask isEqualToString:e.hostmask]) {
 							found = YES;
+                            
 							break;
 						}
 					}
 					
 					if (found == NO) {
 						[config.ignores safeAddObject:g];
+                        
 						[world save];
 					}
 				} else {
@@ -2179,14 +2208,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 57: // Command: RAW
 		case 60: // Command: QUOTE
 		{
-			[self sendLine:s];
+			[self sendLine:s.string];
 			
 			return YES;
 			break;
 		}
 		case 59: // Command: QUERY
 		{
-			NSString *nick = [s getToken];
+			NSString *nick = s.getToken.string;
 			
 			if (NSObjectIsEmpty(nick)) {
 				if (c && c.isTalk) {
@@ -2203,18 +2232,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 62: // Command: TIMER
 		{	
-			NSInteger interval = [[s getToken] integerValue];
+			NSInteger interval = [s.getToken.string integerValue];
 			
 			if (interval > 0) {
 				TimerCommand *cmd = [TimerCommand newad];
 				
-				if ([s hasPrefix:@"/"]) {
-					[s safeDeleteCharactersInRange:NSMakeRange(0, 1)];
+				if ([s.string hasPrefix:@"/"]) {
+                    [s deleteCharactersInRange:NSMakeRange(0, 1)];
 				}
 				
-				cmd.input = s;
-				cmd.time = (CFAbsoluteTimeGetCurrent() + interval);
-				cmd.cid = ((c) ? c.uid : -1);
+				cmd.input = s.string;
+				cmd.time  = (CFAbsoluteTimeGetCurrent() + interval);
+				cmd.cid   = ((c) ? c.uid : -1);
 				
 				[self addCommandToCommandQueue:cmd];
 			} else {
@@ -2244,16 +2273,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 69: // Command: ECHO
 		case 70: // Command: DEBUG
 		{
-			if ([s isEqualNoCase:@"raw on"]) {
+			if ([s.string isEqualNoCase:@"raw on"]) {
 				rawModeEnabled = YES;
 				
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_ENABLED")];
-			} else if ([s isEqualNoCase:@"raw off"]) {
+			} else if ([s.string isEqualNoCase:@"raw off"]) {
 				rawModeEnabled = NO;	
 				
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_RAW_MODE_IS_DISABLED")];
 			} else {
-				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:s];
+				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:s.string];
 			}
 			
 			return YES;
@@ -2294,14 +2323,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 72: // Command: AMSG
 		{
+            [s insertAttributedString:[NSAttributedString emptyStringWithBase:@"MSG "] atIndex:0];
+            
 			if ([Preferences amsgAllConnections]) {
 				for (IRCClient *u in [world clients]) {
 					if ([u isConnected] == NO) continue;
 					
 					for (IRCChannel *c in [u channels]) {
 						c.isUnread = YES;
-						
-						[[u client] sendCommand:[NSString stringWithFormat:@"MSG %@ %@", c.name, s] completeTarget:YES target:c.name];
+                        
+						[u.client sendCommand:s completeTarget:YES target:c.name];
 					}
 				}
 			} else {
@@ -2309,8 +2340,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				for (IRCChannel *c in channels) {
 					c.isUnread = YES;
-					
-					[self sendCommand:[NSString stringWithFormat:@"MSG %@ %@", c.name, s] completeTarget:YES target:c.name];
+                    
+					[self sendCommand:s completeTarget:YES target:c.name];
 				}
 			}
 			
@@ -2321,6 +2352,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 73: // Command: AME
 		{
+            [s insertAttributedString:[NSAttributedString emptyStringWithBase:@"ME "] atIndex:0];
+            
 			if ([Preferences amsgAllConnections]) {
 				for (IRCClient *u in [world clients]) {
 					if ([u isConnected] == NO) continue;
@@ -2328,7 +2361,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					for (IRCChannel *c in [u channels]) {
 						c.isUnread = YES;
 						
-						[[u client] sendCommand:[NSString stringWithFormat:@"ME %@", s] completeTarget:YES target:c.name];
+						[u.client sendCommand:s completeTarget:YES target:c.name];
 					}
 				}
 			} else {
@@ -2337,7 +2370,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				for (IRCChannel *c in channels) {
 					c.isUnread = YES;
 					
-					[self sendCommand:[NSString stringWithFormat:@"ME %@", s] completeTarget:YES target:c.name];
+                    [u.client sendCommand:s completeTarget:YES target:c.name];
 				}
 			}
 			
@@ -2350,12 +2383,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 79: // Command: KICKBAN 
 		{
 			if (c) {
-				NSString *peer = [s getToken];
+				NSString *peer = s.getToken.string;
 				
 				if (peer) {
-					NSString *reason = [s trim];
+					NSString *reason = [s.string trim];
 					
 					IRCUser *user = [c findMember:peer];
+                    
 					NSString *host = ((user) ? [user banMask] : peer);
 					
 					if (NSObjectIsEmpty(reason)) {
@@ -2372,9 +2406,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 81: // Command: ICBADGE
 		{
-			if ([s contains:NSWhitespaceCharacter] == NO) return NO;
+			if ([s.string contains:NSWhitespaceCharacter] == NO) return NO;
 			
-			NSArray *data = [s componentsSeparatedByString:NSWhitespaceCharacter];
+			NSArray *data = [s.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			
 			[DockIcon drawWithHilightCount:[data integerAtIndex:0] 
 							  messageCount:[data integerAtIndex:1]];
@@ -2385,7 +2419,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 82: // Command: SERVER
 		{
 			if (NSObjectIsNotEmpty(s)) {
-				[world createConnection:s chan:nil];
+				[world createConnection:s.string chan:nil];
 			}
 			
 			return YES;
@@ -2394,7 +2428,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 83: // Command: CONN
 		{
 			if (NSObjectIsNotEmpty(s)) {
-				[config setHost:s];
+				[config setHost:s.getToken.string];
 			}
 			
 			if (isConnected) [self quit];
@@ -2482,13 +2516,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 97: // Command: GLINE
 		case 98: // Command: GZLINE
 		{
-			NSString *peer = [s getToken];
+			NSString *peer = s.getToken.string;
 			
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
 			} else {
-				NSString *time   = [s getToken];
-				NSString *reason = s;
+				NSString *time   = s.getToken.string;
+				NSString *reason = s.string;
 				
 				if (peer) {
 					reason = [reason trim];
@@ -2517,14 +2551,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 99:  // Command: SHUN
 		case 100: // Command: TEMPSHUN
 		{
-			NSString *peer   = [s getToken];
+			NSString *peer = s.getToken.string;
 			
 			if ([peer hasPrefix:@"-"]) {
 				[self send:cmd, peer, s, nil];
 			} else {
 				if (peer) {
 					if ([cmd isEqualToString:IRCCI_TEMPSHUN]) {
-						NSString *reason = [s getToken];
+						NSString *reason = s.getToken.string;
 						
 						reason = [reason trim];
 						
@@ -2540,8 +2574,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						
 						[self send:cmd, peer, reason, nil];
 					} else {
-						NSString *time   = [s getToken];
-						NSString *reason = s;
+						NSString *time   = s.getToken.string;
+						NSString *reason = s.string;
 						
 						reason = [reason trim];
 						
@@ -2570,6 +2604,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		default:
 		{   
             NSArray  *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
+            
             NSString *scriptPath = [NSString string];
             NSString *command    = [cmd lowercaseString];
             
@@ -2601,12 +2636,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSLog(TXTLS(@"PLUGIN_COMMAND_CLASH_ERROR_MESSAGE") ,cmd);
 			} else {
 				if (pluginFound) {
-					[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s], cmd, nil]];
+					[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s.string], cmd, nil]];
 					
 					return YES;
 				} else {
 					if (scriptFound) {
-                        NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s, @"input", 
+                        NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s.string, @"input", 
                                                    NSNumberWithBOOL(completeTarget), @"completeTarget", targetChannelName, @"target", nil];
                         
                         [[self invokeInBackgroundThread] executeTextualCmdScript:inputInfo];
@@ -2617,16 +2652,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if (cutColon) {
-				[s insertString:@":" atIndex:0];
+                [s insertAttributedString:[NSAttributedString emptyStringWithBase:@":"] atIndex:0];
 			}
 			
 			if ([s length]) {
-				[s insertString:NSWhitespaceCharacter atIndex:0];
+                [s insertAttributedString:[NSAttributedString emptyStringWithBase:NSWhitespaceCharacter] atIndex:0];
 			}
 			
-			[s insertString:cmd atIndex:0];
+            [s insertAttributedString:[NSAttributedString emptyStringWithBase:cmd] atIndex:0];
 			
-			[self sendLine:s];
+			[self sendLine:s.string];
 			
 			return YES;
 			break;
@@ -3527,7 +3562,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							NSString *host = nil;
 							NSString *snick = nil;
 							
-							NSArray *chunks = [text componentsSeparatedByString:NSWhitespaceCharacter];
+							NSArray *chunks = [text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 							
 							host  = [chunks safeObjectAtIndex:(8 + match_math)];
 							snick = [chunks safeObjectAtIndex:(7 + match_math)];
@@ -4158,7 +4193,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     
     if ([command isEqualNoCase:IRCCI_CAP]) {
         if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
-            NSArray *caps = [action componentsSeparatedByString:NSWhitespaceCharacter];
+            NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
             for (NSString *cap in caps) {
                 if ([cap isEqualNoCase:@"SASL"]) {
@@ -4184,7 +4219,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             
             NSString *authString = [authenticateData base64EncodingWithLineLength:400];
             
-            NSArray *authStrings = [authString componentsSeparatedByString:@"\n"];
+            NSArray *authStrings = [authString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
             
             for (NSString *string in authStrings) {
                 [self send:IRCCI_AUTHENTICATE, string, nil];
@@ -4596,7 +4631,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (hasIRCopAccess) {
 				[self printUnknownReply:m];
 			} else {
-				NSArray *users = [[m sequence] componentsSeparatedByString:NSWhitespaceCharacter];
+				NSArray *users = [[m sequence] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 				
 				for (NSString *name in trackedUsers) {
 					NSString *langkey = nil;
@@ -4699,7 +4734,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			IRCChannel *c = [self findChannel:chname];
 			
 			if (c) {
-				NSArray *ary = [trail componentsSeparatedByString:NSWhitespaceCharacter];
+				NSArray *ary = [trail componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 				
 				for (NSString *nick in ary) {
 					nick = [nick trim];

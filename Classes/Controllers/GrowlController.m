@@ -128,7 +128,6 @@
 		}
 		case GROWL_ADDRESS_BOOK_MATCH: 
 		{
-			NSLog(@"%@", desc);
 			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
 			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
 			break;
@@ -164,7 +163,7 @@
 	[NSApp activateIgnoringOtherApps:YES];
 	
 	if ([context isKindOfClass:[NSString class]]) {
-		NSArray *ary = [context componentsSeparatedByString:NSWhitespaceCharacter];
+		NSArray *ary = [context componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 		
 		if (ary.count >= 2) {
 			NSInteger uid = [ary integerAtIndex:0];

@@ -128,7 +128,7 @@
 - (IRCTreeItem *)previouslySelectedItem;
 
 - (void)focusInputText;
-- (BOOL)inputText:(NSString *)s command:(NSString *)command;
+- (BOOL)inputText:(id)str command:(NSString *)command;
 
 - (void)markAllAsRead;
 - (void)markAllScrollbacks;

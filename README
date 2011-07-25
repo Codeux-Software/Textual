@@ -1,12 +1,11 @@
 #### Introduction ####
 
 Textual is a highly modified version of the open source project known 
-as LimeChat. The user interface is tailored towards users that have 
-used darker themes of the Windows IRC client mIRC, but lighter styles 
-are also available if necessary. The design of the client is mostly 
-based around the open standard of WebKit which means it can be easily 
-themed using CSS and JavaScript. Plugins written in Objective-C and 
-scripts written in AppleScript are also supported.
+as LimeChat. The user interface is tailored towards users that wish to
+move away from applications similar to Colloquy. Much of the app uses
+the open standard of WebKit which makes customization easy through the
+use of CSS 3 and HTML 5. Plugins written in Objective-C and scripts 
+written in AppleScript (and other languages) are also supported.
 
 #### Compiling Requirements ####
 
@@ -45,11 +44,17 @@ folder: [Project Root] -> Resources -> Documents -> Exported Documents
 
 #### License ####
 
+Note: The below mentioned license was the one in place when the source
+code for LimeChat was forked for this project. The license used by 
+LimeChat has since changed. That is why the Textual IRC Client does
+not conform to the same GPL configuration as LimeChat.
+
 The New BSD License
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
 are met:
+
 1. Redistributions of source code must retain the above copyright
 notice, this list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright

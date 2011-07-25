@@ -18,7 +18,7 @@
 		if ([Preferences rightToLeftFormatting]) {
 			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
 		} else {
-			[self setBaseWritingDirection:NSWritingDirectionNatural];
+            [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
 		}
         
         [super setTextContainerInset:NSMakeSize(DefaultTextFieldWidthPadding, DefaultTextFieldHeightPadding)];

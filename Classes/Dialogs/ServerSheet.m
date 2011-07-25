@@ -337,7 +337,7 @@
 	config.realName			= realNameText.stringValue;
 	config.nickPassword		= nickPasswordText.stringValue;
 	
-	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByString:NSWhitespaceCharacter];
+	NSArray *nicks = [altNicksText.stringValue componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	[config.altNicks removeAllObjects];
 	
@@ -363,7 +363,7 @@
 	config.proxyPassword = proxyPasswordText.stringValue;
 	
 	/* Connect Commands */
-	NSArray *commands = [loginCommandsText.string componentsSeparatedByString:NSNewlineCharacter];
+    NSArray *commands = [loginCommandsText.string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	[config.loginCommands removeAllObjects];
 	
