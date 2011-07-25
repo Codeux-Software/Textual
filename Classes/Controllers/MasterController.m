@@ -399,16 +399,14 @@
 {
 	NSAttributedString *as = [text attributedStringValue];
 	
-	NSString *s = [as attributedStringToASCIIFormatting];
-	
 	[text setAttributedStringValue:[NSAttributedString emptyString]];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
 		world.selected.inputHistory.lastHistoryItem = nil;
 	}
 	
-	if (NSObjectIsNotEmpty(s)) {
-		if ([world inputText:s command:command]) {
+	if (NSObjectIsNotEmpty(as)) {
+		if ([world inputText:as command:command]) {
 			[inputHistory add:as];
 		}
 	}
@@ -613,7 +611,7 @@
 	if ([Preferences rightToLeftFormatting]) {
 		[text setBaseWritingDirection:NSWritingDirectionRightToLeft];
 	} else {
-		[text setBaseWritingDirection:NSWritingDirectionNatural];
+		[text setBaseWritingDirection:NSWritingDirectionLeftToRight];
 	}
 	
 	sf = (NSMutableString *)[sf trim];
@@ -1151,6 +1149,10 @@ typedef enum {
         [text setAttributedStringValue:s];
 		
 		[world focusInputText];
+        
+        if ([text respondsToSelector:@selector(resetTextFieldCellSize)]) {
+            [text resetTextFieldCellSize];
+        }
 	}
 }
 
@@ -1162,6 +1164,10 @@ typedef enum {
         [text setAttributedStringValue:s];
 		
 		[world focusInputText];
+        
+        if ([text respondsToSelector:@selector(resetTextFieldCellSize)]) {
+            [text resetTextFieldCellSize];
+        }
 	}
 }
 

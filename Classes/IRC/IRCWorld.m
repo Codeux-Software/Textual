@@ -275,11 +275,11 @@
 	[text focus];
 }
 
-- (BOOL)inputText:(NSString *)s command:(NSString *)command
+- (BOOL)inputText:(id)str command:(NSString *)command 
 {
 	if (PointerIsEmpty(selected)) return NO;
 	
-	return [[selected client] inputText:s command:command];
+	return [selected.client inputText:str command:command];
 }
 
 - (void)markAllAsRead
@@ -940,7 +940,7 @@
 
 - (void)logDoubleClick:(NSString *)s
 {
-	NSArray *ary = [s componentsSeparatedByString:NSWhitespaceCharacter];
+	NSArray *ary = [s componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	if (NSObjectIsNotEmpty(ary)) {
 		NSString *kind = [ary safeObjectAtIndex:0];

@@ -38,8 +38,8 @@
 
 - (void)ok:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-		NSString *topic = [[text attributedStringValue] attributedStringToASCIIFormatting];
+	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
+		NSString *topic = [text.attributedStringValue attributedStringToASCIIFormatting];
 		
 		[delegate topicSheet:self onOK:topic];
 	}

@@ -153,8 +153,8 @@
     [super drawRect:dirtyRect];
     
     NSString *value = [self stringValue];
-    
-    if (NSObjectIsEmpty(value)) {
+            
+    if (NSObjectIsEmpty(value) && NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
         [_placeholderString drawAtPoint:NSMakePoint(6, 5)];
     }
 }
@@ -176,8 +176,6 @@
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
 {
-    NSLog(@"%@", NSStringFromSelector(aSelector));
-    
     if (aSelector == @selector(insertNewline:)) {
         [_actionTarget performSelector:_actonSelector];
         

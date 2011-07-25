@@ -163,42 +163,6 @@ NSInteger ctoi(unsigned char c);
 	return [self componentsSeparatedByString:delimiter];
 }
 
-- (NSArray *)splitIntoLines
-{
-	NSInteger start = 0;
-	NSInteger len = self.length;
-	
-	UniChar buf[len];
-	
-	[self getCharacters:buf range:NSMakeRange(0, len)];
-	
-	NSMutableArray *lines = [NSMutableArray array];
-	
-	for (NSInteger i = 0; i < len; ++i) {
-		UniChar c = buf[i];
-		
-		if (c == LF || c == CR) {
-			NSInteger pos = i;
-			
-			if (c == CR && (i + 1) < len) {
-				UniChar next = buf[i+1];
-				
-				if (next == LF) {
-					++i;
-				}
-			}
-			
-			[lines safeAddObject:[NSString stringWithCharacters:(buf + start) length:(pos - start)]];
-			
-			start = (i + 1);
-		}
-	}
-	
-	[lines safeAddObject:[NSString stringWithCharacters:(buf + start) length:(len - start)]];
-	
-	return lines;
-}
-
 - (NSString *)trim
 {
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -746,68 +710,6 @@ BOOL isUnicharDigit(unichar c)
 	return result;
 }
 
-- (NSString *)getIgnoreToken
-{
-	BOOL useAnchor = NO;
-	BOOL escaped = NO;
-	
-	UniChar anchor;
-	
-	NSInteger len = [self length];
-	
-	for (NSInteger i = 0; i < len; ++i) {
-		UniChar c = [self characterAtIndex:i];
-		
-		if (i == 0) {
-			if (c == '/') {
-				useAnchor = YES;
-				anchor = '/';
-				continue;
-			} else if (c == '"') {
-				useAnchor = YES;
-				anchor = '"';
-				continue;
-			}
-		}
-		
-		if (escaped) {
-			escaped = NO;
-		} else if (c == '\\') {
-			escaped = YES;
-		} else if ((useAnchor && c == anchor) || (useAnchor == NO && c == ' ')) {
-			if (useAnchor) {
-				++i;
-			}
-			
-			NSString *result = [self safeSubstringToIndex:i];
-			
-			NSInteger right;
-			
-			for (right = (i + 1); right < len; ++right) {
-				UniChar c = [self characterAtIndex:right];
-				
-				if (NSDissimilarObjects(c, ' ')) {
-					break;
-				}
-			}
-			
-			if (len <= right) {
-				right = len;
-			}
-			
-			[self safeDeleteCharactersInRange:NSMakeRange(0, right)];
-			
-			return result;
-		}
-	}
-	
-	NSString *result = [[self copy] autodrain];
-	
-	[self setString:NSNullObject];
-	
-	return result;
-}
-
 @end
 
 @implementation NSAttributedString (NSAttributedStringHelper)
@@ -846,9 +748,18 @@ BOOL isUnicharDigit(unichar c)
 
 + (NSAttributedString *)emptyString
 {
-	NSAttributedString *newstr = [[NSAttributedString alloc] initWithString:NSNullObject];
-	
-	return [newstr autodrain];
+    return [NSAttributedString emptyStringWithBase:NSNullObject];
+}
+
++ (NSAttributedString *)emptyStringWithBase:(NSString *)base
+{
+	NSAttributedString *newstr;
+    
+    newstr = [NSAttributedString alloc];
+    newstr = [newstr initWithString:base];
+    newstr = [newstr autodrain];
+    
+	return newstr;
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
@@ -878,6 +789,43 @@ BOOL isUnicharDigit(unichar c)
 	len   = ((range.length >= 1) ? (NSMaxRange(range) - loc) : ([str length] - loc));
 	
 	return [self attributedSubstringFromRange:NSMakeRange(loc, len)];
+}
+
+- (NSArray *)splitIntoLines
+{
+    return [NSArray arrayWithObjects:self, nil];
+}
+
+@end
+
+@implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
+
+- (NSAttributedString *)getToken
+{
+	NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:NSWhitespaceCharacter]];
+	
+	if (NSDissimilarObjects(r.location, NSNotFound)) {
+        NSRange sr = NSMakeRange(0, r.location);
+        
+        NSAttributedString *result = [self attributedSubstringFromRange:sr];
+		
+		NSInteger len = [self length];
+		NSInteger pos = (r.location + 1);
+		
+		while (pos < len && [self.string characterAtIndex:pos] == ' ') {
+			pos++;
+		}
+		
+        [self deleteCharactersInRange:NSMakeRange(0, pos)];
+		
+		return result;
+	}
+	
+	NSAttributedString *result = [self.copy autodrain];
+	
+    [self setAttributedString:[NSAttributedString emptyString]];
+	
+	return result;
 }
 
 @end
