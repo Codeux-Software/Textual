@@ -41,8 +41,6 @@
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
 - (NSArray *)split:(NSString *)delimiter;
-- (NSArray *)splitIntoLines;
-
 - (NSString *)trim;
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
@@ -101,7 +99,6 @@
 
 @interface NSMutableString (NSMutableStringHelper)
 - (NSString *)getToken;
-- (NSString *)getIgnoreToken;
 - (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
 
@@ -109,6 +106,7 @@
 - (NSDictionary *)attributes;
 
 + (NSAttributedString *)emptyString;
++ (NSAttributedString *)emptyStringWithBase:(NSString *)base;
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
@@ -117,4 +115,10 @@
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit;
 
 - (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit;
+
+- (NSArray *)splitIntoLines;
+@end
+
+@interface NSMutableAttributedString (NSMutableAttributedStringHelper)
+- (NSAttributedString *)getToken;
 @end

@@ -58,6 +58,125 @@
 	return result;
 }
 
+- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
+                                       lineType:(LogLineType)type 
+                                        channel:(NSString *)chan 
+                                       hostmask:(NSString *)host
+{
+    /* Do not look for logic in the following code because you will hurt your brain.
+     This method was thrown together in one night and is very hacked. Miracle it works. */
+    
+    NSMutableAttributedString *base = [*string copy];
+	
+	NSMutableString *result = [NSMutableString string];
+    
+    NSInteger newChars   = 0;
+    NSInteger baseMath   = (chan.length + host.length + 14); 
+	NSInteger baseLength = (base.length + baseMath);
+    
+    if (baseLength > IRC_BODY_LEN) {
+        baseLength -= ((IRC_BODY_LEN - baseLength) * -1);
+    }
+    
+    NSRange deleteRange;
+	NSRange effectiveRange;
+	NSRange limitRange = NSMakeRange(0, (baseLength - baseMath));
+    
+    deleteRange.location = 0;
+    deleteRange.length   = limitRange.length;
+    
+    BOOL needBreak = NO;
+    
+    [base autodrain];
+	
+	while (limitRange.length > 0) {
+		NSDictionary *dict = [base safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+        
+		NSInteger foregroundColor = mapColorValue([dict objectForKey:NSForegroundColorAttributeName]);
+		NSInteger backgroundColor = mapColorValue([dict objectForKey:NSBackgroundColorAttributeName]);
+        
+        NSNumber *foregroundNumber = NSNumberWithInteger(foregroundColor);
+        NSNumber *backgroundNumber = NSNumberWithInteger(backgroundColor);
+        
+        NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
+		
+		BOOL foregroundColorD = (foregroundColor >= 0 && foregroundColor <= 15);
+        BOOL backgroundColorD = (backgroundColor >= 0 && backgroundColor <= 15);
+		
+		BOOL boldText       = [baseFont fontTraitSet:NSBoldFontMask];
+		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
+		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
+		
+        if (italicText)         newChars += 2;
+        if (underlineText)      newChars += 2;
+        if (underlineText)      newChars += 2;
+        if (foregroundColorD)   newChars += 3;
+        if (backgroundColorD)   newChars += 3;
+        
+        NSInteger newLength = (baseMath + result.length + newChars);
+        
+        NSString *cake = NSNullObject; // variable names make no sense
+        
+        if (newLength > IRC_BODY_LEN) {
+            if (effectiveRange.length < newChars) {
+                deleteRange.length = effectiveRange.location;
+                
+                break;
+            } else {
+                effectiveRange.length  -= newChars;
+                deleteRange.length      = (effectiveRange.location + effectiveRange.length);
+            }
+        }
+        
+        if (effectiveRange.length == (IRC_BODY_LEN - baseMath)) { // max
+            cake = [base.string safeSubstringWithRange:effectiveRange];
+            
+            if ([cake contains:NSWhitespaceCharacter]) {
+                NSInteger spaceIndex = [cake rangeOfString:NSWhitespaceCharacter options:NSBackwardsSearch range:effectiveRange].location; 
+                NSInteger charDiff   = (effectiveRange.length - spaceIndex);
+                
+                if (charDiff <= 100) {
+                    effectiveRange.length -= charDiff;
+                    deleteRange.length    -= charDiff;
+                    
+                    cake = [base.string safeSubstringWithRange:effectiveRange];
+                    
+                    needBreak = YES;
+               }
+            }
+        } else {
+            cake = [base.string safeSubstringWithRange:effectiveRange];
+        }
+        
+		if (underlineText)  [result appendFormat:@"%c", 0x1F];
+		if (italicText)     [result appendFormat:@"%c", 0x16];
+		if (boldText)       [result appendFormat:@"%c", 0x02];
+		
+		if (foregroundColorD) {
+			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
+			
+			if (backgroundColorD) {
+				[result appendFormat:@",%@", [backgroundNumber integerWithLeadingZero]];
+			}
+		}
+		
+		[result appendString:cake];
+		
+		if (foregroundColorD)       [result appendFormat:@"%c", 0x03];
+		if (boldText)               [result appendFormat:@"%c", 0x02];
+		if (italicText)             [result appendFormat:@"%c", 0x16];
+		if (underlineText)          [result appendFormat:@"%c", 0x1F];
+        if (needBreak)              break;
+		
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
+                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+	}		
+    
+    [*string deleteCharactersInRange:deleteRange];
+    
+    return result;
+}
+
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange
 {
 	NSRange effectiveRange;
@@ -205,7 +324,7 @@
         }
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 }
 
@@ -283,7 +402,7 @@
         [*sourceField setAttributes:newDict inRange:effectiveRange];
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
     }
 }
 
@@ -357,7 +476,7 @@
 		}
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 }
 

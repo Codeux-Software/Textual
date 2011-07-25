@@ -198,10 +198,10 @@ typedef enum {
 - (void)createChanBanExceptionListDialog;
 - (void)createChanInviteExceptionListDialog;
 
-- (BOOL)inputText:(NSString *)s command:(NSString *)command;
-- (BOOL)sendCommand:(NSString *)s;
-- (BOOL)sendCommand:(NSString *)s completeTarget:(BOOL)completeTarget target:(NSString *)target;
-- (void)sendText:(NSString *)s command:(NSString *)command channel:(IRCChannel *)channel;
+- (BOOL)sendCommand:(id)str;
+- (BOOL)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
+- (BOOL)inputText:(id)str command:(NSString *)command;
 
 - (void)sendLine:(NSString *)str;
 - (void)send:(NSString *)str, ...;

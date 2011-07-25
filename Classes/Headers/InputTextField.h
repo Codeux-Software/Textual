@@ -11,6 +11,7 @@
     SEL _actonSelector;
 }
 
+- (void)resetTextFieldCellSize;
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 @end
 

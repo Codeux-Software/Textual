@@ -7,11 +7,14 @@ typedef enum {
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
 	IRCTextFormatterBackgroundColorEffect,
-    IRCTextFormatterRainbowColorEffect, // >_> hehe
 } IRCTextFormatterEffectType; 
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;
+- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
+                                       lineType:(LogLineType)type 
+                                        channel:(NSString *)chan 
+                                       hostmask:(NSString *)host;
 
 - (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
                                         color:(NSColor *)defaultColor
