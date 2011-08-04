@@ -57,6 +57,7 @@
 	[self setValue:OP_VALUE forMode:'v'];
 	[self setValue:OP_VALUE forMode:'a'];
 	[self setValue:OP_VALUE forMode:'q'];
+    [self setValue:OP_VALUE forMode:'u'];
 	[self setValue:OP_VALUE forMode:'b'];
 	[self setValue:OP_VALUE forMode:'e'];
 	
@@ -197,7 +198,7 @@
 				NSString *modeKey   = [nodes stringCharacterAtIndex:i];
 				NSString *modeChar  = [chars stringCharacterAtIndex:i];
 				
-				if ([modeKey isEqualToString:@"q"]) {
+				if ([modeKey isEqualToString:@"q"] || [modeKey isEqualToString:@"u"]) {
 					self.userModeQPrefix = modeChar;
 				} else if ([modeKey isEqualToString:@"a"]) {
 					self.userModeAPrefix = modeChar;
