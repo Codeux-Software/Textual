@@ -103,7 +103,7 @@
 	
 	for (NSString *file in resourceFiles) {
 		if ([file hasSuffix:@".bundle"]) {
-			NSString *fullPath	 = [path_2 stringByAppendingPathComponent:file];
+			NSString *fullPath	 = [path_1 stringByAppendingPathComponent:file];
             
             if ([_NSFileManager() fileExistsAtPath:fullPath] == NO) {
                 fullPath = [path_2 stringByAppendingPathComponent:file];
