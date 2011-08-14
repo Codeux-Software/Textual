@@ -8,6 +8,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
+    NSLog(@"?????");
 	if (keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
