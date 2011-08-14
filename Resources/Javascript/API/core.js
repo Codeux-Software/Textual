@@ -42,7 +42,7 @@ Textual = {
 	on_addr: function() { app.setAddr(event.target.innerHTML); },
 	on_chname: function() { app.setChan(event.target.innerHTML); },
 	on_ct_nick: function() { app.setNick(event.target.innerHTML); },
-	on_nick: function() { app.setNick(event.target.parentNode.parentNode.getAttribute("nick")); },
+	on_nick: function() { app.setNick(event.target.getAttribute("nick")); },
 	
 	on_dblclick_nick: function() { 
 		Textual.on_nick();
