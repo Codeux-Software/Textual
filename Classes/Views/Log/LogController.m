@@ -572,7 +572,7 @@
 	if (line.nick) {
         NSString *htmltag = ((modernRender) ? @"div" : @"span");
         
-        [s appendFormat:@"<%@ class=\"sender\" ondblclick=\"Textual.on_dblclick_nick()\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", htmltag, [LogLine memberTypeString:line.memberType]];
+        [s appendFormat:@"<%@ class=\"sender\" ondblclick=\"Textual.on_dblclick_nick()\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\" nick=\"%@\"", htmltag, [LogLine memberTypeString:line.memberType], line.nickInfo];
 		
         if (line.memberType == MEMBER_TYPE_NORMAL && [Preferences disableNicknameColors] == NO) {
             [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
@@ -643,10 +643,6 @@
     
 	[attrs setObject:((highlighted) ? @"true" : @"false")		forKey:@"highlight"];
 	[attrs setObject:((isText) ? @"line text" : @"line event")	forKey:@"class"];
-	
-	if (line.nickInfo) {
-		[attrs setObject:line.nickInfo forKey:@"nick"];
-    }
     
     dispatch_async(world.messageQueue, ^{
         [self writeLine:s attributes:attrs];
