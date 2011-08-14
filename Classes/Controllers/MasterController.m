@@ -1244,6 +1244,11 @@ typedef enum {
     }
 }
 
+- (void)focusWebview
+{
+    [window makeFirstResponder:world.selected.log.view];
+}
+
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
 	[window registerKeyHandler:sel key:keyCode modifiers:mods];
@@ -1285,6 +1290,8 @@ typedef enum {
 	
 	[self handler:@selector(inputHistoryUp:)	char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:)	char:'n' mods:NSControlKeyMask];
+    
+    [self inputHandler:@selector(focusWebview) char:'l' mods:(NSControlKeyMask | NSCommandKeyMask)];
     
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
