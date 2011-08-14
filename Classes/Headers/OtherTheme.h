@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#define THEME_DISABLED_INDENTATION_OFFSET     -99
+
 @interface OtherTheme : NSObject
 {	
 	NSString *path;
@@ -13,11 +15,9 @@
 	NSString *nicknameFormat;
 	NSString *timestampFormat;
 	
-	BOOL indentWrappedMessages;
-	BOOL overrideMessageIndentWrap;
 	BOOL channelViewFontOverrode;
 	
-	NSInteger nicknameFormatFixedWidth;
+    NSDoubleN indentationOffset;
 	NSDoubleN renderingEngineVersion;
 }
 
@@ -25,11 +25,9 @@
 @property (nonatomic, retain) NSFont *channelViewFont;
 @property (nonatomic, retain) NSString *nicknameFormat;
 @property (nonatomic, retain) NSString *timestampFormat;
-@property (nonatomic, assign) BOOL indentWrappedMessages;
-@property (nonatomic, assign) BOOL overrideMessageIndentWrap;
 @property (nonatomic, assign) BOOL channelViewFontOverrode;
-@property (nonatomic, assign) NSInteger nicknameFormatFixedWidth;
 @property (nonatomic, retain) NSColor *underlyingWindowColor;
+@property (nonatomic, assign) NSDoubleN indentationOffset;
 @property (nonatomic, assign) NSDoubleN renderingEngineVersion;
 
 - (void)reload;

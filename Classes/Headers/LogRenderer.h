@@ -9,6 +9,7 @@ typedef enum {
 } LogRendererType;
 
 TEXTUAL_EXTERN NSString *logEscape(NSString *s);
+TEXTUAL_EXTERN NSString *logEscapeWithNil(NSString *s);
 
 TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
 TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);

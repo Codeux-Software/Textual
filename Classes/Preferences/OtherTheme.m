@@ -18,12 +18,10 @@
 
 @synthesize channelViewFont;
 @synthesize channelViewFontOverrode;
-@synthesize indentWrappedMessages;
 @synthesize nicknameFormat;
-@synthesize nicknameFormatFixedWidth;
-@synthesize overrideMessageIndentWrap;
 @synthesize timestampFormat;
 @synthesize underlyingWindowColor;
+@synthesize indentationOffset;
 @synthesize renderingEngineVersion;
 
 - (NSString *)path
@@ -110,6 +108,7 @@
 - (void)reload 
 {	
 	self.channelViewFontOverrode = NO;
+    self.indentationOffset       = THEME_DISABLED_INDENTATION_OFFSET;
 	
 	// ====================================================== //
 	
@@ -123,17 +122,17 @@
 	// ====================================================== //
 	
 	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
-	
 	NSDictionary *prefOChannelFont    = [preferencesOverride objectForKey:@"Override Channel Font"];
-	NSDictionary *prefOIndentMessages = [preferencesOverride objectForKey:@"Indent Wrapped Messages"];
 	
 	// ====================================================== //
 	
+    NSLog(@"%@", preferencesOverride);
+    if ([preferencesOverride containsKey:@"Indentation Offset"]) {
+        self.indentationOffset = [preferencesOverride doubleForKey:@"Indentation Offset"];
+    }
+    
 	self.nicknameFormat  = [self processNSStringValue:[preferencesOverride objectForKey:@"Nickname Format"] def:nil];
 	self.timestampFormat = [self processNSStringValue:[preferencesOverride objectForKey:@"Timestamp Format"] def:nil];
-	
-	self.indentWrappedMessages		= [prefOIndentMessages boolForKey:@"New Value"];
-	self.overrideMessageIndentWrap	= [prefOIndentMessages boolForKey:@"Override Setting"];
 	
 	self.channelViewFont = [self processFontValue:[prefOChannelFont objectForKey:@"Font Name"] 
 											 size:[prefOChannelFont integerForKey:@"Font Size"] 
@@ -142,20 +141,16 @@
 									  allowCustom:YES
 										 overrode:&channelViewFontOverrode];
 	
-	self.nicknameFormatFixedWidth = [self processIntegerValue:[preferencesOverride integerForKey:@"Nickname Format Fixed Width"] def:0];
-	
 	// ====================================================== //
 	
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Preferences.Theme.tpoce_nick_format"];
 	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Preferences.Theme.tpoce_timestamp_format"];
-	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.overrideMessageIndentWrap))	forKey:@"Preferences.Theme.tpoce_indent_onwordwrap"];
-	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.channelViewFontOverrode))		forKey:@"Preferences.Theme.tpoce_channel_font"];
+    [[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.channelViewFontOverrode))		forKey:@"Preferences.Theme.tpoce_channel_font"];
 	
 	// ====================================================== //
 	
 	userInterface = nil;
-	prefOChannelFont = nil;
-	prefOIndentMessages = nil;
+	prefOChannelFont = nil;  
 	preferencesOverride = nil;
 }
 

@@ -4,6 +4,8 @@
 <dict>
 	<key>Nickname Format</key>
 	<string></string>
+	<key>Timestamp Format</key>
+	<string></string>
 	<key>Override Channel Font</key>
 	<dict>
 		<key>Font Name</key>
@@ -11,9 +13,7 @@
 		<key>Font Size</key>
 		<integer>0</integer>
 	</dict>
-	<key>Timestamp Format</key>
-	<string></string>
 	<key>Indentation Offset</key>
-	<integer>6</integer>
+	<integer>0</integer>
 </dict>
 </plist>

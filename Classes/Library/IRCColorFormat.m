@@ -6,6 +6,7 @@
 #pragma mark -
 #pragma mark General Calls
 
+/* TODO: Make this suck less */
 - (NSString *)attributedStringToASCIIFormatting
 {
 	NSString *realBody = [self string];
@@ -74,8 +75,8 @@
     NSInteger baseMath   = (chan.length + host.length + 14); 
 	NSInteger baseLength = (base.length + baseMath);
     
-    if (baseLength > IRC_BODY_LEN) {
-        baseLength -= ((IRC_BODY_LEN - baseLength) * -1);
+    if (baseLength > MAXIMUM_IRC_BODY_LEN) {
+        baseLength -= (baseLength - MAXIMUM_IRC_BODY_LEN);
     }
     
     NSRange deleteRange;
@@ -117,7 +118,7 @@
         
         NSString *cake = NSNullObject; // variable names make no sense
         
-        if (newLength > IRC_BODY_LEN) {
+        if (newLength > MAXIMUM_IRC_BODY_LEN) {
             if (effectiveRange.length < newChars) {
                 deleteRange.length = effectiveRange.location;
                 
@@ -128,7 +129,7 @@
             }
         }
         
-        if (effectiveRange.length == (IRC_BODY_LEN - baseMath)) { // max
+        if (effectiveRange.length == (MAXIMUM_IRC_BODY_LEN - baseMath)) { // max
             cake = [base.string safeSubstringWithRange:effectiveRange];
             
             if ([cake contains:NSWhitespaceCharacter]) {

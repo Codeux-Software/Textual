@@ -11,7 +11,7 @@
 	WebScriptObject *js;
 	LogScriptEventSink *sink;
 	WebViewAutoScroll *autoScroller;
-
+    
 	IRCWorld *world;
 	IRCClient *client;
 	IRCChannel *channel;
@@ -39,7 +39,7 @@
 	NSInteger loadingImages;
 	
 	NSMutableArray *highlightedLineNumbers;
-
+    
 	NSString *html;
 }
 
@@ -76,6 +76,8 @@
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
+
+- (DOMDocument *)mainFrameDocument;
 
 - (void)moveToTop;
 - (void)moveToBottom;

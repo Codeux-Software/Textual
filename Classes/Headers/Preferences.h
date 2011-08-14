@@ -2,7 +2,7 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#define DEFAULT_TEXTUAL_STYLE @"resource:Simplified Dark"
+#define DEFAULT_TEXTUAL_STYLE @"resource:Simplified Light"
 #define DEFAULT_TEXTUAL_FONT  @"Lucida Grande"
 
 typedef enum {
@@ -105,7 +105,6 @@ typedef enum {
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
-+ (BOOL)indentOnHang;
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;

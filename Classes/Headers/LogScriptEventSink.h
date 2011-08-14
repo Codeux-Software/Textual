@@ -10,6 +10,7 @@
 	
 	NSInteger x;
 	NSInteger y;
+    
 	CFAbsoluteTime lastClickTime;
 }
 

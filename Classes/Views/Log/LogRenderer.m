@@ -71,6 +71,17 @@ NSString *logEscape(NSString *s)
 	return [[s gtm_stringByEscapingForHTML] stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
+NSString *logEscapeWithNil(NSString *s)
+{
+    NSString *escaped = logEscape(s);
+    
+    if (NSObjectIsEmpty(escaped)) {
+        return NSNullObject;
+    }
+    
+    return escaped;
+}
+
 NSInteger mapColorValue(NSColor *color)
 {
 	NSArray *possibleColors = [NSColor possibleFormatterColors];

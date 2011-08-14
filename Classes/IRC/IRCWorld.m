@@ -248,11 +248,13 @@
 	if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;
 	
 	for (IRCClient *c in clients) {
-		if (c.config.autoConnect) {
-			[c autoConnect:delay];
+        if ((c.disconnectType == DISCONNECT_SLEEP_MODE && afterWakeUp) || afterWakeUp == NO) { 
+            if (c.config.autoConnect) {
+                [c autoConnect:delay];
 			
-			delay += AUTO_CONNECT_DELAY;
-		}
+                delay += AUTO_CONNECT_DELAY;
+            }
+        }
 	}
 }
 
@@ -266,6 +268,8 @@
 - (void)prepareForSleep
 {
 	for (IRCClient *c in clients) {
+        c.disconnectType = DISCONNECT_SLEEP_MODE;
+        
 		[c quit:c.config.sleepQuitMessage];
 	}
 }
@@ -1094,6 +1098,8 @@
 	
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
+    
+    [self focusInputText];
 	
 	[selected.log.view clearSelection];
 	

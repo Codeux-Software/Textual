@@ -4,7 +4,7 @@
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
-  	word-wrap: break-word;
+    word-wrap: break-word;
 }	
 
 body {
@@ -22,68 +22,76 @@ body div#body_home {
 	left: 0;
 	right: 0;
 	bottom: 0;
+    width: 100%;
 	z-index: 100;
-	max-height: 97.5%;
+    max-height: 99.99%;
 	position: absolute;
 }
 
-body div#body_home div {
+body[type=channel] div#body_home {
+	max-height: 96.5%;
+}
+
+body .line {
  	margin-top: -1px;
 }
 
-body div#body_home p {
-	clear: both;
-	position: relative;
+body[dir=rtl] .sender {
+    display: inline-block;
 }
 
 /* Time */
-		
-body .time {
+
+body[dir=ltr] .time {
 	color: #666;
-	text-indent: 0;
-	word-wrap: normal;
-	white-space: nowrap
-	display: inline-block;
+    white-space: nowrap; 
+}
+
+body[dir=rtl] .time {
+	color: #666;
+    white-space: nowrap; 
+	padding-left: 0.4em;
+    display: inline-block;
 }
 
 /* Links */
 
 a {
-  color: #0080FF;
-  border-color: #0080FF;
-  text-decoration: none;
-  border-bottom: dotted 1px;
+    color: #0080FF;
+    border-color: #0080FF;
+    text-decoration: none;
+    border-bottom: dotted 1px;
 }
 
 a:hover {
-  color: #40A0FF;
-  border-color: #40A0FF;
+    color: #40A0FF;
+    border-color: #40A0FF;
 }
 
 /* Topic Bar */
 
 #topic_bar {
-  top: 0;
-  left: 0;
-  right: 0;
-  color: #000;
-  z-index: 400;
-  opacity: 0.95;
-  position: fixed;
-  background: #CFD4DD;
-  padding: 2px 0.5em 3px;
-  border-bottom: 1px solid #8387B6;
-  -webkit-box-shadow: 0 1px 5px #777;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #000;
+    z-index: 400;
+    opacity: 0.95;
+    position: fixed;
+    background: #CFD4DD;
+    padding: 2px 0.5em 3px;
+    border-bottom: 1px solid #8387B6;
+    -webkit-box-shadow: 0 1px 5px #777;
 }
 
 #topic_bar a {
-  color: #00e;
-  border-color: #00e;
+    color: #00e;
+    border-color: #00e;
 }
 
 #topic_bar a:hover {
-  color: #0080FF;
-  border-color: #0080FF;
+    color: #0080FF;
+    border-color: #0080FF;
 }
 
 /* Images */
@@ -95,27 +103,25 @@ body a img {
 body img {
     display: block;
     max-width: 95%;
-    padding-top: 5px;
-    padding-left: 8px;
-    padding-bottom: 5px;
+    margin: 15px 15px 12px 15px;
 }
 
 /* Remember Line */
 
 div[id=mark] {
-  position: relative;
-  z-index: 295;
-  margin-top: -1px;
-  border-bottom: 1px dashed;
-  border-color: #444;
-  -webkit-transition: 0.2s linear;
+    position: relative;
+    z-index: 295;
+    margin-top: -1px;
+    border-bottom: 1px dashed;
+    border-color: #444;
+    -webkit-transition: 0.2s linear;
 }
 
 /* NOTICE/CTCP/WALLOPS */
 
-body div[type=notice],
-body div[type=ctcp],
-body div[type=wallops] {
+body div.line[type*=ctcp],
+body div.line[type*=notice],
+body div.line[type*=wallops] {
 	color: #f00;
   	z-index: 191;
 	background: #400;
@@ -125,19 +131,19 @@ body div[type=wallops] {
 	border-bottom: 1px solid #811;
 }
 
-body div[type=notice] .sender {
+body div[type*=notice] .sender {
 	color: #f00;
 	font-weight: 700;
 }
 
 /* PRIVMSG */
 
-body div[type=privmsg][highlight=false]  {
+body div.line[type*=privmsg][highlight=false] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div[type=privmsg][highlight=true],
-body div[type=action][highlight=true] {
+body div.line[type*=privmsg][highlight=true],
+body div.line[type*=action][highlight=true] {
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #988C00;
@@ -145,55 +151,66 @@ body div[type=action][highlight=true] {
   	background-color: #362C00 !important;
 }
 
-body div[type=privmsg] .message {
+body div[type="privmsg"] .message {
 	color: #aaa;
 }
 
-body div[type=privmsg] p[type=myself] .message {
+body div[type*=privmsg] p[type*=myself] .message {
 	color: #fff;
 }
 
-body div[type=privmsg] .sender {
+body div[type*=privmsg] .sender {
 	font-weight: 700;
 }
 
 /* ACTION */
 
-body div[type=action]  {
+body div.line[type*=action] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div[type=action] .message {
+body div[type="action"] .message {
 	color: #aaa;
 }
 
-body div[type=action] .sender {
+body div[type*=action] .sender {
 	font-weight: 700;
 }
 
-body div[type=action] p[type=myself] .sender,
-body div[type=action] p[type=myself] .message {
+body div[type*=action] p[type*=myself] .sender,
+body div[type*=action] p[type*=myself] .message {
 	color: #B52CF6;
 }
 
-body div[type=action] .sender:before {
+body[dir=ltr] div[type*=action] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
 }
 
-body div[type=action] .sender:after {
+body[dir=ltr] div[type*=action] .sender:after {
 	content: "";
+	margin-right: 0.4em;
+}
+
+body[dir=rtl] div[type*=action] .sender:before {
+	content: "\2022";
+	margin-left: 0.4em;
+}
+
+body[dir=rtl] div[type*=action] .sender:after {
+	content: "";
+	margin-left: 0.4em;
 }
 
 /* REPLY/SYSTEM/ERROR/DEBUG/INVITE */
 
-body div[type=invite],
-body div[type=reply],
-body div[type=system],
-body div[type=error],
-body div[type=error_reply],
-body div[type=debug_send],
-body div[type=debug_receive] {
+body div.line[type*=reply],
+body div.line[type*=error],
+body div.line[type*=invite],
+body div.line[type*=system],
+body div.line[type*=debug_send],
+body div.line[type*=error_reply],
+body div.line[type*=debug_receive] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -205,37 +222,57 @@ body div[type=debug_receive] {
 
 /* GENERAL EVENT */
 
-body div[type=join],
-body div[type=part],
-body div[type=kick],
-body div[type=quit],
-body div[type=kill],
-body div[type=nick],
-body div[type=mode],
-body div[type=website],
-body div[type=topic] {
+body div.line[type*=join],
+body div.line[type*=part],
+body div.line[type*=kick],
+body div.line[type*=quit],
+body div.line[type*=kill],
+body div.line[type*=nick],
+body div.line[type*=mode],
+body div.line[type*=topic],
+body div.line[type*=website] {
  	padding: 3px 5px 3px 5px;
     color: #666;
 }
 
-body div[type=join] .message:before {
+body[dir=ltr] div[type*=join] .message:before {
 	content: "→";
   	color: #0c0;
-  	margin-right: 3px;
+  	margin-right: 0.4em;
 }
 
-body div[type=kick] .message:before,
-body div[type=part] .message:before,
-body div[type=quit] .message:before {
+body[dir=ltr] div[type*=kick] .message:before,
+body[dir=ltr] div[type*=part] .message:before,
+body[dir=ltr] div[type*=quit] .message:before {
 	content: "←";
   	color: #e00;
-  	margin-right: 3px;
+  	margin-right: 0.4em;
 }
 
-body div[type=nick] .message:before {
+body[dir=ltr] div[type*=nick] .message:before {
 	content:"•";
   	color: #0c0;
-  	margin-right: 3px;
+  	margin-right: 0.4em;
+}
+
+body[dir=rtl] div[type*=join] .message:before {
+	content: "→";
+  	color: #0c0;
+  	margin-left: 0.4em;
+}
+
+body[dir=rtl] div[type*=kick] .message:before,
+body[dir=rtl] div[type*=part] .message:before,
+body[dir=rtl] div[type*=quit] .message:before {
+	content: "←";
+  	color: #e00;
+  	margin-left: 0.4em;
+}
+
+body[dir=rtl] div[type*=nick] .message:before {
+	content:"•";
+  	color: #0c0;
+  	margin-left: 0.4em;
 }
 
 /* Nickname Colors */
@@ -244,178 +281,177 @@ body .inline_nickname {
     font-weight: 700;
 }
 
-body div[type=privmsg] .sender[type=myself],
-body div[type=action] .sender[type=myself] { 
+body div[type*=privmsg] .sender[type*=myself] { 
 	color: #B8DFFF; 
 }
 
-body .sender[type=normal][colornumber='0'], 
+body .sender[type*=normal][colornumber='0'], 
 body .inline_nickname[colornumber='0'] { 
 	color: red; 
 }
 
-body .sender[type=normal][colornumber='1'], 
+body .sender[type*=normal][colornumber='1'], 
 body .inline_nickname[colornumber='1'] { 
 	color: #636aff; 
 }
 
-body .sender[type=normal][colornumber='2'], 
+body .sender[type*=normal][colornumber='2'], 
 body .inline_nickname[colornumber='2'] { 
 	color: #00BA00; 
 }
 
-body .sender[type=normal][colornumber='3'], 
+body .sender[type*=normal][colornumber='3'], 
 body .inline_nickname[colornumber='3'] { 
 	color: #C083F2; 
 }
 
-body .sender[type=normal][colornumber='4'], 
+body .sender[type*=normal][colornumber='4'], 
 body .inline_nickname[colornumber='4'] { 
 	color: #4DEDF0; 
 }
 
-body .sender[type=normal][colornumber='5'], 
+body .sender[type*=normal][colornumber='5'], 
 body .inline_nickname[colornumber='5'] { 
 	color: #E422B2; 
 }
 
-body .sender[type=normal][colornumber='6'],
+body .sender[type*=normal][colornumber='6'],
 body .inline_nickname[colornumber='6'] { 
 	color: #EAE87E; 
 }
 
-body .sender[type=normal][colornumber='7'], 
+body .sender[type*=normal][colornumber='7'], 
 body .inline_nickname[colornumber='7'] { 
 	color: #B8DFFF; 
 }
 
-body .sender[type=normal][colornumber='8'],
+body .sender[type*=normal][colornumber='8'],
 body .inline_nickname[colornumber='8'] { 
 	color: #75A1FB; 
 }
 
-body .sender[type=normal][colornumber='9'], 
+body .sender[type*=normal][colornumber='9'], 
 body .inline_nickname[colornumber='9'] { 
 	color: #97C74B; 
 }
 
-body .sender[type=normal][colornumber='10'], 
+body .sender[type*=normal][colornumber='10'], 
 body .inline_nickname[colornumber='10'] { 
 	color: #A5EAC4; 
 }
 
-body .sender[type=normal][colornumber='11'], 
+body .sender[type*=normal][colornumber='11'], 
 body .inline_nickname[colornumber='11'] { 
 	color: #FFA6A0; 
 }
 
-body .sender[type=normal][colornumber='12'], 
+body .sender[type*=normal][colornumber='12'], 
 body .inline_nickname[colornumber='12'] { 
 	color: #8E67E7; 
 }
 
-body .sender[type=normal][colornumber='13'], 
+body .sender[type*=normal][colornumber='13'], 
 body .inline_nickname[colornumber='13'] { 
 	color: #FFBB58; 
 }
 
-body .sender[type=normal][colornumber='14'], 
+body .sender[type*=normal][colornumber='14'], 
 body .inline_nickname[colornumber='14'] { 
 	color: #EDD7AD; 
 }
 
-body .sender[type=normal][colornumber='15'], 
+body .sender[type*=normal][colornumber='15'], 
 body .inline_nickname[colornumber='15'] { 
 	color: #FF1676;
 }
 
-body .sender[type=normal][colornumber='16'], 
+body .sender[type*=normal][colornumber='16'], 
 body .inline_nickname[colornumber='16'] { 
 	color: #706616;
 }
 
-body .sender[type=normal][colornumber='17'], 
+body .sender[type*=normal][colornumber='17'], 
 body .inline_nickname[colornumber='17'] { 
 	color: #46799c;
 }
 
-body .sender[type=normal][colornumber='18'], 
+body .sender[type*=normal][colornumber='18'], 
 body .inline_nickname[colornumber='18'] { 
 	color: #80372e;
 }
 
-body .sender[type=normal][colornumber='19'], 
+body .sender[type*=normal][colornumber='19'], 
 body .inline_nickname[colornumber='19'] { 
 	color: #8F478E;
 }
 
-body .sender[type=normal][colornumber='20'], 
+body .sender[type*=normal][colornumber='20'], 
 body .inline_nickname[colornumber='20'] { 
 	color: #5b9e4c;
 }
 
-body .sender[type=normal][colornumber='21'], 
+body .sender[type*=normal][colornumber='21'], 
 body .inline_nickname[colornumber='21'] { 
 	color: #13826c;
 }
 
-body .sender[type=normal][colornumber='22'], 
+body .sender[type*=normal][colornumber='22'], 
 body .inline_nickname[colornumber='22'] { 
 	color: #b13637;
 }
 
-body .sender[type=normal][colornumber='23'], 
+body .sender[type*=normal][colornumber='23'], 
 body .inline_nickname[colornumber='23'] { 
 	color: #e45d59;
 }
 
-body .sender[type=normal][colornumber='24'], 
+body .sender[type*=normal][colornumber='24'], 
 body .inline_nickname[colornumber='24'] { 
 	color: #1b51ae;
 }
 
-body .sender[type=normal][colornumber='25'], 
+body .sender[type*=normal][colornumber='25'], 
 body .inline_nickname[colornumber='25'] { 
 	color: #4855ac;
 }
 
-body .sender[type=normal][colornumber='26'], 
+body .sender[type*=normal][colornumber='26'], 
 body .inline_nickname[colornumber='26'] { 
 	color: #7f1d86;
 }
 
-body .sender[type=normal][colornumber='27'], 
+body .sender[type*=normal][colornumber='27'], 
 body .inline_nickname[colornumber='27'] { 
 	color: #73643f;
 }
 
-body .sender[type=normal][colornumber='28'], 
+body .sender[type*=normal][colornumber='28'], 
 body .inline_nickname[colornumber='28'] { 
 	color: #0b9578;
 }
 
-body .sender[type=normal][colornumber='29'], 
+body .sender[type*=normal][colornumber='29'], 
 body .inline_nickname[colornumber='29'] { 
 	color: #569c96;
 }
 
-body .sender[type=normal][colornumber='30'], 
+body .sender[type*=normal][colornumber='30'], 
 body .inline_nickname[colornumber='30'] { 
 	color: #08465f;
 }
 
 /* mIRC Color Codes */
 
-.effect[color-number='0'] { color: #ffffff; }
-.effect[color-number='1'] { color: #000000; }
-.effect[color-number='2'] { color: #000088; }
-.effect[color-number='3'] { color: #008800; }
-.effect[color-number='4'] { color: #ff0000; }
-.effect[color-number='5'] { color: #880000; }
-.effect[color-number='6'] { color: #880088; }
-.effect[color-number='7'] { color: #ff8800; }
-.effect[color-number='8'] { color: #ffff00; }
-.effect[color-number='9'] { color: #00ff00; }
+.effect[color-number='0']  { color: #ffffff; }
+.effect[color-number='1']  { color: #000000; }
+.effect[color-number='2']  { color: #000088; }
+.effect[color-number='3']  { color: #008800; }
+.effect[color-number='4']  { color: #ff0000; }
+.effect[color-number='5']  { color: #880000; }
+.effect[color-number='6']  { color: #880088; }
+.effect[color-number='7']  { color: #ff8800; }
+.effect[color-number='8']  { color: #ffff00; }
+.effect[color-number='9']  { color: #00ff00; }
 .effect[color-number='10'] { color: #008888; }
 .effect[color-number='11'] { color: #00ffff; }
 .effect[color-number='12'] { color: #0000ff; }
@@ -423,16 +459,16 @@ body .inline_nickname[colornumber='30'] {
 .effect[color-number='14'] { color: #888888; }
 .effect[color-number='15'] { color: #cccccc; }
 
-.effect[bgcolor-number='0'] { background-color: #ffffff; }
-.effect[bgcolor-number='1'] { background-color: #000000; }
-.effect[bgcolor-number='2'] { background-color: #000088; }
-.effect[bgcolor-number='3'] { background-color: #008800; }
-.effect[bgcolor-number='4'] { background-color: #ff0000; }
-.effect[bgcolor-number='5'] { background-color: #880000; }
-.effect[bgcolor-number='6'] { background-color: #880088; }
-.effect[bgcolor-number='7'] { background-color: #ff8800; }
-.effect[bgcolor-number='8'] { background-color: #ffff00; }
-.effect[bgcolor-number='9'] { background-color: #00ff00; }
+.effect[bgcolor-number='0']  { background-color: #ffffff; }
+.effect[bgcolor-number='1']  { background-color: #000000; }
+.effect[bgcolor-number='2']  { background-color: #000088; }
+.effect[bgcolor-number='3']  { background-color: #008800; }
+.effect[bgcolor-number='4']  { background-color: #ff0000; }
+.effect[bgcolor-number='5']  { background-color: #880000; }
+.effect[bgcolor-number='6']  { background-color: #880088; }
+.effect[bgcolor-number='7']  { background-color: #ff8800; }
+.effect[bgcolor-number='8']  { background-color: #ffff00; }
+.effect[bgcolor-number='9']  { background-color: #00ff00; }
 .effect[bgcolor-number='10'] { background-color: #008888; }
 .effect[bgcolor-number='11'] { background-color: #00ffff; }
 .effect[bgcolor-number='12'] { background-color: #0000ff; }

@@ -5,6 +5,9 @@
 #define TABLE_ROW_TYPE			@"row"
 #define TABLE_ROW_TYPES			[NSArray arrayWithObject:TABLE_ROW_TYPE]
 
+#define TIMEOUT_INT_MIN     0
+#define TIMEOUT_INT_MAX     360
+
 @interface ServerSheet (Private)
 - (void)load;
 - (void)save;
@@ -24,6 +27,7 @@
 @synthesize encodingView;
 @synthesize autojoinView;
 @synthesize ignoresView;
+@synthesize socketsView;
 @synthesize commandsView;
 @synthesize proxyServerView;
 @synthesize addChannelButton;
@@ -66,6 +70,8 @@
 @synthesize saslCheck;
 @synthesize tabView;
 @synthesize uid;
+@synthesize pongInterval;
+@synthesize timeoutInterval;
 @synthesize usernameText;
 
 - (id)init
@@ -73,15 +79,17 @@
 	if ((self = [super init])) {
 		tabViewList = [NSMutableArray new];
 		
-		[tabViewList addObject:[NSArray arrayWithObjects:@"GENERAL",				@"1", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"IDENTITY",				@"2", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"MESSAGES",				@"3", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"ENCODING",				@"4", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"AUTOJOIN",				@"5", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"IGNORES",				@"6", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"COMMANDS",				@"7", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"PROXY",					@"8", nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"GENERAL",				@"1", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"IDENTITY",				@"2", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"MESSAGES",				@"3", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"ENCODING",				@"4", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"AUTOJOIN",				@"5", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"IGNORES",				@"6", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"COMMANDS",				@"7", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"PROXY",					@"8", NSNumberWithBOOL(NO), nil]];
+        [tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", NSNumberWithBOOL(YES), nil]];
+        [tabViewList addObject:[NSArray arrayWithObjects:@"SOCKETS",				@"9", NSNumberWithBOOL(YES), nil]];
 		
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
@@ -98,7 +106,7 @@
 		[sleepQuitMessageText	setFont:[NSFont systemFontOfSize:13.0]];
 		[loginCommandsText		setFont:[NSFont systemFontOfSize:13.0]];
 	}
-
+    
 	return self;
 }
 
@@ -153,8 +161,6 @@
 
 - (void)startWithIgnoreTab:(NSString *)imask
 {
-    /* TODO: ADD ABILITY TO SHOW NEW IGNORE DIALOG ON EMPTY "IGNORE" COMMAND. */
-    
 	[channelTable setTarget:self];
 	[channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 	[channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
@@ -186,9 +192,14 @@
 			ignoreSheet.newItem = YES;
 			
 			ignoreSheet.ignore = [AddressBook new];
-			ignoreSheet.ignore.hostmask = imask;
-			[ignoreSheet.ignore processHostMaskRegex];
-			
+            
+            if ([imask isEqualToString:@"--"]) {
+                ignoreSheet.ignore.hostmask = @"<nickname>";
+            } else {
+                ignoreSheet.ignore.hostmask = imask;
+			}
+            
+            [ignoreSheet.ignore processHostMaskRegex];
 			[ignoreSheet start];
 		}
 	} else {
@@ -224,6 +235,25 @@
 	delegate = nil;
 	
 	[self endSheet];
+}
+
+- (void)toggleTechnicalStuff:(id)sender
+{
+    if ([sender state] == NSOnState) {
+        includeAdvancedSettings = YES;
+    } else {
+        includeAdvancedSettings = NO;
+        
+        NSArray *itemData = [tabViewList safeObjectAtIndex:tabView.selectedRow];
+        
+        BOOL isSpecial = [itemData boolAtIndex:2];
+        
+        if (isSpecial) {
+            [self focusView:generalView	atRow:0];
+        }
+    }
+    
+    [tabView reloadData];
 }
 
 - (void)load
@@ -286,6 +316,11 @@
 	/* Connect Commands */
 	invisibleCheck.state		= config.invisibleMode;
 	loginCommandsText.string	= [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
+    
+    /* Sockets */
+    
+    pongInterval.integerValue    = config.pongInterval;
+    timeoutInterval.integerValue = config.timeoutInterval;
 }
 
 - (void)save
@@ -366,7 +401,7 @@
     NSArray *commands = [loginCommandsText.string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	[config.loginCommands removeAllObjects];
-	
+
 	for (NSString *s in commands) {
 		if (NSObjectIsNotEmpty(s)) {
 			[config.loginCommands safeAddObject:s];
@@ -374,6 +409,13 @@
 	}
 	
 	config.invisibleMode = invisibleCheck.state;
+    
+    /* Sockets */
+    
+    config.pongInterval = pongInterval.integerValue;
+    config.timeoutInterval = timeoutInterval.integerValue;
+    
+    [client pongTimerIntervalChanged];
 }
 
 - (void)updateConnectionPage
@@ -591,9 +633,9 @@
 	
 	tableRect.origin.y += (tableRect.size.height);
 	tableRect.origin.y += 34;
-						
+    
 	[addIgnoreMenu popUpMenuPositioningItem:nil atLocation:tableRect.origin
-														  inView:ignoreTable];
+                                     inView:ignoreTable];
 }
 - (void)addIgnore:(id)sender
 {
@@ -707,16 +749,20 @@
 		}
 	} else if (sender == tabView) {
 		NSArray *tabInfo = [tabViewList safeObjectAtIndex:row];
-		
-		NSString *keyhead = [tabInfo safeObjectAtIndex:0];
-		
-		if ([keyhead isEqualToString:ListSeparatorCellIndex] == NO) {
-			NSString *langkey = [NSString stringWithFormat:@"SERVER_SHEET_NAVIGATION_LIST_%@", keyhead];
-		
-			return TXTLS(langkey);
-		} else {
-			return ListSeparatorCellIndex;
-		}
+        
+        BOOL isTechnical = [tabInfo boolAtIndex:2];
+        
+        if ((isTechnical && includeAdvancedSettings) || isTechnical == NO) {
+            NSString *keyhead = [tabInfo safeObjectAtIndex:0];
+            
+            if ([keyhead isEqualToString:ListSeparatorCellIndex] == NO) {
+                NSString *langkey = [NSString stringWithFormat:@"SERVER_SHEET_NAVIGATION_LIST_%@", keyhead];
+                
+                return TXTLS(langkey);
+            } else {
+                return ListSeparatorCellIndex;
+            }
+        }
 	} else {
 		AddressBook *g = [config.ignores safeObjectAtIndex:row];
 		
@@ -772,14 +818,15 @@
 		NSInteger row = [tabView selectedRow];
 		
 		switch (row) {
-			case 0: [self focusView:generalView		atRow:0]; break;
-			case 1: [self focusView:identityView	atRow:1]; break;
-			case 2: [self focusView:messagesView	atRow:2]; break;
-			case 3: [self focusView:encodingView	atRow:3]; break;
-			case 4: [self focusView:autojoinView	atRow:4]; break;
-			case 5: [self focusView:ignoresView		atRow:5]; break;
-			case 6: [self focusView:commandsView	atRow:6]; break;
-			case 8: [self focusView:proxyServerView atRow:8]; break;
+			case 0:  [self focusView:generalView		atRow:0]; break;
+			case 1:  [self focusView:identityView       atRow:1]; break;
+			case 2:  [self focusView:messagesView       atRow:2]; break;
+			case 3:  [self focusView:encodingView       atRow:3]; break;
+			case 4:  [self focusView:autojoinView       atRow:4]; break;
+			case 5:  [self focusView:ignoresView		atRow:5]; break;
+			case 6:  [self focusView:commandsView       atRow:6]; break;
+			case 8:  [self focusView:proxyServerView    atRow:8]; break;
+            case 10: [self focusView:socketsView        atRow:10]; break;
 			default: break;
 		}
 	} else {
@@ -802,7 +849,7 @@
 {
 	if (sender == channelTable) {
 		NSArray *ary = [NSArray arrayWithObject:NSNumberWithInteger([rows firstIndex])];
-	
+        
 		[pboard declareTypes:TABLE_ROW_TYPES owner:self];
 		[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
 	}
@@ -814,7 +861,7 @@
 {
 	if (sender == channelTable) {
 		NSPasteboard *pboard = [info draggingPasteboard];
-	
+        
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
 			return NSDragOperationGeneric;
 		} else {
@@ -839,7 +886,7 @@
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			
 			[target adrv];
-
+            
 			NSMutableArray *low  = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
 			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autodrain];
 			
