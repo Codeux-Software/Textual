@@ -126,7 +126,6 @@
 	
 	// ====================================================== //
 	
-    NSLog(@"%@", preferencesOverride);
     if ([preferencesOverride containsKey:@"Indentation Offset"]) {
         self.indentationOffset = [preferencesOverride doubleForKey:@"Indentation Offset"];
     }
