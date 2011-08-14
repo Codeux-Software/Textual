@@ -4,7 +4,6 @@
 
 #include <arpa/inet.h>
 
-#define PONG_INTERVAL				300
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
 #define ISON_CHECK_INTERVAL			30
@@ -519,14 +518,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)chanBanDialogOnUpdate:(ChanBanSheet *)sender
 {
+    [sender.list removeAllObjects];
+    
 	[self send:IRCCI_MODE, [[world selectedChannel] name], @"+b", nil];
 }
 
 - (void)chanBanDialogWillClose:(ChanBanSheet *)sender
 {
-	if (NSObjectIsNotEmpty(sender.modeString)) {
-		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [[world selectedChannel] name], sender.modeString]];
-	}
+    if (NSObjectIsNotEmpty(sender.modes)) {
+        for (NSString *mode in sender.modes) {
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [world selectedChannel].name, mode]];
+        }
+    }
 	
 	[chanBanListSheet drain];
 	chanBanListSheet = nil;
@@ -562,14 +565,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)chanInviteExceptionDialogOnUpdate:(ChanInviteExceptionSheet *)sender
 {
+    [sender.list removeAllObjects];
+    
 	[self send:IRCCI_MODE, [[world selectedChannel] name], @"+I", nil];
 }
 
 - (void)chanInviteExceptionDialogWillClose:(ChanInviteExceptionSheet *)sender
 {
-	if (NSObjectIsNotEmpty(sender.modeString)) {
-		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [[world selectedChannel] name], sender.modeString]];
-	}
+    if (NSObjectIsNotEmpty(sender.modes)) {
+        for (NSString *mode in sender.modes) {
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [world selectedChannel].name, mode]];
+        }
+    }
 	
 	[inviteExceptionSheet drain];
 	inviteExceptionSheet = nil;
@@ -605,14 +612,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)chanBanExceptionDialogOnUpdate:(ChanBanExceptionSheet *)sender
 {
+    [sender.list removeAllObjects];
+    
 	[self send:IRCCI_MODE, [[world selectedChannel] name], @"+e", nil];
 }
 
 - (void)chanBanExceptionDialogWillClose:(ChanBanExceptionSheet *)sender
 {
-	if (NSObjectIsNotEmpty(sender.modeString)) {
-		[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [[world selectedChannel] name], sender.modeString]];
-	}
+    if (NSObjectIsNotEmpty(sender.modes)) {
+        for (NSString *mode in sender.modes) {
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, [world selectedChannel].name, mode]];
+        }
+    }
 	
 	[banExceptionSheet drain];
 	banExceptionSheet = nil;
@@ -634,6 +645,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)listDialogOnUpdate:(ListDialog *)sender
 {
+    [sender.list removeAllObjects];
+    
 	[self sendLine:IRCCI_LIST];
 }
 
@@ -684,8 +697,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)startPongTimer
 {
 	if (pongTimer.isActive) return;
+    if (config.pongInterval <= 0) return;
 	
-	[pongTimer start:PONG_INTERVAL];
+	[pongTimer start:config.pongInterval];
 }
 
 - (void)stopPongTimer
@@ -702,6 +716,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		[self stopPongTimer];
 	}
+}
+
+- (void)pongTimerIntervalChanged
+{
+    [self stopPongTimer];
+    [self startPongTimer];
 }
 
 - (void)startReconnectTimer
@@ -1065,7 +1085,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		NSData *targetData = [target dataUsingEncoding:enc];
 		NSData *passData   = [pass dataUsingEncoding:enc];
 		
-		if ((targetData.length + passData.length) > MAX_BODY_LEN) {
+		if ((targetData.length + passData.length) > MAXIMUM_IRC_BODY_LEN) {
 			if (NSObjectIsEmpty(prevTarget)) {
 				if (NSObjectIsEmpty(prevPass)) {
 					[self send:IRCCI_JOIN, prevTarget, nil];
@@ -1595,7 +1615,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 			}
 			
-			[self send:IRCCI_JOIN, targetChannelName, s, nil];
+			[self send:IRCCI_JOIN, targetChannelName, s.string, nil];
 			
 			return YES;
 			break;
@@ -1806,7 +1826,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				while (NSObjectIsNotEmpty(s)) {
 					NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
                     
-                    NSString *t = [str attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:myHost];
+                    NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:myHost];
 					
 					for (NSString *chname in targets) {
 						if (NSObjectIsEmpty(chname)) {
@@ -2140,7 +2160,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 65: // Command: UNIGNORE
 		{
 			if (NSObjectIsEmpty(s)) {
-				[world.menuController showServerPropertyDialog:self ignore:@"-"];
+				[world.menuController showServerPropertyDialog:self ignore:@"--"];
 			} else {
 				NSString *n = s.getToken.string;
                 
@@ -3197,21 +3217,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return NO;
 	}
 	
-	LogLine *c = [LogLine newad];
-	
-	NSString *time = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
-	
-	IRCChannel *channel = nil;
-	
-	NSString *place   = nil;
+	NSString *time    = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
 	NSString *nickStr = nil;
 	
+	IRCChannel *channel = nil;
+    
 	LogMemberType memberType = MEMBER_TYPE_NORMAL;
 	
 	NSInteger colorNumber = 0;
 	
 	NSArray *keywords     = nil;
 	NSArray *excludeWords = nil;
+    
+	LogLine *c = [LogLine newad];
 	
 	if (nick && [nick isEqualToString:myNick]) {
 		memberType = MEMBER_TYPE_MYSELF;
@@ -3220,7 +3238,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([chan isKindOfClass:[IRCChannel class]]) {
 		channel = chan;
 	} else if ([chan isKindOfClass:[NSString class]]) {
-		place = [NSString stringWithFormat:@"<%@> ", chan];
+        if (NSObjectIsNotEmpty(chan)) {
+            return NO;
+        }
 	}
 	
 	if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
@@ -3271,16 +3291,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	c.time = time;
-	
-	c.place = place;
-	c.nick  = nickStr;
-	
+	c.nick = nickStr;
 	c.body = text;
 	
 	c.lineType			= type;
 	c.memberType		= memberType;
 	c.nickInfo			= nick;
-	c.clickInfo			= nil;
 	c.identified		= identified;
 	c.nickColorNumber	= colorNumber;
 	
@@ -4055,7 +4071,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *nick   = m.sender.nick;
 	NSString *toNick = [m paramAt:0];
     
-    if ([nick isEqualNoCase:toNick]) {
+    if ([nick isEqualToString:toNick]) {
         return;
     }
 	
@@ -4905,9 +4921,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 381:
 		{
-			hasIRCopAccess = YES;
-			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_HAS_GOOD_LIFE", m.sender.nick)];
+			if (hasIRCopAccess == NO) {
+                /* If we are already an IRCOp, then we do not need to see this line again. 
+                 We will assume that if we are seeing it again, then it is the result of a
+                 user opening two connections to a single bouncer session. */
+                
+                [self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_HAS_GOOD_LIFE", m.sender.nick)];
+                
+                hasIRCopAccess = YES;
+            }
 			
 			break;
 		}
@@ -5132,8 +5154,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *disconnectTXTLString = nil;
 	
 	switch (disconnectType) {
-		case DISCONNECT_NORMAL: disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER"; break;
-		case DISCONNECT_TRIAL_PERIOD: disconnectTXTLString = @"TRIAL_BUILD_NETWORK_DISCONNECTED";break;
+		case DISCONNECT_NORMAL:       disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SERVER"; break;
+        case DISCONNECT_SLEEP_MODE:   disconnectTXTLString = @"IRC_DISCONNECTED_FROM_SLEEP"; break;
+		case DISCONNECT_TRIAL_PERIOD: disconnectTXTLString = @"TRIAL_BUILD_NETWORK_DISCONNECTED"; break;
 		default: break;
 	}
 	

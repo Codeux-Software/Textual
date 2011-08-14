@@ -15,6 +15,7 @@ typedef enum {
 	DISCONNECT_NORMAL,
 	DISCONNECT_TRIAL_PERIOD,
 	DISCONNECT_BAD_SSL_CERT,
+    DISCONNECT_SLEEP_MODE,
 } DisconnectType;
 
 @interface IRCClient : IRCTreeItem
@@ -233,6 +234,8 @@ typedef enum {
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
+
+- (void)pongTimerIntervalChanged;
 
 - (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype;
 - (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;

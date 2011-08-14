@@ -46,7 +46,7 @@
 			if (PointerIsEmpty(range)) return;
 			if ([(id)sender hasSelection] == NO) return;
 			
-			[NSApp sendAction:@selector(copy:) to:[[NSApp mainWindow] firstResponder] from:self];
+			[NSApp sendAction:@selector(copy:) to:[NSApp mainWindow].firstResponder from:self];
 			
 			[sender setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
 		}

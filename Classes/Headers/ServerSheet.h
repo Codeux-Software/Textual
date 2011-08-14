@@ -8,6 +8,8 @@
 	
 	IRCClient *client;
 	IRCClientConfig *config;
+    
+    BOOL includeAdvancedSettings;
 	
 	NSDictionary *serverList;
 	NSMutableArray *tabViewList;
@@ -20,6 +22,7 @@
 	IBOutlet NSView *autojoinView;
 	IBOutlet NSView *ignoresView;
 	IBOutlet NSView *commandsView;
+    IBOutlet NSView *socketsView;
 	IBOutlet NSView *proxyServerView;
 	
 	IBOutlet ListView *tabView;
@@ -53,6 +56,9 @@
 	IBOutlet NSTextField *proxyPortText;
 	IBOutlet NSTextField *proxyUserText;
 	IBOutlet NSTextField *proxyPasswordText;
+    
+    IBOutlet NSTextField *pongInterval;
+    IBOutlet NSTextField *timeoutInterval;
 	
 	IBOutlet ListView *channelTable;
 	IBOutlet NSButton *addChannelButton;
@@ -83,6 +89,7 @@
 @property (nonatomic, retain) NSView *autojoinView;
 @property (nonatomic, retain) NSView *ignoresView;
 @property (nonatomic, retain) NSView *commandsView;
+@property (nonatomic, retain) NSView *socketsView;
 @property (nonatomic, retain) NSView *proxyServerView;
 @property (nonatomic, retain) ListView *tabView;
 @property (nonatomic, retain) NSTextField *nameText;
@@ -108,6 +115,8 @@
 @property (nonatomic, retain) NSTextField *proxyPortText;
 @property (nonatomic, retain) NSTextField *proxyUserText;
 @property (nonatomic, retain) NSTextField *proxyPasswordText;
+@property (nonatomic, retain) NSTextField *pongInterval;
+@property (nonatomic, retain) NSTextField *timeoutInterval;
 @property (nonatomic, retain) ListView *channelTable;
 @property (nonatomic, retain) NSButton *addChannelButton;
 @property (nonatomic, retain) NSButton *editChannelButton;
@@ -132,7 +141,7 @@
 - (void)ok:(id)sender;
 - (void)cancel:(id)sender;
 
-- (IBAction)hostComboChanged:(id)sender;
+- (void)hostComboChanged:(id)sender;
 
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
@@ -146,6 +155,8 @@
 - (void)editIgnore:(id)sender;
 - (void)deleteIgnore:(id)sender;
 - (void)showAddIgnoreMenu:(id)sender;
+
+- (void)toggleTechnicalStuff:(id)sender;
 @end
 
 @interface NSObject (ServerSheetDelegate)

@@ -34,6 +34,19 @@
 	return self;
 }
 
+- (NSInteger)timeoutInterval
+{
+    IRCClient *connd = [delegate delegate];
+    
+    NSInteger time = connd.config.timeoutInterval;
+    
+    if (time <= 0) {
+        return -1;
+    }
+    
+    return time;
+}
+
 - (void)dealloc
 {
 	if (conn) {
@@ -91,7 +104,7 @@
 		conn = [AsyncSocket socketWithDelegate:self];
 	}
 	
-	if ([conn connectToHost:host onPort:port withTimeout:15.0 error:&connError] == NO) {
+	if ([conn connectToHost:host onPort:port withTimeout:[self timeoutInterval] error:&connError] == NO) {
 		NSLog(@"Silently ignoring connection error: %@", [connError localizedDescription]);
 	}
 	
@@ -160,8 +173,8 @@
 	
 	++sendQueueSize;
 	
-	[conn writeData:data withTimeout:15.0	tag:0];
-	[conn readDataWithTimeout:(-1)			tag:0];
+	[conn writeData:data withTimeout:[self timeoutInterval]	tag:0];
+	[conn readDataWithTimeout:[self timeoutInterval]		tag:0];
 }
 
 - (BOOL)onSocketWillConnect:(AsyncSocket *)sock
@@ -183,7 +196,7 @@
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	[conn readDataWithTimeout:(-1) tag:0]; 
+	[conn readDataWithTimeout:[self timeoutInterval] tag:0]; 
 	
 	connecting = NO;
 	connected  = YES;
@@ -246,7 +259,7 @@
 		[delegate tcpClientDidReceiveData:self];
 	}
 	
-	[conn readDataWithTimeout:(-1) tag:0]; 
+	[conn readDataWithTimeout:[self timeoutInterval] tag:0]; 
 }
 
 - (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag

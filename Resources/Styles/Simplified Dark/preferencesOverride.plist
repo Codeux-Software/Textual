@@ -4,17 +4,8 @@
 <dict>
 	<key>Nickname Format</key>
 	<string></string>
-	<key>Nickname Format Fixed Width</key>
-	<integer>0</integer>
 	<key>Timestamp Format</key>
 	<string></string>
-	<key>Indent Wrapped Messages</key>
-	<dict>
-		<key>Override Setting</key>
-		<false/>
-		<key>New Value</key>
-		<false/>
-	</dict>
 	<key>Override Channel Font</key>
 	<dict>
 		<key>Font Name</key>
@@ -22,5 +13,7 @@
 		<key>Font Size</key>
 		<integer>0</integer>
 	</dict>
+	<key>Indentation Offset</key>
+	<integer>6</integer>
 </dict>
 </plist>

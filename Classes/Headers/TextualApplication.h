@@ -47,6 +47,7 @@
 	#import "MemberList.h"
 	#import "MemberListCell.h"
 	#import "TextFieldWithDisabledState.h"
+    #import "LogScrollView.h"
 	#import "IRC.h"
 	#import "Timer.h"
 	#import "TCPClient.h"

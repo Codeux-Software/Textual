@@ -5,6 +5,8 @@
 	<key>Underlying Window Color</key>
 	<string>#000000</string>
 	<key>Rendering Engine Version</key>
-	<real>1</real>
+	<real>1.1</real>
+	<key>Indentation Offset</key>
+	<integer>0</integer>
 </dict>
 </plist>

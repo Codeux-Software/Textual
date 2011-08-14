@@ -10,14 +10,15 @@
 @synthesize list;
 @synthesize table;
 @synthesize header;
-@synthesize modeString;
+@synthesize modes;
 
 - (id)init
 {
     if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ChanBanExceptionSheet" owner:self];
 		
-		list = [NSMutableArray new];
+		list  = [NSMutableArray new];
+        modes = [NSMutableArray new];
     }
     
     return self;
@@ -26,7 +27,7 @@
 - (void)dealloc
 {
     [list drain];
-	[modeString drain];
+    [modes drain];
 	
     [super dealloc];
 }
@@ -86,22 +87,42 @@
 
 - (void)onRemoveExceptions:(id)sender
 {
+    NSString *modeString;
+    
 	NSMutableString *str   = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
 	NSIndexSet *indexes = [table selectedRowIndexes];
 	
+    NSInteger indexTotal = 0;
+    
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+        indexTotal++;
+        
 		NSArray *iteml = [list safeObjectAtIndex:[index unsignedIntegerValue]];
 		
 		if (NSObjectIsNotEmpty(iteml)) {
 			[str   appendString:@"e"];
 			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
 		}
+    
+		if (indexTotal == MAXIMUM_SETS_PER_MODE) {
+            modeString = (id)[str stringByAppendingString:trail];
+            
+            [modes safeAddObject:modeString];
+            
+            [str   setString:@"-"];
+            [trail setString:NSNullObject];
+            
+            indexTotal = 0;
+        }
 	}
 	
-	modeString = (id)[str stringByAppendingString:trail];
-	[modeString retain];
+    if (NSObjectIsNotEmpty(trail)) {
+        modeString = (id)[str stringByAppendingString:trail];
+        
+        [modes safeAddObject:modeString];
+    }
     
 	[self ok:sender];
 }

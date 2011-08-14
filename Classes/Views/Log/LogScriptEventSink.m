@@ -85,8 +85,13 @@
 	return res;
 }
 
-- (void)hideInlineImage:(NSString *)url parent:(NSString *)lineNumber 
-{
+- (void)hideInlineImage:(DOMHTMLImageElement *)object
+{	
+    if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+        [object.parentNode removeChild:object];
+    } else {
+        [URLOpener open:[NSURL URLWithString:object.src]];
+    }
 }
 
 - (void)setUrl:(NSString *)s

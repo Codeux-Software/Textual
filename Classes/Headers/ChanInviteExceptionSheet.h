@@ -3,8 +3,8 @@
 
 @interface ChanInviteExceptionSheet : SheetBase
 {
-	NSMutableArray  *list;
-	NSMutableString *modeString;
+	NSMutableArray *list;
+	NSMutableArray *modes;
 	
 	IBOutlet ListView *table;
 	IBOutlet NSTextField *header;
@@ -13,7 +13,7 @@
 @property (nonatomic, retain) ListView *table;
 @property (nonatomic, retain) NSTextField *header;
 @property (nonatomic, retain) NSMutableArray *list;
-@property (nonatomic, retain) NSMutableString *modeString;
+@property (nonatomic, retain) NSMutableArray *modes;
 
 - (void)show;
 - (void)clear;

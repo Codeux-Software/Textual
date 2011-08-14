@@ -289,9 +289,10 @@
                 
                 [self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:isHighlight selected:isSelected];
                 
-                cellFrame.size.width -= (badgeRect.size.width + (BADGE_RIGHT_MARGIN * 2));
+                cellFrame.size.width -= badgeRect.size.width;
             }
             
+            cellFrame.size.width -= (BADGE_RIGHT_MARGIN * 2);
             
 			if (isSelected == NO) {
                 [itemShadow setShadowOffset:NSMakeSize(0, -1)];

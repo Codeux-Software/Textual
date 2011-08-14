@@ -13,8 +13,6 @@
 #define ACTIVE						(c && c.isActive)
 #define NOT_ACTIVE					(c && c.isActive == NO)
 
-#define MAXIMUM_SETS_PER_MODE		10
-
 @interface MenuController (Private)
 - (LogView *)currentWebView;
 @end
