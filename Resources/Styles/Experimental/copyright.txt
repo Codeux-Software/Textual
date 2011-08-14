@@ -1,7 +1,0 @@
-This is a modified version of Simplified Dark, which
-itself is a modified and stripped down version of 
-the "Simplified" theme developed by "Cowboy" Ben Alman
-(http://benalman.com/). It is copyright to him.
-
-Some inspiration was also taken from the LimeChat theme
-"Usably" by Idan Gazit.

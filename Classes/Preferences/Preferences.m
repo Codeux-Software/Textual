@@ -388,11 +388,6 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.nick_allconnections"];
 }
 
-+ (BOOL)indentOnHang
-{
-	return [_NSUserDefaults() boolForKey:@"Preferences.Theme.indent_onwordwrap"];
-}
-
 + (BOOL)confirmQuit
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.confirm_quit"];
@@ -982,7 +977,6 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.General.display_servmotd"];
 	[d setBool:YES forKey:@"Preferences.General.dockbadges"];
 	[d setBool:YES forKey:@"Preferences.General.autoadd_scrollbackmark"];
-	[d setBool:YES forKey:@"Preferences.Theme.indent_onwordwrap"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:YES forKey:@"Preferences.General.track_conversations"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];

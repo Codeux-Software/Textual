@@ -77,6 +77,8 @@
 + (NSString *)stringWithUUID;
 
 - (NSString *)reservedCharactersToIRCFormatting;
+
+- (NSInteger)pixelHeightInWidth:(NSInteger)width;
 @end
 
 @interface NSString (NSStringNumberHelper)

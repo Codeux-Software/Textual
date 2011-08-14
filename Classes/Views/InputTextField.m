@@ -79,10 +79,13 @@
 	} else {
         NSAttributedString *value = [self attributedStringValue];
         
-		NSLayoutManager *layoutManager	= [NSLayoutManager new];
-		NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithAttributedString:value];
-		NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize((textBoxFrame.size.width - 12), FLT_MAX)];
+		NSTextStorage *textStorage = [NSTextStorage alloc];
+		NSLayoutManager *layoutManager  = [NSLayoutManager new];
+		NSTextContainer *textContainer= [NSTextContainer alloc];
 		
+        [textStorage initWithAttributedString:value];
+        [textContainer initWithContainerSize:NSMakeSize((textBoxFrame.size.width - 12), FLT_MAX)];
+        
 		[layoutManager addTextContainer:textContainer];
 		[textStorage addLayoutManager:layoutManager];
 		[textContainer setLineFragmentPadding:0.0];

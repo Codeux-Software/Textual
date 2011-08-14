@@ -36,12 +36,10 @@ typedef enum {
 @interface LogLine : NSObject
 {
 	NSString *time;
-	NSString *place;
 	NSString *nick;
 	NSString *body;
 	
 	NSString *nickInfo;
-	NSString *clickInfo;
 		
 	BOOL identified;
 	
@@ -55,13 +53,11 @@ typedef enum {
 }
 
 @property (nonatomic, retain) NSString *time;
-@property (nonatomic, retain) NSString *place;
 @property (nonatomic, retain) NSString *nick;
 @property (nonatomic, retain) NSString *body;
 @property (nonatomic, assign) LogLineType lineType;
 @property (nonatomic, assign) LogMemberType memberType;
 @property (nonatomic, retain) NSString *nickInfo;
-@property (nonatomic, retain) NSString *clickInfo;
 @property (nonatomic, assign) BOOL identified;
 @property (nonatomic, assign) NSInteger nickColorNumber;
 @property (nonatomic, retain) NSArray *keywords;

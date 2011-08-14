@@ -335,7 +335,10 @@ BOOL isUnicharDigit(unichar c)
     
     NSDictionary *input = [NSDictionary dictionaryWithObjectsAndKeys:defaultFont, @"attributedStringFont", nil];
 	
-	return [LogRenderer renderBody:self controller:nil renderType:ASCII_TO_ATTRIBUTED_STRING properties:input resultInfo:NULL];
+	return [LogRenderer renderBody:self 
+                        controller:nil 
+                        renderType:ASCII_TO_ATTRIBUTED_STRING 
+                        properties:input resultInfo:NULL];
 }
 
 - (NSString *)stripEffects
@@ -625,13 +628,13 @@ BOOL isUnicharDigit(unichar c)
     /* We do not want ports in server address. */
     self = [self trim];
     
-    if ([self isIPv6Address] == NO) {
-        if ([TXRegularExpression string:self isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"]) {
-            NSInteger stringPos = [self stringPosition:@":"];
-            
-            if (stringPos > 0) {
-                self = [self safeSubstringToIndex:stringPos];
-            }
+    if ([TXRegularExpression string:self isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
+        [TXRegularExpression string:self isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"]) {
+        
+        NSInteger stringPos = [self rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, self.length)].location;
+        
+        if (stringPos > 0) {
+            self = [self safeSubstringToIndex:stringPos];
         }
     }
 	
@@ -644,6 +647,25 @@ BOOL isUnicharDigit(unichar c)
 	NSArray *matches = [self componentsSeparatedByString:@":"];
 	
 	return ([matches count] >= 2 && [matches count] <= 7);
+}
+
+- (NSInteger)pixelHeightInWidth:(NSInteger)width
+{
+    NSTextStorage *textStorage = [NSTextStorage alloc];
+	NSLayoutManager *layoutManager = [NSLayoutManager new];
+	NSTextContainer *textContainer = [NSTextContainer alloc];
+	
+    [textStorage initWithString:self];
+    [textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
+    
+	[layoutManager addTextContainer:textContainer];
+	[textStorage addLayoutManager:layoutManager];
+	[textContainer setLineFragmentPadding:0.0];
+	[layoutManager glyphRangeForTextContainer:textContainer];
+	
+	NSInteger cellHeight = [layoutManager usedRectForTextContainer:textContainer].size.height;
+    
+    return cellHeight;
 }
 
 @end
@@ -793,7 +815,42 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSArray *)splitIntoLines
 {
-    return [NSArray arrayWithObjects:self, nil];
+    NSMutableArray *lines = [NSMutableArray array];
+    
+    NSInteger len   = self.string.length;
+    NSInteger start = 0;
+    
+    NSMutableAttributedString *copyd = [self.mutableCopy autodrain];
+    
+    while (start < len) {
+        NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] 
+                                                 options:NSCaseInsensitiveSearch 
+                                                   range:NSMakeRange(start, (len - start))];
+        
+        if (r.location == NSNotFound) {
+            break;
+        }
+        
+        NSRange delRange = NSMakeRange(0, ((r.location - start) + 1));
+        NSRange cutRange = NSMakeRange(start, (r.location - start));
+        
+        NSAttributedString *line = [self attributedSubstringFromRange:cutRange];
+        
+        [lines safeAddObject:line];
+        [copyd deleteCharactersInRange:delRange];
+        
+        start = NSMaxRange(r);
+    }
+    
+    if (NSObjectIsEmpty(lines)) {
+        [lines safeAddObject:self];
+    } else {
+        if (copyd.string.length) {
+            [lines safeAddObject:copyd];
+        }
+    }
+    
+    return lines;
 }
 
 @end
@@ -802,7 +859,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSAttributedString *)getToken
 {
-	NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:NSWhitespaceCharacter]];
+	NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
         NSRange sr = NSMakeRange(0, r.location);

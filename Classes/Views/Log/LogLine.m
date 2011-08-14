@@ -5,13 +5,11 @@
 @implementation LogLine
 
 @synthesize time;
-@synthesize place;
 @synthesize nick;
 @synthesize body;
 @synthesize lineType;
 @synthesize keywords;
 @synthesize nickInfo;
-@synthesize clickInfo;
 @synthesize identified;
 @synthesize memberType;
 @synthesize excludeWords;
@@ -20,12 +18,10 @@
 - (void)dealloc
 {
 	[time drain];
-	[place drain];
 	[nick drain];
 	[body drain];
 	[keywords drain];
 	[nickInfo drain];
-	[clickInfo drain];
 	[excludeWords drain];
 	
 	[super dealloc];

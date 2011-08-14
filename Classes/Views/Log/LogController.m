@@ -17,7 +17,6 @@
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs;
 - (NSString *)initialDocument:(NSString *)topic;
 - (NSString *)generateOverrideStyle;
-- (DOMDocument *)mainFrameDocument;
 - (DOMNode *)html_head;
 - (DOMElement *)body:(DOMDocument *)doc;
 - (DOMElement *)topic:(DOMDocument *)doc;
@@ -112,11 +111,6 @@
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
-}
-
-- (BOOL)modernRenderingEngineEnabled
-{
-	return (theme.other.renderingEngineVersion == 2.1);
 }
 
 #pragma mark -
@@ -510,12 +504,11 @@
 	NSString *body			 = nil;
 	NSString *lineTypeString = [LogLine lineTypeString:type];
 	
-	BOOL highlighted     = NO;
-	BOOL showInlineImage = NO;
+	BOOL highlighted = NO;
 	
-	BOOL isText			 = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
-	BOOL isNormalMsg     = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION);
-    BOOL drawLinks		 = BOOLReverseValue([[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
+	BOOL isText	     = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION);
+	BOOL isNormalMsg = (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION);
+    BOOL drawLinks   = BOOLReverseValue([[URLParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
 	
 	NSArray *urlRanges = [NSArray array];
 	
@@ -544,42 +537,71 @@
 	} else {
 		body = line.body;
 	}
+    
+    BOOL oldRenderAbs = (theme.other.renderingEngineVersion == 0.0);
+    BOOL oldRenderEst = (theme.other.renderingEngineVersion == 1.2);
+    BOOL oldRenderAlt = (theme.other.renderingEngineVersion == 1.1 || oldRenderEst);
+    BOOL modernRender = (theme.other.renderingEngineVersion == 2.1);
 	
 	NSMutableString *s = [NSMutableString string];
 	
-	if (line.memberType == MEMBER_TYPE_MYSELF) {
-		if ([self modernRenderingEngineEnabled]) {
-			[s appendFormat:@"<span type=\"%@\">", [LogLine memberTypeString:line.memberType]];
-		} else {
-			[s appendFormat:@"<p type=\"%@\">", [LogLine memberTypeString:line.memberType]];
-		}
-	} else {
-		[s appendFormat:@"<p>"];
+    if (oldRenderAbs || oldRenderAlt) {
+        if (line.memberType == MEMBER_TYPE_MYSELF) {
+            [s appendFormat:@"<p type=\"%@\">", [LogLine memberTypeString:line.memberType]];
+        } else {
+            [s appendFormat:@"<p>"];
+        }
 	}
-	
+    
 	if (NSObjectIsEmpty(line.time) && rawHTML == NO) {
 		return NO;
 	}
 	
-	if (line.time)  [s appendFormat:@"<span class=\"time\">%@</span>",  logEscape(line.time)];
-	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
+    if (oldRenderAbs || oldRenderAlt) {
+        if (line.time) {
+            [s appendFormat:@"<span class=\"time\">%@</span>",  logEscape(line.time)];
+        }
+    } else {
+        [s appendFormat:@"<div class=\"time\">%@</div>",  logEscapeWithNil(line.time)];
+    }
+    
+    if (oldRenderAlt) {
+        [s appendFormat:@"<span class=\"message\" type=\"%@\">", lineTypeString];
+    }
 	
 	if (line.nick) {
-		[s appendFormat:@"<span class=\"sender\" ondblclick=\"Textual.on_dblclick_nick()\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
+        NSString *htmltag = ((modernRender) ? @"div" : @"span");
+        
+        [s appendFormat:@"<%@ class=\"sender\" ondblclick=\"Textual.on_dblclick_nick()\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\"", htmltag, [LogLine memberTypeString:line.memberType]];
 		
-		if (line.memberType == MEMBER_TYPE_NORMAL && [Preferences disableNicknameColors] == NO) {
-			[s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
-		}
+        if (line.memberType == MEMBER_TYPE_NORMAL && [Preferences disableNicknameColors] == NO) {
+            [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
+        }
 		
-		[s appendFormat:@">%@</span> ", logEscape(line.nick)];
-	}
+        [s appendFormat:@">%@</%@> ", logEscape(line.nick), htmltag];
+    } else {
+        if (modernRender) { 
+            [s appendString:@"<div class=\"sender\"></div>"];
+        } else {
+            if (oldRenderEst) {
+                [s appendString:@"<span class=\"sender\">&nbsp;</span>"];
+            }
+        }
+    }
 	
-    [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
+    if (modernRender) {
+        [s appendFormat:@"<div class=\"message\">%@", body];
+    } else {
+        if (oldRenderAbs) { 
+            [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
+        } else {
+            [s appendString:body];
+        }
+    }
     
 	if (isNormalMsg && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
         if (([channel isChannel] && channel.config.inlineImages == NO) || [channel isTalk]) {
             NSString *imageUrl  = nil;
-            NSString *lineBreak = nil;
             
             NSMutableArray *postedUrls = [NSMutableArray array];
             
@@ -595,29 +617,30 @@
                         [postedUrls safeAddObject:imageUrl];
                     }
                     
-                    showInlineImage = YES;
-                    
-                    if (NSObjectIsNotEmpty(lineBreak)) {
-                        lineBreak = @"<br />";
-                    } else {
-                        lineBreak = @"<br /><br />";
-                    }
-                    
-                    [s appendFormat:@"%@<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\" /></a>", lineBreak, url, imageUrl, [Preferences inlineImagesMaxWidth]];
+                    [s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" onclick=\"return Textual.hide_inline_image(this)\" style=\"max-width: %ipx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
                 }
-            }
-            
-            if (showInlineImage) {
-                [s appendString:@"<br />"];
             }
         }
 	}
-    
-	[s appendFormat:@"</span></p>"];
 	
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-	
-	[attrs setObject:[LogLine lineTypeString:type]				forKey:@"type"];
+    
+    if (oldRenderAbs || oldRenderAlt) {
+        [s appendString:@"</span></p>"];
+        
+        [attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
+    } else {
+        [s appendFormat:@"</div>"];
+        
+        NSString *typeattr = [LogLine lineTypeString:type];
+        
+        if (line.memberType == MEMBER_TYPE_MYSELF) {
+            typeattr = [typeattr stringByAppendingFormat:@" %@", [LogLine memberTypeString:line.memberType]];
+        }
+        
+        [attrs setObject:typeattr forKey:@"type"];
+    }
+    
 	[attrs setObject:((highlighted) ? @"true" : @"false")		forKey:@"highlight"];
 	[attrs setObject:((isText) ? @"line text" : @"line event")	forKey:@"class"];
 	
@@ -712,7 +735,9 @@
 	
 	if ([Preferences rightToLeftFormatting]) {
 		[bodyAttrs appendString:@" dir=\"rtl\""];
-	}
+	} else {
+		[bodyAttrs appendString:@" dir=\"ltr\""];
+    }
 	
 	NSMutableString *s = [NSMutableString string];
 	
@@ -763,38 +788,35 @@
 	
 	NSFont *channelFont = other.channelViewFont;
 	
-	NSString *name  = [channelFont fontName];
+	NSString *name = [channelFont fontName];
+    
 	NSInteger rsize = [channelFont pointSize];
-	NSDoubleN size  = ([channelFont pointSize] * (72.0 / 96.0));
+	NSDoubleN dsize = ([channelFont pointSize] * (72.0 / 96.0));
 	
 	[sf appendString:@"html, body, body[type], body {"];
 	[sf appendFormat:@"font-family:'%@';", name];
-	[sf appendFormat:@"font-size:%fpt;", size];
+	[sf appendFormat:@"font-size:%fpt;", dsize];
 	[sf appendString:@"}"];
-	
-	if ([Preferences rightToLeftFormatting] == NO) {
-		if (other.overrideMessageIndentWrap == YES && other.indentWrappedMessages == NO) {
-			return sf;
-		}
-		
-		if ([Preferences indentOnHang]) {
-			NSString	 *time		 = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat);
-			NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
-			NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
-			
-			NSSize    textSize  = [time sizeWithAttributes:attributes]; 
-			NSInteger textWidth = (textSize.width + (6 + other.nicknameFormatFixedWidth));
-			
-			[sf appendString:@"body div#body_home p {"];
-			[sf appendFormat:@"margin-left: %ipx;", textWidth];
-			[sf appendFormat:@"text-indent: -%ipx;", textWidth];  
-			[sf appendString:@"}"];
-			
-			[sf appendString:@"body .time {"];
-			[sf appendFormat:@"width: %fpx;", (textSize.width + 6)];
-			[sf appendString:@"}"];
-		}
-	}
+    
+    if (other.indentationOffset == THEME_DISABLED_INDENTATION_OFFSET || [Preferences rightToLeftFormatting]) {
+        return sf;
+    } else {
+        NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
+        NSString	 *time		 = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat);
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
+        
+        NSSize    textSize  = [time sizeWithAttributes:attributes]; 
+        NSInteger textWidth = (textSize.width + other.indentationOffset);
+        
+        [sf appendString:@"body div#body_home p {"];
+        [sf appendFormat:@"margin-left: %ipx;", textWidth];
+        [sf appendFormat:@"text-indent: -%ipx;", textWidth];  
+        [sf appendString:@"}"];
+        
+        [sf appendString:@"body .time {"];
+        [sf appendFormat:@"width: %ipx;", textWidth];
+        [sf appendString:@"}"];
+    }
 	
 	return sf;
 }
@@ -817,6 +839,7 @@
 	if (PointerIsEmpty(scrollView)) return;
 	
 	[scrollView setHasHorizontalScroller:NO];
+    [scrollView setHasVerticalScroller:YES];
 	
 	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
 		[(id)scrollView setAllowsHorizontalScrolling:NO];

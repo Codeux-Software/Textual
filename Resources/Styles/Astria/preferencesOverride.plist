@@ -3,24 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>Nickname Format</key>
-	<string>%@%n:</string>
-	<key>Nickname Format Fixed Width</key>
-	<integer>158</integer>
+	<string></string>
 	<key>Timestamp Format</key>
-	<string>[%H:%M:%S]</string>
-	<key>Indent Wrapped Messages</key>
-	<dict>
-		<key>Override Setting</key>
-		<true/>
-		<key>New Value</key>
-		<true/>
-	</dict>
+	<string></string>
 	<key>Override Channel Font</key>
 	<dict>
 		<key>Font Name</key>
-		<string>Monaco</string>
+		<string></string>
 		<key>Font Size</key>
-		<integer>9</integer>
+		<integer>0</integer>
 	</dict>
+	<key>Indentation Offset</key>
+	<integer>6</integer>
 </dict>
 </plist>

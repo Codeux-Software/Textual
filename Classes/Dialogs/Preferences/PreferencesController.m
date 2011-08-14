@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define LINES_MIN			100
-#define LINES_MAX			5000
+#define LINES_MAX			10000
 #define INLINE_IMAGE_MAX	5000
 #define INLINE_IMAGE_MIN	40
 
@@ -436,6 +436,9 @@
 
 - (void)onChangedTheme:(id)sender
 {
+    NSDoubleN oldRenderVersion = world.viewTheme.other.renderingEngineVersion;
+    NSDoubleN newRenderVersion = 0;
+    
 	NSMenuItem *item = [themeButton selectedItem];
 	
 	NSString *newThemeName = nil;
@@ -454,6 +457,14 @@
 	[Preferences setThemeName:newThemeName];
 	
 	[self onStyleChanged:nil];
+    
+    newRenderVersion = world.viewTheme.other.renderingEngineVersion;
+    
+    if (NSDissimilarObjects(oldRenderVersion, newRenderVersion)) {
+        for (IRCClient *u in world.clients) {
+            [u sendCommand:@"CLEARALL"];
+        }
+    }
 }
 
 - (void)onSelectFont:(id)sender

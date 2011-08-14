@@ -30,6 +30,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize nickPassword;
 @synthesize password;
 @synthesize port;
+@synthesize pongInterval;
+@synthesize timeoutInterval;
 @synthesize proxyHost;
 @synthesize proxyPassword;
 @synthesize proxyPort;
@@ -62,6 +64,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		proxyPort = 1080;
 		proxyUser = NSNullObject;
 		proxyPassword = NSNullObject;
+        
+        pongInterval = 0;
+        timeoutInterval = 0;
         
         prefersIPv6 = YES;
 		
@@ -247,6 +252,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	encoding = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
 	fallbackEncoding = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
 	
+    pongInterval = [dic integerForKey:@"pong_interval"];
+    timeoutInterval = [dic integerForKey:@"timeout_interval"];
+    
 	if ([dic stringForKey:@"leaving_comment"]) {
 		[leavingComment drain];
 		leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
@@ -311,6 +319,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setInteger:proxyType forKey:@"proxy"];
 	[dic setInteger:proxyPort forKey:@"proxy_port"];
 	[dic setInteger:encoding forKey:@"encoding"];
+    [dic setInteger:pongInterval forKey:@"pong_interval"];
+    [dic setInteger:timeoutInterval forKey:@"timeout_interval"];
 	[dic setInteger:fallbackEncoding forKey:@"fallback_encoding"];
 	
 	[dic setBool:useSSL forKey:@"ssl"];

@@ -18,9 +18,13 @@
 - (void)populateData;
 {			
 	NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
-    
+
     if (NSObjectIsNotEmpty(resourceFiles)) {
         for (NSString *file in resourceFiles) {
+            if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+                continue;
+            }
+            
             NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
             NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
             
@@ -34,6 +38,10 @@
     
     if (NSObjectIsNotEmpty(resourceFiles)) {
         for (NSString *file in resourceFiles) {
+            if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+                continue;
+            }
+            
             NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
             NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
             
