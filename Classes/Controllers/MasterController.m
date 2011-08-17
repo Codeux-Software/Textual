@@ -1239,8 +1239,10 @@ typedef enum {
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-    if (menu.isInFullScreenMode) {
+    if (menu.isInFullScreenMode && [text isFocused] == NO) {
         [menu wantsFullScreenModeToggled:nil];
+    } else {
+        [text keyDown:e];
     }
 }
 
