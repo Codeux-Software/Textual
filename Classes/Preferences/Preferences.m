@@ -179,22 +179,22 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)whereApplicationSupportPath
 {
-	return [@"~/Library/Application Support/Textual/" stringByExpandingTildeInPath];
+	return [@"~/Library/Application Support/Textual IRC/" stringByExpandingTildeInPath];
 }
 
 + (NSString *)whereScriptsPath
 {
-	return [@"~/Library/Application Support/Textual/Scripts" stringByExpandingTildeInPath];
+	return [@"~/Library/Application Support/Textual IRC/Scripts" stringByExpandingTildeInPath];
 }
 
 + (NSString *)whereThemesPath
 {
-	return [@"~/Library/Application Support/Textual/Styles" stringByExpandingTildeInPath];
+	return [@"~/Library/Application Support/Textual IRC/Styles" stringByExpandingTildeInPath];
 }
 
 + (NSString *)wherePluginsPath
 {
-	return [@"~/Library/Application Support/Textual/Extensions" stringByExpandingTildeInPath];
+	return [@"~/Library/Application Support/Textual IRC/Extensions" stringByExpandingTildeInPath];
 }
 
 + (NSString *)whereScriptsLocalPath
