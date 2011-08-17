@@ -83,12 +83,14 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	NSRect columnRect = [tableView rectOfColumn:1];
+	NSRect columnRect;
+    
+    columnRect = [tableView rectOfColumn:1];
+    columnRect.size.width -= 6;
 	
 	NSArray *data = [list safeObjectAtIndex:row];
-    NSString *stringv = [[data safeObjectAtIndex:2] string];
     
-    NSInteger pixelHeight = [stringv pixelHeightInWidth:columnRect.size.width];
+    NSInteger pixelHeight = [[data safeObjectAtIndex:2] pixelHeightInWidth:columnRect.size.width];
     NSInteger lineCount   = (pixelHeight / 14); 
     
     return (ROW_HEIGHT_MULTIPLIER * lineCount);

@@ -119,6 +119,8 @@
 - (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit;
 
 - (NSArray *)splitIntoLines;
+
+- (NSInteger)pixelHeightInWidth:(NSInteger)width;
 @end
 
 @interface NSMutableAttributedString (NSMutableAttributedStringHelper)
