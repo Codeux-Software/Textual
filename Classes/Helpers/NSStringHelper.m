@@ -853,6 +853,25 @@ BOOL isUnicharDigit(unichar c)
     return lines;
 }
 
+- (NSInteger)pixelHeightInWidth:(NSInteger)width
+{
+    NSTextStorage *textStorage = [NSTextStorage alloc];
+	NSLayoutManager *layoutManager = [NSLayoutManager new];
+	NSTextContainer *textContainer = [NSTextContainer alloc];
+	
+    [textStorage initWithAttributedString:self];
+    [textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
+    
+	[layoutManager addTextContainer:textContainer];
+	[textStorage addLayoutManager:layoutManager];
+	[textContainer setLineFragmentPadding:0.0];
+	[layoutManager glyphRangeForTextContainer:textContainer];
+	
+	NSInteger cellHeight = [layoutManager usedRectForTextContainer:textContainer].size.height;
+    
+    return cellHeight;
+}
+
 @end
 
 @implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
