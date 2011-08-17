@@ -173,6 +173,8 @@
 	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
     
     [[self invokeInBackgroundThread] holdMessageQueue];
+    
+    [world focusInputText];
 }
 
 - (void)notifyDidBecomeVisible
@@ -617,7 +619,7 @@
                         [postedUrls safeAddObject:imageUrl];
                     }
                     
-                    [s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\" onclick=\"return Textual.hide_inline_image(this)\" style=\"max-width: %ipx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
+                    [s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
                 }
             }
         }
