@@ -1670,7 +1670,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[self createChannelListDialog];
 			}
 			
-			[self send:IRCCI_LIST, s, nil];
+			[self send:IRCCI_LIST, s.string, nil];
 			
 			return YES;
 			break;
@@ -2539,7 +2539,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *peer = s.getToken.string;
 			
 			if ([peer hasPrefix:@"-"]) {
-				[self send:cmd, peer, s, nil];
+				[self send:cmd, peer, s.string, nil];
 			} else {
 				NSString *time   = s.getToken.string;
 				NSString *reason = s.string;
@@ -2574,7 +2574,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *peer = s.getToken.string;
 			
 			if ([peer hasPrefix:@"-"]) {
-				[self send:cmd, peer, s, nil];
+				[self send:cmd, peer, s.string, nil];
 			} else {
 				if (peer) {
 					if ([cmd isEqualToString:IRCCI_TEMPSHUN]) {

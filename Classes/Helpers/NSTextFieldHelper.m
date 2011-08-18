@@ -10,9 +10,11 @@
 
 - (void)focus
 {
-    NSWindow *win = [NSApp keyWindow];
+    if ([self isFocused]) {
+        return;
+    }
     
-    [win makeFirstResponder:self];
+    [self.window makeFirstResponder:self];
 }
 
 - (NSRange)fullSelectionRange
