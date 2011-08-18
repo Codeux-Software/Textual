@@ -118,6 +118,8 @@
     
 	[scroller	setFrame:textBoxFrame];
 	[superView	setFrame:superViewFrame];
+    
+    [scroller setNeedsDisplay:YES];
 }
 
 - (void)textDidChange:(NSNotification *)aNotification
