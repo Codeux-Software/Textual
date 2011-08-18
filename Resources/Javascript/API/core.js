@@ -59,9 +59,11 @@ Textual = {
 		app.nicknameDoubleClicked();
 	},
     
-    hide_inline_image: function(object) { 
-        app.hideInlineImage(object);
+    hide_inline_image: function(object) {
+        if (app.hideInlineImage(object) == "false") {
+            return false;
+        }
         
-        return false;
+        return true;
     },
 }

@@ -85,12 +85,21 @@
 	return res;
 }
 
-- (void)hideInlineImage:(DOMHTMLImageElement *)object
+- (void)logToConsole:(NSString *)message
+{
+    NSLog(@"JavaScript: %@", message);
+}
+
+- (NSString *)hideInlineImage:(DOMHTMLAnchorElement *)object
 {	
     if ([NSEvent modifierFlags] & NSShiftKeyMask) {
         [object.parentNode removeChild:object];
+        
+        return @"false";
     } else {
-        [URLOpener open:[NSURL URLWithString:object.src]];
+        [URLOpener open:[NSURL URLWithString:object.href]];
+        
+        return @"true";
     }
 }
 
