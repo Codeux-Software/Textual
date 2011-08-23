@@ -1493,7 +1493,7 @@
 
 - (void)onWantTextualConnnectToHelp:(id)sender 
 {
-	[world createConnection:@"irc.wyldryde.org +6697" chan:@"#textual"];
+	[world createConnection:@"irc.wyldryde.org +6697" chan:@"#textual,#textual-offtopic"];
 }
 
 - (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString *)vhost

@@ -21,8 +21,7 @@
 		}
 	} else {
 		nrect.origin.x   += 15;
-		nrect.size.width -= 15
-        ;
+		nrect.size.width -= 15;
 	} 
 	
 	return nrect;

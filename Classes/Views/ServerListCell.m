@@ -313,6 +313,7 @@
             }
 			
 			cellFrame.origin.y += 2;
+            cellFrame.origin.x -= 2;
             
 			NSRange textRange = NSMakeRange(0, [newValue length]);
 			

@@ -43,43 +43,52 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize username;
 @synthesize useSSL;
 @synthesize useSASL;
+@synthesize outgoingFloodControl;
+@synthesize incomingFloodControl;
+@synthesize floodControlMaximumMessages;
+@synthesize floodControlDelayTimerInterval;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		cuid = TXRandomNumber(9999);
-		guid = [[NSString stringWithUUID] retain];
+		guid = [NSString stringWithUUID].retain;
 		
-		ignores = [NSMutableArray new];
-		altNicks = [NSMutableArray new];
-		channels = [NSMutableArray new];
-		loginCommands = [NSMutableArray new];
+		ignores         = [NSMutableArray new];
+		altNicks        = [NSMutableArray new];
+		channels        = [NSMutableArray new];
+		loginCommands   = [NSMutableArray new];
 		
-		host = NSNullObject;
-		port = 6667;
-		password = [NSNullObject retain];
+		host         = NSNullObject;
+		port         = 6667;
+		password     = [NSNullObject retain];
 		nickPassword = [NSNullObject retain];
 		
-		proxyHost = NSNullObject;
-		proxyPort = 1080;
-		proxyUser = NSNullObject;
-		proxyPassword = NSNullObject;
+		proxyHost       = NSNullObject;
+		proxyPort       = 1080;
+		proxyUser       = NSNullObject;
+		proxyPassword   = NSNullObject;
         
         pongInterval = 0;
         timeoutInterval = 0;
         
-        prefersIPv6 = YES;
+        prefersIPv6 = NO;
 		
-		encoding = NSUTF8StringEncoding;
+		encoding         = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
+        
+        incomingFloodControl            = NO;
+        outgoingFloodControl            = NO;
+        floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
+        floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
 		
-		name = [TXTLS(@"UNTITLED_CONNECTION_NAME") retain];
-		nick = [[Preferences defaultNickname] retain];
-		username = [[Preferences defaultUsername] retain];
-		realName = [[Preferences defaultRealname] retain];
+		name        = TXTLS(@"UNTITLED_CONNECTION_NAME").retain;
+		nick        = [Preferences defaultNickname].retain;
+		username    = [Preferences defaultUsername].retain;
+		realName    = [Preferences defaultRealname].retain;
 		
-		leavingComment = [TXTLS(@"DEFAULT_QPS_MESSAGE") retain];
-		sleepQuitMessage = [TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE") retain];
+		leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE").retain;
+		sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE").retain;
 	}
 	
 	return self;
@@ -209,79 +218,97 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if ([dic stringForKey:@"guid"]) {
 		[guid drain];
-		guid = [[dic stringForKey:@"guid"] retain];
+		guid = [dic stringForKey:@"guid"].retain;
 	}
 	
 	if ([dic stringForKey:@"name"]) {
 		[name drain];
-		name = [[dic stringForKey:@"name"] retain];
+		name = [dic stringForKey:@"name"].retain;
 	}
 	
-	host = (([[dic stringForKey:@"host"] retain]) ?: NSNullObject);
+	host = (([dic stringForKey:@"host"].retain) ?: NSNullObject);
 	port = (([dic integerForKey:@"port"]) ?: 6667);
+    
 	
 	if ([dic stringForKey:@"nick"]) {
 		[nick drain];
-		nick = [[dic stringForKey:@"nick"] retain];
+		nick = [dic stringForKey:@"nick"].retain;
 	}
 	
-	useSSL = [dic boolForKey:@"ssl"];
+	useSSL  = [dic boolForKey:@"ssl"];
     useSASL = [dic boolForKey:@"sasl"];
 	
 	if ([dic stringForKey:@"username"]) {
 		[username drain];
-		username = [[dic stringForKey:@"username"] retain];
+		username = [dic stringForKey:@"username"].retain;
 	}
 	
 	if ([dic stringForKey:@"realname"]) {
 		[realName drain];
-		realName = [[dic stringForKey:@"realname"] retain];
+		realName = [dic stringForKey:@"realname"].retain;
 	}
 	
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
-	proxyType = [dic integerForKey:@"proxy"];
-	proxyHost = (([[dic stringForKey:@"proxy_host"] retain]) ?: NSNullObject);
-	proxyPort = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-	proxyUser = (([[dic stringForKey:@"proxy_user"] retain]) ?: NSNullObject);
-	proxyPassword = (([[dic stringForKey:@"proxy_password"] retain]) ?: NSNullObject);
+	proxyType       = [dic integerForKey:@"proxy"];
+	proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
+	proxyHost       = (([dic stringForKey:@"proxy_host"].retain) ?: NSNullObject);
+	proxyUser       = (([dic stringForKey:@"proxy_user"].retain) ?: NSNullObject);
+	proxyPassword   = (([dic stringForKey:@"proxy_password"].retain) ?: NSNullObject);
 	
-	autoConnect = [dic boolForKey:@"auto_connect"];
-	autoReconnect = [dic boolForKey:@"auto_reconnect"];
-	bouncerMode = [dic boolForKey:@"bouncer_mode"];
-	encoding = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
-	fallbackEncoding = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
+	autoConnect         = [dic boolForKey:@"auto_connect"];
+	autoReconnect       = [dic boolForKey:@"auto_reconnect"];
+	bouncerMode         = [dic boolForKey:@"bouncer_mode"];
+	encoding            = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
+	fallbackEncoding    = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
 	
-    pongInterval = [dic integerForKey:@"pong_interval"];
+    pongInterval    = [dic integerForKey:@"pong_interval"];
     timeoutInterval = [dic integerForKey:@"timeout_interval"];
     
 	if ([dic stringForKey:@"leaving_comment"]) {
 		[leavingComment drain];
-		leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
+		leavingComment = [dic stringForKey:@"leaving_comment"].retain;
 	}
 	
 	if ([dic stringForKey:@"sleep_quit_message"]) {
 		[sleepQuitMessage drain];
-		sleepQuitMessage = [[dic stringForKey:@"sleep_quit_message"] retain];
+		sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"].retain;
 	}
 	
-    prefersIPv6 = [dic boolForKey:@"prefersIPv6"];
-	invisibleMode = [dic boolForKey:@"invisible"];
+    prefersIPv6         = [dic boolForKey:@"prefersIPv6"];
+	invisibleMode       = [dic boolForKey:@"invisible"];
 	isTrustedConnection = [dic boolForKey:@"trustedConnection"];
 	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
 	
 	for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
-		IRCChannelConfig *c = [[[IRCChannelConfig alloc] initWithDictionary:e] autodrain];
+        IRCChannelConfig *c;
+        
+        c = [IRCChannelConfig alloc];
+        c = [c initWithDictionary:e];
+        c = [c autodrain];
 		
 		[channels safeAddObject:c];
 	}
 	
 	for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
-		AddressBook *ignore = [[[AddressBook alloc] initWithDictionary:e] autodrain];
+        AddressBook *ignore;
+        
+        ignore = [AddressBook alloc];
+        ignore = [ignore initWithDictionary:e];
+        ignore = [ignore autodrain];
 		
 		[ignores safeAddObject:ignore];
 	}
+    
+    NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
+    
+    if (NSObjectIsNotEmpty(e)) {
+        floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
+        floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
+        outgoingFloodControl           = [e boolForKey:@"outgoing"];
+        incomingFloodControl           = [e boolForKey:@"incoming"];
+    }
 	
 	return self;
 }
@@ -346,6 +373,15 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
 	if (sleepQuitMessage) [dic setObject:sleepQuitMessage forKey:@"sleep_quit_message"];
 	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
+    
+    NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
+    
+    [floodControl setInteger:floodControlDelayTimerInterval forKey:@"delay_timer"];
+    [floodControl setInteger:floodControlMaximumMessages forKey:@"message_count"];
+    [floodControl setBool:outgoingFloodControl forKey:@"outgoing"];
+    [floodControl setBool:incomingFloodControl forKey:@"incoming"];
+    
+    [dic setObject:floodControl forKey:@"flood_control"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];

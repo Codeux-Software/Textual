@@ -29,6 +29,7 @@
 	NSMutableData *buffer;
 	
 	dispatch_queue_t dispatchQueue;
+    dispatch_queue_t socketQueue;
 }
 
 @property (nonatomic, retain) NSMutableData *buffer; 
@@ -49,6 +50,7 @@
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
 
 - (void)open;
 - (void)close;

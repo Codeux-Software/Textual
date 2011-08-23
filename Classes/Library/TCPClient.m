@@ -21,6 +21,7 @@
 @synthesize proxyUser;
 @synthesize sendQueueSize;
 @synthesize socksVersion;
+@synthesize socketQueue;
 @synthesize useSocks;
 @synthesize useSSL;
 @synthesize useSystemSocks;
@@ -47,21 +48,48 @@
     return time;
 }
 
+- (BOOL)useNewSocketEngine
+{
+	return (useSystemSocks == NO && useSocks == NO && [_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
+}
+
+- (void)destroyDispatchQueue
+{
+    if ([self useNewSocketEngine]) {
+        if (dispatchQueue) {
+            dispatch_release(dispatchQueue);
+            dispatchQueue = NULL;
+        }
+        
+        if (socketQueue) {
+            dispatch_release(socketQueue);
+            socketQueue = NULL;
+        }
+    }
+}
+
+- (void)createDispatchQueue
+{
+	if ([self useNewSocketEngine]) {
+		NSString *dqname = [NSString stringWithUUID];
+        NSString *sqname = [NSString stringWithUUID];
+        
+        socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
+		dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
+	}
+}
+
 - (void)dealloc
 {
 	if (conn) {
 		[conn setDelegate:nil];
 		[conn disconnect];
-		
 		[conn autodrain];
 	}
 	
-	if (dispatchQueue) {
-		dispatch_release(dispatchQueue);
-		dispatchQueue = NULL;
-	}
-	
 	[buffer drain];
+    
+    [self destroyDispatchQueue];
 	
 	[host drain];
 	[proxyHost drain];
@@ -71,31 +99,17 @@
 	[super dealloc];
 }
 
-- (BOOL)useNewSocketEngine
-{
-	return (useSystemSocks == NO && useSocks == NO && [_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
-}
-
-- (void)createDispatchQueue
-{
-	if ([self useNewSocketEngine]) {
-		NSString *queueName = [NSString stringWithUUID];
-	
-		dispatchQueue = dispatch_queue_create([queueName UTF8String], NULL);
-	}
-}
-
 - (void)open
 {
 	[self createDispatchQueue];
-	[self close];
+    [self close];
 	
 	[buffer setLength:0];
 	
 	NSError *connError = nil;
 	
 	if ([self useNewSocketEngine]) {
-		conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:dispatchQueue];
+        conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:dispatchQueue socketQueue:socketQueue];
         
         IRCClient *clin = [delegate delegate];
         
@@ -120,10 +134,9 @@
 	if (PointerIsEmpty(conn)) return;
 	
 	[conn setDelegate:nil];
-	[conn disconnect];
-	
-	[conn autodrain];
-	conn = nil;
+    [conn disconnect];
+    
+    [self destroyDispatchQueue];
 	
 	active	   = NO;
 	connecting = NO;

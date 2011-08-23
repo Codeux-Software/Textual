@@ -44,7 +44,6 @@
 @synthesize movingToBottom;
 @synthesize highlightedLineNumbers;
 @synthesize needsLimitNumberOfLines;
-@synthesize inMessageQueue;
 @synthesize scrollBottom;
 @synthesize scrollTop;
 @synthesize policy;
@@ -59,8 +58,6 @@
 	if ((self = [super init])) {
 		bottom              = YES;
 		maxLines            = 300;
-        
-        inMessageQueue = NO;
 		
 		highlightedLineNumbers = [NSMutableArray new];
 		
@@ -151,28 +148,11 @@
 	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
-- (void)holdMessageQueue
-{
-    if ([view isLoading]) {
-        inMessageQueue = YES;
-    }
-    
-    while ([view isLoading]) {
-        [NSThread sleepForTimeInterval:0.2];
-        
-        continue;
-    }
-    
-    inMessageQueue = NO;
-}
-
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
 	[(id)view setBackgroundColor:theme.other.underlyingWindowColor];
 	
 	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
-    
-    [[self invokeInBackgroundThread] holdMessageQueue];
     
     [world focusInputText];
 }
@@ -672,7 +652,7 @@
 
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
-    while (inMessageQueue) {
+    while ([view isLoading]) {
         [NSThread sleepForTimeInterval:0.2];
         
         continue;

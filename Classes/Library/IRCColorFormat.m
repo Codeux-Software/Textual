@@ -143,7 +143,7 @@
                     cake = [base.string safeSubstringWithRange:effectiveRange];
                     
                     needBreak = YES;
-               }
+                }
             }
         } else {
             cake = [base.string safeSubstringWithRange:effectiveRange];
@@ -170,7 +170,7 @@
         if (needBreak)              break;
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}		
     
     [*string deleteCharactersInRange:deleteRange];
@@ -178,12 +178,19 @@
     return result;
 }
 
-- (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect range:(NSRange)limitRange
+@end
+
+@implementation TextField (TextFieldFormattingHelper) 
+
+- (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
+                                  range:(NSRange)limitRange 
 {
+    NSAttributedString *valued = self.attributedString;
+    
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		switch (effect) {
 			case IRCTextFormatterBoldEffect: 
@@ -247,50 +254,51 @@
 
 - (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
                                         color:(NSColor *)defaultColor
-                                       source:(TextField **)sourceField
-                                        range:(NSRange)limitRange    
+                                        range:(NSRange)limitRange
 {
-	NSRange effectiveRange;
+    NSAttributedString *valued = self.attributedString;
+    
+    NSRange effectiveRange;
     
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-	
-	limitRange = NSMakeRange(0, [self length]);
-	
-	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+    
+    limitRange = NSMakeRange(0, [valued length]);
+    
+    while (limitRange.length >= 1) {
+        NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
         
-		/* Manage font settings */
-		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
-		
-		BOOL boldText   = [baseFont fontTraitSet:NSBoldFontMask];
-		BOOL italicText = [baseFont fontTraitSet:NSItalicFontMask];
-		
-		baseFont = defaultFont;
-		
-		if (baseFont) {
-			if (boldText) {
-				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-			}
-			
-			if (italicText) {
-				baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
-			}
-			
+        /* Manage font settings */
+        NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
+        
+        BOOL boldText   = [baseFont fontTraitSet:NSBoldFontMask];
+        BOOL italicText = [baseFont fontTraitSet:NSItalicFontMask];
+        
+        baseFont = defaultFont;
+        
+        if (baseFont) {
+            if (boldText) {
+                baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
+            }
+            
+            if (italicText) {
+                baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
+            }
+            
             [attrs setObject:baseFont forKey:NSFontAttributeName];
-		}
+        }
         
-		/* Process other attributes */
-		NSColor *foregroundColorD = [dict objectForKey:NSForegroundColorAttributeName];
-		NSColor *backgroundColorD = [dict objectForKey:NSBackgroundColorAttributeName];
-		
-		BOOL underlineText		  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
-		BOOL hasForegroundColor   = NO;
-		
-		if (underlineText) {
+        /* Process other attributes */
+        NSColor *foregroundColorD = [dict objectForKey:NSForegroundColorAttributeName];
+        NSColor *backgroundColorD = [dict objectForKey:NSBackgroundColorAttributeName];
+        
+        BOOL underlineText		  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
+        BOOL hasForegroundColor   = NO;
+        
+        if (underlineText) {
             [attrs setObject:[NSNumber numberWithInt:NSSingleUnderlineStyle] forKey:NSUnderlineStyleAttributeName];
-		}
-		
-		if (foregroundColorD) {
+        }
+        
+        if (foregroundColorD) {
             NSInteger mappedColor = mapColorValue(foregroundColorD);
             
             if (mappedColor >= 0 && mappedColor <= 15) {
@@ -300,11 +308,11 @@
             } else {
                 [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
             }
-		} else {
+        } else {
             [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
         }
-		
-		if (backgroundColorD) {
+        
+        if (backgroundColorD) {
             if (hasForegroundColor) {
                 NSInteger mappedColor = mapColorValue(backgroundColorD);
                 
@@ -316,17 +324,17 @@
             } else {
                 [attrs removeObjectForKey:NSBackgroundColorAttributeName];
             }
-		} else {
+        } else {
             [attrs removeObjectForKey:NSBackgroundColorAttributeName];
         }
         
         if (NSObjectIsNotEmpty(attrs)) {
-            [*sourceField setAttributes:attrs inRange:effectiveRange];
+            [self setAttributes:attrs inRange:effectiveRange];
         }
-		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
-	}
+        
+        limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
+                                  (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+    }
 }
 
 #pragma mark -
@@ -334,13 +342,14 @@
 
 - (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
                            value:(id)value 
-                           range:(NSRange)limitRange 
-                          source:(TextField **)sourceField
+                           range:(NSRange)limitRange
 {	
+    NSAttributedString *valued = self.attributedString;
+    
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
         
@@ -400,22 +409,23 @@
             default: break;
         }
         
-        [*sourceField setAttributes:newDict inRange:effectiveRange];
+        [self setAttributes:newDict inRange:effectiveRange];
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
     }
 }
 
 - (void)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
                               range:(NSRange)limitRange 
                               color:(NSColor *)defaultColor
-                             source:(TextField **)sourceField
 {	
+    NSAttributedString *valued = self.attributedString;
+    
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
 		
 		NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
         
@@ -431,7 +441,7 @@
 						if (baseFont) {
 							[newDict setObject:baseFont forKey:NSFontAttributeName];
                             
-                            [*sourceField setAttributes:newDict inRange:effectiveRange];
+                            [self setAttributes:newDict inRange:effectiveRange];
 						}
 					}
 					
@@ -445,7 +455,7 @@
 						if (baseFont) {
 							[newDict setObject:baseFont forKey:NSFontAttributeName];
                             
-                            [*sourceField setAttributes:newDict inRange:effectiveRange];
+                            [self setAttributes:newDict inRange:effectiveRange];
 						}
 					}
 					
@@ -453,7 +463,7 @@
 				}
 				case IRCTextFormatterUnderlineEffect:
 				{
-                    [*sourceField removeAttribute:NSUnderlineStyleAttributeName inRange:effectiveRange];
+                    [self removeAttribute:NSUnderlineStyleAttributeName inRange:effectiveRange];
 					
 					break;
 				}
@@ -461,14 +471,14 @@
 				{
                     [newDict setObject:defaultColor forKey:NSForegroundColorAttributeName];
                     
-                    [*sourceField setAttributes:newDict inRange:effectiveRange];
-                    [*sourceField removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
+                    [self setAttributes:newDict inRange:effectiveRange];
+                    [self removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
 					
 					break;
 				}
 				case IRCTextFormatterBackgroundColorEffect:
 				{
-                    [*sourceField removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
+                    [self removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
 					
 					break;
 				}
@@ -477,7 +487,7 @@
 		}
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 }
 
