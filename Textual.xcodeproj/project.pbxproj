@@ -178,7 +178,6 @@
 		4C8B85F6131A35DE0065B4F9 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10711737F660044E7A1 /* SoundPlayer.m */; };
 		4C8B85F7131A35DE0065B4F9 /* AddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* AddressBookSheet.m */; };
 		4C8B85FA131A35DE0065B4F9 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
-		4C8B85FB131A35DE0065B4F9 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
 		4C8B85FC131A35DE0065B4F9 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
 		4C8B85FD131A35DE0065B4F9 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
 		4C8B85FE131A35DE0065B4F9 /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AEF1D12D1B6A900D6B18C /* ValidateReceipt.m */; };
@@ -299,7 +298,6 @@
 		4CD0E67D12F1B63D00C8F016 /* InputTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67212F1B63D00C8F016 /* InputTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E67E12F1B63D00C8F016 /* ListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67312F1B63D00C8F016 /* ListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E67F12F1B63D00C8F016 /* MainWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67412F1B63D00C8F016 /* MainWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E68A12F1B66900C8F016 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68912F1B66900C8F016 /* DockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69912F1B6B000C8F016 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E69A12F1B6B000C8F016 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -613,7 +611,6 @@
 		4CD0E67212F1B63D00C8F016 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputTextField.h; path = Classes/Headers/InputTextField.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67312F1B63D00C8F016 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListView.h; path = Classes/Headers/ListView.h; sourceTree = SOURCE_ROOT; };
 		4CD0E67412F1B63D00C8F016 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = Classes/Headers/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldWithDisabledState.h; path = Classes/Headers/TextFieldWithDisabledState.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68912F1B66900C8F016 /* DockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DockIcon.h; path = Classes/Headers/DockIcon.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLMAsyncSocket.h; path = Classes/Headers/RLMAsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocketExtensions.h; path = Classes/Headers/AsyncSocketExtensions.h; sourceTree = SOURCE_ROOT; };
@@ -754,7 +751,6 @@
 		78A8C18E11737F660044E7A1 /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
 		78A8C19011737F660044E7A1 /* MainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
 		78A8C19711737F660044E7A1 /* MemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListCell.m; sourceTree = "<group>"; };
-		78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWithDisabledState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1506,8 +1502,6 @@
 				78A8C19011737F660044E7A1 /* MainWindow.m */,
 				4CDFE2F9136F66660039300A /* ThinSplitView.h */,
 				4CDFE2F7136F664A0039300A /* ThinSplitView.m */,
-				4CD0E67812F1B63D00C8F016 /* TextFieldWithDisabledState.h */,
-				78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */,
 			);
 			name = Views;
 			path = Classes/Views;
@@ -1650,7 +1644,6 @@
 				4CD0E6CC12F1B75300C8F016 /* SoundPlayer.h in Headers */,
 				4CD0E62612F1B4FB00C8F016 /* SoundWrapper.h in Headers */,
 				4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */,
-				4CD0E68312F1B63D00C8F016 /* TextFieldWithDisabledState.h in Headers */,
 				4CA8248B12F1CC0F00C3D8C7 /* TextualApplication.h in Headers */,
 				4CD0E6D512F1B77300C8F016 /* TextualPluginItem.h in Headers */,
 				4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */,
@@ -1980,7 +1973,6 @@
 				4C8B85F6131A35DE0065B4F9 /* SoundPlayer.m in Sources */,
 				4C8B85F7131A35DE0065B4F9 /* AddressBookSheet.m in Sources */,
 				4C8B85FA131A35DE0065B4F9 /* TimerCommand.m in Sources */,
-				4C8B85FB131A35DE0065B4F9 /* TextFieldWithDisabledState.m in Sources */,
 				4C8B85FC131A35DE0065B4F9 /* IRCWorldConfig.m in Sources */,
 				4C8B85FD131A35DE0065B4F9 /* InputHistory.m in Sources */,
 				4C8B85FE131A35DE0065B4F9 /* ValidateReceipt.m in Sources */,
