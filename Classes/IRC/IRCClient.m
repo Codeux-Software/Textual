@@ -810,10 +810,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	connectType    = mode;
 	disconnectType = DISCONNECT_NORMAL;
 	
-	if (conn) {
+	if (isConnected) {
 		[conn close];
-		[conn autodrain];
-		conn = nil;
 	}
 	
 	retryEnabled     = YES;
@@ -837,8 +835,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		default: break;
 	}
 	
-	conn		  = [IRCConnection new];
-	conn.delegate = self;
+    if (PointerIsEmpty(conn)) {
+        conn = [IRCConnection new];
+        conn.delegate = self;
+	}
     
 	conn.host	  = host;
 	conn.port	  = config.port;
@@ -869,8 +869,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (conn) {
 		[conn close];
-		[conn autodrain];
-		conn = nil;
 	}
 	
 	[self stopPongTimer];

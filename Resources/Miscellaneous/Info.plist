@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9527</string>
+	<string>9538</string>
 	<key>Build Reference</key>
-	<string>2.1p3-91-gabd814d-unstable</string>
+	<string>2.1p3-92-g91ef1f4-unstable</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -25,6 +27,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>application</string>
 			<key>CFBundleURLName</key>
 			<string>Internet Relay Chat</string>
 			<key>CFBundleURLSchemes</key>
@@ -50,5 +56,11 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array/>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

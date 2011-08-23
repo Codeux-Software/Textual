@@ -8,8 +8,6 @@
 	
 	IRCClient *client;
 	IRCClientConfig *config;
-    
-    BOOL includeAdvancedSettings;
 	
 	NSDictionary *serverList;
 	NSMutableArray *tabViewList;
@@ -23,7 +21,14 @@
 	IBOutlet NSView *ignoresView;
 	IBOutlet NSView *commandsView;
     IBOutlet NSView *socketsView;
+    IBOutlet NSView *floodControlView;
+    IBOutlet NSView *floodControlToolView;
 	IBOutlet NSView *proxyServerView;
+    
+    IBOutlet NSButton *incomingFloodControl;
+    IBOutlet NSButton *outgoingFloodControl;
+    IBOutlet NSSlider *floodControlMessageCount;
+    IBOutlet NSSlider *floodControlDelayTimer;
 	
 	IBOutlet ListView *tabView;
 	
@@ -90,7 +95,13 @@
 @property (nonatomic, retain) NSView *ignoresView;
 @property (nonatomic, retain) NSView *commandsView;
 @property (nonatomic, retain) NSView *socketsView;
+@property (nonatomic, retain) NSView *floodControlView;
+@property (nonatomic, retain) NSView *floodControlToolView;
 @property (nonatomic, retain) NSView *proxyServerView;
+@property (nonatomic, retain) NSButton *incomingFloodControl;
+@property (nonatomic, retain) NSButton *outgoingFloodControl;
+@property (nonatomic, retain) NSSlider *floodControlMessageCount;
+@property (nonatomic, retain) NSSlider *floodControlDelayTimer;
 @property (nonatomic, retain) ListView *tabView;
 @property (nonatomic, retain) NSTextField *nameText;
 @property (nonatomic, retain) NSButton *prefersIPv6Check;
@@ -142,10 +153,10 @@
 - (void)cancel:(id)sender;
 
 - (void)hostComboChanged:(id)sender;
-
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
 - (void)bouncerModeChanged:(id)sender;
+- (void)floodControlChanged:(id)sender;
 
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
@@ -155,8 +166,6 @@
 - (void)editIgnore:(id)sender;
 - (void)deleteIgnore:(id)sender;
 - (void)showAddIgnoreMenu:(id)sender;
-
-- (void)toggleTechnicalStuff:(id)sender;
 @end
 
 @interface NSObject (ServerSheetDelegate)

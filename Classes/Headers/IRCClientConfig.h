@@ -2,6 +2,10 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+
+#define FLOOD_CONTROL_DEFAULT_DELAY_TIMER       2
+#define FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT     2
+
 typedef enum {
 	PROXY_NONE = 0,
 	PROXY_SOCKS_SYSTEM = 1,
@@ -40,7 +44,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
     
     NSInteger pongInterval;
     NSInteger timeoutInterval;
-	
+    
+    BOOL outgoingFloodControl;
+    BOOL incomingFloodControl;
+    NSInteger floodControlMaximumMessages;
+	NSInteger floodControlDelayTimerInterval;
+    
 	BOOL autoConnect;
 	BOOL autoReconnect;
     BOOL prefersIPv6;
@@ -94,6 +103,10 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, readonly) NSMutableArray *ignores;
 @property (nonatomic, retain) NSString *server;
 @property (nonatomic, retain) NSString *network;
+@property (nonatomic, assign) BOOL outgoingFloodControl;
+@property (nonatomic, assign) BOOL incomingFloodControl;
+@property (nonatomic, assign) NSInteger floodControlMaximumMessages;
+@property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;

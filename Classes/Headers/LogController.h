@@ -29,7 +29,6 @@
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
-    BOOL inMessageQueue;
 	BOOL needsLimitNumberOfLines;
 	
 	NSInteger count;
@@ -43,7 +42,6 @@
 	NSString *html;
 }
 
-@property (assign) BOOL inMessageQueue;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;

@@ -228,24 +228,6 @@ static NSMutableDictionary *commandIndex = nil;
 }
 
 #pragma mark -
-#pragma mark Flood Control
-
-+ (BOOL)floodControlIsEnabled
-{
-	return [_NSUserDefaults() boolForKey:@"Preferences.FloodControl.enabled"];
-}
-
-+ (NSInteger)floodControlMaxMessages
-{
-	return [_NSUserDefaults() integerForKey:@"Preferences.FloodControl.maxmsg"];
-}
-
-+ (NSInteger)floodControlDelayTimer
-{
-	return [_NSUserDefaults() integerForKey:@"Preferences.FloodControl.timer"];
-}
-
-#pragma mark -
 #pragma mark Default Identity
 
 + (NSString *)defaultNickname
@@ -997,7 +979,6 @@ static NSInteger totalRunTime = 0;
 	[d setBool:NO  forKey:@"Preferences.General.amsg_allconnections"];
 	[d setBool:NO  forKey:@"Preferences.General.away_allconnections"];
 	[d setBool:NO  forKey:@"Preferences.General.nick_allconnections"];
-	[d setBool:NO  forKey:@"Preferences.FloodControl.enabled"];
 	[d setBool:NO  forKey:@"Preferences.General.connect_on_doubleclick"];
 	[d setBool:NO  forKey:@"Preferences.General.disconnect_on_doubleclick"];
 	[d setBool:NO  forKey:@"Preferences.General.join_on_doubleclick"];
@@ -1025,8 +1006,6 @@ static NSInteger totalRunTime = 0;
 	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
 	[d setObject:@"~/Documents/Textual Logs"	forKey:@"Preferences.General.transcript_folder"];
 	
-	[d setInteger:2							forKey:@"Preferences.FloodControl.timer"];
-	[d setInteger:2							forKey:@"Preferences.FloodControl.maxmsg"];
 	[d setInteger:5							forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];
 	[d setInteger:300						forKey:@"Preferences.General.inline_image_width"];

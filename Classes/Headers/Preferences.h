@@ -131,11 +131,7 @@ typedef enum {
 
 + (UserDoubleClickAction)userDoubleClickOption;
 
-+ (BOOL)floodControlIsEnabled;
-+ (NSInteger)floodControlDelayTimer;
-+ (NSInteger)floodControlMaxMessages;
 + (NSInteger)autojoinMaxChannelJoins;
-
 + (HostmaskBanFormat)banFormat;
 
 + (NSInteger)inlineImagesMaxWidth;

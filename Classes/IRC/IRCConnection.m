@@ -122,7 +122,9 @@
 
 - (BOOL)readyToSend
 {
-	return (sending == NO && maxMsgCount < [Preferences floodControlMaxMessages]);
+    IRCClient *c = delegate;
+    
+	return (sending == NO && maxMsgCount < c.config.floodControlMaximumMessages);
 }
 
 - (void)clearSendQueue
@@ -153,9 +155,11 @@
 
 - (BOOL)tryToSend
 {
+    IRCClient *c = delegate;
+    
 	if (sending) return NO;
 	if (NSObjectIsEmpty(sendQueue)) return NO;
-	if (maxMsgCount > [Preferences floodControlMaxMessages]) return NO;
+	if (maxMsgCount > c.config.floodControlMaximumMessages) return NO;
 	
 	NSString *s = [[sendQueue safeObjectAtIndex:0] stringByAppendingString:@"\r\n"];
 	
@@ -166,7 +170,7 @@
 	if (data) {
 		sending = YES;
 		
-		if (loggedIn && [Preferences floodControlIsEnabled]) {
+		if (loggedIn && c.config.outgoingFloodControl) {
 			maxMsgCount++;
 		}
 		
@@ -182,15 +186,17 @@
 
 - (void)updateTimer
 {
+    IRCClient *c = delegate;
+    
 	if (NSObjectIsEmpty(sendQueue) && maxMsgCount < 1) {
 		if (timer.isActive) {
 			[timer stop];
 		}
 	} else {
 		if (timer.isActive == NO) {
-			if ([Preferences floodControlIsEnabled]) {
-				[timer start:[Preferences floodControlDelayTimer]];
-			}
+			if (c.config.outgoingFloodControl) {
+				[timer start:c.config.floodControlDelayTimerInterval];
+            }
 		}
 	}
 }
@@ -245,7 +251,7 @@
 
 - (void)tcpClientDidReceiveData:(TCPClient *)sender
 {
-	while (1) {
+	while (1 == 1) {
 		NSData *data = [conn readLine];
 		
 		if (NSObjectIsEmpty(data)) break;

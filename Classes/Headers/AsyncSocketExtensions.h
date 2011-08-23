@@ -4,7 +4,7 @@
 @class IRCClient;
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
-+ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq;
++ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
 + (void)useSSLWithConnection:(id)socket delegate:(id)theDelegate;
 

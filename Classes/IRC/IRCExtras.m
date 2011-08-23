@@ -217,11 +217,25 @@
 	if (NSObjectIsNotEmpty(c)) {
 		NSMutableArray *channels = [NSMutableArray array];
 		
-		if ([c isChannelName]) {
-			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
-                                     NSNumberWithBOOL(YES), @"auto_join", 
-                                     NSNumberWithBOOL(YES), @"growl", nil]];	
-		}
+        if ([c contains:@","]) {
+            NSArray *chunks = [c componentsSeparatedByString:@","];
+            
+            for (NSString *cc in chunks) {
+                cc = cc.trim;
+                
+                if ([cc isChannelName]) {
+                    [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:cc, @"name", 
+                                             NSNumberWithBOOL(YES), @"auto_join", 
+                                             NSNumberWithBOOL(YES), @"growl", nil]];	
+                }
+            }
+        } else {
+            if ([c isChannelName]) {
+                [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
+                                         NSNumberWithBOOL(YES), @"auto_join", 
+                                         NSNumberWithBOOL(YES), @"growl", nil]];	
+            }
+        }
 		
 		[dic setObject:channels forKey:@"channels"];
 	}
@@ -235,7 +249,6 @@
 	IRCClient *uf = [world createClient:cf reload:YES];
 	
 	[world save];
-	
 	[uf connect];
 }
 

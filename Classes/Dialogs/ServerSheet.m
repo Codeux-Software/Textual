@@ -29,6 +29,8 @@
 @synthesize ignoresView;
 @synthesize socketsView;
 @synthesize commandsView;
+@synthesize floodControlView;
+@synthesize floodControlToolView;
 @synthesize proxyServerView;
 @synthesize addChannelButton;
 @synthesize addIgnoreButton;
@@ -73,6 +75,10 @@
 @synthesize pongInterval;
 @synthesize timeoutInterval;
 @synthesize usernameText;
+@synthesize floodControlDelayTimer;
+@synthesize floodControlMessageCount;
+@synthesize outgoingFloodControl;
+@synthesize incomingFloodControl;
 
 - (id)init
 {
@@ -88,8 +94,8 @@
 		[tabViewList addObject:[NSArray arrayWithObjects:@"COMMANDS",				@"7", NSNumberWithBOOL(NO), nil]];
 		[tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", NSNumberWithBOOL(NO), nil]];
 		[tabViewList addObject:[NSArray arrayWithObjects:@"PROXY",					@"8", NSNumberWithBOOL(NO), nil]];
-        [tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", NSNumberWithBOOL(YES), nil]];
         [tabViewList addObject:[NSArray arrayWithObjects:@"SOCKETS",				@"9", NSNumberWithBOOL(YES), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"FLOODC",					@"10", NSNumberWithBOOL(NO), nil]];
 		
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
@@ -237,25 +243,6 @@
 	[self endSheet];
 }
 
-- (void)toggleTechnicalStuff:(id)sender
-{
-    if ([sender state] == NSOnState) {
-        includeAdvancedSettings = YES;
-    } else {
-        includeAdvancedSettings = NO;
-        
-        NSArray *itemData = [tabViewList safeObjectAtIndex:tabView.selectedRow];
-        
-        BOOL isSpecial = [itemData boolAtIndex:2];
-        
-        if (isSpecial) {
-            [self focusView:generalView	atRow:0];
-        }
-    }
-    
-    [tabView reloadData];
-}
-
 - (void)load
 {
 	/* General */
@@ -318,9 +305,16 @@
 	loginCommandsText.string	= [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
     
     /* Sockets */
-    
     pongInterval.integerValue    = config.pongInterval;
     timeoutInterval.integerValue = config.timeoutInterval;
+    
+    /* Flood Control */
+    floodControlDelayTimer.integerValue     = config.floodControlDelayTimerInterval;
+    floodControlMessageCount.integerValue   = config.floodControlMaximumMessages;
+    outgoingFloodControl.state              = config.outgoingFloodControl;
+    incomingFloodControl.state              = config.incomingFloodControl;
+    
+    [self floodControlChanged:nil];
 }
 
 - (void)save
@@ -401,7 +395,7 @@
     NSArray *commands = [loginCommandsText.string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	[config.loginCommands removeAllObjects];
-
+    
 	for (NSString *s in commands) {
 		if (NSObjectIsNotEmpty(s)) {
 			[config.loginCommands safeAddObject:s];
@@ -416,6 +410,12 @@
     config.timeoutInterval = timeoutInterval.integerValue;
     
     [client pongTimerIntervalChanged];
+    
+    /* Flood Control */
+    config.floodControlMaximumMessages      = floodControlMessageCount.integerValue;
+    config.floodControlDelayTimerInterval   = floodControlDelayTimer.integerValue;
+    config.outgoingFloodControl             = outgoingFloodControl.state;
+    config.incomingFloodControl             = incomingFloodControl.state;
 }
 
 - (void)updateConnectionPage
@@ -463,6 +463,13 @@
 - (void)reloadIgnoreTable
 {
 	[ignoreTable reloadData];
+}
+
+- (void)floodControlChanged:(id)sender
+{
+    BOOL match = (incomingFloodControl.state == NSOnState || outgoingFloodControl.state == NSOnState);
+        
+    [floodControlToolView setHidden:BOOLReverseValue(match)];
 }
 
 #pragma mark -
@@ -750,18 +757,14 @@
 	} else if (sender == tabView) {
 		NSArray *tabInfo = [tabViewList safeObjectAtIndex:row];
         
-        BOOL isTechnical = [tabInfo boolAtIndex:2];
+        NSString *keyhead = [tabInfo safeObjectAtIndex:0];
         
-        if ((isTechnical && includeAdvancedSettings) || isTechnical == NO) {
-            NSString *keyhead = [tabInfo safeObjectAtIndex:0];
+        if ([keyhead isEqualToString:ListSeparatorCellIndex] == NO) {
+            NSString *langkey = [NSString stringWithFormat:@"SERVER_SHEET_NAVIGATION_LIST_%@", keyhead];
             
-            if ([keyhead isEqualToString:ListSeparatorCellIndex] == NO) {
-                NSString *langkey = [NSString stringWithFormat:@"SERVER_SHEET_NAVIGATION_LIST_%@", keyhead];
-                
-                return TXTLS(langkey);
-            } else {
-                return ListSeparatorCellIndex;
-            }
+            return TXTLS(langkey);
+        } else {
+            return ListSeparatorCellIndex;
         }
 	} else {
 		AddressBook *g = [config.ignores safeObjectAtIndex:row];
@@ -817,21 +820,22 @@
 	} else if (sender == tabView) {
 		NSInteger row = [tabView selectedRow];
 		
-		switch (row) {
-			case 0:  [self focusView:generalView		atRow:0]; break;
-			case 1:  [self focusView:identityView       atRow:1]; break;
-			case 2:  [self focusView:messagesView       atRow:2]; break;
-			case 3:  [self focusView:encodingView       atRow:3]; break;
-			case 4:  [self focusView:autojoinView       atRow:4]; break;
-			case 5:  [self focusView:ignoresView		atRow:5]; break;
-			case 6:  [self focusView:commandsView       atRow:6]; break;
-			case 8:  [self focusView:proxyServerView    atRow:8]; break;
-            case 10: [self focusView:socketsView        atRow:10]; break;
-			default: break;
-		}
-	} else {
-		[self updateIgnoresPage];
-	}
+        switch (row) {
+            case 0:  [self focusView:generalView		atRow:0]; break;
+            case 1:  [self focusView:identityView       atRow:1]; break;
+            case 2:  [self focusView:messagesView       atRow:2]; break;
+            case 3:  [self focusView:encodingView       atRow:3]; break;
+            case 4:  [self focusView:autojoinView       atRow:4]; break;
+            case 5:  [self focusView:ignoresView		atRow:5]; break;
+            case 6:  [self focusView:commandsView       atRow:6]; break;
+            case 8:  [self focusView:proxyServerView    atRow:8]; break;
+            case 9:  [self focusView:socketsView        atRow:9]; break;
+            case 10: [self focusView:floodControlView   atRow:10]; break;
+            default: break;
+        }
+    } else {
+        [self updateIgnoresPage];
+    }
 }
 
 - (void)tableViewDoubleClicked:(id)sender
