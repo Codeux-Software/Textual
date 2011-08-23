@@ -14,9 +14,13 @@
     BOOL _lastChangeWasPaste;
     
 	KeyEventHandler *_keyHandler;
+    
+    dispatch_queue_t _formattingQueue;
 }
 
 - (BOOL)requriesSpecialPaste;
+
+- (dispatch_queue_t)formattingQueue;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;

@@ -543,7 +543,7 @@
 								</object>
 								<object class="NSMenuItem" id="217375488">
 									<reference key="NSMenu" ref="100171152"/>
-									<string key="NSTitle">Cancel Reconnecting</string>
+									<string key="NSTitle">Cancel Reconnect</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1139,7 +1139,8 @@
 								<object class="NSMenuItem" id="590970309">
 									<reference key="NSMenu" ref="609329107"/>
 									<string key="NSTitle">Next Highlight</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv"></string>
+									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
@@ -1147,7 +1148,8 @@
 								<object class="NSMenuItem" id="245359759">
 									<reference key="NSMenu" ref="609329107"/>
 									<string key="NSTitle">Previous Highlight</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv"></string>
+									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
@@ -2390,7 +2392,7 @@
 					</object>
 					<object class="NSMenuItem" id="149367709">
 						<reference key="NSMenu" ref="765356395"/>
-						<string key="NSTitle">Bankick</string>
+						<string key="NSTitle">Ban and Kick</string>
 						<string key="NSKeyEquiv">k</string>
 						<int key="NSKeyEquivModMask">1572864</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -2422,7 +2424,7 @@
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="123430436">
 									<reference key="NSMenu" ref="213921985"/>
-									<string key="NSTitle">Ping</string>
+									<string key="NSTitle">PING</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2432,7 +2434,7 @@
 								</object>
 								<object class="NSMenuItem" id="754705348">
 									<reference key="NSMenu" ref="213921985"/>
-									<string key="NSTitle">Time</string>
+									<string key="NSTitle">TIME</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2442,7 +2444,7 @@
 								</object>
 								<object class="NSMenuItem" id="392368454">
 									<reference key="NSMenu" ref="213921985"/>
-									<string key="NSTitle">Version</string>
+									<string key="NSTitle">VERSION</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2452,7 +2454,7 @@
 								</object>
 								<object class="NSMenuItem" id="1037840032">
 									<reference key="NSMenu" ref="213921985"/>
-									<string key="NSTitle">UserInfo</string>
+									<string key="NSTitle">USERINFO</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2462,7 +2464,7 @@
 								</object>
 								<object class="NSMenuItem" id="505365232">
 									<reference key="NSMenu" ref="213921985"/>
-									<string key="NSTitle">ClientInfo</string>
+									<string key="NSTitle">CLIENTINFO</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2487,7 +2489,7 @@
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="259907435">
 									<reference key="NSMenu" ref="784916333"/>
-									<string key="NSTitle">Kill</string>
+									<string key="NSTitle">Kill from Server</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -2495,7 +2497,7 @@
 								</object>
 								<object class="NSMenuItem" id="469013518">
 									<reference key="NSMenu" ref="784916333"/>
-									<string key="NSTitle">Shun</string>
+									<string key="NSTitle">Shun on Server</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -2503,7 +2505,7 @@
 								</object>
 								<object class="NSMenuItem" id="840555146">
 									<reference key="NSMenu" ref="784916333"/>
-									<string key="NSTitle">Gline</string>
+									<string key="NSTitle">Ban from Server (G:Line)</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -2521,7 +2523,7 @@
 								</object>
 								<object class="NSMenuItem" id="777207958">
 									<reference key="NSMenu" ref="784916333"/>
-									<string key="NSTitle">Set vHost</string>
+									<string key="NSTitle">Set Virtual Host (vHost)</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
@@ -2970,7 +2972,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{800, 414}</string>
 				<object class="NSView" key="NSWindowView" id="606779342">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSSplitView" id="100056217">
@@ -2990,7 +2992,7 @@
 													<int key="NSvFlags">4352</int>
 													<string key="NSFrameSize">{188, 512}</string>
 													<reference key="NSSuperview" ref="649664949"/>
-													<reference key="NSNextKeyView" ref="718755093"/>
+													<reference key="NSNextKeyView" ref="678251316"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="_NSCornerView" key="NSCornerView">
 														<nil key="NSNextResponder"/>
@@ -3123,7 +3125,7 @@
 									</array>
 									<string key="NSFrameSize">{188, 512}</string>
 									<reference key="NSSuperview" ref="100056217"/>
-									<reference key="NSNextKeyView" ref="649664949"/>
+									<reference key="NSNextKeyView" ref="718755093"/>
 									<int key="NSsFlags">133648</int>
 									<reference key="NSVScroller" ref="678251316"/>
 									<reference key="NSHScroller" ref="718755093"/>
@@ -3195,7 +3197,7 @@
 																	<int key="NSvFlags">4353</int>
 																	<string key="NSFrameSize">{223, 512}</string>
 																	<reference key="NSSuperview" ref="337544634"/>
-																	<reference key="NSNextKeyView" ref="941879084"/>
+																	<reference key="NSNextKeyView" ref="676679988"/>
 																	<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="_NSCornerView" key="NSCornerView">
@@ -3287,7 +3289,7 @@
 													</array>
 													<string key="NSFrame">{{-1, 0}, {223, 512}}</string>
 													<reference key="NSSuperview" ref="752371143"/>
-													<reference key="NSNextKeyView" ref="337544634"/>
+													<reference key="NSNextKeyView" ref="941879084"/>
 													<int key="NSViewLayerContentsRedrawPolicy">2</int>
 													<int key="NSsFlags">133648</int>
 													<reference key="NSVScroller" ref="676679988"/>
@@ -3355,28 +3357,9 @@
 										<object class="NSTextView" id="474308682">
 											<reference key="NSNextResponder" ref="915392651"/>
 											<int key="NSvFlags">2322</int>
-											<set class="NSMutableSet" key="NSDragTypes">
-												<string>Apple HTML pasteboard type</string>
-												<string>Apple PDF pasteboard type</string>
-												<string>Apple PICT pasteboard type</string>
-												<string>Apple PNG pasteboard type</string>
-												<string>Apple URL pasteboard type</string>
-												<string>CorePasteboardFlavorType 0x6D6F6F76</string>
-												<string>NSColor pasteboard type</string>
-												<string>NSFilenamesPboardType</string>
-												<string>NSStringPboardType</string>
-												<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-												<string>NeXT RTFD pasteboard type</string>
-												<string>NeXT Rich Text Format v1.0 pasteboard type</string>
-												<string>NeXT TIFF v4.0 pasteboard type</string>
-												<string>NeXT font pasteboard type</string>
-												<string>NeXT ruler pasteboard type</string>
-												<string>WebURLsWithTitlesPboardType</string>
-												<string>public.url</string>
-											</set>
-											<string key="NSFrame">{{0, 1}, {612, 17}}</string>
+											<string key="NSFrameSize">{612, 17}</string>
 											<reference key="NSSuperview" ref="915392651"/>
-											<reference key="NSNextKeyView" ref="1016719665"/>
+											<reference key="NSNextKeyView" ref="821141213"/>
 											<string key="NSReuseIdentifierKey">_NS:3760</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="986559100">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -3471,6 +3454,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{597, 0}, {15, 26}}</string>
 									<reference key="NSSuperview" ref="613525633"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:3774</string>
 									<reference key="NSTarget" ref="613525633"/>
 									<string key="NSAction">_doScroller:</string>
@@ -3493,7 +3477,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							</array>
 							<string key="NSFrame">{{20, 6}, {612, 26}}</string>
 							<reference key="NSSuperview" ref="606779342"/>
-							<reference key="NSNextKeyView" ref="915392651"/>
+							<reference key="NSNextKeyView" ref="1016719665"/>
 							<string key="NSReuseIdentifierKey">_NS:148</string>
 							<int key="NSsFlags">133136</int>
 							<reference key="NSVScroller" ref="821141213"/>
@@ -3502,6 +3486,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						</object>
 					</array>
 					<string key="NSFrameSize">{652, 551}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="100056217"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -5105,15 +5090,15 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<int key="objectID">29</int>
 						<reference key="object" ref="215217970"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="158979937"/>
 							<reference ref="33257923"/>
 							<reference ref="568014952"/>
 							<reference ref="575385311"/>
-							<reference ref="22865942"/>
-							<reference ref="758853065"/>
 							<reference ref="689204340"/>
 							<reference ref="188852092"/>
 							<reference ref="680857465"/>
+							<reference ref="158979937"/>
+							<reference ref="758853065"/>
+							<reference ref="22865942"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">MainMenu</string>
@@ -6997,11 +6982,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<reference key="parent" ref="122861396"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2198</int>
-						<reference key="object" ref="439844532"/>
-						<reference key="parent" ref="876978220"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">2193</int>
 						<reference key="object" ref="718755093"/>
 						<reference key="parent" ref="230253150"/>
@@ -7095,6 +7075,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<int key="objectID">1780</int>
 						<reference key="object" ref="611384082"/>
 						<reference key="parent" ref="739238452"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2198</int>
+						<reference key="object" ref="439844532"/>
+						<reference key="parent" ref="876978220"/>
 					</object>
 				</array>
 			</object>
@@ -7356,7 +7341,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="2205.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2206.CustomClassName">MemberList</string>
 				<string key="2206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="2206.ibExternalAutomaticallyCalculatesRowSizeFromViewHeight"/>
 				<string key="2207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="2207.isInViewBasedMode"/>
 				<string key="2210.CustomClassName">MemberListCell</string>
@@ -7451,7 +7435,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2291</int>
+			<int key="maxID">2294</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

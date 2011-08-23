@@ -971,7 +971,7 @@ typedef enum {
 		
 		if (count <= 1) return;
 		
-		while (1) {
+		while (1 == 1) {
 			if (dir == MOVE_UP) {
 				--n;
 				
@@ -1019,7 +1019,7 @@ typedef enum {
 		NSInteger count = world.clients.count;
 		if (count <= 1) return;
 		
-		while (1) {
+		while (1 == 1) {
 			if (dir == MOVE_LEFT) {
 				--n;
 				

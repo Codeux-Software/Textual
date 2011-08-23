@@ -79,22 +79,10 @@
 	} else {
         NSAttributedString *value = [self attributedStringValue];
         
-		NSTextStorage *textStorage = [NSTextStorage alloc];
-		NSLayoutManager *layoutManager  = [NSLayoutManager new];
-		NSTextContainer *textContainer= [NSTextContainer alloc];
+        NSInteger cellHeight = [value pixelHeightInWidth:(textBoxFrame.size.width - 12)];
+		CGFloat totalLines = ceil(cellHeight / 14.0f);
 		
-        [textStorage initWithAttributedString:value];
-        [textContainer initWithContainerSize:NSMakeSize((textBoxFrame.size.width - 12), FLT_MAX)];
-        
-		[layoutManager addTextContainer:textContainer];
-		[textStorage addLayoutManager:layoutManager];
-		[textContainer setLineFragmentPadding:0.0];
-		[layoutManager glyphRangeForTextContainer:textContainer];
-		
-		NSInteger cellHeight = [layoutManager usedRectForTextContainer:textContainer].size.height;
-		NSInteger totalLines = (cellHeight / 14);
-		
-		if (totalLines == 1) {
+		if (totalLines <= 1) {
 			textBoxFrame.size.height = InputBoxDefaultHeight;
 		} else {
 			textBoxFrame.size.height = (InputBoxDefaultHeight + ((totalLines - 1) * InputBoxReszieHeightMultiplier));
@@ -103,10 +91,6 @@
 		if (textBoxFrame.size.height > InputTextFiedMaxHeight) {
 			textBoxFrame.size.height = InputTextFiedMaxHeight;
 		}
-        
-        [textStorage   drain];
-        [layoutManager drain];
-        [textContainer drain];
 	}	
 	
 	NSInteger contentBorder = (textBoxFrame.size.height + 13);

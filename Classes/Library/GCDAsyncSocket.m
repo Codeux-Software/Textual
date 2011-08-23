@@ -2484,6 +2484,16 @@ static NSThread *sslHandshakeThread;
 		accept6Source = NULL;
 	}
 	
+    if ((readSource && writeSource) == NO) {
+        if (socket4FD) {
+            close(socket4FD);
+        }
+        
+        if (socket6FD) {
+            close(socket6FD);
+        }
+    }
+    
 	if (readSource)
 	{
 		LogVerbose(@"dispatch_source_cancel(readSource)");
