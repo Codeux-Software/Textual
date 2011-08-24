@@ -40,8 +40,11 @@
 	NSMutableArray *highlightedLineNumbers;
     
 	NSString *html;
+    
+    dispatch_queue_t messageQueue;
 }
 
+@property (nonatomic, assign) dispatch_queue_t messageQueue;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
