@@ -52,6 +52,7 @@
 @synthesize urlMenu;
 @synthesize view;
 @synthesize world;
+@synthesize messageQueue;
 
 - (id)init
 {
@@ -63,6 +64,10 @@
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
 		[[WebPreferences standardPreferences] setUsesPageCache:NO];
+        
+        NSString *uuid = [NSString stringWithUUID];
+        
+        messageQueue = dispatch_queue_create([uuid UTF8String], NULL);
 	}
 	
 	return self;
@@ -85,6 +90,9 @@
 	[memberMenu drain];
 	[autoScroller drain];
 	[highlightedLineNumbers drain];
+    
+    dispatch_release(messageQueue);
+    messageQueue = NULL;
 	
 	[super dealloc];
 }
@@ -626,7 +634,13 @@
 	[attrs setObject:((highlighted) ? @"true" : @"false")		forKey:@"highlight"];
 	[attrs setObject:((isText) ? @"line text" : @"line event")	forKey:@"class"];
     
-    dispatch_async(world.messageQueue, ^{
+    dispatch_async(messageQueue, ^{
+        while ([view isLoading]) {
+            [NSThread sleepForTimeInterval:0.2];
+            
+            continue;
+        }
+        
         [self writeLine:s attributes:attrs];
     });
     
@@ -652,12 +666,6 @@
 
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
-    while ([view isLoading]) {
-        [NSThread sleepForTimeInterval:0.2];
-        
-        continue;
-    }
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self savePosition];
         
