@@ -86,6 +86,7 @@
 	conn.proxyHost = proxyHost;
 	conn.proxyPort = proxyPort;
 	conn.proxyUser = proxyUser;
+	conn.proxyPassword = proxyPassword;
 	
 	[conn open];
 }
