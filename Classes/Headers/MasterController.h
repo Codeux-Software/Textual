@@ -98,4 +98,5 @@
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
+- (NSString *)stripModePrefix:(NSString *)nick;
 @end

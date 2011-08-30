@@ -902,8 +902,8 @@
 		NSMutableArray *lowerNicks = [NSMutableArray array];
 		
 		for (IRCUser *m in users) {
-			[nicks      safeAddObject:m.nick];
-			[lowerNicks safeAddObject:[m.nick lowercaseString]];
+			[nicks      safeAddObject:[self stripModePrefix: m.nick]];
+			[lowerNicks safeAddObject:[self stripModePrefix: [m.nick lowercaseString]]];
 		}
 		
 		[nicks      safeAddObject:@"NickServ"];
@@ -1001,6 +1001,19 @@
 		status.text = text.stringValue;
 		status.range = selectedRange;
 	}
+}
+
+- (NSString *)stripModePrefix:(NSString *)nick
+{
+    if ([nick characterAtIndex:0] != '@' && [nick characterAtIndex:0] != '+') {
+        return nick; // shortcut if nick ain't op or voice
+    }
+    NSRange firstCharRange;
+    firstCharRange.location = 0;
+    firstCharRange.length = 1;
+    NSMutableString* newNick = [[NSMutableString alloc] initWithString:nick];
+    [newNick deleteCharactersInRange:firstCharRange];
+    return newNick;
 }
 
 #pragma mark -
