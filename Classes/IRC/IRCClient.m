@@ -3564,6 +3564,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
                             
                             [self send:IRCCI_PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
                         }
+                    
+                    } else if ([text hasPrefix:@"This nick is owned by someone else"]) {
+                        if (NSObjectIsNotEmpty(config.nickPassword)) {
+                            serverHasNickServ = YES;
+                            
+                            [self send:IRCCI_PRIVMSG, @"NickServ@services.dal.net", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+                        }
+                        
                     } else {
                         if ([Preferences autojoinWaitForNickServ]) {
                             if ([text hasPrefix:@"You are now identified"] ||
