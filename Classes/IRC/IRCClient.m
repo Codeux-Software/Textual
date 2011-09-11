@@ -3576,7 +3576,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
                         if ([Preferences autojoinWaitForNickServ]) {
                             if ([text hasPrefix:@"You are now identified"] ||
                                 [text hasPrefix:@"You are already identified"] ||
-                                [text hasSuffix:@"you are now recognized."]) {
+                                [text hasSuffix:@"you are now recognized."] || 
+                                [text hasPrefix:@"Password accepted for"]) {
                                 
                                 if (autojoinInitialized == NO && serverHasNickServ) {
                                     autojoinInitialized = YES;
