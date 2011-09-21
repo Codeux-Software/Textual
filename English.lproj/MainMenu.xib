@@ -796,7 +796,7 @@
 													<array class="NSMutableArray" key="NSMenuItems">
 														<object class="NSMenuItem" id="809170009">
 															<reference key="NSMenu" ref="1006033885"/>
-															<string key="NSTitle">Moderaed — Voice Only (+m)</string>
+															<string key="NSTitle">Moderated — Voice Only (+m)</string>
 															<string key="NSKeyEquiv">m</string>
 															<int key="NSKeyEquivModMask">1572864</int>
 															<int key="NSMnemonicLoc">2147483647</int>
@@ -2766,7 +2766,7 @@
 													<array class="NSMutableArray" key="NSMenuItems">
 														<object class="NSMenuItem" id="370876993">
 															<reference key="NSMenu" ref="148141853"/>
-															<string key="NSTitle">Moderaed — Voice Only (+m)</string>
+															<string key="NSTitle">Moderated — Voice Only (+m)</string>
 															<string key="NSKeyEquiv">m</string>
 															<int key="NSKeyEquivModMask">1572864</int>
 															<int key="NSMnemonicLoc">2147483647</int>
