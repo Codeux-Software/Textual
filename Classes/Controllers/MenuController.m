@@ -586,6 +586,28 @@
 	[sel.log mark];
 }
 
+- (void)onClearScrollback:(id)sender
+{
+	IRCClient *u = [world selectedClient];
+	IRCChannel *c = [world selectedChannel];
+
+    if (u) {
+        if (c) {
+            [world clearContentsOfChannel:c inClient:u];
+            
+            [c setUnreadCount:0];
+            [c setKeywordCount:0];
+        } else {
+            [world clearContentsOfClient:u];
+            
+            [u setUnreadCount:0];
+            [u setKeywordCount:0];
+        }
+        
+        [world updateIcon];
+    }
+}
+
 - (void)onIncreaseFontSize:(id)sender
 {
 	IRCTreeItem *sel = world.selected;

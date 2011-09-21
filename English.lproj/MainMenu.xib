@@ -439,6 +439,15 @@
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
 								</object>
+								<object class="NSMenuItem" id="628249255">
+									<reference key="NSMenu" ref="280333478"/>
+									<string key="NSTitle">Clear Scrollback</string>
+									<string key="NSKeyEquiv">k</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="222848805"/>
+									<reference key="NSMixedImage" ref="852898728"/>
+								</object>
 								<object class="NSMenuItem" id="598612084">
 									<reference key="NSMenu" ref="280333478"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -4615,6 +4624,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">onClearScrollback:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="628249255"/>
+					</object>
+					<int key="connectionID">2045</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">insertForegroundColorCharIntoTextBox:</string>
 						<reference key="source" ref="4596802"/>
 						<reference key="destination" ref="930873788"/>
@@ -6418,6 +6435,7 @@
 							<reference ref="598612084"/>
 							<reference ref="766095104"/>
 							<reference ref="22765018"/>
+							<reference ref="628249255"/>
 						</array>
 						<reference key="parent" ref="680857465"/>
 					</object>
@@ -6975,6 +6993,11 @@
 						<int key="objectID">2042</int>
 						<reference key="object" ref="29091170"/>
 						<reference key="parent" ref="562520351"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2043</int>
+						<reference key="object" ref="628249255"/>
+						<reference key="parent" ref="280333478"/>
 					</object>
 				</array>
 			</object>
