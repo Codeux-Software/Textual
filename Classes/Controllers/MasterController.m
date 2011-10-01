@@ -157,6 +157,7 @@
 	menu.text		= text;
 	menu.master		= self;
 	
+	[memberList setTarget:menu];    
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 	
 	growl = [GrowlController new];
