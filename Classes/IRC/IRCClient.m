@@ -4206,20 +4206,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
     action = [action trim];
     
     if ([command isEqualNoCase:IRCCI_CAP]) {
-        if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
-            NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            
-            for (NSString *cap in caps) {
-                if ([cap isEqualNoCase:@"SASL"]) {
-                    if ([base isEqualNoCase:@"LS"]) {
-                        [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
-                    } else {
-                        [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
-                        
-                        inSASLRequest = YES;
-                    }
-                } 
+        NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+        if ([base isEqualNoCase:@"LS"]) {
+            NSMutableArray *toSet = [NSMutableArray newad];
+
+            if ([caps containsObjectIgnoringCase:@"MULTI-PREFIX"]) {
+                [toSet safeAddObject:@"multi-prefix"];
             }
+            if ([caps containsObjectIgnoringCase:@"SASL"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
+                [toSet safeAddObject:@"sasl"];
+            }
+
+            if (NSObjectIsNotEmpty(toSet)) {
+                [self send:IRCCI_CAP, @"REQ", [toSet componentsJoinedByString:@" "], nil];
+            } else {
+                [self send:IRCCI_CAP, @"END", nil];
+            }
+        } else if ([base isEqualNoCase:@"ACK"]) {
+            if ([caps containsObjectIgnoringCase:@"SASL"]) {
+                [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+                inSASLRequest = YES;
+            } else {
+                [self send:IRCCI_CAP, @"END", nil];
+            }
+        } else if ([base isEqualNoCase:@"LIST"]) {
+            NSString *text = [(NSString *) [caps safeObjectAtIndex:0] length] == 0 ? TXTLS(@"IRC_CAP_CURRENTLY_ENABLED_NONE") : TXTFLS(@"IRC_CAP_CURRENTLY_ENABLED", action);
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text];
         }
     } else {
         if ([star isEqualToString:@"+"]) {
@@ -4755,27 +4768,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					
 					if (NSObjectIsEmpty(nick)) continue;
 					
-					NSString *u  = [nick safeSubstringWithRange:NSMakeRange(0, 1)];
-					NSString *op = NSWhitespaceCharacter;
-					
-					if ([u isEqualTo:isupport.userModeQPrefix] || [u isEqualTo:isupport.userModeHPrefix] || 
-						[u isEqualTo:isupport.userModeAPrefix] || [u isEqualTo:isupport.userModeVPrefix] || 
-						[u isEqualTo:isupport.userModeOPrefix]) {
-						
-						nick = [nick safeSubstringFromIndex:1];
-						op   = u;
-					}
-					
 					IRCUser *m = [IRCUser newad];
 					
+					NSInteger i = 0;
+					while (i < nick.length) {
+						NSString *ch = [nick safeSubstringWithRange:NSMakeRange(i++, 1)];
+						
+						if ([ch isEqualTo:isupport.userModeQPrefix] || [ch isEqualTo:isupport.userModeHPrefix] ||
+							[ch isEqualTo:isupport.userModeAPrefix] || [ch isEqualTo:isupport.userModeVPrefix] ||
+							[ch isEqualTo:isupport.userModeOPrefix]) {
+							if (!m.q)
+								m.q = [ch isEqualTo:isupport.userModeQPrefix];
+							if (!m.a)
+								m.a = [ch isEqualTo:isupport.userModeAPrefix];
+							if (!m.o)
+								m.o = [ch isEqualTo:isupport.userModeOPrefix];
+							if (!m.h)
+								m.h = [ch isEqualTo:isupport.userModeHPrefix];
+							if (!m.v)
+								m.v = [ch isEqualTo:isupport.userModeVPrefix];
+						} else {
+							i--;
+							break;
+						}
+					}
+
+					nick = [nick safeSubstringFromIndex:i];
 					m.nick        = nick;
-					
-					m.q = ([op isEqualTo:isupport.userModeQPrefix]);
-					m.a = ([op isEqualTo:isupport.userModeAPrefix]);
-					m.o = ([op isEqualTo:isupport.userModeOPrefix] || m.q);
-					m.h = ([op isEqualTo:isupport.userModeHPrefix]);
-					m.v = ([op isEqualTo:isupport.userModeVPrefix]);
-					
 					m.supportInfo = isupport;
 					m.isMyself    = [nick isEqualNoCase:myNick];
 					
@@ -5222,9 +5241,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         realName = config.nick;
     }
     
-    if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
-        [self send:IRCCI_CAP, @"LS", nil];
-    }
+    [self send:IRCCI_CAP, @"LS", nil];
 	
 	if (NSObjectIsNotEmpty(config.password)) {
         [self send:IRCCI_PASS, config.password, nil];
