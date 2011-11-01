@@ -104,6 +104,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize tryingNickNumber;
 @synthesize whoisChannel;
 @synthesize inSASLRequest;
+@synthesize inNamesInfoRun;
 @synthesize world;
 
 - (id)init
@@ -2095,6 +2096,21 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			[self sendLine:line];
 			
+			return YES;
+			break;
+		}
+		case 12: // command: NAMES
+		{
+			inNamesInfoRun = YES;
+
+			if (c && selChannel && selChannel.isChannel && [s.string isChannelName] == NO) {
+				targetChannelName = selChannel.name;
+			} else {
+				targetChannelName = s.getToken.string;
+			}
+
+			[self send:IRCCI_NAMES, targetChannelName, nil];
+
 			return YES;
 			break;
 		}
@@ -4809,46 +4825,56 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[c reloadMemberList];
 			} 
 			
+			if (inNamesInfoRun) {
+				[self printUnknownReply:m];
+			}
+
 			break;
 		}
 		case 366:
 		{
-			NSString *chname = [m paramAt:1];
-			
-			IRCChannel *c = [self findChannel:chname];
-			
-			if (c) {
-				if ([c numberOfMembers] <= 1 && c.isOp) {
-					NSString *m = c.config.mode;
-					
-					if (NSObjectIsNotEmpty(m)) {
-						NSString *line = [NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, chname, m];
-						
-						[self sendLine:line];
+			if (inNamesInfoRun) { // Requested by user, just show the informations
+				[self printUnknownReply:m];
+
+				inNamesInfoRun = NO;
+			} else {
+				NSString *chname = [m paramAt:1];
+
+				IRCChannel *c = [self findChannel:chname];
+
+				if (c) {
+					if ([c numberOfMembers] <= 1 && c.isOp) {
+						NSString *m = c.config.mode;
+
+						if (NSObjectIsNotEmpty(m)) {
+							NSString *line = [NSString stringWithFormat:@"%@ %@ %@", IRCCI_MODE, chname, m];
+
+							[self sendLine:line];
+						}
+
+						c.isModeInit = YES;
 					}
-					
-					c.isModeInit = YES;
-				}
-				
-				if ([c numberOfMembers] <= 1 && [chname isModeChannelName] && c.isOp) {
-					NSString *topic = c.storedTopic;
-					
-					if (NSObjectIsEmpty(topic)) {
-						topic = c.config.topic;
-					}
-					
-					if (NSObjectIsNotEmpty(topic)) {
-						if ([self encryptOutgoingMessage:&topic channel:c] == YES) {
-							[self send:IRCCI_TOPIC, chname, topic, nil];
+
+					if ([c numberOfMembers] <= 1 && [chname isModeChannelName] && c.isOp) {
+						NSString *topic = c.storedTopic;
+
+						if (NSObjectIsEmpty(topic)) {
+							topic = c.config.topic;
+						}
+
+						if (NSObjectIsNotEmpty(topic)) {
+							if ([self encryptOutgoingMessage:&topic channel:c] == YES) {
+								[self send:IRCCI_TOPIC, chname, topic, nil];
+							}
 						}
 					}
-				}
-				
-				if ([Preferences processChannelModes]) {
-					[self requestUserHosts:c];
+
+					if ([Preferences processChannelModes]) {
+						[self requestUserHosts:c];
+					}
 				}
 			}
-			
+
 			break;
 		}
 		case 320:

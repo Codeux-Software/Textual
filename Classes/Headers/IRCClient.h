@@ -60,6 +60,7 @@ typedef enum {
     BOOL inSASLRequest;
 	BOOL inWhoWasRun;
 	BOOL inFirstISONRun;
+	BOOL inNamesInfoRun;
 	
 	CFAbsoluteTime lastLagCheck;
 	
@@ -128,6 +129,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL autojoinInitialized;
 @property (nonatomic, assign) BOOL sendLagcheckToChannel;
 @property (nonatomic, assign) BOOL isIdentifiedWithSASL;
+@property (nonatomic, assign) BOOL inNamesInfoRun;
 @property (nonatomic, retain) FileLogger *logFile;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, retain) NSString *logDate;
