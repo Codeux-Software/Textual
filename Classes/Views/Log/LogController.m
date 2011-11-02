@@ -168,11 +168,13 @@
 - (void)queueLoop
 {
     if ([view isLoading]) {
-        while ([view isLoading] && PointerIsEmpty([self mainFrameDocument])) {
-            [NSThread sleepForTimeInterval:0.2];
-            
-            continue;
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            while ([view isLoading] && PointerIsEmpty([self mainFrameDocument])) {
+                [NSThread sleepForTimeInterval:0.2];
+
+                continue;
+            }
+        });
     }
 }
 
