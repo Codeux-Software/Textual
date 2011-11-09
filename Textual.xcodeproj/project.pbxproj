@@ -349,6 +349,7 @@
 		4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFB1053138CE8E0007B8F2E /* HighlightSheet.xib */; };
 		4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */; };
+		77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -669,6 +670,7 @@
 		4CFC7DB61231F40C00FFC3B7 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
 		4CFF3BD511CC715A00FF2930 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInvocationGrabber.m; sourceTree = "<group>"; };
 		4CFF3BD711CC715A00FF2930 /* DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDExtensions.m; sourceTree = "<group>"; };
+		77A33937146B3B300003ACD2 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
 		780C685D118230EE00CB739F /* WebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewAutoScroll.m; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */,
 				4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */,
 				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
 				4CA945E111E1AFBA00D36367 /* Cocoa.framework in Frameworks */,
@@ -1159,6 +1162,7 @@
 		4C66E86912DF694A00446250 /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77A33937146B3B300003ACD2 /* Growl.framework */,
 				4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */,
 				4C66E88412DF69E500446250 /* BlowfishEncryption.framework */,
 			);
