@@ -7,15 +7,13 @@
 @implementation GrowlController
 
 @synthesize owner;
-@synthesize growl;
 @synthesize lastClickedContext;
 @synthesize lastClickedTime;
-@synthesize registered;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		registered = [Preferences registeredToGrowl];
+        [GrowlApplicationBridge setGrowlDelegate:self];
 	}
 	
 	return self;
@@ -23,37 +21,11 @@
 
 - (void)dealloc
 {
-	[growl drain];
 	[lastClickedContext drain];
 	
 	[super dealloc];
 }
 
-- (void)registerToGrowl
-{
-	if (growl) return;
-	
-	growl = [TinyGrowlClient new];
-	growl.delegate = self;
-	
-	if (registered == NO) {
-		growl.allNotifications = [NSArray array];
-		growl.defaultNotifications = growl.allNotifications;
-		
-		[growl registerApplication];
-	}
-	
-	growl.allNotifications = [NSArray arrayWithObjects:
-							  TXTLS(@"GROWL_MSG_LOGIN"), TXTLS(@"GROWL_MSG_KICKED"), 
-							  TXTLS(@"GROWL_MSG_INVITED"), TXTLS(@"GROWL_MSG_NEW_TALK"), 
-							  TXTLS(@"GROWL_MSG_TALK_MSG"), TXTLS(@"GROWL_MSG_HIGHLIGHT"), 
-							  TXTLS(@"GROWL_MSG_DISCONNECT"), TXTLS(@"GROWL_MSG_TALK_NOTICE"), 
-							  TXTLS(@"GROWL_MSG_CHANNEL_MSG"), TXTLS(@"GROWL_MSG_CHANNEL_NOTICE"), 
-							  TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"), nil];
-	
-	growl.defaultNotifications = growl.allNotifications;
-	[growl registerApplication];
-}
 
 - (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
@@ -134,11 +106,10 @@
 		}
 	}
 	
-	[growl notifyWithType:kind title:title description:desc clickContext:context sticky:sticky priority:priority icon:nil];
+	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:context];
 }
 
-- (void)tinyGrowlClient:(TinyGrowlClient *)sender didClick:(id)context
-{
+- (void)growlNotificationWasClicked:(id)context {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
 	if ((now - lastClickedTime) < CLICK_INTERVAL) {
@@ -151,20 +122,14 @@
 	
 	[lastClickedContext drain];
 	lastClickedContext = [context retain];
-	
-	if (registered == NO) {
-		registered = YES;
-		
-		[Preferences setRegisteredToGrowl:YES];
-	}
-	
+
 	[owner.window makeKeyAndOrderFront:nil];
-	
+
 	[NSApp activateIgnoringOtherApps:YES];
-	
+
 	if ([context isKindOfClass:[NSString class]]) {
 		NSArray *ary = [context componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-		
+
 		if (ary.count >= 2) {
 			NSInteger uid = [ary integerAtIndex:0];
 			NSInteger cid = [ary integerAtIndex:1];
@@ -186,15 +151,6 @@
 				[owner select:u];
 			}
 		}
-	}
-}
-
-- (void)tinyGrowlClient:(TinyGrowlClient *)sender didTimeOut:(id)context
-{
-	if (registered == NO) {
-		registered = YES;
-		
-		[Preferences setRegisteredToGrowl:YES];
 	}
 }
 
