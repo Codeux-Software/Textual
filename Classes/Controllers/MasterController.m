@@ -164,8 +164,6 @@
 	growl.owner = world;
 	world.growl = growl;
 	
-	[growl registerToGrowl];
-	
 	[formattingMenu enableWindowField:text];
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {

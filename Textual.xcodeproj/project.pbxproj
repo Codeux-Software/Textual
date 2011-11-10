@@ -197,7 +197,6 @@
 		4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
 		4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10911737F660044E7A1 /* UnicodeHelper.m */; };
 		4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
-		4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0136C12F0C772001953E6 /* IRCModeInfo.m */; };
 		4C8B8613131A35DE0065B4F9 /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BEE4911CC3E30002F65F7 /* NSBundleHelper.m */; };
 		4C8B8614131A35DE0065B4F9 /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14549412F8AC720014CC3A /* IRCColorFormat.m */; };
@@ -309,7 +308,6 @@
 		4CD0E6A012F1B6B000C8F016 /* PopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A212F1B6B000C8F016 /* TCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69412F1B6B000C8F016 /* TCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69612F1B6B000C8F016 /* Timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6A612F1B6B000C8F016 /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69812F1B6B000C8F016 /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6AC12F1B6ED00C8F016 /* AGKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AB12F1B6ED00C8F016 /* AGKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD0E6B912F1B70300C8F016 /* NSArrayHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AD12F1B70300C8F016 /* NSArrayHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -350,6 +348,7 @@
 		4CFB1057138CEA96007B8F2E /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */; };
 		77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
+		77A3394E146B47710003ACD2 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -432,6 +431,16 @@
 				4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 			);
 			name = "Copy Additional Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		77A3394D146B47530003ACD2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				77A3394E146B47710003ACD2 /* Growl.framework in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -623,7 +632,6 @@
 		4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupPrompts.h; path = Classes/Headers/PopupPrompts.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69412F1B6B000C8F016 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = Classes/Headers/TCPClient.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69612F1B6B000C8F016 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timer.h; path = Classes/Headers/Timer.h; sourceTree = SOURCE_ROOT; };
-		4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TinyGrowlClient.h; path = Classes/Headers/TinyGrowlClient.h; sourceTree = SOURCE_ROOT; };
 		4CD0E69812F1B6B000C8F016 /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLParser.h; path = Classes/Headers/URLParser.h; sourceTree = SOURCE_ROOT; };
 		4CD0E6AB12F1B6ED00C8F016 /* AGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGKeychain.h; path = Classes/Headers/AGKeychain.h; sourceTree = SOURCE_ROOT; };
 		4CD0E6AD12F1B70300C8F016 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayHelper.h; path = ../Headers/NSArrayHelper.h; sourceTree = "<group>"; };
@@ -740,7 +748,6 @@
 		78A8C13E11737F660044E7A1 /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
 		78A8C14211737F660044E7A1 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
 		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Timer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78A8C16D11737F660044E7A1 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; wrapsLines = 0; };
 		78A8C16F11737F660044E7A1 /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
 		78A8C17811737F660044E7A1 /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
@@ -1460,8 +1467,6 @@
 				78A8C14211737F660044E7A1 /* TCPClient.m */,
 				4CD0E69612F1B6B000C8F016 /* Timer.h */,
 				78A8C14611737F660044E7A1 /* Timer.m */,
-				4CD0E69712F1B6B000C8F016 /* TinyGrowlClient.h */,
-				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
 				4CD0E69812F1B6B000C8F016 /* URLParser.h */,
 				4C982D15121F32430051543F /* URLParser.m */,
 			);
@@ -1652,7 +1657,6 @@
 				4CD0E6D512F1B77300C8F016 /* TextualPluginItem.h in Headers */,
 				4CD0E6A412F1B6B000C8F016 /* Timer.h in Headers */,
 				4CD0E61D12F1B4E200C8F016 /* TimerCommand.h in Headers */,
-				4CD0E6A512F1B6B000C8F016 /* TinyGrowlClient.h in Headers */,
 				4CD0E64912F1B58600C8F016 /* TopicSheet.h in Headers */,
 				4CD0E6CD12F1B75300C8F016 /* UnicodeHelper.h in Headers */,
 				4CD0E6CE12F1B75300C8F016 /* URLOpener.h in Headers */,
@@ -1686,6 +1690,7 @@
 				4CAA3BCD12E0ECF300FB83EB /* Headers */,
 				4C3F690F12FD925F00B50CB9 /* Compile Plugins */,
 				4C3F693E12FD95A300B50CB9 /* Copy Plugins */,
+				77A3394D146B47530003ACD2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1996,7 +2001,6 @@
 				4C8B860D131A35DE0065B4F9 /* InputTextField.m in Sources */,
 				4C8B860E131A35DE0065B4F9 /* UnicodeHelper.m in Sources */,
 				4C8B8610131A35DE0065B4F9 /* GTMNSString+URLArguments.m in Sources */,
-				4C8B8611131A35DE0065B4F9 /* TinyGrowlClient.m in Sources */,
 				4C8B8612131A35DE0065B4F9 /* IRCModeInfo.m in Sources */,
 				4C8B8613131A35DE0065B4F9 /* NSBundleHelper.m in Sources */,
 				4C8B8614131A35DE0065B4F9 /* IRCColorFormat.m in Sources */,
