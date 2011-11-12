@@ -365,6 +365,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.away_allconnections"];
 }
 
++ (BOOL)giveFocusOnMessage
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.focus_on_message"];
+}
+
 + (BOOL)nickAllConnections
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.nick_allconnections"];
@@ -964,6 +969,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
     [d setBool:YES forKey:@"Preferences.General.use_nomode_symbol"];
+    [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];
