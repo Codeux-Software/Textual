@@ -1880,6 +1880,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						}
 						
 						[self send:localCmd, chname, t, nil];
+
+                        if (c && [Preferences giveFocusOnMessage]) {
+                            [world select:c];
+                        }
 					}
 				}
 			} 
