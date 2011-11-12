@@ -86,6 +86,7 @@ typedef enum {
 
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
++ (BOOL)giveFocusOnMessage;
 + (BOOL)nickAllConnections;
 + (BOOL)clearAllOnlyOnActiveServer;
 
