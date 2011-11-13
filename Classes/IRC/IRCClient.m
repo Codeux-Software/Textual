@@ -1930,7 +1930,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			if (targetChannelName) {
-                NSString *topic = s.string;
+				NSString *topic = [s attributedStringToASCIIFormatting];
                 
 				if (NSObjectIsEmpty(topic)) {
 					topic = nil;
