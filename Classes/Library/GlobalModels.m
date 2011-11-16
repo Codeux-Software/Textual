@@ -46,17 +46,17 @@ NSString *TXTFLS(NSString *key, ...)
 	return [formattedString autodrain];
 }
 
-NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override) 
+NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override) 
 {
 	if (NSObjectIsEmpty(format))      format = @"[%H:%M:%S]";
 	if (NSObjectIsNotEmpty(override)) format = override;
 	
-	return [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:format timeZone:nil]];
+	return [NSString stringWithFormat:@"%@", [date dateWithCalendarFormat:format timeZone:nil]];
 }
 
-NSString *TXFormattedTimestamp(NSString *format) 
+NSString *TXFormattedTimestamp(NSDate *date, NSString *format) 
 {
-	return TXFormattedTimestampWithOverride(format, nil);
+	return TXFormattedTimestampWithOverride(date, format, nil);
 }
 
 NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue) 
