@@ -13,8 +13,8 @@ TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Langua
 
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
 
-TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSString *format);
-TEXTUAL_EXTERN NSString *TXFormattedTimestampWithOverride(NSString *format, NSString *override);
+TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);
+TEXTUAL_EXTERN NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override);
 
 TEXTUAL_EXTERN NSString *TXReadableTime(NSInteger dateInterval);
 TEXTUAL_EXTERN NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue);
