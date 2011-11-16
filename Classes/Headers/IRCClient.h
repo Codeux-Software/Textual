@@ -215,17 +215,21 @@ typedef enum {
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text;
-- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text ;
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate*)receivedAt;
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
+- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (BOOL)printAndLog:(LogLine *)line withHTML:(BOOL)rawHTML;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
+- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
+- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
+- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
 - (void)printDebugInformation:(NSString *)m;
