@@ -26,6 +26,9 @@
 	[super dealloc];
 }
 
+- (NSString *) applicationNameForGrowl {
+	return @"Textual";
+}
 
 - (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
