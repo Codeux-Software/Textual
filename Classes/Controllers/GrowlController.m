@@ -30,6 +30,21 @@
 	return @"Textual";
 }
 
+- (NSDictionary *) registrationDictionaryForGrowl {
+	NSArray *defaultNotifications = [NSArray arrayWithObjects:
+										TXTLS(@"GROWL_MSG_NEW_TALK"), TXTLS(@"GROWL_MSG_TALK_MSG"),
+										TXTLS(@"GROWL_MSG_HIGHLIGHT"), TXTLS(@"GROWL_MSG_INVITED"),
+										TXTLS(@"GROWL_MSG_KICKED"), nil];
+	NSArray *allNotifications = [NSArray arrayWithObjects:
+									TXTLS(@"GROWL_MSG_HIGHLIGHT"), TXTLS(@"GROWL_MSG_NEW_TALK"),
+									TXTLS(@"GROWL_MSG_CHANNEL_MSG"), TXTLS(@"GROWL_MSG_CHANNEL_NOTICE"),
+									TXTLS(@"GROWL_MSG_TALK_MSG"), TXTLS(@"GROWL_MSG_TALK_NOTICE"),
+									TXTLS(@"GROWL_MSG_KICKED"), TXTLS(@"GROWL_MSG_INVITED"),
+									TXTLS(@"GROWL_MSG_LOGIN"), TXTLS(@"GROWL_MSG_DISCONNECT"),
+									TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"), nil];
+	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
+}
+
 - (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
