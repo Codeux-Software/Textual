@@ -48,6 +48,7 @@
 @synthesize stylesView;
 @synthesize themeButton;
 @synthesize alertButton;
+@synthesize alertSoundButton;
 @synthesize highlightNicknameButton;
 @synthesize transcriptFolderButton;
 @synthesize addExcludeWordButton;
@@ -278,6 +279,16 @@
 #pragma mark Sounds
 
 - (void)updateAlert {
+	[alertSoundButton removeAllItems];
+
+	NSArray *alertSounds = [self availableSounds];
+    for (NSString *alertSound in alertSounds) {
+        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:alertSound action:nil keyEquivalent:NSNullObject] autodrain];
+        [alertSoundButton.menu addItem:item];
+    }
+
+    [alertSoundButton selectItemAtIndex:0];
+
     [alertButton removeAllItems];
 
     NSMutableArray *alerts = [self sounds];
@@ -295,6 +306,8 @@
 
     [useGrowlButton setState:[alert growl]];
     [disableAlertWhenAwayButton setState:[alert disableWhileAway]];
+
+	[alertSoundButton selectItemAtIndex:[[self availableSounds] indexOfObject:[alert sound]]];
 }
 
 - (IBAction)onUseGrowl:(id)sender {
@@ -307,6 +320,11 @@
     [alert setDisableWhileAway:[disableAlertWhenAwayButton state]];
 }
 
+- (IBAction)onChangeAlertSound:(id)sender {
+	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+	[alert setSound:[alertSoundButton titleOfSelectedItem]];
+}
+
 - (NSArray *)availableSounds
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
@@ -315,6 +333,7 @@
 	NSArray *homeDirectoryContents	= [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath]	error:NULL];
 	
 	[sound_list safeAddObject:EMPTY_SOUND];
+	[sound_list safeAddObject:@"Beep"];
 	
 	if (NSObjectIsNotEmpty(directoryContents)) {
 		for (NSString *s in directoryContents) {	
