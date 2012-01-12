@@ -76,4 +76,8 @@
 	[Preferences setDisableWhileAway:value forEvent:eventType];
 }
 
+- (GrowlNotificationType)eventType {
+    return eventType;
+}
+
 @end

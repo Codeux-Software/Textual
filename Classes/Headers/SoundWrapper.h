@@ -15,5 +15,6 @@
 @property (nonatomic, assign) BOOL disableWhileAway;
 
 + (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType;
+- (GrowlNotificationType)eventType;
 
 @end
