@@ -13,6 +13,7 @@
 @interface PreferencesController (Private)
 - (void)updateTranscriptFolder;
 - (void)updateTheme;
+- (void)updateAlert;
 
 - (void)setUpToolbarItemsAndMenus;
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
@@ -46,9 +47,12 @@
 @synthesize scriptsView;
 @synthesize stylesView;
 @synthesize themeButton;
+@synthesize alertButton;
 @synthesize highlightNicknameButton;
 @synthesize transcriptFolderButton;
 @synthesize addExcludeWordButton;
+@synthesize useGrowlButton;
+@synthesize disableAlertWhenAwayButton;
 @synthesize transfersView;
 @synthesize updatesView;
 @synthesize world;
@@ -99,6 +103,7 @@
 	
 	[self updateTranscriptFolder];
 	[self updateTheme];
+    [self updateAlert];
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
@@ -271,6 +276,36 @@
 
 #pragma mark -
 #pragma mark Sounds
+
+- (void)updateAlert {
+    [alertButton removeAllItems];
+
+    NSMutableArray *alerts = [self sounds];
+    for (SoundWrapper *alert in alerts) {
+        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[alert displayName] action:nil keyEquivalent:NSNullObject] autodrain];
+		[item setTag:[alert eventType]];
+        [alertButton.menu addItem:item];
+    }
+
+    [alertButton selectItemAtIndex:0];
+}
+
+- (void)onChangeAlert:(id)sender {
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+
+    [useGrowlButton setState:[alert growl]];
+    [disableAlertWhenAwayButton setState:[alert disableWhileAway]];
+}
+
+- (IBAction)onUseGrowl:(id)sender {
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+    [alert setGrowl:[useGrowlButton state]];
+}
+
+- (IBAction)onAlertWhileAway:(id)sender {
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+    [alert setDisableWhileAway:[disableAlertWhenAwayButton state]];
+}
 
 - (NSArray *)availableSounds
 {

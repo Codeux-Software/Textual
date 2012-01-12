@@ -40,6 +40,10 @@
 	
 	IBOutlet NSPopUpButton *transcriptFolderButton;
 	IBOutlet NSPopUpButton *themeButton;
+    IBOutlet NSPopUpButton *alertButton;
+
+    IBOutlet NSButton *useGrowlButton;
+    IBOutlet NSButton *disableAlertWhenAwayButton;
 	
 	IBOutlet NSTextField *scriptLocationField;
 	
@@ -80,6 +84,9 @@
 @property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
 @property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, retain) NSPopUpButton *themeButton;
+@property (nonatomic, retain) NSPopUpButton *alertButton;
+@property (nonatomic, retain) NSButton *useGrowlButton;
+@property (nonatomic, retain) NSButton *disableAlertWhenAwayButton;
 @property (nonatomic, retain) NSMenu *installedScriptsMenu;
 @property (nonatomic, retain) NSTextField *scriptLocationField;
 @property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
@@ -101,6 +108,9 @@
 - (void)onChangedTransparency:(id)sender;
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onHighlightLoggingChanged:(id)sender;
+- (IBAction)onChangeAlert:(id)sender;
+- (IBAction)onUseGrowl:(id)sender;
+- (IBAction)onAlertWhileAway:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
