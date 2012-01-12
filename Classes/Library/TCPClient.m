@@ -96,6 +96,9 @@
 	[proxyUser drain];
 	[proxyPassword drain];
 	
+	[delegate release];
+	delegate = nil;
+
 	[super dealloc];
 }
 
@@ -267,7 +270,7 @@
     }
     
 	[buffer appendData:data];
-	
+
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
 		[delegate tcpClientDidReceiveData:self];
 	}
