@@ -190,7 +190,7 @@
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182273</int>
 									<int key="NSButtonFlags2">2</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="331612002">
+									<object class="NSCustomResource" key="NSNormalImage" id="191761718">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">TPWTB_InstalledScripts-DropDown</string>
 									</object>
@@ -204,7 +204,7 @@
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSImage" ref="331612002"/>
+										<reference key="NSImage" ref="191761718"/>
 										<object class="NSCustomResource" key="NSOnImage" id="93802364">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
@@ -251,7 +251,7 @@
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="331612002"/>
+							<reference key="NSToolbarItemImage" ref="191761718"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -380,7 +380,7 @@
 										<string key="NSTitle"/>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage" id="423569674">
+										<object class="NSCustomResource" key="NSImage" id="504877021">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">TPWTB_Advanced</string>
 										</object>
@@ -486,7 +486,7 @@
 									<bool key="NSAltersState">YES</bool>
 								</object>
 							</object>
-							<reference key="NSToolbarItemImage" ref="423569674"/>
+							<reference key="NSToolbarItemImage" ref="504877021"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{32, 32}</string>
@@ -2485,7 +2485,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="739981559">
-							<int key="NSCellFlags">-1539178944</int>
+							<int key="NSCellFlags">-2076049856</int>
 							<int key="NSCellFlags2">2048</int>
 							<reference key="NSSupport" ref="90392730"/>
 							<reference key="NSControlView" ref="697430914"/>
@@ -2495,24 +2495,24 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="1072988375">
-								<reference key="NSMenu" ref="674055686"/>
-								<string key="NSTitle">Beep</string>
-								<string key="NSKeyEquiv"/>
-								<int key="NSMnemonicLoc">2147483647</int>
-								<int key="NSState">1</int>
-								<reference key="NSOnImage" ref="93802364"/>
-								<reference key="NSMixedImage" ref="746962281"/>
-								<string key="NSAction">_popUpItemAction:</string>
-								<reference key="NSTarget" ref="739981559"/>
-							</object>
+							<nil key="NSMenuItem"/>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
 							<object class="NSMenu" key="NSMenu" id="674055686">
 								<string key="NSTitle">OtherViews</string>
 								<array class="NSMutableArray" key="NSMenuItems">
-									<reference ref="1072988375"/>
+									<object class="NSMenuItem" id="1072988375">
+										<reference key="NSMenu" ref="674055686"/>
+										<string key="NSTitle">Beep</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="93802364"/>
+										<reference key="NSMixedImage" ref="746962281"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<reference key="NSTarget" ref="739981559"/>
+									</object>
 								</array>
 							</object>
+							<int key="NSSelectedIndex">-1</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -2631,24 +2631,24 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<nil key="NSMenuItem"/>
+							<object class="NSMenuItem" key="NSMenuItem" id="357801270">
+								<reference key="NSMenu" ref="869037942"/>
+								<string key="NSTitle">Feature not completed ...</string>
+								<string key="NSKeyEquiv"/>
+								<int key="NSMnemonicLoc">2147483647</int>
+								<int key="NSState">1</int>
+								<reference key="NSOnImage" ref="93802364"/>
+								<reference key="NSMixedImage" ref="746962281"/>
+								<string key="NSAction">_popUpItemAction:</string>
+								<reference key="NSTarget" ref="336120983"/>
+							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
 							<object class="NSMenu" key="NSMenu" id="869037942">
 								<string key="NSTitle">OtherViews</string>
 								<array class="NSMutableArray" key="NSMenuItems">
-									<object class="NSMenuItem" id="357801270">
-										<reference key="NSMenu" ref="869037942"/>
-										<string key="NSTitle">Feature not completed ...</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="93802364"/>
-										<reference key="NSMixedImage" ref="746962281"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<reference key="NSTarget" ref="336120983"/>
-									</object>
+									<reference ref="357801270"/>
 								</array>
 							</object>
-							<int key="NSSelectedIndex">-1</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -6130,14 +6130,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onChangedTheme:</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="697430914"/>
-					</object>
-					<int key="connectionID">6636</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onPrefPaneSelected:</string>
 						<reference key="source" ref="523994250"/>
 						<reference key="destination" ref="376864740"/>
@@ -6223,6 +6215,22 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<reference key="destination" ref="775392983"/>
 					</object>
 					<int key="connectionID">6719</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onChangeAlertSound:</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="697430914"/>
+					</object>
+					<int key="connectionID">6720</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">alertSoundButton</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="697430914"/>
+					</object>
+					<int key="connectionID">6721</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -11561,7 +11569,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">6719</int>
+			<int key="maxID">6721</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11571,6 +11579,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="onAlertWhileAway:">id</string>
 						<string key="onChangeAlert:">id</string>
+						<string key="onChangeAlertSound:">id</string>
 						<string key="onUseGrowl:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -11582,6 +11591,10 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string key="name">onChangeAlert:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="onChangeAlertSound:">
+							<string key="name">onChangeAlertSound:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onUseGrowl:">
 							<string key="name">onUseGrowl:</string>
 							<string key="candidateClassName">id</string>
@@ -11591,6 +11604,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<string key="IRCopServicesView">NSView</string>
 						<string key="addExcludeWordButton">NSButton</string>
 						<string key="alertButton">NSPopUpButton</string>
+						<string key="alertSoundButton">NSPopUpButton</string>
 						<string key="alertsView">NSView</string>
 						<string key="channelManagementView">NSView</string>
 						<string key="contentView">NSView</string>
@@ -11630,6 +11644,10 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="alertButton">
 							<string key="name">alertButton</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alertSoundButton">
+							<string key="name">alertSoundButton</string>
 							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="alertsView">
