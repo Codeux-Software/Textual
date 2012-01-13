@@ -2780,6 +2780,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk
 {
+	IRCChannel *c = [self findChannel:name];
+	if (c) {
+		return c;
+	}
+
 	if (doTalk) {
 		return [world createTalk:name client:self];
 	} else {
