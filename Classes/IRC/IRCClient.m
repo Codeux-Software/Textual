@@ -113,6 +113,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ((self = [super init])) {
 		tryingNickNumber = -1;
 		
+		capPaused = 0;
+
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
@@ -4321,8 +4323,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
             if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
                 [self send:IRCCI_AUTHENTICATE, @"+", nil];
             }
-        } else {
-            [self resumeCap];
         }
     }
 }
@@ -5053,8 +5053,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             
             if (inSASLRequest) {
                 inSASLRequest = NO;
-                
-                [self send:IRCCI_CAP, @"END", nil];
+                [self resumeCap];
             }
             
             break;
