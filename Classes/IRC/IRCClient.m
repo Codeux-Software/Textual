@@ -4253,7 +4253,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 }
 
 - (BOOL)isCapAvailible:(NSString*)cap {
-	return ([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
+	return [cap isEqualNoCase:@"znc.in/server-time"] || ([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
 }
 
 - (void)cap:(NSString*)cap result:(BOOL)supported {
