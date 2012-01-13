@@ -153,6 +153,9 @@
 
 "IRC_SERVER_HAD_NETSPLIT" = "Netsplit: %@";
 
+"IRC_CAP_CURRENTLY_ENABLED" = "The following capabilities are currently enabled: %@";
+"IRC_CAP_CURRENTLY_ENABLED_NONE" = "There is no capability enabled.";
+
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
 "LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";
 
