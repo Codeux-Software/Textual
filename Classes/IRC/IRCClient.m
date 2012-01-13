@@ -2944,8 +2944,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return NO;
 	}
 	
-	//[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
-	[SoundPlayer play:@"Beep" isMuted:world.soundMuted];
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
 	
 	if ([Preferences growlEnabledForEvent:type] == NO) return YES;
 	if ([Preferences stopGrowlOnActive] && [world.window isOnCurrentWorkspace]) return YES;
