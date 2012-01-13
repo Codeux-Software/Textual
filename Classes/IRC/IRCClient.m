@@ -69,6 +69,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize encoding;
 @synthesize hasIRCopAccess;
 @synthesize highlights;
+@synthesize pendingCaps;
+@synthesize acceptedCaps;
 @synthesize identifyCTCP;
 @synthesize identifyMsg;
 @synthesize inWhoInfoRun;
@@ -114,6 +116,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
+
+		acceptedCaps = [[NSMutableArray alloc] init];
+		pendingCaps = [[NSMutableArray alloc] init];
+
 		trackedUsers = [NSMutableDictionary new];
 		
 		isupport = [IRCISupportInfo new];
@@ -195,7 +201,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[sentNick drain];
 	[serverHostname drain];
 	[trackedUsers drain];
-	
+
+	[pendingCaps drain];
+	[acceptedCaps drain];
+
 #ifdef IS_TRIAL_BINARY
 	[trialPeriodTimer stop];
 	[trialPeriodTimer drain];
@@ -4222,6 +4231,39 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self printError:m.sequence];
 }
 
+- (void)sendNextCap {
+	if (!capPaused) {
+		if (pendingCaps && [pendingCaps count]) {
+			NSString *cap = [pendingCaps lastObject];
+			[self send:IRCCI_CAP, @"REQ", cap, nil];
+			[pendingCaps removeLastObject];
+		} else {
+			[self send:IRCCI_CAP, @"END", nil];
+		}
+	}
+}
+
+- (void)pauseCap {
+	capPaused++;
+}
+
+- (void)resumeCap {
+	capPaused--;
+	[self sendNextCap];
+}
+
+- (BOOL)isCapAvailible:(NSString*)cap {
+	return ([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
+}
+
+- (void)cap:(NSString*)cap result:(BOOL)supported {
+	if (supported && [cap isEqualNoCase:@"sasl"]) {
+		inSASLRequest = YES;
+		[self pauseCap];
+		[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+	}
+}
+
 - (void)receiveCapacityOrAuthenticationRequest:(IRCMessage *)m
 {
     /* Implementation based off Colloquy's own. */
@@ -4235,21 +4277,30 @@ static NSDateFormatter *dateTimeFormatter = nil;
     action = [action trim];
     
     if ([command isEqualNoCase:IRCCI_CAP]) {
-        if ([base isEqualNoCase:@"ACK"] || [base isEqualNoCase:@"LS"]) {
+        if ([base isEqualNoCase:@"LS"]) {
             NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            
+
             for (NSString *cap in caps) {
-                if ([cap isEqualNoCase:@"SASL"]) {
-                    if ([base isEqualNoCase:@"LS"]) {
-                        [self sendLine:[NSString stringWithFormat:@"%@ REQ :sasl", IRCCI_CAP]];
-                    } else {
-                        [self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
-                        
-                        inSASLRequest = YES;
-                    }
+				if ([self isCapAvailible:cap]) {
+					[pendingCaps addObject:cap];
 				}
             }
-        }
+        } else if ([base isEqualNoCase:@"ACK"]) {
+			NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+            for (NSString *cap in caps) {
+				[acceptedCaps addObject:cap];
+				[self cap:cap result:YES];
+			}
+		} else if ([base isEqualNoCase:@"NAK"]) {
+			NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+            for (NSString *cap in caps) {
+				[self cap:cap result:NO];
+			}
+		}
+
+		[self sendNextCap];
     } else {
         if ([star isEqualToString:@"+"]) {
             NSData *usernameData = [config.nick dataUsingEncoding:config.encoding allowLossyConversion:YES];
@@ -4272,7 +4323,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                 [self send:IRCCI_AUTHENTICATE, @"+", nil];
             }
         } else {
-            [self send:IRCCI_CAP, @"END", nil];
+            [self resumeCap];
         }
     }
 }
@@ -5251,9 +5302,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         realName = config.nick;
     }
     
-    if (NSObjectIsNotEmpty(config.nickPassword) && config.useSASL) {
-        [self send:IRCCI_CAP, @"LS", nil];
-    }
+    [self send:IRCCI_CAP, @"LS", nil];
 	
 	if (NSObjectIsNotEmpty(config.password)) {
         [self send:IRCCI_PASS, config.password, nil];
