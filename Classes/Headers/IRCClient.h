@@ -37,6 +37,10 @@ typedef enum {
 	NSInteger connectDelay;
 	NSInteger tryingNickNumber;
 	
+	NSMutableArray *pendingCaps;
+	NSMutableArray *acceptedCaps;
+	NSUInteger capPaused;
+
 	BOOL isAway;
 	BOOL hasIRCopAccess;
 	
@@ -106,6 +110,8 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *highlights;
 @property (nonatomic, retain) NSMutableArray *commandQueue;
 @property (nonatomic, retain) NSMutableDictionary *trackedUsers;
+@property (nonatomic, retain) NSMutableArray *pendingCaps;
+@property (nonatomic, retain) NSMutableArray *acceptedCaps;
 @property (nonatomic, assign) CFAbsoluteTime lastLagCheck;
 @property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -174,6 +180,12 @@ typedef enum {
 - (void)cancelReconnect;
 
 - (BOOL)IRCopStatus;
+
+- (void)sendNextCap;
+- (void)pauseCap;
+- (void)resumeCap;
+- (BOOL)isCapAvailible:(NSString*)cap;
+- (void)cap:(NSString*) result:(BOOL)supported;
 
 - (void)joinChannels:(NSArray *)chans;
 - (void)joinChannel:(IRCChannel *)channel;
