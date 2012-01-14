@@ -5214,6 +5214,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	BOOL prevConnected = isConnected;
 	
+	[acceptedCaps drain];
+	acceptedCaps = [[NSMutableArray alloc] init];
+
 	[conn autodrain];
 	conn = nil;
     
