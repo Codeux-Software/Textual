@@ -551,27 +551,24 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)createChanInviteExceptionListDialog
 {
-	if (PointerIsEmpty(inviteExceptionSheet)) {
+	if (inviteExceptionSheet) {
+		[inviteExceptionSheet ok:nil];
+
+		[inviteExceptionSheet drain];
+		inviteExceptionSheet = nil;
+
+		[self createChanInviteExceptionListDialog];
+	} else {
 		IRCClient *u = [world selectedClient];
 		IRCChannel *c = [world selectedChannel];
-		
+
 		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
-		
+
 		inviteExceptionSheet = [ChanInviteExceptionSheet new];
 		inviteExceptionSheet.delegate = self;
 		inviteExceptionSheet.window = world.window;
-	} else {
-		[inviteExceptionSheet ok:nil];
-		
-		[inviteExceptionSheet drain];
-		inviteExceptionSheet = nil;
-		
-		[self createChanBanExceptionListDialog];
-		
-		return;
+		[inviteExceptionSheet show];
 	}
-	
-	[inviteExceptionSheet show];
 }
 
 - (void)chanInviteExceptionDialogOnUpdate:(ChanInviteExceptionSheet *)sender
