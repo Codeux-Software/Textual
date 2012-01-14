@@ -4264,7 +4264,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 }
 
 - (BOOL)isCapAvailible:(NSString*)cap {
-	return [cap isEqualNoCase:@"znc.in/server-time"] || ([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
+	return [cap isEqualNoCase:@"znc.in/server-time"] ||
+		[cap isEqualNoCase:@"multi-prefix"] ||
+		([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
 }
 
 - (void)cap:(NSString*)cap result:(BOOL)supported {
@@ -4844,26 +4846,27 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					
 					if (NSObjectIsEmpty(nick)) continue;
 					
-					NSString *u  = [nick safeSubstringWithRange:NSMakeRange(0, 1)];
-					NSString *op = NSWhitespaceCharacter;
-					
-					if ([u isEqualTo:isupport.userModeQPrefix] || [u isEqualTo:isupport.userModeHPrefix] || 
-						[u isEqualTo:isupport.userModeAPrefix] || [u isEqualTo:isupport.userModeVPrefix] || 
-						[u isEqualTo:isupport.userModeOPrefix]) {
-						
-						nick = [nick safeSubstringFromIndex:1];
-						op   = u;
-					}
-					
 					IRCUser *m = [IRCUser newad];
-					
-					m.nick        = nick;
-					
-					m.q = ([op isEqualTo:isupport.userModeQPrefix]);
-					m.a = ([op isEqualTo:isupport.userModeAPrefix]);
-					m.o = ([op isEqualTo:isupport.userModeOPrefix] || m.q);
-					m.h = ([op isEqualTo:isupport.userModeHPrefix]);
-					m.v = ([op isEqualTo:isupport.userModeVPrefix]);
+					NSInteger i;
+					for (i = 0; i < nick.length; i++) {
+						NSString *prefix = [nick safeSubstringWithRange:NSMakeRange(i, 1)];
+
+						if ([prefix isEqualTo:isupport.userModeQPrefix]) {
+							m.q = YES;
+						} else if ([prefix isEqualTo:isupport.userModeAPrefix]) {
+							m.a = YES;
+						} else if ([prefix isEqualTo:isupport.userModeOPrefix]) {
+							m.o = YES;
+						} else if ([prefix isEqualTo:isupport.userModeHPrefix]) {
+							m.h = YES;
+						} else if ([prefix isEqualTo:isupport.userModeVPrefix]) {
+							m.v = YES;
+						} else {
+							break;
+						}
+					}
+					nick = [nick substringFromIndex:i];
+					m.nick = nick;
 					
 					m.supportInfo = isupport;
 					m.isMyself    = [nick isEqualNoCase:myNick];
