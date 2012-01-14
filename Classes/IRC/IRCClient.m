@@ -3165,7 +3165,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
 {
-	return [self printChannel:chan type:type nick:nil text:text identified:NO receivedAt:[NSDate date]];
+	return [self printChannel:chan type:type nick:nil text:text identified:identified receivedAt:[NSDate date]];
 }
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt
@@ -4266,14 +4266,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (BOOL)isCapAvailible:(NSString*)cap {
 	return [cap isEqualNoCase:@"znc.in/server-time"] ||
 		[cap isEqualNoCase:@"multi-prefix"] ||
+		[cap isEqualNoCase:@"identify-msg"] ||
+		[cap isEqualNoCase:@"identify-ctcp"] ||
 		([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
 }
 
 - (void)cap:(NSString*)cap result:(BOOL)supported {
-	if (supported && [cap isEqualNoCase:@"sasl"]) {
-		inSASLRequest = YES;
-		[self pauseCap];
-		[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+	if (supported) {
+		if ([cap isEqualNoCase:@"sasl"]) {
+			inSASLRequest = YES;
+			[self pauseCap];
+			[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+		} else if ([cap isEqualNoCase:@"identify-msg"]) {
+			identifyMsg = YES;
+		} else if ([cap isEqualNoCase:@"identify-ctcp"]) {
+			identifyCTCP = YES;
+		}
 	}
 }
 
