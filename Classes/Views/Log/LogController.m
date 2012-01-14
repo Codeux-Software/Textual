@@ -167,13 +167,9 @@
 
 - (void)queueLoop
 {
-    if ([view isLoading]) {
-        while ([view isLoading] && PointerIsEmpty([self mainFrameDocument])) {
-            [NSThread sleepForTimeInterval:0.2];
-            
-            continue;
-        }
-    }
+	while([view isLoading]) {
+		[NSThread sleepForTimeInterval:0.2];
+	}
 }
 
 - (void)notifyDidBecomeVisible
