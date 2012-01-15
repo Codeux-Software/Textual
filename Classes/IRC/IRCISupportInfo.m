@@ -72,6 +72,9 @@
 	[self setValue:4 forMode:'s'];
 	[self setValue:4 forMode:'t'];
 	[self setValue:4 forMode:'r'];
+
+	[self setUserModeOPrefix:@"@"];
+	[self setUserModeVPrefix:@"+"];
 }
 
 - (BOOL)update:(NSString *)str
