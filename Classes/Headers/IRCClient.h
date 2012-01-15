@@ -184,7 +184,7 @@ typedef enum {
 - (void)sendNextCap;
 - (void)pauseCap;
 - (void)resumeCap;
-- (BOOL)isCapAvailible:(NSString*)cap;
+- (BOOL)isCapAvailable:(NSString*)cap;
 - (void)cap:(NSString*)cap result:(BOOL)supported;
 
 - (void)joinChannels:(NSArray *)chans;

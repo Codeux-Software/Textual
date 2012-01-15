@@ -4263,7 +4263,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self sendNextCap];
 }
 
-- (BOOL)isCapAvailible:(NSString*)cap {
+- (BOOL)isCapAvailable:(NSString*)cap {
 	return [cap isEqualNoCase:@"znc.in/server-time"] ||
 		[cap isEqualNoCase:@"multi-prefix"] ||
 		[cap isEqualNoCase:@"identify-msg"] ||
@@ -4302,7 +4302,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
             for (NSString *cap in caps) {
-				if ([self isCapAvailible:cap]) {
+				if ([self isCapAvailable:cap]) {
 					[pendingCaps addObject:cap];
 				}
             }
