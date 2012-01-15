@@ -26,7 +26,7 @@
 - (void)start:(NSString *)topic
 {
 	MenuController *menu = delegate;
-	
+
 	IRCChannel *c = [menu.world selectedChannel];
 	
 	NSString *nheader;
@@ -37,7 +37,7 @@
 	[menu.master.formattingMenu enableSheetField:text];
     
 	[header setStringValue:nheader];
-	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting:DefaultTextFieldFont]];
+	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting:DefaultTextFieldFont followFormattingPreference:NO]];
     
 	[self startSheet];
 }
