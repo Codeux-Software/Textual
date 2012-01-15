@@ -334,6 +334,19 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	id sel = world.selected;
+
+	if (sel) {
+		[sel resetState];
+
+		[world updateIcon];
+	}
+
+    [world reloadTree];
+}
+
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
 	[self saveWindowState];
