@@ -17,6 +17,12 @@
 	return self;
 }
 
+- (void)dealloc {
+	[text release];
+	[header release];
+	[super dealloc];
+}
+
 - (void)start:(NSString *)topic
 {
 	MenuController *menu = delegate;
