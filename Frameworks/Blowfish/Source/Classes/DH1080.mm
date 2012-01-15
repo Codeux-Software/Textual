@@ -1,4 +1,4 @@
-/* Copyright (c) 2011 Codeux Software <support at codeux dot com> */
+/* Copyright (c) 2012 Codeux Software <support at codeux dot com> */
 
 #import "DH1080.h"
 #import "dh1080_be.hpp"
