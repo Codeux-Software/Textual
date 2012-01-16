@@ -13,7 +13,7 @@ static dhclass *keyExchanger;
 		free(keyExchanger);
 	}
 	
-	[self dealloc];
+	[super dealloc];
 }
 
 - (NSString *)generatePublicKey
