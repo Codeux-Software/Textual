@@ -3,11 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9544</string>
+	<string>9545</string>
 	<key>Build Reference</key>
-	<string>2.1p3-96-gf456158-unstable</string>
-	<key>CFBundleDocumentTypes</key>
-	<array/>
+	<string>2.1rc1-133-ged9936c-future</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -21,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1p3</string>
+	<string>2.1rc1</string>
 	<key>CFBundleSignature</key>
 	<string>TXTL</string>
 	<key>CFBundleURLTypes</key>
@@ -40,7 +38,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1 Preview 3</string>
+	<string>2.1 Release Candidate 1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSArchitecturePriority</key>
@@ -56,11 +54,5 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSServices</key>
-	<array/>
-	<key>UTExportedTypeDeclarations</key>
-	<array/>
-	<key>UTImportedTypeDeclarations</key>
-	<array/>
 </dict>
 </plist>
