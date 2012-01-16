@@ -53,6 +53,7 @@
 	
 	NSMutableString *s = [line mutableCopy];
 
+#if 0
 	if ([s hasPrefix:@"@t="]) {
 		NSString* t = [s getToken];
 		t = [t substringFromIndex:3];
@@ -60,7 +61,10 @@
 	} else {
 		receivedAt = [[NSDate date] retain];
 	}
-	
+#else
+	receivedAt = [[NSDate date] retain];
+#endif
+
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [s getToken];
 		
