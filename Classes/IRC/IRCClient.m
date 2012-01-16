@@ -4264,10 +4264,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 }
 
 - (BOOL)isCapAvailable:(NSString*)cap {
-	return [cap isEqualNoCase:@"znc.in/server-time"] ||
-		[cap isEqualNoCase:@"multi-prefix"] ||
+	return [cap isEqualNoCase:@"multi-prefix"] ||
 		[cap isEqualNoCase:@"identify-msg"] ||
 		[cap isEqualNoCase:@"identify-ctcp"] ||
+		//[cap isEqualNoCase:@"znc.in/server-time"] ||
 		([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
 }
 
