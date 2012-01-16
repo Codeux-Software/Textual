@@ -3792,7 +3792,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if ([command isEqualToString:IRCCI_PING]) {
 			[self sendCTCPReply:nick command:command text:s];
 		} else if ([command isEqualToString:IRCCI_TIME]) {
-			[self sendCTCPReply:nick command:command text:[[NSDate date] description]];
+			[self sendCTCPReply:nick command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCCI_VERSION]) {
 			NSString *ref = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
 			
