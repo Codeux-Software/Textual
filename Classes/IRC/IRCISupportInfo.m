@@ -101,7 +101,7 @@
 			} else if ([key isEqualToString:@"MODES"]) {
 				modesCount = [value integerValue];
 			} else if ([key isEqualToString:@"NETWORK"]) {
-				networkName = [value retain];
+				self.networkName = value;
 			} 
 		}
 	}
