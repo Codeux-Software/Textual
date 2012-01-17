@@ -349,6 +349,8 @@
 		4CFB1059138CEAA3007B8F2E /* HighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB1058138CEAA3007B8F2E /* HighlightSheet.m */; };
 		77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
 		77A3394E146B47710003ACD2 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
+		77F7358114C5F4B6004C28F7 /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
+		77F7358214C5F4B8004C28F7 /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -440,6 +442,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				77A3394E146B47710003ACD2 /* Growl.framework in CopyFiles */,
+				77F7358114C5F4B6004C28F7 /* AutoHyperlinks.framework in CopyFiles */,
+				77F7358214C5F4B8004C28F7 /* BlowfishEncryption.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
