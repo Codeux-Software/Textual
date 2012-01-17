@@ -2286,6 +2286,7 @@
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
+				SKIP_INSTALL = YES;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
