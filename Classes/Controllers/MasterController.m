@@ -1293,9 +1293,6 @@ typedef enum {
 	[self handler:@selector(tab:)		code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:)	code:KEY_TAB mods:NSShiftKeyMask];
 	
-	[self handler:@selector(sendMsgAction:) code:KEY_ENTER	mods:NSCommandKeyMask];
-	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
-	
 	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
 	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSShiftKeyMask)];
 	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSShiftKeyMask)];
