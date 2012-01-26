@@ -39,6 +39,7 @@ typedef enum {
 	
 	NSMutableArray *pendingCaps;
 	NSMutableArray *acceptedCaps;
+	
 	NSUInteger capPaused;
 
 	BOOL isAway;

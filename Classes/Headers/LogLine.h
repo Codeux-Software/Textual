@@ -36,10 +36,10 @@ typedef enum {
 @interface LogLine : NSObject
 {
 	NSDate *receivedAt;
+	
 	NSString *time;
 	NSString *nick;
 	NSString *body;
-	
 	NSString *nickInfo;
 		
 	BOOL identified;

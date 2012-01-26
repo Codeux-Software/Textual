@@ -96,7 +96,7 @@
 	[proxyUser drain];
 	[proxyPassword drain];
 	
-	[delegate release];
+	[delegate drain];
 	delegate = nil;
 
 	[super dealloc];

@@ -99,8 +99,5 @@
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
 }
-/* TODO: MAKE DRAG WORK */
-
-
 
 @end
