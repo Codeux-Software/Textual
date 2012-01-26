@@ -17,9 +17,11 @@
 	return self;
 }
 
-- (void)dealloc {
-	[text release];
-	[header release];
+- (void)dealloc 
+{
+	[text drain];
+	[header drain];
+	
 	[super dealloc];
 }
 

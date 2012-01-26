@@ -58,7 +58,7 @@
 	}
 	
 	NSInteger lCount = [[mode modeInfoFor:@"l"].param integerValue];
-	
+								
 	if (lCount < 0) {
 		lCount = 0;
 	}
@@ -67,7 +67,7 @@
 		[lCheck setState:NSOnState];
 	}
 	
-	[lText setStringValue:[NSString stringWithDouble:lCount]];
+	[lText setStringValue:[NSString stringWithInteger:lCount]];
 	
 	[self updateTextFields];
 	[self startSheet];

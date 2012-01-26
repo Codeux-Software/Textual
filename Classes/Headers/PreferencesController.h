@@ -110,10 +110,10 @@
 - (void)onChangedTransparency:(id)sender;
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onHighlightLoggingChanged:(id)sender;
-- (IBAction)onChangeAlert:(id)sender;
-- (IBAction)onUseGrowl:(id)sender;
-- (IBAction)onAlertWhileAway:(id)sender;
-- (IBAction)onChangeAlertSound:(id)sender;
+- (void)onChangeAlert:(id)sender;
+- (void)onUseGrowl:(id)sender;
+- (void)onAlertWhileAway:(id)sender;
+- (void)onChangeAlertSound:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)

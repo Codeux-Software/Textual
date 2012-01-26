@@ -341,7 +341,8 @@ BOOL isUnicharDigit(unichar c)
                         properties:input resultInfo:NULL];
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont {
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont
+{
 	return [self attributedStringWithIRCFormatting:defaultFont followFormattingPreference:YES];
 }
 

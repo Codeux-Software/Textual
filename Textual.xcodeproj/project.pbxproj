@@ -238,6 +238,119 @@
 		77A3394E146B47710003ACD2 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77A33937146B3B300003ACD2 /* Growl.framework */; };
 		77F7358114C5F4B6004C28F7 /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		77F7358214C5F4B8004C28F7 /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
+		AB8FA17914D0C6AF008B50D5 /* GrowlController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5E912F1B45900C8F016 /* GrowlController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17A14D0C6AF008B50D5 /* MasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EA12F1B45900C8F016 /* MasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17B14D0C6AF008B50D5 /* MenuController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EB12F1B45900C8F016 /* MenuController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17C14D0C6AF008B50D5 /* NickCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5EC12F1B45900C8F016 /* NickCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17D14D0C6AF008B50D5 /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD60CC01340B48D0050A57F /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17E14D0C6AF008B50D5 /* TextualApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8248A12F1CC0F00C3D8C7 /* TextualApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA17F14D0C6AF008B50D5 /* PreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62112F1B4FB00C8F016 /* PreferencesController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18014D0C6AF008B50D5 /* ScriptsWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62212F1B4FB00C8F016 /* ScriptsWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18114D0C6AF008B50D5 /* SoundWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62312F1B4FB00C8F016 /* SoundWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18214D0C6AF008B50D5 /* AboutPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64212F1B58600C8F016 /* AboutPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18314D0C6AF008B50D5 /* AddressBookSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62A12F1B53300C8F016 /* AddressBookSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18414D0C6AF008B50D5 /* ChanBanExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62B12F1B53300C8F016 /* ChanBanExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18514D0C6AF008B50D5 /* ChanBanSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62C12F1B53300C8F016 /* ChanBanSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18614D0C6AF008B50D5 /* ChanInviteExceptionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83EBB41311B3DD0016AE76 /* ChanInviteExceptionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18714D0C6AF008B50D5 /* ChannelSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62D12F1B53300C8F016 /* ChannelSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18814D0C6AF008B50D5 /* HighlightSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB1056138CEA96007B8F2E /* HighlightSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18914D0C6AF008B50D5 /* InputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62E12F1B53300C8F016 /* InputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18A14D0C6AF008B50D5 /* InviteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E62F12F1B53300C8F016 /* InviteSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18B14D0C6AF008B50D5 /* ListDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E63012F1B53300C8F016 /* ListDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18C14D0C6AF008B50D5 /* ModeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64312F1B58600C8F016 /* ModeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18D14D0C6AF008B50D5 /* NickSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64412F1B58600C8F016 /* NickSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18E14D0C6AF008B50D5 /* ServerSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E63112F1B53300C8F016 /* ServerSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA18F14D0C6AF008B50D5 /* SheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E63212F1B53300C8F016 /* SheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19014D0C6AF008B50D5 /* TopicSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64512F1B58600C8F016 /* TopicSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19114D0C6AF008B50D5 /* WelcomeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E63312F1B53300C8F016 /* WelcomeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19214D0C6AF008B50D5 /* GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DB12F1B78D00C8F016 /* GTMBase64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19314D0C6AF008B50D5 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DC12F1B78D00C8F016 /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19414D0C6AF008B50D5 /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DD12F1B78D00C8F016 /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19514D0C6AF008B50D5 /* GTMNSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DE12F1B78D00C8F016 /* GTMNSString+HTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19614D0C6AF008B50D5 /* GTMNSString+URLArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6DF12F1B78D00C8F016 /* GTMNSString+URLArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19714D0C6AF008B50D5 /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AE12F1B70300C8F016 /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19814D0C6AF008B50D5 /* PluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6D212F1B77300C8F016 /* PluginProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19914D0C6AF008B50D5 /* TextualPluginItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6D312F1B77300C8F016 /* TextualPluginItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19A14D0C6AF008B50D5 /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14549712F8ACA20014CC3A /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19B14D0C6AF008B50D5 /* DDInvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6D912F1B78200C8F016 /* DDInvocationGrabber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19C14D0C6AF008B50D5 /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B412F1B70300C8F016 /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19D14D0C6AF008B50D5 /* NSArrayHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AD12F1B70300C8F016 /* NSArrayHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19E14D0C6AF008B50D5 /* NSColorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AF12F1B70300C8F016 /* NSColorHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA19F14D0C6AF008B50D5 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B012F1B70300C8F016 /* NSDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A014D0C6AF008B50D5 /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67A81012F38268002E308B /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A114D0C6AF008B50D5 /* NSDictionaryHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B112F1B70300C8F016 /* NSDictionaryHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A214D0C6AF008B50D5 /* NSFontHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B212F1B70300C8F016 /* NSFontHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A314D0C6AF008B50D5 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B312F1B70300C8F016 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A414D0C6AF008B50D5 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA00CB12F4EE4400A9EC74 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A514D0C6AF008B50D5 /* NSOutlineViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB91A4213680C40005E00E8 /* NSOutlineViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A614D0C6AF008B50D5 /* NSPasteboardHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B512F1B70300C8F016 /* NSPasteboardHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A714D0C6AF008B50D5 /* NSRectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B612F1B70300C8F016 /* NSRectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A814D0C6AF008B50D5 /* NSStringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B712F1B70300C8F016 /* NSStringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1A914D0C6AF008B50D5 /* NSSplitViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6DD1761388803B00280797 /* NSSplitViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AA14D0C6B0008B50D5 /* NSTextFieldHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA5B8912FAC92F00707F36 /* NSTextFieldHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AB14D0C6B0008B50D5 /* NSWindowHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6B812F1B70300C8F016 /* NSWindowHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AC14D0C6B0008B50D5 /* SoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6C912F1B75300C8F016 /* SoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AD14D0C6B0008B50D5 /* UnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6CA12F1B75300C8F016 /* UnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AE14D0C6B0008B50D5 /* URLOpener.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6CB12F1B75300C8F016 /* URLOpener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1AF14D0C6B0008B50D5 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F412F1B47A00C8F016 /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B014D0C6B0008B50D5 /* IRCChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F512F1B47A00C8F016 /* IRCChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B114D0C6B0008B50D5 /* IRCChannelConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F612F1B47A00C8F016 /* IRCChannelConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B214D0C6B0008B50D5 /* IRCChannelMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F712F1B47A00C8F016 /* IRCChannelMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B314D0C6B0008B50D5 /* IRCClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F812F1B47A00C8F016 /* IRCClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B414D0C6B0008B50D5 /* IRCClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5F912F1B47A00C8F016 /* IRCClientConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B514D0C6B0008B50D5 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FA12F1B47A00C8F016 /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B614D0C6B0008B50D5 /* IRCExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FB12F1B47A00C8F016 /* IRCExtras.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B714D0C6B0008B50D5 /* IRCISupportInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FC12F1B47A00C8F016 /* IRCISupportInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B814D0C6B0008B50D5 /* IRCMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FD12F1B47A00C8F016 /* IRCMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1B914D0C6B0008B50D5 /* IRCModeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FE12F1B47A00C8F016 /* IRCModeInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BA14D0C6B0008B50D5 /* IRCPrefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E5FF12F1B47A00C8F016 /* IRCPrefix.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BB14D0C6B0008B50D5 /* IRCSendingMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E60012F1B47A00C8F016 /* IRCSendingMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BC14D0C6B0008B50D5 /* IRCTreeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E60112F1B47A00C8F016 /* IRCTreeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BD14D0C6B0008B50D5 /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E60212F1B47A00C8F016 /* IRCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BE14D0C6B0008B50D5 /* IRCWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E60312F1B47A00C8F016 /* IRCWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1BF14D0C6B0008B50D5 /* IRCWorldConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E60412F1B47A00C8F016 /* IRCWorldConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C014D0C6B0008B50D5 /* TimerCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E61B12F1B4E200C8F016 /* TimerCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C114D0C6B0008B50D5 /* AddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E61A12F1B4E200C8F016 /* AddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C214D0C6B0008B50D5 /* AGKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6AB12F1B6ED00C8F016 /* AGKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C314D0C6B0008B50D5 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC33B8113177EB100BDBCA0 /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C414D0C6B0008B50D5 /* TXRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C514D0C6B0008B50D5 /* AsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68C12F1B6B000C8F016 /* AsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C614D0C6B0008B50D5 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68B12F1B6B000C8F016 /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C714D0C6B0008B50D5 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4107B61359686200614BBF /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C814D0C6B0008B50D5 /* FileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68D12F1B6B000C8F016 /* FileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1C914D0C6B0008B50D5 /* GlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68E12F1B6B000C8F016 /* GlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CA14D0C6B0008B50D5 /* InputHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68F12F1B6B000C8F016 /* InputHistory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CB14D0C6B0008B50D5 /* KeyEventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69012F1B6B000C8F016 /* KeyEventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CC14D0C6B0008B50D5 /* LanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69112F1B6B000C8F016 /* LanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CD14D0C6B0008B50D5 /* PopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69212F1B6B000C8F016 /* PopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CE14D0C6B0008B50D5 /* TCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69412F1B6B000C8F016 /* TCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1CF14D0C6B0008B50D5 /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69612F1B6B000C8F016 /* Timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D014D0C6B0008B50D5 /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E69812F1B6B000C8F016 /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D114D0C6B0008B50D5 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E6EC12F1B7BD00C8F016 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D214D0C6B0008B50D5 /* FileWithContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64D12F1B5B500C8F016 /* FileWithContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D314D0C6B0008B50D5 /* OtherTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64E12F1B5B500C8F016 /* OtherTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D414D0C6B0008B50D5 /* Preferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E64F12F1B5B500C8F016 /* Preferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D514D0C6B0008B50D5 /* ViewTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65012F1B5B500C8F016 /* ViewTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D614D0C6B0008B50D5 /* ImageURLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65812F1B5DE00C8F016 /* ImageURLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D714D0C6B0008B50D5 /* LogController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65912F1B5DE00C8F016 /* LogController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D814D0C6B0008B50D5 /* LogLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65A12F1B5DE00C8F016 /* LogLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1D914D0C6B0008B50D5 /* LogPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65B12F1B5DE00C8F016 /* LogPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DA14D0C6B0008B50D5 /* LogRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65C12F1B5DE00C8F016 /* LogRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DB14D0C6B0008B50D5 /* LogScriptEventSink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65D12F1B5DE00C8F016 /* LogScriptEventSink.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DC14D0C6B0008B50D5 /* LogView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65E12F1B5DE00C8F016 /* LogView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DD14D0C6B0008B50D5 /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E65F12F1B5DE00C8F016 /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DE14D0C6B0008B50D5 /* MemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1C996E1369D76700C1A916 /* MemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1DF14D0C6B0008B50D5 /* MemberListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E66C12F1B60400C8F016 /* MemberListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E014D0C6B0008B50D5 /* ServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB91A6E13683E92005E00E8 /* ServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E114D0C6B0008B50D5 /* ServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCB9392136899E500085C3E /* ServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E214D0C6B0008B50D5 /* IRCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E314D0C6B0008B50D5 /* DockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E68912F1B66900C8F016 /* DockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E414D0C6B0008B50D5 /* InputTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67212F1B63D00C8F016 /* InputTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E514D0C6B0008B50D5 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C70B46613D9A222004D7619 /* TextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E614D0C6B0008B50D5 /* ListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67312F1B63D00C8F016 /* ListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E714D0C6B0008B50D5 /* ListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E814D0C6B0008B50D5 /* MainWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0E67412F1B63D00C8F016 /* MainWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB8FA1E914D0C6B0008B50D5 /* ThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDFE2F9136F66660039300A /* ThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -324,7 +437,7 @@
 		};
 		77A3394D146B47530003ACD2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -1445,6 +1558,129 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		ABA25D6C14CDAC5100B5201B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB8FA17914D0C6AF008B50D5 /* GrowlController.h in Headers */,
+				AB8FA17A14D0C6AF008B50D5 /* MasterController.h in Headers */,
+				AB8FA17B14D0C6AF008B50D5 /* MenuController.h in Headers */,
+				AB8FA17C14D0C6AF008B50D5 /* NickCompletionStatus.h in Headers */,
+				AB8FA17D14D0C6AF008B50D5 /* StaticDefinitions.h in Headers */,
+				AB8FA17E14D0C6AF008B50D5 /* TextualApplication.h in Headers */,
+				AB8FA17F14D0C6AF008B50D5 /* PreferencesController.h in Headers */,
+				AB8FA18014D0C6AF008B50D5 /* ScriptsWrapper.h in Headers */,
+				AB8FA18114D0C6AF008B50D5 /* SoundWrapper.h in Headers */,
+				AB8FA18214D0C6AF008B50D5 /* AboutPanel.h in Headers */,
+				AB8FA18314D0C6AF008B50D5 /* AddressBookSheet.h in Headers */,
+				AB8FA18414D0C6AF008B50D5 /* ChanBanExceptionSheet.h in Headers */,
+				AB8FA18514D0C6AF008B50D5 /* ChanBanSheet.h in Headers */,
+				AB8FA18614D0C6AF008B50D5 /* ChanInviteExceptionSheet.h in Headers */,
+				AB8FA18714D0C6AF008B50D5 /* ChannelSheet.h in Headers */,
+				AB8FA18814D0C6AF008B50D5 /* HighlightSheet.h in Headers */,
+				AB8FA18914D0C6AF008B50D5 /* InputPromptDialog.h in Headers */,
+				AB8FA18A14D0C6AF008B50D5 /* InviteSheet.h in Headers */,
+				AB8FA18B14D0C6AF008B50D5 /* ListDialog.h in Headers */,
+				AB8FA18C14D0C6AF008B50D5 /* ModeSheet.h in Headers */,
+				AB8FA18D14D0C6AF008B50D5 /* NickSheet.h in Headers */,
+				AB8FA18E14D0C6AF008B50D5 /* ServerSheet.h in Headers */,
+				AB8FA18F14D0C6AF008B50D5 /* SheetBase.h in Headers */,
+				AB8FA19014D0C6AF008B50D5 /* TopicSheet.h in Headers */,
+				AB8FA19114D0C6AF008B50D5 /* WelcomeSheet.h in Headers */,
+				AB8FA19214D0C6AF008B50D5 /* GTMBase64.h in Headers */,
+				AB8FA19314D0C6AF008B50D5 /* GTMDefines.h in Headers */,
+				AB8FA19414D0C6AF008B50D5 /* GTMGarbageCollection.h in Headers */,
+				AB8FA19514D0C6AF008B50D5 /* GTMNSString+HTML.h in Headers */,
+				AB8FA19614D0C6AF008B50D5 /* GTMNSString+URLArguments.h in Headers */,
+				AB8FA19714D0C6AF008B50D5 /* NSBundleHelper.h in Headers */,
+				AB8FA19814D0C6AF008B50D5 /* PluginProtocol.h in Headers */,
+				AB8FA19914D0C6AF008B50D5 /* TextualPluginItem.h in Headers */,
+				AB8FA19A14D0C6AF008B50D5 /* IRCColorFormat.h in Headers */,
+				AB8FA19B14D0C6AF008B50D5 /* DDInvocationGrabber.h in Headers */,
+				AB8FA19C14D0C6AF008B50D5 /* DDExtensions.h in Headers */,
+				AB8FA19D14D0C6AF008B50D5 /* NSArrayHelper.h in Headers */,
+				AB8FA19E14D0C6AF008B50D5 /* NSColorHelper.h in Headers */,
+				AB8FA19F14D0C6AF008B50D5 /* NSDataHelper.h in Headers */,
+				AB8FA1A014D0C6AF008B50D5 /* NSDateHelper.h in Headers */,
+				AB8FA1A114D0C6AF008B50D5 /* NSDictionaryHelper.h in Headers */,
+				AB8FA1A214D0C6AF008B50D5 /* NSFontHelper.h in Headers */,
+				AB8FA1A314D0C6AF008B50D5 /* NSNumberHelper.h in Headers */,
+				AB8FA1A414D0C6AF008B50D5 /* NSObjectHelper.h in Headers */,
+				AB8FA1A514D0C6AF008B50D5 /* NSOutlineViewHelper.h in Headers */,
+				AB8FA1A614D0C6AF008B50D5 /* NSPasteboardHelper.h in Headers */,
+				AB8FA1A714D0C6AF008B50D5 /* NSRectHelper.h in Headers */,
+				AB8FA1A814D0C6AF008B50D5 /* NSStringHelper.h in Headers */,
+				AB8FA1A914D0C6AF008B50D5 /* NSSplitViewHelper.h in Headers */,
+				AB8FA1AA14D0C6B0008B50D5 /* NSTextFieldHelper.h in Headers */,
+				AB8FA1AB14D0C6B0008B50D5 /* NSWindowHelper.h in Headers */,
+				AB8FA1AC14D0C6B0008B50D5 /* SoundPlayer.h in Headers */,
+				AB8FA1AD14D0C6B0008B50D5 /* UnicodeHelper.h in Headers */,
+				AB8FA1AE14D0C6B0008B50D5 /* URLOpener.h in Headers */,
+				AB8FA1AF14D0C6B0008B50D5 /* IRC.h in Headers */,
+				AB8FA1B014D0C6B0008B50D5 /* IRCChannel.h in Headers */,
+				AB8FA1B114D0C6B0008B50D5 /* IRCChannelConfig.h in Headers */,
+				AB8FA1B214D0C6B0008B50D5 /* IRCChannelMode.h in Headers */,
+				AB8FA1B314D0C6B0008B50D5 /* IRCClient.h in Headers */,
+				AB8FA1B414D0C6B0008B50D5 /* IRCClientConfig.h in Headers */,
+				AB8FA1B514D0C6B0008B50D5 /* IRCConnection.h in Headers */,
+				AB8FA1B614D0C6B0008B50D5 /* IRCExtras.h in Headers */,
+				AB8FA1B714D0C6B0008B50D5 /* IRCISupportInfo.h in Headers */,
+				AB8FA1B814D0C6B0008B50D5 /* IRCMessage.h in Headers */,
+				AB8FA1B914D0C6B0008B50D5 /* IRCModeInfo.h in Headers */,
+				AB8FA1BA14D0C6B0008B50D5 /* IRCPrefix.h in Headers */,
+				AB8FA1BB14D0C6B0008B50D5 /* IRCSendingMessage.h in Headers */,
+				AB8FA1BC14D0C6B0008B50D5 /* IRCTreeItem.h in Headers */,
+				AB8FA1BD14D0C6B0008B50D5 /* IRCUser.h in Headers */,
+				AB8FA1BE14D0C6B0008B50D5 /* IRCWorld.h in Headers */,
+				AB8FA1BF14D0C6B0008B50D5 /* IRCWorldConfig.h in Headers */,
+				AB8FA1C014D0C6B0008B50D5 /* TimerCommand.h in Headers */,
+				AB8FA1C114D0C6B0008B50D5 /* AddressBook.h in Headers */,
+				AB8FA1C214D0C6B0008B50D5 /* AGKeychain.h in Headers */,
+				AB8FA1C314D0C6B0008B50D5 /* RegexKitLite.h in Headers */,
+				AB8FA1C414D0C6B0008B50D5 /* TXRegularExpression.h in Headers */,
+				AB8FA1C514D0C6B0008B50D5 /* AsyncSocketExtensions.h in Headers */,
+				AB8FA1C614D0C6B0008B50D5 /* RLMAsyncSocket.h in Headers */,
+				AB8FA1C714D0C6B0008B50D5 /* GCDAsyncSocket.h in Headers */,
+				AB8FA1C814D0C6B0008B50D5 /* FileLogger.h in Headers */,
+				AB8FA1C914D0C6B0008B50D5 /* GlobalModels.h in Headers */,
+				AB8FA1CA14D0C6B0008B50D5 /* InputHistory.h in Headers */,
+				AB8FA1CB14D0C6B0008B50D5 /* KeyEventHandler.h in Headers */,
+				AB8FA1CC14D0C6B0008B50D5 /* LanguagePreferences.h in Headers */,
+				AB8FA1CD14D0C6B0008B50D5 /* PopupPrompts.h in Headers */,
+				AB8FA1CE14D0C6B0008B50D5 /* TCPClient.h in Headers */,
+				AB8FA1CF14D0C6B0008B50D5 /* Timer.h in Headers */,
+				AB8FA1D014D0C6B0008B50D5 /* URLParser.h in Headers */,
+				AB8FA1D114D0C6B0008B50D5 /* ValidateReceipt.h in Headers */,
+				AB8FA1D214D0C6B0008B50D5 /* FileWithContent.h in Headers */,
+				AB8FA1D314D0C6B0008B50D5 /* OtherTheme.h in Headers */,
+				AB8FA1D414D0C6B0008B50D5 /* Preferences.h in Headers */,
+				AB8FA1D514D0C6B0008B50D5 /* ViewTheme.h in Headers */,
+				AB8FA1D614D0C6B0008B50D5 /* ImageURLParser.h in Headers */,
+				AB8FA1D714D0C6B0008B50D5 /* LogController.h in Headers */,
+				AB8FA1D814D0C6B0008B50D5 /* LogLine.h in Headers */,
+				AB8FA1D914D0C6B0008B50D5 /* LogPolicy.h in Headers */,
+				AB8FA1DA14D0C6B0008B50D5 /* LogRenderer.h in Headers */,
+				AB8FA1DB14D0C6B0008B50D5 /* LogScriptEventSink.h in Headers */,
+				AB8FA1DC14D0C6B0008B50D5 /* LogView.h in Headers */,
+				AB8FA1DD14D0C6B0008B50D5 /* WebViewAutoScroll.h in Headers */,
+				AB8FA1DE14D0C6B0008B50D5 /* MemberList.h in Headers */,
+				AB8FA1DF14D0C6B0008B50D5 /* MemberListCell.h in Headers */,
+				AB8FA1E014D0C6B0008B50D5 /* ServerList.h in Headers */,
+				AB8FA1E114D0C6B0008B50D5 /* ServerListCell.h in Headers */,
+				AB8FA1E214D0C6B0008B50D5 /* IRCTextFormatterMenu.h in Headers */,
+				AB8FA1E314D0C6B0008B50D5 /* DockIcon.h in Headers */,
+				AB8FA1E414D0C6B0008B50D5 /* InputTextField.h in Headers */,
+				AB8FA1E514D0C6B0008B50D5 /* TextField.h in Headers */,
+				AB8FA1E614D0C6B0008B50D5 /* ListView.h in Headers */,
+				AB8FA1E714D0C6B0008B50D5 /* ListSeparatorCell.h in Headers */,
+				AB8FA1E814D0C6B0008B50D5 /* MainWindow.h in Headers */,
+				AB8FA1E914D0C6B0008B50D5 /* ThinSplitView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		4CA9456011E1AFBA00D36367 /* Textual */ = {
 			isa = PBXNativeTarget;
@@ -1458,6 +1694,7 @@
 				4C3F690F12FD925F00B50CB9 /* Compile Plugins */,
 				4C3F693E12FD95A300B50CB9 /* Copy Plugins */,
 				77A3394D146B47530003ACD2 /* CopyFiles */,
+				ABA25D6C14CDAC5100B5201B /* Headers */,
 			);
 			buildRules = (
 			);
@@ -2016,7 +2253,7 @@
 		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2097,7 +2334,7 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2146,7 +2383,7 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2253,7 +2490,7 @@
 		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

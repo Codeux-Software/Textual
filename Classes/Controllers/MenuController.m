@@ -567,6 +567,11 @@
 	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
 }
 
+- (void)onShowContributors:(id)sender
+{
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"Contributors.pdf"]]];
+}
+
 - (void)onPaste:(id)sender
 {
 	NSWindow *win = [NSApp keyWindow];
@@ -867,6 +872,7 @@
 	d.window = window;
 	d.list = u.highlights;
 	
+	[window closeExistingSheet];
 	[d show];
 	
 	highlightSheet = d;

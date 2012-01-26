@@ -110,13 +110,6 @@
 		[nick autodrain];
 		nick = nil;
 		
-		NSMenuItem *userOptions = [NSMenuItem newad];
-		
-		[userOptions setTitle:TXTFLS(@"USER_OPTIONS_MENU_ITEM", menuController.pointedNick)];
-		
-		[ary safeAddObject:userOptions];
-		[ary safeAddObject:[NSMenuItem separatorItem]];
-		
 		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {

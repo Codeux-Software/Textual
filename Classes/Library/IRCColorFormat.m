@@ -6,7 +6,6 @@
 #pragma mark -
 #pragma mark General Calls
 
-/* TODO: Make this suck less */
 - (NSString *)attributedStringToASCIIFormatting
 {
 	NSString *realBody = [self string];

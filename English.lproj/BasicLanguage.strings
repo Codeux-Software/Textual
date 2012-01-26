@@ -1,4 +1,4 @@
-/* Copyright © 2010-2012 Codeux Software. */
+/* Copyright © 2010, 2011, 2012 Codeux Software. */
 
 "SHUN_REASON" = "1d Shunned.";
 "KILL_REASON" = "Your behavior is not conducive to the desired environment.";
@@ -28,7 +28,7 @@
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 
 "DEFAULT_QPS_MESSAGE" = "[Textual IRC Client: http://www.textualapp.com/]";
-"SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
+"SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep. — [Textual IRC Client: http://www.textualapp.com/]";
 
 "DCC_REQUEST_ERROR_MESSAGE" = "The Textual IRC Client has received a DCC request that could not be processed.";
 
@@ -73,7 +73,6 @@
 "TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
 
 "DELETE_QUERY_MENU_ITEM" = "Delete Query";
-"USER_OPTIONS_MENU_ITEM" = "User Options: %@";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
 "COPY_LOG_AS_HTML_MENU_ITEM" = "Copy Log as HTML";
 "FORCE_RELOAD_THEME_MENU_ITEM" = "Force Reload Style";
@@ -96,7 +95,7 @@
 "BLOWFISH_ENCRYPTION_STARTED_QUERY" = "Encryption started in query. If this query is closed, then the key must be set again.";
 "BLOWFISH_KEY_EXCHANGE_QUERY_ONLY" = "Key exchange is for queries only.";
 "BLOWFISH_KEY_EXCHANGE_UNKNOWN_ERROR" = "An unknown error occurred during key exchange.";
-"BLOWFISH_KEY_EXCHANGE_REQUEST_SENT" = "Key exchange request has been sent to %@.";
+"BLOWFISH_KEY_EXCHANGE_REQUEST_SENT" = "Key exchange request has been sent to \002%@\002.";
 "BLOWFISH_KEY_EXCHANGE_ALREADY_EXISTS" = "A key exchange request already exists for %@. Please wait for the current one to expire before requesting a new one.";
 "BLOWFISH_KEY_EXCHANGE_TIMED_OUT" = "Key exchange request for %@ has expired.";
 "BLOWFISH_KEY_EXCHANGE_RESPONSE_PENDING" = "Received key exchange request from %@. Processing …";
@@ -127,16 +126,17 @@
 "IRC_USER_CHANGED_NICKNAME" = "%1$@ is now known as \002%2$@\002";
 "IRC_USER_WHOIS_CONNECTED_FROM" = "%1$@ is connected on %2$@ (%3$@)";
 "IRC_WEIGHTS_COMMAND_RESULT" = "%@ - sent: %f receive: %f total: %f";
+"IRC_WEIGHTS_COMMAND_NO_RESULT" = "No information available.";
 "IRC_USER_INVITED_YOU_TO" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC_HAS_IGNORED_CTCP" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "IRC_CTCP_CLIENT_INFO" = "VERSION CLIENTINFO USERINFO PING TIME";
 "IRC_USER_WHOWAS_CONNECTED_FROM" = "%1$@ was connected to %2$@ on %3$@";
 "IRC_USER_PARTED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) left the channel.";
 "IRC_RECIEVED_CTCP_PING_REPLY" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
-"IRC_TIMER_REQUIRES_REALINT" = "Timer command needs interval as a number.";
+"IRC_TIMER_REQUIRES_REALINT" = "Timer command needs an interval as a number.";
 "IRC_USER_JOINED_CHANNEL" = "\002%1$@\002 (%2$@@%3$@) joined the channel.";
-"IRC_USER_WHOIS_HOSTMASK" = "%1$@ has userhost %2$@@%3$@ and realname %4$@";
-"IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and realname %4$@";
+"IRC_USER_WHOIS_HOSTMASK" = "%1$@ has userhost %2$@@%3$@ and real name \"%4$@\"";
+"IRC_USER_WHOWAS_HOSTMASK" = "%1$@ had userhost %2$@@%3$@ and real name \"%4$@\"";
 "IRC_USER_WHOIS_UPTIME" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRC_CHANNEL_TOPIC_CHANGED" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "IRC_USER_KICKED_FROM_CHANNEL" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
@@ -198,15 +198,15 @@
 
 "GROWL_ADDRESS_BOOK_MATCH" = "Address Book Notification";
 "GROWL_CHANNEL_NOTICE" = "Channel Notice";
-"GROWL_NEW_TALK" = "New Private Message";
+"GROWL_NEW_TALK" = "Private Message (new)";
 "GROWL_CHANNEL_MSG" = "Channel Message";
 "GROWL_TALK_NOTICE" = "Private Notice";
 "GROWL_TALK_MSG" = "Private Message";
 "GROWL_DISCONNECT" = "Disconnected";
 "GROWL_HIGHLIGHT" = "Highlight";
-"GROWL_INVITED" = "Invited";
+"GROWL_INVITED" = "Channel Invitation";
 "GROWL_LOGIN" = "Connected";
-"GROWL_KICKED" = "Kicked";
+"GROWL_KICKED" = "Kicked from Channel";
 
 "CMDWKEY_SHORTCUT_LEAVE_QUERY" = "Close Query";
 "CMDWKEY_SHORTCUT_CLOSE_WINDOW" = "Close Window";

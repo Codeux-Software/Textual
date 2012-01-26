@@ -143,6 +143,7 @@
 
 - (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
+- (void)onShowContributors:(id)sender;
 - (void)onShowAcknowledgments:(id)sender;
 - (void)processNavigationItem:(id)sender;
 - (void)wantsFullScreenModeToggled:(id)sender;

@@ -61,7 +61,7 @@
 	 * The documentation then goes to say how you should try setting makeFirstResponder first.
 	 */
 
-	if (![self makeFirstResponder:self]) {
+	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
 	}
 }

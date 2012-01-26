@@ -7,4 +7,6 @@
 - (void)centerOfWindow:(NSWindow *)window;
 
 - (BOOL)isOnCurrentWorkspace;
+
+- (void)closeExistingSheet;
 @end
