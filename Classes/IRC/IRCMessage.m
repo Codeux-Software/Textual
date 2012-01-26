@@ -7,6 +7,7 @@
 
 @implementation IRCMessage
 
+@synthesize receivedAt;
 @synthesize sender;
 @synthesize command;
 @synthesize numericReply;
@@ -35,6 +36,7 @@
 	[sender drain];
 	[command drain];
 	[params drain];
+	[receivedAt drain];
 	
 	[super dealloc];
 }
@@ -50,7 +52,19 @@
 	params = [NSMutableArray new];
 	
 	NSMutableString *s = [line mutableCopy];
-	
+
+#if 0
+	if ([s hasPrefix:@"@t="]) {
+		NSString* t = [s getToken];
+		t = [t substringFromIndex:3];
+		receivedAt = [[NSDate dateWithTimeIntervalSince1970: [t longLongValue]] retain];
+	} else {
+		receivedAt = [[NSDate date] retain];
+	}
+#else
+	receivedAt = [[NSDate date] retain];
+#endif
+
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [s getToken];
 		

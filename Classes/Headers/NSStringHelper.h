@@ -43,6 +43,7 @@
 - (NSArray *)split:(NSString *)delimiter;
 - (NSString *)trim;
 
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference;
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
 
 - (UniChar)safeCharacterAtIndex:(NSInteger)index;
