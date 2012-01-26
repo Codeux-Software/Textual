@@ -35,6 +35,7 @@ typedef enum {
 
 @interface LogLine : NSObject
 {
+	NSDate *receivedAt;
 	NSString *time;
 	NSString *nick;
 	NSString *body;
@@ -52,6 +53,7 @@ typedef enum {
 	NSArray *excludeWords;
 }
 
+@property (nonatomic, retain) NSDate *receivedAt;
 @property (nonatomic, retain) NSString *time;
 @property (nonatomic, retain) NSString *nick;
 @property (nonatomic, retain) NSString *body;

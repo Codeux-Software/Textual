@@ -157,13 +157,12 @@
 	menu.text		= text;
 	menu.master		= self;
 	
+	[memberList setTarget:menu];    
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 	
 	growl = [GrowlController new];
 	growl.owner = world;
 	world.growl = growl;
-	
-	[growl registerToGrowl];
 	
 	[formattingMenu enableWindowField:text];
 	
@@ -334,6 +333,19 @@
 
 #pragma mark -
 #pragma mark NSWindow Delegate
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	id sel = world.selected;
+
+	if (sel) {
+		[sel resetState];
+
+		[world updateIcon];
+	}
+
+    [world reloadTree];
+}
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
@@ -1280,9 +1292,6 @@ typedef enum {
 	
 	[self handler:@selector(tab:)		code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:)	code:KEY_TAB mods:NSShiftKeyMask];
-	
-	[self handler:@selector(sendMsgAction:) code:KEY_ENTER	mods:NSCommandKeyMask];
-	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
 	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
 	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSShiftKeyMask)];

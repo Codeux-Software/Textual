@@ -37,6 +37,10 @@ typedef enum {
 	NSInteger connectDelay;
 	NSInteger tryingNickNumber;
 	
+	NSMutableArray *pendingCaps;
+	NSMutableArray *acceptedCaps;
+	NSUInteger capPaused;
+
 	BOOL isAway;
 	BOOL hasIRCopAccess;
 	
@@ -106,6 +110,8 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *highlights;
 @property (nonatomic, retain) NSMutableArray *commandQueue;
 @property (nonatomic, retain) NSMutableDictionary *trackedUsers;
+@property (nonatomic, retain) NSMutableArray *pendingCaps;
+@property (nonatomic, retain) NSMutableArray *acceptedCaps;
 @property (nonatomic, assign) CFAbsoluteTime lastLagCheck;
 @property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -175,6 +181,12 @@ typedef enum {
 
 - (BOOL)IRCopStatus;
 
+- (void)sendNextCap;
+- (void)pauseCap;
+- (void)resumeCap;
+- (BOOL)isCapAvailable:(NSString*)cap;
+- (void)cap:(NSString*)cap result:(BOOL)supported;
+
 - (void)joinChannels:(NSArray *)chans;
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(NSString *)password;
@@ -215,17 +227,21 @@ typedef enum {
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text;
-- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text ;
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate*)receivedAt;
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
+- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (BOOL)printAndLog:(LogLine *)line withHTML:(BOOL)rawHTML;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
+- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
+- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
+- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
 - (void)printDebugInformation:(NSString *)m;
