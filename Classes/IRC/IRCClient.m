@@ -118,9 +118,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
-
-		acceptedCaps = [[NSMutableArray alloc] init];
-		pendingCaps = [[NSMutableArray alloc] init];
+		acceptedCaps = [NSMutableArray new];
+		pendingCaps	 = [NSMutableArray new];
 
 		trackedUsers = [NSMutableDictionary new];
 		
@@ -2286,14 +2285,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 68: // Command: WEIGHTS
 		{
 			if (c) {
-				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
+				NSInteger tc = 0;
 				
 				for (IRCUser *m in c.members) {
 					if (m.totalWeight > 0) {
 						NSString *text = TXTFLS(@"IRC_WEIGHTS_COMMAND_RESULT", m.nick, m.incomingWeight, m.outgoingWeight, m.totalWeight);
 						
+						tc++;
+						
 						[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:text];
 					}
+				}
+				
+				if (tc == 0) {
+					[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_WEIGHTS_COMMAND_NO_RESULT")];
 				}
 			}
 			
@@ -2633,9 +2638,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 102:
 			if ([acceptedCaps count]) {
-				[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_CAP_CURRENTLY_ENABLED", [acceptedCaps componentsJoinedByString:@", "])];
+				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_CAP_CURRENTLY_ENABLED", [acceptedCaps componentsJoinedByString:@", "])];
 			} else {
-				[self printBoth:nil type:LINE_TYPE_REPLY text:TXTLS(@"IRC_CAP_CURRENTLY_ENABLED_NONE")];
+				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_CAP_CURRENTLY_ENABLED_NONE")];
 			}
 
 			return YES;
@@ -2772,25 +2777,30 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	IRCChannel *c = [self findChannel:name];
 	
-	return ((PointerIsEmpty(c)) ? [self findChannelOrCreate:name useTalk:NO] : c);
+	if (PointerIsEmpty(c)) {
+		return [self findChannelOrCreate:name useTalk:NO];
+	}
+	
+	return c;
 }
 
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk
 {
 	IRCChannel *c = [self findChannel:name];
-	if (c) {
-		return c;
-	}
 
-	if (doTalk) {
-		return [world createTalk:name client:self];
-	} else {
-		IRCChannelConfig *seed = [IRCChannelConfig newad];
-		
-		seed.name = name;
-		
-		return [world createChannel:seed client:self reload:YES adjust:YES];
+	if (PointerIsEmpty(c)) {
+		if (doTalk) {
+			return [world createTalk:name client:self];
+		} else {
+			IRCChannelConfig *seed = [IRCChannelConfig newad];
+			
+			seed.name = name;
+			
+			return [world createChannel:seed client:self reload:YES adjust:YES];
+		}
 	}
+	
+	return c;
 }
 
 - (NSInteger)indexOfTalkChannel
@@ -3373,7 +3383,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self printChannel:channel type:LINE_TYPE_SYSTEM text:text receivedAt:receivedAt];
 }
 
-- (void)printSystemBoth:(id)channel text:(NSString *)text {
+- (void)printSystemBoth:(id)channel text:(NSString *)text 
+{
 	[self printSystemBoth:channel text:text receivedAt:[NSDate date]];
 }
 
@@ -4242,11 +4253,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self printError:m.sequence];
 }
 
-- (void)sendNextCap {
-	if (!capPaused) {
+- (void)sendNextCap 
+{
+	if (capPaused == NO) {
 		if (pendingCaps && [pendingCaps count]) {
 			NSString *cap = [pendingCaps lastObject];
+			
 			[self send:IRCCI_CAP, @"REQ", cap, nil];
+			
 			[pendingCaps removeLastObject];
 		} else {
 			[self send:IRCCI_CAP, @"END", nil];
@@ -4254,27 +4268,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 }
 
-- (void)pauseCap {
+- (void)pauseCap 
+{
 	capPaused++;
 }
 
-- (void)resumeCap {
+- (void)resumeCap 
+{
 	capPaused--;
+	
 	[self sendNextCap];
 }
 
-- (BOOL)isCapAvailable:(NSString*)cap {
-	return [cap isEqualNoCase:@"multi-prefix"] ||
-		[cap isEqualNoCase:@"identify-msg"] ||
-		[cap isEqualNoCase:@"identify-ctcp"] ||
-		//[cap isEqualNoCase:@"znc.in/server-time"] ||
-		([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL);
+- (BOOL)isCapAvailable:(NSString*)cap 
+{
+	return ([cap isEqualNoCase:@"identify-msg"] ||
+			[cap isEqualNoCase:@"identify-ctcp"] ||
+			[cap isEqualNoCase:@"multi-prefix"] ||
+		  //[cap isEqualNoCase:@"znc.in/server-time"] ||
+			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL));
 }
 
-- (void)cap:(NSString*)cap result:(BOOL)supported {
+- (void)cap:(NSString*)cap result:(BOOL)supported 
+{
 	if (supported) {
 		if ([cap isEqualNoCase:@"sasl"]) {
 			inSASLRequest = YES;
+			
 			[self pauseCap];
 			[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
 		} else if ([cap isEqualNoCase:@"identify-msg"]) {
@@ -4311,6 +4331,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
             for (NSString *cap in caps) {
 				[acceptedCaps addObject:cap];
+				
 				[self cap:cap result:YES];
 			}
 		} else if ([base isEqualNoCase:@"NAK"]) {
@@ -4327,13 +4348,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSData *usernameData = [config.nick dataUsingEncoding:config.encoding allowLossyConversion:YES];
             
             NSMutableData *authenticateData = [usernameData mutableCopy];
+			
             [authenticateData appendBytes:"\0" length:1];
             [authenticateData appendData:usernameData];
             [authenticateData appendBytes:"\0" length:1];
             [authenticateData appendData:[config.nickPassword dataUsingEncoding:config.encoding allowLossyConversion:YES]];
             
             NSString *authString = [authenticateData base64EncodingWithLineLength:400];
-            
             NSArray *authStrings = [authString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
             
             for (NSString *string in authStrings) {
@@ -4855,7 +4876,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					if (NSObjectIsEmpty(nick)) continue;
 					
 					IRCUser *m = [IRCUser newad];
+					
 					NSInteger i;
+					
 					for (i = 0; i < nick.length; i++) {
 						NSString *prefix = [nick safeSubstringWithRange:NSMakeRange(i, 1)];
 
@@ -4873,6 +4896,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							break;
 						}
 					}
+					
 					nick = [nick substringFromIndex:i];
 					m.nick = nick;
 					
@@ -5222,8 +5246,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	BOOL prevConnected = isConnected;
 	
-	[acceptedCaps drain];
-	acceptedCaps = [[NSMutableArray alloc] init];
+	[acceptedCaps removeAllObjects];
 
 	[conn autodrain];
 	conn = nil;
@@ -5246,6 +5269,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[myNick drain];
 	[sentNick drain];
+	
 	myNick = NSNullObject;
 	sentNick = NSNullObject;
 	

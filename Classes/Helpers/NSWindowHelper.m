@@ -55,4 +55,17 @@
 	return ([self isOnActiveSpace] && [self isVisible] && [NSApp keyWindow] == self);
 }
 
+- (void)closeExistingSheet
+{
+	id awindow = [self attachedSheet];
+	
+	if (PointerIsNotEmpty(awindow)) {
+		id windel = [awindow delegate];
+		
+		if ([windel respondsToSelector:@selector(endSheet)]) {
+			[windel performSelector:@selector(endSheet)];
+		}
+	}
+}
+
 @end

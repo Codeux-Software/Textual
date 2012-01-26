@@ -278,50 +278,64 @@
 #pragma mark -
 #pragma mark Sounds
 
-- (void)updateAlert {
+- (void)updateAlert 
+{
 	[alertSoundButton removeAllItems];
 
 	NSArray *alertSounds = [self availableSounds];
+	
     for (NSString *alertSound in alertSounds) {
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:alertSound action:nil keyEquivalent:NSNullObject] autodrain];
+		NSMenuItem *item = [NSMenuItem newad];
+		
+		[item setTitle:alertSound];
+		
         [alertSoundButton.menu addItem:item];
     }
 
     [alertSoundButton selectItemAtIndex:0];
-
     [alertButton removeAllItems];
 
     NSMutableArray *alerts = [self sounds];
+	
     for (SoundWrapper *alert in alerts) {
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[alert displayName] action:nil keyEquivalent:NSNullObject] autodrain];
-		[item setTag:[alert eventType]];
+		NSMenuItem *item = [NSMenuItem newad];
+		
+		[item setTitle:alert.displayName];
+		
         [alertButton.menu addItem:item];
     }
 
     [alertButton selectItemAtIndex:0];
 }
 
-- (void)onChangeAlert:(id)sender {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+- (void)onChangeAlert:(id)sender 
+{
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
 
-    [useGrowlButton setState:[alert growl]];
-    [disableAlertWhenAwayButton setState:[alert disableWhileAway]];
+    [useGrowlButton setState:alert.growl];
+    [disableAlertWhenAwayButton setState:alert.disableWhileAway];
 
-	[alertSoundButton selectItemAtIndex:[[self availableSounds] indexOfObject:[alert sound]]];
+	[alertSoundButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.sound]];
 }
 
-- (IBAction)onUseGrowl:(id)sender {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+- (void)onUseGrowl:(id)sender 
+{
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+	
     [alert setGrowl:[useGrowlButton state]];
 }
 
-- (IBAction)onAlertWhileAway:(id)sender {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+- (void)onAlertWhileAway:(id)sender 
+{
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+	
     [alert setDisableWhileAway:[disableAlertWhenAwayButton state]];
 }
 
-- (IBAction)onChangeAlertSound:(id)sender {
-	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:[[alertButton selectedItem] tag]];
+- (void)onChangeAlertSound:(id)sender 
+{
+	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+	
 	[alert setSound:[alertSoundButton titleOfSelectedItem]];
 }
 
@@ -364,13 +378,14 @@
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_KICKED]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_INVITED]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
 		
 		sounds = ary;
 	}
