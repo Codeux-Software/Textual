@@ -1,4 +1,4 @@
-/* Copyright (c) 2011 Codeux Software <support at codeux dot com> */
+/* Copyright (c) 2012 Codeux Software <support at codeux dot com> */
 
 @interface CSFWBlowfish : NSObject
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local;

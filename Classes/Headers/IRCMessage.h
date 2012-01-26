@@ -3,12 +3,14 @@
 
 @interface IRCMessage : NSObject
 {
+	NSDate *receivedAt;
 	IRCPrefix *sender;
 	NSString *command;
 	NSInteger numericReply;
 	NSMutableArray *params;
 }
 
+@property (nonatomic, retain) NSDate *receivedAt;
 @property (nonatomic, retain) IRCPrefix *sender;
 @property (nonatomic, retain) NSString *command;
 @property (nonatomic, assign) NSInteger numericReply;

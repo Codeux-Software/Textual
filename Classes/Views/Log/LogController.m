@@ -167,13 +167,9 @@
 
 - (void)queueLoop
 {
-    if ([view isLoading]) {
-        while ([view isLoading] && PointerIsEmpty([self mainFrameDocument])) {
-            [NSThread sleepForTimeInterval:0.2];
-            
-            continue;
-        }
-    }
+	while([view isLoading]) {
+		[NSThread sleepForTimeInterval:0.2];
+	}
 }
 
 - (void)notifyDidBecomeVisible
@@ -803,7 +799,7 @@
         return sf;
     } else {
         NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
-        NSString	 *time		 = TXFormattedTimestampWithOverride([Preferences themeTimestampFormat], other.timestampFormat);
+        NSString	 *time		 = TXFormattedTimestampWithOverride([NSDate date], [Preferences themeTimestampFormat], other.timestampFormat);
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
         
         NSSize    textSize  = [time sizeWithAttributes:attributes]; 

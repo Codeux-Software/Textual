@@ -52,4 +52,18 @@
 	[super sendEvent:e];
 }
 
+- (void)endEditingFor:(id)object {
+	/* WebHTMLView results in this method being called.
+	 *
+	 * The documentation states "The endEditingFor: method should be used only as a
+	 * last resort if the field editor refuses to resign first responder status."
+	 *
+	 * The documentation then goes to say how you should try setting makeFirstResponder first.
+	 */
+
+	if (![self makeFirstResponder:self]) {
+		[super endEditingFor:object];
+	}
+}
+
 @end

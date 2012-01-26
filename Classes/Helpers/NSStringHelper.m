@@ -327,9 +327,9 @@ BOOL isUnicharDigit(unichar c)
 	return r.location;
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference
 {
-	if ([Preferences removeAllFormatting]) {
+	if (formattingPreference && [Preferences removeAllFormatting]) {
 		return [self stripEffects];
 	}
     
@@ -339,6 +339,10 @@ BOOL isUnicharDigit(unichar c)
                         controller:nil 
                         renderType:ASCII_TO_ATTRIBUTED_STRING 
                         properties:input resultInfo:NULL];
+}
+
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont {
+	return [self attributedStringWithIRCFormatting:defaultFont followFormattingPreference:YES];
 }
 
 - (NSString *)stripEffects
