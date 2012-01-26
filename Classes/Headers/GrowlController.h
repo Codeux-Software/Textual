@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#import <Growl/Growl.h>
+
 @class IRCWorld;
 
 typedef enum {
@@ -18,23 +20,17 @@ typedef enum {
 	GROWL_ADDRESS_BOOK_MATCH	= 1010,
 } GrowlNotificationType;
 
-@interface GrowlController : NSObject
+@interface GrowlController : NSObject <GrowlApplicationBridgeDelegate>
 {
 	IRCWorld		*owner;
-	TinyGrowlClient *growl;
 	
 	id				lastClickedContext;
 	CFAbsoluteTime	lastClickedTime;
-	
-	BOOL registered;
 }
 
 @property (nonatomic, assign) IRCWorld *owner;
-@property (nonatomic, retain) TinyGrowlClient *growl;
 @property (nonatomic, retain) id lastClickedContext;
 @property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
-@property (nonatomic, assign) BOOL registered;
 
-- (void)registerToGrowl;
 - (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
 @end

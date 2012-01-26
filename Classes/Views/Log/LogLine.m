@@ -4,6 +4,7 @@
 
 @implementation LogLine
 
+@synthesize receivedAt;
 @synthesize time;
 @synthesize nick;
 @synthesize body;

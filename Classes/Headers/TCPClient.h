@@ -34,7 +34,7 @@
 
 @property (nonatomic, retain) NSMutableData *buffer; 
 @property (nonatomic, retain) AsyncSocket *conn;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, retain) id delegate;
 @property (nonatomic, retain) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;

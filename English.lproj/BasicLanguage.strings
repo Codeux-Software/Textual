@@ -1,4 +1,4 @@
-/* Copyright © 2010, 2011 Codeux Software. */
+/* Copyright © 2010-2012 Codeux Software. */
 
 "SHUN_REASON" = "1d Shunned.";
 "KILL_REASON" = "Your behavior is not conducive to the desired environment.";
@@ -146,12 +146,15 @@
 "IRC_HAS_NETWORK_NAME" = "%@ IRC Network";
 
 "IRC_RAW_MODE_IS_DISABLED" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it recieves and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
+"IRC_RAW_MODE_IS_ENABLED" = "Raw mode has been enabled. Textual will now output all data that it receives and sends to the IRC server in the Mac OS X \"Console\" application. To disable execute \"/debug raw off\"";
 
 "IRC_CTCP_VERSION_TITLE" = "\002Current Version:\002 %@";
 "IRC_CTCP_VERSION_INFO" = "%1$@ %2$@ (Git Reference: %3$@)"; 
 
 "IRC_SERVER_HAD_NETSPLIT" = "Netsplit: %@";
+
+"IRC_CAP_CURRENTLY_ENABLED" = "The following capabilities are currently enabled: %@";
+"IRC_CAP_CURRENTLY_ENABLED_NONE" = "There is no capability enabled.";
 
 "LIST_DIALOG_HAS_CHANNELS" = "%i Public Channels";
 "LIST_DIALOG_HAS_SEARCH_RESULTS" = "%1$i Public Channels - %2$i Search Results";

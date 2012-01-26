@@ -22,7 +22,6 @@
 	#import "ServerList.h"
 	#import "ServerListCell.h"
 	#import "AsyncSocketExtensions.h"
-	#import "TinyGrowlClient.h"
 	#import "GrowlController.h"
 	#import "Preferences.h"
 	#import "OtherTheme.h"
