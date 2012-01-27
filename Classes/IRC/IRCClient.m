@@ -4471,7 +4471,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 5:
 		{
-			[isupport update:[m sequence:1]];
+			[isupport update:[m sequence:1] client:self];
 			
 			if (NSObjectIsNotEmpty(isupport.networkName)) {
 				[config setNetwork:TXTFLS(@"IRC_HAS_NETWORK_NAME", isupport.networkName)];
