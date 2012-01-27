@@ -30,7 +30,7 @@
 @property (nonatomic, retain) NSString *userModeVPrefix;
 
 - (void)reset;
-- (BOOL)update:(NSString *)s;
+- (BOOL)update:(NSString *)s client:(IRCClient *)client;
 
 - (NSArray *)parseMode:(NSString *)s;
 - (IRCModeInfo *)createMode:(NSString *)mode;

@@ -77,7 +77,7 @@
 	[self setUserModeVPrefix:@"+"];
 }
 
-- (BOOL)update:(NSString *)str
+- (BOOL)update:(NSString *)str client:(IRCClient *)client
 {
 	if ([str hasSuffix:ISUPPORT_SUFFIX]) {
 		str = [str safeSubstringToIndex:(str.length - [ISUPPORT_SUFFIX length])];
@@ -86,12 +86,16 @@
 	NSArray *ary = [str split:NSWhitespaceCharacter];
 	
 	for (NSString *s in ary) {
+		NSString *key = s;
+		NSString *value = nil;
+
 		NSRange r = [s rangeOfString:@"="];
-		
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
-			NSString *key = [[s safeSubstringToIndex:r.location] uppercaseString];
-			NSString *value = [s safeSubstringFromIndex:NSMaxRange(r)];
-			
+			key = [[s safeSubstringToIndex:r.location] uppercaseString];
+			value = [s safeSubstringFromIndex:NSMaxRange(r)];
+		}
+
+		if (value) {
 			if ([key isEqualToString:@"PREFIX"]) {
 				[self parsePrefix:value];
 			} else if ([key isEqualToString:@"CHANMODES"]) {
@@ -102,7 +106,11 @@
 				modesCount = [value integerValue];
 			} else if ([key isEqualToString:@"NETWORK"]) {
 				self.networkName = value;
-			} 
+			}
+		}
+
+		if ([key isEqualToString:@"NAMESX"]) {
+			[client sendLine:@"PROTOCTL NAMESX"];
 		}
 	}
 	
