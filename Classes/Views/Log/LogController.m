@@ -167,9 +167,21 @@
 
 - (void)queueLoop
 {
+	BOOL ifnl = NO;
+	
 	while([view isLoading]) {
+		ifnl = YES;
+		
+        [NSThread sleepForTimeInterval:0.2];
+        
+        continue;
+	}
+    
+	if (ifnl) {
 		[NSThread sleepForTimeInterval:0.2];
 	}
+	
+    return;
 }
 
 - (void)notifyDidBecomeVisible
