@@ -28,7 +28,7 @@
 "SOUND_IS_NO_LONGER_MUTED" = "Sound is no longer muted.";
 
 "DEFAULT_QPS_MESSAGE" = "[Textual IRC Client: http://www.textualapp.com/]";
-"SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep. — [Textual IRC Client: http://www.textualapp.com/]";
+"SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
 
 "DCC_REQUEST_ERROR_MESSAGE" = "The Textual IRC Client has received a DCC request that could not be processed.";
 
