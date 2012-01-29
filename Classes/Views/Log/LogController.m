@@ -171,6 +171,8 @@
 
 - (void)messageQueueLoop
 {
+	BOOL finishedFirstLoop = NO;
+	
 	while (1 == 1) {
 		if (prepareForDealloc) {
 			break;
@@ -183,6 +185,14 @@
 		}
 		
 		if ([view isLoading] == NO) {
+			if (finishedFirstLoop == NO) {
+				finishedFirstLoop = YES;
+				
+				[NSThread sleepForTimeInterval:1.10];
+				
+				continue;
+			}
+			
 			if (NSObjectIsNotEmpty(messageQueue)) {
 				void (^messageBlock)(void) = [messageQueue objectAtIndex:0];
 				
@@ -219,7 +229,7 @@
 {
 	DOMDocument *doc = [self mainFrameDocument];
 	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
-	DOMNode	  *head = [nodes item:0];
+	DOMNode *head = [nodes item:0];
 	
 	return head;
 }
