@@ -29,6 +29,7 @@
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
+	BOOL prepareForDealloc;
 	BOOL needsLimitNumberOfLines;
 	
 	NSInteger count;
@@ -39,13 +40,11 @@
 	
 	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
-	
-	dispatch_queue_t dispatchQueue;
     
 	NSString *html;
 }
 
-@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) BOOL prepareForDealloc;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
