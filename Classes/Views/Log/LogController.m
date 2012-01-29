@@ -55,7 +55,6 @@
 @synthesize world;
 @synthesize messageQueue;
 @synthesize dispatchQueue;
-@synthesize loadedFull;
 
 - (id)init
 {
@@ -96,6 +95,9 @@
 	[messageQueue drain];
 	[highlightedLineNumbers drain];
 	
+	dispatch_release(dispatchQueue);
+	dispatchQueue = NULL;
+	
 	[super dealloc];
 }
 
@@ -126,7 +128,6 @@
 - (void)setUp
 {
 	loaded = NO;
-	loadedFull = NO;
 	
 	policy = [LogPolicy new];
 	sink   = [LogScriptEventSink new];
@@ -184,9 +185,8 @@
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	self.loadedFull = NO;
-	
 	[(id)view setBackgroundColor:theme.other.underlyingWindowColor];
+	
 	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
 }
 

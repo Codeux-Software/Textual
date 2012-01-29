@@ -26,7 +26,6 @@
 	
 	BOOL bottom;
 	BOOL loaded;
-	BOOL loadedFull;
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
@@ -53,7 +52,6 @@
 @property (nonatomic, assign) IRCChannel *channel;
 @property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL loaded;
-@property (nonatomic, assign) BOOL loadedFull;
 @property (nonatomic, retain) NSMenu *menu;
 @property (nonatomic, retain) NSMenu *urlMenu;
 @property (nonatomic, retain) NSMenu *addrMenu;
