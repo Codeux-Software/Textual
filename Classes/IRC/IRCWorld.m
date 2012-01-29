@@ -299,6 +299,7 @@
 	}
 	
 	[self reloadTree];
+	[self updateIcon];
 }
 
 - (void)markAllScrollbacks
