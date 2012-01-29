@@ -114,13 +114,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		tryingNickNumber = -1;
 		
 		capPaused = 0;
-
+		
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
 		commandQueue = [NSMutableArray new];
 		acceptedCaps = [NSMutableArray new];
 		pendingCaps	 = [NSMutableArray new];
-
+		
 		trackedUsers = [NSMutableDictionary new];
 		
 		isupport = [IRCISupportInfo new];
@@ -202,10 +202,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[sentNick drain];
 	[serverHostname drain];
 	[trackedUsers drain];
-
+	
 	[pendingCaps drain];
 	[acceptedCaps drain];
-
+	
 #ifdef IS_TRIAL_BINARY
 	[trialPeriodTimer stop];
 	[trialPeriodTimer drain];
@@ -552,17 +552,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (inviteExceptionSheet) {
 		[inviteExceptionSheet ok:nil];
-
+		
 		[inviteExceptionSheet drain];
 		inviteExceptionSheet = nil;
-
+		
 		[self createChanInviteExceptionListDialog];
 	} else {
 		IRCClient *u = [world selectedClient];
 		IRCChannel *c = [world selectedChannel];
-
+		
 		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
-
+		
 		inviteExceptionSheet = [ChanInviteExceptionSheet new];
 		inviteExceptionSheet.delegate = self;
 		inviteExceptionSheet.window = world.window;
@@ -1340,7 +1340,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         [scriptTask waitUntilExit];
         
         NSData *outputData    = [filehandle readDataToEndOfFile];
-       
+		
 		NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
         
         if (NSObjectIsNotEmpty(outputString)) {
@@ -1891,7 +1891,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						}
 						
 						[self send:localCmd, chname, t, nil];
-
+						
                         if (c && [Preferences giveFocusOnMessage]) {
                             [world select:c];
                         }
@@ -2646,7 +2646,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			} else {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTLS(@"IRC_CAP_CURRENTLY_ENABLED_NONE")];
 			}
-
+			
 			return YES;
 		default:
 		{   
@@ -2791,7 +2791,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk
 {
 	IRCChannel *c = [self findChannel:name];
-
+	
 	if (PointerIsEmpty(c)) {
 		if (doTalk) {
 			return [world createTalk:name client:self];
@@ -3712,11 +3712,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							
 							[self send:IRCCI_PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
 						}
+					} else if ([text hasPrefix:@"This nick is owned by someone else"]) {
+						if ([config.server hasSuffix:@"dal.net"]) {
+							if (NSObjectIsNotEmpty(config.nickPassword)) {
+								serverHasNickServ = YES;
+								
+								[self send:IRCCI_PRIVMSG, @"NickServ@services.dal.net", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+							}
+						}
 					} else {
 						if ([Preferences autojoinWaitForNickServ]) {
 							if ([text hasPrefix:@"You are now identified"] ||
 								[text hasPrefix:@"You are already identified"] ||
-								[text hasSuffix:@"you are now recognized."]) {
+								[text hasSuffix:@"you are now recognized."] ||
+								[text hasPrefix:@"Password accepted for"]) {
 								
 								if (autojoinInitialized == NO && serverHasNickServ) {
 									autojoinInitialized = YES;
@@ -4289,7 +4298,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return ([cap isEqualNoCase:@"identify-msg"] ||
 			[cap isEqualNoCase:@"identify-ctcp"] ||
 			[cap isEqualNoCase:@"multi-prefix"] ||
-		  //[cap isEqualNoCase:@"znc.in/server-time"] ||
+			//[cap isEqualNoCase:@"znc.in/server-time"] ||
 			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL));
 }
 
@@ -4324,7 +4333,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     if ([command isEqualNoCase:IRCCI_CAP]) {
         if ([base isEqualNoCase:@"LS"]) {
             NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
+			
             for (NSString *cap in caps) {
 				if ([self isCapAvailable:cap]) {
 					[pendingCaps addObject:cap];
@@ -4332,7 +4341,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             }
         } else if ([base isEqualNoCase:@"ACK"]) {
 			NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
+			
             for (NSString *cap in caps) {
 				[acceptedCaps addObject:cap];
 				
@@ -4340,12 +4349,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		} else if ([base isEqualNoCase:@"NAK"]) {
 			NSArray *caps = [action componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
+			
             for (NSString *cap in caps) {
 				[self cap:cap result:NO];
 			}
 		}
-
+		
 		[self sendNextCap];
     } else {
         if ([star isEqualToString:@"+"]) {
@@ -4885,7 +4894,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					
 					for (i = 0; i < nick.length; i++) {
 						NSString *prefix = [nick safeSubstringWithRange:NSMakeRange(i, 1)];
-
+						
 						if ([prefix isEqualTo:isupport.userModeQPrefix]) {
 							m.q = YES;
 						} else if ([prefix isEqualTo:isupport.userModeAPrefix]) {
@@ -5251,7 +5260,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL prevConnected = isConnected;
 	
 	[acceptedCaps removeAllObjects];
-
+	
 	[conn autodrain];
 	conn = nil;
     
