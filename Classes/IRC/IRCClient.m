@@ -4,11 +4,13 @@
 
 #include <arpa/inet.h>
 
+#define TIMEOUT_INTERVAL			360
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
 #define ISON_CHECK_INTERVAL			30
 #define TRIAL_PERIOD_INTERVAL		7200
 #define AUTOJOIN_DELAY_INTERVAL		2
+#define PONG_CHECK_INTERVAL			30
 
 static NSDateFormatter *dateTimeFormatter = nil;
 
@@ -106,6 +108,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize tryingNickNumber;
 @synthesize whoisChannel;
 @synthesize inSASLRequest;
+@synthesize lastMessageReceived;
 @synthesize world;
 
 - (id)init
@@ -704,31 +707,28 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)startPongTimer
 {
 	if (pongTimer.isActive) return;
-    if (config.pongInterval <= 0) return;
 	
-	[pongTimer start:config.pongInterval];
+	[pongTimer start:PONG_CHECK_INTERVAL];
 }
 
 - (void)stopPongTimer
 {
-	[pongTimer stop];
+	if (pongTimer.isActive) {
+		[pongTimer stop];
+	}
 }
 
 - (void)onPongTimer:(id)sender
 {
-	if (isLoggedIn) {
-		if (NSObjectIsNotEmpty(serverHostname)) {
-			[self send:IRCCI_PONG, serverHostname, nil];
-		}
-	} else {
+	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:lastMessageReceived];
+	NSInteger minsSpent = (timeSpent / 60);
+	
+	if (timeSpent >= TIMEOUT_INTERVAL) {
+		[self printDebugInformation:TXTFLS(@"IRC_DISCONNECTED_FROM_TIMEOUT", minsSpent) channel:nil];
+		
 		[self stopPongTimer];
+		[self disconnect];
 	}
-}
-
-- (void)pongTimerIntervalChanged
-{
-    [self stopPongTimer];
-    [self startPongTimer];
 }
 
 - (void)startReconnectTimer
@@ -4384,9 +4384,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)receivePing:(IRCMessage *)m
 {
 	[self send:IRCCI_PONG, [m sequence:0], nil];
-	
-	[self stopPongTimer];
-	[self startPongTimer];
 }
 
 - (void)receiveInit:(IRCMessage *)m
@@ -5411,6 +5408,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircConnectionDidReceive:(NSData *)data
 {
+	//lastMessageReceived = [NSDate epochTime];
+	
 	NSString *s = [NSString stringWithData:data encoding:encoding];
 	
 	if (PointerIsEmpty(s)) {

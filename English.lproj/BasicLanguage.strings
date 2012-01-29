@@ -110,6 +110,7 @@
 "IRC_YOU_HAVE_UMODES" = "Your user mode is %@";
 "IRC_DISCONNECTED_FROM_SERVER" = "Disconnected";
 "IRC_DISCONNECTED_FROM_SLEEP" = "Disconnect for Sleep Mode";
+"IRC_DISCONNECTED_FROM_TIMEOUT" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
 "IRC_CONNECTED_TO_SERVER" = "Connection to host completed.";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
@@ -222,7 +223,6 @@
 "SERVER_SHEET_NAVIGATION_LIST_IGNORES" = "Address Book";
 "SERVER_SHEET_NAVIGATION_LIST_COMMANDS" = "Connect Commands";
 "SERVER_SHEET_NAVIGATION_LIST_PROXY" = "Proxy Server";
-"SERVER_SHEET_NAVIGATION_LIST_SOCKETS" = "TCP Sockets";
 "SERVER_SHEET_NAVIGATION_LIST_FLOODC" = "Flood Control";
 "SERVER_SHEET_NAVIGATION_LIST_MISC" = "Miscellaneous";
 
