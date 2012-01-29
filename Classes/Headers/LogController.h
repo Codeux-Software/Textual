@@ -26,6 +26,7 @@
 	
 	BOOL bottom;
 	BOOL loaded;
+	BOOL loadedFull;
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
@@ -37,20 +38,22 @@
 	NSInteger lineNumber;
 	NSInteger loadingImages;
 	
+	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
+	
+	dispatch_queue_t dispatchQueue;
     
 	NSString *html;
-    
-    dispatch_queue_t messageQueue;
 }
 
-@property (nonatomic, assign) dispatch_queue_t messageQueue;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
 @property (nonatomic, assign) IRCChannel *channel;
 @property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL loaded;
+@property (nonatomic, assign) BOOL loadedFull;
 @property (nonatomic, retain) NSMenu *menu;
 @property (nonatomic, retain) NSMenu *urlMenu;
 @property (nonatomic, retain) NSMenu *addrMenu;
@@ -72,6 +75,7 @@
 @property (nonatomic, retain) NSString *html;
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic, assign) NSInteger scrollTop;
+@property (nonatomic, assign) NSMutableArray *messageQueue;
 @property (nonatomic, retain) NSMutableArray *highlightedLineNumbers;
 
 - (void)setUp;
