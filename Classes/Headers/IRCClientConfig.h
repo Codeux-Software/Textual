@@ -41,9 +41,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	NSString *proxyUser;
 	NSString *proxyPassword;
     
-    NSInteger pongInterval;
-    NSInteger timeoutInterval;
-    
     BOOL outgoingFloodControl;
     NSInteger floodControlMaximumMessages;
 	NSInteger floodControlDelayTimerInterval;
@@ -84,8 +81,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, retain) NSString *proxyUser;
 @property (nonatomic, retain) NSString *proxyPassword;
-@property (nonatomic, assign) NSInteger pongInterval;
-@property (nonatomic, assign) NSInteger timeoutInterval;
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
 @property (nonatomic, assign) BOOL bouncerMode;

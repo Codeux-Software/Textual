@@ -37,15 +37,7 @@
 
 - (NSInteger)timeoutInterval
 {
-    IRCClient *connd = [delegate delegate];
-    
-    NSInteger time = connd.config.timeoutInterval;
-    
-    if (time <= 0) {
-        return -1;
-    }
-    
-    return time;
+	return 30;
 }
 
 - (BOOL)useNewSocketEngine

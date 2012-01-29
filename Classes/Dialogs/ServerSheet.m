@@ -27,7 +27,6 @@
 @synthesize encodingView;
 @synthesize autojoinView;
 @synthesize ignoresView;
-@synthesize socketsView;
 @synthesize commandsView;
 @synthesize floodControlView;
 @synthesize floodControlToolView;
@@ -72,8 +71,6 @@
 @synthesize saslCheck;
 @synthesize tabView;
 @synthesize uid;
-@synthesize pongInterval;
-@synthesize timeoutInterval;
 @synthesize usernameText;
 @synthesize floodControlDelayTimer;
 @synthesize floodControlMessageCount;
@@ -93,8 +90,7 @@
 		[tabViewList addObject:[NSArray arrayWithObjects:@"COMMANDS",				@"7", NSNumberWithBOOL(NO), nil]];
 		[tabViewList addObject:[NSArray arrayWithObjects:ListSeparatorCellIndex,	@"-", NSNumberWithBOOL(NO), nil]];
 		[tabViewList addObject:[NSArray arrayWithObjects:@"PROXY",					@"8", NSNumberWithBOOL(NO), nil]];
-        [tabViewList addObject:[NSArray arrayWithObjects:@"SOCKETS",				@"9", NSNumberWithBOOL(YES), nil]];
-		[tabViewList addObject:[NSArray arrayWithObjects:@"FLOODC",					@"10", NSNumberWithBOOL(NO), nil]];
+		[tabViewList addObject:[NSArray arrayWithObjects:@"FLOODC",					@"9", NSNumberWithBOOL(NO), nil]];
 		
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
@@ -303,10 +299,6 @@
 	invisibleCheck.state		= config.invisibleMode;
 	loginCommandsText.string	= [config.loginCommands componentsJoinedByString:NSNewlineCharacter];
     
-    /* Sockets */
-    pongInterval.integerValue    = config.pongInterval;
-    timeoutInterval.integerValue = config.timeoutInterval;
-    
     /* Flood Control */
     floodControlDelayTimer.integerValue     = config.floodControlDelayTimerInterval;
     floodControlMessageCount.integerValue   = config.floodControlMaximumMessages;
@@ -401,13 +393,6 @@
 	}
 	
 	config.invisibleMode = invisibleCheck.state;
-    
-    /* Sockets */
-    
-    config.pongInterval = pongInterval.integerValue;
-    config.timeoutInterval = timeoutInterval.integerValue;
-    
-    [client pongTimerIntervalChanged];
     
     /* Flood Control */
     config.floodControlMaximumMessages      = floodControlMessageCount.integerValue;
@@ -826,8 +811,7 @@
             case 5:  [self focusView:ignoresView		atRow:5]; break;
             case 6:  [self focusView:commandsView       atRow:6]; break;
             case 8:  [self focusView:proxyServerView    atRow:8]; break;
-            case 9:  [self focusView:socketsView        atRow:9]; break;
-            case 10: [self focusView:floodControlView   atRow:10]; break;
+            case 9:  [self focusView:floodControlView   atRow:9]; break;
             default: break;
         }
     } else {

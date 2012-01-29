@@ -94,6 +94,8 @@ typedef enum {
 	ChanBanExceptionSheet *banExceptionSheet;
 	ChanInviteExceptionSheet *inviteExceptionSheet;
 	
+	NSInteger lastMessageReceived;
+	
 	FileLogger *logFile;
 	
 #ifdef IS_TRIAL_BINARY
@@ -149,6 +151,7 @@ typedef enum {
 @property (nonatomic, retain) Timer *autoJoinTimer;
 @property (nonatomic, retain) Timer *reconnectTimer;
 @property (nonatomic, retain) Timer *commandQueueTimer;
+@property (nonatomic, assign) NSInteger lastMessageReceived;
 @property (nonatomic, assign) ConnectMode connectType;
 @property (nonatomic, assign) DisconnectType disconnectType;
 @property (nonatomic, retain) ListDialog *channelListDialog;
@@ -251,8 +254,6 @@ typedef enum {
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
-
-- (void)pongTimerIntervalChanged;
 
 - (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype;
 - (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;

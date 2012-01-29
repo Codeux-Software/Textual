@@ -20,7 +20,6 @@
 	IBOutlet NSView *autojoinView;
 	IBOutlet NSView *ignoresView;
 	IBOutlet NSView *commandsView;
-    IBOutlet NSView *socketsView;
     IBOutlet NSView *floodControlView;
     IBOutlet NSView *floodControlToolView;
 	IBOutlet NSView *proxyServerView;
@@ -60,9 +59,6 @@
 	IBOutlet NSTextField *proxyPortText;
 	IBOutlet NSTextField *proxyUserText;
 	IBOutlet NSTextField *proxyPasswordText;
-    
-    IBOutlet NSTextField *pongInterval;
-    IBOutlet NSTextField *timeoutInterval;
 	
 	IBOutlet ListView *channelTable;
 	IBOutlet NSButton *addChannelButton;
@@ -93,7 +89,6 @@
 @property (nonatomic, retain) NSView *autojoinView;
 @property (nonatomic, retain) NSView *ignoresView;
 @property (nonatomic, retain) NSView *commandsView;
-@property (nonatomic, retain) NSView *socketsView;
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *floodControlToolView;
 @property (nonatomic, retain) NSView *proxyServerView;
@@ -124,8 +119,6 @@
 @property (nonatomic, retain) NSTextField *proxyPortText;
 @property (nonatomic, retain) NSTextField *proxyUserText;
 @property (nonatomic, retain) NSTextField *proxyPasswordText;
-@property (nonatomic, retain) NSTextField *pongInterval;
-@property (nonatomic, retain) NSTextField *timeoutInterval;
 @property (nonatomic, retain) ListView *channelTable;
 @property (nonatomic, retain) NSButton *addChannelButton;
 @property (nonatomic, retain) NSButton *editChannelButton;
