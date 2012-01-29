@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define URL_ATTR				(1 << 31)
-#define ADDRESS_ATTR			(1 << 30)
+#define ADDRESS_ATTR			(1 << 30) // deprecated
 #define CHANNEL_NAME_ATTR		(1 << 29)
 #define BOLD_ATTR				(1 << 28)
 #define UNDERLINE_ATTR			(1 << 27)
@@ -208,8 +208,6 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		}	
 		
 		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, logEscape(content)];
-	} else if (attr & ADDRESS_ATTR) {
-		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"Textual.on_addr()\">%@</span>", logEscape(content)];
 	} else if (attr & CHANNEL_NAME_ATTR) {
 		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.on_dblclick_chname()\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
 	} else {
@@ -572,23 +570,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
         
 		[resultInfo setBool:foundKeyword forKey:@"wordMatchFound"];
 		
-		/* IP Address and Channel Name Detection */
-		
-		start = 0;
-		
-		while (start < len) {
-			NSRange r = [body rangeOfAddressStart:start];
-			
-			if (r.location == NSNotFound) {
-				break;
-			}
-			
-			if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-				setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
-			}
-			
-			start = (NSMaxRange(r) + 1);
-		}
+		/* Channel Name Detection */
 		
 		start = 0;
 		
