@@ -39,7 +39,6 @@ Textual = {
 	
 	/* The following function calls are required. */
 	on_url: function() { app.setUrl(event.target.innerHTML); },
-	on_addr: function() { app.setAddr(event.target.innerHTML); },
 	on_chname: function() { app.setChan(event.target.innerHTML); },
 	on_ct_nick: function() { app.setNick(event.target.innerHTML); },
 	on_nick: function() { app.setNick(event.target.getAttribute("nick")); },

@@ -93,17 +93,6 @@
 		}
 		
 		return ary;
-	} else if (addr) {
-		menuController.pointedAddress = addr;
-		
-		[addr autodrain];
-		addr = nil;
-		
-		for (NSMenuItem *item in [addrMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autodrain]];
-		}
-		
-		return ary;
 	} else if (nick) {
 		menuController.pointedNick = nick;
 		
