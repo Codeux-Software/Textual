@@ -44,7 +44,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize useSSL;
 @synthesize useSASL;
 @synthesize outgoingFloodControl;
-@synthesize incomingFloodControl;
 @synthesize floodControlMaximumMessages;
 @synthesize floodControlDelayTimerInterval;
 
@@ -77,7 +76,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		encoding         = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
         
-        incomingFloodControl            = NO;
         outgoingFloodControl            = NO;
         floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
         floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
@@ -307,7 +305,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
         floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
         outgoingFloodControl           = [e boolForKey:@"outgoing"];
-        incomingFloodControl           = [e boolForKey:@"incoming"];
     }
 	
 	return self;
@@ -379,7 +376,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
     [floodControl setInteger:floodControlDelayTimerInterval forKey:@"delay_timer"];
     [floodControl setInteger:floodControlMaximumMessages forKey:@"message_count"];
     [floodControl setBool:outgoingFloodControl forKey:@"outgoing"];
-    [floodControl setBool:incomingFloodControl forKey:@"incoming"];
     
     [dic setObject:floodControl forKey:@"flood_control"];
 	

@@ -1273,8 +1273,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
         NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:scriptPath] error:&errors];
         
         if (appleScript) {
-            NSAppleEventDescriptor *firstParameter = [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
-            NSAppleEventDescriptor *parameters = [NSAppleEventDescriptor listDescriptor];
+            NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
+            NSAppleEventDescriptor *parameters		= [NSAppleEventDescriptor listDescriptor];
             
             [parameters insertDescriptor:firstParameter atIndex:1];
             
@@ -1283,8 +1283,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
                                                                                             bytes:&psn
                                                                                            length:sizeof(ProcessSerialNumber)];
+			
             NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:@"textualcmd"];
-            NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
+            NSAppleEventDescriptor *event	= [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
                                                                                      eventID:kASSubroutineEvent
                                                                             targetDescriptor:target
                                                                                     returnID:kAutoGenerateReturnID
@@ -1301,7 +1302,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                 NSString *finalResult = [[result stringValue] trim];
                 
                 if (NSObjectIsNotEmpty(finalResult)) {
-                    [[world iomt] inputText:finalResult command:IRCCI_PRIVMSG];
+                    [world.iomt inputText:finalResult command:IRCCI_PRIVMSG];
                 }
             }
         } else {
@@ -1310,8 +1311,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
         
         [appleScript drain];
     } else {
-        NSMutableArray  *args  = [NSMutableArray array];
-        NSString        *input = [details valueForKey:@"input"];
+        NSMutableArray *args  = [NSMutableArray array];
+		
+        NSString *input = [details valueForKey:@"input"];
         
         for (NSString *i in [input componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]) {
             [args addObject:i];
@@ -1322,7 +1324,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
         
         if ([_NSFileManager() isExecutableFileAtPath:scriptPath] == NO) {
             NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", scriptPath, nil];
-            NSTask  *chmod          = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
+            
+			NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
             
             [chmod waitUntilExit];
         }
@@ -1336,11 +1339,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
         [scriptTask launch];
         [scriptTask waitUntilExit];
         
-        NSData   *outputData    = [filehandle readDataToEndOfFile];
-        NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
+        NSData *outputData    = [filehandle readDataToEndOfFile];
+       
+		NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
         
         if (NSObjectIsNotEmpty(outputString)) {
-            [[world iomt] inputText:outputString command:IRCCI_PRIVMSG];
+            [world.iomt inputText:outputString command:IRCCI_PRIVMSG];
         }
         
         [scriptTask drain];
@@ -2646,23 +2650,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 		default:
 		{   
-            NSArray  *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
+            NSArray *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
             
             NSString *scriptPath = [NSString string];
-            NSString *command    = [cmd lowercaseString];
+            NSString *command = [cmd lowercaseString];
             
             BOOL scriptFound;
             
             for (NSString *i in extensions) {
                 NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
                 
-                scriptPath  = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
+                scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
                 scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
                 
                 if (scriptFound == YES) {
                     break;
                 } else {
-                    scriptPath  = [[Preferences whereScriptsLocalPath] stringByAppendingPathComponent:filename];
+                    scriptPath = [[Preferences whereScriptsLocalPath] stringByAppendingPathComponent:filename];
                     scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
                     
                     if (scriptFound == YES) {

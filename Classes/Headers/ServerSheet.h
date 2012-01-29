@@ -25,7 +25,6 @@
     IBOutlet NSView *floodControlToolView;
 	IBOutlet NSView *proxyServerView;
     
-    IBOutlet NSButton *incomingFloodControl;
     IBOutlet NSButton *outgoingFloodControl;
     IBOutlet NSSlider *floodControlMessageCount;
     IBOutlet NSSlider *floodControlDelayTimer;
@@ -98,7 +97,6 @@
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *floodControlToolView;
 @property (nonatomic, retain) NSView *proxyServerView;
-@property (nonatomic, retain) NSButton *incomingFloodControl;
 @property (nonatomic, retain) NSButton *outgoingFloodControl;
 @property (nonatomic, retain) NSSlider *floodControlMessageCount;
 @property (nonatomic, retain) NSSlider *floodControlDelayTimer;
