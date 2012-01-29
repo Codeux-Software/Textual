@@ -444,45 +444,6 @@ BOOL isUnicharDigit(unichar c)
 	return [self lowercaseString];
 }
 
-- (NSRange)rangeOfAddress
-{
-	return [self rangeOfAddressStart:0];
-}
-
-- (NSRange)rangeOfAddressStart:(NSInteger)start
-{
-	NSInteger len = self.length;
-	if (len <= start) return NSMakeRange(NSNotFound, 0);
-	
-	NSString *shortstring = [self safeSubstringFromIndex:start];
-	
-	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}"];
-	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
-	NSRange r = NSMakeRange((rs.location + start), rs.length);
-	
-	NSInteger prev = (r.location - 1);
-	
-	if (0 <= prev && prev < len) {
-		UniChar c = [self characterAtIndex:prev];
-		
-		if (IsWordLetter(c)) {
-			return [self rangeOfAddressStart:NSMaxRange(r)];
-		}
-	}
-	
-	NSInteger next = NSMaxRange(r);
-	
-	if (next < len) {
-		UniChar c = [self characterAtIndex:next];
-		
-		if (IsWordLetter(c)) {
-			return [self rangeOfAddressStart:NSMaxRange(r)];
-		}
-	}
-	
-	return r;
-}
-
 - (NSRange)rangeOfChannelName
 {
 	return [self rangeOfChannelNameStart:0];
@@ -505,7 +466,7 @@ BOOL isUnicharDigit(unichar c)
 		UniChar c = [self characterAtIndex:prev];
 		
 		if (IsWordLetter(c)) {
-			return [self rangeOfAddressStart:NSMaxRange(r)];
+			return NSMakeRange(NSNotFound, 0);
 		}
 	}
 	
@@ -515,7 +476,7 @@ BOOL isUnicharDigit(unichar c)
 		UniChar c = [self characterAtIndex:next];
 		
 		if (IsWordLetter(c)) {
-			return [self rangeOfAddressStart:NSMaxRange(r)];
+			return NSMakeRange(NSNotFound, 0);
 		}
 	}
 	

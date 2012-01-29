@@ -30,7 +30,6 @@
 @synthesize memberList;
 @synthesize modeSheet;
 @synthesize nickSheet;
-@synthesize pointedAddress;
 @synthesize pointedChannelName;
 @synthesize pointedNick;
 @synthesize pointedUrl;
@@ -60,7 +59,6 @@
 	[inviteSheet drain];
 	[modeSheet drain];
 	[nickSheet drain];
-	[pointedAddress drain];
 	[pointedChannelName drain];
 	[pointedNick drain];
 	[pointedUrl drain];
@@ -1264,16 +1262,6 @@
 		
         [pointedUrl autodrain];
 		pointedUrl = nil;
-	}
-}
-
-- (void)onCopyAddress:(id)sender
-{
-	if (NSObjectIsNotEmpty(pointedAddress)) {
-		[_NSPasteboard() setStringContent:pointedAddress];
-		
-        [pointedAddress drain];
-		pointedAddress = nil;
 	}
 }
 

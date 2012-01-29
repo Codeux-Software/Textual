@@ -17,7 +17,6 @@
 	MemberList *memberList;
 	
 	NSString *pointedUrl;
-	NSString *pointedAddress;
 	NSString *pointedNick;
 	NSString *pointedChannelName;
 	NSString *currentSearchPhrase;
@@ -42,7 +41,6 @@
 @property (nonatomic, assign) ServerList *serverList;
 @property (nonatomic, assign) MemberList *memberList;
 @property (nonatomic, retain) NSString *pointedUrl;
-@property (nonatomic, retain) NSString *pointedAddress;
 @property (nonatomic, retain) NSString *pointedNick;
 @property (nonatomic, retain) NSString *pointedChannelName;
 @property (nonatomic, retain) NSString *currentSearchPhrase;
@@ -123,7 +121,6 @@
 
 - (void)onCopyUrl:(id)sender;
 - (void)onJoinChannel:(id)sender;
-- (void)onCopyAddress:(id)sender;
 
 - (void)onWantChannelModerated:(id)sender;
 - (void)onWantChannelVoiceOnly:(id)sender;

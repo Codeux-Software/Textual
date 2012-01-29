@@ -60,9 +60,6 @@
 
 - (NSString *)stripEffects;
 
-- (NSRange)rangeOfAddress;
-- (NSRange)rangeOfAddressStart:(NSInteger)start;
-
 - (NSRange)rangeOfChannelName;
 - (NSRange)rangeOfChannelNameStart:(NSInteger)start;
 
