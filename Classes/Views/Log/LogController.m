@@ -54,23 +54,19 @@
 @synthesize view;
 @synthesize world;
 @synthesize messageQueue;
-@synthesize dispatchQueue;
+@synthesize prepareForDealloc;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		bottom              = YES;
-		maxLines            = 300;
+		bottom        = YES;
+		maxLines      = 300;
 		
-		messageQueue			  = [NSMutableArray new];
-		highlightedLineNumbers = [NSMutableArray new];
+		messageQueue			= [NSMutableArray new];
+		highlightedLineNumbers	= [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
 		[[WebPreferences standardPreferences] setUsesPageCache:NO];
-		
-		NSString *uuid = [NSString stringWithUUID];
-        
-        dispatchQueue = dispatch_queue_create([uuid UTF8String], NULL);
 	}
 	
 	return self;
@@ -94,9 +90,6 @@
 	[autoScroller drain];
 	[messageQueue drain];
 	[highlightedLineNumbers drain];
-	
-	dispatch_release(dispatchQueue);
-	dispatchQueue = NULL;
 	
 	[super dealloc];
 }
@@ -159,14 +152,30 @@
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
-	dispatch_async(dispatchQueue, ^{
-		[self messageQueueLoop];
-	});
+	if (PointerIsNotEmpty(channel)) {
+		[channel createMessageQueue];
+		
+		dispatch_async(channel.messageQueue, ^{
+			[self messageQueueLoop];
+		});
+	} else {
+		if (PointerIsNotEmpty(client)) {
+			[client createMessageQueue];
+			
+			dispatch_async(client.messageQueue, ^{
+				[self messageQueueLoop];
+			});
+		}
+	}
 }
 
 - (void)messageQueueLoop
 {
 	while (1 == 1) {
+		if (prepareForDealloc) {
+			break;
+		}
+		
 		if (channel.isClient) {
 			[NSThread sleepForTimeInterval:0.15];
 		} else {
