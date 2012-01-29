@@ -78,7 +78,6 @@
 @synthesize floodControlDelayTimer;
 @synthesize floodControlMessageCount;
 @synthesize outgoingFloodControl;
-@synthesize incomingFloodControl;
 
 - (id)init
 {
@@ -312,7 +311,6 @@
     floodControlDelayTimer.integerValue     = config.floodControlDelayTimerInterval;
     floodControlMessageCount.integerValue   = config.floodControlMaximumMessages;
     outgoingFloodControl.state              = config.outgoingFloodControl;
-    incomingFloodControl.state              = config.incomingFloodControl;
     
     [self floodControlChanged:nil];
 }
@@ -415,7 +413,6 @@
     config.floodControlMaximumMessages      = floodControlMessageCount.integerValue;
     config.floodControlDelayTimerInterval   = floodControlDelayTimer.integerValue;
     config.outgoingFloodControl             = outgoingFloodControl.state;
-    config.incomingFloodControl             = incomingFloodControl.state;
 }
 
 - (void)updateConnectionPage
@@ -467,8 +464,8 @@
 
 - (void)floodControlChanged:(id)sender
 {
-    BOOL match = (incomingFloodControl.state == NSOnState || outgoingFloodControl.state == NSOnState);
-        
+    BOOL match = (outgoingFloodControl.state == NSOnState);
+	
     [floodControlToolView setHidden:BOOLReverseValue(match)];
 }
 
