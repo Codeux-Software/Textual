@@ -1,8 +1,8 @@
 #### Introduction ####
 
 Textual is a highly modified version of the open source project known 
-as LimeChat. The user interface is tailored towards users that wish to
-move away from applications similar to Colloquy. Much of the app uses
+as LimeChat. It is designed as a replacement for those applications
+for Mac OS which have ceased to be maintained. Much of the app uses
 the open standard of WebKit which makes customization easy through the
 use of CSS 3 and HTML 5. Plugins written in Objective-C and scripts 
 written in AppleScript (and other languages) are also supported.
