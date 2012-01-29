@@ -167,9 +167,13 @@
 - (void)messageQueueLoop
 {
 	while (1 == 1) {
-		if ([view isLoading]) {
-			[NSThread sleepForTimeInterval:0.2];
+		if (channel.isClient) {
+			[NSThread sleepForTimeInterval:0.15];
 		} else {
+			[NSThread sleepForTimeInterval:0.10];
+		}
+		
+		if ([view isLoading] == NO) {
 			if (NSObjectIsNotEmpty(messageQueue)) {
 				void (^messageBlock)(void) = [messageQueue objectAtIndex:0];
 				
@@ -178,8 +182,6 @@
 				[messageQueue removeObjectAtIndex:0];
 			}
 		}
-		
-		continue;
 	}
 }
 

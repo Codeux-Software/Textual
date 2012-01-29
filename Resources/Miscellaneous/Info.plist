@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9561</string>
+	<string>9568</string>
 	<key>Build Reference</key>
-	<string>2.1-152-gba9648a-unstable</string>
+	<string>2.1-154-g9f15dc6-unstable</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
