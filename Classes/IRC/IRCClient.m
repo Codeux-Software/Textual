@@ -5263,6 +5263,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL prevConnected = isConnected;
 	
 	[acceptedCaps removeAllObjects];
+	capPaused = 0;
 	
 	[conn autodrain];
 	conn = nil;
