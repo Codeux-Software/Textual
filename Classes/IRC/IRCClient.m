@@ -720,6 +720,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)onPongTimer:(id)sender
 {
+	if (isConnected == NO) {
+		[self stopPongTimer];
+		
+		return;
+	}
+	
 	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:lastMessageReceived];
 	NSInteger minsSpent = (timeSpent / 60);
 	
