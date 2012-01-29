@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 
 #define TIMEOUT_INTERVAL			360
+#define PING_INTERVAL				270
 #define RETRY_INTERVAL				240
 #define RECONNECT_INTERVAL			20
 #define ISON_CHECK_INTERVAL			30
@@ -732,8 +733,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (timeSpent >= TIMEOUT_INTERVAL) {
 		[self printDebugInformation:TXTFLS(@"IRC_DISCONNECTED_FROM_TIMEOUT", minsSpent) channel:nil];
 		
-		[self stopPongTimer];
 		[self disconnect];
+	} else if (timeSpent >= PING_INTERVAL) {
+		[self send:IRCCI_PING, serverHostname, nil];
 	}
 }
 
