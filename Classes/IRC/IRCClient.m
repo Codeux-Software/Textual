@@ -5408,7 +5408,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircConnectionDidReceive:(NSData *)data
 {
-	//lastMessageReceived = [NSDate epochTime];
+	lastMessageReceived = [NSDate epochTime];
 	
 	NSString *s = [NSString stringWithData:data encoding:encoding];
 	
