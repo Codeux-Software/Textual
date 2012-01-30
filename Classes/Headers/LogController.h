@@ -4,6 +4,8 @@
 
 @class IRCWorld, IRCClient, IRCChannel;
 
+typedef BOOL (^MessageBlock)(void);
+
 @interface LogController : NSObject
 {
 	LogView *view;

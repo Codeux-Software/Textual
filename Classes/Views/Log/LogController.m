@@ -171,8 +171,6 @@
 
 - (void)messageQueueLoop
 {
-	BOOL finishedFirstLoop = NO;
-	
 	while (1 == 1) {
 		if (prepareForDealloc) {
 			break;
@@ -185,20 +183,14 @@
 		}
 		
 		if ([view isLoading] == NO) {
-			if (finishedFirstLoop == NO) {
-				finishedFirstLoop = YES;
-				
-				[NSThread sleepForTimeInterval:1.10];
-				
-				continue;
-			}
-			
 			if (NSObjectIsNotEmpty(messageQueue)) {
-				void (^messageBlock)(void) = [messageQueue objectAtIndex:0];
-				
-				dispatch_async(dispatch_get_main_queue(), messageBlock);
-				
-				[messageQueue removeObjectAtIndex:0];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					BOOL srslt = ((MessageBlock)[messageQueue objectAtIndex:0])();
+					
+					if (srslt) {						
+						[messageQueue removeObjectAtIndex:0];
+					}
+				});
 			}
 		}
 	}
@@ -254,7 +246,7 @@
 
 - (void)setTopic:(NSString *)topic 
 {
-	int (^messageBlock)(void) = [^{
+	MessageBlock (^messageBlock)(void) = [^{
 		if (NSObjectIsNotEmpty(topic)) {
 			if ([[self topicValue] isEqualToString:topic] == NO) {
 				NSString *body = [LogRenderer renderBody:topic 
@@ -264,14 +256,16 @@
 											  resultInfo:NULL];
 				
 				DOMDocument *doc = [self mainFrameDocument];
-				if (PointerIsEmpty(doc)) return;
+				if (PointerIsEmpty(doc)) return NO;
 				
 				DOMElement *topic_body = [self topic:doc];
-				if (PointerIsEmpty(topic_body)) return;
+				if (PointerIsEmpty(topic_body)) return NO;
 				
 				[(id)topic_body setInnerHTML:body];
 			}
 		}
+		
+		return YES;
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
@@ -346,13 +340,13 @@
 
 - (void)mark
 {
-	int (^messageBlock)(void) = [^{
-		if (loaded == NO) return;
+	MessageBlock (^messageBlock)(void) = [^{
+		if (loaded == NO) return NO;
 		
 		[self savePosition];
 		
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return;
+		if (PointerIsEmpty(doc)) return NO;
 		
 		DOMElement *body = [self body:doc];
 		
@@ -367,6 +361,8 @@
 			
 			[self restorePosition];
 		}
+		
+		return YES;
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
@@ -375,11 +371,11 @@
 
 - (void)unmark
 {
-	int (^messageBlock)(void) = [^{
-		if (loaded == NO) return;
+	MessageBlock (^messageBlock)(void) = [^{
+		if (loaded == NO) return NO;
 		
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return;
+		if (PointerIsEmpty(doc)) return NO;
 		
 		DOMElement *e = [doc getElementById:@"mark"];
 		
@@ -388,6 +384,8 @@
 			
 			--count;
 		}
+		
+		return YES;
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
@@ -709,15 +707,19 @@
 
 - (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs
 {
-	int (^messageBlock)(void) = [^{
+	MessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
 		
 		++lineNumber;
 		++count;
 		
-		DOMDocument *doc  = [self mainFrameDocument];
-		DOMElement  *body = [self body:doc];
-		DOMElement  *div  = [doc createElement:@"div"];
+		DOMDocument *doc = [self mainFrameDocument];
+		if (PointerIsEmpty(doc)) return NO;
+		
+		DOMElement *body = [self body:doc];
+		if (PointerIsEmpty(body)) return NO;
+		
+		DOMElement *div = [doc createElement:@"div"];
 		
 		[(id)div setInnerHTML:aHtml];
 		
@@ -745,6 +747,8 @@
 			[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
 						  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(lineNumber), nil]];  
 		} 
+		
+		return YES;
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
