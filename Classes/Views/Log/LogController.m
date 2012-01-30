@@ -183,15 +183,15 @@
 		}
 		
 		if ([view isLoading] == NO) {
-			if (NSObjectIsNotEmpty(messageQueue)) {
-				dispatch_async(dispatch_get_main_queue(), ^{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (NSObjectIsNotEmpty(messageQueue)) {
 					BOOL srslt = ((MessageBlock)[messageQueue objectAtIndex:0])();
 					
 					if (srslt) {						
 						[messageQueue removeObjectAtIndex:0];
 					}
-				});
-			}
+				}
+			});
 		}
 	}
 }
