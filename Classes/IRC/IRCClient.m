@@ -3607,7 +3607,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 	} else {
-		bool targetOurself = [target isEqualNoCase:myNick];
+		BOOL targetOurself = [target isEqualNoCase:myNick];
 		
 		if ([ignoreChecks ignorePMHighlights] == YES) {
 			if (type == LINE_TYPE_ACTION) {
