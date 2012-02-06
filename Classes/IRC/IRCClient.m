@@ -3606,7 +3606,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 			}
 		}
-	} else if ([target isEqualNoCase:myNick]) {
+	} else {
+		bool targetOurself = [target isEqualNoCase:myNick];
+		
 		if ([ignoreChecks ignorePMHighlights] == YES) {
 			if (type == LINE_TYPE_ACTION) {
 				type = LINE_TYPE_ACTION_NH;
@@ -3615,7 +3617,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
-		if ([ignoreChecks ignorePrivateMsg] == YES) {
+		if (targetOurself && [ignoreChecks ignorePrivateMsg]) {
 			return;
 		}
 		
@@ -3690,14 +3692,24 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[self printBoth:nil type:type text:text receivedAt:m.receivedAt];
 			}
 		} else {
-			IRCChannel *c = [self findChannel:anick];
-			
+			IRCChannel *c;
+
+			if (targetOurself) {
+				c = [self findChannel:anick];
+			} else {
+				c = [self findChannel:target];
+			}
+
 			[self decryptIncomingMessage:&text channel:c];
 			
 			BOOL newTalk = NO;
 			
 			if (PointerIsEmpty(c) && NSDissimilarObjects(type, LINE_TYPE_NOTICE)) {
-				c = [world createTalk:anick client:self];
+				if (targetOurself) {
+					c = [world createTalk:anick client:self];
+				} else {
+					c = [world createTalk:target client:self];
+				}
 				
 				newTalk = YES;
 			}
@@ -3747,8 +3759,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 				}
 				
-				[self setUnreadState:c];
-				[self notifyText:GROWL_TALK_NOTICE lineType:type target:c nick:anick text:text];
+				if (targetOurself) {
+					[self setUnreadState:c];
+					[self notifyText:GROWL_TALK_NOTICE lineType:type target:c nick:anick text:text];
+				}
 			} else {
 				BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
 				BOOL postevent = NO;
@@ -3759,7 +3773,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					if (postevent) {
 						[self setKeywordState:c];
 					}
-				} else {
+				} else if (targetOurself) {
 					if (newTalk) {
 						postevent = [self notifyText:GROWL_NEW_TALK lineType:type target:c nick:anick text:text];
 						
@@ -3782,12 +3796,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					[c.log setTopic:hostTopic];
 				}
 			}
-		}
-	} else {
-		if (NSObjectIsEmpty(anick) || [anick isNickname] == NO) {
-			[self printBoth:nil type:type text:text receivedAt:m.receivedAt];
-		} else {
-			[self printBoth:nil type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
 		}
 	}
 }
