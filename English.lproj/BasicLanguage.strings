@@ -72,7 +72,7 @@
 "TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
 "TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
 
-"DELETE_QUERY_MENU_ITEM" = "Delete Query";
+"DELETE_QUERY_MENU_ITEM" = "Close Query";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
 "COPY_LOG_AS_HTML_MENU_ITEM" = "Copy Log as HTML";
 "FORCE_RELOAD_THEME_MENU_ITEM" = "Force Reload Style";
