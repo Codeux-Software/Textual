@@ -13,7 +13,7 @@
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;
-- (void)monitorViewLoops;
+- (void)monitorView:(NSTimer *)timer;
 @end
 
 @implementation IRCWorld;
@@ -99,7 +99,7 @@
 	
 	[config.clients removeAllObjects];
 	
-	[NSThread detachNewThreadSelector:@selector(monitorViewLoops) toTarget:self withObject:nil];
+	[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(monitorView:) userInfo:nil repeats:YES];
 }
 
 - (void)setupTree
@@ -196,22 +196,18 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)monitorViewLoops
+- (void)monitorView:(NSTimer *)timer
 {
-	while (1 == 1) {
-		for (IRCClient *u in clients) {
-			if (u.log.queueInProgress == NO) {
-				[u.log destroyViewLoop];
-			}
-			
-			for (IRCChannel *c in u.channels) {
-				if (c.log.queueInProgress == NO) {
-					[c.log destroyViewLoop];
-				}
-			}
+	for (IRCClient *u in clients) {
+		if (u.log.queueInProgress == NO) {
+			[u.log destroyViewLoop];
 		}
 		
-		[NSThread sleepForTimeInterval:20.0];
+		for (IRCChannel *c in u.channels) {
+			if (c.log.queueInProgress == NO) {
+				[c.log destroyViewLoop];
+			}
+		}
 	}
 }
 
