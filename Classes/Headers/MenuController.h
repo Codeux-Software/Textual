@@ -75,6 +75,7 @@
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
 
 - (void)onMarkScrollback:(id)sender;
+- (void)onClearScrollback:(id)sender;
 - (void)onMarkAllAsRead:(id)sender;
 - (void)onIncreaseFontSize:(id)sender;
 - (void)onDecreaseFontSize:(id)sender;
