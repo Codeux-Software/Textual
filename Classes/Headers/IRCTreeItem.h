@@ -18,8 +18,6 @@
 	NSInteger dockUnreadCount;
 	NSInteger treeUnreadCount;
 	
-	dispatch_queue_t messageQueue;
-	
 	InputHistory *inputHistory;
 	NSAttributedString *currentInputHistory;
 }
@@ -38,9 +36,6 @@
 @property (nonatomic, readonly) NSString *label;
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, retain) InputHistory *inputHistory;
-@property (nonatomic, assign) dispatch_queue_t messageQueue;
-
-- (void)createMessageQueue;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;

@@ -31,7 +31,7 @@ typedef BOOL (^MessageBlock)(void);
 	BOOL scrollBottom;
 	BOOL becameVisible;
 	BOOL movingToBottom;
-	BOOL prepareForDealloc;
+	BOOL queueInProgress;
 	BOOL needsLimitNumberOfLines;
 	
 	NSInteger count;
@@ -42,11 +42,14 @@ typedef BOOL (^MessageBlock)(void);
 	
 	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
+	
+	dispatch_queue_t messageQueueDispatch;
     
 	NSString *html;
 }
 
-@property (nonatomic, assign) BOOL prepareForDealloc;
+@property (nonatomic, assign) BOOL queueInProgress;
+@property (nonatomic, assign) dispatch_queue_t messageQueueDispatch;
 @property (nonatomic, readonly) LogView *view;
 @property (nonatomic, assign) IRCWorld *world;
 @property (nonatomic, assign) IRCClient *client;
@@ -85,6 +88,9 @@ typedef BOOL (^MessageBlock)(void);
 
 - (void)moveToTop;
 - (void)moveToBottom;
+
+- (void)destroyViewLoop;
+- (void)createViewLoop;
 
 - (void)setTopic:(NSString *)topic;
 

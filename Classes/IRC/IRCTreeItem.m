@@ -13,24 +13,11 @@
 @synthesize inputHistory;
 @synthesize treeUnreadCount;
 @synthesize dockUnreadCount;
-@synthesize messageQueue;
-
-- (void)createMessageQueue
-{
-	NSString *uuid = [NSString stringWithUUID];
-	
-	messageQueue = dispatch_queue_create([uuid UTF8String], NULL);
-}
 
 - (void)dealloc
 {
-	log.prepareForDealloc = YES;
-	
 	[inputHistory drain];
 	[log drain];
-	
-	dispatch_release(messageQueue);
-	messageQueue = NULL;
 	
 	[super dealloc];
 }
