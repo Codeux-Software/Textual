@@ -13,9 +13,7 @@
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;
-- (void)changeInputTextTheme;
-- (void)changeTreeTheme;
-- (void)changeMemberListTheme;
+- (void)monitorViewLoops;
 @end
 
 @implementation IRCWorld;
@@ -100,6 +98,8 @@
 	}
 	
 	[config.clients removeAllObjects];
+	
+	[NSThread detachNewThreadSelector:@selector(monitorViewLoops) toTarget:self withObject:nil];
 }
 
 - (void)setupTree
@@ -194,7 +194,26 @@
 }
 
 #pragma mark -
-#pragma mark Utilities}
+#pragma mark Utilities
+
+- (void)monitorViewLoops
+{
+	while (1 == 1) {
+		for (IRCClient *u in clients) {
+			if (u.log.queueInProgress == NO) {
+				[u.log destroyViewLoop];
+			}
+			
+			for (IRCChannel *c in u.channels) {
+				if (c.log.queueInProgress == NO) {
+					[c.log destroyViewLoop];
+				}
+			}
+		}
+		
+		[NSThread sleepForTimeInterval:0.2];
+	}
+}
 
 - (void)resetLoadedBundles
 {
