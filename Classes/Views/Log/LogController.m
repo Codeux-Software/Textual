@@ -54,7 +54,8 @@
 @synthesize view;
 @synthesize world;
 @synthesize messageQueue;
-@synthesize prepareForDealloc;
+@synthesize queueInProgress;
+@synthesize messageQueueDispatch;
 
 - (id)init
 {
@@ -75,6 +76,9 @@
 - (void)dealloc
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	
+	self.queueInProgress = NO;
+	[self destroyViewLoop];
 	
 	[js drain];
 	[html drain];
@@ -152,28 +156,47 @@
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
-	if (PointerIsNotEmpty(channel)) {
-		[channel createMessageQueue];
-		
-		dispatch_async(channel.messageQueue, ^{
-			[self messageQueueLoop];
-		});
-	} else {
-		if (PointerIsNotEmpty(client)) {
-			[client createMessageQueue];
-			
-			dispatch_async(client.messageQueue, ^{
-				[self messageQueueLoop];
-			});
-		}
+	queueInProgress = NO;
+}
+
+- (void)destroyViewLoop
+{
+	if (self.queueInProgress) {
+		return;
 	}
+	
+	if (PointerIsNotEmpty(messageQueueDispatch)) {
+		dispatch_release(messageQueueDispatch);
+		messageQueueDispatch = NULL;
+	}
+}
+
+- (void)createViewLoop
+{
+	if (self.queueInProgress) {
+		return;
+	} else {
+		self.queueInProgress = YES;
+	}
+	
+	if (PointerIsEmpty(messageQueueDispatch)) {
+		NSString *uuid = [NSString stringWithUUID];
+		
+		messageQueueDispatch = dispatch_queue_create([uuid UTF8String], NULL);
+	}
+	
+	dispatch_async(messageQueueDispatch, ^{
+		[self messageQueueLoop];
+	});
 }
 
 - (void)messageQueueLoop
 {
 	while (1 == 1) {
-		if (prepareForDealloc) {
-			break;
+		if (NSObjectIsEmpty(messageQueue)) {
+			self.queueInProgress = NO;
+			
+			return;
 		}
 		
 		if (channel.isClient) {
@@ -270,6 +293,8 @@
 	
 	[messageQueue safeAddObject:messageBlock];
 	[messageBlock release];
+	
+	[self createViewLoop];
 }
 
 - (void)moveToTop
@@ -367,6 +392,8 @@
 	
 	[messageQueue safeAddObject:messageBlock];
 	[messageBlock release];
+	
+	[self createViewLoop];
 }
 
 - (void)unmark
@@ -390,6 +417,8 @@
 	
 	[messageQueue safeAddObject:messageBlock];
 	[messageBlock release];
+	
+	[self createViewLoop];
 }
 
 - (void)goToMark
@@ -753,6 +782,8 @@
 	
 	[messageQueue safeAddObject:messageBlock];
 	[messageBlock release];
+	
+	[self createViewLoop];
 }
 
 - (NSString *)initialDocument:(NSString *)topic
