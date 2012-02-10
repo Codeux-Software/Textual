@@ -192,13 +192,7 @@
 
 - (void)messageQueueLoop
 {
-	while (1 == 1) {
-		if (NSObjectIsEmpty(messageQueue)) {
-			self.queueInProgress = NO;
-			
-			return;
-		}
-		
+	while (NSObjectIsNotEmpty(messageQueue)) {
 		if (channel.isClient) {
 			[NSThread sleepForTimeInterval:0.15];
 		} else {
@@ -217,6 +211,8 @@
 			});
 		}
 	}
+
+	self.queueInProgress = NO;
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
