@@ -337,7 +337,17 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (HostmaskBanFormat)banFormat
 {
-	return [_NSUserDefaults() boolForKey:@"Preferences.General.banformat"];
+	return [_NSUserDefaults() integerForKey:@"Preferences.General.banformat"];
+}
+
++ (NSDoubleN)viewLoopConsoleDelay
+{
+	return [_NSUserDefaults() doubleForKey:@"Preferences.Experimental.view_loop_console_delay"];
+}
+
++ (NSDoubleN)viewLoopChannelDelay
+{
+	return [_NSUserDefaults() doubleForKey:@"Preferences.Experimental.view_loop_channel_delay"];
 }
 
 + (BOOL)displayDockBadge
@@ -1022,6 +1032,8 @@ static NSInteger totalRunTime = 0;
 	[d setInteger:USERDC_ACTION_QUERY		forKey:@"Preferences.General.user_doubleclick_action"];
 	[d setInteger:CMDWKEY_SHORTCUT_CLOSE	forKey:@"Preferences.General.keyboard_cmdw_response"];
 	
+	[d setDouble:0.15 forKey:@"Preferences.Experimental.view_loop_console_delay"];
+	[d setDouble:0.10 forKey:@"Preferences.Experimental.view_loop_channel_delay"];
 	[d setDouble:12.0 forKey:@"Preferences.Theme.log_font_size"];
 	[d setDouble:1.0  forKey:@"Preferences.Theme.transparency"];
 	
