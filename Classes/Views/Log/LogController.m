@@ -194,9 +194,9 @@
 {
 	while (NSObjectIsNotEmpty(messageQueue)) {
 		if (channel.isClient) {
-			[NSThread sleepForTimeInterval:0.15];
+			[NSThread sleepForTimeInterval:[Preferences viewLoopConsoleDelay]];
 		} else {
-			[NSThread sleepForTimeInterval:0.10];
+			[NSThread sleepForTimeInterval:[Preferences viewLoopChannelDelay]];
 		}
 		
 		if ([view isLoading] == NO) {

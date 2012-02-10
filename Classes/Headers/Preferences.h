@@ -54,6 +54,9 @@ typedef enum {
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;
 
++ (NSDoubleN)viewLoopConsoleDelay;
++ (NSDoubleN)viewLoopChannelDelay;
+
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
 
