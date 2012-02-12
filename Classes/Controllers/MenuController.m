@@ -1511,7 +1511,7 @@
 
 - (void)onWantTextualConnnectToHelp:(id)sender 
 {
-	[world createConnection:@"irc.wyldryde.org +6697" chan:@"#textual,#textual-offtopic"];
+	[world createConnection:@"chat.freenode.net +6697" chan:@"#textual"];
 }
 
 - (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString *)vhost
