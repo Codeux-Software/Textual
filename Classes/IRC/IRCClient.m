@@ -4994,6 +4994,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
+		case 321:
+		{
+			if (channelListDialog) {
+				[channelListDialog clear];
+			}
+
+			break;
+		}
 		case 322:
 		{
 			NSString *chname = [m paramAt:1];
@@ -5007,7 +5015,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 323:	
-		case 321:
 		case 329:
 		case 368:
 		case 347:
