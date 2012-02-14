@@ -68,9 +68,9 @@
 "DEFAULT_IRC_CLIENT_PROMPT_TITLE" = "Default IRC Client";
 "DEFAULT_IRC_CLIENT_PROMPT_MESSAGE" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 
-"TRIAL_BUILD_INTRO_DIALOG_TITLE" = "Welcome to the Textual IRC Client!";
-"TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is meant to allow you to test the usability, features, and performance of Textual without having to purchase it. For this reason, it has all of the features and functionality as the full Textual client.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours. We hope that this glimpse of Textual will allow us to demonstrate that it is worth the low sale price.";
-"TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit.";
+"TRIAL_BUILD_INTRO_DIALOG_TITLE" = "Welcome to the Textual IRC Client";
+"TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is designed to demonstrate the features, performance, reliability, and usability of Textual without having to purchase it.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours.\n\nWe hope that this glimpse of Textual will help show that it is worth its low sale price. ";
+"TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 
 "DELETE_QUERY_MENU_ITEM" = "Close Query";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
