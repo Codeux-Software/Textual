@@ -544,8 +544,8 @@
 			NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
 									(rect.origin.y + (rect.size.height / 2)));
 			
-			NSInteger w = 1024;
-			NSInteger h = 768;
+			NSInteger w = 800;
+			NSInteger h = 418;
 			
 			rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 			
