@@ -114,6 +114,7 @@
 			[client sendLine:@"PROTOCTL NAMESX"];
 		} else if ([key isEqualToString:@"UHNAMES"]) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
+			client.userhostInNames = YES;
 		}
 	}
 	
