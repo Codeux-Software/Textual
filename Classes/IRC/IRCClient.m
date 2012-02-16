@@ -2649,6 +2649,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		case 102:
+		case 103:
 			if ([acceptedCaps count]) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_CAP_CURRENTLY_ENABLED", [acceptedCaps componentsJoinedByString:@", "])];
 			} else {

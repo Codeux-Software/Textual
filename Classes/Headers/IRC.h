@@ -14,6 +14,7 @@
 #define IRCCI_BAN				@"BAN"
 #define IRCCI_CHATOPS			@"CHATOPS"
 #define IRCCI_CAP				@"CAP"
+#define IRCCI_CAPS				@"CAPS"
 #define IRCCI_CLEAR				@"CLEAR"
 #define IRCCI_CLEARALL			@"CLEARALL"
 #define IRCCI_CLIENTINFO		@"CLIENTINFO"

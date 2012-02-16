@@ -90,6 +90,7 @@
 		NSString *value = nil;
 
 		NSRange r = [s rangeOfString:@"="];
+		
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
 			key = [[s safeSubstringToIndex:r.location] uppercaseString];
 			value = [s safeSubstringFromIndex:NSMaxRange(r)];
