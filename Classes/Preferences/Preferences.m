@@ -144,6 +144,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[commandIndex setObject:@"100" forKey:IRCCI_TEMPSHUN];
 	[commandIndex setObject:@"101" forKey:IRCCI_AUTHENTICATE];
 	[commandIndex setObject:@"102" forKey:IRCCI_CAP];
+	[commandIndex setObject:@"103" forKey:IRCCI_CAPS];
 }
 
 + (NSInteger)commandUIndex:(NSString *)command 
