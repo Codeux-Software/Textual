@@ -74,6 +74,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize highlights;
 @synthesize pendingCaps;
 @synthesize acceptedCaps;
+@synthesize userhostInNames;
 @synthesize identifyCTCP;
 @synthesize identifyMsg;
 @synthesize inWhoInfoRun;
@@ -118,6 +119,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		tryingNickNumber = -1;
 		
 		capPaused = 0;
+		userhostInNames = NO;
 		
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
@@ -3909,7 +3911,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c setIsModeInit:YES];
 		
 		[self send:IRCCI_MODE, c.name, nil];
-		[self send:IRCCI_WHO, c.name, nil, nil];
+
+		if (userhostInNames == NO) {
+			// We can skip requesting WHO, we already have this information
+			[self send:IRCCI_WHO, c.name, nil, nil];
+		}
 	}
 }
 
@@ -4328,6 +4334,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			[self pauseCap];
 			[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
+		} else if ([cap isEqualNoCase:@"userhost-in-names"]) {
+			userhostInNames = YES;
 		} else if ([cap isEqualNoCase:@"identify-msg"]) {
 			identifyMsg = YES;
 		} else if ([cap isEqualNoCase:@"identify-ctcp"]) {
@@ -5286,6 +5294,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[acceptedCaps removeAllObjects];
 	capPaused = 0;
+
+	userhostInNames = NO;
 	
 	[conn autodrain];
 	conn = nil;

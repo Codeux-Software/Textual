@@ -59,6 +59,7 @@ typedef enum {
 	BOOL serverHasNickServ;
 	BOOL autojoinInitialized;
 	
+	BOOL userhostInNames;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	BOOL inWhoInfoRun;
@@ -121,6 +122,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL isAway;
 @property (nonatomic, assign) BOOL inWhoInfoRun;
 @property (nonatomic, assign) BOOL inWhoWasRun;
+@property (nonatomic, assign) BOOL userhostInNames;
 @property (nonatomic, assign) BOOL identifyMsg;
 @property (nonatomic, assign) BOOL identifyCTCP;
 @property (nonatomic, assign) BOOL inFirstISONRun;
