@@ -4315,6 +4315,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return ([cap isEqualNoCase:@"identify-msg"] ||
 			[cap isEqualNoCase:@"identify-ctcp"] ||
 			[cap isEqualNoCase:@"multi-prefix"] ||
+			[cap isEqualNoCase:@"userhost-in-names"] ||
 			//[cap isEqualNoCase:@"znc.in/server-time"] ||
 			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(config.nickPassword) && config.useSASL));
 }
@@ -4925,7 +4926,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 					
 					nick = [nick substringFromIndex:i];
-					m.nick = nick;
+
+					m.nick = [nick nicknameFromHostmask];
+					m.username = [nick identFromHostmask];
+					m.address = [nick hostFromHostmask];
 					
 					m.supportInfo = isupport;
 					m.isMyself    = [nick isEqualNoCase:myNick];
