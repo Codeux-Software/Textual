@@ -224,7 +224,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			if (PointerIsEmpty(user) == NO) {
                 if ([user.nick isEqualNoCase:client.myNick] == NO) {
                     matchedUser = YES;
-				
+					
                     [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
                 } 
             }
@@ -467,7 +467,6 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			}
 		}
 		
-        
         if (regexWordMatching) {
             for (NSString *keyword in keywords) {
                 NSRange matchRange = [TXRegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
@@ -495,76 +494,120 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                 }
             }
         } else {
+			NSString *curchan; 
+			
+			if (log) {
+				curchan = log.channel.name;
+			}
+			
             for (NSString *keyword in keywords) {
-                start = 0;
-                
-                while (start < len) {
-                    NSRange r = [body rangeOfString:keyword 
-                                            options:NSCaseInsensitiveSearch 
-                                              range:NSMakeRange(start, (len - start))];
-                    
-                    if (r.location == NSNotFound) {
-                        break;
-                    }
-                    
-                    BOOL enabled = YES;
-                    
-                    for (NSValue *e in excludeRanges) {
-                        if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
-                            enabled = NO;
-                            
-                            break;
-                        }
-                    }
-                    
-                    if (exactWordMatching) {
-                        if (enabled) {
-                            UniChar c = [body characterAtIndex:r.location];
-                            
-                            if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-                                NSInteger prev = (r.location - 1);
-                                
-                                if (0 <= prev && prev < len) {
-                                    UniChar c = [body characterAtIndex:prev];
-                                    
-                                    if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-                                        enabled = NO;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        if (enabled) {
-                            UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-                            
-                            if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-                                NSInteger next = NSMaxRange(r);
-                                
-                                if (next < len) {
-                                    UniChar c = [body characterAtIndex:next];
-                                    
-                                    if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-                                        enabled = NO;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (enabled) {
-                        if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-                            setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
-                            
-                            foundKeyword = YES;
-                            
-                            break;
-                        }
-                    }
-                    
-                    start = (NSMaxRange(r) + 1);
-                }
-                
-                if (foundKeyword) break;
+				BOOL continueSearch = YES;
+				
+				if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"])) {
+					NSRange atsrange = [keyword rangeOfString:@";" options:NSBackwardsSearch];
+					
+					NSString *excludeList = [keyword safeSubstringAfterIndex:atsrange.location];
+					
+					keyword = [keyword safeSubstringToIndex:atsrange.location];
+					
+					NSArray *excldlist = [excludeList split:@" "];
+					
+					for (NSString *exchan in excldlist) {
+						if ([exchan hasPrefix:@"-"] == NO && [exchan hasPrefix:@"+"] == NO) {
+							continue;
+						}
+						
+						NSString *nchan = [exchan safeSubstringFromIndex:1];
+						
+						if ([nchan isEqualToString:@"all"]) {
+							continueSearch = NO;
+						}
+						
+						if ([exchan hasPrefix:@"+"]) {
+							if ([nchan isEqualNoCase:curchan]) {
+								continueSearch = YES;
+							}
+						} else {
+							if ([exchan hasPrefix:@"-"]) {
+								if ([nchan isEqualNoCase:curchan]) {
+									continueSearch = NO;
+								}
+							}
+						}
+					}
+				}
+				
+				if (continueSearch) {
+					start = 0;
+					
+					while (start < len) {
+						NSRange r = [body rangeOfString:keyword 
+												options:NSCaseInsensitiveSearch 
+												  range:NSMakeRange(start, (len - start))];
+						
+						if (r.location == NSNotFound) {
+							break;
+						}
+						
+						BOOL enabled = YES;
+						
+						for (NSValue *e in excludeRanges) {
+							if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+								enabled = NO;
+								
+								break;
+							}
+						}
+						
+						if (exactWordMatching) {
+							if (enabled) {
+								UniChar c = [body characterAtIndex:r.location];
+								
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									NSInteger prev = (r.location - 1);
+									
+									if (0 <= prev && prev < len) {
+										UniChar c = [body characterAtIndex:prev];
+										
+										if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+											enabled = NO;
+										}
+									}
+								}
+							}
+							
+							if (enabled) {
+								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+								
+								if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+									NSInteger next = NSMaxRange(r);
+									
+									if (next < len) {
+										UniChar c = [body characterAtIndex:next];
+										
+										if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+											enabled = NO;
+										}
+									}
+								}
+							}
+						}
+						
+						if (enabled) {
+							if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+								setFlag(attrBuf, HIGHLIGHT_KEYWORD_ATTR, r.location, r.length);
+								
+								foundKeyword = YES;
+								
+								break;
+							}
+						}
+						
+						start = (NSMaxRange(r) + 1);
+					}
+					
+					if (foundKeyword) break;
+				}
             }
         }
         
