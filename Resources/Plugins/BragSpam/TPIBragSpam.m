@@ -81,6 +81,15 @@
 		IRCChannel *cc;
 		
 		NSMutableArray *chanlist = [client.channels mutableCopy];
+		
+		for (IRCChannel *c in client.channels) {
+			IRCChannelMode *modes = c.mode;
+			
+			if ([modes modeInfoFor:@"p"].plus || [modes modeInfoFor:@"s"].plus) {
+				[chanlist removeObject:c];
+			}
+		}
+		
 		NSMutableString *result = [NSMutableString string];
 		
 		if (NSObjectIsEmpty(chanlist)) {	
