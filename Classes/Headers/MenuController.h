@@ -90,6 +90,9 @@
 - (void)onDeleteServer:(id)sender;
 - (void)onServerProperties:(id)sender;
 
+- (void)onNextHighlight:(id)sender;
+- (void)onPreviousHighlight:(id)sender;
+
 - (void)onJoin:(id)sender;
 - (void)onLeave:(id)sender;
 - (void)onTopic:(id)sender;
