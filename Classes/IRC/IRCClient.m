@@ -120,6 +120,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		capPaused = 0;
 		userhostInNames = NO;
+		identifyMsg = NO;
+		identifyCTCP = NO;
 		
 		channels     = [NSMutableArray new];
 		highlights   = [NSMutableArray new];
@@ -5296,6 +5298,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	capPaused = 0;
 
 	userhostInNames = NO;
+	identifyMsg = NO;
+	identifyCTCP = NO;
 	
 	[conn autodrain];
 	conn = nil;
