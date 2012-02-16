@@ -350,6 +350,7 @@
 			}
 			
 			return YES;
+			break;
 		}
 		case 593: // Highlights
 		{
@@ -365,7 +366,18 @@
             }
             
             return YES;
+			break;
         }
+		case 990002: // Next Highlight
+		{
+			return [world.selected.log highlightAvailable:NO];
+			break;
+		}
+		case 990003: // Previous Highlight
+		{
+			return [world.selected.log highlightAvailable:YES];
+			break;
+		}
 		default:
 		{
 			return YES;
@@ -1748,6 +1760,16 @@
         
         [sender setState:NSOnState];
     }
+}
+
+- (void)onNextHighlight:(id)sender
+{
+	[world.selected.log nextHighlight];
+}
+
+- (void)onPreviousHighlight:(id)sender
+{
+	[world.selected.log previousHighlight];
 }
 
 @end

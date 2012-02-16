@@ -39,6 +39,7 @@ typedef BOOL (^MessageBlock)(void);
 	NSInteger scrollTop;
 	NSInteger lineNumber;
 	NSInteger loadingImages;
+	NSInteger lastVisitedHighlight;
 	
 	NSMutableArray *messageQueue;
 	NSMutableArray *highlightedLineNumbers;
@@ -48,6 +49,7 @@ typedef BOOL (^MessageBlock)(void);
 	NSString *html;
 }
 
+@property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, assign) BOOL queueInProgress;
 @property (nonatomic, assign) dispatch_queue_t messageQueueDispatch;
 @property (nonatomic, readonly) LogView *view;
@@ -83,6 +85,10 @@ typedef BOOL (^MessageBlock)(void);
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
+
+- (void)nextHighlight;
+- (void)previousHighlight;
+- (BOOL)highlightAvailable:(BOOL)previous;
 
 - (DOMDocument *)mainFrameDocument;
 

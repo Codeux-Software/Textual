@@ -3,6 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define BOTTOM_EPSILON		0
+#define SCROLL_CORRECTION   20 
 #define TIME_BUFFER_SIZE	256
 
 @interface NSScrollView (Private)
@@ -56,6 +57,7 @@
 @synthesize messageQueue;
 @synthesize queueInProgress;
 @synthesize messageQueueDispatch;
+@synthesize lastVisitedHighlight;
 
 - (id)init
 {
@@ -128,6 +130,8 @@
 	
 	policy = [LogPolicy new];
 	sink   = [LogScriptEventSink new];
+	
+	lastVisitedHighlight = -1;
 	
 	policy.menuController = [world menuController];
 	policy.menu			  = menu;
@@ -438,7 +442,7 @@
 			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:NSNumberWithInteger((y - 20)) forKey:@"scrollTop"];
+		[[doc body] setValue:NSNumberWithInteger((y - SCROLL_CORRECTION)) forKey:@"scrollTop"];
 	}
 }
 
@@ -489,6 +493,85 @@
 	}
 	
 	[self restorePosition];
+}
+
+- (BOOL)highlightAvailable:(BOOL)previous
+{
+	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+		return NO;
+	}
+	
+	return YES;
+	
+	/* TODO: Return NO if we cannot go forward or backwards
+	 depending on the direction being traveled. */
+}
+
+- (void)nextHighlight
+{
+	if (loaded == NO) return;
+	
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return;
+	
+	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+		return;
+	}
+	
+	id bhli = NSNumberWithInteger(lastVisitedHighlight);
+	
+	if ([highlightedLineNumbers containsObject:bhli]) {
+		NSInteger hli_ci = [highlightedLineNumbers indexOfObject:bhli];
+		NSInteger hli_ei = [highlightedLineNumbers indexOfObject:highlightedLineNumbers.lastObject];
+		
+		if (NSDissimilarObjects(hli_ci, hli_ei) == NO) {
+			// Return method since the last highlight we 
+			// visited was the end of array. Nothing ahead.
+		} else {
+			lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:(hli_ci + 1)];
+		}
+	} else {
+		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+	}
+	
+	NSString *lid = [NSString stringWithFormat:@"line%i", lastVisitedHighlight];
+	
+	DOMElement *e = [doc getElementById:lid];
+	
+	/* TODO: Insert code to go to line in scrollbar here. */
+}
+
+- (void)previousHighlight
+{
+	if (loaded == NO) return;
+	
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return;
+	
+	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+		return;
+	}
+	
+	id bhli = NSNumberWithInteger(lastVisitedHighlight);
+	
+	if ([highlightedLineNumbers containsObject:bhli]) {
+		NSInteger hli_ci = [highlightedLineNumbers indexOfObject:bhli];
+		
+		if (NSDissimilarObjects(hli_ci, 0) == NO) {
+			// Return method since the last highlight we 
+			// visited was the start of array. Nothing ahead.
+		} else {
+			lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:(hli_ci - 1)];
+		}
+	} else {
+		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+	}
+	
+	NSString *lid = [NSString stringWithFormat:@"line%i", lastVisitedHighlight];
+	
+	DOMElement *e = [doc getElementById:lid];
+	
+	/* TODO: Insert code to go to line in scrollbar here. */
 }
 
 - (void)limitNumberOfLines
