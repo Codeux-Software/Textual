@@ -577,6 +577,28 @@ BOOL isUnicharDigit(unichar c)
 	return [self safeSubstringToIndex:[self stringPosition:@"!"]];	
 }
 
+- (NSString *)identFromHostmask
+{
+	if ([self contains:@"!"]) {
+		NSString *identHost = [self safeSubstringAfterIndex:[self stringPosition:@"!"]];
+
+		if ([identHost contains:@"@"]) {
+			return [identHost safeSubstringAfterIndex:[identHost stringPosition:@"@"]];
+		}
+	}
+
+	return @"";
+}
+
+- (NSString *)hostFromHostmask
+{
+	if ([self contains:@"@"]) {
+		return [self safeSubstringAfterIndex:[self stringPosition:@"@"]];
+	}
+
+	return @"";
+}
+
 - (NSString *)reservedCharactersToIRCFormatting
 {
 	NSString *s = self;

@@ -112,6 +112,8 @@
 
 		if ([key isEqualToString:@"NAMESX"]) {
 			[client sendLine:@"PROTOCTL NAMESX"];
+		} else if ([key isEqualToString:@"UHNAMES"]) {
+			[client sendLine:@"PROTOCTL UHNAMES"];
 		}
 	}
 	

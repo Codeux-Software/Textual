@@ -25,6 +25,8 @@
 - (NSString *)stringCharacterAtIndex:(NSInteger)index;
 
 - (NSString *)nicknameFromHostmask;
+- (NSString *)identFromHostmask;
+- (NSString *)hostFromHostmask;
 - (NSString *)hostmaskFromRawString;
 
 - (NSString *)cleanedServerHostmask;
