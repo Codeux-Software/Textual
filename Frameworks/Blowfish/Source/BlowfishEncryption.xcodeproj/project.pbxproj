@@ -269,6 +269,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = BlowfishEncryption;
+				SDKROOT = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -288,6 +289,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = BlowfishEncryption;
+				SDKROOT = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -306,7 +308,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 			};
 			name = Debug;
@@ -324,7 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 			};
 			name = Release;
