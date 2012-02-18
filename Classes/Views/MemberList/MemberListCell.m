@@ -138,6 +138,10 @@
     if (mcstring == '+' || mcstring == '~' || mcstring == 'x') {
         badgeTextPoint.y -= 1;
     }
+	
+	if ([Preferences applicationRanOnMountainLion]) {
+		badgeTextPoint.y -= 1;
+	}
     
     [modeString drawAtPoint:badgeTextPoint];
 }

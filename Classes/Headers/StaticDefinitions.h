@@ -10,9 +10,9 @@
 	#endif
 #endif
 
-#ifndef NSAppKitVersionNumber10_6
-	#define NSAppKitVersionNumber10_6 1038
-#endif
+#define NSAppKitVersionNumber10_6		1038
+#define NSAppKitVersionNumber10_7		1138
+#define NSAppKitVersionNumber10_7_2	1138.23
 
 /* Textual Specific Frameworks */
 #ifdef LinkTextualIRCFrameworks

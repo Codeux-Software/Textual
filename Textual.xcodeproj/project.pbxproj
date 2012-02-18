@@ -815,7 +815,6 @@
 		29B97314FDCFA39411CA2CEA /* LimeChat */ = {
 			isa = PBXGroup;
 			children = (
-				774A728F14EF4C04008E9BA3 /* Textual.entitlements */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1126,6 +1125,7 @@
 		4C5AEF8112D1B72900D6B18C /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				774A728F14EF4C04008E9BA3 /* Textual.entitlements */,
 				4C5AF38612D1BBC500D6B18C /* Info.plist */,
 				4C5AF34712D1B8C000D6B18C /* IRCNetworks.plist */,
 			);
