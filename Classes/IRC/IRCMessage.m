@@ -54,13 +54,21 @@
 	NSMutableString *s = [line mutableCopy];
 
 #if 0
-	if ([s hasPrefix:@"@t="]) {
-		NSString* t = [s getToken];
-		t = [t substringFromIndex:3];
-		receivedAt = [[NSDate dateWithTimeIntervalSince1970: [t longLongValue]] retain];
-	} else {
-		receivedAt = [[NSDate date] retain];
+	NSMutableDictionary *extensions = [NSMutableDictionary dictionary];
+	if ([s hasPrefix:@"@"]) {
+		NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
+		NSArray *values = [t componentsSeparatedByString:@","];
+		for (unsigned int i=0; i<[values count]; i++) {
+			NSArray *info = [[values objectAtIndex:i] componentsSeparatedByString:@"="];
+			if ([info count]!=2)
+				continue;
+			[extensions setObject:[info objectAtIndex:1] forKey:[info objectAtIndex:0]];
+		}
 	}
+	if ([extensions objectForKey:@"t"]!=nil)
+		receivedAt = [[NSDate dateWithTimeIntervalSince1970:[[extensions objectForKey:@"t"] longLongValue]] retain];
+	else
+		receivedAt = [[NSDate date] retain];
 #else
 	receivedAt = [[NSDate date] retain];
 #endif

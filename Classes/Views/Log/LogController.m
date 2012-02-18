@@ -667,6 +667,10 @@
 			[inputDictionary setObject:line.keywords forKey:@"keywords"];
 		}
 		
+		if (NSObjectIsNotEmpty(line.nickInfo)) {
+			[inputDictionary setObject:line.nickInfo forKey:@"nick"];
+		}
+		
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
 			[inputDictionary setObject:line.excludeWords forKey:@"excludeWords"];
 		}
