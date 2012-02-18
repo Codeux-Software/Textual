@@ -128,13 +128,13 @@
 		}
 	}
 	
-	NSUserNotification *notification = [[NSUserNotification alloc] init];
+	NSUserNotification *notification = [NSUserNotification newad];
+	
 	notification.title = title;
 	notification.informativeText = desc;
 	notification.deliveryDate = [NSDate date];
-	[[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:notification];
-
-//	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:context];
+	
+	[_NSUserNotificationCenter() scheduleNotification:notification];
 }
 
 - (void)growlNotificationWasClicked:(id)context {
