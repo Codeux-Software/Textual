@@ -160,12 +160,17 @@ static NSMutableDictionary *commandIndex = nil;
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
 }
 
++ (BOOL)applicationRanOnMountainLion
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+}
+
 + (NSData *)applicationIcon
 {
 	return [[NSApp applicationIconImage] TIFFRepresentation];
 }
 
-+ (NSString *)applicationName;
++ (NSString *)applicationName
 {
 	return [textualPlist objectForKey:@"CFBundleName"];
 }
