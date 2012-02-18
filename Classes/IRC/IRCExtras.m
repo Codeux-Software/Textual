@@ -183,7 +183,12 @@
         if (NSObjectIsNotEmpty(base)) {
             tempval = [base getToken];
             
-            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
+                if ([tempval hasPrefix:@"+"]) {
+                    tempval = [tempval safeSubstringFromIndex:1];
+                    useSSL = YES;
+                }
+                
                 port = [tempval integerValue];
             }
         }
