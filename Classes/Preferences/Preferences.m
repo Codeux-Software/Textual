@@ -584,19 +584,6 @@ static NSMutableDictionary *commandIndex = nil;
 }
 
 #pragma mark -
-#pragma mark Transcript Folder
-
-+ (NSString *)transcriptFolder
-{
-	return [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
-}
-
-+ (void)setTranscriptFolder:(NSString *)value
-{
-	[_NSUserDefaults() setObject:value forKey:@"Preferences.General.transcript_folder"];
-}
-
-#pragma mark -
 #pragma mark Events
 
 + (NSString *)titleForEvent:(GrowlNotificationType)event
@@ -1023,7 +1010,6 @@ static NSInteger totalRunTime = 0;
 	[d setObject:DEFAULT_TEXTUAL_FONT			forKey:@"Preferences.Theme.log_font_name"];
 	[d setObject:@"<%@%n>"						forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
-	[d setObject:@"~/Documents/Textual Logs"	forKey:@"Preferences.General.transcript_folder"];
 	
 	[d setInteger:5							forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];

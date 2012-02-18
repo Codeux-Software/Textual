@@ -38,7 +38,6 @@
 	IBOutlet NSArrayController *keywordsArrayController;
 	IBOutlet NSArrayController *excludeWordsArrayController;
 	
-	IBOutlet NSPopUpButton *transcriptFolderButton;
 	IBOutlet NSPopUpButton *themeButton;
     IBOutlet NSPopUpButton *alertButton;
 	IBOutlet NSPopUpButton *alertSoundButton;
@@ -83,7 +82,6 @@
 @property (nonatomic, retain) NSTableView *installedScriptsTable;
 @property (nonatomic, retain) NSArrayController *keywordsArrayController;
 @property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
-@property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, retain) NSPopUpButton *themeButton;
 @property (nonatomic, retain) NSPopUpButton *alertButton;
 @property (nonatomic, retain) NSPopUpButton *alertSoundButton;
@@ -108,7 +106,6 @@
 - (void)onOpenPathToThemes:(id)sender;
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onChangedTransparency:(id)sender;
-- (void)onTranscriptFolderChanged:(id)sender;
 - (void)onHighlightLoggingChanged:(id)sender;
 - (void)onChangeAlert:(id)sender;
 - (void)onUseGrowl:(id)sender;
