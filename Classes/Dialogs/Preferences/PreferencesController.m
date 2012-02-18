@@ -11,7 +11,6 @@
 #define ADDONS_TOOLBAR_ITEM_INDEX	8
 
 @interface PreferencesController (Private)
-- (void)updateTranscriptFolder;
 - (void)updateTheme;
 - (void)updateAlert;
 
@@ -50,7 +49,6 @@
 @synthesize alertButton;
 @synthesize alertSoundButton;
 @synthesize highlightNicknameButton;
-@synthesize transcriptFolderButton;
 @synthesize addExcludeWordButton;
 @synthesize useGrowlButton;
 @synthesize disableAlertWhenAwayButton;
@@ -102,7 +100,6 @@
 	installedScriptsTable.dataSource = scriptsController;
 	[installedScriptsTable reloadData];
 	
-	[self updateTranscriptFolder];
 	[self updateTheme];
     [self updateAlert];
 	
@@ -391,48 +388,6 @@
 	}
 	
 	return sounds;
-}
-
-#pragma mark -
-#pragma mark Transcript Folder Popup
-
-- (void)updateTranscriptFolder
-{
-	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
-	
-	NSImage *icon = [_NSWorkspace() iconForFile:path];
-	[icon setSize:NSMakeSize(16, 16)];
-	
-	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
-	
-	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
-	[item setImage:icon];
-}
-
-- (void)onTranscriptFolderChanged:(id)sender
-{
-	if ([transcriptFolderButton selectedTag] == 2) {
-		NSOpenPanel *d = [NSOpenPanel openPanel];
-		
-		[d setCanChooseFiles:NO];
-		[d setCanChooseDirectories:YES];
-		[d setResolvesAliases:YES];
-		[d setAllowsMultipleSelection:NO];
-		[d setCanCreateDirectories:YES];
-		
-		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
-			[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
-			
-			if (returnCode == NSOKButton) {
-				NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
-				NSString *path = [pathURL path];
-				
-				[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
-				
-				[self updateTranscriptFolder];
-			}
-		}];
-	}
 }
 
 #pragma mark -

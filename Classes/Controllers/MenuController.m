@@ -1488,7 +1488,7 @@
 
 - (void)onWantToReadTextualLogs:(id)sender
 {	
-	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
+	NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
 	
 	if ([_NSFileManager() fileExistsAtPath:path]) {
 		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
