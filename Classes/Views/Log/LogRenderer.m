@@ -510,7 +510,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					
 					keyword = [keyword safeSubstringToIndex:atsrange.location];
 					
-					NSArray *excldlist = [excludeList split:@" "];
+					NSArray *excldlist = [excludeList split:NSWhitespaceCharacter];
 					
 					for (NSString *exchan in excldlist) {
 						if ([exchan hasPrefix:@"-"] == NO && [exchan hasPrefix:@"+"] == NO) {
