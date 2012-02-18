@@ -21,6 +21,7 @@
         location = [location safeSubstringFromIndex:6];
 	} else if ([location hasPrefix:@"ircs://"]) {
 		location = [location safeSubstringFromIndex:7];
+		
 		useSSL = YES;
 	} else {
 		return;
