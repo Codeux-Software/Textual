@@ -282,10 +282,10 @@
 	NSArray *alertSounds = [self availableSounds];
 	
     for (NSString *alertSound in alertSounds) {
-		NSMenuItem *item = [NSMenuItem newad];
+        NSMenuItem *item = [NSMenuItem newad];
 		
-		[item setTitle:alertSound];
-		
+        [item setTitle:alertSound];
+        
         [alertSoundButton.menu addItem:item];
     }
 
@@ -295,10 +295,11 @@
     NSMutableArray *alerts = [self sounds];
 	
     for (SoundWrapper *alert in alerts) {
-		NSMenuItem *item = [NSMenuItem newad];
-		
-		[item setTitle:alert.displayName];
-		
+        NSMenuItem *item = [NSMenuItem newad];
+
+        [item setTitle:alert.displayName];
+        [item setTag:[alert eventType]];
+
         [alertButton.menu addItem:item];
     }
 
