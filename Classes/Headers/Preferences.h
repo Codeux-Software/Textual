@@ -155,9 +155,6 @@ typedef enum {
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;
 
-+ (NSString *)transcriptFolder;
-+ (void)setTranscriptFolder:(NSString *)value;
-
 + (BOOL)stopGrowlOnActive;
 
 + (NSString *)titleForEvent:(GrowlNotificationType)event;
