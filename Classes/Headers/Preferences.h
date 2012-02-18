@@ -50,6 +50,7 @@ typedef enum {
 + (void)updateTotalRunTime;
 
 + (BOOL)applicationRanOnLion;
++ (BOOL)applicationRanOnMountainLion;
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;
