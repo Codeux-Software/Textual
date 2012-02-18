@@ -19,87 +19,92 @@
     
     if ([location hasPrefix:@"irc://"]) {
         location = [location safeSubstringFromIndex:6];
+	} else if ([location hasPrefix:@"ircs://"]) {
+		location = [location safeSubstringFromIndex:7];
+		useSSL = YES;
+	} else {
+		return;
+	}
         
-        if ([location contains:@"/"] == NO) {
-            location = [NSString stringWithFormat:@"%@/", location];
-        }
-        
-        NSInteger slashPos = [location stringPosition:@"/"];
-        
-        tempval = [location safeSubstringToIndex:slashPos];
-        
-        /* Server Address */
-        if ([tempval hasPrefix:@"["]) {
-            if ([tempval contains:@"]"]) {
-                NSInteger startPos = ([tempval stringPosition:@"["] + 1);
-                NSInteger endPos   =  [tempval stringPosition:@"]"];
-                
-                NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
-                
-                server  = [tempval safeSubstringWithRange:servRange];
-                tempval = [tempval safeSubstringAfterIndex:endPos];
-            } else {
-                return;
-            }
-        } else {
-            if ([tempval contains:@":"]) {
-                NSInteger cutPos = [tempval stringPosition:@":"];
-                
-                server  = [tempval safeSubstringToIndex:cutPos];
-                tempval = [tempval safeSubstringFromIndex:cutPos];
-            } else {
-                server  = tempval;
-                tempval = nil;
-            }
-        }
-        
-        /* Server Port */
-        if ([tempval hasPrefix:@":"]) {
-            NSInteger chopIndex = 1;
-            
-            if ([tempval hasPrefix:@":+"]) {
-                chopIndex = 2;
-                
-                useSSL = YES;
-            }
-            
-            tempval = [tempval safeSubstringFromIndex:chopIndex];
-            
-            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
-                port = [tempval integerValue];
-            }
-        }
-        
-        tempval = [location safeSubstringAfterIndex:slashPos];
-        
-        if (NSObjectIsNotEmpty(tempval)) {
-            if ([tempval contains:@","]) {
-                NSArray         *items  = [tempval componentsSeparatedByString:@","];
-                NSMutableArray  *mitems = [items mutableCopy];
-                
-                target = [mitems safeObjectAtIndex:0];
-                
-                if ([target hasPrefix:@"#"] == NO) {
-                    target = [NSString stringWithFormat:@"#%@", target];
-                }
-                
-                [mitems removeObjectAtIndex:0];
-                
-                for (NSString *setting in mitems) {
-                    if ([setting isEqualNoCase:@"needssl"]) {
-                        useSSL = YES;
-                    }
-                }
-                
-                [mitems drain];
-            } else {
-                target = tempval;
-                
-                if ([target hasPrefix:@"#"] == NO) {
-                    target = [NSString stringWithFormat:@"#%@", target];
-                }
-            }
-        }
+	if ([location contains:@"/"] == NO) {
+		location = [NSString stringWithFormat:@"%@/", location];
+	}
+	
+	NSInteger slashPos = [location stringPosition:@"/"];
+	
+	tempval = [location safeSubstringToIndex:slashPos];
+	
+	/* Server Address */
+	if ([tempval hasPrefix:@"["]) {
+		if ([tempval contains:@"]"]) {
+			NSInteger startPos = ([tempval stringPosition:@"["] + 1);
+			NSInteger endPos   =  [tempval stringPosition:@"]"];
+			
+			NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
+			
+			server  = [tempval safeSubstringWithRange:servRange];
+			tempval = [tempval safeSubstringAfterIndex:endPos];
+		} else {
+			return;
+		}
+	} else {
+		if ([tempval contains:@":"]) {
+			NSInteger cutPos = [tempval stringPosition:@":"];
+			
+			server  = [tempval safeSubstringToIndex:cutPos];
+			tempval = [tempval safeSubstringFromIndex:cutPos];
+		} else {
+			server  = tempval;
+			tempval = nil;
+		}
+	}
+	
+	/* Server Port */
+	if ([tempval hasPrefix:@":"]) {
+		NSInteger chopIndex = 1;
+		
+		if ([tempval hasPrefix:@":+"]) {
+			chopIndex = 2;
+			
+			useSSL = YES;
+		}
+		
+		tempval = [tempval safeSubstringFromIndex:chopIndex];
+		
+		if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+			port = [tempval integerValue];
+		}
+	}
+	
+	tempval = [location safeSubstringAfterIndex:slashPos];
+	
+	if (NSObjectIsNotEmpty(tempval)) {
+		if ([tempval contains:@","]) {
+			NSArray         *items  = [tempval componentsSeparatedByString:@","];
+			NSMutableArray  *mitems = [items mutableCopy];
+			
+			target = [mitems safeObjectAtIndex:0];
+			
+			if ([target hasPrefix:@"#"] == NO) {
+				target = [NSString stringWithFormat:@"#%@", target];
+			}
+			
+			[mitems removeObjectAtIndex:0];
+			
+			for (NSString *setting in mitems) {
+				if ([setting isEqualNoCase:@"needssl"]) {
+					useSSL = YES;
+				}
+			}
+			
+			[mitems drain];
+		} else {
+			target = tempval;
+			
+			if ([target hasPrefix:@"#"] == NO) {
+				target = [NSString stringWithFormat:@"#%@", target];
+			}
+		}
     }
     
     /* Add Server */
@@ -183,7 +188,12 @@
         if (NSObjectIsNotEmpty(base)) {
             tempval = [base getToken];
             
-            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
+                if ([tempval hasPrefix:@"+"]) {
+                    tempval = [tempval safeSubstringFromIndex:1];
+                    useSSL = YES;
+                }
+                
                 port = [tempval integerValue];
             }
         }
