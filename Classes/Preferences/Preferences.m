@@ -228,6 +228,10 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[NSBundle mainBundle] bundlePath];
 }
 
++ (NSString *)whereTranscriptFolder {
+    return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+}
+
 #pragma mark -
 #pragma mark Default Identity
 

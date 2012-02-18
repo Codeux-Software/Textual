@@ -91,7 +91,7 @@
 
 - (NSString *)buildPath
 {
-	NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+	NSString *base = [Preferences whereTranscriptFolder];
 	
 	NSString *serv = [[client name] safeFileName];
 	NSString *chan = [[channel name] safeFileName];
