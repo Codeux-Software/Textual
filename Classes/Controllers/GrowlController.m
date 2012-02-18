@@ -176,4 +176,8 @@
 	}
 }
 
+- (BOOL)hasNetworkClientEntitlement {
+    return YES;
+}
+
 @end
