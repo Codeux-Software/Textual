@@ -128,7 +128,13 @@
 		}
 	}
 	
-	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:context];
+	NSUserNotification *notification = [[NSUserNotification alloc] init];
+	notification.title = title;
+	notification.informativeText = desc;
+	notification.deliveryDate = [NSDate date];
+	[[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:notification];
+
+//	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:context];
 }
 
 - (void)growlNotificationWasClicked:(id)context {
