@@ -34,6 +34,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>irc</string>
+				<string>ircs</string>
 			</array>
 		</dict>
 	</array>
