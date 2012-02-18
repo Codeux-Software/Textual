@@ -70,6 +70,7 @@ typedef enum {
 + (NSString *)wherePluginsLocalPath;
 + (NSString *)whereAppStoreReceipt;
 + (NSString *)whereMainApplicationBundle;
++ (NSString *)whereTranscriptFolder;
 
 + (NSDictionary *)commandIndexList;
 + (NSInteger)commandUIndex:(NSString *)command;
