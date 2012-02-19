@@ -2927,6 +2927,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)notifyText:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text
 {
+	if ([myNick isEqual:nick]) {
+		return NO;
+	}
+	
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
 	}
