@@ -1010,8 +1010,8 @@
 		[(id)scrollView setAllowsHorizontalScrolling:NO];
 	}
 	
-#ifdef _RUNNING_MAC_OS_LION
-	if ([Preferences applicationRanOnLion]) {
+#ifdef _MAC_OS_LION_OR_NEWER
+	if ([Preferences featureAvailableToOSXLion]) {
 		[scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
 		[scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
 	}

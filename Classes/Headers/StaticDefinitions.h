@@ -2,28 +2,29 @@
 #define _LOAD_MAC_OS_LION_LIBRARIES 1
 
 #if _LOAD_MAC_OS_LION_LIBRARIES
-	#if defined(MAC_OS_X_VERSION_10_7) 
-		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-			#define _RUNNING_MAC_OS_LION
+	#if defined(MAC_OS_X_VERSION_10_8) 
+		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
+			#define _MAC_OS_MOUNTAIN_LION_OR_NEWER
 		#endif	
 	#endif
 
-	#if defined(MAC_OS_X_VERSION_10_8) 
-		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
-			#define _RUNNING_MAC_OS_MOUNTAIN_LION
+	#if defined(MAC_OS_X_VERSION_10_7) 
+		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+			#define _MAC_OS_LION_OR_NEWER
 		#endif	
 	#endif
+
 #endif
 
 #define NSAppKitVersionNumber10_6		1038
 #define NSAppKitVersionNumber10_7		1138
 #define NSAppKitVersionNumber10_7_2	1138.23
 
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _MAC_OS_LION_OR_NEWER
 	#define _USES_MODERN_REGULAR_EXPRESSION
 #endif
 
-#ifdef _RUNNING_MAC_OS_MOUNTAIN_LION
+#ifdef _MAC_OS_MOUNTAIN_LION_OR_NEWER
 	#define _USES_NATIVE_NOTIFICATION_CENTER
 #endif
 

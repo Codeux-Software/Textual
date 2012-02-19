@@ -13,7 +13,7 @@
 
 + (BOOL)useNewRegularExpressionEngine
 {
-	return [Preferences applicationRanOnLion];
+	return [Preferences featureAvailableToOSXLion];
 }
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle

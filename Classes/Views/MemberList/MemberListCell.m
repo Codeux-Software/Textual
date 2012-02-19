@@ -139,7 +139,7 @@
         badgeTextPoint.y -= 1;
     }
 	
-	if ([Preferences applicationRanOnMountainLion]) {
+	if ([Preferences featureAvailableToOSXMountainLion]) {
 		badgeTextPoint.y -= 1;
 	}
     

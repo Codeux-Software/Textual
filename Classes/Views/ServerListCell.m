@@ -187,7 +187,7 @@
 	badgeTextPoint = NSMakePoint( (NSMidX(badgeFrame) - (messageCountSize.width / 2.0)),
 								 ((NSMidY(badgeFrame) - (messageCountSize.height / 2.0)) + 1));
 	
-	if ([Preferences applicationRanOnMountainLion]) {
+	if ([Preferences featureAvailableToOSXMountainLion]) {
 		badgeTextPoint.y -= 1;
 	}
 	

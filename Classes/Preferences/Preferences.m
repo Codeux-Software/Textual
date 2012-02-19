@@ -155,12 +155,12 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Application Information
 
-+ (BOOL)applicationRanOnLion
++ (BOOL)featureAvailableToOSXLion
 {
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
 }
 
-+ (BOOL)applicationRanOnMountainLion
++ (BOOL)featureAvailableToOSXMountainLion
 {
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
 }
