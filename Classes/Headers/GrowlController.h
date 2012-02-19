@@ -7,18 +7,18 @@
 @class IRCWorld;
 
 typedef enum {
-	GROWL_HIGHLIGHT				= 1000,
-	GROWL_NEW_TALK				= 1001,
-	GROWL_CHANNEL_MSG			= 1002,
-	GROWL_CHANNEL_NOTICE		= 1003,
-	GROWL_TALK_MSG				= 1004,
-	GROWL_TALK_NOTICE			= 1005,
-	GROWL_KICKED				= 1006,
-	GROWL_INVITED				= 1007,
-	GROWL_LOGIN					= 1008,
-	GROWL_DISCONNECT			= 1009,
-	GROWL_ADDRESS_BOOK_MATCH	= 1010,
-} GrowlNotificationType;
+	NOTIFICATION_HIGHLIGHT				= 1000,
+	NOTIFICATION_NEW_TALK				= 1001,
+	NOTIFICATION_CHANNEL_MSG			= 1002,
+	NOTIFICATION_CHANNEL_NOTICE		= 1003,
+	NOTIFICATION_TALK_MSG				= 1004,
+	NOTIFICATION_TALK_NOTICE			= 1005,
+	NOTIFICATION_KICKED				= 1006,
+	NOTIFICATION_INVITED				= 1007,
+	NOTIFICATION_LOGIN					= 1008,
+	NOTIFICATION_DISCONNECT			= 1009,
+	NOTIFICATION_ADDRESS_BOOK_MATCH	= 1010,
+} NotificationType;
 
 @interface GrowlController : NSObject <GrowlApplicationBridgeDelegate>
 {
@@ -32,5 +32,5 @@ typedef enum {
 @property (nonatomic, retain) id lastClickedContext;
 @property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
 
-- (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
+- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
 @end
