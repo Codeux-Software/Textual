@@ -26,30 +26,7 @@
 	[super dealloc];
 }
 
-- (NSString *)applicationNameForGrowl 
-{
-	return [Preferences applicationName];
-}
-
-- (NSDictionary *)registrationDictionaryForGrowl 
-{
-	NSArray *defaultNotifications = [NSArray arrayWithObjects:
-										TXTLS(@"GROWL_MSG_NEW_TALK"), TXTLS(@"GROWL_MSG_TALK_MSG"),
-										TXTLS(@"GROWL_MSG_HIGHLIGHT"), TXTLS(@"GROWL_MSG_INVITED"),
-										TXTLS(@"GROWL_MSG_KICKED"), TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"), nil];
-	
-	NSArray *allNotifications = [NSArray arrayWithObjects:
-									TXTLS(@"GROWL_MSG_HIGHLIGHT"), TXTLS(@"GROWL_MSG_NEW_TALK"),
-									TXTLS(@"GROWL_MSG_CHANNEL_MSG"), TXTLS(@"GROWL_MSG_CHANNEL_NOTICE"),
-									TXTLS(@"GROWL_MSG_TALK_MSG"), TXTLS(@"GROWL_MSG_TALK_NOTICE"),
-									TXTLS(@"GROWL_MSG_KICKED"), TXTLS(@"GROWL_MSG_INVITED"),
-									TXTLS(@"GROWL_MSG_LOGIN"), TXTLS(@"GROWL_MSG_DISCONNECT"),
-									TXTLS(@"GROWL_ADDRESS_BOOK_MATCH"), nil];
-	
-	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
-}
-
-- (void)notify:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
+- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	
@@ -59,71 +36,71 @@
 	BOOL sticky = [Preferences growlStickyForEvent:type];
 	
 	switch (type) {
-		case GROWL_HIGHLIGHT:
+		case NOTIFICATION_HIGHLIGHT:
 		{
 			priority = 1;
-			kind =  TXTLS(@"GROWL_MSG_HIGHLIGHT");
-			title = TXTFLS(@"GROWL_MSG_HIGHLIGHT_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_HIGHLIGHT");
+			title = TXTFLS(@"NOTIFICATION_MSG_HIGHLIGHT_TITLE", title);
 			break;
 		}
-		case GROWL_NEW_TALK:
+		case NOTIFICATION_NEW_TALK:
 		{
 			priority = 1;
-			kind =  TXTLS(@"GROWL_MSG_NEW_TALK");
-			title = TXTLS(@"GROWL_MSG_NEW_TALK_TITLE");
+			kind =  TXTLS(@"NOTIFICATION_MSG_NEW_TALK");
+			title = TXTLS(@"NOTIFICATION_MSG_NEW_TALK_TITLE");
 			break;
 		}
-		case GROWL_CHANNEL_MSG:
+		case NOTIFICATION_CHANNEL_MSG:
 		{
-			kind =  TXTLS(@"GROWL_MSG_CHANNEL_MSG");
+			kind =  TXTLS(@"NOTIFICATION_MSG_CHANNEL_MSG");
 			break;
 		}
-		case GROWL_CHANNEL_NOTICE:
+		case NOTIFICATION_CHANNEL_NOTICE:
 		{
-			kind =  TXTLS(@"GROWL_MSG_CHANNEL_NOTICE");
-			title = TXTFLS(@"GROWL_MSG_CHANNEL_NOTICE_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_CHANNEL_NOTICE");
+			title = TXTFLS(@"NOTIFICATION_MSG_CHANNEL_NOTICE_TITLE", title);
 			break;
 		}
-		case GROWL_TALK_MSG:
+		case NOTIFICATION_TALK_MSG:
 		{
-			kind =  TXTLS(@"GROWL_MSG_TALK_MSG");
-			title = TXTLS(@"GROWL_MSG_TALK_MSG_TITLE");
+			kind =  TXTLS(@"NOTIFICATION_MSG_TALK_MSG");
+			title = TXTLS(@"NOTIFICATION_MSG_TALK_MSG_TITLE");
 			break;
 		}
-		case GROWL_TALK_NOTICE:
+		case NOTIFICATION_TALK_NOTICE:
 		{
-			kind =  TXTLS(@"GROWL_MSG_TALK_NOTICE");
-			title = TXTLS(@"GROWL_MSG_TALK_NOTICE_TITLE");
+			kind =  TXTLS(@"NOTIFICATION_MSG_TALK_NOTICE");
+			title = TXTLS(@"NOTIFICATION_MSG_TALK_NOTICE_TITLE");
 			break;
 		}
-		case GROWL_KICKED:
+		case NOTIFICATION_KICKED:
 		{
-			kind =  TXTLS(@"GROWL_MSG_KICKED");
-			title = TXTFLS(@"GROWL_MSG_KICKED_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_KICKED");
+			title = TXTFLS(@"NOTIFICATION_MSG_KICKED_TITLE", title);
 			break;
 		}
-		case GROWL_INVITED:
+		case NOTIFICATION_INVITED:
 		{
-			kind =  TXTLS(@"GROWL_MSG_INVITED");
-			title = TXTFLS(@"GROWL_MSG_INVITED_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_INVITED");
+			title = TXTFLS(@"NOTIFICATION_MSG_INVITED_TITLE", title);
 			break;
 		}
-		case GROWL_LOGIN:
+		case NOTIFICATION_LOGIN:
 		{
-			kind =  TXTLS(@"GROWL_MSG_LOGIN");
-			title = TXTFLS(@"GROWL_MSG_LOGIN_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_LOGIN");
+			title = TXTFLS(@"NOTIFICATION_MSG_LOGIN_TITLE", title);
 			break;
 		}
-		case GROWL_DISCONNECT:
+		case NOTIFICATION_DISCONNECT:
 		{
-			kind =  TXTLS(@"GROWL_MSG_DISCONNECT");
-			title = TXTFLS(@"GROWL_MSG_DISCONNECT_TITLE", title);
+			kind =  TXTLS(@"NOTIFICATION_MSG_DISCONNECT");
+			title = TXTFLS(@"NOTIFICATION_MSG_DISCONNECT_TITLE", title);
 			break;
 		}
-		case GROWL_ADDRESS_BOOK_MATCH: 
+		case NOTIFICATION_ADDRESS_BOOK_MATCH: 
 		{
-			kind = TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
-			title = TXTLS(@"GROWL_MSG_ADDRESS_BOOK_MATCH_TITLE");
+			kind = TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH");
+			title = TXTLS(@"NOTIFICATION_MSG_ADDRESS_BOOK_MATCH_TITLE");
 			break;
 		}
 	}
@@ -135,6 +112,31 @@
 	notification.deliveryDate = [NSDate date];
 	
 	[_NSUserNotificationCenter() scheduleNotification:notification];
+}
+
+/* Growl delegate */
+
+- (NSString *)applicationNameForGrowl
+{
+	return [Preferences applicationName];
+}
+
+- (NSDictionary *)registrationDictionaryForGrowl
+{
+	NSArray *defaultNotifications = [NSArray arrayWithObjects:
+										TXTLS(@"NOTIFICATION_MSG_NEW_TALK"), TXTLS(@"NOTIFICATION_MSG_TALK_MSG"),
+										TXTLS(@"NOTIFICATION_MSG_HIGHLIGHT"), TXTLS(@"NOTIFICATION_MSG_INVITED"),
+										TXTLS(@"NOTIFICATION_MSG_KICKED"), TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH"), nil];
+	
+	NSArray *allNotifications = [NSArray arrayWithObjects:
+									TXTLS(@"NOTIFICATION_MSG_HIGHLIGHT"), TXTLS(@"NOTIFICATION_MSG_NEW_TALK"),
+									TXTLS(@"NOTIFICATION_MSG_CHANNEL_MSG"), TXTLS(@"NOTIFICATION_MSG_CHANNEL_NOTICE"),
+									TXTLS(@"NOTIFICATION_MSG_TALK_MSG"), TXTLS(@"NOTIFICATION_MSG_TALK_NOTICE"),
+									TXTLS(@"NOTIFICATION_MSG_KICKED"), TXTLS(@"NOTIFICATION_MSG_INVITED"),
+									TXTLS(@"NOTIFICATION_MSG_LOGIN"), TXTLS(@"NOTIFICATION_MSG_DISCONNECT"),
+									TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH"), nil];
+	
+	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
 }
 
 - (void)growlNotificationWasClicked:(id)context {
@@ -187,3 +189,4 @@
 }
 
 @end
+

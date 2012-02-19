@@ -3,7 +3,7 @@
 
 @implementation SoundWrapper
 
-- (id)initWithEventType:(GrowlNotificationType)aEventType
+- (id)initWithEventType:(NotificationType)aEventType
 {
 	if ((self = [super init])) {
 		eventType = aEventType;
@@ -12,7 +12,7 @@
 	return self;
 }
 
-+ (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType
++ (SoundWrapper *)soundWrapperWithEventType:(NotificationType)eventType
 {
 	return [[[SoundWrapper alloc] initWithEventType:eventType] autodrain];
 }
@@ -76,7 +76,7 @@
 	[Preferences setDisableWhileAway:value forEvent:eventType];
 }
 
-- (GrowlNotificationType)eventType
+- (NotificationType)eventType
 {
     return eventType;
 }
