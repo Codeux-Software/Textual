@@ -2957,17 +2957,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		chname = self.name;
 	}
 	
-	NSString *context = nil;
+	NSDictionary *info = nil;
 	NSString *title = chname;
 	NSString *desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 	
 	if (channel) {
-		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		context = [NSString stringWithDouble:uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
-	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
 	
 	return YES;
 }
@@ -3035,15 +3035,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		default: return YES;
 	}
 	
-	NSString *context = nil;
+	NSDictionary *info = nil;
 	
 	if (channel) {
-		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		context = [NSString stringWithDouble:uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
-	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
 	
 	return YES;
 }

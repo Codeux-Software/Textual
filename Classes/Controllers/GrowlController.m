@@ -13,7 +13,11 @@
 - (id)init
 {
 	if ((self = [super init])) {
-        [GrowlApplicationBridge setGrowlDelegate:self];
+		if ([Preferences applicationRanOnMountainLion]) {
+			[_NSUserNotificationCenter() setDelegate:self];
+		} else {
+			[GrowlApplicationBridge setGrowlDelegate:self];
+		}
 	}
 	
 	return self;
@@ -26,7 +30,7 @@
 	[super dealloc];
 }
 
-- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
+- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info
 {
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	
@@ -111,11 +115,20 @@
 		notification.title = title;
 		notification.informativeText = desc;
 		notification.deliveryDate = [NSDate date];
+		notification.userInfo = info;
 		
 		[_NSUserNotificationCenter() scheduleNotification:notification];
 	} else {
-		[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:context];
+		[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:info];
 	}
+}
+
+/* NSUserNotificationCenter */
+
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+	[_NSUserNotificationCenter() removeDeliveredNotification:notification];
+	[self growlNotificationWasClicked:[notification userInfo]];
 }
 
 /* Growl delegate */
@@ -143,7 +156,7 @@
 	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
 }
 
-- (void)growlNotificationWasClicked:(id)context {
+- (void)growlNotificationWasClicked:(NSDictionary *)context {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
 	if ((now - lastClickedTime) < CLICK_INTERVAL) {
@@ -161,29 +174,20 @@
 
 	[NSApp activateIgnoringOtherApps:YES];
 
-	if ([context isKindOfClass:[NSString class]]) {
-		NSArray *ary = [context componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-		if (ary.count >= 2) {
-			NSInteger uid = [ary integerAtIndex:0];
-			NSInteger cid = [ary integerAtIndex:1];
-			
-			IRCClient  *u = [owner findClientById:uid];
-			IRCChannel *c = [owner findChannelByClientId:uid channelId:cid];
-			
-			if (c) {
-				[owner select:c];
-			} else if (u) {
-				[owner select:u];
-			}
-		} else if (ary.count == 1) {
-			NSInteger uid = [ary integerAtIndex:0];
-			
-			IRCClient *u = [owner findClientById:uid];
-			
-			if (u) {
-				[owner select:u];
-			}
+	if ([context isKindOfClass:[NSDictionary class]]) {
+		NSNumber *uid = [context objectForKey:@"client"];
+		IRCClient *u = [owner findClientById:[uid integerValue]];
+		IRCChannel *c = nil;
+		
+		if ([context objectForKey:@"channel"]) {
+			NSNumber *cid = [context objectForKey:@"channel"];
+			c = [owner findChannelByClientId:[uid integerValue] channelId:[cid integerValue]];
+		}
+		
+		if (c) {
+			[owner select:c];
+		} else if (u) {
+			[owner select:u];
 		}
 	}
 }
