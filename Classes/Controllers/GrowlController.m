@@ -13,11 +13,14 @@
 - (id)init
 {
 	if ((self = [super init])) {
+#if defined(MAC_OS_X_VERSION_10_7)
 		if ([Preferences applicationRanOnMountainLion]) {
 			[_NSUserNotificationCenter() setDelegate:self];
-		} else {
-			[GrowlApplicationBridge setGrowlDelegate:self];
+			return self;
 		}
+#endif
+		
+		[GrowlApplicationBridge setGrowlDelegate:self];
 	}
 	
 	return self;
@@ -110,6 +113,7 @@
 		}
 	}
 	
+#if defined(MAC_OS_X_VERSION_10_7)
 	if ([Preferences applicationRanOnMountainLion]) {
 		NSUserNotification *notification = [NSUserNotification newad];
 		
@@ -119,9 +123,11 @@
 		notification.userInfo = info;
 		
 		[_NSUserNotificationCenter() scheduleNotification:notification];
-	} else {
-		[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:info];
+		return;
 	}
+#endif
+	
+	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:info];
 }
 
 /* NSUserNotificationCenter */
