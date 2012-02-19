@@ -1995,10 +1995,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 32: // Command: CTCP
 		{ 
-			NSString *subCommand = [s.getToken.string uppercaseString];
+			targetChannelName = s.getToken.string;
 			
-			if (NSObjectIsNotEmpty(subCommand)) {
-				targetChannelName = s.getToken.string;
+			if (NSObjectIsNotEmpty(targetChannelName)) {
+				NSString *subCommand = [s.getToken.string uppercaseString];
 				
 				if ([subCommand isEqualToString:IRCCI_PING]) {
 					[self sendCTCPPing:targetChannelName];
