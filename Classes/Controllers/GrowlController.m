@@ -13,9 +13,10 @@
 - (id)init
 {
 	if ((self = [super init])) {
-#if defined(MAC_OS_X_VERSION_10_8)
+#ifdef _USES_NATIVE_NOTIFICATION_CENTER
 		if ([Preferences applicationRanOnMountainLion]) {
 			[_NSUserNotificationCenter() setDelegate:self];
+			
 			return self;
 		}
 #endif
@@ -113,7 +114,7 @@
 		}
 	}
 	
-#if defined(MAC_OS_X_VERSION_10_8)
+#ifdef _USES_NATIVE_NOTIFICATION_CENTER
 	if ([Preferences applicationRanOnMountainLion]) {
 		NSUserNotification *notification = [NSUserNotification newad];
 		
