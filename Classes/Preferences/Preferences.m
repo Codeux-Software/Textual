@@ -595,47 +595,47 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Events
 
-+ (NSString *)titleForEvent:(GrowlNotificationType)event
++ (NSString *)titleForEvent:(NotificationType)event
 {
 	switch (event) {
-		case GROWL_HIGHLIGHT:			return TXTLS(@"GROWL_HIGHLIGHT");
-		case GROWL_NEW_TALK:			return TXTLS(@"GROWL_NEW_TALK");
-		case GROWL_CHANNEL_MSG:			return TXTLS(@"GROWL_CHANNEL_MSG");
-		case GROWL_CHANNEL_NOTICE:		return TXTLS(@"GROWL_CHANNEL_NOTICE");
-		case GROWL_TALK_MSG:			return TXTLS(@"GROWL_TALK_MSG");
-		case GROWL_TALK_NOTICE:			return TXTLS(@"GROWL_TALK_NOTICE");
-		case GROWL_KICKED:				return TXTLS(@"GROWL_KICKED");
-		case GROWL_INVITED:				return TXTLS(@"GROWL_INVITED");
-		case GROWL_LOGIN:				return TXTLS(@"GROWL_LOGIN");
-		case GROWL_DISCONNECT:			return TXTLS(@"GROWL_DISCONNECT");
-		case GROWL_ADDRESS_BOOK_MATCH:	return TXTLS(@"GROWL_ADDRESS_BOOK_MATCH");
+		case NOTIFICATION_HIGHLIGHT:			return TXTLS(@"NOTIFICATION_HIGHLIGHT");
+		case NOTIFICATION_NEW_TALK:		    	return TXTLS(@"NOTIFICATION_NEW_TALK");
+		case NOTIFICATION_CHANNEL_MSG:			return TXTLS(@"NOTIFICATION_CHANNEL_MSG");
+		case NOTIFICATION_CHANNEL_NOTICE:		return TXTLS(@"NOTIFICATION_CHANNEL_NOTICE");
+		case NOTIFICATION_TALK_MSG:		    	return TXTLS(@"NOTIFICATION_TALK_MSG");
+		case NOTIFICATION_TALK_NOTICE:			return TXTLS(@"NOTIFICATION_TALK_NOTICE");
+		case NOTIFICATION_KICKED:				return TXTLS(@"NOTIFICATION_KICKED");
+		case NOTIFICATION_INVITED:				return TXTLS(@"NOTIFICATION_INVITED");
+		case NOTIFICATION_LOGIN:				return TXTLS(@"NOTIFICATION_LOGIN");
+		case NOTIFICATION_DISCONNECT:			return TXTLS(@"NOTIFICATION_DISCONNECT");
+		case NOTIFICATION_ADDRESS_BOOK_MATCH:	return TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH");
 		default: return nil;
 	}
 	
 	return nil;
 }
 
-+ (NSString *)keyForEvent:(GrowlNotificationType)event
++ (NSString *)keyForEvent:(NotificationType)event
 {
 	switch (event) {
-		case GROWL_HIGHLIGHT:			return @"eventHighlight";
-		case GROWL_NEW_TALK:			return @"eventNewtalk";
-		case GROWL_CHANNEL_MSG:			return @"eventChannelText";
-		case GROWL_CHANNEL_NOTICE:		return @"eventChannelNotice";
-		case GROWL_TALK_MSG:			return @"eventTalkText";
-		case GROWL_TALK_NOTICE:			return @"eventTalkNotice";
-		case GROWL_KICKED:				return @"eventKicked";
-		case GROWL_INVITED:				return @"eventInvited";
-		case GROWL_LOGIN:				return @"eventLogin";
-		case GROWL_DISCONNECT:			return @"eventDisconnect";
-		case GROWL_ADDRESS_BOOK_MATCH:	return @"eventAddressBookMatch";
+		case NOTIFICATION_HIGHLIGHT:			return @"eventHighlight";
+		case NOTIFICATION_NEW_TALK:			return @"eventNewtalk";
+		case NOTIFICATION_CHANNEL_MSG:			return @"eventChannelText";
+		case NOTIFICATION_CHANNEL_NOTICE:		return @"eventChannelNotice";
+		case NOTIFICATION_TALK_MSG:			return @"eventTalkText";
+		case NOTIFICATION_TALK_NOTICE:			return @"eventTalkNotice";
+		case NOTIFICATION_KICKED:				return @"eventKicked";
+		case NOTIFICATION_INVITED:				return @"eventInvited";
+		case NOTIFICATION_LOGIN:				return @"eventLogin";
+		case NOTIFICATION_DISCONNECT:			return @"eventDisconnect";
+		case NOTIFICATION_ADDRESS_BOOK_MATCH:	return @"eventAddressBookMatch";
 		default: return nil;
 	}
 	
 	return nil;
 }
 
-+ (NSString *)soundForEvent:(GrowlNotificationType)event
++ (NSString *)soundForEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -648,7 +648,7 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() objectForKey:key];
 }
 
-+ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event
++ (void)setSound:(NSString *)value forEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -661,7 +661,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[_NSUserDefaults() setObject:value forKey:key];
 }
 
-+ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
++ (BOOL)growlEnabledForEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -674,7 +674,7 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:key];
 }
 
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
++ (void)setGrowlEnabled:(BOOL)value forEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -687,7 +687,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[_NSUserDefaults() setBool:value forKey:key];
 }
 
-+ (BOOL)growlStickyForEvent:(GrowlNotificationType)event
++ (BOOL)growlStickyForEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -700,7 +700,7 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:key];
 }
 
-+ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
++ (void)setGrowlSticky:(BOOL)value forEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -713,7 +713,7 @@ static NSMutableDictionary *commandIndex = nil;
 	[_NSUserDefaults() setBool:value forKey:key];
 }
 
-+ (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event
++ (BOOL)disableWhileAwayForEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
@@ -726,7 +726,7 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:key];
 }
 
-+ (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event
++ (void)setDisableWhileAway:(BOOL)value forEvent:(NotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 	
