@@ -2938,6 +2938,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
 	
 	IRCChannel *channel = nil;
+	
 	NSString *chname = nil;
 	
 	if (target) {
@@ -2958,6 +2959,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	NSDictionary *info = nil;
+	
 	NSString *title = chname;
 	NSString *desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 	
