@@ -257,9 +257,9 @@ typedef enum {
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
 
-- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype;
-- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)notifyText:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype;
+- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyText:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
 

@@ -5,7 +5,7 @@
 
 @interface SoundWrapper : NSObject
 {
-	GrowlNotificationType eventType;
+	NotificationType eventType;
 }
 
 @property (nonatomic, readonly) NSString *displayName;
@@ -14,7 +14,7 @@
 @property (nonatomic, assign) BOOL growlSticky;
 @property (nonatomic, assign) BOOL disableWhileAway;
 
-+ (SoundWrapper *)soundWrapperWithEventType:(GrowlNotificationType)eventType;
-- (GrowlNotificationType)eventType;
++ (SoundWrapper *)soundWrapperWithEventType:(NotificationType)eventType;
+- (NotificationType)eventType;
 
 @end
