@@ -14,7 +14,7 @@
 {
 	if ((self = [super init])) {
 #ifdef _USES_NATIVE_NOTIFICATION_CENTER
-		if ([Preferences applicationRanOnMountainLion]) {
+		if ([Preferences featureAvailableToOSXMountainLion]) {
 			[_NSUserNotificationCenter() setDelegate:self];
 			
 			return self;
@@ -115,7 +115,7 @@
 	}
 	
 #ifdef _USES_NATIVE_NOTIFICATION_CENTER
-	if ([Preferences applicationRanOnMountainLion]) {
+	if ([Preferences featureAvailableToOSXMountainLion]) {
 		NSUserNotification *notification = [NSUserNotification newad];
 		
 		notification.title = title;

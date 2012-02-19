@@ -49,8 +49,9 @@ typedef enum {
 + (NSInteger)totalRunTime;
 + (void)updateTotalRunTime;
 
-+ (BOOL)applicationRanOnLion;
-+ (BOOL)applicationRanOnMountainLion;
++ (BOOL)featureAvailableToOSXLion;
++ (BOOL)featureAvailableToOSXMountainLion;
+
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;
