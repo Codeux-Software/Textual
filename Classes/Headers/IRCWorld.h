@@ -141,7 +141,7 @@
 - (void)updateChannelTitle:(IRCChannel *)channel;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message;
-- (void)notifyOnGrowl:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
+- (void)notifyOnGrowl:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
 
 - (void)preferencesChanged;
 - (void)reloadTheme;

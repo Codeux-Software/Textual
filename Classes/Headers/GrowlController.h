@@ -20,7 +20,7 @@ typedef enum {
 	NOTIFICATION_ADDRESS_BOOK_MATCH	= 1010,
 } NotificationType;
 
-@interface GrowlController : NSObject <GrowlApplicationBridgeDelegate>
+@interface GrowlController : NSObject <GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate>
 {
 	IRCWorld		*owner;
 	
@@ -32,5 +32,5 @@ typedef enum {
 @property (nonatomic, retain) id lastClickedContext;
 @property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
 
-- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context;
+- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
 @end
