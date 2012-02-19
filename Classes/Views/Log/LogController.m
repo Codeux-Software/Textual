@@ -507,6 +507,32 @@
 	 depending on the direction being traveled. */
 }
 
+- (void)jumpToLine:(NSInteger)line {
+	NSString *lid = [NSString stringWithFormat:@"line%i", line];
+	
+	if (loaded == NO) return;
+	
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return;
+	
+	DOMElement *e = [doc getElementById:lid];
+	
+	if (e) {
+		NSInteger y = 0;
+		DOMElement *t = e;
+		
+		while (t) {
+			if ([t isKindOfClass:[DOMElement class]]) {
+				y += [[t valueForKey:@"offsetTop"] integerValue];
+			}
+			
+			t = (id)[t parentNode];
+		}
+		
+		[[doc body] setValue:NSNumberWithInteger((y - SCROLL_CORRECTION)) forKey:@"scrollTop"];
+	}
+}
+
 - (void)nextHighlight
 {
 	if (loaded == NO) return;
@@ -534,11 +560,7 @@
 		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
 	}
 	
-	NSString *lid = [NSString stringWithFormat:@"line%i", lastVisitedHighlight];
-	
-	DOMElement *e = [doc getElementById:lid];
-	
-	/* TODO: Insert code to go to line in scrollbar here. */
+	[self jumpToLine:lastVisitedHighlight];
 }
 
 - (void)previousHighlight
@@ -567,11 +589,7 @@
 		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
 	}
 	
-	NSString *lid = [NSString stringWithFormat:@"line%i", lastVisitedHighlight];
-	
-	DOMElement *e = [doc getElementById:lid];
-	
-	/* TODO: Insert code to go to line in scrollbar here. */
+	[self jumpToLine:lastVisitedHighlight];
 }
 
 - (void)limitNumberOfLines
