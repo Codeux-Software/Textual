@@ -35,6 +35,7 @@
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	
 	NSString *kind = nil;
+	
 	NSInteger priority = 0;
 	
 	BOOL sticky = [Preferences growlStickyForEvent:type];
@@ -56,7 +57,7 @@
 		}
 		case NOTIFICATION_CHANNEL_MSG:
 		{
-			kind =  TXTLS(@"NOTIFICATION_MSG_CHANNEL_MSG");
+			kind = TXTLS(@"NOTIFICATION_MSG_CHANNEL_MSG");
 			break;
 		}
 		case NOTIFICATION_CHANNEL_NOTICE:
@@ -156,7 +157,8 @@
 	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
 }
 
-- (void)growlNotificationWasClicked:(NSDictionary *)context {
+- (void)growlNotificationWasClicked:(NSDictionary *)context 
+{
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
 	if ((now - lastClickedTime) < CLICK_INTERVAL) {
@@ -176,11 +178,13 @@
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
 		NSNumber *uid = [context objectForKey:@"client"];
-		IRCClient *u = [owner findClientById:[uid integerValue]];
+		
+		IRCClient  *u = [owner findClientById:[uid integerValue]];
 		IRCChannel *c = nil;
 		
 		if ([context objectForKey:@"channel"]) {
 			NSNumber *cid = [context objectForKey:@"channel"];
+			
 			c = [owner findChannelByClientId:[uid integerValue] channelId:[cid integerValue]];
 		}
 		
@@ -192,9 +196,9 @@
 	}
 }
 
-- (BOOL)hasNetworkClientEntitlement {
+- (BOOL)hasNetworkClientEntitlement 
+{
     return YES;
 }
 
 @end
-
