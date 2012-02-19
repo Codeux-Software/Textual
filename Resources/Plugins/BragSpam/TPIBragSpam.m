@@ -24,7 +24,6 @@
 			if (c.isConnected == NO) continue;
 			
 			networkCount++;
-			channelCount += [c.channels count];
 			
 			if (c.hasIRCopAccess == YES) {
 				operCount++;
@@ -36,6 +35,8 @@
 			
 			for (IRCChannel *ch in c.channels) {
 				if ([ch isActive] == NO || [ch isChannel] == NO) continue;
+
+				channelCount += 1;
 				
 				IRCUser *myself = [ch findMember:c.myNick];
 				
