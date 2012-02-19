@@ -430,7 +430,7 @@
 	}
 }
 
-- (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
+- (void)notifyOnGrowl:(NotificationType)type title:(NSString *)title desc:(NSString *)desc context:(id)context
 {
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	if ([Preferences stopGrowlOnActive] && [window isOnCurrentWorkspace]) return;
