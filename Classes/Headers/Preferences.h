@@ -159,17 +159,17 @@ typedef enum {
 
 + (BOOL)stopGrowlOnActive;
 
-+ (NSString *)titleForEvent:(GrowlNotificationType)event;
-+ (NSString *)soundForEvent:(GrowlNotificationType)event;
++ (NSString *)titleForEvent:(NotificationType)event;
++ (NSString *)soundForEvent:(NotificationType)event;
 
-+ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event;
-+ (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
-+ (BOOL)disableWhileAwayForEvent:(GrowlNotificationType)event;
++ (BOOL)growlEnabledForEvent:(NotificationType)event;
++ (BOOL)growlStickyForEvent:(NotificationType)event;
++ (BOOL)disableWhileAwayForEvent:(NotificationType)event;
 
-+ (void)setSound:(NSString *)value forEvent:(GrowlNotificationType)event;
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
-+ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
-+ (void)setDisableWhileAway:(BOOL)value forEvent:(GrowlNotificationType)event;
++ (void)setSound:(NSString *)value forEvent:(NotificationType)event;
++ (void)setGrowlEnabled:(BOOL)value forEvent:(NotificationType)event;
++ (void)setGrowlSticky:(BOOL)value forEvent:(NotificationType)event;
++ (void)setDisableWhileAway:(BOOL)value forEvent:(NotificationType)event;
 
 + (TabActionType)tabAction;
 

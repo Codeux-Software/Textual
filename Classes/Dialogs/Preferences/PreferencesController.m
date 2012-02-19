@@ -373,17 +373,17 @@
 	if (NSObjectIsEmpty(sounds)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_LOGIN]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_KICKED]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_INVITED]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE]];
-		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:GROWL_ADDRESS_BOOK_MATCH]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_LOGIN]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_DISCONNECT]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_HIGHLIGHT]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_KICKED]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_INVITED]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_CHANNEL_MSG]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_CHANNEL_NOTICE]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_TALK_MSG]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_NEW_TALK]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_TALK_NOTICE]];
+		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_ADDRESS_BOOK_MATCH]];
 		
 		sounds = ary;
 	}

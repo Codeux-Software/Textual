@@ -339,7 +339,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([ignoreItem notifyJoins] == YES) {
 		NSString *text = TXTFLS(localKey, host, ignoreItem.hostmask);
 		
-		[self notifyEvent:GROWL_ADDRESS_BOOK_MATCH lineType:LINE_TYPE_NOTICE target:nil nick:nick text:text];
+		[self notifyEvent:NOTIFICATION_ADDRESS_BOOK_MATCH lineType:LINE_TYPE_NOTICE target:nil nick:nick text:text];
 	}
 }
 
@@ -2925,7 +2925,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Growl
 
-- (BOOL)notifyText:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text
+- (BOOL)notifyText:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
@@ -2938,6 +2938,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
 	
 	IRCChannel *channel = nil;
+	
 	NSString *chname = nil;
 	
 	if (target) {
@@ -2957,27 +2958,28 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		chname = self.name;
 	}
 	
-	NSString *context = nil;
+	NSDictionary *info = nil;
+	
 	NSString *title = chname;
 	NSString *desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 	
 	if (channel) {
-		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		context = [NSString stringWithDouble:uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
-	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
 	
 	return YES;
 }
 
-- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype
+- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype
 {
 	return [self notifyEvent:type lineType:ltype target:nil nick:NSNullObject text:NSNullObject];
 }
 
-- (BOOL)notifyEvent:(GrowlNotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text
+- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
@@ -3005,29 +3007,29 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *desc  = NSNullObject;
 	
 	switch (type) {
-		case GROWL_LOGIN:
+		case NOTIFICATION_LOGIN:
 		{
 			title = self.name;
 			break;
 		}
-		case GROWL_DISCONNECT:
+		case NOTIFICATION_DISCONNECT:
 		{
 			title = self.name;
 			break;
 		}
-		case GROWL_KICKED:
+		case NOTIFICATION_KICKED:
 		{
 			title = channel.name;
-			desc = TXTFLS(@"GROWL_MSG_KICKED_DESC", nick, text);
+			desc = TXTFLS(@"NOTIFICATION_MSG_KICKED_DESC", nick, text);
 			break;
 		}
-		case GROWL_INVITED:
+		case NOTIFICATION_INVITED:
 		{
 			title = self.name;
-			desc = TXTFLS(@"GROWL_MSG_INVITED_DESC", nick, text);
+			desc = TXTFLS(@"NOTIFICATION_MSG_INVITED_DESC", nick, text);
 			break;
 		}
-		case GROWL_ADDRESS_BOOK_MATCH: 
+		case NOTIFICATION_ADDRESS_BOOK_MATCH: 
 		{
 			desc = text;
 			break;
@@ -3035,15 +3037,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		default: return YES;
 	}
 	
-	NSString *context = nil;
+	NSDictionary *info = nil;
 	
 	if (channel) {
-		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		context = [NSString stringWithDouble:uid];
+		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
-	[world notifyOnGrowl:type title:title desc:desc context:context];
+	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
 	
 	return YES;
 }
@@ -3578,19 +3580,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (type == LINE_TYPE_NOTICE) {     
 			[self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
-			[self notifyText:GROWL_CHANNEL_NOTICE lineType:type target:c nick:anick text:text];
+			[self notifyText:NOTIFICATION_CHANNEL_NOTICE lineType:type target:c nick:anick text:text];
 		} else {
 			BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
 			BOOL postevent = NO;
 			
 			if (highlight) {
-				postevent = [self notifyText:GROWL_HIGHLIGHT lineType:type target:c nick:anick text:text];
+				postevent = [self notifyText:NOTIFICATION_HIGHLIGHT lineType:type target:c nick:anick text:text];
 				
 				if (postevent) {
 					[self setKeywordState:c];
 				}
 			} else {
-				postevent = [self notifyText:GROWL_CHANNEL_MSG lineType:type target:c nick:anick text:text];
+				postevent = [self notifyText:NOTIFICATION_CHANNEL_MSG lineType:type target:c nick:anick text:text];
 			}
 			
 			if (postevent) {
@@ -3766,27 +3768,27 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				if (targetOurself) {
 					[self setUnreadState:c];
-					[self notifyText:GROWL_TALK_NOTICE lineType:type target:c nick:anick text:text];
+					[self notifyText:NOTIFICATION_TALK_NOTICE lineType:type target:c nick:anick text:text];
 				}
 			} else {
 				BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
 				BOOL postevent = NO;
 				
 				if (highlight) {
-					postevent = [self notifyText:GROWL_HIGHLIGHT lineType:type target:c nick:anick text:text];
+					postevent = [self notifyText:NOTIFICATION_HIGHLIGHT lineType:type target:c nick:anick text:text];
 					
 					if (postevent) {
 						[self setKeywordState:c];
 					}
 				} else if (targetOurself) {
 					if (newTalk) {
-						postevent = [self notifyText:GROWL_NEW_TALK lineType:type target:c nick:anick text:text];
+						postevent = [self notifyText:NOTIFICATION_NEW_TALK lineType:type target:c nick:anick text:text];
 						
 						if (postevent) {
 							[self setNewTalkState:c];
 						}
 					} else {
-						postevent = [self notifyText:GROWL_TALK_MSG lineType:type target:c nick:anick text:text];
+						postevent = [self notifyText:NOTIFICATION_TALK_MSG lineType:type target:c nick:anick text:text];
 					}
 				}
 				
@@ -4074,7 +4076,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[c deactivate];
 			
 			[self reloadTree];
-			[self notifyEvent:GROWL_KICKED lineType:LINE_TYPE_KICK target:c nick:nick text:comment];
+			[self notifyEvent:NOTIFICATION_KICKED lineType:LINE_TYPE_KICK target:c nick:nick text:comment];
 			
 			if ([Preferences rejoinOnKick] && c.errLastJoin == NO) {
 				[self joinChannel:c];
@@ -4279,7 +4281,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *text = TXTFLS(@"IRC_USER_INVITED_YOU_TO", nick, m.sender.user, m.sender.address, chname);
 	
 	[self printBoth:self type:LINE_TYPE_INVITE text:text receivedAt:m.receivedAt];
-	[self notifyEvent:GROWL_INVITED lineType:LINE_TYPE_INVITE target:nil nick:nick text:chname];
+	[self notifyEvent:NOTIFICATION_INVITED lineType:LINE_TYPE_INVITE target:nil nick:nick text:chname];
 	
 	if ([Preferences autoJoinOnInvite]) {
 		[self joinUnlistedChannel:chname];
@@ -4434,7 +4436,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[myNick drain];
 	myNick = [[m paramAt:0] retain];
 	
-	[self notifyEvent:GROWL_LOGIN lineType:LINE_TYPE_SYSTEM];
+	[self notifyEvent:NOTIFICATION_LOGIN lineType:LINE_TYPE_SYSTEM];
 	
 	for (NSString *s in config.loginCommands) {
 		if ([s hasPrefix:@"/"]) {
@@ -5349,7 +5351,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self printSystemBoth:nil text:TXTLS(disconnectTXTLString)];
 		
 		if (prevConnected) {
-			[self notifyEvent:GROWL_DISCONNECT lineType:LINE_TYPE_SYSTEM];
+			[self notifyEvent:NOTIFICATION_DISCONNECT lineType:LINE_TYPE_SYSTEM];
 		}
 	}
 	
