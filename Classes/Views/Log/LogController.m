@@ -507,7 +507,8 @@
 	 depending on the direction being traveled. */
 }
 
-- (void)jumpToLine:(NSInteger)line {
+- (void)jumpToLine:(NSInteger)line 
+{
 	NSString *lid = [NSString stringWithFormat:@"line%i", line];
 	
 	if (loaded == NO) return;

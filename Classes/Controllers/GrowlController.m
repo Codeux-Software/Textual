@@ -136,6 +136,7 @@
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
 	[_NSUserNotificationCenter() removeDeliveredNotification:notification];
+	
 	[self growlNotificationWasClicked:[notification userInfo]];
 }
 
