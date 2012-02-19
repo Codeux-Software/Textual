@@ -12,7 +12,7 @@
 	id childItem = [self itemAtRow:row];
 	
 	if ([self isGroupItem:childItem] == NO) {
-		if ([Preferences applicationRanOnLion]) {
+		if ([Preferences featureAvailableToOSXLion]) {
 			nrect.origin.x   += 35;
 			nrect.size.width  = ([self frame].size.width - 35);
 		} else {

@@ -64,7 +64,7 @@
 
 - (void)awakeFromNib
 {
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _MAC_OS_LION_OR_NEWER
 	[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
 	

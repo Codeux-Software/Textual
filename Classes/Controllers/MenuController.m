@@ -1666,8 +1666,8 @@
 
 - (void)wantsFullScreenModeToggled:(id)sender
 {
-#ifdef _RUNNING_MAC_OS_LION
-	if ([Preferences applicationRanOnLion]) {
+#ifdef _MAC_OS_LION_OR_NEWER
+	if ([Preferences featureAvailableToOSXLion]) {
 		if (isInFullScreenMode) {
 			[window toggleFullScreen:sender];
 			[master loadWindowState];
@@ -1702,7 +1702,7 @@
 			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		}
 		
-#ifdef _RUNNING_MAC_OS_LION
+#ifdef _MAC_OS_LION_OR_NEWER
 	}
 #endif
 	
