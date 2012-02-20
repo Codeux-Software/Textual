@@ -501,10 +501,19 @@
 		return NO;
 	}
 	
-	return YES;
+	if ([highlightedLineNumbers containsObject:NSNumberWithInteger(lastVisitedHighlight)] == NO) {
+		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+	}
 	
-	/* TODO: Return NO if we cannot go forward or backwards
-	 depending on the direction being traveled. */
+	if (previous && [highlightedLineNumbers integerAtIndex:0] == lastVisitedHighlight) {
+		return NO;
+	}
+	
+	if ((previous == NO) && [highlightedLineNumbers.lastObject integerValue] == lastVisitedHighlight) {
+		return NO;
+	}
+	
+	return YES;
 }
 
 - (void)jumpToLine:(NSInteger)line 
