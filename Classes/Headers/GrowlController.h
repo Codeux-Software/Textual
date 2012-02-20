@@ -20,7 +20,13 @@ typedef enum {
 	NOTIFICATION_ADDRESS_BOOK_MATCH	= 1010,
 } NotificationType;
 
-@interface GrowlController : NSObject <GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate>
+#ifdef _USES_NATIVE_NOTIFICATION_CENTER
+	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate
+#else
+	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate
+#endif
+
+@interface GrowlController : NSObject <GrowlControllerDelegate>
 {
 	IRCWorld		*owner;
 	
