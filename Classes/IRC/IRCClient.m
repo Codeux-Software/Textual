@@ -2965,12 +2965,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSDictionary *info = nil;
 	
 	NSString *title = chname;
-	NSString *desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
+	NSString *desc;
+	
+	if (ltype == LINE_TYPE_ACTION || ltype == LINE_TYPE_ACTION_NH) {
+		desc = [NSString stringWithFormat:@"• %@: %@", nick, text];
+	} else {
+		desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
+	}
 	
 	if (channel) {
-		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
+		info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
+		info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
@@ -3044,9 +3050,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSDictionary *info = nil;
 	
 	if (channel) {
-		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
+		info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:uid], @"client", [NSNumber numberWithInteger:channel.uid], @"channel", nil];
 	} else {
-		info = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInteger:uid], @"client", nil];
+		info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:uid], @"client", nil];
 	}
 	
 	[world notifyOnGrowl:type title:title desc:desc userInfo:info];
