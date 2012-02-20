@@ -133,12 +133,16 @@
 
 /* NSUserNotificationCenter */
 
+#ifdef _USES_NATIVE_NOTIFICATION_CENTER
+
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
 	[_NSUserNotificationCenter() removeDeliveredNotification:notification];
 	
 	[self growlNotificationWasClicked:[notification userInfo]];
 }
+
+#endif
 
 /* Growl delegate */
 
