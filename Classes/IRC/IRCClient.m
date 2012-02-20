@@ -3915,7 +3915,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		mach_timebase_info(&info);
 		
 		NSDoubleN nano = (1e-9 * ((NSDoubleN)info.numer / (NSDoubleN)info.denom));
-		NSDoubleN seconds = ((double)delta * nano);
+		NSDoubleN seconds = ((NSDoubleN)delta * nano);
 		
 		text = TXTFLS(@"IRC_RECIEVED_CTCP_PING_REPLY", nick, command, seconds);
 	} else {
