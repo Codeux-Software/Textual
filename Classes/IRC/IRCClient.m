@@ -3,6 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #include <arpa/inet.h>
+#import <mach/mach_time.h>
 
 #define TIMEOUT_INTERVAL			360
 #define PING_INTERVAL				270
@@ -1526,7 +1527,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendCTCPPing:(NSString *)target
 {
-	[self sendCTCPQuery:target command:IRCCI_PING text:[NSString stringWithFloat:CFAbsoluteTimeGetCurrent()]];
+	[self sendCTCPQuery:target command:IRCCI_PING text:[NSString stringWithFormat:@"%qu", mach_absolute_time()]];
 }
 
 - (BOOL)sendCommand:(id)str
@@ -3908,10 +3909,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if ([command isEqualToString:IRCCI_PING]) {
-		NSDoubleN time = [s doubleValue];
-		NSDoubleN delta = (CFAbsoluteTimeGetCurrent() - time);
+		uint64_t delta = mach_absolute_time() - [s longLongValue];
+		mach_timebase_info_data_t info;
+		mach_timebase_info(&info);
+		double nano = 1e-9 * ((double) info.numer) / ((double) info.denom);
+		double seconds = ((double) delta) * nano;
 		
-		text = TXTFLS(@"IRC_RECIEVED_CTCP_PING_REPLY", nick, command, delta);
+		text = TXTFLS(@"IRC_RECIEVED_CTCP_PING_REPLY", nick, command, seconds);
 	} else {
 		text = TXTFLS(@"IRC_RECIEVED_CTCP_REPLY", nick, command, s);
 	}
