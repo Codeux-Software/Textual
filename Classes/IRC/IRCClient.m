@@ -3909,11 +3909,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if ([command isEqualToString:IRCCI_PING]) {
-		uint64_t delta = mach_absolute_time() - [s longLongValue];
+		uint64_t delta = (mach_absolute_time() - [s longLongValue]);
+		
 		mach_timebase_info_data_t info;
 		mach_timebase_info(&info);
-		double nano = 1e-9 * ((double) info.numer) / ((double) info.denom);
-		double seconds = ((double) delta) * nano;
+		
+		NSDoubleN nano = (1e-9 * ((NSDoubleN)info.numer / (NSDoubleN)info.denom));
+		NSDoubleN seconds = ((double)delta * nano);
 		
 		text = TXTFLS(@"IRC_RECIEVED_CTCP_PING_REPLY", nick, command, seconds);
 	} else {
