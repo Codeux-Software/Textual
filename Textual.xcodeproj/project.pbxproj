@@ -2277,7 +2277,7 @@
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = appstore;
+				ZERO_LINK = NO;
 			};
 			name = "App Store Release";
 		};
