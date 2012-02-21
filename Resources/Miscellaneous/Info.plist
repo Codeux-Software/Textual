@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9621</string>
+	<string>9623</string>
 	<key>Build Reference</key>
-	<string>2.1-241-g335d21f-unstable</string>
+	<string>2.1-242-gc278073-unstable</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual</string>
+	<string>com.codeux.irc.textual.trial</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
