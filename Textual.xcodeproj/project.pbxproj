@@ -29,17 +29,6 @@
 			name = "Clean Up Resources ";
 			productName = "Clean Up Resources ";
 		};
-		4CBC373D12DB04B200B211E0 /* Update Version Data */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4CBC375512DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Update Version Data" */;
-			buildPhases = (
-				4CBC373C12DB04B200B211E0 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Update Version Data";
-			productName = "Standard Build";
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -381,13 +370,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BlowfishCommandLine;
-		};
-		4CE5D499131798F100321734 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CBC373D12DB04B200B211E0;
-			remoteInfo = "Update Version Data";
 		};
 		4CE5D49B131798F100321734 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1688,6 +1670,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
+				4C6185C614F35AE400BBA3B2 /* Update Version Info */,
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */,
 				4C66E89512DF6A4D00446250 /* Copy Additional Frameworks */,
@@ -1702,7 +1685,6 @@
 			);
 			dependencies = (
 				4CE5D49C131798F100321734 /* PBXTargetDependency */,
-				4CE5D49A131798F100321734 /* PBXTargetDependency */,
 				4C7642281382B922001B23F4 /* PBXTargetDependency */,
 			);
 			name = Textual;
@@ -1749,7 +1731,6 @@
 			targets = (
 				4CA9456011E1AFBA00D36367 /* Textual */,
 				4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */,
-				4CBC373D12DB04B200B211E0 /* Update Version Data */,
 				4C7642201382B8A3001B23F4 /* Build Frameworks */,
 			);
 		};
@@ -1871,6 +1852,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n";
 		};
+		4C6185C614F35AE400BBA3B2 /* Update Version Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Version Info";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$PROJECT_DIR/Resources/Miscellaneous/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nbuildRef=\"${bundleVersion}-${refInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: $buildRef)\"\n\nbuildNumber=$(($buildNumber + 1))\n\nif [ ${#refInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" $TEXTUAL_BUNDLE_ID\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\nfi";
+		};
 		4C7642261382B8A9001B23F4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1895,20 +1890,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name Compiled -exec rm -rf '{}' +";
-		};
-		4CBC373C12DB04B200B211E0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "cd \"$PROJECT_DIR/Resources/Miscellaneous/\"\n\nif [ \"${CONFIGURATION}\" == \"Release (Trial)\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" \\\"com.codeux.irc.textual.trial\\\"\" Info.plist\nelse\n/usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" \\\"com.codeux.irc.textual\\\"\" Info.plist\nfi\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]; then exit; fi;\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nbuildRef=\"${bundleVersion}-${refInfo}\"\n\necho \"Building Textual (Build Reference: $buildRef)\"\n\nbuildNumber=$(($buildNumber + 1))\n\nif [ ${#refInfo} -gt 5 ]; then\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n/usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\nfi";
+			shellScript = "if [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name Compiled -exec rm -rf '{}' +";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2035,11 +2017,6 @@
 			isa = PBXTargetDependency;
 			target = 4C7642201382B8A3001B23F4 /* Build Frameworks */;
 			targetProxy = 4C7642271382B922001B23F4 /* PBXContainerItemProxy */;
-		};
-		4CE5D49A131798F100321734 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4CBC373D12DB04B200B211E0 /* Update Version Data */;
-			targetProxy = 4CE5D499131798F100321734 /* PBXContainerItemProxy */;
 		};
 		4CE5D49C131798F100321734 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2249,6 +2226,8 @@
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
 			};
 			name = "App Store Release";
 		};
@@ -2276,7 +2255,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
@@ -2294,9 +2272,12 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				SKIP_INSTALL = NO;
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_GITREF_BUILD_ID = appstore;
 				VERSION_INFO_BUILDER = "Codeux Software";
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
+				ZERO_LINK = appstore;
 			};
 			name = "App Store Release";
 		};
@@ -2360,10 +2341,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"VALIDATE_APPSTORE_RECEIPT=0",
-					DEBUG,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
@@ -2379,6 +2356,9 @@
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_GITREF_BUILD_ID = debug;
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -2408,7 +2388,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
@@ -2425,45 +2404,14 @@
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_GITREF_BUILD_ID = stdbuild;
 				VERSION_INFO_BUILDER = "Codeux Software";
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		4CBC373E12DB04B200B211E0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "Standard Build";
-			};
-			name = Debug;
-		};
-		4CBC373F12DB04B200B211E0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				PRODUCT_NAME = "Standard Build";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		4CBC374012DB04B200B211E0 /* Release (Trial) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Standard Build";
-			};
-			name = "Release (Trial)";
-		};
-		4CBC374112DB04B200B211E0 /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Standard Build";
-			};
-			name = "App Store Release";
 		};
 		4CEE702212AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
@@ -2478,6 +2426,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2489,6 +2438,8 @@
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
 			};
 			name = "Release (Trial)";
 		};
@@ -2516,10 +2467,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					IS_TRIAL_BINARY,
-					"VALIDATE_APPSTORE_RECEIPT=0",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
@@ -2536,7 +2483,10 @@
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
+				TEXTUAL_GITREF_BUILD_ID = trial;
 				VERSION_INFO_BUILDER = "Codeux Software";
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -2555,7 +2505,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"VALIDATE_APPSTORE_RECEIPT=0",
+					DEBUG,
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2566,6 +2519,8 @@
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
 			};
 			name = Debug;
 		};
@@ -2582,6 +2537,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2593,6 +2549,8 @@
 				SDKROOT = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
 			};
 			name = Release;
 		};
@@ -2628,17 +2586,6 @@
 				4CA945ED11E1AFBA00D36367 /* Release */,
 				4CEE702312AB8A690083F30F /* Release (Trial) */,
 				4C8D707D12A36FDB00738B2C /* App Store Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CBC375512DB052900B211E0 /* Build configuration list for PBXAggregateTarget "Update Version Data" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CBC373E12DB04B200B211E0 /* Debug */,
-				4CBC373F12DB04B200B211E0 /* Release */,
-				4CBC374012DB04B200B211E0 /* Release (Trial) */,
-				4CBC374112DB04B200B211E0 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
