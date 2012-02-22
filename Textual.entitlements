@@ -6,7 +6,15 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
-	<key>com.apple.security.temporary-exception.apple-events</key>
-	<true/>
+	<key>com.apple.security.temporary-exception.apple-events - 6 - 2 - 2 - 2</key>
+	<array>
+		<string>com.apple.systemevents</string>
+		<string>com.apple.finder</string>
+		<string>com.apple.itunes</string>
+		<string>com.apple.safari</string>
+		<string>com.spotify.client</string>
+		<string>com.google.chrome</string>
+		<string>com.operasoftware.opera</string>
+	</array>
 </dict>
 </plist>
