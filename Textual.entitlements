@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
-	<key>com.apple.security.temporary-exception.apple-events - 6 - 2 - 2 - 2</key>
+	<key>com.apple.security.temporary-exception.apple-events</key>
 	<array>
 		<string>com.apple.systemevents</string>
 		<string>com.apple.finder</string>
