@@ -1020,7 +1020,7 @@ static NSInteger totalRunTime = 0;
 	[d setObject:@"<%@%n>"						forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
 	
-	[d setInteger:5							forKey:@"Preferences.General.autojoin_maxchans"];
+	[d setInteger:2							forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];
 	[d setInteger:300						forKey:@"Preferences.General.inline_image_width"];
 	[d setInteger:TAB_COMPLETE_NICK			forKey:@"Preferences.General.tab_action"];

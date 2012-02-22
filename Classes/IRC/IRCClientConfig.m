@@ -222,7 +222,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	host = (([dic stringForKey:@"host"].retain) ?: NSNullObject);
 	port = (([dic integerForKey:@"port"]) ?: 6667);
     
-	
 	if ([dic stringForKey:@"nick"]) {
 		[nick drain];
 		nick = [dic stringForKey:@"nick"].retain;
@@ -291,13 +290,19 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[ignores safeAddObject:ignore];
 	}
     
-    NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
-    
-    if (NSObjectIsNotEmpty(e)) {
-        floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
-        floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
-        outgoingFloodControl           = [e boolForKey:@"outgoing"];
-    }
+	if ([dic containsKey:@"flood_control"]) {
+		NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
+		
+		if (NSObjectIsNotEmpty(e)) {
+			floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
+			floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
+			outgoingFloodControl           = [e boolForKey:@"outgoing"];
+		}
+	} else {
+		if ([host hasSuffix:@"freenode.net"]) {
+			outgoingFloodControl = YES;
+		}
+	}
 	
 	return self;
 }
