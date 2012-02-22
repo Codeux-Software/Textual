@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9635</string>
+	<string>9637</string>
 	<key>Build Reference</key>
-	<string>2.1.0-246-ga555b41-appstore</string>
+	<string>2.1.0-247-g7c0d46a-debug</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -42,11 +42,6 @@
 	<string>2.1.0</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
-	<key>LSArchitecturePriority</key>
-	<array>
-		<string>x86_64</string>
-		<string>i386</string>
-	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>
 	<key>NSHumanReadableCopyright</key>
