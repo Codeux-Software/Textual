@@ -1030,8 +1030,8 @@ static NSInteger totalRunTime = 0;
 	[d setInteger:USERDC_ACTION_QUERY		forKey:@"Preferences.General.user_doubleclick_action"];
 	[d setInteger:CMDWKEY_SHORTCUT_CLOSE	forKey:@"Preferences.General.keyboard_cmdw_response"];
 	
-	[d setDouble:0.10 forKey:@"Preferences.Experimental.view_loop_console_delay"];
-	[d setDouble:0.10 forKey:@"Preferences.Experimental.view_loop_channel_delay"];
+	[d setDouble:0.05 forKey:@"Preferences.Experimental.view_loop_console_delay"];
+	[d setDouble:0.07 forKey:@"Preferences.Experimental.view_loop_channel_delay"];
 	[d setDouble:12.0 forKey:@"Preferences.Theme.log_font_size"];
 	[d setDouble:1.0  forKey:@"Preferences.Theme.transparency"];
 	
