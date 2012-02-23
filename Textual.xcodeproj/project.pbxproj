@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		4C627E6114F5BB0000CB2D7B /* Update Version Info */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C627E6214F5BB0000CB2D7B /* Build configuration list for PBXAggregateTarget "Update Version Info" */;
+			buildPhases = (
+				4C627E6714F5BB0500CB2D7B /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Update Version Info";
+			productName = "Update Version Info";
+		};
 		4C7642201382B8A3001B23F4 /* Build Frameworks */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4C7642211382B8A3001B23F4 /* Build configuration list for PBXAggregateTarget "Build Frameworks" */;
@@ -356,6 +367,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = BragSpam;
+		};
+		4C627E6814F5BB3400CB2D7B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C627E6114F5BB0000CB2D7B;
+			remoteInfo = "Update Version Info";
 		};
 		4C7642271382B922001B23F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1670,7 +1688,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
-				4C6185C614F35AE400BBA3B2 /* Update Version Info */,
 				4CA9456111E1AFBA00D36367 /* Resources */,
 				4C5AF37912D1BB5700D6B18C /* Copy JavaScript Files */,
 				4C66E89512DF6A4D00446250 /* Copy Additional Frameworks */,
@@ -1685,6 +1702,7 @@
 			);
 			dependencies = (
 				4CE5D49C131798F100321734 /* PBXTargetDependency */,
+				4C627E6914F5BB3400CB2D7B /* PBXTargetDependency */,
 				4C7642281382B922001B23F4 /* PBXTargetDependency */,
 			);
 			name = Textual;
@@ -1732,6 +1750,7 @@
 				4CA9456011E1AFBA00D36367 /* Textual */,
 				4C9CB1CD12AD549E00F107FC /* Clean Up Resources  */,
 				4C7642201382B8A3001B23F4 /* Build Frameworks */,
+				4C627E6114F5BB0000CB2D7B /* Update Version Info */,
 			);
 		};
 /* End PBXProject section */
@@ -1852,19 +1871,18 @@
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/BlowfishCommandLine\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/BragSpam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n\ncd \"$PROJECT_DIR/Resources/Plugins/SystemProfiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" 2> /dev/null\n";
 		};
-		4C6185C614F35AE400BBA3B2 /* Update Version Info */ = {
+		4C627E6714F5BB0500CB2D7B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Update Version Info";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$PROJECT_DIR/Resources/Miscellaneous/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nbuildRef=\"${bundleVersion}-${refInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: $buildRef)\"\n\nbuildNumber=$(($buildNumber + 1))\n\nif [ ${#refInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" $TEXTUAL_BUNDLE_ID\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\nfi";
+			shellScript = "cd \"$PROJECT_DIR/Resources/Miscellaneous/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"Build Number\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\nrefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\nbuildRef=\"${bundleVersion}-${refInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: $buildRef)\"\n\nbuildNumber=$(($buildNumber + 1))\n\nif [ ${#refInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" $TEXTUAL_BUNDLE_ID\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Reference\\\" $buildRef\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"Build Number\\\" $buildNumber\" Info.plist\n    fi";
 		};
 		4C7642261382B8A9001B23F4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2013,6 +2031,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C627E6914F5BB3400CB2D7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C627E6114F5BB0000CB2D7B /* Update Version Info */;
+			targetProxy = 4C627E6814F5BB3400CB2D7B /* PBXContainerItemProxy */;
+		};
 		4C7642281382B922001B23F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4C7642201382B8A3001B23F4 /* Build Frameworks */;
@@ -2173,6 +2196,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4C627E6314F5BB0000CB2D7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEXTUAL_GITREF_BUILD_ID = debug;
+			};
+			name = Debug;
+		};
+		4C627E6414F5BB0000CB2D7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEXTUAL_GITREF_BUILD_ID = stdbuild;
+			};
+			name = Release;
+		};
+		4C627E6514F5BB0000CB2D7B /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEXTUAL_GITREF_BUILD_ID = trial;
+			};
+			name = "Release (Trial)";
+		};
+		4C627E6614F5BB0000CB2D7B /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEXTUAL_GITREF_BUILD_ID = appstore;
+			};
+			name = "App Store Release";
+		};
 		4C7642221382B8A3001B23F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2557,6 +2612,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4C627E6214F5BB0000CB2D7B /* Build configuration list for PBXAggregateTarget "Update Version Info" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C627E6314F5BB0000CB2D7B /* Debug */,
+				4C627E6414F5BB0000CB2D7B /* Release */,
+				4C627E6514F5BB0000CB2D7B /* Release (Trial) */,
+				4C627E6614F5BB0000CB2D7B /* App Store Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		4C7642211382B8A3001B23F4 /* Build configuration list for PBXAggregateTarget "Build Frameworks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
