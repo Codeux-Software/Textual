@@ -2551,6 +2551,111 @@
 			};
 			name = "Release (Trial)";
 		};
+		4CF55DCA14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+				);
+				CODE_SIGN_IDENTITY = "";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /Applications;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
+			};
+			name = "Release + No Sandbox";
+		};
+		4CF55DCB14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
+					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks/Blowfish\"",
+					"\"$(SRCROOT)/Frameworks/Adium/AutoHyperlinks\"",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INSTALL_PATH = /Applications;
+				KEEP_PRIVATE_EXTERNS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = "";
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WARNING_CFLAGS = "";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "Release + No Sandbox";
+		};
+		4CF55DCC14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = "Clean Up Resources ";
+				ZERO_LINK = NO;
+			};
+			name = "Release + No Sandbox";
+		};
+		4CF55DCD14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release + No Sandbox";
+		};
+		4CF55DCE14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_GITREF_BUILD_ID = stdbuild;
+			};
+			name = "Release + No Sandbox";
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2621,16 +2726,19 @@
 			buildConfigurations = (
 				4C627E6314F5BB0000CB2D7B /* Debug */,
 				4C627E6414F5BB0000CB2D7B /* Release */,
+				4CF55DCE14F5F34E003E6242 /* Release + No Sandbox */,
 				4C627E6514F5BB0000CB2D7B /* Release (Trial) */,
 				4C627E6614F5BB0000CB2D7B /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4C7642211382B8A3001B23F4 /* Build configuration list for PBXAggregateTarget "Build Frameworks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C7642221382B8A3001B23F4 /* Debug */,
 				4C7642231382B8A3001B23F4 /* Release */,
+				4CF55DCD14F5F34E003E6242 /* Release + No Sandbox */,
 				4C7642241382B8A3001B23F4 /* Release (Trial) */,
 				4C7642251382B8A3001B23F4 /* App Store Release */,
 			);
@@ -2642,6 +2750,7 @@
 			buildConfigurations = (
 				4C9CB1CE12AD549E00F107FC /* Debug */,
 				4C9CB1CF12AD549E00F107FC /* Release */,
+				4CF55DCC14F5F34E003E6242 /* Release + No Sandbox */,
 				4C9CB1D012AD549E00F107FC /* Release (Trial) */,
 				4C9CB1D112AD549E00F107FC /* App Store Release */,
 			);
@@ -2653,6 +2762,7 @@
 			buildConfigurations = (
 				4CA945EC11E1AFBA00D36367 /* Debug */,
 				4CA945ED11E1AFBA00D36367 /* Release */,
+				4CF55DCB14F5F34E003E6242 /* Release + No Sandbox */,
 				4CEE702312AB8A690083F30F /* Release (Trial) */,
 				4C8D707D12A36FDB00738B2C /* App Store Release */,
 			);
@@ -2664,6 +2774,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				4CF55DCA14F5F34E003E6242 /* Release + No Sandbox */,
 				4CEE702212AB8A690083F30F /* Release (Trial) */,
 				4C8D707C12A36FDB00738B2C /* App Store Release */,
 			);
