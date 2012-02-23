@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>9649</string>
+	<string>9650</string>
 	<key>Build Reference</key>
-	<string>2.1.0-254-g96f44e9-</string>
+	<string>2.1.0-255-g626b93a-appstore</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>trial</string>
+	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
