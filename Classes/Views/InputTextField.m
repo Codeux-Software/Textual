@@ -27,7 +27,7 @@
         self.delegate = self;
         
         NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-        
+		
         /* Default Value */
         [attrs setObject:DefaultTextFieldFont forKey:NSFontAttributeName];
         [attrs setObject:[NSColor grayColor]  forKey:NSForegroundColorAttributeName];
