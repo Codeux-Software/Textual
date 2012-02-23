@@ -1,7 +1,7 @@
 /* Availability Macros */
-#define _LOAD_MAC_OS_LION_LIBRARIES 1
+#define _LOAD_MAC_OS_LIBRARIES 1
 
-#if _LOAD_MAC_OS_LION_LIBRARIES
+#if _LOAD_MAC_OS_LIBRARIES
 	#if defined(MAC_OS_X_VERSION_10_8) 
 		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
 			#define _MAC_OS_MOUNTAIN_LION_OR_NEWER
@@ -13,7 +13,6 @@
 			#define _MAC_OS_LION_OR_NEWER
 		#endif	
 	#endif
-
 #endif
 
 #define NSAppKitVersionNumber10_6		1038
