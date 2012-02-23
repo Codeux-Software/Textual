@@ -860,22 +860,19 @@
 		}
 		
 		[nicks      safeAddObject:@"NickServ"];
-		[lowerNicks safeAddObject:@"nickserv"];
-		
 		[nicks      safeAddObject:@"RootServ"];
-		[lowerNicks safeAddObject:@"rootserv"];
-		
 		[nicks      safeAddObject:@"OperServ"];
-		[lowerNicks safeAddObject:@"operserv"];
-		
 		[nicks      safeAddObject:@"HostServ"];
-		[lowerNicks safeAddObject:@"hostserv"];
-		
 		[nicks      safeAddObject:@"ChanServ"];
-		[lowerNicks safeAddObject:@"chanserv"];
-		
 		[nicks      safeAddObject:@"MemoServ"];
-		[lowerNicks safeAddObject:@"Memoserv"];
+		[nicks      safeAddObject:@"Textual"];
+		
+		[lowerNicks safeAddObject:@"nickserv"];
+		[lowerNicks safeAddObject:@"rootserv"];
+		[lowerNicks safeAddObject:@"operserv"];
+		[lowerNicks safeAddObject:@"hostserv"];
+		[lowerNicks safeAddObject:@"chanserv"];
+		[lowerNicks safeAddObject:@"textual"];
 		
 		choices      = nicks;
 		lowerChoices = lowerNicks;
