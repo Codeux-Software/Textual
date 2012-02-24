@@ -233,8 +233,13 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[NSBundle mainBundle] bundlePath];
 }
 
-+ (NSString *)whereTranscriptFolder {
++ (NSString *)whereTranscriptFolder 
+{
+#ifdef TEXTUAL_SANDBOX_DISABLED
+    return [NSHomeDirectory() stringByAppendingPathComponent:@"Textual Logs"];
+#else 
     return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+#endif
 }
 
 #pragma mark -
