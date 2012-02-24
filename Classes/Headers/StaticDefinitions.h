@@ -14,7 +14,6 @@
 		#endif	
 	#endif
 #endif
-#define _MAC_OS_LION_OR_NEWER
 
 #define NSAppKitVersionNumber10_6 1038
 #define NSAppKitVersionNumber10_7 1138
