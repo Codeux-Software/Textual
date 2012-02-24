@@ -2650,6 +2650,10 @@
 		4CF55DCE14F5F34E003E6242 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"VALIDATE_APPSTORE_RECEIPT=0",
+					TEXTUAL_SANDBOX_DISABLED,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
