@@ -230,6 +230,7 @@
 		34C57363093E5E6E00829508 /* Release-Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -244,6 +245,7 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SYMROOT = ./build;
 				WARNING_CFLAGS = "-Wall";
@@ -262,6 +264,7 @@
 		DA8A8084085549EE00F24BB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -276,6 +279,7 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SYMROOT = ./build;
 				WARNING_CFLAGS = "-Wall";
@@ -286,6 +290,7 @@
 		DA8A8085085549EE00F24BB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -300,6 +305,7 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
