@@ -1908,7 +1908,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name Compiled -exec rm -rf '{}' +";
+			shellScript = "if [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name build -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name Compiled -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"AutoHyperlinks.framework\" -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"BlowfishEncryption.framework\" -exec rm -rf '{}' +\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
