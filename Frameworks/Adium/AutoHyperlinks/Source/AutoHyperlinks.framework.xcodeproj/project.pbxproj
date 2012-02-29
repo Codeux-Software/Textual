@@ -30,10 +30,6 @@
 		4C68FF42130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoHyperlinks.framework_Prefix.pch; path = Source/AutoHyperlinks.framework_Prefix.pch; sourceTree = "<group>"; };
 		4C68FF45130D813900AE3A7C /* Copyright.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Copyright.txt; path = Resources/Copyright.txt; sourceTree = "<group>"; };
 		4C68FF46130D813900AE3A7C /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = License.txt; path = Resources/License.txt; sourceTree = "<group>"; };
-		7E0CF1AF11769E6100EDC305 /* AutoHyperlinks.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = AutoHyperlinks.xcconfig; path = xcconfigs/AutoHyperlinks.xcconfig; sourceTree = "<group>"; };
-		7E0CF30C11769F4C00EDC305 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = xcconfigs/Debug.xcconfig; sourceTree = "<group>"; };
-		7E0CF31811769FBD00EDC305 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = xcconfigs/Release.xcconfig; sourceTree = "<group>"; };
-		7E0CF31B11769FE700EDC305 /* Release-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Release-Debug.xcconfig"; path = "xcconfigs/Release-Debug.xcconfig"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* AutoHyperlinks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AutoHyperlinks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -66,7 +62,6 @@
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				7E0CF1A011769DE400EDC305 /* xcconfigs */,
 			);
 			name = AIHyperlinks.framework;
 			sourceTree = "<group>";
@@ -125,17 +120,6 @@
 				4C68FF42130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch */,
 			);
 			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		7E0CF1A011769DE400EDC305 /* xcconfigs */ = {
-			isa = PBXGroup;
-			children = (
-				7E0CF31B11769FE700EDC305 /* Release-Debug.xcconfig */,
-				7E0CF1AF11769E6100EDC305 /* AutoHyperlinks.xcconfig */,
-				7E0CF30C11769F4C00EDC305 /* Debug.xcconfig */,
-				7E0CF31811769FBD00EDC305 /* Release.xcconfig */,
-			);
-			name = xcconfigs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +214,6 @@
 		34C57363093E5E6E00829508 /* Release-Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -245,7 +228,6 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
-				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SYMROOT = ./build;
 				WARNING_CFLAGS = "-Wall";
@@ -255,16 +237,17 @@
 		};
 		34C57364093E5E6E00829508 /* Release-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E0CF31B11769FE700EDC305 /* Release-Debug.xcconfig */;
 			buildSettings = {
-				SDKROOT = "";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				PROVISIONING_PROFILE = "";
 			};
 			name = "Release-Debug";
 		};
 		DA8A8084085549EE00F24BB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -279,7 +262,6 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
-				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SYMROOT = ./build;
 				WARNING_CFLAGS = "-Wall";
@@ -290,7 +272,6 @@
 		DA8A8085085549EE00F24BB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -305,7 +286,6 @@
 				MACH_O_TYPE = mh_dylib;
 				PREBINDING = NO;
 				PRODUCT_NAME = AutoHyperlinks;
-				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
@@ -316,16 +296,22 @@
 		};
 		DA8A8088085549EE00F24BB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E0CF30C11769F4C00EDC305 /* Debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		DA8A8089085549EE00F24BB3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E0CF31811769FBD00EDC305 /* Release.xcconfig */;
 			buildSettings = {
-				SDKROOT = "";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CONFIGURATION_BUILD_DIR = ..;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
