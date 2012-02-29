@@ -10,3 +10,5 @@ Debug.xcconfig
 Resources/Plugins/Compiled
 .LSOverride
 xcuserdata
+Frameworks/Blowfish/BlowfishEncryption.framework
+Frameworks/Adium/AutoHyperlinks/AutoHyperlinks.framework
