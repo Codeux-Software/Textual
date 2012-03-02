@@ -37,6 +37,7 @@
 #define IRCCI_HALFOP			@"HALFOP"
 #define IRCCI_HOP				@"HOP"
 #define IRCCI_ICBADGE			@"ICBADGE"
+#define IRCCI_CCBADGE			@"CCBADGE"
 #define IRCCI_IGNORE			@"IGNORE"
 #define IRCCI_INVITE			@"INVITE"
 #define IRCCI_ISON				@"ISON"

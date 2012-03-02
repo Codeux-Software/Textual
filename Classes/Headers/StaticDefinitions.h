@@ -20,11 +20,11 @@
 #define NSAppKitVersionNumber10_7_2 1138.23
 
 #ifdef _MAC_OS_LION_OR_NEWER
-	//#define _USES_MODERN_REGULAR_EXPRESSION
+	#define _USES_MODERN_REGULAR_EXPRESSION
 #endif
 
 #ifdef _MAC_OS_MOUNTAIN_LION_OR_NEWER
-	//#define _USES_NATIVE_NOTIFICATION_CENTER
+	#define _USES_NATIVE_NOTIFICATION_CENTER
 #endif
 
 /* Textual Specific Frameworks */
