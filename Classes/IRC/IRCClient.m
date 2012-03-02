@@ -2653,8 +2653,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
-		case 102:
-		case 103:
+		case 102: // Command: CAP
+		case 103: // Command: CAPS
+		{
 			if ([acceptedCaps count]) {
 				[self printBoth:[world selectedChannelOn:self] type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_CAP_CURRENTLY_ENABLED", [acceptedCaps componentsJoinedByString:@", "])];
 			} else {
@@ -2662,6 +2663,38 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 			
 			return YES;
+			break;
+		}
+		case 104: // Command: CCBADGE
+		{
+			NSString *chan = s.getToken.string;
+			
+			if (NSObjectIsEmpty(chan)) {
+				return NO;
+			}
+			
+			NSInteger count = [s.getToken.string integerValue];
+			
+			IRCChannel *c = [self findChannel:chan];
+			
+			if (PointerIsNotEmpty(c)) {
+				[c setTreeUnreadCount:count];
+				
+				NSString *hlt = s.getToken.string;
+				
+				if (NSObjectIsNotEmpty(hlt)) {
+					if ([hlt isEqualToString:@"-h"]) {
+						[c setIsKeyword:YES];
+						[c setKeywordCount:1];
+					}
+				}
+				
+				[world reloadTree];
+			}
+			
+			return YES;
+			break;
+		}
 		default:
 		{   
             NSArray *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
