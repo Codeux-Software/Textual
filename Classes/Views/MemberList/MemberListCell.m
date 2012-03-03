@@ -214,14 +214,20 @@
 		}
 		
 		/* Draw Badges, Text, and Status Icon */
-        
-        [self drawModeBadge:member.mark inCell:cellFrame isSelected:isSelected];
+        if ([_NSUserDefaults() boolForKey:@"Preferences.General.show_usermode_icons"]){
+            [self drawModeBadge:member.mark inCell:cellFrame isSelected:isSelected];
+        }
 		
 		NSAttributedString			*stringValue	= [self attributedStringValue];	
 		NSMutableAttributedString	*newValue		= nil;
         
         newValue = [NSMutableAttributedString alloc];
-        newValue = [newValue initWithString:member.nick attributes:[stringValue attributes]];
+        if ([_NSUserDefaults() boolForKey:@"Preferences.General.show_usermode_icons"]){
+            newValue = [newValue initWithString:member.nick attributes:[stringValue attributes]];
+        } else {
+            NSString * myNicknameString = [NSString stringWithFormat:@"%c %@",member.mark, member.nick];
+            newValue = [newValue initWithString:myNicknameString attributes:[stringValue attributes]];
+        }
 		
 		NSShadow *itemShadow = [NSShadow new];
 		
@@ -244,8 +250,13 @@
         }
         
         cellFrame.origin.y += 1;
-        cellFrame.origin.x += 29;
-        cellFrame.size.width -= 29;
+        if ([_NSUserDefaults() boolForKey:@"Preferences.General.show_usermode_icons"]){
+            cellFrame.origin.x += 29;
+            cellFrame.size.width -= 29;
+        } else {
+            cellFrame.origin.x += 5;
+            cellFrame.size.width -= 5;
+        }
         
         NSRange textRange = NSMakeRange(0, [newValue length]);
         
