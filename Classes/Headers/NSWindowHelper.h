@@ -7,6 +7,7 @@
 - (void)centerOfWindow:(NSWindow *)window;
 
 - (BOOL)isOnCurrentWorkspace;
+- (BOOL)isInFullscreenMode;
 
 - (void)closeExistingSheet;
 @end

@@ -55,6 +55,11 @@
 	return ([self isOnActiveSpace] && [self isVisible] && [NSApp keyWindow] == self);
 }
 
+- (BOOL)isInFullscreenMode
+{
+	return (([self styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask);
+}
+
 - (void)closeExistingSheet
 {
 	id awindow = [self attachedSheet];
