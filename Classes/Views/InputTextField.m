@@ -95,8 +95,13 @@
 	
 	NSInteger contentBorder = (textBoxFrame.size.height + 13);
 	
-	superViewFrame.origin.y	   = contentBorder;
-	superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder - 22);
+	superViewFrame.origin.y = contentBorder;
+    
+	if ([mainWindow isInFullscreenMode]) {
+        superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder);
+    } else {
+        superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder - 22);
+    }
 	
 	[mainWindow setContentBorderThickness:contentBorder forEdge:NSMinYEdge];
     
