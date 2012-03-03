@@ -29,8 +29,6 @@
 				operCount++;
 			}
 			
-			BOOL addUser = NO;
-			
 			NSMutableArray *trackedUsers = [NSMutableArray new];
 			
 			for (IRCChannel *ch in c.channels) {
@@ -50,6 +48,7 @@
 				
 				for (IRCUser *m in ch.members) {
 					if ([m isEqual:myself]) continue;
+					BOOL addUser = NO;
 					
 					if (myself.q && m.q == NO) {
 						addUser = YES;
