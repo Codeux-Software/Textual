@@ -153,7 +153,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -163,7 +163,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -172,13 +171,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -254,13 +252,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
@@ -291,13 +288,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";

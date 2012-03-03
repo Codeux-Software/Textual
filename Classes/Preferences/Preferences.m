@@ -296,6 +296,21 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() objectForKey:@"Preferences.General.ircop_alert_match"];
 }
 
++ (BOOL)StatusBagde
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"];
+}
+
++ (BOOL)ChanDifcolor
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.chan_difcolor"];
+}
+
++ (BOOL)UsermodeIcons
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.show_usermode_icons"];
+}
+
 + (BOOL)trackConversations
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.track_conversations"];
@@ -985,6 +1000,9 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
     [d setBool:YES forKey:@"Preferences.General.use_nomode_symbol"];
     [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
+    [d setBool:YES forKey:@"Preferences.General.chan_difcolor"];
+    [d setBool:YES forKey:@"Preferences.General.show_usermode_icons"];
+    [d setBool:YES forKey:@"Preferences.General.status_badge"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];

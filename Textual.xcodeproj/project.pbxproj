@@ -2275,7 +2275,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = "";
@@ -2290,8 +2290,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2306,7 +2305,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2314,7 +2313,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				SKIP_INSTALL = NO;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
@@ -2364,8 +2362,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2381,7 +2378,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2389,7 +2386,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
@@ -2403,8 +2399,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2419,7 +2414,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2427,7 +2422,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
@@ -2455,7 +2449,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = "";
@@ -2470,8 +2464,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2486,7 +2479,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2494,7 +2487,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
 				TEXTUAL_GITREF_BUILD_ID = trial;
@@ -2523,7 +2515,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = "";
@@ -2538,8 +2530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
@@ -2554,7 +2545,7 @@
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				INSTALL_PATH = /Applications;
 				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2562,7 +2553,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
@@ -2622,7 +2612,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = "";
@@ -2650,7 +2640,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = "";
@@ -2674,7 +2664,7 @@
 				4C627E6614F5BB0000CB2D7B /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release + No Sandbox";
 		};
 		4C7642211382B8A3001B23F4 /* Build configuration list for PBXAggregateTarget "Build Frameworks" */ = {
 			isa = XCConfigurationList;
@@ -2686,7 +2676,7 @@
 				4C7642251382B8A3001B23F4 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release + No Sandbox";
 		};
 		4C9CB1D212AD54BC00F107FC /* Build configuration list for PBXAggregateTarget "Clean Up Resources " */ = {
 			isa = XCConfigurationList;
@@ -2698,7 +2688,7 @@
 				4C9CB1D112AD549E00F107FC /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release + No Sandbox";
 		};
 		4CA945EB11E1AFBA00D36367 /* Build configuration list for PBXNativeTarget "Textual" */ = {
 			isa = XCConfigurationList;
@@ -2710,7 +2700,7 @@
 				4C8D707D12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release + No Sandbox";
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Textual" */ = {
 			isa = XCConfigurationList;
@@ -2722,7 +2712,7 @@
 				4C8D707C12A36FDB00738B2C /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release + No Sandbox";
 		};
 /* End XCConfigurationList section */
 	};
