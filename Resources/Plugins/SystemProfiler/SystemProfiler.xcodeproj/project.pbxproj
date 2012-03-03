@@ -168,7 +168,7 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
@@ -176,6 +176,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -183,11 +184,12 @@
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -259,11 +261,12 @@
 		4CAA3B2312E0EC3800FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
@@ -292,11 +295,12 @@
 		4CAA3B2512E0EC3800FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
