@@ -96,8 +96,6 @@
 	NSInteger contentBorder = (textBoxFrame.size.height + 13);
 	
 	superViewFrame.origin.y	   = contentBorder;
-    //superViewFrame
-    
     if (([mainWindow styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask){
         superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder);
     } else {

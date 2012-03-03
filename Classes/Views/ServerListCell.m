@@ -288,7 +288,9 @@
                     }
                 } 
 			} else {
-				[self drawStatusBadge:@"NSUser" inCell:cellFrame];
+                if ([_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"]){
+                    [self drawStatusBadge:@"NSUser" inCell:cellFrame];
+                }
 			}
 			
             BOOL drawMessageBadge = (isSelected == NO ||
