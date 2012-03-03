@@ -95,6 +95,7 @@
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
 		4C70B46513D9A14F004D7619 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B46313D9A14F004D7619 /* TextField.m */; };
+		4C70FA1E1502FC9200EEAF97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		4C7642291382B990001B23F4 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
@@ -771,6 +772,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C70FA1E1502FC9200EEAF97 /* Foundation.framework in Frameworks */,
 				77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */,
 				4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */,
 				4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */,
