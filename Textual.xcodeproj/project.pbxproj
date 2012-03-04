@@ -2261,51 +2261,19 @@
 		4C8D707C12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				SDKROOT = "";
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
-				TEXTUAL_BUNDLE_ID = "";
-				TEXTUAL_GITREF_BUILD_ID = "";
-			};
-			name = "App Store Release";
-		};
-		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_PATH = /Applications;
-				KEEP_PRIVATE_EXTERNS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2315,13 +2283,20 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
-				SKIP_INSTALL = NO;
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "App Store Release";
+		};
+		4C8D707D12A36FDB00738B2C /* App Store Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = appstore;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WARNING_CFLAGS = "";
-				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = "App Store Release";
@@ -2363,38 +2338,8 @@
 		4CA945EC11E1AFBA00D36367 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_PATH = /Applications;
-				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
-				WARNING_CFLAGS = "";
-				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -2402,38 +2347,8 @@
 		4CA945ED11E1AFBA00D36367 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_PATH = /Applications;
-				KEEP_PRIVATE_EXTERNS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WARNING_CFLAGS = "";
-				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2441,51 +2356,22 @@
 		4CEE702212AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				SDKROOT = "";
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
-				TEXTUAL_BUNDLE_ID = "";
-				TEXTUAL_GITREF_BUILD_ID = "";
-			};
-			name = "Release (Trial)";
-		};
-		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"VALIDATE_APPSTORE_RECEIPT=0",
+					"IS_TRIAL_BINARY=1",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_PATH = /Applications;
-				KEEP_PRIVATE_EXTERNS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2495,12 +2381,20 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Release (Trial)";
+		};
+		4CEE702312AB8A690083F30F /* Release (Trial) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
 				TEXTUAL_GITREF_BUILD_ID = trial;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WARNING_CFLAGS = "";
-				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = "Release (Trial)";
@@ -2508,52 +2402,22 @@
 		4CF55DCA14F5F34E003E6242 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = TEXTUAL_SANDBOX_DISABLED;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				SDKROOT = "";
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
-				TEXTUAL_BUNDLE_ID = "";
-				TEXTUAL_GITREF_BUILD_ID = "";
-			};
-			name = "Release + No Sandbox";
-		};
-		4CF55DCB14F5F34E003E6242 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"VALIDATE_APPSTORE_RECEIPT=0",
+					"TEXTUAL_SANDBOX_DISABLED=1",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
-				INSTALL_PATH = /Applications;
-				KEEP_PRIVATE_EXTERNS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2563,12 +2427,20 @@
 				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
+				STRIPFLAGS = "-S";
+				STRIP_STYLE = "non-global";
+				TEXTUAL_BUNDLE_ID = "";
+				TEXTUAL_GITREF_BUILD_ID = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Release + No Sandbox";
+		};
+		4CF55DCB14F5F34E003E6242 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WARNING_CFLAGS = "";
-				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = "Release + No Sandbox";
@@ -2593,71 +2465,80 @@
 		4CF55DCE14F5F34E003E6242 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"VALIDATE_APPSTORE_RECEIPT=0",
-					TEXTUAL_SANDBOX_DISABLED,
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = stdbuild;
+				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
 			name = "Release + No Sandbox";
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"VALIDATE_APPSTORE_RECEIPT=0",
 					DEBUG,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = /Applications;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = Textual;
+				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};

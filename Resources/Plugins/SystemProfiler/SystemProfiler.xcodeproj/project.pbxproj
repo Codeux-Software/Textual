@@ -12,7 +12,6 @@
 		4C57A695131D37F000252759 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C57A694131D37F000252759 /* OpenGL.framework */; };
 		4CD69D82131E2BD200F4618E /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CD69D81131E2BD200F4618E /* MacintoshModels.plist */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
-		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
 				4C57A695131D37F000252759 /* OpenGL.framework in Frameworks */,
 			);
@@ -168,29 +166,12 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = SystemProfiler;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = SystemProfiler;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -198,21 +179,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "${USER}";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -220,20 +203,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -241,33 +226,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
 		};
 		4CAA3B2312E0EC3800FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = SystemProfiler;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
 		};
@@ -275,35 +255,59 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
 		};
 		4CAA3B2512E0EC3800FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = SystemProfiler;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
+		};
+		4CCB84A41501C57D0053A181 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = SystemProfiler;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Release + No Sandbox";
+		};
+		4CCB84A51501C57D0053A181 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release + No Sandbox";
 		};
 /* End XCBuildConfiguration section */
 
@@ -313,6 +317,7 @@
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
 				1DEB911C08733D790010E9CD /* Release */,
+				4CCB84A51501C57D0053A181 /* Release + No Sandbox */,
 				4CAA3B2312E0EC3800FB83EB /* App Store Release */,
 				4CAA3B2512E0EC3800FB83EB /* Release (Trial) */,
 			);
@@ -324,6 +329,7 @@
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,
 				1DEB912008733D790010E9CD /* Release */,
+				4CCB84A41501C57D0053A181 /* Release + No Sandbox */,
 				4CAA3B2212E0EC3800FB83EB /* App Store Release */,
 				4CAA3B2412E0EC3800FB83EB /* Release (Trial) */,
 			);

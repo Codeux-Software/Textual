@@ -3,7 +3,7 @@
 
 #import "TPI_BlowfishCommands.h"
 
-#define exchangeRequestPrefix	@"DH1080_INIT "
+#define exchangeRequestPrefix		@"DH1080_INIT "
 #define exchangeResponsePrefix	@"DH1080_FINISH "
 
 @implementation TPI_BlowfishCommands
