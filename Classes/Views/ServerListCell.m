@@ -36,6 +36,8 @@
 
 #define CHANNEL_CELL_FONT                           [NSFont fontWithName:@"LucidaGrande" size:11.0]
 #define CHANNEL_CELL_FONT_COLOR                     [NSColor blackColor]
+#define CHANNEL_INACTIVE_CELL_FONT_COLOR            [NSColor _colorWithCalibratedRed:163 green:163 blue:163 alpha:1]
+#define CHANNEL_INACTIVE_CELL_SELECTION_FONT_COLOR  [NSColor _colorWithCalibratedRed:224 green:224 blue:224 alpha:1]
 #define CHANNEL_CELL_SELECTION_FONT_COLOR           [NSColor whiteColor]
 #define CHANNEL_CELL_SELECTION_FONT                 [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0]
 #define CHANNEL_CELL_SHADOW_COLOR                   [NSColor _colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.5]
@@ -267,16 +269,28 @@
 		NSMutableAttributedString	*newValue		= [stringValue mutableCopy];
 		
 		NSShadow *itemShadow = [NSShadow new];
-		
+		NSColor *channelColor = CHANNEL_CELL_FONT_COLOR;
 		if (isGroupItem == NO) {
 			if (channel.isChannel) {
                 if (channel.isActive) {
-                    [self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
+                    // Active Channel Icon
+                    channelColor = CHANNEL_CELL_FONT_COLOR;
+                    if ([_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"]){
+                        [self drawStatusBadge:@"status-channel-active.tif" inCell:cellFrame];
+                    }
                 } else {
-                    [self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
+                    // Inactive Channel Icon
+                    if ([_NSUserDefaults() boolForKey:@"Preferences.General.chan_difcolor"]){
+                        channelColor = CHANNEL_INACTIVE_CELL_FONT_COLOR;
+                    }
+                    if ([_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"]){
+                        [self drawStatusBadge:@"status-channel-inactive.tif" inCell:cellFrame];
+                    }
                 } 
 			} else {
-				[self drawStatusBadge:@"NSUser" inCell:cellFrame];
+                if ([_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"]){
+                    [self drawStatusBadge:@"NSUser" inCell:cellFrame];
+                }
 			}
 			
             BOOL drawMessageBadge = (isSelected == NO ||
@@ -317,16 +331,26 @@
             }
 			
 			cellFrame.origin.y += 2;
-            cellFrame.origin.x -= 2;
+            if ([_NSUserDefaults() boolForKey:@"Preferences.General.status_badge"]){
+                cellFrame.origin.x -= 2;
+            } else {
+                cellFrame.origin.x -= 16;
+            }
             
 			NSRange textRange = NSMakeRange(0, [newValue length]);
 			
             if (isSelected) {
                 [newValue addAttribute:NSFontAttributeName              value:CHANNEL_CELL_SELECTION_FONT       range:textRange];
-                [newValue addAttribute:NSForegroundColorAttributeName	value:CHANNEL_CELL_SELECTION_FONT_COLOR range:textRange];
+                if (channel.isActive) {
+                    [newValue addAttribute:NSForegroundColorAttributeName	value:CHANNEL_CELL_SELECTION_FONT_COLOR range:textRange];
+                } else {
+                    if ([_NSUserDefaults() boolForKey:@"Preferences.General.chan_difcolor"]){
+                        [newValue addAttribute:NSForegroundColorAttributeName	value:CHANNEL_INACTIVE_CELL_SELECTION_FONT_COLOR range:textRange];
+                    }
+                }
             } else {
                 [newValue addAttribute:NSFontAttributeName              value:CHANNEL_CELL_FONT         range:textRange];
-                [newValue addAttribute:NSForegroundColorAttributeName   value:CHANNEL_CELL_FONT_COLOR	range:textRange];
+                [newValue addAttribute:NSForegroundColorAttributeName   value:channelColor	range:textRange];
             }
             
             [newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
