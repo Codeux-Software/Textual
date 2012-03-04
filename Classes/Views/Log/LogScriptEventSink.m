@@ -97,8 +97,6 @@
         
         return @"false";
     } else {
-        [URLOpener open:[NSURL URLWithString:object.href]];
-        
         return @"true";
     }
 }
