@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C393AAD121AE217004C66F4 /* TPIBragSpam.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPIBragSpam.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
-		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +25,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,34 +150,12 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -187,22 +163,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "";
+				PRODUCT_NAME = BragSpam;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "${USER}";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -210,21 +187,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = "";
+				PRODUCT_NAME = BragSpam;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -232,36 +210,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = "";
+				PRODUCT_NAME = BragSpam;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
 		};
 		4CAA3B4C12E0EC7C00FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = "App Store Release";
 		};
@@ -269,38 +239,59 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
-				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/../../../Frameworks/**";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../../Classes/Headers/**";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = "";
+				PRODUCT_NAME = BragSpam;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
 		};
 		4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = BragSpam;
-				PROVISIONING_PROFILE = "";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (Trial)";
+		};
+		4CCB84A21501C5690053A181 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CONFIGURATION_BUILD_DIR = ../Compiled;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
+				INFOPLIST_FILE = Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = BragSpam;
+				PROVISIONING_PROFILE = "";
+				VERSION_INFO_BUILDER = "Codeux Software";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Release + No Sandbox";
+		};
+		4CCB84A31501C5690053A181 /* Release + No Sandbox */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release + No Sandbox";
 		};
 /* End XCBuildConfiguration section */
 
@@ -310,6 +301,7 @@
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
 				1DEB911C08733D790010E9CD /* Release */,
+				4CCB84A31501C5690053A181 /* Release + No Sandbox */,
 				4CAA3B4C12E0EC7C00FB83EB /* App Store Release */,
 				4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */,
 			);
@@ -321,6 +313,7 @@
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,
 				1DEB912008733D790010E9CD /* Release */,
+				4CCB84A21501C5690053A181 /* Release + No Sandbox */,
 				4CAA3B4B12E0EC7C00FB83EB /* App Store Release */,
 				4CAA3B4D12E0EC7C00FB83EB /* Release (Trial) */,
 			);

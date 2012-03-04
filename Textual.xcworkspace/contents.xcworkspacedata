@@ -13,4 +13,10 @@
    <FileRef
       location = "group:Resources/Plugins/SystemProfiler/SystemProfiler.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Frameworks/Blowfish/Source/BlowfishEncryption.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Frameworks/Adium/AutoHyperlinks/Source/AutoHyperlinks.framework.xcodeproj">
+   </FileRef>
 </Workspace>
