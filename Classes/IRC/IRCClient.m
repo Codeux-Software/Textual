@@ -1867,17 +1867,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						
 						IRCChannel *c = [self findChannel:chname];
 						
-						if (PointerIsEmpty(c)
-							&& [chname isChannelName] == NO
-							&& [lowerChname isEqualToString:@"nickserv"] == NO
-							&& [lowerChname isEqualToString:@"chanserv"] == NO) {
-							
-							if (secretMsg == NO) {
-								if (type == LINE_TYPE_NOTICE) {
-									c = (id)self;
-								} else {
-									c = [world createTalk:chname client:self];
-								}
+						if (PointerIsEmpty(c) && [chname isChannelName] == NO &&
+								secretMsg == NO) {
+							if (type == LINE_TYPE_NOTICE) {
+								c = (id)self;
+							} else {
+								c = [world createTalk:chname client:self];
 							}
 						}
 						
