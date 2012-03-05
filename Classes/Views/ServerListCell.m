@@ -38,7 +38,7 @@
 #define CHANNEL_CELL_FONT_COLOR                     [NSColor blackColor]
 #define CHANNEL_CELL_SELECTION_FONT_COLOR           [NSColor whiteColor]
 #define CHANNEL_CELL_SELECTION_FONT                 [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0]
-#define CHANNEL_CELL_SHADOW_COLOR                   [NSColor _colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.5]
+#define CHANNEL_CELL_SHADOW_COLOR                   [NSColor _colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:1.0]
 #define CHANNEL_CELL_SELECTION_SHADOW_COLOR_AW      [NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
 #define CHANNEL_CELL_SELECTION_SHADOW_COLOR_IA      [NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
 
@@ -299,7 +299,7 @@
             cellFrame.size.width -= (BADGE_RIGHT_MARGIN * 2);
             
 			if (isSelected == NO) {
-                [itemShadow setShadowOffset:NSMakeSize(0, -1)];
+                [itemShadow setShadowOffset:NSMakeSize(1, -1)];
                 [itemShadow setShadowColor:CHANNEL_CELL_SHADOW_COLOR];
 			} else {
                 [itemShadow setShadowBlurRadius:2.0];
