@@ -2277,7 +2277,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2376,7 +2375,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2423,7 +2421,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2497,7 +2494,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -2531,7 +2527,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
