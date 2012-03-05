@@ -2,16 +2,12 @@
 #define _LOAD_MAC_OS_LIBRARIES 1
 
 #if _LOAD_MAC_OS_LIBRARIES
-	#if defined(MAC_OS_X_VERSION_10_8) 
-		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
-			#define _MAC_OS_MOUNTAIN_LION_OR_NEWER
-		#endif	
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER) 
+		#define _MAC_OS_MOUNTAIN_LION_OR_NEWER
 	#endif
 
-	#if defined(MAC_OS_X_VERSION_10_7) 
-		#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-			#define _MAC_OS_LION_OR_NEWER
-		#endif	
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER) 
+		#define _MAC_OS_LION_OR_NEWER
 	#endif
 #endif
 
