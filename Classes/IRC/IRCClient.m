@@ -3639,7 +3639,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				postevent = [self notifyText:NOTIFICATION_CHANNEL_MSG lineType:type target:c nick:anick text:text];
 			}
 			
-			if (postevent) {
+			if (postevent && (highlight || c.config.growl)) {
 				[self setUnreadState:c];
 			}
 			
