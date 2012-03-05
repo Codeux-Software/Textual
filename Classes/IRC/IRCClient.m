@@ -2969,12 +2969,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return NO;
 	}
 	
-	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
-	
-	if ([Preferences growlEnabledForEvent:type] == NO) return YES;
-	if ([Preferences stopGrowlOnActive] && [world.window isOnCurrentWorkspace]) return YES;
-	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
-	
 	IRCChannel *channel = nil;
 	
 	NSString *chname = nil;
@@ -2983,8 +2977,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if ([target isKindOfClass:[IRCChannel class]]) {
 			channel = (IRCChannel *)target;
 			chname = channel.name;
-			
-			if (channel.config.growl == NO) {
+
+			if (type == NOTIFICATION_HIGHLIGHT) {
+				if (channel.config.ihighlights) {
+					return YES;
+				}
+			} else if (channel.config.growl == NO) {
 				return YES;
 			}
 		} else {
@@ -2995,6 +2993,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (NSObjectIsEmpty(chname)) {
 		chname = self.name;
 	}
+    
+	[SoundPlayer play:[Preferences soundForEvent:type] isMuted:world.soundMuted];
+	
+	if ([Preferences growlEnabledForEvent:type] == NO) return YES;
+	if ([Preferences stopGrowlOnActive] && [world.window isOnCurrentWorkspace]) return YES;
+	if ([Preferences disableWhileAwayForEvent:type] == YES && isAway == YES) return YES;
 	
 	NSDictionary *info = nil;
 	
