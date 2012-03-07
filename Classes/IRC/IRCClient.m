@@ -76,6 +76,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize pendingCaps;
 @synthesize acceptedCaps;
 @synthesize userhostInNames;
+@synthesize multiPrefix;
 @synthesize identifyCTCP;
 @synthesize identifyMsg;
 @synthesize inWhoInfoRun;
@@ -121,6 +122,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		capPaused = 0;
 		userhostInNames = NO;
+		multiPrefix = NO;
 		identifyMsg = NO;
 		identifyCTCP = NO;
 		
@@ -4291,9 +4293,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (c) {
 			NSArray *info = [c.mode update:modeStr];
+			BOOL performWho = NO;
 			
 			for (IRCModeInfo *h in info) {
 				[c changeMember:h.param mode:h.mode value:h.plus];
+
+				if (h.plus == NO && multiPrefix == NO) {
+					performWho = YES;
+				}
+			}
+
+			if (performWho) {
+				[self send:IRCCI_WHO, c.name, nil, nil];
 			}
 			
 			[self printBoth:c type:LINE_TYPE_MODE text:TXTFLS(@"IRC_MDOE_SET", nick, modeStr) receivedAt:m.receivedAt];
@@ -4388,6 +4399,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self send:IRCCI_AUTHENTICATE, @"PLAIN", nil];
 		} else if ([cap isEqualNoCase:@"userhost-in-names"]) {
 			userhostInNames = YES;
+		} else if ([cap isEqualNoCase:@"multi-prefix"]) {
+			multiPrefix = YES;
 		} else if ([cap isEqualNoCase:@"identify-msg"]) {
 			identifyMsg = YES;
 		} else if ([cap isEqualNoCase:@"identify-ctcp"]) {
@@ -5374,6 +5387,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	capPaused = 0;
 
 	userhostInNames = NO;
+	multiPrefix = NO;
 	identifyMsg = NO;
 	identifyCTCP = NO;
 	

@@ -112,6 +112,7 @@
 
 		if ([key isEqualToString:@"NAMESX"]) {
 			[client sendLine:@"PROTOCTL NAMESX"];
+			client.multiPrefix = YES;
 		} else if ([key isEqualToString:@"UHNAMES"]) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
 			client.userhostInNames = YES;
