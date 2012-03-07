@@ -4912,7 +4912,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			break;
 		}
-		case 352:
+		case 352:  // RPL_WHOREPLY
 		{
 			NSString *chname = [m paramAt:1];
 			
@@ -4922,24 +4922,50 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *nick		= [m paramAt:5];
 				NSString *hostmask	= [m paramAt:3];
 				NSString *username	= [m paramAt:2];
+				NSString *fields    = [m paramAt:6];
+
+				// fields = G|H *| chanprefixes
+				// strip G or H (away status)
+				fields = [fields substringFromIndex:1];
+
+				if ([fields hasPrefix:@"*"]) {
+					// The nick is an oper
+					fields = [fields substringFromIndex:1];
+				}
 				
 				IRCUser *u = [c findMember:nick];
-				
-				if (u) {
-					if (NSObjectIsEmpty(u.address)) {
-						[u setAddress:hostmask];
-						[u setUsername:username];
-					}
-				} else {
+				if (!u) {
 					IRCUser *u = [IRCUser newad];
-					
-					u.nick			= nick;
-					u.username		= username;
-					u.address		= hostmask;
-					u.supportInfo	= isupport;
-					
-					[c addMember:u];
+					u.supportInfo = isupport;
+					u.nick = nick;
 				}
+
+				NSInteger i;
+				for (i = 0; i < fields.length; i++) {
+					NSString *prefix = [fields safeSubstringWithRange:NSMakeRange(i, 1)];
+
+					if ([prefix isEqualTo:isupport.userModeQPrefix]) {
+						u.q = YES;
+					} else if ([prefix isEqualTo:isupport.userModeAPrefix]) {
+						u.a = YES;
+					} else if ([prefix isEqualTo:isupport.userModeOPrefix]) {
+						u.o = YES;
+					} else if ([prefix isEqualTo:isupport.userModeHPrefix]) {
+						u.h = YES;
+					} else if ([prefix isEqualTo:isupport.userModeVPrefix]) {
+						u.v = YES;
+					} else {
+						break;
+					}
+				}
+
+				if (NSObjectIsEmpty(u.address)) {
+					[u setAddress:hostmask];
+					[u setUsername:username];
+				}
+
+				[c updateOrAddMember:u];
+				[c reloadMemberList];
 			} 
 			
 			if (inWhoInfoRun) {
