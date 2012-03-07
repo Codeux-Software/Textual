@@ -153,11 +153,6 @@
 
 - (NSDictionary *)registrationDictionaryForGrowl
 {
-	NSArray *defaultNotifications = [NSArray arrayWithObjects:
-										TXTLS(@"NOTIFICATION_MSG_NEW_TALK"), TXTLS(@"NOTIFICATION_MSG_TALK_MSG"),
-										TXTLS(@"NOTIFICATION_MSG_HIGHLIGHT"), TXTLS(@"NOTIFICATION_MSG_INVITED"),
-										TXTLS(@"NOTIFICATION_MSG_KICKED"), TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH"), nil];
-	
 	NSArray *allNotifications = [NSArray arrayWithObjects:
 									TXTLS(@"NOTIFICATION_MSG_HIGHLIGHT"), TXTLS(@"NOTIFICATION_MSG_NEW_TALK"),
 									TXTLS(@"NOTIFICATION_MSG_CHANNEL_MSG"), TXTLS(@"NOTIFICATION_MSG_CHANNEL_NOTICE"),
@@ -166,7 +161,7 @@
 									TXTLS(@"NOTIFICATION_MSG_LOGIN"), TXTLS(@"NOTIFICATION_MSG_DISCONNECT"),
 									TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH"), nil];
 	
-	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
+	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, allNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
 }
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context 
