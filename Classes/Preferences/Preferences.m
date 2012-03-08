@@ -244,6 +244,16 @@ static NSMutableDictionary *commandIndex = nil;
 }
 
 #pragma mark -
+#pragma mark Sandbox Check
+
+BOOL appstoreSandboxEnabled = NO;
+
++ (BOOL)sandboxEnabled
+{
+	return appstoreSandboxEnabled;
+}
+
+#pragma mark -
 #pragma mark Default Identity
 
 + (NSString *)defaultNickname
@@ -1059,6 +1069,13 @@ static NSInteger totalRunTime = 0;
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
+	
+	/* Sandbox Check */
+	/* There probably is an Apple API call to tell if this
+	 application is in the sandbox, but we already had the
+	 information in our "gitref" so might as well use that. */
+	
+//NSString *gitref = [textualPlist];
 	
 	/* Font Check */
 	

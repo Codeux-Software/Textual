@@ -93,6 +93,7 @@
 		4C5AF37612D1BB3900D6B18C /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C5AEF8E12D1B75600D6B18C /* core.js */; };
 		4C62C7591221D385002DCB9A /* InputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62C7581221D385002DCB9A /* InputPromptDialog.xib */; };
 		4C66E88512DF69E500446250 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
+		4C69DF241505B26D00A32119 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C69DF231505B26D00A32119 /* CoreFoundation.framework */; };
 		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
 		4C70B46513D9A14F004D7619 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B46313D9A14F004D7619 /* TextField.m */; };
 		4C70FA1E1502FC9200EEAF97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
@@ -527,6 +528,7 @@
 		4C66E88412DF69E500446250 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C67A80612F38125002E308B /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		4C67A81012F38268002E308B /* NSDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDateHelper.h; path = Classes/Headers/NSDateHelper.h; sourceTree = SOURCE_ROOT; };
+		4C69DF231505B26D00A32119 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C6C44FD13178C6A00815D4E /* TXRegularExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXRegularExpression.h; path = Classes/Headers/TXRegularExpression.h; sourceTree = SOURCE_ROOT; };
 		4C6DD1761388803B00280797 /* NSSplitViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSSplitViewHelper.h; path = Classes/Headers/NSSplitViewHelper.h; sourceTree = SOURCE_ROOT; };
 		4C6DD1791388804E00280797 /* NSSplitViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSSplitViewHelper.m; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C69DF241505B26D00A32119 /* CoreFoundation.framework in Frameworks */,
 				4C70FA1E1502FC9200EEAF97 /* Foundation.framework in Frameworks */,
 				77A33938146B3B300003ACD2 /* Growl.framework in Frameworks */,
 				4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */,
@@ -1151,6 +1154,7 @@
 		4C5AF05012D1B76A00D6B18C /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C69DF231505B26D00A32119 /* CoreFoundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
@@ -1716,7 +1720,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Codeux Software";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Textual" */;
@@ -2263,13 +2267,17 @@
 		4C8D707C12A36FDB00738B2C /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/**\"",
+					"\"/System/Library/Frameworks/**\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
@@ -2358,13 +2366,17 @@
 		4CEE702212AB8A690083F30F /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/**\"",
+					"\"/System/Library/Frameworks/**\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2404,13 +2416,17 @@
 		4CF55DCA14F5F34E003E6242 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/**\"",
+					"\"/System/Library/Frameworks/**\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2476,13 +2492,17 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/**\"",
+					"\"/System/Library/Frameworks/**\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
@@ -2513,13 +2533,17 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/**\"",
+					"\"/System/Library/Frameworks/**\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";

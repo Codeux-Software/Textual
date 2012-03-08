@@ -4935,7 +4935,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *nick		= [m paramAt:5];
 				NSString *hostmask	= [m paramAt:3];
 				NSString *username	= [m paramAt:2];
-				NSString *fields    = [m paramAt:6];
+				NSString *fields     = [m paramAt:6];
 
 				// fields = G|H *| chanprefixes
 				// strip G or H (away status)
@@ -4947,13 +4947,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				IRCUser *u = [c findMember:nick];
-				if (!u) {
+				
+				if (PointerIsEmpty(u)) {
 					IRCUser *u = [IRCUser newad];
+					
 					u.supportInfo = isupport;
 					u.nick = nick;
 				}
 
 				NSInteger i;
+				
 				for (i = 0; i < fields.length; i++) {
 					NSString *prefix = [fields safeSubstringWithRange:NSMakeRange(i, 1)];
 
