@@ -30,5 +30,7 @@
 	<string>irc.oftc.net</string>
 	<key>Thinkstack</key>
 	<string>irc.thinstack.net</string>
+	<key>TWiT</key>
+	<string>irc.twit.tv</string>
 </dict>
 </plist>
