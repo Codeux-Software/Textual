@@ -110,12 +110,14 @@
 			}
 		}
 
-		if ([key isEqualToString:@"NAMESX"]) {
+		if ([key isEqualToString:@"NAMESX"] && client.multiPrefix == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
 			client.multiPrefix = YES;
-		} else if ([key isEqualToString:@"UHNAMES"]) {
+			[client.acceptedCaps addObject:@"multi-prefix"];
+		} else if ([key isEqualToString:@"UHNAMES"] && client.userhostInNames == NO) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
 			client.userhostInNames = YES;
+			[client.acceptedCaps addObject:@"userhost-in-names"];
 		}
 	}
 	
