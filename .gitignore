@@ -12,3 +12,4 @@ Resources/Plugins/Compiled
 xcuserdata
 Frameworks/Blowfish/BlowfishEncryption.framework
 Frameworks/Adium/AutoHyperlinks/AutoHyperlinks.framework
+*.xcworkspace
