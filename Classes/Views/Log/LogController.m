@@ -269,23 +269,25 @@
 
 - (void)setTopic:(NSString *)topic 
 {
+	if (NSObjectIsEmpty(topic)) {
+		topic = TXTLS(@"NO_TOPIC_DEFAULT_TOPIC");
+	}
+	
 	MessageBlock (^messageBlock)(void) = [^{
-		if (NSObjectIsNotEmpty(topic)) {
-			if ([[self topicValue] isEqualToString:topic] == NO) {
-				NSString *body = [LogRenderer renderBody:topic 
-											  controller:nil
-											  renderType:ASCII_TO_HTML 
-											  properties:[NSDictionary dictionaryWithObjectsAndKeys:NSNumberWithBOOL(YES), @"renderLinks", nil]
-											  resultInfo:NULL];
-				
-				DOMDocument *doc = [self mainFrameDocument];
-				if (PointerIsEmpty(doc)) return NO;
-				
-				DOMElement *topic_body = [self topic:doc];
-				if (PointerIsEmpty(topic_body)) return NO;
-				
-				[(id)topic_body setInnerHTML:body];
-			}
+		if ([[self topicValue] isEqualToString:topic] == NO) {
+			NSString *body = [LogRenderer renderBody:topic
+										  controller:nil
+										  renderType:ASCII_TO_HTML
+										  properties:[NSDictionary dictionaryWithObjectsAndKeys:NSNumberWithBOOL(YES), @"renderLinks", nil]
+										  resultInfo:NULL];
+			
+			DOMDocument *doc = [self mainFrameDocument];
+			if (PointerIsEmpty(doc)) return NO;
+			
+			DOMElement *topic_body = [self topic:doc];
+			if (PointerIsEmpty(topic_body)) return NO;
+			
+			[(id)topic_body setInnerHTML:body];
 		}
 		
 		return YES;
