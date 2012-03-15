@@ -53,17 +53,14 @@
 	
 	NSMutableString *s = [line mutableCopy];
 
-#if 0
 	if ([s hasPrefix:@"@t="]) {
+		// znc server-time
 		NSString* t = [s getToken];
 		t = [t substringFromIndex:3];
 		receivedAt = [[NSDate dateWithTimeIntervalSince1970: [t longLongValue]] retain];
 	} else {
 		receivedAt = [[NSDate date] retain];
 	}
-#else
-	receivedAt = [[NSDate date] retain];
-#endif
 
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [s getToken];
