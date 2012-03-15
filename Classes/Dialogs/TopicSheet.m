@@ -48,6 +48,7 @@
 {
 	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
 		NSString *topic = [text.attributedStringValue attributedStringToASCIIFormatting];
+		topic = [[topic componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
 		
 		[delegate topicSheet:self onOK:topic];
 	}
