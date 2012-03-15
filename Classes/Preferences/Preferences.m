@@ -236,21 +236,22 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)whereTranscriptFolder 
 {
-#ifdef TEXTUAL_SANDBOX_DISABLED
-    return [NSHomeDirectory() stringByAppendingPathComponent:@"Textual Logs"];
-#else 
-    return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
-#endif
+	if ([self sandboxEnabled]) {
+		return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+	}
+
+	return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Textual Logs"];
 }
 
 #pragma mark -
 #pragma mark Sandbox Check
 
-BOOL appstoreSandboxEnabled = NO;
-
 + (BOOL)sandboxEnabled
 {
-	return appstoreSandboxEnabled;
+	// This is a dirty way to detect if we are sandboxed.
+	NSString *homeDirectory = NSHomeDirectory();
+	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [[NSBundle mainBundle] bundleIdentifier]];
+	return [homeDirectory hasSuffix:suffix];
 }
 
 #pragma mark -
