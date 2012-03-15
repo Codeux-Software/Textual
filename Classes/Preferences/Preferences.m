@@ -253,13 +253,10 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (BOOL)sandboxEnabled
 {
-	NSString *gitref = [self gitBuildReference];
-	
-	if ([gitref contains:@",nosndbox"]) {
-		return NO;
-	}
-
-	return YES;
+	// This is a dirty way to detect if we are sandboxed.
+	NSString *homeDirectory = NSHomeDirectory();
+	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [[NSBundle mainBundle] bundleIdentifier]];
+	return [homeDirectory hasSuffix:suffix];
 }
 
 #pragma mark -
