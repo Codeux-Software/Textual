@@ -91,9 +91,9 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue)
 				}
 				
 				if (shortValue) {
-					return [NSString stringWithFormat:@"%i %@", total, TXTLS(languageKey)];
+					return [NSString stringWithFormat:@"%d %@", total, TXTLS(languageKey)];
 				} else {
-					[finalResult appendFormat:@"%i %@, ", total, TXTLS(languageKey)];
+					[finalResult appendFormat:@"%d %@, ", total, TXTLS(languageKey)];
 				}
 			}
 		}

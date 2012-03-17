@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">12A128p</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2427</string>
-		<string key="IBDocument.AppKitVersion">1157.7</string>
-		<string key="IBDocument.HIToolboxVersion">599.00</string>
+		<string key="IBDocument.SystemVersion">12A154q</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2429</string>
+		<string key="IBDocument.AppKitVersion">1162.3</string>
+		<string key="IBDocument.HIToolboxVersion">604.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2427</string>
+			<string key="NS.object.0">2429</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSScroller</string>
@@ -3009,8 +3009,9 @@
 													<string key="NSFrameSize">{188, 512}</string>
 													<reference key="NSSuperview" ref="649664949"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="678251316"/>
+													<reference key="NSNextKeyView" ref="718755093"/>
 													<bool key="NSEnabled">YES</bool>
+													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<object class="_NSCornerView" key="NSCornerView">
 														<nil key="NSNextResponder"/>
 														<int key="NSvFlags">-2147483392</int>
@@ -3043,7 +3044,7 @@
 																</object>
 															</object>
 															<object class="NSTextFieldCell" key="NSDataCell" id="439844532">
-																<int key="NSCellFlags">337716800</int>
+																<int key="NSCellFlags">337647168</int>
 																<int key="NSCellFlags2">2112</int>
 																<string key="NSContents">Text Cell</string>
 																<object class="NSFont" key="NSSupport" id="826350039">
@@ -3126,6 +3127,7 @@
 											<reference key="NSSuperview" ref="230253150"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="314651887"/>
+											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="230253150"/>
 											<string key="NSAction">_doScroller:</string>
 											<double key="NSPercent">0.99805068226120852</double>
@@ -3137,6 +3139,7 @@
 											<reference key="NSSuperview" ref="230253150"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="649664949"/>
+											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<int key="NSsFlags">1</int>
 											<reference key="NSTarget" ref="230253150"/>
 											<string key="NSAction">_doScroller:</string>
@@ -3146,7 +3149,7 @@
 									<string key="NSFrameSize">{188, 512}</string>
 									<reference key="NSSuperview" ref="100056217"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="718755093"/>
+									<reference key="NSNextKeyView" ref="649664949"/>
 									<int key="NSsFlags">133648</int>
 									<reference key="NSVScroller" ref="678251316"/>
 									<reference key="NSHScroller" ref="718755093"/>
@@ -3180,7 +3183,7 @@
 											<bool key="NSViewCanDrawConcurrently">YES</bool>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
-												<int key="NSCellFlags">67186688</int>
+												<int key="NSCellFlags">67117056</int>
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Title</string>
 												<reference key="NSSupport" ref="826350039"/>
@@ -3222,8 +3225,9 @@
 																	<string key="NSFrameSize">{223, 512}</string>
 																	<reference key="NSSuperview" ref="337544634"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="676679988"/>
+																	<reference key="NSNextKeyView" ref="941879084"/>
 																	<bool key="NSEnabled">YES</bool>
+																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																	<object class="_NSCornerView" key="NSCornerView">
 																		<nil key="NSNextResponder"/>
 																		<int key="NSvFlags">-2147483392</int>
@@ -3235,7 +3239,7 @@
 																			<double key="NSMinWidth">40</double>
 																			<double key="NSMaxWidth">1000</double>
 																			<object class="NSTableHeaderCell" key="NSHeaderCell">
-																				<int key="NSCellFlags">75545152</int>
+																				<int key="NSCellFlags">75500096</int>
 																				<int key="NSCellFlags2">2048</int>
 																				<string key="NSContents"/>
 																				<reference key="NSSupport" ref="26"/>
@@ -3246,7 +3250,7 @@
 																				<reference key="NSTextColor" ref="545697232"/>
 																			</object>
 																			<object class="NSTextFieldCell" key="NSDataCell" id="985701308">
-																				<int key="NSCellFlags">69253697</int>
+																				<int key="NSCellFlags">69235777</int>
 																				<int key="NSCellFlags2">6144</int>
 																				<string key="NSContents">Text Cell</string>
 																				<reference key="NSSupport" ref="826350039"/>
@@ -3296,6 +3300,7 @@
 															<reference key="NSSuperview" ref="610795041"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="743325937"/>
+															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<reference key="NSTarget" ref="610795041"/>
 															<string key="NSAction">_doScroller:</string>
 															<double key="NSPercent">0.99806949806949807</double>
@@ -3307,6 +3312,7 @@
 															<reference key="NSSuperview" ref="610795041"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="337544634"/>
+															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<int key="NSsFlags">1</int>
 															<reference key="NSTarget" ref="610795041"/>
 															<string key="NSAction">_doScroller:</string>
@@ -3316,7 +3322,7 @@
 													<string key="NSFrame">{{-1, 0}, {223, 512}}</string>
 													<reference key="NSSuperview" ref="752371143"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="941879084"/>
+													<reference key="NSNextKeyView" ref="337544634"/>
 													<int key="NSsFlags">133648</int>
 													<reference key="NSVScroller" ref="676679988"/>
 													<reference key="NSHScroller" ref="941879084"/>
@@ -3376,6 +3382,7 @@
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 						<object class="NSScrollView" id="613525633">
 							<reference key="NSNextResponder" ref="606779342"/>
@@ -3410,7 +3417,7 @@
 											<string key="NSFrameSize">{612, 17}</string>
 											<reference key="NSSuperview" ref="915392651"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="821141213"/>
 											<string key="NSReuseIdentifierKey">_NS:3760</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="986559100">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -3488,13 +3495,11 @@
 SxqWyKXyeYxyZzWbSuJTScRCbz2Nz+gRKhUOfTqeUai0OSxiWTiBQSHSGFquGwekxyAgAAAPAQAAAwAA
 AAEAEAAAAQEAAwAAAAEAEAAAAQIAAwAAAAIACAAIAQMAAwAAAAEABQAAAQYAAwAAAAEAAQAAAREABAAA
 AAEAAAAIARIAAwAAAAEAAQAAARUAAwAAAAEAAgAAARYAAwAAAAEAEAAAARcABAAAAAEAAABnARwAAwAA
-AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABArwAAQAAAUMAAAEqAAAAADx4
+AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABArwAAQAAAMQAAAEqAAAAADx4
 OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuMS4yIj4K
 ICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50
-YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1s
-bnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iPgogICAgICAgICA8dGlmZjpDb21w
-cmVzc2lvbj41PC90aWZmOkNvbXByZXNzaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9y
-ZGY6UkRGPgo8L3g6eG1wbWV0YT4KA</bytes>
+YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIvPgogICA8L3JkZjpSREY+
+CjwveDp4bXBtZXRhPgo</bytes>
 														</object>
 													</object>
 												</array>
@@ -3515,6 +3520,7 @@ ZGY6UkRGPgo8L3g6eG1wbWV0YT4KA</bytes>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1016719665"/>
 									<string key="NSReuseIdentifierKey">_NS:3774</string>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="613525633"/>
 									<string key="NSAction">_doScroller:</string>
 									<double key="NSCurValue">1</double>
@@ -3528,6 +3534,7 @@ ZGY6UkRGPgo8L3g6eG1wbWV0YT4KA</bytes>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="915392651"/>
 									<string key="NSReuseIdentifierKey">_NS:3762</string>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="613525633"/>
 									<string key="NSAction">_doScroller:</string>
@@ -3538,9 +3545,9 @@ ZGY6UkRGPgo8L3g6eG1wbWV0YT4KA</bytes>
 							<string key="NSFrame">{{20, 6}, {612, 26}}</string>
 							<reference key="NSSuperview" ref="606779342"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="821141213"/>
+							<reference key="NSNextKeyView" ref="915392651"/>
 							<string key="NSReuseIdentifierKey">_NS:148</string>
-							<int key="NSsFlags">154128</int>
+							<int key="NSsFlags">133648</int>
 							<reference key="NSVScroller" ref="821141213"/>
 							<reference key="NSHScroller" ref="1016719665"/>
 							<reference key="NSContentView" ref="915392651"/>
@@ -7427,7 +7434,6 @@ ZGY6UkRGPgo8L3g6eG1wbWV0YT4KA</bytes>
 				<string key="2206.CustomClassName">MemberList</string>
 				<string key="2206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="2207.isInViewBasedMode"/>
 				<string key="2210.CustomClassName">MemberListCell</string>
 				<string key="2210.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSMutableDictionary" key="2244.IBAttributePlaceholdersKey">
