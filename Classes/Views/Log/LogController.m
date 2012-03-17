@@ -520,7 +520,7 @@
 
 - (void)jumpToLine:(NSInteger)line 
 {
-	NSString *lid = [NSString stringWithFormat:@"line%i", line];
+	NSString *lid = [NSString stringWithFormat:@"line%d", line];
 	
 	if (loaded == NO) return;
 	
@@ -794,7 +794,7 @@
 						[postedUrls safeAddObject:imageUrl];
 					}
 					
-					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %ipx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
+					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
 				}
 			}
 		}
@@ -924,9 +924,9 @@
 	
 	NSTimeInterval ti = [NSDate timeIntervalSinceReferenceDate];
 	
-	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?%d\" />", ti];
+	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?%f\" />", ti];
 	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", theme.core_js.filename];
-	[s appendFormat:@"<script src=\"scripts.js?%d\" type=\"text/javascript\"></script>", ti];
+	[s appendFormat:@"<script src=\"scripts.js?%f\" type=\"text/javascript\"></script>", ti];
 	
 	if (override_style) {
 		[s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
@@ -985,12 +985,12 @@
 		NSInteger textWidth = (textSize.width + other.indentationOffset);
 		
 		[sf appendString:@"body div#body_home p {"];
-		[sf appendFormat:@"margin-left: %ipx;", textWidth];
-		[sf appendFormat:@"text-indent: -%ipx;", textWidth];  
+		[sf appendFormat:@"margin-left: %dpx;", textWidth];
+		[sf appendFormat:@"text-indent: -%dpx;", textWidth];
 		[sf appendString:@"}"];
 		
 		[sf appendString:@"body .time {"];
-		[sf appendFormat:@"width: %ipx;", textWidth];
+		[sf appendFormat:@"width: %dpx;", textWidth];
 		[sf appendString:@"}"];
 	}
 	

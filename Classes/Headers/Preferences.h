@@ -56,6 +56,8 @@ typedef enum {
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;
 
++ (NSString *)gitBuildReference;
+
 + (NSDoubleN)viewLoopConsoleDelay;
 + (NSDoubleN)viewLoopChannelDelay;
 

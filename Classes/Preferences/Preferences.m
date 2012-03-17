@@ -181,6 +181,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[NSProcessInfo processInfo] processIdentifier];
 }
 
++ (NSString *)gitBuildReference
+{
+	return [textualPlist objectForKey:@"Build Reference"];
+}
+
 #pragma mark -
 #pragma mark Path Index
 
@@ -248,10 +253,13 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (BOOL)sandboxEnabled
 {
-	// This is a dirty way to detect if we are sandboxed.
-	NSString *homeDirectory = NSHomeDirectory();
-	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [[NSBundle mainBundle] bundleIdentifier]];
-	return [homeDirectory hasSuffix:suffix];
+	NSString *gitref = [self gitBuildReference];
+	
+	if ([gitref contains:@",nosndbox"]) {
+		return NO;
+	}
+
+	return YES;
 }
 
 #pragma mark -

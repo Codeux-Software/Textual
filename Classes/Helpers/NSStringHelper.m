@@ -668,7 +668,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedShort:(unsigned short)value				{ return [NSString stringWithFormat:@"%hu", value]; }
 
 + (NSString *)stringWithInt:(int)value									{ return [NSString stringWithFormat:@"%i", value]; }
-+ (NSString *)stringWithInteger:(NSInteger)value						{ return [NSString stringWithFormat:@"%i", value]; }
++ (NSString *)stringWithInteger:(NSInteger)value						{ return [NSString stringWithFormat:@"%d", value]; }
 + (NSString *)stringWithUnsignedInt:(unsigned int)value					{ return [NSString stringWithFormat:@"%u", value]; }
 + (NSString *)stringWithUnsignedInteger:(NSUInteger)value				{ return [NSString stringWithFormat:@"%u", value]; }
 
@@ -679,7 +679,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(NSDoubleN)value							{ return [NSString stringWithFormat:@"%d", value]; }
++ (NSString *)stringWithDouble:(NSDoubleN)value							{ return [NSString stringWithFormat:@"%f", value]; }
 
 @end
 
