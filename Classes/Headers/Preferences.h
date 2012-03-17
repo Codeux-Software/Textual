@@ -43,6 +43,8 @@ typedef enum {
 
 @interface Preferences : NSObject
 
++ (BOOL)sandboxEnabled;
+
 + (void)validateStoreReceipt;
 
 + (NSInteger)startTime;
@@ -74,7 +76,9 @@ typedef enum {
 + (NSString *)wherePluginsLocalPath;
 + (NSString *)whereAppStoreReceipt;
 + (NSString *)whereMainApplicationBundle;
-+ (NSString *)whereTranscriptFolder;
+
++ (NSString *)transcriptFolder;
++ (void)setTranscriptFolder:(NSString *)value;
 
 + (NSDictionary *)commandIndexList;
 + (NSInteger)commandUIndex:(NSString *)command;

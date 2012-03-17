@@ -91,7 +91,7 @@
 
 - (NSString *)buildPath
 {
-	NSString *base = [Preferences whereTranscriptFolder];
+	NSString *base = [Preferences transcriptFolder];
 	
 	NSString *serv = [[client name] safeFileName];
 	NSString *chan = [[channel name] safeFileName];
