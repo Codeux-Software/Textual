@@ -57,6 +57,7 @@ typedef enum {
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;
++ (NSString *)applicationBundleIdentifier;
 
 + (NSString *)gitBuildReference;
 

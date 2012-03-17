@@ -186,6 +186,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [textualPlist objectForKey:@"Build Reference"];
 }
 
++ (NSString *)applicationBundleIdentifier
+{
+	return [[NSBundle mainBundle] bundleIdentifier];
+}
+
 #pragma mark -
 #pragma mark Path Index
 
@@ -261,10 +266,9 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (BOOL)sandboxEnabled
 {
-	// This is a dirty way to detect if we are sandboxed.
-	NSString *homeDirectory = NSHomeDirectory();
-	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [[NSBundle mainBundle] bundleIdentifier]];
-	return [homeDirectory hasSuffix:suffix];
+	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [Preferences applicationBundleIdentifier]];
+	
+	return [NSHomeDirectory() hasSuffix:suffix];
 }
 
 #pragma mark -
