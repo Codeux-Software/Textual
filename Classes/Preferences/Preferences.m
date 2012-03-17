@@ -239,13 +239,21 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[NSBundle mainBundle] bundlePath];
 }
 
-+ (NSString *)whereTranscriptFolder 
+#pragma mark -
+#pragma mark Logging
+
++ (NSString *)transcriptFolder
 {
 	if ([self sandboxEnabled]) {
 		return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
 	}
 
-	return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Textual Logs"];
+	return [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
+}
+
++ (void)setTranscriptFolder:(NSString *)value
+{
+	[_NSUserDefaults() setObject:value forKey:@"Preferences.General.transcript_folder"];
 }
 
 #pragma mark -
@@ -1044,6 +1052,8 @@ static NSInteger totalRunTime = 0;
 	[d setObject:DEFAULT_TEXTUAL_FONT			forKey:@"Preferences.Theme.log_font_name"];
 	[d setObject:@"<%@%n>"						forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
+	[d setObject:@"~/Documents/Textual Logs"	forKey:@"Preferences.General.transcript_folder"];
+	
 	
 	[d setInteger:2							forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];

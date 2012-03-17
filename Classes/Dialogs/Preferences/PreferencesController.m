@@ -40,6 +40,7 @@
 @synthesize keywordsArrayController;
 @synthesize keywordsTable;
 @synthesize logView;
+@synthesize world;
 @synthesize preferenceSelectToolbar;
 @synthesize scriptLocationField;
 @synthesize scriptsController;
@@ -49,12 +50,10 @@
 @synthesize alertButton;
 @synthesize alertSoundButton;
 @synthesize highlightNicknameButton;
+@synthesize transcriptFolderButton;
 @synthesize addExcludeWordButton;
 @synthesize useGrowlButton;
 @synthesize disableAlertWhenAwayButton;
-@synthesize transfersView;
-@synthesize updatesView;
-@synthesize world;
 
 - (id)initWithWorldController:(IRCWorld *)word
 {
@@ -82,9 +81,7 @@
 	[scriptsController drain];
 	[scriptsView drain];
 	[sounds drain];
-	[stylesView drain];
-	[transfersView drain];
-	[updatesView drain];	
+	[stylesView drain];	
 	
 	[super dealloc];
 }
@@ -110,9 +107,10 @@
 	}
 	
 	[self.window makeKeyAndOrderFront:nil];
-	
+
+	[self updateTranscriptFolder];
 	[self setUpToolbarItemsAndMenus];
-    [self onHighlightTypeChanged:nil];
+	[self onHighlightTypeChanged:nil];
 	[self firstPane:generalView selectedItem:0];
 }
 
@@ -161,7 +159,7 @@
 		case 8: [self firstPane:channelManagementView selectedItem:11]; break;
 		case 9: [self firstPane:identityView selectedItem:9]; break;
 		case 10: [self firstPane:scriptsView selectedItem:10]; break;
-        case 11: [self firstPane:experimentalSettingsView selectedItem:11]; break;
+		case 11: [self firstPane:experimentalSettingsView selectedItem:11]; break;
 		default:
 		{
 			TextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
@@ -389,6 +387,54 @@
 	}
 	
 	return sounds;
+}
+
+#pragma mark -
+#pragma mark Transcript Folder Popup
+
+- (void)updateTranscriptFolder
+{
+	if ([Preferences sandboxEnabled]) {
+		[transcriptFolderButton setHidden:YES];
+
+		return;
+	}
+	
+	NSString *path = [[Preferences transcriptFolder] stringByExpandingTildeInPath];
+	
+	NSImage *icon = [_NSWorkspace() iconForFile:path];
+	[icon setSize:NSMakeSize(16, 16)];
+	
+	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
+	
+	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
+	[item setImage:icon];
+}
+
+- (void)onTranscriptFolderChanged:(id)sender
+{
+	if ([transcriptFolderButton selectedTag] == 2) {
+		NSOpenPanel *d = [NSOpenPanel openPanel];
+		
+		[d setCanChooseFiles:NO];
+		[d setCanChooseDirectories:YES];
+		[d setResolvesAliases:YES];
+		[d setAllowsMultipleSelection:NO];
+		[d setCanCreateDirectories:YES];
+		
+		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
+			[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+			
+			if (returnCode == NSOKButton) {
+				NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
+				NSString *path = [pathURL path];
+				
+				[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+				
+				[self updateTranscriptFolder];
+			}
+		}];
+	}
 }
 
 #pragma mark -

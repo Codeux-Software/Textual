@@ -17,12 +17,10 @@
 	IBOutlet NSView *interfaceView;
 	IBOutlet NSView *alertsView;
 	IBOutlet NSView *stylesView;
-	IBOutlet NSView *transfersView;
 	IBOutlet NSView *logView;
 	IBOutlet NSView *generalView;
 	IBOutlet NSView *scriptsView;
 	IBOutlet NSView *identityView;
-	IBOutlet NSView *updatesView;
 	IBOutlet NSView *floodControlView;
 	IBOutlet NSView *IRCopServicesView;
 	IBOutlet NSView *channelManagementView;
@@ -41,6 +39,7 @@
 	IBOutlet NSPopUpButton *themeButton;
     IBOutlet NSPopUpButton *alertButton;
 	IBOutlet NSPopUpButton *alertSoundButton;
+	IBOutlet NSPopUpButton *transcriptFolderButton;
 
     IBOutlet NSButton *useGrowlButton;
     IBOutlet NSButton *disableAlertWhenAwayButton;
@@ -65,12 +64,10 @@
 @property (nonatomic, retain) NSView *interfaceView;
 @property (nonatomic, retain) NSView *alertsView;
 @property (nonatomic, retain) NSView *stylesView;
-@property (nonatomic, retain) NSView *transfersView;
 @property (nonatomic, retain) NSView *logView;
 @property (nonatomic, retain) NSView *generalView;
 @property (nonatomic, retain) NSView *scriptsView;
 @property (nonatomic, retain) NSView *identityView;
-@property (nonatomic, retain) NSView *updatesView;
 @property (nonatomic, retain) NSView *floodControlView;
 @property (nonatomic, retain) NSView *IRCopServicesView;
 @property (nonatomic, retain) NSView *channelManagementView;
@@ -82,6 +79,7 @@
 @property (nonatomic, retain) NSTableView *installedScriptsTable;
 @property (nonatomic, retain) NSArrayController *keywordsArrayController;
 @property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
+@property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, retain) NSPopUpButton *themeButton;
 @property (nonatomic, retain) NSPopUpButton *alertButton;
 @property (nonatomic, retain) NSPopUpButton *alertSoundButton;
@@ -111,6 +109,7 @@
 - (void)onUseGrowl:(id)sender;
 - (void)onAlertWhileAway:(id)sender;
 - (void)onChangeAlertSound:(id)sender;
+- (void)onTranscriptFolderChanged:(id)sender;
 @end
 
 @interface NSObject (PreferencesControllerDelegate)
