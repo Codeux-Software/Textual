@@ -2489,7 +2489,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 84: // Command: MYVERSION
 		{
-			NSString *ref  = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
+			NSString *ref  = [Preferences gitBuildReference];
 			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_INFO"), 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 
@@ -3886,8 +3886,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		} else if ([command isEqualToString:IRCCI_TIME]) {
 			[self sendCTCPReply:nick command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCCI_VERSION]) {
-			NSString *ref = [[Preferences textualInfoPlist] objectForKey:@"Build Reference"];
-			
+			NSString *ref  = [Preferences gitBuildReference];
 			NSString *text = [NSString stringWithFormat:TXTLS(@"IRC_CTCP_VERSION_INFO"), 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleName"], 
 							  [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"], 

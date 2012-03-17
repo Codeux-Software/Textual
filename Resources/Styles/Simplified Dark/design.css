@@ -80,9 +80,9 @@ a:hover {
     position: fixed;
     background: #CFD4DD;
     padding: 2px 0.5em 3px;
-	text-shadow: 1px 1px #F2F2F2;
     border-bottom: 1px solid #8387B6;
     -webkit-box-shadow: 0 1px 5px #777;
+	text-shadow: 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 #topic_bar a {

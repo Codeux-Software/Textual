@@ -1158,7 +1158,7 @@
 	} else {		
 		IRCChannel *c = (IRCChannel *)i;
 		
-		s = [NSString stringWithFormat:@"%d-%d", c.client.uid, c.uid];
+		s = [NSString stringWithFormat:@"%ld-%ld", c.client.uid, c.uid];
 	}
 	
 	[pboard declareTypes:TREE_DRAG_ITEM_TYPES owner:self];
