@@ -258,7 +258,6 @@ static NSMutableDictionary *commandIndex = nil;
 	base = [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
 	base = [base stringByExpandingTildeInPath];
 	
-	NSLog(@"%@", base);
 	return base;
 }
 
