@@ -253,7 +253,13 @@ static NSMutableDictionary *commandIndex = nil;
 		return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
 	}
 
-	return [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
+	NSString *base;
+
+	base = [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
+	base = [base stringByExpandingTildeInPath];
+	
+	NSLog(@"%@", base);
+	return base;
 }
 
 + (void)setTranscriptFolder:(NSString *)value
@@ -1089,13 +1095,10 @@ static NSInteger totalRunTime = 0;
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
-	
+
 	/* Sandbox Check */
-	/* There probably is an Apple API call to tell if this
-	 application is in the sandbox, but we already had the
-	 information in our "gitref" so might as well use that. */
-	
-//NSString *gitref = [textualPlist];
+
+	[_NSUserDefaults() setBool:[Preferences sandboxEnabled] forKey:@"Preferences.security.sandbox_enabled"];
 	
 	/* Font Check */
 	
