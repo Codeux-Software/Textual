@@ -197,7 +197,8 @@
 																title:TXTLS(@"TRIAL_BUILD_INTRO_DIALOG_TITLE")
 														defaultButton:TXTLS(@"OK_BUTTON") 
 													  alternateButton:nil
-													   suppressionKey:@"Preferences.prompts.trial_period_info" 
+														  otherButton:nil
+													   suppressionKey:@"trial_period_info"
 													  suppressionText:nil];
 #endif
 	
@@ -262,6 +263,7 @@
 															title:TXTLS(@"WANT_QUIT_TITLE") 
 													defaultButton:TXTLS(@"QUIT_BUTTON") 
 												  alternateButton:TXTLS(@"CANCEL_BUTTON") 
+													  otherButton:nil
 												   suppressionKey:nil suppressionText:nil];
 		
 		if (result == NO) {
@@ -634,7 +636,8 @@
 										title:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TITLE")
 								defaultButton:TXTLS(@"OK_BUTTON")
 							  alternateButton:nil 
-							   suppressionKey:@"Preferences.prompts.theme_override_info" 
+								  otherButton:nil
+							   suppressionKey:@"theme_override_info" 
 							  suppressionText:nil];
 	}
 }

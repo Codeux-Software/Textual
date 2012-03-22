@@ -809,6 +809,7 @@
 												   title:TXTLS(@"WANT_SERVER_DELETE_TITLE")
 										   defaultButton:TXTLS(@"OK_BUTTON") 
 										 alternateButton:TXTLS(@"CANCEL_BUTTON")
+											 otherButton:nil
 										  suppressionKey:@"delete_server"
 										 suppressionText:nil];
 	
@@ -1032,6 +1033,7 @@
 													   title:TXTLS(@"WANT_CHANNEL_DELETE_TITLE") 
 											   defaultButton:TXTLS(@"OK_BUTTON") 
 											 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+												 otherButton:nil
 											  suppressionKey:@"delete_channel"
 											 suppressionText:nil];
 		
@@ -1496,7 +1498,9 @@
 		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE")
 										 title:TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE")
 								 defaultButton:TXTLS(@"OK_BUTTON") 
-							   alternateButton:nil suppressionKey:nil 
+							   alternateButton:nil 
+								   otherButton:nil
+								suppressionKey:nil
 							   suppressionText:nil];
 	}
 }
@@ -1515,8 +1519,10 @@
 	} else {
 		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE")
 										 title:TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE")
-								 defaultButton:TXTLS(@"OK_BUTTON") 
-							   alternateButton:nil suppressionKey:nil 
+								 defaultButton:TXTLS(@"OK_BUTTON")
+								alternateButton:nil
+								   otherButton:nil
+								suppressionKey:nil
 							   suppressionText:nil];
 	}
 }

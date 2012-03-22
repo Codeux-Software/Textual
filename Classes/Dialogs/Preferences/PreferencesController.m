@@ -626,6 +626,10 @@
 	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
 	
     NSInteger _returnCode = [returnCode integerValue];
+
+	if (_returnCode == NSAlertSecondButtonReturn) {
+		return;
+	}
     
 	if (_returnCode == NSAlertFirstButtonReturn) {
 		NSString *path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:name];
@@ -644,19 +648,20 @@
 - (void)onOpenPathToThemes:(id)sender
 {
 	NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
+	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
     
     if ([kind isEqualNoCase:@"resource"]) {
 		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
 									   target:[PreferencesController class]
 									   action:@selector(openPathToThemesCallback:) 
-										 body:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_MESSAGE")
+										 body:TXTFLS(@"OPENING_LOCAL_STYLE_RESOURCES_MESSAGE", name)
 										title:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_TITLE")
 								defaultButton:TXTLS(@"CONTINUE_BUTTON")
-							  alternateButton:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_COPY_BUTTON")
-							   suppressionKey:@"Preferences.prompts.opening_local_style" 
+							  alternateButton:TXTLS(@"CANCEL_BUTTON") 
+								  otherButton:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_COPY_BUTTON")
+							   suppressionKey:@"opening_local_style" 
 							  suppressionText:nil];
     } else {
-		NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
 		NSString *path = [[Preferences whereThemesPath] stringByAppendingPathComponent:name];
 		
 		[_NSWorkspace() openFile:path];
