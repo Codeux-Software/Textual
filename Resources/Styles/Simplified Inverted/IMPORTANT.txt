@@ -1,5 +1,0 @@
-This is a default theme packaged with Textual. The location that it is stored in cannot 
-be edited. Please copy its contents to a custom folder that you have created in the 
-location "[Home Folder] -> Library -> Application Support -> Textual -> Styles" — If 
-you are on Mac OS Lion, then the "Library" folder may not be visible by default. Use 
-the "Go To Folder …" option in Finder to browse to the location if necessary.

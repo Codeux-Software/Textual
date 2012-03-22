@@ -621,19 +621,46 @@
 	[_NSNotificationCenter() postNotificationName:ThemeStyleDidChangeNotification object:nil userInfo:nil];
 }
 
++ (void)openPathToThemesCallback:(NSNumber *)returnCode
+{	
+	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
+	
+    NSInteger _returnCode = [returnCode integerValue];
+    
+	if (_returnCode == NSAlertFirstButtonReturn) {
+		NSString *path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:name];
+		
+		[_NSWorkspace() openFile:path];
+	} else {
+		NSString *newpath = [[Preferences whereThemesPath]		stringByAppendingPathComponent:name];
+		NSString *oldpath = [[Preferences whereThemesLocalPath]	stringByAppendingPathComponent:name];
+		
+		[_NSFileManager() copyItemAtPath:oldpath toPath:newpath error:NULL];
+		
+		[_NSWorkspace() openFile:newpath];
+	}
+}
+
 - (void)onOpenPathToThemes:(id)sender
 {
 	NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
-	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
-    NSString *path = nil;
     
     if ([kind isEqualNoCase:@"resource"]) {
-        path = [[Preferences whereThemesLocalPath] stringByAppendingPathComponent:name];
+		[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
+									   target:[PreferencesController class]
+									   action:@selector(openPathToThemesCallback:) 
+										 body:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_MESSAGE")
+										title:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_TITLE")
+								defaultButton:TXTLS(@"CONTINUE_BUTTON")
+							  alternateButton:TXTLS(@"OPENING_LOCAL_STYLE_RESOURCES_COPY_BUTTON")
+							   suppressionKey:@"Preferences.prompts.opening_local_style" 
+							  suppressionText:nil];
     } else {
-        path = [[Preferences whereThemesPath] stringByAppendingPathComponent:name];
+		NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
+		NSString *path = [[Preferences whereThemesPath] stringByAppendingPathComponent:name];
+		
+		[_NSWorkspace() openFile:path];
     }
-    
-	[_NSWorkspace() openFile:path];
 }
 
 - (void)onOpenPathToScripts:(id)sender
