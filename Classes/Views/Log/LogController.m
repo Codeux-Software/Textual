@@ -922,11 +922,11 @@
 	[s appendFormat:@"<html %@><head>", bodyAttrs];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
 	
-	NSTimeInterval ti = [NSDate timeIntervalSinceReferenceDate];
-	
-	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?%f\" />", ti];
+	NSString *ti = [NSString stringWithUUID];
+
+	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?u=%@\" />", ti];
 	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", theme.core_js.filename];
-	[s appendFormat:@"<script src=\"scripts.js?%f\" type=\"text/javascript\"></script>", ti];
+	[s appendFormat:@"<script src=\"scripts.js?u=%@\" type=\"text/javascript\"></script>", ti];
 	
 	if (override_style) {
 		[s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
