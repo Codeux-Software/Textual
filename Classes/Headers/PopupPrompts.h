@@ -20,6 +20,7 @@
 						   title:(NSString *)titleText
 				   defaultButton:(NSString *)buttonDefault
 				 alternateButton:(NSString *)buttonAlternate
+					 otherButton:(NSString *)otherButton
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText;
 
@@ -36,6 +37,7 @@
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
+					otherButton:(NSString *)otherButton
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText;
 
