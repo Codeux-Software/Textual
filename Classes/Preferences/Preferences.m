@@ -975,6 +975,7 @@ static NSInteger totalRunTime = 0;
 											title:TXTLS(@"DEFAULT_IRC_CLIENT_PROMPT_TITLE")
 									defaultButton:TXTLS(@"YES_BUTTON") 
 								  alternateButton:TXTLS(@"NO_BUTTON") 
+									  otherButton:nil
 								   suppressionKey:@"default_irc_client" 
 								  suppressionText:nil];
 		}

@@ -24,6 +24,7 @@
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
+					otherButton:(NSString *)otherButton
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText
 {
@@ -57,6 +58,7 @@
 	[alert setInformativeText:bodyText];
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
+	[alert addButtonWithTitle:otherButton];
 	[alert setShowsSuppressionButton:useSupression];
 	
 	[[alert suppressionButton] setTitle:suppressText];
@@ -95,6 +97,7 @@
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
+					otherButton:(NSString *)otherButton
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText
 {
@@ -106,7 +109,8 @@
 							   body:bodyText 
 							  title:titleText 
 					  defaultButton:buttonDefault 
-					alternateButton:buttonAlternate 
+					alternateButton:buttonAlternate
+						otherButton:otherButton
 					 suppressionKey:suppressKey 
 					suppressionText:suppressText];
 }
@@ -123,6 +127,7 @@
 						   title:(NSString *)titleText
 				   defaultButton:(NSString *)buttonDefault
 				 alternateButton:(NSString *)buttonAlternate
+					 otherButton:(NSString *)otherButton
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText
 {
@@ -143,7 +148,7 @@
 	NSAlert *alert = [NSAlert alertWithMessageText:titleText
 									 defaultButton:buttonDefault
 								   alternateButton:buttonAlternate
-									   otherButton:nil
+									   otherButton:otherButton
 						 informativeTextWithFormat:bodyText];
 	
 	NSButton *button = [alert suppressionButton];
@@ -178,7 +183,7 @@
 	InputPromptDialog *dialog = [InputPromptDialog new];
 	
 	[dialog alertWithMessageText:titleText
-				   defaultButton:buttonDefault 
+				   defaultButton:buttonDefault
 				 alternateButton:buttonAlternate
 				 informativeText:bodyText
 				defaultUserInput:defaultValue];

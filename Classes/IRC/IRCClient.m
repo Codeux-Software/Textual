@@ -5517,7 +5517,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			BOOL status = [PopupPrompts dialogWindowWithQuestion:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_MESSAGE") 
 														   title:TXTLS(@"SSL_SOCKET_BAD_CERTIFICATE_ERROR_TITLE") 
 												   defaultButton:TXTLS(@"TRUST_BUTTON") 
-												 alternateButton:TXTLS(@"CANCEL_BUTTON") 
+												 alternateButton:TXTLS(@"CANCEL_BUTTON")
+													 otherButton:nil
 												  suppressionKey:suppKey
 												 suppressionText:@"-"];
 			

@@ -34,7 +34,7 @@
 
 "OPENING_LOCAL_STYLE_RESOURCES_TITLE" = "Default Style";
 "OPENING_LOCAL_STYLE_RESOURCES_COPY_BUTTON" = "Make Local Copy";
-"OPENING_LOCAL_STYLE_RESOURCES_MESSAGE" = "The style that is being opened is one packaged by default with Textual. Therefore, it is stored within the application itself and is read only.";
+"OPENING_LOCAL_STYLE_RESOURCES_MESSAGE" = "The version of the style \"%@\" being opened is the one packaged by default with Textual. Therefore, it is stored within the application itself and is read only.";
 
 "DEFAULT_QPS_MESSAGE" = "Textual IRC Client: www.textualapp.com";
 "SLEEPING_APPLICATION_QUIT_MESSAGE" = "Computer has gone to sleep.";
