@@ -86,7 +86,11 @@
 - (NSInteger)colorNumber
 {
 	if (colorNumber < 0) {
-		colorNumber = (CFHash([nick lowercaseString]) % COLOR_NUMBER_MAX);
+		if ([_NSUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
+			colorNumber = (CFHash([NSString stringWithUUID]) % COLOR_NUMBER_MAX);
+		} else {
+			colorNumber = (CFHash([nick lowercaseString]) % COLOR_NUMBER_MAX);
+		}
 	}
 	
 	return colorNumber;
