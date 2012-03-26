@@ -4437,7 +4437,7 @@ CjwveDp4bXBtZXRhPgo</bytes>
 						<object class="NSTextFieldCell" key="NSCell" id="225172894">
 							<int key="NSCellFlags">68256832</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Storage Location:</string>
+							<string key="NSContents">Custom Addons Location:</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">13</double>

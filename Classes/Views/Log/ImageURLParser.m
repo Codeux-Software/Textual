@@ -134,6 +134,8 @@
 		
 		if (vid) {
 			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
+			// http://gdata.youtube.com/feeds/api/videos?v=2&q=07wZiqJlu3U&max-results=1&fields=entry%28title%29&prettyprint=true
+			// root(feed).entry.title(text)
 		}
 	} else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString *vid = nil;
