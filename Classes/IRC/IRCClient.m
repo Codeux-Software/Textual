@@ -3166,7 +3166,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-    if (isActiveWindow == NO || (NSDissimilarObjects(world.selected, t) && isActiveWindow)) {
+    if ((NSDissimilarObjects(world.selected, t) && isActiveWindow)) {
 		[t setTreeUnreadCount:([t treeUnreadCount] + 1)];
 	}
 	
