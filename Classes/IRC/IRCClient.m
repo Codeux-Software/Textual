@@ -1607,18 +1607,30 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 5: // Command: INVITE
 		{
-            if (NSObjectIsEmpty(s)) {
-                return NO;
-            }
-            
-			targetChannelName = s.getToken.string;
-			
+			/* invite nick[ nick[ ...]] [channel] */
+
 			if (NSObjectIsEmpty(s)) {
-                [self send:cmd, targetChannelName, myNick, nil];
+				return NO;
+			}
+
+            NSMutableArray *nicks = [NSMutableArray arrayWithArray:
+                    [[s mutableString] componentsSeparatedByString: @" "]];
+
+			if ([nicks count] && [[nicks lastObject] isChannelName]) {
+				targetChannelName = [nicks lastObject];
+				[nicks removeLastObject];
+			} else if (c) {
+				/* They didn't supply a channel, use the selected channel */
+				targetChannelName = c.name;
 			} else {
-                [self send:cmd, targetChannelName, [s.string trim], nil];
-            }
-			
+				/* We're not in a channel and they didn't supply a channel */
+				return NO;
+			}
+
+			for (NSString *nick in nicks) {
+				[self send:cmd, nick, targetChannelName, nil];
+			}
+
 			return YES;
 			break;
 		}
