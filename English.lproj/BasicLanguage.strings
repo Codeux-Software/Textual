@@ -126,7 +126,7 @@
 "IRC_AWAY_COMMAND_DEFAULT_REASON" = "Be back later.";
 "IRC_MDOE_SET" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRC_IS_CONNECTING" = "Connecting to [%1$@] on port %2$i";
-"IRC_USER_INVITED_OTHER_USER" = "Inviting %@ to join …";
+"IRC_USER_INVITED_OTHER_USER" = "Inviting %1$@ to join %2$@";
 "IRC_RECIEVED_CTCP_REPLY" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "IRC_RECIEVED_CTCP_REQUEST" = "\002-CTCP-\002 %1$@ from %2$@";
 "IRC_CHANNEL_HAS_TOPIC_AUTHOR" = "Set by \002%1$@\002 on %2$@";
