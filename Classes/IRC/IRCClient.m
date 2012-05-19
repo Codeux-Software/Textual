@@ -4867,8 +4867,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *chname = [m paramAt:2];
+
+			IRCChannel *c = [self findChannel:chname];
 			
-			[self printBoth:nil type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_INVITED_OTHER_USER", nick, chname) receivedAt:m.receivedAt];
+			[self printBoth:c type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_INVITED_OTHER_USER", nick, chname) receivedAt:m.receivedAt];
 			
 			break;
 		}
