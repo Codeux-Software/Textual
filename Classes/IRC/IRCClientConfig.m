@@ -40,7 +40,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @synthesize sleepQuitMessage;
 @synthesize username;
 @synthesize useSSL;
-@synthesize useSASL;
 @synthesize outgoingFloodControl;
 @synthesize floodControlMaximumMessages;
 @synthesize floodControlDelayTimerInterval;
@@ -228,7 +227,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	useSSL  = [dic boolForKey:@"ssl"];
-    useSASL = [dic boolForKey:@"sasl"];
 	
 	if ([dic stringForKey:@"username"]) {
 		[username drain];
@@ -343,7 +341,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setInteger:fallbackEncoding forKey:@"fallback_encoding"];
 	
 	[dic setBool:useSSL forKey:@"ssl"];
-    [dic setBool:useSASL forKey:@"sasl"];
     [dic setBool:prefersIPv6 forKey:@"prefersIPv6"];
 	[dic setBool:autoConnect forKey:@"auto_connect"];
 	[dic setBool:autoReconnect forKey:@"auto_reconnect"];
