@@ -1994,10 +1994,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 24: // Command: WHOIS
 		{
+			NSString *peer = s.string;
+
+			if (NSObjectIsEmpty(peer)) {
+				IRCChannel *c = world.selectedChannel;
+
+				if (c.isTalk) {
+					peer = c.name;
+				} else {
+					return NO;
+				}
+			}
+
 			if ([s.string contains:NSWhitespaceCharacter]) {
-				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, s.string]];
+				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, peer]];
 			} else {
-				[self send:IRCCI_WHOIS, s.string, s.string, nil];
+				[self send:IRCCI_WHOIS, peer, peer, nil];
 			}
 			
 			return YES;
