@@ -4509,8 +4509,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self stopRetryTimer];
 	[self stopAutoJoinTimer];
 	
-	[world expandClient:self];
-	
 	sendLagcheckToChannel = serverHasNickServ = NO;
 	isLoggedIn = conn.loggedIn = inFirstISONRun = YES;
 	isAway = isConnecting = hasIRCopAccess = NO;
@@ -5535,6 +5533,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", realName, nil];
 	}
+
+	[world reloadTree];
 }
 
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender

@@ -228,4 +228,9 @@
 	return [self _colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
 }
 
++ (NSColor *)outlineViewHeaderDisabledTextColor
+{
+	return [self _colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:0.7];
+}
+
 @end

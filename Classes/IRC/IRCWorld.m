@@ -119,8 +119,6 @@
 	}
     
 	if (client) {
-		[serverList expandItem:client];
-		
 		NSInteger n = [serverList rowForItem:client];
 		if (client.channels.count) ++n;
 		
