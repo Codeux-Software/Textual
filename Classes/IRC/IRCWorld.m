@@ -1002,6 +1002,8 @@
 				[u connect];
 			}
 		}
+
+		[self expandClient:u];
 	} else {		
 		if (u.isLoggedIn) {
 			if (c.isActive) {
