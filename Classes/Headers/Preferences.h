@@ -129,6 +129,7 @@ typedef enum {
 + (BOOL)confirmQuit;
 + (BOOL)rejoinOnKick;
 + (BOOL)copyOnSelect;
++ (BOOL)replyToCTCPRequests;
 + (BOOL)autojoinWaitForNickServ;
 + (BOOL)inputHistoryIsChannelSpecific;
 
