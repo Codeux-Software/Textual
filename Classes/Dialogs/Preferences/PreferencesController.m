@@ -98,7 +98,9 @@
 	[installedScriptsTable reloadData];
 	
 	[self updateTheme];
+	
     [self updateAlert];
+	[self onChangeAlert:nil];
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	

@@ -124,6 +124,7 @@
 		notification.userInfo = info;
 		
 		[_NSUserNotificationCenter() scheduleNotification:notification];
+		
 		return;
 	}
 #endif
