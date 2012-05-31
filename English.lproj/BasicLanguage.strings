@@ -81,6 +81,8 @@
 "TRIAL_BUILD_INTRO_DIALOG_MESSAGE" = "This version of Textual is designed to demonstrate the features, performance, reliability, and usability of Textual without having to purchase it.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours.\n\nWe hope that this glimpse of Textual will help show that it is worth its low sale price. ";
 "TRIAL_BUILD_NETWORK_DISCONNECTED" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 
+"LOG_VIEW_HIDE_INLINE_IMAGE_MESSAGE" = "Hide image by shift clicking.";
+
 "DELETE_QUERY_MENU_ITEM" = "Close Query";
 "DELETE_CHANNEL_MENU_ITEM" = "Delete Channel";
 "COPY_LOG_AS_HTML_MENU_ITEM" = "Copy Log as HTML";
