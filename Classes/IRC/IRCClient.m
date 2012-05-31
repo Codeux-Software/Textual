@@ -4174,27 +4174,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
 													 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 	
-	if ([ignoreChecks ignoreJPQE] == YES) {
-		return;
-	}
-	
-	if (hasIRCopAccess == NO) {
-		if ([ignoreChecks notifyJoins] == YES) {
-			NSString *tracker = [ignoreChecks trackingNickname];
-			
-			BOOL ison = [trackedUsers boolForKey:tracker];
-			
-			if (ison) {					
-				[trackedUsers setBool:NO forKey:tracker];
-				
-				[self handleUserTrackingNotification:ignoreChecks 
-											nickname:m.sender.nick 
-											hostmask:[m.sender.raw hostmaskFromRawString]
-											langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
-			}
-		}
-	}
-	
 	NSString *text = TXTFLS(@"IRC_USER_DISCONNECTED", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
@@ -4209,7 +4188,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in channels) {
 		if ([c findMember:nick]) {
-			if ([Preferences showJoinLeave] && c.config.iJPQActivity == NO) {
+			if ([Preferences showJoinLeave] && c.config.iJPQActivity == NO && [ignoreChecks ignoreJPQE] == NO) {
 				[self printChannel:c type:LINE_TYPE_QUIT text:text receivedAt:m.receivedAt];
 			}
 			
@@ -4227,7 +4206,25 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
+
 	[world reloadTree];
+
+	if (hasIRCopAccess == NO) {
+		if ([ignoreChecks notifyJoins] == YES) {
+			NSString *tracker = [ignoreChecks trackingNickname];
+			
+			BOOL ison = [trackedUsers boolForKey:tracker];
+			
+			if (ison) {					
+				[trackedUsers setBool:NO forKey:tracker];
+				
+				[self handleUserTrackingNotification:ignoreChecks 
+											nickname:m.sender.nick 
+											hostmask:[m.sender.raw hostmaskFromRawString]
+											langitem:@"USER_TRACKING_HOSTMASK_NO_LONGER_AVAILABLE"];
+			}
+		}
+	}
 }
 
 - (void)receiveKill:(IRCMessage *)m
