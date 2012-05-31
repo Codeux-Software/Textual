@@ -76,6 +76,7 @@
 
 - (void)onMarkScrollback:(id)sender;
 - (void)onClearScrollback:(id)sender;
+- (void)onGotoScrollbackMark:(id)sender;
 - (void)onMarkAllAsRead:(id)sender;
 - (void)onIncreaseFontSize:(id)sender;
 - (void)onDecreaseFontSize:(id)sender;

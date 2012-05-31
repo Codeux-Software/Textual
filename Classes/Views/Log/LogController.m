@@ -3,7 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #define BOTTOM_EPSILON		0
-#define SCROLL_CORRECTION   20 
 #define TIME_BUFFER_SIZE	256
 
 @interface NSScrollView (Private)
@@ -22,6 +21,7 @@
 - (DOMNode *)html_head;
 - (DOMElement *)body:(DOMDocument *)doc;
 - (DOMElement *)topic:(DOMDocument *)doc;
+- (NSInteger)scrollbackCorrectionInit;
 - (void)loadAlternateHTML:(NSString *)newHTML;
 @end
 
@@ -224,6 +224,11 @@
 	[(id)view setBackgroundColor:theme.other.underlyingWindowColor];
 	
 	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
+}
+
+- (NSInteger)scrollbackCorrectionInit
+{
+	return (self.view.frame.size.height / 2);
 }
 
 - (void)notifyDidBecomeVisible
@@ -444,7 +449,7 @@
 			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:NSNumberWithInteger((y - SCROLL_CORRECTION)) forKey:@"scrollTop"];
+		[[doc body] setValue:NSNumberWithInteger((y - [self scrollbackCorrectionInit])) forKey:@"scrollTop"];
 	}
 }
 
@@ -541,7 +546,7 @@
 			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:NSNumberWithInteger((y - SCROLL_CORRECTION)) forKey:@"scrollTop"];
+		[[doc body] setValue:NSNumberWithInteger((y -  [self scrollbackCorrectionInit])) forKey:@"scrollTop"];
 	}
 }
 

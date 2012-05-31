@@ -655,6 +655,14 @@
 	[sel.log unmark];
 	[sel.log mark];
 }
+- (void)onGotoScrollbackMark:(id)sender;
+{
+	IRCTreeItem *sel = world.selected;
+	
+	if (PointerIsEmpty(sel)) return;
+	
+	[sel.log goToMark];
+}
 
 - (void)onClearScrollback:(id)sender
 {
