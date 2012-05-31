@@ -27,6 +27,8 @@
 + (NSColor *)fromCSS:(NSString *)str;
 
 + (NSColor *)outlineViewHeaderTextColor;
++ (NSColor *)outlineViewHeaderDisabledTextColor;
+
 + (NSColor *)_colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 + (NSColor *)_colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end

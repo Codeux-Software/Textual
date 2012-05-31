@@ -84,7 +84,7 @@
 	[proxyPassword drain];
 	
 	delegate = nil;
-
+	
 	[super dealloc];
 }
 
@@ -207,10 +207,14 @@
 		[delegate tcpClientDidConnect:self];
 	}
 	
-	NSLog(@"Debug Information:");
-	NSLog(@"	Connected Host: %@", [sock connectedHost]);
-	NSLog(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
-	NSLog(@"	Connected Port: %hu", [sock connectedPort]);
+	IRCClient *clin = [delegate delegate];
+	
+	if (clin.rawModeEnabled) {
+		NSLog(@"Debug Information:");
+		NSLog(@"	Connected Host: %@", [sock connectedHost]);
+		NSLog(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
+		NSLog(@"	Connected Port: %hu", [sock connectedPort]);
+	}
 }
 
 - (void)onSocketDidDisconnect:(id)sock
@@ -261,7 +265,7 @@
     }
     
 	[buffer appendData:data];
-
+	
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
 		[delegate tcpClientDidReceiveData:self];
 	}
