@@ -710,6 +710,8 @@
 	if (NO_CLIENT || CONNECTED) return;
 	
 	[u connect];
+	
+	[world expandClient:u];
 }
 
 - (void)onDisconnect:(id)sender
