@@ -359,6 +359,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.copyonselect"];
 }
 
++ (BOOL)replyToCTCPRequests
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.reply_ctcp_requests"];
+}
+
 + (BOOL)autoAddScrollbackMark
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.autoadd_scrollbackmark"];
@@ -1019,6 +1024,7 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"Preferences.Theme.predetermine_fonts"];
     [d setBool:YES forKey:@"Preferences.General.use_nomode_symbol"];
     [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
+	[d setBool:YES forKey:@"Preferences.General.reply_ctcp_requests"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];

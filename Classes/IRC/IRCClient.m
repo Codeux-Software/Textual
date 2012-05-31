@@ -1608,14 +1608,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 5: // Command: INVITE
 		{
 			/* invite nick[ nick[ ...]] [channel] */
-
+			
 			if (NSObjectIsEmpty(s)) {
 				return NO;
 			}
-
+			
             NSMutableArray *nicks = [NSMutableArray arrayWithArray:
-                    [[s mutableString] componentsSeparatedByString: @" "]];
-
+									 [[s mutableString] componentsSeparatedByString: @" "]];
+			
 			if ([nicks count] && [[nicks lastObject] isChannelName]) {
 				targetChannelName = [nicks lastObject];
 				[nicks removeLastObject];
@@ -1626,11 +1626,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				/* We're not in a channel and they didn't supply a channel */
 				return NO;
 			}
-
+			
 			for (NSString *nick in nicks) {
 				[self send:cmd, nick, targetChannelName, nil];
 			}
-
+			
 			return YES;
 			break;
 		}
@@ -1882,7 +1882,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						IRCChannel *c = [self findChannel:chname];
 						
 						if (PointerIsEmpty(c) && [chname isChannelName] == NO &&
-								secretMsg == NO) {
+							secretMsg == NO) {
 							if (type == LINE_TYPE_NOTICE) {
 								c = (id)self;
 							} else {
@@ -1995,17 +1995,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 24: // Command: WHOIS
 		{
 			NSString *peer = s.string;
-
+			
 			if (NSObjectIsEmpty(peer)) {
 				IRCChannel *c = world.selectedChannel;
-
+				
 				if (c.isTalk) {
 					peer = c.name;
 				} else {
 					return NO;
 				}
 			}
-
+			
 			if ([s.string contains:NSWhitespaceCharacter]) {
 				[self sendLine:[NSString stringWithFormat:@"%@ %@", IRCCI_WHOIS, peer]];
 			} else {
@@ -2998,7 +2998,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if ([target isKindOfClass:[IRCChannel class]]) {
 			channel = (IRCChannel *)target;
 			chname = channel.name;
-
+			
 			if (type == NOTIFICATION_HIGHLIGHT) {
 				if (channel.config.ihighlights) {
 					return YES;
@@ -3769,13 +3769,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		} else {
 			IRCChannel *c;
-
+			
 			if (targetOurself) {
 				c = [self findChannel:anick];
 			} else {
 				c = [self findChannel:target];
 			}
-
+			
 			[self decryptIncomingMessage:&text channel:c];
 			
 			BOOL newTalk = NO;
@@ -3883,6 +3883,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSMutableString *s = [[text mutableCopy] autodrain];
 	NSString *command = [[s getToken] uppercaseString];
 	
+	if ([Preferences replyToCTCPRequests] == NO) {
+		[self printDebugInformationToConsole:TXTFLS(@"IRC_HAS_IGNORED_CTCP", command, nick)];
+		
+		return;
+	}
+	
 	AddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
 													 withMatches:[NSArray arrayWithObjects:@"ignoreCTCP", nil]];
 	
@@ -3988,7 +3994,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c setIsModeInit:YES];
 		
 		[self send:IRCCI_MODE, c.name, nil];
-
+		
 		if (userhostInNames == NO) {
 			// We can skip requesting WHO, we already have this information
 			[self send:IRCCI_WHO, c.name, nil, nil];
@@ -4320,12 +4326,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			for (IRCModeInfo *h in info) {
 				[c changeMember:h.param mode:h.mode value:h.plus];
-
+				
 				if (h.plus == NO && multiPrefix == NO) {
 					performWho = YES;
 				}
 			}
-
+			
 			if (performWho) {
 				[self send:IRCCI_WHO, c.name, nil, nil];
 			}
@@ -4879,7 +4885,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			NSString *nick = [m paramAt:1];
 			NSString *chname = [m paramAt:2];
-
+			
 			IRCChannel *c = [self findChannel:chname];
 			
 			[self printBoth:c type:LINE_TYPE_REPLY text:TXTFLS(@"IRC_USER_INVITED_OTHER_USER", nick, chname) receivedAt:m.receivedAt];
@@ -4961,11 +4967,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *hostmask	= [m paramAt:3];
 				NSString *username	= [m paramAt:2];
 				NSString *fields     = [m paramAt:6];
-
+				
 				// fields = G|H *| chanprefixes
 				// strip G or H (away status)
 				fields = [fields substringFromIndex:1];
-
+				
 				if ([fields hasPrefix:@"*"]) {
 					// The nick is an oper
 					fields = [fields substringFromIndex:1];
@@ -4979,12 +4985,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					u.supportInfo = isupport;
 					u.nick = nick;
 				}
-
+				
 				NSInteger i;
 				
 				for (i = 0; i < fields.length; i++) {
 					NSString *prefix = [fields safeSubstringWithRange:NSMakeRange(i, 1)];
-
+					
 					if ([prefix isEqualTo:isupport.userModeQPrefix]) {
 						u.q = YES;
 					} else if ([prefix isEqualTo:isupport.userModeAPrefix]) {
@@ -4999,12 +5005,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						break;
 					}
 				}
-
+				
 				if (NSObjectIsEmpty(u.address)) {
 					[u setAddress:hostmask];
 					[u setUsername:username];
 				}
-
+				
 				[c updateOrAddMember:u];
 				[c reloadMemberList];
 			} 
@@ -5053,7 +5059,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 					
 					nick = [nick substringFromIndex:i];
-
+					
 					m.nick = [nick nicknameFromHostmask];
 					m.username = [nick identFromHostmask];
 					m.address = [nick hostFromHostmask];
@@ -5131,7 +5137,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (channelListDialog) {
 				[channelListDialog clear];
 			}
-
+			
 			break;
 		}
 		case 322:
@@ -5413,7 +5419,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[acceptedCaps removeAllObjects];
 	capPaused = 0;
-
+	
 	userhostInNames = NO;
 	multiPrefix = NO;
 	identifyMsg = NO;
