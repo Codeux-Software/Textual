@@ -799,7 +799,7 @@
 						[postedUrls safeAddObject:imageUrl];
 					}
 					
-					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth]];
+					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" title=\"%@\" /></a>", url, imageUrl, [Preferences inlineImagesMaxWidth], TXTLS(@"LOG_VIEW_HIDE_INLINE_IMAGE_MESSAGE")];
 				}
 			}
 		}
