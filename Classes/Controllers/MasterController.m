@@ -71,7 +71,7 @@
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		ghostMode = YES;
 	}
-    
+	
 #if defined(DEBUG)
     ghostMode = YES; // Do not use autoconnect during debug
 #endif

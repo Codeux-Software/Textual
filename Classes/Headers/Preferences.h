@@ -71,6 +71,11 @@ typedef enum {
 + (NSString *)whereApplicationSupportPath;
 + (NSString *)whereThemesPath;
 + (NSString *)whereScriptsLocalPath;
+
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
++ (NSString *)whereScriptsUnsupervisedPath;
+#endif
+
 + (NSString *)whereThemesLocalPath;
 + (NSString *)whereResourcePath;
 + (NSString *)wherePluginsPath;

@@ -21,6 +21,7 @@
 
 #ifdef _MAC_OS_MOUNTAIN_LION_OR_NEWER
 	#define _USES_NATIVE_NOTIFICATION_CENTER
+	#define _USES_APPLICATION_SCRIPTS_FOLDER
 #endif
 
 /* Textual Specific Frameworks */

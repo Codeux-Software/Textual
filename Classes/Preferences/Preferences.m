@@ -219,6 +219,17 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Scripts"];
 }
 
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
++ (NSString *)whereScriptsUnsupervisedPath
+{
+	if ([Preferences featureAvailableToOSXMountainLion]) {
+		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL].relativePath;
+	}
+	
+	return nil;
+}
+#endif
+
 + (NSString *)whereThemesLocalPath
 {
 	return [[self whereResourcePath] stringByAppendingPathComponent:@"Styles"];	
@@ -252,12 +263,12 @@ static NSMutableDictionary *commandIndex = nil;
 	if ([self sandboxEnabled]) {
 		return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
 	}
-
+	
 	NSString *base;
-
+	
 	base = [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
 	base = [base stringByExpandingTildeInPath];
-
+	
 	return base;
 }
 
@@ -967,7 +978,7 @@ static NSInteger totalRunTime = 0;
 	
     CFURLRef ircAppURL = NULL;
     OSStatus status    = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
-
+	
 	if (status == noErr) {
 		NSBundle *mainBundle		  = [NSBundle mainBundle];
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:CFItemRefToID(ircAppURL)];
@@ -992,7 +1003,7 @@ static NSInteger totalRunTime = 0;
 + (void)initPreferences
 {
 	NSInteger numberOfRuns = ([_NSUserDefaults() integerForKey:@"TXRunCount"] + 1);
-
+	
 	[_NSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
 	
 #ifndef IS_TRIAL_BINARY
@@ -1101,9 +1112,9 @@ static NSInteger totalRunTime = 0;
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
-
+	
 	/* Sandbox Check */
-
+	
 	[_NSUserDefaults() setBool:[Preferences sandboxEnabled] forKey:@"Preferences.security.sandbox_enabled"];
 	
 	/* Font Check */
@@ -1113,7 +1124,7 @@ static NSInteger totalRunTime = 0;
 	}
 	
 	/* Theme Check */
-
+	
 	NSString *themeName = [ViewTheme extractThemeName:[Preferences themeName]];
 	NSString *themePath = [[Preferences whereThemesPath] stringByAppendingPathComponent:themeName];
 	
