@@ -179,7 +179,7 @@
 	[conn readDataWithTimeout:(-1)			tag:0];
 }
 
-- (BOOL)onSocketWillConnect:(AsyncSocket *)sock
+- (BOOL)onSocketWillConnect:(id)sock
 {
 	if (useSystemSocks) {
 		[conn useSystemSocksProxy];
@@ -196,7 +196,7 @@
 	return YES;
 }
 
-- (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
+- (void)onSocket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
 	[conn readDataWithTimeout:(-1) tag:0]; 
 	
@@ -206,9 +206,14 @@
 	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
 		[delegate tcpClientDidConnect:self];
 	}
+	
+	NSLog(@"Debug Information:");
+	NSLog(@"	Connected Host: %@", [sock connectedHost]);
+	NSLog(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
+	NSLog(@"	Connected Port: %hu", [sock connectedPort]);
 }
 
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+- (void)onSocketDidDisconnect:(id)sock
 {
 	[self close];
 	
@@ -217,7 +222,7 @@
 	}	
 }
 
-- (void)onSocket:(AsyncSocket *)sender willDisconnectWithError:(NSError *)error
+- (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
 {
 	if (PointerIsEmpty(error) || [error code] == errSSLClosedGraceful) {
 		[self onSocketDidDisconnect:sender];
@@ -249,7 +254,7 @@
 	}
 }
 
-- (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
     if (PointerIsEmpty(delegate)) {
         return;
@@ -264,7 +269,7 @@
 	[conn readDataWithTimeout:(-1) tag:0]; 
 }
 
-- (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
+- (void)onSocket:(id)sock didWriteDataWithTag:(long)tag
 {
 	--sendQueueSize;
 	
@@ -277,25 +282,25 @@
 	}
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
+- (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	[[self iomt] onSocketWillConnect:nil];
-	[[self iomt] onSocket:nil didConnectToHost:ahost port:aport];
+	[[self iomt] onSocketWillConnect:sock];
+	[[self iomt] onSocket:sock didConnectToHost:ahost port:aport];
 }
 
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+- (void)socketDidDisconnect:(id)sock withError:(NSError *)err
 {
-	[[self iomt] onSocket:nil willDisconnectWithError:err];
+	[[self iomt] onSocket:sock willDisconnectWithError:err];
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[[self iomt] onSocket:nil didReadData:data withTag:tag];
+	[[self iomt] onSocket:sock didReadData:data withTag:tag];
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+- (void)socket:(id)sock didWriteDataWithTag:(long)tag
 {
-	[[self iomt] onSocket:nil didWriteDataWithTag:tag];
+	[[self iomt] onSocket:sock didWriteDataWithTag:tag];
 }
 
 @end
