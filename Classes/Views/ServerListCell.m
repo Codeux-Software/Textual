@@ -28,6 +28,7 @@
 
 #define SERVER_CELL_FONT                            [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0]
 #define SERVER_CELL_FONT_COLOR                      [NSColor outlineViewHeaderTextColor]
+#define SERVER_CELL_FONT_COLOR_DISABLED				[NSColor outlineViewHeaderDisabledTextColor]
 #define SERVER_CELL_SELECTION_FONT_COLOR            [NSColor whiteColor]
 #define SERVER_CELL_SELECTION_SHADOW_COLOR_AW       [NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
 #define SERVER_CELL_SELECTION_SHADOW_COLOR_IA       [NSColor colorWithCalibratedWhite:0.00 alpha:0.20]
@@ -265,7 +266,7 @@
 		
 		NSAttributedString			*stringValue	= [self attributedStringValue];	
 		NSMutableAttributedString	*newValue		= [stringValue mutableCopy];
-		
+
 		NSShadow *itemShadow = [NSShadow new];
 		
 		if (isGroupItem == NO) {
@@ -336,6 +337,10 @@
 			
 			NSColor *controlColor	= SERVER_CELL_FONT_COLOR;
 			NSFont  *groupFont		= SERVER_CELL_FONT;
+
+			if (cellItem.client.isConnected == NO) {
+				controlColor = SERVER_CELL_FONT_COLOR_DISABLED;
+			}
 			
 			[itemShadow setShadowOffset:NSMakeSize(1, -1)];
 			

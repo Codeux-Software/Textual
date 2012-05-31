@@ -802,8 +802,7 @@
 	config.cuid += 1;
 	
 	IRCClient *n = [world createClient:config reload:YES];
-	
-	[world expandClient:n];
+
 	[world save];
 }
 
