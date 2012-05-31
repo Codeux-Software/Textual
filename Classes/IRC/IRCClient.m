@@ -2717,7 +2717,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			break;
 		}
 		default:
-		{   
+		{	
             NSArray *extensions = [NSArray arrayWithObjects:@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @"", nil];
             
             NSString *scriptPath = [NSString string];
@@ -2726,6 +2726,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
             BOOL scriptFound;
             
             for (NSString *i in extensions) {
+				/* Would probably be cleaner to use another loop
+				 here to go through all the locations that a script
+				 can be found in, but the lazier soulution is always
+				 the best. Go team! */
+				
                 NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
                 
                 scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
@@ -2740,7 +2745,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
                     if (scriptFound == YES) {
                         break;
                     } else {
+						
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+						scriptPath = [[Preferences whereScriptsUnsupervisedPath] stringByAppendingPathComponent:filename];
+						scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
+						
+						if (scriptFound == YES) {
+							break;
+						} else {
+							continue;
+						}
+#else	
                         continue;
+#endif
+						
                     }
                 }
             }
