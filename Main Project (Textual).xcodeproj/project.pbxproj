@@ -97,6 +97,7 @@
 		4C6DD17B1388804F00280797 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DD1791388804E00280797 /* NSSplitViewHelper.m */; };
 		4C70B46513D9A14F004D7619 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B46313D9A14F004D7619 /* TextField.m */; };
 		4C70FA1E1502FC9200EEAF97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
+		4C73E9AB1578164100992CD1 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C73E9AA1578164100992CD1 /* Scripts */; };
 		4C7642291382B990001B23F4 /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BCC97130D8373006C36A9 /* AutoHyperlinks.framework */; };
 		4C76422A1382B990001B23F4 /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C66E88412DF69E500446250 /* BlowfishEncryption.framework */; };
 		4C83EBA91311B3870016AE76 /* ChanInviteExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C83EBA81311B3870016AE76 /* ChanInviteExceptionSheet.xib */; };
@@ -203,7 +204,6 @@
 		4C8D703C12A36D2100738B2C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8D702A12A36CE800738B2C /* libcrypto.dylib */; };
 		4C90F3B312B6375F00CAEB7B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C90F3B212B6375F00CAEB7B /* libicucore.dylib */; };
 		4CA0C741138920B2002689FD /* ListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C740138920B2002689FD /* ListSeparatorCell.m */; };
-		4CA9456311E1AFBA00D36367 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4C942E3511A017F9002DAC1C /* Scripts */; };
 		4CA9456411E1AFBA00D36367 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Styles */; };
 		4CA9456511E1AFBA00D36367 /* ChannelSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelSheet.xib */; };
 		4CA9456611E1AFBA00D36367 /* TopicSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* TopicSheet.xib */; };
@@ -535,6 +535,7 @@
 		4C6E801E11B3753800BACBA7 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
 		4C70B46313D9A14F004D7619 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		4C70B46613D9A222004D7619 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = Classes/Headers/TextField.h; sourceTree = SOURCE_ROOT; };
+		4C73E9AA1578164100992CD1 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Scripts"; sourceTree = "<group>"; };
 		4C796D8112F8F1DF008EF597 /* IRCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C796DE312F8FC26008EF597 /* IRCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTextFormatterMenu.h; path = Classes/Headers/IRCTextFormatterMenu.h; sourceTree = SOURCE_ROOT; };
 		4C7AD473121AEF830021648A /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = "<group>"; };
@@ -551,7 +552,6 @@
 		4C8CFF2A13D24C3C002BD81B /* ListSeparatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListSeparatorCell.h; path = Classes/Headers/ListSeparatorCell.h; sourceTree = SOURCE_ROOT; };
 		4C8D702A12A36CE800738B2C /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C90F3B212B6375F00CAEB7B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		4C942E3511A017F9002DAC1C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = Resources/Scripts; sourceTree = "<group>"; };
 		4C982D15121F32430051543F /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; wrapsLines = 0; };
 		4C9FEAC312312BDC00740B40 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
 		4CA0C740138920B2002689FD /* ListSeparatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSeparatorCell.m; sourceTree = "<group>"; };
@@ -888,7 +888,7 @@
 			children = (
 				4C5AEF8612D1B74500D6B18C /* JavaScript */,
 				4C82A68A11DBB1C600C01FBD /* Extensions */,
-				4C942E3511A017F9002DAC1C /* Scripts */,
+				4C73E9AA1578164100992CD1 /* Scripts */,
 				78287EA90D742DAA008D5656 /* Styles */,
 			);
 			name = "Styles & Scripts";
@@ -1817,7 +1817,6 @@
 				4C5AEF6712D1B6E400D6B18C /* FormattingColor_9.png in Resources */,
 				4C5AEF6812D1B6E400D6B18C /* FormattingColor_Rainbow.png in Resources */,
 				4C5AF34812D1B8C000D6B18C /* IRCNetworks.plist in Resources */,
-				4CA9456311E1AFBA00D36367 /* Scripts in Resources */,
 				4CA9456411E1AFBA00D36367 /* Styles in Resources */,
 				4C329CA212D1BD20001990A9 /* TPWTB_Advanced.png in Resources */,
 				4C329CA312D1BD20001990A9 /* TPWTB_Alerts-GrowlIcon.png in Resources */,
@@ -1855,6 +1854,7 @@
 				4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */,
 				4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */,
 				4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */,
+				4C73E9AB1578164100992CD1 /* Scripts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
