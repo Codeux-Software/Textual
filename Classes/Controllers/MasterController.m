@@ -339,13 +339,13 @@
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	id sel = world.selected;
-
+	
 	if (sel) {
 		[sel resetState];
-
+		
 		[world updateIcon];
 	}
-
+	
     [world reloadTree];
 }
 
@@ -802,39 +802,33 @@
 			}
 		}
 		
-		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsPath] error:NULL];
+		NSArray *scriptPaths = [NSArray arrayWithObjects:
+								
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+								[Preferences whereScriptsUnsupervisedPath],
+#endif
+								
+								[Preferences whereScriptsLocalPath],
+								[Preferences whereScriptsPath], nil];
 		
-        if (NSObjectIsNotEmpty(resourceFiles)) {
-            for (NSString *file in resourceFiles) {
-                if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-                    continue;
-                }
-                
-                NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-                NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-                
-                if ([choices containsObject:cmdl] == NO) {
-                    [choices safeAddObject:cmdl];
-                }
-            }
+		for (NSString *path in scriptPaths) {
+			NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+			
+			if (NSObjectIsNotEmpty(resourceFiles)) {
+				for (NSString *file in resourceFiles) {
+					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+						continue;
+					}
+					
+					NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+					NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+					
+					if ([choices containsObject:cmdl] == NO) {
+						[choices safeAddObject:cmdl];
+					}
+				}
+			}
 		}
-        
-        resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:[Preferences whereScriptsLocalPath] error:NULL];
-        
-        if (NSObjectIsNotEmpty(resourceFiles)) {
-            for (NSString *file in resourceFiles) {
-                if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-                    continue;
-                }
-                
-                NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-                NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-                
-                if ([choices containsObject:cmdl] == NO) {
-                    [choices safeAddObject:cmdl];
-                }
-            }
-        }
         
 		lowerChoices = choices;
 	} else if (channelMode) {

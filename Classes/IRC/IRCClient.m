@@ -1327,17 +1327,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				} else {
 					[applescript executeWithAppleEvent:event
 									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error){
-
-						if (PointerIsEmpty(result)) {
-							NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), [error localizedDescription]);
-						} else {	
-							NSString *finalResult = [result stringValue].trim;
-							
-							if (NSObjectIsNotEmpty(finalResult)) {
-								[world.iomt inputText:finalResult command:IRCCI_PRIVMSG];
-							}
-						}
-					}];
+										 
+										 if (PointerIsEmpty(result)) {
+											 NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), [error localizedDescription]);
+										 } else {	
+											 NSString *finalResult = [result stringValue].trim;
+											 
+											 if (NSObjectIsNotEmpty(finalResult)) {
+												 [world.iomt inputText:finalResult command:IRCCI_PRIVMSG];
+											 }
+										 }
+									 }];
 				}
 				
 				[aserror drain];
@@ -2769,43 +2769,27 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSString *command = [cmd lowercaseString];
             
             BOOL scriptFound;
+			
+			NSArray *scriptPaths = [NSArray arrayWithObjects:
+									
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+									[Preferences whereScriptsUnsupervisedPath],
+#endif
+									
+									[Preferences whereScriptsLocalPath],
+									[Preferences whereScriptsPath], nil];
             
             for (NSString *i in extensions) {
-				/* Would probably be cleaner to use another loop
-				 here to go through all the locations that a script
-				 can be found in, but the lazier soulution is always
-				 the best. Go team! */
-				
                 NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
-                
-                scriptPath = [[Preferences whereScriptsPath] stringByAppendingPathComponent:filename];
-                scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-                
-                if (scriptFound == YES) {
-                    break;
-                } else {
-                    scriptPath = [[Preferences whereScriptsLocalPath] stringByAppendingPathComponent:filename];
-                    scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-                    
-                    if (scriptFound == YES) {
-                        break;
-                    } else {
-						
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
-						scriptPath = [[Preferences whereScriptsUnsupervisedPath] stringByAppendingPathComponent:filename];
-						scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-						
-						if (scriptFound == YES) {
-							break;
-						} else {
-							continue;
-						}
-#else	
-                        continue;
-#endif
-						
-                    }
-                }
+				
+				for (NSString *path in scriptPaths) {
+					scriptPath = [path stringByAppendingPathComponent:filename];
+					scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
+					
+					if (scriptFound == YES) {
+						break;
+					}
+				}
             }
             
 			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
