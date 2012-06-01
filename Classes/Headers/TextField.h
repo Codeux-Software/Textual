@@ -10,15 +10,10 @@
 
 @interface TextField : NSTextView 
 {
-    BOOL _fontResetRequired;
-    BOOL _lastChangeWasPaste;
-    
 	KeyEventHandler *_keyHandler;
     
     dispatch_queue_t _formattingQueue;
 }
-
-- (BOOL)requriesSpecialPaste;
 
 - (dispatch_queue_t)formattingQueue;
 
@@ -34,8 +29,4 @@
 
 - (void)removeAttribute:(id)attr inRange:(NSRange)local;
 - (void)setAttributes:(id)attrs inRange:(NSRange)local;
-
-- (void)toggleFontResetStatus:(BOOL)status;
-- (void)resetTextFieldFont:(id)defaultFont color:(id)defaultColor;
-- (void)textDidChange:(id)sender pasted:(BOOL)paste range:(NSRange)erange;
 @end
