@@ -215,7 +215,7 @@
 			});
 		}
 	}
-
+	
 	self.queueInProgress = NO;
 }
 
@@ -928,7 +928,7 @@
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
 	
 	NSString *ti = [NSString stringWithUUID];
-
+	
 	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?u=%@\" />", ti];
 	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", theme.core_js.filename];
 	[s appendFormat:@"<script src=\"scripts.js?u=%@\" type=\"text/javascript\"></script>", ti];

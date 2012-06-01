@@ -556,6 +556,14 @@ BOOL isUnicharDigit(unichar c)
 
 + (NSString *)stringWithUUID 
 {
+#ifdef _USES_FOUNDATION_BASED_NSUUID
+	if ([Preferences featureAvailableToOSXMountainLion]) {
+		NSUUID *uuidObj = [NSUUID UUID];
+		
+		return [uuidObj UUIDString];
+	}
+#endif
+	
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
 	NSString *uuidString = CFItemRefToID(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
@@ -581,12 +589,12 @@ BOOL isUnicharDigit(unichar c)
 {
 	if ([self contains:@"!"]) {
 		NSString *identHost = [self safeSubstringAfterIndex:[self stringPosition:@"!"]];
-
+		
 		if ([identHost contains:@"@"]) {
 			return [identHost safeSubstringAfterIndex:[identHost stringPosition:@"@"]];
 		}
 	}
-
+	
 	return @"";
 }
 
@@ -595,7 +603,7 @@ BOOL isUnicharDigit(unichar c)
 	if ([self contains:@"@"]) {
 		return [self safeSubstringAfterIndex:[self stringPosition:@"@"]];
 	}
-
+	
 	return @"";
 }
 

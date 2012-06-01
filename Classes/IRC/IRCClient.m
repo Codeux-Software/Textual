@@ -2,9 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#include <arpa/inet.h>
+#import <arpa/inet.h>
 #import <mach/mach_time.h>
-#import <Foundation/Foundation.h>
 
 #define TIMEOUT_INTERVAL			360
 #define PING_INTERVAL				270
