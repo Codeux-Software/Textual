@@ -252,47 +252,16 @@
 #pragma mark Pasted String Sanitization
 
 - (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
-                                        color:(NSColor *)defaultColor
-                                        range:(NSRange)limitRange
 {
-    NSAttributedString *valued = self.attributedString;
-    
-    NSRange effectiveRange;
-    
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-    
-    limitRange = NSMakeRange(0, [valued length]);
-    
-    while (limitRange.length >= 1) {
-        NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
-        
-        /* Manage font settings */
-        NSFont *baseFont = [dict objectForKey:NSFontAttributeName];
-        
-        BOOL boldText   = [baseFont fontTraitSet:NSBoldFontMask];
-        BOOL italicText = [baseFont fontTraitSet:NSItalicFontMask];
-        
-        baseFont = defaultFont;
-        
-        if (baseFont) {
-            if (boldText) {
-                baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
-            }
-            
-            if (italicText) {
-                baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
-            }
-            
-            [attrs setObject:baseFont forKey:NSFontAttributeName];
-        }
+	NSRange effectiveRange = NSMakeRange(0, [self stringLength]);
 
-		if (NSObjectIsNotEmpty(attrs)) {
-            [self setAttributes:attrs inRange:effectiveRange];
-        }
-        
-        limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                  (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
-    }
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+
+	[attrs setObject:defaultFont forKey:NSFontAttributeName];
+	
+	if (NSObjectIsNotEmpty(attrs)) {
+		[self setAttributes:attrs inRange:effectiveRange];
+	}
 }
 
 #pragma mark -
