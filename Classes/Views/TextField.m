@@ -107,14 +107,11 @@
         
         newRange.location = selectedRange.location;
         newRange.length   = [pasteboard length];
-
-		NSLog(@"d: %@ %@", NSStringFromRange(newRange), pasteboard);
         
 		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont
 											  color:DefaultTextFieldFontColor 
 											  range:newRange];
     } else {
-		NSLog(@"d: %@", NSStringFromRange(selectedRange));
 		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont 
 											  color:DefaultTextFieldFontColor 
 											  range:selectedRange];
