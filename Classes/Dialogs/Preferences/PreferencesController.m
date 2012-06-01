@@ -26,6 +26,11 @@
 @synthesize channelManagementView;
 @synthesize contentView;
 @synthesize delegate;
+
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+@synthesize downloadExtraAddonsButton;
+#endif
+
 @synthesize excludeWordsArrayController;
 @synthesize excludeWordsTable;
 @synthesize experimentalSettingsView;
@@ -101,6 +106,10 @@
 	
     [self updateAlert];
 	[self onChangeAlert:nil];
+	
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+	[downloadExtraAddonsButton setHidden:BOOLReverseValue([Preferences featureAvailableToOSXMountainLion])];
+#endif
 	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
@@ -683,6 +692,13 @@
 		}
 	}
 }
+
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+- (void)onDownloadExtraAddons:(id)sender
+{
+	[URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras.pkg"]];
+}
+#endif
 
 #pragma mark -
 #pragma mark NSWindow Delegate
