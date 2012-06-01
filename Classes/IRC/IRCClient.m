@@ -2778,11 +2778,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 									
 									[Preferences whereScriptsLocalPath],
 									[Preferences whereScriptsPath], nil];
+
+	
             
-            for (NSString *i in extensions) {
-                NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
+			for (NSString *path in scriptPaths) {
+				if (scriptFound == YES) {
+					break;
+				}
 				
-				for (NSString *path in scriptPaths) {
+				for (NSString *i in extensions) {
+					NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
+					
 					scriptPath = [path stringByAppendingPathComponent:filename];
 					scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
 					
@@ -2791,7 +2797,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 				}
             }
-            
+
 			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
 			
 			if (pluginFound && scriptFound) {
