@@ -103,7 +103,7 @@
     
     [super paste:self];
     
-    NSString *pasteboard = [_NSPasteboard() stringContent];
+   NSString *pasteboard = [_NSPasteboard() stringContent];
     
     if (selectedRange.length == 0) {
         NSRange newRange;
@@ -111,13 +111,9 @@
         newRange.location = selectedRange.location;
         newRange.length   = [pasteboard length];
         
-		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont
-											  color:DefaultTextFieldFontColor 
-											  range:newRange];
+		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
     } else {
-		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont 
-											  color:DefaultTextFieldFontColor 
-											  range:selectedRange];
+		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
     }
 }
 
