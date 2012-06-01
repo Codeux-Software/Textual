@@ -22,6 +22,7 @@
 #ifdef _MAC_OS_MOUNTAIN_LION_OR_NEWER
 	#define _USES_NATIVE_NOTIFICATION_CENTER
 	#define _USES_APPLICATION_SCRIPTS_FOLDER
+	#define _USES_FOUNDATION_BASED_NSUUID
 #endif
 
 /* Textual Specific Frameworks */
