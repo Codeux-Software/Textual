@@ -6,14 +6,17 @@
 - (void)dealloc
 {
 	[_keyHandler drain];
+
+	dispatch_release(_formattingQueue);
+	_formattingQueue = NULL;
 	
 	[super dealloc];
 }
 
-- (id)initWithCoder:(NSCoder *)coder 
+- (id)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
-	
+
 	if (self) {
 		if ([Preferences rightToLeftFormatting]) {
 			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
