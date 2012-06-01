@@ -4,6 +4,7 @@
 
 #include <arpa/inet.h>
 #import <mach/mach_time.h>
+#import <Foundation/Foundation.h>
 
 #define TIMEOUT_INTERVAL			360
 #define PING_INTERVAL				270
@@ -1276,45 +1277,89 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)executeTextualCmdScript:(NSDictionary *)details 
 {
+	BOOL MLNonsandboxedScript = NO;
+	
 	if ([details containsKey:@"path"] == NO) {
 		return;
 	}
     
     NSString *scriptPath = [details valueForKey:@"path"];
+	
+	if ([scriptPath contains:[Preferences whereScriptsUnsupervisedPath]]) {
+		MLNonsandboxedScript = YES;
+	}
     
-    if ([scriptPath hasSuffix:@".scpt"]) {	
-        NSDictionary *errors = [NSDictionary dictionary];
-        
-        NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:scriptPath] error:&errors];
+    if ([scriptPath hasSuffix:@".scpt"]) {
+		/* Event Descriptor */
+		
+		NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
+		NSAppleEventDescriptor *parameters		= [NSAppleEventDescriptor listDescriptor];
+		
+		[parameters insertDescriptor:firstParameter atIndex:1];
+		
+		ProcessSerialNumber psn = { 0, kCurrentProcess };
+		
+		NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
+																						bytes:&psn
+																					   length:sizeof(ProcessSerialNumber)];
+		
+		NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:@"textualcmd"];
+		NSAppleEventDescriptor *event	= [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
+																				 eventID:kASSubroutineEvent
+																		targetDescriptor:target
+																				returnID:kAutoGenerateReturnID
+																		   transactionID:kAnyTransactionID];
+		
+		[event setParamDescriptor:handler forKeyword:keyASSubroutineName];
+		[event setParamDescriptor:parameters forKeyword:keyDirectObject];
+		
+		/* Execute Event — Mountain Lion, Non-sandboxed Script */
+		
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+		if (MLNonsandboxedScript) {
+			if ([Preferences featureAvailableToOSXMountainLion]) {
+				NSError *aserror = [NSError new];
+				
+				NSUserAppleScriptTask *applescript = [[NSUserAppleScriptTask alloc] initWithURL:[NSURL fileURLWithPath:scriptPath] error:&aserror];
+				
+				if (PointerIsEmpty(applescript)) {
+					NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), [aserror localizedDescription]);
+				} else {
+					[applescript executeWithAppleEvent:event
+									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error){
+
+						if (PointerIsEmpty(result)) {
+							NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), [error localizedDescription]);
+						} else {	
+							NSString *finalResult = [result stringValue].trim;
+							
+							if (NSObjectIsNotEmpty(finalResult)) {
+								[world.iomt inputText:finalResult command:IRCCI_PRIVMSG];
+							}
+						}
+					}];
+				}
+				
+				[aserror drain];
+			}
+			
+			return;
+		}
+#endif
+		
+		/* Execute Event — All Other */
+		
+		NSDictionary *errors = [NSDictionary dictionary];
+		
+		NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:scriptPath] error:&errors];
         
         if (appleScript) {
-            NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:[details objectForKey:@"input"]];
-            NSAppleEventDescriptor *parameters		= [NSAppleEventDescriptor listDescriptor];
-            
-            [parameters insertDescriptor:firstParameter atIndex:1];
-            
-            ProcessSerialNumber psn = { 0, kCurrentProcess };
-            
-            NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber
-                                                                                            bytes:&psn
-                                                                                           length:sizeof(ProcessSerialNumber)];
-			
-            NSAppleEventDescriptor *handler = [NSAppleEventDescriptor descriptorWithString:@"textualcmd"];
-            NSAppleEventDescriptor *event	= [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
-                                                                                     eventID:kASSubroutineEvent
-                                                                            targetDescriptor:target
-                                                                                    returnID:kAutoGenerateReturnID
-                                                                               transactionID:kAnyTransactionID];
-            
-            [event setParamDescriptor:handler forKeyword:keyASSubroutineName];
-            [event setParamDescriptor:parameters forKeyword:keyDirectObject];
-            
             NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
             
             if (errors && PointerIsEmpty(result)) {
                 NSLog(TXTLS(@"IRC_SCRIPT_EXECUTION_FAILURE"), errors);
             } else {	
-                NSString *finalResult = [[result stringValue] trim];
+                NSString *finalResult = [result stringValue].trim;
                 
                 if (NSObjectIsNotEmpty(finalResult)) {
                     [world.iomt inputText:finalResult command:IRCCI_PRIVMSG];
@@ -4224,9 +4269,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-
+	
 	[world reloadTree];
-
+	
 	if (hasIRCopAccess == NO) {
 		if ([ignoreChecks notifyJoins] == YES) {
 			NSString *tracker = [ignoreChecks trackingNickname];
@@ -5551,7 +5596,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	} else {
 		[self send:IRCCI_USER, user, [NSString stringWithDouble:modeParam], @"*", realName, nil];
 	}
-
+	
 	[world reloadTree];
 }
 
