@@ -26,11 +26,6 @@
 @synthesize channelManagementView;
 @synthesize contentView;
 @synthesize delegate;
-
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
-@synthesize downloadExtraAddonsButton;
-#endif
-
 @synthesize excludeWordsArrayController;
 @synthesize excludeWordsTable;
 @synthesize experimentalSettingsView;
@@ -107,10 +102,6 @@
     [self updateAlert];
 	[self onChangeAlert:nil];
 	
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
-	[downloadExtraAddonsButton setHidden:BOOLReverseValue([Preferences featureAvailableToOSXMountainLion])];
-#endif
-	
 	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
 	if ([self.window isVisible] == NO) {
@@ -118,7 +109,7 @@
 	}
 	
 	[self.window makeKeyAndOrderFront:nil];
-
+	
 	[self updateTranscriptFolder];
 	[self setUpToolbarItemsAndMenus];
 	[self onHighlightTypeChanged:nil];
@@ -287,7 +278,7 @@
 - (void)updateAlert 
 {
 	[alertSoundButton removeAllItems];
-
+	
 	NSArray *alertSounds = [self availableSounds];
 	
     for (NSString *alertSound in alertSounds) {
@@ -297,31 +288,31 @@
         
         [alertSoundButton.menu addItem:item];
     }
-
+	
     [alertSoundButton selectItemAtIndex:0];
     [alertButton removeAllItems];
-
+	
     NSMutableArray *alerts = [self sounds];
 	
     for (SoundWrapper *alert in alerts) {
         NSMenuItem *item = [NSMenuItem newad];
-
+		
         [item setTitle:alert.displayName];
         [item setTag:[alert eventType]];
-
+		
         [alertButton.menu addItem:item];
     }
-
+	
     [alertButton selectItemAtIndex:0];
 }
 
 - (void)onChangeAlert:(id)sender 
 {
     SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
-
+	
     [useGrowlButton setState:alert.growl];
     [disableAlertWhenAwayButton setState:alert.disableWhileAway];
-
+	
 	[alertSoundButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.sound]];
 }
 
@@ -407,7 +398,7 @@
 {
 	if ([Preferences sandboxEnabled]) {
 		[transcriptFolderButton setHidden:YES];
-
+		
 		return;
 	}
 	
@@ -552,7 +543,7 @@
 - (void)onSelectFont:(id)sender
 {
 	NSFont *logfont = world.viewTheme.other.channelViewFont;
-		
+	
 	[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
 	[_NSFontManager() orderFrontFontPanel:self];
 	[_NSFontManager() setAction:@selector(changeItemFont:)];
@@ -563,10 +554,10 @@
 	OtherTheme *theme = world.viewTheme.other;
 	
 	NSFont *newFont = [sender convertFont:theme.channelViewFont];
-			
+	
 	[Preferences setThemeChannelViewFontName:[newFont fontName]];
 	[Preferences setThemeChannelViewFontSize:[newFont pointSize]];
-			
+	
 	[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
 	[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
 	
@@ -637,7 +628,7 @@
 	NSString *name = [ViewTheme extractThemeName:[Preferences themeName]];
 	
     NSInteger _returnCode = [returnCode integerValue];
-
+	
 	if (_returnCode == NSAlertSecondButtonReturn) {
 		return;
 	}
@@ -693,12 +684,28 @@
 	}
 }
 
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
 - (void)onDownloadExtraAddons:(id)sender
 {
-	[URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras.pkg"]];
-}
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+	if ([Preferences featureAvailableToOSXMountainLion]) {
+		if ([Preferences sandboxEnabled]) {
+			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.8).pkg"]];
+		} else {
+			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
+		}
+	}
 #endif
+	
+	if ([Preferences featureAvailableToOSXLion]) {
+		if ([Preferences sandboxEnabled]) {
+			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.7).pkg"]];
+		} else {
+			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
+		}
+	} else {
+		return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
+	}
+}
 
 #pragma mark -
 #pragma mark NSWindow Delegate
@@ -706,7 +713,7 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[Preferences cleanUpWords];
-    [Preferences sync];
+	[Preferences sync];
 	
 	[_NSUserDefaults() synchronize];
 	

@@ -25,10 +25,6 @@
 	IBOutlet NSView *IRCopServicesView;
 	IBOutlet NSView *channelManagementView;
     IBOutlet NSView *experimentalSettingsView;
-
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
-	IBOutlet NSButton *downloadExtraAddonsButton;
-#endif
 	
     IBOutlet NSButton *highlightNicknameButton;
     IBOutlet NSButton *addExcludeWordButton;
@@ -76,11 +72,6 @@
 @property (nonatomic, retain) NSView *IRCopServicesView;
 @property (nonatomic, retain) NSView *channelManagementView;
 @property (nonatomic, retain) NSView *experimentalSettingsView;
-
-#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
-@property (nonatomic, retain) NSButton *downloadExtraAddonsButton;
-#endif
-
 @property (nonatomic, retain) NSButton *highlightNicknameButton;
 @property (nonatomic, retain) NSButton *addExcludeWordButton;
 @property (nonatomic, retain) NSTableView *keywordsTable;
