@@ -1277,17 +1277,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)executeTextualCmdScript:(NSDictionary *)details 
 {
-	BOOL MLNonsandboxedScript = NO;
-	
 	if ([details containsKey:@"path"] == NO) {
 		return;
 	}
     
     NSString *scriptPath = [details valueForKey:@"path"];
 	
+#ifdef _USES_APPLICATION_SCRIPTS_FOLDER
+	BOOL MLNonsandboxedScript = NO;
+	
 	if ([scriptPath contains:[Preferences whereScriptsUnsupervisedPath]]) {
 		MLNonsandboxedScript = YES;
 	}
+#endif
     
     if ([scriptPath hasSuffix:@".scpt"]) {
 		/* Event Descriptor */
@@ -2778,8 +2780,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 									
 									[Preferences whereScriptsLocalPath],
 									[Preferences whereScriptsPath], nil];
-
-	
+			
+			
             
 			for (NSString *path in scriptPaths) {
 				if (scriptFound == YES) {
@@ -2797,7 +2799,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					}
 				}
             }
-
+			
 			BOOL pluginFound = BOOLValueFromObject([world.bundlesForUserInput objectForKey:cmd]);
 			
 			if (pluginFound && scriptFound) {
