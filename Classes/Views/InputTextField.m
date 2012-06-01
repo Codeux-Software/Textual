@@ -113,14 +113,6 @@
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
-    if (_lastChangeWasPaste) {
-        _lastChangeWasPaste = NO;
-        
-        return;
-    }
-    
-    [super textDidChange:self pasted:NO range:[self fullSelectionRange]];
-    
     [self resetTextFieldCellSize];
 }
 
@@ -155,8 +147,6 @@
 
 - (void)paste:(id)sender
 {
-    _lastChangeWasPaste = YES;
-    
     [super paste:self];
     
     [self resetTextFieldCellSize];
@@ -173,7 +163,6 @@
     if (aSelector == @selector(insertNewline:)) {
         [_actionTarget performSelector:_actonSelector];
         
-        [self toggleFontResetStatus:YES];
         [self resetTextFieldCellSize];
         
         return YES;

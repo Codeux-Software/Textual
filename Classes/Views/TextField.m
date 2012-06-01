@@ -98,73 +98,27 @@
 {
     NSRange selectedRange = [self selectedRange];
     
-    [self setRichText:NO];
     [super paste:self];
-    [self setRichText:YES];
     
     NSString *pasteboard = [_NSPasteboard() stringContent];
-    
-    [self toggleFontResetStatus:NO];
     
     if (selectedRange.length == 0) {
         NSRange newRange;
         
         newRange.location = selectedRange.location;
         newRange.length   = [pasteboard length];
+
+		NSLog(@"d: %@ %@", NSStringFromRange(newRange), pasteboard);
         
-        [self textDidChange:sender pasted:YES range:newRange];
+		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont
+											  color:DefaultTextFieldFontColor 
+											  range:newRange];
     } else {
-        [self textDidChange:sender pasted:YES range:selectedRange];
+		NSLog(@"d: %@", NSStringFromRange(selectedRange));
+		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont 
+											  color:DefaultTextFieldFontColor 
+											  range:selectedRange];
     }
-}
-
-- (void)textDidChange:(id)sender pasted:(BOOL)paste range:(NSRange)erange
-{
-    NSAttributedString *string = [self attributedStringValue];
-    
-    if (NSObjectIsEmpty(string) && paste == NO) {
-        _fontResetRequired = YES;
-    }
-    
-    if (_fontResetRequired && paste == NO) {
-        if ([string length] >= 1) {
-            [self resetTextFieldFont:DefaultTextFieldFont color:DefaultTextFieldFontColor];
-        }
-    } else {
-        dispatch_sync([self formattingQueue], ^{
-            [self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont 
-                                                  color:DefaultTextFieldFontColor 
-                                                  range:erange];
-        });
-    }
-}
-
-- (void)toggleFontResetStatus:(BOOL)status
-{
-    _fontResetRequired = status;
-}
-
-- (void)resetTextFieldFont:(id)defaultFont color:(id)defaultColor
-{
-    dispatch_sync([self formattingQueue], ^{
-        NSRange local = [self fullSelectionRange];
-        
-        [self removeAttribute:NSForegroundColorAttributeName inRange:local];
-        [self removeAttribute:NSBackgroundColorAttributeName inRange:local];
-        [self removeAttribute:NSUnderlineStyleAttributeName  inRange:local];
-        
-        NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-        
-        [attrs setObject:defaultFont  forKey:NSFontAttributeName];
-        [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
-        
-        [self setAttributes:attrs inRange:local];
-    });
-}
-
-- (BOOL)requriesSpecialPaste
-{
-    return YES;
 }
 
 @end

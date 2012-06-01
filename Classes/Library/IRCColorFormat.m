@@ -220,9 +220,9 @@
 			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
-				NSInteger foregroundColor = mapColorValue([dict objectForKey:NSForegroundColorAttributeName]);
+				BOOL foregroundColor = PointerIsEmpty([dict objectForKey:NSForegroundColorAttributeName]);
 				
-                if (foregroundColor >= 0 && foregroundColor <= 15) {
+                if (foregroundColor == NO) {
                     return YES;
                 }
 				
@@ -285,49 +285,8 @@
             
             [attrs setObject:baseFont forKey:NSFontAttributeName];
         }
-        
-        /* Process other attributes */
-        NSColor *foregroundColorD = [dict objectForKey:NSForegroundColorAttributeName];
-        NSColor *backgroundColorD = [dict objectForKey:NSBackgroundColorAttributeName];
-        
-        BOOL underlineText		  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
-        BOOL hasForegroundColor   = NO;
-        
-        if (underlineText) {
-            [attrs setObject:[NSNumber numberWithInt:NSSingleUnderlineStyle] forKey:NSUnderlineStyleAttributeName];
-        }
-        
-        if (foregroundColorD) {
-            NSInteger mappedColor = mapColorValue(foregroundColorD);
-            
-            if (mappedColor >= 0 && mappedColor <= 15) {
-                hasForegroundColor = YES;
-                
-                [attrs setObject:foregroundColorD forKey:NSForegroundColorAttributeName];
-            } else {
-                [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
-            }
-        } else {
-            [attrs setObject:defaultColor forKey:NSForegroundColorAttributeName];
-        }
-        
-        if (backgroundColorD) {
-            if (hasForegroundColor) {
-                NSInteger mappedColor = mapColorValue(backgroundColorD);
-                
-                if (mappedColor >= 0 && mappedColor <= 15) {
-                    [attrs setObject:backgroundColorD forKey:NSBackgroundColorAttributeName];
-                } else {
-                    [attrs removeObjectForKey:NSBackgroundColorAttributeName];
-                }
-            } else {
-                [attrs removeObjectForKey:NSBackgroundColorAttributeName];
-            }
-        } else {
-            [attrs removeObjectForKey:NSBackgroundColorAttributeName];
-        }
-        
-        if (NSObjectIsNotEmpty(attrs)) {
+
+		if (NSObjectIsNotEmpty(attrs)) {
             [self setAttributes:attrs inRange:effectiveRange];
         }
         
