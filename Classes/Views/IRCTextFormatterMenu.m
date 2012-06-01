@@ -156,8 +156,6 @@
                                       value:NSNumberWithBOOL(YES)
                                       range:selectedTextRange];
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -174,8 +172,6 @@
                                       value:NSNumberWithBOOL(YES)
                                       range:selectedTextRange];
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -191,8 +187,6 @@
         [textField setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
                                       value:NSNumberWithBOOL(YES)
                                       range:selectedTextRange];
-        
-        [textField toggleFontResetStatus:NO];
         
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
@@ -254,8 +248,6 @@
                                           range:selectedTextRange];
         }
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -307,8 +299,6 @@
                                           range:selectedTextRange];
         }
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -328,8 +318,6 @@
                                          range:selectedTextRange
                                          color:DefaultTextFieldFontColor];
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -345,8 +333,6 @@
         [textField removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
                                          range:selectedTextRange
                                          color:DefaultTextFieldFontColor];
-        
-        [textField toggleFontResetStatus:NO];
         
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
@@ -364,8 +350,6 @@
                                          range:selectedTextRange
                                          color:DefaultTextFieldFontColor];
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -382,8 +366,6 @@
                                          range:selectedTextRange
                                          color:DefaultTextFieldFontColor];
         
-        [textField toggleFontResetStatus:NO];
-        
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
         }
@@ -399,8 +381,6 @@
         [textField removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
                                          range:selectedTextRange
                                          color:DefaultTextFieldFontColor];
-        
-        [textField toggleFontResetStatus:NO];
         
         if ([textField respondsToSelector:@selector(focus)]) {
             [textField performSelector:@selector(focus)];
