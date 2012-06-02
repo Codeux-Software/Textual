@@ -14,6 +14,8 @@
 	BOOL isUnread;
 	BOOL isNewTalk;
 	
+	BOOL isExpanded;
+	
 	NSInteger keywordCount;
 	NSInteger dockUnreadCount;
 	NSInteger treeUnreadCount;
@@ -32,6 +34,7 @@
 @property (nonatomic, assign) NSInteger treeUnreadCount;
 @property (nonatomic, readonly) BOOL isActive;
 @property (nonatomic, readonly) BOOL isClient;
+@property (nonatomic, assign) BOOL isExpanded;
 @property (nonatomic, readonly) IRCClient *client;
 @property (nonatomic, readonly) NSString *label;
 @property (nonatomic, readonly) NSString *name;

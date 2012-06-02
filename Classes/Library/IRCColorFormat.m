@@ -220,9 +220,9 @@
 			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
-				BOOL foregroundColor = PointerIsEmpty([dict objectForKey:NSForegroundColorAttributeName]);
+				NSColor *foregroundColor = [dict objectForKey:NSForegroundColorAttributeName];
 				
-                if (foregroundColor == NO) {
+                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:DefaultTextFieldFontColor]) {
                     return YES;
                 }
 				
@@ -251,17 +251,30 @@
 #pragma mark -
 #pragma mark Pasted String Sanitization
 
-- (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
+- (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes
 {
-	NSRange effectiveRange = NSMakeRange(0, [self stringLength]);
+	NSRange limitRange = NSMakeRange(0, [self stringLength]);
 	
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-	
-	[attrs setObject:defaultFont forKey:NSFontAttributeName];
-	
-	if (NSObjectIsNotEmpty(attrs)) {
-		[self setAttributes:attrs inRange:effectiveRange];
+	if (clearAttributes) {
+		NSAttributedString *valued = self.attributedString;
+		
+		NSRange effectiveRange;
+		
+		while (limitRange.length >= 1) {
+			NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+
+			for (NSString *key in [dict allKeys]) {
+				[self removeAttribute:key inRange:effectiveRange];
+			}
+			
+			limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
+									 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		}
+
+		[self setTextColor:DefaultTextFieldFontColor];
 	}
+
+	[self setFont:DefaultTextFieldFont];
 }
 
 #pragma mark -

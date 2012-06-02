@@ -9,6 +9,7 @@
 @synthesize isKeyword;
 @synthesize isUnread;
 @synthesize isNewTalk;
+@synthesize isExpanded;
 @synthesize keywordCount;
 @synthesize inputHistory;
 @synthesize treeUnreadCount;

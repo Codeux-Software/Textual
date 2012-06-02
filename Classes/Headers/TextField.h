@@ -27,7 +27,7 @@
 - (NSString *)stringValue;
 - (void)setStringValue:(NSString *)string;
 
-- (void)sanitizeTextField;
+- (void)sanitizeTextField:(BOOL)paste;
 
 - (void)removeAttribute:(id)attr inRange:(NSRange)local;
 - (void)setAttributes:(id)attrs inRange:(NSRange)local;

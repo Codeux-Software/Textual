@@ -119,6 +119,8 @@
 	}
     
 	if (client) {
+		[serverList expandItem:client];
+
 		NSInteger n = [serverList rowForItem:client];
 		if (client.channels.count) ++n;
 		
@@ -1061,6 +1063,20 @@
 {
 	cell.parent		= serverList;
 	cell.cellItem	= item;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
+{
+	item.isExpanded = YES;
+	
+	return YES;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
+{
+	item.isExpanded = NO;
+
+	return YES;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note

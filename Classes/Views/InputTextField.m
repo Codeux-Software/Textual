@@ -150,7 +150,7 @@
     [super paste:self];
     
     [self resetTextFieldCellSize];
-	[self sanitizeTextField];
+	[self sanitizeTextField:YES];
 }
 
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner
@@ -165,7 +165,7 @@
         [_actionTarget performSelector:_actonSelector];
         
         [self resetTextFieldCellSize];
-		[self sanitizeTextField];
+		[self sanitizeTextField:NO];
         
         return YES;
     }
