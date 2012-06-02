@@ -20,7 +20,7 @@ typedef enum {
 @end
 
 @interface TextField (TextFieldFormattingHelper) 
-- (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont;
+- (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes;
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange;

@@ -806,6 +806,10 @@
 	IRCClient *n = [world createClient:config reload:YES];
 
 	[world save];
+
+	if (u.isExpanded) {
+		[world expandClient:n];
+	}
 }
 
 - (void)onDeleteServer:(id)sender
