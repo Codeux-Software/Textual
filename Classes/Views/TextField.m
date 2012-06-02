@@ -97,9 +97,9 @@
     [self.textStorage setAttributes:attrs range:local];
 }
 
-- (void)sanitizeTextField
+- (void)sanitizeTextField:(BOOL)paste
 {
-	[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
+	[self sanitizeIRCCompatibleAttributedString:BOOLReverseValue(paste)];
 }
 
 @end
