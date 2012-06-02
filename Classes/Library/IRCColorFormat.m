@@ -254,9 +254,9 @@
 - (void)sanitizeIRCCompatibleAttributedString:(NSFont *)defaultFont 
 {
 	NSRange effectiveRange = NSMakeRange(0, [self stringLength]);
-
+	
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-
+	
 	[attrs setObject:defaultFont forKey:NSFontAttributeName];
 	
 	if (NSObjectIsNotEmpty(attrs)) {
