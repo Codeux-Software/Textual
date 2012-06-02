@@ -97,24 +97,9 @@
     [self.textStorage setAttributes:attrs range:local];
 }
 
-- (void)paste:(id)sender
+- (void)sanitizeTextField
 {
-    NSRange selectedRange = [self selectedRange];
-    
-    [super paste:self];
-    
-   NSString *pasteboard = [_NSPasteboard() stringContent];
-    
-    if (selectedRange.length == 0) {
-        NSRange newRange;
-        
-        newRange.location = selectedRange.location;
-        newRange.length   = [pasteboard length];
-        
-		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
-    } else {
-		[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
-    }
+	[self sanitizeIRCCompatibleAttributedString:DefaultTextFieldFont];
 }
 
 @end
