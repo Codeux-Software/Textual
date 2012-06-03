@@ -1291,10 +1291,10 @@ typedef enum {
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
 	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
-	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSShiftKeyMask)];
-	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSShiftKeyMask)];
-    [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask)];
-	[self handler:@selector(textFormattingBackgroundColor:) char:'c' mods:(NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+    [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingBackgroundColor:) char:'h' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	
 	[self handler:@selector(inputHistoryUp:)	char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:)	char:'n' mods:NSControlKeyMask];
