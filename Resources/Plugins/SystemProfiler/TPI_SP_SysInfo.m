@@ -6,6 +6,10 @@
 #define LOCAL_VOLUME_DICTIONARY @"/Volumes"
 #define MEMORY_DIVISION_SIZE	1.073741824
 
+@interface TPI_SP_SysInfo (Private)
++ (NSInteger)_internalSystemUptime;
+@end
+
 @implementation TPI_SP_SysInfo
 
 #pragma mark -
@@ -126,7 +130,13 @@
 
 + (NSString *)applicationAndSystemUptime
 {
-	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", [self systemUptime], TXReadableTime([NSDate secondsSinceUnixTimestamp:[Preferences startTime]])];
+	NSString *systemUptime = TXSpecialReadableTime([self _internalSystemUptime], NO,
+												   [NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
+	
+	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[Preferences startTime]], NO,
+													[NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
+	
+	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", systemUptime, textualUptime];
 }
 
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world
@@ -410,7 +420,7 @@
 	}
 }
 
-+ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue
++ (NSInteger)_internalSystemUptime
 {
 	struct timeval boottime;
 	size_t size = sizeof(boottime);
@@ -419,7 +429,12 @@
 		boottime.tv_sec = 0;
 	}
 	
-	return TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:boottime.tv_sec], shortValue);
+	return [NSDate secondsSinceUnixTimestamp:boottime.tv_sec];
+}
+
++ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue
+{
+	return TXSpecialReadableTime([self _internalSystemUptime], shortValue, nil);
 }
 
 + (NSString *)systemUptime

@@ -17,6 +17,6 @@ TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);
 TEXTUAL_EXTERN NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override);
 
 TEXTUAL_EXTERN NSString *TXReadableTime(NSInteger dateInterval);
-TEXTUAL_EXTERN NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue);
+TEXTUAL_EXTERN NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix);
 
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);

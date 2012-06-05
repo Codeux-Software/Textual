@@ -106,7 +106,7 @@
 	} else if ([col isEqualToString:@"time"]) {
 		NSInteger time = [item integerAtIndex:1];
 		
-		return TXTFLS(@"TIME_AGO", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:time], YES));
+		return TXTFLS(@"TIME_AGO", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:time], YES, nil));
     } else {
         return [item safeObjectAtIndex:2];
     }

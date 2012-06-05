@@ -59,9 +59,11 @@ NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 	return TXFormattedTimestampWithOverride(date, format, nil);
 }
 
-NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue) 
+NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix)
 {
-	NSArray *orderMatrix = [NSArray arrayWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
+	if (NSObjectIsEmpty(orderMatrix)) {
+		orderMatrix = [NSArray arrayWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
+	}
 	
 	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
 	
@@ -110,7 +112,7 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue)
 
 NSString *TXReadableTime(NSInteger dateInterval)
 {
-	return TXSpecialReadableTime(dateInterval, NO);
+	return TXSpecialReadableTime(dateInterval, NO, nil);
 }
 
 NSInteger TXRandomNumber(NSInteger maxset)
