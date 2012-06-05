@@ -1019,6 +1019,7 @@ static NSInteger totalRunTime = 0;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 	[d setBool:YES forKey:@"SpellChecking"];
+	[d setBool:YES forKey:@"GrammarChecking"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
 	[d setBool:YES forKey:@"eventAddressBookMatch"];
@@ -1036,6 +1037,7 @@ static NSInteger totalRunTime = 0;
     [d setBool:YES forKey:@"Preferences.General.use_nomode_symbol"];
     [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
 	[d setBool:YES forKey:@"Preferences.General.reply_ctcp_requests"];
+	[d setBool:NO  forKey:@"AutoSpellChecking"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];
