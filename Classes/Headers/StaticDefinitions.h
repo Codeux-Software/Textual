@@ -38,6 +38,7 @@
 #define _NSFontManager()						[NSFontManager sharedFontManager]
 #define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
 #define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
 #define _NSUserNotificationCenter()			[NSUserNotificationCenter defaultUserNotificationCenter]
 #define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
 #define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]

@@ -34,10 +34,10 @@
         
         _placeholderString = [NSAttributedString alloc];
         _placeholderString = [_placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
-
+		
 		[super sanitizeTextField:YES];
     }
-
+	
     return self;
 }
 
@@ -62,7 +62,7 @@
 	NSRect textBoxFrame		= scroller.frame;
 	NSRect superViewFrame	= superView.frame;
 	NSRect mainWindowFrame	= mainWindow.frame;
-
+	
 	NSString *stringv = self.stringValue;
 	
 	if (NSObjectIsEmpty(stringv)) {
@@ -99,9 +99,9 @@
 - (void)textDidChange:(NSNotification *)aNotification
 {
     [self resetTextFieldCellSize];
-
+	
 	if (NSObjectIsEmpty(self.stringValue)) {
-		[super sanitizeTextField:YES];
+		[super sanitizeTextField:NO];
 	}
 }
 
@@ -110,28 +110,56 @@
     NSScrollView *scroller = [self scrollView];
     
     if (scroller.frame.size.height == InputTextFiedMaxHeight) {
-        BOOL cleanSubview = NO;
+        BOOL cleanBottomSubview = NO;
+		BOOL cleanTopSubview	= NO;
         
         if ([scroller hasVerticalScroller]) {
             if (self.frame.size.height > scroller.frame.size.height) {
                 if (NSDissimilarObjects(1.0f, scroller.verticalScroller.floatValue)) {
-                    cleanSubview = YES;
+                    cleanBottomSubview  = YES;
                 }
+				
+                if (NSDissimilarObjects(0.0f, scroller.verticalScroller.floatValue)) {
+					cleanTopSubview = YES;
+				}
             }
-        }
-        
-        if (cleanSubview) {
-            dirtyRect.size.height -= 4;
-        }
-    }
-    
-    [super drawRect:dirtyRect];
-    
-    NSString *value = [self stringValue];
-            
-    if (NSObjectIsEmpty(value) && NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-        [_placeholderString drawAtPoint:NSMakePoint(6, 5)];
-    }
+		}
+		
+		if (cleanBottomSubview) {
+			dirtyRect.size.height -= 4;
+		}
+		
+		if (cleanTopSubview) {
+			dirtyRect.origin.y += 4;
+			dirtyRect.size.height -= 4;
+		}
+	}
+	
+	if ([Preferences useLogAntialiasing] == NO) {
+		[_NSGraphicsCurrentContext() saveGraphicsState];
+		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+	}
+	
+	[super drawRect:dirtyRect];
+	
+	if ([Preferences useLogAntialiasing] == NO) {
+		[_NSGraphicsCurrentContext() restoreGraphicsState];
+	}
+	
+	NSString *value = [self stringValue];
+	
+	if (NSObjectIsEmpty(value) && NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+		if ([Preferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() saveGraphicsState];
+			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+		}
+		
+		[_placeholderString drawAtPoint:NSMakePoint(6, 5)];
+		
+		if ([Preferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() restoreGraphicsState];
+		}
+	}
 }
 
 - (void)paste:(id)sender

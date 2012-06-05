@@ -998,6 +998,12 @@
 		[sf appendFormat:@"width: %dpx;", textWidth];
 		[sf appendString:@"}"];
 	}
+
+	if ([Preferences useLogAntialiasing] == NO) {
+		[sf appendString:@"body {"];
+		[sf appendString:@"-webkit-font-smoothing: none;"];
+		[sf appendString:@"}"];
+	}
 	
 	return sf;
 }
