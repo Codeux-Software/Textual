@@ -1549,6 +1549,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text
 {
+	if (NSObjectIsEmpty(command)) {
+		return;
+	}
+	
 	NSString *trail;
 	
 	if (NSObjectIsNotEmpty(text)) {
@@ -3982,6 +3986,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		} else if ([command isEqualToString:IRCCI_CLIENTINFO]) {
 			[self sendCTCPReply:nick command:command text:TXTLS(@"IRC_CTCP_CLIENT_INFO")];
 		} else if ([command isEqualToString:IRCCI_LAGCHECK]) {
+			if (lastLagCheck == 0) {
+				[self printDebugInformationToConsole:TXTFLS(@"IRC_HAS_IGNORED_CTCP", command, nick)];
+			}
+			
 			NSDoubleN time = CFAbsoluteTimeGetCurrent();
 			
 			if (time >= lastLagCheck) {
