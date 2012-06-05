@@ -36,6 +36,14 @@
     return self;
 }
 
+- (dispatch_queue_t)formattingQueue
+{
+    return _formattingQueue;
+}
+
+#pragma mark -
+#pragma mark Keyboard Shorcuts
+
 - (void)setKeyHandlerTarget:(id)target
 {
 	[_keyHandler setTarget:target];
@@ -56,14 +64,17 @@
 	if ([_keyHandler processKeyEvent:e]) {
 		return;
 	}
-	
+
+	[self keyDownToSuper:e];
+}
+
+- (void)keyDownToSuper:(NSEvent *)e
+{
 	[super keyDown:e];
 }
 
-- (dispatch_queue_t)formattingQueue
-{
-    return _formattingQueue;
-}
+#pragma mark -
+#pragma mark Value Management
 
 - (NSAttributedString *)attributedStringValue
 {
@@ -100,6 +111,91 @@
 - (void)sanitizeTextField:(BOOL)paste
 {
 	[self sanitizeIRCCompatibleAttributedString:BOOLReverseValue(paste)];
+}
+
+#pragma mark -
+#pragma mark Line Counting
+
+- (BOOL)isAtBottomOfView
+{
+	return ([self selectedLineNumber] == [self numberOfLines]);
+}
+
+- (BOOL)isAtTopfView
+{
+	return ([self selectedLineNumber] == 1);
+}
+
+- (NSInteger)selectedLineNumber
+{
+	NSLayoutManager *layoutManager = [self layoutManager];
+	
+	/* Range of selected line. */
+	NSRange blr;
+	NSRange selr = self.selectedRange;
+	
+	NSString *stringv = self.stringValue;
+	
+	if (selr.location <= stringv.length) {
+		[layoutManager lineFragmentRectForGlyphAtIndex:selr.location effectiveRange:&blr];
+	} else {
+		return -1;
+	}
+	
+	/* Loop through the range of each line in our text view using
+	 the same technique we use for counting our total number of 
+	 lines. If a range matches our base while looping, then that 
+	 is our selected line number. */
+	
+	NSUInteger numberOfLines, index, numberOfGlyphs = [layoutManager numberOfGlyphs];
+	
+	NSRange lineRange;
+	
+	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
+		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+		
+		if (blr.location == lineRange.location &&
+			blr.length == lineRange.length) {
+			
+			return (numberOfLines + 1);
+		}
+		
+		index = NSMaxRange(lineRange);
+	}
+
+	return [self numberOfLines];
+}
+
+- (NSInteger)numberOfLines
+{
+	/* Base line number count. */
+	NSLayoutManager *layoutManager = [self layoutManager];
+	
+	NSUInteger numberOfLines, index, numberOfGlyphs = [layoutManager numberOfGlyphs];
+	
+	NSRange lineRange;
+	
+	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
+		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+		
+		index = NSMaxRange(lineRange);
+	}
+	
+	/* The method used above for counting the number of lines in
+	 our text view does not take into consideration blank lines at
+	 the end of our field. Therefore, we must manually check if the 
+	 last line of our input is a blank newline. If it is, then 
+	 increase our count by one. */
+	
+	NSString *lastChar = [self.stringValue stringCharacterAtIndex:(self.stringLength - 1)];
+	
+	NSRange nlr = [lastChar rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+	
+	if (NSDissimilarObjects(nlr.location, NSNotFound)) {
+		numberOfLines += 1;
+	}
+	
+	return numberOfLines;
 }
 
 @end
