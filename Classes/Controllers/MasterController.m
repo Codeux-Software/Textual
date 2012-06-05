@@ -653,6 +653,7 @@
 
 - (void)inputHistorySchemeChanged:(NSNotification *)note
 {
+	NSLog(@"this thing is still called?");
 	if (inputHistory) {
 		[inputHistory drain];
 		inputHistory = nil;
@@ -683,6 +684,8 @@
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
 		inputHistory = [InputHistory new];
 	}
+
+NSLog(@"ih: %@", inputHistory);
 }
 
 #pragma mark -
