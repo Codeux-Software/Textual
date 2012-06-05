@@ -27,10 +27,12 @@
 
 - (void)add:(NSAttributedString *)s
 {
+	NSAttributedString *lo = buf.lastObject;
+	
 	pos = buf.count;
 	
 	if (NSObjectIsEmpty(s)) return;
-	if ([buf.lastObject isEqualToAttributedString:s]) return;
+	if ([lo.string isEqualToString:s.string]) return;
 	
 	[buf safeAddObject:s];
 	
@@ -50,7 +52,7 @@
 			cur = [buf safeObjectAtIndex:pos];
 		}
 		
-		if (NSObjectIsEmpty(cur) || [cur isEqualToAttributedString:s] == NO) {
+		if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
 			[buf safeAddObject:s];
 			
 			if (buf.count > INPUT_HISTORY_MAX) {
@@ -88,7 +90,7 @@
 		cur = [buf safeObjectAtIndex:pos];
 	}
 
-	if (NSObjectIsEmpty(cur) || [cur isEqualToAttributedString:s] == NO) {
+	if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
 		[self add:s];
 		
 		return [NSAttributedString emptyString];
