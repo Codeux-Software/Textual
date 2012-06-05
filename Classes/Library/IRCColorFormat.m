@@ -253,23 +253,13 @@
 
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes
 {
-	NSRange limitRange = NSMakeRange(0, [self stringLength]);
-	
 	if (clearAttributes) {
-		NSAttributedString *valued = self.attributedString;
-		
-		NSRange effectiveRange;
-		
-		while (limitRange.length >= 1) {
-			NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		/* The easiest way to clear existing attributes in our 
+		 text field once it becomes empty is to simply toggle
+		 rich text formatting off, then back on. */
 
-			for (NSString *key in [dict allKeys]) {
-				[self removeAttribute:key inRange:effectiveRange];
-			}
-			
-			limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-									 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
-		}
+		[self setRichText:NO];
+		[self setRichText:YES];
 
 		[self setTextColor:DefaultTextFieldFontColor];
 	}

@@ -15,8 +15,15 @@
     dispatch_queue_t _formattingQueue;
 }
 
+- (BOOL)isAtTopfView;
+- (BOOL)isAtBottomOfView;
+
+- (NSInteger)selectedLineNumber;
+- (NSInteger)numberOfLines;
+
 - (dispatch_queue_t)formattingQueue;
 
+- (void)keyDownToSuper:(NSEvent *)e;
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

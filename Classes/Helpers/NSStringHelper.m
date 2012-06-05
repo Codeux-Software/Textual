@@ -81,32 +81,6 @@ NSInteger ctoi(unsigned char c);
 	return nil;
 }
 
-- (NSString *)fastChopEndWithChars:(NSArray *)chars
-{
-	NSInteger chopMnt = 0;
-	NSInteger slnt	  = [self length];
-	
-	NSString *slchar	 = nil;
-	NSString *strChopper = self;
-	
-	for (NSInteger i = 1; i < slnt; i++) {
-		slchar     = [strChopper safeSubstringFromIndex:([strChopper length] - 1)];
-		strChopper = [strChopper safeSubstringToIndex:([strChopper length] - 1)];
-		
-		if ([chars containsObject:slchar] == NO) {
-			break;
-		}
-		
-		chopMnt++;
-	}
-	
-	if (chopMnt > 0) {
-		return [self safeSubstringToIndex:(slnt - chopMnt)];
-	}
-	
-	return self;
-}
-
 - (const UniChar*)getCharactersBuffer
 {
 	NSUInteger len = self.length;

@@ -20,8 +20,6 @@
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 
-- (NSString *)fastChopEndWithChars:(NSArray *)chars;
-
 - (NSString *)stringCharacterAtIndex:(NSInteger)index;
 
 - (NSString *)nicknameFromHostmask;

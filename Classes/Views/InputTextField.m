@@ -13,6 +13,7 @@
 #define InputTextFiedMaxHeight				404.0
 #define InputBoxDefaultHeight				26.0
 #define InputBoxReszieHeightMultiplier		14.0
+#define InputBoxResizeHeightPadding			12.0
 
 @implementation InputTextField
 
@@ -28,27 +29,15 @@
         
         NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
-        /* Default Value */
         [attrs setObject:DefaultTextFieldFont forKey:NSFontAttributeName];
         [attrs setObject:[NSColor grayColor]  forKey:NSForegroundColorAttributeName];
         
         _placeholderString = [NSAttributedString alloc];
         _placeholderString = [_placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
-        
-        /* Set Text Color */
-        [attrs setObject:DefaultTextFieldFontColor forKey:NSForegroundColorAttributeName];
-        
-        NSAttributedString *temps;
-        
-        temps = [NSAttributedString alloc];
-        temps = [temps initWithString:@"-" attributes:attrs];
-        
-        [self setAttributedStringValue:temps];
-        [self setStringValue:NSNullObject];
-        
-        [temps drain];
+
+		[super sanitizeTextField:YES];
     }
-	
+
     return self;
 }
 
@@ -66,27 +55,23 @@
 
 - (void)resetTextFieldCellSize
 {
-	NSWindow     *mainWindow = [self window];
+	NSWindow     *mainWindow = self.window;
 	NSView       *superView	 = [self splitterView];
     NSScrollView *scroller   = [self scrollView];
 	
-	NSRect textBoxFrame		= [scroller frame];
-	NSRect superViewFrame	= [superView frame];
-	NSRect mainWindowFrame	= [mainWindow frame];
+	NSRect textBoxFrame		= scroller.frame;
+	NSRect superViewFrame	= superView.frame;
+	NSRect mainWindowFrame	= mainWindow.frame;
+
+	NSString *stringv = self.stringValue;
 	
-	if (NSObjectIsEmpty([self string])) {
+	if (NSObjectIsEmpty(stringv)) {
 		textBoxFrame.size.height = InputBoxDefaultHeight;
 	} else {
-        NSAttributedString *value = [self attributedStringValue];
-        
-        NSInteger cellHeight = [value pixelHeightInWidth:(textBoxFrame.size.width - 12)];
-		CGFloat totalLines = ceil(cellHeight / 14.0f);
+		NSInteger totalLines = [self numberOfLines];
 		
-		if (totalLines <= 1) {
-			textBoxFrame.size.height = InputBoxDefaultHeight;
-		} else {
-			textBoxFrame.size.height = (InputBoxDefaultHeight + ((totalLines - 1) * InputBoxReszieHeightMultiplier));
-		}
+		textBoxFrame.size.height  = (totalLines * InputBoxReszieHeightMultiplier);
+		textBoxFrame.size.height += InputBoxResizeHeightPadding;
 		
 		if (textBoxFrame.size.height > InputTextFiedMaxHeight) {
 			textBoxFrame.size.height = InputTextFiedMaxHeight;
@@ -114,6 +99,10 @@
 - (void)textDidChange:(NSNotification *)aNotification
 {
     [self resetTextFieldCellSize];
+
+	if (NSObjectIsEmpty(self.stringValue)) {
+		[super sanitizeTextField:YES];
+	}
 }
 
 - (void)drawRect:(NSRect)dirtyRect
