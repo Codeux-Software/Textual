@@ -143,7 +143,16 @@
 		badgeTextPoint.y -= 1;
 	}
     
+	if ([Preferences useLogAntialiasing] == NO) {
+		[_NSGraphicsCurrentContext() saveGraphicsState];
+		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+	}
+	
     [modeString drawAtPoint:badgeTextPoint];
+	
+	if ([Preferences useLogAntialiasing] == NO) {
+		[_NSGraphicsCurrentContext() restoreGraphicsState];
+	}
 }
 
 #pragma mark -
@@ -258,7 +267,17 @@
         }
         
         [newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-        [newValue drawInRect:cellFrame];
+		
+		if ([Preferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() saveGraphicsState];
+			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+		}
+
+		[newValue drawInRect:cellFrame];
+		
+		if ([Preferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() restoreGraphicsState];
+		}
 		
 		[newValue drain];
 		[itemShadow drain];

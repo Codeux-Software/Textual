@@ -127,6 +127,7 @@ typedef enum {
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;
++ (BOOL)useLogAntialiasing;
 
 + (BOOL)autoJoinOnInvite;
 + (BOOL)processChannelModes;

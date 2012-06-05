@@ -385,6 +385,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.strip_formatting"];
 }
 
++ (BOOL)useLogAntialiasing
+{
+	return [_NSUserDefaults() boolForKey:@"Preferences.General.log_antialiasing"];
+}
+
 + (BOOL)disableNicknameColors
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.disable_nickname_colors"];
@@ -1037,6 +1042,7 @@ static NSInteger totalRunTime = 0;
     [d setBool:YES forKey:@"Preferences.General.use_nomode_symbol"];
     [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
 	[d setBool:YES forKey:@"Preferences.General.reply_ctcp_requests"];
+	[d setBool:YES forKey:@"Preferences.General.log_antialiasing"];
 	[d setBool:NO  forKey:@"AutoSpellChecking"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
