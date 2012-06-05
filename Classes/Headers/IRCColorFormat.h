@@ -9,7 +9,7 @@ typedef enum {
 	IRCTextFormatterBackgroundColorEffect,
 } IRCTextFormatterEffectType; 
 
-#define MAXIMUM_FORMATTING_LENGTH   600
+#define MAXIMUM_FORMATTING_LENGTH   300
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;
