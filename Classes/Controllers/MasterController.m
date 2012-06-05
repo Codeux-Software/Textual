@@ -1152,9 +1152,33 @@ typedef enum {
 	[self sendText:IRCCI_ACTION];
 }
 
-- (void)inputHistoryUp:(NSEvent *)e
+- (void)_moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
 {
-	NSAttributedString *s = [inputHistory up:[text attributedStringValue]];
+	if (scroll) {
+		NSInteger nol = [text numberOfLines];
+		
+		if (nol >= 2) {
+			BOOL atTop    = [text isAtTopfView];
+			BOOL atBottom = [text isAtBottomOfView];
+			
+			if ((atTop && event.keyCode == KEY_DOWN) ||
+				(atBottom && event.keyCode == KEY_UP) ||
+				(atTop == NO && atBottom == NO)) {
+				
+				[text keyDownToSuper:event];
+				
+				return;
+			}
+		}
+	}
+	
+	NSAttributedString *s;
+	
+	if (up) {
+		s = [inputHistory up:[text attributedStringValue]];
+	} else {
+		s = [inputHistory down:[text attributedStringValue]];
+	}
 	
 	if (s) {
         [text setAttributedStringValue:s];
@@ -1167,19 +1191,24 @@ typedef enum {
 	}
 }
 
+- (void)inputHistoryUp:(NSEvent *)e
+{
+	[self _moveInputHistory:YES checkScroller:NO event:e];
+}
+
 - (void)inputHistoryDown:(NSEvent *)e
 {
-	NSAttributedString *s = [inputHistory down:[text attributedStringValue]];
-	
-	if (s) {
-        [text setAttributedStringValue:s];
-		
-		[world focusInputText];
-        
-        if ([text respondsToSelector:@selector(resetTextFieldCellSize)]) {
-            [text resetTextFieldCellSize];
-        }
-	}
+	[self _moveInputHistory:NO checkScroller:NO event:e];
+}
+
+- (void)inputHistoryUpWithScrollCheck:(NSEvent *)e
+{
+	[self _moveInputHistory:YES checkScroller:YES event:e];
+}
+
+- (void)inputHistoryDownWithScrollCheck:(NSEvent *)e
+{
+	[self _moveInputHistory:NO checkScroller:YES event:e];
 }
 
 - (void)textFormattingBold:(NSEvent *)e
@@ -1301,11 +1330,11 @@ typedef enum {
     
     [self inputHandler:@selector(focusWebview) char:'l' mods:(NSControlKeyMask | NSCommandKeyMask)];
     
-	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
-	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
+	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:KEY_UP mods:0];
+	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:KEY_UP mods:NSAlternateKeyMask];
 	
-	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
-	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
+	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:KEY_DOWN mods:0];
+	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:KEY_DOWN mods:NSAlternateKeyMask];
 }
 
 #pragma mark -
