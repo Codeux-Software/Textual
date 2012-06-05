@@ -525,7 +525,9 @@
 		
 		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
 		
+		[text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"GrammarChecking"]];
 		[text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
+		[text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"AutoSpellChecking"]];
 		
 		serverSplitView.position = [dic integerForKey:@"serverList"];
 		memberSplitView.position = [dic integerForKey:@"memberList"];
@@ -591,7 +593,9 @@
 	[dic setInteger:serverSplitView.position forKey:@"serverList"];
 	[dic setInteger:memberSplitView.position forKey:@"memberList"];
 	
-	[_NSUserDefaults() setBool:[text isContinuousSpellCheckingEnabled] forKey:@"SpellChecking"];
+	[_NSUserDefaults() setBool:[text isGrammarCheckingEnabled]				forKey:@"GrammarChecking"];
+	[_NSUserDefaults() setBool:[text isContinuousSpellCheckingEnabled]		forKey:@"SpellChecking"];
+	[_NSUserDefaults() setBool:[text isAutomaticSpellingCorrectionEnabled]	forKey:@"AutoSpellChecking"];
 	
 	[Preferences saveWindowState:dic name:@"MainWindow"];
 	[Preferences sync];
