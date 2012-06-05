@@ -36,6 +36,15 @@
         _placeholderString = [_placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
 		
 		[super sanitizeTextField:YES];
+
+#ifdef _MAC_OS_LION_OR_NEWER
+		if ([Preferences featureAvailableToOSXLion]) {
+			NSScrollView *scrollView = [self scrollView];
+			
+			[scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
+			[scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+		}
+#endif
     }
 	
     return self;
