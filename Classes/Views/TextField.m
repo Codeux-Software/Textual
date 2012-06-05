@@ -76,6 +76,12 @@
 #pragma mark -
 #pragma mark Value Management
 
+- (NSArray *)readablePasteboardTypes
+{
+    return [NSArray arrayWithObjects:NSPasteboardTypeString,
+			NSPasteboardTypeRTF, NSPasteboardTypeColor, NSPasteboardTypeFont, nil];
+}
+
 - (NSAttributedString *)attributedStringValue
 {
     return [self.attributedString.copy autodrain];
