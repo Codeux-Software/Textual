@@ -226,6 +226,7 @@
 		4CB91A4113680BB9005E00E8 /* ServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB91A3F13680BB9005E00E8 /* ServerList.m */; };
 		4CB91A4513680C4B005E00E8 /* NSOutlineViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB91A4413680C4B005E00E8 /* NSOutlineViewHelper.m */; };
 		4CCB939913689A1B00085C3E /* ServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB939813689A1B00085C3E /* ServerListCell.m */; };
+		4CCFEDBE157DABF600A8DE6A /* adventure-cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFEDBD157DABF600A8DE6A /* adventure-cat.jpg */; };
 		4CD3CA46138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA42138B9768002FD1E3 /* ChannelCellSelection_Aqua.tif */; };
 		4CD3CA47138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA43138B9768002FD1E3 /* ChannelCellSelection_Graphite.tif */; };
 		4CD3CA48138B9768002FD1E3 /* ServerCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3CA44138B9768002FD1E3 /* ServerCellSelection_Graphite.tif */; };
@@ -570,6 +571,7 @@
 		4CCB9392136899E500085C3E /* ServerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerListCell.h; path = Classes/Headers/ServerListCell.h; sourceTree = SOURCE_ROOT; };
 		4CCB939813689A1B00085C3E /* ServerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerListCell.m; path = ../ServerListCell.m; sourceTree = "<group>"; };
 		4CCD0F8711BAE7E900758B81 /* GlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalModels.m; sourceTree = "<group>"; };
+		4CCFEDBD157DABF600A8DE6A /* adventure-cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "adventure-cat.jpg"; sourceTree = "<group>"; };
 		4CD0136C12F0C772001953E6 /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCModeInfo.m; sourceTree = "<group>"; };
 		4CD0E5E912F1B45900C8F016 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrowlController.h; path = Classes/Headers/GrowlController.h; sourceTree = SOURCE_ROOT; };
 		4CD0E5EA12F1B45900C8F016 /* MasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterController.h; path = Classes/Headers/MasterController.h; sourceTree = SOURCE_ROOT; };
@@ -1029,6 +1031,7 @@
 		4C5AEF2312D1B6E400D6B18C /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				4CCFEDBD157DABF600A8DE6A /* adventure-cat.jpg */,
 				4C5AEF2412D1B6E400D6B18C /* application.icns */,
 			);
 			path = Application;
@@ -1855,6 +1858,7 @@
 				4CD3CA49138B9768002FD1E3 /* ServerCellSelection_Aqua.tif in Resources */,
 				4CFB1055138CE8E0007B8F2E /* HighlightSheet.xib in Resources */,
 				4C73E9AB1578164100992CD1 /* Scripts in Resources */,
+				4CCFEDBE157DABF600A8DE6A /* adventure-cat.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
