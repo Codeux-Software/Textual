@@ -255,7 +255,7 @@
 	while (1 == 1) {
 		NSData *data = [conn readLine];
 		
-		if (NSObjectIsEmpty(data)) break;
+		if (data == nil) break;
 		
 		if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
 			[delegate ircConnectionDidReceive:data];
