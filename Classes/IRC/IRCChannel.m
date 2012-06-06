@@ -111,6 +111,8 @@
 
 - (void)terminate
 {
+	status = IRCChannelTerminated;
+	
 	[self closeDialogs];
 	[self closeLogFile];
 }

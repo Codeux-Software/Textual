@@ -940,6 +940,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self send:IRCCI_NICK, newNick, nil];
 }
 
+- (void)_joinKickedChannel:(IRCChannel *)channel
+{
+	if (PointerIsNotEmpty(channel)) {
+		if (channel.status == IRCChannelTerminated) {
+			return;
+		}
+		
+		[self joinChannel:channel];
+	}
+}
+
 - (void)joinChannel:(IRCChannel *)channel
 {
 	return [self joinChannel:channel password:nil];
@@ -4217,10 +4228,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[c deactivate];
 			
 			[self reloadTree];
+
 			[self notifyEvent:NOTIFICATION_KICKED lineType:LINE_TYPE_KICK target:c nick:nick text:comment];
 			
 			if ([Preferences rejoinOnKick] && c.errLastJoin == NO) {
-				[self joinChannel:c];
+				[self printDebugInformation:TXTLS(@"IRC_CHANNEL_PREPARING_REJOIN") channel:c];
+				
+				[self performSelector:@selector(_joinKickedChannel:) withObject:c afterDelay:3.0];
 			}
 		}
 	}
@@ -4267,7 +4281,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self changeNick:config.nick];
 		}
 	}
-	
 	
 	[world reloadTree];
 	
