@@ -12,8 +12,6 @@ static dhclass *keyExchanger;
 	if (keyExchanger) {
 		free(keyExchanger);
 	}
-	
-	[super dealloc];
 }
 
 - (NSString *)generatePublicKey
@@ -62,7 +60,7 @@ static dhclass *keyExchanger;
 													length:specialPrivateKey.length()
 												 encoding:NSASCIIStringEncoding];
 	
-	return [privateKey autorelease];
+	return privateKey;
 }
 
 @end
