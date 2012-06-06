@@ -78,8 +78,7 @@
 
 - (NSArray *)readablePasteboardTypes
 {
-    return [NSArray arrayWithObjects:NSPasteboardTypeString,
-			NSPasteboardTypeRTF, NSPasteboardTypeColor, NSPasteboardTypeFont, nil];
+    return [NSArray arrayWithObjects:NSPasteboardTypeString, nil];
 }
 
 - (NSAttributedString *)attributedStringValue
