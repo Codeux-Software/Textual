@@ -222,7 +222,7 @@
 			{
 				NSColor *foregroundColor = [dict objectForKey:NSForegroundColorAttributeName];
 				
-                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:DefaultTextFieldFontColor]) {
+                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:DefaultTextFieldFontColor] == NO) {
                     return YES;
                 }
 				
@@ -230,9 +230,9 @@
 			}
 			case IRCTextFormatterBackgroundColorEffect:
 			{
-				BOOL result = BOOLValueFromObject([dict objectForKey:NSBackgroundColorAttributeName]);
+				NSColor *backgroundColor = [dict objectForKey:NSBackgroundColorAttributeName];
 				
-				if (result) {
+				if (PointerIsNotEmpty(backgroundColor)) {
 					return YES;
 				}
 				
@@ -254,17 +254,21 @@
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes
 {
 	if (clearAttributes) {
-		/* The easiest way to clear existing attributes in our 
-		 text field once it becomes empty is to simply toggle
-		 rich text formatting off, then back on. */
+		NSAttributedString *stringv = [NSAttributedString alloc];
+		NSAttributedString *stringn = [NSAttributedString emptyString];
+		
+		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+		
+		[attrs setObject:DefaultTextFieldFont		forKey:NSFontAttributeName];
+		[attrs setObject:DefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
 
-		[self setRichText:NO];
-		[self setRichText:YES];
+		[stringv initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
 
-		[self setTextColor:DefaultTextFieldFontColor];
+		[self setAttributedStringValue:stringv];
+		[self setAttributedStringValue:stringn];
+	} else {
+		[self setFont:DefaultTextFieldFont];
 	}
-
-	[self setFont:DefaultTextFieldFont];
 }
 
 #pragma mark -
