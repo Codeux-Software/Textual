@@ -2351,6 +2351,7 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504910</int>
 					</object>
 					<object class="NSMenuItem" id="514173876">
 						<reference key="NSMenu" ref="765356395"/>
@@ -2360,6 +2361,7 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504911</int>
 					</object>
 					<object class="NSMenuItem" id="43131096">
 						<reference key="NSMenu" ref="765356395"/>
@@ -2369,6 +2371,16 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504912</int>
+					</object>
+					<object class="NSMenuItem" id="360815335">
+						<reference key="NSMenu" ref="765356395"/>
+						<string key="NSTitle">All Modes Given</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="222848805"/>
+						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504913</int>
 					</object>
 					<object class="NSMenuItem" id="636280688">
 						<reference key="NSMenu" ref="765356395"/>
@@ -2389,6 +2401,7 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504810</int>
 					</object>
 					<object class="NSMenuItem" id="1041968715">
 						<reference key="NSMenu" ref="765356395"/>
@@ -2398,6 +2411,7 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504811</int>
 					</object>
 					<object class="NSMenuItem" id="483295284">
 						<reference key="NSMenu" ref="765356395"/>
@@ -2407,6 +2421,16 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="222848805"/>
 						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504812</int>
+					</object>
+					<object class="NSMenuItem" id="958386812">
+						<reference key="NSMenu" ref="765356395"/>
+						<string key="NSTitle">All Modes Taken</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="222848805"/>
+						<reference key="NSMixedImage" ref="852898728"/>
+						<int key="NSTag">504813</int>
 					</object>
 					<object class="NSMenuItem" id="398275065">
 						<reference key="NSMenu" ref="765356395"/>
@@ -5623,6 +5647,8 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="19181048"/>
 							<reference ref="636280688"/>
 							<reference ref="398275065"/>
+							<reference ref="958386812"/>
+							<reference ref="360815335"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">MemberMenu</string>
@@ -7183,6 +7209,16 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<reference key="object" ref="327121451"/>
 						<reference key="parent" ref="557176961"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2552</int>
+						<reference key="object" ref="958386812"/>
+						<reference key="parent" ref="765356395"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2553</int>
+						<reference key="object" ref="360815335"/>
+						<reference key="parent" ref="765356395"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -7475,6 +7511,8 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="2502.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2503.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2504.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2552.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2553.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="267.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="277.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7538,7 +7576,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2551</int>
+			<int key="maxID">2553</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -368,6 +368,41 @@
             return YES;
 			break;
         }
+		case 504910 ... 504912: // User, right click menu, + mode changes
+		case 504810 ... 504812: // User, right click menu, - mode changes
+		{
+			NSArray *nicknames = [self selectedMembers:nil];
+
+			if (NSObjectIsEmpty(nicknames) || nicknames.count > 1) {
+				[item setHidden:NO];
+
+				return YES;
+			} else {
+				IRCUser *m = [nicknames safeObjectAtIndex:0];
+
+				switch (tag) {
+					case 504910: [item setHidden:m.o]; break; // +o
+					case 504911: [item setHidden:m.h]; break;  // +h
+					case 504912: [item setHidden:m.v]; break;  // +v
+					case 504810: [item setHidden:(m.o == NO)]; break; // -o
+					case 504811: [item setHidden:(m.h == NO)]; break; // -h
+					case 504812: [item setHidden:(m.v == NO)]; break; // -v
+						
+					default: break;
+				}
+
+				BOOL hideTakeSepItem = (m.o == NO || m.h == NO || m.v == NO);
+				BOOL hideGiveSepItem = (m.o || m.h || m.v);
+
+				NSLog(@"%i %i | %i %i %i", hideGiveSepItem, hideTakeSepItem, m.o, m.h, m.v);
+
+				[[item.menu itemWithTag:504913] setHidden:hideTakeSepItem];
+				[[item.menu itemWithTag:504813] setHidden:hideGiveSepItem];
+
+				return YES;
+			}
+			break;
+		}
 		case 990002: // Next Highlight
 		{
 			return [world.selected.log highlightAvailable:NO];
