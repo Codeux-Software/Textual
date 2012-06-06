@@ -123,6 +123,7 @@
 "IRC_DISCONNECTED_FROM_SLEEP" = "Disconnect for Sleep Mode";
 "IRC_DISCONNECTED_FROM_TIMEOUT" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRC_CHANNEL_HAS_TOPIC" = "Topic is \002%@\002";
+"IRC_CHANNEL_PREPARING_REJOIN" = "Attempting to rejoin channel in three seconds.";
 "IRC_CONNECTED_TO_SERVER" = "Connection to host completed.";
 "IRC_CHANNEL_HAS_WEBSITE" = "Website is \002%@\002";
 "IRC_AWAY_COMMAND_DEFAULT_REASON" = "Be back later.";

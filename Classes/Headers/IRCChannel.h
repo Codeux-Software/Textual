@@ -8,6 +8,7 @@ typedef enum {
 	IRCChannelParted,
 	IRCChannelJoining,
 	IRCChannelJoined,
+	IRCChannelTerminated,
 } ChannelStatus;
 
 @interface IRCChannel : IRCTreeItem
