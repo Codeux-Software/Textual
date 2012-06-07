@@ -85,7 +85,7 @@ NSInteger ctoi(unsigned char c);
 {
 	NSUInteger len = self.length;
 	
-	const UniChar* buffer = CFStringGetCharactersPtr((CFStringRef)self);
+	const UniChar* buffer = CFStringGetCharactersPtr((__bridge CFStringRef)self);
 	
 	if (buffer == NULL) {
 		NSMutableData *data = [NSMutableData dataWithLength:(len * sizeof(UniChar))];

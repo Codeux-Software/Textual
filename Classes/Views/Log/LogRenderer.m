@@ -290,7 +290,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	UniChar dest[len];
 	UniChar source[len];
 	
-	CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
+	CFStringGetCharacters((__bridge CFStringRef)body, CFRangeMake(0, len), source);
 	
 	for (NSInteger i = 0; i < len; i++) {
 		UniChar c = source[i];
