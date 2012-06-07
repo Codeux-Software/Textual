@@ -357,6 +357,9 @@
 			if (NSObjectIsEmpty(nicknames) || nicknames.count > 1) {
 				[item setHidden:NO];
 
+				[[item.menu itemWithTag:504913] setHidden:YES];
+				[[item.menu itemWithTag:504813] setHidden:YES];
+
 				return YES;
 			} else {
 				IRCUser *m = [nicknames safeObjectAtIndex:0];
@@ -374,8 +377,6 @@
 
 				BOOL hideTakeSepItem = (m.o == NO || m.h == NO || m.v == NO);
 				BOOL hideGiveSepItem = (m.o || m.h || m.v);
-
-				NSLog(@"%i %i | %i %i %i", hideGiveSepItem, hideTakeSepItem, m.o, m.h, m.v);
 
 				[[item.menu itemWithTag:504913] setHidden:hideTakeSepItem];
 				[[item.menu itemWithTag:504813] setHidden:hideGiveSepItem];
@@ -796,8 +797,8 @@
 	d.window = window;
 	d.config = [[IRCClientConfig alloc] init];
 	d.uid = -1;
-	
-	[d startWithIgnoreTab:NO];
+
+	[d startWithIgnoreTab:NSNullObject];
 	
 	serverSheet = d;
 }
@@ -869,7 +870,7 @@
 
 - (void)onServerProperties:(id)sender
 {
-	[self showServerPropertyDialog:[world selectedClient] ignore:NO];
+	[self showServerPropertyDialog:[world selectedClient] ignore:NSNullObject];
 }
 
 - (void)ServerSheetOnOK:(ServerSheet *)sender

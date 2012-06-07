@@ -64,7 +64,7 @@
 	
 	if (useSystemSocks) {
 		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
-		NSNumber *num = (NSNumber *)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
+		NSNumber *num = (__bridge NSNumber *)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
 		BOOL systemSocksEnabled = BOOLReverseValue([num integerValue] == 0);
 		CFRelease(proxyDic);
 		
