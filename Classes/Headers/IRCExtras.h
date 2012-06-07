@@ -5,10 +5,10 @@
 
 @interface IRCExtras : NSObject 
 {
-	IRCWorld *world;
+	IRCWorld *__weak world;
 }
 
-@property (nonatomic, assign) IRCWorld *world;
+@property (nonatomic, weak) IRCWorld *world;
 
 - (void)parseIRCProtocolURI:(NSString *)location;
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel;

@@ -7,25 +7,25 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	MainWindow			*window;
-	ViewTheme			*viewTheme;
-	InputTextField		*text;
-	GrowlController		*growl;
+	MainWindow			*__weak window;
+	ViewTheme			*__weak viewTheme;
+	InputTextField		*__unsafe_unretained text;
+	GrowlController		*__weak growl;
 	LogController		*dummyLog;
-	MasterController	*master;
-	MenuController		*menuController;
+	MasterController	*__weak master;
+	MenuController		*__weak menuController;
 	
-	ServerList *serverList;
-	MemberList *memberList;
+	ServerList *__weak serverList;
+	MemberList *__weak memberList;
 	
-	NSBox *logBase;
+	NSBox *__weak logBase;
 	
-	NSMenu *logMenu;
-	NSMenu *urlMenu;
-	NSMenu *addrMenu;
-	NSMenu *chanMenu;
-	NSMenu *treeMenu;
-	NSMenu *memberMenu;
+	NSMenu *__weak logMenu;
+	NSMenu *__weak urlMenu;
+	NSMenu *__weak addrMenu;
+	NSMenu *__weak chanMenu;
+	NSMenu *__weak treeMenu;
+	NSMenu *__weak memberMenu;
 	NSMenu *serverMenu;
 	NSMenu *channelMenu;
 	
@@ -44,7 +44,7 @@
 	BOOL soundMuted;
 	BOOL reloadingTree;
 	
-	IRCExtras *extrac;
+	IRCExtras *__weak extrac;
 	
 	IRCTreeItem *selected;
 	
@@ -59,41 +59,41 @@
 	NSDictionary *bundlesWithOutputRules;
 }
 
-@property (nonatomic, assign) ServerList *serverList;
-@property (nonatomic, assign) MemberList *memberList;
-@property (nonatomic, assign) MainWindow *window;
-@property (nonatomic, assign) ViewTheme *viewTheme;
-@property (nonatomic, assign) InputTextField *text;
-@property (nonatomic, assign) GrowlController *growl;
-@property (nonatomic, assign) MasterController *master;
-@property (nonatomic, retain) LogController *dummyLog;
-@property (nonatomic, assign) MenuController *menuController;
-@property (nonatomic, assign) NSBox *logBase;
-@property (nonatomic, assign) NSMenu *logMenu;
-@property (nonatomic, assign) NSMenu *urlMenu;
-@property (nonatomic, assign) NSMenu *addrMenu;
-@property (nonatomic, assign) NSMenu *chanMenu;
-@property (nonatomic, assign) NSMenu *treeMenu;
-@property (nonatomic, assign) NSMenu *memberMenu;
-@property (nonatomic, retain) NSMenu *serverMenu;
-@property (nonatomic, retain) NSMenu *channelMenu;
+@property (nonatomic, weak) ServerList *serverList;
+@property (nonatomic, weak) MemberList *memberList;
+@property (nonatomic, weak) MainWindow *window;
+@property (nonatomic, weak) ViewTheme *viewTheme;
+@property (nonatomic, unsafe_unretained) InputTextField *text;
+@property (nonatomic, weak) GrowlController *growl;
+@property (nonatomic, weak) MasterController *master;
+@property (nonatomic, strong) LogController *dummyLog;
+@property (nonatomic, weak) MenuController *menuController;
+@property (nonatomic, weak) NSBox *logBase;
+@property (nonatomic, weak) NSMenu *logMenu;
+@property (nonatomic, weak) NSMenu *urlMenu;
+@property (nonatomic, weak) NSMenu *addrMenu;
+@property (nonatomic, weak) NSMenu *chanMenu;
+@property (nonatomic, weak) NSMenu *treeMenu;
+@property (nonatomic, weak) NSMenu *memberMenu;
+@property (nonatomic, strong) NSMenu *serverMenu;
+@property (nonatomic, strong) NSMenu *channelMenu;
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXFSLongInt bandwidthIn;
 @property (nonatomic, assign) TXFSLongInt bandwidthOut;
-@property (nonatomic, retain) IRCWorldConfig *config;
-@property (nonatomic, assign) NSMutableArray *clients;
+@property (nonatomic, strong) IRCWorldConfig *config;
+@property (nonatomic, strong) NSMutableArray *clients;
 @property (nonatomic, assign) NSInteger itemId;
 @property (nonatomic, assign) BOOL soundMuted;
-@property (nonatomic, assign) IRCExtras *extrac;
-@property (nonatomic, retain) IRCTreeItem *selected;
+@property (nonatomic, weak) IRCExtras *extrac;
+@property (nonatomic, strong) IRCTreeItem *selected;
 @property (nonatomic, assign) NSInteger previousSelectedClientId;
 @property (nonatomic, assign) NSInteger previousSelectedChannelId;
-@property (nonatomic, retain) NSArray *allLoadedBundles;
-@property (nonatomic, retain) NSArray *bundlesWithPreferences;
-@property (nonatomic, retain) NSDictionary *bundlesForUserInput;
-@property (nonatomic, retain) NSDictionary *bundlesForServerInput;
-@property (nonatomic, retain) NSDictionary *bundlesWithOutputRules;
+@property (nonatomic, strong) NSArray *allLoadedBundles;
+@property (nonatomic, strong) NSArray *bundlesWithPreferences;
+@property (nonatomic, strong) NSDictionary *bundlesForUserInput;
+@property (nonatomic, strong) NSDictionary *bundlesForServerInput;
+@property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
 
 - (void)setup:(IRCWorldConfig *)seed;
 - (void)setupTree;

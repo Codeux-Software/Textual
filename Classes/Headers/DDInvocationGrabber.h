@@ -37,10 +37,10 @@ typedef enum {
 	invocationThreadType threadType;
 }
 
-@property (nonatomic, retain) id target;
+@property (nonatomic, strong) id target;
 @property (nonatomic, assign) BOOL waitUntilDone;
-@property (nonatomic, retain) NSThread *parentThread;
-@property (nonatomic, retain) NSInvocation *invocation;
+@property (nonatomic, strong) NSThread *parentThread;
+@property (nonatomic, strong) NSInvocation *invocation;
 @property (nonatomic, assign) invocationThreadType threadType;
 
 + (id)invocationGrabber;

@@ -22,7 +22,6 @@
 {
 	[self stop];
 	
-	[super dealloc];
 }
 
 - (BOOL)isActive
@@ -34,10 +33,10 @@
 {
 	[self stop];
 	
-	timer = [[NSTimer scheduledTimerWithTimeInterval:interval 
+	timer = [NSTimer scheduledTimerWithTimeInterval:interval 
 											  target:self 
 											selector:@selector(onTimer:) 
-											userInfo:nil repeats:reqeat] retain];
+											userInfo:nil repeats:reqeat];
 	
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
@@ -45,7 +44,6 @@
 - (void)stop
 {
 	[timer invalidate];
-	[timer drain];
 	timer = nil;
 }
 
@@ -58,7 +56,12 @@
 	}
 	
 	if ([delegate respondsToSelector:selector]) {
+		
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 		[delegate performSelector:selector withObject:self];
+#pragma clang diagnostic pop
+		
 	}
 }
 

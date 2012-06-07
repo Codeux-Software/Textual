@@ -14,7 +14,7 @@
 
 + (SoundWrapper *)soundWrapperWithEventType:(NotificationType)eventType
 {
-	return [[[SoundWrapper alloc] initWithEventType:eventType] autodrain];
+	return [[SoundWrapper alloc] initWithEventType:eventType];
 }
 
 - (NSString *)displayName

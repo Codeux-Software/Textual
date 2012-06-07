@@ -94,7 +94,6 @@
 		[NSBundle loadNibNamed:@"ServerSheet" owner:self];
 		
 		serverList = [NSDictionary dictionaryWithContentsOfFile:[[Preferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
-		[serverList retain];
 		
 		NSArray *sortedKeys = [[serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		
@@ -110,24 +109,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[config drain];
-	[serverList drain];
-	[ignoreSheet drain];
-	[identityView drain];
-	[messagesView drain];
-	[encodingView drain];
-	[autojoinView drain];
-	[ignoresView drain];
-	[commandsView drain];
-	[proxyServerView drain];
-	[ignoresView drain];
-	[tabViewList drain];
-	[channelSheet drain];
-	
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Server List Factory
@@ -183,7 +164,6 @@
 		[self showWithDefaultView:ignoresView andSegment:5];
 		
 		if ([imask isEqualToString:@"-"] == NO) {
-			[ignoreSheet drain];
 			ignoreSheet = nil;
 			
 			ignoreSheet = [AddressBookSheet new];
@@ -517,15 +497,14 @@
 	IRCChannelConfig *conf;
 	
 	if (sel < 0) {
-		conf = [IRCChannelConfig newad];
+		conf = [[IRCChannelConfig alloc] init];
 	} else {
 		IRCChannelConfig *c = [config.channels safeObjectAtIndex:sel];
 		
-		conf = [[c mutableCopy] autodrain];
+		conf = [c mutableCopy];
 		conf.name = NSNullObject;
 	}
 	
-	[channelSheet drain];
 	channelSheet = nil;
 	
 	channelSheet = [ChannelSheet new];
@@ -542,9 +521,8 @@
 	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
 	
-	IRCChannelConfig *c = [[[config.channels safeObjectAtIndex:sel] mutableCopy] autodrain];
+	IRCChannelConfig *c = [[config.channels safeObjectAtIndex:sel] mutableCopy];
 	
-	[channelSheet drain];
 	channelSheet = nil;
 	
 	channelSheet = [ChannelSheet new];
@@ -586,7 +564,6 @@
 
 - (void)ChannelSheetWillClose:(ChannelSheet *)sender
 {
-	[channelSheet drain];
 	channelSheet = nil;
 }
 
@@ -625,7 +602,6 @@
 }
 - (void)addIgnore:(id)sender
 {
-	[ignoreSheet drain];
 	ignoreSheet = nil;
 	
 	ignoreSheet = [AddressBookSheet new];
@@ -648,7 +624,6 @@
 	NSInteger sel = [ignoreTable selectedRow];
 	if (sel < 0) return;
 	
-	[ignoreSheet drain];
 	ignoreSheet = nil;
 	
 	ignoreSheet = [AddressBookSheet new];
@@ -701,7 +676,6 @@
 
 - (void)ignoreItemSheetWillClose:(AddressBookSheet *)sender
 {
-	[ignoreSheet drain];
 	ignoreSheet = nil;
 }
 
@@ -867,10 +841,9 @@
 			
 			IRCChannelConfig *target = [ary safeObjectAtIndex:sel];
 			
-			[target adrv];
             
-			NSMutableArray *low  = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autodrain];
-			NSMutableArray *high = [[[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy] autodrain];
+			NSMutableArray *low  = [[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy];
+			NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(row, (ary.count - row))] mutableCopy];
 			
 			[low  removeObjectIdenticalTo:target];
 			[high removeObjectIdenticalTo:target];

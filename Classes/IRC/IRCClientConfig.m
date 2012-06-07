@@ -48,7 +48,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	if ((self = [super init])) {
 		cuid = TXRandomNumber(9999);
-		guid = [NSString stringWithUUID].retain;
+		guid = [NSString stringWithUUID];
 		
 		ignores         = [NSMutableArray new];
 		altNicks        = [NSMutableArray new];
@@ -57,8 +57,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 		host         = NSNullObject;
 		port         = 6667;
-		password     = [NSNullObject retain];
-		nickPassword = [NSNullObject retain];
+		password     = NSNullObject;
+		nickPassword = NSNullObject;
 		
 		proxyHost       = NSNullObject;
 		proxyPort       = 1080;
@@ -74,13 +74,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
         floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
 		
-		name        = TXTLS(@"UNTITLED_CONNECTION_NAME").retain;
-		nick        = [Preferences defaultNickname].retain;
-		username    = [Preferences defaultUsername].retain;
-		realName    = [Preferences defaultRealname].retain;
+		name        = TXTLS(@"UNTITLED_CONNECTION_NAME");
+		nick        = [Preferences defaultNickname];
+		username    = [Preferences defaultUsername];
+		realName    = [Preferences defaultRealname];
 		
-		leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE").retain;
-		sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE").retain;
+		leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE");
+		sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE");
 	}
 	
 	return self;
@@ -103,10 +103,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if (kcPassword) {
 		if ([kcPassword isEqualToString:nickPassword] == NO) {
-			[nickPassword drain];
 			nickPassword = nil;
 			
-			nickPassword = [kcPassword retain];
+			nickPassword = kcPassword;
 		}
 	}
 	
@@ -131,10 +130,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
 		}
 		
-		[nickPassword drain];
 		nickPassword = nil;
 		
-		nickPassword = [pass retain];
+		nickPassword = pass;
 	}
 }
 
@@ -152,10 +150,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if (kcPassword) {
 		if ([kcPassword isEqualToString:password] == NO) {
-			[password drain];
 			password = nil;
 			
-			password = [kcPassword retain];
+			password = kcPassword;
 		}
 	}
 	
@@ -179,10 +176,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];			
 		}
 		
-		[password drain];
 		password = nil;
 		
-		password = [pass retain];
+		password = pass;
 	}
 }
 
@@ -204,47 +200,42 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	[self init];	
+	if (!(self = [self init])) return nil;	
 	
 	cuid = (([dic integerForKey:@"cuid"]) ?: cuid);
 	
 	if ([dic stringForKey:@"guid"]) {
-		[guid drain];
-		guid = [dic stringForKey:@"guid"].retain;
+		guid = [dic stringForKey:@"guid"];
 	}
 	
 	if ([dic stringForKey:@"name"]) {
-		[name drain];
-		name = [dic stringForKey:@"name"].retain;
+		name = [dic stringForKey:@"name"];
 	}
 	
-	host = (([dic stringForKey:@"host"].retain) ?: NSNullObject);
+	host = (([dic stringForKey:@"host"]) ?: NSNullObject);
 	port = (([dic integerForKey:@"port"]) ?: 6667);
     
 	if ([dic stringForKey:@"nick"]) {
-		[nick drain];
-		nick = [dic stringForKey:@"nick"].retain;
+		nick = [dic stringForKey:@"nick"];
 	}
 	
 	useSSL  = [dic boolForKey:@"ssl"];
 	
 	if ([dic stringForKey:@"username"]) {
-		[username drain];
-		username = [dic stringForKey:@"username"].retain;
+		username = [dic stringForKey:@"username"];
 	}
 	
 	if ([dic stringForKey:@"realname"]) {
-		[realName drain];
-		realName = [dic stringForKey:@"realname"].retain;
+		realName = [dic stringForKey:@"realname"];
 	}
 	
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
-	proxyType       = [dic integerForKey:@"proxy"];
+	proxyType       = (ProxyType)[dic integerForKey:@"proxy"];
 	proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-	proxyHost       = (([dic stringForKey:@"proxy_host"].retain) ?: NSNullObject);
-	proxyUser       = (([dic stringForKey:@"proxy_user"].retain) ?: NSNullObject);
-	proxyPassword   = (([dic stringForKey:@"proxy_password"].retain) ?: NSNullObject);
+	proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSNullObject);
+	proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSNullObject);
+	proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSNullObject);
 	
 	autoConnect         = [dic boolForKey:@"auto_connect"];
 	autoReconnect       = [dic boolForKey:@"auto_reconnect"];
@@ -253,13 +244,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	fallbackEncoding    = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
     
 	if ([dic stringForKey:@"leaving_comment"]) {
-		[leavingComment drain];
-		leavingComment = [dic stringForKey:@"leaving_comment"].retain;
+		leavingComment = [dic stringForKey:@"leaving_comment"];
 	}
 	
 	if ([dic stringForKey:@"sleep_quit_message"]) {
-		[sleepQuitMessage drain];
-		sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"].retain;
+		sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"];
 	}
 	
     prefersIPv6         = [dic boolForKey:@"prefersIPv6"];
@@ -273,7 +262,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         
         c = [IRCChannelConfig alloc];
         c = [c initWithDictionary:e];
-        c = [c autodrain];
+        c = c;
 		
 		[channels safeAddObject:c];
 	}
@@ -283,7 +272,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         
         ignore = [AddressBook alloc];
         ignore = [ignore initWithDictionary:e];
-        ignore = [ignore autodrain];
+        ignore = ignore;
 		
 		[ignores safeAddObject:ignore];
 	}
@@ -305,30 +294,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	return self;
 }
 
-- (void)dealloc
-{
-	[altNicks drain];
-	[channels drain];
-	[guid drain];
-	[host drain];
-	[ignores drain];
-	[leavingComment drain];
-	[loginCommands drain];
-	[name drain];
-	[network drain];
-	[nickPassword drain];
-	[nick drain];
-	[password drain];
-	[proxyHost drain];
-	[proxyPassword drain];
-	[proxyUser drain];
-	[realName drain];
-	[server drain];
-	[sleepQuitMessage drain];
-	[username drain];	
-	
-	[super dealloc];
-}
 
 - (NSMutableDictionary *)dictionaryValue
 {

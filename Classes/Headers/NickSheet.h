@@ -11,8 +11,8 @@
 }
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) NSTextField *currentText;
-@property (nonatomic, retain) NSTextField *nicknameNewInfo;
+@property (nonatomic, strong) NSTextField *currentText;
+@property (nonatomic, strong) NSTextField *nicknameNewInfo;
 
 - (void)start:(NSString *)nick;
 @end

@@ -4,7 +4,7 @@
 
 @interface ModeSheet : SheetBase
 {
-	IRCChannelMode *mode;
+	IRCChannelMode *__weak mode;
 	
 	NSString *channelName;
 	
@@ -24,20 +24,20 @@
 	IBOutlet NSTextField *lText;
 }
 
-@property (nonatomic, assign) IRCChannelMode *mode;
-@property (nonatomic, retain) NSString *channelName;
+@property (nonatomic, weak) IRCChannelMode *mode;
+@property (nonatomic, strong) NSString *channelName;
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, retain) NSButton *sCheck;
-@property (nonatomic, retain) NSButton *pCheck;
-@property (nonatomic, retain) NSButton *nCheck;
-@property (nonatomic, retain) NSButton *tCheck;
-@property (nonatomic, retain) NSButton *iCheck;
-@property (nonatomic, retain) NSButton *mCheck;
-@property (nonatomic, retain) NSButton *kCheck;
-@property (nonatomic, retain) NSButton *lCheck;
-@property (nonatomic, retain) NSTextField *kText;
-@property (nonatomic, retain) NSTextField *lText;
+@property (nonatomic, strong) NSButton *sCheck;
+@property (nonatomic, strong) NSButton *pCheck;
+@property (nonatomic, strong) NSButton *nCheck;
+@property (nonatomic, strong) NSButton *tCheck;
+@property (nonatomic, strong) NSButton *iCheck;
+@property (nonatomic, strong) NSButton *mCheck;
+@property (nonatomic, strong) NSButton *kCheck;
+@property (nonatomic, strong) NSButton *lCheck;
+@property (nonatomic, strong) NSTextField *kText;
+@property (nonatomic, strong) NSTextField *lText;
 
 - (void)start;
 - (void)onChangeCheck:(id)sender;

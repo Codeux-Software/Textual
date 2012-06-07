@@ -27,7 +27,7 @@ typedef enum {
 }
 
 @property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, retain) NSString *hostmask;
+@property (nonatomic, strong) NSString *hostmask;
 @property (nonatomic, assign) BOOL ignorePublicMsg;
 @property (nonatomic, assign) BOOL ignorePrivateMsg;
 @property (nonatomic, assign) BOOL ignoreHighlights;
@@ -35,7 +35,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL ignoreCTCP;
 @property (nonatomic, assign) BOOL ignoreJPQE;
 @property (nonatomic, assign) BOOL notifyJoins;
-@property (nonatomic, retain) NSString *hostmaskRegex;
+@property (nonatomic, strong) NSString *hostmaskRegex;
 @property (nonatomic, assign) BOOL ignorePMHighlights;
 @property (nonatomic, assign) AddressBookEntryType entryType;
 

@@ -500,7 +500,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				curchan = log.channel.name;
 			}
 			
-            for (NSString *keyword in keywords) {
+            for (__strong NSString *keyword in keywords) {
 				BOOL continueSearch = YES;
 				
 				if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"])) {
@@ -711,7 +711,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	id result = nil;
 	
 	if (drawingType == ASCII_TO_ATTRIBUTED_STRING) {
-		result = [[[NSMutableAttributedString alloc] initWithString:body] autodrain];
+		result = [[NSMutableAttributedString alloc] initWithString:body];
 	} else {
 		result = [NSMutableString string];
 	}

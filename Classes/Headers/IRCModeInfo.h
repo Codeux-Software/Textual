@@ -17,7 +17,7 @@
 @property (nonatomic, assign) BOOL op;
 @property (nonatomic, assign) BOOL plus;
 @property (nonatomic, assign) BOOL simpleMode;
-@property (nonatomic, retain) NSString *param;
+@property (nonatomic, strong) NSString *param;
 
 + (IRCModeInfo *)modeInfo;
 @end

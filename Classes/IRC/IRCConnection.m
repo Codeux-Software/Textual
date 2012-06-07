@@ -44,18 +44,10 @@
 
 - (void)dealloc
 {
-	[conn autodrain];
 	[conn close];
-	[host drain];
-	[proxyHost drain];
-	[proxyPassword drain];
-	[proxyUser drain];
-	[sendQueue drain];
 	
 	[timer stop];
-	[timer drain];
 	
-	[super dealloc];
 }
 
 - (void)open
@@ -102,7 +94,6 @@
 	[sendQueue removeAllObjects];
 	
 	[conn close];
-	[conn autodrain];
 	conn = nil;
 }
 

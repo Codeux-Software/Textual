@@ -16,20 +16,13 @@
 @synthesize notifyJoins;
 @synthesize ignorePMHighlights;
 
-- (void)dealloc
-{
-	[hostmask drain];
-	[hostmaskRegex drain];
-	
-	[super dealloc];
-}
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ([self init]) {
 		cid = (([dic integerForKey:@"cid"]) ?: TXRandomNumber(9999));
 		
-		hostmask = [[dic objectForKey:@"hostmask"] retain];
+		hostmask = [dic objectForKey:@"hostmask"];
 		
 		ignorePublicMsg		= [dic boolForKey:@"ignorePublicMsg"];
 		ignorePrivateMsg	= [dic boolForKey:@"ignorePrivateMsg"];
@@ -40,7 +33,7 @@
 		notifyJoins			= [dic boolForKey:@"notifyJoins"];
 		ignorePMHighlights	= [dic boolForKey:@"ignorePMHighlights"];
 		
-		entryType = [dic integerForKey:@"entryType"];
+		entryType = (AddressBookEntryType)[dic integerForKey:@"entryType"];
 		
 		[self processHostMaskRegex];
 	}
@@ -53,14 +46,12 @@
 	if (entryType == ADDRESS_BOOK_TRACKING_ENTRY) {
 		NSString *nickname = [self trackingNickname];
 		
-		[hostmaskRegex drain];
 		hostmaskRegex = nil;
 		
-		[hostmask drain];
 		hostmask = nil;
 		
-		hostmask	  = [nickname retain];
-		hostmaskRegex = [[NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", nickname] retain];
+		hostmask	  = nickname;
+		hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", nickname];
 	} else {
 		if (NSObjectIsEmpty(hostmaskRegex)) {
 			NSString *nhostmask = hostmask;
@@ -85,8 +76,7 @@
 			}
 			
 			if (NSDissimilarObjects(hostmask, nhostmask)) {
-				[hostmask drain];
-				hostmask = [nhostmask retain];
+				hostmask = nhostmask;
 			}
 			
 			/* There probably is an easier way to escape characters before making
@@ -106,10 +96,9 @@
 			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
 			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
 			
-			[hostmaskRegex drain];
 			hostmaskRegex = nil;
 			
-			hostmaskRegex = [[NSString stringWithFormat:@"^%@$", new_hostmask] retain];
+			hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
 		}
 	}
 }

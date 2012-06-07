@@ -5,45 +5,25 @@
 
 + (id)newad 
 {
-	return [[[self alloc] init] autodrain];
+	return nil;
 }
 
 - (id)adrv
 {
-	return [[self retain] autodrain];
+	return nil;
 }
 
 - (oneway void)drain
 {
-	if ([_NSUserDefaults() boolForKey:@"DisableMemoryDeallocation"] == NO) {
-		if (self) {
-			NSUInteger retainTotal = [self retainCount];
-			
-			if (retainTotal >= 1) {
-				[self release];
-			} 
-		}
-	}
 }
 
 - (id)autodrain
 {
-	if ([_NSUserDefaults() boolForKey:@"DisableMemoryDeallocation"] == NO) {
-		if (self) {
-			return [self autorelease];
-		}
-	}
-	
-	return self;
+	return nil;
 }
 
 - (oneway void)forcedrain
 {
-	if (self) {
-		while (self && [self retainCount] >= 1) {
-			[self drain];
-		}
-	}
 }
 
 @end

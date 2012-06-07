@@ -5,12 +5,12 @@
 
 @interface MemberListCell : NSTextFieldCell
 {
-    id cellItem;
-	IRCUser *member;
-    MemberList *parent;
+    id __unsafe_unretained cellItem;
+	IRCUser *__weak member;
+    MemberList *__weak parent;
 }
 
-@property (nonatomic, assign) id cellItem;
-@property (nonatomic, assign) IRCUser *member;
-@property (nonatomic, assign) MemberList *parent;
+@property (nonatomic, unsafe_unretained) id cellItem;
+@property (nonatomic, weak) IRCUser *member;
+@property (nonatomic, weak) MemberList *parent;
 @end

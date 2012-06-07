@@ -14,19 +14,12 @@
 		
 		completeColon = YES;
 		
-		command = [[aCommand uppercaseString] retain];
+		command = [aCommand uppercaseString];
 	}
 
 	return self;
 }
 
-- (void)dealloc
-{
-	[command drain];
-	[params drain];
-	
-	[super dealloc];
-}
 
 - (void)addParameter:(NSString *)parameter
 {

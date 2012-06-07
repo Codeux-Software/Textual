@@ -6,12 +6,12 @@
 	IBOutlet ListView *table;
 	IBOutlet NSTextField *header;
 	
-	NSMutableArray *list;
+	NSMutableArray *__weak list;
 }
 
-@property (nonatomic, retain) ListView *table;
-@property (nonatomic, retain) NSTextField *header;
-@property (nonatomic, assign) NSMutableArray *list;
+@property (nonatomic, strong) ListView *table;
+@property (nonatomic, strong) NSTextField *header;
+@property (nonatomic, weak) NSMutableArray *list;
 
 - (void)show;
 - (void)onClearList:(id)sender;

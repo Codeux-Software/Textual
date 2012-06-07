@@ -45,19 +45,6 @@
 @synthesize window;
 @synthesize world;
 
-- (void)dealloc
-{
-	[completionStatus drain];
-	[extrac drain];
-	[formattingMenu drain];
-	[growl drain];
-	[inputHistory drain];
-	[viewTheme drain];
-	[welcomeSheet drain];
-	[world drain];	
-	
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark NSApplication Delegate
@@ -110,7 +97,7 @@
     
 	[LanguagePreferences setThemeForLocalization:viewTheme.path];
 	
-	IRCWorldConfig *seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autodrain];
+	IRCWorldConfig *seed = [[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]];
 	
 	extrac = [IRCExtras new];
 	world  = [IRCWorld new];
@@ -654,13 +641,11 @@
 - (void)inputHistorySchemeChanged:(NSNotification *)note
 {
 	if (inputHistory) {
-		[inputHistory drain];
 		inputHistory = nil;
 	}
 	
 	for (IRCClient *c in world.clients) {
 		if (c.inputHistory) {
-			[c.inputHistory drain];
 			c.inputHistory = nil;
 		}
 		
@@ -670,7 +655,6 @@
 		
 		for (IRCChannel *u in c.channels) {
 			if (u.inputHistory) {
-				[u.inputHistory drain];
 				u.inputHistory = nil;
 			}
 			
@@ -878,7 +862,6 @@
 		choices      = nicks;
 		lowerChoices = lowerNicks;
 		
-		[users drain];
 	}
 	
 	NSMutableArray *currentChoices      = [NSMutableArray array];
@@ -1371,7 +1354,7 @@ typedef enum {
 	
 	[window makeKeyAndOrderFront:nil];
 	
-	IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:dic] autodrain];
+	IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:dic];
 	IRCClient		*u = [world createClient:c reload:YES];
 	
 	[world save];
@@ -1383,7 +1366,6 @@ typedef enum {
 
 - (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
 {
-	[welcomeSheet drain];
 	welcomeSheet = nil;
 }
 

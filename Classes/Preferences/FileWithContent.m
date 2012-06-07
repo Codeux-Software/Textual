@@ -11,13 +11,6 @@
 @synthesize filename;
 @synthesize content;
 
-- (void)dealloc
-{
-	[filename drain];
-	[content drain];
-	
-	[super dealloc];
-}
 
 - (NSString *)filename
 {
@@ -27,8 +20,7 @@
 - (void)setFilename:(NSString *)value
 {
 	if (NSDissimilarObjects(filename, value)) {
-		[filename drain];
-		filename = [value retain];
+		filename = value;
 	}
 	
 	[self reload];
@@ -36,11 +28,9 @@
 
 - (void)reload
 {
-	[content drain];
 	content = nil;
 	
 	content = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
-	[content retain];
 }
 
 @end

@@ -13,7 +13,6 @@
 	
 	result = [scanner matchesForString:body];
 	
-	[scanner drain];
 	scanner = nil;
 	
 	return result;

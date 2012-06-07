@@ -26,19 +26,19 @@
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = [username length];
+	attributes[0].length = (UInt32)[username length];
 	
 	attributes[1].tag = kSecDescriptionItemAttr;
 	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = [keychainItemKind length];
+	attributes[1].length = (UInt32)[keychainItemKind length];
 	
 	attributes[2].tag = kSecLabelItemAttr;
 	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = [keychainItemName length];
+	attributes[2].length = (UInt32)[keychainItemName length];
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [service length];
+	attributes[3].length = (UInt32)[service length];
 	
 	list.count = 4;
 	list.attr = attributes;
@@ -78,19 +78,19 @@
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = [username length];
+	attributes[0].length = (UInt32)[username length];
 	
 	attributes[1].tag = kSecDescriptionItemAttr;
 	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = [keychainItemKind length];
+	attributes[1].length = (UInt32)[keychainItemKind length];
 	
 	attributes[2].tag = kSecLabelItemAttr;
 	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = [keychainItemName length];
+	attributes[2].length = (UInt32)[keychainItemName length];
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [service length];
+	attributes[3].length = (UInt32)[service length];
 	
 	list.count = 4;
 	list.attr = attributes;
@@ -135,23 +135,23 @@
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = [username length];
+	attributes[0].length = (UInt32)[username length];
 	
 	attributes[1].tag = kSecDescriptionItemAttr;
 	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = [keychainItemKind length];
+	attributes[1].length = (UInt32)[keychainItemKind length];
 	
 	attributes[2].tag = kSecLabelItemAttr;
 	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = [keychainItemName length];
+	attributes[2].length = (UInt32)[keychainItemName length];
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [service length];
+	attributes[3].length = (UInt32)[service length];
 	
 	attributes[4].tag = kSecCommentItemAttr;
 	attributes[4].data = (void *)[comment UTF8String];
-	attributes[4].length = [comment length];
+	attributes[4].length = (UInt32)[comment length];
 	
 	list.count = 4;
 	list.attr = attributes;
@@ -167,10 +167,10 @@
 	list.count = 5;
 	
 	if (result == errSecItemNotFound) {
-		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [newPassword length], 
+		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, (UInt32)[newPassword length], 
 												  [newPassword UTF8String], NULL,NULL, &item);
 	} else {
-		status = SecKeychainItemModifyContent(item, &list, [newPassword length], [newPassword UTF8String]);
+		status = SecKeychainItemModifyContent(item, &list, (UInt32)[newPassword length], [newPassword UTF8String]);
 		
 		CFRelease(item);
 	}
@@ -194,24 +194,24 @@
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = [username length];
+	attributes[0].length = (UInt32)[username length];
 	
 	attributes[1].tag = kSecDescriptionItemAttr;
 	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = [keychainItemKind length];
+	attributes[1].length = (UInt32)[keychainItemKind length];
 	
 	attributes[2].tag = kSecLabelItemAttr;
 	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = [keychainItemName length];
+	attributes[2].length = (UInt32)[keychainItemName length];
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = [service length];
+	attributes[3].length = (UInt32)[service length];
 	
 	list.count = 4;
 	list.attr = attributes;
 	
-	status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, [password length], 
+	status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, (UInt32)[password length], 
 											  [password UTF8String], NULL,NULL, &item);
 	
 	return BOOLReverseValue(status);
@@ -232,19 +232,19 @@
 	
 	attributes[0].tag = kSecAccountItemAttr;
 	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = [username length];
+	attributes[0].length = (UInt32)[username length];
 	
 	attributes[1].tag = kSecDescriptionItemAttr;
 	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = [keychainItemKind length];
+	attributes[1].length = (UInt32)[keychainItemKind length];
 	
 	attributes[2].tag = kSecLabelItemAttr;
 	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = [keychainItemName length];
+	attributes[2].length = (UInt32)[keychainItemName length];
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = ((legacy) ? [keychainItemName length] : [service length]);
+	attributes[3].length = (UInt32)((legacy) ? [keychainItemName length] : [service length]);
 	
 	list.count = 4;
 	list.attr = attributes;

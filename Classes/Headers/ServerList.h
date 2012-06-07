@@ -3,10 +3,10 @@
 
 @interface ServerList : NSOutlineView
 {
-	id keyDelegate;
+	id __unsafe_unretained keyDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
 
 - (void)toggleAddServerButton;
 @end

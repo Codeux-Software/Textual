@@ -12,14 +12,8 @@
 
 + (IRCModeInfo *)modeInfo
 {
-	return [IRCModeInfo newad];
+	return [[IRCModeInfo alloc] init];
 }
 
-- (void)dealloc
-{
-	[param drain];
-	
-	[super dealloc];
-}
 
 @end

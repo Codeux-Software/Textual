@@ -113,7 +113,7 @@ static char encodingTable[64] = {
 		}
 	}
 	
-	return [[[NSString alloc] initWithCharacters:buf length:n] autodrain];
+	return [[NSString alloc] initWithCharacters:buf length:n];
 }
 
 

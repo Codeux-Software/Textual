@@ -6,13 +6,13 @@
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
 {
-	IRCISupportInfo *isupport;
+	IRCISupportInfo *__weak isupport;
 	
 	NSMutableArray		*allModes;
 	NSMutableDictionary *modeIndexes;
 }
 
-@property (nonatomic, assign) IRCISupportInfo *isupport;
+@property (nonatomic, weak) IRCISupportInfo *isupport;
 @property (nonatomic, readonly) NSMutableArray *allModes;
 @property (nonatomic, readonly) NSMutableDictionary *modeIndexes;
 

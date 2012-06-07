@@ -43,7 +43,7 @@ NSString *TXTFLS(NSString *key, ...)
 	
 	va_end(args);
 	
-	return [formattedString autodrain];
+	return formattedString;
 }
 
 NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override) 
@@ -79,7 +79,11 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 		NSMutableString *finalResult = [NSMutableString string];
 		
 		for (NSString *unit in orderMatrix) {
+			
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 			NSInteger total = (NSInteger)[breakdownInfo performSelector:NSSelectorFromString(unit)];
+#pragma clang diagnostic pop
 			
 			if (total < 0) {
 				total *= -1;

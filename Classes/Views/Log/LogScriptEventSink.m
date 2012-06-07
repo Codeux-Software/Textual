@@ -21,12 +21,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[policy drain];
-	
-	[super dealloc];
-}
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {

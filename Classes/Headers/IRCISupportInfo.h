@@ -22,12 +22,12 @@
 
 @property (nonatomic, readonly) NSInteger nickLen;
 @property (nonatomic, readonly) NSInteger modesCount;
-@property (nonatomic, retain) NSString *networkName;
-@property (nonatomic, retain) NSString *userModeQPrefix;
-@property (nonatomic, retain) NSString *userModeAPrefix;
-@property (nonatomic, retain) NSString *userModeOPrefix;
-@property (nonatomic, retain) NSString *userModeHPrefix;
-@property (nonatomic, retain) NSString *userModeVPrefix;
+@property (nonatomic, strong) NSString *networkName;
+@property (nonatomic, strong) NSString *userModeQPrefix;
+@property (nonatomic, strong) NSString *userModeAPrefix;
+@property (nonatomic, strong) NSString *userModeOPrefix;
+@property (nonatomic, strong) NSString *userModeHPrefix;
+@property (nonatomic, strong) NSString *userModeVPrefix;
 
 - (void)reset;
 - (BOOL)update:(NSString *)s client:(IRCClient *)client;

@@ -56,7 +56,7 @@
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:badgeString
 																   attributes:attributes];
     
-	return [mcstring autodrain];
+	return mcstring;
 }
 
 - (void)drawModeBadge:(char)mcstring inCell:(NSRect)badgeFrame isSelected:(BOOL)selected
@@ -279,8 +279,6 @@
 			[_NSGraphicsCurrentContext() restoreGraphicsState];
 		}
 		
-		[newValue drain];
-		[itemShadow drain];
 	}
     
 }

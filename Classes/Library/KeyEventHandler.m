@@ -17,13 +17,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[codeHandlerMap drain];
-	[characterHandlerMap drain];
-	
-	[super dealloc];
-}
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
@@ -89,7 +82,11 @@
 		NSString *selectorName = [codeMap objectForKey:NSNumberWithInteger([e keyCode])];
 
 		if (selectorName) {
+			
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 			[target performSelector:NSSelectorFromString(selectorName) withObject:e];
+#pragma clang diagnostic pop
 			
 			return YES;
 		}
@@ -104,7 +101,11 @@
 			NSString *selectorName = [characterMap objectForKey:NSNumberWithInteger([str characterAtIndex:0])];
 			
 			if (selectorName) {
+				
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 				[target performSelector:NSSelectorFromString(selectorName) withObject:e];
+#pragma clang diagnostic pop
 				
 				return YES;
 			}

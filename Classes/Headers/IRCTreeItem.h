@@ -25,7 +25,7 @@
 }
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, retain) LogController *log;
+@property (nonatomic, strong) LogController *log;
 @property (nonatomic, assign) BOOL isKeyword;
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, assign) BOOL isNewTalk;
@@ -35,10 +35,10 @@
 @property (nonatomic, readonly) BOOL isActive;
 @property (nonatomic, readonly) BOOL isClient;
 @property (nonatomic, assign) BOOL isExpanded;
-@property (nonatomic, readonly) IRCClient *client;
-@property (nonatomic, readonly) NSString *label;
-@property (nonatomic, readonly) NSString *name;
-@property (nonatomic, retain) InputHistory *inputHistory;
+@property (weak, nonatomic, readonly) IRCClient *client;
+@property (weak, nonatomic, readonly) NSString *label;
+@property (weak, nonatomic, readonly) NSString *name;
+@property (nonatomic, strong) InputHistory *inputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;

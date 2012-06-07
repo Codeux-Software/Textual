@@ -20,9 +20,6 @@
 		NSMutableDictionary *newServerDict		= [*serverDict mutableCopy];
 		NSMutableDictionary *newOutputRulesDict	= [*outputRulesDict mutableCopy];
 		
-		[*userDict drain];
-		[*serverDict drain];
-		[*outputRulesDict drain];
 		
 		// Ouput Rules
 		
@@ -47,7 +44,7 @@
 										NSArray *boss_entry = [NSArray arrayWithObjects:console, channels, queries, nil];
 										
 										if ([newOutputRulesDict containsKey:command] == NO) {
-											[newOutputRulesDict setObject:[NSMutableDictionary newad] forKey:command];
+											[newOutputRulesDict setObject:[[NSMutableDictionary alloc] init] forKey:command];
 										}
 										
 										NSDictionary *originalEntries = [newOutputRulesDict objectForKey:command];
@@ -73,13 +70,13 @@
 				NSArray *spdcmds = [pluginPrimaryClass pluginSupportsUserInputCommands];
 				
 				if (NSObjectIsNotEmpty(spdcmds)) {
-					for (NSString *cmd in spdcmds) {
+					for (__strong NSString *cmd in spdcmds) {
 						cmd = [cmd uppercaseString];
 						
 						NSArray *cmdDict = [newUserDict objectForKey:cmd];
 						
 						if (NSObjectIsEmpty(cmdDict)) {
-							[newUserDict setObject:[NSMutableArray newad] forKey:cmd];
+							[newUserDict setObject:[[NSMutableArray alloc] init] forKey:cmd];
 						}
 						
 						if ([cmdDict containsObject:bundle] == NO) {
@@ -97,13 +94,13 @@
 				NSArray *spdcmds = [pluginPrimaryClass pluginSupportsServerInputCommands];
 				
 				if (NSObjectIsNotEmpty(spdcmds)) {
-					for (NSString *cmd in spdcmds) {
+					for (__strong NSString *cmd in spdcmds) {
 						cmd = [cmd uppercaseString];
 						
 						NSArray *cmdDict = [newServerDict objectForKey:cmd];
 						
 						if (NSObjectIsEmpty(cmdDict)) {
-							[newServerDict setObject:[NSMutableArray newad] forKey:cmd];
+							[newServerDict setObject:[[NSMutableArray alloc] init] forKey:cmd];
 						}
 						
 						if ([cmdDict containsObject:bundle] == NO) {
@@ -118,13 +115,10 @@
 			[pluginPrimaryClass pluginLoadedIntoMemory:world];
 		}
 		
-		*userDict			= [newUserDict retain];
-		*serverDict			= [newServerDict retain];
-		*outputRulesDict	= [newOutputRulesDict retain];
+		*userDict			= newUserDict;
+		*serverDict			= newServerDict;
+		*outputRulesDict	= newOutputRulesDict;
 		
-		[newUserDict drain];
-		[newServerDict drain];
-		[newOutputRulesDict drain];
 	}
 }
 
@@ -134,10 +128,7 @@
 		[pluginPrimaryClass pluginUnloadedFromMemory];
 	}
 	
-	[pluginPrimaryClass drain];
-	[pluginBundle drain];
 	
-	[super dealloc];
 }
 
 @end

@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C078C4915811569000A17D5 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C078C4715811569000A17D5 /* PLWeakCompatibilityStubs.m */; };
 		4C393AAD121AE217004C66F4 /* TPIBragSpam.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPIBragSpam.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C078C4615811569000A17D5 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
+		4C078C4715811569000A17D5 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4C393AAB121AE217004C66F4 /* TPIBragSpam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBragSpam.h; sourceTree = "<group>"; };
 		4C393AAC121AE217004C66F4 /* TPIBragSpam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIBragSpam.m; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -63,6 +66,7 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4C078C4215811569000A17D5 /* PLWeakCompatibility */,
 				4C393AAB121AE217004C66F4 /* TPIBragSpam.h */,
 				4C393AAC121AE217004C66F4 /* TPIBragSpam.m */,
 			);
@@ -75,6 +79,16 @@
 				8D576316048677EA00EA77CD /* BragSpam.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4C078C4215811569000A17D5 /* PLWeakCompatibility */ = {
+			isa = PBXGroup;
+			children = (
+				4C078C4615811569000A17D5 /* PLWeakCompatibilityStubs.h */,
+				4C078C4715811569000A17D5 /* PLWeakCompatibilityStubs.m */,
+			);
+			name = PLWeakCompatibility;
+			path = ../../../Classes/Library/PLWeakCompatibility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C393AAD121AE217004C66F4 /* TPIBragSpam.m in Sources */,
+				4C078C4915811569000A17D5 /* PLWeakCompatibilityStubs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +178,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
@@ -171,6 +187,7 @@
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -178,6 +195,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -189,13 +210,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -203,6 +226,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -214,13 +241,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -228,6 +257,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -245,13 +278,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -259,6 +294,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -276,13 +315,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -290,6 +331,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";

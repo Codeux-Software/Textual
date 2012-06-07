@@ -35,31 +35,17 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[mode drain];
-	[topic drain];	
-	[config drain];
-	[logDate drain];
-	[logFile drain];
-	[members drain];
-	[storedTopic drain];
-	
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Init
 
 - (void)setup:(IRCChannelConfig *)seed
 {
-	[config autodrain];
 	config = [seed mutableCopy];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	[config autodrain];
 	config = [seed mutableCopy];
 }
 
@@ -204,13 +190,12 @@
 		
 		if (logDate) {
 			if ([logDate isEqualToString:comp] == NO) {
-				[logDate drain];
 				
-				logDate = [comp retain];
+				logDate = comp;
 				[logFile reopenIfNeeded];
 			}
 		} else {
-			logDate = [comp retain];
+			logDate = comp;
 		}
 		
 		NSString *nickStr = NSNullObject;
@@ -272,7 +257,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[members safeObjectAtIndex:n] adrv];
+		[members safeObjectAtIndex:n];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -293,7 +278,7 @@
 	NSInteger n = [self indexOfMember:nick];
 	
 	if (n >= 0) {
-		[[members safeObjectAtIndex:n] adrv];
+		[members safeObjectAtIndex:n];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -307,13 +292,12 @@
 	if (n >= 0) {
 		IRCUser *m = [members safeObjectAtIndex:n];
 		
-		[m adrv];
 		
 		[self removeMember:toNick reload:NO];
 		
 		m.nick = toNick;
 		
-		[[members safeObjectAtIndex:n] adrv];
+		[members safeObjectAtIndex:n];
 		[members safeRemoveObjectAtIndex:n];
 		
 		[self sortedInsert:m];
@@ -326,7 +310,7 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[[members safeObjectAtIndex:n] adrv];
+		[members safeObjectAtIndex:n];
 		[members safeRemoveObjectAtIndex:n];
 	}
 	
@@ -347,8 +331,8 @@
 			case 'h': m.h = value; break;
 			case 'v': m.v = value; break;
 		}
-		
-		[[members safeObjectAtIndex:n] adrv];
+
+		[members safeObjectAtIndex:n];
 		[members safeRemoveObjectAtIndex:n];
 		
 		if (m.q && NSObjectIsEmpty(client.isupport.userModeQPrefix)) {

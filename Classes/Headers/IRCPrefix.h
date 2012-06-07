@@ -11,9 +11,9 @@
 	BOOL isServer;
 }
 
-@property (nonatomic, retain) NSString *raw;
-@property (nonatomic, retain) NSString *nick;
-@property (nonatomic, retain) NSString *user;
-@property (nonatomic, retain) NSString *address;
+@property (nonatomic, strong) NSString *raw;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *user;
+@property (nonatomic, strong) NSString *address;
 @property (nonatomic, assign) BOOL isServer;
 @end

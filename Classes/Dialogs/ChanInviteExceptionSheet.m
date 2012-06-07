@@ -25,13 +25,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [list drain];
-	[modes drain];
-	
-    [super dealloc];
-}
 
 - (void)show
 {
