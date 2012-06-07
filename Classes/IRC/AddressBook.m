@@ -19,7 +19,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	if ([self init]) {
+	if ((self = [super init])) {
 		cid = (([dic integerForKey:@"cid"]) ?: TXRandomNumber(9999));
 		
 		hostmask = [dic objectForKey:@"hostmask"];
@@ -36,9 +36,11 @@
 		entryType = (AddressBookEntryType)[dic integerForKey:@"entryType"];
 		
 		[self processHostMaskRegex];
+
+		return self;
 	}
-	
-	return self;
+
+	return nil;
 }
 
 - (void)processHostMaskRegex
