@@ -17,13 +17,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[buf drain];
-	[lastHistoryItem drain];
-	
-	[super dealloc];
-}
 
 - (void)add:(NSAttributedString *)s
 {

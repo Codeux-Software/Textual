@@ -6,7 +6,7 @@
 @interface TCPClient : NSObject
 {
 	id conn;
-	id delegate;
+	id __unsafe_unretained delegate;
 	
 	NSString *host;
 	NSString *proxyHost;
@@ -32,19 +32,19 @@
     dispatch_queue_t socketQueue;
 }
 
-@property (nonatomic, retain) NSMutableData *buffer; 
-@property (nonatomic, retain) AsyncSocket *conn;
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, retain) NSString *host;
+@property (nonatomic, strong) NSMutableData *buffer; 
+@property (nonatomic, strong) AsyncSocket *conn;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
 @property (nonatomic, assign) BOOL useSystemSocks;
 @property (nonatomic, assign) BOOL useSocks;
 @property (nonatomic, assign) NSInteger socksVersion;
-@property (nonatomic, retain) NSString *proxyHost;
+@property (nonatomic, strong) NSString *proxyHost;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, retain) NSString *proxyUser;
-@property (nonatomic, retain) NSString *proxyPassword;
+@property (nonatomic, strong) NSString *proxyUser;
+@property (nonatomic, strong) NSString *proxyPassword;
 @property (nonatomic, readonly) NSInteger sendQueueSize;
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;

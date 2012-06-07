@@ -77,7 +77,6 @@
 		}
 	}
 	
-	[allBundles drain];
 }
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
@@ -139,8 +138,6 @@
 			}
 			
 			[completeBundleIndex safeAddObject:currBundle];
-			
-			[plugin autodrain];
 		}
 	}
 	
@@ -150,11 +147,6 @@
 	[world setBundlesForServerInput:serverInputBundles];
 	[world setBundlesWithPreferences:preferencesBundlesIndex];
 	
-	[outputRulesDict drain];
-	[userInputBundles drain];
-	[serverInputBundles drain];
-	[completeBundleIndex drain];
-	[preferencesBundlesIndex drain];
 }
 
 @end

@@ -33,17 +33,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[networkName drain];
-	[userModeQPrefix drain];
-	[userModeAPrefix drain];
-	[userModeOPrefix drain];
-	[userModeHPrefix drain];
-	[userModeVPrefix drain];
-	
-	[super dealloc];
-}
 
 - (void)reset
 {
@@ -127,7 +116,7 @@
 - (NSArray *)parseMode:(NSString *)str
 {
 	NSMutableArray *ary = [NSMutableArray array];
-	NSMutableString *s = [[str mutableCopy] autodrain];
+	NSMutableString *s = [str mutableCopy];
 	
 	BOOL plus = NO;
 	

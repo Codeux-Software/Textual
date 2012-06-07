@@ -3,12 +3,12 @@
 
 @interface LogView : WebView
 {
-	id keyDelegate;
-	id resizeDelegate;
+	id __unsafe_unretained keyDelegate;
+	id __unsafe_unretained resizeDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
-@property (nonatomic, assign) id resizeDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id resizeDelegate;
 
 - (NSString *)contentString;
 - (WebScriptObject *)js_api;

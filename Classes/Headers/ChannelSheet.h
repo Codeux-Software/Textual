@@ -31,22 +31,22 @@
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, retain) NSView *contentView;
-@property (nonatomic, retain) NSView *generalView;
-@property (nonatomic, retain) NSView *encryptView;
-@property (nonatomic, retain) NSView *defaultsView;
-@property (nonatomic, retain) IRCChannelConfig *config;
-@property (nonatomic, retain) NSTextField *nameText;
-@property (nonatomic, retain) NSTextField *passwordText;
-@property (nonatomic, retain) NSTextField *modeText;
-@property (nonatomic, retain) NSTextField *topicText;
-@property (nonatomic, retain) NSTextField *encryptKeyText;
-@property (nonatomic, retain) NSSegmentedControl *tabView;
-@property (nonatomic, retain) NSButton *autoJoinCheck;
-@property (nonatomic, retain) NSButton *ihighlights;
-@property (nonatomic, retain) NSButton *growlCheck;
-@property (nonatomic, retain) NSButton *inlineImagesCheck;
-@property (nonatomic, retain) NSButton *JPQActivityCheck;
+@property (nonatomic, strong) NSView *contentView;
+@property (nonatomic, strong) NSView *generalView;
+@property (nonatomic, strong) NSView *encryptView;
+@property (nonatomic, strong) NSView *defaultsView;
+@property (nonatomic, strong) IRCChannelConfig *config;
+@property (nonatomic, strong) NSTextField *nameText;
+@property (nonatomic, strong) NSTextField *passwordText;
+@property (nonatomic, strong) NSTextField *modeText;
+@property (nonatomic, strong) NSTextField *topicText;
+@property (nonatomic, strong) NSTextField *encryptKeyText;
+@property (nonatomic, strong) NSSegmentedControl *tabView;
+@property (nonatomic, strong) NSButton *autoJoinCheck;
+@property (nonatomic, strong) NSButton *ihighlights;
+@property (nonatomic, strong) NSButton *growlCheck;
+@property (nonatomic, strong) NSButton *inlineImagesCheck;
+@property (nonatomic, strong) NSButton *JPQActivityCheck;
 
 - (void)start;
 - (void)show;

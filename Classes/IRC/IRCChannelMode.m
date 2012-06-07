@@ -29,13 +29,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[allModes drain];
-	[modeIndexes drain];
-	
-	[super dealloc];
-}
 
 - (void)clear
 {

@@ -7,11 +7,5 @@
 @synthesize cid;
 @synthesize input;
 
-- (void)dealloc
-{
-	[input drain];
-	
-	[super dealloc];
-}
 
 @end

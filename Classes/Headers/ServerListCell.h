@@ -5,10 +5,10 @@
 
 @interface ServerListCell : NSTextFieldCell 
 {
-	ServerList *parent;
-	IRCTreeItem *cellItem;
+	ServerList *__weak parent;
+	IRCTreeItem *__weak cellItem;
 }
 
-@property (nonatomic, assign) ServerList *parent;
-@property (nonatomic, assign) IRCTreeItem *cellItem;
+@property (nonatomic, weak) ServerList *parent;
+@property (nonatomic, weak) IRCTreeItem *cellItem;
 @end

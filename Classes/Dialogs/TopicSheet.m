@@ -17,13 +17,6 @@
 	return self;
 }
 
-- (void)dealloc 
-{
-	[text drain];
-	[header drain];
-	
-	[super dealloc];
-}
 
 - (void)start:(NSString *)topic
 {

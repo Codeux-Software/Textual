@@ -71,21 +71,14 @@
 	if (conn) {
 		[conn setDelegate:nil];
 		[conn disconnect];
-		[conn autodrain];
 	}
 	
-	[buffer drain];
     
     [self destroyDispatchQueue];
 	
-	[host drain];
-	[proxyHost drain];
-	[proxyUser drain];
-	[proxyPassword drain];
 	
 	delegate = nil;
 	
-	[super dealloc];
 }
 
 - (void)open
@@ -154,7 +147,7 @@
 		}
 	}
 	
-	NSMutableData *result = [buffer autodrain];
+	NSMutableData *result = buffer;
 	
 	++p;
 	

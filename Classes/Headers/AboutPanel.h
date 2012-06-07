@@ -3,13 +3,13 @@
 
 @interface AboutPanel : NSWindowController
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
 	IBOutlet NSTextField *versionInfo;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, retain) NSTextField *versionInfo;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, strong) NSTextField *versionInfo;
 
 - (void)show;
 @end

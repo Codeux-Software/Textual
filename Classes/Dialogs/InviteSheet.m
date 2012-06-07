@@ -18,12 +18,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[nicks drain];
-	
-	[super dealloc];
-}
 
 - (void)startWithChannels:(NSArray *)channels
 {

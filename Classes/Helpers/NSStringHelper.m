@@ -18,12 +18,12 @@ NSInteger ctoi(unsigned char c);
 /* Helper Methods */
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
-	return [[[NSString alloc] initWithBytes:bytes length:length encoding:encoding] autodrain];
+	return [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 }
 
 + (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
 {
-	return [[[NSString alloc] initWithData:data encoding:encoding] autodrain];
+	return [[NSString alloc] initWithData:data encoding:encoding];
 }
 
 - (NSString *)safeSubstringWithRange:(NSRange)range;
@@ -281,8 +281,9 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)safeFileName
 {
-	self = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-	return [self stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+	NSString *bob = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	
+	return [bob stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 }
 
 - (NSInteger)stringPosition:(NSString *)needle
@@ -539,10 +540,10 @@ BOOL isUnicharDigit(unichar c)
 #endif
 	
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-	NSString *uuidString = CFItemRefToID(CFUUIDCreateString(nil, uuidObj));
+	NSString *uuidString = CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
 	
-	return [uuidString autodrain];
+	return uuidString;
 }
 
 - (NSString *)hostmaskFromRawString
@@ -596,19 +597,19 @@ BOOL isUnicharDigit(unichar c)
 - (NSString *)cleanedServerHostmask
 {
     /* We do not want ports in server address. */
-    self = [self trim];
+    NSString *bob = [self trim];
     
-    if ([TXRegularExpression string:self isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
-        [TXRegularExpression string:self isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"]) {
+    if ([TXRegularExpression string:bob isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
+        [TXRegularExpression string:bob isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"]) {
         
-        NSInteger stringPos = [self rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, self.length)].location;
+        NSInteger stringPos = [bob rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, self.length)].location;
         
         if (stringPos > 0) {
-            self = [self safeSubstringToIndex:stringPos];
+            bob = [bob safeSubstringToIndex:stringPos];
         }
     }
 	
-	return self;
+	return bob;
 }
 
 - (BOOL)isIPv6Address
@@ -625,8 +626,8 @@ BOOL isUnicharDigit(unichar c)
 	NSLayoutManager *layoutManager = [NSLayoutManager new];
 	NSTextContainer *textContainer = [NSTextContainer alloc];
 	
-    [textStorage initWithString:self];
-    [textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
+    (void)[textStorage initWithString:self];
+    (void)[textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
     
 	[layoutManager addTextContainer:textContainer];
 	[textStorage addLayoutManager:layoutManager];
@@ -695,7 +696,7 @@ BOOL isUnicharDigit(unichar c)
 		return result;
 	}
 	
-	NSString *result = [[self copy] autodrain];
+	NSString *result = [self copy];
 	
 	[self setString:NSNullObject];
 	
@@ -749,7 +750,7 @@ BOOL isUnicharDigit(unichar c)
     
     newstr = [NSAttributedString alloc];
     newstr = [newstr initWithString:base];
-    newstr = [newstr autodrain];
+    newstr = newstr;
     
 	return newstr;
 }
@@ -790,7 +791,7 @@ BOOL isUnicharDigit(unichar c)
     NSInteger len   = self.string.length;
     NSInteger start = 0;
     
-    NSMutableAttributedString *copyd = [self.mutableCopy autodrain];
+    NSMutableAttributedString *copyd = self.mutableCopy;
     
     while (start < len) {
         NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] 
@@ -829,8 +830,8 @@ BOOL isUnicharDigit(unichar c)
 	NSLayoutManager *layoutManager = [NSLayoutManager new];
 	NSTextContainer *textContainer = [NSTextContainer alloc];
 	
-    [textStorage initWithAttributedString:self];
-    [textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
+    (void)[textStorage initWithAttributedString:self];
+    (void)[textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
     
 	[layoutManager addTextContainer:textContainer];
 	[textStorage addLayoutManager:layoutManager];
@@ -867,7 +868,7 @@ BOOL isUnicharDigit(unichar c)
 		return result;
 	}
 	
-	NSAttributedString *result = [self.copy autodrain];
+	NSAttributedString *result = self.copy;
 	
     [self setAttributedString:[NSAttributedString emptyString]];
 	

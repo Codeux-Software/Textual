@@ -39,12 +39,12 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	[self init];
+	if (!(self = [self init])) return nil;
     
-    type = [dic integerForKey:@"type"];
+    type = (ChannelType)[dic integerForKey:@"type"];
     
-    name = (([[dic stringForKey:@"name"] retain]) ?: NSNullObject);
-    password = (([[dic stringForKey:@"password"] retain]) ?: NSNullObject);
+    name = (([dic stringForKey:@"name"]) ?: NSNullObject);
+    password = (([dic stringForKey:@"password"]) ?: NSNullObject);
     
     growl = [dic boolForKey:@"growl"];
     autoJoin = [dic boolForKey:@"auto_join"];
@@ -52,23 +52,13 @@
     inlineImages = [dic boolForKey:@"disable_images"];
     iJPQActivity = [dic boolForKey:@"ignore_join,leave"];
     
-    mode = (([[dic stringForKey:@"mode"] retain]) ?: NSNullObject);
-    topic = (([[dic stringForKey:@"topic"] retain]) ?: NSNullObject);
-    encryptionKey = (([[dic stringForKey:@"encryptionKey"] retain]) ?: NSNullObject);
+    mode = (([dic stringForKey:@"mode"]) ?: NSNullObject);
+    topic = (([dic stringForKey:@"topic"]) ?: NSNullObject);
+    encryptionKey = (([dic stringForKey:@"encryptionKey"]) ?: NSNullObject);
     
     return self;
 }
 
-- (void)dealloc
-{
-	[name drain];
-	[mode drain];
-	[topic drain];
-	[password drain];
-	[encryptionKey drain];
-	
-	[super dealloc];
-}
 
 - (NSMutableDictionary *)dictionaryValue
 {

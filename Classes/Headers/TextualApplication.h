@@ -2,18 +2,20 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #ifdef __OBJC__
-	#include <Cocoa/Cocoa.h>
-	#include <Carbon/Carbon.h>
-	#include <WebKit/WebKit.h>
-	#include <Security/Security.h>
-	#include <SystemConfiguration/SystemConfiguration.h>
+	#import <Cocoa/Cocoa.h>
+	#import <Carbon/Carbon.h>
+	#import <WebKit/WebKit.h>
+	#import <Security/Security.h>
+	#import <SystemConfiguration/SystemConfiguration.h>
 
+	#import "PLWeakCompatibilityStubs.h"
 	#import "StaticDefinitions.h"
 
     #import "GlobalModels.h"
 	#import "NSObjectHelper.h"
 	#import "RegexKitLite.h"
 	#import "TXRegularExpression.h"
+
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"
 	#import "GCDAsyncSocket.h"

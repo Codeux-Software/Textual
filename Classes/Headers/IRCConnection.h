@@ -4,7 +4,7 @@
 
 @interface IRCConnection : NSObject
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
 	NSString *host;
 	
@@ -32,9 +32,9 @@
 	NSMutableArray *sendQueue;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) Timer *timer;
-@property (nonatomic, retain) NSString *host;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, strong) Timer *timer;
+@property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
 @property (nonatomic, assign) NSStringEncoding encoding;
@@ -42,17 +42,17 @@
 @property (nonatomic, assign) BOOL useSocks;
 @property (nonatomic, assign) NSInteger socksVersion;
 @property (nonatomic, assign) NSInteger maxMsgCount;
-@property (nonatomic, retain) NSString *proxyHost;
+@property (nonatomic, strong) NSString *proxyHost;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, retain) NSString *proxyUser;
-@property (nonatomic, retain) NSString *proxyPassword;
+@property (nonatomic, strong) NSString *proxyUser;
+@property (nonatomic, strong) NSString *proxyPassword;
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, readonly) BOOL readyToSend;
 @property (nonatomic, assign) BOOL loggedIn;
-@property (nonatomic, retain) TCPClient *conn;
-@property (nonatomic, retain) NSMutableArray *sendQueue;
+@property (nonatomic, strong) TCPClient *conn;
+@property (nonatomic, strong) NSMutableArray *sendQueue;
 @property (nonatomic, assign) BOOL sending;
 
 - (void)open;

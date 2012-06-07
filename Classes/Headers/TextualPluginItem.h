@@ -7,8 +7,8 @@
 	PluginProtocol *pluginPrimaryClass;
 }
 
-@property (nonatomic, retain) NSBundle *pluginBundle;
-@property (nonatomic, retain) PluginProtocol *pluginPrimaryClass;
+@property (nonatomic, strong) NSBundle *pluginBundle;
+@property (nonatomic, strong) PluginProtocol *pluginPrimaryClass;
 
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle

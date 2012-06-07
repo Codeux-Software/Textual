@@ -15,7 +15,6 @@
 {
 	self.webFrame = nil;
 	
-	[super dealloc];
 }
 
 - (WebFrameView *)webFrame

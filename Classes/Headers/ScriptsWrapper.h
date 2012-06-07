@@ -3,13 +3,13 @@
 
 @interface ScriptsWrapper : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 {
-	IRCWorld *world;
+	IRCWorld *__weak world;
 	
 	NSMutableArray *scripts;
 }
 
-@property (nonatomic, assign) IRCWorld *world;
-@property (nonatomic, retain) NSMutableArray *scripts;
+@property (nonatomic, weak) IRCWorld *world;
+@property (nonatomic, strong) NSMutableArray *scripts;
 
 - (void)populateData;
 @end

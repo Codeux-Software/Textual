@@ -98,7 +98,6 @@
 				}
 			}
 			
-			[mitems drain];
 		} else {
 			target = tempval;
 			
@@ -231,7 +230,7 @@
         if ([c contains:@","]) {
             NSArray *chunks = [c componentsSeparatedByString:@","];
             
-            for (NSString *cc in chunks) {
+            for (__strong NSString *cc in chunks) {
                 cc = cc.trim;
                 
                 if ([cc isChannelName]) {
@@ -251,7 +250,7 @@
 		[dic setObject:channels forKey:@"channels"];
 	}
 	
-	IRCClientConfig *cf = [[[IRCClientConfig alloc] initWithDictionary:dic] autodrain];
+	IRCClientConfig *cf = [[IRCClientConfig alloc] initWithDictionary:dic];
     
 	if (NSObjectIsNotEmpty(password)) {
 		cf.password = password;

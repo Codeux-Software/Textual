@@ -14,12 +14,6 @@
 @synthesize userInputField;
 @synthesize informationalText;
 
-- (void)dealloc
-{
-	[finalModalValue drain];
-	
-    [super dealloc];
-}
 
 - (NSString *)promptValue
 {
@@ -80,16 +74,13 @@
 		continue;
 	}
 	
-	[textStorage drain];
-	[textContainer drain];
-	[layoutManager drain];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
 	buttonClicked = NSAlertDefaultReturn;
 	
-	finalModalValue = [[userInputField stringValue] retain];
+	finalModalValue = [userInputField stringValue];
 	
 	[dialogWindow close];
 }
@@ -98,7 +89,7 @@
 {
 	buttonClicked = NSAlertAlternateReturn;
 	
-	finalModalValue = [[userInputField stringValue] retain];
+	finalModalValue = [userInputField stringValue];
 	
 	[dialogWindow close];
 }

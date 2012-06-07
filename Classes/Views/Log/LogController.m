@@ -82,22 +82,7 @@
 	self.queueInProgress = NO;
 	[self destroyViewLoop];
 	
-	[js drain];
-	[html drain];
-	[menu drain];
-	[sink drain];
-	[view drain];
-	[theme drain];
-	[policy drain];
-	[urlMenu drain];
-	[addrMenu drain];
-	[chanMenu drain];
-	[memberMenu drain];
-	[autoScroller drain];
-	[messageQueue drain];
-	[highlightedLineNumbers drain];
 	
-	[super dealloc];
 }
 
 #pragma mark -
@@ -145,7 +130,6 @@
 	
 	if (view) {
 		[view removeFromSuperview];
-		[view drain];
 	}
 	
 	view = [[LogView alloc] initWithFrame:NSZeroRect];
@@ -299,7 +283,6 @@
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
-	[messageBlock release];
 	
 	[self createViewLoop];
 }
@@ -398,7 +381,6 @@
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
-	[messageBlock release];
 	
 	[self createViewLoop];
 }
@@ -423,7 +405,6 @@
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
-	[messageBlock release];
 	
 	[self createViewLoop];
 }
@@ -628,7 +609,7 @@
 	n = (nodeList.length - maxLines);
 	
 	for (NSInteger i = (n - 1); i >= 0; --i) {
-		[body removeChild:[nodeList item:i]];
+		[body removeChild:[nodeList item:(unsigned)i]];
 	}
 	
 	if (NSObjectIsNotEmpty(highlightedLineNumbers)) {
@@ -881,7 +862,7 @@
 		}
 		
 		if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-			[highlightedLineNumbers safeAddObject:[NSNumber numberWithInt:lineNumber]];
+			[highlightedLineNumbers safeAddObject:[NSNumber numberWithInteger:lineNumber]];
 		}
 		
 		WebScriptObject *js_api = [view js_api];
@@ -895,7 +876,6 @@
 	} copy];
 	
 	[messageQueue safeAddObject:messageBlock];
-	[messageBlock release];
 	
 	[self createViewLoop];
 }
@@ -955,7 +935,6 @@
 	
 	[s appendString:@"</html>"];
 	
-	[html drain];
 	html = nil;
 	
 	return s;
@@ -1045,8 +1024,7 @@
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-	[js drain];
-	js = [windowObject retain];
+	js = windowObject;
 	
 	[js setValue:sink forKey:@"app"];
 }

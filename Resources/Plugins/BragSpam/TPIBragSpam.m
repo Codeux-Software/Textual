@@ -70,7 +70,6 @@
 				}
 			}
 			
-			[trackedUsers release];
 		}
 		
 		NSString *result = TXTFLS(@"BRAGSPAM_PLUGIN_NORMAL_RESULT", channelCount, networkCount, operCount, 
@@ -116,7 +115,6 @@
 		
 		[[client iomt] sendPrivmsgToSelectedChannel:result];
 		
-		[chanlist drain];
 	}
 }
 

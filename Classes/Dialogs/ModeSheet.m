@@ -32,12 +32,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[channelName drain];
-	
-	[super dealloc];
-}
 
 - (void)start
 {

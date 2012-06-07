@@ -5,10 +5,10 @@
 @interface FileWithContent : NSObject
 {
 	NSString *filename;
-	NSString *content;
+	NSString *__weak content;
 }
 
-@property (nonatomic, retain) NSString *filename;
-@property (nonatomic, readonly) NSString *content;
+@property (nonatomic, strong) NSString *filename;
+@property (weak, nonatomic, readonly) NSString *content;
 
 @end

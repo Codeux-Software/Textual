@@ -4,7 +4,7 @@
 
 @interface ListDialog : NSWindowController
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
 	IBOutlet ListView *table;
 	
@@ -22,16 +22,16 @@
 	IBOutlet NSSearchField *filterText;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, readonly) NSInteger sortKey;
 @property (nonatomic, readonly) NSComparisonResult sortOrder;
-@property (nonatomic, retain) NSMutableArray *list;
-@property (nonatomic, retain) NSMutableArray *filteredList;
-@property (nonatomic, retain) ListView *table;
-@property (nonatomic, retain) NSSearchField *filterText;
-@property (nonatomic, retain) NSButton *updateButton;
-@property (nonatomic, retain) NSTextField *channelCount;
-@property (nonatomic, retain) NSTextField *networkName;
+@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, strong) NSMutableArray *filteredList;
+@property (nonatomic, strong) ListView *table;
+@property (nonatomic, strong) NSSearchField *filterText;
+@property (nonatomic, strong) NSButton *updateButton;
+@property (nonatomic, strong) NSTextField *channelCount;
+@property (nonatomic, strong) NSTextField *networkName;
 
 - (void)start;
 - (void)show;

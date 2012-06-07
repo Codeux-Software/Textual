@@ -9,12 +9,6 @@
 @synthesize okButton;
 @synthesize cancelButton;
 
-- (void)dealloc
-{
-	[sheet drain];
-	
-	[super dealloc];
-}
 
 - (void)startSheet
 {

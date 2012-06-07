@@ -16,17 +16,6 @@
 @synthesize excludeWords;
 @synthesize nickColorNumber;
 
-- (void)dealloc
-{
-	[time drain];
-	[nick drain];
-	[body drain];
-	[keywords drain];
-	[nickInfo drain];
-	[excludeWords drain];
-	
-	[super dealloc];
-}
 
 + (NSString *)lineTypeString:(LogLineType)type
 {

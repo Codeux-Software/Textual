@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CE221C913423667007AFFAB /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE221C813423667007AFFAB /* BlowfishEncryption.framework */; };
+		4C828A9015811373007C7D92 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C828A8F15811352007C7D92 /* PLWeakCompatibilityStubs.m */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4CE221C813423667007AFFAB /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
+		4C828A8E15811352007C7D92 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
+		4C828A8F15811352007C7D92 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -28,7 +29,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
-				4CE221C913423667007AFFAB /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,9 +49,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
-				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
-				4CE221C813423667007AFFAB /* BlowfishEncryption.framework */,
+				4C828A861581128D007C7D92 /* System Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -67,6 +65,7 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4C828A8A15811352007C7D92 /* PLWeakCompatibility */,
 				4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */,
 				4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */,
 			);
@@ -79,6 +78,25 @@
 				8D576316048677EA00EA77CD /* BlowfishCommandLine.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4C828A861581128D007C7D92 /* System Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+			);
+			name = "System Frameworks";
+			sourceTree = "<group>";
+		};
+		4C828A8A15811352007C7D92 /* PLWeakCompatibility */ = {
+			isa = PBXGroup;
+			children = (
+				4C828A8E15811352007C7D92 /* PLWeakCompatibilityStubs.h */,
+				4C828A8F15811352007C7D92 /* PLWeakCompatibilityStubs.m */,
+			);
+			name = PLWeakCompatibility;
+			path = ../../../Classes/Library/PLWeakCompatibility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C828A9015811373007C7D92 /* PLWeakCompatibilityStubs.m in Sources */,
 				4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -156,14 +175,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Frameworks/Blowfish\"";
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -174,6 +195,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -185,13 +210,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Frameworks/Blowfish\"";
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -202,6 +229,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -213,13 +244,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Frameworks/Blowfish\"";
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -230,6 +263,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -247,13 +284,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Frameworks/Blowfish\"";
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -264,6 +303,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -281,13 +324,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CONFIGURATION_BUILD_DIR = ../Compiled;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Frameworks/Blowfish\"";
+				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
@@ -298,6 +343,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";

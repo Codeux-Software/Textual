@@ -45,7 +45,7 @@
 		}
 	}
     
-	for (NSString *cmd in world.bundlesForUserInput) {
+	for (__strong NSString *cmd in world.bundlesForUserInput) {
 		cmd = [cmd lowercaseString];
 		
 		if ([scripts containsObject:cmd] == NO) {
@@ -56,12 +56,6 @@
 	[scripts sortUsingSelector:@selector(compare:)];
 }
 
-- (void)dealloc
-{
-	[scripts drain];
-	
-	[super dealloc];
-}
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {

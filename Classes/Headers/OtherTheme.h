@@ -21,12 +21,12 @@
 	NSDoubleN renderingEngineVersion;
 }
 
-@property (nonatomic, retain, getter=path, setter=setPath:) NSString *path;
-@property (nonatomic, retain) NSFont *channelViewFont;
-@property (nonatomic, retain) NSString *nicknameFormat;
-@property (nonatomic, retain) NSString *timestampFormat;
+@property (nonatomic, strong, getter=path, setter=setPath:) NSString *path;
+@property (nonatomic, strong) NSFont *channelViewFont;
+@property (nonatomic, strong) NSString *nicknameFormat;
+@property (nonatomic, strong) NSString *timestampFormat;
 @property (nonatomic, assign) BOOL channelViewFontOverrode;
-@property (nonatomic, retain) NSColor *underlyingWindowColor;
+@property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) NSDoubleN indentationOffset;
 @property (nonatomic, assign) NSDoubleN renderingEngineVersion;
 

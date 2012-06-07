@@ -19,15 +19,15 @@
 
 @interface KeyEventHandler : NSObject
 {
-	id target;
+	id __unsafe_unretained target;
 	
 	NSMutableDictionary *codeHandlerMap;
 	NSMutableDictionary *characterHandlerMap;
 }
 
-@property (nonatomic, assign) id target;
-@property (nonatomic, retain) NSMutableDictionary *codeHandlerMap;
-@property (nonatomic, retain) NSMutableDictionary *characterHandlerMap;
+@property (nonatomic, unsafe_unretained) id target;
+@property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
+@property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

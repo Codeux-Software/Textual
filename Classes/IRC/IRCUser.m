@@ -35,14 +35,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[nick drain];
-	[address drain];
-	[username drain];
-	
-	[super dealloc];
-}
 
 - (NSString *)banMask
 {
@@ -87,9 +79,9 @@
 {
 	if (colorNumber < 0) {
 		if ([_NSUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
-			colorNumber = (CFHash([NSString stringWithUUID]) % COLOR_NUMBER_MAX);
+			colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % COLOR_NUMBER_MAX);
 		} else {
-			colorNumber = (CFHash([nick lowercaseString]) % COLOR_NUMBER_MAX);
+			colorNumber = (CFHash((__bridge CFTypeRef)([nick lowercaseString])) % COLOR_NUMBER_MAX);
 		}
 	}
 	

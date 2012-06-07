@@ -19,12 +19,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[keyHandler drain];
-	
-	[super dealloc];
-}
 
 - (void)setKeyHandlerTarget:(id)target
 {

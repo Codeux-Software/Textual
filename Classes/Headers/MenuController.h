@@ -8,13 +8,13 @@
 {
 	IBOutlet NSMenuItem *closeWindowItem;
 	
-	IRCWorld *world;
-	MainWindow *window;
-	InputTextField *text;
-	MasterController *master;
+	IRCWorld *__weak world;
+	MainWindow *__weak window;
+	InputTextField *__unsafe_unretained text;
+	MasterController *__weak master;
 	
-	ServerList *serverList;
-	MemberList *memberList;
+	ServerList *__weak serverList;
+	MemberList *__weak memberList;
 	
 	NSString *pointedUrl;
 	NSString *pointedNick;
@@ -34,26 +34,26 @@
 	BOOL isInFullScreenMode;
 }
 
-@property (nonatomic, assign) IRCWorld *world;
-@property (nonatomic, assign) MainWindow *window;
-@property (nonatomic, assign) InputTextField *text;
-@property (nonatomic, assign) MasterController *master;
-@property (nonatomic, assign) ServerList *serverList;
-@property (nonatomic, assign) MemberList *memberList;
-@property (nonatomic, retain) NSString *pointedUrl;
-@property (nonatomic, retain) NSString *pointedNick;
-@property (nonatomic, retain) NSString *pointedChannelName;
-@property (nonatomic, retain) NSString *currentSearchPhrase;
-@property (nonatomic, retain) NSMenuItem *closeWindowItem;
-@property (nonatomic, retain) PreferencesController *preferencesController;
-@property (nonatomic, retain) ChannelSheet *channelSheet;
-@property (nonatomic, retain) NickSheet *nickSheet;
-@property (nonatomic, retain) ModeSheet *modeSheet;
-@property (nonatomic, retain) TopicSheet *topicSheet;
-@property (nonatomic, retain) ServerSheet *serverSheet;
-@property (nonatomic, retain) InviteSheet *inviteSheet;
-@property (nonatomic, retain) AboutPanel *aboutPanel;
-@property (nonatomic, retain) HighlightSheet *highlightSheet;
+@property (nonatomic, weak) IRCWorld *world;
+@property (nonatomic, weak) MainWindow *window;
+@property (nonatomic, unsafe_unretained) InputTextField *text;
+@property (nonatomic, weak) MasterController *master;
+@property (nonatomic, weak) ServerList *serverList;
+@property (nonatomic, weak) MemberList *memberList;
+@property (nonatomic, strong) NSString *pointedUrl;
+@property (nonatomic, strong) NSString *pointedNick;
+@property (nonatomic, strong) NSString *pointedChannelName;
+@property (nonatomic, strong) NSString *currentSearchPhrase;
+@property (nonatomic, strong) NSMenuItem *closeWindowItem;
+@property (nonatomic, strong) PreferencesController *preferencesController;
+@property (nonatomic, strong) ChannelSheet *channelSheet;
+@property (nonatomic, strong) NickSheet *nickSheet;
+@property (nonatomic, strong) ModeSheet *modeSheet;
+@property (nonatomic, strong) TopicSheet *topicSheet;
+@property (nonatomic, strong) ServerSheet *serverSheet;
+@property (nonatomic, strong) InviteSheet *inviteSheet;
+@property (nonatomic, strong) AboutPanel *aboutPanel;
+@property (nonatomic, strong) HighlightSheet *highlightSheet;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;

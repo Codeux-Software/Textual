@@ -6,7 +6,7 @@
 
 @interface IRCUser : NSObject
 {
-	IRCISupportInfo *supportInfo;
+	IRCISupportInfo *__weak supportInfo;
 	
 	NSString *nick;
 	NSString *username;
@@ -28,10 +28,10 @@
 	CFAbsoluteTime lastFadedWeights;
 }
 
-@property (nonatomic, assign) IRCISupportInfo *supportInfo;
-@property (nonatomic, retain) NSString *nick;
-@property (nonatomic, retain) NSString *username;
-@property (nonatomic, retain) NSString *address;
+@property (nonatomic, weak) IRCISupportInfo *supportInfo;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *address;
 @property (nonatomic, assign) BOOL q;
 @property (nonatomic, assign) BOOL a;
 @property (nonatomic, assign) BOOL o;

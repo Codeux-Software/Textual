@@ -28,14 +28,14 @@ typedef enum {
 
 @interface GrowlController : NSObject <GrowlControllerDelegate>
 {
-	IRCWorld		*owner;
+	IRCWorld		*__weak owner;
 	
 	id				lastClickedContext;
 	CFAbsoluteTime	lastClickedTime;
 }
 
-@property (nonatomic, assign) IRCWorld *owner;
-@property (nonatomic, retain) id lastClickedContext;
+@property (nonatomic, weak) IRCWorld *owner;
+@property (nonatomic, strong) id lastClickedContext;
 @property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
 
 - (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;

@@ -13,16 +13,13 @@
 {
 	[self close];
 	
-	[filename drain];
 	
-	[super dealloc];
 }
 
 - (void)close
 {
 	if (file) {
 		[file closeFile];
-		[file drain];
 		
 		file = nil;
 	}
@@ -66,8 +63,7 @@
 {
 	[self close];
 	
-	[filename drain];
-	filename = [[self buildFileName] retain];
+	filename = [self buildFileName];
 	
 	NSString *dir = [filename stringByDeletingLastPathComponent];
 	
@@ -81,8 +77,7 @@
 		[_NSFileManager() createFileAtPath:filename contents:[NSData data] attributes:nil];
 	}
 	
-	[file drain];
-	file = [[NSFileHandle fileHandleForUpdatingAtPath:filename] retain];
+	file = [NSFileHandle fileHandleForUpdatingAtPath:filename];
 	
 	if (file) {
 		[file seekToEndOfFile];

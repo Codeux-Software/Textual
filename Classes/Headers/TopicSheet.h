@@ -12,8 +12,8 @@
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, retain) TextField *text;
-@property (nonatomic, retain) NSTextField *header;
+@property (nonatomic, strong) TextField *text;
+@property (nonatomic, strong) NSTextField *header;
 
 - (void)start:(NSString *)topic;
 @end

@@ -32,7 +32,7 @@
 
 + (id)invocationGrabber
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (id)init
@@ -48,19 +48,11 @@
 
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
-    target = [inTarget retain];
+    target = inTarget;
 	
     return self;
 }
 
-- (void)dealloc
-{
-    [target release];
-	[invocation release];
-	[parentThread release];
-	
-    [super dealloc];
-}
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
@@ -71,7 +63,7 @@
 {
     [ioInvocation setTarget:target];
 	
-	invocation = [ioInvocation retain];
+	invocation = ioInvocation;
 	
 	if (waitUntilDone == NO) {
 		[invocation retainArguments];
@@ -104,11 +96,11 @@
 	 autorelease pool like the default application run loop. For that
 	 reason let us invoke the invocation within our autorelease pool. */
 	
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	@autoreleasepool {
 	
-	[anInvocation invoke];
+		[anInvocation invoke];
 	
-	[pool drain];
+	}
 }
 
 @end 

@@ -114,7 +114,7 @@
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
 																   attributes:attributes];
 	
-	return [mcstring autodrain];
+	return mcstring;
 }
 
 - (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring 
@@ -401,8 +401,6 @@
 			}
 		}
 		
-		[newValue drain];
-		[itemShadow drain];
 	}
 }
 

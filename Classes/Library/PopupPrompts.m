@@ -10,12 +10,6 @@
 @synthesize _actionSelector;
 @synthesize _suppressionKey;
 
-- (void)dealloc
-{
-    [_suppressionKey drain];
-    
-    [super dealloc];
-}
 
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
@@ -65,12 +59,11 @@
 	
 	_targetClass	= targetClass;
 	_actionSelector = actionSelector;
-	_suppressionKey = [__suppressionKey retain];
+	_suppressionKey = __suppressionKey;
 	
 	[alert beginSheetModalForWindow:window modalDelegate:self
 					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:) contextInfo:nil];
 	
-	[alert drain];
 }
 
 - (void)_sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -85,9 +78,11 @@
 		return;
 	}
 	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	[_targetClass performSelector:_actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
+#pragma clang diagnostic pop
     
-    [self drain];
 }
 
 + (void)sheetWindowWithQuestion:(NSWindow *)window
@@ -193,7 +188,6 @@
 	NSInteger button = [dialog buttonClicked];
 	NSString *result = [dialog promptValue];
 	
-	[dialog drain];
 	
 	if (NSObjectIsNotEmpty(result) && button == NSAlertDefaultReturn) {
 		return result;

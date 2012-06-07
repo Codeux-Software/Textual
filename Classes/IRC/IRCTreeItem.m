@@ -15,13 +15,6 @@
 @synthesize treeUnreadCount;
 @synthesize dockUnreadCount;
 
-- (void)dealloc
-{
-	[inputHistory drain];
-	[log drain];
-	
-	[super dealloc];
-}
 
 - (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u
 {

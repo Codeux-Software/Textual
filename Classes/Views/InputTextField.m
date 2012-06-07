@@ -50,12 +50,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_placeholderString drain];
-    
-    [super dealloc];
-}
 
 - (NSView *)splitterView
 {
@@ -188,7 +182,11 @@
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
 {
     if (aSelector == @selector(insertNewline:)) {
-        [_actionTarget performSelector:_actonSelector];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		[_actionTarget performSelector:_actonSelector];
+#pragma clang diagnostic pop
         
         [self resetTextFieldCellSize];
 		[self sanitizeTextField:NO];
@@ -254,8 +252,6 @@
     
 	[frameGradient drawInBezierPath:framePath angle:90];
     
-	[gradient      drain];
-	[frameGradient drain];
 	
 	[super drawRect:dirtyRect];
 }

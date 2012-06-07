@@ -32,23 +32,12 @@
 - (void)setPath:(NSString *)value
 {
 	if (NSDissimilarObjects(path, value)) {
-		[path drain];
-		path = [value retain];
+		path = value;
 	}
 	
 	[self reload];
 }
 
-- (void)dealloc
-{
-	[path drain];
-	[nicknameFormat drain];
-	[channelViewFont drain];
-	[timestampFormat drain];
-	[underlyingWindowColor drain];
-	
-	[super dealloc];
-}
 
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv
 {

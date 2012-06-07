@@ -16,12 +16,12 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	[self init];
+	if (!(self = [self init])) return nil;
     
     NSArray *ary = [dic arrayForKey:@"clients"];
     
     for (NSDictionary *e in ary) {
-        IRCClientConfig *c = [[[IRCClientConfig alloc] initWithDictionary:e] autodrain];
+        IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:e];
         
         [clients safeAddObject:c];
     }
@@ -29,12 +29,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-	[clients drain];
-	
-	[super dealloc];
-}
 
 - (NSMutableDictionary *)dictionaryValue
 {
