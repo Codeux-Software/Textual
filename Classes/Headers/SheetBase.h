@@ -5,7 +5,7 @@
 {
 	id __unsafe_unretained delegate;
 	
-	NSWindow *__weak window;
+	NSWindow *__unsafe_unretained window;
 
 	IBOutlet NSWindow *sheet;
 	IBOutlet NSButton *okButton;
@@ -13,7 +13,7 @@
 }
 
 @property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, weak) NSWindow *window;
+@property (nonatomic, unsafe_unretained) NSWindow *window;
 @property (nonatomic, strong) NSWindow *sheet;
 @property (nonatomic, strong) NSButton *okButton;
 @property (nonatomic, strong) NSButton *cancelButton;
