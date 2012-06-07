@@ -971,7 +971,7 @@ static NSInteger totalRunTime = 0;
     
 	if (_returnCode == NSAlertFirstButtonReturn) {
 		NSString *bundleID    = [[NSBundle mainBundle] bundleIdentifier];
-		OSStatus changeResult = LSSetDefaultHandlerForURLScheme((CFStringRef)@"irc", CFBridgingRetain(bundleID));
+		OSStatus changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"irc", (__bridge CFStringRef)(bundleID));
 		
 		if (changeResult == noErr) return;
 	}
@@ -980,9 +980,11 @@ static NSInteger totalRunTime = 0;
 + (void)defaultIRCClientPrompt
 {
 	[NSThread sleepForTimeInterval:1.5];
+
+	NSURL *baseURL = [[NSURL alloc] initWithString:@"irc:"];
 	
     CFURLRef ircAppURL = NULL;
-    OSStatus status    = LSGetApplicationForURL((__bridge CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
+    OSStatus status    = LSGetApplicationForURL((__bridge CFURLRef)baseURL, kLSRolesAll, NULL, &ircAppURL);
 	
 	if (status == noErr) {
 		NSBundle *mainBundle		  = [NSBundle mainBundle];
@@ -1001,8 +1003,6 @@ static NSInteger totalRunTime = 0;
 								  suppressionText:nil];
 		}
 	}
-	
-	if (ircAppURL) CFRelease(ircAppURL);
 }
 
 + (void)initPreferences
