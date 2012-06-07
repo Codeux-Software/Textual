@@ -85,26 +85,12 @@ static NSArray					*encKeys						= nil;
 		enclosureSet = [NSCharacterSet characterSetWithCharactersInString:@"()[]{}"];
 		enclosureStopArray = [NSArray arrayWithObjects:@")",@"]",@"}",nil];
 		encKeys = [NSArray arrayWithObjects:ENC_INDEX_KEY, ENC_CHAR_KEY, nil];
-		
-		[endSet retain];
-		[puncSet retain];
-		[encKeys retain];
-		[skipSet retain];
-		[startSet retain];
-		[enclosureSet retain];
-		[enclosureStopArray retain];
-		[enclosureStartArray retain];
-		[hostnameComponentSeparatorSet retain];
-		
-		[mutableStartSet release];
-		[mutableSkipSet release];
-		[mutablePuncSet release];
 	}
 }
 
 + (AHHyperlinkScanner *)linkScanner
 {
-	return [[[self class] new] autorelease];
+	return [[self class] new];
 }
 
 - (NSArray *)matchesForString:(NSString *)inString
@@ -113,9 +99,6 @@ static NSArray					*encKeys						= nil;
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
 	m_urlSchemes = [NSDictionary dictionaryWithObjectsAndKeys:@"ftp://", @"ftp", nil];
-	
-	[m_scanString retain];
-	[m_urlSchemes retain];
 	
 	return [self _allMatches];
 }
@@ -127,20 +110,12 @@ static NSArray					*encKeys						= nil;
 	m_scanStringLength = [m_scanString length];
 	m_urlSchemes = [NSDictionary dictionaryWithObjectsAndKeys:@"ftp://", @"ftp", nil];
 	
-	[m_scanString retain];
-	[m_urlSchemes retain];
-	
 	return [self _allMatches];
 }
 
 - (void)dealloc
 {
 	m_scanLocation = 0;
-	
-	[m_scanString release];
-	[m_urlSchemes release];
-	
-	[super dealloc];
 }
 
 - (BOOL)isStringValidURI:(NSString *)inString usingStrict:(BOOL)useStrictChecking fromIndex:(unsigned long *)sIndex 
