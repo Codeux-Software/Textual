@@ -28,6 +28,8 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 
+	#import "PLWeakCompatibilityStubs.h"
+
 	#import "AHLinkLexer.h"
 	#import "AHHyperlinkScanner.h"
 #endif

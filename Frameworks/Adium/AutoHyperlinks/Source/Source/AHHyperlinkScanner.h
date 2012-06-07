@@ -40,8 +40,8 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 
 @interface AHHyperlinkScanner : NSObject 
 {
-	NSDictionary		*m_urlSchemes;
-	NSString			*m_scanString;
+	NSDictionary		*__weak m_urlSchemes;
+	NSString			*__weak m_scanString;
 	
 	BOOL				m_strictChecking;
 	BOOL				m_firstCharMismactch;
@@ -50,8 +50,8 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 	unsigned long		m_scanStringLength;
 }
 
-@property (nonatomic, readonly) NSDictionary *urlSchemes;
-@property (nonatomic, readonly) NSString *scanString;
+@property (weak, nonatomic, readonly) NSDictionary *urlSchemes;
+@property (weak, nonatomic, readonly) NSString *scanString;
 @property (nonatomic, readonly) BOOL strictChecking;
 @property (nonatomic, readonly) unsigned long scanLocation;
 @property (nonatomic, readonly) unsigned long scanStringLength;
