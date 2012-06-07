@@ -109,8 +109,8 @@ static NSString *txCFStreamErrorDomainSSL = @"kCFStreamErrorDomainSSL";
 	if (NSObjectIsNotEmpty(user))		[settings setObject:user		forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
 	if (NSObjectIsNotEmpty(password))	[settings setObject:password	forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
 
-	CFReadStreamSetProperty(theReadStream,		kCFStreamPropertySOCKSProxy, CFBridgingRetain(settings));
-	CFWriteStreamSetProperty(theWriteStream,	kCFStreamPropertySOCKSProxy, CFBridgingRetain(settings));
+	CFReadStreamSetProperty(theReadStream,		kCFStreamPropertySOCKSProxy, (__bridge CFStringRef)(settings));
+	CFWriteStreamSetProperty(theWriteStream,	kCFStreamPropertySOCKSProxy, (__bridge CFStringRef)(settings));
 }
 
 @end

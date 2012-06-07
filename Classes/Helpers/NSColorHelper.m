@@ -107,7 +107,7 @@
 
 + (NSArray *)possibleFormatterColors
 {
-	NSMutableArray *combo  = [NSMutableArray array];
+	NSMutableArray *combo = nil;
 	NSMutableArray *colors = [NSMutableArray array];
 	
 	combo = [NSMutableArray arrayWithObjects:[self formatterWhiteColor], nil];

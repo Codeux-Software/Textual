@@ -2733,7 +2733,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSString *scriptPath = [NSString string];
             NSString *command = [cmd lowercaseString];
             
-            BOOL scriptFound;
+            BOOL scriptFound = NO;
 			
 			NSArray *scriptPaths = [NSArray arrayWithObjects:
 									
