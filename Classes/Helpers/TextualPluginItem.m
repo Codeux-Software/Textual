@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-
+#import "TextualPluginItem.h"
 @implementation TextualPluginItem
 
 @synthesize pluginBundle;
@@ -11,11 +11,11 @@
 				andIRCWorld:(IRCWorld *)world
 		  withUserInputDict:(NSMutableDictionary **)userDict
 		withServerInputDict:(NSMutableDictionary **)serverDict
-		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict;
+		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict
 {
-	pluginPrimaryClass = [primaryClass new];
+	self.pluginPrimaryClass = [primaryClass new];
 	
-	if (pluginPrimaryClass) {
+	if (self.pluginPrimaryClass) {
 		NSMutableDictionary *newUserDict		= [*userDict mutableCopy];
 		NSMutableDictionary *newServerDict		= [*serverDict mutableCopy];
 		NSMutableDictionary *newOutputRulesDict	= [*outputRulesDict mutableCopy];
