@@ -9,7 +9,7 @@
 	IBOutlet NSMenuItem *closeWindowItem;
 	
 	IRCWorld *__weak world;
-	MainWindow *__weak window;
+	MainWindow *__unsafe_unretained  window;
 	InputTextField *__unsafe_unretained text;
 	MasterController *__weak master;
 	
@@ -35,7 +35,7 @@
 }
 
 @property (nonatomic, weak) IRCWorld *world;
-@property (nonatomic, weak) MainWindow *window;
+@property (nonatomic, unsafe_unretained ) MainWindow *window;
 @property (nonatomic, unsafe_unretained) InputTextField *text;
 @property (nonatomic, weak) MasterController *master;
 @property (nonatomic, weak) ServerList *serverList;

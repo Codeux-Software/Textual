@@ -7,7 +7,7 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	MainWindow			*__weak window;
+	MainWindow			*__unsafe_unretained window;
 	ViewTheme			*__weak viewTheme;
 	InputTextField		*__unsafe_unretained text;
 	GrowlController		*__weak growl;
@@ -61,7 +61,7 @@
 
 @property (nonatomic, weak) ServerList *serverList;
 @property (nonatomic, weak) MemberList *memberList;
-@property (nonatomic, weak) MainWindow *window;
+@property (nonatomic, unsafe_unretained) MainWindow *window;
 @property (nonatomic, weak) ViewTheme *viewTheme;
 @property (nonatomic, unsafe_unretained) InputTextField *text;
 @property (nonatomic, weak) GrowlController *growl;
