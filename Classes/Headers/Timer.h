@@ -3,7 +3,7 @@
 
 @interface Timer : NSObject
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
 	BOOL reqeat;
 	SEL selector;
@@ -11,11 +11,11 @@
 	NSTimer *timer;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, assign) BOOL reqeat;
 @property (nonatomic, assign) SEL selector;
 @property (nonatomic, readonly) BOOL isActive;
-@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *timer;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;

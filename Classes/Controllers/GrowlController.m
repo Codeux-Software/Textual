@@ -27,12 +27,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[lastClickedContext drain];
-	
-	[super dealloc];
-}
 
 - (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info
 {
@@ -116,7 +110,7 @@
 	
 #ifdef _USES_NATIVE_NOTIFICATION_CENTER
 	if ([Preferences featureAvailableToOSXMountainLion]) {
-		NSUserNotification *notification = [NSUserNotification newad];
+		NSUserNotification *notification = [[NSUserNotification alloc] init];
 		
 		notification.title = title;
 		notification.informativeText = desc;
@@ -129,7 +123,7 @@
 	}
 #endif
 	
-	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:priority isSticky:sticky clickContext:info];
+	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:(int)priority isSticky:sticky clickContext:info];
 }
 
 /* NSUserNotificationCenter */
@@ -177,8 +171,7 @@
 	
 	lastClickedTime = now;
 	
-	[lastClickedContext drain];
-	lastClickedContext = [context retain];
+	lastClickedContext = context;
 
 	[owner.window makeKeyAndOrderFront:nil];
 

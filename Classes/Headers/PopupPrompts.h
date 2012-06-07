@@ -5,12 +5,12 @@
 
 @interface PopupPrompts : NSObject 
 {
-	id  _targetClass;
+	id  __unsafe_unretained _targetClass;
 	id  _suppressionKey;
 	SEL _actionSelector;
 }
 
-@property (nonatomic, readonly) id _targetClass;
+@property (unsafe_unretained, nonatomic, readonly) id _targetClass;
 @property (nonatomic, readonly) id _suppressionKey;
 @property (nonatomic, readonly) SEL _actionSelector;
 

@@ -18,20 +18,6 @@
 @synthesize nick;
 @synthesize chan;
 
-- (void)dealloc
-{
-	[url drain];
-	[addr drain];
-	[nick drain];
-	[chan drain];
-	[menu drain];
-	[urlMenu drain];
-	[addrMenu drain];
-	[chanMenu drain];
-	[memberMenu drain];
-	
-	[super dealloc];
-}
 
 - (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
 {
@@ -62,7 +48,6 @@
 {
 	menuController.pointedChannelName = chan;
 	
-	[chan autodrain];
 	chan = nil;
 	
 	[menuController onJoinChannel:nil];
@@ -72,7 +57,6 @@
 {
 	menuController.pointedNick = nick;
 	
-	[nick autodrain];
 	nick = nil;
 	
 	[menuController memberListDoubleClicked:nil];
@@ -85,18 +69,16 @@
 	if (url) {
 		menuController.pointedUrl = url;
 		
-		[url autodrain];
 		url = nil;
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autodrain]];
+			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
 	} else if (nick) {
 		menuController.pointedNick = nick;
 		
-		[nick autodrain];
 		nick = nil;
 		
 		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
@@ -106,18 +88,17 @@
 				continue;
 			}
 			
-			[ary safeAddObject:[[item copy] autodrain]];
+			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
 	} else if (chan) {
 		menuController.pointedChannelName = chan;
 		
-		[chan autodrain];
 		chan = nil;
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			[ary safeAddObject:[[item copy] autodrain]];
+			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
@@ -136,10 +117,10 @@
 		for (NSMenuItem *item in [menu itemArray]) {
 			if ([item tag] == WebMenuItemTagInspectElement) {
 				if (lookupInDictionaryItem) {
-					[ary safeAddObject:[[lookupInDictionaryItem copy] autodrain]];
+					[ary safeAddObject:[lookupInDictionaryItem copy]];
 				}
 			} else {
-				[ary safeAddObject:[[item copy] autodrain]];
+				[ary safeAddObject:[item copy]];
 			}
 		}
 		
@@ -147,14 +128,14 @@
 			[ary safeAddObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {
-				[ary safeAddObject:[[inspectElementItem copy] autodrain]];
+				[ary safeAddObject:[inspectElementItem copy]];
 			}
 			
-			NSMenuItem *copyHTML = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
-															   action:@selector(onCopyLogAsHtml:) keyEquivalent:NSNullObject] autodrain];
+			NSMenuItem *copyHTML = [[NSMenuItem alloc] initWithTitle:TXTLS(@"COPY_LOG_AS_HTML_MENU_ITEM") 
+															   action:@selector(onCopyLogAsHtml:) keyEquivalent:NSNullObject];
 			
-			NSMenuItem *reloadTheme = [[[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
-																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:NSNullObject] autodrain];
+			NSMenuItem *reloadTheme = [[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
+																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:NSNullObject];
 			
 			[copyHTML	 setTarget:menuController];
 			[reloadTheme setTarget:menuController];

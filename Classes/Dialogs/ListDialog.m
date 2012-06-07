@@ -36,13 +36,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[list drain];
-	[filteredList drain];
-	
-	[super dealloc];
-}
 
 - (void)start
 {
@@ -79,7 +72,6 @@
 {
 	[list removeAllObjects];
 	
-	[filteredList drain];
 	filteredList = nil;
 	
 	[self reloadTable];
@@ -123,7 +115,7 @@
 
 static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 {
-	ListDialog *dialog = (ListDialog *)context;
+	ListDialog *dialog = CFBridgingRelease(context);
 	
 	NSInteger key = dialog.sortKey;
 	NSComparisonResult order = dialog.sortOrder;
@@ -148,7 +140,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 
 - (void)sort
 {
-	[list sortUsingFunction:compareItems context:self];
+	[list sortUsingFunction:compareItems context:(__bridge void *)(self)];
 }
 
 - (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary
@@ -161,7 +153,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 	while ((right - left) > THRESHOLD) {
 		NSInteger pivot = ((left + right) / 2);
 		
-		if (compareItems([ary safeObjectAtIndex:pivot], item, self) == NSOrderedDescending) {
+		if (compareItems([ary safeObjectAtIndex:pivot], item, (__bridge void *)(self)) == NSOrderedDescending) {
 			right = pivot;
 		} else {
 			left = pivot;
@@ -169,7 +161,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 	}
 	
 	for (NSInteger i = left; i < right; ++i) {
-		if (compareItems([ary safeObjectAtIndex:i], item, self) == NSOrderedDescending) {
+		if (compareItems([ary safeObjectAtIndex:i], item, (__bridge void *)(self)) == NSOrderedDescending) {
 			[ary safeInsertObject:item atIndex:i];
 			
 			return;
@@ -216,7 +208,6 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
 
 - (void)onSearchFieldChange:(id)sender
 {
-	[filteredList drain];
 	filteredList = nil;
 	
 	NSString *filter = [filterText stringValue];

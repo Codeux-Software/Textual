@@ -67,24 +67,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[alertsView drain];
-	[channelManagementView drain];
-	[floodControlView drain];
-	[generalView drain];
-	[highlightView drain];
-	[identityView drain];
-	[interfaceView drain];
-	[IRCopServicesView drain];
-	[logView drain];
-	[scriptsController drain];
-	[scriptsView drain];
-	[sounds drain];
-	[stylesView drain];	
-	
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Utilities
@@ -140,7 +122,6 @@
 			
 			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
 			[pluginMenu setTag:tagIndex];
-			[pluginMenu autodrain];
 			
 			[installedScriptsMenu addItem:pluginMenu];
 		}
@@ -282,7 +263,7 @@
 	NSArray *alertSounds = [self availableSounds];
 	
     for (NSString *alertSound in alertSounds) {
-        NSMenuItem *item = [NSMenuItem newad];
+        NSMenuItem *item = [[NSMenuItem alloc] init];
 		
         [item setTitle:alertSound];
         
@@ -295,7 +276,7 @@
     NSMutableArray *alerts = [self sounds];
 	
     for (SoundWrapper *alert in alerts) {
-        NSMenuItem *item = [NSMenuItem newad];
+        NSMenuItem *item = [[NSMenuItem alloc] init];
 		
         [item setTitle:alert.displayName];
         [item setTag:[alert eventType]];
@@ -308,7 +289,7 @@
 
 - (void)onChangeAlert:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
 	
     [useGrowlButton setState:alert.growl];
     [disableAlertWhenAwayButton setState:alert.disableWhileAway];
@@ -318,21 +299,21 @@
 
 - (void)onUseGrowl:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
 	
     [alert setGrowl:[useGrowlButton state]];
 }
 
 - (void)onAlertWhileAway:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
 	
     [alert setDisableWhileAway:[disableAlertWhenAwayButton state]];
 }
 
 - (void)onChangeAlertSound:(id)sender 
 {
-	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:alertButton.selectedItem.tag];
+	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
 	
 	[alert setSound:[alertSoundButton titleOfSelectedItem]];
 }
@@ -473,7 +454,7 @@
 			NSInteger i = 0;
 			
 			for (NSString *f in files) {
-				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:NSNullObject] autodrain];
+				NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:NSNullObject];
 				
 				[item setTag:tag];
 				[themeButton.menu addItem:item];

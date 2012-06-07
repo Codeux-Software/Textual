@@ -5,12 +5,10 @@
 
 - (void)dealloc
 {
-	[_keyHandler drain];
 
 	dispatch_release(_formattingQueue);
 	_formattingQueue = NULL;
 	
-	[super dealloc];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -83,7 +81,7 @@
 
 - (NSAttributedString *)attributedStringValue
 {
-    return [self.attributedString.copy autodrain];
+    return self.attributedString.copy;
 }
 
 - (void)setAttributedStringValue:(NSAttributedString *)string

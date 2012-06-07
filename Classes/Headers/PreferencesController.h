@@ -8,9 +8,9 @@
 
 @interface PreferencesController : NSWindowController
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
-	IRCWorld *world;
+	IRCWorld *__weak world;
 	
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *highlightView;
@@ -54,40 +54,40 @@
 	NSMutableArray *sounds;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) IRCWorld *world;
-@property (nonatomic, retain) ScriptsWrapper *scriptsController;
-@property (nonatomic, readonly) NSArray *availableSounds;
-@property (nonatomic, readonly) NSMutableArray *sounds;
-@property (nonatomic, retain) NSView *contentView;
-@property (nonatomic, retain) NSView *highlightView;
-@property (nonatomic, retain) NSView *interfaceView;
-@property (nonatomic, retain) NSView *alertsView;
-@property (nonatomic, retain) NSView *stylesView;
-@property (nonatomic, retain) NSView *logView;
-@property (nonatomic, retain) NSView *generalView;
-@property (nonatomic, retain) NSView *scriptsView;
-@property (nonatomic, retain) NSView *identityView;
-@property (nonatomic, retain) NSView *floodControlView;
-@property (nonatomic, retain) NSView *IRCopServicesView;
-@property (nonatomic, retain) NSView *channelManagementView;
-@property (nonatomic, retain) NSView *experimentalSettingsView;
-@property (nonatomic, retain) NSButton *highlightNicknameButton;
-@property (nonatomic, retain) NSButton *addExcludeWordButton;
-@property (nonatomic, retain) NSTableView *keywordsTable;
-@property (nonatomic, retain) NSTableView *excludeWordsTable;
-@property (nonatomic, retain) NSTableView *installedScriptsTable;
-@property (nonatomic, retain) NSArrayController *keywordsArrayController;
-@property (nonatomic, retain) NSArrayController *excludeWordsArrayController;
-@property (nonatomic, retain) NSPopUpButton *transcriptFolderButton;
-@property (nonatomic, retain) NSPopUpButton *themeButton;
-@property (nonatomic, retain) NSPopUpButton *alertButton;
-@property (nonatomic, retain) NSPopUpButton *alertSoundButton;
-@property (nonatomic, retain) NSButton *useGrowlButton;
-@property (nonatomic, retain) NSButton *disableAlertWhenAwayButton;
-@property (nonatomic, retain) NSMenu *installedScriptsMenu;
-@property (nonatomic, retain) NSTextField *scriptLocationField;
-@property (nonatomic, retain) NSToolbar *preferenceSelectToolbar;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, weak) IRCWorld *world;
+@property (nonatomic, strong) ScriptsWrapper *scriptsController;
+@property (weak, nonatomic, readonly) NSArray *availableSounds;
+@property (weak, nonatomic, readonly) NSMutableArray *sounds;
+@property (nonatomic, strong) NSView *contentView;
+@property (nonatomic, strong) NSView *highlightView;
+@property (nonatomic, strong) NSView *interfaceView;
+@property (nonatomic, strong) NSView *alertsView;
+@property (nonatomic, strong) NSView *stylesView;
+@property (nonatomic, strong) NSView *logView;
+@property (nonatomic, strong) NSView *generalView;
+@property (nonatomic, strong) NSView *scriptsView;
+@property (nonatomic, strong) NSView *identityView;
+@property (nonatomic, strong) NSView *floodControlView;
+@property (nonatomic, strong) NSView *IRCopServicesView;
+@property (nonatomic, strong) NSView *channelManagementView;
+@property (nonatomic, strong) NSView *experimentalSettingsView;
+@property (nonatomic, strong) NSButton *highlightNicknameButton;
+@property (nonatomic, strong) NSButton *addExcludeWordButton;
+@property (nonatomic, strong) NSTableView *keywordsTable;
+@property (nonatomic, strong) NSTableView *excludeWordsTable;
+@property (nonatomic, strong) NSTableView *installedScriptsTable;
+@property (nonatomic, strong) NSArrayController *keywordsArrayController;
+@property (nonatomic, strong) NSArrayController *excludeWordsArrayController;
+@property (nonatomic, strong) NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, strong) NSPopUpButton *themeButton;
+@property (nonatomic, strong) NSPopUpButton *alertButton;
+@property (nonatomic, strong) NSPopUpButton *alertSoundButton;
+@property (nonatomic, strong) NSButton *useGrowlButton;
+@property (nonatomic, strong) NSButton *disableAlertWhenAwayButton;
+@property (nonatomic, strong) NSMenu *installedScriptsMenu;
+@property (nonatomic, strong) NSTextField *scriptLocationField;
+@property (nonatomic, strong) NSToolbar *preferenceSelectToolbar;
 
 - (id)initWithWorldController:(IRCWorld *)word;
 

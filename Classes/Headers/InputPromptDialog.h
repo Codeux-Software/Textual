@@ -18,13 +18,13 @@
 }
 
 @property (nonatomic, assign) NSInteger buttonClicked;
-@property (nonatomic, retain) NSString *finalModalValue;
-@property (nonatomic, retain) NSWindow *dialogWindow;
-@property (nonatomic, retain) NSButton *defaultButton;
-@property (nonatomic, retain) NSButton *alternateButton;
-@property (nonatomic, retain) NSTextField *dialogTitle;
-@property (nonatomic, retain) NSTextField *userInputField;
-@property (nonatomic, retain) NSTextField *informationalText;
+@property (nonatomic, strong) NSString *finalModalValue;
+@property (nonatomic, strong) NSWindow *dialogWindow;
+@property (nonatomic, strong) NSButton *defaultButton;
+@property (nonatomic, strong) NSButton *alternateButton;
+@property (nonatomic, strong) NSTextField *dialogTitle;
+@property (nonatomic, strong) NSTextField *userInputField;
+@property (nonatomic, strong) NSTextField *informationalText;
 
 - (void)runModal;
 

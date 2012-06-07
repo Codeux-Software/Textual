@@ -26,15 +26,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[name drain];
-	[path drain];
-	[other drain];
-	[core_js drain];
-	
-	[super dealloc];
-}
 
 - (NSString *)name
 {
@@ -44,8 +35,7 @@
 - (void)setName:(NSString *)value
 {
 	if (name != value) {
-		[name drain];
-		name = [value retain];
+		name = value;
 	}
 	
 	[self load];

@@ -86,7 +86,6 @@ NSData *appleRootCert()
 			if (itemRef) CFRelease(itemRef);
 		}
 		
-        [name drain];
 	}
 	
 	CFRelease(searchList);
@@ -330,10 +329,10 @@ BOOL validateBinarySignature(NSString *authority)
 	
 	NSString *requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", authority];
 	
-	status = SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
+	status = SecStaticCodeCreateWithPath((__bridge CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode);
 	DevNullDestroyObject(YES, status);
 	
-	status = SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &req);
+	status = SecRequirementCreateWithString((__bridge CFStringRef)(CFBridgingRelease((__bridge_retained CFTypeRef)(requirementString))), kSecCSDefaultFlags, &req);
 	DevNullDestroyObject(YES, status);
 	
 	status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, req);
@@ -358,8 +357,7 @@ BOOL validateReceiptAtPath(NSString *path)
 	NSString *bundleVersion = nil;
 	NSString *bundleIdentifer = nil;
 	
-	guidData = (id)copy_mac_address();
-	[guidData autodrain];
+	guidData = (id)CFBridgingRelease(copy_mac_address());
 
 	if (PointerIsEmpty(guidData)) return NO;
 	

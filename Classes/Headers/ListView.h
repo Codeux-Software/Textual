@@ -5,12 +5,12 @@
 
 @interface ListView : NSTableView
 {
-	id keyDelegate;
-	id textDelegate;
+	id __unsafe_unretained keyDelegate;
+	id __unsafe_unretained textDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
-@property (nonatomic, assign) id textDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id textDelegate;
 
 - (NSInteger)countSelectedRows;
 - (NSArray *)selectedRows;

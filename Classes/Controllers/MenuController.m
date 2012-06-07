@@ -50,25 +50,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[aboutPanel drain];
-	[channelSheet drain];
-	[currentSearchPhrase drain];
-	[highlightSheet sheet];
-	[inviteSheet drain];
-	[modeSheet drain];
-	[nickSheet drain];
-	[pointedChannelName drain];
-	[pointedNick drain];
-	[pointedUrl drain];
-	[preferencesController drain];
-	[serverSheet drain];
-	[topicSheet drain];	
-	
-	[super dealloc];
-}
-
 - (void)terminate
 {
 	if (serverSheet) [serverSheet close];
@@ -466,7 +447,6 @@
 					[ary safeAddObject:m];
 				} 
                 
-                [pointedNick autodrain];
                 pointedNick = nil;
 			}
 		}
@@ -494,12 +474,10 @@
 												 defaultInput:currentSearchPhrase];
 	
 	if (NSObjectIsEmpty(newPhrase)) {
-		[currentSearchPhrase drain];
 		currentSearchPhrase = NSNullObject;
 	} else {
 		if ([newPhrase isNotEqualTo:currentSearchPhrase]) {
-			[currentSearchPhrase drain];
-			currentSearchPhrase = [newPhrase retain];
+			currentSearchPhrase = newPhrase;
 		}
 	}
 	
@@ -575,7 +553,7 @@
 	pc.world = world;
 	
 	preferencesController = pc;
-	[preferencesController initWithWorldController:world];
+	(void)[preferencesController initWithWorldController:world];
 	[preferencesController show];
 }
 
@@ -583,7 +561,6 @@
 {
 	[world preferencesChanged];
 	
-	[preferencesController drain];
 	preferencesController = nil;
 }
 
@@ -795,7 +772,6 @@
 
 - (void)nickSheetWillClose:(NickSheet *)sender
 {
-	[nickSheet drain];
 	nickSheet = nil;
 }
 
@@ -818,7 +794,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [IRCClientConfig newad];
+	d.config = [[IRCClientConfig alloc] init];
 	d.uid = -1;
 	
 	[d startWithIgnoreTab:NO];
@@ -913,7 +889,6 @@
 
 - (void)ServerSheetWillClose:(ServerSheet *)sender
 {
-	[serverSheet drain];
 	serverSheet = nil;
 }
 
@@ -963,7 +938,6 @@
 
 - (void)highlightSheetWillClose:(HighlightSheet *)sender
 {
-	[highlightSheet drain];
 	highlightSheet = nil;
 }
 
@@ -1002,7 +976,6 @@
 
 - (void)topicSheetWillClose:(TopicSheet *)sender
 {
-	[topicSheet drain];
 	topicSheet = nil;
 }
 
@@ -1045,7 +1018,6 @@
 
 - (void)modeSheetWillClose:(ModeSheet *)sender
 {
-	[modeSheet drain];
 	modeSheet = nil;
 }
 
@@ -1061,7 +1033,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [IRCChannelConfig newad];
+	d.config = [[IRCChannelConfig alloc] init];
 	d.uid = u.uid;
 	d.cid = -1;
 	
@@ -1107,7 +1079,7 @@
 	
 	d.delegate = self;
 	d.window = window;
-	d.config = [[c.config mutableCopy] autodrain];
+	d.config = [c.config mutableCopy];
 	d.uid = u.uid;
 	d.cid = c.uid;
 	
@@ -1148,7 +1120,6 @@
 
 - (void)ChannelSheetWillClose:(ChannelSheet *)sender
 {
-	[channelSheet drain];
 	channelSheet = nil;
 }
 
@@ -1267,7 +1238,6 @@
 
 - (void)inviteSheetWillClose:(InviteSheet *)sender
 {
-	[inviteSheet drain];
 	inviteSheet = nil;
 }
 
@@ -1346,7 +1316,6 @@
 	if (NSObjectIsNotEmpty(pointedUrl)) {
 		[_NSPasteboard() setStringContent:pointedUrl];
 		
-        [pointedUrl autodrain];
 		pointedUrl = nil;
 	}
 }
@@ -1359,8 +1328,7 @@
 	
 	if (NSObjectIsNotEmpty(pointedChannelName)) {
 		[u joinUnlistedChannel:pointedChannelName];
-        
-        [pointedChannelName autodrain];
+
         pointedChannelName = nil;
 	}
 }
@@ -1384,7 +1352,6 @@
 
 - (void)aboutPanelWillClose:(AboutPanel *)sender
 {
-	[aboutPanel drain];
 	aboutPanel = nil;
 }
 

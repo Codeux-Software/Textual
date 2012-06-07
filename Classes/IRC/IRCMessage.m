@@ -31,21 +31,9 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[sender drain];
-	[command drain];
-	[params drain];
-	[receivedAt drain];
-	
-	[super dealloc];
-}
 
 - (void)parseLine:(NSString *)line
 {
-	[sender drain];
-	[command drain];
-	[params drain];
 	
 	command = NSNullObject;
 	sender = [IRCPrefix new];
@@ -57,9 +45,9 @@
 		// znc server-time
 		NSString* t = [s getToken];
 		t = [t substringFromIndex:3];
-		receivedAt = [[NSDate dateWithTimeIntervalSince1970: [t longLongValue]] retain];
+		receivedAt = [NSDate dateWithTimeIntervalSince1970: [t longLongValue]];
 	} else {
-		receivedAt = [[NSDate date] retain];
+		receivedAt = [NSDate date];
 	}
 
 	if ([s hasPrefix:@":"]) {
@@ -87,7 +75,7 @@
 		}
 	}
 	
-	command = [[[s getToken] uppercaseString] retain];
+	command = [[s getToken] uppercaseString];
 	numericReply = [command integerValue];
 	
 	while (NSObjectIsNotEmpty(s)) {
@@ -100,7 +88,6 @@
 		}
 	}
 	
-	[s drain];
 }
 
 - (NSString *)paramAt:(NSInteger)index

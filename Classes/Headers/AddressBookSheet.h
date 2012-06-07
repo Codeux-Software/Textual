@@ -24,19 +24,19 @@
 }
 
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, retain) AddressBook *ignore;
-@property (nonatomic, retain) NSTextField *hostmask;
-@property (nonatomic, retain) NSTextField *nickname;
-@property (nonatomic, retain) NSButton *ignorePublicMsg;
-@property (nonatomic, retain) NSButton *ignorePrivateMsg;
-@property (nonatomic, retain) NSButton *ignoreHighlights;
-@property (nonatomic, retain) NSButton *ignoreNotices;
-@property (nonatomic, retain) NSButton *ignoreCTCP;
-@property (nonatomic, retain) NSButton *ignoreJPQE;
-@property (nonatomic, retain) NSButton *notifyJoins;
-@property (nonatomic, retain) NSButton *ignorePMHighlights;
-@property (nonatomic, retain) NSWindow *ignoreWindow;
-@property (nonatomic, retain) NSWindow *notifyWindow;
+@property (nonatomic, strong) AddressBook *ignore;
+@property (nonatomic, strong) NSTextField *hostmask;
+@property (nonatomic, strong) NSTextField *nickname;
+@property (nonatomic, strong) NSButton *ignorePublicMsg;
+@property (nonatomic, strong) NSButton *ignorePrivateMsg;
+@property (nonatomic, strong) NSButton *ignoreHighlights;
+@property (nonatomic, strong) NSButton *ignoreNotices;
+@property (nonatomic, strong) NSButton *ignoreCTCP;
+@property (nonatomic, strong) NSButton *ignoreJPQE;
+@property (nonatomic, strong) NSButton *notifyJoins;
+@property (nonatomic, strong) NSButton *ignorePMHighlights;
+@property (nonatomic, strong) NSWindow *ignoreWindow;
+@property (nonatomic, strong) NSWindow *notifyWindow;
 
 - (void)start;
 @end

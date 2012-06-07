@@ -13,9 +13,9 @@
 	FileWithContent *core_js;
 }
 
-@property (nonatomic, retain) NSURL *baseUrl;
-@property (nonatomic, retain) NSString *path;
-@property (nonatomic, retain, getter=name, setter=setName:) NSString *name;
+@property (nonatomic, strong) NSURL *baseUrl;
+@property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong, getter=name, setter=setName:) NSString *name;
 @property (nonatomic, readonly) OtherTheme *other;
 @property (nonatomic, readonly) FileWithContent *core_js;
 

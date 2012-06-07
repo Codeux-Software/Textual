@@ -86,8 +86,6 @@
     deleteRange.length   = limitRange.length;
     
     BOOL needBreak = NO;
-    
-    [base autodrain];
 	
 	while (limitRange.length > 0) {
 		NSDictionary *dict = [base safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
@@ -262,7 +260,7 @@
 		[attrs setObject:DefaultTextFieldFont		forKey:NSFontAttributeName];
 		[attrs setObject:DefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
 
-		[stringv initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
+		(void)[stringv initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
 
 		[self setAttributedStringValue:stringv];
 		[self setAttributedStringValue:stringn];

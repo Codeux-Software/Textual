@@ -15,12 +15,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[text drain];
-	
-	[super dealloc];
-}
 
 - (void)clear
 {

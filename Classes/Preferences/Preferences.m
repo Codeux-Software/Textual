@@ -407,7 +407,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (HostmaskBanFormat)banFormat
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.General.banformat"];
+	return (HostmaskBanFormat)[_NSUserDefaults() integerForKey:@"Preferences.General.banformat"];
 }
 
 + (NSDoubleN)viewLoopConsoleDelay
@@ -527,7 +527,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (TabActionType)tabAction
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.General.tab_action"];
+	return (TabActionType)[_NSUserDefaults() integerForKey:@"Preferences.General.tab_action"];
 }
 
 + (BOOL)keywordCurrentNick
@@ -542,7 +542,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (KeywordMatchType)keywordMatchingMethod
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.Keyword.matching_method"];
+	return (KeywordMatchType)[_NSUserDefaults() integerForKey:@"Preferences.Keyword.matching_method"];
 }
 
 + (NSArray *)keywordWords
@@ -552,17 +552,17 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (UserDoubleClickAction)userDoubleClickOption
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.General.user_doubleclick_action"];
+	return (UserDoubleClickAction)[_NSUserDefaults() integerForKey:@"Preferences.General.user_doubleclick_action"];
 }
 
 + (NoticesSendToLocation)locationToSendNotices
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.General.notices_sendto_location"];
+	return (NoticesSendToLocation)[_NSUserDefaults() integerForKey:@"Preferences.General.notices_sendto_location"];
 }
 
 + (CmdW_Shortcut_ResponseType)cmdWResponseType
 {
-	return [_NSUserDefaults() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
+	return (CmdW_Shortcut_ResponseType)[_NSUserDefaults() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
 }
 
 #pragma mark -
@@ -971,7 +971,7 @@ static NSInteger totalRunTime = 0;
     
 	if (_returnCode == NSAlertFirstButtonReturn) {
 		NSString *bundleID    = [[NSBundle mainBundle] bundleIdentifier];
-		OSStatus changeResult = LSSetDefaultHandlerForURLScheme((CFStringRef)@"irc", (CFStringRef)bundleID);
+		OSStatus changeResult = LSSetDefaultHandlerForURLScheme((CFStringRef)@"irc", CFBridgingRetain(bundleID));
 		
 		if (changeResult == noErr) return;
 	}
@@ -982,11 +982,11 @@ static NSInteger totalRunTime = 0;
 	[NSThread sleepForTimeInterval:1.5];
 	
     CFURLRef ircAppURL = NULL;
-    OSStatus status    = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
+    OSStatus status    = LSGetApplicationForURL((__bridge CFURLRef)[NSURL URLWithString:@"irc:"], kLSRolesAll, NULL, &ircAppURL);
 	
 	if (status == noErr) {
 		NSBundle *mainBundle		  = [NSBundle mainBundle];
-		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:CFItemRefToID(ircAppURL)];
+		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:CFBridgingRelease(ircAppURL)];
 		
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {
 			[PopupPrompts sheetWindowWithQuestion:[NSApp keyWindow]
@@ -1113,7 +1113,6 @@ static NSInteger totalRunTime = 0;
 	if (NSObjectIsEmpty(systemVersionPlist)) systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
 	if (NSObjectIsEmpty(systemVersionPlist)) exit(10);
 	
-	[systemVersionPlist retain];
 	
 	textualPlist = [[NSBundle mainBundle] infoDictionary];
 	

@@ -42,14 +42,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[config drain];
-	[generalView drain];
-	[encryptView drain];
-	
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark NSToolbar Delegates

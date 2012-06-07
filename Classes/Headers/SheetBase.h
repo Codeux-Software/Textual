@@ -3,20 +3,20 @@
 
 @interface SheetBase : NSObject
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	
-	NSWindow *window;
+	NSWindow *__weak window;
 
 	IBOutlet NSWindow *sheet;
 	IBOutlet NSButton *okButton;
 	IBOutlet NSButton *cancelButton;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) NSWindow *window;
-@property (nonatomic, retain) NSWindow *sheet;
-@property (nonatomic, retain) NSButton *okButton;
-@property (nonatomic, retain) NSButton *cancelButton;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, weak) NSWindow *window;
+@property (nonatomic, strong) NSWindow *sheet;
+@property (nonatomic, strong) NSButton *okButton;
+@property (nonatomic, strong) NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

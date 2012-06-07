@@ -6,7 +6,7 @@
 
 @interface LogPolicy : NSObject
 {
-	MenuController *menuController;
+	MenuController *__unsafe_unretained menuController;
 	
 	NSMenu *menu;
 	NSMenu *urlMenu;
@@ -20,16 +20,16 @@
 	NSString *chan;
 }
 
-@property (nonatomic, assign) id menuController;
-@property (nonatomic, retain) NSMenu *menu;
-@property (nonatomic, retain) NSMenu *urlMenu;
-@property (nonatomic, retain) NSMenu *addrMenu;
-@property (nonatomic, retain) NSMenu *memberMenu;
-@property (nonatomic, retain) NSMenu *chanMenu;
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) NSString *addr;
-@property (nonatomic, retain) NSString *nick;
-@property (nonatomic, retain) NSString *chan;
+@property (nonatomic, unsafe_unretained) id menuController;
+@property (nonatomic, strong) NSMenu *menu;
+@property (nonatomic, strong) NSMenu *urlMenu;
+@property (nonatomic, strong) NSMenu *addrMenu;
+@property (nonatomic, strong) NSMenu *memberMenu;
+@property (nonatomic, strong) NSMenu *chanMenu;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *addr;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *chan;
 
 - (void)channelDoubleClicked;
 - (void)nicknameDoubleClicked;

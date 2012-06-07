@@ -8,8 +8,8 @@
 	NotificationType eventType;
 }
 
-@property (nonatomic, readonly) NSString *displayName;
-@property (nonatomic, assign) NSString *sound;
+@property (weak, nonatomic, readonly) NSString *displayName;
+@property (nonatomic, weak) NSString *sound;
 @property (nonatomic, assign) BOOL growl;
 @property (nonatomic, assign) BOOL growlSticky;
 @property (nonatomic, assign) BOOL disableWhileAway;

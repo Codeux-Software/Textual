@@ -32,12 +32,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[ignore drain];
-	
-	[super dealloc];
-}
 
 - (void)start
 {

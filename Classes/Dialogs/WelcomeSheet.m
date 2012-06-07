@@ -28,12 +28,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[channels drain];
-	
-	[super dealloc];
-}
 
 - (void)show
 {
@@ -57,7 +51,7 @@
 	NSMutableSet *set = [NSMutableSet set];
 	NSMutableArray *chans = [NSMutableArray array];
 	
-	for (NSString *s in channels) {
+	for (__strong NSString *s in channels) {
 		if (NSObjectIsNotEmpty(s)) {
 			if ([s isChannelName] == NO) {
 				s = [@"#" stringByAppendingString:s];
@@ -149,7 +143,7 @@
 	NSInteger n = [channelTable editedRow];
 	
 	if (n >= 0) {
-		NSString *s = [[[[[note object] textStorage] string] copy] autodrain];
+		NSString *s = [[[[note object] textStorage] string] copy];
 		
 		[channels replaceObjectAtIndex:n withObject:s];
 		

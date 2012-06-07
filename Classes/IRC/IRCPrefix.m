@@ -21,14 +21,5 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[raw drain];
-	[nick drain];
-	[user drain];
-	[address drain];
-	
-	[super dealloc];
-}
 
 @end
