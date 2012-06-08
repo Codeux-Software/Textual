@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 07, 2012
+#import "ThinSplitView.m"
 
 @interface ThinSplitView (Private)
 - (void)updatePosition;
@@ -50,13 +51,15 @@
 		fixedViewIndex = value;
 		
 		if (self.inverted) {
-			self.fixedViewIndex = ((self.fixedViewIndex) ? 0 : 1);
+			fixedViewIndex = ((self.fixedViewIndex) ? 0 : 1);
 		}
 	}
 }
 
 - (void)setPosition:(NSInteger)value
 {
+	if (self.position == value) return;
+	
 	position = value;
 	
 	[self adjustSubviews];
@@ -64,6 +67,8 @@
 
 - (void)setMyDividerThickness:(NSInteger)value
 {
+	if (self.myDividerThickness == value) return;
+
 	myDividerThickness = value;
 
 	[self adjustSubviews];
@@ -71,8 +76,6 @@
 
 - (void)setInverted:(BOOL)value
 {
-	if (self.inverted == value) return;
-	
 	inverted = value;
 	
 	NSView *a = [[self subviews] safeObjectAtIndex:0];
@@ -84,7 +87,7 @@
 	[self addSubview:b];
 	[self addSubview:a];
 	
-	self.fixedViewIndex = ((self.fixedViewIndex) ? 0 : 1);
+	fixedViewIndex = ((self.fixedViewIndex) ? 0 : 1);
 	
 	[self adjustSubviews];
 }
@@ -93,7 +96,7 @@
 {
 	[super setVertical:value];
 	
-	self.myDividerThickness = ((value) ? 1 : 5);
+	myDividerThickness = ((value) ? 1 : 5);
 	
 	[self adjustSubviews];
 }

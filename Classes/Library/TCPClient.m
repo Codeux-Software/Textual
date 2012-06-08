@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define LF	0xa
 #define CR	0xd
@@ -29,7 +30,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		buffer = [NSMutableData new];
+		self.buffer = [NSMutableData new];
 	}
 	
 	return self;
@@ -37,20 +38,20 @@
 
 - (BOOL)useNewSocketEngine
 {
-	return (useSystemSocks == NO && useSocks == NO && [_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
+	return (self.useSystemSocks == NO && self.useSocks == NO && [_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
 }
 
 - (void)destroyDispatchQueue
 {
     if ([self useNewSocketEngine]) {
-        if (dispatchQueue) {
-            dispatch_release(dispatchQueue);
-            dispatchQueue = NULL;
+        if (self.dispatchQueue) {
+            dispatch_release(self.dispatchQueue);
+            self.dispatchQueue = NULL;
         }
         
-        if (socketQueue) {
-            dispatch_release(socketQueue);
-            socketQueue = NULL;
+        if (self.socketQueue) {
+            dispatch_release(self.socketQueue);
+            self.socketQueue = NULL;
         }
     }
 }
@@ -61,24 +62,21 @@
 		NSString *dqname = [NSString stringWithUUID];
         NSString *sqname = [NSString stringWithUUID];
         
-        socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
-		dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
+		self.socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
+		self.dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
 	}
 }
 
 - (void)dealloc
 {
-	if (conn) {
-		[conn setDelegate:nil];
-		[conn disconnect];
+	if (self.conn) {
+		[self.conn setDelegate:nil];
+		[self.conn disconnect];
 	}
 	
-    
     [self destroyDispatchQueue];
 	
-	
-	delegate = nil;
-	
+	self.delegate = nil;
 }
 
 - (void)open
@@ -86,53 +84,55 @@
 	[self createDispatchQueue];
     [self close];
 	
-	[buffer setLength:0];
+	[self.buffer setLength:0];
 	
 	NSError *connError = nil;
 	
 	if ([self useNewSocketEngine]) {
-        conn = [GCDAsyncSocket socketWithDelegate:self delegateQueue:dispatchQueue socketQueue:socketQueue];
+        self.conn = [GCDAsyncSocket socketWithDelegate:self
+										 delegateQueue:self.dispatchQueue
+										   socketQueue:self.socketQueue];
         
-        IRCClient *clin = [delegate delegate];
+        IRCClient *clin = [self.delegate delegate];
         
-        [conn setPreferIPv4OverIPv6:BOOLReverseValue(clin.config.prefersIPv6)];
+        [self.conn setPreferIPv4OverIPv6:BOOLReverseValue(clin.config.prefersIPv6)];
 	} else {
-		conn = [AsyncSocket socketWithDelegate:self];
+		self.conn = [AsyncSocket socketWithDelegate:self];
 	}
 	
-	if ([conn connectToHost:host onPort:port withTimeout:(-1) error:&connError] == NO) {
+	if ([self.conn connectToHost:self.host onPort:self.port withTimeout:(-1) error:&connError] == NO) {
 		NSLog(@"Silently ignoring connection error: %@", [connError localizedDescription]);
 	}
 	
-	active     = YES;
-	connecting = YES;
-	connected  = NO;
+	self.active     = YES;
+	self.connecting = YES;
+	self.connected  = NO;
 	
-	sendQueueSize = 0;
+	self.sendQueueSize = 0;
 }
 
 - (void)close
 {
-	if (PointerIsEmpty(conn)) return;
+	if (PointerIsEmpty(self.conn)) return;
 	
-	[conn setDelegate:nil];
-    [conn disconnect];
+	[self.conn setDelegate:nil];
+    [self.conn disconnect];
     
     [self destroyDispatchQueue];
 	
-	active	   = NO;
-	connecting = NO;
-	connected  = NO;
+	self.active	   = NO;
+	self.connecting = NO;
+	self.connected  = NO;
 	
-	sendQueueSize = 0;
+	self.sendQueueSize = 0;
 }
 
 - (NSData *)readLine
 {
-	NSInteger len = [buffer length];
+	NSInteger len = [self.buffer length];
 	if (len < 1) return nil;
 	
-	const char *bytes = [buffer bytes];
+	const char *bytes = [self.buffer bytes];
 	char *p = memchr(bytes, LF, len);
 	
 	if (p == NULL) return nil;
@@ -147,14 +147,14 @@
 		}
 	}
 	
-	NSMutableData *result = buffer;
+	NSMutableData *result = self.buffer;
 	
 	++p;
 	
 	if (p < (bytes + len)) {
-		buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
+		self.buffer = [[NSMutableData alloc] initWithBytes:p length:((bytes + len) - p)];
 	} else {
-		buffer = [NSMutableData new];
+		self.buffer = [NSMutableData new];
 	}
 	
 	[result setLength:n];
@@ -164,26 +164,26 @@
 
 - (void)write:(NSData *)data
 {
-	if (connected == NO) return;
+	if (self.connected == NO) return;
 	
-	++sendQueueSize;
+	++self.sendQueueSize;
 	
-	[conn writeData:data withTimeout:(-1)	tag:0];
-	[conn readDataWithTimeout:(-1)			tag:0];
+	[self.conn writeData:data withTimeout:(-1)	tag:0];
+	[self.conn readDataWithTimeout:(-1)			tag:0];
 }
 
 - (BOOL)onSocketWillConnect:(id)sock
 {
-	if (useSystemSocks) {
-		[conn useSystemSocksProxy];
-	} else if (useSocks) {
-		[conn useSocksProxyVersion:socksVersion 
-							  host:proxyHost 
-							  port:proxyPort 
-							  user:proxyUser 
-						  password:proxyPassword];
-	} else if (useSSL) {
-		[GCDAsyncSocket useSSLWithConnection:conn delegate:delegate];
+	if (self.useSystemSocks) {
+		[self.conn useSystemSocksProxy];
+	} else if (self.useSocks) {
+		[self.conn useSocksProxyVersion:self.socksVersion 
+							  host:self.proxyHost 
+							  port:self.proxyPort 
+							  user:self.proxyUser 
+						  password:self.proxyPassword];
+	} else if (self.useSSL) {
+		[GCDAsyncSocket useSSLWithConnection:self.conn delegate:self.delegate];
 	}
 	
 	return YES;
@@ -191,16 +191,16 @@
 
 - (void)onSocket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	[conn readDataWithTimeout:(-1) tag:0]; 
+	[self.conn readDataWithTimeout:(-1) tag:0]; 
 	
-	connecting = NO;
-	connected  = YES;
+	self.connecting = NO;
+	self.connected  = YES;
 	
-	if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
-		[delegate tcpClientDidConnect:self];
+	if ([self.delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
+		[self.delegate tcpClientDidConnect:self];
 	}
 	
-	IRCClient *clin = [delegate delegate];
+	IRCClient *clin = [self.delegate delegate];
 	
 	if (clin.rawModeEnabled) {
 		NSLog(@"Debug Information:");
@@ -214,8 +214,8 @@
 {
 	[self close];
 	
-	if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-		[delegate tcpClientDidDisconnect:self];
+	if ([self.delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
+		[self.delegate tcpClientDidDisconnect:self];
 	}	
 }
 
@@ -228,7 +228,7 @@
 		NSString *domain = [error domain];
 		
 		if ([GCDAsyncSocket badSSLCertErrorFound:error]) {
-			IRCClient *client = [delegate performSelector:@selector(delegate)];
+			IRCClient *client = [self.delegate performSelector:@selector(delegate)];
 			
 			client.disconnectType = DISCONNECT_BAD_SSL_CERT;
 		} else {
@@ -240,8 +240,8 @@
 				msg = [error localizedDescription];
 			}
 			
-			if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-				[delegate tcpClient:self error:msg];
+			if ([self.delegate respondsToSelector:@selector(tcpClient:error:)]) {
+				[self.delegate tcpClient:self error:msg];
 			}
 		}
 		
@@ -253,29 +253,29 @@
 
 - (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    if (PointerIsEmpty(delegate)) {
+    if (PointerIsEmpty(self.delegate)) {
         return;
     }
     
-	[buffer appendData:data];
+	[self.buffer appendData:data];
 	
-	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
-		[delegate tcpClientDidReceiveData:self];
+	if ([self.delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
+		[self.delegate tcpClientDidReceiveData:self];
 	}
 	
-	[conn readDataWithTimeout:(-1) tag:0]; 
+	[self.conn readDataWithTimeout:(-1) tag:0]; 
 }
 
 - (void)onSocket:(id)sock didWriteDataWithTag:(long)tag
 {
-	--sendQueueSize;
+	--self.sendQueueSize;
 	
-    if (PointerIsEmpty(delegate)) {
+    if (PointerIsEmpty(self.delegate)) {
         return;
     }
     
-	if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
-		[delegate tcpClientDidSendData:self];
+	if ([self.delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
+		[self.delegate tcpClientDidSendData:self];
 	}
 }
 

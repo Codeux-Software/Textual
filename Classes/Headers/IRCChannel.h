@@ -35,25 +35,25 @@ typedef enum {
 	FileLogger *logFile;
 }
 
-@property (weak) IRCClient *client;
-@property (readonly) IRCChannelMode *mode;
-@property (readonly) IRCChannelConfig *config;
-@property (readonly) NSMutableArray *members;
-@property (weak, readonly) NSString *channelTypeString;
-@property (strong) NSString *topic;
-@property (strong) NSString *storedTopic;
-@property (strong) NSString *logDate;
-@property (assign) BOOL isOp;
-@property (assign) BOOL isHalfOp;
-@property (assign) BOOL isModeInit;
-@property (assign) BOOL isActive;
-@property (assign) BOOL errLastJoin;
-@property (assign) ChannelStatus status;
-@property (readonly) BOOL isChannel;
-@property (readonly) BOOL isTalk;
-@property (strong) FileLogger *logFile;
-@property (weak) NSString *name;
-@property (weak, readonly) NSString *password;
+@property (nonatomic, weak) IRCClient *client;
+@property (nonatomic, readonly) IRCChannelMode *mode;
+@property (nonatomic, readonly) IRCChannelConfig *config;
+@property (nonatomic, readonly) NSMutableArray *members;
+@property (nonatomic, weak, readonly) NSString *channelTypeString;
+@property (nonatomic, strong) NSString *topic;
+@property (nonatomic, strong) NSString *storedTopic;
+@property (nonatomic, strong) NSString *logDate;
+@property (nonatomic, assign) BOOL isOp;
+@property (nonatomic, assign) BOOL isHalfOp;
+@property (nonatomic, assign) BOOL isModeInit;
+@property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, assign) BOOL errLastJoin;
+@property (nonatomic, assign) ChannelStatus status;
+@property (nonatomic, readonly) BOOL isChannel;
+@property (nonatomic, readonly) BOOL isTalk;
+@property (nonatomic, strong) FileLogger *logFile;
+@property (nonatomic, weak) NSString *name;
+@property (nonatomic, weak, readonly) NSString *password;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;

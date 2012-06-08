@@ -3,8 +3,8 @@
 // Converted to ARC Support on Thursday, June 07, 2012
 
 @interface LogView : WebView
-@property (unsafe_unretained) id keyDelegate;
-@property (unsafe_unretained) id resizeDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id resizeDelegate;
 
 - (NSString *)contentString;
 - (WebScriptObject *)js_api;

@@ -5,9 +5,9 @@
 @class LogController, LogPolicy;
 
 @interface LogScriptEventSink : NSObject
-@property (unsafe_unretained) id owner;
-@property (strong) id policy;
-@property (assign) NSInteger x;
-@property (assign) NSInteger y;
+@property (nonatomic, unsafe_unretained) id owner;
+@property (nonatomic, strong) id policy;
+@property (nonatomic, assign) NSInteger x;
+@property (nonatomic, assign) NSInteger y;
 @property CFAbsoluteTime lastClickTime;
 @end

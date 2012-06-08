@@ -16,13 +16,13 @@
 	IBOutlet NSButton *deleteChannelButton;
 }
 
-@property (strong) NSMutableArray *channels;
-@property (strong) NSTextField *nickText;
-@property (strong) NSTextField *hostCombo;
-@property (strong) ListView *channelTable;
-@property (strong) NSButton *autoConnectCheck;
-@property (strong) NSButton *addChannelButton;
-@property (strong) NSButton *deleteChannelButton;
+@property (nonatomic, strong) NSMutableArray *channels;
+@property (nonatomic, strong) NSTextField *nickText;
+@property (nonatomic, strong) NSTextField *hostCombo;
+@property (nonatomic, strong) ListView *channelTable;
+@property (nonatomic, strong) NSButton *autoConnectCheck;
+@property (nonatomic, strong) NSButton *addChannelButton;
+@property (nonatomic, strong) NSButton *deleteChannelButton;
 
 - (void)show;
 - (void)close;

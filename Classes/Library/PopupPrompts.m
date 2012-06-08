@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @implementation PopupPrompts
 
@@ -9,7 +10,6 @@
 @synthesize _targetClass;
 @synthesize _actionSelector;
 @synthesize _suppressionKey;
-
 
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
@@ -57,9 +57,9 @@
 	
 	[[alert suppressionButton] setTitle:suppressText];
 	
-	_targetClass	= targetClass;
-	_actionSelector = actionSelector;
-	_suppressionKey = __suppressionKey;
+	self._targetClass	= targetClass;
+	self._actionSelector = actionSelector;
+	self._suppressionKey = __suppressionKey;
 	
 	[alert beginSheetModalForWindow:window modalDelegate:self
 					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:) contextInfo:nil];
@@ -68,19 +68,19 @@
 
 - (void)_sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {	
-	if (NSObjectIsNotEmpty(_suppressionKey)) {
+	if (NSObjectIsNotEmpty(self._suppressionKey)) {
 		NSButton *button = [alert suppressionButton];
 		
-		[_NSUserDefaults() setBool:[button state] forKey:_suppressionKey];
+		[_NSUserDefaults() setBool:[button state] forKey:self._suppressionKey];
 	}
 	
-	if ([_targetClass isKindOfClass:[self class]]) {
+	if ([self._targetClass isKindOfClass:[self class]]) {
 		return;
 	}
 	
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-	[_targetClass performSelector:_actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
+	[self._targetClass performSelector:self._actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
 #pragma clang diagnostic pop
     
 }
@@ -187,7 +187,6 @@
 	
 	NSInteger button = [dialog buttonClicked];
 	NSString *result = [dialog promptValue];
-	
 	
 	if (NSObjectIsNotEmpty(result) && button == NSAlertDefaultReturn) {
 		return result;

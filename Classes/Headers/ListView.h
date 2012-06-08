@@ -5,8 +5,8 @@
 #define DefaultListViewFont             [NSFont fontWithName:@"Lucida Grande" size:12.0]
 
 @interface ListView : NSTableView
-@property (unsafe_unretained) id keyDelegate;
-@property (unsafe_unretained) id textDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id textDelegate;
 
 - (NSInteger)countSelectedRows;
 - (NSArray *)selectedRows;

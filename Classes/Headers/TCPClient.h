@@ -1,56 +1,29 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @class IRCClient;
 
 @interface TCPClient : NSObject
-{
-	id conn;
-	id __unsafe_unretained delegate;
-	
-	NSString *host;
-	NSString *proxyHost;
-	NSString *proxyUser;
-	NSString *proxyPassword;
-	
-	NSInteger port;
-	NSInteger proxyPort;
-	NSInteger sendQueueSize;
-	NSInteger socksVersion;
-	
-	BOOL useSSL;
-	BOOL useSocks;
-	BOOL useSystemSocks;
-	
-	BOOL active;
-	BOOL connecting;
-	BOOL connected;
-	
-	NSMutableData *buffer;
-	
-	dispatch_queue_t dispatchQueue;
-    dispatch_queue_t socketQueue;
-}
-
-@property (strong) NSMutableData *buffer; 
-@property (strong) AsyncSocket *conn;
-@property (unsafe_unretained) id delegate;
-@property (strong) NSString *host;
-@property (assign) NSInteger port;
-@property (assign) BOOL useSSL;
-@property (assign) BOOL useSystemSocks;
-@property (assign) BOOL useSocks;
-@property (assign) NSInteger socksVersion;
-@property (strong) NSString *proxyHost;
-@property (assign) NSInteger proxyPort;
-@property (strong) NSString *proxyUser;
-@property (strong) NSString *proxyPassword;
-@property (readonly) NSInteger sendQueueSize;
-@property (readonly) BOOL active;
-@property (readonly) BOOL connecting;
-@property (readonly) BOOL connected;
-@property (assign) dispatch_queue_t dispatchQueue;
-@property (assign) dispatch_queue_t socketQueue;
+@property (nonatomic, strong) NSMutableData *buffer; 
+@property (nonatomic, strong) id conn;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, strong) NSString *host;
+@property (nonatomic, assign) NSInteger port;
+@property (nonatomic, assign) BOOL useSSL;
+@property (nonatomic, assign) BOOL useSystemSocks;
+@property (nonatomic, assign) BOOL useSocks;
+@property (nonatomic, assign) NSInteger socksVersion;
+@property (nonatomic, strong) NSString *proxyHost;
+@property (nonatomic, assign) NSInteger proxyPort;
+@property (nonatomic, strong) NSString *proxyUser;
+@property (nonatomic, strong) NSString *proxyPassword;
+@property (nonatomic, assign) NSInteger sendQueueSize;
+@property (nonatomic, assign) BOOL active;
+@property (nonatomic, assign) BOOL connecting;
+@property (nonatomic, assign) BOOL connected;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
 
 - (void)open;
 - (void)close;

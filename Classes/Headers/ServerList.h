@@ -3,7 +3,7 @@
 // Converted to ARC Support on Thursday, June 07, 2012
 
 @interface ServerList : NSOutlineView
-@property (unsafe_unretained) id keyDelegate;
+@property (nonatomic, unsafe_unretained) id keyDelegate;
 
 - (void)toggleAddServerButton;
 @end

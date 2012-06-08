@@ -3,7 +3,7 @@
 // Converted to ARC Support on Thursday, June 07, 2012
 
 @interface MainWindow : NSWindow
-@property (strong) KeyEventHandler *keyHandler;
+@property (nonatomic, strong) KeyEventHandler *keyHandler;
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;

@@ -2,7 +2,7 @@
 // Converted to ARC Support on Thursday, June 07, 2012
 
 @interface WebViewAutoScroll : NSObject
-@property (assign) NSRect lastFrame;
-@property (assign) NSRect lastVisibleRect;
+@property (nonatomic, assign) NSRect lastFrame;
+@property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, weak) WebFrameView *webFrame;
 @end
