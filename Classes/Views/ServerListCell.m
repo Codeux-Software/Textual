@@ -1,15 +1,9 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 /* This class and the one for the user list is based off the open source PXSourceList 
- toolkit developed by Alex Rozanski. The implemtnation is fairly dirty and uses a lot
- of hard coded math/numbers so not recommended to try and use in your own app. 
- 
- Let's hope I can even remember how this works six months from now. — Mikey 
- 
- Also, I did so much custom drawing in this class and the user list because I enjoyed
- the shadows and such that Lion added to table views so I wanted that to be experienced
- on both Snow Leopard and Lion. */
+ toolkit developed by Alex Rozanski. */
 
 #define ICON_SPACING                                5.0
 #define BADGE_RIGHT_MARGIN                          5.0		
@@ -221,19 +215,19 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	NSInteger selectedRow = [parent selectedRow];
+	NSInteger selectedRow = [self.parent selectedRow];
 	
-	if (cellItem) {
-		NSInteger rowIndex = [parent rowForItem:cellItem];
+	if (self.cellItem) {
+		NSInteger rowIndex = [self.parent rowForItem:self.cellItem];
 		
-		NSWindow *parentWindow = [parent.keyDelegate window];
+		NSWindow *parentWindow = [self.parent.keyDelegate window];
         
-		BOOL isGroupItem = [parent isGroupItem:cellItem];
+		BOOL isGroupItem = [self.parent isGroupItem:self.cellItem];
 		BOOL isSelected  = (rowIndex == selectedRow);
 		BOOL isKeyWindow = [parentWindow isOnCurrentWorkspace];
         BOOL isGraphite  = ([NSColor currentControlTint] == NSGraphiteControlTint);
         
-		IRCChannel *channel = cellItem.log.channel;
+		IRCChannel *channel = self.cellItem.log.channel;
 		
 		/* Draw Background */
         
@@ -243,7 +237,7 @@
 			 looks ugly in this developer's opinion. */
 			
 			NSRect backgroundRect = cellFrame;
-			NSRect parentRect	  = [parent frame];
+			NSRect parentRect	  = [self.parent frame];
 			
 			backgroundRect.origin.x   = parentRect.origin.x;
 			backgroundRect.size.width = parentRect.size.width;
@@ -292,8 +286,8 @@
             BOOL drawMessageBadge = (isSelected == NO ||
                                      (isKeyWindow == NO && isSelected));
             
-            NSInteger unreadCount  = cellItem.treeUnreadCount;
-            NSInteger keywordCount = cellItem.keywordCount;
+            NSInteger unreadCount  = self.cellItem.treeUnreadCount;
+            NSInteger keywordCount = self.cellItem.keywordCount;
             
             BOOL isHighlight = (keywordCount >= 1);
             
@@ -357,7 +351,7 @@
 			NSColor *controlColor	= SERVER_CELL_FONT_COLOR;
 			NSFont  *groupFont		= SERVER_CELL_FONT;
 
-			if (cellItem.client.isConnected == NO) {
+			if (self.cellItem.client.isConnected == NO) {
 				controlColor = SERVER_CELL_FONT_COLOR_DISABLED;
 			}
 			

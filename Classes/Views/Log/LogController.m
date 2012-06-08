@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 #define BOTTOM_EPSILON		0
 #define TIME_BUFFER_SIZE	256
@@ -62,11 +63,11 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		bottom        = YES;
-		maxLines      = 300;
+		self.bottom        = YES;
+		self.maxLines      = 300;
 		
-		messageQueue			= [NSMutableArray new];
-		highlightedLineNumbers	= [NSMutableArray new];
+		self.messageQueue			= [NSMutableArray new];
+		self.highlightedLineNumbers	= [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
 		[[WebPreferences standardPreferences] setUsesPageCache:NO];
@@ -81,26 +82,19 @@
 	
 	self.queueInProgress = NO;
 	[self destroyViewLoop];
-	
-	
 }
 
 #pragma mark -
 #pragma mark Properties
 
-- (NSInteger)maxLines
-{
-	return maxLines;
-}
-
 - (void)setMaxLines:(NSInteger)value
 {
-	if (maxLines == value) return;
+	if (self.maxLines == value) return;
 	maxLines = value;
 	
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
-	if (maxLines > 0 && count > maxLines) {
+	if (self.maxLines > 0 && self.count > self.maxLines) {
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
@@ -111,40 +105,39 @@
 
 - (void)setUp
 {
-	loaded = NO;
+	self.loaded = NO;
 	
-	policy = [LogPolicy new];
-	sink   = [LogScriptEventSink new];
+	self.policy = [LogPolicy new];
+	self.sink   = [LogScriptEventSink new];
 	
-	lastVisitedHighlight = -1;
+	self.lastVisitedHighlight = -1;
 	
-	policy.menuController = [world menuController];
-	policy.menu			  = menu;
-	policy.urlMenu		  = urlMenu;
-	policy.addrMenu       = addrMenu;
-	policy.chanMenu		  = chanMenu;
-	policy.memberMenu     = memberMenu;
+	self.policy.menuController = [self.world menuController];
+	self.policy.menu			= self.menu;
+	self.policy.urlMenu			= self.urlMenu;
+	self.policy.chanMenu		= self.chanMenu;
+	self.policy.memberMenu		= self.memberMenu;
 	
-	sink.owner  = self;
-	sink.policy = policy;
+	self.sink.owner  = self;
+	self.sink.policy = self.policy;
 	
-	if (view) {
-		[view removeFromSuperview];
+	if (self.view) {
+		[self.view removeFromSuperview];
 	}
 	
-	view = [[LogView alloc] initWithFrame:NSZeroRect];
+	self.view = [[LogView alloc] initWithFrame:NSZeroRect];
 	
-	view.frameLoadDelegate	  = self;
-	view.UIDelegate			  = policy;
-	view.policyDelegate		  = policy;
-	view.resourceLoadDelegate = self;
-	view.keyDelegate		  = self;
-	view.resizeDelegate		  = self;
-	view.autoresizingMask	  = (NSViewWidthSizable | NSViewHeightSizable);
+	self.view.frameLoadDelegate			= self;
+	self.view.UIDelegate				= self.policy;
+	self.view.policyDelegate			= self.policy;
+	self.view.resourceLoadDelegate		= self;
+	self.view.keyDelegate				= self;
+	self.view.resizeDelegate			= self;
+	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
-	queueInProgress = NO;
+	self.queueInProgress = NO;
 }
 
 - (void)destroyViewLoop
@@ -153,9 +146,9 @@
 		return;
 	}
 	
-	if (PointerIsNotEmpty(messageQueueDispatch)) {
-		dispatch_release(messageQueueDispatch);
-		messageQueueDispatch = NULL;
+	if (PointerIsNotEmpty(self.messageQueueDispatch)) {
+		dispatch_release(self.messageQueueDispatch);
+		self.messageQueueDispatch = NULL;
 	}
 }
 
@@ -167,33 +160,33 @@
 		self.queueInProgress = YES;
 	}
 	
-	if (PointerIsEmpty(messageQueueDispatch)) {
+	if (PointerIsEmpty(self.messageQueueDispatch)) {
 		NSString *uuid = [NSString stringWithUUID];
 		
-		messageQueueDispatch = dispatch_queue_create([uuid UTF8String], NULL);
+		self.messageQueueDispatch = dispatch_queue_create([uuid UTF8String], NULL);
 	}
 	
-	dispatch_async(messageQueueDispatch, ^{
+	dispatch_async(self.messageQueueDispatch, ^{
 		[self messageQueueLoop];
 	});
 }
 
 - (void)messageQueueLoop
 {
-	while (NSObjectIsNotEmpty(messageQueue)) {
-		if (channel) {
+	while (NSObjectIsNotEmpty(self.messageQueue)) {
+		if (self.channel) {
 			[NSThread sleepForTimeInterval:[Preferences viewLoopChannelDelay]];
 		} else {
 			[NSThread sleepForTimeInterval:[Preferences viewLoopConsoleDelay]];
 		}
 		
-		if ([view isLoading] == NO) {
+		if ([self.view isLoading] == NO) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				if (NSObjectIsNotEmpty(messageQueue)) {
-					BOOL srslt = ((MessageBlock)[messageQueue objectAtIndex:0])();
+				if (NSObjectIsNotEmpty(self.messageQueue)) {
+					BOOL srslt = ((MessageBlock)[self.messageQueue objectAtIndex:0])();
 					
 					if (srslt) {						
-						[messageQueue removeObjectAtIndex:0];
+						[self.messageQueue removeObjectAtIndex:0];
 					}
 				}
 			});
@@ -205,9 +198,8 @@
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	[(id)view setBackgroundColor:theme.other.underlyingWindowColor];
-	
-	[[view mainFrame] loadHTMLString:newHTML baseURL:theme.baseUrl];
+	[(id)self.view setBackgroundColor:self.theme.other.underlyingWindowColor];
+	[[self.view mainFrame] loadHTMLString:newHTML baseURL:self.theme.baseUrl];
 }
 
 - (NSInteger)scrollbackCorrectionInit
@@ -217,8 +209,8 @@
 
 - (void)notifyDidBecomeVisible
 {
-	if (becameVisible == NO) {
-		becameVisible = YES;
+	if (self.becameVisible == NO) {
+		self.becameVisible = YES;
 		
 		[self moveToBottom];
 	}
@@ -226,7 +218,7 @@
 
 - (DOMDocument *)mainFrameDocument
 {
-	return [view mainFrameDocument];
+	return [self.view mainFrameDocument];
 }
 
 - (DOMNode *)html_head
@@ -282,14 +274,13 @@
 		return YES;
 	} copy];
 	
-	[messageQueue safeAddObject:messageBlock];
-	
+	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
 
 - (void)moveToTop
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
@@ -303,9 +294,9 @@
 
 - (void)moveToBottom
 {
-	movingToBottom = NO;
+	self.movingToBottom = NO;
 	
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
@@ -319,8 +310,8 @@
 
 - (BOOL)viewingBottom
 {
-	if (loaded == NO)   return YES;
-	if (movingToBottom) return YES;
+	if (self.loaded == NO)   return YES;
+	if (self.movingToBottom) return YES;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return NO;
@@ -328,14 +319,14 @@
 	DOMHTMLElement *body = [doc body];
 	
 	if (body) {
-		NSInteger viewHeight = view.frame.size.height;
+		NSInteger viewHeight = self.view.frame.size.height;
 		
 		NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
 		NSInteger top    = [[body valueForKey:@"scrollTop"] integerValue];
 		
 		if (viewHeight == 0) return YES;
 		
-		return (top + viewHeight >= height - BOTTOM_EPSILON);
+		return ((top + viewHeight) >= (height - BOTTOM_EPSILON));
 	}
 	
 	return NO;
@@ -343,8 +334,8 @@
 
 - (void)savePosition
 {
-	if (loadingImages == 0) {
-		bottom = [self viewingBottom];
+	if (self.loadingImages == 0) {
+		self.bottom = [self viewingBottom];
 	}
 }
 
@@ -356,7 +347,7 @@
 - (void)mark
 {
 	MessageBlock (^messageBlock)(void) = [^{
-		if (loaded == NO) return NO;
+		if (self.loaded == NO) return NO;
 		
 		[self savePosition];
 		
@@ -372,7 +363,7 @@
 			
 			[body appendChild:e];
 			
-			++count;
+			++self.count;
 			
 			[self restorePosition];
 		}
@@ -380,15 +371,14 @@
 		return YES;
 	} copy];
 	
-	[messageQueue safeAddObject:messageBlock];
-	
+	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
 
 - (void)unmark
 {
 	MessageBlock (^messageBlock)(void) = [^{
-		if (loaded == NO) return NO;
+		if (self.loaded == NO) return NO;
 		
 		DOMDocument *doc = [self mainFrameDocument];
 		if (PointerIsEmpty(doc)) return NO;
@@ -398,20 +388,19 @@
 		if (e) {
 			[[e parentNode] removeChild:e];
 			
-			--count;
+			--self.count;
 		}
 		
 		return YES;
 	} copy];
 	
-	[messageQueue safeAddObject:messageBlock];
-	
+	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
 
 - (void)goToMark
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
@@ -436,12 +425,12 @@
 
 - (void)reloadTheme
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	WebScriptObject *js_api = [view js_api];
+	WebScriptObject *js_api = [self.view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
@@ -452,20 +441,19 @@
 	
 	self.html = [(id)body innerHTML];
 	
-	scrollBottom = [self viewingBottom];
-	scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
+	self.scrollBottom = [self viewingBottom];
+	self.scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
 
 - (void)clear
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	self.html = nil;
-	
-	loaded = NO;
-	count  = 0;
+	self.loaded = NO;
+	self.count  = 0;
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -475,9 +463,9 @@
 	[self savePosition];
 	
 	if (bigger) {
-		[view makeTextLarger:nil];
+		[self.view makeTextLarger:nil];
 	} else {
-		[view makeTextSmaller:nil];
+		[self.view makeTextSmaller:nil];
 	}
 	
 	[self restorePosition];
@@ -485,19 +473,19 @@
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
-	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return NO;
 	}
 	
-	if ([highlightedLineNumbers containsObject:NSNumberWithInteger(lastVisitedHighlight)] == NO) {
-		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+	if ([self.highlightedLineNumbers containsObject:NSNumberWithInteger(self.lastVisitedHighlight)] == NO) {
+		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
 	
-	if (previous && [highlightedLineNumbers integerAtIndex:0] == lastVisitedHighlight) {
+	if (previous && [self.highlightedLineNumbers integerAtIndex:0] == self.lastVisitedHighlight) {
 		return NO;
 	}
 	
-	if ((previous == NO) && [highlightedLineNumbers.lastObject integerValue] == lastVisitedHighlight) {
+	if ((previous == NO) && [self.highlightedLineNumbers.lastObject integerValue] == self.lastVisitedHighlight) {
 		return NO;
 	}
 	
@@ -508,7 +496,7 @@
 {
 	NSString *lid = [NSString stringWithFormat:@"line%d", line];
 	
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
@@ -533,69 +521,69 @@
 
 - (void)nextHighlight
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return;
 	}
 	
-	id bhli = NSNumberWithInteger(lastVisitedHighlight);
+	id bhli = NSNumberWithInteger(self.lastVisitedHighlight);
 	
-	if ([highlightedLineNumbers containsObject:bhli]) {
-		NSInteger hli_ci = [highlightedLineNumbers indexOfObject:bhli];
-		NSInteger hli_ei = [highlightedLineNumbers indexOfObject:highlightedLineNumbers.lastObject];
+	if ([self.highlightedLineNumbers containsObject:bhli]) {
+		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
+		NSInteger hli_ei = [self.highlightedLineNumbers indexOfObject:self.highlightedLineNumbers.lastObject];
 		
 		if (NSDissimilarObjects(hli_ci, hli_ei) == NO) {
 			// Return method since the last highlight we 
 			// visited was the end of array. Nothing ahead.
 		} else {
-			lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:(hli_ci + 1)];
+			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci + 1)];
 		}
 	} else {
-		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
 	
-	[self jumpToLine:lastVisitedHighlight];
+	[self jumpToLine:self.lastVisitedHighlight];
 }
 
 - (void)previousHighlight
 {
-	if (loaded == NO) return;
+	if (self.loaded == NO) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 	
-	if (NSObjectIsEmpty(highlightedLineNumbers)) {
+	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return;
 	}
 	
-	id bhli = NSNumberWithInteger(lastVisitedHighlight);
+	id bhli = NSNumberWithInteger(self.lastVisitedHighlight);
 	
-	if ([highlightedLineNumbers containsObject:bhli]) {
-		NSInteger hli_ci = [highlightedLineNumbers indexOfObject:bhli];
+	if ([self.highlightedLineNumbers containsObject:bhli]) {
+		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
 		
 		if (NSDissimilarObjects(hli_ci, 0) == NO) {
 			// Return method since the last highlight we 
 			// visited was the start of array. Nothing ahead.
 		} else {
-			lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:(hli_ci - 1)];
+			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci - 1)];
 		}
 	} else {
-		lastVisitedHighlight = [highlightedLineNumbers integerAtIndex:0];
+		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
 	
-	[self jumpToLine:lastVisitedHighlight];
+	[self jumpToLine:self.lastVisitedHighlight];
 }
 
 - (void)limitNumberOfLines
 {
-	needsLimitNumberOfLines = NO;
+	self.needsLimitNumberOfLines = NO;
 	
-	NSInteger n = (count - maxLines);
-	if (loaded == NO || n <= 0 || count <= 0) return;
+	NSInteger n = (self.count - self.maxLines);
+	if (self.loaded == NO || n <= 0 || self.count <= 0) return;
 	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
@@ -606,13 +594,13 @@
 	DOMNodeList *nodeList = [body childNodes];
 	if (PointerIsEmpty(nodeList)) return;
 	
-	n = (nodeList.length - maxLines);
+	n = (nodeList.length - self.maxLines);
 	
 	for (NSInteger i = (n - 1); i >= 0; --i) {
 		[body removeChild:[nodeList item:(unsigned)i]];
 	}
 	
-	if (NSObjectIsNotEmpty(highlightedLineNumbers)) {
+	if (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
 		DOMNodeList *nodeList = [body childNodes];
 		
 		if (nodeList.length) {
@@ -625,28 +613,28 @@
 					NSString *lineNumStr = [lineId safeSubstringFromIndex:4];
 					NSInteger lineNum    = [lineNumStr integerValue];
 					
-					while (NSObjectIsNotEmpty(highlightedLineNumbers)) {
-						NSInteger i = [highlightedLineNumbers integerAtIndex:0];
+					while (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
+						NSInteger i = [self.highlightedLineNumbers integerAtIndex:0];
 						
 						if (lineNum <= i) break;
 						
-						[highlightedLineNumbers safeRemoveObjectAtIndex:0];
+						[self.highlightedLineNumbers safeRemoveObjectAtIndex:0];
 					}
 				}
 			}
 		} else {
-			[highlightedLineNumbers removeAllObjects];
+			[self.highlightedLineNumbers removeAllObjects];
 		}
 	}
 	
-	count -= n;
+	self.count -= n;
 	
-	if (count < 0) count = 0;
+	if (self.count < 0) self.count = 0;
 }
 
 - (void)setNeedsLimitNumberOfLines
 {
-	if (needsLimitNumberOfLines) return;
+	if (self.needsLimitNumberOfLines) return;
 	
 	needsLimitNumberOfLines = YES;
 	
@@ -701,10 +689,10 @@
 		body = line.body;
 	}
 	
-	BOOL oldRenderAbs = (theme.other.renderingEngineVersion == 0.0);
-	BOOL oldRenderEst = (theme.other.renderingEngineVersion == 1.2);
-	BOOL oldRenderAlt = (theme.other.renderingEngineVersion == 1.1 || oldRenderEst);
-	BOOL modernRender = (theme.other.renderingEngineVersion == 2.1);
+	BOOL oldRenderAbs = (self.theme.other.renderingEngineVersion == 0.0);
+	BOOL oldRenderEst = (self.theme.other.renderingEngineVersion == 1.2);
+	BOOL oldRenderAlt = (self.theme.other.renderingEngineVersion == 1.1 || oldRenderEst);
+	BOOL modernRender = (self.theme.other.renderingEngineVersion == 2.1);
 	
 	NSMutableString *s = [NSMutableString string];
 	
@@ -763,7 +751,7 @@
 	}
 	
 	if (isNormalMsg && NSObjectIsNotEmpty(urlRanges) && [Preferences showInlineImages]) {
-		if (([channel isChannel] && channel.config.inlineImages == NO) || [channel isTalk]) {
+		if (([self.channel isChannel] && self.channel.config.inlineImages == NO) || [self.channel isTalk]) {
 			NSString *imageUrl  = nil;
 			
 			NSMutableArray *postedUrls = [NSMutableArray array];
@@ -823,7 +811,7 @@
 			messageBody = [NSString stringWithFormat:@"%@ %@", nicknameBody, line.body];
 		}
 		
-		[world addHighlightInChannel:channel withMessage:messageBody];
+		[self.world addHighlightInChannel:self.channel withMessage:messageBody];
 	}
 	
 	return highlighted;
@@ -834,8 +822,8 @@
 	MessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
 		
-		++lineNumber;
-		++count;
+		++self.lineNumber;
+		++self.count;
 		
 		DOMDocument *doc = [self mainFrameDocument];
 		if (PointerIsEmpty(doc)) return NO;
@@ -853,30 +841,29 @@
 			[div setAttribute:key value:value];
 		}
 		
-		[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", lineNumber]];
+		[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", self.lineNumber]];
 		
 		[body appendChild:div];
 		
-		if (maxLines > 0 && (count - 10) > maxLines) {
+		if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
 			[self setNeedsLimitNumberOfLines];
 		}
 		
 		if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-			[highlightedLineNumbers safeAddObject:[NSNumber numberWithInteger:lineNumber]];
+			[self.highlightedLineNumbers safeAddObject:[NSNumber numberWithInteger:self.lineNumber]];
 		}
 		
-		WebScriptObject *js_api = [view js_api];
+		WebScriptObject *js_api = [self.view js_api];
 		
 		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 			[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
-						  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(lineNumber), nil]];  
+						  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(self.lineNumber), nil]];  
 		} 
 		
 		return YES;
 	} copy];
 	
-	[messageQueue safeAddObject:messageBlock];
-	
+	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
 
@@ -884,11 +871,11 @@
 {
 	NSMutableString *bodyAttrs = [NSMutableString string];
 	
-	if (channel) {
-		[bodyAttrs appendFormat:@"type=\"%@\"", [channel channelTypeString]];
+	if (self.channel) {
+		[bodyAttrs appendFormat:@"type=\"%@\"", [self.channel channelTypeString]];
 		
-		if ([channel isChannel]) {
-			[bodyAttrs appendFormat:@" channelname=\"%@\"", logEscape([channel name])];
+		if ([self.channel isChannel]) {
+			[bodyAttrs appendFormat:@" channelname=\"%@\"", logEscape([self.channel name])];
 		}
 	} else {
 		[bodyAttrs appendString:@"type=\"server\""];
@@ -910,7 +897,7 @@
 	NSString *ti = [NSString stringWithUUID];
 	
 	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?u=%@\" />", ti];
-	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", theme.core_js.filename];
+	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", self.theme.core_js.filename];
 	[s appendFormat:@"<script src=\"scripts.js?u=%@\" type=\"text/javascript\"></script>", ti];
 	
 	if (override_style) {
@@ -919,13 +906,13 @@
 	
 	[s appendFormat:@"</head><body %@>", bodyAttrs];
 	
-	if (NSObjectIsNotEmpty(html)) {
-		[s appendFormat:@"<div id=\"body_home\">%@</div>", html];
+	if (NSObjectIsNotEmpty(self.html)) {
+		[s appendFormat:@"<div id=\"body_home\">%@</div>", self.html];
 	} else {
 		[s appendString:@"<div id=\"body_home\"></div>"];
 	}
 	
-	if (channel && (channel.isChannel || channel.isTalk)) {
+	if (self.channel && (self.channel.isChannel || self.channel.isTalk)) {
 		if (NSObjectIsNotEmpty(topic)) {
 			[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
 		} else {
@@ -935,7 +922,7 @@
 	
 	[s appendString:@"</html>"];
 	
-	html = nil;
+	self.html = nil;
 	
 	return s;
 }
@@ -944,7 +931,7 @@
 {
 	NSMutableString *sf = [NSMutableString string];
 	
-	OtherTheme *other = world.viewTheme.other;
+	OtherTheme *other = self.world.viewTheme.other;
 	
 	NSFont *channelFont = other.channelViewFont;
 	
@@ -989,7 +976,7 @@
 
 - (void)setUpScroller
 {
-	WebFrameView *frame = [[view mainFrame] frameView];
+	WebFrameView *frame = [[self.view mainFrame] frameView];
 	if (PointerIsEmpty(frame)) return;
 	
 	NSScrollView *scrollView = nil;
@@ -1024,44 +1011,44 @@
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-	js = windowObject;
+	self.js = windowObject;
 	
-	[js setValue:sink forKey:@"app"];
+	[self.js setValue:self.sink forKey:@"app"];
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	loaded		  = YES;
-	loadingImages = 0;
+	self.loaded		  = YES;
+	self.loadingImages = 0;
 	
 	[self setUpScroller];
 	
-	if (PointerIsEmpty(autoScroller)) {
-		autoScroller = [WebViewAutoScroll new];
+	if (PointerIsEmpty(self.autoScroller)) {
+		self.autoScroller = [WebViewAutoScroll new];
 	}
 	
-	autoScroller.webFrame = view.mainFrame.frameView;
+	self.autoScroller.webFrame = view.mainFrame.frameView;
 	
-	if (html) {
+	if (self.html) {
 		DOMDocument *doc = [frame DOMDocument];
 		
 		if (doc) {
 			DOMElement *body = [self body:doc];
 			
-			[(id)body setInnerHTML:html];
+			[(id)body setInnerHTML:self.html];
 			
 			self.html = nil;
 			
-			if (scrollBottom) {
+			if (self.scrollBottom) {
 				[self moveToBottom];
-			} else if (scrollTop) {
-				[body setValue:NSNumberWithInteger(scrollTop) forKey:@"scrollTop"];
+			} else if (self.scrollTop) {
+				[body setValue:NSNumberWithInteger(self.scrollTop) forKey:@"scrollTop"];
 			}
 		}
 	} else {
 		[self moveToBottom];
 		
-		bottom = YES;
+		self.bottom = YES;
 	}
 	
 	DOMDocument *doc = [frame DOMDocument];
@@ -1082,7 +1069,7 @@
 		e = next;
 	}
 	
-	WebScriptObject *js_api = [view js_api];
+	WebScriptObject *js_api = [self.view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
@@ -1096,11 +1083,11 @@
 	if ([scheme isEqualToString:@"http"] || 
 		[scheme isEqualToString:@"https"]) {
 		
-		if (loadingImages == 0) {
+		if (self.loadingImages == 0) {
 			[self savePosition];
 		}
 		
-		++loadingImages;
+		++self.loadingImages;
 		
 		return self;
 	}
@@ -1111,11 +1098,11 @@
 - (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 {
 	if (identifier) {
-		if (loadingImages > 0) {
-			--loadingImages;
+		if (self.loadingImages > 0) {
+			--self.loadingImages;
 		}
 		
-		if (loadingImages == 0) {
+		if (self.loadingImages == 0) {
 			[self restorePosition];
 		}
 	}
@@ -1126,12 +1113,12 @@
 
 - (void)logViewKeyDown:(NSEvent *)e
 {
-	[world logKeyDown:e];
+	[self.world logKeyDown:e];
 }
 
 - (void)logViewOnDoubleClick:(NSString *)e
 {
-	[world logDoubleClick:e];
+	[self.world logDoubleClick:e];
 }
 
 - (void)logViewWillResize

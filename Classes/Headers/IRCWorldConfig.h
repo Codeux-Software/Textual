@@ -6,7 +6,7 @@
 	NSMutableArray *clients;
 }
 
-@property (nonatomic, readonly) NSMutableArray *clients;
+@property (readonly) NSMutableArray *clients;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;

@@ -8,8 +8,8 @@
 	NSMutableArray *scripts;
 }
 
-@property (nonatomic, weak) IRCWorld *world;
-@property (nonatomic, strong) NSMutableArray *scripts;
+@property (weak) IRCWorld *world;
+@property (strong) NSMutableArray *scripts;
 
 - (void)populateData;
 @end

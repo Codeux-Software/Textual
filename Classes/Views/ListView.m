@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation ListView
 
@@ -83,13 +84,13 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (keyDelegate) {
+	if (self.keyDelegate) {
 		switch ([e keyCode]) {
 			case 51:
 			case 117:	
 				if ([self countSelectedRows] > 0) {
-					if ([keyDelegate respondsToSelector:@selector(listViewDelete)]) {
-						[keyDelegate listViewDelete];
+					if ([self.keyDelegate respondsToSelector:@selector(listViewDelete)]) {
+						[self.keyDelegate listViewDelete];
 						
 						return;
 					}
@@ -100,8 +101,8 @@
 				NSIndexSet *set = [self selectedRowIndexes];
 				
 				if (NSObjectIsNotEmpty(set) && [set containsIndex:0]) {
-					if ([keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
-						[keyDelegate listViewMoveUp];
+					if ([self.keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
+						[self.keyDelegate listViewMoveUp];
 						
 						return;
 					}
@@ -113,8 +114,8 @@
 			case 123 ... 125:	
 				break;
 			default:
-				if ([keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
-					[keyDelegate listViewKeyDown:e];
+				if ([self.keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
+					[self.keyDelegate listViewKeyDown:e];
 				}
 				
 				break;
@@ -126,8 +127,8 @@
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	if ([textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-		[textDelegate textDidEndEditing:note];
+	if ([self.textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+		[self.textDelegate textDidEndEditing:note];
 	} else {
 		[super textDidEndEditing:note];
 	}

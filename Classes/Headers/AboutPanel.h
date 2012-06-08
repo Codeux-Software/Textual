@@ -8,8 +8,8 @@
 	IBOutlet NSTextField *versionInfo;
 }
 
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, strong) NSTextField *versionInfo;
+@property (unsafe_unretained) id delegate;
+@property (strong) NSTextField *versionInfo;
 
 - (void)show;
 @end

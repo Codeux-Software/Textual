@@ -1,6 +1,11 @@
 // Created by Allan Odgaard.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation WebViewAutoScroll
+
+@synthesize lastVisibleRect;
+@synthesize lastFrame;
+@synthesize webFrame;
 
 - (void)scrollViewToBottom:(NSView *)aView
 {
@@ -14,28 +19,22 @@
 - (void)dealloc
 {
 	self.webFrame = nil;
-	
-}
-
-- (WebFrameView *)webFrame
-{
-	return webFrame;
 }
 
 - (void)setWebFrame:(WebFrameView *)aWebFrame
 {
-	if (aWebFrame == webFrame) {
+	if (aWebFrame == self.webFrame) {
 		return;
 	}
 	
 	webFrame = aWebFrame;
 	
-	if (webFrame) {
+	if (self.webFrame) {
 		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
 		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
-		lastFrame		= [[webFrame documentView] frame];
-		lastVisibleRect = [[webFrame documentView] visibleRect];
+		self.lastFrame		 = [[self.webFrame documentView] frame];
+		self.lastVisibleRect = [[self.webFrame documentView] visibleRect];
 	} else {
 		[_NSNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
 		[_NSNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
@@ -44,36 +43,36 @@
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSClipView *clipView = [[[webFrame documentView] enclosingScrollView] contentView];
+	NSClipView *clipView = [[[self.webFrame documentView] enclosingScrollView] contentView];
 	
 	if (NSDissimilarObjects(clipView, [aNotification object])) {
 		return;
 	}
 	
-	lastVisibleRect = [[clipView documentView] visibleRect];
+	self.lastVisibleRect = [[clipView documentView] visibleRect];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
 	NSView *view = [aNotification object];
 	
-	if (NSDissimilarObjects(view, webFrame) && NSDissimilarObjects(view, [webFrame documentView])) {
+	if (NSDissimilarObjects(view, self.webFrame) && NSDissimilarObjects(view, [self.webFrame documentView])) {
 		return;
 	}
 	
-	if (view == [webFrame documentView]) {
-		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame)) {
+	if (view == [self.webFrame documentView]) {
+		if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
 			[self scrollViewToBottom:view];
 			
-			lastVisibleRect = [view visibleRect];
+			self.lastVisibleRect = [view visibleRect];
 		}
 		
-		lastFrame = [view frame];
+		self.lastFrame = [view frame];
 	}
 	
-	if (view == webFrame) {
-		if (NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame)) {
-			[self scrollViewToBottom:[webFrame documentView]];
+	if (view == self.webFrame) {
+		if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
+			[self scrollViewToBottom:[self.webFrame documentView]];
 		}
 	}
 }

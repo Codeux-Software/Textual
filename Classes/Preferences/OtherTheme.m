@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @interface OtherTheme (Private)
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
@@ -16,6 +17,7 @@
 
 @implementation OtherTheme
 
+@synthesize path;
 @synthesize channelViewFont;
 @synthesize channelViewFontOverrode;
 @synthesize nicknameFormat;
@@ -24,14 +26,9 @@
 @synthesize indentationOffset;
 @synthesize renderingEngineVersion;
 
-- (NSString *)path
-{
-	return path;
-}
-
 - (void)setPath:(NSString *)value
 {
-	if (NSDissimilarObjects(path, value)) {
+	if (NSDissimilarObjects(self.path, value)) {
 		path = value;
 	}
 	
@@ -101,7 +98,7 @@
 	
 	// ====================================================== //
 	
-	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/userInterface.plist"]];
+	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[self.path stringByAppendingPathComponent:@"/userInterface.plist"]];
 	
 	self.renderingEngineVersion = [userInterface doubleForKey:@"Rendering Engine Version"];
 	self.underlyingWindowColor	= [self processColorStringValue:[userInterface objectForKey:@"Underlying Window Color"]
@@ -110,7 +107,7 @@
 	
 	// ====================================================== //
 	
-	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
+	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[self.path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
 	NSDictionary *prefOChannelFont    = [preferencesOverride objectForKey:@"Override Channel Font"];
 	
 	// ====================================================== //

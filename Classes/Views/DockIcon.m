@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 #define _NSMainScreen()		[NSScreen mainScreen]
 
@@ -10,7 +11,6 @@
 @implementation DockIcon
 
 /* The math is messy but it gets the job done. =) */
-
 + (void)drawWithoutCounts
 {
 	[NSApp setApplicationIconImage:[NSImage imageNamed:@"NSApplicationIcon"]];
@@ -83,15 +83,10 @@
 + (NSString *)badgeFilename:(NSInteger)count
 {
 	switch (count) {
-		case 1 ... 99:
-			return @"1&2.tiff";
-			break;
-		case 100 ... 999:
-			return @"3.tiff";
-			break;
-		case 1000 ... 9999:
-			return @"4.tiff";
-			break;
+		case 1 ... 99: return @"1&2.tiff"; break;
+		case 100 ... 999: return @"3.tiff"; break;
+		case 1000 ... 9999: return @"4.tiff"; break;
+		default: break;
 	}
 	
 	return nil;

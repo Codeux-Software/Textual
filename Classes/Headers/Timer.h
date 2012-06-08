@@ -11,11 +11,11 @@
 	NSTimer *timer;
 }
 
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, assign) BOOL reqeat;
-@property (nonatomic, assign) SEL selector;
-@property (nonatomic, readonly) BOOL isActive;
-@property (nonatomic, strong) NSTimer *timer;
+@property (unsafe_unretained) id delegate;
+@property (assign) BOOL reqeat;
+@property (assign) SEL selector;
+@property (readonly) BOOL isActive;
+@property (strong) NSTimer *timer;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;

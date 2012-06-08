@@ -17,24 +17,18 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		other = [OtherTheme new];
+		self.other = [OtherTheme new];
 		
-		core_js = [FileWithContent new];
-		core_js.filename = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
+		self.core_js = [FileWithContent new];
+		self.core_js.filename = [[Preferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
 	
 	return self;
 }
 
-
-- (NSString *)name
-{
-	return name;
-}
-
 - (void)setName:(NSString *)value
 {
-	if (name != value) {
+	if (self.name != value) {
 		name = value;
 	}
 	
@@ -43,7 +37,7 @@
 
 - (void)validateFilePathExistanceAndReload:(BOOL)reload
 {
-	if (name) {
+	if (self.name) {
 		NSString *kind = [ViewTheme extractThemeSource:[Preferences themeName]];
 		NSString *filename = [ViewTheme extractThemeName:[Preferences themeName]];
 		
@@ -68,14 +62,13 @@
 			}
 			
 			self.baseUrl = [NSURL fileURLWithPath:path];
-			
-			other.path = path;
+			self.other.path = path;
 			
 			return;
 		}
 	}
 	
-	other.path = nil;
+	self.other.path = nil;
 }
 
 - (void)load
@@ -85,7 +78,7 @@
 
 - (void)reload
 {
-	[other reload];
+	[self.other reload];
 }
 
 + (void)createDirectoryAtLocation:(NSString *)dest 

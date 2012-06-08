@@ -13,10 +13,10 @@
 	NSFileHandle *file;
 }
 
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, weak) IRCChannel *channel;
-@property (nonatomic, strong) NSString *filename;
-@property (nonatomic, strong) NSFileHandle *file;
+@property (weak) IRCClient *client;
+@property (weak) IRCChannel *channel;
+@property (strong) NSString *filename;
+@property (strong) NSFileHandle *file;
 
 - (void)open;
 - (void)close;

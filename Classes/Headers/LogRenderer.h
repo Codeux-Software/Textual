@@ -1,5 +1,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @class LogController;
 
@@ -15,11 +16,9 @@ TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
 TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);
 
 @interface LogRenderer : NSObject
-
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(LogController *)log
 			  renderType:(LogRendererType)drawingType
 			  properties:(NSDictionary *)inputDictionary
 			  resultInfo:(NSDictionary **)outputDictionary;
-
 @end

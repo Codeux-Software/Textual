@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation LogView
 
@@ -8,7 +9,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (keyDelegate) {
+	if (self.keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
 		BOOL ctrl = (m & NSControlKeyMask);
@@ -16,8 +17,8 @@
 		BOOL alt  = (m & NSAlternateKeyMask);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
-			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-				[keyDelegate logViewKeyDown:e];
+			if ([self.keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
+				[self.keyDelegate logViewKeyDown:e];
 			}
 			
 			return;
@@ -29,14 +30,14 @@
 
 - (void)setFrame:(NSRect)rect
 {
-	if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
-		[resizeDelegate logViewWillResize];
+	if (self.resizeDelegate && [self.resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
+		[self.resizeDelegate logViewWillResize];
 	}
 	
 	[super setFrame:rect];
 	
-	if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
-		[resizeDelegate logViewDidResize];
+	if (self.resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
+		[self.resizeDelegate logViewDidResize];
 	}
 }
 
