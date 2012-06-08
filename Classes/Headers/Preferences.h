@@ -32,7 +32,7 @@ typedef enum {
 	CMDWKEY_SHORTCUT_PARTC = 1,
 	CMDWKEY_SHORTCUT_DISCT = 2,
 	CMDWKEY_SHORTCUT_QUITA = 3,
-} CmdW_Shortcut_ResponseType;
+} CmdWShortcutResponseType;
 
 typedef enum {
 	HMBAN_FORMAT_WHNIN  = 0, // With Hostmask, No Username/Nickname
@@ -42,7 +42,6 @@ typedef enum {
 } HostmaskBanFormat;
 
 @interface Preferences : NSObject
-
 + (BOOL)sandboxEnabled;
 
 + (void)validateStoreReceipt;
@@ -139,7 +138,7 @@ typedef enum {
 + (BOOL)autojoinWaitForNickServ;
 + (BOOL)inputHistoryIsChannelSpecific;
 
-+ (CmdW_Shortcut_ResponseType)cmdWResponseType;
++ (CmdWShortcutResponseType)cmdWResponseType;
 
 + (BOOL)logTranscript;
 
@@ -206,5 +205,4 @@ typedef enum {
 
 + (void)initPreferences;
 + (void)sync;
-
 @end

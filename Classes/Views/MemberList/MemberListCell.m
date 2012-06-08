@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 /* That is a lot of defenitions … */
 #define BADGE_MARGIN                                5.0
@@ -170,13 +171,13 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-    NSArray *selectedRows = [parent selectedRows];
+    NSArray *selectedRows = [self.parent selectedRows];
     
-    if (cellItem) {
-		IRCChannel *channel = (id)[parent dataSource];
+    if (self.cellItem) {
+		IRCChannel *channel = (id)[self.parent dataSource];
         IRCClient  *client  = [channel client];
         
-        NSInteger rowIndex = [parent rowAtPoint:cellFrame.origin];
+        NSInteger rowIndex = [self.parent rowAtPoint:cellFrame.origin];
 		
 		NSWindow *parentWindow = [client.world window];
         
@@ -224,13 +225,13 @@
 		
 		/* Draw Badges, Text, and Status Icon */
         
-        [self drawModeBadge:member.mark inCell:cellFrame isSelected:isSelected];
+        [self drawModeBadge:self.member.mark inCell:cellFrame isSelected:isSelected];
 		
 		NSAttributedString			*stringValue	= [self attributedStringValue];	
 		NSMutableAttributedString	*newValue		= nil;
         
         newValue = [NSMutableAttributedString alloc];
-        newValue = [newValue initWithString:member.nick attributes:[stringValue attributes]];
+        newValue = [newValue initWithString:self.member.nick attributes:[stringValue attributes]];
 		
 		NSShadow *itemShadow = [NSShadow new];
 		

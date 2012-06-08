@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation MainWindow
 
@@ -13,7 +14,7 @@
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
-		keyHandler = [KeyEventHandler new];
+		self.keyHandler = [KeyEventHandler new];
 	}
 	
 	return self;
@@ -22,23 +23,23 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[keyHandler setTarget:target];
+	[self.keyHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[keyHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[keyHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == NSKeyDown) {
-		if ([keyHandler processKeyEvent:e]) {
+		if ([self.keyHandler processKeyEvent:e]) {
 			return;
 		}
 	}
@@ -46,7 +47,8 @@
 	[super sendEvent:e];
 }
 
-- (void)endEditingFor:(id)object {
+- (void)endEditingFor:(id)object
+{
 	/* WebHTMLView results in this method being called.
 	 *
 	 * The documentation states "The endEditingFor: method should be used only as a

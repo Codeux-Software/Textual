@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
 
@@ -17,6 +18,10 @@
 
 @implementation InputTextField
 
+@synthesize _placeholderString;
+@synthesize _actionTarget;
+@synthesize _actionSelector;
+
 #pragma mark -
 #pragma mark Drawing
 
@@ -32,8 +37,8 @@
         [attrs setObject:DefaultTextFieldFont forKey:NSFontAttributeName];
         [attrs setObject:[NSColor grayColor]  forKey:NSForegroundColorAttributeName];
         
-        _placeholderString = [NSAttributedString alloc];
-        _placeholderString = [_placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
+        self._placeholderString = [NSAttributedString alloc];
+        self._placeholderString = [self._placeholderString initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
 		
 		[super sanitizeTextField:YES];
 
@@ -157,7 +162,7 @@
 			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
 		}
 		
-		[_placeholderString drawAtPoint:NSMakePoint(6, 5)];
+		[self._placeholderString drawAtPoint:NSMakePoint(6, 5)];
 		
 		if ([Preferences useLogAntialiasing] == NO) {
 			[_NSGraphicsCurrentContext() restoreGraphicsState];
@@ -175,8 +180,8 @@
 
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner
 {
-    _actionTarget  = owner;
-    _actonSelector = selector;
+    self._actionTarget  = owner;
+    self._actionSelector = selector;
 }
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
@@ -185,7 +190,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		[_actionTarget performSelector:_actonSelector];
+		[self._actionTarget performSelector:self._actionSelector];
 #pragma clang diagnostic pop
         
         [self resetTextFieldCellSize];

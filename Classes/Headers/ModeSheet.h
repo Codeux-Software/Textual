@@ -24,20 +24,20 @@
 	IBOutlet NSTextField *lText;
 }
 
-@property (nonatomic, weak) IRCChannelMode *mode;
-@property (nonatomic, strong) NSString *channelName;
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, strong) NSButton *sCheck;
-@property (nonatomic, strong) NSButton *pCheck;
-@property (nonatomic, strong) NSButton *nCheck;
-@property (nonatomic, strong) NSButton *tCheck;
-@property (nonatomic, strong) NSButton *iCheck;
-@property (nonatomic, strong) NSButton *mCheck;
-@property (nonatomic, strong) NSButton *kCheck;
-@property (nonatomic, strong) NSButton *lCheck;
-@property (nonatomic, strong) NSTextField *kText;
-@property (nonatomic, strong) NSTextField *lText;
+@property (weak) IRCChannelMode *mode;
+@property (strong) NSString *channelName;
+@property (assign) NSInteger uid;
+@property (assign) NSInteger cid;
+@property (strong) NSButton *sCheck;
+@property (strong) NSButton *pCheck;
+@property (strong) NSButton *nCheck;
+@property (strong) NSButton *tCheck;
+@property (strong) NSButton *iCheck;
+@property (strong) NSButton *mCheck;
+@property (strong) NSButton *kCheck;
+@property (strong) NSButton *lCheck;
+@property (strong) NSTextField *kText;
+@property (strong) NSTextField *lText;
 
 - (void)start;
 - (void)onChangeCheck:(id)sender;

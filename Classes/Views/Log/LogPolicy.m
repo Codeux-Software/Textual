@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 #define WebMenuItemTagInspectElement	2024
 #define WebMenuItemTagIRCopServices		42354
@@ -10,16 +11,14 @@
 @synthesize menuController;
 @synthesize menu;
 @synthesize urlMenu;
-@synthesize addrMenu;
 @synthesize memberMenu;
 @synthesize chanMenu;
 @synthesize url;
-@synthesize addr;
 @synthesize nick;
 @synthesize chan;
 
-
-- (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
+- (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation
+  modifierFlags:(NSUInteger)modifierFlags
 {
 	if ([Preferences copyOnSelect]) {
 		if (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) {
@@ -46,44 +45,41 @@
 
 - (void)channelDoubleClicked
 {
-	menuController.pointedChannelName = chan;
+	self.menuController.pointedChannelName = self.chan;
+	self.chan = nil;
 	
-	chan = nil;
-	
-	[menuController onJoinChannel:nil];
+	[self.menuController onJoinChannel:nil];
 }
 
 - (void)nicknameDoubleClicked
 {
-	menuController.pointedNick = nick;
+	self.menuController.pointedNick = self.nick;
+	self.nick = nil;
 	
-	nick = nil;
-	
-	[menuController memberListDoubleClicked:nil];
+	[self.menuController memberListDoubleClicked:nil];
 }
 
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element
+	defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	NSMutableArray *ary = [NSMutableArray array];
 	
-	if (url) {
-		menuController.pointedUrl = url;
+	if (self.url) {
+		self.menuController.pointedUrl = self.url;
+		self.url = nil;
 		
-		url = nil;
-		
-		for (NSMenuItem *item in [urlMenu itemArray]) {
+		for (NSMenuItem *item in [self.urlMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else if (nick) {
-		menuController.pointedNick = nick;
+	} else if (self.nick) {
+		self.menuController.pointedNick = self.nick;
+		self.nick = nil;
 		
-		nick = nil;
+		BOOL isIRCop = [[self.menuController.world selectedClient] IRCopStatus];
 		
-		BOOL isIRCop = [[menuController.world selectedClient] IRCopStatus];
-		
-		for (NSMenuItem *item in [memberMenu itemArray]) {
+		for (NSMenuItem *item in [self.memberMenu itemArray]) {
 			if ([item tag] == WebMenuItemTagIRCopServices && isIRCop == NO) {
 				continue;
 			}
@@ -92,17 +88,16 @@
 		}
 		
 		return ary;
-	} else if (chan) {
-		menuController.pointedChannelName = chan;
+	} else if (self.chan) {
+		self.menuController.pointedChannelName = self.chan;
+		self.chan = nil;
 		
-		chan = nil;
-		
-		for (NSMenuItem *item in [chanMenu itemArray]) {
+		for (NSMenuItem *item in [self.chanMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else if (menu) {
+	} else if (self.menu) {
 		NSMenuItem *inspectElementItem = nil;
 		NSMenuItem *lookupInDictionaryItem = nil;
 		
@@ -114,7 +109,7 @@
 			}
 		}
 		
-		for (NSMenuItem *item in [menu itemArray]) {
+		for (NSMenuItem *item in [self.menu itemArray]) {
 			if ([item tag] == WebMenuItemTagInspectElement) {
 				if (lookupInDictionaryItem) {
 					[ary safeAddObject:[lookupInDictionaryItem copy]];
@@ -137,8 +132,8 @@
 			NSMenuItem *reloadTheme = [[NSMenuItem alloc] initWithTitle:TXTLS(@"FORCE_RELOAD_THEME_MENU_ITEM") 
 																  action:@selector(onWantThemeForceReloaded:) keyEquivalent:NSNullObject];
 			
-			[copyHTML	 setTarget:menuController];
-			[reloadTheme setTarget:menuController];
+			[copyHTML	 setTarget:self.menuController];
+			[reloadTheme setTarget:self.menuController];
 		
 			[ary safeAddObject:copyHTML];
 			[ary safeAddObject:reloadTheme];
@@ -152,7 +147,8 @@
 	return defaultMenuItems;
 }
 
-- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+		request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
 	NSInteger action = [actionInformation integerForKey:WebActionNavigationTypeKey];
 	

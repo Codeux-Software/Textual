@@ -11,10 +11,10 @@
 	NSMutableArray *params;
 }
 
-@property (nonatomic, readonly) NSString *command;
-@property (nonatomic, readonly) NSMutableArray *params;
-@property (nonatomic, assign) BOOL completeColon;
-@property (weak, nonatomic, readonly) NSString *string;
+@property (readonly) NSString *command;
+@property (readonly) NSMutableArray *params;
+@property (assign) BOOL completeColon;
+@property (weak, readonly) NSString *string;
 
 - (id)initWithCommand:(NSString *)aCommand;
 - (void)addParameter:(NSString *)parameter;

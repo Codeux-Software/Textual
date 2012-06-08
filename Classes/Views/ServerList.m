@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation ServerList
 
@@ -31,10 +32,10 @@
 {
 	NSRect clipRect = [self frame];
 	
-	MasterController *master = [keyDelegate master];
+	MasterController *master = [self.keyDelegate master];
 	MenuController   *menucl = [master menu];
 	
-	if (NSObjectIsEmpty([keyDelegate clients])) { 
+	if (NSObjectIsEmpty([self.keyDelegate clients])) {
 		[master.addServerButton setHidden:NO];
 		[master.addServerButton setTarget:menucl];
 		[master.addServerButton setAction:@selector(onAddServer:)];
@@ -59,7 +60,7 @@
 	if (i >= 0) {
 		[self selectItemAtIndex:i];
 	} else if (i == -1) {
-		return [keyDelegate treeMenu];
+		return [self.keyDelegate treeMenu];
 	}
 	
 	return [self menu];
@@ -67,15 +68,15 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (keyDelegate) {
+	if (self.keyDelegate) {
 		switch ([e keyCode]) {
 			case 123 ... 126:
 			case 116:
 			case 121:
 				break;
 			default:
-				if ([keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
-					[keyDelegate serverListKeyDown:e];
+				if ([self.keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
+					[self.keyDelegate serverListKeyDown:e];
 				}
 				
 				break;

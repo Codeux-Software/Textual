@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 #define DefaultTextFieldFontColor           [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
 #define DefaultTextFieldFont                [NSFont fontWithName:@"Helvetica" size:12.0]
@@ -9,11 +10,8 @@
 @class KeyEventHandler;
 
 @interface TextField : NSTextView 
-{
-	KeyEventHandler *_keyHandler;
-    
-    dispatch_queue_t _formattingQueue;
-}
+@property (strong) KeyEventHandler *_keyHandler;
+@property (assign) dispatch_queue_t _formattingQueue;
 
 - (BOOL)isAtTopfView;
 - (BOOL)isAtBottomOfView;
