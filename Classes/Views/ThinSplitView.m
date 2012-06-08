@@ -76,6 +76,8 @@
 
 - (void)setInverted:(BOOL)value
 {
+	if (inverted == value) return;
+	
 	inverted = value;
 	
 	NSView *a = [[self subviews] safeObjectAtIndex:0];
