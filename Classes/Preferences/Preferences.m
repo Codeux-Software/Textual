@@ -560,9 +560,9 @@ static NSMutableDictionary *commandIndex = nil;
 	return (NoticesSendToLocation)[_NSUserDefaults() integerForKey:@"Preferences.General.notices_sendto_location"];
 }
 
-+ (CmdW_Shortcut_ResponseType)cmdWResponseType
++ (CmdWShortcutResponseType)cmdWResponseType
 {
-	return (CmdW_Shortcut_ResponseType)[_NSUserDefaults() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
+	return (CmdWShortcutResponseType)[_NSUserDefaults() integerForKey:@"Preferences.General.keyboard_cmdw_response"];
 }
 
 #pragma mark -

@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 #define DOUBLE_CLICK_RADIUS	3
 
@@ -14,8 +15,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		x = -10000;
-		y = -10000;
+		self.x = -10000;
+		self.y = -10000;
 	}
 	
 	return self;
@@ -50,7 +51,7 @@
 
 - (void)onDblClick:(id)e
 {
-	[owner logViewOnDoubleClick:e];
+	[self.owner logViewOnDoubleClick:e];
 }
 
 - (BOOL)shouldStopDoubleClick:(id)e
@@ -63,18 +64,18 @@
 	
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
-	if ((x - d) <= cx && cx <= (x + d) && 
-		(y - d) <= cy && cy <= (y + d)) {
+	if ((self.x - d) <= cx && cx <= (self.x + d) && 
+		(self.y - d) <= cy && cy <= (self.y + d)) {
 		
-		if (now < (lastClickTime + [NSEvent doubleClickInterval])) {
+		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
 			res = YES;
 		}
 	}
 	
-	lastClickTime = now;
+	self.lastClickTime = now;
 	
-	x = cx;
-	y = cy;
+	self.x = cx;
+	self.y = cy;
 	
 	return res;
 }
@@ -97,32 +98,32 @@
 
 - (void)setUrl:(NSString *)s
 {
-	[policy setUrl:[s gtm_stringByUnescapingFromHTML]];
+	[self.policy setUrl:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setAddr:(NSString *)s
 {
-	[policy setAddr:[s gtm_stringByUnescapingFromHTML]];
+	[self.policy setAddr:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNick:(NSString *)s
 {
-	[policy setNick:[s gtm_stringByUnescapingFromHTML]];
+	[self.policy setNick:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChan:(NSString *)s
 {
-	[policy setChan:[s gtm_stringByUnescapingFromHTML]];
+	[self.policy setChan:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelDoubleClicked
 {
-	[policy channelDoubleClicked];
+	[self.policy channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-	[policy nicknameDoubleClicked];
+	[self.policy nicknameDoubleClicked];
 }
 
 - (void)print:(NSString *)s

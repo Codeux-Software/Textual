@@ -9,9 +9,9 @@
 	NSMutableArray *__weak list;
 }
 
-@property (nonatomic, strong) ListView *table;
-@property (nonatomic, strong) NSTextField *header;
-@property (nonatomic, weak) NSMutableArray *list;
+@property (strong) ListView *table;
+@property (strong) NSTextField *header;
+@property (weak) NSMutableArray *list;
 
 - (void)show;
 - (void)onClearList:(id)sender;

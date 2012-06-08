@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation ImageURLParser
 
@@ -9,7 +10,7 @@
     
 	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
 	
-	NSString *host = [u.host lowercaseString];
+	NSString *host = u.host.lowercaseString;
 	NSString *path = u.path;
 	
 	if ([lowerUrl hasSuffix:@".jpg"]
@@ -134,8 +135,6 @@
 		
 		if (vid) {
 			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
-			// http://gdata.youtube.com/feeds/api/videos?v=2&q=07wZiqJlu3U&max-results=1&fields=entry%28title%29&prettyprint=true
-			// root(feed).entry.title(text)
 		}
 	} else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString *vid = nil;
@@ -165,7 +164,7 @@
 		if (vid && vid.length > 2) {
 			long long vidNum = [[vid safeSubstringFromIndex:2] longLongValue];
 			
-			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
+			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", ((vidNum % 4) + 1), vidNum];
 		}
 	} 
 	

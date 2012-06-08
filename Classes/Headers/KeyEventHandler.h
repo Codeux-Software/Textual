@@ -25,9 +25,9 @@
 	NSMutableDictionary *characterHandlerMap;
 }
 
-@property (nonatomic, unsafe_unretained) id target;
-@property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
-@property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
+@property (unsafe_unretained) id target;
+@property (strong) NSMutableDictionary *codeHandlerMap;
+@property (strong) NSMutableDictionary *characterHandlerMap;
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

@@ -10,9 +10,9 @@
 	SEL _actionSelector;
 }
 
-@property (unsafe_unretained, nonatomic, readonly) id _targetClass;
-@property (nonatomic, readonly) id _suppressionKey;
-@property (nonatomic, readonly) SEL _actionSelector;
+@property (unsafe_unretained, readonly) id _targetClass;
+@property (readonly) id _suppressionKey;
+@property (readonly) SEL _actionSelector;
 
 + (void)popupPromptNULLSelector:(NSInteger)returnCode;
 

@@ -1,14 +1,16 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @implementation TextField
 
+@synthesize _keyHandler;
+@synthesize _formattingQueue;
+
 - (void)dealloc
 {
-
-	dispatch_release(_formattingQueue);
-	_formattingQueue = NULL;
-	
+	dispatch_release(self._formattingQueue);
+	self._formattingQueue = NULL;
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -24,11 +26,11 @@
         
         [super setTextContainerInset:NSMakeSize(DefaultTextFieldWidthPadding, DefaultTextFieldHeightPadding)];
         
-        if (PointerIsEmpty(_keyHandler)) {
-            _keyHandler = [KeyEventHandler new];
+        if (PointerIsEmpty(self._keyHandler)) {
+            self._keyHandler = [KeyEventHandler new];
         }
         
-        _formattingQueue = dispatch_queue_create("formattingQueue", NULL);
+        self._formattingQueue = dispatch_queue_create("formattingQueue", NULL);
     }
 	
     return self;
@@ -36,7 +38,7 @@
 
 - (dispatch_queue_t)formattingQueue
 {
-    return _formattingQueue;
+    return self._formattingQueue;
 }
 
 #pragma mark -
@@ -44,22 +46,22 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[_keyHandler setTarget:target];
+	[self._keyHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[_keyHandler registerSelector:selector key:code modifiers:mods];
+	[self._keyHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[_keyHandler registerSelector:selector character:c modifiers:mods];
+	[self._keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([_keyHandler processKeyEvent:e]) {
+	if ([self._keyHandler processKeyEvent:e]) {
 		return;
 	}
 

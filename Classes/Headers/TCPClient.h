@@ -32,25 +32,25 @@
     dispatch_queue_t socketQueue;
 }
 
-@property (nonatomic, strong) NSMutableData *buffer; 
-@property (nonatomic, strong) AsyncSocket *conn;
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, strong) NSString *host;
-@property (nonatomic, assign) NSInteger port;
-@property (nonatomic, assign) BOOL useSSL;
-@property (nonatomic, assign) BOOL useSystemSocks;
-@property (nonatomic, assign) BOOL useSocks;
-@property (nonatomic, assign) NSInteger socksVersion;
-@property (nonatomic, strong) NSString *proxyHost;
-@property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, strong) NSString *proxyUser;
-@property (nonatomic, strong) NSString *proxyPassword;
-@property (nonatomic, readonly) NSInteger sendQueueSize;
-@property (nonatomic, readonly) BOOL active;
-@property (nonatomic, readonly) BOOL connecting;
-@property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
-@property (nonatomic, assign) dispatch_queue_t socketQueue;
+@property (strong) NSMutableData *buffer; 
+@property (strong) AsyncSocket *conn;
+@property (unsafe_unretained) id delegate;
+@property (strong) NSString *host;
+@property (assign) NSInteger port;
+@property (assign) BOOL useSSL;
+@property (assign) BOOL useSystemSocks;
+@property (assign) BOOL useSocks;
+@property (assign) NSInteger socksVersion;
+@property (strong) NSString *proxyHost;
+@property (assign) NSInteger proxyPort;
+@property (strong) NSString *proxyUser;
+@property (strong) NSString *proxyPassword;
+@property (readonly) NSInteger sendQueueSize;
+@property (readonly) BOOL active;
+@property (readonly) BOOL connecting;
+@property (readonly) BOOL connected;
+@property (assign) dispatch_queue_t dispatchQueue;
+@property (assign) dispatch_queue_t socketQueue;
 
 - (void)open;
 - (void)close;

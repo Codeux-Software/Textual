@@ -1857,7 +1857,7 @@
 		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (

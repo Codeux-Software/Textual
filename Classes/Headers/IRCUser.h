@@ -28,24 +28,24 @@
 	CFAbsoluteTime lastFadedWeights;
 }
 
-@property (nonatomic, weak) IRCISupportInfo *supportInfo;
-@property (nonatomic, strong) NSString *nick;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *address;
-@property (nonatomic, assign) BOOL q;
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL o;
-@property (nonatomic, assign) BOOL h;
-@property (nonatomic, assign) BOOL v;
-@property (nonatomic, assign) BOOL isMyself;
-@property (nonatomic, readonly) char mark;
-@property (nonatomic, readonly) BOOL isOp;
-@property (nonatomic, readonly) BOOL isHalfOp; 
-@property (nonatomic, readonly) NSInteger colorNumber;
-@property (nonatomic, readonly) CGFloat totalWeight;
-@property (nonatomic, readonly) CGFloat incomingWeight;
-@property (nonatomic, readonly) CGFloat outgoingWeight;
-@property (nonatomic, assign) CFAbsoluteTime lastFadedWeights;
+@property (weak) IRCISupportInfo *supportInfo;
+@property (strong) NSString *nick;
+@property (strong) NSString *username;
+@property (strong) NSString *address;
+@property (assign) BOOL q;
+@property (assign) BOOL a;
+@property (assign) BOOL o;
+@property (assign) BOOL h;
+@property (assign) BOOL v;
+@property (assign) BOOL isMyself;
+@property (readonly) char mark;
+@property (readonly) BOOL isOp;
+@property (readonly) BOOL isHalfOp; 
+@property (readonly) NSInteger colorNumber;
+@property (readonly) CGFloat totalWeight;
+@property (readonly) CGFloat incomingWeight;
+@property (readonly) CGFloat outgoingWeight;
+@property (assign) CFAbsoluteTime lastFadedWeights;
 
 - (BOOL)hasMode:(char)mode;
 - (NSString *)banMask;

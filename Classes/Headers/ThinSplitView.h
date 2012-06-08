@@ -1,19 +1,11 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 07, 2012
 
 @interface ThinSplitView : NSSplitView
-{
-	NSInteger position;
-	NSInteger fixedViewIndex;
-	NSInteger myDividerThickness;
-	
-	BOOL hidden;
-	BOOL inverted;
-}
-
-@property (nonatomic, assign, setter=setFixedViewIndex:, getter=fixedViewIndex) NSInteger fixedViewIndex;
-@property (nonatomic, assign, setter=setPosition:, getter=position) NSInteger position;
-@property (nonatomic, assign, setter=setInverted:, getter=inverted) BOOL inverted;
-@property (nonatomic, assign, setter=setHidden:, getter=hidden) BOOL hidden;
-@property (nonatomic, setter=setDividerThickness:, getter=myDividerThickness) NSInteger myDividerThickness;
+@property (nonatomic, assign) NSInteger fixedViewIndex;
+@property (nonatomic, assign) NSInteger position;
+@property (nonatomic, assign) BOOL inverted;
+@property (nonatomic, assign) BOOL hidden;
+@property (nonatomic) NSInteger myDividerThickness;
 @end

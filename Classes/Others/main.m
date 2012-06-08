@@ -2,7 +2,6 @@
 int main(int argc, const char* argv[])
 {
 	@autoreleasepool {
-
 		[_NSUserDefaults() addSuiteNamed:@"com.codeux.irc.textual.trial"];
 		
 #if !defined(DEBUG) && !defined(IS_TRIAL_BINARY)
@@ -15,7 +14,8 @@ int main(int argc, const char* argv[])
 #endif
 #endif
 		
-    NSApplicationMain(argc, argv);
+		NSApplicationMain(argc, argv);
 	}
+	
     return 0;
 }

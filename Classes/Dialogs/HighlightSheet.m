@@ -24,7 +24,7 @@
 
 - (void)show
 {
-	MenuController *menu = delegate;
+	MenuController *menu = self.delegate;
 	
 	IRCClient *currentNetwork = [menu.world selectedClient];
 	NSString  *currentHeader  = nil;

@@ -10,10 +10,10 @@
 	IBOutlet NSTextField *header;
 }
 
-@property (nonatomic, strong) ListView *table;
-@property (nonatomic, strong) NSTextField *header;
-@property (nonatomic, strong) NSMutableArray *list;
-@property (nonatomic, strong) NSMutableArray *modes;
+@property (strong) ListView *table;
+@property (strong) NSTextField *header;
+@property (strong) NSMutableArray *list;
+@property (strong) NSMutableArray *modes;
 
 - (void)show;
 - (void)clear;
