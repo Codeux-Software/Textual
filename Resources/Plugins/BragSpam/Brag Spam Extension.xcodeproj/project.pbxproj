@@ -14,7 +14,6 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4C078C4615811569000A17D5 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		4C078C4715811569000A17D5 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4C393AAB121AE217004C66F4 /* TPIBragSpam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBragSpam.h; sourceTree = "<group>"; };
 		4C393AAC121AE217004C66F4 /* TPIBragSpam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIBragSpam.m; sourceTree = "<group>"; };
@@ -84,7 +83,6 @@
 		4C078C4215811569000A17D5 /* PLWeakCompatibility */ = {
 			isa = PBXGroup;
 			children = (
-				4C078C4615811569000A17D5 /* PLWeakCompatibilityStubs.h */,
 				4C078C4715811569000A17D5 /* PLWeakCompatibilityStubs.m */,
 			);
 			name = PLWeakCompatibility;
@@ -165,12 +163,20 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Release;
 		};
@@ -195,10 +201,6 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -226,10 +228,6 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -257,10 +255,6 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -271,6 +265,10 @@
 		4CAA3B4C12E0EC7C00FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "App Store Release";
 		};
@@ -294,10 +292,6 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -308,6 +302,10 @@
 		4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "Release (Trial)";
 		};
@@ -331,10 +329,6 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -345,6 +339,10 @@
 		4CCB84A31501C5690053A181 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "Release + No Sandbox";
 		};
