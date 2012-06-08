@@ -1,7 +1,6 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 
-#import "PLWeakCompatibilityStubs.h"
 #import "TextualApplication.h"
 
 #include <mach/mach.h>
