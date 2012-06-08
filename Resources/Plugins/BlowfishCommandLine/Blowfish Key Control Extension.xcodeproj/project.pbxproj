@@ -14,7 +14,6 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4C828A8E15811352007C7D92 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		4C828A8F15811352007C7D92 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
@@ -92,7 +91,6 @@
 		4C828A8A15811352007C7D92 /* PLWeakCompatibility */ = {
 			isa = PBXGroup;
 			children = (
-				4C828A8E15811352007C7D92 /* PLWeakCompatibilityStubs.h */,
 				4C828A8F15811352007C7D92 /* PLWeakCompatibilityStubs.m */,
 			);
 			name = PLWeakCompatibility;
@@ -162,12 +160,20 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Release;
 		};
@@ -195,10 +201,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -229,10 +231,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -263,10 +261,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -277,6 +271,10 @@
 		4CAA3B2312E0EC3800FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "App Store Release";
 		};
@@ -303,10 +301,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -317,6 +311,10 @@
 		4CAA3B2512E0EC3800FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "Release (Trial)";
 		};
@@ -343,10 +341,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -357,6 +351,10 @@
 		4CCB84A01501C4A30053A181 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = "Release + No Sandbox";
 		};
