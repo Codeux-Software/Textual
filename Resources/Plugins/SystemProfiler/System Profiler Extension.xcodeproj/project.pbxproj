@@ -17,7 +17,6 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4C52AE76158115FC00940619 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		4C52AE77158115FC00940619 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4C57A67C131D378900252759 /* SystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfiler.h; sourceTree = "<group>"; };
 		4C57A67D131D378900252759 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 		4C52AE72158115FC00940619 /* PLWeakCompatibility */ = {
 			isa = PBXGroup;
 			children = (
-				4C52AE76158115FC00940619 /* PLWeakCompatibilityStubs.h */,
 				4C52AE77158115FC00940619 /* PLWeakCompatibilityStubs.m */,
 			);
 			name = PLWeakCompatibility;

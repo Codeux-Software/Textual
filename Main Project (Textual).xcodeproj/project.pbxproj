@@ -351,7 +351,6 @@
 		4CCF300D15804C32006FFE21 /* ViewTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8A1580429D00846B64 /* ViewTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300E15804C32006FFE21 /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8B1580429D00846B64 /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300F15804C32006FFE21 /* WelcomeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8C1580429D00846B64 /* WelcomeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CCF30241580693E006FFE21 /* PLWeakCompatibilityStubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCF301F1580693E006FFE21 /* PLWeakCompatibilityStubs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF30251580693E006FFE21 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCF30201580693E006FFE21 /* PLWeakCompatibilityStubs.m */; };
 /* End PBXBuildFile section */
 
@@ -754,7 +753,6 @@
 		4CCF2F551580489C006FFE21 /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/BlowfishCommandLine/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5E158048A6006FFE21 /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/BragSpam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF2F6A158048BB006FFE21 /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/SystemProfiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4CCF301F1580693E006FFE21 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLWeakCompatibilityStubs.h; path = ../Library/PLWeakCompatibility/PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		4CCF30201580693E006FFE21 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = PLWeakCompatibility/PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -972,7 +970,6 @@
 				4C46CB6C1580429D00846B64 /* NSTextFieldHelper.h */,
 				4C46CB6D1580429D00846B64 /* NSWindowHelper.h */,
 				4C46CB6E1580429D00846B64 /* OtherTheme.h */,
-				4CCF301F1580693E006FFE21 /* PLWeakCompatibilityStubs.h */,
 				4C46CB6F1580429D00846B64 /* PluginProtocol.h */,
 				4C46CB701580429D00846B64 /* PopupPrompts.h */,
 				4C46CB711580429D00846B64 /* Preferences.h */,
@@ -1621,7 +1618,6 @@
 				4CCF2FEF15804C32006FFE21 /* NSTextFieldHelper.h in Headers */,
 				4CCF2FF015804C32006FFE21 /* NSWindowHelper.h in Headers */,
 				4CCF2FF115804C32006FFE21 /* OtherTheme.h in Headers */,
-				4CCF30241580693E006FFE21 /* PLWeakCompatibilityStubs.h in Headers */,
 				4CCF2FF215804C32006FFE21 /* PluginProtocol.h in Headers */,
 				4CCF2FF315804C32006FFE21 /* PopupPrompts.h in Headers */,
 				4CCF2FF415804C32006FFE21 /* Preferences.h in Headers */,
@@ -2285,10 +2281,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
@@ -2329,10 +2321,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
@@ -2399,10 +2387,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
@@ -2458,10 +2442,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
@@ -2514,10 +2494,6 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-S";
