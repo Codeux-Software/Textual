@@ -4,11 +4,11 @@
 // Converted to ARC Support on Thursday, June 07, 2012
 
 @interface ViewTheme : NSObject
-@property (strong) NSURL *baseUrl;
-@property (strong) NSString *path;
+@property (nonatomic, strong) NSURL *baseUrl;
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *name;
-@property (strong) OtherTheme *other;
-@property (strong) FileWithContent *core_js;
+@property (nonatomic, strong) OtherTheme *other;
+@property (nonatomic, strong) FileWithContent *core_js;
 
 - (void)reload;
 + (void)createUserDirectory:(BOOL)force_reset;

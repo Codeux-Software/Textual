@@ -5,18 +5,10 @@
 @class IRCClient, IRCChannel;
 
 @interface FileLogger : NSObject
-{
-	IRCClient *__weak client;
-	IRCChannel *__weak channel;
-	
-	NSString *filename;
-	NSFileHandle *file;
-}
-
-@property (weak) IRCClient *client;
-@property (weak) IRCChannel *channel;
-@property (strong) NSString *filename;
-@property (strong) NSFileHandle *file;
+@property (nonatomic, weak) IRCClient *client;
+@property (nonatomic, weak) IRCChannel *channel;
+@property (nonatomic, strong) NSString *filename;
+@property (nonatomic, strong) NSFileHandle *file;
 
 - (void)open;
 - (void)close;

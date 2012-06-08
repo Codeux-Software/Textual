@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @implementation FileLogger
 
@@ -12,34 +13,32 @@
 - (void)dealloc
 {
 	[self close];
-	
-	
 }
 
 - (void)close
 {
-	if (file) {
-		[file closeFile];
+	if (self.file) {
+		[self.file closeFile];
 		
-		file = nil;
+		self.file = nil;
 	}
 }
 
 - (void)writeLine:(NSString *)s
 {
-    if (client.isConnected == NO) {
+    if (self.client.isConnected == NO) {
         return;
     }
     
 	[self open];
 	
-	if (file) {
+	if (self.file) {
 		s = [s stringByAppendingString:NSNewlineCharacter];
 		
-		NSData *data = [s dataUsingEncoding:client.encoding];
+		NSData *data = [s dataUsingEncoding:self.client.encoding];
 		
 		if (NSObjectIsEmpty(data)) {
-			data = [s dataUsingEncoding:client.config.fallbackEncoding];
+			data = [s dataUsingEncoding:self.client.config.fallbackEncoding];
 			
 			if (NSObjectIsEmpty(data)) {
 				data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -47,14 +46,14 @@
 		}
 		
 		if (data) {
-			[file writeData:data];
+			[self.file writeData:data];
 		}
 	}
 }
 
 - (void)reopenIfNeeded
 {
-	if (NSObjectIsEmpty(filename) || [filename isEqualToString:[self buildFileName]] == NO) {
+	if (NSObjectIsEmpty(self.filename) || [self.filename isEqualToString:[self buildFileName]] == NO) {
 		[self open];
 	}
 }
@@ -63,9 +62,9 @@
 {
 	[self close];
 	
-	filename = [self buildFileName];
+	self.filename = [self buildFileName];
 	
-	NSString *dir = [filename stringByDeletingLastPathComponent];
+	NSString *dir = [self.filename stringByDeletingLastPathComponent];
 	
 	BOOL isDir = NO;
 	
@@ -73,14 +72,14 @@
 		[_NSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	
-	if ([_NSFileManager() fileExistsAtPath:filename] == NO) {
-		[_NSFileManager() createFileAtPath:filename contents:[NSData data] attributes:nil];
+	if ([_NSFileManager() fileExistsAtPath:self.filename] == NO) {
+		[_NSFileManager() createFileAtPath:self.filename contents:[NSData data] attributes:nil];
 	}
 	
-	file = [NSFileHandle fileHandleForUpdatingAtPath:filename];
+	self.file = [NSFileHandle fileHandleForUpdatingAtPath:self.filename];
 	
-	if (file) {
-		[file seekToEndOfFile];
+	if (self.file) {
+		[self.file seekToEndOfFile];
 	}
 }
 
@@ -88,12 +87,12 @@
 {
 	NSString *base = [Preferences transcriptFolder];
 
-	NSString *serv = [[client name] safeFileName];
-	NSString *chan = [[channel name] safeFileName];
+	NSString *serv = [[self.client name] safeFileName];
+	NSString *chan = [[self.channel name] safeFileName];
 	
-	if (PointerIsEmpty(channel)) {
+	if (PointerIsEmpty(self.channel)) {
 		return [base stringByAppendingFormat:@"/%@/Console/", serv];
-	} else if ([channel isTalk]) {
+	} else if ([self.channel isTalk]) {
 		return [base stringByAppendingFormat:@"/%@/Queries/%@/", serv, chan];
 	} else {
 		return [base stringByAppendingFormat:@"/%@/Channels/%@/", serv, chan];

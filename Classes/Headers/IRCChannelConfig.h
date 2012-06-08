@@ -25,17 +25,17 @@ typedef enum {
 	NSString *encryptionKey;
 }
 
-@property (assign) ChannelType type;
-@property (strong) NSString *name;
-@property (strong) NSString *password;
-@property (assign) BOOL autoJoin;
-@property (assign) BOOL growl;
-@property (assign) BOOL ihighlights;
-@property (assign) BOOL inlineImages;
-@property (assign) BOOL iJPQActivity;
-@property (strong) NSString *mode;
-@property (strong) NSString *topic;
-@property (strong) NSString *encryptionKey;
+@property (nonatomic, assign) ChannelType type;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, assign) BOOL autoJoin;
+@property (nonatomic, assign) BOOL growl;
+@property (nonatomic, assign) BOOL ihighlights;
+@property (nonatomic, assign) BOOL inlineImages;
+@property (nonatomic, assign) BOOL iJPQActivity;
+@property (nonatomic, strong) NSString *mode;
+@property (nonatomic, strong) NSString *topic;
+@property (nonatomic, strong) NSString *encryptionKey;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;

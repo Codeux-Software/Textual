@@ -34,27 +34,27 @@
 	BOOL isInFullScreenMode;
 }
 
-@property (weak) IRCWorld *world;
-@property (unsafe_unretained ) MainWindow *window;
-@property (unsafe_unretained) InputTextField *text;
-@property (weak) MasterController *master;
-@property (weak) ServerList *serverList;
-@property (weak) MemberList *memberList;
-@property (strong) NSString *pointedUrl;
-@property (strong) NSString *pointedNick;
-@property (strong) NSString *pointedChannelName;
-@property (strong) NSString *currentSearchPhrase;
-@property (strong) NSMenuItem *closeWindowItem;
-@property (strong) PreferencesController *preferencesController;
-@property (strong) ChannelSheet *channelSheet;
-@property (strong) NickSheet *nickSheet;
-@property (strong) ModeSheet *modeSheet;
-@property (strong) TopicSheet *topicSheet;
-@property (strong) ServerSheet *serverSheet;
-@property (strong) InviteSheet *inviteSheet;
-@property (strong) AboutPanel *aboutPanel;
-@property (strong) HighlightSheet *highlightSheet;
-@property (assign) BOOL isInFullScreenMode;
+@property (nonatomic, weak) IRCWorld *world;
+@property (nonatomic, unsafe_unretained ) MainWindow *window;
+@property (nonatomic, unsafe_unretained) InputTextField *text;
+@property (nonatomic, weak) MasterController *master;
+@property (nonatomic, weak) ServerList *serverList;
+@property (nonatomic, weak) MemberList *memberList;
+@property (nonatomic, strong) NSString *pointedUrl;
+@property (nonatomic, strong) NSString *pointedNick;
+@property (nonatomic, strong) NSString *pointedChannelName;
+@property (nonatomic, strong) NSString *currentSearchPhrase;
+@property (nonatomic, strong) NSMenuItem *closeWindowItem;
+@property (nonatomic, strong) PreferencesController *preferencesController;
+@property (nonatomic, strong) ChannelSheet *channelSheet;
+@property (nonatomic, strong) NickSheet *nickSheet;
+@property (nonatomic, strong) ModeSheet *modeSheet;
+@property (nonatomic, strong) TopicSheet *topicSheet;
+@property (nonatomic, strong) ServerSheet *serverSheet;
+@property (nonatomic, strong) InviteSheet *inviteSheet;
+@property (nonatomic, strong) AboutPanel *aboutPanel;
+@property (nonatomic, strong) HighlightSheet *highlightSheet;
+@property (nonatomic, assign) BOOL isInFullScreenMode;
 
 - (void)terminate;
 

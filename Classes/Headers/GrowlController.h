@@ -34,9 +34,9 @@ typedef enum {
 	CFAbsoluteTime	lastClickedTime;
 }
 
-@property (weak) IRCWorld *owner;
-@property (strong) id lastClickedContext;
-@property (assign) CFAbsoluteTime lastClickedTime;
+@property (nonatomic, weak) IRCWorld *owner;
+@property (nonatomic, strong) id lastClickedContext;
+@property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
 
 - (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
 @end

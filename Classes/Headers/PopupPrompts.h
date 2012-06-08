@@ -1,18 +1,13 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define PopupPromptSuppressionPrefix	@"Preferences.prompts."
 
 @interface PopupPrompts : NSObject 
-{
-	id  __unsafe_unretained _targetClass;
-	id  _suppressionKey;
-	SEL _actionSelector;
-}
-
-@property (unsafe_unretained, readonly) id _targetClass;
-@property (readonly) id _suppressionKey;
-@property (readonly) SEL _actionSelector;
+@property (nonatomic, unsafe_unretained) id _targetClass;
+@property (nonatomic, assign) id _suppressionKey;
+@property (nonatomic, assign) SEL _actionSelector;
 
 + (void)popupPromptNULLSelector:(NSInteger)returnCode;
 
@@ -40,5 +35,4 @@
 					otherButton:(NSString *)otherButton
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText;
-
 @end

@@ -20,14 +20,14 @@
 	unsigned char modes[MODES_SIZE];
 }
 
-@property (readonly) NSInteger nickLen;
-@property (readonly) NSInteger modesCount;
-@property (strong) NSString *networkName;
-@property (strong) NSString *userModeQPrefix;
-@property (strong) NSString *userModeAPrefix;
-@property (strong) NSString *userModeOPrefix;
-@property (strong) NSString *userModeHPrefix;
-@property (strong) NSString *userModeVPrefix;
+@property (nonatomic, readonly) NSInteger nickLen;
+@property (nonatomic, readonly) NSInteger modesCount;
+@property (nonatomic, strong) NSString *networkName;
+@property (nonatomic, strong) NSString *userModeQPrefix;
+@property (nonatomic, strong) NSString *userModeAPrefix;
+@property (nonatomic, strong) NSString *userModeOPrefix;
+@property (nonatomic, strong) NSString *userModeHPrefix;
+@property (nonatomic, strong) NSString *userModeVPrefix;
 
 - (void)reset;
 - (BOOL)update:(NSString *)s client:(IRCClient *)client;

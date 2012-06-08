@@ -5,7 +5,7 @@
 @class IRCUser;
 
 @interface MemberListCell : NSTextFieldCell
-@property (unsafe_unretained) id cellItem;
-@property (weak) IRCUser *member;
-@property (weak) MemberList *parent;
+@property (nonatomic, unsafe_unretained) id cellItem;
+@property (nonatomic, weak) IRCUser *member;
+@property (nonatomic, weak) MemberList *parent;
 @end

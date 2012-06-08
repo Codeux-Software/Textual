@@ -5,5 +5,5 @@
 
 @interface FileWithContent : NSObject
 @property (nonatomic, strong) NSString *filename;
-@property (weak) NSString *content;
+@property (nonatomic, weak) NSString *content;
 @end

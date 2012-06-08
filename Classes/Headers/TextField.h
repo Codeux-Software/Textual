@@ -10,8 +10,8 @@
 @class KeyEventHandler;
 
 @interface TextField : NSTextView 
-@property (strong) KeyEventHandler *_keyHandler;
-@property (assign) dispatch_queue_t _formattingQueue;
+@property (nonatomic, strong) KeyEventHandler *_keyHandler;
+@property (nonatomic, assign) dispatch_queue_t _formattingQueue;
 
 - (BOOL)isAtTopfView;
 - (BOOL)isAtBottomOfView;

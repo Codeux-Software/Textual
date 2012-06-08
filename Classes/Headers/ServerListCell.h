@@ -5,6 +5,6 @@
 @class IRCTreeItem;
 
 @interface ServerListCell : NSTextFieldCell 
-@property (weak) ServerList *parent;
-@property (weak) IRCTreeItem *cellItem;
+@property (nonatomic, weak) ServerList *parent;
+@property (nonatomic, weak) IRCTreeItem *cellItem;
 @end

@@ -12,11 +12,11 @@
 	IBOutlet NSButton *cancelButton;
 }
 
-@property (unsafe_unretained) id delegate;
-@property (unsafe_unretained) NSWindow *window;
-@property (strong) NSWindow *sheet;
-@property (strong) NSButton *okButton;
-@property (strong) NSButton *cancelButton;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, unsafe_unretained) NSWindow *window;
+@property (nonatomic, strong) NSWindow *sheet;
+@property (nonatomic, strong) NSButton *okButton;
+@property (nonatomic, strong) NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

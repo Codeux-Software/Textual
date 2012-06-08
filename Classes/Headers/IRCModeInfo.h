@@ -13,11 +13,11 @@
 	NSString *param;
 }
 
-@property (assign) unsigned char mode;
-@property (assign) BOOL op;
-@property (assign) BOOL plus;
-@property (assign) BOOL simpleMode;
-@property (strong) NSString *param;
+@property (nonatomic, assign) unsigned char mode;
+@property (nonatomic, assign) BOOL op;
+@property (nonatomic, assign) BOOL plus;
+@property (nonatomic, assign) BOOL simpleMode;
+@property (nonatomic, strong) NSString *param;
 
 + (IRCModeInfo *)modeInfo;
 @end
