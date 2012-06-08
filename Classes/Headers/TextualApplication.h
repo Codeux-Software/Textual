@@ -8,7 +8,6 @@
 	#import <Security/Security.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
 
-	#import "PLWeakCompatibilityStubs.h"
 	#import "StaticDefinitions.h"
 
     #import "GlobalModels.h"

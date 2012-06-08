@@ -3,7 +3,6 @@
 
 #define LinkTextualIRCFrameworks
 
-#import "PLWeakCompatibilityStubs.h"
 #import "TextualApplication.h"
 
 @interface TPI_BlowfishCommands : NSObject 
