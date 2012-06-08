@@ -22,16 +22,16 @@
 	IBOutlet NSSearchField *filterText;
 }
 
-@property (unsafe_unretained) id delegate;
-@property (readonly) NSInteger sortKey;
-@property (readonly) NSComparisonResult sortOrder;
-@property (strong) NSMutableArray *list;
-@property (strong) NSMutableArray *filteredList;
-@property (strong) ListView *table;
-@property (strong) NSSearchField *filterText;
-@property (strong) NSButton *updateButton;
-@property (strong) NSTextField *channelCount;
-@property (strong) NSTextField *networkName;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, readonly) NSInteger sortKey;
+@property (nonatomic, readonly) NSComparisonResult sortOrder;
+@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, strong) NSMutableArray *filteredList;
+@property (nonatomic, strong) ListView *table;
+@property (nonatomic, strong) NSSearchField *filterText;
+@property (nonatomic, strong) NSButton *updateButton;
+@property (nonatomic, strong) NSTextField *channelCount;
+@property (nonatomic, strong) NSTextField *networkName;
 
 - (void)start;
 - (void)show;

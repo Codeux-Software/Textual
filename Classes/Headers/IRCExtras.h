@@ -8,7 +8,7 @@
 	IRCWorld *__weak world;
 }
 
-@property (weak) IRCWorld *world;
+@property (nonatomic, weak) IRCWorld *world;
 
 - (void)parseIRCProtocolURI:(NSString *)location;
 - (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)channel;

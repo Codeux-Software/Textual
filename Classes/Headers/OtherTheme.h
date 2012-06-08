@@ -7,13 +7,13 @@
 
 @interface OtherTheme : NSObject
 @property (nonatomic, strong) NSString *path;
-@property (strong) NSFont *channelViewFont;
-@property (strong) NSString *nicknameFormat;
-@property (strong) NSString *timestampFormat;
-@property (assign) BOOL channelViewFontOverrode;
-@property (strong) NSColor *underlyingWindowColor;
-@property (assign) NSDoubleN indentationOffset;
-@property (assign) NSDoubleN renderingEngineVersion;
+@property (nonatomic, strong) NSFont *channelViewFont;
+@property (nonatomic, strong) NSString *nicknameFormat;
+@property (nonatomic, strong) NSString *timestampFormat;
+@property (nonatomic, assign) BOOL channelViewFontOverrode;
+@property (nonatomic, strong) NSColor *underlyingWindowColor;
+@property (nonatomic, assign) NSDoubleN indentationOffset;
+@property (nonatomic, assign) NSDoubleN renderingEngineVersion;
 
 - (void)reload;
 @end

@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define KEY_RETURN		0x24
 #define KEY_TAB			0x30
@@ -18,16 +19,9 @@
 #define KEY_UP			0x7E
 
 @interface KeyEventHandler : NSObject
-{
-	id __unsafe_unretained target;
-	
-	NSMutableDictionary *codeHandlerMap;
-	NSMutableDictionary *characterHandlerMap;
-}
-
-@property (unsafe_unretained) id target;
-@property (strong) NSMutableDictionary *codeHandlerMap;
-@property (strong) NSMutableDictionary *characterHandlerMap;
+@property (nonatomic, unsafe_unretained) id target;
+@property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
+@property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

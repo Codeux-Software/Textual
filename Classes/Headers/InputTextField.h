@@ -5,9 +5,9 @@
 @class TextField;
 
 @interface InputTextField : TextField <NSTextViewDelegate>
-@property (assign) id _actionTarget;
-@property (assign) SEL _actionSelector;
-@property (strong) NSAttributedString *_placeholderString;
+@property (nonatomic, assign) id _actionTarget;
+@property (nonatomic, assign) SEL _actionSelector;
+@property (nonatomic, strong) NSAttributedString *_placeholderString;
 
 - (void)resetTextFieldCellSize;
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;

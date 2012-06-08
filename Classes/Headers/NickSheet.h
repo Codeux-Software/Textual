@@ -10,9 +10,9 @@
 	IBOutlet NSTextField *nicknameNewInfo;
 }
 
-@property (assign) NSInteger uid;
-@property (strong) NSTextField *currentText;
-@property (strong) NSTextField *nicknameNewInfo;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, strong) NSTextField *currentText;
+@property (nonatomic, strong) NSTextField *nicknameNewInfo;
 
 - (void)start:(NSString *)nick;
 @end

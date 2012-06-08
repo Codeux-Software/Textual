@@ -7,5 +7,5 @@
 @property (nonatomic, assign) NSInteger position;
 @property (nonatomic, assign) BOOL inverted;
 @property (nonatomic, assign) BOOL hidden;
-@property (nonatomic) NSInteger myDividerThickness;
+@property (nonatomic, nonatomic) NSInteger myDividerThickness;
 @end

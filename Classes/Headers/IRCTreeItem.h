@@ -24,21 +24,21 @@
 	NSAttributedString *currentInputHistory;
 }
 
-@property (assign) NSInteger uid;
-@property (strong) LogController *log;
-@property (assign) BOOL isKeyword;
-@property (assign) BOOL isUnread;
-@property (assign) BOOL isNewTalk;
-@property (assign) NSInteger keywordCount;
-@property (assign) NSInteger dockUnreadCount;
-@property (assign) NSInteger treeUnreadCount;
-@property (readonly) BOOL isActive;
-@property (readonly) BOOL isClient;
-@property (assign) BOOL isExpanded;
-@property (weak, readonly) IRCClient *client;
-@property (weak, readonly) NSString *label;
-@property (weak, readonly) NSString *name;
-@property (strong) InputHistory *inputHistory;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, strong) LogController *log;
+@property (nonatomic, assign) BOOL isKeyword;
+@property (nonatomic, assign) BOOL isUnread;
+@property (nonatomic, assign) BOOL isNewTalk;
+@property (nonatomic, assign) NSInteger keywordCount;
+@property (nonatomic, assign) NSInteger dockUnreadCount;
+@property (nonatomic, assign) NSInteger treeUnreadCount;
+@property (nonatomic, readonly) BOOL isActive;
+@property (nonatomic, readonly) BOOL isClient;
+@property (nonatomic, assign) BOOL isExpanded;
+@property (nonatomic, weak, readonly) IRCClient *client;
+@property (nonatomic, weak, readonly) NSString *label;
+@property (nonatomic, weak, readonly) NSString *name;
+@property (nonatomic, strong) InputHistory *inputHistory;
 
 - (void)resetState;
 - (NSInteger)numberOfChildren;

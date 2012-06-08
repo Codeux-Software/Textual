@@ -1,21 +1,13 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @interface Timer : NSObject
-{
-	id __unsafe_unretained delegate;
-	
-	BOOL reqeat;
-	SEL selector;
-	
-	NSTimer *timer;
-}
-
-@property (unsafe_unretained) id delegate;
-@property (assign) BOOL reqeat;
-@property (assign) SEL selector;
-@property (readonly) BOOL isActive;
-@property (strong) NSTimer *timer;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, assign) BOOL reqeat;
+@property (nonatomic, assign) SEL selector;
+@property (nonatomic, readonly) BOOL isActive;
+@property (nonatomic, strong) NSTimer *timer;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;

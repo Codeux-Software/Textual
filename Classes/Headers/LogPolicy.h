@@ -6,14 +6,14 @@
 @class MenuController;
 
 @interface LogPolicy : NSObject
-@property (unsafe_unretained) MenuController *menuController;
-@property (strong) NSMenu *menu;
-@property (strong) NSMenu *urlMenu;
-@property (strong) NSMenu *memberMenu;
-@property (strong) NSMenu *chanMenu;
-@property (strong) NSString *url;
-@property (strong) NSString *nick;
-@property (strong) NSString *chan;
+@property (nonatomic, unsafe_unretained) MenuController *menuController;
+@property (nonatomic, strong) NSMenu *menu;
+@property (nonatomic, strong) NSMenu *urlMenu;
+@property (nonatomic, strong) NSMenu *memberMenu;
+@property (nonatomic, strong) NSMenu *chanMenu;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *chan;
 
 - (void)channelDoubleClicked;
 - (void)nicknameDoubleClicked;

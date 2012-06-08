@@ -35,17 +35,17 @@ typedef enum {
 #define IRCCommandFromLineType(t)	[LogLine lineTypeString:t]
 
 @interface LogLine : NSObject
-@property (strong) NSDate *receivedAt;
-@property (strong) NSString *time;
-@property (strong) NSString *nick;
-@property (strong) NSString *body;
-@property (assign) LogLineType lineType;
-@property (assign) LogMemberType memberType;
-@property (strong) NSString *nickInfo;
-@property (assign) BOOL identified;
-@property (assign) NSInteger nickColorNumber;
-@property (strong) NSArray *keywords;
-@property (strong) NSArray *excludeWords;
+@property (nonatomic, strong) NSDate *receivedAt;
+@property (nonatomic, strong) NSString *time;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *body;
+@property (nonatomic, assign) LogLineType lineType;
+@property (nonatomic, assign) LogMemberType memberType;
+@property (nonatomic, strong) NSString *nickInfo;
+@property (nonatomic, assign) BOOL identified;
+@property (nonatomic, assign) NSInteger nickColorNumber;
+@property (nonatomic, strong) NSArray *keywords;
+@property (nonatomic, strong) NSArray *excludeWords;
 
 + (NSString *)lineTypeString:(LogLineType)type;
 + (NSString *)memberTypeString:(LogMemberType)type;

@@ -1,4 +1,6 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>// You can redistribute it and/or modify it under the new BSD license.
+// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
+// You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define INPUT_HISTORY_MAX	50
 
@@ -11,29 +13,28 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		buf = [NSMutableArray new];
+		self.buf = [NSMutableArray new];
 	}
 	
 	return self;
 }
 
-
 - (void)add:(NSAttributedString *)s
 {
-	NSAttributedString *lo = buf.lastObject;
+	NSAttributedString *lo = self.buf.lastObject;
 	
-	pos = buf.count;
+	self.pos = self.buf.count;
 	
 	if (NSObjectIsEmpty(s)) return;
 	if ([lo.string isEqualToString:s.string]) return;
 	
-	[buf safeAddObject:s];
+	[self.buf safeAddObject:s];
 	
-	if (buf.count > INPUT_HISTORY_MAX) {
-		[buf safeRemoveObjectAtIndex:0];
+	if (self.buf.count > INPUT_HISTORY_MAX) {
+		[self.buf safeRemoveObjectAtIndex:0];
 	}
 	
-	pos = buf.count;
+	self.pos = self.buf.count;
 }
 
 - (NSAttributedString *)up:(NSAttributedString *)s
@@ -41,29 +42,29 @@
 	if (NSObjectIsNotEmpty(s)) {
 		NSAttributedString *cur = nil;
 		
-		if (0 <= pos && pos < buf.count) {
-			cur = [buf safeObjectAtIndex:pos];
+		if (0 <= self.pos && self.pos < buf.count) {
+			cur = [self.buf safeObjectAtIndex:self.pos];
 		}
 		
 		if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
-			[buf safeAddObject:s];
+			[self.buf safeAddObject:s];
 			
-			if (buf.count > INPUT_HISTORY_MAX) {
-				[buf safeRemoveObjectAtIndex:0];
+			if (self.buf.count > INPUT_HISTORY_MAX) {
+				[self.buf safeRemoveObjectAtIndex:0];
 				
-				--pos;
+				--self.pos;
 			}
 		}
 	}	
 	
-	--pos;
+	--self.pos;
 	
-	if (pos < 0) {
-		pos = 0;
+	if (self.pos < 0) {
+		self.pos = 0;
 		
 		return nil;
-	} else if (0 <= pos && pos < buf.count) {
-		return [buf safeObjectAtIndex:pos];
+	} else if (0 <= self.pos && self.pos < self.buf.count) {
+		return [self.buf safeObjectAtIndex:self.pos];
 	} else {
 		return [NSAttributedString emptyString];
 	}
@@ -72,15 +73,15 @@
 - (NSAttributedString *)down:(NSAttributedString *)s
 {
 	if (NSObjectIsEmpty(s)) {
-		pos = buf.count;
+		self.pos = self.buf.count;
 		
 		return nil;
 	}
 	
 	NSAttributedString *cur = nil;
 	
-	if (0 <= pos && pos < buf.count) {
-		cur = [buf safeObjectAtIndex:pos];
+	if (0 <= self.pos && self.pos < self.buf.count) {
+		cur = [self.buf safeObjectAtIndex:self.pos];
 	}
 
 	if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
@@ -88,10 +89,10 @@
 		
 		return [NSAttributedString emptyString];
 	} else {
-		++pos;
+		++self.pos;
 		
-		if (0 <= pos && pos < buf.count) {
-			return [buf safeObjectAtIndex:pos];
+		if (0 <= self.pos && self.pos < self.buf.count) {
+			return [self.buf safeObjectAtIndex:self.pos];
 		}
 		
 		return [NSAttributedString emptyString];

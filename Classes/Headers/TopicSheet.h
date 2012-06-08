@@ -10,10 +10,10 @@
 	IBOutlet NSTextField *header;
 }
 
-@property (assign) NSInteger uid;
-@property (assign) NSInteger cid;
-@property (strong) TextField *text;
-@property (strong) NSTextField *header;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, strong) TextField *text;
+@property (nonatomic, strong) NSTextField *header;
 
 - (void)start:(NSString *)topic;
 @end

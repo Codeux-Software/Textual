@@ -3,22 +3,12 @@
 
 #define IRCTextFormatterMenuTag		53037
 
-@interface IRCTextFormatterMenu : NSObject {
-	IBOutlet NSMenuItem *formatterMenu;
-	
-	IBOutlet NSMenu	*foregroundColorMenu;
-	IBOutlet NSMenu *backgroundColorMenu;
-	
-	BOOL sheetOverrideEnabled;
-	
-	TextField *__unsafe_unretained textField;
-}
-
-@property (unsafe_unretained) TextField *textField;
-@property (strong) NSMenuItem *formatterMenu;
-@property (strong) NSMenu *foregroundColorMenu;
-@property (strong) NSMenu *backgroundColorMenu;
-@property (assign) BOOL sheetOverrideEnabled;
+@interface IRCTextFormatterMenu : NSObject
+@property (nonatomic, unsafe_unretained) TextField *textField;
+@property (nonatomic, strong) NSMenuItem *formatterMenu;
+@property (nonatomic, strong) NSMenu *foregroundColorMenu;
+@property (nonatomic, strong) NSMenu *backgroundColorMenu;
+@property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(TextField *)field;
 - (void)enableWindowField:(TextField *)field;

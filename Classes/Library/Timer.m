@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @implementation Timer
 
@@ -7,12 +8,13 @@
 @synthesize reqeat;
 @synthesize selector;
 @synthesize timer;
+@synthesize isActive;
 
 - (id)init
 {
 	if ((self = [super init])) {
-		reqeat = YES;
-		selector = @selector(timerOnTimer:);
+		self.reqeat = YES;
+		self.selector = @selector(timerOnTimer:);
 	}
 	
 	return self;
@@ -21,45 +23,44 @@
 - (void)dealloc
 {
 	[self stop];
-	
 }
 
 - (BOOL)isActive
 {
-	return BOOLValueFromObject(timer);
+	return BOOLValueFromObject(self.timer);
 }
 
 - (void)start:(NSTimeInterval)interval
 {
 	[self stop];
 	
-	timer = [NSTimer scheduledTimerWithTimeInterval:interval 
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval 
 											  target:self 
 											selector:@selector(onTimer:) 
 											userInfo:nil repeats:reqeat];
 	
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
+	[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
 {
-	[timer invalidate];
-	timer = nil;
+	[self.timer invalidate];
+	self.timer = nil;
 }
 
 - (void)onTimer:(id)sender
 {
 	if (self.isActive == NO) return;
 	
-	if (reqeat == NO) {
+	if (self.reqeat == NO) {
 		[self stop];
 	}
 	
-	if ([delegate respondsToSelector:selector]) {
+	if ([self.delegate respondsToSelector:self.selector]) {
 		
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		[delegate performSelector:selector withObject:self];
+		[self.delegate performSelector:self.selector withObject:self];
 #pragma clang diagnostic pop
 		
 	}

@@ -3,8 +3,8 @@
 
 @interface TextualPluginItem : NSObject
 
-@property (strong) NSBundle *pluginBundle;
-@property (strong) PluginProtocol *pluginPrimaryClass;
+@property (nonatomic, strong) NSBundle *pluginBundle;
+@property (nonatomic, strong) PluginProtocol *pluginPrimaryClass;
 
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle
