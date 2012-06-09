@@ -113,7 +113,7 @@
 	[table reloadData];
 }
 
-static NSInteger compareItems(NSArray *self, NSArray *other, void* context)
+static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 {
 	ListDialog *dialog = CFBridgingRelease(context);
 	
