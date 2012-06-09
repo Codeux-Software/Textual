@@ -29,7 +29,7 @@
 
 - (void)setName:(NSString *)value
 {
-	if (self.name != value) {
+	if (NSDissimilarObjects(self.name, value)) {
 		name = value;
 	}
 	

@@ -47,7 +47,7 @@
 
 - (void)setFixedViewIndex:(NSInteger)value
 {
-	if (self.fixedViewIndex != value) {
+	if (NSDissimilarObjects(self.fixedViewIndex, value)) {
 		fixedViewIndex = value;
 		
 		if (self.inverted) {

@@ -3401,8 +3401,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (channel && [[channel config] ihighlights] == NO) {
 				keywords     = [Preferences keywords];
 				excludeWords = [Preferences excludeWords];
-				
-                if ([Preferences keywordMatchingMethod] != KEYWORD_MATCH_REGEX) {
+
+				if (NSDissimilarObjects([Preferences keywordMatchingMethod], KEYWORD_MATCH_REGEX)) {
                     if ([Preferences keywordCurrentNick]) {
                         NSMutableArray *ary = [keywords mutableCopy];
                         
