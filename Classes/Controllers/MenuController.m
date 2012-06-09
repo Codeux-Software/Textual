@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define NO_CLIENT					(PointerIsEmpty(u))
 #define NO_CHANNEL					(PointerIsEmpty(c))
@@ -44,7 +45,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		currentSearchPhrase = NSNullObject;
+		self.currentSearchPhrase = NSNullObject;
 	}
 	
 	return self;
@@ -52,14 +53,14 @@
 
 - (void)terminate
 {
-	if (serverSheet) [serverSheet close];
-	if (channelSheet) [channelSheet close];
-	if (preferencesController) [preferencesController close];
+	if (self.serverSheet) [self.serverSheet close];
+	if (self.channelSheet) [self.channelSheet close];
+	if (self.preferencesController) [self.preferencesController close];
 }
 
 - (void)validateChannelMenuSubmenus:(NSMenuItem *)item
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (IS_CHANNEL) {
 		[[[item menu] itemWithTag:936] setHidden:NO];
@@ -80,8 +81,8 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	IRCClient   *u = [world selectedClient];
-	IRCChannel  *c = [world selectedChannel];
+	IRCClient   *u = [self.world selectedClient];
+	IRCChannel  *c = [self.world selectedChannel];
 	
 	NSInteger tag = item.tag;
 	
@@ -285,16 +286,18 @@
 		}
 		case 9631: // close window
 		{
-			if ([window isKeyWindow]) {
-				IRCClient *u = [world selectedClient];
-				IRCChannel *c = [world selectedChannel];
+			if ([self.window isKeyWindow]) {
+				IRCClient *u = [self.world selectedClient];
+				IRCChannel *c = [self.world selectedChannel];
 				
 				if (NO_CLIENT_OR_CHANNEL) return YES;
 				
 				switch ([Preferences cmdWResponseType]) {
 					case CMDWKEY_SHORTCUT_CLOSE:
+					{
 						[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_CLOSE_WINDOW")];
 						break;
+					}
 					case CMDWKEY_SHORTCUT_PARTC:
 					{
 						if (IS_CLIENT) {
@@ -323,8 +326,10 @@
 						break;
 					}
 					case CMDWKEY_SHORTCUT_QUITA:
+					{
 						[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_QUIT_APPLICATION")];
 						break;
+					}
 				}
 			} else {
 				[item setTitle:TXTLS(@"CMDWKEY_SHORTCUT_CLOSE_WINDOW")];
@@ -353,17 +358,17 @@
 		case 504810 ... 504812: // User, right click menu, - mode changes
 		{
 			NSArray *nicknames = [self selectedMembers:nil];
-
+			
 			if (NSObjectIsEmpty(nicknames) || nicknames.count > 1) {
 				[item setHidden:NO];
-
+				
 				[[item.menu itemWithTag:504913] setHidden:YES];
 				[[item.menu itemWithTag:504813] setHidden:YES];
-
+				
 				return YES;
 			} else {
 				IRCUser *m = [nicknames safeObjectAtIndex:0];
-
+				
 				switch (tag) {
 					case 504910: [item setHidden:m.o]; break; // +o
 					case 504911: [item setHidden:m.h]; break;  // +h
@@ -374,25 +379,25 @@
 						
 					default: break;
 				}
-
+				
 				BOOL hideTakeSepItem = (m.o == NO || m.h == NO || m.v == NO);
 				BOOL hideGiveSepItem = (m.o || m.h || m.v);
-
+				
 				[[item.menu itemWithTag:504913] setHidden:hideTakeSepItem];
 				[[item.menu itemWithTag:504813] setHidden:hideGiveSepItem];
-
+				
 				return YES;
 			}
 			break;
 		}
 		case 990002: // Next Highlight
 		{
-			return [world.selected.log highlightAvailable:NO];
+			return [self.world.selected.log highlightAvailable:NO];
 			break;
 		}
 		case 990003: // Previous Highlight
 		{
-			return [world.selected.log highlightAvailable:YES];
+			return [self.world.selected.log highlightAvailable:YES];
 			break;
 		}
 		default:
@@ -410,27 +415,27 @@
 
 - (LogView *)currentWebView
 {
-	return world.selected.log.view;
+	return self.world.selected.log.view;
 }
 
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item
 {
-	return ([memberList countSelectedRows] > 0);
+	return ([self.memberList countSelectedRows] > 0);
 }
 
 - (NSArray *)selectedMembers:(NSMenuItem *)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	if (NO_CLIENT_OR_CHANNEL || NOT_ACTIVE || NOT_CONNECTED || IS_CLIENT) {
 		return ary;
 	} else {
-		NSIndexSet *indexes = [memberList selectedRowIndexes];
+		NSIndexSet *indexes = [self.memberList selectedRowIndexes];
 		
-		if (NSObjectIsNotEmpty(indexes) && NSObjectIsEmpty(pointedNick)) {
+		if (NSObjectIsNotEmpty(indexes) && NSObjectIsEmpty(self.pointedNick)) {
 			for (NSNumber *index in [indexes arrayFromIndexSet]) {
 				NSUInteger nindex = [index unsignedIntegerValue];
 				
@@ -441,14 +446,14 @@
 				}
 			}
 		} else {
-			if (NSObjectIsNotEmpty(pointedNick)) {
-				IRCUser *m = [c findMember:pointedNick];
+			if (NSObjectIsNotEmpty(self.pointedNick)) {
+				IRCUser *m = [c findMember:self.pointedNick];
 				
 				if (m) {
 					[ary safeAddObject:m];
 				} 
                 
-                pointedNick = nil;
+               self. pointedNick = nil;
 			}
 		}
 	}
@@ -458,9 +463,9 @@
 
 - (void)deselectMembers:(NSMenuItem *)sender
 {
-	pointedNick = nil;
+	self.pointedNick = nil;
 	
-	[memberList deselectAll:nil];
+	[self.memberList deselectAll:nil];
 }
 
 #pragma mark -
@@ -472,28 +477,28 @@
 														title:TXTLS(@"FIND_SEARCH_PRHASE_PROMPT_TITLE")
 												defaultButton:TXTLS(@"FIND_SEARCH_PHRASE_PROMPT_BUTTON")
 											  alternateButton:TXTLS(@"CANCEL_BUTTON") 
-												 defaultInput:currentSearchPhrase];
+												 defaultInput:self.currentSearchPhrase];
 	
 	if (NSObjectIsEmpty(newPhrase)) {
-		currentSearchPhrase = NSNullObject;
+		self.currentSearchPhrase = NSNullObject;
 	} else {
-		if ([newPhrase isNotEqualTo:currentSearchPhrase]) {
-			currentSearchPhrase = newPhrase;
+		if ([newPhrase isNotEqualTo:self.currentSearchPhrase]) {
+			self.currentSearchPhrase = newPhrase;
 		}
 	}
 	
-	[[[self iomt] currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+	[[[self iomt] currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 }
 
 - (void)onWantFindPanel:(id)sender
 {
-	if ([sender tag] == 1 || NSObjectIsEmpty(currentSearchPhrase)) {
+	if ([sender tag] == 1 || NSObjectIsEmpty(self.currentSearchPhrase)) {
 		[[self invokeInBackgroundThread] _onWantFindPanel:sender];
 	} else {
 		if ([sender tag] == 2) {
-			[[self currentWebView] searchFor:currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 		} else {
-			[[self currentWebView] searchFor:currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
+			[[self currentWebView] searchFor:self.currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
 		}
 	}
 }
@@ -502,14 +507,16 @@
 {
 	NSWindow *currentWindow = [NSApp keyWindow];
 	
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
-	if ([window isKeyWindow]) {
+	if ([self.window isKeyWindow]) {
 		switch ([Preferences cmdWResponseType]) {
 			case CMDWKEY_SHORTCUT_CLOSE:
-				[window close];
+			{
+				[self.window close];
 				break;
+			}
 			case CMDWKEY_SHORTCUT_PARTC:
 			{
 				if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
@@ -518,7 +525,7 @@
 					[u partChannel:c];
 				} else {
 					if (IS_QUERY) {
-						[world destroyChannel:c];
+						[self.world destroyChannel:c];
 					}
 				}
 				
@@ -533,8 +540,10 @@
 				break;
 			}
 			case CMDWKEY_SHORTCUT_QUITA:
+			{
 				[NSApp terminate:nil];
 				break;
+			}
 		}
 	} else {
 		[currentWindow performClose:nil];
@@ -543,26 +552,29 @@
 
 - (void)onPreferences:(id)sender
 {
-	if (preferencesController) {
-		[preferencesController show];
+	if (self.preferencesController) {
+		[self.preferencesController show];
+		
 		return;
 	}
 	
 	PreferencesController *pc = [PreferencesController alloc];
 	
 	pc.delegate = self;
-	pc.world = world;
+	pc.world = self.world;
 	
-	preferencesController = pc;
-	(void)[preferencesController initWithWorldController:world];
-	[preferencesController show];
+	self.preferencesController = pc;
+
+	(void)[self.preferencesController initWithWorldController:self.world];
+	
+	[self.preferencesController show];
 }
 
 - (void)preferencesDialogWillClose:(PreferencesController *)sender
 {
-	[world preferencesChanged];
+	[self.world preferencesChanged];
 	
-	preferencesController = nil;
+	self.preferencesController = nil;
 }
 
 - (void)onCloseWindow:(id)sender
@@ -577,11 +589,11 @@
 
 - (void)onCloseCurrentPanel:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (c) {
-		[world destroyChannel:c];
-		[world save];
+		[self.world destroyChannel:c];
+		[self.world save];
 	}
 }
 
@@ -604,17 +616,17 @@
 	if (PointerIsEmpty(t)) return;
 	
     if ([t respondsToSelector:@selector(requriesSpecialPaste)]) {
-        if ([window attachedSheet]) {
+        if ([self.window attachedSheet]) {
             [t paste:self];
         } else {
-            [text focus];
-            [text paste:self];
+            [self.text focus];
+            [self.text paste:self];
         }
     } else {
-        if (window == [NSApp keyWindow]) {
-            if (PointerIsEmpty([window attachedSheet])) {
-                [text focus];
-                [text paste:self];
+        if (self.window == [NSApp keyWindow]) {
+            if (PointerIsEmpty([self.window attachedSheet])) {
+                [self.text focus];
+                [self.text paste:self];
                 
                 return;
             }
@@ -652,7 +664,7 @@
 
 - (void)onCopyLogAsHtml:(id)sender
 {
-	IRCTreeItem *sel = world.selected;
+	IRCTreeItem *sel = self.world.selected;
 	
 	if (PointerIsEmpty(sel)) return;
 	
@@ -661,7 +673,7 @@
 
 - (void)onMarkScrollback:(id)sender
 {
-	IRCTreeItem *sel = world.selected;
+	IRCTreeItem *sel = self.world.selected;
 	
 	if (PointerIsEmpty(sel)) return;
 	
@@ -670,7 +682,7 @@
 }
 - (void)onGotoScrollbackMark:(id)sender;
 {
-	IRCTreeItem *sel = world.selected;
+	IRCTreeItem *sel = self.world.selected;
 	
 	if (PointerIsEmpty(sel)) return;
 	
@@ -679,57 +691,57 @@
 
 - (void)onClearScrollback:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
     if (u) {
         if (c) {
-            [world clearContentsOfChannel:c inClient:u];
+            [self.world clearContentsOfChannel:c inClient:u];
             
 			[c setDockUnreadCount:0];
 			[c setTreeUnreadCount:0];
             [c setKeywordCount:0];
         } else {
-            [world clearContentsOfClient:u];
+            [self.world clearContentsOfClient:u];
             
 			[u setDockUnreadCount:0];
 			[u setTreeUnreadCount:0];
             [u setKeywordCount:0];
         }
         
-        [world updateIcon];
+        [self.world updateIcon];
     }
 }
 
 - (void)onIncreaseFontSize:(id)sender
 {
-	[world changeTextSize:YES];
+	[self.world changeTextSize:YES];
 }
 
 - (void)onDecreaseFontSize:(id)sender
 {
-	[world changeTextSize:NO];
+	[self.world changeTextSize:NO];
 }
 
 - (void)onMarkAllAsRead:(id)sender
 {
-	[world markAllAsRead];
+	[self.world markAllAsRead];
 }
 
 - (void)onConnect:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || CONNECTED) return;
 	
 	[u connect];
 	
-	[world expandClient:u];
+	[self.world expandClient:u];
 }
 
 - (void)onDisconnect:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
@@ -739,7 +751,7 @@
 
 - (void)onCancelReconnecting:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT) return;
 	
@@ -748,23 +760,23 @@
 
 - (void)onNick:(id)sender
 {
-	if (nickSheet) return;
+	if (self.nickSheet) return;
 	
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
-	nickSheet = [NickSheet new];
-	nickSheet.delegate = self;
-	nickSheet.window = window;
-	nickSheet.uid = u.uid;
+	self.nickSheet = [NickSheet new];
+	self.nickSheet.delegate = self;
+	self.nickSheet.window = self.window;
+	self.nickSheet.uid = u.uid;
 	
-	[nickSheet start:u.myNick];
+	[self.nickSheet start:u.myNick];
 }
 
 - (void)nickSheet:(NickSheet *)sender didInputNick:(NSString *)newNick
 {
-	IRCClient *u = [world findClientById:sender.uid];
+	IRCClient *u = [self.world findClientById:sender.uid];
 	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
@@ -773,60 +785,59 @@
 
 - (void)nickSheetWillClose:(NickSheet *)sender
 {
-	nickSheet = nil;
+	self.nickSheet = nil;
 }
 
 - (void)onChannelList:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
 	[u createChannelListDialog];
-	
 	[u send:IRCCI_LIST, nil];
 }
 
 - (void)onAddServer:(id)sender
 {
-	if (serverSheet) return;
+	if (self.serverSheet) return;
 	
 	ServerSheet *d = [ServerSheet new];
 	
 	d.delegate = self;
-	d.window = window;
+	d.window = self.window;
 	d.config = [[IRCClientConfig alloc] init];
 	d.uid = -1;
-
+	
 	[d startWithIgnoreTab:NSNullObject];
 	
-	serverSheet = d;
+	self.serverSheet = d;
 }
 
 - (void)onCopyServer:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT) return;
 	
 	IRCClientConfig *config = u.storedConfig;
 	
-	config.name = [config.name stringByAppendingString:@"_"];
-	config.guid = [NSString stringWithUUID];
+	config.name  = [config.name stringByAppendingString:@"_"];
+	config.guid  = [NSString stringWithUUID];
 	config.cuid += 1;
 	
-	IRCClient *n = [world createClient:config reload:YES];
-
-	[world save];
-
+	IRCClient *n = [self.world createClient:config reload:YES];
+	
+	[self.world save];
+	
 	if (u.isExpanded) {
-		[world expandClient:n];
+		[self.world expandClient:n];
 	}
 }
 
 - (void)onDeleteServer:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || CONNECTED) return;
 	
@@ -846,57 +857,57 @@
 	
 	[_NSUserDefaults() removeObjectForKey:[@"Preferences.prompts.cert_trust_error." stringByAppendingString:u.config.guid]];
 	
-	[world destroyClient:u];
-	[world save];
+	[self.world destroyClient:u];
+	[self.world save];
 }
 
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask
 {
 	if (NO_CLIENT) return;
-	if (serverSheet) return;
+	if (self.serverSheet) return;
 	
 	ServerSheet *d = [ServerSheet new];
 	
 	d.delegate = self;
-	d.window = window;
+	d.window = self.window;
 	d.config = u.storedConfig;
 	d.uid = u.uid;
 	d.client = u;
 	
 	[d startWithIgnoreTab:imask];
 	
-	serverSheet = d;
+	self.serverSheet = d;
 }
 
 - (void)onServerProperties:(id)sender
 {
-	[self showServerPropertyDialog:[world selectedClient] ignore:NSNullObject];
+	[self showServerPropertyDialog:[self.world selectedClient] ignore:NSNullObject];
 }
 
 - (void)ServerSheetOnOK:(ServerSheet *)sender
 {
 	if (sender.uid < 0) {
-		[world createClient:sender.config reload:YES];
+		[self.world createClient:sender.config reload:YES];
 	} else {
-		IRCClient *u = [world findClientById:sender.uid];
+		IRCClient *u = [self.world findClientById:sender.uid];
 		
 		if (NO_CLIENT) return;
 		
 		[u updateConfig:sender.config];
 	}
 	
-	[world save];
+	[self.world save];
 }
 
 - (void)ServerSheetWillClose:(ServerSheet *)sender
 {
-	serverSheet = nil;
+	self.serverSheet = nil;
 }
 
 - (void)onJoin:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY || ACTIVE || NOT_CONNECTED) return;
 	
@@ -905,67 +916,68 @@
 
 - (void)onLeave:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || NOT_ACTIVE || NOT_CONNECTED) return;
 	
 	if (IS_CHANNEL) {
 		[u partChannel:c];
 	} else {
-		[world destroyChannel:c];
+		[self.world destroyChannel:c];
 	}
 }
 
 - (void)showHighlightSheet:(id)sender
 {
-	if (highlightSheet) return;
+	if (self.highlightSheet) return;
 	
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT) return;
 	
 	HighlightSheet *d = [HighlightSheet new];
 	
 	d.delegate = self;
-	d.window = window;
+	d.window = self.window;
 	d.list = u.highlights;
 	
-	[window closeExistingSheet];
+	[self.window closeExistingSheet];
+	
 	[d show];
 	
-	highlightSheet = d;
+	self.highlightSheet = d;
 }
 
 - (void)highlightSheetWillClose:(HighlightSheet *)sender
 {
-	highlightSheet = nil;
+	self.highlightSheet = nil;
 }
 
 - (void)onTopic:(id)sender
 {
-	if (topicSheet) return;
+	if (self.topicSheet) return;
 	
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	TopicSheet *t = [TopicSheet new];
 	
 	t.delegate = self;
-	t.window = window;
+	t.window = self.window;
 	t.uid = u.uid;
 	t.cid = c.uid;
 	
 	[t start:c.topic];
 	
-	topicSheet = t;
+	self.topicSheet = t;
 }
 
 - (void)topicSheet:(TopicSheet *)sender onOK:(NSString *)topic
 {
-	IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	IRCChannel *c = [self.world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient *u = c.client;
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
@@ -977,22 +989,22 @@
 
 - (void)topicSheetWillClose:(TopicSheet *)sender
 {
-	topicSheet = nil;
+	self.topicSheet = nil;
 }
 
 - (void)onMode:(id)sender
 {
-	if (modeSheet) return;
+	if (self.modeSheet) return;
 	
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	ModeSheet *m = [ModeSheet new];
 	
 	m.delegate = self;
-	m.window = window;
+	m.window = self.window;
 	m.uid = u.uid;
 	m.cid = c.uid;
 	m.channelName = c.name;
@@ -1000,12 +1012,12 @@
 	
 	[m start];
 	
-	modeSheet = m;
+	self.modeSheet = m;
 }
 
 - (void)modeSheetOnOK:(ModeSheet *)sender
 {
-	IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	IRCChannel *c = [self.world findChannelByClientId:sender.uid channelId:sender.cid];
 	IRCClient *u = c.client;
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
@@ -1019,33 +1031,33 @@
 
 - (void)modeSheetWillClose:(ModeSheet *)sender
 {
-	modeSheet = nil;
+	self.modeSheet = nil;
 }
 
 - (void)onAddChannel:(id)sender
 {
-	if (channelSheet) return;
+	if (self.channelSheet) return;
 	
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT) return;
 	
 	ChannelSheet *d = [ChannelSheet new];
 	
 	d.delegate = self;
-	d.window = window;
+	d.window = self.window;
 	d.config = [[IRCChannelConfig alloc] init];
 	d.uid = u.uid;
 	d.cid = -1;
 	
 	[d start];
 	
-	channelSheet = d;
+	self.channelSheet = d;
 }
 
 - (void)onDeleteChannel:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT) return;
 	
@@ -1063,43 +1075,43 @@
 		}
 	}
 	
-	[world destroyChannel:c];
-	[world save];
+	[self.world destroyChannel:c];
+	[self.world save];
 }
 
 - (void)onChannelProperties:(id)sender
 {
-	if (channelSheet) return;
+	if (self.channelSheet) return;
 	
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	ChannelSheet *d = [ChannelSheet new];
 	
 	d.delegate = self;
-	d.window = window;
+	d.window = self.window;
 	d.config = [c.config mutableCopy];
 	d.uid = u.uid;
 	d.cid = c.uid;
 	
 	[d start];
 	
-	channelSheet = d;
+	self.channelSheet = d;
 }
 
 - (void)ChannelSheetOnOK:(ChannelSheet *)sender
 {
 	if (sender.cid < 0) {
-		IRCClient *u = [world findClientById:sender.uid];
+		IRCClient *u = [self.world findClientById:sender.uid];
 		
 		if (NO_CLIENT) return;
 		
-		[world createChannel:sender.config client:u reload:YES adjust:YES];
-		[world expandClient:u];
+		[self.world createChannel:sender.config client:u reload:YES adjust:YES];
+		[self.world expandClient:u];
 	} else {
-		IRCChannel *c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+		IRCChannel *c = [self.world findChannelByClientId:sender.uid channelId:sender.cid];
 		
 		if (NO_CHANNEL) return;
 		
@@ -1116,18 +1128,18 @@
 		[c updateConfig:sender.config];
 	}
 	
-	[world save];
+	[self.world save];
 }
 
 - (void)ChannelSheetWillClose:(ChannelSheet *)sender
 {
-	channelSheet = nil;
+	self.channelSheet = nil;
 }
 
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1147,7 +1159,7 @@
     NSPoint pt;
     NSInteger n;
     
-    pt = [window mouseLocationOutsideOfEventStream];
+    pt = [self.window mouseLocationOutsideOfEventStream];
     pt = [view convertPoint:pt fromView:nil];
     
     n = [view rowAtPoint:pt];
@@ -1158,12 +1170,8 @@
         }
         
         switch ([Preferences userDoubleClickOption]) {
-            case USERDC_ACTION_WHOIS: 
-                [self whoisSelectedMembers:nil deselect:NO];
-                break;
-            case USERDC_ACTION_QUERY: 
-                [self onMemberTalk:nil];
-                break;
+            case USERDC_ACTION_WHOIS: [self whoisSelectedMembers:nil deselect:NO]; break;
+            case USERDC_ACTION_QUERY: [self onMemberTalk:nil]; break;
         }
     }
 }
@@ -1175,8 +1183,8 @@
 
 - (void)onMemberTalk:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1184,10 +1192,10 @@
 		IRCChannel *c = [u findChannel:m.nick];
 		
 		if (NO_CHANNEL) {
-			c = [world createTalk:m.nick client:u];
+			c = [self.world createTalk:m.nick client:u];
 		}
 		
-		[world select:c];
+		[self.world select:c];
 	}
 	
 	[self deselectMembers:sender];
@@ -1195,10 +1203,10 @@
 
 - (void)onMemberInvite:(id)sender
 {
-	if (inviteSheet) return;
+	if (self.inviteSheet) return;
 	
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || NOT_CONNECTED) return;
 	
@@ -1217,18 +1225,18 @@
 	
 	if (NSObjectIsEmpty(channels)) return;
 	
-	inviteSheet = [InviteSheet new];
-	inviteSheet.delegate = self;
-	inviteSheet.window = window;
-	inviteSheet.nicks = nicks;
-	inviteSheet.uid = u.uid;
+	self.inviteSheet = [InviteSheet new];
+	self.inviteSheet.delegate = self;
+	self.inviteSheet.window = self.window;
+	self.inviteSheet.nicks = nicks;
+	self.inviteSheet.uid = u.uid;
 	
-	[inviteSheet startWithChannels:channels];
+	[self.inviteSheet startWithChannels:channels];
 }
 
 - (void)inviteSheet:(InviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
-	IRCClient *u = [world findClientById:sender.uid];
+	IRCClient *u = [self.world findClientById:sender.uid];
 	
 	if (u && NSObjectIsNotEmpty(channelName)) {
 		for (NSString *nick in sender.nicks) {
@@ -1239,13 +1247,13 @@
 
 - (void)inviteSheetWillClose:(InviteSheet *)sender
 {
-	inviteSheet = nil;
+	self.inviteSheet = nil;
 }
 
 - (void)onMemberPing:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1258,8 +1266,8 @@
 
 - (void)onMemberTime:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1272,8 +1280,8 @@
 
 - (void)onMemberVersion:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1286,8 +1294,8 @@
 
 - (void)onMemberUserInfo:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1300,8 +1308,8 @@
 
 - (void)onMemberClientInfo:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT || IS_CLIENT) return;
 	
@@ -1314,56 +1322,57 @@
 
 - (void)onCopyUrl:(id)sender
 {
-	if (NSObjectIsNotEmpty(pointedUrl)) {
-		[_NSPasteboard() setStringContent:pointedUrl];
+	if (NSObjectIsNotEmpty(self.pointedUrl)) {
+		[_NSPasteboard() setStringContent:self.pointedUrl];
 		
-		pointedUrl = nil;
+		self.pointedUrl = nil;
 	}
 }
 
 - (void)onJoinChannel:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	
 	if (NO_CLIENT || NOT_CONNECTED) return;
 	
-	if (NSObjectIsNotEmpty(pointedChannelName)) {
-		[u joinUnlistedChannel:pointedChannelName];
-
-        pointedChannelName = nil;
+	if (NSObjectIsNotEmpty(self.pointedChannelName)) {
+		[u joinUnlistedChannel:self.pointedChannelName];
+		
+        self.pointedChannelName = nil;
 	}
 }
 
 - (void)onWantIgnoreListShown:(id)sender
 {
-	[self showServerPropertyDialog:[world selectedClient] ignore:@"-"];
+	[self showServerPropertyDialog:[self.world selectedClient] ignore:@"-"];
 }
 
 - (void)onWantAboutWindowShown:(id)sender
 {
-	if (aboutPanel) {
-		[aboutPanel show];
+	if (self.aboutPanel) {
+		[self.aboutPanel show];
 		return;
 	}
 	
-	aboutPanel = [AboutPanel new];
-	aboutPanel.delegate = self;
-	[aboutPanel show];
+	self.aboutPanel = [AboutPanel new];
+	self.aboutPanel.delegate = self;
+	[self.aboutPanel show];
 }
 
 - (void)aboutPanelWillClose:(AboutPanel *)sender
 {
-	aboutPanel = nil;
+	self.aboutPanel = nil;
 }
 
 - (void)processModeChange:(id)sender mode:(NSString *)tmode 
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	NSString *opString = NSNullObject;
+	
 	NSInteger currentIndex = 0;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
@@ -1375,6 +1384,7 @@
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
 			
 			opString = NSNullObject;
+			
 			currentIndex = 0;
 		}
 	}
@@ -1418,8 +1428,8 @@
 
 - (void)onMemberKick:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
@@ -1432,8 +1442,8 @@
 
 - (void)onMemberBan:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
@@ -1446,13 +1456,14 @@
 
 - (void)onMemberBanKick:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, [Preferences defaultKickMessage]] completeTarget:YES target:c.name];
+		[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, [Preferences defaultKickMessage]]
+		completeTarget:YES target:c.name];
 	}
 	
 	[self deselectMembers:sender];
@@ -1460,8 +1471,8 @@
 
 - (void)onMemberKill:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
@@ -1474,8 +1485,8 @@
 
 - (void)onMemberGline:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
@@ -1492,8 +1503,8 @@
 
 - (void)onMemberShun:(id)sender
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
@@ -1523,8 +1534,8 @@
 
 - (void)onWantToReadChannelLogs:(id)sender;
 {
-	IRCClient *u = [world selectedClient];
-	IRCChannel *c = [world selectedChannel];
+	IRCClient *u = [self.world selectedClient];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CLIENT_OR_CHANNEL || IS_CLIENT) return;
 	
@@ -1536,7 +1547,7 @@
 		[PopupPrompts dialogWindowWithQuestion:TXTLS(@"LOG_PATH_DOESNT_EXIST_MESSAGE")
 										 title:TXTLS(@"LOG_PATH_DOESNT_EXIST_TITLE")
 								 defaultButton:TXTLS(@"OK_BUTTON")
-								alternateButton:nil
+							   alternateButton:nil
 								   otherButton:nil
 								suppressionKey:nil
 							   suppressionText:nil];
@@ -1545,14 +1556,14 @@
 
 - (void)onWantTextualConnnectToHelp:(id)sender 
 {
-	[world createConnection:@"chat.freenode.net +6697" chan:@"#textual"];
+	[self.world createConnection:@"chat.freenode.net +6697" chan:@"#textual"];
 }
 
 - (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString *)vhost
 {
 	if (NSObjectIsNotEmpty(vhost)) {
-		IRCClient *u = [world selectedClient];
-		IRCChannel *c = [world selectedChannel];
+		IRCClient *u = [self.world selectedClient];
+		IRCChannel *c = [self.world selectedChannel];
 		
 		if (NO_CLIENT || IS_CLIENT) return;
 		
@@ -1584,142 +1595,104 @@
 
 - (void)onWantChannelBanList:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	[[world selectedClient] createChanBanListDialog];
-	[[world selectedClient] send:IRCCI_MODE, [c name], @"+b", nil];
+	[[self.world selectedClient] createChanBanListDialog];
+	[[self.world selectedClient] send:IRCCI_MODE, [c name], @"+b", nil];
 }
 
 - (void)onWantChannelBanExceptionList:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	[[world selectedClient] createChanBanExceptionListDialog];
-	[[world selectedClient] send:IRCCI_MODE, [c name], @"+e", nil];
+	[[self.world selectedClient] createChanBanExceptionListDialog];
+	[[self.world selectedClient] send:IRCCI_MODE, [c name], @"+e", nil];
 }
 
 - (void)onWantChannelInviteExceptionList:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	[[world selectedClient] createChanInviteExceptionListDialog];
-	[[world selectedClient] send:IRCCI_MODE, [c name], @"+I", nil];
+	[[self.world selectedClient] createChanInviteExceptionListDialog];
+	[[self.world selectedClient] send:IRCCI_MODE, [c name], @"+I", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	switch ([sender tag]) {
-		case 101:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]];
-			break;
-		case 103:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]];
-			break;
-		case 104:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]];
-			break;
-		case 105:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]];
-			break;
-		case 106:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]];
-			break;
-		case 108:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]];
-			break;
-		case 110:
-			[_NSWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/forum/"]];
-			break;
+		case 101: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/"]]; break;
+		case 103: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/text-formatting"]]; break;
+		case 104: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/command-reference"]]; break;
+		case 105: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]]; break;
+		case 106: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]]; break;
+		case 108: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]]; break;
+		case 110: [_NSWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/forum/"]]; break;
 	}
 }
 
 - (void)processNavigationItem:(NSMenuItem *)sender
 {
 	switch ([sender tag]) {
-		case 50001:
-			[master selectNextServer:nil];
-			break;
-		case 50002:
-			[master selectPreviousServer:nil];
-			break;
-		case 50003:
-			[master selectNextActiveServer:nil];
-			break;
-		case 50004:
-			[master selectPreviousActiveServer:nil];
-			break;
-		case 50005:
-			[master selectNextChannel:nil];
-			break;
-		case 50006:
-			[master selectPreviousChannel:nil];
-			break;
-		case 50007:
-			[master selectNextActiveChannel:nil];
-			break;
-		case 50008:
-			[master selectPreviousActiveChannel:nil];
-			break;
-		case 50009:
-			[master selectNextUnreadChannel:nil];
-			break;
-		case 50010:
-			[master selectPreviousUnreadChannel:nil];
-			break;
-		case 50011:
-			[master selectPreviousSelection:nil];
-			break;
-		case 50012:
-			[master selectNextSelection:nil];
-			break;
+		case 50001: [self.master selectNextServer:nil]; break;
+		case 50002: [self.master selectPreviousServer:nil]; break;
+		case 50003: [self.master selectNextActiveServer:nil]; break;
+		case 50004: [self.master selectPreviousActiveServer:nil]; break;
+		case 50005: [self.master selectNextChannel:nil]; break;
+		case 50006: [self.master selectPreviousChannel:nil]; break;
+		case 50007: [self.master selectNextActiveChannel:nil]; break;
+		case 50008: [self.master selectPreviousActiveChannel:nil]; break;
+		case 50009: [self.master selectNextUnreadChannel:nil]; break;
+		case 50010: [self.master selectPreviousUnreadChannel:nil]; break;
+		case 50011: [self.master selectPreviousSelection:nil]; break;
+		case 50012: [self.master selectNextSelection:nil]; break;
 	}
 }
 
 - (void)onWantMainWindowShown:(id)sender 
 {
-	[window makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)wantsFullScreenModeToggled:(id)sender
 {
 #ifdef _MAC_OS_LION_OR_NEWER
 	if ([Preferences featureAvailableToOSXLion]) {
-		if (isInFullScreenMode) {
-			[window toggleFullScreen:sender];
-			[master loadWindowState];
+		if (self.isInFullScreenMode) {
+			[self.window toggleFullScreen:sender];
+			[self.master loadWindowState];
 		} else {
-			[master saveWindowState];
-			[window toggleFullScreen:sender];
+			[self.master saveWindowState];
+			[self.window toggleFullScreen:sender];
 		}
 	} else {
 #endif
 		
-		if (isInFullScreenMode == NO) {
-			[master saveWindowState];
+		if (self.isInFullScreenMode == NO) {
+			[self.master saveWindowState];
 			
 			[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
 			
-			[[window standardWindowButton:NSWindowZoomButton] setHidden:YES];
-			[[window standardWindowButton:NSWindowCloseButton] setHidden:YES];
-			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
+			[[self.window standardWindowButton:NSWindowZoomButton] setHidden:YES];
+			[[self.window standardWindowButton:NSWindowCloseButton] setHidden:YES];
+			[[self.window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
 			
-			[window setShowsResizeIndicator:NO];
+			[self.window setShowsResizeIndicator:NO];
 			
-			[window setFrame:[window frameRectForContentRect:[[window screen] frame]] display:YES animate:YES];
+			[self.window setFrame:[self.window frameRectForContentRect:[[self.window screen] frame]]
+						  display:YES animate:YES];
 		} else {
-			[[window standardWindowButton:NSWindowZoomButton] setHidden:NO];
-			[[window standardWindowButton:NSWindowCloseButton] setHidden:NO];
-			[[window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
+			[[self.window standardWindowButton:NSWindowZoomButton] setHidden:NO];
+			[[self.window standardWindowButton:NSWindowCloseButton] setHidden:NO];
+			[[self.window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
 			
-			[window setShowsResizeIndicator:YES];
-			
-			[master loadWindowState];
+			[self.window setShowsResizeIndicator:YES];
+			[self.master loadWindowState];
 			
 			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		}
@@ -1728,12 +1701,12 @@
 	}
 #endif
 	
-	isInFullScreenMode = BOOLReverseValue(isInFullScreenMode);
+	self.isInFullScreenMode = BOOLReverseValue(self.isInFullScreenMode);
 }
 
 - (void)onWantChannelListSorted:(id)sender
 {
-	for (IRCClient *u in [world clients]) {
+	for (IRCClient *u in [self.world clients]) {
 		NSArray *clientChannels = [u.channels sortedArrayUsingFunction:channelDataSort context:nil];
 		
 		[u.channels removeAllObjects];
@@ -1745,7 +1718,7 @@
 		[u updateConfig:[u storedConfig]];
 	}
 	
-	[world save];
+	[self.world save];
 }
 
 - (void)onWantThemeForceReloaded:(id)sender
@@ -1755,20 +1728,20 @@
 
 - (void)onWantChannelModerated:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
 }
 
 - (void)onWantChannelVoiceOnly:(id)sender
 {
-	IRCChannel *c = [world selectedChannel];
+	IRCChannel *c = [self.world selectedChannel];
 	
 	if (NO_CHANNEL || IS_CLIENT || IS_QUERY) return;
 	
-	[[world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
 }
 
 - (void)toggleDeveloperMode:(id)sender
@@ -1786,12 +1759,12 @@
 
 - (void)onNextHighlight:(id)sender
 {
-	[world.selected.log nextHighlight];
+	[self.world.selected.log nextHighlight];
 }
 
 - (void)onPreviousHighlight:(id)sender
 {
-	[world.selected.log previousHighlight];
+	[self.world.selected.log previousHighlight];
 }
 
 @end

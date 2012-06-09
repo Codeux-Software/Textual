@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @implementation NSFont (NSFontHelper)
 
@@ -7,9 +8,6 @@ const CGFloat kRotationForItalicText = -14.0;
 
 - (NSFont *)convertToItalics
 { 
-	// The following code to make a font have italics with an extra fallback is from:
-	// <http://www.answerspice.com/c119/1619181/how-do-i-get-lucida-grande-italic-into-my-application>
-	
 	NSFont *theFont = [_NSFontManager() convertFont:self toHaveTrait:NSItalicFontMask];  
 	
 	if ([self fontTraitSet:NSItalicFontMask] == NO) {       

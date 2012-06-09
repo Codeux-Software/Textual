@@ -22,7 +22,7 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-void DevNullDestroyObject(BOOL condition, ...)
+void DevNullDestroyObject(BOOL condition, ...) // lol
 {
 	return;
 }

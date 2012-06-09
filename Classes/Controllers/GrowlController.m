@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define CLICK_INTERVAL	2
 
@@ -28,7 +29,8 @@
 }
 
 
-- (void)notify:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info
+- (void)notify:(NotificationType)type title:(NSString *)title
+		  desc:(NSString *)desc userInfo:(NSDictionary *)info
 {
 	if ([Preferences growlEnabledForEvent:type] == NO) return;
 	
@@ -123,14 +125,21 @@
 	}
 #endif
 	
-	[GrowlApplicationBridge notifyWithTitle:title description:desc notificationName:kind iconData:nil priority:(int)priority isSticky:sticky clickContext:info];
+	[GrowlApplicationBridge notifyWithTitle:title
+								description:desc
+						   notificationName:kind
+								   iconData:nil
+								   priority:(int)priority
+								   isSticky:sticky
+							   clickContext:info];
 }
 
 /* NSUserNotificationCenter */
 
 #ifdef _USES_NATIVE_NOTIFICATION_CENTER
 
-- (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center
+	   didActivateNotification:(NSUserNotification *)notification
 {
 	[_NSUserNotificationCenter() removeDeliveredNotification:notification];
 	
@@ -156,43 +165,42 @@
 									TXTLS(@"NOTIFICATION_MSG_LOGIN"), TXTLS(@"NOTIFICATION_MSG_DISCONNECT"),
 									TXTLS(@"NOTIFICATION_ADDRESS_BOOK_MATCH"), nil];
 	
-	return [NSDictionary dictionaryWithObjectsAndKeys: allNotifications, GROWL_NOTIFICATIONS_ALL, allNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
+	return [NSDictionary dictionaryWithObjectsAndKeys:allNotifications, GROWL_NOTIFICATIONS_ALL, allNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
 }
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context 
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
-	if ((now - lastClickedTime) < CLICK_INTERVAL) {
-		if (lastClickedContext && [lastClickedContext isEqual:context]) {
+	if ((now - self.lastClickedTime) < CLICK_INTERVAL) {
+		if (self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
 	
-	lastClickedTime = now;
-	
-	lastClickedContext = context;
+	self.lastClickedTime = now;
+	self.lastClickedContext = context;
 
-	[owner.window makeKeyAndOrderFront:nil];
+	[self.owner.window makeKeyAndOrderFront:nil];
 
 	[NSApp activateIgnoringOtherApps:YES];
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
 		NSNumber *uid = [context objectForKey:@"client"];
 		
-		IRCClient  *u = [owner findClientById:[uid integerValue]];
+		IRCClient  *u = [self.owner findClientById:[uid integerValue]];
 		IRCChannel *c = nil;
 		
 		if ([context objectForKey:@"channel"]) {
 			NSNumber *cid = [context objectForKey:@"channel"];
 			
-			c = [owner findChannelByClientId:[uid integerValue] channelId:[cid integerValue]];
+			c = [self.owner findChannelByClientId:[uid integerValue] channelId:[cid integerValue]];
 		}
 		
 		if (c) {
-			[owner select:c];
+			[self.owner select:c];
 		} else if (u) {
-			[owner select:u];
+			[self.owner select:u];
 		}
 	}
 }

@@ -37,7 +37,7 @@
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval 
 											  target:self 
 											selector:@selector(onTimer:) 
-											userInfo:nil repeats:reqeat];
+											userInfo:nil repeats:self.reqeat];
 	
 	[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }

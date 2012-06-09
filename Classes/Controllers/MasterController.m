@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
@@ -17,7 +18,6 @@
 @implementation MasterController
 
 @synthesize addServerButton;
-@synthesize addrMenu;
 @synthesize chanMenu;
 @synthesize channelMenu;
 @synthesize completionStatus;
@@ -45,29 +45,28 @@
 @synthesize window;
 @synthesize world;
 
-
 #pragma mark -
 #pragma mark NSApplication Delegate
 
 - (void)awakeFromNib
 {
 #ifdef _MAC_OS_LION_OR_NEWER
-	[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
 	
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-		ghostMode = YES;
+		self.ghostMode = YES;
 	}
 	
 #if defined(DEBUG)
     ghostMode = YES; // Do not use autoconnect during debug
 #endif
 	
-	[window makeMainWindow];
+	[self.window makeMainWindow];
 	
 	[Preferences initPreferences];
 	
-	[text setBackgroundColor:[NSColor clearColor]];
+	[self.text setBackgroundColor:[NSColor clearColor]];
 	
 	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
 	
@@ -81,102 +80,101 @@
 	
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
-    [text setFieldEditor:YES];
+    [self.text setFieldEditor:YES];
     
-	serverSplitView.fixedViewIndex = 0;
-	memberSplitView.fixedViewIndex = 1;
+	self.serverSplitView.fixedViewIndex = 0;
+	self.memberSplitView.fixedViewIndex = 1;
 	
-	viewTheme	   = [ViewTheme new];
-	viewTheme.name = [Preferences themeName];
+	self.viewTheme	   = [ViewTheme new];
+	self.viewTheme.name = [Preferences themeName];
 	
 	[self loadWindowState];
 	
-	[window setAlphaValue:[Preferences themeTransparency]];
+	[self.window setAlphaValue:[Preferences themeTransparency]];
 	
-    [text setReturnActionWithSelector:@selector(textEntered) owner:self];
+    [self.text setReturnActionWithSelector:@selector(textEntered) owner:self];
     
-	[LanguagePreferences setThemeForLocalization:viewTheme.path];
+	[LanguagePreferences setThemeForLocalization:self.viewTheme.path];
 	
 	IRCWorldConfig *seed = [[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]];
 	
-	extrac = [IRCExtras new];
-	world  = [IRCWorld new];
+	self.extrac = [IRCExtras new];
+	self.world  = [IRCWorld new];
 	
-	world.window			= window;
-	world.growl				= growl;
-	world.master			= self;
-	world.extrac			= extrac;
-	world.text				= text;
-	world.logBase			= logBase;
-	world.memberList		= memberList;
-	world.treeMenu			= treeMenu;
-	world.logMenu			= logMenu;
-	world.urlMenu			= urlMenu;
-	world.addrMenu			= addrMenu;
-	world.chanMenu			= chanMenu;
-	world.memberMenu		= memberMenu;
-	world.viewTheme			= viewTheme;
-	world.menuController	= menu;
-	world.serverList		= serverList;
+	self.world.window			= self.window;
+	self.world.growl			= self.growl;
+	self.world.master			= self;
+	self.world.extrac			= self.extrac;
+	self.world.text				= self.text;
+	self.world.logBase			= self.logBase;
+	self.world.memberList		= self.memberList;
+	self.world.treeMenu			= self.treeMenu;
+	self.world.logMenu			= self.logMenu;
+	self.world.urlMenu			= self.urlMenu;
+	self.world.chanMenu			= self.chanMenu;
+	self.world.memberMenu		= self.memberMenu;
+	self.world.viewTheme		= self.viewTheme;
+	self.world.menuController	= self.menu;
+	self.world.serverList		= self.serverList;
 	
-	[world setServerMenuItem:serverMenu];
-	[world setChannelMenuItem:channelMenu];
+	[self.world setServerMenuItem:self.serverMenu];
+	[self.world setChannelMenuItem:self.channelMenu];
 	
-	[world setup:seed];
+	[self.world setup:seed];
 	
-	extrac.world = world;
+	self.extrac.world = self.world;
 	
-	serverSplitView.delegate = self;
-	memberSplitView.delegate = self;
+	self.serverSplitView.delegate = self;
+	self.memberSplitView.delegate = self;
 	
-	serverList.dataSource	= world;
-	serverList.delegate		= world;
-    memberList.keyDelegate  = world;
-	serverList.keyDelegate  = world;
-	[serverList reloadData];
+	self.serverList.dataSource		= self.world;
+	self.serverList.delegate		= self.world;
+    self.memberList.keyDelegate		= self.world;
+	self.serverList.keyDelegate		= self.world;
+	[self.serverList reloadData];
 	
-	[world setupTree];
+	[self.world setupTree];
 	
-	menu.world		= world;
-	menu.window		= window;
-	menu.serverList = serverList;
-	menu.memberList = memberList;
-	menu.text		= text;
-	menu.master		= self;
+	self.menu.world			= self.world;
+	self.menu.window		= self.window;
+	self.menu.serverList	= self.serverList;
+	self.menu.memberList	= self.memberList;
+	self.menu.text			= self.text;
+	self.menu.master		= self;
 	
-	[memberList setTarget:menu];    
-	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
+	[self.memberList setTarget:self.menu];    
+	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 	
-	growl = [GrowlController new];
-	growl.owner = world;
-	world.growl = growl;
+	self.growl = [GrowlController new];
+	self.growl.owner = self.world;
+	self.world.growl = self.growl;
 	
-	[formattingMenu enableWindowField:text];
+	[self.formattingMenu enableWindowField:self.text];
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
-		inputHistory = [InputHistory new];
+		self.inputHistory = [InputHistory new];
 	}
 	
 	[self registerKeyHandlers];
 	
-	[viewTheme validateFilePathExistanceAndReload:YES];
+	[self.viewTheme validateFilePathExistanceAndReload:YES];
 	
-	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
+	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:self.world];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
-    [world focusInputText];
+    [self.world focusInputText];
     
-	[window makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 	
-	if (world.clients.count < 1) {
-		welcomeSheet = [WelcomeSheet new];
-		welcomeSheet.delegate = self;
-		welcomeSheet.window = window;
-		[welcomeSheet show];
+	if (self.world.clients.count < 1) {
+		self.welcomeSheet = [WelcomeSheet new];
+		self.welcomeSheet.delegate = self;
+		self.welcomeSheet.window = self.window;
+		[self.welcomeSheet show];
 	} else {
-		[world autoConnectAfterWakeup:NO];	
+		[self.world autoConnectAfterWakeup:NO];	
 	}
 	
 #ifdef IS_TRIAL_BINARY
@@ -193,46 +191,46 @@
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
-	id sel = world.selected;
+	id sel = self.world.selected;
     
 	if (sel) {
 		[sel resetState];
 		
-		[world updateIcon];
+		[self.world updateIcon];
 	}
 	
-    [world reloadTree];
+    [self.world reloadTree];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
-	id sel = world.selected;
+	id sel = self.world.selected;
     
 	if (sel) {
 		[sel resetState];
 		
-		[world updateIcon];
+		[self.world updateIcon];
 	}
     
-    [world reloadTree];
+    [self.world reloadTree];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-	[window makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 	
 	return YES;
 }
 
 - (void)applicationDidReceiveHotKey:(id)sender
 {
-	if ([window isVisible] == NO || [NSApp isActive] == NO) {
-		if (NSObjectIsEmpty(world.clients)) {
+	if ([self.window isVisible] == NO || [NSApp isActive] == NO) {
+		if (NSObjectIsEmpty(self.world.clients)) {
 			[NSApp activateIgnoringOtherApps:YES];
 			
-			[window makeKeyAndOrderFront:nil];
+			[self.window makeKeyAndOrderFront:nil];
 			
-			[text focus];
+			[self.text focus];
 		}
 	} else {
 		[NSApp hide:nil];
@@ -241,7 +239,7 @@
 
 - (BOOL)queryTerminate
 {
-	if (terminating) {
+	if (self.terminating) {
 		return YES;
 	}
 	
@@ -276,11 +274,9 @@
 	
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
-	[world save];
-	[world terminate];
-	
-	[menu terminate];
-	
+	[self.world save];
+	[self.world terminate];
+	[self.menu terminate];
 	[self saveWindowState];
 	
 	[Preferences updateTotalRunTime];
@@ -289,33 +285,34 @@
 #pragma mark -
 #pragma mark NSWorkspace Notifications
 
-- (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+- (void)handleURLEvent:(NSAppleEventDescriptor *)event
+		withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
 	NSString *url = [[event descriptorAtIndex:1] stringValue];
 	
-    [extrac parseIRCProtocolURI:url];
+    [self.extrac parseIRCProtocolURI:url];
 }
 
 - (void)computerWillSleep:(NSNotification *)note
 {
-	[world prepareForSleep];
+	[self.world prepareForSleep];
 }
 
 - (void)computerDidWakeUp:(NSNotification *)note
 {
-	[world autoConnectAfterWakeup:YES];
+	[self.world autoConnectAfterWakeup:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note
 {
-	terminating = YES;
+	self.terminating = YES;
 	
 	[NSApp terminate:nil];
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-	[window makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 	
 	return YES;
 }
@@ -325,15 +322,15 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	id sel = world.selected;
+	id sel = self.world.selected;
 	
 	if (sel) {
 		[sel resetState];
 		
-		[world updateIcon];
+		[self.world updateIcon];
 	}
 	
-    [world reloadTree];
+    [self.world reloadTree];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
@@ -343,22 +340,22 @@
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
 {
-	menu.isInFullScreenMode = YES;
+	self.menu.isInFullScreenMode = YES;
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
 	[self loadWindowState];
 	
-	menu.isInFullScreenMode = NO;
+	self.menu.isInFullScreenMode = NO;
 }
 
 - (NSSize)windowWillResize:(NSWindow *)awindow toSize:(NSSize)newSize
 {
-	if (NSDissimilarObjects(awindow, window)) {
+	if (NSDissimilarObjects(awindow, self.window)) {
 		return newSize; 
 	} else {
-		if (menu.isInFullScreenMode) {
+		if (self.menu.isInFullScreenMode) {
 			return [awindow frame].size;
 		} else {
 			return newSize;
@@ -368,17 +365,17 @@
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
 {
-	if (NSDissimilarObjects(window, awindow)) {
+	if (NSDissimilarObjects(self.window, awindow)) {
 		return YES;
 	} else {
-		return BOOLReverseValue(menu.isInFullScreenMode);
+		return BOOLReverseValue(self.menu.isInFullScreenMode);
 	}
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-    NSMenu	   *editorMenu = [text menu];
-    NSMenuItem *formatMenu = [formattingMenu formatterMenu];
+    NSMenu	   *editorMenu = [self.text menu];
+    NSMenuItem *formatMenu = [self.formattingMenu formatterMenu];
     
     if (formatMenu) {
         NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
@@ -388,10 +385,10 @@
             [editorMenu addItem:formatMenu];
         }
         
-        [text setMenu:editorMenu];
+        [self.text setMenu:editorMenu];
     }
     
-    return text;
+    return self.text;
 }
 
 #pragma mark -
@@ -399,22 +396,22 @@
 
 - (void)sendText:(NSString *)command
 {
-	NSAttributedString *as = [text attributedStringValue];
+	NSAttributedString *as = [self.text attributedStringValue];
 	
-	[text setAttributedStringValue:[NSAttributedString emptyString]];
+	[self.text setAttributedStringValue:[NSAttributedString emptyString]];
 	
 	if ([Preferences inputHistoryIsChannelSpecific]) {
-		world.selected.inputHistory.lastHistoryItem = nil;
+		self.world.selected.inputHistory.lastHistoryItem = nil;
 	}
 	
 	if (NSObjectIsNotEmpty(as)) {
-		if ([world inputText:as command:command]) {
-			[inputHistory add:as];
+		if ([self.world inputText:as command:command]) {
+			[self.inputHistory add:as];
 		}
 	}
 	
-	if (completionStatus) {
-		[completionStatus clear];
+	if (self.completionStatus) {
+		[self.completionStatus clear];
 	}
 }
 
@@ -425,25 +422,25 @@
 
 - (void)showMemberListSplitView:(BOOL)showList
 {
-	memberSplitViewOldPosition = memberSplitView.position;
+	self.memberSplitViewOldPosition = self.memberSplitView.position;
 	
 	if (showList) {
-		NSView *rightView = [[memberSplitView subviews] safeObjectAtIndex:1];
+		NSView *rightView = [[self.memberSplitView subviews] safeObjectAtIndex:1];
 		
-		memberSplitView.hidden	 = NO;
-		memberSplitView.inverted = NO;
+		self.memberSplitView.hidden	 = NO;
+		self.memberSplitView.inverted = NO;
 		
-		if ([memberSplitView isSubviewCollapsed:rightView] == NO) {
-			if (memberSplitViewOldPosition < minimumSplitViewWidth) {
-				memberSplitViewOldPosition = minimumSplitViewWidth;
+		if ([self.memberSplitView isSubviewCollapsed:rightView] == NO) {
+			if (self.memberSplitViewOldPosition < minimumSplitViewWidth) {
+				self.memberSplitViewOldPosition = minimumSplitViewWidth;
 			}
 			
-			memberSplitView.position = memberSplitViewOldPosition;
+			self.memberSplitView.position = self.memberSplitViewOldPosition;
 		}
 	} else {
-		if (memberSplitView.hidden == NO) {
-			memberSplitView.hidden   = YES;
-			memberSplitView.inverted = YES;
+		if (self.memberSplitView.hidden == NO) {
+			self.memberSplitView.hidden   = YES;
+			self.memberSplitView.inverted = YES;
 		}
 	}
 }
@@ -451,9 +448,11 @@
 #pragma mark -
 #pragma mark Preferences
 
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView
+constrainMaxCoordinate:(CGFloat)proposedMax
+		 ofSubviewAt:(NSInteger)dividerIndex
 {
-	if ([splitView isEqual:memberSplitView]) {
+	if ([splitView isEqual:self.memberSplitView]) {
 		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
 		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
 		
@@ -466,9 +465,11 @@
 	return maximumSplitViewWidth;
 }
 
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView
+constrainMinCoordinate:(CGFloat)proposedMax
+		 ofSubviewAt:(NSInteger)dividerIndex
 {
-	if ([splitView isEqual:memberSplitView]) {
+	if ([splitView isEqual:self.memberSplitView]) {
 		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
 		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
 		
@@ -483,16 +484,16 @@
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
-	if ([splitView isEqual:memberSplitView]) {
+	if ([splitView isEqual:self.memberSplitView]) {
 		NSView *leftSide = [[splitView subviews] objectAtIndex:0];
         
 		if ([leftSide isEqual:subview]) {
 			return NO;
 		}
-	} else if ([splitView isEqual:serverSplitView]) {
+	} else if ([splitView isEqual:self.serverSplitView]) {
 		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
 		
-		if ([rightSide isEqual:subview] || NSObjectIsEmpty(world.clients)) {
+		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.world.clients)) {
 			return NO;		
 		} 
 	}
@@ -510,21 +511,21 @@
 		NSInteger w = [dic integerForKey:@"w"];
 		NSInteger h = [dic integerForKey:@"h"];
 		
-		[window setFrame:NSMakeRect(x, y, w, h) display:YES animate:menu.isInFullScreenMode];
+		[self.window setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.menu.isInFullScreenMode];
 		
-		[text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"GrammarChecking"]];
-		[text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
-		[text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"AutoSpellChecking"]];
+		[self.text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"GrammarChecking"]];
+		[self.text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
+		[self.text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"AutoSpellCorrection"]];
 		
-		serverSplitView.position = [dic integerForKey:@"serverList"];
-		memberSplitView.position = [dic integerForKey:@"memberList"];
+		self.serverSplitView.position = [dic integerForKey:@"serverList"];
+		self.memberSplitView.position = [dic integerForKey:@"memberList"];
 		
-		if (serverSplitView.position < minimumSplitViewWidth) {
-			serverSplitView.position = defaultSplitViewWidth;
+		if (self.serverSplitView.position < minimumSplitViewWidth) {
+			self.serverSplitView.position = defaultSplitViewWidth;
 		}
 		
-		if (memberSplitView.position < minimumSplitViewWidth) {
-			memberSplitView.position = defaultSplitViewWidth;
+		if (self.memberSplitView.position < minimumSplitViewWidth) {
+			self.memberSplitView.position = defaultSplitViewWidth;
 		}
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
@@ -540,49 +541,49 @@
 			
 			rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 			
-			[window setFrame:rect display:YES animate:menu.isInFullScreenMode];
+			[self.window setFrame:rect display:YES animate:self.menu.isInFullScreenMode];
 		}
 		
-		serverSplitView.position = 170;
-		memberSplitView.position = 170;
+		self.serverSplitView.position = 170;
+		self.memberSplitView.position = 170;
 	}
 	
-	memberSplitViewOldPosition = memberSplitView.position;
+	self.memberSplitViewOldPosition = self.memberSplitView.position;
 }
 
 - (void)saveWindowState
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	if (menu.isInFullScreenMode) {
-		[menu wantsFullScreenModeToggled:nil];
+	if (self.menu.isInFullScreenMode) {
+		[self.menu wantsFullScreenModeToggled:nil];
 	}
 	
-	NSRect rect = window.frame;
+	NSRect rect = self.window.frame;
 	
 	[dic setInteger:rect.origin.x		forKey:@"x"];
 	[dic setInteger:rect.origin.y		forKey:@"y"];
 	[dic setInteger:rect.size.width		forKey:@"w"];
 	[dic setInteger:rect.size.height	forKey:@"h"];
 	
-	if (serverSplitView.position < minimumSplitViewWidth) {
-		serverSplitView.position = defaultSplitViewWidth;
+	if (self.serverSplitView.position < minimumSplitViewWidth) {
+		self.serverSplitView.position = defaultSplitViewWidth;
 	}
 	
-	if (memberSplitView.position < minimumSplitViewWidth) {
-		if (memberSplitViewOldPosition < minimumSplitViewWidth) {
-			memberSplitView.position = defaultSplitViewWidth;
+	if (self.memberSplitView.position < minimumSplitViewWidth) {
+		if (self.memberSplitViewOldPosition < minimumSplitViewWidth) {
+			self.memberSplitView.position = defaultSplitViewWidth;
 		} else {
-			memberSplitView.position = memberSplitViewOldPosition;
+			self.memberSplitView.position = self.memberSplitViewOldPosition;
 		}
 	}
 	
-	[dic setInteger:serverSplitView.position forKey:@"serverList"];
-	[dic setInteger:memberSplitView.position forKey:@"memberList"];
+	[dic setInteger:self.serverSplitView.position forKey:@"serverList"];
+	[dic setInteger:self.memberSplitView.position forKey:@"memberList"];
 	
-	[_NSUserDefaults() setBool:[text isGrammarCheckingEnabled]				forKey:@"GrammarChecking"];
-	[_NSUserDefaults() setBool:[text isContinuousSpellCheckingEnabled]		forKey:@"SpellChecking"];
-	[_NSUserDefaults() setBool:[text isAutomaticSpellingCorrectionEnabled]	forKey:@"AutoSpellChecking"];
+	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"GrammarChecking"];
+	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"SpellChecking"];
+	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"AutoSpellCorrection"];
 	
 	[Preferences saveWindowState:dic name:@"MainWindow"];
 	[Preferences sync];
@@ -592,27 +593,27 @@
 {
 	NSMutableString *sf = [NSMutableString string];
 	
-	[world reloadTheme];
+	[self.world reloadTheme];
 	
-	if (viewTheme.other.nicknameFormat) {
+	if (self.viewTheme.other.nicknameFormat) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_NICKNAME_FORMAT")];
 		[sf appendString:NSNewlineCharacter];
 	}
 	
-	if (viewTheme.other.timestampFormat) {
+	if (self.viewTheme.other.timestampFormat) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_TIMESTAMP_FORMAT")];
 		[sf appendString:NSNewlineCharacter];
 	}
 	
-	if (viewTheme.other.channelViewFontOverrode) {
+	if (self.viewTheme.other.channelViewFontOverrode) {
 		[sf appendString:TXTLS(@"THEME_CHANGE_OVERRIDE_PROMPT_CHANNEL_FONT")];
 		[sf appendString:NSNewlineCharacter];
 	}
 	
 	if ([Preferences rightToLeftFormatting]) {
-		[text setBaseWritingDirection:NSWritingDirectionRightToLeft];
+		[self.text setBaseWritingDirection:NSWritingDirectionRightToLeft];
 	} else {
-		[text setBaseWritingDirection:NSWritingDirectionLeftToRight];
+		[self.text setBaseWritingDirection:NSWritingDirectionLeftToRight];
 	}
 	
 	sf = (NSMutableString *)[sf trim];
@@ -635,16 +636,16 @@
 
 - (void)transparencyDidChange:(NSNotification *)note
 {
-	[window setAlphaValue:[Preferences themeTransparency]];
+	[self.window setAlphaValue:[Preferences themeTransparency]];
 }
 
 - (void)inputHistorySchemeChanged:(NSNotification *)note
 {
-	if (inputHistory) {
-		inputHistory = nil;
+	if (self.inputHistory) {
+		self.inputHistory = nil;
 	}
 	
-	for (IRCClient *c in world.clients) {
+	for (IRCClient *c in self.world.clients) {
 		if (c.inputHistory) {
 			c.inputHistory = nil;
 		}
@@ -665,7 +666,7 @@
 	}
 	
 	if ([Preferences inputHistoryIsChannelSpecific] == NO) {
-		inputHistory = [InputHistory new];
+		self.inputHistory = [InputHistory new];
 	}
 }
 
@@ -674,30 +675,30 @@
 
 - (void)completeNick:(BOOL)forward
 {
-	IRCClient *client = [world selectedClient];
-	IRCChannel *channel = [world selectedChannel];
+	IRCClient *client = [self.world selectedClient];
+	IRCChannel *channel = [self.world selectedChannel];
 	
 	if (PointerIsEmpty(client)) {
 		return;
 	}
 	
-	if ([text isFocused] == NO) {
-		[world focusInputText];
+	if ([self.text isFocused] == NO) {
+		[self.world focusInputText];
 	}
 	
-	NSText *fe = [window fieldEditor:YES forObject:text];
+	NSText *fe = [self.window fieldEditor:YES forObject:self.text];
 	if (PointerIsEmpty(fe)) return;
 	
 	NSRange selectedRange = [fe selectedRange];
 	if (selectedRange.location == NSNotFound) return;
 	
-	if (PointerIsEmpty(completionStatus)) {
-		completionStatus = [NickCompletionStatus new];
+	if (PointerIsEmpty(self.completionStatus)) {
+		self.completionStatus = [NickCompletionStatus new];
 	}
 	
-	NickCompletionStatus *status = completionStatus;
+	NickCompletionStatus *status = self.completionStatus;
     
-	NSString *s = [text stringValue];
+	NSString *s = [self.text stringValue];
 	
 	if ([status.text isEqualToString:s]
 		&& NSDissimilarObjects(status.range.location, NSNotFound)
@@ -782,7 +783,7 @@
 			[choices safeAddObject:[command lowercaseString]];
 		}
 		
-		for (NSString *command in [world bundlesForUserInput].allKeys) {
+		for (NSString *command in [self.world bundlesForUserInput].allKeys) {
 			NSString *cmdl = [command lowercaseString];
 			
 			if ([choices containsObject:cmdl] == NO) {
@@ -808,8 +809,8 @@
 						continue;
 					}
 					
-					NSArray     *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-					NSString    *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+					NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+					NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
 					
 					if ([choices containsObject:cmdl] == NO) {
 						[choices safeAddObject:cmdl];
@@ -823,7 +824,7 @@
 		NSMutableArray *channels      = [NSMutableArray array];
 		NSMutableArray *lowerChannels = [NSMutableArray array];
 		
-		IRCClient *u = [world selectedClient];
+		IRCClient *u = [self.world selectedClient];
 		
 		for (IRCChannel *c in u.channels) {
 			[channels      safeAddObject:c.name];
@@ -850,18 +851,17 @@
 		[nicks      safeAddObject:@"HostServ"];
 		[nicks      safeAddObject:@"ChanServ"];
 		[nicks      safeAddObject:@"MemoServ"];
-		[nicks      safeAddObject:@"Textual"];
+		[nicks      safeAddObject:[Preferences applicationName]];
 		
 		[lowerNicks safeAddObject:@"nickserv"];
 		[lowerNicks safeAddObject:@"rootserv"];
 		[lowerNicks safeAddObject:@"operserv"];
 		[lowerNicks safeAddObject:@"hostserv"];
 		[lowerNicks safeAddObject:@"chanserv"];
-		[lowerNicks safeAddObject:@"textual"];
+		[lowerNicks safeAddObject:[Preferences applicationName]];
 		
 		choices      = nicks;
 		lowerChoices = lowerNicks;
-		
 	}
 	
 	NSMutableArray *currentChoices      = [NSMutableArray array];
@@ -904,7 +904,8 @@
 		t = [currentChoices safeObjectAtIndex:index];
 	}
 	
-	[[NSSpellChecker sharedSpellChecker] ignoreWord:t inSpellDocumentWithTag:[text spellCheckerDocumentTag]];
+	[[NSSpellChecker sharedSpellChecker] ignoreWord:t
+							 inSpellDocumentWithTag:[self.text spellCheckerDocumentTag]];
 	
 	if ((commandMode || channelMode) || head == NO) {
 		t = [t stringByAppendingString:NSWhitespaceCharacter];
@@ -932,7 +933,7 @@
 	} else {
 		selectedRange.length = (t.length - pre.length);
 		
-		status.text = [text stringValue];
+		status.text = [self.text stringValue];
 		status.range = selectedRange;
 	}
 }
@@ -953,14 +954,14 @@ typedef enum {
 - (void)move:(MoveKind)dir target:(MoveKind)target
 {
 	if (dir == MOVE_UP || dir == MOVE_DOWN) {
-		id sel = world.selected;
+		id sel = self.world.selected;
 		if (PointerIsEmpty(sel)) return;
 		
-		NSInteger n = [serverList rowForItem:sel];
+		NSInteger n = [self.serverList rowForItem:sel];
 		if (n < 0) return;
 		
 		NSInteger start = n;
-		NSInteger count = [serverList numberOfRows];
+		NSInteger count = [self.serverList numberOfRows];
 		
 		if (count <= 1) return;
 		
@@ -977,39 +978,39 @@ typedef enum {
 			
 			if (n == start) break;
 			
-			id i = [serverList itemAtRow:n];
+			id i = [self.serverList itemAtRow:n];
 			
 			if (i) {
 				if (target == MOVE_ACTIVE) {
 					if ([i isClient] == NO && [i isActive]) {
-						[world select:i];
+						[self.world select:i];
 						
 						break;
 					}
 				} else if (target == MOVE_UNREAD) {
 					if ([i isUnread]) {
-						[world select:i];
+						[self.world select:i];
 						
 						break;
 					}
 				} else {
-					[world select:i];
+					[self.world select:i];
 					
 					break;
 				}
 			}
 		}
 	} else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-		IRCClient *client = [world selectedClient];
+		IRCClient *client = [self.world selectedClient];
 		if (PointerIsEmpty(client)) return;
 		
-		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
+		NSUInteger pos = [self.world.clients indexOfObjectIdenticalTo:client];
 		if (pos == NSNotFound) return;
 		
 		NSInteger n = pos;
 		NSInteger start = n;
 		
-		NSInteger count = world.clients.count;
+		NSInteger count = self.world.clients.count;
 		if (count <= 1) return;
 		
 		while (1 == 1) {
@@ -1025,21 +1026,21 @@ typedef enum {
 			
 			if (n == start) break;
 			
-			client = [world.clients safeObjectAtIndex:n];
+			client = [self.world.clients safeObjectAtIndex:n];
 			
 			if (client) {
 				if (target == MOVE_ACTIVE) {
 					if (client.isLoggedIn) {
 						id t = ((client.lastSelectedChannel) ?: (id)client);
 						
-						[world select:t];
+						[self.world select:t];
 						
 						break;
 					}
 				} else {
 					id t = ((client.lastSelectedChannel) ?: (id)client);
 					
-					[world select:t];
+					[self.world select:t];
 					
 					break;
 				}
@@ -1100,7 +1101,7 @@ typedef enum {
 
 - (void)selectPreviousSelection:(NSEvent *)e
 {
-	[world selectPreviousItem];
+	[self.world selectPreviousItem];
 }
 
 - (void)selectNextSelection:(NSEvent *)e
@@ -1111,12 +1112,8 @@ typedef enum {
 - (void)tab:(NSEvent *)e
 {
 	switch ([Preferences tabAction]) {
-		case TAB_COMPLETE_NICK:
-			[self completeNick:YES];
-			break;
-		case TAB_UNREAD:
-			[self move:MOVE_DOWN target:MOVE_UNREAD];
-			break;
+		case TAB_COMPLETE_NICK: [self completeNick:YES];					break;
+		case TAB_UNREAD:		[self move:MOVE_DOWN target:MOVE_UNREAD];	break;
 		default: break;
 	}
 }
@@ -1124,12 +1121,8 @@ typedef enum {
 - (void)shiftTab:(NSEvent *)e
 {
 	switch ([Preferences tabAction]) {
-		case TAB_COMPLETE_NICK:
-			[self completeNick:NO];
-			break;
-		case TAB_UNREAD:
-			[self move:MOVE_UP target:MOVE_UNREAD];
-			break;
+		case TAB_COMPLETE_NICK: [self completeNick:NO];					break;
+		case TAB_UNREAD:		[self move:MOVE_UP target:MOVE_UNREAD]; break;
 		default: break;
 	}
 }
@@ -1142,17 +1135,17 @@ typedef enum {
 - (void)_moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
 {
 	if (scroll) {
-		NSInteger nol = [text numberOfLines];
+		NSInteger nol = [self.text numberOfLines];
 		
 		if (nol >= 2) {
-			BOOL atTop    = [text isAtTopfView];
-			BOOL atBottom = [text isAtBottomOfView];
+			BOOL atTop    = [self.text isAtTopfView];
+			BOOL atBottom = [self.text isAtBottomOfView];
 			
 			if ((atTop && event.keyCode == KEY_DOWN) ||
 				(atBottom && event.keyCode == KEY_UP) ||
 				(atTop == NO && atBottom == NO)) {
 				
-				[text keyDownToSuper:event];
+				[self.text keyDownToSuper:event];
 				
 				return;
 			}
@@ -1162,18 +1155,17 @@ typedef enum {
 	NSAttributedString *s;
 	
 	if (up) {
-		s = [inputHistory up:[text attributedStringValue]];
+		s = [self.inputHistory up:[self.text attributedStringValue]];
 	} else {
-		s = [inputHistory down:[text attributedStringValue]];
+		s = [self.inputHistory down:[self.text attributedStringValue]];
 	}
 	
 	if (s) {
-        [text setAttributedStringValue:s];
-		
-		[world focusInputText];
+        [self.text setAttributedStringValue:s];
+		[self.world focusInputText];
         
-        if ([text respondsToSelector:@selector(resetTextFieldCellSize)]) {
-            [text resetTextFieldCellSize];
+        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize)]) {
+            [self.text resetTextFieldCellSize];
         }
 	}
 }
@@ -1200,103 +1192,103 @@ typedef enum {
 
 - (void)textFormattingBold:(NSEvent *)e
 {
-	if ([formattingMenu boldSet]) {
-		[formattingMenu removeBoldCharFromTextBox:nil];
+	if ([self.formattingMenu boldSet]) {
+		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
-		[formattingMenu insertBoldCharIntoTextBox:nil];
+		[self.formattingMenu insertBoldCharIntoTextBox:nil];
 	}
 }
 
 - (void)textFormattingItalic:(NSEvent *)e
 {
-	if ([formattingMenu italicSet]) {
-		[formattingMenu removeItalicCharFromTextBox:nil];
+	if ([self.formattingMenu italicSet]) {
+		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
-		[formattingMenu insertItalicCharIntoTextBox:nil];
+		[self.formattingMenu insertItalicCharIntoTextBox:nil];
 	}
 }
 
 - (void)textFormattingUnderline:(NSEvent *)e
 {
-	if ([formattingMenu underlineSet]) {
-		[formattingMenu removeUnderlineCharFromTextBox:nil];
+	if ([self.formattingMenu underlineSet]) {
+		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
-		[formattingMenu insertUnderlineCharIntoTextBox:nil];
+		[self.formattingMenu insertUnderlineCharIntoTextBox:nil];
 	}
 }
 
 - (void)textFormattingForegroundColor:(NSEvent *)e
 {
-	if ([formattingMenu foregroundColorSet]) {
-		[formattingMenu removeForegroundColorCharFromTextBox:nil];
+	if ([self.formattingMenu foregroundColorSet]) {
+		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 	} else {
-		NSRect fieldRect = [formattingMenu.textField frame];
+		NSRect fieldRect = [self.formattingMenu.textField frame];
 		
 		fieldRect.origin.y -= 200;
 		fieldRect.origin.x += 100;
 		
-		[formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
-														  atLocation:fieldRect.origin
-															  inView:formattingMenu.textField];
+		[self.formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
+															   atLocation:fieldRect.origin
+																   inView:self.formattingMenu.textField];
 	}
 }
 
 - (void)textFormattingBackgroundColor:(NSEvent *)e
 {
-	if ([formattingMenu foregroundColorSet]) {
-		if ([formattingMenu backgroundColorSet]) {
-			[formattingMenu removeForegroundColorCharFromTextBox:nil];
+	if ([self.formattingMenu foregroundColorSet]) {
+		if ([self.formattingMenu backgroundColorSet]) {
+			[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 		} else {
-			NSRect fieldRect = [formattingMenu.textField frame];
+			NSRect fieldRect = [self.formattingMenu.textField frame];
 			
 			fieldRect.origin.y -= 200;
 			fieldRect.origin.x += 100;
 			
-			[formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
-															  atLocation:fieldRect.origin
-																  inView:formattingMenu.textField];
+			[self.formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
+																   atLocation:fieldRect.origin
+																	   inView:self.formattingMenu.textField];
 		}
 	}
 }
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-    if (menu.isInFullScreenMode && [text isFocused] == NO) {
-        [menu wantsFullScreenModeToggled:nil];
+    if (self.menu.isInFullScreenMode && [self.text isFocused] == NO) {
+        [self.menu wantsFullScreenModeToggled:nil];
     } else {
-        [text keyDown:e];
+        [self.text keyDown:e];
     }
 }
 
 - (void)focusWebview
 {
-    [window makeFirstResponder:world.selected.log.view];
+    [self.window makeFirstResponder:self.world.selected.log.view];
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[window registerKeyHandler:sel key:keyCode modifiers:mods];
+	[self.window registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[text registerKeyHandler:sel key:keyCode modifiers:mods];
+	[self.text registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[text registerKeyHandler:sel character:c modifiers:mods];
+	[self.text registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[window registerKeyHandler:sel character:c modifiers:mods];
+	[self.window registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)registerKeyHandlers
 {
-	[window		setKeyHandlerTarget:self];
-	[text       setKeyHandlerTarget:self];
+	[self.window	setKeyHandlerTarget:self];
+	[self.text      setKeyHandlerTarget:self];
     
     [self handler:@selector(exitFullscreenMode:) code:KEY_ESCAPE mods:0];
 	
@@ -1307,7 +1299,7 @@ typedef enum {
 	[self handler:@selector(sendMsgAction:) code:KEY_RETURN mods:NSCommandKeyMask];
 	
 	[self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
-
+	
 	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
 	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
@@ -1352,12 +1344,12 @@ typedef enum {
 	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
 	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
 	
-	[window makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 	
 	IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:dic];
-	IRCClient		*u = [world createClient:c reload:YES];
+	IRCClient		*u = [self.world createClient:c reload:YES];
 	
-	[world save];
+	[self.world save];
 	
 	if (c.autoConnect) {
 		[u connect];
@@ -1366,7 +1358,7 @@ typedef enum {
 
 - (void)WelcomeSheetWillClose:(WelcomeSheet *)sender
 {
-	welcomeSheet = nil;
+	self.welcomeSheet = nil;
 }
 
 @end

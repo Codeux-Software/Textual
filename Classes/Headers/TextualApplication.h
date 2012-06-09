@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
@@ -11,10 +12,8 @@
 	#import "StaticDefinitions.h"
 
     #import "GlobalModels.h"
-	#import "NSObjectHelper.h"
 	#import "RegexKitLite.h"
 	#import "TXRegularExpression.h"
-
 	#import "PopupPrompts.h"
 	#import "RLMAsyncSocket.h"
 	#import "GCDAsyncSocket.h"

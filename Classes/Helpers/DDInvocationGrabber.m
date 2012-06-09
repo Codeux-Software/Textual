@@ -37,51 +37,50 @@
 
 - (id)init
 {
-    target = nil;
-    invocation = nil;
-	parentThread = nil;
-    waitUntilDone = NO;
-    threadType = INVOCATION_BACKGROUND_THREAD;
+    self.target = nil;
+    self.invocation = nil;
+	self.parentThread = nil;
+    self.waitUntilDone = NO;
+    self.threadType = INVOCATION_BACKGROUND_THREAD;
     
     return self;
 }
 
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
-    target = inTarget;
+    self.target = inTarget;
 	
     return self;
 }
 
-
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-    return [target methodSignatureForSelector:selector];
+    return [self.target methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)ioInvocation
 {
-    [ioInvocation setTarget:target];
+    [ioInvocation setTarget:self.target];
 	
-	invocation = ioInvocation;
+	self.invocation = ioInvocation;
 	
-	if (waitUntilDone == NO) {
-		[invocation retainArguments];
+	if (self.waitUntilDone == NO) {
+		[self.invocation retainArguments];
 	}
 	
-	if (parentThread && threadType == INVOCATION_PARENT_THREAD) {
-		[invocation performSelector:@selector(performInvocation:) 
-						   onThread:parentThread
-						 withObject:invocation
-					  waitUntilDone:NO];
+	if (self.parentThread && self.threadType == INVOCATION_PARENT_THREAD) {
+		[self.invocation performSelector:@selector(performInvocation:) 
+								onThread:self.parentThread
+							  withObject:self.invocation
+						   waitUntilDone:NO];
 	} else {
-		if (threadType == INVOCATION_BACKGROUND_THREAD) {
-			[invocation performSelectorInBackground:@selector(performInvocation:)
-										 withObject:invocation];
+		if (self.threadType == INVOCATION_BACKGROUND_THREAD) {
+			[self.invocation performSelectorInBackground:@selector(performInvocation:)
+											  withObject:self.invocation];
 		} else {
-			[invocation performSelectorOnMainThread:@selector(performInvocation:)
-										 withObject:invocation
-									  waitUntilDone:waitUntilDone];
+			[self.invocation performSelectorOnMainThread:@selector(performInvocation:)
+											  withObject:self.invocation
+										   waitUntilDone:self.waitUntilDone];
 		}
 	}
 }
@@ -97,9 +96,7 @@
 	 reason let us invoke the invocation within our autorelease pool. */
 	
 	@autoreleasepool {
-	
 		[anInvocation invoke];
-	
 	}
 }
 

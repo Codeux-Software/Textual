@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 #define LF	0xa
 #define CR	0xd
@@ -344,8 +345,11 @@ BOOL isUnicharDigit(unichar c)
 				case 0xf:
 				case 0x16:
 				case 0x1f:
+				{
 					break;
+				}
 				case 0x3:
+				{
 					if ((i + 1) >= len) continue;
 					unichar d = src[i+1];
 					if (isUnicharDigit(d) == NO) continue;
@@ -377,9 +381,12 @@ BOOL isUnicharDigit(unichar c)
 					i++;
 					
 					break;
+				}
 				default:
+				{
 					buf[pos++] = c;
 					break;
+				}
 			}
 		} else {
 			buf[pos++] = c;
@@ -462,15 +469,15 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (NSObjectIsEmpty(self)) return NSNullObject;
 	
-	const char* src		   = [self UTF8String];
-	const char* characters = "0123456789ABCDEF";
+	const char *src		   = [self UTF8String];
+	const char *characters = "0123456789ABCDEF";
 	
 	if (src == NULL) return NSNullObject;
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	
-	char buf[len*4];
-	char* dest = buf;
+	char  buf[len*4];
+	char *dest = buf;
 	
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
@@ -491,15 +498,15 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (NSObjectIsEmpty(self)) return NSNullObject;
 	
-	const char* src		   = [self UTF8String];
-	const char* characters = "0123456789ABCDEF";
+	const char *src		   = [self UTF8String];
+	const char *characters = "0123456789ABCDEF";
 	
 	if (src == NULL) return NSNullObject;
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	
-	char buf[len*4];
-	char* dest = buf;
+	char  buf[len*4];
+	char *dest = buf;
 	
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;

@@ -28,7 +28,6 @@
 
 @implementation LogController
 
-@synthesize addrMenu;
 @synthesize autoScroller;
 @synthesize becameVisible;
 @synthesize bottom;
