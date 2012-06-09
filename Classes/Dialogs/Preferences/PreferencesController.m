@@ -23,6 +23,7 @@
 
 @implementation PreferencesController
 
+@synthesize sounds;
 @synthesize alertsView;
 @synthesize channelManagementView;
 @synthesize contentView;
@@ -372,7 +373,7 @@
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_TALK_NOTICE]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_ADDRESS_BOOK_MATCH]];
 		
-		self.sounds = ary;
+		sounds = ary;
 	}
 	
 	return self.sounds;
