@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface AddressBookSheet (Private)
 - (void)updateButtons;
@@ -9,6 +10,7 @@
 @implementation AddressBookSheet
 
 @synthesize ignore;
+@synthesize delegate;
 @synthesize newItem;
 @synthesize hostmask;
 @synthesize nickname;
@@ -32,56 +34,55 @@
 	return self;
 }
 
-
 - (void)start
 {
-	if (ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
-		self.sheet = ignoreWindow;
+	if (self.ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
+		self.sheet = self.ignoreWindow;
 		
-		if (NSObjectIsNotEmpty(ignore.hostmask)) {
-			[hostmask setStringValue:ignore.hostmask];
+		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
+			[self.hostmask setStringValue:self.ignore.hostmask];
 		} 
 	} else {
-		self.sheet = notifyWindow;
+		self.sheet = self.notifyWindow;
 		
-		if (NSObjectIsNotEmpty(ignore.hostmask)) {
-			[nickname setStringValue:ignore.hostmask];
+		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
+			[self.nickname setStringValue:self.ignore.hostmask];
 		} 
 	}
 	
-	[ignorePublicMsg	setState:ignore.ignorePublicMsg];
-	[ignorePrivateMsg	setState:ignore.ignorePrivateMsg];
-	[ignoreHighlights	setState:ignore.ignoreHighlights];
-	[ignoreNotices		setState:ignore.ignoreNotices];
-	[ignoreCTCP			setState:ignore.ignoreCTCP];
-	[ignoreJPQE			setState:ignore.ignoreJPQE];
-	[notifyJoins		setState:ignore.notifyJoins];
-	[ignorePMHighlights setState:ignore.ignorePMHighlights];
+	[self.ignorePublicMsg		setState:self.ignore.ignorePublicMsg];
+	[self.ignorePrivateMsg		setState:self.ignore.ignorePrivateMsg];
+	[self.ignoreHighlights		setState:self.ignore.ignoreHighlights];
+	[self.ignoreNotices			setState:self.ignore.ignoreNotices];
+	[self.ignoreCTCP			setState:self.ignore.ignoreCTCP];
+	[self.ignoreJPQE			setState:self.ignore.ignoreJPQE];
+	[self.notifyJoins			setState:self.ignore.notifyJoins];
+	[self.ignorePMHighlights	setState:self.ignore.ignorePMHighlights];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if (ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
-		ignore.hostmask = [hostmask stringValue];
+	if (self.ignore.entryType == ADDRESS_BOOK_IGNORE_ENTRY) {
+		self.ignore.hostmask = [self.hostmask stringValue];
 	} else {
-		ignore.hostmask = [nickname stringValue];
+		self.ignore.hostmask = [self.nickname stringValue];
 	}
 	
-	ignore.ignorePublicMsg		= [ignorePublicMsg state];
-	ignore.ignorePrivateMsg		= [ignorePrivateMsg state];
-	ignore.ignoreHighlights		= [ignoreHighlights state];
-	ignore.ignoreNotices		= [ignoreNotices state];
-	ignore.ignoreCTCP			= [ignoreCTCP state];
-	ignore.ignoreJPQE			= [ignoreJPQE state];
-	ignore.notifyJoins			= [notifyJoins state];
-	ignore.ignorePMHighlights	= [ignorePMHighlights state];
+	self.ignore.ignorePublicMsg		= [self.ignorePublicMsg state];
+	self.ignore.ignorePrivateMsg	= [self.ignorePrivateMsg state];
+	self.ignore.ignoreHighlights	= [self.ignoreHighlights state];
+	self.ignore.ignoreNotices		= [self.ignoreNotices state];
+	self.ignore.ignoreCTCP			= [self.ignoreCTCP state];
+	self.ignore.ignoreJPQE			= [self.ignoreJPQE state];
+	self.ignore.notifyJoins			= [self.notifyJoins state];
+	self.ignore.ignorePMHighlights	= [self.ignorePMHighlights state];
 	
-	[ignore processHostMaskRegex];
+	[self.ignore processHostMaskRegex];
 	
-	if ([delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
-		[delegate ignoreItemSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
+		[self.delegate ignoreItemSheetOnOK:self];
 	}
 	
 	[super ok:sender];
@@ -92,8 +93,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
-		[delegate ignoreItemSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
+		[self.delegate ignoreItemSheetWillClose:self];
 	}
 }
 

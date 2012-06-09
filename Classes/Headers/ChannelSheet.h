@@ -1,34 +1,9 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface ChannelSheet : SheetBase
-{
-	NSInteger uid;
-	NSInteger cid;
-	
-	IRCChannelConfig *config;
-	
-	IBOutlet NSView *contentView;
-	IBOutlet NSView *generalView;
-	IBOutlet NSView *encryptView;
-    IBOutlet NSView *defaultsView;
- 	
-	IBOutlet NSTextField *nameText;
-	IBOutlet NSTextField *passwordText;
-	IBOutlet NSTextField *modeText;
-	IBOutlet NSTextField *topicText;
-	IBOutlet NSTextField *encryptKeyText;
-	
-	IBOutlet NSSegmentedControl *tabView;
-	
-    IBOutlet NSButton *ihighlights;
-	IBOutlet NSButton *autoJoinCheck;
-	IBOutlet NSButton *growlCheck;
-    IBOutlet NSButton *inlineImagesCheck;
-    IBOutlet NSButton *JPQActivityCheck;
-}
-
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger cid;
 @property (nonatomic, strong) NSView *contentView;

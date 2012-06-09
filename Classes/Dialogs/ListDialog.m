@@ -1,6 +1,8 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
+
 
 @interface ListDialog (Private)
 - (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary;
@@ -25,12 +27,12 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ListDialog" owner:self];
 		
-		list = [NSMutableArray new];
+		self.list = [NSMutableArray new];
 		
-		sortKey = 1;
-		sortOrder = NSOrderedDescending;
+		self.sortKey = 1;
+		self.sortOrder = NSOrderedDescending;
         
-        [table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+        [self.table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	}
 	
 	return self;
@@ -39,7 +41,7 @@
 
 - (void)start
 {
-	[table setDoubleAction:@selector(onJoin:)];
+	[self.table setDoubleAction:@selector(onJoin:)];
 	
 	[self show];
 }
@@ -50,7 +52,7 @@
 		[self.window center];
 	}
 	
-	IRCClient *client = delegate;
+	IRCClient *client = self.delegate;
 	
 	NSString *network = client.config.network;
 	
@@ -58,7 +60,7 @@
 		network = client.config.name;
 	}
 	
-	[networkName setStringValue:TXTFLS(@"CHANNEL_LIST_NETWORK_NAME", network)];
+	[self.networkName setStringValue:TXTFLS(@"CHANNEL_LIST_NETWORK_NAME", network)];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -70,9 +72,9 @@
 
 - (void)clear
 {
-	[list removeAllObjects];
+	[self.list removeAllObjects];
 	
-	filteredList = nil;
+	self.filteredList = nil;
 	
 	[self reloadTable];
 }
@@ -80,42 +82,43 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic, [topic attributedStringWithIRCFormatting:DefaultListViewFont], nil];
+		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic,
+						 [topic attributedStringWithIRCFormatting:DefaultListViewFont], nil];
 		
-		NSString *filter = [filterText stringValue];
+		NSString *filter = [self.filterText stringValue];
 		
 		if (NSObjectIsNotEmpty(filter)) {
-			if (PointerIsEmpty(filteredList)) {
-				filteredList = [NSMutableArray new];
+			if (PointerIsEmpty(self.filteredList)) {
+				self.filteredList = [NSMutableArray new];
 			}
 			
 			NSInteger tr = [topic stringPositionIgnoringCase:filter];
 			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 			
 			if (tr >= 0 || cr >= 0) {
-				[self sortedInsert:item inArray:filteredList];
+				[self sortedInsert:item inArray:self.filteredList];
 			}
 		}
 		
-		[self sortedInsert:item inArray:list];
+		[self sortedInsert:item inArray:self.list];
 		[self reloadTable];
 	}
 }
 
 - (void)reloadTable
 {
-	if (NSObjectIsNotEmpty([filterText stringValue]) && NSDissimilarObjects([list count], [filteredList count])) {
-		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_SEARCH_RESULTS", [list count], [filteredList count])];
+	if (NSObjectIsNotEmpty([self.filterText stringValue]) && NSDissimilarObjects([self.list count], [self.filteredList count])) {
+		[self.channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_SEARCH_RESULTS", [self.list count], [self.filteredList count])];
 	} else {
-		[channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_CHANNELS", [list count])];
+		[self.channelCount setStringValue:TXTFLS(@"LIST_DIALOG_HAS_CHANNELS", [self.list count])];
 	}
 	
-	[table reloadData];
+	[self.table reloadData];
 }
 
 static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 {
-	ListDialog *dialog = CFBridgingRelease(context);
+	ListDialog *dialog = (__bridge ListDialog *)context;
 	
 	NSInteger key = dialog.sortKey;
 	NSComparisonResult order = dialog.sortOrder;
@@ -140,7 +143,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)sort
 {
-	[list sortUsingFunction:compareItems context:(__bridge void *)(self)];
+	[self.list sortUsingFunction:compareItems context:(__bridge void *)(self)];
 }
 
 - (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary
@@ -181,41 +184,41 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)onUpdate:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
-		[delegate listDialogOnUpdate:self];
+	if ([self.delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
+		[self.delegate listDialogOnUpdate:self];
 	}
 }
 
 - (void)onJoin:(id)sender
 {
-	NSArray *ary = list;
-	NSString *filter = [filterText stringValue];
+	NSArray *ary = self.list;
+	NSString *filter = [self.filterText stringValue];
 	
 	if (NSObjectIsNotEmpty(filter)) {
-		ary = filteredList;
+		ary = self.filteredList;
 	}
 	
-	NSIndexSet *indexes = [table selectedRowIndexes];
+	NSIndexSet *indexes = [self.table selectedRowIndexes];
 	
 	for (NSUInteger i = [indexes firstIndex]; NSDissimilarObjects(i, NSNotFound); i = [indexes indexGreaterThanIndex:i]) {
 		NSArray *item = [ary safeObjectAtIndex:i];
 		
-		if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-			[delegate listDialogOnJoin:self channel:[item safeObjectAtIndex:0]];
+		if ([self.delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
+			[self.delegate listDialogOnJoin:self channel:[item safeObjectAtIndex:0]];
 		}
 	}
 }
 
 - (void)onSearchFieldChange:(id)sender
 {
-	filteredList = nil;
+	self.filteredList = nil;
 	
-	NSString *filter = [filterText stringValue];
+	NSString *filter = [self.filterText stringValue];
 	
 	if (NSObjectIsNotEmpty(filter)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
-		for (NSArray *item in list) {
+		for (NSArray *item in self.list) {
 			NSString *channel = [item safeObjectAtIndex:0];
 			NSString *topic = [item safeObjectAtIndex:2];
 			
@@ -227,7 +230,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 			}
 		}
 		
-		filteredList = ary;
+		self.filteredList = ary;
 	}
 	
 	[self reloadTable];
@@ -238,16 +241,16 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	if (filteredList) {
-		return filteredList.count;
+	if (self.filteredList) {
+		return self.filteredList.count;
 	}
 	
-	return list.count;
+	return self.list.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *ary = ((filteredList) ?: list);
+	NSArray *ary = ((self.filteredList) ? self.filteredList : self.list);
 	NSArray *item = [ary safeObjectAtIndex:row];
 	
 	NSString *col = [column identifier];
@@ -274,16 +277,16 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 		i = 2;
 	}
 	
-	if (sortKey == i) {
-		sortOrder = - sortOrder;
+	if (self.sortKey == i) {
+		self.sortOrder = - self.sortOrder;
 	} else {
-		sortKey = i;
-		sortOrder = ((sortKey == 1) ? NSOrderedDescending : NSOrderedAscending);
+		self.sortKey = i;
+		self.sortOrder = ((self.sortKey == 1) ? NSOrderedDescending : NSOrderedAscending);
 	}
 	
 	[self sort];
 	
-	if (filteredList) {
+	if (self.filteredList) {
 		[self onSearchFieldChange:nil];
 	}
 	
@@ -295,8 +298,8 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(listDialogWillClose:)]) {
-		[delegate listDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
+		[self.delegate listDialogWillClose:self];
 	}
 }
 

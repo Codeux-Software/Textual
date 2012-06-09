@@ -68,8 +68,6 @@
 	
 	[self.text setBackgroundColor:[NSColor clearColor]];
 	
-	[[ViewTheme invokeInBackgroundThread] createUserDirectory:NO];
-	
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:ThemeStyleDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TransparencyDidChangeNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:InputHistoryGlobalSchemeNotification object:nil];

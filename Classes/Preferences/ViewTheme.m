@@ -82,20 +82,6 @@
 	[self.other reload];
 }
 
-+ (void)createDirectoryAtLocation:(NSString *)dest 
-{
-	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
-}
-
-+ (void)createUserDirectory:(BOOL)force_reset
-{
-	[self createDirectoryAtLocation:[Preferences whereScriptsPath]];
-	[self createDirectoryAtLocation:[Preferences whereThemesPath]];
-	[self createDirectoryAtLocation:[Preferences wherePluginsPath]];
-}
-
 + (NSString *)buildResourceFilename:(NSString *)name
 {
 	return [NSString stringWithFormat:@"resource:%@", name];

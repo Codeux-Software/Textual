@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define WINDOW_TOOLBAR_HEIGHT	25
 
@@ -17,6 +18,9 @@
 @synthesize uid;
 @synthesize cid;
 @synthesize config;
+@synthesize delegate;
+@synthesize sheet;
+@synthesize okButton;
 @synthesize tabView;
 @synthesize nameText;
 @synthesize encryptKeyText;
@@ -42,46 +46,37 @@
 	return self;
 }
 
-
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
 - (void)onMenuBarItemChanged:(id)sender 
 {
 	switch ([sender indexOfSelectedItem]) {
-		case 0:
-			[self firstPane:generalView];
-			break;
-		case 1:
-			[self firstPane:encryptView];
-			break;
-        case 2:
-            [self firstPane:defaultsView];
-            break;
-		default:
-			[self firstPane:generalView];
-			break;
+		case 0: [self firstPane:self.generalView]; break;
+		case 1: [self firstPane:self.encryptView]; break;
+        case 2: [self firstPane:self.defaultsView];  break;
+		default: [self firstPane:self.generalView]; break;
 	}
 } 
 
 - (void)firstPane:(NSView *)view 
 {
-	NSRect windowFrame = [sheet frame];
+	NSRect windowFrame = [self.sheet frame];
 	
 	windowFrame.size.width = [view frame].size.width;
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
-	windowFrame.origin.y = (NSMaxY([sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
+	windowFrame.origin.y = (NSMaxY([self.sheet frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT));
 	
-	if (NSObjectIsNotEmpty([contentView subviews])) {
-		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
+	if (NSObjectIsNotEmpty([self.contentView subviews])) {
+		[[[self.contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
-	[sheet setFrame:windowFrame display:YES animate:YES];
+	[self.sheet setFrame:windowFrame display:YES animate:YES];
 	
-	[contentView setFrame:[view frame]];
-	[contentView addSubview:view];	
+	[self.contentView setFrame:[view frame]];
+	[self.contentView addSubview:view];	
 	
-	[sheet recalculateKeyViewLoop];
+	[self.sheet recalculateKeyViewLoop];
 }
 
 #pragma mark -
@@ -92,9 +87,9 @@
 	[self load];
 	[self update];
 	[self startSheet];
-	[self firstPane:generalView];
+	[self firstPane:self.generalView];
 	
-	[tabView setSelectedSegment:0];
+	[self.tabView setSelectedSegment:0];
 }
 
 - (void)show
@@ -104,54 +99,54 @@
 
 - (void)close
 {
-	delegate = nil;
+	self.delegate = nil;
 	
 	[self endSheet];
 }
 
 - (void)load
 {
-	nameText.stringValue = config.name;
-	modeText.stringValue = config.mode;
-	topicText.stringValue = config.topic;
-	passwordText.stringValue = config.password;
-	encryptKeyText.stringValue = config.encryptionKey;
+	self.nameText.stringValue = self.config.name;
+	self.modeText.stringValue = self.config.mode;
+	self.topicText.stringValue = self.config.topic;
+	self.passwordText.stringValue = self.config.password;
+	self.encryptKeyText.stringValue = self.config.encryptionKey;
 	
-	growlCheck.state = config.growl;
-	autoJoinCheck.state = config.autoJoin;
-	ihighlights.state = config.ihighlights;
-    JPQActivityCheck.state = config.iJPQActivity;
-    inlineImagesCheck.state = config.inlineImages;
+	self.growlCheck.state = self.config.growl;
+	self.autoJoinCheck.state = self.config.autoJoin;
+	self.ihighlights.state = self.config.ihighlights;
+    self.JPQActivityCheck.state = self.config.iJPQActivity;
+    self.inlineImagesCheck.state = self.config.inlineImages;
 }
 
 - (void)save
 {
-	config.name = nameText.stringValue;
-	config.mode = modeText.stringValue;
-	config.topic = topicText.stringValue;
-	config.password = passwordText.stringValue;
-	config.encryptionKey = encryptKeyText.stringValue;
+	self.config.name = self.nameText.stringValue;
+	self.config.mode = self.modeText.stringValue;
+	self.config.topic = self.topicText.stringValue;
+	self.config.password = self.passwordText.stringValue;
+	self.config.encryptionKey = self.encryptKeyText.stringValue;
     
-	config.growl = growlCheck.state;
-	config.autoJoin = autoJoinCheck.state;
-    config.ihighlights = ihighlights.state;
-    config.iJPQActivity = JPQActivityCheck.state;
-    config.inlineImages = inlineImagesCheck.state;
+	self.config.growl = self.growlCheck.state;
+	self.config.autoJoin = self.autoJoinCheck.state;
+    self.config.ihighlights = self.ihighlights.state;
+    self.config.iJPQActivity = self.JPQActivityCheck.state;
+    self.config.inlineImages = self.inlineImagesCheck.state;
 	
-	if ([config.name isChannelName] == NO) {
-		config.name = [@"#" stringByAppendingString:config.name];
+	if ([self.config.name isChannelName] == NO) {
+		self.config.name = [@"#" stringByAppendingString:self.config.name];
 	}
 }
 
 - (void)update
 {
-	if (cid > 0) {
-		[nameText setEditable:NO];
+	if (self.cid > 0) {
+		[self.nameText setEditable:NO];
 	}
 	
-	NSString *s = nameText.stringValue;
+	NSString *s = self.nameText.stringValue;
 	
-	[okButton setEnabled:NSObjectIsNotEmpty(s)];
+	[self.okButton setEnabled:NSObjectIsNotEmpty(s)];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note
@@ -166,8 +161,8 @@
 {
 	[self save];
 	
-	if ([delegate respondsToSelector:@selector(ChannelSheetOnOK:)]) {
-		[delegate ChannelSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(ChannelSheetOnOK:)]) {
+		[self.delegate ChannelSheetOnOK:self];
 	}
 	
 	[self cancel:nil];
@@ -183,8 +178,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(ChannelSheetWillClose:)]) {
-		[delegate ChannelSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(ChannelSheetWillClose:)]) {
+		[self.delegate ChannelSheetWillClose:self];
 	}
 }
 

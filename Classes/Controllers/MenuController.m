@@ -453,7 +453,7 @@
 					[ary safeAddObject:m];
 				} 
                 
-               self. pointedNick = nil;
+               self.pointedNick = nil;
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation AboutPanel
 
@@ -17,7 +18,7 @@
 
 - (void)show
 {	
-	[versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
+	[self.versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"ABOUT_WINDOW_BUILD_NUMBER"), 
 								 [[Preferences textualInfoPlist] objectForKey:@"CFBundleVersion"]]];	
 	
 	[self.window center];
@@ -26,8 +27,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
-		[delegate aboutPanelWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
+		[self.delegate aboutPanelWillClose:self];
 	}
 }
 
