@@ -79,7 +79,6 @@
 		4C46CC0D1580429D00846B64 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB981580429D00846B64 /* NSDictionaryHelper.m */; };
 		4C46CC0E1580429D00846B64 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB991580429D00846B64 /* NSFontHelper.m */; };
 		4C46CC0F1580429D00846B64 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB9A1580429D00846B64 /* NSNumberHelper.m */; };
-		4C46CC101580429D00846B64 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB9B1580429D00846B64 /* NSObjectHelper.m */; };
 		4C46CC111580429D00846B64 /* NSOutlineViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB9C1580429D00846B64 /* NSOutlineViewHelper.m */; };
 		4C46CC121580429D00846B64 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB9D1580429D00846B64 /* NSPasteboardHelper.m */; };
 		4C46CC131580429D00846B64 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CB9E1580429D00846B64 /* NSRectHelper.m */; };
@@ -126,7 +125,6 @@
 		4C46CC3D1580429D00846B64 /* TXRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBCA1580429D00846B64 /* TXRegularExpression.m */; };
 		4C46CC3E1580429D00846B64 /* URLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBCB1580429D00846B64 /* URLParser.m */; };
 		4C46CC3F1580429D00846B64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBCD1580429D00846B64 /* main.m */; };
-		4C46CC401580429D00846B64 /* ValidateReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBCF1580429D00846B64 /* ValidateReceipt.m */; };
 		4C46CC411580429D00846B64 /* FileWithContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBD11580429D00846B64 /* FileWithContent.m */; };
 		4C46CC421580429D00846B64 /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBD21580429D00846B64 /* OtherTheme.m */; };
 		4C46CC431580429D00846B64 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBD31580429D00846B64 /* Preferences.m */; };
@@ -312,7 +310,6 @@
 		4CCF2FE615804C32006FFE21 /* NSDictionaryHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB631580429D00846B64 /* NSDictionaryHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF2FE715804C32006FFE21 /* NSFontHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB641580429D00846B64 /* NSFontHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF2FE815804C32006FFE21 /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB651580429D00846B64 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CCF2FE915804C32006FFE21 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB661580429D00846B64 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF2FEA15804C32006FFE21 /* NSOutlineViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB671580429D00846B64 /* NSOutlineViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF2FEB15804C32006FFE21 /* NSPasteboardHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB681580429D00846B64 /* NSPasteboardHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF2FEC15804C32006FFE21 /* NSRectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB691580429D00846B64 /* NSRectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -347,7 +344,6 @@
 		4CCF300915804C32006FFE21 /* UnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB861580429D00846B64 /* UnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300A15804C32006FFE21 /* URLOpener.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB871580429D00846B64 /* URLOpener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300B15804C32006FFE21 /* URLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB881580429D00846B64 /* URLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CCF300C15804C32006FFE21 /* ValidateReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB891580429D00846B64 /* ValidateReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300D15804C32006FFE21 /* ViewTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8A1580429D00846B64 /* ViewTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300E15804C32006FFE21 /* WebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8B1580429D00846B64 /* WebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300F15804C32006FFE21 /* WelcomeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8C1580429D00846B64 /* WelcomeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -538,7 +534,6 @@
 		4C46CB631580429D00846B64 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryHelper.h; sourceTree = "<group>"; };
 		4C46CB641580429D00846B64 /* NSFontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFontHelper.h; sourceTree = "<group>"; };
 		4C46CB651580429D00846B64 /* NSNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberHelper.h; sourceTree = "<group>"; };
-		4C46CB661580429D00846B64 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
 		4C46CB671580429D00846B64 /* NSOutlineViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineViewHelper.h; sourceTree = "<group>"; };
 		4C46CB681580429D00846B64 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPasteboardHelper.h; sourceTree = "<group>"; };
 		4C46CB691580429D00846B64 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSRectHelper.h; sourceTree = "<group>"; };
@@ -573,7 +568,6 @@
 		4C46CB861580429D00846B64 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnicodeHelper.h; sourceTree = "<group>"; };
 		4C46CB871580429D00846B64 /* URLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOpener.h; sourceTree = "<group>"; };
 		4C46CB881580429D00846B64 /* URLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLParser.h; sourceTree = "<group>"; };
-		4C46CB891580429D00846B64 /* ValidateReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateReceipt.h; sourceTree = "<group>"; };
 		4C46CB8A1580429D00846B64 /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		4C46CB8B1580429D00846B64 /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewAutoScroll.h; sourceTree = "<group>"; };
 		4C46CB8C1580429D00846B64 /* WelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeSheet.h; sourceTree = "<group>"; };
@@ -590,7 +584,6 @@
 		4C46CB981580429D00846B64 /* NSDictionaryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHelper.m; sourceTree = "<group>"; };
 		4C46CB991580429D00846B64 /* NSFontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFontHelper.m; sourceTree = "<group>"; };
 		4C46CB9A1580429D00846B64 /* NSNumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberHelper.m; sourceTree = "<group>"; };
-		4C46CB9B1580429D00846B64 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C46CB9C1580429D00846B64 /* NSOutlineViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOutlineViewHelper.m; sourceTree = "<group>"; };
 		4C46CB9D1580429D00846B64 /* NSPasteboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPasteboardHelper.m; sourceTree = "<group>"; };
 		4C46CB9E1580429D00846B64 /* NSRectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSRectHelper.m; sourceTree = "<group>"; };
@@ -638,7 +631,6 @@
 		4C46CBCB1580429D00846B64 /* URLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLParser.m; sourceTree = "<group>"; };
 		4C46CBCD1580429D00846B64 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4C46CBCE1580429D00846B64 /* Textual_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Textual_Prefix.pch; sourceTree = "<group>"; };
-		4C46CBCF1580429D00846B64 /* ValidateReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateReceipt.m; path = ../Others/ValidateReceipt.m; sourceTree = "<group>"; };
 		4C46CBD11580429D00846B64 /* FileWithContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWithContent.m; sourceTree = "<group>"; };
 		4C46CBD21580429D00846B64 /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		4C46CBD31580429D00846B64 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
@@ -961,7 +953,6 @@
 				4C46CB631580429D00846B64 /* NSDictionaryHelper.h */,
 				4C46CB641580429D00846B64 /* NSFontHelper.h */,
 				4C46CB651580429D00846B64 /* NSNumberHelper.h */,
-				4C46CB661580429D00846B64 /* NSObjectHelper.h */,
 				4C46CB671580429D00846B64 /* NSOutlineViewHelper.h */,
 				4C46CB681580429D00846B64 /* NSPasteboardHelper.h */,
 				4C46CB691580429D00846B64 /* NSRectHelper.h */,
@@ -994,7 +985,6 @@
 				4C46CB861580429D00846B64 /* UnicodeHelper.h */,
 				4C46CB871580429D00846B64 /* URLOpener.h */,
 				4C46CB881580429D00846B64 /* URLParser.h */,
-				4C46CB891580429D00846B64 /* ValidateReceipt.h */,
 				4C46CB8A1580429D00846B64 /* ViewTheme.h */,
 				4C46CB8B1580429D00846B64 /* WebViewAutoScroll.h */,
 				4C46CB8C1580429D00846B64 /* WelcomeSheet.h */,
@@ -1015,7 +1005,6 @@
 				4C46CB981580429D00846B64 /* NSDictionaryHelper.m */,
 				4C46CB991580429D00846B64 /* NSFontHelper.m */,
 				4C46CB9A1580429D00846B64 /* NSNumberHelper.m */,
-				4C46CB9B1580429D00846B64 /* NSObjectHelper.m */,
 				4C46CB9C1580429D00846B64 /* NSOutlineViewHelper.m */,
 				4C46CB9D1580429D00846B64 /* NSPasteboardHelper.m */,
 				4C46CB9E1580429D00846B64 /* NSRectHelper.m */,
@@ -1058,7 +1047,6 @@
 			isa = PBXGroup;
 			children = (
 				4CCF301A15806902006FFE21 /* ARC Weak Refrences */,
-				4C46CCAD1580449600846B64 /* App Store */,
 				4C46CCAC1580447500846B64 /* Color Formatting */,
 				4C46CCAE158044A300846B64 /* Keychain Control */,
 				4C46CCAF158044B300846B64 /* Regular Expression */,
@@ -1401,14 +1389,6 @@
 			name = "Color Formatting";
 			sourceTree = "<group>";
 		};
-		4C46CCAD1580449600846B64 /* App Store */ = {
-			isa = PBXGroup;
-			children = (
-				4C46CBCF1580429D00846B64 /* ValidateReceipt.m */,
-			);
-			name = "App Store";
-			sourceTree = "<group>";
-		};
 		4C46CCAE158044A300846B64 /* Keychain Control */ = {
 			isa = PBXGroup;
 			children = (
@@ -1609,7 +1589,6 @@
 				4CCF2FE615804C32006FFE21 /* NSDictionaryHelper.h in Headers */,
 				4CCF2FE715804C32006FFE21 /* NSFontHelper.h in Headers */,
 				4CCF2FE815804C32006FFE21 /* NSNumberHelper.h in Headers */,
-				4CCF2FE915804C32006FFE21 /* NSObjectHelper.h in Headers */,
 				4CCF2FEA15804C32006FFE21 /* NSOutlineViewHelper.h in Headers */,
 				4CCF2FEB15804C32006FFE21 /* NSPasteboardHelper.h in Headers */,
 				4CCF2FEC15804C32006FFE21 /* NSRectHelper.h in Headers */,
@@ -1644,7 +1623,6 @@
 				4CCF300915804C32006FFE21 /* UnicodeHelper.h in Headers */,
 				4CCF300A15804C32006FFE21 /* URLOpener.h in Headers */,
 				4CCF300B15804C32006FFE21 /* URLParser.h in Headers */,
-				4CCF300C15804C32006FFE21 /* ValidateReceipt.h in Headers */,
 				4CCF300D15804C32006FFE21 /* ViewTheme.h in Headers */,
 				4CCF300E15804C32006FFE21 /* WebViewAutoScroll.h in Headers */,
 				4CCF300F15804C32006FFE21 /* WelcomeSheet.h in Headers */,
@@ -1922,7 +1900,6 @@
 				4C46CC0D1580429D00846B64 /* NSDictionaryHelper.m in Sources */,
 				4C46CC0E1580429D00846B64 /* NSFontHelper.m in Sources */,
 				4C46CC0F1580429D00846B64 /* NSNumberHelper.m in Sources */,
-				4C46CC101580429D00846B64 /* NSObjectHelper.m in Sources */,
 				4C46CC111580429D00846B64 /* NSOutlineViewHelper.m in Sources */,
 				4C46CC121580429D00846B64 /* NSPasteboardHelper.m in Sources */,
 				4C46CC131580429D00846B64 /* NSRectHelper.m in Sources */,
@@ -1969,7 +1946,6 @@
 				4C46CC3D1580429D00846B64 /* TXRegularExpression.m in Sources */,
 				4C46CC3E1580429D00846B64 /* URLParser.m in Sources */,
 				4C46CC3F1580429D00846B64 /* main.m in Sources */,
-				4C46CC401580429D00846B64 /* ValidateReceipt.m in Sources */,
 				4C46CC411580429D00846B64 /* FileWithContent.m in Sources */,
 				4C46CC421580429D00846B64 /* OtherTheme.m in Sources */,
 				4C46CC431580429D00846B64 /* Preferences.m in Sources */,
@@ -2268,10 +2244,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"VALIDATE_APPSTORE_RECEIPT=0",
-					DEBUG,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -2311,7 +2284,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=0";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -2374,10 +2347,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"VALIDATE_APPSTORE_RECEIPT=0",
-					"TEXTUAL_SANDBOX_DISABLED=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_SANDBOX_DISABLED=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -2429,10 +2399,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"VALIDATE_APPSTORE_RECEIPT=0",
-					"IS_TRIAL_BINARY=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "IS_TRIAL_BINARY=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -2484,7 +2451,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Others/Textual_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "VALIDATE_APPSTORE_RECEIPT=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;

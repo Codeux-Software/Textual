@@ -44,10 +44,8 @@
 	list.attr = attributes;
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-	
-	if (result == noErr) {
-		// Cool
-	}
+
+	DevNullDestroyObject(YES, result);
 	
 	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		CFRelease(item);
@@ -60,7 +58,7 @@
 	return numberOfItemsFound;
 }
 
-+ (BOOL)deleteKeychainItem:(NSString *)keychainItemName 
++ (BOOL)deleteKeychainItem:(NSString *)keychainItemName
 			  withItemKind:(NSString *)keychainItemKind 
 			   forUsername:(NSString *)username
 			   serviceName:(NSString *)service
@@ -97,9 +95,7 @@
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 	
-	if (result == noErr) {
-		// Cool
-	}
+	DevNullDestroyObject(YES, result);
 	
 	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		numberOfItemsFound++;
@@ -158,9 +154,7 @@
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 	
-	if (result == noErr) {
-		// Cool
-	}
+	DevNullDestroyObject(YES, result);
 	
 	result = SecKeychainSearchCopyNext(search, &item);
 	
@@ -251,9 +245,7 @@
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 	
-	if (result == noErr) {
-		// Cool
-	}
+	DevNullDestroyObject(YES, result);
 	
 	NSString *password = NSNullObject;
 	

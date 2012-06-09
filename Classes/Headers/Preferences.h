@@ -45,8 +45,6 @@ typedef enum {
 @interface Preferences : NSObject
 + (BOOL)sandboxEnabled;
 
-+ (void)validateStoreReceipt;
-
 + (NSInteger)startTime;
 + (NSInteger)totalRunTime;
 + (void)updateTotalRunTime;

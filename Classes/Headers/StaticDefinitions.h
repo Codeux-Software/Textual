@@ -1,3 +1,7 @@
+// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
+// You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
+
 /* Availability Macros */
 #define _LOAD_MAC_OS_LIBRARIES 1
 
@@ -11,9 +15,9 @@
 	#endif
 #endif
 
-#define NSAppKitVersionNumber10_6 1038
-#define NSAppKitVersionNumber10_7 1138
-#define NSAppKitVersionNumber10_7_2 1138.23
+#define NSAppKitVersionNumber10_6		1038
+#define NSAppKitVersionNumber10_7		1138
+#define NSAppKitVersionNumber10_7_2		1138.23
 
 #ifdef _MAC_OS_LION_OR_NEWER
 	#define _USES_MODERN_REGULAR_EXPRESSION
@@ -38,9 +42,9 @@
 #define _NSFontManager()						[NSFontManager sharedFontManager]
 #define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
 #define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
-#define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
-#define _NSUserNotificationCenter()			[NSUserNotificationCenter defaultUserNotificationCenter]
 #define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
+#define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
+#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
 #define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
 #define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
@@ -52,6 +56,7 @@
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 #define NSDissimilarObjects(o,n)			(o != n)
+
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
 
 /* Item types */

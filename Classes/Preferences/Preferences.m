@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-#import "ValidateReceipt.h"
-
 @implementation Preferences
 
 #pragma mark -
@@ -21,20 +19,6 @@ static NSDictionary *systemVersionPlist = nil;
 + (NSDictionary *)systemInfoPlist 
 {
 	return systemVersionPlist;
-}
-
-#pragma mark -
-#pragma mark App Store Receipt Validation
-
-+ (void)validateStoreReceipt
-{
-	NSString *receipt = [self whereAppStoreReceipt];
-	
-	if (validateReceiptAtPath(receipt) == NO) {
-		exit(173);
-	} else {
-		NSLog(@"Valid app store receipt located. Launching.");
-	}
 }
 
 #pragma mark -
@@ -1044,7 +1028,7 @@ static NSInteger totalRunTime = 0;
     [d setBool:YES forKey:@"Preferences.General.focus_on_message"];
 	[d setBool:YES forKey:@"Preferences.General.reply_ctcp_requests"];
 	[d setBool:YES forKey:@"Preferences.General.log_antialiasing"];
-	[d setBool:NO  forKey:@"AutoSpellChecking"];
+	[d setBool:NO  forKey:@"AutoSpellCorrection"];
     [d setBool:NO  forKey:DeveloperEnvironmentToken];
 	[d setBool:NO  forKey:@"Preferences.General.log_transcript"];
 	[d setBool:NO  forKey:@"ForceServerListBadgeLocalization"];

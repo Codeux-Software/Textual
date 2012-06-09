@@ -18,7 +18,6 @@
 
 @implementation IRCWorld;
 
-@synthesize addrMenu;
 @synthesize allLoadedBundles;
 @synthesize bandwidthIn;
 @synthesize bandwidthOut;
@@ -898,7 +897,6 @@
 	
 	c.menu = logMenu;
 	c.urlMenu = urlMenu;
-	c.addrMenu = addrMenu;
 	c.chanMenu = chanMenu;
 	c.memberMenu = memberMenu;
 	
