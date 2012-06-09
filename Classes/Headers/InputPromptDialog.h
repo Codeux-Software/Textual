@@ -1,22 +1,8 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface InputPromptDialog : NSObject 
-{
-	NSInteger buttonClicked;
-	
-	NSString *finalModalValue;
-	
-	IBOutlet NSWindow *dialogWindow;
-	
-	IBOutlet NSButton *defaultButton;
-	IBOutlet NSButton *alternateButton;
-	
-	IBOutlet NSTextField *dialogTitle;
-	IBOutlet NSTextField *userInputField;
-	IBOutlet NSTextField *informationalText;
-}
-
 @property (nonatomic, assign) NSInteger buttonClicked;
 @property (nonatomic, strong) NSString *finalModalValue;
 @property (nonatomic, strong) NSWindow *dialogWindow;

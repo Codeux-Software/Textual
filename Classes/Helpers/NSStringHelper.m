@@ -547,7 +547,7 @@ BOOL isUnicharDigit(unichar c)
 #endif
 	
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-	NSString *uuidString = CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
+	NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(nil, uuidObj);
 	CFRelease(uuidObj);
 	
 	return uuidString;

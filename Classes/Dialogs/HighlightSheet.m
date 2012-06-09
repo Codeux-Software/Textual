@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define ROW_HEIGHT_MULTIPLIER 17
 
@@ -12,6 +13,7 @@
 @synthesize list;
 @synthesize table;
 @synthesize header;
+@synthesize delegate;
 
 - (id)init
 {
@@ -35,11 +37,11 @@
 		network = currentNetwork.config.name;
 	}
 	
-	currentHeader = [header stringValue];
+	currentHeader = [self.header stringValue];
 	currentHeader = [NSString stringWithFormat:currentHeader, network];
 	
-	[header setStringValue:currentHeader];
-    [table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+	[self.header setStringValue:currentHeader];
+    [self.table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	
     [self startSheet];
 }
@@ -48,21 +50,21 @@
 {
 	[self endSheet];
 	
-	if ([delegate respondsToSelector:@selector(highlightSheetWillClose:)]) {
-		[delegate highlightSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(highlightSheetWillClose:)]) {
+		[self.delegate highlightSheetWillClose:self];
 	}
 }
 
 - (void)clear
 {
-    [list removeAllObjects];
+    [self.list removeAllObjects];
 	
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [table reloadData];
+    [self.table reloadData];
 }
 
 #pragma mark -
@@ -78,7 +80,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return list.count;
+    return self.list.count;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -88,7 +90,7 @@
     columnRect = [tableView rectOfColumn:1];
     columnRect.size.width -= 6;
 	
-	NSArray *data = [list safeObjectAtIndex:row];
+	NSArray *data = [self.list safeObjectAtIndex:row];
     
     NSInteger pixelHeight = [[data safeObjectAtIndex:2] pixelHeightInWidth:columnRect.size.width];
     NSInteger lineCount   = (pixelHeight / 14); 
@@ -98,7 +100,7 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray  *item = [list safeObjectAtIndex:row];
+    NSArray  *item = [self.list safeObjectAtIndex:row];
     NSString *col  = [column identifier];
     
     if ([col isEqualToString:@"chan"]) {

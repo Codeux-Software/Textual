@@ -17,6 +17,8 @@
 "SET_USER_VHOST_PROMPT_TITLE" = "Set User vHost";
 "SET_USER_VHOST_PROMPT_MESSAGE" = "Please enter desired vHost. (e.g. google.vhost)";
 
+"EMPTY_SOUND" = "None";
+
 "BRAGSPAM_PLUGIN_NORMAL_RESULT" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
 "BRAGSPAM_PLUGIN_CHANNEL_RESULT" = "I am in the channel %@, ";
 "BRAGSPAM_PLUGIN_CHANNEL_RESULT_NONE" = "I am not in any channels on the %2$@.";

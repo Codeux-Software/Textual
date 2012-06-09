@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation TopicSheet
 
@@ -7,6 +8,7 @@
 @synthesize cid;
 @synthesize text;
 @synthesize header;
+@synthesize delegate;
 
 - (id)init
 {
@@ -17,33 +19,37 @@
 	return self;
 }
 
-
 - (void)start:(NSString *)topic
 {
-	MenuController *menu = delegate;
+	MenuController *menu = self.delegate;
 
 	IRCChannel *c = [menu.world selectedChannel];
 	
 	NSString *nheader;
 	
-	nheader = [header stringValue];
+	nheader = [self.header stringValue];
 	nheader = [NSString stringWithFormat:nheader, c.name];
 	
-	[menu.master.formattingMenu enableSheetField:text];
+	[menu.master.formattingMenu enableSheetField:self.text];
     
-	[header setStringValue:nheader];
-	[text setAttributedStringValue:[topic attributedStringWithIRCFormatting:DefaultTextFieldFont followFormattingPreference:NO]];
+	[self.header setStringValue:nheader];
+	[self.text setAttributedStringValue:[topic attributedStringWithIRCFormatting:DefaultTextFieldFont
+													  followFormattingPreference:NO]];
     
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
-		NSString *topic = [text.attributedStringValue attributedStringToASCIIFormatting];
-		topic = [[topic componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
+	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
+		NSString *topicv;
+		NSArray  *topicc;
+
+		topicv = [self.text.attributedStringValue attributedStringToASCIIFormatting];
+		topicc = [topicv componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+		topicv = [topicc componentsJoinedByString:NSWhitespaceCharacter];
 		
-		[delegate topicSheet:self onOK:topic];
+		[self.delegate topicSheet:self onOK:topicv];
 	}
 	
 	[super ok:nil];
@@ -54,10 +60,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[[[delegate master] formattingMenu] enableWindowField:[[delegate master] text]];
+	[[self.delegate master].formattingMenu enableWindowField:[self.delegate master].text];
 	
-	if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
-		[delegate topicSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
+		[self.delegate topicSheetWillClose:self];
 	}
 }
 

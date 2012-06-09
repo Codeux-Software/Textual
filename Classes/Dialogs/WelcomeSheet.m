@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @interface WelcomeSheet (Private)
 - (void)updateOKButton;
@@ -9,6 +10,8 @@
 
 @implementation WelcomeSheet
 
+@synthesize delegate;
+@synthesize okButton;
 @synthesize channels;
 @synthesize nickText;
 @synthesize hostCombo;
@@ -22,26 +25,25 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"WelcomeSheet" owner:self];
 		
-		channels = [NSMutableArray new];
+		self.channels = [NSMutableArray new];
 	}
 	
 	return self;
 }
-
 
 - (void)show
 {
 	[self tableViewSelectionIsChanging:nil];
 	[self updateOKButton];
 	
-	[nickText setStringValue:[Preferences defaultNickname]];
+	[self.nickText setStringValue:[Preferences defaultNickname]];
 	
 	[self startSheet];
 }
 
 - (void)close
 {
-	delegate = nil;
+	self.delegate = nil;
 	
 	[self endSheet];
 }
@@ -51,7 +53,7 @@
 	NSMutableSet *set = [NSMutableSet set];
 	NSMutableArray *chans = [NSMutableArray array];
 	
-	for (__strong NSString *s in channels) {
+	for (__strong NSString *s in self.channels) {
 		if (NSObjectIsNotEmpty(s)) {
 			if ([s isChannelName] == NO) {
 				s = [@"#" stringByAppendingString:s];
@@ -66,13 +68,14 @@
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:chans forKey:@"channels"];
-	[dic setObject:nickText.stringValue forKey:@"nick"];
-	[dic setBool:autoConnectCheck.state forKey:@"autoConnect"];
-	[dic setObject:[hostCombo.stringValue cleanedServerHostmask] forKey:@"host"];
+	[dic setBool:self.autoConnectCheck.state forKey:@"autoConnect"];
 	
-	if ([delegate respondsToSelector:@selector(WelcomeSheet:onOK:)]) {
-		[delegate WelcomeSheet:self onOK:dic];
+	[dic setObject:chans forKey:@"channels"];
+	[dic setObject:self.nickText.stringValue forKey:@"nick"];
+	[dic setObject:[self.hostCombo.stringValue cleanedServerHostmask] forKey:@"host"];
+	
+	if ([self.delegate respondsToSelector:@selector(WelcomeSheet:onOK:)]) {
+		[self.delegate WelcomeSheet:self onOK:dic];
 	}
 	
 	[self endSheet];
@@ -85,30 +88,30 @@
 
 - (void)onAddChannel:(id)sender
 {
-	[channels safeAddObject:NSNullObject];
+	[self.channels safeAddObject:NSNullObject];
 	
-	[channelTable reloadData];
+	[self.channelTable reloadData];
 	
-	NSInteger row = (channels.count - 1);
+	NSInteger row = (self.channels.count - 1);
 	
-	[channelTable selectItemAtIndex:row];
-	[channelTable editColumn:0 row:row withEvent:nil select:YES];
+	[self.channelTable selectItemAtIndex:row];
+	[self.channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
 
 - (void)onDeleteChannel:(id)sender
 {
-	NSInteger n = [channelTable selectedRow];
+	NSInteger n = [self.channelTable selectedRow];
 	
 	if (n >= 0) {
-		[channels safeRemoveObjectAtIndex:n];
+		[self.channels safeRemoveObjectAtIndex:n];
 		
-		[channelTable reloadData];
+		[self.channelTable reloadData];
 		
-		NSInteger count = channels.count;
+		NSInteger count = self.channels.count;
 		if (count <= n) n = (count - 1);
 		
 		if (n >= 0) {
-			[channelTable selectItemAtIndex:n];
+			[self.channelTable selectItemAtIndex:n];
 		}
 		
 		[self tableViewSelectionIsChanging:nil];
@@ -127,12 +130,12 @@
 
 - (void)updateOKButton
 {
-	NSString *nick = nickText.stringValue;
-	NSString *host = hostCombo.stringValue;
+	NSString *nick = self.nickText.stringValue;
+	NSString *host = self.hostCombo.stringValue;
 	
 	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
 	
-	[okButton setEnabled:enabled];
+	[self.okButton setEnabled:enabled];
 }
 
 #pragma mark -
@@ -140,15 +143,15 @@
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	NSInteger n = [channelTable editedRow];
+	NSInteger n = [self.channelTable editedRow];
 	
 	if (n >= 0) {
 		NSString *s = [[[[note object] textStorage] string] copy];
 		
-		[channels replaceObjectAtIndex:n withObject:s];
+		[self.channels replaceObjectAtIndex:n withObject:s];
 		
-		[channelTable reloadData];
-		[channelTable selectItemAtIndex:n];
+		[self.channelTable reloadData];
+		[self.channelTable selectItemAtIndex:n];
 		
 		[self tableViewSelectionIsChanging:nil];
 	}
@@ -156,17 +159,17 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return channels.count;
+	return self.channels.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	return [channels safeObjectAtIndex:row];
+	return [self.channels safeObjectAtIndex:row];
 }
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
 {
-	[deleteChannelButton setEnabled:([channelTable selectedRow] >= 0)];
+	[self.deleteChannelButton setEnabled:([self.channelTable selectedRow] >= 0)];
 }
 
 #pragma mark -
@@ -174,8 +177,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(WelcomeSheetWillClose:)]) {
-		[delegate WelcomeSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(WelcomeSheetWillClose:)]) {
+		[self.delegate WelcomeSheetWillClose:self];
 	}
 }
 

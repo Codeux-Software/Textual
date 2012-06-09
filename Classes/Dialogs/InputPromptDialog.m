@@ -1,7 +1,12 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 // Dirty NSAlert substitution 
+
+#define TEXT_CONTAINER_WIDTH			298.0
+#define TEXT_CONTAINER_PADDING			3
+#define TEXT_CONTAINER_HEIGHT_FIX		5
 
 @implementation InputPromptDialog
 
@@ -14,10 +19,9 @@
 @synthesize userInputField;
 @synthesize informationalText;
 
-
 - (NSString *)promptValue
 {
-	return [finalModalValue trim];
+	return [self.finalModalValue trim];
 }
 
 - (void)alertWithMessageText:(NSString *)messageTitle 
@@ -29,22 +33,22 @@
 	[NSBundle loadNibNamed:@"InputPromptDialog" owner:self];
 	
 	if (NSObjectIsNotEmpty(userInputText)) {
-		[userInputField setStringValue:userInputText];
+		[self.userInputField setStringValue:userInputText];
 	}
 	
-	[dialogTitle setStringValue:messageTitle];
-	[defaultButton setTitle:defaultButtonTitle];
-	[alternateButton setTitle:alternateButtonTitle];
-	[informationalText setStringValue:informativeText];
+	[self.dialogTitle setStringValue:messageTitle];
+	[self.defaultButton setTitle:defaultButtonTitle];
+	[self.alternateButton setTitle:alternateButtonTitle];
+	[self.informationalText setStringValue:informativeText];
 }
 
 - (void)runModal
 {
-	NSRect infoTextFrame = [informationalText frame];
+	NSRect infoTextFrame = [self.informationalText frame];
 	
 	NSLayoutManager *layoutManager	= [NSLayoutManager new];
-	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithString:[informationalText stringValue]];
-	NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(298.0, FLT_MAX)];
+	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithString:[self.informationalText stringValue]];
+	NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(TEXT_CONTAINER_WIDTH, FLT_MAX)];
 	
 	[layoutManager addTextContainer:textContainer];
 	
@@ -57,41 +61,40 @@
 	
 	[layoutManager glyphRangeForTextContainer:textContainer];
 	
-	NSInteger newHeight		= ([layoutManager usedRectForTextContainer:textContainer].size.height + 5);
+	NSInteger newHeight		= ([layoutManager usedRectForTextContainer:textContainer].size.height + TEXT_CONTAINER_HEIGHT_FIX);
 	NSInteger heightDiff	= (infoTextFrame.size.height - newHeight);
 	
-	NSRect windowFrame = [dialogWindow frame];
+	NSRect windowFrame = [self.dialogWindow frame];
 	
-	infoTextFrame.size.height	= (newHeight + 3);
-	windowFrame.size.height		= ((windowFrame.size.height - heightDiff) + 3);
+	infoTextFrame.size.height	= (newHeight + TEXT_CONTAINER_PADDING);
+	windowFrame.size.height		= ((windowFrame.size.height - heightDiff) + TEXT_CONTAINER_PADDING);
 	
-	[dialogWindow setFrame:windowFrame display:NO animate:NO];
-	[dialogWindow makeKeyAndOrderFront:nil];
+	[self.dialogWindow setFrame:windowFrame display:NO animate:NO];
+	[self.dialogWindow makeKeyAndOrderFront:nil];
 	
-	[informationalText setFrame:infoTextFrame];
+	[self.informationalText setFrame:infoTextFrame];
 	
-	while ([dialogWindow isVisible]) {
+	while ([self.dialogWindow isVisible]) {
 		continue;
 	}
-	
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
-	buttonClicked = NSAlertDefaultReturn;
+	self.buttonClicked = NSAlertDefaultReturn;
 	
-	finalModalValue = [userInputField stringValue];
+	self.finalModalValue = [self.userInputField stringValue];
 	
-	[dialogWindow close];
+	[self.dialogWindow close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
-	buttonClicked = NSAlertAlternateReturn;
+	self.buttonClicked = NSAlertAlternateReturn;
 	
-	finalModalValue = [userInputField stringValue];
+	self.finalModalValue = [self.userInputField stringValue];
 	
-	[dialogWindow close];
+	[self.dialogWindow close];
 }
 
 @end

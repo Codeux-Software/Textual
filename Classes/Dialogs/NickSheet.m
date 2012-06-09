@@ -1,10 +1,13 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation NickSheet
 
 @synthesize uid;
+@synthesize sheet;
+@synthesize delegate;
 @synthesize currentText;
 @synthesize nicknameNewInfo;
 
@@ -19,18 +22,18 @@
 
 - (void)start:(NSString *)nick
 {
-	[nicknameNewInfo setStringValue:nick];
-	[currentText setStringValue:nick];
+	[self.nicknameNewInfo setStringValue:nick];
+	[self.currentText setStringValue:nick];
 	
-	[sheet makeFirstResponder:nicknameNewInfo];
+	[self.sheet makeFirstResponder:self.nicknameNewInfo];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-		[delegate nickSheet:self didInputNick:nicknameNewInfo.stringValue];
+	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
+		[self.delegate nickSheet:self didInputNick:self.nicknameNewInfo.stringValue];
 	}
 	
 	[super ok:sender];
@@ -41,8 +44,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
-		[delegate nickSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
+		[self.delegate nickSheetWillClose:self];
 	}
 }
 

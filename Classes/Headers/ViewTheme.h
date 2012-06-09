@@ -11,8 +11,6 @@
 @property (nonatomic, strong) FileWithContent *core_js;
 
 - (void)reload;
-+ (void)createUserDirectory:(BOOL)force_reset;
-
 - (void)validateFilePathExistanceAndReload:(BOOL)reload;
 
 + (NSString *)buildResourceFilename:(NSString *)name;

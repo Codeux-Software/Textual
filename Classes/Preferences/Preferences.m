@@ -179,24 +179,57 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Path Index
 
++ (NSString *)_whereApplicationSupportPath
+{
+	return [_NSFileManager() URLForDirectory:NSApplicationSupportDirectory
+									inDomain:NSUserDomainMask
+						   appropriateForURL:nil
+									  create:YES
+									   error:NULL].relativePath;
+}
+
 + (NSString *)whereApplicationSupportPath
 {
-	return [@"~/Library/Application Support/Textual IRC/" stringByExpandingTildeInPath];
+	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/"];
+	
+	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
 }
 
 + (NSString *)whereScriptsPath
 {
-	return [@"~/Library/Application Support/Textual IRC/Scripts" stringByExpandingTildeInPath];
+	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Scripts/"];
+	
+	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
 }
 
 + (NSString *)whereThemesPath
 {
-	return [@"~/Library/Application Support/Textual IRC/Styles" stringByExpandingTildeInPath];
+	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Styles/"];
+	
+	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
 }
 
 + (NSString *)wherePluginsPath
 {
-	return [@"~/Library/Application Support/Textual IRC/Extensions" stringByExpandingTildeInPath];
+	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Extensions/"];
+	
+	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
 }
 
 + (NSString *)whereScriptsLocalPath
@@ -208,7 +241,11 @@ static NSMutableDictionary *commandIndex = nil;
 + (NSString *)whereScriptsUnsupervisedPath
 {
 	if ([Preferences featureAvailableToOSXMountainLion]) {
-		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL].relativePath;
+		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
+										inDomain:NSUserDomainMask
+							   appropriateForURL:nil
+										  create:YES
+										   error:NULL].relativePath;
 	}
 	
 	return nil;
@@ -246,15 +283,21 @@ static NSMutableDictionary *commandIndex = nil;
 + (NSString *)transcriptFolder
 {
 	if ([self sandboxEnabled]) {
-		return [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+		NSString *dest = [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+		
+		if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
+			[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return dest;
+	} else {
+		NSString *base;
+		
+		base = [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
+		base = [base stringByExpandingTildeInPath];
+		
+		return base;
 	}
-	
-	NSString *base;
-	
-	base = [_NSUserDefaults() objectForKey:@"Preferences.General.transcript_folder"];
-	base = [base stringByExpandingTildeInPath];
-	
-	return base;
 }
 
 + (void)setTranscriptFolder:(NSString *)value
@@ -965,7 +1008,7 @@ static NSInteger totalRunTime = 0;
 + (void)defaultIRCClientPrompt
 {
 	[NSThread sleepForTimeInterval:1.5];
-
+	
 	NSURL *baseURL = [[NSURL alloc] initWithString:@"irc:"];
 	
     CFURLRef ircAppURL = NULL;
@@ -1070,8 +1113,7 @@ static NSInteger totalRunTime = 0;
 	[d setObject:@"<%@%n>"						forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:@"[%H:%M:%S]"					forKey:@"Preferences.Theme.timestamp_format"];
 	[d setObject:@"~/Documents/Textual Logs"	forKey:@"Preferences.General.transcript_folder"];
-	
-	
+
 	[d setInteger:2							forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300						forKey:@"Preferences.General.max_log_lines"];
 	[d setInteger:300						forKey:@"Preferences.General.inline_image_width"];

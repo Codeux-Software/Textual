@@ -1,9 +1,11 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation InviteSheet
 
+@synthesize delegate;
 @synthesize nicks;
 @synthesize uid;
 @synthesize titleLabel;
@@ -18,26 +20,25 @@
 	return self;
 }
 
-
 - (void)startWithChannels:(NSArray *)channels
 {
 	NSString *target = nil;
 	
-	if (nicks.count == 1) {
-		target = [nicks safeObjectAtIndex:0];
-	} else if (nicks.count == 2) {
-		NSString *first = [nicks safeObjectAtIndex:0];
-		NSString *second = [nicks safeObjectAtIndex:1];
+	if (self.nicks.count == 1) {
+		target = [self.nicks safeObjectAtIndex:0];
+	} else if (self.nicks.count == 2) {
+		NSString *first = [self.nicks safeObjectAtIndex:0];
+		NSString *second = [self.nicks safeObjectAtIndex:1];
 		
 		target = TXTFLS(@"INVITE_SHEET_TWO_PEOPLE", first, second);
 	} else {
-		target = TXTFLS(@"INVITE_SHEET_MULTIPLE_PEOPLE", nicks.count);
+		target = TXTFLS(@"INVITE_SHEET_MULTIPLE_PEOPLE", self.nicks.count);
 	}
 	
-	titleLabel.stringValue = TXTFLS(@"INVITE_SHEET_TARGET_DESC", target);
+	self.titleLabel.stringValue = TXTFLS(@"INVITE_SHEET_TARGET_DESC", target);
 	
 	for (NSString *s in channels) {
-		[channelPopup addItemWithTitle:s];
+		[self.channelPopup addItemWithTitle:s];
 	}
 	
 	[self startSheet];
@@ -45,10 +46,10 @@
 
 - (void)invite:(id)sender
 {
-	NSString *channelName = [[channelPopup selectedItem] title];
+	NSString *channelName = [self.channelPopup selectedItem].title;
 	
-	if ([delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
-		[delegate inviteSheet:self onSelectChannel:channelName];
+	if ([self.delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
+		[self.delegate inviteSheet:self onSelectChannel:channelName];
 	}
 	
 	[self endSheet];
@@ -59,8 +60,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
-		[delegate inviteSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
+		[self.delegate inviteSheetWillClose:self];
 	}
 }
 
