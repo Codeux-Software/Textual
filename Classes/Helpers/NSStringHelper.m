@@ -86,7 +86,7 @@ NSInteger ctoi(unsigned char c);
 {
 	NSUInteger len = self.length;
 	
-	const UniChar* buffer = CFStringGetCharactersPtr((__bridge CFStringRef)self);
+	const Unichar *buffer = CFStringGetCharactersPtr((__bridge CFStringRef)self);
 	
 	if (buffer == NULL) {
 		NSMutableData *data = [NSMutableData dataWithLength:(len * sizeof(UniChar))];
@@ -148,7 +148,7 @@ NSInteger ctoi(unsigned char c);
 	NSUInteger len = self.length;
 	if (len == 0) return NO;
 	
-	const UniChar* buffer = [self getCharactersBuffer];
+	const Unichar *buffer = [self getCharactersBuffer];
 	if (buffer == NULL) return NO;
 	
 	for (NSInteger i = 0; i < len; ++i) {
@@ -167,7 +167,7 @@ NSInteger ctoi(unsigned char c);
 	NSUInteger len = self.length;
 	if (len == 0) return NO;
 	
-	const UniChar* buffer = [self getCharactersBuffer];
+	const Unichar *buffer = [self getCharactersBuffer];
 	if (buffer == NULL) return NO;
 	
 	for (NSInteger i = 0; i < len; ++i) {
@@ -263,7 +263,7 @@ BOOL isUnicharDigit(unichar c)
 	NSInteger n = 0;
 	NSInteger len = self.length;
 	
-	const UniChar* buf = [self getCharactersBuffer];
+	const Unichar *buf = [self getCharactersBuffer];
 	
 	UniChar dest[len];
 	
@@ -331,8 +331,8 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSInteger buflen = (len * sizeof(unichar));
 	
-	unichar* src = alloca(buflen);
-	unichar* buf = alloca(buflen);
+	unichar *src = alloca(buflen);
+	unichar *buf = alloca(buflen);
 	
 	[self getCharacters:src];
 	

@@ -14,7 +14,7 @@ static char encodingTable[64] = {
 {
 	NSInteger len = [self length];
 	
-	const unsigned char* bytes = [self bytes];
+	const unsigned char *bytes = [self bytes];
 	
 	NSInteger rest = 0;
 	NSInteger code = 0;
@@ -67,7 +67,7 @@ static char encodingTable[64] = {
 {
 	NSInteger len = [self length];
 	
-	const unsigned char* bytes = [self bytes];
+	const unsigned char *bytes = [self bytes];
     
 	UniChar buf[len];
 	
