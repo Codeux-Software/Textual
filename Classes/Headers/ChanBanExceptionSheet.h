@@ -1,15 +1,8 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface ChanBanExceptionSheet : SheetBase
-{
-	NSMutableArray *list;
-	NSMutableArray *modes;
-	
-	IBOutlet ListView *table;
-	IBOutlet NSTextField *header;
-}
-
 @property (nonatomic, strong) ListView *table;
 @property (nonatomic, strong) NSTextField *header;
 @property (nonatomic, strong) NSMutableArray *list;

@@ -1,6 +1,6 @@
-
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface ChanInviteExceptionSheet (Private)
 - (void)reloadTable;
@@ -12,31 +12,31 @@
 @synthesize table;
 @synthesize header;
 @synthesize modes;
+@synthesize delegate;
 
 - (id)init
 {
     if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"ChanInviteExceptionSheet" owner:self];
 		
-		list  = [NSMutableArray new];
-        modes = [NSMutableArray new];
+		self.list  = [NSMutableArray new];
+        self.modes = [NSMutableArray new];
     }
     
     return self;
 }
 
-
 - (void)show
 {
-	IRCClient  *u = delegate;
+	IRCClient  *u = self.delegate;
 	IRCChannel *c = [u.world selectedChannel];
 	
 	NSString *nheader;
 	
-	nheader = [header stringValue];
+	nheader = [self.header stringValue];
 	nheader = [NSString stringWithFormat:nheader, c.name];
 	
-	[header setStringValue:nheader];
+	[self.header setStringValue:nheader];
 	
     [self startSheet];
 }
@@ -45,28 +45,28 @@
 {
 	[self endSheet];
 	
-	if ([delegate respondsToSelector:@selector(chanInviteExceptionDialogWillClose:)]) {
-		[delegate chanInviteExceptionDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(chanInviteExceptionDialogWillClose:)]) {
+		[self.delegate chanInviteExceptionDialogWillClose:self];
 	}
 }
 
 - (void)clear
 {
-    [list removeAllObjects];
+    [self.list removeAllObjects];
 	
     [self reloadTable];
 }
 
 - (void)addException:(NSString *)host tset:(NSString *)time setby:(NSString *)owner
 {
-    [list safeAddObject:[NSArray arrayWithObjects:host, [owner nicknameFromHostmask], time, nil]];
+    [self.list safeAddObject:[NSArray arrayWithObjects:host, [owner nicknameFromHostmask], time, nil]];
     
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [table reloadData];
+    [self.table reloadData];
 }
 
 #pragma mark -
@@ -74,8 +74,8 @@
 
 - (void)onUpdate:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(chanInviteExceptionDialogOnUpdate:)]) {
-		[delegate chanInviteExceptionDialogOnUpdate:self];
+    if ([self.delegate respondsToSelector:@selector(chanInviteExceptionDialogOnUpdate:)]) {
+		[self.delegate chanInviteExceptionDialogOnUpdate:self];
     }
 }
 
@@ -86,14 +86,14 @@
 	NSMutableString *str   = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
-	NSIndexSet *indexes = [table selectedRowIndexes];
+	NSIndexSet *indexes = [self.table selectedRowIndexes];
 	
     NSInteger indexTotal = 0;
     
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
         indexTotal++;
         
-		NSArray *iteml = [list safeObjectAtIndex:[index unsignedIntegerValue]];
+		NSArray *iteml = [self.list safeObjectAtIndex:[index unsignedIntegerValue]];
 		
 		if (NSObjectIsNotEmpty(iteml)) {
 			[str   appendString:@"I"];
@@ -103,7 +103,7 @@
 		if (indexTotal == MAXIMUM_SETS_PER_MODE) {
             modeString = (id)[str stringByAppendingString:trail];
             
-            [modes safeAddObject:modeString];
+            [self.modes safeAddObject:modeString];
             
             [str   setString:@"-"];
             [trail setString:NSNullObject];
@@ -115,7 +115,7 @@
     if (NSObjectIsNotEmpty(trail)) {
         modeString = (id)[str stringByAppendingString:trail];
         
-        [modes safeAddObject:modeString];
+        [self.modes safeAddObject:modeString];
     }
     
 	[self ok:sender];
@@ -126,12 +126,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return list.count;
+    return self.list.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [list safeObjectAtIndex:row];
+    NSArray *item = [self.list safeObjectAtIndex:row];
     NSString *col = [column identifier];
     
     if ([col isEqualToString:@"mask"]) {

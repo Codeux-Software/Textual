@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define LINES_MIN			100
 #define LINES_MAX			10000
@@ -60,31 +61,30 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 		
-		world				= word;
-		scriptsController	= [ScriptsWrapper new];
+		self.world			   = word;
+		self.scriptsController = [ScriptsWrapper new];
 	}
 	
 	return self;
 }
-
 
 #pragma mark -
 #pragma mark Utilities
 
 - (void)show
 {
-	scriptsController.world = world;
-	[scriptsController populateData];
+	self.scriptsController.world = self.world;
+	[self.scriptsController populateData];
 	
-	installedScriptsTable.dataSource = scriptsController;
-	[installedScriptsTable reloadData];
+	self.installedScriptsTable.dataSource = self.scriptsController;
+	[self.installedScriptsTable reloadData];
 	
 	[self updateTheme];
 	
     [self updateAlert];
 	[self onChangeAlert:nil];
 	
-	[scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
+	[self.scriptLocationField setStringValue:[Preferences whereApplicationSupportPath]];
 	
 	if ([self.window isVisible] == NO) {
 		[self.window center];
@@ -95,7 +95,7 @@
 	[self updateTranscriptFolder];
 	[self setUpToolbarItemsAndMenus];
 	[self onHighlightTypeChanged:nil];
-	[self firstPane:generalView selectedItem:0];
+	[self firstPane:self.generalView selectedItem:0];
 }
 
 #pragma mark -
@@ -103,7 +103,7 @@
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {		
-	NSString *addonID = ((NSObjectIsNotEmpty(world.bundlesWithPreferences)) ? @"13" : @"10");
+	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
 	
 	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"1", @"2", 
 			@"3", @"4", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
@@ -111,9 +111,9 @@
 
 - (void)setUpToolbarItemsAndMenus
 {
-	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
-		for (TextualPluginItem *plugin in world.bundlesWithPreferences) {
-			NSInteger tagIndex = ([world.bundlesWithPreferences indexOfObject:plugin] + 20);
+	if (NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) {
+		for (TextualPluginItem *plugin in self.world.bundlesWithPreferences) {
+			NSInteger tagIndex = ([self.world.bundlesWithPreferences indexOfObject:plugin] + 20);
 			
 			NSMenuItem *pluginMenu = [NSMenuItem new];
 			
@@ -123,7 +123,7 @@
 			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
 			[pluginMenu setTag:tagIndex];
 			
-			[installedScriptsMenu addItem:pluginMenu];
+			[self.installedScriptsMenu addItem:pluginMenu];
 		}
 	}
 }
@@ -131,21 +131,21 @@
 - (void)onPrefPaneSelected:(id)sender 
 {
 	switch ([sender tag]) {
-		case 0: [self firstPane:generalView selectedItem:0]; break;
-		case 1: [self firstPane:highlightView selectedItem:1]; break;
-		case 2: [self firstPane:interfaceView selectedItem:2]; break;
-		case 3: [self firstPane:alertsView selectedItem:3]; break;
-		case 4: [self firstPane:stylesView selectedItem:4]; break;
-		case 5: [self firstPane:logView selectedItem:11]; break;
-		case 6: [self firstPane:floodControlView selectedItem:11]; break;
-		case 7: [self firstPane:IRCopServicesView selectedItem:11]; break;
-		case 8: [self firstPane:channelManagementView selectedItem:11]; break;
-		case 9: [self firstPane:identityView selectedItem:9]; break;
-		case 10: [self firstPane:scriptsView selectedItem:10]; break;
-		case 11: [self firstPane:experimentalSettingsView selectedItem:11]; break;
+		case 0: [self firstPane:self.generalView selectedItem:0]; break;
+		case 1: [self firstPane:self.highlightView selectedItem:1]; break;
+		case 2: [self firstPane:self.interfaceView selectedItem:2]; break;
+		case 3: [self firstPane:self.alertsView selectedItem:3]; break;
+		case 4: [self firstPane:self.stylesView selectedItem:4]; break;
+		case 5: [self firstPane:self.logView selectedItem:11]; break;
+		case 6: [self firstPane:self.floodControlView selectedItem:11]; break;
+		case 7: [self firstPane:self.IRCopServicesView selectedItem:11]; break;
+		case 8: [self firstPane:self.channelManagementView selectedItem:11]; break;
+		case 9: [self firstPane:self.identityView selectedItem:9]; break;
+		case 10: [self firstPane:self.scriptsView selectedItem:10]; break;
+		case 11: [self firstPane:self.experimentalSettingsView selectedItem:11]; break;
 		default:
 		{
-			TextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
+			TextualPluginItem *plugin = [self.world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
 			
 			if (plugin) {
 				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];
@@ -154,7 +154,7 @@
 					[self firstPane:prefsView selectedItem:13];
 				}
 			} else {
-				[self firstPane:generalView selectedItem:0];
+				[self firstPane:self.generalView selectedItem:0];
 			}
 			
 			break;
@@ -170,18 +170,18 @@
 	windowFrame.size.height = ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	windowFrame.origin.y	= NSMaxY([self.window frame]) - ([view frame].size.height + WINDOW_TOOLBAR_HEIGHT);
 	
-	if (NSObjectIsNotEmpty([contentView subviews])) {
-		[[[contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
+	if (NSObjectIsNotEmpty([self.contentView subviews])) {
+		[[[self.contentView subviews] safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
 	[self.window setFrame:windowFrame display:YES animate:YES];
 	
-	[contentView setFrame:[view frame]];
-	[contentView addSubview:view];	
+	[self.contentView setFrame:[view frame]];
+	[self.contentView addSubview:view];	
 	
 	[self.window recalculateKeyViewLoop];
 	
-	[preferenceSelectToolbar setSelectedItemIdentifier:[NSString stringWithInteger:key]];
+	[self.preferenceSelectToolbar setSelectedItemIdentifier:[NSString stringWithInteger:key]];
 }
 
 #pragma mark -
@@ -258,7 +258,7 @@
 
 - (void)updateAlert 
 {
-	[alertSoundButton removeAllItems];
+	[self.alertSoundButton removeAllItems];
 	
 	NSArray *alertSounds = [self availableSounds];
 	
@@ -267,11 +267,11 @@
 		
         [item setTitle:alertSound];
         
-        [alertSoundButton.menu addItem:item];
+        [self.alertSoundButton.menu addItem:item];
     }
 	
-    [alertSoundButton selectItemAtIndex:0];
-    [alertButton removeAllItems];
+    [self.alertSoundButton selectItemAtIndex:0];
+    [self.alertButton removeAllItems];
 	
     NSMutableArray *alerts = [self sounds];
 	
@@ -281,50 +281,56 @@
         [item setTitle:alert.displayName];
         [item setTag:[alert eventType]];
 		
-        [alertButton.menu addItem:item];
+        [self.alertButton.menu addItem:item];
     }
 	
-    [alertButton selectItemAtIndex:0];
+    [self.alertButton selectItemAtIndex:0];
 }
 
 - (void)onChangeAlert:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)self.alertButton.selectedItem.tag];
 	
-    [useGrowlButton setState:alert.growl];
-    [disableAlertWhenAwayButton setState:alert.disableWhileAway];
+    [self.useGrowlButton				setState:alert.growl];
+    [self.disableAlertWhenAwayButton	setState:alert.disableWhileAway];
 	
-	[alertSoundButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.sound]];
+	[self.alertSoundButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.sound]];
 }
 
 - (void)onUseGrowl:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)self.alertButton.selectedItem.tag];
 	
-    [alert setGrowl:[useGrowlButton state]];
+    [alert setGrowl:[self.useGrowlButton state]];
 }
 
 - (void)onAlertWhileAway:(id)sender 
 {
-    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
+    SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)self.alertButton.selectedItem.tag];
 	
-    [alert setDisableWhileAway:[disableAlertWhenAwayButton state]];
+    [alert setDisableWhileAway:[self.disableAlertWhenAwayButton state]];
 }
 
 - (void)onChangeAlertSound:(id)sender 
 {
-	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)alertButton.selectedItem.tag];
+	SoundWrapper *alert = [SoundWrapper soundWrapperWithEventType:(NotificationType)self.alertButton.selectedItem.tag];
 	
-	[alert setSound:[alertSoundButton titleOfSelectedItem]];
+	[alert setSound:[self.alertSoundButton titleOfSelectedItem]];
 }
 
 - (NSArray *)availableSounds
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
+
+	NSString *userSoundFolder = [_NSFileManager() URLForDirectory:NSLibraryDirectory
+														 inDomain:NSUserDomainMask
+												appropriateForURL:nil
+														   create:YES
+															error:NULL].relativePath;
 	
-	NSArray *directoryContents		= [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds"								error:NULL];
-	NSArray *homeDirectoryContents	= [_NSFileManager() contentsOfDirectoryAtPath:[@"~/Library/Sounds/" stringByExpandingTildeInPath]	error:NULL];
-	
+	NSArray *directoryContents		= [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds"										error:NULL];
+	NSArray *homeDirectoryContents	= [_NSFileManager() contentsOfDirectoryAtPath:[userSoundFolder stringByAppendingPathComponent:@"/Sounds"]	error:NULL];
+
 	[sound_list safeAddObject:EMPTY_SOUND];
 	[sound_list safeAddObject:@"Beep"];
 	
@@ -351,7 +357,7 @@
 
 - (NSMutableArray *)sounds
 {
-	if (NSObjectIsEmpty(sounds)) {
+	if (NSObjectIsEmpty(self.sounds)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_LOGIN]];
@@ -366,10 +372,10 @@
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_TALK_NOTICE]];
 		[ary safeAddObject:[SoundWrapper soundWrapperWithEventType:NOTIFICATION_ADDRESS_BOOK_MATCH]];
 		
-		sounds = ary;
+		self.sounds = ary;
 	}
 	
-	return sounds;
+	return self.sounds;
 }
 
 #pragma mark -
@@ -378,7 +384,7 @@
 - (void)updateTranscriptFolder
 {
 	if ([Preferences sandboxEnabled]) {
-		[transcriptFolderButton setHidden:YES];
+		[self.transcriptFolderButton setHidden:YES];
 		
 		return;
 	}
@@ -388,7 +394,7 @@
 	NSImage *icon = [_NSWorkspace() iconForFile:path];
 	[icon setSize:NSMakeSize(16, 16)];
 	
-	NSMenuItem *item = [transcriptFolderButton itemAtIndex:0];
+	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
 	
 	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
 	[item setImage:icon];
@@ -396,7 +402,7 @@
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-	if ([transcriptFolderButton selectedTag] == 2) {
+	if ([self.transcriptFolderButton selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
 		[d setCanChooseFiles:NO];
@@ -406,7 +412,7 @@
 		[d setCanCreateDirectories:YES];
 		
 		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
-			[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];
 			
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [[d URLs] safeObjectAtIndex:0];
@@ -425,7 +431,7 @@
 
 - (void)updateTheme
 {
-	[themeButton removeAllItems];
+	[self.themeButton removeAllItems];
 	
 	NSInteger tag = 0;
 	
@@ -457,7 +463,8 @@
 				NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:NSNullObject];
 				
 				[item setTag:tag];
-				[themeButton.menu addItem:item];
+				
+				[self.themeButton.menu addItem:item];
 				
 				++i;
 			}
@@ -475,13 +482,13 @@
 		targetTag = 1;
 	}
 	
-	NSInteger count = [themeButton numberOfItems];
+	NSInteger count = [self.themeButton numberOfItems];
 	
 	for (NSInteger i = 0; i < count; i++) {
-		NSMenuItem *item = [themeButton itemAtIndex:i];
+		NSMenuItem *item = [self.themeButton itemAtIndex:i];
 		
 		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
-			[themeButton selectItemAtIndex:i];
+			[self.themeButton selectItemAtIndex:i];
 			
 			break;
 		}
@@ -490,10 +497,10 @@
 
 - (void)onChangedTheme:(id)sender
 {
-    NSDoubleN oldRenderVersion = world.viewTheme.other.renderingEngineVersion;
+    NSDoubleN oldRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
     NSDoubleN newRenderVersion = 0;
     
-	NSMenuItem *item = [themeButton selectedItem];
+	NSMenuItem *item = [self.themeButton selectedItem];
 	
 	NSString *newThemeName = nil;
 	NSString *name = [item title];
@@ -512,10 +519,10 @@
 	
 	[self onStyleChanged:nil];
     
-    newRenderVersion = world.viewTheme.other.renderingEngineVersion;
+    newRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
     
     if (NSDissimilarObjects(oldRenderVersion, newRenderVersion)) {
-        for (IRCClient *u in world.clients) {
+        for (IRCClient *u in self.world.clients) {
             [u sendCommand:@"CLEARALL"];
         }
     }
@@ -523,7 +530,7 @@
 
 - (void)onSelectFont:(id)sender
 {
-	NSFont *logfont = world.viewTheme.other.channelViewFont;
+	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
 	
 	[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
 	[_NSFontManager() orderFrontFontPanel:self];
@@ -532,7 +539,7 @@
 
 - (void)changeItemFont:(NSFontManager *)sender
 {
-	OtherTheme *theme = world.viewTheme.other;
+	OtherTheme *theme = self.world.viewTheme.other;
 	
 	NSFont *newFont = [sender convertFont:theme.channelViewFont];
 	
@@ -556,18 +563,18 @@
 - (void)onHighlightTypeChanged:(id)sender 
 {
     if ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_REGEX) {
-        [highlightNicknameButton setEnabled:NO];
-        [addExcludeWordButton setEnabled:YES];
-        [excludeWordsTable setEnabled:YES];
+        [self.highlightNicknameButton setEnabled:NO];
+        [self.addExcludeWordButton setEnabled:YES];
+        [self.excludeWordsTable setEnabled:YES];
     } else {
-        [highlightNicknameButton setEnabled:YES];
+        [self.highlightNicknameButton setEnabled:YES];
         
         if ([Preferences keywordMatchingMethod] == KEYWORD_MATCH_PARTIAL) {
-            [addExcludeWordButton setEnabled:YES];
-            [excludeWordsTable setEnabled:YES];
+            [self.addExcludeWordButton setEnabled:YES];
+            [self.excludeWordsTable setEnabled:YES];
         } else {
-            [addExcludeWordButton setEnabled:NO];
-            [excludeWordsTable setEnabled:NO];
+            [self.addExcludeWordButton setEnabled:NO];
+            [self.excludeWordsTable setEnabled:NO];
         }
     }
 }
@@ -582,16 +589,16 @@
 
 - (void)onAddKeyword:(id)sender
 {
-	[keywordsArrayController add:nil];
+	[self.keywordsArrayController add:nil];
 	
-	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.3];
+	[self performSelector:@selector(editTable:) withObject:self.keywordsTable afterDelay:0.3];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
-	[excludeWordsArrayController add:nil];
+	[self.excludeWordsArrayController add:nil];
 	
-	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.3];
+	[self performSelector:@selector(editTable:) withObject:self.excludeWordsTable afterDelay:0.3];
 }
 
 - (void)onInputHistorySchemeChanged:(id)sender
@@ -659,7 +666,7 @@
 - (void)onHighlightLoggingChanged:(id)sender
 {
 	if ([Preferences logAllHighlightsToQuery] == NO) {
-		for (IRCClient *u in world.clients) {
+		for (IRCClient *u in self.world.clients) {
 			[u.highlights removeAllObjects];
 		}
 	}
@@ -667,25 +674,25 @@
 
 - (void)onDownloadExtraAddons:(id)sender
 {
+	NSString *version = @"6";
+	
 #ifdef _USES_APPLICATION_SCRIPTS_FOLDER
 	if ([Preferences featureAvailableToOSXMountainLion]) {
 		if ([Preferences sandboxEnabled]) {
-			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.8).pkg"]];
-		} else {
-			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
+			version = @"8";
 		}
-	}
+	} 
 #endif
 	
 	if ([Preferences featureAvailableToOSXLion]) {
 		if ([Preferences sandboxEnabled]) {
-			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.7).pkg"]];
-		} else {
-			return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
-		}
-	} else {
-		return [URLOpener open:[NSURL URLWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.6).pkg"]];
+			version = @"7";
+		} 
 	}
+
+	NSString *base = [NSString stringWithFormat:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.%@).pkg", version];
+
+	[URLOpener open:[NSURL URLWithString:base]];
 }
 
 #pragma mark -
@@ -698,8 +705,8 @@
 	
 	[_NSUserDefaults() synchronize];
 	
-	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
-		[delegate preferencesDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
+		[self.delegate preferencesDialogWillClose:self];
 	}
 }
 

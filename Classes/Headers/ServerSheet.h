@@ -1,85 +1,14 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface ServerSheet : SheetBase
-{
-	NSInteger uid;
-	
-	IRCClient *__weak client;
-	IRCClientConfig *config;
-	
-	NSDictionary *serverList;
-	NSMutableArray *tabViewList;
-	
-	IBOutlet NSView *contentView;
-	IBOutlet NSView *generalView;
-	IBOutlet NSView *identityView;
-	IBOutlet NSView *messagesView;
-	IBOutlet NSView *encodingView;
-	IBOutlet NSView *autojoinView;
-	IBOutlet NSView *ignoresView;
-	IBOutlet NSView *commandsView;
-    IBOutlet NSView *floodControlView;
-    IBOutlet NSView *floodControlToolView;
-	IBOutlet NSView *proxyServerView;
-    
-    IBOutlet NSButton *outgoingFloodControl;
-    IBOutlet NSSlider *floodControlMessageCount;
-    IBOutlet NSSlider *floodControlDelayTimer;
-	
-	IBOutlet ListView *tabView;
-	
-	IBOutlet NSTextField *nameText;
-	IBOutlet NSButton *autoReconnectCheck;
-	IBOutlet NSButton *autoConnectCheck;
-	IBOutlet NSButton *bouncerModeCheck;
-    IBOutlet NSButton *prefersIPv6Check;
-	
-	IBOutlet NSComboBox *hostCombo;
-	IBOutlet NSTextField *portText;
-	IBOutlet NSButton *sslCheck;
-	
-	IBOutlet NSTextField *nickText;
-	IBOutlet NSTextField *passwordText;
-	IBOutlet NSTextField *usernameText;
-	IBOutlet NSTextField *realNameText;
-	IBOutlet NSTextField *nickPasswordText;
-	IBOutlet NSTextField *altNicksText;
-	
-	IBOutlet NSTextView *sleepQuitMessageText;
-	IBOutlet NSTextView *leavingCommentText;
-	
-	IBOutlet NSPopUpButton *encodingCombo;
-	IBOutlet NSPopUpButton *fallbackEncodingCombo;
-	
-	IBOutlet NSPopUpButton *proxyCombo;
-	IBOutlet NSTextField *proxyHostText;
-	IBOutlet NSTextField *proxyPortText;
-	IBOutlet NSTextField *proxyUserText;
-	IBOutlet NSTextField *proxyPasswordText;
-	
-	IBOutlet ListView *channelTable;
-	IBOutlet NSButton *addChannelButton;
-	IBOutlet NSButton *editChannelButton;
-	IBOutlet NSButton *deleteChannelButton;
-	
-	IBOutlet NSTextView *loginCommandsText;
-	IBOutlet NSButton *invisibleCheck;
-	
-	IBOutlet ListView *ignoreTable;
-	IBOutlet NSButton *addIgnoreButton;
-	IBOutlet NSButton *editIgnoreButton;
-	IBOutlet NSButton *deleteIgnoreButton;
-	IBOutlet NSMenu *addIgnoreMenu;
-	
-	ChannelSheet *channelSheet;
-	AddressBookSheet *ignoreSheet;
-}
-
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, strong) IRCClientConfig *config;
 @property (nonatomic, weak) IRCClient *client;
+@property (nonatomic, strong) NSDictionary *serverList;
+@property (nonatomic, strong) NSMutableArray *tabViewList;
 @property (nonatomic, strong) NSView *contentView;
 @property (nonatomic, strong) NSView *generalView;
 @property (nonatomic, strong) NSView *identityView;
@@ -99,6 +28,7 @@
 @property (nonatomic, strong) NSButton *prefersIPv6Check;
 @property (nonatomic, strong) NSButton *autoReconnectCheck;
 @property (nonatomic, strong) NSButton *autoConnectCheck;
+@property (nonatomic, strong) NSButton *bouncerModeCheck;
 @property (nonatomic, strong) NSComboBox *hostCombo;
 @property (nonatomic, strong) NSButton *sslCheck;
 @property (nonatomic, strong) NSTextField *portText;

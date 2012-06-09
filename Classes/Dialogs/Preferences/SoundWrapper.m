@@ -1,12 +1,20 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation SoundWrapper
+
+@synthesize eventType;
+@synthesize displayName;
+@synthesize sound;
+@synthesize growl;
+@synthesize growlSticky;
+@synthesize disableWhileAway;
 
 - (id)initWithEventType:(NotificationType)aEventType
 {
 	if ((self = [super init])) {
-		eventType = aEventType;
+		self.eventType = aEventType;
 	}
 
 	return self;
@@ -19,17 +27,17 @@
 
 - (NSString *)displayName
 {
-	return [Preferences titleForEvent:eventType];
+	return [Preferences titleForEvent:self.eventType];
 }
 
 - (NSString *)sound
 {
-	NSString *sound = [Preferences soundForEvent:eventType];
+	NSString *soundd = [Preferences soundForEvent:self.eventType];
 	
-	if (NSObjectIsEmpty(sound)) {
+	if (NSObjectIsEmpty(soundd)) {
 		return EMPTY_SOUND;
 	} else {
-		return sound;
+		return soundd;
 	}
 }
 
@@ -43,42 +51,42 @@
 		[SoundPlayer play:value isMuted:NO];
 	}
 	
-	[Preferences setSound:value forEvent:eventType];
+	[Preferences setSound:value forEvent:self.eventType];
 }
 
 - (BOOL)growl
 {
-	return [Preferences growlEnabledForEvent:eventType];
+	return [Preferences growlEnabledForEvent:self.eventType];
 }
 
 - (void)setGrowl:(BOOL)value
 {
-	[Preferences setGrowlEnabled:value forEvent:eventType];
+	[Preferences setGrowlEnabled:value forEvent:self.eventType];
 }
 
 - (BOOL)growlSticky
 {
-	return [Preferences growlStickyForEvent:eventType];
+	return [Preferences growlStickyForEvent:self.eventType];
 }
 
 - (void)setGrowlSticky:(BOOL)value
 {
-	[Preferences setGrowlSticky:value forEvent:eventType];
+	[Preferences setGrowlSticky:value forEvent:self.eventType];
 }
 
 - (BOOL)disableWhileAway
 {
-	return [Preferences disableWhileAwayForEvent:eventType];
+	return [Preferences disableWhileAwayForEvent:self.eventType];
 }
 
 - (void)setDisableWhileAway:(BOOL)value
 {
-	[Preferences setDisableWhileAway:value forEvent:eventType];
+	[Preferences setDisableWhileAway:value forEvent:self.eventType];
 }
 
 - (NotificationType)eventType
 {
-    return eventType;
+    return self.eventType;
 }
 
 @end

@@ -1,17 +1,9 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
+
 
 @interface SheetBase : NSObject
-{
-	id __unsafe_unretained delegate;
-	
-	NSWindow *__unsafe_unretained window;
-
-	IBOutlet NSWindow *sheet;
-	IBOutlet NSButton *okButton;
-	IBOutlet NSButton *cancelButton;
-}
-
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, unsafe_unretained) NSWindow *window;
 @property (nonatomic, strong) NSWindow *sheet;

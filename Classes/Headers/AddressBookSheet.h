@@ -1,28 +1,8 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface AddressBookSheet : SheetBase
-{
-	IBOutlet NSTextField *hostmask;
-	IBOutlet NSTextField *nickname;
-	
-	IBOutlet NSButton *ignorePublicMsg;
-	IBOutlet NSButton *ignorePrivateMsg;
-	IBOutlet NSButton *ignoreHighlights;
-	IBOutlet NSButton *ignoreNotices;
-	IBOutlet NSButton *ignoreCTCP;
-	IBOutlet NSButton *ignoreJPQE;
-	IBOutlet NSButton *notifyJoins;
-	IBOutlet NSButton *ignorePMHighlights;
-	
-	IBOutlet NSWindow *ignoreWindow;
-	IBOutlet NSWindow *notifyWindow;
-	
-	BOOL newItem;
-	
-	AddressBook *ignore;
-}
-
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, strong) AddressBook *ignore;
 @property (nonatomic, strong) NSTextField *hostmask;

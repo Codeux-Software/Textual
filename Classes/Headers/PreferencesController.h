@@ -1,64 +1,18 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define TransparencyDidChangeNotification		@"TransparencyDidChangeNotification"
 #define ThemeStyleDidChangeNotification			@"ThemeStyleDidChangeNotification"
 #define InputHistoryGlobalSchemeNotification	@"InputHistoryGlobalSchemeNotification"
 
 @interface PreferencesController : NSWindowController
-{
-	id __unsafe_unretained delegate;
-	
-	IRCWorld *__weak world;
-	
-	IBOutlet NSView *contentView;
-	IBOutlet NSView *highlightView;
-	IBOutlet NSView *interfaceView;
-	IBOutlet NSView *alertsView;
-	IBOutlet NSView *stylesView;
-	IBOutlet NSView *logView;
-	IBOutlet NSView *generalView;
-	IBOutlet NSView *scriptsView;
-	IBOutlet NSView *identityView;
-	IBOutlet NSView *floodControlView;
-	IBOutlet NSView *IRCopServicesView;
-	IBOutlet NSView *channelManagementView;
-    IBOutlet NSView *experimentalSettingsView;
-	
-    IBOutlet NSButton *highlightNicknameButton;
-    IBOutlet NSButton *addExcludeWordButton;
-	
-	IBOutlet NSTableView *keywordsTable;
-	IBOutlet NSTableView *excludeWordsTable;
-	IBOutlet NSTableView *installedScriptsTable;
-	
-	IBOutlet NSArrayController *keywordsArrayController;
-	IBOutlet NSArrayController *excludeWordsArrayController;
-	
-	IBOutlet NSPopUpButton *themeButton;
-    IBOutlet NSPopUpButton *alertButton;
-	IBOutlet NSPopUpButton *alertSoundButton;
-	IBOutlet NSPopUpButton *transcriptFolderButton;
-
-    IBOutlet NSButton *useGrowlButton;
-    IBOutlet NSButton *disableAlertWhenAwayButton;
-	
-	IBOutlet NSTextField *scriptLocationField;
-	
-	IBOutlet NSMenu *installedScriptsMenu;
-	IBOutlet NSToolbar *preferenceSelectToolbar;
-	
-	ScriptsWrapper *scriptsController;
-	
-	NSMutableArray *sounds;
-}
-
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, weak) IRCWorld *world;
 @property (nonatomic, strong) ScriptsWrapper *scriptsController;
-@property (nonatomic, weak, readonly) NSArray *availableSounds;
-@property (nonatomic, weak, readonly) NSMutableArray *sounds;
+@property (nonatomic, weak) NSArray *availableSounds;
+@property (nonatomic, weak) NSMutableArray *sounds;
 @property (nonatomic, strong) NSView *contentView;
 @property (nonatomic, strong) NSView *highlightView;
 @property (nonatomic, strong) NSView *interfaceView;

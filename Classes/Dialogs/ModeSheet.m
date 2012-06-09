@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface ModeSheet (Private)
 - (void)updateTextFields;
@@ -9,6 +10,7 @@
 @implementation ModeSheet
 
 @synthesize mode;
+@synthesize delegate;
 @synthesize channelName;
 @synthesize uid;
 @synthesize cid;
@@ -32,36 +34,35 @@
 	return self;
 }
 
-
 - (void)start
 {
-	[sCheck setState:[mode modeInfoFor:@"s"].plus];
-	[pCheck setState:[mode modeInfoFor:@"p"].plus];
-	[nCheck setState:[mode modeInfoFor:@"n"].plus];
-	[tCheck setState:[mode modeInfoFor:@"t"].plus];
-	[iCheck setState:[mode modeInfoFor:@"i"].plus];
-	[mCheck setState:[mode modeInfoFor:@"m"].plus];
+	[self.sCheck setState:[self.mode modeInfoFor:@"s"].plus];
+	[self.pCheck setState:[self.mode modeInfoFor:@"p"].plus];
+	[self.nCheck setState:[self.mode modeInfoFor:@"n"].plus];
+	[self.tCheck setState:[self.mode modeInfoFor:@"t"].plus];
+	[self.iCheck setState:[self.mode modeInfoFor:@"i"].plus];
+	[self.mCheck setState:[self.mode modeInfoFor:@"m"].plus];
 	
-	[kCheck setState:NSObjectIsNotEmpty([mode modeInfoFor:@"k"].param)];
-	[lCheck setState:([[mode modeInfoFor:@"s"].param integerValue] > 0)];
+	[self.kCheck setState:NSObjectIsNotEmpty([self.mode modeInfoFor:@"k"].param)];
+	[self.lCheck setState:([self.mode modeInfoFor:@"s"].param.integerValue > 0)];
 	
-	if ([mode modeInfoFor:@"k"].plus) {
-		[kText setStringValue:[mode modeInfoFor:@"k"].param];
+	if ([self.mode modeInfoFor:@"k"].plus) {
+		[self.kText setStringValue:[self.mode modeInfoFor:@"k"].param];
 	} else {
-		[kText setStringValue:NSNullObject];
+		[self.kText setStringValue:NSNullObject];
 	}
 	
-	NSInteger lCount = [[mode modeInfoFor:@"l"].param integerValue];
+	NSInteger lCount = [self.mode modeInfoFor:@"l"].param.integerValue;
 								
 	if (lCount < 0) {
 		lCount = 0;
 	}
 	
 	if (lCount > 0) {
-		[lCheck setState:NSOnState];
+		[self.lCheck setState:NSOnState];
 	}
 	
-	[lText setStringValue:[NSString stringWithInteger:lCount]];
+	[self.lText setStringValue:[NSString stringWithInteger:lCount]];
 	
 	[self updateTextFields];
 	[self startSheet];
@@ -69,49 +70,51 @@
 
 - (void)updateTextFields
 {
-	[kText setEnabled:(kCheck.state == NSOnState)];
-	[lText setEnabled:(lCheck.state == NSOnState)];
+	[self.kText setEnabled:(self.kCheck.state == NSOnState)];
+	[self.lText setEnabled:(self.lCheck.state == NSOnState)];
 }
 
 - (void)onChangeCheck:(id)sender
 {
 	[self updateTextFields];
 	
-	if ([sCheck state] == NSOnState && [pCheck state] == NSOnState) {
-		if (sender == sCheck) {
-			[pCheck setState:NSOffState];
+	if ([self.sCheck state] == NSOnState &&
+		[self.pCheck state] == NSOnState) {
+		
+		if (sender == self.sCheck) {
+			[self.pCheck setState:NSOffState];
 		} else {
-			[sCheck setState:NSOffState];
+			[self.sCheck setState:NSOffState];
 		}
 	}
 }
 
 - (void)ok:(id)sender
 {
-	[mode modeInfoFor:@"s"].plus = [sCheck state];
-	[mode modeInfoFor:@"p"].plus = [pCheck state];
-	[mode modeInfoFor:@"n"].plus = [nCheck state];
-	[mode modeInfoFor:@"t"].plus = [tCheck state];
-	[mode modeInfoFor:@"i"].plus = [iCheck state];
-	[mode modeInfoFor:@"m"].plus = [mCheck state];
+	[self.mode modeInfoFor:@"s"].plus = [self.sCheck state];
+	[self.mode modeInfoFor:@"p"].plus = [self.pCheck state];
+	[self.mode modeInfoFor:@"n"].plus = [self.nCheck state];
+	[self.mode modeInfoFor:@"t"].plus = [self.tCheck state];
+	[self.mode modeInfoFor:@"i"].plus = [self.iCheck state];
+	[self.mode modeInfoFor:@"m"].plus = [self.mCheck state];
 	
-	if ([kCheck state] == NSOnState) {
-		[mode modeInfoFor:@"k"].plus = YES;
-		[mode modeInfoFor:@"k"].param = [kText stringValue];
+	if ([self.kCheck state] == NSOnState) {
+		[self.mode modeInfoFor:@"k"].plus = YES;
+		[self.mode modeInfoFor:@"k"].param = [self.kText stringValue];
 	} else {
-		[mode modeInfoFor:@"k"].plus = NO;
+		[self.mode modeInfoFor:@"k"].plus = NO;
 	}
 	
-	if ([lCheck state] == NSOnState) {
-		[mode modeInfoFor:@"l"].plus = YES;
-		[mode modeInfoFor:@"l"].param = [lText stringValue];
+	if ([self.lCheck state] == NSOnState) {
+		[self.mode modeInfoFor:@"l"].plus = YES;
+		[self.mode modeInfoFor:@"l"].param = [self.lText stringValue];
 	} else {
-		[mode modeInfoFor:@"l"].plus = NO;
-		[mode modeInfoFor:@"l"].param = @"0";
+		[self.mode modeInfoFor:@"l"].plus = NO;
+		[self.mode modeInfoFor:@"l"].param = @"0";
 	}
 	
-	if ([delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
-		[delegate modeSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
+		[self.delegate modeSheetOnOK:self];
 	}
 	
 	[super ok:sender];
@@ -122,8 +125,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
-		[delegate modeSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
+		[self.delegate modeSheetWillClose:self];
 	}
 }
 

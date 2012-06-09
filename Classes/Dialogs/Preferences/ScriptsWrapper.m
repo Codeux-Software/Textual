@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation ScriptsWrapper
 
@@ -9,7 +10,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-        scripts = [NSMutableArray new];
+        self.scripts = [NSMutableArray new];
 	}
     
 	return self;
@@ -35,36 +36,36 @@
 					continue;
 				}
 				
-				NSArray     *nameParts  = [file componentsSeparatedByString:@"."];
-				NSString    *script     = [[nameParts stringAtIndex:0] lowercaseString];
+				NSArray  *nameParts  = [file componentsSeparatedByString:@"."];
+				NSString *script     = [[nameParts stringAtIndex:0] lowercaseString];
 				
-				if ([scripts containsObject:script] == NO) {
-					[scripts safeAddObject:script];
+				if ([self.scripts containsObject:script] == NO) {
+					[self.scripts safeAddObject:script];
 				}
 			}
 		}
 	}
     
-	for (__strong NSString *cmd in world.bundlesForUserInput) {
+	for (__strong NSString *cmd in self.world.bundlesForUserInput) {
 		cmd = [cmd lowercaseString];
 		
-		if ([scripts containsObject:cmd] == NO) {
-			[scripts safeAddObject:cmd];
+		if ([self.scripts containsObject:cmd] == NO) {
+			[self.scripts safeAddObject:cmd];
 		}
 	}
 	
-	[scripts sortUsingSelector:@selector(compare:)];
+	[self.scripts sortUsingSelector:@selector(compare:)];
 }
 
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [scripts count];
+    return [self.scripts count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [scripts safeObjectAtIndex:rowIndex];
+	return [self.scripts safeObjectAtIndex:rowIndex];
 }
 
 @end

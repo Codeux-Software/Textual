@@ -1,30 +1,13 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
+
 
 @interface ListDialog : NSWindowController
-{
-	id __unsafe_unretained delegate;
-	
-	IBOutlet ListView *table;
-	
-	NSMutableArray *list;
-	NSMutableArray *filteredList;
-	
-	NSInteger sortKey;
-	
-	NSComparisonResult sortOrder;
-	
-	IBOutlet NSButton *updateButton;
-	
-	IBOutlet NSTextField *channelCount;
-	IBOutlet NSTextField *networkName;
-	IBOutlet NSSearchField *filterText;
-}
-
 @property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, readonly) NSInteger sortKey;
-@property (nonatomic, readonly) NSComparisonResult sortOrder;
+@property (nonatomic, assign) NSInteger sortKey;
+@property (nonatomic, assign) NSComparisonResult sortOrder;
 @property (nonatomic, strong) NSMutableArray *list;
 @property (nonatomic, strong) NSMutableArray *filteredList;
 @property (nonatomic, strong) ListView *table;
