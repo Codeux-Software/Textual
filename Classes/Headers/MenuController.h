@@ -1,39 +1,11 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @class MasterController;
 
 @interface MenuController : NSObject
-{
-	IBOutlet NSMenuItem *closeWindowItem;
-	
-	IRCWorld *__weak world;
-	MainWindow *__unsafe_unretained  window;
-	InputTextField *__unsafe_unretained text;
-	MasterController *__weak master;
-	
-	ServerList *__weak serverList;
-	MemberList *__weak memberList;
-	
-	NSString *pointedUrl;
-	NSString *pointedNick;
-	NSString *pointedChannelName;
-	NSString *currentSearchPhrase;
-	
-	NickSheet *nickSheet;
-	ModeSheet *modeSheet;
-	AboutPanel *aboutPanel;
-	TopicSheet *topicSheet;
-	InviteSheet *inviteSheet;
-	ServerSheet *serverSheet;
-	ChannelSheet *channelSheet;
-	HighlightSheet *highlightSheet;
-	PreferencesController *preferencesController;
-	
-	BOOL isInFullScreenMode;
-}
-
 @property (nonatomic, weak) IRCWorld *world;
 @property (nonatomic, unsafe_unretained ) MainWindow *window;
 @property (nonatomic, unsafe_unretained) InputTextField *text;
@@ -152,5 +124,4 @@
 - (void)onWantMainWindowCentered:(id)sender;
 
 - (void)onWantThemeForceReloaded:(id)sender;
-
 @end

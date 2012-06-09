@@ -19,7 +19,6 @@ typedef BOOL (^MessageBlock)(void);
 @property (nonatomic, assign) BOOL loaded;
 @property (nonatomic, strong) NSMenu *menu;
 @property (nonatomic, strong) NSMenu *urlMenu;
-@property (nonatomic, strong) NSMenu *addrMenu;
 @property (nonatomic, strong) NSMenu *chanMenu;
 @property (nonatomic, strong) NSMenu *memberMenu;
 @property (nonatomic, strong) ViewTheme *theme;

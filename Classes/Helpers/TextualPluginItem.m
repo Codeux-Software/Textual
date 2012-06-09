@@ -1,6 +1,7 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-#import "TextualPluginItem.h"
+// Converted to ARC Support on Thursday, June 08, 2012
+
 @implementation TextualPluginItem
 
 @synthesize pluginBundle;
@@ -23,8 +24,8 @@
 		
 		// Ouput Rules
 		
-		if ([pluginPrimaryClass respondsToSelector:@selector(pluginOutputDisplayRules)]) {
-			NSDictionary *pluginRules = [pluginPrimaryClass pluginOutputDisplayRules];
+		if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginOutputDisplayRules)]) {
+			NSDictionary *pluginRules = [self.pluginPrimaryClass pluginOutputDisplayRules];
 			
 			if (NSObjectIsNotEmpty(pluginRules)) {
 				for (NSString *command in pluginRules) {
@@ -65,9 +66,9 @@
 		
 		// User Input
 		
-		if ([pluginPrimaryClass respondsToSelector:@selector(messageSentByUser:message:command:)]) {
-			if ([pluginPrimaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
-				NSArray *spdcmds = [pluginPrimaryClass pluginSupportsUserInputCommands];
+		if ([self.pluginPrimaryClass respondsToSelector:@selector(messageSentByUser:message:command:)]) {
+			if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
+				NSArray *spdcmds = [self.pluginPrimaryClass pluginSupportsUserInputCommands];
 				
 				if (NSObjectIsNotEmpty(spdcmds)) {
 					for (__strong NSString *cmd in spdcmds) {
@@ -89,9 +90,9 @@
 		
 		// Server Input
 		
-		if ([pluginPrimaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)]) {
-			if ([pluginPrimaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]) {
-				NSArray *spdcmds = [pluginPrimaryClass pluginSupportsServerInputCommands];
+		if ([self.pluginPrimaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)]) {
+			if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]) {
+				NSArray *spdcmds = [self.pluginPrimaryClass pluginSupportsServerInputCommands];
 				
 				if (NSObjectIsNotEmpty(spdcmds)) {
 					for (__strong NSString *cmd in spdcmds) {
@@ -111,8 +112,8 @@
 			}
 		}
 		
-		if ([pluginPrimaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)]) {
-			[pluginPrimaryClass pluginLoadedIntoMemory:world];
+		if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)]) {
+			[self.pluginPrimaryClass pluginLoadedIntoMemory:world];
 		}
 		
 		*userDict			= newUserDict;
@@ -124,8 +125,8 @@
 
 - (void)dealloc
 {
-	if ([pluginPrimaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
-		[pluginPrimaryClass pluginUnloadedFromMemory];
+	if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
+		[self.pluginPrimaryClass pluginUnloadedFromMemory];
 	}
 	
 	

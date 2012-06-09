@@ -62,7 +62,8 @@
 	self._suppressionKey = __suppressionKey;
 	
 	[alert beginSheetModalForWindow:window modalDelegate:self
-					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:) contextInfo:nil];
+					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:)
+						contextInfo:nil];
 	
 }
 
@@ -80,7 +81,8 @@
 	
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-	[self._targetClass performSelector:self._actionSelector withObject:[NSNumber numberWithInteger:returnCode]];
+	[self._targetClass performSelector:self._actionSelector
+							withObject:[NSNumber numberWithInteger:returnCode]];
 #pragma clang diagnostic pop
     
 }

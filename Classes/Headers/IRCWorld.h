@@ -22,7 +22,6 @@
 	
 	NSMenu *__weak logMenu;
 	NSMenu *__weak urlMenu;
-	NSMenu *__weak addrMenu;
 	NSMenu *__weak chanMenu;
 	NSMenu *__weak treeMenu;
 	NSMenu *__weak memberMenu;
@@ -71,7 +70,6 @@
 @property (nonatomic, weak) NSBox *logBase;
 @property (nonatomic, weak) NSMenu *logMenu;
 @property (nonatomic, weak) NSMenu *urlMenu;
-@property (nonatomic, weak) NSMenu *addrMenu;
 @property (nonatomic, weak) NSMenu *chanMenu;
 @property (nonatomic, weak) NSMenu *treeMenu;
 @property (nonatomic, weak) NSMenu *memberMenu;

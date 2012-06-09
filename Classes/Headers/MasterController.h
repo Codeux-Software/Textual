@@ -1,49 +1,9 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 08, 2012
 
 @interface MasterController : NSObject <NSSplitViewDelegate>
-{
-	IBOutlet ThinSplitView *serverSplitView;
-	IBOutlet ThinSplitView *memberSplitView;
-	
-	IBOutlet MainWindow *window;
-	IBOutlet MenuController *menu;
-	IBOutlet InputTextField *text;
-	
-	IBOutlet MemberList *memberList;
-	IBOutlet ServerList *serverList;
-	
-	IBOutlet NSBox *logBase;
-	
-	IBOutlet NSMenuItem *serverMenu;
-	IBOutlet NSMenuItem *channelMenu;
-	
-	IBOutlet NSMenu *logMenu;
-	IBOutlet NSMenu *urlMenu;
-	IBOutlet NSMenu *treeMenu;
-	IBOutlet NSMenu *addrMenu;
-	IBOutlet NSMenu *chanMenu;
-	IBOutlet NSMenu *memberMenu;
-	
-	IBOutlet NSButton *addServerButton;
-	
-	IBOutlet IRCTextFormatterMenu *formattingMenu;
-	
-	IRCWorld *world;
-	IRCExtras *extrac;
-	ViewTheme *viewTheme;
-	GrowlController *growl;
-	WelcomeSheet *welcomeSheet;
-	InputHistory *inputHistory;
-	NickCompletionStatus *completionStatus;
-	
-	BOOL ghostMode;
-	BOOL terminating;
-	
-	NSInteger memberSplitViewOldPosition;
-}
-
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, strong) NSBox *logBase;
@@ -60,7 +20,6 @@
 @property (nonatomic, strong) NSMenu *logMenu;
 @property (nonatomic, strong) NSMenu *urlMenu;
 @property (nonatomic, strong) NSMenu *treeMenu;
-@property (nonatomic, strong) NSMenu *addrMenu;
 @property (nonatomic, strong) NSMenu *chanMenu;
 @property (nonatomic, strong) NSMenu *memberMenu;
 @property (nonatomic, strong) IRCWorld *world;
@@ -91,5 +50,4 @@
 - (void)selectPreviousActiveServer:(NSEvent *)e;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
-
 @end
