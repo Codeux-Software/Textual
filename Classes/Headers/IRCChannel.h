@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @class IRCClient;
 
@@ -12,34 +13,11 @@ typedef enum {
 } ChannelStatus;
 
 @interface IRCChannel : IRCTreeItem
-{
-	IRCClient *__weak client;
-	IRCChannelMode *mode;
-	IRCChannelConfig *config;
-	
-	NSMutableArray *members;
-	
-	NSString *topic;
-	NSString *storedTopic;
-	
-	NSString *logDate;
-	
-	BOOL isOp;
-	BOOL isHalfOp;
-	BOOL isModeInit;
-	BOOL isActive;
-	BOOL errLastJoin;
-	
-	ChannelStatus status;
-	
-	FileLogger *logFile;
-}
-
 @property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, readonly) IRCChannelMode *mode;
-@property (nonatomic, readonly) IRCChannelConfig *config;
-@property (nonatomic, readonly) NSMutableArray *members;
-@property (nonatomic, weak, readonly) NSString *channelTypeString;
+@property (nonatomic, strong) IRCChannelMode *mode;
+@property (nonatomic, strong) IRCChannelConfig *config;
+@property (nonatomic, strong) NSMutableArray *members;
+@property (nonatomic, weak) NSString *channelTypeString;
 @property (nonatomic, strong) NSString *topic;
 @property (nonatomic, strong) NSString *storedTopic;
 @property (nonatomic, strong) NSString *logDate;
@@ -49,11 +27,11 @@ typedef enum {
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL errLastJoin;
 @property (nonatomic, assign) ChannelStatus status;
-@property (nonatomic, readonly) BOOL isChannel;
-@property (nonatomic, readonly) BOOL isTalk;
+@property (nonatomic, assign) BOOL isChannel;
+@property (nonatomic, assign) BOOL isTalk;
 @property (nonatomic, strong) FileLogger *logFile;
 @property (nonatomic, weak) NSString *name;
-@property (nonatomic, weak, readonly) NSString *password;
+@property (nonatomic, weak) NSString *password;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
@@ -84,8 +62,10 @@ typedef enum {
 - (void)clearMembers;
 
 - (IRCUser *)memberAtIndex:(NSInteger)index;
+
 - (IRCUser *)findMember:(NSString *)nick;
 - (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask;
+
 - (NSInteger)indexOfMember:(NSString *)nick;
 - (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask;
 

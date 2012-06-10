@@ -65,6 +65,7 @@ typedef unsigned long long	TXFSLongInt; // filesizes
 
 /* Number Handling */
 #define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
+#define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
 #define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
 #define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
 #define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]

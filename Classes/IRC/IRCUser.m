@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define COLOR_NUMBER_MAX	30
 
@@ -20,6 +21,7 @@
 @synthesize isMyself;
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
+@synthesize colorNumber;
 @synthesize nick;
 @synthesize lastFadedWeights;
 @synthesize supportInfo;
@@ -27,27 +29,26 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		colorNumber = -1;
+		self.colorNumber = -1;
 		
-		lastFadedWeights = CFAbsoluteTimeGetCurrent();
+		self.lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}
 
 	return self;
 }
 
-
 - (NSString *)banMask
 {
-	if (NSObjectIsEmpty(address)) {
-		return [NSString stringWithFormat:@"%@!*@*", nick];
+	if (NSObjectIsEmpty(self.address)) {
+		return [NSString stringWithFormat:@"%@!*@*", self.nick];
 	} else {
-		NSString *ident = ((username) ?: @"*");
+		NSString *ident = ((self.username) ?: @"*");
 		
 		switch ([Preferences banFormat]) {
-			case HMBAN_FORMAT_WHNIN:  return [NSString stringWithFormat:@"*!*@%@", address];	
-			case HMBAN_FORMAT_WHAINN: return [NSString stringWithFormat:@"*!%@@%@", ident, address];
-			case HMBAN_FORMAT_WHANNI: return [NSString stringWithFormat:@"%@!*%@", nick, address];
-			case HMBAN_FORMAT_EXACT:  return [NSString stringWithFormat:@"%@!%@@%@", nick, ident, address];
+			case HMBAN_FORMAT_WHNIN:  return [NSString stringWithFormat:@"*!*@%@", self.address];	
+			case HMBAN_FORMAT_WHAINN: return [NSString stringWithFormat:@"*!%@@%@", ident, self.address];
+			case HMBAN_FORMAT_WHANNI: return [NSString stringWithFormat:@"%@!*%@", self.nick, self.address];
+			case HMBAN_FORMAT_EXACT:  return [NSString stringWithFormat:@"%@!%@@%@", self.nick, ident, self.address];
 		}
 	}
 	
@@ -56,32 +57,32 @@
 
 - (char)mark
 {
-	if (q) return [supportInfo.userModeQPrefix safeCharacterAtIndex:0];
-	if (a) return [supportInfo.userModeAPrefix safeCharacterAtIndex:0];
-	if (o) return [supportInfo.userModeOPrefix safeCharacterAtIndex:0];
-	if (h) return [supportInfo.userModeHPrefix safeCharacterAtIndex:0];
-	if (v) return [supportInfo.userModeVPrefix safeCharacterAtIndex:0];
+	if (q) return [self.supportInfo.userModeQPrefix safeCharacterAtIndex:0];
+	if (a) return [self.supportInfo.userModeAPrefix safeCharacterAtIndex:0];
+	if (o) return [self.supportInfo.userModeOPrefix safeCharacterAtIndex:0];
+	if (h) return [self.supportInfo.userModeHPrefix safeCharacterAtIndex:0];
+	if (v) return [self.supportInfo.userModeVPrefix safeCharacterAtIndex:0];
 	
 	return ' ';
 }
 
 - (BOOL)isOp
 {
-	return (o || a || q);
+	return (self.o || self.a || self.q);
 }
 
 - (BOOL)isHalfOp 
 {
-	return (h || [self isOp]);
+	return (self.h || [self isOp]);
 }
 
 - (NSInteger)colorNumber
 {
 	if (colorNumber < 0) {
 		if ([_NSUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
-			colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % COLOR_NUMBER_MAX);
+			self.colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % COLOR_NUMBER_MAX);
 		} else {
-			colorNumber = (CFHash((__bridge CFTypeRef)([nick lowercaseString])) % COLOR_NUMBER_MAX);
+			self.colorNumber = (CFHash((__bridge CFTypeRef)([self.nick lowercaseString])) % COLOR_NUMBER_MAX);
 		}
 	}
 	
@@ -91,11 +92,11 @@
 - (BOOL)hasMode:(char)mode
 {
 	switch (mode) {
-		case 'q': return q;
-		case 'a': return a;
-		case 'o': return o;
-		case 'h': return h;
-		case 'v': return v;
+		case 'q': return self.q;
+		case 'a': return self.a;
+		case 'o': return self.o;
+		case 'h': return self.h;
+		case 'v': return self.v;
 	}
 	
 	return NO;
@@ -105,44 +106,45 @@
 {
 	[self decayConversation];
 	
-	return (incomingWeight + outgoingWeight);
+	return (self.incomingWeight + self.outgoingWeight);
 }
 
 - (void)outgoingConversation
 {
-	CGFloat change = ((outgoingWeight == 0) ? 20 : 5);
+	CGFloat change = ((self.outgoingWeight == 0) ? 20 : 5);
 	
-	outgoingWeight += change;
+	self.outgoingWeight += change;
 }
 
 - (void)incomingConversation
 {
-	CGFloat change = ((incomingWeight == 0) ? 100 : 20);
+	CGFloat change = ((self.incomingWeight == 0) ? 100 : 20);
 	
-	incomingWeight += change;
+	self.incomingWeight += change;
 }
 
 - (void)conversation
 {
-	CGFloat change = ((outgoingWeight == 0) ? 4 : 1);
+	CGFloat change = ((self.outgoingWeight == 0) ? 4 : 1);
 	
-	outgoingWeight += change;
+	self.outgoingWeight += change;
 }
 
 - (void)decayConversation
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-	CGFloat minutes = ((now - lastFadedWeights) / 60);
+	
+	CGFloat minutes = ((now - self.lastFadedWeights) / 60);
 	
 	if (minutes > 1) {
-		lastFadedWeights = now;
+		self.lastFadedWeights = now;
 		
-		if (incomingWeight > 0) {
-			incomingWeight /= pow(2, minutes);
+		if (self.incomingWeight > 0) {
+			self.incomingWeight /= pow(2, minutes);
 		}
 		
-		if (outgoingWeight > 0) {
-			outgoingWeight /= pow(2, minutes);
+		if (self.outgoingWeight > 0) {
+			self.outgoingWeight /= pow(2, minutes);
 		}
 	}
 }
@@ -151,31 +153,31 @@
 {
 	if ([other isKindOfClass:[IRCUser class]] == NO) return NO;
 	
-	return ([nick caseInsensitiveCompare:[(id)other nick]] == NSOrderedSame);
+	return ([self.nick caseInsensitiveCompare:[(id)other nick]] == NSOrderedSame);
 }
 
 - (NSComparisonResult)compare:(IRCUser *)other
 {
-	if (NSDissimilarObjects(q, other.q)) {
-		return ((q) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (q) {
-		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(a, other.a)) {
-		return ((a) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (a) {
-		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(o, other.o)) {
-		return ((o) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (o) {
-		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(h, other.h)) {
-		return ((h) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (h) {
-		return [nick caseInsensitiveCompare:other.nick];
-	} else if (NSDissimilarObjects(v, other.v)) {
-		return ((v) ? NSOrderedAscending : NSOrderedDescending);
+	if (NSDissimilarObjects(self.q, other.q)) {
+		return ((self.q) ? NSOrderedAscending : NSOrderedDescending);
+	} else if (self.q) {
+		return [self.nick caseInsensitiveCompare:other.nick];
+	} else if (NSDissimilarObjects(self.a, other.a)) {
+		return ((self.a) ? NSOrderedAscending : NSOrderedDescending);
+	} else if (self.a) {
+		return [self.nick caseInsensitiveCompare:other.nick];
+	} else if (NSDissimilarObjects(self.o, other.o)) {
+		return ((self.o) ? NSOrderedAscending : NSOrderedDescending);
+	} else if (self.o) {
+		return [self.nick caseInsensitiveCompare:other.nick];
+	} else if (NSDissimilarObjects(self.h, other.h)) {
+		return ((self.h) ? NSOrderedAscending : NSOrderedDescending);
+	} else if (self.h) {
+		return [self.nick caseInsensitiveCompare:other.nick];
+	} else if (NSDissimilarObjects(self.v, other.v)) {
+		return ((self.v) ? NSOrderedAscending : NSOrderedDescending);
 	} else {
-		return [nick caseInsensitiveCompare:other.nick];
+		return [self.nick caseInsensitiveCompare:other.nick];
 	}
 }
 
@@ -187,12 +189,12 @@
 	if (mine > others) return NSOrderedAscending;
 	if (mine < others) return NSOrderedDescending;
 	
-	return [[nick lowercaseString] compare:[other.nick lowercaseString]];
+	return [self.nick.lowercaseString compare:other.nick.lowercaseString];
 }
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<IRCUser %c%@>", self.mark, nick];
+	return [NSString stringWithFormat:@"<IRCUser %c%@>", self.mark, self.nick];
 }
 
 @end

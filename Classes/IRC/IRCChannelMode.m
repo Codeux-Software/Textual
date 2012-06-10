@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 /* Sloppy mode parser. */
 
@@ -13,8 +14,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		allModes = [NSMutableArray new];
-		modeIndexes = [NSMutableDictionary new];
+		self.allModes		= [NSMutableArray new];
+		self.modeIndexes	= [NSMutableDictionary new];
 	}
 
 	return self;
@@ -22,9 +23,9 @@
 
 - (id)initWithChannelMode:(IRCChannelMode *)other
 {
-	isupport = other.isupport;
-	allModes = other.allModes;
-	modeIndexes = other.modeIndexes;
+	self.isupport		= other.isupport;
+	self.allModes		= other.allModes;
+	self.modeIndexes	= other.modeIndexes;
 	
 	return self;
 }
@@ -32,8 +33,8 @@
 
 - (void)clear
 {
-	[allModes removeAllObjects];
-	[modeIndexes removeAllObjects];
+	[self.allModes removeAllObjects];
+	[self.modeIndexes removeAllObjects];
 }
 
 - (NSArray *)badModes 
@@ -43,7 +44,7 @@
 
 - (NSArray *)update:(NSString *)str
 {
-	NSArray *ary = [isupport parseMode:str];
+	NSArray *ary = [self.isupport parseMode:str];
 	
 	for (IRCModeInfo *h in ary) {
 		if (h.op) continue;
@@ -52,15 +53,15 @@
 		
 		if ([[self badModes] containsObject:modec]) continue;
 		
-		if ([modeIndexes containsKey:modec]) {
-			NSInteger moindex = [modeIndexes integerForKey:modec];
+		if ([self.modeIndexes containsKey:modec]) {
+			NSInteger moindex = [self.modeIndexes integerForKey:modec];
 			
-			[allModes safeRemoveObjectAtIndex:moindex];
-			[allModes safeInsertObject:h atIndex:moindex];
+			[self.allModes safeRemoveObjectAtIndex:moindex];
+			[self.allModes safeInsertObject:h atIndex:moindex];
 		} else {
-			[allModes safeAddObject:h];
+			[self.allModes safeAddObject:h];
 			
-			[modeIndexes setInteger:[allModes indexOfObject:h] forKey:modec];
+			[self.modeIndexes setInteger:[self.allModes indexOfObject:h] forKey:modec];
 		}
 	}
 	
@@ -101,7 +102,7 @@
 
 - (BOOL)modeIsDefined:(NSString *)mode
 {
-	return [modeIndexes containsKey:mode];
+	return [self.modeIndexes containsKey:mode];
 }
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
@@ -109,13 +110,13 @@
 	BOOL objk = [self modeIsDefined:mode];
 	
 	if (objk == NO) {
-		IRCModeInfo *m = [isupport createMode:mode];
+		IRCModeInfo *m = [self.isupport createMode:mode];
 		
-		[allModes safeAddObject:m];
-		[modeIndexes setInteger:[allModes indexOfObject:m] forKey:mode];
+		[self.allModes safeAddObject:m];
+		[self.modeIndexes setInteger:[self.allModes indexOfObject:m] forKey:mode];
 	}
 	
-	return [allModes safeObjectAtIndex:[modeIndexes integerForKey:mode]];
+	return [self.allModes safeObjectAtIndex:[self.modeIndexes integerForKey:mode]];
 }
 
 - (NSString *)format:(BOOL)maskK
@@ -125,7 +126,7 @@
 	
 	[str appendString:@"+"];
 	
-	for (IRCModeInfo *h in allModes) {
+	for (IRCModeInfo *h in self.allModes) {
 		if (maskK == YES) {
 			if (h.mode == 'k') continue;
 		}

@@ -9,7 +9,6 @@
 //
 
 @interface AGKeychain : NSObject
-
 + (NSString *)getPasswordFromSecKeychainItemRef:(SecKeychainItemRef)item;
 
 + (BOOL)checkForExistanceOfKeychainItem:(NSString *)keychainItemName 
@@ -40,5 +39,4 @@
 							  forUsername:(NSString *)username
 							  serviceName:(NSString *)service
 						withLegacySupport:(BOOL)legacy;
-
 @end
