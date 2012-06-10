@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define TREE_USERLIST_HEIGHT    16.0
 
@@ -10,6 +11,7 @@
 
 @implementation IRCChannel
 
+@synthesize log;
 @synthesize client;
 @synthesize config;
 @synthesize errLastJoin;
@@ -28,30 +30,29 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		mode    = [IRCChannelMode new];
-		members = [NSMutableArray new];
+		self.mode    = [IRCChannelMode new];
+		self.members = [NSMutableArray new];
 	}
 	
 	return self;
 }
-
 
 #pragma mark -
 #pragma mark Init
 
 - (void)setup:(IRCChannelConfig *)seed
 {
-	config = [seed mutableCopy];
+	self.config = [seed mutableCopy];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	config = [seed mutableCopy];
+	self.config = [seed mutableCopy];
 }
 
 - (NSMutableDictionary *)dictionaryValue
 {
-	return [config dictionaryValue];
+	return [self.config dictionaryValue];
 }
 
 #pragma mark -
@@ -59,32 +60,32 @@
 
 - (NSString *)name
 {
-	return config.name;
+	return self.config.name;
 }
 
 - (void)setName:(NSString *)value
 {
-	config.name = value;
+	self.config.name = value;
 }
 
 - (NSString *)password
 {
-	return ((config.password) ?: NSNullObject);
+	return ((self.config.password) ?: NSNullObject);
 }
 
 - (BOOL)isChannel
 {
-	return (config.type == CHANNEL_TYPE_CHANNEL);
+	return (self.config.type == CHANNEL_TYPE_CHANNEL);
 }
 
 - (BOOL)isTalk
 {
-	return (config.type == CHANNEL_TYPE_TALK);
+	return (self.config.type == CHANNEL_TYPE_TALK);
 }
 
 - (NSString *)channelTypeString
 {
-	switch (config.type) {
+	switch (self.config.type) {
 		case CHANNEL_TYPE_CHANNEL: return @"channel";
 		case CHANNEL_TYPE_TALK: return @"talk";
 	}
@@ -97,7 +98,7 @@
 
 - (void)terminate
 {
-	status = IRCChannelTerminated;
+	self.status = IRCChannelTerminated;
 	
 	[self closeDialogs];
 	[self closeLogFile];
@@ -110,11 +111,11 @@
 
 - (void)preferencesChanged
 {
-	log.maxLines = [Preferences maxLogLines];
+	self.log.maxLines = [Preferences maxLogLines];
 	
-	if (logFile) {
+	if (self.logFile) {
 		if ([Preferences logTranscript]) {
-			[logFile reopenIfNeeded];
+			[self.logFile reopenIfNeeded];
 		} else {
 			[self closeLogFile];
 		}
@@ -123,34 +124,34 @@
 
 - (void)activate
 {
-	isActive = YES;
+	self.isActive = YES;
 	
-	[mode clear];
-	[members removeAllObjects];
+	[self.mode clear];
+	[self.members removeAllObjects];
 	
-	isOp = NO;
-	isHalfOp = NO;
+	self.isOp = NO;
+	self.isHalfOp = NO;
 	
 	self.topic = nil;
 	
-	isModeInit = NO;
-	errLastJoin = NO;
+	self.isModeInit = NO;
+	self.errLastJoin = NO;
 	
-	status = IRCChannelJoined;
+	self.status = IRCChannelJoined;
 	
 	[self reloadMemberList];
 }
 
 - (void)deactivate
 {
-	[members removeAllObjects];
+	[self.members removeAllObjects];
 	
-	isOp = NO;
-	isHalfOp = NO;
-	isActive = NO;
-	errLastJoin = NO;
+	self.isOp = NO;
+	self.isHalfOp = NO;
+	self.isActive = NO;
+	self.errLastJoin = NO;
 	
-	status = IRCChannelParted;
+	self.status = IRCChannelParted;
 	
 	[self reloadMemberList];
 }
@@ -177,25 +178,25 @@
 
 - (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML
 {
-	BOOL result = [log print:line withHTML:rawHTML];
+	BOOL result = [self.log print:line withHTML:rawHTML];
 	
 	if ([Preferences logTranscript]) {
-		if (PointerIsEmpty(logFile)) {
-			logFile = [FileLogger new];
-			logFile.client = client;
-			logFile.channel = self;
+		if (PointerIsEmpty(self.logFile)) {
+			self.logFile = [FileLogger new];
+			self.logFile.client = self.client;
+			self.logFile.channel = self;
 		}
 		
 		NSString *comp = [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
 		
-		if (logDate) {
-			if ([logDate isEqualToString:comp] == NO) {
-				
-				logDate = comp;
-				[logFile reopenIfNeeded];
+		if (self.logDate) {
+			if ([self.logDate isEqualToString:comp] == NO) {
+				self.logDate = comp;
+
+				[self.logFile reopenIfNeeded];
 			}
 		} else {
-			logDate = comp;
+			self.logDate = comp;
 		}
 		
 		NSString *nickStr = NSNullObject;
@@ -206,7 +207,7 @@
 		
 		NSString *s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
 		
-		[logFile writeLine:s];
+		[self.logFile writeLine:s];
 	}
 	
 	return result;
@@ -220,12 +221,12 @@
 	const NSInteger LINEAR_SEARCH_THRESHOLD = 5;
 	
 	NSInteger left = 0;
-	NSInteger right = members.count;
+	NSInteger right = self.members.count;
 	
 	while (right - left > LINEAR_SEARCH_THRESHOLD) {
 		NSInteger i = ((left + right) / 2);
 		
-		IRCUser *t = [members safeObjectAtIndex:i];
+		IRCUser *t = [self.members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedAscending) {
 			left = (i + 1);
@@ -235,16 +236,16 @@
 	}
 	
 	for (NSInteger i = left; i < right; ++i) {
-		IRCUser *t = [members safeObjectAtIndex:i];
+		IRCUser *t = [self.members safeObjectAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedDescending) {
-			[members safeInsertObject:item atIndex:i];
+			[self.members safeInsertObject:item atIndex:i];
 			
 			return;
 		}
 	}
 	
-	[members safeAddObject:item];
+	[self.members safeAddObject:item];
 }
 
 - (void)addMember:(IRCUser *)user
@@ -257,8 +258,8 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[members safeObjectAtIndex:n];
-		[members safeRemoveObjectAtIndex:n];
+		[self.members safeObjectAtIndex:n];
+		[self.members safeRemoveObjectAtIndex:n];
 	}
 	
 	[self sortedInsert:user];
@@ -278,8 +279,8 @@
 	NSInteger n = [self indexOfMember:nick];
 	
 	if (n >= 0) {
-		[members safeObjectAtIndex:n];
-		[members safeRemoveObjectAtIndex:n];
+		[self.members safeObjectAtIndex:n];
+		[self.members safeRemoveObjectAtIndex:n];
 	}
 	
 	if (reload) [self reloadMemberList];
@@ -290,15 +291,14 @@
 	NSInteger n = [self indexOfMember:fromNick];
 	
 	if (n >= 0) {
-		IRCUser *m = [members safeObjectAtIndex:n];
-		
+		IRCUser *m = [self.members safeObjectAtIndex:n];
 		
 		[self removeMember:toNick reload:NO];
 		
 		m.nick = toNick;
 		
-		[members safeObjectAtIndex:n];
-		[members safeRemoveObjectAtIndex:n];
+		[self.members safeObjectAtIndex:n];
+		[self.members safeRemoveObjectAtIndex:n];
 		
 		[self sortedInsert:m];
 		[self reloadMemberList];
@@ -310,8 +310,8 @@
 	NSInteger n = [self indexOfMember:user.nick];
 	
 	if (n >= 0) {
-		[members safeObjectAtIndex:n];
-		[members safeRemoveObjectAtIndex:n];
+		[self.members safeObjectAtIndex:n];
+		[self.members safeRemoveObjectAtIndex:n];
 	}
 	
 	[self sortedInsert:user];
@@ -322,7 +322,7 @@
 	NSInteger n = [self indexOfMember:nick];
 	
 	if (n >= 0) {
-		IRCUser *m = [members safeObjectAtIndex:n];
+		IRCUser *m = [self.members safeObjectAtIndex:n];
 		
 		switch (modeChar) {
 			case 'q': m.q = value; break;
@@ -332,26 +332,26 @@
 			case 'v': m.v = value; break;
 		}
 
-		[members safeObjectAtIndex:n];
-		[members safeRemoveObjectAtIndex:n];
+		[self.members safeObjectAtIndex:n];
+		[self.members safeRemoveObjectAtIndex:n];
 		
-		if (m.q && NSObjectIsEmpty(client.isupport.userModeQPrefix)) {
+		if (m.q && NSObjectIsEmpty(self.client.isupport.userModeQPrefix)) {
 			m.q = NO;
 		}
 		
-		if (m.a && NSObjectIsEmpty(client.isupport.userModeAPrefix)) {
+		if (m.a && NSObjectIsEmpty(self.client.isupport.userModeAPrefix)) {
 			m.a = NO;
 		}
 		
-		if (m.o && NSObjectIsEmpty(client.isupport.userModeOPrefix)) {
+		if (m.o && NSObjectIsEmpty(self.client.isupport.userModeOPrefix)) {
 			m.o = NO;
 		}
 		
-		if (m.h && NSObjectIsEmpty(client.isupport.userModeHPrefix)) {
+		if (m.h && NSObjectIsEmpty(self.client.isupport.userModeHPrefix)) {
 			m.h = NO;
 		}
 		
-		if (m.v && NSObjectIsEmpty(client.isupport.userModeVPrefix)) {
+		if (m.v && NSObjectIsEmpty(self.client.isupport.userModeVPrefix)) {
 			m.v = NO;
 		}
 		
@@ -362,7 +362,7 @@
 
 - (void)clearMembers
 {
-	[members removeAllObjects];
+	[self.members removeAllObjects];
 	
 	[self reloadMemberList];
 }
@@ -376,7 +376,7 @@
 {
 	NSInteger i = -1;
 	
-	for (IRCUser *m in members) {
+	for (IRCUser *m in self.members) {
 		i++;
 		
 		if (mask & NSCaseInsensitiveSearch) {
@@ -395,7 +395,7 @@
 
 - (IRCUser *)memberAtIndex:(NSInteger)index
 {
-	return [members safeObjectAtIndex:index];
+	return [self.members safeObjectAtIndex:index];
 }
 
 - (IRCUser *)findMember:(NSString *)nick
@@ -408,7 +408,7 @@
 	NSInteger n = [self indexOfMember:nick options:mask];
 	
 	if (n >= 0) {
-		return [members safeObjectAtIndex:n];
+		return [self.members safeObjectAtIndex:n];
 	}
 	
 	return nil;
@@ -416,20 +416,20 @@
 
 - (NSInteger)numberOfMembers
 {
-	return members.count;
+	return self.members.count;
 }
 
 - (void)reloadMemberList
 {
-	if (client.world.selected == self) {
-		[client.world.memberList reloadData];
+	if (self.client.world.selected == self) {
+		[self.client.world.memberList reloadData];
 	}
 }
 
 - (void)closeLogFile
 {
-	if (logFile) {
-		[logFile close];
+	if (self.logFile) {
+		[self.logFile close];
 	}
 }
 
@@ -453,7 +453,7 @@
 
 - (NSString *)label
 {
-	return config.name;
+	return self.config.name;
 }
 
 #pragma mark -
@@ -461,7 +461,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return members.count;
+	return self.members.count;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -471,16 +471,19 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	IRCUser *user = [members safeObjectAtIndex:row];
+	IRCUser *user = [self.members safeObjectAtIndex:row];
 	
-	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [config.name safeSubstringFromIndex:1]);
+	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [self.config.name safeSubstringFromIndex:1]);
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender
+  willDisplayCell:(MemberListCell *)cell
+   forTableColumn:(NSTableColumn *)column
+			  row:(NSInteger)row
 {
     cell.cellItem   = cell;
-    cell.parent     = client.world.memberList;
-	cell.member     = [members safeObjectAtIndex:row];
+    cell.parent     = self.client.world.memberList;
+	cell.member     = [self.members safeObjectAtIndex:row];
 }
 
 @end

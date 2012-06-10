@@ -24,13 +24,14 @@
 
 @interface NSObject (DDExtensions)
 - (id)iomt;
-+ (id)iomt;
 - (id)invokeOnThread:(NSThread *)thread;
-+ (id)invokeOnThread:(NSThread *)thread;
 - (id)invokeOnMainThread;
-+ (id)invokeOnMainThread;
 - (id)invokeInBackgroundThread;
-+ (id)invokeInBackgroundThread;
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
+
++ (id)iomt;
++ (id)invokeOnThread:(NSThread *)thread;
++ (id)invokeOnMainThread;
++ (id)invokeInBackgroundThread;
 + (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 @end

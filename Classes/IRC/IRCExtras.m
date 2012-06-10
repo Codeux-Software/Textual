@@ -1,5 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation IRCExtras
 
@@ -216,13 +217,16 @@
 	[dic setObject:server forKey:@"host"];
 	[dic setObject:server forKey:@"name"];
 	
-	[dic setBool:useSSL forKey:@"ssl"];
 	[dic setInteger:port forKey:@"port"];
-	[dic setBool:NO forKey:@"auto_connect"];
-	[dic setObject:[Preferences defaultNickname] forKey:@"nickname"];
-	[dic setObject:[Preferences defaultUsername] forKey:@"username"];
-	[dic setObject:[Preferences defaultRealname] forKey:@"realname"];
-	[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+	
+	[dic setBool:useSSL forKey:@"ssl"];
+	[dic setBool:NO		forKey:@"auto_connect"];
+	
+	[dic setObject:[Preferences defaultNickname]			forKey:@"nickname"];
+	[dic setObject:[Preferences defaultUsername]			forKey:@"username"];
+	[dic setObject:[Preferences defaultRealname]			forKey:@"realname"];
+	
+	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)	forKey:@"encoding"];
 	
 	if (NSObjectIsNotEmpty(c)) {
 		NSMutableArray *channels = [NSMutableArray array];
@@ -256,9 +260,10 @@
 		cf.password = password;
 	}	
 	
-	IRCClient *uf = [world createClient:cf reload:YES];
+	IRCClient *uf = [self.world createClient:cf reload:YES];
 	
-	[world save];
+	[self.world save];
+	
 	[uf connect];
 }
 

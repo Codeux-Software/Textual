@@ -1,8 +1,10 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @implementation IRCSendingMessage
 
+@synthesize string;
 @synthesize command;
 @synthesize params;
 @synthesize completeColon;
@@ -10,53 +12,52 @@
 - (id)initWithCommand:(NSString *)aCommand
 {
 	if ((self = [super init])) {
-		params = [NSMutableArray new];
-		
-		completeColon = YES;
-		
-		command = [aCommand uppercaseString];
+		self.completeColon = YES;
+		self.params = [NSMutableArray new];
+		self.command = [aCommand uppercaseString];
 	}
 
 	return self;
 }
 
-
 - (void)addParameter:(NSString *)parameter
 {
-	[params safeAddObject:parameter];
+	[self.params safeAddObject:parameter];
 }
 
 - (NSString *)string
 {
-	if (NSObjectIsEmpty(string)) {
+	if (NSObjectIsEmpty(self.string)) {
 		BOOL forceCompleteColon = NO;
 		
-		if ([command isEqualToString:IRCCI_PRIVMSG] || [command isEqualToString:IRCCI_NOTICE]) {
-			forceCompleteColon = YES;
-		} else if ([command isEqualToString:IRCCI_NICK]
-				 || [command isEqualToString:IRCCI_MODE]
-				 || [command isEqualToString:IRCCI_JOIN]
-				 || [command isEqualToString:IRCCI_NAMES]
-				 || [command isEqualToString:IRCCI_WHO]
-				 || [command isEqualToString:IRCCI_LIST]
-				 || [command isEqualToString:IRCCI_INVITE]
-				 || [command isEqualToString:IRCCI_WHOIS]
-				 || [command isEqualToString:IRCCI_WHOWAS]
-				 || [command isEqualToString:IRCCI_ISON]
-				 || [command isEqualToString:IRCCI_USER]) {
+		if ([self.command isEqualToString:IRCCI_PRIVMSG] ||
+			[self.command isEqualToString:IRCCI_NOTICE]) {
 			
-			completeColon = NO;
+			forceCompleteColon = YES;
+		} else if ([self.command isEqualToString:IRCCI_NICK]
+				 || [self.command isEqualToString:IRCCI_MODE]
+				 || [self.command isEqualToString:IRCCI_JOIN]
+				 || [self.command isEqualToString:IRCCI_NAMES]
+				 || [self.command isEqualToString:IRCCI_WHO]
+				 || [self.command isEqualToString:IRCCI_LIST]
+				 || [self.command isEqualToString:IRCCI_INVITE]
+				 || [self.command isEqualToString:IRCCI_WHOIS]
+				 || [self.command isEqualToString:IRCCI_WHOWAS]
+				 || [self.command isEqualToString:IRCCI_ISON]
+				 || [self.command isEqualToString:IRCCI_USER]) {
+			
+			self.completeColon = NO;
 		}
 		
 		NSMutableString *d = [NSMutableString new];
 		
-		[d appendString:command];
+		[d appendString:self.command];
 		
-		NSInteger count = [params count];
+		NSInteger count = [self.params count];
 		
-		if (NSObjectIsNotEmpty(params)) {
+		if (NSObjectIsNotEmpty(self.params)) {
 			for (NSInteger i = 0; i < (count - 1); ++i) {
-				NSString *s = [params safeObjectAtIndex:i];
+				NSString *s = [self.params safeObjectAtIndex:i];
 				
 				[d appendString:NSWhitespaceCharacter];
 				[d appendString:s];
@@ -64,7 +65,7 @@
 			
 			[d appendString:NSWhitespaceCharacter];
 			
-			NSString *s = [params safeObjectAtIndex:(count - 1)];
+			NSString *s = [self.params safeObjectAtIndex:(count - 1)];
 			
 			BOOL firstColonOrSpace = NO;
 			
@@ -74,7 +75,7 @@
 				firstColonOrSpace = (c == ' ' || c == ':');
 			}
 			
-			if (forceCompleteColon || (completeColon && (NSObjectIsEmpty(s) || firstColonOrSpace))) {
+			if (forceCompleteColon || (self.completeColon && (NSObjectIsEmpty(s) || firstColonOrSpace))) {
 				[d appendString:@":"];
 			}
 			
@@ -86,7 +87,7 @@
 		string = d;
 	}
 	
-	return string;
+	return self.string;
 }
 
 @end
