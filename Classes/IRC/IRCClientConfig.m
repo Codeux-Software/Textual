@@ -1,9 +1,10 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context) {
-	return [[s1.name lowercaseString] compare:[s2.name lowercaseString]];
+	return [s1.name.lowercaseString compare:s2.name.lowercaseString];
 }
 
 @implementation IRCClientConfig
@@ -47,40 +48,40 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (id)init
 {
 	if ((self = [super init])) {
-		cuid = TXRandomNumber(9999);
-		guid = [NSString stringWithUUID];
+		self.cuid = TXRandomNumber(9999);
+		self.guid = [NSString stringWithUUID];
 		
-		ignores         = [NSMutableArray new];
-		altNicks        = [NSMutableArray new];
-		channels        = [NSMutableArray new];
-		loginCommands   = [NSMutableArray new];
+		self.ignores         = [NSMutableArray new];
+		self.altNicks        = [NSMutableArray new];
+		self.channels        = [NSMutableArray new];
+		self.loginCommands   = [NSMutableArray new];
 		
-		host         = NSNullObject;
-		port         = 6667;
-		password     = NSNullObject;
-		nickPassword = NSNullObject;
+		self.host         = NSNullObject;
+		self.port         = 6667;
+		self.password     = NSNullObject;
+		self.nickPassword = NSNullObject;
 		
-		proxyHost       = NSNullObject;
-		proxyPort       = 1080;
-		proxyUser       = NSNullObject;
-		proxyPassword   = NSNullObject;
+		self.proxyHost       = NSNullObject;
+		self.proxyPort       = 1080;
+		self.proxyUser       = NSNullObject;
+		self.proxyPassword   = NSNullObject;
         
-        prefersIPv6 = NO;
+        self.prefersIPv6 = NO;
 		
-		encoding         = NSUTF8StringEncoding;
-		fallbackEncoding = NSISOLatin1StringEncoding;
+		self.encoding         = NSUTF8StringEncoding;
+		self.fallbackEncoding = NSISOLatin1StringEncoding;
         
-        outgoingFloodControl            = NO;
-        floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
-        floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
+        self.outgoingFloodControl            = NO;
+        self.floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
+		self. floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
 		
-		name        = TXTLS(@"UNTITLED_CONNECTION_NAME");
-		nick        = [Preferences defaultNickname];
-		username    = [Preferences defaultUsername];
-		realName    = [Preferences defaultRealname];
+		self.name        = TXTLS(@"UNTITLED_CONNECTION_NAME");
+		self.nick        = [Preferences defaultNickname];
+		self.username    = [Preferences defaultUsername];
+		self.realName    = [Preferences defaultRealname];
 		
-		leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE");
-		sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE");
+		self.leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE");
+		self.sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE");
 	}
 	
 	return self;
@@ -97,14 +98,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
-												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]
+												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]
 										   withLegacySupport:NO];
 	}
 	
 	if (kcPassword) {
 		if ([kcPassword isEqualToString:nickPassword] == NO) {
 			nickPassword = nil;
-			
 			nickPassword = kcPassword;
 		}
 	}
@@ -119,19 +119,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
 							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
+							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 			
 		} else {
 			[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
 								   withItemKind:@"application password"
 									forUsername:nil
 								withNewPassword:pass
-									withComment:host
-									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
+									withComment:self.host
+									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		}
 		
 		nickPassword = nil;
-		
 		nickPassword = pass;
 	}
 }
@@ -144,14 +143,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
-												 serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]
+												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]
 										   withLegacySupport:NO];
 	}
 	
 	if (kcPassword) {
 		if ([kcPassword isEqualToString:password] == NO) {
 			password = nil;
-			
 			password = kcPassword;
 		}
 	}
@@ -166,18 +164,17 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
 							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];		
+							   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];		
 		} else {
 			[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
 								   withItemKind:@"application password"
 									forUsername:nil
 								withNewPassword:pass
-									withComment:host
-									serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];			
+									withComment:self.host
+									serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];			
 		}
 		
 		password = nil;
-		
 		password = pass;
 	}
 }
@@ -187,12 +184,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.server.%@", guid]];
+					   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 	
 	[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", guid]];
+					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 }
 
 #pragma mark -
@@ -200,150 +197,154 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	if (!(self = [self init])) return nil;	
-	
-	cuid = (([dic integerForKey:@"cuid"]) ?: cuid);
-	
-	if ([dic stringForKey:@"guid"]) {
-		guid = [dic stringForKey:@"guid"];
-	}
-	
-	if ([dic stringForKey:@"name"]) {
-		name = [dic stringForKey:@"name"];
-	}
-	
-	host = (([dic stringForKey:@"host"]) ?: NSNullObject);
-	port = (([dic integerForKey:@"port"]) ?: 6667);
-    
-	if ([dic stringForKey:@"nick"]) {
-		nick = [dic stringForKey:@"nick"];
-	}
-	
-	useSSL  = [dic boolForKey:@"ssl"];
-	
-	if ([dic stringForKey:@"username"]) {
-		username = [dic stringForKey:@"username"];
-	}
-	
-	if ([dic stringForKey:@"realname"]) {
-		realName = [dic stringForKey:@"realname"];
-	}
-	
-	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
-	
-	proxyType       = (ProxyType)[dic integerForKey:@"proxy"];
-	proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-	proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSNullObject);
-	proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSNullObject);
-	proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSNullObject);
-	
-	autoConnect         = [dic boolForKey:@"auto_connect"];
-	autoReconnect       = [dic boolForKey:@"auto_reconnect"];
-	bouncerMode         = [dic boolForKey:@"bouncer_mode"];
-	encoding            = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
-	fallbackEncoding    = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
-    
-	if ([dic stringForKey:@"leaving_comment"]) {
-		leavingComment = [dic stringForKey:@"leaving_comment"];
-	}
-	
-	if ([dic stringForKey:@"sleep_quit_message"]) {
-		sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"];
-	}
-	
-    prefersIPv6         = [dic boolForKey:@"prefersIPv6"];
-	invisibleMode       = [dic boolForKey:@"invisible"];
-	isTrustedConnection = [dic boolForKey:@"trustedConnection"];
-	
-	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
-	
-	for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
-        IRCChannelConfig *c;
-        
-        c = [IRCChannelConfig alloc];
-        c = [c initWithDictionary:e];
-        c = c;
+	if ((self = [self init])) {
+		self.cuid = (([dic integerForKey:@"cuid"]) ?: self.cuid);
 		
-		[channels safeAddObject:c];
-	}
-	
-	for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
-        AddressBook *ignore;
-        
-        ignore = [AddressBook alloc];
-        ignore = [ignore initWithDictionary:e];
-        ignore = ignore;
-		
-		[ignores safeAddObject:ignore];
-	}
-    
-	if ([dic containsKey:@"flood_control"]) {
-		NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
-		
-		if (NSObjectIsNotEmpty(e)) {
-			floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
-			floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
-			outgoingFloodControl           = [e boolForKey:@"outgoing"];
+		if ([dic stringForKey:@"guid"]) {
+			self.guid = [dic stringForKey:@"guid"];
 		}
-	} else {
-		if ([host hasSuffix:@"freenode.net"]) {
-			outgoingFloodControl = YES;
+		
+		if ([dic stringForKey:@"name"]) {
+			self.name = [dic stringForKey:@"name"];
 		}
+		
+		self.host = (([dic stringForKey:@"host"]) ?: NSNullObject);
+		self.port = (([dic integerForKey:@"port"]) ?: 6667);
+		
+		if ([dic stringForKey:@"nick"]) {
+			self.nick = [dic stringForKey:@"nick"];
+		}
+		
+		self.useSSL = [dic boolForKey:@"ssl"];
+		
+		if ([dic stringForKey:@"username"]) {
+			self.username = [dic stringForKey:@"username"];
+		}
+		
+		if ([dic stringForKey:@"realname"]) {
+			self.realName = [dic stringForKey:@"realname"];
+		}
+		
+		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
+		
+		self.proxyType       = (ProxyType)[dic integerForKey:@"proxy"];
+		self.proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
+		self.proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSNullObject);
+		self.proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSNullObject);
+		self.proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSNullObject);
+		
+		self.autoConnect         = [dic boolForKey:@"auto_connect"];
+		self.autoReconnect       = [dic boolForKey:@"auto_reconnect"];
+		self.bouncerMode         = [dic boolForKey:@"bouncer_mode"];
+		self.encoding            = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
+		self.fallbackEncoding    = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
+		
+		if ([dic stringForKey:@"leaving_comment"]) {
+			self.leavingComment = [dic stringForKey:@"leaving_comment"];
+		}
+		
+		if ([dic stringForKey:@"sleep_quit_message"]) {
+			self.sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"];
+		}
+		
+		self.prefersIPv6         = [dic boolForKey:@"prefersIPv6"];
+		self.invisibleMode       = [dic boolForKey:@"invisible"];
+		self.isTrustedConnection = [dic boolForKey:@"trustedConnection"];
+		
+		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
+		
+		for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
+			IRCChannelConfig *c;
+			
+			c = [IRCChannelConfig alloc];
+			c = [c initWithDictionary:e];
+			c = c;
+			
+			[self.channels safeAddObject:c];
+		}
+		
+		for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
+			AddressBook *ignore;
+			
+			ignore = [AddressBook alloc];
+			ignore = [ignore initWithDictionary:e];
+			ignore = ignore;
+			
+			[self.ignores safeAddObject:ignore];
+		}
+		
+		if ([dic containsKey:@"flood_control"]) {
+			NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
+			
+			if (NSObjectIsNotEmpty(e)) {
+				self.outgoingFloodControl           = [e boolForKey:@"outgoing"];
+				
+				self.floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
+				self.floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
+			}
+		} else {
+			if ([self.host hasSuffix:@"freenode.net"]) {
+				self.outgoingFloodControl = YES;
+			}
+		}
+		
+		return self;
 	}
 	
-	return self;
+	return nil;
 }
-
 
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInteger:port forKey:@"port"];
-	[dic setInteger:proxyType forKey:@"proxy"];
-	[dic setInteger:proxyPort forKey:@"proxy_port"];
-	[dic setInteger:encoding forKey:@"encoding"];
-	[dic setInteger:fallbackEncoding forKey:@"fallback_encoding"];
+	[dic setInteger:self.port				forKey:@"port"];
+	[dic setInteger:self.proxyType			forKey:@"proxy"];
+	[dic setInteger:self.proxyPort			forKey:@"proxy_port"];
+	[dic setInteger:self.encoding			forKey:@"encoding"];
+	[dic setInteger:self.fallbackEncoding	forKey:@"fallback_encoding"];
 	
-	[dic setBool:useSSL forKey:@"ssl"];
-    [dic setBool:prefersIPv6 forKey:@"prefersIPv6"];
-	[dic setBool:autoConnect forKey:@"auto_connect"];
-	[dic setBool:autoReconnect forKey:@"auto_reconnect"];
-	[dic setBool:bouncerMode forKey:@"bouncer_mode"];
-	[dic setBool:invisibleMode forKey:@"invisible"];
-	[dic setBool:isTrustedConnection forKey:@"trustedConnection"];
+	[dic setBool:self.useSSL				forKey:@"ssl"];
+    [dic setBool:self.prefersIPv6			forKey:@"prefersIPv6"];
+	[dic setBool:self.autoConnect			forKey:@"auto_connect"];
+	[dic setBool:self.autoReconnect			forKey:@"auto_reconnect"];
+	[dic setBool:self.bouncerMode			forKey:@"bouncer_mode"];
+	[dic setBool:self.invisibleMode			forKey:@"invisible"];
+	[dic setBool:self.isTrustedConnection	forKey:@"trustedConnection"];
 	
-	if (cuid) [dic setInteger:cuid forKey:@"cuid"];
-	if (guid) [dic setObject:guid forKey:@"guid"];
-	if (name) [dic setObject:name forKey:@"name"];
-	if (host) [dic setObject:host forKey:@"host"];
-	if (nick) [dic setObject:nick forKey:@"nick"];
-	if (username) [dic setObject:username forKey:@"username"];
-	if (realName) [dic setObject:realName forKey:@"realname"];
-	if (altNicks) [dic setObject:altNicks forKey:@"alt_nicks"];
-	if (proxyHost) [dic setObject:proxyHost forKey:@"proxy_host"];
-	if (proxyUser) [dic setObject:proxyUser forKey:@"proxy_user"];
-	if (proxyPassword) [dic setObject:proxyPassword forKey:@"proxy_password"];
-	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
-	if (sleepQuitMessage) [dic setObject:sleepQuitMessage forKey:@"sleep_quit_message"];
-	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
+	if (self.cuid)				[dic setInteger:self.cuid				forKey:@"cuid"];
+	
+	if (self.guid)				[dic setObject:self.guid				forKey:@"guid"];
+	if (self.name)				[dic setObject:self.name				forKey:@"name"];
+	if (self.host)				[dic setObject:self.host				forKey:@"host"];
+	if (self.nick)				[dic setObject:self.nick				forKey:@"nick"];
+	if (self.username)			[dic setObject:self.username			forKey:@"username"];
+	if (self.realName)			[dic setObject:self.realName			forKey:@"realname"];
+	if (self.altNicks)			[dic setObject:self.altNicks			forKey:@"alt_nicks"];
+	if (self.proxyHost)			[dic setObject:self.proxyHost			forKey:@"proxy_host"];
+	if (self.proxyUser)			[dic setObject:self.proxyUser			forKey:@"proxy_user"];
+	if (self.proxyPassword)		[dic setObject:self.proxyPassword		forKey:@"proxy_password"];
+	if (self.leavingComment)	[dic setObject:self.leavingComment		forKey:@"leaving_comment"];
+	if (self.sleepQuitMessage)	[dic setObject:self.sleepQuitMessage	forKey:@"sleep_quit_message"];
+	if (self.loginCommands)		[dic setObject:self.loginCommands		forKey:@"login_commands"];
     
     NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
     
-    [floodControl setInteger:floodControlDelayTimerInterval forKey:@"delay_timer"];
-    [floodControl setInteger:floodControlMaximumMessages forKey:@"message_count"];
-    [floodControl setBool:outgoingFloodControl forKey:@"outgoing"];
+    [floodControl setInteger:self.floodControlDelayTimerInterval	forKey:@"delay_timer"];
+    [floodControl setInteger:self.floodControlMaximumMessages		forKey:@"message_count"];
+	
+    [floodControl setBool:self.outgoingFloodControl forKey:@"outgoing"];
     
     [dic setObject:floodControl forKey:@"flood_control"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
 	
-	for (IRCChannelConfig *e in channels) {
+	for (IRCChannelConfig *e in self.channels) {
 		[channelAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	for (AddressBook *e in ignores) {
+	for (AddressBook *e in self.ignores) {
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	

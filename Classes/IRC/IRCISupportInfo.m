@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 #define ISUPPORT_SUFFIX		@" are supported by this server"
 #define OP_VALUE			100
@@ -33,13 +34,12 @@
 	return self;
 }
 
-
 - (void)reset
 {
 	memset(modes, 0, MODES_SIZE);
 	
-	nickLen = 9;
-	modesCount = 3;
+	self.nickLen = 9;
+	self.modesCount = 3;
 	
 	[self setValue:OP_VALUE forMode:'o'];
 	[self setValue:OP_VALUE forMode:'h'];
@@ -91,9 +91,9 @@
 			} else if ([key isEqualToString:@"CHANMODES"]) {
 				[self parseChanmodes:value];
 			} else if ([key isEqualToString:@"NICKLEN"]) {
-				nickLen = [value integerValue];
+				self.nickLen = [value integerValue];
 			} else if ([key isEqualToString:@"MODES"]) {
-				modesCount = [value integerValue];
+				self.modesCount = [value integerValue];
 			} else if ([key isEqualToString:@"NETWORK"]) {
 				self.networkName = value;
 			}
@@ -101,11 +101,15 @@
 
 		if ([key isEqualToString:@"NAMESX"] && client.multiPrefix == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
+			
 			client.multiPrefix = YES;
+			
 			[client.acceptedCaps addObject:@"multi-prefix"];
 		} else if ([key isEqualToString:@"UHNAMES"] && client.userhostInNames == NO) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
+			
 			client.userhostInNames = YES;
+			
 			[client.acceptedCaps addObject:@"userhost-in-names"];
 		}
 	}
@@ -116,6 +120,7 @@
 - (NSArray *)parseMode:(NSString *)str
 {
 	NSMutableArray *ary = [NSMutableArray array];
+	
 	NSMutableString *s = [str mutableCopy];
 	
 	BOOL plus = NO;
@@ -135,12 +140,8 @@
 				c = [token characterAtIndex:i];
 				
 				switch (c) {
-					case '-':
-						plus = NO;
-						break;
-					case '+':
-						plus = YES;
-						break;
+					case '-': plus = NO; break;
+					case '+': plus = YES; break;
 					default:
 					{
 						NSInteger v = [self valueForMode:c];
@@ -172,12 +173,12 @@
 - (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus
 {
 	switch ([self valueForMode:m]) {
-		case 0: return NO;
-		case 1: return YES;
-		case 2: return YES;
-		case 3: return plus;
-		case OP_VALUE: return YES;
-		default: return NO;
+		case 0: return NO; break;
+		case 1: return YES; break;
+		case 2: return YES; break;
+		case 3: return plus; break;
+		case OP_VALUE: return YES; break;
+		default: return NO; break;
 	}
 }
 

@@ -1,37 +1,9 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface IRCConnection : NSObject
-{
-	id __unsafe_unretained delegate;
-	
-	NSString *host;
-	
-	NSInteger port;
-	NSInteger proxyPort;
-	NSInteger socksVersion;
-	NSInteger maxMsgCount;
-	
-	NSStringEncoding encoding;
-	
-	NSString *proxyHost;
-	NSString *proxyUser;
-	NSString *proxyPassword;
-	
-	TCPClient *conn;
-	
-	Timer *timer;
-	
-	BOOL useSystemSocks;
-	BOOL loggedIn;
-	BOOL useSocks;
-	BOOL sending;
-	BOOL useSSL;
-	
-	NSMutableArray *sendQueue;
-}
-
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, strong) Timer *timer;
 @property (nonatomic, strong) NSString *host;

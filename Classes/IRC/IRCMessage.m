@@ -1,5 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on Thursday, June 09, 2012
 
 @interface IRCMessage (Private)
 - (void)parseLine:(NSString *)line;
@@ -31,23 +32,23 @@
 	return self;
 }
 
-
 - (void)parseLine:(NSString *)line
 {
+	self.command = NSNullObject;
 	
-	command = NSNullObject;
-	sender = [IRCPrefix new];
-	params = [NSMutableArray new];
+	self.sender = [IRCPrefix new];
+	self.params = [NSMutableArray new];
 	
 	NSMutableString *s = [line mutableCopy];
 
-	if ([s hasPrefix:@"@t="]) {
-		// znc server-time
+	if ([s hasPrefix:@"@t="]) { // znc server-time
 		NSString* t = [s getToken];
+		
 		t = [t substringFromIndex:3];
-		receivedAt = [NSDate dateWithTimeIntervalSince1970: [t longLongValue]];
+		
+		self.receivedAt = [NSDate dateWithTimeIntervalSince1970:[t longLongValue]];
 	} else {
-		receivedAt = [NSDate date];
+		self.receivedAt = [NSDate date];
 	}
 
 	if ([s hasPrefix:@":"]) {
@@ -55,36 +56,37 @@
 		
 		t = [t safeSubstringFromIndex:1];
 		
-		sender.raw = t;
+		self.sender.raw = t;
 		
 		NSInteger i = [t findCharacter:'!'];
 		
 		if (i < 0) {
-			sender.nick = t;
-			sender.isServer = YES;
+			self.sender.nick = t;
+			self.sender.isServer = YES;
 		} else {
-			sender.nick = [t safeSubstringToIndex:i];
+			self.sender.nick = [t safeSubstringToIndex:i];
 			
 			t = [t safeSubstringAfterIndex:i];
 			i = [t findCharacter:'@'];
 			
 			if (i >= 0) {
-				sender.user = [t safeSubstringToIndex:i];
-				sender.address = [t safeSubstringAfterIndex:i];
+				self.sender.user = [t safeSubstringToIndex:i];
+				self.sender.address = [t safeSubstringAfterIndex:i];
 			}
 		}
 	}
 	
-	command = [[s getToken] uppercaseString];
-	numericReply = [command integerValue];
+	self.command = [s.getToken uppercaseString];
+	
+	self.numericReply = [self.command integerValue];
 	
 	while (NSObjectIsNotEmpty(s)) {
 		if ([s hasPrefix:@":"]) {
-			[params safeAddObject:[s safeSubstringFromIndex:1]];
+			[self.params safeAddObject:[s safeSubstringFromIndex:1]];
 			
 			break;
 		} else {
-			[params safeAddObject:[s getToken]];
+			[self.params safeAddObject:[s getToken]];
 		}
 	}
 	
@@ -92,8 +94,8 @@
 
 - (NSString *)paramAt:(NSInteger)index
 {
-	if (index < params.count) {
-		return [params safeObjectAtIndex:index];
+	if (index < self.params.count) {
+		return [self.params safeObjectAtIndex:index];
 	} else {
 		return NSNullObject;
 	}
@@ -101,7 +103,7 @@
 
 - (NSString *)sequence
 {
-	if ([params count] < 2) {
+	if ([self.params count] < 2) {
 		return [self sequence:0];
 	} else {
 		return [self sequence:1];
@@ -112,8 +114,8 @@
 {
 	NSMutableString *s = [NSMutableString string];
 	
-	for (NSInteger i = index; i < params.count; i++) {
-		NSString *e = [params safeObjectAtIndex:i];
+	for (NSInteger i = index; i < self.params.count; i++) {
+		NSString *e = [self.params safeObjectAtIndex:i];
 		
 		if (NSDissimilarObjects(i, index)) {
 			[s appendString:NSWhitespaceCharacter];
@@ -130,9 +132,9 @@
 	NSMutableString *ms = [NSMutableString string];
 	
 	[ms appendString:@"<IRCMessage "];
-	[ms appendString:command];
+	[ms appendString:self.command];
 	
-	for (NSString *s in params) {
+	for (NSString *s in self.params) {
 		[ms appendString:NSWhitespaceCharacter];
 		[ms appendString:s];
 	}

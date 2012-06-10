@@ -58,6 +58,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 @implementation IRCClient
 
+@synthesize uid;
+@synthesize log;
 @synthesize autoJoinTimer;
 @synthesize autojoinInitialized;
 @synthesize banExceptionSheet;
