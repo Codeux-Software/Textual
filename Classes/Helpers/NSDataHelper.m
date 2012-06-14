@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSData (NSDataHelper)
+@implementation NSData (TXDataHelper)
 
 static char encodingTable[64] = {
     'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
@@ -117,10 +117,10 @@ static char encodingTable[64] = {
 	return [[NSString alloc] initWithCharacters:buf length:n];
 }
 
-
 /* The following method was borrowed from the source code of the 
- Colloquy IRC Client. It is a product of and is copyright of the 
+ Colloquy IRC Client. It is a product of and is copyrighted by the 
  respective ontributors of that project. */
+
 - (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength 
 {
 	const unsigned char	*bytes = [self bytes];

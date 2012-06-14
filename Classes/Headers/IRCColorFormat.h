@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
+#import "TVCTextField.h"
+
 typedef enum {
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
@@ -10,17 +12,17 @@ typedef enum {
 	IRCTextFormatterBackgroundColorEffect,
 } IRCTextFormatterEffectType; 
 
-#define MAXIMUM_FORMATTING_LENGTH   300
+#define TXMaximumRainbowTextFormattingLength   300
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;
 - (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
-                                       lineType:(LogLineType)type 
+                                       lineType:(TVCLogLineType)type 
                                         channel:(NSString *)chan 
                                        hostmask:(NSString *)host;
 @end
 
-@interface TextField (TextFieldFormattingHelper) 
+@interface TVCTextField (TextFieldFormattingHelper) 
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes;
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 

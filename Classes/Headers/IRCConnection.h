@@ -3,9 +3,11 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
+@class TLOSocketClient;
+
 @interface IRCConnection : NSObject
 @property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, strong) Timer *timer;
+@property (nonatomic, strong) TLOTimer *timer;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
@@ -23,7 +25,7 @@
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, readonly) BOOL readyToSend;
 @property (nonatomic, assign) BOOL loggedIn;
-@property (nonatomic, strong) TCPClient *conn;
+@property (nonatomic, strong) TLOSocketClient *conn;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
 @property (nonatomic, assign) BOOL sending;
 

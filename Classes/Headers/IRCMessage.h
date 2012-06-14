@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
+@class IRCPrefix;
+
 @interface IRCMessage : NSObject
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) IRCPrefix *sender;

@@ -3,14 +3,17 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-#define IsAlpha(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
-#define IsNumeric(c)						('0' <= (c) && (c) <= '9' && IsAlpha(c) == NO) 
-#define IsAlphaNum(c)						(IsAlpha(c) || IsNumeric(c))
-#define IsWordLetter(c)						(IsAlphaNum(c) || (c) == '_')
-#define IsIRCColor(c,f)						([NSNumber compareIRCColor:c against:f])
-#define IsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+#define TXIsAlpha(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
+#define TXIsNumeric(c)						('0' <= (c) && (c) <= '9' && TXIsAlpha(c) == NO) 
+#define TXTXIsAlphaNumeric(c)				(TXIsAlpha(c) || TXIsNumeric(c))
+#define TXIsWordLetter(c)					(TXTXIsAlphaNumeric(c) || (c) == '_')
+#define TXIsIRCColor(c,f)					([NSNumber compareIRCColor:c against:f])
+#define TXTXIsAlphaWithDiacriticalMark(c)	(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
 
-@interface NSString (NSStringHelper)
+#pragma mark 
+#pragma mark String Helpers
+
+@interface NSString (TXStringHelper)
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
 + (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
@@ -80,7 +83,10 @@
 - (NSInteger)pixelHeightInWidth:(NSInteger)width;
 @end
 
-@interface NSString (NSStringNumberHelper)
+#pragma mark 
+#pragma mark String Number Helpers
+
+@interface NSString (TXStringNumberHelper)
 + (NSString *)stringWithChar:(char)value;
 + (NSString *)stringWithUniChar:(UniChar)value;
 + (NSString *)stringWithUnsignedChar:(unsigned char)value;
@@ -93,17 +99,23 @@
 + (NSString *)stringWithLongLong:(long long)value;
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value;
 + (NSString *)stringWithFloat:(float)value;
-+ (NSString *)stringWithDouble:(NSDoubleN)value;
++ (NSString *)stringWithDouble:(TXNSDouble)value;
 + (NSString *)stringWithInteger:(NSInteger)value;
 + (NSString *)stringWithUnsignedInteger:(NSUInteger)value;
 @end
 
-@interface NSMutableString (NSMutableStringHelper)
+#pragma mark 
+#pragma mark Mutable String Helpers
+
+@interface NSMutableString (TXMutableStringHelper)
 - (NSString *)getToken;
 - (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
 
-@interface NSAttributedString (NSAttributedStringHelper)
+#pragma mark 
+#pragma mark Attributed String Helpers
+
+@interface NSAttributedString (TXAttributedStringHelper)
 - (NSDictionary *)attributes;
 
 + (NSAttributedString *)emptyString;
@@ -122,6 +134,9 @@
 - (NSInteger)pixelHeightInWidth:(NSInteger)width;
 @end
 
-@interface NSMutableAttributedString (NSMutableAttributedStringHelper)
+#pragma mark 
+#pragma mark Mutable Attributed String Helpers
+
+@interface NSMutableAttributedString (TXMutableAttributedStringHelper)
 - (NSAttributedString *)getToken;
 @end

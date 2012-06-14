@@ -3,19 +3,20 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-@class MasterController;
-@class IRCClient, IRCChannel, IRCChannelConfig, IRCClientConfig;
+@class TVCMainWindow, TPCViewTheme;
+@class TVCServerList, TVCMemberList, TVCInputTextField;
+@class TXMasterController, TXMenuController, IRCWorldConfig;
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
-@property (nonatomic, weak) ServerList *serverList;
-@property (nonatomic, weak) MemberList *memberList;
-@property (nonatomic, unsafe_unretained) MainWindow *window;
-@property (nonatomic, unsafe_unretained) InputTextField *text;
-@property (nonatomic, weak) ViewTheme *viewTheme;
-@property (nonatomic, weak) GrowlController *growl;
-@property (nonatomic, weak) MasterController *master;
-@property (nonatomic, strong) LogController *dummyLog;
-@property (nonatomic, weak) MenuController *menuController;
+@property (nonatomic, weak) TVCServerList *serverList;
+@property (nonatomic, weak) TVCMemberList *memberList;
+@property (nonatomic, unsafe_unretained) TVCMainWindow *window;
+@property (nonatomic, unsafe_unretained) TVCInputTextField *text;
+@property (nonatomic, weak) TPCViewTheme *viewTheme;
+@property (nonatomic, weak) TLOGrowlController *growl;
+@property (nonatomic, weak) TXMasterController *master;
+@property (nonatomic, strong) TVCLogController *dummyLog;
+@property (nonatomic, weak) TXMenuController *menuController;
 @property (nonatomic, weak) NSBox *logBase;
 @property (nonatomic, weak) NSMenu *logMenu;
 @property (nonatomic, weak) NSMenu *urlMenu;
@@ -90,7 +91,7 @@
 - (void)updateChannelTitle:(IRCChannel *)channel;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message;
-- (void)notifyOnGrowl:(NotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
+- (void)notifyOnGrowl:(TXNotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
 
 - (void)preferencesChanged;
 - (void)reloadTheme;
@@ -112,5 +113,5 @@
 - (void)clearContentsOfClient:(IRCClient *)u;
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
-- (LogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
+- (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
 @end

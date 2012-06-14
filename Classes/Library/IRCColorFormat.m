@@ -5,7 +5,7 @@
 @implementation NSAttributedString (IRCTextFormatter)
 
 #pragma mark -
-#pragma mark General Calls
+#pragma mark Text Truncation
 
 - (NSString *)attributedStringToASCIIFormatting
 {
@@ -59,8 +59,13 @@
 	return result;
 }
 
+#warning "-attributedStringToASCIIFormatting:lineType:channel:hostmask:" is dangerous \
+			to call. Its results cannot be guaranteed and are generally inaccurate.
+
+/* TODO: Fix text truncation while also supporting formatting. */
+
 - (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
-                                       lineType:(LogLineType)type 
+                                       lineType:(TVCLogLineType)type 
                                         channel:(NSString *)chan 
                                        hostmask:(NSString *)host
 {
@@ -75,8 +80,8 @@
     NSInteger baseMath   = (chan.length + host.length + 14); 
 	NSInteger baseLength = (base.length + baseMath);
     
-    if (baseLength > MAXIMUM_IRC_BODY_LEN) {
-        baseLength -= (baseLength - MAXIMUM_IRC_BODY_LEN);
+    if (baseLength > TXMaximumIRCBodyLength) {
+        baseLength -= (baseLength - TXMaximumIRCBodyLength);
     }
     
     NSRange deleteRange;
@@ -114,9 +119,9 @@
         
         NSInteger newLength = (baseMath + result.length + newChars);
         
-        NSString *cake = NSNullObject; // variable names make no sense
+        NSString *cake = NSStringEmptyPlaceholder; // variable names make no sense
         
-        if (newLength > MAXIMUM_IRC_BODY_LEN) {
+        if (newLength > TXMaximumIRCBodyLength) {
             if (effectiveRange.length < newChars) {
                 deleteRange.length = effectiveRange.location;
                 
@@ -127,11 +132,11 @@
             }
         }
         
-        if (effectiveRange.length == (MAXIMUM_IRC_BODY_LEN - baseMath)) { // max
+        if (effectiveRange.length == (TXMaximumIRCBodyLength - baseMath)) { // max
             cake = [base.string safeSubstringWithRange:effectiveRange];
             
-            if ([cake contains:NSWhitespaceCharacter]) {
-                NSInteger spaceIndex = [cake rangeOfString:NSWhitespaceCharacter options:NSBackwardsSearch range:effectiveRange].location; 
+            if ([cake contains:NSStringWhitespacePlaceholder]) {
+                NSInteger spaceIndex = [cake rangeOfString:NSStringWhitespacePlaceholder options:NSBackwardsSearch range:effectiveRange].location; 
                 NSInteger charDiff   = (effectiveRange.length - spaceIndex);
                 
                 if (charDiff <= 100) {
@@ -178,7 +183,10 @@
 
 @end
 
-@implementation TextField (TextFieldFormattingHelper) 
+#pragma mark -
+#pragma mark General Formatting Calls
+
+@implementation TVCTextField (TextFieldFormattingHelper)
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange 
@@ -221,7 +229,7 @@
 			{
 				NSColor *foregroundColor = [dict objectForKey:NSForegroundColorAttributeName];
 				
-                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:DefaultTextFieldFontColor] == NO) {
+                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:TXTXDefaultTextFieldFontColor] == NO) {
                     return YES;
                 }
 				
@@ -258,15 +266,15 @@
 		
 		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
-		[attrs setObject:DefaultTextFieldFont		forKey:NSFontAttributeName];
-		[attrs setObject:DefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
+		[attrs setObject:TXDefaultTextFieldFont		forKey:NSFontAttributeName];
+		[attrs setObject:TXTXDefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
 
-		(void)[stringv initWithString:TXTLS(@"INPUT_TEXT_FIELD_PLACE_HOLDER") attributes:attrs];
+		(void)[stringv initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
 
 		[self setAttributedStringValue:stringv];
 		[self setAttributedStringValue:stringn];
 	} else {
-		[self setFont:DefaultTextFieldFont];
+		[self setFont:TXDefaultTextFieldFont];
 	}
 }
 

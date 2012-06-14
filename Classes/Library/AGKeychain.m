@@ -247,13 +247,13 @@
 	
 	DevNullDestroyObject(YES, result);
 	
-	NSString *password = NSNullObject;
+	NSString *password = NSStringEmptyPlaceholder;
 	
 	if (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		password = [self getPasswordFromSecKeychainItemRef:item];
 		
 		if (NSObjectIsEmpty(password)) {
-			password = NSNullObject;
+			password = NSStringEmptyPlaceholder;
 		}	
 		
 		CFRelease(item);
@@ -269,7 +269,7 @@
 	UInt32 length;
 	char *password;
 	
-	NSString *fpass = NSNullObject;
+	NSString *fpass = NSStringEmptyPlaceholder;
 	
 	OSStatus status = SecKeychainItemCopyContent(item, NULL, NULL, &length, (void **)&password);
 	
@@ -286,7 +286,7 @@
 			SecKeychainItemFreeContent(NULL, password);
 		}
 	} else {
-		fpass = NSNullObject;
+		fpass = NSStringEmptyPlaceholder;
 	}
 	
 	return fpass;

@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSArray (NSArrayHelper)
+@implementation NSArray (TXArrayHelper)
 
 - (id)safeObjectAtIndex:(NSInteger)n
 {
@@ -79,7 +79,7 @@
 	return 0;
 }
 
-- (NSDoubleN)doubleAtIndex:(NSInteger)n
+- (TXNSDouble)doubleAtIndex:(NSInteger)n
 {
 	id obj = [self safeObjectAtIndex:n];
 	
@@ -116,7 +116,7 @@
 
 @end
 
-@implementation NSMutableArray (NSMutableArrayHelper)
+@implementation NSMutableArray (TXMutableArrayHelper)
 
 - (void)safeRemoveObjectAtIndex:(NSInteger)n
 {
@@ -154,7 +154,7 @@
 	[self safeInsertObject:NSNumberWithLongLong(value) atIndex:index];
 }
 
-- (void)insertDouble:(NSDoubleN)value atIndex:(NSUInteger)index
+- (void)insertDouble:(TXNSDouble)value atIndex:(NSUInteger)index
 {
 	[self safeInsertObject:NSNumberWithDouble(value) atIndex:index];
 }
@@ -179,7 +179,7 @@
 	[self safeAddObject:NSNumberWithLongLong(value)];
 }
 	 
-- (void)addDouble:(NSDoubleN)value
+- (void)addDouble:(TXNSDouble)value
 {
 	[self safeAddObject:NSNumberWithDouble(value)];
 }
@@ -191,7 +191,7 @@
 
 @end
 
-@implementation NSIndexSet (NSIndexSetHelper)
+@implementation NSIndexSet (TXIndexSetHelper)
 
 - (NSArray *)arrayFromIndexSet
 {

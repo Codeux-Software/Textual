@@ -2,115 +2,39 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-@class IRCWorld;
+#import "IRCTreeItem.h"
+#import "TVCLogLine.h"
+#import "TLOGrowlController.h"
+
+@class IRCMessage;
+@class IRCChannel, IRCClientConfig, IRCConnection;
+@class IRCISupportInfo, IRCWorld, TLOFileLogger;
+@class TLOTimer, TDCListDialog, TDChanBanSheet;
+@class TDChanBanExceptionSheet, TDChanInviteExceptionSheet;
 
 typedef enum {
-	CONNECT_NORMAL,
-	CONNECT_RETRY,
-	CONNECT_RECONNECT,
-	CONNECT_BADSSL_CRT_RECONNECT,
-} ConnectMode;
+	IRCConnectNormalMode,
+	IRCConnectionRetryMode,
+	IRCNormalReconnectionMode,
+	IRCBadSSLCertificateReconnectMode,
+} IRCConnectMode;
 
 typedef enum {
-	DISCONNECT_NORMAL,
-	DISCONNECT_TRIAL_PERIOD,
-	DISCONNECT_BAD_SSL_CERT,
-    DISCONNECT_SLEEP_MODE,
-} DisconnectType;
+	IRCDisconnectNormalMode,
+	IRCTrialPeriodDisconnectMode,
+	IRCBadSSLCertificateDisconnectMode,
+    IRCSleepModeDisconnectMode,
+} IRCDisconnectType;
 
 @interface IRCClient : IRCTreeItem
-{
-	IRCWorld *world;
-	IRCConnection *conn;
-	IRCClientConfig *config;
-	IRCISupportInfo *isupport;
-	
-	IRCChannel *whoisChannel;
-	IRCChannel *lastSelectedChannel;
-	
-	NSMutableArray *channels;
-	NSMutableArray *highlights;
-	NSMutableArray *commandQueue;
-	
-	NSMutableDictionary *trackedUsers;
-	
-	NSInteger connectDelay;
-	NSInteger tryingNickNumber;
-	
-	NSMutableArray *pendingCaps;
-	NSMutableArray *acceptedCaps;
-	
-	NSUInteger capPaused;
-
-	BOOL isAway;
-	BOOL hasIRCopAccess;
-	
-	BOOL sendLagcheckToChannel;
-	
-    BOOL isIdentifiedWithSASL;
-	BOOL reconnectEnabled;
-	BOOL rawModeEnabled;
-	BOOL retryEnabled;
-	BOOL isConnecting;
-	BOOL isConnected;
-	BOOL isLoggedIn;
-	BOOL isQuitting;
-	
-	BOOL serverHasNickServ;
-	BOOL autojoinInitialized;
-	
-	BOOL userhostInNames;
-	BOOL multiPrefix;
-	BOOL identifyMsg;
-	BOOL identifyCTCP;
-	BOOL inWhoInfoRun;
-    BOOL inSASLRequest;
-	BOOL inWhoWasRun;
-	BOOL inFirstISONRun;
-	
-	CFAbsoluteTime lastLagCheck;
-	
-	NSStringEncoding encoding;
-	
-	NSString *logDate;
-	
-	NSString *inputNick;
-	NSString *sentNick;
-	NSString *myNick;
-	NSString *myHost;
-	
-	NSString *serverHostname;
-	
-	Timer *isonTimer;
-	Timer *pongTimer;
-	Timer *retryTimer;
-	Timer *autoJoinTimer;
-	Timer *reconnectTimer;
-	Timer *commandQueueTimer;
-	
-	ConnectMode connectType;
-	DisconnectType disconnectType;
-	
-	ListDialog *channelListDialog;
-	ChanBanSheet *chanBanListSheet;
-	ChanBanExceptionSheet *banExceptionSheet;
-	ChanInviteExceptionSheet *inviteExceptionSheet;
-	
-	NSInteger lastMessageReceived;
-	
-	FileLogger *logFile;
-	
-#ifdef IS_TRIAL_BINARY
-	Timer *trialPeriodTimer;
-#endif
-}
-
 @property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, strong) IRCConnection *conn;
 @property (nonatomic, strong) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *isupport;
 @property (nonatomic, strong) IRCChannel *whoisChannel;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
+@property (nonatomic, assign) IRCConnectMode connectType;
+@property (nonatomic, assign) IRCDisconnectType disconnectType;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
@@ -118,8 +42,9 @@ typedef enum {
 @property (nonatomic, strong) NSMutableArray *pendingCaps;
 @property (nonatomic, strong) NSMutableArray *acceptedCaps;
 @property (nonatomic, assign) CFAbsoluteTime lastLagCheck;
-@property (nonatomic, assign, setter=autoConnect:, getter=connectDelay) NSInteger connectDelay;
+@property (nonatomic, assign, setter=autoConnect:) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
+@property (nonatomic, assign) NSUInteger capPaused;
 @property (nonatomic, assign) BOOL isAway;
 @property (nonatomic, assign) BOOL inWhoInfoRun;
 @property (nonatomic, assign) BOOL inWhoWasRun;
@@ -141,7 +66,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL autojoinInitialized;
 @property (nonatomic, assign) BOOL sendLagcheckToChannel;
 @property (nonatomic, assign) BOOL isIdentifiedWithSASL;
-@property (nonatomic, strong) FileLogger *logFile;
+@property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, strong) NSString *logDate;
 @property (nonatomic, strong) NSString *inputNick;
@@ -149,19 +74,22 @@ typedef enum {
 @property (nonatomic, strong) NSString *myNick;
 @property (nonatomic, strong) NSString *myHost;
 @property (nonatomic, strong) NSString *serverHostname;
-@property (nonatomic, strong) Timer *isonTimer;
-@property (nonatomic, strong) Timer *pongTimer;
-@property (nonatomic, strong) Timer *retryTimer;
-@property (nonatomic, strong) Timer *autoJoinTimer;
-@property (nonatomic, strong) Timer *reconnectTimer;
-@property (nonatomic, strong) Timer *commandQueueTimer;
+@property (nonatomic, strong) TLOTimer *isonTimer;
+@property (nonatomic, strong) TLOTimer *pongTimer;
+@property (nonatomic, strong) TLOTimer *retryTimer;
+@property (nonatomic, strong) TLOTimer *autoJoinTimer;
+@property (nonatomic, strong) TLOTimer *reconnectTimer;
+@property (nonatomic, strong) TLOTimer *commandQueueTimer;
+
+#ifdef IS_TRIAL_BINARY
+@property (nonatomic, strong) Timer *trialPeriodTimer;
+#endif
+
 @property (nonatomic, assign) NSInteger lastMessageReceived;
-@property (nonatomic, assign) ConnectMode connectType;
-@property (nonatomic, assign) DisconnectType disconnectType;
-@property (nonatomic, strong) ListDialog *channelListDialog;
-@property (nonatomic, strong) ChanBanSheet *chanBanListSheet;
-@property (nonatomic, strong) ChanBanExceptionSheet *banExceptionSheet;
-@property (nonatomic, strong) ChanInviteExceptionSheet *inviteExceptionSheet;
+@property (nonatomic, strong) TDCListDialog *channelListDialog;
+@property (nonatomic, strong) TDChanBanSheet *chanBanListSheet;
+@property (nonatomic, strong) TDChanBanExceptionSheet *banExceptionSheet;
+@property (nonatomic, strong) TDChanInviteExceptionSheet *inviteExceptionSheet;
 
 - (void)setup:(IRCClientConfig *)seed;
 - (void)updateConfig:(IRCClientConfig *)seed;
@@ -175,13 +103,13 @@ typedef enum {
 
 - (BOOL)isReconnecting;
 
-- (AddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+- (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan;
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan;
 
 - (void)connect;
-- (void)connect:(ConnectMode)mode;
+- (void)connect:(IRCConnectMode)mode;
 - (void)disconnect;
 - (void)quit;
 - (void)quit:(NSString *)comment;
@@ -239,13 +167,13 @@ typedef enum {
 - (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate*)receivedAt;
 
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
-- (BOOL)printAndLog:(LogLine *)line withHTML:(BOOL)rawHTML;
-- (BOOL)printChannel:(IRCChannel *)channel type:(LogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate*)receivedAt;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
 - (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
@@ -259,12 +187,11 @@ typedef enum {
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
 - (void)printError:(NSString *)error;
 
-- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype;
-- (BOOL)notifyEvent:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)notifyText:(NotificationType)type lineType:(LogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
 
-- (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(LogLineType)type;
-
+- (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 @end

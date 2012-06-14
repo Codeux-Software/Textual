@@ -17,6 +17,9 @@
 @synthesize dockUnreadCount;
 @synthesize currentInputHistory;
 
+#warning "-resetLogView:withChannel:andClient:" does not function properly. \
+		It does not create new view when destroying the old. 
+
 - (void)resetLogView:(IRCWorld *)world
 		 withChannel:(IRCChannel *)c
 		   andClient:(IRCClient *)u
@@ -61,12 +64,12 @@
 
 - (NSString *)label
 {
-	return NSNullObject;
+	return NSStringEmptyPlaceholder;
 }
 
 - (NSString *)name
 {
-	return NSNullObject;
+	return NSStringEmptyPlaceholder;
 }
 
 @end

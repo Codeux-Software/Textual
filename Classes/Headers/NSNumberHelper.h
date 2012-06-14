@@ -2,9 +2,9 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-#define DirtyCGFloatsMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+#define TXDirtyCGFloatsMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
 
-@interface NSNumber (NSNumberHelper)
+@interface NSNumber (TXNumberHelper)
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 

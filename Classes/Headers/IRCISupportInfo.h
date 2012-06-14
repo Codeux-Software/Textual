@@ -3,11 +3,11 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define MODES_SIZE		52
+#define TXModesSize		52
 
 @interface IRCISupportInfo : NSObject
 {
-	unsigned char modes[MODES_SIZE];
+	unsigned char modes[TXModesSize];
 }
 
 @property (nonatomic, assign) NSInteger nickLen;
