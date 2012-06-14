@@ -13,10 +13,10 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.raw = NSNullObject;
-		self.nick = NSNullObject;
-		self.user = NSNullObject;
-		self.address = NSNullObject;
+		self.raw = NSStringEmptyPlaceholder;
+		self.nick = NSStringEmptyPlaceholder;
+		self.user = NSStringEmptyPlaceholder;
+		self.address = NSStringEmptyPlaceholder;
 	}
 
 	return self;

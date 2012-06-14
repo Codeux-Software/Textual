@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSWindow (NSWindowHelper)
+@implementation NSWindow (TXWindowHelper)
 
 - (void)centerOfWindow:(NSWindow *)window
 {
@@ -25,6 +25,7 @@
 		
 		if (NSContainsRect(screenFrame, r) == NO) {
 			r = NSRectAdjustInRect(r, screenFrame);
+			
 			p = r.origin;
 		}
 	}
@@ -58,8 +59,8 @@
 
 - (BOOL)isInFullscreenMode
 {
-#ifdef _MAC_OS_LION_OR_NEWER
-	return (([self styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask);
+#ifdef TXMacOSLionOrNewer
+	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
 #else
 	return NO;
 #endif

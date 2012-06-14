@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSBundle (NSBundleHelper)
+@implementation NSBundle (TXBundleHelper)
 
 + (void)sendUserInputDataToBundles:(IRCWorld *)world
 						   message:(NSString *)message
@@ -12,8 +12,8 @@
 	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
-		for (TextualPluginItem *plugin in cmdPlugins) {
-			PluginProtocol *bundle = [plugin pluginPrimaryClass];
+		for (THOTextualPluginItem *plugin in cmdPlugins) {
+			THOPluginProtocol *bundle = [plugin pluginPrimaryClass];
 			
 			[bundle messageSentByUser:client message:message command:command];
 		}
@@ -36,14 +36,14 @@
 		
 		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
 									 msg.command, @"messageCommand",
-									 [msg sequence], @"messageSequence",
-									 [msg params], @"messageParamaters",
+									 msg.sequence, @"messageSequence",
+									 msg.params, @"messageParamaters",
 									 client.config.server, @"messageServer",
 									 client.config.network, @"messageNetwork",
-									 NSNumberWithInteger([msg numericReply]), @"messageNumericReply", nil];
+									 NSNumberWithInteger(msg.numericReply), @"messageNumericReply", nil];
 		
-		for (TextualPluginItem *plugin in cmdPlugins) {
-			PluginProtocol *bundle = [plugin pluginPrimaryClass];
+		for (THOTextualPluginItem *plugin in cmdPlugins) {
+			THOPluginProtocol *bundle = [plugin pluginPrimaryClass];
 			
 			[bundle messageReceivedByServer:client sender:senderData message:messageData];
 		}
@@ -58,7 +58,7 @@
 
 + (void)deallocBundlesFromMemory:(IRCWorld *)world
 {		
-	PreferencesController *prefController = world.menuController.preferencesController;
+	TDCPreferencesController *prefController = world.menuController.preferencesController;
 	
 	if (prefController) {
 		if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
@@ -81,8 +81,8 @@
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-    NSString *path_1 = [Preferences wherePluginsPath];
-    NSString *path_2 = [Preferences wherePluginsLocalPath];
+    NSString *path_1 = [TPCPreferences wherePluginsPath];
+    NSString *path_2 = [TPCPreferences wherePluginsLocalPath];
     
     if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
         [self deallocBundlesFromMemory:world];
@@ -117,7 +117,7 @@
             
 			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath]; 
 			
-			TextualPluginItem *plugin = [TextualPluginItem new];
+			THOTextualPluginItem *plugin = [THOTextualPluginItem new];
 			
 			[plugin initWithPluginClass:[currBundle principalClass] 
 							  andBundle:currBundle 
@@ -146,7 +146,6 @@
 	[world setBundlesWithOutputRules:outputRulesDict];
 	[world setBundlesForServerInput:serverInputBundles];
 	[world setBundlesWithPreferences:preferencesBundlesIndex];
-	
 }
 
 @end

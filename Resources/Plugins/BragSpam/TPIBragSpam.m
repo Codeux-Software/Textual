@@ -72,7 +72,7 @@
 			
 		}
 		
-		NSString *result = TXTFLS(@"BRAGSPAM_PLUGIN_NORMAL_RESULT", channelCount, networkCount, operCount, 
+		NSString *result = TXTFLS(@"BragspamPluginNormalResult", channelCount, networkCount, operCount, 
 								  chanOpCount, chanHopCount, chanVopCount, powerOverCount);
 		
 		[[client iomt] sendPrivmsgToSelectedChannel:result];
@@ -92,22 +92,22 @@
 		NSMutableString *result = [NSMutableString string];
 		
 		if (NSObjectIsEmpty(chanlist)) {	
-			[result appendString:TXTFLS(@"BRAGSPAM_PLUGIN_CHANNEL_RESULT_NONE", client.config.network)];
+			[result appendString:TXTFLS(@"BragspamPluginChannelResultNone", client.config.network)];
 		} else {
 			cc = [chanlist objectAtIndex:0];
 			
 			if (chanlist.count == 1) {	
-				[result appendString:TXTFLS(@"BRAGSPAM_PLUGIN_CHANNEL_RESULT_SINGLE", cc.name, client.config.network)];
+				[result appendString:TXTFLS(@"BragspamPluginChannelResultSingle", cc.name, client.config.network)];
 			} else {
-				[result appendString:TXTFLS(@"BRAGSPAM_PLUGIN_CHANNEL_RESULT", cc.name)];
+				[result appendString:TXTFLS(@"BragspamPluginChannelResult", cc.name)];
 				
 				[chanlist removeObjectAtIndex:0];
 				
 				for (cc in chanlist) {
 					if (NSDissimilarObjects(cc, [chanlist lastObject])) {
-						[result appendString:TXTFLS(@"BRAGSPAM_PLUGIN_CHANNEL_RESULT_MIDITEM", cc.name)];
+						[result appendString:TXTFLS(@"BragspamPluginChannelResultMiddleItem", cc.name)];
 					} else {
-						[result appendString:TXTFLS(@"BRAGSPAM_PLUGIN_CHANNEL_RESULT_ENDITEM", cc.name, client.config.network)];
+						[result appendString:TXTFLS(@"BragspamPluginChannelResultEndItem", cc.name, client.config.network)];
 					}
 				}
 			}

@@ -2,19 +2,19 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSColor (NSColorHelper)
+@implementation NSColor (TXColorHelper)
 
 #pragma mark -
 #pragma mark Custom Methods
 
-+ (NSColor *)_colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha 
++ (NSColor *)internalColorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	CGFloat comps[] = {red, green, blue, alpha};
 	
 	return [NSColor colorWithColorSpace:[NSColorSpace sRGBColorSpace] components:comps count:4];
 }
 
-+ (NSColor *)_colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
++ (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	if (red   > 1.0) red   = (red   / 255.99999f);
 	if (green > 1.0) green = (green / 255.99999f);
@@ -28,82 +28,82 @@
 
 + (NSColor *)formatterWhiteColor
 {
-	return NSCalibratedRBGColor(1.00, 1.00, 1.00);
+	return TXCalibratedRBGColor(1.00, 1.00, 1.00);
 }
 
 + (NSColor *)formatterBlackColor
 {
-	return NSCalibratedRBGColor(0.00, 0.00, 0.00);
+	return TXCalibratedRBGColor(0.00, 0.00, 0.00);
 }
 
 + (NSColor *)formatterNavyBlueColor
 {
-	return NSCalibratedRBGColor(0.04, 0.52, 0.00); 
+	return TXCalibratedRBGColor(0.04, 0.52, 0.00); 
 }
 
 + (NSColor *)formatterDarkGreenColor
 {
-	return NSCalibratedRBGColor(0.00, 0.08, 0.54);
+	return TXCalibratedRBGColor(0.00, 0.08, 0.54);
 }
 
 + (NSColor *)formatterRedColor
 {
-	return NSCalibratedRBGColor(1.00, 0.04, 0.05);
+	return TXCalibratedRBGColor(1.00, 0.04, 0.05);
 }
 
 + (NSColor *)formatterBrownColor
 {
-	return NSCalibratedRBGColor(0.55, 0.02, 0.02);
+	return TXCalibratedRBGColor(0.55, 0.02, 0.02);
 }
 
 + (NSColor *)formatterPurpleColor
 {
-	return NSCalibratedRBGColor(0.55, 0.53, 0.00);
+	return TXCalibratedRBGColor(0.55, 0.53, 0.00);
 }
 
 + (NSColor *)formatterOrangeColor
 {
-	return NSCalibratedRBGColor(1.00, 0.09, 0.54);
+	return TXCalibratedRBGColor(1.00, 0.09, 0.54);
 }
 
 + (NSColor *)formatterYellowColor
 {
-	return NSCalibratedRBGColor(1.00, 0.15, 1.00);
+	return TXCalibratedRBGColor(1.00, 0.15, 1.00);
 }
 
 + (NSColor *)formatterLimeGreenColor
 {
-	return NSCalibratedRBGColor(0.00, 0.15, 1.00);
+	return TXCalibratedRBGColor(0.00, 0.15, 1.00);
 }
 
 + (NSColor *)formatterTealColor
 {
-	return NSCalibratedRBGColor(0.00, 0.53, 0.53);
+	return TXCalibratedRBGColor(0.00, 0.53, 0.53);
 }
 
 + (NSColor *)formatterAquaCyanColor
 {
-	return NSCalibratedRBGColor(0.00, 1.00, 1.00);
+	return TXCalibratedRBGColor(0.00, 1.00, 1.00);
 }
 
 + (NSColor *)formatterLightBlueColor
 {
-	return NSCalibratedRBGColor(0.07, 0.98, 0.00);
+	return TXCalibratedRBGColor(0.07, 0.98, 0.00);
 }
 
 + (NSColor *)formatterFuchsiaPinkColor
 {
-	return NSCalibratedRBGColor(1.00, 0.98, 0.00);
+	return TXCalibratedRBGColor(1.00, 0.98, 0.00);
 }
 
 + (NSColor *)formatterNormalGrayColor
 {
-	return NSCalibratedRBGColor(0.53, 0.53, 0.53);
+	return TXCalibratedRBGColor(0.53, 0.53, 0.53);
 }
 
 + (NSColor *)formatterLightGrayColor
 {
-	return NSCalibratedRBGColor(0.80, 0.80, 0.80);
+	return TXCalibratedRBGColor(0.80, 0.80, 0.80);
 }
 
 + (NSArray *)possibleFormatterColors
@@ -117,43 +117,43 @@
 	combo = [NSMutableArray arrayWithObjects:[self formatterBlackColor], nil];
 	[colors safeInsertObject:combo atIndex:1];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterNavyBlueColor], NSCalibratedRBGColor(0.0, 0.47, 0.0), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterNavyBlueColor], TXCalibratedRBGColor(0.0, 0.47, 0.0), nil];
 	[colors safeInsertObject:combo atIndex:2];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterDarkGreenColor], NSCalibratedRBGColor(0.03, 0.0, 0.48), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterDarkGreenColor], TXCalibratedRBGColor(0.03, 0.0, 0.48), nil];
 	[colors safeInsertObject:combo atIndex:3];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterRedColor], NSCalibratedRBGColor(1.00, 0.00, 0.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterRedColor], TXCalibratedRBGColor(1.00, 0.00, 0.00), nil];
 	[colors safeInsertObject:combo atIndex:4];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterBrownColor], NSCalibratedRBGColor(0.46, 0.00, 0.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterBrownColor], TXCalibratedRBGColor(0.46, 0.00, 0.00), nil];
 	[colors safeInsertObject:combo atIndex:5];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterPurpleColor], NSCalibratedRBGColor(0.46, 0.47, 0.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterPurpleColor], TXCalibratedRBGColor(0.46, 0.47, 0.00), nil];
 	[colors safeInsertObject:combo atIndex:6];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterOrangeColor], NSCalibratedRBGColor(1.00, 0.00, 0.45), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterOrangeColor], TXCalibratedRBGColor(1.00, 0.00, 0.45), nil];
 	[colors safeInsertObject:combo atIndex:7];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterYellowColor], NSCalibratedRBGColor(1.00, 0.00, 1.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterYellowColor], TXCalibratedRBGColor(1.00, 0.00, 1.00), nil];
 	[colors safeInsertObject:combo atIndex:8];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterLimeGreenColor], NSCalibratedRBGColor(0.06, 0.00, 1.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterLimeGreenColor], TXCalibratedRBGColor(0.06, 0.00, 1.00), nil];
 	[colors safeInsertObject:combo atIndex:9];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterTealColor], NSCalibratedRBGColor(0.00, 0.46, 0.46), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterTealColor], TXCalibratedRBGColor(0.00, 0.46, 0.46), nil];
 	[colors safeInsertObject:combo atIndex:10];
 	
 	combo = [NSMutableArray arrayWithObjects:[self formatterAquaCyanColor], nil];
 	[colors safeInsertObject:combo atIndex:11];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterLightBlueColor], NSCalibratedRBGColor(0.00, 1.00, 0.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterLightBlueColor], TXCalibratedRBGColor(0.00, 1.00, 0.00), nil];
 	[colors safeInsertObject:combo atIndex:12];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterFuchsiaPinkColor], NSCalibratedRBGColor(1.00, 1.00, 0.00), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterFuchsiaPinkColor], TXCalibratedRBGColor(1.00, 1.00, 0.00), nil];
 	[colors safeInsertObject:combo atIndex:13];
 	
-	combo = [NSMutableArray arrayWithObjects:[self formatterNormalGrayColor], NSCalibratedRBGColor(0.46, 0.46, 0.46), nil];
+	combo = [NSMutableArray arrayWithObjects:[self formatterNormalGrayColor], TXCalibratedRBGColor(0.46, 0.46, 0.46), nil];
 	[colors safeInsertObject:combo atIndex:14];
 	
 	combo = [NSMutableArray arrayWithObjects:[self formatterLightGrayColor], nil];
@@ -204,7 +204,7 @@
 			NSInteger g = ((n >> 8) & 0xff);
 			NSInteger b = (n & 0xff);
 			
-			return NSCalibratedRBGColor(r, b, g);
+			return TXCalibratedRBGColor(r, b, g);
 		} else if (len == 3) {
 			long n = strtol([s UTF8String], NULL, 16);
 			
@@ -212,7 +212,7 @@
 			NSInteger g = ((n >> 4) & 0xf);
 			NSInteger b = (n & 0xf);
 			
-			return NSCalibratedRBGColor((r / 15.0), 
+			return TXCalibratedRBGColor((r / 15.0), 
 										(b / 15.0), 
 										(g / 15.0));
 		}
@@ -226,12 +226,12 @@
 
 + (NSColor *)outlineViewHeaderTextColor
 {
-	return [self _colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
+	return [self internalColorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];	
 }
 
 + (NSColor *)outlineViewHeaderDisabledTextColor
 {
-	return [self _colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:0.7];
+	return [self internalColorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:0.7];
 }
 
 @end

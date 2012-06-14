@@ -2,9 +2,9 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-#define NSCalibratedRBGColor(r, b, g)		([NSColor _colorWithCalibratedRed:r green:g blue:b alpha:1.0])
+#define TXCalibratedRBGColor(r, b, g)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
 
-@interface NSColor (NSColorHelper)
+@interface NSColor (TXColorHelper)
 + (NSColor *)formatterWhiteColor;
 + (NSColor *)formatterBlackColor;
 + (NSColor *)formatterNavyBlueColor;
@@ -30,6 +30,6 @@
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 
-+ (NSColor *)_colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
-+ (NSColor *)_colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
++ (NSColor *)internalColorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
++ (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end

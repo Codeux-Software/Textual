@@ -3,15 +3,15 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define FLOOD_CONTROL_DEFAULT_DELAY_TIMER       2
-#define FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT     2
+#define TXFloodControlDefaultDelayTimer       2
+#define TXFloodControlDefaultMessageCount     2
 
 typedef enum {
-	PROXY_NONE = 0,
-	PROXY_SOCKS_SYSTEM = 1,
-	PROXY_SOCKS4 = 4,
-	PROXY_SOCKS5 = 5,
-} ProxyType;
+	TXConnectionNoProxyType = 0,
+	TXConnectionSystemSocksProxyType = 1,
+	TXConnectionSocks4ProxyType = 4,
+	TXConnectionSocks5ProxyType = 5,
+} TXConnectionProxyType;
 
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context);
 
@@ -28,7 +28,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, strong) NSString *realName;
 @property (nonatomic, strong) NSString *nickPassword;
 @property (nonatomic, strong) NSMutableArray *altNicks;
-@property (nonatomic, assign) ProxyType proxyType;
+@property (nonatomic, assign) TXConnectionProxyType proxyType;
 @property (nonatomic, strong) NSString *proxyHost;
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, strong) NSString *proxyUser;

@@ -4,12 +4,12 @@
 // Converted to ARC Support on Thursday, June 09, 2012
 
 typedef enum {
-	CHANNEL_TYPE_CHANNEL,
-	CHANNEL_TYPE_TALK,
-} ChannelType;
+	IRCChannelNormalType,
+	IRCChannelPrivateMessageType,
+} IRCChannelType;
 
 @interface IRCChannelConfig : NSObject <NSMutableCopying>
-@property (nonatomic, assign) ChannelType type;
+@property (nonatomic, assign) IRCChannelType type;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, assign) BOOL autoJoin;

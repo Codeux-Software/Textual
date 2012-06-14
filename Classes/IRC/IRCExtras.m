@@ -73,7 +73,7 @@
 		
 		tempval = [tempval safeSubstringFromIndex:chopIndex];
 		
-		if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+		if ([TLORegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
 			port = [tempval integerValue];
 		}
 	}
@@ -182,14 +182,14 @@
         
         tempval = [tempval safeSubstringFromIndex:chopIndex];
         
-        if ([TXRegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+        if ([TLORegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
             port = [tempval integerValue];
         }
     } else {
         if (NSObjectIsNotEmpty(base)) {
             tempval = [base getToken];
             
-            if ([TXRegularExpression string:tempval isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
+            if ([TLORegularExpression string:tempval isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
                 if ([tempval hasPrefix:@"+"]) {
                     tempval = [tempval safeSubstringFromIndex:1];
                     useSSL = YES;
@@ -221,10 +221,10 @@
 	
 	[dic setBool:useSSL forKey:@"ssl"];
 	[dic setBool:NO		forKey:@"auto_connect"];
-	
-	[dic setObject:[Preferences defaultNickname]			forKey:@"nickname"];
-	[dic setObject:[Preferences defaultUsername]			forKey:@"username"];
-	[dic setObject:[Preferences defaultRealname]			forKey:@"realname"];
+
+	[dic setObject:[TPCPreferences defaultNickname]			forKey:@"nickname"];
+	[dic setObject:[TPCPreferences defaultUsername]			forKey:@"username"];
+	[dic setObject:[TPCPreferences defaultRealname]			forKey:@"realname"];
 	
 	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)	forKey:@"encoding"];
 	

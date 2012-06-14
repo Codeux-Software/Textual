@@ -56,15 +56,15 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.channels        = [NSMutableArray new];
 		self.loginCommands   = [NSMutableArray new];
 		
-		self.host         = NSNullObject;
+		self.host         = NSStringEmptyPlaceholder;
 		self.port         = 6667;
-		self.password     = NSNullObject;
-		self.nickPassword = NSNullObject;
+		self.password     = NSStringEmptyPlaceholder;
+		self.nickPassword = NSStringEmptyPlaceholder;
 		
-		self.proxyHost       = NSNullObject;
+		self.proxyHost       = NSStringEmptyPlaceholder;
 		self.proxyPort       = 1080;
-		self.proxyUser       = NSNullObject;
-		self.proxyPassword   = NSNullObject;
+		self.proxyUser       = NSStringEmptyPlaceholder;
+		self.proxyPassword   = NSStringEmptyPlaceholder;
         
         self.prefersIPv6 = NO;
 		
@@ -72,16 +72,16 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.fallbackEncoding = NSISOLatin1StringEncoding;
         
         self.outgoingFloodControl            = NO;
-        self.floodControlMaximumMessages     = FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT;
-		self. floodControlDelayTimerInterval  = FLOOD_CONTROL_DEFAULT_DELAY_TIMER;
+        self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
+		self. floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
-		self.name        = TXTLS(@"UNTITLED_CONNECTION_NAME");
-		self.nick        = [Preferences defaultNickname];
-		self.username    = [Preferences defaultUsername];
-		self.realName    = [Preferences defaultRealname];
+		self.name        = TXTLS(@"DefaultNewConnectionName");
+		self.nick        = [TPCPreferences defaultNickname];
+		self.username    = [TPCPreferences defaultUsername];
+		self.realName    = [TPCPreferences defaultRealname];
 		
-		self.leavingComment      = TXTLS(@"DEFAULT_QPS_MESSAGE");
-		self.sleepQuitMessage    = TXTLS(@"SLEEPING_APPLICATION_QUIT_MESSAGE");
+		self.leavingComment      = TXTLS(@"DefaultDisconnectQuitMessage");
+		self.sleepQuitMessage    = TXTLS(@"OSXGoingToSleepQuitMessage");
 	}
 	
 	return self;
@@ -208,7 +208,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			self.name = [dic stringForKey:@"name"];
 		}
 		
-		self.host = (([dic stringForKey:@"host"]) ?: NSNullObject);
+		self.host = (([dic stringForKey:@"host"]) ?: NSStringEmptyPlaceholder);
 		self.port = (([dic integerForKey:@"port"]) ?: 6667);
 		
 		if ([dic stringForKey:@"nick"]) {
@@ -227,11 +227,11 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		
 		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 		
-		self.proxyType       = (ProxyType)[dic integerForKey:@"proxy"];
+		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxy"];
 		self.proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-		self.proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSNullObject);
-		self.proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSNullObject);
-		self.proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSNullObject);
+		self.proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSStringEmptyPlaceholder);
+		self.proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSStringEmptyPlaceholder);
+		self.proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSStringEmptyPlaceholder);
 		
 		self.autoConnect         = [dic boolForKey:@"auto_connect"];
 		self.autoReconnect       = [dic boolForKey:@"auto_reconnect"];
@@ -264,9 +264,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		}
 		
 		for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
-			AddressBook *ignore;
+			IRCAddressBook *ignore;
 			
-			ignore = [AddressBook alloc];
+			ignore = [IRCAddressBook alloc];
 			ignore = [ignore initWithDictionary:e];
 			ignore = ignore;
 			
@@ -279,8 +279,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			if (NSObjectIsNotEmpty(e)) {
 				self.outgoingFloodControl           = [e boolForKey:@"outgoing"];
 				
-				self.floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: FLOOD_CONTROL_DEFAULT_MESSAGE_COUNT);
-				self.floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: FLOOD_CONTROL_DEFAULT_DELAY_TIMER);
+				self.floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: TXFloodControlDefaultMessageCount);
+				self.floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: TXFloodControlDefaultDelayTimer);
 			}
 		} else {
 			if ([self.host hasSuffix:@"freenode.net"]) {
@@ -344,7 +344,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[channelAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	for (AddressBook *e in self.ignores) {
+	for (IRCAddressBook *e in self.ignores) {
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	

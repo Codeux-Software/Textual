@@ -88,7 +88,7 @@
 			[str appendFormat:@"-%c", h.mode];
 			
 			if (h.mode == 'k') {
-				h.param = NSNullObject;
+				h.param = NSStringEmptyPlaceholder;
 			} else {
 				if (h.mode == 'l') {
 					h.param = 0;

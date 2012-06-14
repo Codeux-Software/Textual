@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define TREE_USERLIST_HEIGHT    16.0
+#define _treeUserlistHeight    16.0
 
 @interface IRCChannel (Private)
 - (void)closeLogFile;
@@ -70,24 +70,24 @@
 
 - (NSString *)password
 {
-	return ((self.config.password) ?: NSNullObject);
+	return ((self.config.password) ?: NSStringEmptyPlaceholder);
 }
 
 - (BOOL)isChannel
 {
-	return (self.config.type == CHANNEL_TYPE_CHANNEL);
+	return (self.config.type == IRCChannelNormalType);
 }
 
 - (BOOL)isTalk
 {
-	return (self.config.type == CHANNEL_TYPE_TALK);
+	return (self.config.type == IRCChannelPrivateMessageType);
 }
 
 - (NSString *)channelTypeString
 {
 	switch (self.config.type) {
-		case CHANNEL_TYPE_CHANNEL: return @"channel";
-		case CHANNEL_TYPE_TALK: return @"talk";
+		case IRCChannelNormalType: return @"channel";
+		case IRCChannelPrivateMessageType: return @"talk";
 	}
 	
 	return nil;
@@ -111,10 +111,10 @@
 
 - (void)preferencesChanged
 {
-	self.log.maxLines = [Preferences maxLogLines];
+	self.log.maxLines = [TPCPreferences maxLogLines];
 	
 	if (self.logFile) {
-		if ([Preferences logTranscript]) {
+		if ([TPCPreferences logTranscript]) {
 			[self.logFile reopenIfNeeded];
 		} else {
 			[self closeLogFile];
@@ -158,8 +158,8 @@
 
 - (void)detectOutgoingConversation:(NSString *)text
 {
-	if (NSObjectIsNotEmpty([Preferences completionSuffix])) {
-		NSArray *pieces = [text split:[Preferences completionSuffix]];
+	if (NSObjectIsNotEmpty([TPCPreferences completionSuffix])) {
+		NSArray *pieces = [text split:[TPCPreferences completionSuffix]];
 		
 		if ([pieces count] > 1) {
 			IRCUser *talker = [self findMember:[pieces safeObjectAtIndex:0]];
@@ -171,18 +171,18 @@
 	}
 }
 
-- (BOOL)print:(LogLine *)line
+- (BOOL)print:(TVCLogLine *)line
 {
 	return [self print:line withHTML:NO];
 }
 
-- (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML
+- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML
 {
 	BOOL result = [self.log print:line withHTML:rawHTML];
 	
-	if ([Preferences logTranscript]) {
+	if ([TPCPreferences logTranscript]) {
 		if (PointerIsEmpty(self.logFile)) {
-			self.logFile = [FileLogger new];
+			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self.client;
 			self.logFile.channel = self;
 		}
@@ -199,7 +199,7 @@
 			self.logDate = comp;
 		}
 		
-		NSString *nickStr = NSNullObject;
+		NSString *nickStr = NSStringEmptyPlaceholder;
 		
 		if (line.nick) {
 			nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
@@ -466,18 +466,18 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-    return TREE_USERLIST_HEIGHT;
+    return _treeUserlistHeight;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	IRCUser *user = [self.members safeObjectAtIndex:row];
 	
-	return TXTFLS(@"ACCESSIBILITY_MEMBER_LIST_DESCRIPTION", [user nick], [self.config.name safeSubstringFromIndex:1]);
+	return TXTFLS(@"AccessibilityMemberListDescription", [user nick], [self.config.name safeSubstringFromIndex:1]);
 }
 
 - (void)tableView:(NSTableView *)sender
-  willDisplayCell:(MemberListCell *)cell
+  willDisplayCell:(TVCMemberListCell *)cell
    forTableColumn:(NSTableColumn *)column
 			  row:(NSInteger)row
 {

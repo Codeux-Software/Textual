@@ -54,12 +54,7 @@
 #define RKL_GC_VOLATILE
 #endif // __OBJC_GC__
 
-#if (defined(TARGET_OS_EMBEDDED) && (TARGET_OS_EMBEDDED != 0)) || (defined(TARGET_OS_IPHONE) && (TARGET_OS_IPHONE != 0)) || (defined(MAC_OS_X_VERSION_MIN_REQUIRED) && (MAC_OS_X_VERSION_MIN_REQUIRED >= 1050))
-//#include <objc/runtime.h>
-#else
 #include <objc/objc-runtime.h>
-#endif
-
 #include <libkern/OSAtomic.h>
 #include <mach-o/loader.h>
 #include <AvailabilityMacros.h>
@@ -687,9 +682,9 @@ static NSUInteger rkl_dtrace_eventID, rkl_dtrace_compiledCacheLookups, rkl_dtrac
 
 #define rkl_dtrace_incrementEventID() do { rkl_dtrace_eventID++; } while(0)
 #define rkl_dtrace_incrementAndGetEventID(v) do { rkl_dtrace_eventID++; v = rkl_dtrace_eventID; } while(0)
-#define rkl_dtrace_compiledRegexCache(a0, a1, a2, a3, a4, a5) do { int _a3 = (a3); rkl_dtrace_compiledCacheLookups++; if(_a3 == 1) { rkl_dtrace_compiledCacheHits++; } if(RKL_EXPECTED(REGEXKITLITE_COMPILEDREGEXCACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_compiledCacheLookups > 0UL) { hitRate = ((NSDoubleN)rkl_dtrace_compiledCacheHits / (NSDoubleN)rkl_dtrace_compiledCacheLookups) * 100.0; } REGEXKITLITE_COMPILEDREGEXCACHE(rkl_dtrace_eventID, a0, a1, a2, _a3, a4, a5, &hitRate); } } while(0)
-#define rkl_dtrace_utf16ConversionCache(a0, a1, a2, a3, a4) do { unsigned int _a0 = (a0); if((_a0 & RKLConversionRequiredLookupFlag) != 0U) { rkl_dtrace_conversionBufferLookups++; if((_a0 & RKLCacheHitLookupFlag) != 0U) { rkl_dtrace_conversionBufferHits++; } } if(RKL_EXPECTED(REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_conversionBufferLookups > 0UL) { hitRate = ((NSDoubleN)rkl_dtrace_conversionBufferHits / (NSDoubleN)rkl_dtrace_conversionBufferLookups) * 100.0; } REGEXKITLITE_CONVERTEDSTRINGU16CACHE(rkl_dtrace_eventID, _a0, &hitRate, a1, a2, a3, a4); } } while(0)
-#define rkl_dtrace_utf16ConversionCacheWithEventID(c0, a0, a1, a2, a3, a4) do { unsigned int _a0 = (a0); if((_a0 & RKLConversionRequiredLookupFlag) != 0U) { rkl_dtrace_conversionBufferLookups++; if((_a0 & RKLCacheHitLookupFlag) != 0U) { rkl_dtrace_conversionBufferHits++; } } if(RKL_EXPECTED(REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_conversionBufferLookups > 0UL) { hitRate = ((NSDoubleN)rkl_dtrace_conversionBufferHits / (NSDoubleN)rkl_dtrace_conversionBufferLookups) * 100.0; } REGEXKITLITE_CONVERTEDSTRINGU16CACHE(c0, _a0, &hitRate, a1, a2, a3, a4); } } while(0)
+#define rkl_dtrace_compiledRegexCache(a0, a1, a2, a3, a4, a5) do { int _a3 = (a3); rkl_dtrace_compiledCacheLookups++; if(_a3 == 1) { rkl_dtrace_compiledCacheHits++; } if(RKL_EXPECTED(REGEXKITLITE_COMPILEDREGEXCACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_compiledCacheLookups > 0UL) { hitRate = ((TXNSDouble)rkl_dtrace_compiledCacheHits / (TXNSDouble)rkl_dtrace_compiledCacheLookups) * 100.0; } REGEXKITLITE_COMPILEDREGEXCACHE(rkl_dtrace_eventID, a0, a1, a2, _a3, a4, a5, &hitRate); } } while(0)
+#define rkl_dtrace_utf16ConversionCache(a0, a1, a2, a3, a4) do { unsigned int _a0 = (a0); if((_a0 & RKLConversionRequiredLookupFlag) != 0U) { rkl_dtrace_conversionBufferLookups++; if((_a0 & RKLCacheHitLookupFlag) != 0U) { rkl_dtrace_conversionBufferHits++; } } if(RKL_EXPECTED(REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_conversionBufferLookups > 0UL) { hitRate = ((TXNSDouble)rkl_dtrace_conversionBufferHits / (TXNSDouble)rkl_dtrace_conversionBufferLookups) * 100.0; } REGEXKITLITE_CONVERTEDSTRINGU16CACHE(rkl_dtrace_eventID, _a0, &hitRate, a1, a2, a3, a4); } } while(0)
+#define rkl_dtrace_utf16ConversionCacheWithEventID(c0, a0, a1, a2, a3, a4) do { unsigned int _a0 = (a0); if((_a0 & RKLConversionRequiredLookupFlag) != 0U) { rkl_dtrace_conversionBufferLookups++; if((_a0 & RKLCacheHitLookupFlag) != 0U) { rkl_dtrace_conversionBufferHits++; } } if(RKL_EXPECTED(REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED(), 0L)) { double hitRate = 0.0; if(rkl_dtrace_conversionBufferLookups > 0UL) { hitRate = ((TXNSDouble)rkl_dtrace_conversionBufferHits / (TXNSDouble)rkl_dtrace_conversionBufferLookups) * 100.0; } REGEXKITLITE_CONVERTEDSTRINGU16CACHE(c0, _a0, &hitRate, a1, a2, a3, a4); } } while(0)
 
 
 // \342\200\246 == UTF8 for HORIZONTAL ELLIPSIS, aka triple dots '...'

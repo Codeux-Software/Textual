@@ -2,35 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>IRC_CHANNEL_HAS_MODES</key>
+	<key>IRCChannelHasModes</key>
 	<string>Mode is %@</string>
-	<key>IRC_CHANNEL_HAS_TOPIC</key>
+	<key>IRCChannelHasTopic</key>
 	<string>Topic is %@</string>
-	<key>IRC_CHANNEL_HAS_WEBSITE</key>
+	<key>IRCChannelHasWebsite</key>
 	<string>Website is %@</string>
-	<key>IRC_MDOE_SET</key>
+	<key>IRCModeSet</key>
 	<string>%1$@ sets mode %2$@</string>
-	<key>IRC_RECIEVED_CTCP_REPLY</key>
+	<key>IRCRecievedCTCPReply</key>
 	<string>-%1$@ CTCP- %2$@ %3$@</string>
-	<key>IRC_RECIEVED_CTCP_REQUEST</key>
+	<key>IRCRecievedCTCPRequest</key>
 	<string>-CTCP- %1$@ from %2$@</string>
-	<key>IRC_CHANNEL_HAS_TOPIC_AUTHOR</key>
+	<key>IRCChannelHasTopicAuthor</key>
 	<string>Set by %1$@ on %2$@</string>
-	<key>IRC_USER_DISCONNECTED</key>
+	<key>IRCUserDisconnected</key>
 	<string>%1$@ (%2$@@%3$@) left IRC.</string>
-	<key>IRC_USER_CHANGED_NICKNAME</key>
+	<key>IRCUserChangedNickname</key>
 	<string>%1$@ is now known as %2$@</string>
-	<key>IRC_HAS_IGNORED_CTCP</key>
+	<key>IRCCTCPRequestIgnored</key>
 	<string>-CTCP- %1$@ from %2$@ was ignored.</string>
-	<key>IRC_USER_PARTED_CHANNEL</key>
+	<key>IRCUserPartedChannel</key>
 	<string>%1$@ (%2$@@%3$@) left the channel.</string>
-	<key>IRC_RECIEVED_CTCP_PING_REPLY</key>
+	<key>IRCRecievedCTCPPingReply</key>
 	<string>-%1$@ CTCP- %2$@ (%3$1.5f sec)</string>
-	<key>IRC_USER_JOINED_CHANNEL</key>
+	<key>IRCUserJoinedChannel</key>
 	<string>%1$@ (%2$@@%3$@) joined the channel.</string>
-	<key>IRC_CHANNEL_TOPIC_CHANGED</key>
+	<key>IRCChannelTopicChanged</key>
 	<string>%1$@ changed the topic to %2$@</string>
-	<key>IRC_USER_KICKED_FROM_CHANNEL</key>
+	<key>IRCUserKickedFromChannel</key>
 	<string>%1$@ kicked %2$@ from the channel. (%3$@)</string>
 </dict>
 </plist>

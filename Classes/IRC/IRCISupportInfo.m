@@ -3,8 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define ISUPPORT_SUFFIX		@" are supported by this server"
-#define OP_VALUE			100
+#define _isupportSuffix		@" are supported by this server"
+#define _opValue			100
 
 @interface IRCISupportInfo (Private)
 - (void)setValue:(NSInteger)value forMode:(unsigned char)m;
@@ -36,19 +36,19 @@
 
 - (void)reset
 {
-	memset(modes, 0, MODES_SIZE);
+	memset(modes, 0, TXModesSize);
 	
 	self.nickLen = 9;
 	self.modesCount = 3;
 	
-	[self setValue:OP_VALUE forMode:'o'];
-	[self setValue:OP_VALUE forMode:'h'];
-	[self setValue:OP_VALUE forMode:'v'];
-	[self setValue:OP_VALUE forMode:'a'];
-	[self setValue:OP_VALUE forMode:'q'];
-	[self setValue:OP_VALUE forMode:'b'];
-	[self setValue:OP_VALUE forMode:'e'];
-    [self setValue:OP_VALUE forMode:'u'];
+	[self setValue:_opValue forMode:'o'];
+	[self setValue:_opValue forMode:'h'];
+	[self setValue:_opValue forMode:'v'];
+	[self setValue:_opValue forMode:'a'];
+	[self setValue:_opValue forMode:'q'];
+	[self setValue:_opValue forMode:'b'];
+	[self setValue:_opValue forMode:'e'];
+    [self setValue:_opValue forMode:'u'];
 	
 	[self setValue:1 forMode:'I'];
 	[self setValue:1 forMode:'R'];
@@ -68,11 +68,11 @@
 
 - (BOOL)update:(NSString *)str client:(IRCClient *)client
 {
-	if ([str hasSuffix:ISUPPORT_SUFFIX]) {
-		str = [str safeSubstringToIndex:(str.length - [ISUPPORT_SUFFIX length])];
+	if ([str hasSuffix:_isupportSuffix]) {
+		str = [str safeSubstringToIndex:(str.length - [_isupportSuffix length])];
 	}
 	
-	NSArray *ary = [str split:NSWhitespaceCharacter];
+	NSArray *ary = [str split:NSStringWhitespacePlaceholder];
 	
 	for (NSString *s in ary) {
 		NSString *key = s;
@@ -177,7 +177,7 @@
 		case 1: return YES; break;
 		case 2: return YES; break;
 		case 3: return plus; break;
-		case OP_VALUE: return YES; break;
+		case _opValue: return YES; break;
 		default: return NO; break;
 	}
 }
@@ -218,7 +218,7 @@
 					self.userModeVPrefix = modeChar;
 				}
 				
-				[self setValue:OP_VALUE forMode:rawKey];
+				[self setValue:_opValue forMode:rawKey];
 			}
 		}
 	}
@@ -273,7 +273,7 @@
 	
 	m.mode = [mode characterAtIndex:0];
 	m.plus = NO;
-	m.param = NSNullObject;
+	m.param = NSStringEmptyPlaceholder;
 	
 	return m;
 }

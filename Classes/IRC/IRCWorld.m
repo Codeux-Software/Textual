@@ -3,14 +3,14 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define AUTO_CONNECT_DELAY              1
-#define RECONNECT_AFTER_WAKE_UP_DELAY	8
+#define _autoConnectDelay				1
+#define _reconnectAfterWakeupDelay		8
 
-#define TREE_DRAG_ITEM_TYPE     @"tree"
-#define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
+#define _treeDragItemType		@"tree"
+#define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
-#define TREE_CLIENT_HEIGHT		21.0
-#define TREE_CHANNEL_HEIGHT		18.0
+#define _treeClientHeight		21.0
+#define _treeChannelHeight		18.0
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;
@@ -90,7 +90,7 @@
 {
 	[self.serverList setTarget:self];
 	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
-	[self.serverList registerForDraggedTypes:TREE_DRAG_ITEM_TYPES];
+	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 	
 	IRCClient *client = nil;
 	
@@ -118,8 +118,8 @@
 
 - (void)save
 {
-	[Preferences saveWorld:[self dictionaryValue]];
-	[Preferences sync];
+	[TPCPreferences saveWorld:[self dictionaryValue]];
+	[TPCPreferences sync];
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -207,12 +207,12 @@
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message
 {
-	if ([Preferences logAllHighlightsToQuery]) {
+	if ([TPCPreferences logAllHighlightsToQuery]) {
 		message = [message trim];
 		
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
 		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time,
-						   [message attributedStringWithIRCFormatting:DefaultListViewFont], nil];
+						   [message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont], nil];
 		
 		/* We insert at head so that latest is always at top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
@@ -233,14 +233,14 @@
 	
 	NSInteger delay = 0;
 	
-	if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;
+	if (afterWakeUp) delay += _reconnectAfterWakeupDelay;
 	
 	for (IRCClient *c in self.clients) {
-        if ((c.disconnectType == DISCONNECT_SLEEP_MODE && afterWakeUp) || afterWakeUp == NO) { 
+        if ((c.disconnectType == IRCSleepModeDisconnectMode && afterWakeUp) || afterWakeUp == NO) { 
             if (c.config.autoConnect) {
                 [c autoConnect:delay];
 			
-                delay += AUTO_CONNECT_DELAY;
+                delay += _autoConnectDelay;
             }
         }
 	}
@@ -256,7 +256,7 @@
 - (void)prepareForSleep
 {
 	for (IRCClient *c in self.clients) {
-        c.disconnectType = DISCONNECT_SLEEP_MODE;
+        c.disconnectType = IRCSleepModeDisconnectMode;
         
 		[c quit:c.config.sleepQuitMessage];
 	}
@@ -285,7 +285,7 @@
 			c.treeUnreadCount = 0;
 			c.keywordCount = 0;
 			
-			if ([Preferences autoAddScrollbackMark]) {
+			if ([TPCPreferences autoAddScrollbackMark]) {
 				[c.log unmark];
 				[c.log mark];
 			}
@@ -309,13 +309,13 @@
 
 - (void)updateIcon
 {
-	if ([Preferences displayDockBadge]) {
+	if ([TPCPreferences displayDockBadge]) {
 		NSInteger messageCount = 0;
 		NSInteger highlightCount = 0;
 		
 		for (IRCClient *u in self.clients) {
 			for (IRCChannel *c in u.channels) {
-				if ([c.name isEqualToString:TXTLS(@"SERVER_NOTICES_WINDOW_TITLE")] == NO) {
+				if ([c.name isEqualToString:TXTLS(@"ServerNoticeTreeItemTitle")] == NO) {
 					messageCount   += [c dockUnreadCount];
 					highlightCount += [c keywordCount];
 				}
@@ -323,9 +323,9 @@
 		}
 		
 		if (messageCount == 0 && highlightCount == 0) {
-			[DockIcon drawWithoutCounts];
+			[TVCDockIcon drawWithoutCounts];
 		} else {
-			[DockIcon drawWithHilightCount:highlightCount messageCount:messageCount];
+			[TVCDockIcon drawWithHilightCount:highlightCount messageCount:messageCount];
 		}
 	}
 }
@@ -409,11 +409,11 @@
 	}
 }
 
-- (void)notifyOnGrowl:(NotificationType)type title:(NSString *)title
+- (void)notifyOnGrowl:(TXNotificationType)type title:(NSString *)title
 				 desc:(NSString *)desc userInfo:(NSDictionary *)info
 {
-	if ([Preferences growlEnabledForEvent:type] == NO) return;
-	if ([Preferences stopGrowlOnActive] && [self.window isOnCurrentWorkspace]) return;
+	if ([TPCPreferences growlEnabledForEvent:type] == NO) return;
+	if ([TPCPreferences stopGrowlOnActive] && [self.window isOnCurrentWorkspace]) return;
 	
 	[self.growl notify:type title:title desc:desc userInfo:info];
 }
@@ -424,7 +424,7 @@
 - (void)updateTitle
 {
 	if (PointerIsEmpty(selected)) {
-		[window setTitle:[Preferences applicationName]];
+		[window setTitle:[TPCPreferences applicationName]];
 		
 		return;
 	}
@@ -480,12 +480,12 @@
 		}
 		
 		if (c.isChannel) {
-			[title appendFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_USERS"), [c.members count]];
+			[title appendFormat:TXTLS(@"ChannelApplicationTitleUserCount"), [c.members count]];
 			
 			NSString *modes = [c.mode titleString];
 			
 			if ([modes length] >= 2) {
-				[title appendFormat:TXTLS(@"CHANNEL_APPLICATION_TITLE_MODES"), modes];
+				[title appendFormat:TXTLS(@"ChannelApplicationTitleModeValue"), modes];
 			}
 		}
 		
@@ -627,7 +627,7 @@
 
 - (void)reloadTheme
 {
-	self.viewTheme.name = [Preferences themeName];
+	self.viewTheme.name = [TPCPreferences themeName];
 	
 	NSMutableArray *logs = [NSMutableArray array];
 	
@@ -639,7 +639,7 @@
 		}
 	}
 	
-	for (LogController *log in logs) {
+	for (TVCLogController *log in logs) {
 		[log reloadTheme];
 	}
 }
@@ -690,8 +690,8 @@
 	c.uid = ++self.itemId;
 	c.world = self;
 	
-	if ([Preferences inputHistoryIsChannelSpecific]) {
-		c.inputHistory = [InputHistory new];
+	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+		c.inputHistory = [TLOInputHistory new];
 	}
 	
 	c.log = [self createLogWithClient:c channel:nil];
@@ -724,8 +724,8 @@
 	c.client = client;
 	c.mode.isupport = client.isupport;
 	
-	if ([Preferences inputHistoryIsChannelSpecific]) {
-		c.inputHistory = [InputHistory new];
+	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+		c.inputHistory = [TLOInputHistory new];
 	}
 	
 	[c setup:seed];
@@ -733,7 +733,7 @@
 	c.log = [self createLogWithClient:client channel:c];
 	
 	switch (seed.type) {
-		case CHANNEL_TYPE_CHANNEL:
+		case IRCChannelNormalType:
 		{
 			NSInteger n = [client indexOfTalkChannel];
 			
@@ -759,7 +759,7 @@
 	IRCChannelConfig *seed = [[IRCChannelConfig alloc] init];
 	
 	seed.name = nick;
-	seed.type = CHANNEL_TYPE_TALK;
+	seed.type = IRCChannelPrivateMessageType;
 	
 	IRCChannel *c = [self createChannel:seed client:client reload:YES adjust:YES];
 	
@@ -891,9 +891,9 @@
 	}
 }
 
-- (LogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
+- (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
 {
-	LogController *c = [LogController new];
+	TVCLogController *c = [TVCLogController new];
 	
 	c.menu = self.logMenu;
 	c.urlMenu = self.urlMenu;
@@ -903,7 +903,7 @@
 	c.world = self;
 	c.client = client;
 	c.channel = channel;
-	c.maxLines = [Preferences maxLogLines];
+	c.maxLines = [TPCPreferences maxLogLines];
 	
 	c.theme = self.viewTheme;
 	
@@ -922,8 +922,8 @@
 	[self focusInputText];
 	
 	switch (e.keyCode) {
-		case KEY_RETURN:
-		case KEY_ENTER:
+		case TXKeyReturnCode:
+		case TXKeyEnterCode:
 			return;
 	}
 	
@@ -974,11 +974,11 @@
 	
 	if (PointerIsEmpty(c)) {
 		if (u.isConnecting || u.isConnected || u.isLoggedIn) {
-			if ([Preferences disconnectOnDoubleclick]) {
+			if ([TPCPreferences disconnectOnDoubleclick]) {
 				[u quit];
 			}
 		} else {
-			if ([Preferences connectOnDoubleclick]) {
+			if ([TPCPreferences connectOnDoubleclick]) {
 				[u connect];
 			}
 		}
@@ -987,11 +987,11 @@
 	} else {		
 		if (u.isLoggedIn) {
 			if (c.isActive) {
-				if ([Preferences leaveOnDoubleclick]) {
+				if ([TPCPreferences leaveOnDoubleclick]) {
 					[u partChannel:c];
 				}
 			} else {
-				if ([Preferences joinOnDoubleclick]) {
+				if ([TPCPreferences joinOnDoubleclick]) {
 					[u joinChannel:c];
 				}
 			}
@@ -1031,13 +1031,13 @@
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(IRCTreeItem *)item
 {
 	if (PointerIsEmpty(item) || item.isClient) {
-		return TREE_CLIENT_HEIGHT;
+		return _treeClientHeight;
 	}
 	
-	return TREE_CHANNEL_HEIGHT;
+	return _treeChannelHeight;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(ServerListCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(TVCServerListCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
 	cell.parent		= self.serverList;
 	cell.cellItem	= item;
@@ -1082,7 +1082,7 @@
 	
 	[self.selected resetState];
 	
-	LogController *log = [self.selected log];
+	TVCLogController *log = [self.selected log];
 	
 	self.logBase.contentView = [log view];
 	[log notifyDidBecomeVisible];
@@ -1108,19 +1108,19 @@
 	
 	[self.selected.log.view clearSelection];
 	
-	if ([Preferences inputHistoryIsChannelSpecific]) {
+	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		NSAttributedString *inputValue = [self.text attributedStringValue];
 		
 		self.master.inputHistory = self.selected.inputHistory;
 		
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
-		InputHistory *oldHistory = previous.inputHistory;
-		InputHistory *newHistory = self.selected.inputHistory;
+		TLOInputHistory *oldHistory = previous.inputHistory;
+		TLOInputHistory *newHistory = self.selected.inputHistory;
 		
 		[oldHistory setLastHistoryItem:inputValue];
 		
-		[self.text setStringValue:NSNullObject];
+		[self.text setStringValue:NSStringEmptyPlaceholder];
 		
 		if (NSObjectIsNotEmpty(newHistory.lastHistoryItem)) {
 			[self.text setAttributedStringValue:newHistory.lastHistoryItem];
@@ -1156,9 +1156,9 @@
 		s = [NSString stringWithFormat:@"%ld-%ld", c.client.uid, c.uid];
 	}
 	
-	[pboard declareTypes:TREE_DRAG_ITEM_TYPES owner:self];
+	[pboard declareTypes:_treeDragItemTypes owner:self];
 	
-	[pboard setPropertyList:s forType:TREE_DRAG_ITEM_TYPE];
+	[pboard setPropertyList:s forType:_treeDragItemType];
 	
 	return YES;
 }
@@ -1182,9 +1182,9 @@
 	if (index < 0) return NSDragOperationNone;
 	
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if (PointerIsEmpty([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES])) return NSDragOperationNone;
+	if (PointerIsEmpty([pboard availableTypeFromArray:_treeDragItemTypes])) return NSDragOperationNone;
 	
-	NSString *infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
+	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
 	if (PointerIsEmpty(infoStr)) return NSDragOperationNone;
 	
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];
@@ -1234,9 +1234,9 @@
 	if (index < 0) return NO;
 	
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if (PointerIsEmpty([pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES])) return NO;
+	if (PointerIsEmpty([pboard availableTypeFromArray:_treeDragItemTypes])) return NO;
 	
-	NSString *infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
+	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
 	if (PointerIsEmpty(infoStr)) return NO;
 	
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];

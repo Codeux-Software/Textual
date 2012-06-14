@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSDictionary (NSDictionaryHelper)
+@implementation NSDictionary (TXDictionaryHelper)
 
 - (BOOL)boolForKey:(NSString *)key
 {
@@ -37,7 +37,7 @@
 	return 0;
 }
 
-- (NSDoubleN)doubleForKey:(NSString *)key
+- (TXNSDouble)doubleForKey:(NSString *)key
 {
 	id obj = [self objectForKey:key];
 	
@@ -115,7 +115,7 @@
 
 @end
 
-@implementation NSMutableDictionary (NSMutableDictionaryHelper)
+@implementation NSMutableDictionary (TXMutableDictionaryHelper)
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
@@ -132,7 +132,7 @@
 	[self setObject:NSNumberWithLongLong(value) forKey:key];
 }
 
-- (void)setDouble:(NSDoubleN)value forKey:(NSString *)key
+- (void)setDouble:(TXNSDouble)value forKey:(NSString *)key
 {
 	[self setObject:NSNumberWithDouble(value) forKey:key];
 }

@@ -36,7 +36,7 @@
 		
 		self.sendQueue = [NSMutableArray new];
 		
-		self.timer = [Timer new];
+		self.timer = [TLOTimer new];
 		self.timer.delegate = self;
 	}
 	
@@ -55,7 +55,7 @@
 	
 	self.maxMsgCount = 0;
 	
-	self.conn = [TCPClient new];
+	self.conn = [TLOSocketClient new];
 	self.conn.delegate = self;
 	self.conn.host = self.host;
 	self.conn.port = self.port;
@@ -210,7 +210,7 @@
 	}
 }
 
-- (void)tcpClientDidConnect:(TCPClient *)sender
+- (void)tcpClientDidConnect:(TLOSocketClient *)sender
 {
 	[self.sendQueue removeAllObjects];
 	
@@ -219,7 +219,7 @@
 	}
 }
 
-- (void)tcpClient:(TCPClient *)sender error:(NSString *)error
+- (void)tcpClient:(TLOSocketClient *)sender error:(NSString *)error
 {
 	[self.timer stop];
 	
@@ -230,7 +230,7 @@
 	}
 }
 
-- (void)tcpClientDidDisconnect:(TCPClient *)sender
+- (void)tcpClientDidDisconnect:(TLOSocketClient *)sender
 {
 	[self.timer stop];
 	
@@ -241,7 +241,7 @@
 	}
 }
 
-- (void)tcpClientDidReceiveData:(TCPClient *)sender
+- (void)tcpClientDidReceiveData:(TLOSocketClient *)sender
 {
 	while (1 == 1) {
 		NSData *data = [self.conn readLine];
@@ -254,7 +254,7 @@
 	}
 }
 
-- (void)tcpClientDidSendData:(TCPClient *)sender
+- (void)tcpClientDidSendData:(TLOSocketClient *)sender
 {
 	self.sending = NO;
 	

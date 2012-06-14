@@ -3,10 +3,10 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-#define LF	0xa
-#define CR	0xd
+#define _LF	0xa
+#define _CR	0xd
 
-@implementation NSString (NSStringHelper)
+@implementation NSString (TXStringHelper)
 
 /* Private Header */
 BOOL isSurrogate(UniChar c);
@@ -154,7 +154,7 @@ NSInteger ctoi(unsigned char c);
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		
-		if (IsNumeric(c) == NO) {
+		if (TXIsNumeric(c) == NO) {
 			return NO;
 		}
 	}
@@ -173,7 +173,7 @@ NSInteger ctoi(unsigned char c);
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		
-		if (IsAlphaNum(c) == NO) {
+		if (TXTXIsAlphaNumeric(c) == NO) {
 			return NO;
 		}
 	}
@@ -270,7 +270,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
 		
-		if (IsWordLetter(c)) {
+		if (TXIsWordLetter(c)) {
 			dest[n++] = c;
 		} else {
 			dest[n++] = '_';
@@ -305,15 +305,15 @@ BOOL isUnicharDigit(unichar c)
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference
 {
-	if (formattingPreference && [Preferences removeAllFormatting]) {
+	if (formattingPreference && [TPCPreferences removeAllFormatting]) {
 		return [self stripEffects];
 	}
     
     NSDictionary *input = [NSDictionary dictionaryWithObjectsAndKeys:defaultFont, @"attributedStringFont", nil];
 	
-	return [LogRenderer renderBody:self 
+	return [LVCLogRenderer renderBody:self 
                         controller:nil 
-                        renderType:ASCII_TO_ATTRIBUTED_STRING 
+                        renderType:TVCLogRendererAttributedStringType 
                         properties:input resultInfo:NULL];
 }
 
@@ -357,7 +357,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar e = src[i+1];
-					if (IsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) continue;
+					if (TXIsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) continue;
 					i++;
 					
 					if ((e == ',') == NO) {
@@ -377,7 +377,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar h = src[i+1];
-					if (IsIRCColor(h, (g - '0')) == NO) continue;
+					if (TXIsIRCColor(h, (g - '0')) == NO) continue;
 					i++;
 					
 					break;
@@ -438,7 +438,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *shortstring = [self safeSubstringFromIndex:start];
 	
-	NSRange rs = [TXRegularExpression string:shortstring rangeOfRegex:@"#([a-zA-Z0-9\\#\\-]+)"];
+	NSRange rs = [TLORegularExpression string:shortstring rangeOfRegex:@"#([a-zA-Z0-9\\#\\-]+)"];
 	if (rs.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
 	NSRange r = NSMakeRange((rs.location + start), rs.length);
 	
@@ -447,7 +447,7 @@ BOOL isUnicharDigit(unichar c)
 	if (0 <= prev && prev < len) {
 		UniChar c = [self characterAtIndex:prev];
 		
-		if (IsWordLetter(c)) {
+		if (TXIsWordLetter(c)) {
 			return NSMakeRange(NSNotFound, 0);
 		}
 	}
@@ -457,7 +457,7 @@ BOOL isUnicharDigit(unichar c)
 	if (next < len) {
 		UniChar c = [self characterAtIndex:next];
 		
-		if (IsWordLetter(c)) {
+		if (TXIsWordLetter(c)) {
 			return NSMakeRange(NSNotFound, 0);
 		}
 	}
@@ -467,12 +467,12 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIComponent
 {
-	if (NSObjectIsEmpty(self)) return NSNullObject;
+	if (NSObjectIsEmpty(self)) return NSStringEmptyPlaceholder;
 	
 	const char *src		   = [self UTF8String];
 	const char *characters = "0123456789ABCDEF";
 	
-	if (src == NULL) return NSNullObject;
+	if (src == NULL) return NSStringEmptyPlaceholder;
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	
@@ -482,7 +482,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
 		
-		if (IsWordLetter(c) || c == '-' || c == '.' || c == '~') {
+		if (TXIsWordLetter(c) || c == '-' || c == '.' || c == '~') {
 			*dest++ = c;
 		} else {
 			*dest++ = '%';
@@ -496,12 +496,12 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)encodeURIFragment
 {
-	if (NSObjectIsEmpty(self)) return NSNullObject;
+	if (NSObjectIsEmpty(self)) return NSStringEmptyPlaceholder;
 	
 	const char *src		   = [self UTF8String];
 	const char *characters = "0123456789ABCDEF";
 	
-	if (src == NULL) return NSNullObject;
+	if (src == NULL) return NSStringEmptyPlaceholder;
 	
 	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	
@@ -511,7 +511,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
 		
-		if (IsWordLetter(c)
+		if (TXIsWordLetter(c)
 			|| c == '#' || c == '%'
 			|| c == '&' || c == '+'
 			|| c == ',' || c == '-'
@@ -538,8 +538,8 @@ BOOL isUnicharDigit(unichar c)
 
 + (NSString *)stringWithUUID 
 {
-#ifdef _USES_FOUNDATION_BASED_NSUUID
-	if ([Preferences featureAvailableToOSXMountainLion]) {
+#ifdef TXFoundationBasedUUIDAvailable
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		NSUUID *uuidObj = [NSUUID UUID];
 		
 		return [uuidObj UUIDString];
@@ -606,8 +606,8 @@ BOOL isUnicharDigit(unichar c)
     /* We do not want ports in server address. */
     NSString *bob = [self trim];
     
-    if ([TXRegularExpression string:bob isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
-        [TXRegularExpression string:bob isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"]) {
+    if ([TLORegularExpression string:bob isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
+        [TLORegularExpression string:bob isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"]) {
         
         NSInteger stringPos = [bob rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, self.length)].location;
         
@@ -669,7 +669,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(NSDoubleN)value							{ return [NSString stringWithFormat:@"%f", value]; }
++ (NSString *)stringWithDouble:(TXNSDouble)value							{ return [NSString stringWithFormat:@"%f", value]; }
 
 @end
 
@@ -686,7 +686,7 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)getToken
 {
-	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:NSWhitespaceCharacter]];
+	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:NSStringWhitespacePlaceholder]];
 	
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
 		NSString *result = [self safeSubstringToIndex:r.location];
@@ -705,7 +705,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSString *result = [self copy];
 	
-	[self setString:NSNullObject];
+	[self setString:NSStringEmptyPlaceholder];
 	
 	return result;
 }
@@ -748,7 +748,7 @@ BOOL isUnicharDigit(unichar c)
 
 + (NSAttributedString *)emptyString
 {
-    return [NSAttributedString emptyStringWithBase:NSNullObject];
+    return [NSAttributedString emptyStringWithBase:NSStringEmptyPlaceholder];
 }
 
 + (NSAttributedString *)emptyStringWithBase:(NSString *)base
