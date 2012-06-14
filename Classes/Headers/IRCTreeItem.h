@@ -3,11 +3,12 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-@class IRCWorld, IRCClient, IRCChannel, InputHistory, LogController;
+@class TVCLogController, IRCClient, IRCChannel;
+@class TLOInputHistory, IRCWorld;
 
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, strong) LogController *log;
+@property (nonatomic, strong) TVCLogController *log;
 @property (nonatomic, assign) BOOL isKeyword;
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, assign) BOOL isNewTalk;
@@ -20,7 +21,7 @@
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, weak) NSString *label;
 @property (nonatomic, weak) NSString *name;
-@property (nonatomic, strong) InputHistory *inputHistory;
+@property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) NSAttributedString *currentInputHistory;
 
 - (void)resetState;

@@ -20,7 +20,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.type = CHANNEL_TYPE_CHANNEL;
+		self.type = IRCChannelNormalType;
 		
         self.inlineImages = NO;
         self.iJPQActivity = NO;
@@ -28,11 +28,11 @@
 		self.autoJoin = YES;
 		self.growl = YES;
 		
-		self.name = NSNullObject;
-		self.mode = NSNullObject;
-		self.topic = NSNullObject;
-		self.password = NSNullObject;
-		self.encryptionKey = NSNullObject;
+		self.name = NSStringEmptyPlaceholder;
+		self.mode = NSStringEmptyPlaceholder;
+		self.topic = NSStringEmptyPlaceholder;
+		self.password = NSStringEmptyPlaceholder;
+		self.encryptionKey = NSStringEmptyPlaceholder;
 	}
     
 	return self;
@@ -41,10 +41,10 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		self.type			= (ChannelType)[dic integerForKey:@"type"];
+		self.type			= (IRCChannelType)[dic integerForKey:@"type"];
 		
-		self.name			= (([dic stringForKey:@"name"]) ?: NSNullObject);
-		self.password		= (([dic stringForKey:@"password"]) ?: NSNullObject);
+		self.name			= (([dic stringForKey:@"name"]) ?: NSStringEmptyPlaceholder);
+		self.password		= (([dic stringForKey:@"password"]) ?: NSStringEmptyPlaceholder);
 		
 		self.growl			= [dic boolForKey:@"growl"];
 		self.autoJoin		= [dic boolForKey:@"auto_join"];
@@ -52,9 +52,9 @@
 		self.inlineImages	= [dic boolForKey:@"disable_images"];
 		self.iJPQActivity	= [dic boolForKey:@"ignore_join,leave"];
 		
-		self.mode			= (([dic stringForKey:@"mode"]) ?: NSNullObject);
-		self.topic			= (([dic stringForKey:@"topic"]) ?: NSNullObject);
-		self.encryptionKey	= (([dic stringForKey:@"encryptionKey"]) ?: NSNullObject);
+		self.mode			= (([dic stringForKey:@"mode"]) ?: NSStringEmptyPlaceholder);
+		self.topic			= (([dic stringForKey:@"topic"]) ?: NSStringEmptyPlaceholder);
+		self.encryptionKey	= (([dic stringForKey:@"encryptionKey"]) ?: NSStringEmptyPlaceholder);
 		
 		return self;
 	}

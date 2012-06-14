@@ -3,8 +3,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-@class IRCISupportInfo;
-
 @interface IRCUser : NSObject
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSString *nick;
@@ -18,7 +16,8 @@
 @property (nonatomic, assign) BOOL isMyself;
 @property (nonatomic, assign) char mark;
 @property (nonatomic, assign) BOOL isOp;
-@property (nonatomic, assign) BOOL isHalfOp; 
+@property (nonatomic, assign) BOOL isHalfOp;
+@property (nonatomic, assign) BOOL isIRCOp;
 @property (nonatomic, assign) NSInteger colorNumber;
 @property (nonatomic, assign) CGFloat totalWeight;
 @property (nonatomic, assign) CGFloat incomingWeight;

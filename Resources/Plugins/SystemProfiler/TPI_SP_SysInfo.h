@@ -31,5 +31,5 @@
 + (NSString *)getBandwidthStats:(IRCWorld *)world;
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
-+ (NSString *)formattedCPUFrequency:(NSDoubleN)rate;
++ (NSString *)formattedCPUFrequency:(TXNSDouble)rate;
 @end

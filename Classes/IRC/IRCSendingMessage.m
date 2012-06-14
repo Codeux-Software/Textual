@@ -30,21 +30,21 @@
 	if (NSObjectIsEmpty(self.string)) {
 		BOOL forceCompleteColon = NO;
 		
-		if ([self.command isEqualToString:IRCCI_PRIVMSG] ||
-			[self.command isEqualToString:IRCCI_NOTICE]) {
+		if ([self.command isEqualToString:IRCCommandIndexPrivmsg] ||
+			[self.command isEqualToString:IRCCommandIndexNotice]) {
 			
 			forceCompleteColon = YES;
-		} else if ([self.command isEqualToString:IRCCI_NICK]
-				 || [self.command isEqualToString:IRCCI_MODE]
-				 || [self.command isEqualToString:IRCCI_JOIN]
-				 || [self.command isEqualToString:IRCCI_NAMES]
-				 || [self.command isEqualToString:IRCCI_WHO]
-				 || [self.command isEqualToString:IRCCI_LIST]
-				 || [self.command isEqualToString:IRCCI_INVITE]
-				 || [self.command isEqualToString:IRCCI_WHOIS]
-				 || [self.command isEqualToString:IRCCI_WHOWAS]
-				 || [self.command isEqualToString:IRCCI_ISON]
-				 || [self.command isEqualToString:IRCCI_USER]) {
+		} else if ([self.command isEqualToString:IRCCommandIndexNick]
+				 || [self.command isEqualToString:IRCCommandIndexMode]
+				 || [self.command isEqualToString:IRCCommandIndexJoin]
+				 || [self.command isEqualToString:IRCCommandIndexNames]
+				 || [self.command isEqualToString:IRCCommandIndexWho]
+				 || [self.command isEqualToString:IRCCommandIndexList]
+				 || [self.command isEqualToString:IRCCommandIndexInvite]
+				 || [self.command isEqualToString:IRCCommandIndexWhois]
+				 || [self.command isEqualToString:IRCCommandIndexWhowas]
+				 || [self.command isEqualToString:IRCCommandIndexIson]
+				 || [self.command isEqualToString:IRCCommandIndexUser]) {
 			
 			self.completeColon = NO;
 		}
@@ -59,11 +59,11 @@
 			for (NSInteger i = 0; i < (count - 1); ++i) {
 				NSString *s = [self.params safeObjectAtIndex:i];
 				
-				[d appendString:NSWhitespaceCharacter];
+				[d appendString:NSStringWhitespacePlaceholder];
 				[d appendString:s];
 			}
 			
-			[d appendString:NSWhitespaceCharacter];
+			[d appendString:NSStringWhitespacePlaceholder];
 			
 			NSString *s = [self.params safeObjectAtIndex:(count - 1)];
 			

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12A206j</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2507</string>
-		<string key="IBDocument.AppKitVersion">1172.1</string>
-		<string key="IBDocument.HIToolboxVersion">613.00</string>
+		<string key="IBDocument.SystemVersion">12A239</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2541</string>
+		<string key="IBDocument.AppKitVersion">1179.1</string>
+		<string key="IBDocument.HIToolboxVersion">620.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2507</string>
+			<string key="NS.object.0">2541</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSBox</string>
@@ -1491,13 +1491,13 @@
 				<string key="NSName">_NSMainMenu</string>
 			</object>
 			<object class="NSCustomObject" id="569757849">
-				<string key="NSClassName">MasterController</string>
+				<string key="NSClassName">TXMasterController</string>
 			</object>
 			<object class="NSCustomObject" id="361464326">
-				<string key="NSClassName">MenuController</string>
+				<string key="NSClassName">TXMenuController</string>
 			</object>
 			<object class="NSCustomObject" id="4596802">
-				<string key="NSClassName">IRCTextFormatterMenu</string>
+				<string key="NSClassName">TVCTextFormatterMenu</string>
 			</object>
 			<object class="NSMenuItem" id="706863929">
 				<string key="NSTitle">IRC Formatting</string>
@@ -3019,7 +3019,7 @@
 				<string key="NSWindowRect">{{874, 449}, {652, 551}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Textual</string>
-				<string key="NSWindowClass">MainWindow</string>
+				<string key="NSWindowClass">TVCMainWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
@@ -3438,7 +3438,7 @@
 												<string>WebURLsWithTitlesPboardType</string>
 												<string>public.url</string>
 											</set>
-											<string key="NSFrameSize">{612, 17}</string>
+											<string key="NSFrameSize">{612, 26}</string>
 											<reference key="NSSuperview" ref="915392651"/>
 											<reference key="NSNextKeyView" ref="821141213"/>
 											<string key="NSReuseIdentifierKey">_NS:3760</string>
@@ -3461,7 +3461,7 @@
 												<int key="NSTCFlags">1</int>
 											</object>
 											<object class="NSTextViewSharedData" key="NSSharedData">
-												<int key="NSFlags">67153543</int>
+												<int key="NSFlags">100707975</int>
 												<int key="NSTextCheckingTypes">0</int>
 												<nil key="NSMarkedAttributes"/>
 												<reference key="NSBackgroundColor" ref="317973488"/>
@@ -3494,7 +3494,6 @@
 											</object>
 											<int key="NSTVFlags">6</int>
 											<string key="NSMaxSize">{612, 10000000}</string>
-											<string key="NSMinize">{218, 17}</string>
 											<nil key="NSDelegate"/>
 										</object>
 									</array>
@@ -3882,486 +3881,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onServerProperties:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="728532574"/>
-					</object>
-					<int key="connectionID">351</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onConnect:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="832713501"/>
-					</object>
-					<int key="connectionID">352</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDisconnect:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="288115996"/>
-					</object>
-					<int key="connectionID">353</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onJoin:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="378874017"/>
-					</object>
-					<int key="connectionID">354</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onLeave:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="1062562259"/>
-					</object>
-					<int key="connectionID">355</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddServer:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="371128240"/>
-					</object>
-					<int key="connectionID">356</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onCopyServer:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="914410595"/>
-					</object>
-					<int key="connectionID">357</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDeleteServer:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="824403706"/>
-					</object>
-					<int key="connectionID">358</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="110199382"/>
-					</object>
-					<int key="connectionID">359</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="416367301"/>
-					</object>
-					<int key="connectionID">360</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDeleteChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="408611574"/>
-					</object>
-					<int key="connectionID">361</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberWhois:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="117915178"/>
-					</object>
-					<int key="connectionID">363</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberTalk:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="208034414"/>
-					</object>
-					<int key="connectionID">364</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddServer:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="360772615"/>
-					</object>
-					<int key="connectionID">370</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onSearchWeb:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="721359463"/>
-					</object>
-					<int key="connectionID">396</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onSearchWeb:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="70069596"/>
-					</object>
-					<int key="connectionID">400</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onCancelReconnecting:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="217375488"/>
-					</object>
-					<int key="connectionID">407</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onNick:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="66905723"/>
-					</object>
-					<int key="connectionID">408</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onNick:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="431532922"/>
-					</object>
-					<int key="connectionID">409</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onPreferences:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="89768667"/>
-					</object>
-					<int key="connectionID">413</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onCopyUrl:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="765886912"/>
-					</object>
-					<int key="connectionID">430</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberPing:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="123430436"/>
-					</object>
-					<int key="connectionID">444</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberTime:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="754705348"/>
-					</object>
-					<int key="connectionID">445</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberVersion:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="392368454"/>
-					</object>
-					<int key="connectionID">446</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberUserInfo:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="1037840032"/>
-					</object>
-					<int key="connectionID">447</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberClientInfo:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="505365232"/>
-					</object>
-					<int key="connectionID">448</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onChannelList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="893665359"/>
-					</object>
-					<int key="connectionID">494</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onJoinChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="812957295"/>
-					</object>
-					<int key="connectionID">967</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberInvite:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="787257747"/>
-					</object>
-					<int key="connectionID">1004</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelListSorted:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="743173552"/>
-					</object>
-					<int key="connectionID">1307</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantMainWindowShown:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="25380426"/>
-					</object>
-					<int key="connectionID">1311</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantIgnoreListShown:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="996369234"/>
-					</object>
-					<int key="connectionID">1312</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantAboutWindowShown:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="491891229"/>
-					</object>
-					<int key="connectionID">1313</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberDeOp:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="582565168"/>
-					</object>
-					<int key="connectionID">1338</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberDeVoice:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="483295284"/>
-					</object>
-					<int key="connectionID">1339</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberDeHalfOp:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="1041968715"/>
-					</object>
-					<int key="connectionID">1341</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberHalfOp:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="514173876"/>
-					</object>
-					<int key="connectionID">1342</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberOp:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="49999229"/>
-					</object>
-					<int key="connectionID">1343</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberVoice:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="43131096"/>
-					</object>
-					<int key="connectionID">1344</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberBanKick:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="149367709"/>
-					</object>
-					<int key="connectionID">1346</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberGline:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="840555146"/>
-					</object>
-					<int key="connectionID">1347</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberKill:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="259907435"/>
-					</object>
-					<int key="connectionID">1348</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberShun:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="469013518"/>
-					</object>
-					<int key="connectionID">1349</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberKick:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="925899411"/>
-					</object>
-					<int key="connectionID">1351</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMemberBan:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="107506872"/>
-					</object>
-					<int key="connectionID">1352</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadTextualLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="138370719"/>
-					</object>
-					<int key="connectionID">1380</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantTextualConnnectToHelp:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="114437229"/>
-					</object>
-					<int key="connectionID">1394</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantHostServVhostSet:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="777207958"/>
-					</object>
-					<int key="connectionID">1412</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantIgnoreListShown:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="829662713"/>
-					</object>
-					<int key="connectionID">1452</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantFindPanel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="455127013"/>
-					</object>
-					<int key="connectionID">1463</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantFindPanel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="603120722"/>
-					</object>
-					<int key="connectionID">1464</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantFindPanel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="357422025"/>
-					</object>
-					<int key="connectionID">1465</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadChannelLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="224753435"/>
-					</object>
-					<int key="connectionID">1495</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMode:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="613675874"/>
-					</object>
-					<int key="connectionID">1508</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onTopic:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="739528529"/>
-					</object>
-					<int key="connectionID">1509</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadChannelLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="780948417"/>
-					</object>
-					<int key="connectionID">1510</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onChannelProperties:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="812753476"/>
-					</object>
-					<int key="connectionID">1511</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelBanList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="327121451"/>
-					</object>
-					<int key="connectionID">1512</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadChannelLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="933029848"/>
-					</object>
-					<int key="connectionID">1516</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantMainWindowCentered:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="323632593"/>
-					</object>
-					<int key="connectionID">1525</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">processNavigationItem:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="999446727"/>
@@ -4466,14 +3985,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelBanExceptionList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="1071241716"/>
-					</object>
-					<int key="connectionID">1684</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">openHelpMenuLinkItem:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="731542245"/>
@@ -4522,227 +4033,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelModerated:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="809170009"/>
-					</object>
-					<int key="connectionID">1727</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelModerated:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="679107002"/>
-					</object>
-					<int key="connectionID">1728</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelVoiceOnly:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="995849926"/>
-					</object>
-					<int key="connectionID">1729</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelVoiceOnly:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="1017624667"/>
-					</object>
-					<int key="connectionID">1730</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">commandWShortcutUsed:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="965784219"/>
 					</object>
 					<int key="connectionID">1771</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">wantsFullScreenModeToggled:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="623730998"/>
-					</object>
-					<int key="connectionID">1791</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onShowAcknowledgments:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="938816563"/>
-					</object>
-					<int key="connectionID">1797</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelBanList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="638336192"/>
-					</object>
-					<int key="connectionID">1903</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelModerated:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="794572479"/>
-					</object>
-					<int key="connectionID">1904</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDeleteChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="707037079"/>
-					</object>
-					<int key="connectionID">1905</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddChannel:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="623720347"/>
-					</object>
-					<int key="connectionID">1906</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMode:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="378794669"/>
-					</object>
-					<int key="connectionID">1907</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onChannelProperties:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="982936547"/>
-					</object>
-					<int key="connectionID">1908</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onTopic:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="516291847"/>
-					</object>
-					<int key="connectionID">1909</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelModerated:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="370876993"/>
-					</object>
-					<int key="connectionID">1910</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onJoin:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="364825859"/>
-					</object>
-					<int key="connectionID">1911</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelBanExceptionList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="750835537"/>
-					</object>
-					<int key="connectionID">1912</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadChannelLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="969694554"/>
-					</object>
-					<int key="connectionID">1913</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelVoiceOnly:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="163036947"/>
-					</object>
-					<int key="connectionID">1914</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantToReadChannelLogs:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="884924773"/>
-					</object>
-					<int key="connectionID">1915</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onLeave:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="695244826"/>
-					</object>
-					<int key="connectionID">1916</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelVoiceOnly:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="569555360"/>
-					</object>
-					<int key="connectionID">1917</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMarkAllAsRead:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="766095104"/>
-					</object>
-					<int key="connectionID">1925</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onIncreaseFontSize:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="442725346"/>
-					</object>
-					<int key="connectionID">1926</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onMarkScrollback:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="22765018"/>
-					</object>
-					<int key="connectionID">1927</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDecreaseFontSize:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="458959136"/>
-					</object>
-					<int key="connectionID">1928</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelInviteExceptionList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="744178805"/>
-					</object>
-					<int key="connectionID">2032</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onWantChannelInviteExceptionList:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="423028712"/>
-					</object>
-					<int key="connectionID">2034</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -4762,38 +4057,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onPaste:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="611384082"/>
-					</object>
-					<int key="connectionID">2290</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onPaste:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="678613358"/>
-					</object>
-					<int key="connectionID">2291</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onShowContributors:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="720686644"/>
-					</object>
-					<int key="connectionID">2298</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onClearScrollback:</string>
-						<reference key="source" ref="361464326"/>
-						<reference key="destination" ref="621210569"/>
-					</object>
-					<int key="connectionID">2301</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onNextHighlight:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="590970309"/>
@@ -4810,11 +4073,747 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onGotoScrollbackMark:</string>
+						<string key="label">centerMainWindow:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="323632593"/>
+					</object>
+					<int key="connectionID">2554</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleFullscreenMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="623730998"/>
+					</object>
+					<int key="connectionID">2555</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showAcknowledgments:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="938816563"/>
+					</object>
+					<int key="connectionID">2556</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showContributors:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="720686644"/>
+					</object>
+					<int key="connectionID">2557</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelInviteExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="744178805"/>
+					</object>
+					<int key="connectionID">2558</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelInviteExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="423028712"/>
+					</object>
+					<int key="connectionID">2559</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelBanExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="1071241716"/>
+					</object>
+					<int key="connectionID">2560</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelBanExceptionList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="750835537"/>
+					</object>
+					<int key="connectionID">2561</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelBanList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="327121451"/>
+					</object>
+					<int key="connectionID">2562</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelBanList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="638336192"/>
+					</object>
+					<int key="connectionID">2563</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showFindPanel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="455127013"/>
+					</object>
+					<int key="connectionID">2564</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showFindPanel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="357422025"/>
+					</object>
+					<int key="connectionID">2565</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showFindPanel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="603120722"/>
+					</object>
+					<int key="connectionID">2566</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showSetVhostPrompt:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="777207958"/>
+					</object>
+					<int key="connectionID">2567</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">connectToTextualHelpChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="114437229"/>
+					</object>
+					<int key="connectionID">2568</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openChannelLogs:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="969694554"/>
+					</object>
+					<int key="connectionID">2569</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openChannelLogs:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="884924773"/>
+					</object>
+					<int key="connectionID">2570</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openChannelLogs:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="224753435"/>
+					</object>
+					<int key="connectionID">2571</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openChannelLogs:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="780948417"/>
+					</object>
+					<int key="connectionID">2572</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openChannelLogs:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="933029848"/>
+					</object>
+					<int key="connectionID">2573</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openLogLocation:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="138370719"/>
+					</object>
+					<int key="connectionID">2574</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showAboutWindow:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="491891229"/>
+					</object>
+					<int key="connectionID">2575</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelIgnoreList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="996369234"/>
+					</object>
+					<int key="connectionID">2576</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelIgnoreList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="829662713"/>
+					</object>
+					<int key="connectionID">2577</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showMainWindow:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="25380426"/>
+					</object>
+					<int key="connectionID">2578</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sortChannelListNames:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="743173552"/>
+					</object>
+					<int key="connectionID">2579</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelModerationMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="679107002"/>
+					</object>
+					<int key="connectionID">2580</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelModerationMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="794572479"/>
+					</object>
+					<int key="connectionID">2581</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelModerationMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="370876993"/>
+					</object>
+					<int key="connectionID">2582</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelModerationMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="809170009"/>
+					</object>
+					<int key="connectionID">2583</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelInviteMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="1017624667"/>
+					</object>
+					<int key="connectionID">2584</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelInviteMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="569555360"/>
+					</object>
+					<int key="connectionID">2585</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelInviteMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="163036947"/>
+					</object>
+					<int key="connectionID">2586</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleChannelInviteMode:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="995849926"/>
+					</object>
+					<int key="connectionID">2587</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showPreferencesDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="89768667"/>
+					</object>
+					<int key="connectionID">2588</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">performPaste:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="611384082"/>
+					</object>
+					<int key="connectionID">2589</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">performPaste:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="678613358"/>
+					</object>
+					<int key="connectionID">2590</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">searchGoogle:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="70069596"/>
+					</object>
+					<int key="connectionID">2591</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">searchGoogle:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="721359463"/>
+					</object>
+					<int key="connectionID">2592</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">markScrollback:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="22765018"/>
+					</object>
+					<int key="connectionID">2593</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">clearScrollback:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="621210569"/>
+					</object>
+					<int key="connectionID">2594</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">gotoScrollbackMarker:</string>
 						<reference key="source" ref="361464326"/>
 						<reference key="destination" ref="791838339"/>
 					</object>
-					<int key="connectionID">2308</int>
+					<int key="connectionID">2595</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">markAllAsRead:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="766095104"/>
+					</object>
+					<int key="connectionID">2596</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">increaseLogFontSize:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="442725346"/>
+					</object>
+					<int key="connectionID">2597</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">decreaseLogFontSize:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="458959136"/>
+					</object>
+					<int key="connectionID">2598</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">connect:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="832713501"/>
+					</object>
+					<int key="connectionID">2599</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">disconnect:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="288115996"/>
+					</object>
+					<int key="connectionID">2600</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cancelReconnection:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="217375488"/>
+					</object>
+					<int key="connectionID">2601</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showNicknameChangeDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="431532922"/>
+					</object>
+					<int key="connectionID">2602</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showNicknameChangeDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="66905723"/>
+					</object>
+					<int key="connectionID">2603</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showServerChannelList:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="893665359"/>
+					</object>
+					<int key="connectionID">2604</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="371128240"/>
+					</object>
+					<int key="connectionID">2605</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="360772615"/>
+					</object>
+					<int key="connectionID">2606</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">copyServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="914410595"/>
+					</object>
+					<int key="connectionID">2607</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">deleteServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="824403706"/>
+					</object>
+					<int key="connectionID">2608</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showServerPropertiesDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="728532574"/>
+					</object>
+					<int key="connectionID">2609</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">joinChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="378874017"/>
+					</object>
+					<int key="connectionID">2610</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">joinChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="364825859"/>
+					</object>
+					<int key="connectionID">2611</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">leaveChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="1062562259"/>
+					</object>
+					<int key="connectionID">2612</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">leaveChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="695244826"/>
+					</object>
+					<int key="connectionID">2613</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelTopicDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="516291847"/>
+					</object>
+					<int key="connectionID">2614</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelTopicDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="739528529"/>
+					</object>
+					<int key="connectionID">2615</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelModeDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="378794669"/>
+					</object>
+					<int key="connectionID">2616</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelModeDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="613675874"/>
+					</object>
+					<int key="connectionID">2617</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="416367301"/>
+					</object>
+					<int key="connectionID">2618</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="110199382"/>
+					</object>
+					<int key="connectionID">2619</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="623720347"/>
+					</object>
+					<int key="connectionID">2620</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">deleteChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="408611574"/>
+					</object>
+					<int key="connectionID">2621</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">deleteChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="707037079"/>
+					</object>
+					<int key="connectionID">2622</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelPropertiesDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="982936547"/>
+					</object>
+					<int key="connectionID">2623</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showChannelPropertiesDialog:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="812753476"/>
+					</object>
+					<int key="connectionID">2624</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendWhois:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="117915178"/>
+					</object>
+					<int key="connectionID">2625</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberStartQuery:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="208034414"/>
+					</object>
+					<int key="connectionID">2626</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendInvite:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="787257747"/>
+					</object>
+					<int key="connectionID">2627</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendCTCPPing:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="123430436"/>
+					</object>
+					<int key="connectionID">2628</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendCTCPTime:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="754705348"/>
+					</object>
+					<int key="connectionID">2629</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendCTCPVersion:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="392368454"/>
+					</object>
+					<int key="connectionID">2630</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendCTCPUserinfo:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="1037840032"/>
+					</object>
+					<int key="connectionID">2631</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberSendCTCPClientInfo:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="505365232"/>
+					</object>
+					<int key="connectionID">2632</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeOp:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="49999229"/>
+					</object>
+					<int key="connectionID">2633</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeDeop:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="582565168"/>
+					</object>
+					<int key="connectionID">2634</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeHalfop:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="514173876"/>
+					</object>
+					<int key="connectionID">2635</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeDehalfop:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="1041968715"/>
+					</object>
+					<int key="connectionID">2636</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeVoice:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="43131096"/>
+					</object>
+					<int key="connectionID">2637</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberModeChangeDevoice:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="483295284"/>
+					</object>
+					<int key="connectionID">2638</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberKickFromChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="925899411"/>
+					</object>
+					<int key="connectionID">2639</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberBanFromServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="107506872"/>
+					</object>
+					<int key="connectionID">2640</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberKickbanFromChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="149367709"/>
+					</object>
+					<int key="connectionID">2641</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberKillFromServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="259907435"/>
+					</object>
+					<int key="connectionID">2642</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberGlineFromServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="840555146"/>
+					</object>
+					<int key="connectionID">2643</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">memberShunFromServer:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="469013518"/>
+					</object>
+					<int key="connectionID">2644</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">copyUrl:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="765886912"/>
+					</object>
+					<int key="connectionID">2645</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">joinChannel:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="812957295"/>
+					</object>
+					<int key="connectionID">2646</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -7386,26 +7385,26 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<boolean value="YES" key="21.IBNSWindowAutoPositionCentersVertical"/>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBWindowTemplateEditedContentRect">{{755, 524}, {632, 501}}</string>
-				<string key="2187.CustomClassName">ThinSplitView</string>
+				<string key="2187.CustomClassName">TVCThinSplitView</string>
 				<string key="2187.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2190.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2191.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2193.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2194.CustomClassName">ServerList</string>
+				<string key="2194.CustomClassName">TVCServerList</string>
 				<string key="2194.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2195.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2198.CustomClassName">ServerListCell</string>
+				<string key="2198.CustomClassName">TVCServerListCell</string>
 				<string key="2198.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2199.CustomClassName">ThinSplitView</string>
+				<string key="2199.CustomClassName">TVCThinSplitView</string>
 				<string key="2199.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2201.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2202.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2203.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2205.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2206.CustomClassName">MemberList</string>
+				<string key="2206.CustomClassName">TVCMemberList</string>
 				<string key="2206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2210.CustomClassName">MemberListCell</string>
+				<string key="2210.CustomClassName">TVCMemberListCell</string>
 				<string key="2210.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSMutableDictionary" key="2244.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">AccessibilityDescription</string>
@@ -7424,11 +7423,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="2278.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2279.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2280.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2282.CustomClassName">InputTextFieldScroller</string>
+				<string key="2282.CustomClassName">TVCInputTextFieldScroller</string>
 				<string key="2282.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2284.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2285.CustomClassName">InputTextField</string>
+				<string key="2285.CustomClassName">TVCInputTextField</string>
 				<string key="2285.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2295.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2296.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7553,219 +7552,10 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2553</int>
+			<int key="maxID">2646</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">IRCTextFormatterMenu</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/IRCTextFormatterMenu.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">InputTextField</string>
-					<string key="superclassName">TextField</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/InputTextField.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">InputTextFieldScroller</string>
-					<string key="superclassName">NSScrollView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/InputTextFieldScroller.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ListView</string>
-					<string key="superclassName">NSTableView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ListView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MainWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MainWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MasterController</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="addServerButton">NSButton</string>
-						<string key="addrMenu">NSMenu</string>
-						<string key="chanMenu">NSMenu</string>
-						<string key="channelMenu">NSMenuItem</string>
-						<string key="formattingMenu">IRCTextFormatterMenu</string>
-						<string key="logBase">NSBox</string>
-						<string key="logMenu">NSMenu</string>
-						<string key="memberList">MemberList</string>
-						<string key="memberMenu">NSMenu</string>
-						<string key="memberSplitView">ThinSplitView</string>
-						<string key="menu">MenuController</string>
-						<string key="serverList">ServerList</string>
-						<string key="serverMenu">NSMenuItem</string>
-						<string key="serverSplitView">ThinSplitView</string>
-						<string key="text">InputTextField</string>
-						<string key="treeMenu">NSMenu</string>
-						<string key="urlMenu">NSMenu</string>
-						<string key="window">MainWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="addServerButton">
-							<string key="name">addServerButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="addrMenu">
-							<string key="name">addrMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="chanMenu">
-							<string key="name">chanMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="channelMenu">
-							<string key="name">channelMenu</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="formattingMenu">
-							<string key="name">formattingMenu</string>
-							<string key="candidateClassName">IRCTextFormatterMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="logBase">
-							<string key="name">logBase</string>
-							<string key="candidateClassName">NSBox</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="logMenu">
-							<string key="name">logMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="memberList">
-							<string key="name">memberList</string>
-							<string key="candidateClassName">MemberList</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="memberMenu">
-							<string key="name">memberMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="memberSplitView">
-							<string key="name">memberSplitView</string>
-							<string key="candidateClassName">ThinSplitView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="menu">
-							<string key="name">menu</string>
-							<string key="candidateClassName">MenuController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="serverList">
-							<string key="name">serverList</string>
-							<string key="candidateClassName">ServerList</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="serverMenu">
-							<string key="name">serverMenu</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="serverSplitView">
-							<string key="name">serverSplitView</string>
-							<string key="candidateClassName">ThinSplitView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="text">
-							<string key="name">text</string>
-							<string key="candidateClassName">InputTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="treeMenu">
-							<string key="name">treeMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="urlMenu">
-							<string key="name">urlMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="window">
-							<string key="name">window</string>
-							<string key="candidateClassName">MainWindow</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MasterController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MemberList</string>
-					<string key="superclassName">ListView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MemberList.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MemberListCell</string>
-					<string key="superclassName">NSTextFieldCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MemberListCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MenuController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">closeWindowItem</string>
-						<string key="NS.object.0">NSMenuItem</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">closeWindowItem</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">closeWindowItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MenuController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ServerList</string>
-					<string key="superclassName">NSOutlineView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ServerList.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ServerListCell</string>
-					<string key="superclassName">NSTextFieldCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ServerListCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TextField</string>
-					<string key="superclassName">NSTextView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TextField.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ThinSplitView</string>
-					<string key="superclassName">NSSplitView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ThinSplitView.h</string>
-					</object>
-				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
 					<object class="NSMutableDictionary" key="actions">

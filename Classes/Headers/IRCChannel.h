@@ -3,14 +3,17 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-@class IRCClient;
+#import "IRCTreeItem.h"
+
+@class IRCUser, TVCLogLine, TLOFileLogger;
+@class IRCClient, IRCChannelConfig, IRCChannelMode;
 
 typedef enum {
 	IRCChannelParted,
 	IRCChannelJoining,
 	IRCChannelJoined,
 	IRCChannelTerminated,
-} ChannelStatus;
+} IRCChannelStatus;
 
 @interface IRCChannel : IRCTreeItem
 @property (nonatomic, weak) IRCClient *client;
@@ -26,10 +29,10 @@ typedef enum {
 @property (nonatomic, assign) BOOL isModeInit;
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL errLastJoin;
-@property (nonatomic, assign) ChannelStatus status;
+@property (nonatomic, assign) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL isChannel;
 @property (nonatomic, assign) BOOL isTalk;
-@property (nonatomic, strong) FileLogger *logFile;
+@property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, weak) NSString *name;
 @property (nonatomic, weak) NSString *password;
 
@@ -45,8 +48,8 @@ typedef enum {
 - (void)deactivate;
 - (void)detectOutgoingConversation:(NSString *)text;
 
-- (BOOL)print:(LogLine *)line;
-- (BOOL)print:(LogLine *)line withHTML:(BOOL)rawHTML;
+- (BOOL)print:(TVCLogLine *)line;
+- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
 
 - (void)addMember:(IRCUser *)user;
 - (void)addMember:(IRCUser *)user reload:(BOOL)reload;

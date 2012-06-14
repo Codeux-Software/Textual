@@ -2,11 +2,11 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 08, 2012
 
-@implementation NSNumber (NSNumberHelper)
+@implementation NSNumber (TXNumberHelper)
 
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber
 {
-	if (IsNumeric(c) && firstNumber < 2) {
+	if (TXIsNumeric(c) && firstNumber < 2) {
 		NSInteger ci = (c - '0');
 		
 		if ((firstNumber == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 

@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on Thursday, June 09, 2012
 
-#define COLOR_NUMBER_MAX	30
+#define _colorNumberMax	30
 
 @interface IRCUser (Private)
 - (void)decayConversation;
@@ -19,6 +19,7 @@
 @synthesize h;
 @synthesize v;
 @synthesize isMyself;
+@synthesize isIRCOp;
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
 @synthesize colorNumber;
@@ -44,11 +45,11 @@
 	} else {
 		NSString *ident = ((self.username) ?: @"*");
 		
-		switch ([Preferences banFormat]) {
-			case HMBAN_FORMAT_WHNIN:  return [NSString stringWithFormat:@"*!*@%@", self.address];	
-			case HMBAN_FORMAT_WHAINN: return [NSString stringWithFormat:@"*!%@@%@", ident, self.address];
-			case HMBAN_FORMAT_WHANNI: return [NSString stringWithFormat:@"%@!*%@", self.nick, self.address];
-			case HMBAN_FORMAT_EXACT:  return [NSString stringWithFormat:@"%@!%@@%@", self.nick, ident, self.address];
+		switch ([TPCPreferences banFormat]) {
+			case TXHostmaskBanWHNINFormat:  return [NSString stringWithFormat:@"*!*@%@", self.address];	
+			case TXHostmaskBanWHAINNFormat: return [NSString stringWithFormat:@"*!%@@%@", ident, self.address];
+			case TXHostmaskBanWHANNIFormat: return [NSString stringWithFormat:@"%@!*%@", self.nick, self.address];
+			case TXHostmaskBanExactFormat:  return [NSString stringWithFormat:@"%@!%@@%@", self.nick, ident, self.address];
 		}
 	}
 	
@@ -80,9 +81,9 @@
 {
 	if (colorNumber < 0) {
 		if ([_NSUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
-			self.colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % COLOR_NUMBER_MAX);
+			self.colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % _colorNumberMax);
 		} else {
-			self.colorNumber = (CFHash((__bridge CFTypeRef)([self.nick lowercaseString])) % COLOR_NUMBER_MAX);
+			self.colorNumber = (CFHash((__bridge CFTypeRef)([self.nick lowercaseString])) % _colorNumberMax);
 		}
 	}
 	

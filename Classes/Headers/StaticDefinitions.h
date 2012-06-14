@@ -3,15 +3,15 @@
 // Converted to ARC Support on Thursday, June 08, 2012
 
 /* Availability Macros */
-#define _LOAD_MAC_OS_LIBRARIES 1
+#define TXLoadMacOSLibraries 1
 
-#if _LOAD_MAC_OS_LIBRARIES
+#if TXLoadMacOSLibraries
 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER) 
-		#define _MAC_OS_MOUNTAIN_LION_OR_NEWER
+		#define TXMacOSMountainLionOrNewer
 	#endif
 
 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER) 
-		#define _MAC_OS_LION_OR_NEWER
+		#define TXMacOSLionOrNewer
 	#endif
 #endif
 
@@ -19,14 +19,17 @@
 #define NSAppKitVersionNumber10_7		1138
 #define NSAppKitVersionNumber10_7_2		1138.23
 
-#ifdef _MAC_OS_LION_OR_NEWER
-	#define _USES_MODERN_REGULAR_EXPRESSION
+#define PointerIsEmpty(s)				(s == NULL || s == nil)
+#define PointerIsNotEmpty(s)			(s != NULL && s != nil)
+
+#ifdef TXMacOSLionOrNewer
+	#define TXNativeRegularExpressionAvailable
 #endif
 
-#ifdef _MAC_OS_MOUNTAIN_LION_OR_NEWER
-	#define _USES_NATIVE_NOTIFICATION_CENTER
-	#define _USES_APPLICATION_SCRIPTS_FOLDER
-	#define _USES_FOUNDATION_BASED_NSUUID
+#ifdef TXMacOSMountainLionOrNewer
+	#define TXNativeNotificationCenterAvailable
+	#define TXUserScriptsFolderAvailable
+	#define TXFoundationBasedUUIDAvailable
 #endif
 
 /* Textual Specific Frameworks */
@@ -36,23 +39,24 @@
 #endif
 
 /* Establish Common Pointers */
-#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
-#define _NSPasteboard()							[NSPasteboard generalPasteboard]
 #define _NSFileManager()						[NSFileManager defaultManager]
+#define _NSPasteboard()							[NSPasteboard generalPasteboard]
 #define _NSFontManager()						[NSFontManager sharedFontManager]
-#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
-#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
-#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
 #define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
-#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
-#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
+#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
+#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
 #define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
 #define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
+#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
+#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
 
-/* Miscellaneous functions to handle small tasks */
+#ifdef TXNativeNotificationCenterAvailable
+	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
+#endif
+
+/* Miscellaneous functions to handle small tasks. */
 #define CFItemRefToID(s)					(id)s
-#define PointerIsEmpty(s)					(s == NULL || s == nil)
-#define PointerIsNotEmpty(s)				BOOLReverseValue(PointerIsEmpty(s))
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
 #define NSDissimilarObjects(o,n)			(o != n)
@@ -60,7 +64,7 @@
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
 
 /* Item types */
-typedef double				NSDoubleN;
+typedef double				TXNSDouble;
 typedef unsigned long long	TXFSLongInt; // filesizes
 
 /* Number Handling */
@@ -72,8 +76,8 @@ typedef unsigned long long	TXFSLongInt; // filesizes
 #define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
 /* Everything Else */
-#define NSNullObject				@""
-#define NSWhitespaceCharacter		@" "
-#define NSNewlineCharacter			@"\n"
+#define NSStringEmptyPlaceholder			@""
+#define NSStringNewlinePlaceholder			@"\n"
+#define NSStringWhitespacePlaceholder		@" "
 
-#define DeveloperEnvironmentToken		@"TextualDeveloperEnvironment"
+#define TXDeveloperEnvironmentToken			@"TextualDeveloperEnvironment"

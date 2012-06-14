@@ -33,8 +33,8 @@
 	
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 	
-	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSWhitespaceCharacter];
-	_cpu_model = [TXRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSWhitespaceCharacter];
+	_cpu_model = [TLORegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
+	_cpu_model = [TLORegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
 	
 	_cpu_model = [_cpu_model trim];
 	
@@ -90,9 +90,9 @@
 	}
 	
 	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@)",
-			   [[Preferences systemInfoPlist] objectForKey:@"ProductName"], 
-			   [[Preferences systemInfoPlist] objectForKey:@"ProductVersion"], 
-			   [[Preferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
+			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
+			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], 
+			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
 	
 	NSString *arch = [self kernelArchitecture];
 	
@@ -133,7 +133,7 @@
 	NSString *systemUptime = TXSpecialReadableTime([self _internalSystemUptime], NO,
 												   [NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
 	
-	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[Preferences startTime]], NO,
+	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[TPCPreferences startTime]], NO,
 													[NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
 	
 	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", systemUptime, textualUptime];
@@ -141,7 +141,7 @@
 
 + (NSString *)getCurrentThemeInUse:(IRCWorld *)world
 {
-	NSString* fname = [ViewTheme extractThemeName:[Preferences themeName]];
+	NSString* fname = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	
 	if (fname) {
 		return [NSString stringWithFormat:@"\002Current Theme:\002 %@", fname];
@@ -153,7 +153,7 @@
 + (NSString *)getBandwidthStats:(IRCWorld *)world
 {
 	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. That equals roughly \002%.2f\002 messages a second. Combined this comes to around \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
-			world.messagesSent, world.messagesReceived, (world.messagesReceived / ([[NSDate date] timeIntervalSince1970] - [Preferences startTime])), 
+			world.messagesSent, world.messagesReceived, (world.messagesReceived / ([[NSDate date] timeIntervalSince1970] - [TPCPreferences startTime])), 
 			[self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
 }
 
@@ -164,7 +164,7 @@
 
 + (NSString *)getTextualRunCount
 {
-	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times with a total runtime of %@", [_NSUserDefaults() integerForKey:@"TXRunCount"], TXReadableTime([Preferences totalRunTime])];
+	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times with a total runtime of %@", [_NSUserDefaults() integerForKey:@"TXRunCount"], TXReadableTime([TPCPreferences totalRunTime])];
 }
 
 + (NSString *)getNetworkStats
@@ -342,7 +342,7 @@
 	}
 }
 
-+ (NSString *)formattedCPUFrequency:(NSDoubleN)rate
++ (NSString *)formattedCPUFrequency:(TXNSDouble)rate
 {
 	if ((rate / 1000000) >= 990) {
 		return [NSString stringWithFormat:@"%.2f GHz", ((rate / 100000000.0) / 10.0)];
@@ -399,7 +399,7 @@
 		if (cglContext) {
 			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
             
-			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:NSNullObject];
+			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:NSStringEmptyPlaceholder];
 		}
 	}	
 	
@@ -444,7 +444,7 @@
 
 + (NSString *)loadAveragesWithCores:(NSInteger)cores
 {
-	NSDoubleN load_ave[3];
+	TXNSDouble load_ave[3];
 	
 	if (getloadavg(load_ave, 3) == 3) {
 		if (cores > 0) {

@@ -17,7 +17,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[self parseLine:NSNullObject];
+		[self parseLine:NSStringEmptyPlaceholder];
 	}
 
 	return self;
@@ -34,7 +34,7 @@
 
 - (void)parseLine:(NSString *)line
 {
-	self.command = NSNullObject;
+	self.command = NSStringEmptyPlaceholder;
 	
 	self.sender = [IRCPrefix new];
 	self.params = [NSMutableArray new];
@@ -97,7 +97,7 @@
 	if (index < self.params.count) {
 		return [self.params safeObjectAtIndex:index];
 	} else {
-		return NSNullObject;
+		return NSStringEmptyPlaceholder;
 	}
 }
 
@@ -118,7 +118,7 @@
 		NSString *e = [self.params safeObjectAtIndex:i];
 		
 		if (NSDissimilarObjects(i, index)) {
-			[s appendString:NSWhitespaceCharacter];
+			[s appendString:NSStringWhitespacePlaceholder];
 		}
 		
 		[s appendString:e];
@@ -135,7 +135,7 @@
 	[ms appendString:self.command];
 	
 	for (NSString *s in self.params) {
-		[ms appendString:NSWhitespaceCharacter];
+		[ms appendString:NSStringWhitespacePlaceholder];
 		[ms appendString:s];
 	}
 	
