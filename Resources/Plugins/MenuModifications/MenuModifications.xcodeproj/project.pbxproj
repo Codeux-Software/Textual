@@ -20,7 +20,7 @@
 		4C7670FF124802CC005DBC12 /* TPI_CustomMenus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_CustomMenus.m; sourceTree = "<group>"; };
 		4CE3751F124809E300166B5F /* TPI_CMP_MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_CMP_MenuController.h; sourceTree = "<group>"; };
 		4CE37520124809E300166B5F /* TPI_CMP_MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_CMP_MenuController.m; sourceTree = "<group>"; };
-		8D576316048677EA00EA77CD /* MenuModifications.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuModifications.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* .bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,7 +79,7 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D576316048677EA00EA77CD /* MenuModifications.bundle */,
+				8D576316048677EA00EA77CD /* .bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,7 +102,7 @@
 			name = MenuModifications;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = MenuModifications;
-			productReference = 8D576316048677EA00EA77CD /* MenuModifications.bundle */;
+			productReference = 8D576316048677EA00EA77CD /* .bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -155,31 +155,13 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = MenuModifications;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = MenuModifications;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -187,21 +169,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
-				FRAMEWORK_SEARCH_PATHS = "/Applications/Textual.app/Contents/Frameworks//**";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = "/Applications/Textual.app/Contents/Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "/Applications/Textual.app/Contents/Headers//**";
+				HEADER_SEARCH_PATHS = "/Applications/Textual.app/Contents/Headers/**";
+				INFOPLIST_FILE = info.plist;
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
+				PRODUCT_NAME = MenuModification;
 				SDKROOT = "";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -209,20 +193,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
-				FRAMEWORK_SEARCH_PATHS = "/Applications/Textual.app/Contents/Frameworks//**";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = "/Applications/Textual.app/Contents/Frameworks/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "/Applications/Textual.app/Contents/Headers//**";
+				HEADER_SEARCH_PATHS = "/Applications/Textual.app/Contents/Headers/**";
+				INFOPLIST_FILE = info.plist;
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
+				PRODUCT_NAME = MenuModification;
 				SDKROOT = "";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};

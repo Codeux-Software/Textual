@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 /* Sloppy mode parser. */
 
@@ -17,7 +17,7 @@
 		self.allModes		= [NSMutableArray new];
 		self.modeIndexes	= [NSMutableDictionary new];
 	}
-
+	
 	return self;
 }
 
@@ -33,8 +33,8 @@
 
 - (void)clear
 {
-	[self.allModes removeAllObjects];
-	[self.modeIndexes removeAllObjects];
+	[self.allModes		removeAllObjects];
+	[self.modeIndexes	removeAllObjects];
 }
 
 - (NSArray *)badModes 
@@ -48,7 +48,7 @@
 	
 	for (IRCModeInfo *h in ary) {
 		if (h.op) continue;
-		    
+		
 		NSString *modec = [NSString stringWithChar:h.mode];
 		
 		if ([[self badModes] containsObject:modec]) continue;
@@ -84,7 +84,7 @@
 			if (h.param) {
 				[trail appendFormat:@" %@", h.param];
 			}
-		
+			
 			[str appendFormat:@"-%c", h.mode];
 			
 			if (h.mode == 'k') {
@@ -113,6 +113,7 @@
 		IRCModeInfo *m = [self.isupport createMode:mode];
 		
 		[self.allModes safeAddObject:m];
+		
 		[self.modeIndexes setInteger:[self.allModes indexOfObject:m] forKey:mode];
 	}
 	

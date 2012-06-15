@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 @interface IRCConnection (Private)
 - (void)updateTimer;
@@ -55,11 +55,11 @@
 	
 	self.maxMsgCount = 0;
 	
-	self.conn = [TLOSocketClient new];
-	self.conn.delegate = self;
-	self.conn.host = self.host;
-	self.conn.port = self.port;
-	self.conn.useSSL = self.useSSL;
+	self.conn			= [TLOSocketClient new];
+	self.conn.delegate	= self;
+	self.conn.host		= self.host;
+	self.conn.port		= self.port;
+	self.conn.useSSL	= self.useSSL;
 	
 	if (self.useSystemSocks) {
 		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
@@ -68,16 +68,16 @@
 		
 		BOOL systemSocksEnabled = BOOLReverseValue([num integerValue] == 0);
 		
-		self.conn.useSocks = systemSocksEnabled;
-		self.conn.useSystemSocks = systemSocksEnabled;
+		self.conn.useSocks			= systemSocksEnabled;
+		self.conn.useSystemSocks	= systemSocksEnabled;
 	} else {
-		self.conn.useSocks = self.useSocks;
-		self.conn.socksVersion = self.socksVersion;
+		self.conn.useSocks		= self.useSocks;
+		self.conn.socksVersion	= self.socksVersion;
 	}
 	
-	self.conn.proxyHost = self.proxyHost;
-	self.conn.proxyPort = self.proxyPort;
-	self.conn.proxyUser = self.proxyUser;
+	self.conn.proxyHost		= self.proxyHost;
+	self.conn.proxyPort		= self.proxyPort;
+	self.conn.proxyUser		= self.proxyUser;
 	self.conn.proxyPassword = self.proxyPassword;
 	
 	[self.conn open];

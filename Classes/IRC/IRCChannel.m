@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 #define _treeUserlistHeight    16.0
 
@@ -86,8 +86,8 @@
 - (NSString *)channelTypeString
 {
 	switch (self.config.type) {
-		case IRCChannelNormalType: return @"channel";
-		case IRCChannelPrivateMessageType: return @"talk";
+		case IRCChannelNormalType:			return @"channel";
+		case IRCChannelPrivateMessageType:	return @"talk";
 	}
 	
 	return nil;
@@ -129,13 +129,13 @@
 	[self.mode clear];
 	[self.members removeAllObjects];
 	
-	self.isOp = NO;
-	self.isHalfOp = NO;
+	self.isOp		= NO;
+	self.isHalfOp	= NO;
 	
 	self.topic = nil;
 	
-	self.isModeInit = NO;
-	self.errLastJoin = NO;
+	self.isModeInit		= NO;
+	self.errLastJoin	= NO;
 	
 	self.status = IRCChannelJoined;
 	
@@ -146,10 +146,10 @@
 {
 	[self.members removeAllObjects];
 	
-	self.isOp = NO;
-	self.isHalfOp = NO;
-	self.isActive = NO;
-	self.errLastJoin = NO;
+	self.isOp			= NO;
+	self.isHalfOp		= NO;
+	self.isActive		= NO;
+	self.errLastJoin	= NO;
 	
 	self.status = IRCChannelParted;
 	
@@ -192,7 +192,7 @@
 		if (self.logDate) {
 			if ([self.logDate isEqualToString:comp] == NO) {
 				self.logDate = comp;
-
+				
 				[self.logFile reopenIfNeeded];
 			}
 		} else {
@@ -331,7 +331,7 @@
 			case 'h': m.h = value; break;
 			case 'v': m.v = value; break;
 		}
-
+		
 		[self.members safeObjectAtIndex:n];
 		[self.members safeRemoveObjectAtIndex:n];
 		
@@ -469,11 +469,14 @@
     return _treeUserlistHeight;
 }
 
-- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (id)tableView:(NSTableView *)sender
+objectValueForTableColumn:(NSTableColumn *)column
+			row:(NSInteger)row
 {
 	IRCUser *user = [self.members safeObjectAtIndex:row];
 	
-	return TXTFLS(@"AccessibilityMemberListDescription", [user nick], [self.config.name safeSubstringFromIndex:1]);
+	return TXTFLS(@"AccessibilityMemberListDescription",
+				  [user nick], [self.config.name safeSubstringFromIndex:1]);
 }
 
 - (void)tableView:(NSTableView *)sender

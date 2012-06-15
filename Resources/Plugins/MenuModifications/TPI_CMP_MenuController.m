@@ -3,11 +3,11 @@
 
 #import "TPI_CMP_MenuController.h"
 
-@implementation MenuController (TPI_CMP_MenuController)
+@implementation TXMenuController (TPI_CMP_MenuController)
 
 - (void)postLinkToTextualHomepage:(id)sender
 {
-	IRCClient *u = [world selectedClient];
+	IRCClient *u = [self.world selectedClient];
 	if (PointerIsEmpty(u)) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {

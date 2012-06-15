@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 /* It is always best to trust native developer APIs. Therefore, on versions
  of Mac OS X that support NSRegularExpression let us use it instead of relying

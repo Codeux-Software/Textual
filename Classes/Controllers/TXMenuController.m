@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 #define _noClient					(PointerIsEmpty(u))
 #define _noChannel					(PointerIsEmpty(c))
@@ -487,9 +487,9 @@
 		if ([newPhrase isNotEqualTo:self.currentSearchPhrase]) {
 			self.currentSearchPhrase = newPhrase;
 		}
+		
+		[[self.iomt currentWebView] searchFor:newPhrase direction:YES caseSensitive:NO wrap:YES];
 	}
-	
-	[[[self iomt] currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 }
 
 - (void)showFindPanel:(id)sender

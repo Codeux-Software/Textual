@@ -1,5 +1,5 @@
 // Created by Allan Odgaard.
-// Converted to ARC Support on Thursday, June 07, 2012
+// Converted to ARC Support on June 07, 2012
 
 @implementation TVCWebViewAutoScroll
 

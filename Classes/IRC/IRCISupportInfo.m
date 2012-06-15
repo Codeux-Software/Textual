@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 #define _isupportSuffix		@" are supported by this server"
 #define _opValue			100
@@ -38,7 +38,7 @@
 {
 	memset(modes, 0, TXModesSize);
 	
-	self.nickLen = 9;
+	self.nickLen    = 9;
 	self.modesCount = 3;
 	
 	[self setValue:_opValue forMode:'o'];
@@ -61,7 +61,7 @@
 	[self setValue:4 forMode:'s'];
 	[self setValue:4 forMode:'t'];
 	[self setValue:4 forMode:'r'];
-
+	
 	[self setUserModeOPrefix:@"@"];
 	[self setUserModeVPrefix:@"+"];
 }
@@ -69,22 +69,22 @@
 - (BOOL)update:(NSString *)str client:(IRCClient *)client
 {
 	if ([str hasSuffix:_isupportSuffix]) {
-		str = [str safeSubstringToIndex:(str.length - [_isupportSuffix length])];
+		str = [str safeSubstringToIndex:(str.length - _isupportSuffix.length)];
 	}
 	
 	NSArray *ary = [str split:NSStringWhitespacePlaceholder];
 	
 	for (NSString *s in ary) {
-		NSString *key = s;
+		NSString *key   = s;
 		NSString *value = nil;
-
+		
 		NSRange r = [s rangeOfString:@"="];
 		
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
-			key = [[s safeSubstringToIndex:r.location] uppercaseString];
+			key   = [s safeSubstringToIndex:r.location].uppercaseString;
 			value = [s safeSubstringFromIndex:NSMaxRange(r)];
 		}
-
+		
 		if (value) {
 			if ([key isEqualToString:@"PREFIX"]) {
 				[self parsePrefix:value];
@@ -98,7 +98,7 @@
 				self.networkName = value;
 			}
 		}
-
+		
 		if ([key isEqualToString:@"NAMESX"] && client.multiPrefix == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
 			
@@ -271,9 +271,9 @@
 {
 	IRCModeInfo *m = [IRCModeInfo modeInfo];
 	
-	m.mode = [mode characterAtIndex:0];
-	m.plus = NO;
+	m.plus  = NO;
 	m.param = NSStringEmptyPlaceholder;
+	m.mode  = [mode characterAtIndex:0];
 	
 	return m;
 }

@@ -1,6 +1,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 @implementation TVCTextFormatterMenu
 
@@ -317,7 +317,7 @@
         
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
                                          range:selectedTextRange
-                                         color:TXTXDefaultTextFieldFontColor];
+                                         color:TXDefaultTextFieldFontColor];
         
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -333,7 +333,7 @@
         
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
                                          range:selectedTextRange
-                                         color:TXTXDefaultTextFieldFontColor];
+                                         color:TXDefaultTextFieldFontColor];
         
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -349,7 +349,7 @@
         
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
                                          range:selectedTextRange
-                                         color:TXTXDefaultTextFieldFontColor];
+                                         color:TXDefaultTextFieldFontColor];
         
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -365,7 +365,7 @@
         
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
                                          range:selectedTextRange
-                                         color:TXTXDefaultTextFieldFontColor];
+                                         color:TXDefaultTextFieldFontColor];
         
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -381,7 +381,7 @@
         
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
                                          range:selectedTextRange
-                                         color:TXTXDefaultTextFieldFontColor];
+                                         color:TXDefaultTextFieldFontColor];
         
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];

@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 07, 2012
+// Converted to ARC Support on June 07, 2012
 
 #define _NSMainScreen()		[NSScreen mainScreen]
 
@@ -11,7 +11,7 @@
 @implementation TVCDockIcon
 
 /* The math is messy but it gets the job done. =) */
-+ (void)drawWithoutCounts
++ (void)drawWithoutCount
 {
 	[NSApp setApplicationIconImage:[NSImage imageNamed:@"NSApplicationIcon"]];
 }

@@ -1,3 +1,6 @@
+
+#warning FIX: Model list is outdated as of June 2012.
+
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 

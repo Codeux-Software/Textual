@@ -1,9 +1,9 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
-#define _colorNumberMax	30
+#define _colorNumberMax		30
 
 @interface IRCUser (Private)
 - (void)decayConversation;
@@ -34,7 +34,7 @@
 		
 		self.lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}
-
+	
 	return self;
 }
 
@@ -46,10 +46,10 @@
 		NSString *ident = ((self.username) ?: @"*");
 		
 		switch ([TPCPreferences banFormat]) {
-			case TXHostmaskBanWHNINFormat:  return [NSString stringWithFormat:@"*!*@%@", self.address];	
-			case TXHostmaskBanWHAINNFormat: return [NSString stringWithFormat:@"*!%@@%@", ident, self.address];
-			case TXHostmaskBanWHANNIFormat: return [NSString stringWithFormat:@"%@!*%@", self.nick, self.address];
-			case TXHostmaskBanExactFormat:  return [NSString stringWithFormat:@"%@!%@@%@", self.nick, ident, self.address];
+			case TXHostmaskBanWHNINFormat:  return [NSString stringWithFormat:@"*!*@%@", self.address];	 break;
+			case TXHostmaskBanWHAINNFormat: return [NSString stringWithFormat:@"*!%@@%@", ident, self.address]; break;
+			case TXHostmaskBanWHANNIFormat: return [NSString stringWithFormat:@"%@!*%@", self.nick, self.address]; break;
+			case TXHostmaskBanExactFormat:  return [NSString stringWithFormat:@"%@!%@@%@", self.nick, ident, self.address]; break;
 		}
 	}
 	
@@ -58,10 +58,10 @@
 
 - (char)mark
 {
-	if (q) return [self.supportInfo.userModeQPrefix safeCharacterAtIndex:0];
-	if (a) return [self.supportInfo.userModeAPrefix safeCharacterAtIndex:0];
-	if (o) return [self.supportInfo.userModeOPrefix safeCharacterAtIndex:0];
-	if (h) return [self.supportInfo.userModeHPrefix safeCharacterAtIndex:0];
+	if (q) return [self.supportInfo.userModeQPrefix safeCharacterAtIndex:0]; 
+	if (a) return [self.supportInfo.userModeAPrefix safeCharacterAtIndex:0]; 
+	if (o) return [self.supportInfo.userModeOPrefix safeCharacterAtIndex:0]; 
+	if (h) return [self.supportInfo.userModeHPrefix safeCharacterAtIndex:0]; 
 	if (v) return [self.supportInfo.userModeVPrefix safeCharacterAtIndex:0];
 	
 	return ' ';
@@ -93,11 +93,11 @@
 - (BOOL)hasMode:(char)mode
 {
 	switch (mode) {
-		case 'q': return self.q;
-		case 'a': return self.a;
-		case 'o': return self.o;
-		case 'h': return self.h;
-		case 'v': return self.v;
+		case 'q': return self.q; break;
+		case 'a': return self.a; break;
+		case 'o': return self.o; break;
+		case 'h': return self.h; break;
+		case 'v': return self.v; break;
 	}
 	
 	return NO;
@@ -186,7 +186,7 @@
 {
 	CGFloat mine   = self.totalWeight;
 	CGFloat others = other.totalWeight;
-
+	
 	if (mine > others) return NSOrderedAscending;
 	if (mine < others) return NSOrderedDescending;
 	

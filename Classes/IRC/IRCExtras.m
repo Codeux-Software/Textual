@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 @implementation IRCExtras
 
@@ -27,7 +27,7 @@
 	} else {
 		return;
 	}
-        
+	
 	if ([location contains:@"/"] == NO) {
 		location = [NSString stringWithFormat:@"%@/", location];
 	}
@@ -221,7 +221,7 @@
 	
 	[dic setBool:useSSL forKey:@"ssl"];
 	[dic setBool:NO		forKey:@"auto_connect"];
-
+	
 	[dic setObject:[TPCPreferences defaultNickname]			forKey:@"nickname"];
 	[dic setObject:[TPCPreferences defaultUsername]			forKey:@"username"];
 	[dic setObject:[TPCPreferences defaultRealname]			forKey:@"realname"];
