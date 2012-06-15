@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 #define _autoConnectDelay				1
 #define _reconnectAfterWakeupDelay		8
@@ -104,7 +104,7 @@
     
 	if (client) {
 		[self.serverList expandItem:client];
-
+		
 		NSInteger n = [self.serverList rowForItem:client];
 		if (client.channels.count) ++n;
 		
@@ -125,6 +125,7 @@
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [self.config dictionaryValue];
+	
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	for (IRCClient *u in self.clients) {
@@ -211,10 +212,11 @@
 		message = [message trim];
 		
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
+		
 		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time,
 						   [message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont], nil];
 		
-		/* We insert at head so that latest is always at top. */
+		/* We insert at head so that latest is always on top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
 		
 		if (self.menuController.highlightSheet) {
@@ -239,7 +241,7 @@
         if ((c.disconnectType == IRCSleepModeDisconnectMode && afterWakeUp) || afterWakeUp == NO) { 
             if (c.config.autoConnect) {
                 [c autoConnect:delay];
-			
+				
                 delay += _autoConnectDelay;
             }
         }
@@ -323,7 +325,7 @@
 		}
 		
 		if (messageCount == 0 && highlightCount == 0) {
-			[TVCDockIcon drawWithoutCounts];
+			[TVCDockIcon drawWithoutCount];
 		} else {
 			[TVCDockIcon drawWithHilightCount:highlightCount messageCount:messageCount];
 		}
@@ -339,7 +341,7 @@
 	}
 	
 	self.reloadingTree = YES;
-
+	
 	[self.serverList reloadData];
 	
 	self.reloadingTree = NO;
@@ -660,9 +662,9 @@
 
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u
 {
-	[c resetLogView:self withChannel:nil andClient:u];
+	[c resetLogView:self withChannel:c andClient:u];
 	
-	if (c.uid == [[self selectedChannel] uid]) {
+	if (c.uid == self.selectedChannel.uid) {
 		[self outlineViewSelectionDidChange:nil];
 	}
 	
@@ -673,7 +675,7 @@
 {
 	[u resetLogView:self withChannel:nil andClient:u];
 	
-	if (u.uid == [[self selectedClient] uid]) {
+	if (u.uid == self.selectedClient.uid) {
 		[self outlineViewSelectionDidChange:nil];
 	}
 }
@@ -685,7 +687,7 @@
 
 - (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload
 {
-	IRCClient *c = [[IRCClient alloc] init];
+	IRCClient *c = [IRCClient new];
 	
 	c.uid = ++self.itemId;
 	c.world = self;
@@ -711,17 +713,19 @@
 	return c;
 }
 
-- (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client
-					   reload:(BOOL)reload adjust:(BOOL)adjust
+- (IRCChannel *)createChannel:(IRCChannelConfig *)seed
+					   client:(IRCClient *)client
+					   reload:(BOOL)reload
+					   adjust:(BOOL)adjust
 {
 	IRCChannel *c = [client findChannel:seed.name];
 	if (NSObjectIsNotEmpty(c.name)) return c;
 	
-	c = [[IRCChannel alloc] init];
+	c = [IRCChannel new];
 	
 	c.uid = ++self.itemId;
 	
-	c.client = client;
+	c.client		= client;
 	c.mode.isupport = client.isupport;
 	
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
@@ -756,7 +760,7 @@
 
 - (IRCChannel *)createTalk:(NSString *)nick client:(IRCClient *)client
 {
-	IRCChannelConfig *seed = [[IRCChannelConfig alloc] init];
+	IRCChannelConfig *seed = [IRCChannelConfig new];
 	
 	seed.name = nick;
 	seed.type = IRCChannelPrivateMessageType;
@@ -768,11 +772,11 @@
 		
 		IRCUser *m = nil;
 		
-		m = [[IRCUser alloc] init];
+		m = [IRCUser new];
 		m.nick = client.myNick;
 		[c addMember:m];
 		
-		m = [[IRCUser alloc] init];
+		m = [IRCUser new];
 		m.nick = c.name;
 		[c addMember:m];
 	}
@@ -895,17 +899,17 @@
 {
 	TVCLogController *c = [TVCLogController new];
 	
-	c.menu = self.logMenu;
-	c.urlMenu = self.urlMenu;
-	c.chanMenu = self.chanMenu;
-	c.memberMenu = self.memberMenu;
+	c.menu			= self.logMenu;
+	c.urlMenu		= self.urlMenu;
+	c.chanMenu		= self.chanMenu;
+	c.memberMenu	= self.memberMenu;
 	
-	c.world = self;
-	c.client = client;
-	c.channel = channel;
-	c.maxLines = [TPCPreferences maxLogLines];
+	c.world			= self;
+	c.client		= client;
+	c.channel		= channel;
+	c.maxLines		= [TPCPreferences maxLogLines];
 	
-	c.theme = self.viewTheme;
+	c.theme			= self.viewTheme;
 	
 	[c setUp];
 	
@@ -925,6 +929,7 @@
 		case TXKeyReturnCode:
 		case TXKeyEnterCode:
 			return;
+			break;
 	}
 	
 	[self.window sendEvent:e];
@@ -982,7 +987,7 @@
 				[u connect];
 			}
 		}
-
+		
 		[self expandClient:u];
 	} else {		
 		if (u.isLoggedIn) {
@@ -1053,14 +1058,14 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
 {
 	item.isExpanded = NO;
-
+	
 	return YES;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-	[[NSSpellChecker sharedSpellChecker] setIgnoredWords:[NSArray array]
-								  inSpellDocumentWithTag:[self.text spellCheckerDocumentTag]];
+	[_NSSpellChecker() setIgnoredWords:[NSArray array]
+				inSpellDocumentWithTag:self.text.spellCheckerDocumentTag];
 	
 	id nextItem = [self.serverList itemAtRow:[self.serverList selectedRow]];
 	
@@ -1092,12 +1097,14 @@
 		
 		self.memberList.dataSource = nil;
 		self.memberList.delegate = nil;
+		
 		[self.memberList reloadData];
 	} else {		
 		self.serverList.menu = self.channelMenu;
 		
 		self.memberList.dataSource = self.selected;
 		self.memberList.delegate = self.selected;
+		
 		[self.memberList reloadData];
 	}
 	

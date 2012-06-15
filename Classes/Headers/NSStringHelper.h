@@ -1,14 +1,14 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 #define TXIsAlpha(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define TXIsNumeric(c)						('0' <= (c) && (c) <= '9' && TXIsAlpha(c) == NO) 
-#define TXTXIsAlphaNumeric(c)				(TXIsAlpha(c) || TXIsNumeric(c))
-#define TXIsWordLetter(c)					(TXTXIsAlphaNumeric(c) || (c) == '_')
+#define TXIsAlphaNumeric(c)				(TXIsAlpha(c) || TXIsNumeric(c))
+#define TXIsWordLetter(c)					(TXIsAlphaNumeric(c) || (c) == '_')
 #define TXIsIRCColor(c,f)					([NSNumber compareIRCColor:c against:f])
-#define TXTXIsAlphaWithDiacriticalMark(c)	(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+#define TXIsAlphaWithDiacriticalMark(c)	(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
 
 #pragma mark 
 #pragma mark String Helpers

@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context) {
 	return [s1.name.lowercaseString compare:s2.name.lowercaseString];
@@ -73,7 +73,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         
         self.outgoingFloodControl            = NO;
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
-		self. floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
+		self. floodControlDelayTimerInterval = TXFloodControlDefaultDelayTimer;
 		
 		self.name        = TXTLS(@"DefaultNewConnectionName");
 		self.nick        = [TPCPreferences defaultNickname];
@@ -283,6 +283,9 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 				self.floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: TXFloodControlDefaultDelayTimer);
 			}
 		} else {
+			/* Enable flood control by default for Freenode servers. 
+			 They are very strict about flooding. This is required. */
+			
 			if ([self.host hasSuffix:@"freenode.net"]) {
 				self.outgoingFloodControl = YES;
 			}

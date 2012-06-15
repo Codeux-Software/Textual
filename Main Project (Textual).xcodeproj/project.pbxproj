@@ -596,22 +596,22 @@
 		4C46CBA51580429D00846B64 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOUnicodeHelper.m; sourceTree = "<group>"; };
 		4C46CBA61580429D00846B64 /* TLOpenLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOpenLink.m; path = ../Helpers/TLOpenLink.m; sourceTree = "<group>"; };
 		4C46CBA81580429D00846B64 /* IRCAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCAddressBook.m; sourceTree = "<group>"; };
-		4C46CBAA1580429D00846B64 /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannel.m; sourceTree = "<group>"; };
-		4C46CBAB1580429D00846B64 /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelConfig.m; sourceTree = "<group>"; };
-		4C46CBAC1580429D00846B64 /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelMode.m; sourceTree = "<group>"; };
+		4C46CBAA1580429D00846B64 /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannel.m; path = IRC/IRCChannel.m; sourceTree = "<group>"; };
+		4C46CBAB1580429D00846B64 /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannelConfig.m; path = IRC/IRCChannelConfig.m; sourceTree = "<group>"; };
+		4C46CBAC1580429D00846B64 /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannelMode.m; path = IRC/IRCChannelMode.m; sourceTree = "<group>"; };
 		4C46CBAD1580429D00846B64 /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClient.m; sourceTree = "<group>"; };
-		4C46CBAE1580429D00846B64 /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
-		4C46CBAF1580429D00846B64 /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnection.m; sourceTree = "<group>"; };
-		4C46CBB01580429D00846B64 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCExtras.m; sourceTree = "<group>"; };
-		4C46CBB11580429D00846B64 /* IRCISupportInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCISupportInfo.m; sourceTree = "<group>"; };
-		4C46CBB21580429D00846B64 /* IRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCMessage.m; sourceTree = "<group>"; };
-		4C46CBB31580429D00846B64 /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCModeInfo.m; sourceTree = "<group>"; };
-		4C46CBB41580429D00846B64 /* IRCPrefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCPrefix.m; sourceTree = "<group>"; };
-		4C46CBB51580429D00846B64 /* IRCSendingMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCSendingMessage.m; sourceTree = "<group>"; };
-		4C46CBB61580429D00846B64 /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTreeItem.m; sourceTree = "<group>"; };
-		4C46CBB71580429D00846B64 /* IRCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCUser.m; sourceTree = "<group>"; };
-		4C46CBB81580429D00846B64 /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
-		4C46CBB91580429D00846B64 /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
+		4C46CBAE1580429D00846B64 /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCClientConfig.m; path = IRC/IRCClientConfig.m; sourceTree = "<group>"; };
+		4C46CBAF1580429D00846B64 /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnection.m; path = IRC/IRCConnection.m; sourceTree = "<group>"; };
+		4C46CBB01580429D00846B64 /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCExtras.m; path = IRC/IRCExtras.m; sourceTree = "<group>"; };
+		4C46CBB11580429D00846B64 /* IRCISupportInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCISupportInfo.m; path = IRC/IRCISupportInfo.m; sourceTree = "<group>"; };
+		4C46CBB21580429D00846B64 /* IRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCMessage.m; path = IRC/IRCMessage.m; sourceTree = "<group>"; };
+		4C46CBB31580429D00846B64 /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCModeInfo.m; path = IRC/IRCModeInfo.m; sourceTree = "<group>"; };
+		4C46CBB41580429D00846B64 /* IRCPrefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCPrefix.m; path = IRC/IRCPrefix.m; sourceTree = "<group>"; };
+		4C46CBB51580429D00846B64 /* IRCSendingMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCSendingMessage.m; path = IRC/IRCSendingMessage.m; sourceTree = "<group>"; };
+		4C46CBB61580429D00846B64 /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCTreeItem.m; path = IRC/IRCTreeItem.m; sourceTree = "<group>"; };
+		4C46CBB71580429D00846B64 /* IRCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUser.m; path = IRC/IRCUser.m; sourceTree = "<group>"; };
+		4C46CBB81580429D00846B64 /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorld.m; path = IRC/IRCWorld.m; sourceTree = "<group>"; };
+		4C46CBB91580429D00846B64 /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorldConfig.m; path = IRC/IRCWorldConfig.m; sourceTree = "<group>"; };
 		4C46CBBA1580429D00846B64 /* TLOTimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOTimerCommand.m; path = ../IRC/TLOTimerCommand.m; sourceTree = "<group>"; };
 		4C46CBBC1580429D00846B64 /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C46CBBD1580429D00846B64 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketExtensions.m; sourceTree = "<group>"; };
@@ -776,6 +776,21 @@
 			isa = PBXGroup;
 			children = (
 				4C46CCB0158044E200846B64 /* Address Book */,
+				4C46CBAA1580429D00846B64 /* IRCChannel.m */,
+				4C46CBAB1580429D00846B64 /* IRCChannelConfig.m */,
+				4C46CBAC1580429D00846B64 /* IRCChannelMode.m */,
+				4C46CBAE1580429D00846B64 /* IRCClientConfig.m */,
+				4C46CBAF1580429D00846B64 /* IRCConnection.m */,
+				4C46CBB01580429D00846B64 /* IRCExtras.m */,
+				4C46CBB11580429D00846B64 /* IRCISupportInfo.m */,
+				4C46CBB21580429D00846B64 /* IRCMessage.m */,
+				4C46CBB31580429D00846B64 /* IRCModeInfo.m */,
+				4C46CBB41580429D00846B64 /* IRCPrefix.m */,
+				4C46CBB51580429D00846B64 /* IRCSendingMessage.m */,
+				4C46CBB61580429D00846B64 /* IRCTreeItem.m */,
+				4C46CBB71580429D00846B64 /* IRCUser.m */,
+				4C46CBB81580429D00846B64 /* IRCWorld.m */,
+				4C46CBB91580429D00846B64 /* IRCWorldConfig.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
@@ -997,22 +1012,7 @@
 		4C46CBA71580429D00846B64 /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				4C46CBAA1580429D00846B64 /* IRCChannel.m */,
-				4C46CBAB1580429D00846B64 /* IRCChannelConfig.m */,
-				4C46CBAC1580429D00846B64 /* IRCChannelMode.m */,
 				4C46CBAD1580429D00846B64 /* IRCClient.m */,
-				4C46CBAE1580429D00846B64 /* IRCClientConfig.m */,
-				4C46CBAF1580429D00846B64 /* IRCConnection.m */,
-				4C46CBB01580429D00846B64 /* IRCExtras.m */,
-				4C46CBB11580429D00846B64 /* IRCISupportInfo.m */,
-				4C46CBB21580429D00846B64 /* IRCMessage.m */,
-				4C46CBB31580429D00846B64 /* IRCModeInfo.m */,
-				4C46CBB41580429D00846B64 /* IRCPrefix.m */,
-				4C46CBB51580429D00846B64 /* IRCSendingMessage.m */,
-				4C46CBB61580429D00846B64 /* IRCTreeItem.m */,
-				4C46CBB71580429D00846B64 /* IRCUser.m */,
-				4C46CBB81580429D00846B64 /* IRCWorld.m */,
-				4C46CBB91580429D00846B64 /* IRCWorldConfig.m */,
 			);
 			path = IRC;
 			sourceTree = "<group>";

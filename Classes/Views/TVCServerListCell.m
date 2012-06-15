@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 07, 2012
+// Converted to ARC Support on June 07, 2012
 
 /* This class and the one for the user list is based off the open source PXSourceList 
  toolkit developed by Alex Rozanski. */

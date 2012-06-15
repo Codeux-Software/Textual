@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 @implementation IRCChannelConfig
 
@@ -22,17 +22,17 @@
 	if ((self = [super init])) {
 		self.type = IRCChannelNormalType;
 		
-        self.inlineImages = NO;
-        self.iJPQActivity = NO;
-        self.ihighlights = NO;
-		self.autoJoin = YES;
-		self.growl = YES;
+        self.inlineImages	= NO;
+        self.iJPQActivity	= NO;
+        self.ihighlights	= NO;
+		self.autoJoin		= YES;
+		self.growl			= YES;
 		
-		self.name = NSStringEmptyPlaceholder;
-		self.mode = NSStringEmptyPlaceholder;
-		self.topic = NSStringEmptyPlaceholder;
-		self.password = NSStringEmptyPlaceholder;
-		self.encryptionKey = NSStringEmptyPlaceholder;
+		self.name			= NSStringEmptyPlaceholder;
+		self.mode			= NSStringEmptyPlaceholder;
+		self.topic			= NSStringEmptyPlaceholder;
+		self.password		= NSStringEmptyPlaceholder;
+		self.encryptionKey	= NSStringEmptyPlaceholder;
 	}
     
 	return self;

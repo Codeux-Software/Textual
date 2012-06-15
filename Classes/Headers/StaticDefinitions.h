@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 /* Availability Macros */
 #define TXLoadMacOSLibraries 1
@@ -50,6 +50,7 @@
 #define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
 #define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
 #define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
+#define _NSSpellChecker()						[NSSpellChecker sharedSpellChecker]
 
 #ifdef TXNativeNotificationCenterAvailable
 	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]

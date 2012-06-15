@@ -1,6 +1,6 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 @implementation NSAttributedString (IRCTextFormatter)
 
@@ -229,7 +229,17 @@
 			{
 				NSColor *foregroundColor = [dict objectForKey:NSForegroundColorAttributeName];
 				
-                if (PointerIsNotEmpty(foregroundColor) && [foregroundColor isEqual:TXTXDefaultTextFieldFontColor] == NO) {
+                if (PointerIsNotEmpty(foregroundColor)) {
+					NSColor *defaultColor = TXDefaultTextFieldFontColor;
+					NSColor *compareColor = [foregroundColor colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
+
+					CGFloat defaultWhite = [defaultColor whiteComponent];
+					CGFloat compareWhite = [compareColor whiteComponent];
+					
+					if (TXDirtyCGFloatsMatch(defaultWhite, compareWhite)) {
+						return NO;
+					}
+
                     return YES;
                 }
 				
@@ -267,7 +277,7 @@
 		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
 		[attrs setObject:TXDefaultTextFieldFont		forKey:NSFontAttributeName];
-		[attrs setObject:TXTXDefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
+		[attrs setObject:TXDefaultTextFieldFontColor	forKey:NSForegroundColorAttributeName];
 
 		(void)[stringv initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
 

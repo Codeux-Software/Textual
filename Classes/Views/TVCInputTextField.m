@@ -1,6 +1,6 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 07, 2012
+// Converted to ARC Support on June 07, 2012
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
 
@@ -44,6 +44,9 @@
 		
 		[super sanitizeTextField:YES];
 
+#warning FIX: Drawing of text field dirtyRect when the scrollview goes elastic needs to be fixed. \
+				We do not want to keep this feature disabled. 
+		
 #ifdef TXMacOSLionOrNewer
 		if ([TPCPreferences featureAvailableToOSXLion]) {
 			NSScrollView *scrollView = [self scrollView];
