@@ -15,7 +15,7 @@
 		4C68FF43130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C68FF42130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch */; };
 		4C68FF47130D813900AE3A7C /* Copyright.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C68FF45130D813900AE3A7C /* Copyright.txt */; };
 		4C68FF48130D813900AE3A7C /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C68FF46130D813900AE3A7C /* License.txt */; };
-		4CEA502C158B06C700D6CC72 /* AHLinkLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA502B158B06C700D6CC72 /* AHLinkLexer.h */; };
+		4CEA502C158B06C700D6CC72 /* AHLinkLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA502B158B06C700D6CC72 /* AHLinkLexer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -143,8 +143,8 @@
 			files = (
 				3496A82407CE69270055BBAB /* AutoHyperlinks.h in Headers */,
 				3496A82807CE69270055BBAB /* AHHyperlinkScanner.h in Headers */,
-				4C68FF43130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch in Headers */,
 				4CEA502C158B06C700D6CC72 /* AHLinkLexer.h in Headers */,
+				4C68FF43130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
