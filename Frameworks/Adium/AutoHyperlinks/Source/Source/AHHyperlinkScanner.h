@@ -25,31 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-typedef void					*yyscan_t;
-typedef struct					AH_buffer_state *AH_BUFFER_STATE;
-
-extern long						AHlex(yyscan_t yyscanner);
-extern long						AHlex_init(yyscan_t *ptr_yy_globals);
-extern long						AHlex_destroy(yyscan_t yyscanner);
-extern long						AHget_leng(yyscan_t scanner);
-extern void						AHset_in(FILE *in_str, yyscan_t scanner);
-extern void						AH_switch_to_buffer(AH_BUFFER_STATE, yyscan_t scanner);
-extern void						AH_delete_buffer(AH_BUFFER_STATE, yyscan_t scanner);
-extern YY_EXTRA_TYPE			AHget_extra(yyscan_t scanner);
-extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
-
 @interface AHHyperlinkScanner : NSObject 
-{
-	NSDictionary		*__weak m_urlSchemes;
-	NSString			*__weak m_scanString;
-	
-	BOOL				m_strictChecking;
-	BOOL				m_firstCharMismactch;
-	
-	unsigned long		m_scanLocation;
-	unsigned long		m_scanStringLength;
-}
-
 @property (weak, nonatomic, readonly) NSDictionary *urlSchemes;
 @property (weak, nonatomic, readonly) NSString *scanString;
 @property (nonatomic, readonly) BOOL strictChecking;

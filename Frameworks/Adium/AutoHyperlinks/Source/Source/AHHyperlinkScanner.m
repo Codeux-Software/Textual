@@ -25,6 +25,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+typedef void					*yyscan_t;
+typedef struct					AH_buffer_state *AH_BUFFER_STATE;
+
+extern long						AHlex(yyscan_t yyscanner);
+extern long						AHlex_init(yyscan_t *ptr_yy_globals);
+extern long						AHlex_destroy(yyscan_t yyscanner);
+extern long						AHget_leng(yyscan_t scanner);
+extern void						AHset_in(FILE *in_str, yyscan_t scanner);
+extern void						AH_switch_to_buffer(AH_BUFFER_STATE, yyscan_t scanner);
+extern void						AH_delete_buffer(AH_BUFFER_STATE, yyscan_t scanner);
+extern YY_EXTRA_TYPE			AHget_extra(yyscan_t scanner);
+extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
+
 #define DEFAULT_URL_SCHEME	@"http://"
 #define ENC_INDEX_KEY		@"encIndex"
 #define ENC_CHAR_KEY		@"encChar"
@@ -38,6 +51,16 @@
 @end
 
 @implementation AHHyperlinkScanner
+{
+	NSDictionary		*__weak m_urlSchemes;
+	NSString			*__weak m_scanString;
+	
+	BOOL				m_strictChecking;
+	BOOL				m_firstCharMismactch;
+	
+	unsigned long		m_scanLocation;
+	unsigned long		m_scanStringLength;
+}
 
 static NSCharacterSet			*skipSet						= nil;
 static NSCharacterSet			*endSet							= nil;

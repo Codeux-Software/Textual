@@ -159,7 +159,7 @@
 		4C46CC84158042C200846B64 /* TVCInputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC69158042C200846B64 /* TVCInputPromptDialog.xib */; };
 		4C46CC85158042C200846B64 /* TDCInviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC6B158042C200846B64 /* TDCInviteSheet.xib */; };
 		4C46CC86158042C200846B64 /* TDCListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC6D158042C200846B64 /* TDCListDialog.xib */; };
-		4C46CC87158042C200846B64 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC6F158042C200846B64 /* MainMenu.xib */; };
+		4C46CC87158042C200846B64 /* TXCMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC6F158042C200846B64 /* TXCMainMenu.xib */; };
 		4C46CC88158042C200846B64 /* TDCModeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC71158042C200846B64 /* TDCModeSheet.xib */; };
 		4C46CC89158042C200846B64 /* TDCNickSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC73158042C200846B64 /* TDCNickSheet.xib */; };
 		4C46CC8A158042C200846B64 /* TDCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46CC75158042C200846B64 /* TDCPreferences.xib */; };
@@ -665,7 +665,7 @@
 		4C46CC6A158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TVCInputPromptDialog.xib; sourceTree = SOURCE_ROOT; };
 		4C46CC6C158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TDCInviteSheet.xib; sourceTree = SOURCE_ROOT; };
 		4C46CC6E158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TDCListDialog.xib; sourceTree = SOURCE_ROOT; };
-		4C46CC70158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
+		4C46CC70158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TXCMainMenu.xib; sourceTree = SOURCE_ROOT; };
 		4C46CC72158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TDCModeSheet.xib; sourceTree = SOURCE_ROOT; };
 		4C46CC74158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TDCNickSheet.xib; sourceTree = SOURCE_ROOT; };
 		4C46CC76158042C200846B64 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TDCPreferences.xib; sourceTree = SOURCE_ROOT; };
@@ -1115,7 +1115,7 @@
 				4C46CC69158042C200846B64 /* TVCInputPromptDialog.xib */,
 				4C46CC6B158042C200846B64 /* TDCInviteSheet.xib */,
 				4C46CC6D158042C200846B64 /* TDCListDialog.xib */,
-				4C46CC6F158042C200846B64 /* MainMenu.xib */,
+				4C46CC6F158042C200846B64 /* TXCMainMenu.xib */,
 				4C46CC71158042C200846B64 /* TDCModeSheet.xib */,
 				4C46CC73158042C200846B64 /* TDCNickSheet.xib */,
 				4C46CC75158042C200846B64 /* TDCPreferences.xib */,
@@ -1797,7 +1797,7 @@
 				4C46CC84158042C200846B64 /* TVCInputPromptDialog.xib in Resources */,
 				4C46CC85158042C200846B64 /* TDCInviteSheet.xib in Resources */,
 				4C46CC86158042C200846B64 /* TDCListDialog.xib in Resources */,
-				4C46CC87158042C200846B64 /* MainMenu.xib in Resources */,
+				4C46CC87158042C200846B64 /* TXCMainMenu.xib in Resources */,
 				4C46CC88158042C200846B64 /* TDCModeSheet.xib in Resources */,
 				4C46CC89158042C200846B64 /* TDCNickSheet.xib in Resources */,
 				4C46CC8A158042C200846B64 /* TDCPreferences.xib in Resources */,
@@ -2132,12 +2132,12 @@
 			name = TDCListDialog.xib;
 			sourceTree = "<group>";
 		};
-		4C46CC6F158042C200846B64 /* MainMenu.xib */ = {
+		4C46CC6F158042C200846B64 /* TXCMainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4C46CC70158042C200846B64 /* English */,
 			);
-			name = MainMenu.xib;
+			name = TXCMainMenu.xib;
 			sourceTree = "<group>";
 		};
 		4C46CC71158042C200846B64 /* TDCModeSheet.xib */ = {
@@ -2309,10 +2309,13 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
@@ -2349,10 +2352,13 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
@@ -2411,10 +2417,13 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
@@ -2463,10 +2472,13 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
@@ -2515,10 +2527,13 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Miscellaneous/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
