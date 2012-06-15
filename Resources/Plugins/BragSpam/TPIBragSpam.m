@@ -84,7 +84,10 @@
 		for (IRCChannel *c in client.channels) {
 			IRCChannelMode *modes = c.mode;
 			
-			if (c.isTalk || [modes modeInfoFor:@"p"].plus || [modes modeInfoFor:@"s"].plus) {
+			if (c.isTalk || [modes modeInfoFor:@"p"].plus ||
+				[modes modeInfoFor:@"s"].plus ||
+				[modes modeInfoFor:@"i"].plus) {
+				
 				[chanlist removeObject:c];
 			}
 		}
@@ -98,6 +101,10 @@
 			
 			if (chanlist.count == 1) {	
 				[result appendString:TXTFLS(@"BragspamPluginChannelResultSingle", cc.name, client.config.network)];
+			} else if (chanlist.count == 2) {
+				IRCChannel *ccsecond = [chanlist objectAtIndex:1];
+				
+				[result appendString:TXTFLS(@"BragspamPluginChannelResultDouble", cc.name, ccsecond.name, client.config.network)];
 			} else {
 				[result appendString:TXTFLS(@"BragspamPluginChannelResult", cc.name)];
 				
