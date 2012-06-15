@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>10437</string>
+	<string>10441</string>
 	<key>Build Reference</key>
-	<string>2.1.1-124-gbc3754f-stdbuild</string>
+	<string>2.1.1-125-g04dc1d1-stdbuild</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>
@@ -20,8 +20,6 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.1.1</string>
-	<key>CFBundleSignature</key>
-	<string>TXTL</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -47,7 +45,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010, 2011, 2012 Codeux Software</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

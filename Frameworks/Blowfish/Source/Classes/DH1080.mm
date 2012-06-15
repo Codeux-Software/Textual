@@ -3,6 +3,8 @@
 #import "DH1080.h"
 #import "dh1080_be.hpp"
 
+#define requiredPublicKeyLength		135
+
 @implementation CFDH1080
 
 static dhclass *keyExchanger;
