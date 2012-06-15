@@ -26,11 +26,12 @@
 "BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
 "BlowfishNoEncryptionKeySet" = "No encryption key is set.";
 
-"BragspamPluginChannelResult" = "I am within the channel %@, ";
+"BragspamPluginChannelResult" = "I am within the channels %@, ";
 "BragspamPluginChannelResultEndItem" = "and %1$@ on the %2$@.";
 "BragspamPluginChannelResultMiddleItem" = "%@, ";
 "BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
 "BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
+"BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
 "BragspamPluginNormalResult" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
 
 "CancelButton" = "Cancel";
