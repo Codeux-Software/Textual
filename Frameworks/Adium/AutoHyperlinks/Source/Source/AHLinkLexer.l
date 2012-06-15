@@ -77,14 +77,14 @@ ignoreable      (b\.sc|m\.in)
 
 <CANONICAL>({userAndPass}@)?{urlCSpec}|{ipURL}|{ipv6URL} {yyleng += yyextra;
                                                           BEGIN INITIAL;
-                                                          return AH_URL_VALID;}
+                                                          return AHValidURL;}
 
 <CANONICAL>.*                                            {BEGIN INITIAL;
-                                                          return AH_URL_INVALID;}
+                                                          return AHInvalidURL;}
 
-{ignoreable}            {return AH_URL_INVALID;}
+{ignoreable}            {return AHInvalidURL;}
 
-file:\/\/\/.*           {return AH_FILE_VALID;}
+file:\/\/\/.*           {return AHValidFile;}
 
 https?:\/\/             |
 s?ftp:\/\/              |
@@ -107,7 +107,7 @@ notes:\/\/              |
 gopher:\/\/             |
 x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 
-{urlSpec}               {return AH_URL_DEGENERATE;}
+{urlSpec}               {return AHDegenerateURL;}
 
 {myimSpec}              |
 {jabberSpec}            |
@@ -118,7 +118,7 @@ x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 {rdarSpec}              |
 {msnSpec}               |
 {dictSpec}				|
-{spotifySpec}           {return AH_URL_VALID;}
+{spotifySpec}           {return AHValidURL;}
 
-.                       {return AH_URL_INVALID;}
+.                       {return AHInvalidURL;}
 %%

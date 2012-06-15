@@ -4,14 +4,37 @@
 
 #import <objc/objc-runtime.h>
 
+@interface TLOPopupPrompts (Private)
++ (void)sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+@end
+
 @implementation TLOPopupPrompts
 
 #pragma mark -
 #pragma mark Alert Sheets
 
-@synthesize target;
-@synthesize selector;
-@synthesize _suppressionKey;
++ (void)sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	NSArray *sheetInfo = (NSArray *)CFBridgingRelease(contextInfo);
+
+	NSString *suppressionKey = [sheetInfo objectAtIndex:0];
+	NSString *selectorName   = [sheetInfo objectAtIndex:2];
+
+	id  targetClass  = [sheetInfo objectAtIndex:1];
+	SEL targetAction = NSSelectorFromString(selectorName);
+
+	if (NSObjectIsNotEmpty(suppressionKey)) {
+		NSButton *button = [alert suppressionButton];
+		
+		[_NSUserDefaults() setBool:[button state] forKey:suppressionKey];
+	}
+	
+	if ([targetClass isKindOfClass:[self class]]) {
+		return;
+	}
+	
+	objc_msgSend(targetClass, targetAction, [NSNumber numberWithInteger:returnCode]);
+}
 
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
@@ -58,58 +81,16 @@
 	[alert setShowsSuppressionButton:useSupression];
 	
 	[[alert suppressionButton] setTitle:suppressText];
-	
-	self.target	= targetClass;
-	self.selector = actionSelector;
-	self._suppressionKey = __suppressionKey;
-	
-	[alert beginSheetModalForWindow:window modalDelegate:self
-					 didEndSelector:@selector(_sheetWindowWithQuestionCallback:returnCode:contextInfo:)
-						contextInfo:nil];
-	
+
+	NSArray *context = [NSArray arrayWithObjects:__suppressionKey, targetClass,
+						NSStringFromSelector(actionSelector), nil];
+
+	[alert beginSheetModalForWindow:window modalDelegate:[self class]
+					 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
+						contextInfo:(void *)CFBridgingRetain(context)];
 }
 
-- (void)_sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{	
-	if (NSObjectIsNotEmpty(self._suppressionKey)) {
-		NSButton *button = [alert suppressionButton];
-		
-		[_NSUserDefaults() setBool:[button state] forKey:self._suppressionKey];
-	}
-	
-	if ([self.target isKindOfClass:[self class]]) {
-		return;
-	}
-	
-	objc_msgSend(self.target, self.selector, [NSNumber numberWithInteger:returnCode]);
-}
-
-+ (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(id)targetClass
-						 action:(SEL)actionSelector
-						   body:(NSString *)bodyText 
-						  title:(NSString *)titleText
-				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-					otherButton:(NSString *)otherButton
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText
-{
-	TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-	
-	[prompt sheetWindowWithQuestion:window 
-							 target:targetClass 
-							 action:actionSelector 
-							   body:bodyText 
-							  title:titleText 
-					  defaultButton:buttonDefault 
-					alternateButton:buttonAlternate
-						otherButton:otherButton
-					 suppressionKey:suppressKey 
-					suppressionText:suppressText];
-}
-
-+ (void)popupPromptNULLSelector:(NSInteger)returnCode 
++ (void)popupPromptNULLSelector:(NSInteger)returnCode
 {
 	return;
 }
@@ -127,14 +108,14 @@
 {
 	BOOL useSupression = NO;
 	
-	NSString *_suppressKey = @"";
+	NSString *__suppressKey = @"";
 	
 	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
-        _suppressKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
-        
+        __suppressKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+
 		useSupression = YES;
 		
-		if ([_NSUserDefaults() boolForKey:_suppressKey] == YES) {
+		if ([_NSUserDefaults() boolForKey:__suppressKey] == YES) {
 			return YES;
 		}
 	}
@@ -159,7 +140,7 @@
 	
 	if ([alert runModal] == NSAlertDefaultReturn) {
 		if (useSupression) {
-			[_NSUserDefaults() setBool:[button state] forKey:_suppressKey];
+			[_NSUserDefaults() setBool:[button state] forKey:__suppressKey];
 		}
 		
 		return YES;
@@ -185,6 +166,7 @@
 	[dialog runModal];
 	
 	NSInteger button = [dialog buttonClicked];
+	
 	NSString *result = [dialog promptValue];
 	
 	if (NSObjectIsNotEmpty(result) && button == NSAlertDefaultReturn) {

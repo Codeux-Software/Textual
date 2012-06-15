@@ -15,9 +15,11 @@
 {
 	if ((self = [super init])) {
 		self.eventType = aEventType;
+		
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
@@ -82,11 +84,6 @@
 - (void)setDisableWhileAway:(BOOL)value
 {
 	[TPCPreferences setDisableWhileAway:value forEvent:self.eventType];
-}
-
-- (TXNotificationType)eventType
-{
-    return eventType;
 }
 
 @end
