@@ -171,7 +171,7 @@
 	windowFrame.size.height = ([view frame].size.height + _TXWindowToolbarHeight);
 	
 	windowFrame.origin.y	= NSMaxY([self.window frame]) -
-										([view frame].size.height + _TXWindowToolbarHeight);
+	([view frame].size.height + _TXWindowToolbarHeight);
 	
 	if (NSObjectIsNotEmpty([self.contentView subviews])) {
 		[[self.contentView.subviews safeObjectAtIndex:0] removeFromSuperview];
@@ -324,7 +324,7 @@
 - (NSArray *)availableSounds
 {
 	NSMutableArray *sound_list = [NSMutableArray array];
-
+	
 	NSString *userSoundFolder = [_NSFileManager() URLForDirectory:NSLibraryDirectory
 														 inDomain:NSUserDomainMask
 												appropriateForURL:nil
@@ -333,7 +333,7 @@
 	
 	NSArray *directoryContents		= [_NSFileManager() contentsOfDirectoryAtPath:@"/System/Library/Sounds"										error:NULL];
 	NSArray *homeDirectoryContents	= [_NSFileManager() contentsOfDirectoryAtPath:[userSoundFolder stringByAppendingPathComponent:@"/Sounds"]	error:NULL];
-
+	
 	[sound_list safeAddObject:TXEmptySoundAlertLabel];
 	[sound_list safeAddObject:@"Beep"];
 	
@@ -363,19 +363,19 @@
 	if (NSObjectIsEmpty(sounds)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
-		[ary safeAddObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
+		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
 		
-		sounds = ary;
+		self.sounds = ary;
 	}
 	
 	return sounds;
@@ -645,16 +645,18 @@
 	NSString *name = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
     
     if ([kind isEqualNoCase:@"resource"]) {
-		[TLOPopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
-									   target:[TDCPreferencesController class]
-									   action:@selector(openPathToThemesCallback:) 
-										 body:TXTFLS(@"OpeningLocalStyleResourcesMessage", name)
-										title:TXTLS(@"OpeningLocalStyleResourcesTitle")
-								defaultButton:TXTLS(@"ContinueButton")
-							  alternateButton:TXTLS(@"CancelButton") 
-								  otherButton:TXTLS(@"OpeningLocalStyleResourcesCopyButton")
-							   suppressionKey:@"opening_local_style" 
-							  suppressionText:nil];
+		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+		
+		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
+								 target:[TDCPreferencesController class]
+								 action:@selector(openPathToThemesCallback:) 
+								   body:TXTFLS(@"OpeningLocalStyleResourcesMessage", name)
+								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
+						  defaultButton:TXTLS(@"ContinueButton")
+						alternateButton:TXTLS(@"CancelButton") 
+							otherButton:TXTLS(@"OpeningLocalStyleResourcesCopyButton")
+						 suppressionKey:@"opening_local_style" 
+						suppressionText:nil];
     } else {
 		NSString *path = [[TPCPreferences whereThemesPath] stringByAppendingPathComponent:name];
 		
@@ -693,9 +695,9 @@
 			version = @"7";
 		} 
 	}
-
+	
 	NSString *base = [NSString stringWithFormat:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.%@).pkg", version];
-
+	
 	[TLOpenLink open:[NSURL URLWithString:base]];
 }
 

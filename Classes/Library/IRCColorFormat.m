@@ -59,7 +59,7 @@
 	return result;
 }
 
-#warning "-attributedStringToASCIIFormatting:lineType:channel:hostmask:" is dangerous \
+#warning FIX: "-attributedStringToASCIIFormatting:lineType:channel:hostmask:" is dangerous \
 			to call. Its results cannot be guaranteed and are generally inaccurate.
 
 /* TODO: Fix text truncation while also supporting formatting. */

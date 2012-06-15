@@ -144,7 +144,7 @@ static NSArray					*encKeys						= nil;
 - (BOOL)isStringValidURI:(NSString *)inString usingStrict:(BOOL)useStrictChecking fromIndex:(unsigned long *)sIndex 
 {
     AH_BUFFER_STATE		buf;  
-	AH_URI_STATUS		validStatus;
+	AHParserStatus		validStatus;
 	const char			*inStringEnc;
     unsigned long		encodedLength;
 	yyscan_t			scanner; 
@@ -165,14 +165,14 @@ static NSArray					*encKeys						= nil;
 	
     buf = AH_scan_string(inStringEnc, scanner);
 	
-    validStatus = (AH_URI_STATUS)AHlex(scanner);
+    validStatus = (AHParserStatus)AHlex(scanner);
 	
 	if (sIndex) {
 		*sIndex += AHget_leng(scanner);
 	}
 	
-    if ((validStatus == AH_URL_VALID || validStatus == AH_FILE_VALID) ||
-		(validStatus == AH_URL_DEGENERATE && useStrictChecking == NO)) {
+    if ((validStatus == AHValidURL || validStatus == AHValidFile) ||
+		(validStatus == AHDegenerateURL && useStrictChecking == NO)) {
 		
         AH_delete_buffer(buf, scanner); 
 		
