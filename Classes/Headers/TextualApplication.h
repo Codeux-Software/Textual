@@ -4,7 +4,6 @@
 
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
-	#import <Carbon/Carbon.h>
 	#import <WebKit/WebKit.h>
 	#import <Security/Security.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
