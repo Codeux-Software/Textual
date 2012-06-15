@@ -1,7 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 08, 2012
+// Converted to ARC Support on June 08, 2012
 
 #define _LF	0xa
 #define _CR	0xd
@@ -173,7 +173,7 @@ NSInteger ctoi(unsigned char c);
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		
-		if (TXTXIsAlphaNumeric(c) == NO) {
+		if (TXIsAlphaNumeric(c) == NO) {
 			return NO;
 		}
 	}

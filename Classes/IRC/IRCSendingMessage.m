@@ -1,6 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 @implementation IRCSendingMessage
 
@@ -13,10 +13,12 @@
 {
 	if ((self = [super init])) {
 		self.completeColon = YES;
+		
 		self.params = [NSMutableArray new];
+		
 		self.command = [aCommand uppercaseString];
 	}
-
+	
 	return self;
 }
 
@@ -35,16 +37,16 @@
 			
 			forceCompleteColon = YES;
 		} else if ([self.command isEqualToString:IRCCommandIndexNick]
-				 || [self.command isEqualToString:IRCCommandIndexMode]
-				 || [self.command isEqualToString:IRCCommandIndexJoin]
-				 || [self.command isEqualToString:IRCCommandIndexNames]
-				 || [self.command isEqualToString:IRCCommandIndexWho]
-				 || [self.command isEqualToString:IRCCommandIndexList]
-				 || [self.command isEqualToString:IRCCommandIndexInvite]
-				 || [self.command isEqualToString:IRCCommandIndexWhois]
-				 || [self.command isEqualToString:IRCCommandIndexWhowas]
-				 || [self.command isEqualToString:IRCCommandIndexIson]
-				 || [self.command isEqualToString:IRCCommandIndexUser]) {
+				   || [self.command isEqualToString:IRCCommandIndexMode]
+				   || [self.command isEqualToString:IRCCommandIndexJoin]
+				   || [self.command isEqualToString:IRCCommandIndexNames]
+				   || [self.command isEqualToString:IRCCommandIndexWho]
+				   || [self.command isEqualToString:IRCCommandIndexList]
+				   || [self.command isEqualToString:IRCCommandIndexInvite]
+				   || [self.command isEqualToString:IRCCommandIndexWhois]
+				   || [self.command isEqualToString:IRCCommandIndexWhowas]
+				   || [self.command isEqualToString:IRCCommandIndexIson]
+				   || [self.command isEqualToString:IRCCommandIndexUser]) {
 			
 			self.completeColon = NO;
 		}

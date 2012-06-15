@@ -3,6 +3,6 @@
 
 #include "TPI_CustomMenus.h"
 
-@interface MenuController (TPI_CMP_MenuController)
+@interface TXMenuController (TPI_CMP_MenuController)
 - (void)postLinkToTextualHomepage:(id)sender;
 @end

@@ -1,10 +1,10 @@
 // Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 07, 2012
+// Converted to ARC Support on June 07, 2012
 
 @class TLOKeyEventHandler;
 
-#define TXTXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
+#define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
 #define TXDefaultTextFieldFont                [NSFont fontWithName:@"Helvetica" size:12.0]
 
 @interface TVCTextField : NSTextView 

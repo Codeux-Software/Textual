@@ -1,6 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on Thursday, June 09, 2012
+// Converted to ARC Support on June 09, 2012
 
 @interface IRCMessage (Private)
 - (void)parseLine:(NSString *)line;
@@ -19,7 +19,7 @@
 	if ((self = [super init])) {
 		[self parseLine:NSStringEmptyPlaceholder];
 	}
-
+	
 	return self;
 }
 
@@ -28,7 +28,7 @@
 	if ((self = [super init])) {
 		[self parseLine:line];
 	}
-
+	
 	return self;
 }
 
@@ -40,20 +40,22 @@
 	self.params = [NSMutableArray new];
 	
 	NSMutableString *s = [line mutableCopy];
-
+	
 	if ([s hasPrefix:@"@t="]) { // znc server-time
-		NSString* t = [s getToken];
+		NSString *t;
 		
+		t = [s getToken];
 		t = [t substringFromIndex:3];
 		
 		self.receivedAt = [NSDate dateWithTimeIntervalSince1970:[t longLongValue]];
 	} else {
 		self.receivedAt = [NSDate date];
 	}
-
+	
 	if ([s hasPrefix:@":"]) {
-		NSString *t = [s getToken];
+		NSString *t;
 		
+		t = [s getToken];
 		t = [t safeSubstringFromIndex:1];
 		
 		self.sender.raw = t;

@@ -2,6 +2,8 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#warning FIX: Conversion to ARC not finished within this file.
+
 #import <arpa/inet.h>
 #import <mach/mach_time.h>
 
@@ -2063,6 +2065,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 41: // Command: BAN
 		case 64: // Command: UNBAN
 		{
+#warning FIX: The "ban" command is using hostmask as indent. 
+
 			if (c) {
 				NSString *peer = s.getToken.string;
 				
@@ -5329,7 +5333,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSInteger n = m.numericReply;
 	
 	switch (n) {
-		case 401:	// ERR_NOSUCHNICK
+		case 401:	
 		{
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
@@ -5342,8 +5346,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return;
 			break;
 		}
-		case 433:	// ERR_NICKNAMEINUSE
-		case 437:   // ERR_NICKTEMPUNAVAIL
+		case 433:	
+		case 437:   
         {
 			if (self.isLoggedIn) break;
 
@@ -5352,7 +5356,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return;
 			break;
         }
-		case 402:   // ERR_NOSUCHSERVER
+		case 402:   
 		{
 			NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence:1]);
 			
@@ -5361,7 +5365,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return;
 			break;
 		}
-		case 404:	// ERR_CANNOTSENDMESSAGE
+		case 404:	
 		{
 			NSString *chname = [m paramAt:1];
 			NSString *text	 = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence:2]);
@@ -5371,7 +5375,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return;
 			break;
 		}
-		case 405:	// ERR_GENERICJOINERROR
+		case 405:	
 		case 471:
 		case 473:
 		case 474:
@@ -5458,10 +5462,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self.acceptedCaps removeAllObjects];
 	self.capPaused = 0;
 	
-	self.userhostInNames = NO;
-	self.multiPrefix = NO;
-	self.identifyMsg = NO;
-	self.identifyCTCP = NO;
+	self.userhostInNames	= NO;
+	self.multiPrefix		= NO;
+	self.identifyMsg		= NO;
+	self.identifyCTCP		= NO;
 	
 	self.conn = nil;
     
@@ -5481,7 +5485,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	self.isConnecting = self.isConnected = self.isLoggedIn = self.isQuitting = NO;
 	self.hasIRCopAccess = self.serverHasNickServ = self.autojoinInitialized = NO;
 	
-	self.myNick = NSStringEmptyPlaceholder;
+	self.myNick   = NSStringEmptyPlaceholder;
 	self.sentNick = NSStringEmptyPlaceholder;
 	
 	self.tryingNickNumber = -1;
@@ -5489,7 +5493,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *disconnectTXTLString = nil;
 	
 	switch (self.disconnectType) {
-		case IRCDisconnectNormalMode:       disconnectTXTLString = @"IRCDisconnectedFromServer"; break;
+		case IRCDisconnectNormalMode:      disconnectTXTLString = @"IRCDisconnectedFromServer"; break;
         case IRCSleepModeDisconnectMode:   disconnectTXTLString = @"IRCDisconnectedBySleepMode"; break;
 		case IRCTrialPeriodDisconnectMode: disconnectTXTLString = @"IRCDisconnectedByTrialPeriodTimer"; break;
 		default: break;
@@ -5575,7 +5579,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender
 {
 	if (self.disconnectType == IRCBadSSLCertificateDisconnectMode) {
-		NSString *suppKey = [@"Preferences.prompts.cert_trust_error." stringByAppendingString:self.config.guid];
+		NSString *suppKey = [@"cert_trust_error." stringByAppendingString:self.config.guid];
 		
 		if (self.config.isTrustedConnection == NO) {
 			BOOL status = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"SocketBadSSLCertificateErrorMessage") 
@@ -5735,8 +5739,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
         }
     }
     
-    if ([[self.world bundlesForServerInput] containsKey:cmd]) {
-        [[self invokeInBackgroundThread] processBundlesServerMessage:m];
+    if ([self.world.bundlesForServerInput containsKey:cmd]) {
+        [self.invokeInBackgroundThread processBundlesServerMessage:m];
     }
     
     [self.world updateTitle];
