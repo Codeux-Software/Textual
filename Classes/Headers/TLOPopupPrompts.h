@@ -5,10 +5,6 @@
 #define TXPopupPromptSuppressionPrefix		@"Preferences.prompts."
 
 @interface TLOPopupPrompts : NSObject 
-@property (nonatomic, unsafe_unretained) id target;
-@property (nonatomic, unsafe_unretained) SEL selector;
-@property (nonatomic, assign) id _suppressionKey;
-
 + (void)popupPromptNULLSelector:(NSInteger)returnCode;
 
 + (BOOL)dialogWindowWithQuestion:(NSString *)bodyText 
@@ -25,7 +21,7 @@
 					alternateButton:(NSString *)buttonAlternate
 					   defaultInput:(NSString *)defaultValue;
 
-+ (void)sheetWindowWithQuestion:(NSWindow *)window
+- (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
 						 action:(SEL)actionSelector
 						   body:(NSString *)bodyText 

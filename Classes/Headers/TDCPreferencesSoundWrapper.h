@@ -13,5 +13,4 @@
 @property (nonatomic, assign) BOOL disableWhileAway;
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
-- (TXNotificationType)eventType;
 @end

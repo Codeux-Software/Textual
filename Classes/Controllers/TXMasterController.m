@@ -243,11 +243,11 @@
 	
 	if ([TPCPreferences confirmQuit]) {
 		NSInteger result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ApplicationWantsToTerminatePromptMessage")
-															title:TXTLS(@"ApplicationWantsToTerminatePromptTitle") 
-													defaultButton:TXTLS(@"QuitButton") 
-												  alternateButton:TXTLS(@"CancelButton") 
-													  otherButton:nil
-												   suppressionKey:nil suppressionText:nil];
+															   title:TXTLS(@"ApplicationWantsToTerminatePromptTitle") 
+													   defaultButton:TXTLS(@"QuitButton") 
+													 alternateButton:TXTLS(@"CancelButton") 
+														 otherButton:nil
+													  suppressionKey:nil suppressionText:nil];
 		
 		if (result == NO) {
 			return NO;
@@ -619,16 +619,18 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	if (NSObjectIsNotEmpty(sf)) {		
 		NSString *theme = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 		
-		[TLOPopupPrompts sheetWindowWithQuestion:[NSApp keyWindow] 
-									   target:[TLOPopupPrompts class]
-									   action:@selector(popupPromptNULLSelector:) 
-										 body:TXTFLS(@"ThemeChangeOverridePromptMessage", theme, sf)
-										title:TXTLS(@"ThemeChangeOverridePromptTitle")
-								defaultButton:TXTLS(@"OkButton")
-							  alternateButton:nil 
-								  otherButton:nil
-							   suppressionKey:@"theme_override_info" 
-							  suppressionText:nil];
+		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+		
+		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
+								 target:[TLOPopupPrompts class]
+								 action:@selector(popupPromptNULLSelector:) 
+								   body:TXTFLS(@"ThemeChangeOverridePromptMessage", theme, sf)
+								  title:TXTLS(@"ThemeChangeOverridePromptTitle")
+						  defaultButton:TXTLS(@"OkButton")
+						alternateButton:nil 
+							otherButton:nil
+						 suppressionKey:@"theme_override_info" 
+						suppressionText:nil];
 	}
 }
 

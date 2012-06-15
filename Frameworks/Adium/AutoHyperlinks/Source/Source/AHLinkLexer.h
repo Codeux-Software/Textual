@@ -26,10 +26,10 @@
  */
 
 typedef enum {
-    AH_URL_INVALID = -1,
-    AH_URL_VALID = 0,
-    AH_FILE_VALID,
-    AH_URL_DEGENERATE,
-} AH_URI_STATUS;
+    AHInvalidURL = -1,
+    AHValidURL = 0,
+    AHValidFile,
+    AHDegenerateURL,
+} AHParserStatus;
 
 #define YY_EXTRA_TYPE unsigned int

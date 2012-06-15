@@ -87,7 +87,7 @@
 	if ((self = [super init])) {
 		self.tabViewList = [NSMutableArray new];
 		
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Geneal",						@"1", NSNumberWithBOOL(NO), nil]];
+		[self.tabViewList addObject:[NSArray arrayWithObjects:@"General",						@"1", NSNumberWithBOOL(NO), nil]];
 		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Identity",						@"2", NSNumberWithBOOL(NO), nil]];
 		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Message",						@"3", NSNumberWithBOOL(NO), nil]];
 		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Encoding",						@"4", NSNumberWithBOOL(NO), nil]];

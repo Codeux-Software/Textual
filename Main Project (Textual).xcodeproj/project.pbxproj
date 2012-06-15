@@ -111,7 +111,7 @@
 		4C46CC2F1580429D00846B64 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBBC1580429D00846B64 /* AGKeychain.m */; };
 		4C46CC301580429D00846B64 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBBD1580429D00846B64 /* GCDAsyncSocketExtensions.m */; };
 		4C46CC311580429D00846B64 /* TLOFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBBE1580429D00846B64 /* TLOFileLogger.m */; };
-		4C46CC321580429D00846B64 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBBF1580429D00846B64 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = " -fobjc-arc"; }; };
+		4C46CC321580429D00846B64 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBBF1580429D00846B64 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C46CC331580429D00846B64 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC01580429D00846B64 /* TXGlobalModels.m */; };
 		4C46CC341580429D00846B64 /* TLOInputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC11580429D00846B64 /* TLOInputHistory.m */; };
 		4C46CC351580429D00846B64 /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC21580429D00846B64 /* IRCColorFormat.m */; };
@@ -119,7 +119,7 @@
 		4C46CC371580429D00846B64 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC41580429D00846B64 /* TLOLanguagePreferences.m */; };
 		4C46CC381580429D00846B64 /* TLOPopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC51580429D00846B64 /* TLOPopupPrompts.m */; };
 		4C46CC391580429D00846B64 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC61580429D00846B64 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C46CC3A1580429D00846B64 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC71580429D00846B64 /* RLMAsyncSocket.m */; settings = {COMPILER_FLAGS = " -fobjc-arc"; }; };
+		4C46CC3A1580429D00846B64 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC71580429D00846B64 /* RLMAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C46CC3B1580429D00846B64 /* TLOSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC81580429D00846B64 /* TLOSocketClient.m */; };
 		4C46CC3C1580429D00846B64 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBC91580429D00846B64 /* TLOTimer.m */; };
 		4C46CC3D1580429D00846B64 /* TLORegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46CBCA1580429D00846B64 /* TLORegularExpression.m */; };

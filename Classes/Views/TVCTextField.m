@@ -41,7 +41,7 @@
 
 - (dispatch_queue_t)formattingQueue
 {
-    return self.formattingQueue;
+    return formattingQueue;
 }
 
 #pragma mark -

@@ -289,7 +289,7 @@ static NSMutableDictionary *commandIndex = nil;
 		if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
 			[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 		}
-
+		
 		return dest;
 	} else {
 		NSString *base;
@@ -709,9 +709,9 @@ static NSMutableDictionary *commandIndex = nil;
 	switch (event) {
 		case TXNotificationHighlightType:			return @"eventHighlight";
 		case TXNotificationNewQueryType:			return @"eventNewtalk";
-		case TXNotificationChannelMessageType:			return @"eventChannelText";
+		case TXNotificationChannelMessageType:		return @"eventChannelText";
 		case TXNotificationChannelNoticeType:		return @"eventChannelNotice";
-		case TXNotificationQueryMessageType:			return @"eventTalkText";
+		case TXNotificationQueryMessageType:		return @"eventTalkText";
 		case TXNotificationQueryNoticeType:			return @"eventTalkNotice";
 		case TXNotificationKickType:				return @"eventKicked";
 		case TXNotificationInviteType:				return @"eventInvited";
@@ -1020,16 +1020,18 @@ static NSInteger totalRunTime = 0;
 		NSBundle *defaultClientBundle = [NSBundle bundleWithURL:CFBridgingRelease(ircAppURL)];
 		
 		if ([[defaultClientBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]]) {
-			[TLOPopupPrompts sheetWindowWithQuestion:[NSApp keyWindow]
-										   target:self
-										   action:@selector(defaultIRCClientSheetCallback:)
-											 body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
-											title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
-									defaultButton:TXTLS(@"YesButton") 
-								  alternateButton:TXTLS(@"NoButton") 
-									  otherButton:nil
-								   suppressionKey:@"default_irc_client" 
-								  suppressionText:nil];
+			TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+			
+			[prompt sheetWindowWithQuestion:[NSApp keyWindow]
+									 target:self
+									 action:@selector(defaultIRCClientSheetCallback:)
+									   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
+									  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
+							  defaultButton:TXTLS(@"YesButton") 
+							alternateButton:TXTLS(@"NoButton") 
+								otherButton:nil
+							 suppressionKey:@"default_irc_client" 
+							suppressionText:nil];
 		}
 	}
 }
@@ -1114,7 +1116,7 @@ static NSInteger totalRunTime = 0;
 	[d setObject:TXDefaultTextualNicknameFormat		forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:TXDefaultTextualTimestampFormat	forKey:@"Preferences.Theme.timestamp_format"];
 	[d setObject:@"~/Documents/Textual Logs"		forKey:@"Preferences.General.transcript_folder"];
-
+	
 	[d setInteger:2										forKey:@"Preferences.General.autojoin_maxchans"];
 	[d setInteger:300									forKey:@"Preferences.General.max_log_lines"];
 	[d setInteger:300									forKey:@"Preferences.General.inline_image_width"];

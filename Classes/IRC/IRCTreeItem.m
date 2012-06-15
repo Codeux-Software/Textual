@@ -17,7 +17,7 @@
 @synthesize dockUnreadCount;
 @synthesize currentInputHistory;
 
-#warning "-resetLogView:withChannel:andClient:" does not function properly. \
+#warning FIX: "-resetLogView:withChannel:andClient:" does not function properly. \
 		It does not create new view when destroying the old. 
 
 - (void)resetLogView:(IRCWorld *)world
