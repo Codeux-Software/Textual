@@ -5,8 +5,7 @@
 "AccessibilityMemberListDescription" = "User %1$@ selected in member list of channel hash %2$@.";
 
 "AddressBookIgnoreEntryType" = "User Ignore";
-"AddressBookUserTrackingEntryType" 
-= "User Tracking";
+"AddressBookUserTrackingEntryType" = "User Tracking";
 
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
@@ -176,7 +175,7 @@
 
 "OpeningLocalStyleResourcesCopyButton" = "Make Local Copy";
 "OpeningLocalStyleResourcesMessage" = "The style being opened is a read-only version bundled with Textual.";
-"OpeningLocalStyleResourcesTitle" = "Opening Resource Filess";
+"OpeningLocalStyleResourcesTitle" = "Resource Files";
 
 "PluginCommandClashErrorMessage" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
 
@@ -191,7 +190,7 @@
 "ServerDeletePromptMessage" = "There is no undo and all data related to this server will be erased.";
 "ServerDeletePromptTitle" = "Do you want to delete the selection?";
 
-"ServerNoticeTreeItemTitle"		= "Server Notices";
+"ServerNoticeTreeItemTitle"	= "Server Notices";
 
 "ServerSheetAutojoinNavigationTreeItem"	= "Autojoin";
 "ServerSheetCommandsNavigationTreeItem"	= "Connect Commands";
