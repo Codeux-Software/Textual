@@ -327,7 +327,7 @@
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
 
-"SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";"
+"SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%i\002 times with a total runtime of %@";
 "SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
