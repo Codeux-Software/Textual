@@ -44,8 +44,8 @@
 	list.attr = attributes;
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-
-	DevNullDestroyObject(YES, result);
+	
+#pragma unused(result)
 	
 	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		CFRelease(item);
@@ -95,7 +95,7 @@
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 	
-	DevNullDestroyObject(YES, result);
+#pragma unused(result)
 	
 	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
 		numberOfItemsFound++;
@@ -154,7 +154,7 @@
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 	
-	DevNullDestroyObject(YES, result);
+#pragma unused(result)
 	
 	result = SecKeychainSearchCopyNext(search, &item);
 	
@@ -244,8 +244,8 @@
 	list.attr = attributes;
 	
 	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-	
-	DevNullDestroyObject(YES, result);
+
+#pragma unused(result)
 	
 	NSString *password = NSStringEmptyPlaceholder;
 	
