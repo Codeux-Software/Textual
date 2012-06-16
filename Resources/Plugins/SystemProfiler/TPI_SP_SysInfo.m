@@ -223,7 +223,7 @@
 	
 	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
 		if (AF_LINK != ifa->ifa_addr->sa_family) continue;
-		if ((ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING) == NO) continue;
+		if ((ifa->ifa_flags & IFF_UP) == NO && (ifa->ifa_flags & IFF_RUNNING) == NO) continue;
 		if (ifa->ifa_data == 0) continue;
 		
 		if (strncmp(ifa->ifa_name, "lo", 2)) {
