@@ -7,8 +7,6 @@
 TEXTUAL_EXTERN BOOL NSObjectIsEmpty(id obj);
 TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
-TEXTUAL_EXTERN void DevNullDestroyObject(BOOL condition, ...);
-
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
 TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
 
