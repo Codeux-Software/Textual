@@ -28,17 +28,17 @@
 			if (NSObjectIsEmpty(messageString)) {
 				c.config.encryptionKey = nil;
 				
-				[[client iomt] printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+				[client.iomt printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 			} else {
 				if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
-						[[client iomt] printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
+						[client.iomt printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
 					}
 				} else {
 					if (c.isTalk) {
-						[[client iomt] printDebugInformation:TXTLS(@"BlowfishEncryptionStartedInQuery") channel:c];
+						[client.iomt printDebugInformation:TXTLS(@"BlowfishEncryptionStartedInQuery") channel:c];
 					} else {
-						[[client iomt] printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+						[client.iomt printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 					}
 				}
 				
@@ -47,15 +47,15 @@
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			c.config.encryptionKey = nil;
 			
-			[[client iomt] printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+			[client.iomt printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
-				[[client iomt] printDebugInformation:TXTFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
+				[client.iomt printDebugInformation:TXTFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
 			} else {	
-				[[client iomt] printDebugInformation:TXTLS(@"BlowfishNoEncryptionKeySet") channel:c];
+				[client.iomt printDebugInformation:TXTLS(@"BlowfishNoEncryptionKeySet") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-			[[client iomt] printDebugInformation:TXTLS(@"BlowfishKeyExchangeFeatureNotReadyYet") channel:c];
+			[client.iomt printDebugInformation:TXTLS(@"BlowfishKeyExchangeFeatureNotReadyYet") channel:c];
 		}
 	}
 }

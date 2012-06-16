@@ -75,7 +75,7 @@
 		NSString *result = TXTFLS(@"BragspamPluginNormalResult", channelCount, networkCount, operCount, 
 								  chanOpCount, chanHopCount, chanVopCount, powerOverCount);
 		
-		[[client iomt] sendPrivmsgToSelectedChannel:result];
+		[client.iomt sendPrivmsgToSelectedChannel:result];
 	} else if ([commandString isEqualToString:@"CBRAG"]) {
 		IRCChannel *cc;
 		
@@ -120,7 +120,7 @@
 			}
 		}		
 		
-		[[client iomt] sendPrivmsgToSelectedChannel:result];
+		[client.iomt sendPrivmsgToSelectedChannel:result];
 		
 	}
 }
