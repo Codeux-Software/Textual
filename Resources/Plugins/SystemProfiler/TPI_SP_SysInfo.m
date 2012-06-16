@@ -3,8 +3,8 @@
 
 #import "TPI_SP_SysInfo.h"
 
-#define LOCAL_VOLUME_DICTIONARY @"/Volumes"
-#define MEMORY_DIVISION_SIZE	1.073741824
+#define _localVolumeBaseDirectory		@"/Volumes"
+#define _systemMemoryDivisor			1.073741824
 
 @interface TPI_SP_SysInfo (Private)
 + (NSInteger)_internalSystemUptime;
@@ -17,14 +17,16 @@
 
 + (NSString *)compiledOutput
 {
-	NSString *sysinfo = @"System Information:";
+	NSString *sysinfo = TXTLS(@"SystemInformationCompiledOutputPrefix");
+	
+	NSString *_new;
 	
 	NSString *_model			= [self model];
 	NSString *_cpu_model		= [self processor];
-	NSNumber *_cpu_count		= [self processorCount];
+	NSString *_cpu_count		= [self processorCount];
 	NSString *_cpu_speed		= [self processorClockSpeed]; 
 	NSInteger _cpu_count_int	= [_cpu_count integerValue];
-			
+	
 	NSString *_cpu_l2		= [self processorL2CacheSize];
 	NSString *_cpu_l3		= [self processorL3CacheSize];
 	NSString *_memory		= [self physicalMemorySize];
@@ -34,10 +36,11 @@
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 	
 	_cpu_model = [TLORegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
-	_cpu_model = [TLORegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
+	_cpu_model = [TLORegularExpression string:_cpu_model replacedByRegex:@"\\s+"							withString:NSStringWhitespacePlaceholder];
 	
 	_cpu_model = [_cpu_model trim];
 	
+	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
 		
@@ -47,66 +50,98 @@
 			_exact_model = [_all_models objectForKey:_model];
 		}
 		
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Model:\002 %@ \002•\002", _exact_model];
+		_new = TXTFLS(@"SystemInformationCompiledOutputModel", _exact_model);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
+	/* CPU Information. */
 	if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
 		if (_cpu_count_int == 1) {
-			sysinfo = [sysinfo stringByAppendingFormat:@" \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002", _cpu_model, _cpu_count, _cpu_speed];
+			_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
 		} else {
-			sysinfo = [sysinfo stringByAppendingFormat:@" \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002", _cpu_model, _cpu_count, _cpu_speed];
+			_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
 		}
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
+	/* L2 & L3 Cache. */
 	if (_cpu_l2) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002L%1$i:\002 %2$@ \002•\002", 2, _cpu_l2];
+		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
 	if (_cpu_l3) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002L%1$i:\002 %2$@ \002•\002", 3, _cpu_l3];
+		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
 	if (_memory) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Memory:\002 %@ \002•\002", _memory];
+		_new = TXTFLS(@"SystemInformationCompiledOutputMemory", _memory);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Uptime:\002 %@ \002•\002", [self systemUptimeUsingShortValue:YES]];
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002Disk Space:\002 %@ \002•\002", [self diskInfo]];
+	/* System Uptime. */
+	_new = TXTFLS(@"SystemInformationCompiledOutputUptime", [self systemUptimeUsingShortValue:YES]);
 	
+	sysinfo = [sysinfo stringByAppendingString:_new];
+	
+	/* Disk Space Information. */
+	_new = TXTFLS(@"SystemInformationCompiledOutputDiskspace", [self diskInfo]);
+	
+	sysinfo = [sysinfo stringByAppendingString:_new];
+	
+	/* GPU Information. */
 	if (NSObjectIsNotEmpty(_gpu_model)) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Graphics:\002 %@ \002•\002", _gpu_model];
+		_new = TXTFLS(@"SystemInformationCompiledOutputGraphics", _gpu_model);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
+	/* Screen Resolution. */
 	NSArray *allScreens = [NSScreen screens];
 	
 	if (NSObjectIsNotEmpty(allScreens)) {		
 		NSScreen *maiScreen = [allScreens objectAtIndex:0];
 		
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Screen Resolution:\002 %.0f x %.0f \002•\002", maiScreen.frame.size.width, maiScreen.frame.size.height];
+		_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
+	/* Load Average. */
 	if (NSObjectIsNotEmpty(_loadavg)) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@%% \002•\002", _loadavg];
+		_new = TXTFLS(@"SystemInformationCompiledOutputLoad", _loadavg);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
+	/* Operating System. */
 	NSString *osname = [self operatingSystemName];
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)",
-			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
-			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], osname,
-			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
+	_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
+				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
+				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], osname,
+				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]);
 	
+	sysinfo = [sysinfo stringByAppendingString:_new];
+
+	/* Compiled Output. */
 	return sysinfo;
 }
 
-+ (NSString *)getAllScreenResolutions 
++ (NSString *)activeScreenResolutions 
 {
 	NSArray *screens = [NSScreen screens];
 	
 	if ([screens count] == 1) {
 		NSScreen *maiScreen = [screens objectAtIndex:0];
-		
-		return [NSString stringWithFormat:@"\002Screen Resolution:\002 %.0f x %.0f", maiScreen.frame.size.width, maiScreen.frame.size.height];
+
+		return TXTFLS(@"SystemInformationScreensCommandResultSingle", maiScreen.frame.size.width, maiScreen.frame.size.height);
 	} else {
 		NSMutableString *result = [NSMutableString string];
 		
@@ -114,9 +149,9 @@
 			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
 			
 			if (screenNumber == 1) {
-				[result appendFormat:@"\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiBase", screenNumber, screen.frame.size.width, screen.frame.size.height)];
 			} else {
-				[result appendFormat:@"; Monitor %i: %.0f x %.0f", screenNumber, screen.frame.size.width, screen.frame.size.height];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiMiddle", screenNumber, screen.frame.size.width, screen.frame.size.height)];
 			}
 		}
 		
@@ -131,42 +166,47 @@
 	
 	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[TPCPreferences startTime]], NO,
 													[NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
-	
-	return [NSString stringWithFormat:@"System Uptime: %@ - Textual Uptime: %@", systemUptime, textualUptime];
+
+	return TXTFLS(@"SystemInformationUptimeCommandResult", systemUptime, textualUptime);
 }
 
-+ (NSString *)getCurrentThemeInUse:(IRCWorld *)world
++ (NSString *)logThemeInformationFrom:(IRCWorld *)world
 {
-	NSString* fname = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
+	NSString *fname = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	
 	if (fname) {
-		return [NSString stringWithFormat:@"\002Current Theme:\002 %@", fname];
+		return TXTFLS(@"SystemInformationThemeCommandResult", fname);
 	}
     
-    return @"\002Current Theme:\002 Unknown";
+    return TXTLS(@"SystemInformationThemeCommandResultError");
 }
 
-+ (NSString *)getBandwidthStats:(IRCWorld *)world
++ (NSString *)bandwidthStatsFrom:(IRCWorld *)world
 {
-	return [NSString stringWithFormat:@"Textual has sent \002%i\002 messages since startup with a total of \002%i\002 messages received. That equals roughly \002%.2f\002 messages a second. Combined this comes to around \002%@ in\002 and \002%@ out\002 worth of bandwidth.",
-			world.messagesSent, world.messagesReceived, (world.messagesReceived / ([[NSDate date] timeIntervalSince1970] - [TPCPreferences startTime])), 
-			[self formattedDiskSize:world.bandwidthIn], [self formattedDiskSize:world.bandwidthOut]];
+	return TXTFLS(@"SystemInformationMsgcountCommandResult",
+				  TXFormattedNumber(world.messagesSent),
+				  TXFormattedNumber(world.messagesReceived),
+				  (world.messagesReceived / ([NSDate epochTime] - [TPCPreferences startTime])),
+				  [self formattedDiskSize:world.bandwidthIn],
+				  [self formattedDiskSize:world.bandwidthOut]);
+	
 }
 
-+ (NSString *)getSystemLoadAverage
++ (NSString *)systemLoadAverage
 {
-	return [NSString stringWithFormat:@"\002Load Average:\002 %@", [self loadAveragesWithCores:0]];
+	return TXTFLS(@"SystemInformationLoadavgCommandResult", [self loadAveragesWithCores:0]);
 }
 
-+ (NSString *)getTextualRunCount
++ (NSString *)applicationRunCount
 {
-	return [NSString stringWithFormat:@"Textual has been opened \002%i\002 times with a total runtime of %@", [_NSUserDefaults() integerForKey:@"TXRunCount"], TXReadableTime([TPCPreferences totalRunTime])];
+	return TXTFLS(@"SystemInformationRuncountCommandResult",
+				  TXFormattedNumber([_NSUserDefaults() integerForKey:@"TXRunCount"]),
+				  TXReadableTime([TPCPreferences totalRunTime]));
 }
 
-+ (NSString *)getNetworkStats
++ (NSString *)networkStats
 {
-	/* Based off the source code of the "top" command:
-	 <http://src.gnu-darwin.org/DarwinSourceArchive/expanded/top/top-15/libtop.c> */
+	/* Based off the source code of "libtop.c" */
 	
 	NSMutableString *netstat = [NSMutableString string];
 	
@@ -183,7 +223,7 @@
 	
 	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
 		if (AF_LINK != ifa->ifa_addr->sa_family) continue;
-		if (!(ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING)) continue;
+		if ((ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING) == NO) continue;
 		if (ifa->ifa_data == 0) continue;
 		
 		if (strncmp(ifa->ifa_name, "lo", 2)) {
@@ -195,13 +235,15 @@
 			net_ibytes += if_data->ifi_ibytes;
 			
 			if (objectIndex == 0) {
-				[netstat appendFormat:@" [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
-				 [self formattedDiskSize:if_data->ifi_ibytes], 
-				 [self formattedDiskSize:if_data->ifi_obytes]];
+				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultBase",
+											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 [self formattedDiskSize:if_data->ifi_ibytes], 
+											 [self formattedDiskSize:if_data->ifi_obytes])];
 			} else {
-				[netstat appendFormat:@" — [%@]: %@ in, %@ out", [NSString stringWithUTF8String:ifa->ifa_name], 
-				 [self formattedDiskSize:if_data->ifi_ibytes], 
-				 [self formattedDiskSize:if_data->ifi_obytes]];
+				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultMiddle",
+											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 [self formattedDiskSize:if_data->ifi_ibytes], 
+											 [self formattedDiskSize:if_data->ifi_obytes])];
 			}
 			
 			objectIndex += 1;
@@ -213,25 +255,19 @@
 	}
 	
 	if (NSObjectIsEmpty(netstat)) {
-		return @"Error: Unable to locate any network statistics. ";
+		return TXTLS(@"SystemInformationNetstatsCommandResultError");
 	} else {
-		return [@"\002Network Traffic:\002" stringByAppendingString:netstat];
+		return TXTFLS(@"SystemInformationNetstatsCommandResultPrefix", netstat);
 	}
 	
 	return netstat;
 }
 
-+ (NSString *)getSystemMemoryUsage
++ (NSString *)systemMemoryUsage
 {
 	TXFSLongInt totalMemory = [self totalMemorySize];
 	TXFSLongInt freeMemory  = [self freeMemorySize];
 	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
-	
-#if __x86_64__ == 0
-	if (totalMemory > 4294967296) {
-		return @"\002Error:\002 This command requires Textual to run in 64-bit mode on systems with more than 4 GB of memory.";
-	}
-#endif
 	
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
@@ -252,32 +288,32 @@
 	}
 	
 	[result appendFormat:@"%c", 0x03];
-	
-	return [NSString stringWithFormat:@"\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]",
-			 [self formattedDiskSize:freeMemory], [self formattedDiskSize:usedMemory], [self formattedDiskSize:totalMemory], result];
+
+	return TXTFLS(@"SystemInformationSysmemCommandResult",
+				  [self formattedDiskSize:freeMemory],
+				  [self formattedDiskSize:usedMemory],
+				  [self formattedDiskSize:totalMemory], result);
 }
 
-+ (NSString *)getAllVolumesAndSizes
++ (NSString *)allVolumesAndSizes
 {
-	// Based off the source code located at:
-	// <http://www.cocoabuilder.com/archive/cocoa/150006-detecting-volumes.html>
-	
 	NSMutableString *result = [NSMutableString string];
 	
-	NSArray *drives = [_NSFileManager() contentsOfDirectoryAtPath:LOCAL_VOLUME_DICTIONARY error:NULL];
+	NSArray *drives = [_NSFileManager() contentsOfDirectoryAtPath:_localVolumeBaseDirectory error:NULL];
 	
 	NSInteger objectIndex = 0;
 	
 	for (NSString *name in drives) {
-		NSString *fullpath = [LOCAL_VOLUME_DICTIONARY stringByAppendingPathComponent:name];
+		NSString *fullpath = [_localVolumeBaseDirectory stringByAppendingPathComponent:name];
 		
-		FSRef fsRef;
+		FSRef			fsRef;
+		FSCatalogInfo	catalogInfo;
+		
 		struct statfs stat;
-		FSCatalogInfo catalogInfo;
 		
 		const char *fsRep = [fullpath fileSystemRepresentation];
 		
-		if (FSPathMakeRef((const UInt8*)fsRep, &fsRef, NULL) != 0) {
+		if (FSPathMakeRef((const UInt8 *)fsRep, &fsRef, NULL) != 0) {
 			continue;
 		}
 		
@@ -299,9 +335,13 @@
 						TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 						
 						if (objectIndex == 0) {
-							[result appendFormat:@"%@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+							[result appendString:TXTFLS(@"SystemInformationDiskspaceCommandResultBase", name,
+														[self formattedDiskSize:totalSpace],
+														[self formattedDiskSize:freeSpace])];
 						} else {
-							[result appendFormat:@" — %@: Total: %@; Free: %@", name, [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+							[result appendString:TXTFLS(@"SystemInformationDiskspaceCommandResultMiddle", name,
+														[self formattedDiskSize:totalSpace],
+														[self formattedDiskSize:freeSpace])];
 						}
 						
 						objectIndex++;
@@ -312,9 +352,9 @@
 	}
 	
 	if (NSObjectIsEmpty(result)) {
-		return @"Error: Unable to find any mounted drives.";
+		return TXTLS(@"SystemInformationDiskspaceCommandResultError");
 	} else {
-		return [@"\002Mounted Drives:\002 " stringByAppendingString:result];
+		return TXTFLS(@"SystemInformationDiskspaceCommandResultPrefix", result);
 	}
 }
 
@@ -324,16 +364,16 @@
 + (NSString *)formattedDiskSize:(TXFSLongInt)size
 {
 	if (size >= 1000000000000.0) {
-		return [NSString stringWithFormat:@"%.2f TB", (size / 1000000000000.0)];
+		return TXTFLS(@"SystemInformationFilesizeTB", (size / 1000000000000.0));
 	} else {
 		if (size < 1000000000.0) {
 			if (size < 1000000.0) {
-				return [NSString stringWithFormat:@"%.2f KB", (size / 1000.0)];
+				return TXTFLS(@"SystemInformationFilesizeKB", (size / 1000.0));
 			} else {
-				return [NSString stringWithFormat:@"%.2f MB", (size / 1000000.0)];
+				return TXTFLS(@"SystemInformationFilesizeMB", (size / 1000000.0));
 			}
 		} else {
-			return [NSString stringWithFormat:@"%.2f GB", (size / 1000000000.0)];
+			return TXTFLS(@"SystemInformationFilesizeGB", (size / 1000000000.0));
 		}
 	}
 }
@@ -341,9 +381,9 @@
 + (NSString *)formattedCPUFrequency:(TXNSDouble)rate
 {
 	if ((rate / 1000000) >= 990) {
-		return [NSString stringWithFormat:@"%.2f GHz", ((rate / 100000000.0) / 10.0)];
+		return TXTFLS(@"SystemInformationCPUClockSpeedGHz", ((rate / 100000000.0) / 10.0));
 	} else {
-		return [NSString stringWithFormat:@"%.2f MHz", rate];
+		return TXTFLS(@"SystemInformationCPUClockSpeedMHz", rate);
 	}
 }
 
@@ -358,15 +398,7 @@
 	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
 	
 	if (kerr == KERN_SUCCESS) {
-		NSString *result = [NSString stringWithFormat:@"Textual is currently using %@ of memory in ", [self formattedDiskSize:info.resident_size]];
-		
-#if __x86_64__
-		result = [result stringByAppendingString:@"64-bit mode."];
-#else 
-		result = [result stringByAppendingString:@"32-bit mode."];
-#endif
-		
-		return result;
+		return TXTFLS(@"SystemInformationApplicationMemoryUse", [self formattedDiskSize:info.resident_size]);
 	} 
 	
 	return nil;
@@ -378,17 +410,19 @@
 	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
     
 	GLint numPixelFormats			= 0;
+	
 	CGLContextObj cglContext		= 0;
 	CGLPixelFormatObj pixelFormat	= NULL;
 	CGLContextObj curr_ctx			= CGLGetCurrentContext();
-
+	
 #pragma unused(curr_ctx)
-		
+	
 	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
 	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
     
 	if (pixelFormat) {
 		CGLCreateContext(pixelFormat, NULL, &cglContext);
+		
 		CGLDestroyPixelFormat(pixelFormat);
 		CGLSetCurrentContext(cglContext);
 		
@@ -409,8 +443,10 @@
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
-		
-		return [NSString stringWithFormat:@"Total: %@; Free: %@", [self formattedDiskSize:totalSpace], [self formattedDiskSize:freeSpace]];
+
+		return TXTFLS(@"SystemInformationCompiledOutputDiskspaceExtended",
+					  [self formattedDiskSize:totalSpace],
+					  [self formattedDiskSize:freeSpace]);
 	} else {
 		return nil;
 	}
@@ -419,6 +455,7 @@
 + (NSInteger)_internalSystemUptime
 {
 	struct timeval boottime;
+	
 	size_t size = sizeof(boottime);
 	
 	if (sysctlbyname("kern.boottime", &boottime, &size, NULL, 0) == -1) {
@@ -459,6 +496,7 @@
 + (NSString *)processor
 {
 	char buffer[256];
+	
 	size_t sz = sizeof(buffer);
 	
 	if (0 == sysctlbyname("machdep.cpu.brand_string", buffer, &sz, NULL, 0)) {
@@ -473,6 +511,7 @@
 + (NSString *)model
 {
 	char modelBuffer[256];
+	
 	size_t sz = sizeof(modelBuffer);
 	
 	if (0 == sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0)) {
@@ -484,7 +523,7 @@
 	}	
 }
 
-+ (NSNumber *)processorCount
++ (NSString *)processorCount
 {
 	host_basic_info_data_t hostInfo;
 	mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;
@@ -493,12 +532,13 @@
 		return nil;
 	}
 	
-	return [NSNumber numberWithUnsignedInt:hostInfo.max_cpus];
+	return [NSString stringWithUnsignedInteger:hostInfo.max_cpus];
 }
 
 + (NSString *)processorL2CacheSize
 {
 	u_int64_t size = 0L;
+	
 	size_t len = sizeof(size);
 	
 	if (sysctlbyname("hw.l2cachesize", &size, &len, NULL, 0) >= 0) {
@@ -511,6 +551,7 @@
 + (NSString *)processorL3CacheSize
 {
 	u_int64_t size = 0L;
+	
 	size_t len = sizeof(size);
 	
 	if (sysctlbyname("hw.l3cachesize", &size, &len, NULL, 0) >= 0) {
@@ -523,6 +564,7 @@
 + (NSString *)processorClockSpeed
 {
 	u_int64_t clockrate = 0L;
+	
 	size_t len = sizeof(clockrate);
 	
 	if (sysctlbyname("hw.cpufrequency", &clockrate, &len, NULL, 0) >= 0) {
@@ -535,19 +577,19 @@
 + (NSString *)operatingSystemName
 {
 	NSString *productVersion = [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"];
-
+	
 	if ([productVersion contains:@"10.6"]) {
-		return @"Snow Leopard";
+		return TXTLS(@"SystemInformationOSVersionSnowLeopard");
 	}
 	
 	if ([productVersion contains:@"10.7"]) {
-		return @"Lion";
+		return TXTLS(@"SystemInformationOSVersionLion");
 	}
 	
 	if ([productVersion contains:@"10.8"]) {
-		return @"Mountain Lion";
+		return TXTLS(@"SystemInformationOSVersionMountainLion");
 	}
-
+	
 	return nil;
 }
 
@@ -564,18 +606,17 @@
 		return -1;
 	}
 	
-	TXFSLongInt result = ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
-	
-	return result;
+	return ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
 }
 
 + (TXFSLongInt)totalMemorySize
 {
 	uint64_t linesize = 0L;
+	
 	size_t len = sizeof(linesize);
 	
 	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		return (linesize / MEMORY_DIVISION_SIZE);
+		return (linesize / _systemMemoryDivisor);
 	} 
 	
 	return -1;

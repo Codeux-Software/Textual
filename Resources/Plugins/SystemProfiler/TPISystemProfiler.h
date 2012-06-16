@@ -4,11 +4,9 @@
 #include "SystemProfiler.h"
 
 @interface TPISystemProfiler : NSObject
+- (void)messageSentByUser:(IRCClient *)client
+				  message:(NSString *)messageString
+				  command:(NSString *)commandString;
 
-- (void)messageSentByUser:(IRCClient*)client
-				  message:(NSString*)messageString
-				  command:(NSString*)commandString;
-
-- (NSArray*)pluginSupportsUserInputCommands;
-
+- (NSArray *)pluginSupportsUserInputCommands;
 @end

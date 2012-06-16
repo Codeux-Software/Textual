@@ -6,46 +6,47 @@
 
 @implementation TPISystemProfiler
 
-- (NSArray*)pluginSupportsUserInputCommands
+- (NSArray *)pluginSupportsUserInputCommands
 {
 	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", 
-			@"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg", @"sysmem", nil];
+			@"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg",
+			@"sysmem", nil];
 }
 
-- (void)messageSentByUser:(IRCClient*)client
-				  message:(NSString*)messageString
-				  command:(NSString*)commandString
+- (void)messageSentByUser:(IRCClient *)client
+				  message:(NSString *)messageString
+				  command:(NSString *)commandString
 {
 	if ([client isConnected]) {
-		NSString *channelName = [[client.world selectedChannel] name];
+		NSString *channelName = client.world.selectedChannel.name;
 		
 		if ([channelName length] >= 1) {
 			if ([commandString isEqualToString:@"SYSINFO"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
 			} else if ([commandString isEqualToString:@"MEMORY"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
 				
 				if ([_NSUserDefaults() boolForKey:@"HideMemoryCommandExtraInfo"] == NO) {
-					[[client iomt] printDebugInformation:@"Information about memory use: http://is.gd/j0a9s"];
+					[client.iomt printDebugInformation:TXTLS(@"SystemInformationApplicationMemoryUseInfoLink")];
 				}
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
 			} else if ([commandString isEqualToString:@"NETSTATS"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getNetworkStats]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo networkStats]];
 			} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getBandwidthStats:client.world]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo bandwidthStatsFrom:client.world]];
 			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllVolumesAndSizes]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo allVolumesAndSizes]];
 			} else if ([commandString isEqualToString:@"THEME"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getCurrentThemeInUse:client.world]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo logThemeInformationFrom:client.world]];
 			} else if ([commandString isEqualToString:@"SCREENS"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getAllScreenResolutions]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo activeScreenResolutions]];
 			} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getTextualRunCount]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationRunCount]];
 			} else if ([commandString isEqualToString:@"LOADAVG"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getSystemLoadAverage]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemLoadAverage]];
 			} else if ([commandString isEqualToString:@"SYSMEM"]) {
-				[[client iomt] sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo getSystemMemoryUsage]];
+				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemMemoryUsage]];
 			}
 		}
 	}

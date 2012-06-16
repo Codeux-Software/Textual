@@ -38,7 +38,7 @@
 	if (NSObjectIsEmpty([self.keyDelegate clients])) {
 		[master.addServerButton setHidden:NO];
 		[master.addServerButton setTarget:menucl];
-		[master.addServerButton setAction:@selector(onAddServer:)];
+		[master.addServerButton setAction:@selector(addServer:)];
 		
 		NSRect winRect = [master.serverSplitView frame];
 		NSRect oldRect = [master.addServerButton frame];

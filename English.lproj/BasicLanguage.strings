@@ -10,30 +10,6 @@
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
 
-"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
-"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
-"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
-"BlowfishEncryptionStarted" = "Encryption started.";
-"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
-"BlowfishEncryptionStopped" = "Encryption stopped.";
-
-"BlowfishKeyExchangeFeatureNotReadyYet" = "Key exchange is currently not supported.";
-"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
-"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for %@. Please wait for the current one to expire before requesting a new one.";
-"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from %@. Processing …";
-"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
-"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for %@ has expired.";
-"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
-"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
-
-"BragspamPluginChannelResult" = "I am within the channels %@, ";
-"BragspamPluginChannelResultEndItem" = "and %1$@ on the %2$@.";
-"BragspamPluginChannelResultMiddleItem" = "%@, ";
-"BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
-"BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
-"BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
-"BragspamPluginNormalResult" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
-
 "CancelButton" = "Cancel";
 
 "ChannelApplicationTitleModeValue" = " (%@)";
@@ -274,3 +250,85 @@
 "UserTrackingNicknameNowAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
 
 "YesButton" = "Yes";
+
+/* Blowfish Encryption Extension. */
+
+"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
+"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
+"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
+"BlowfishEncryptionStarted" = "Encryption started.";
+"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
+"BlowfishEncryptionStopped" = "Encryption stopped.";
+
+"BlowfishKeyExchangeFeatureNotReadyYet" = "Key exchange is currently not supported.";
+"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
+"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for %@. Please wait for the current one to expire before requesting a new one.";
+"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from %@. Processing …";
+"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
+"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for %@ has expired.";
+"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
+"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
+
+/* Brag Spam Extension. */
+
+"BragspamPluginChannelResult" = "I am within the channels %@, ";
+"BragspamPluginChannelResultEndItem" = "and %1$@ on the %2$@.";
+"BragspamPluginChannelResultMiddleItem" = "%@, ";
+"BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
+"BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
+"BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
+"BragspamPluginNormalResult" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
+
+/* System Profiler Extension. */
+
+"SystemInformationCompiledOutputPrefix" = "System Information:";
+"SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
+"SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
+"SystemInformationCompiledOutputCPUMultiCore" = " \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002";
+"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$i:\002 %2$@ \002•\002";
+"SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
+"SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
+"SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
+"SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
+"SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
+"SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
+"SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
+"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
+
+"SystemInformationOSVersionSnowLeopard" = "Snow Leopard";
+"SystemInformationOSVersionLion" = "Lion";
+"SystemInformationOSVersionMountainLion" = "Mountain Lion";
+
+"SystemInformationApplicationMemoryUse" = "Textual is currently using %@ of memory in 64-bit mode.";
+"SystemInformationApplicationMemoryUseInfoLink" = "Information about memory use: http://is.gd/j0a9s";
+
+"SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
+"SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
+
+"SystemInformationDiskspaceCommandResultPrefix" = "\002Mounted Drives:\002%@";
+"SystemInformationDiskspaceCommandResultBase" = "%@: Total: %@; Free: %@";
+"SystemInformationDiskspaceCommandResultMiddle" = " — %@: Total: %@; Free: %@";
+"SystemInformationDiskspaceCommandResultError" = "Error: Unable to find any mounted drives."; // what are we running on?
+
+"SystemInformationNetstatsCommandResultPrefix" = "\002Network Traffic:\002%@";
+"SystemInformationNetstatsCommandResultBase" = " [%@]: %@ in, %@ out";
+"SystemInformationNetstatsCommandResultMiddle" = " — [%@]: %@ in, %@ out";
+"SystemInformationNetstatsCommandResultError" = "Error: Unable to locate any network statistics. ";
+
+"SystemInformationFilesizeTB" = "%.2f TB";
+"SystemInformationFilesizeGB" = "%.2f GB";
+"SystemInformationFilesizeMB" = "%.2f MB";
+"SystemInformationFilesizeKB" = "%.2f KB";
+
+"SystemInformationThemeCommandResult" = "\002Current Theme:\002 %@";
+"SystemInformationThemeCommandResultError" = "\002Current Theme:\002 Unknown";
+
+"SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
+"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
+"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
+
+"SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";"
+"SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
+"SystemInformationRuncountCommandResult" = "Textual has been opened \002%i\002 times with a total runtime of %@";
+"SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
+"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$i\002 messages since startup with a total of \002%2$i\002 messages received. That equals roughly \002%3$.2f\002 messages a second. Combined this comes to around \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";

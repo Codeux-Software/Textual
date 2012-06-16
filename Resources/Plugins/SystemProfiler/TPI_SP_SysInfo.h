@@ -5,31 +5,38 @@
 
 @interface TPI_SP_SysInfo : NSObject 
 + (NSString *)compiledOutput;
+
 + (NSString *)model;
 + (NSString *)processor;
-+ (NSNumber *)processorCount;
++ (NSString *)processorCount;
 + (NSString *)processorL2CacheSize;
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
+
 + (NSString *)operatingSystemName;
-+ (NSString *)getSystemMemoryUsage;
+
++ (NSString *)systemMemoryUsage;
 + (NSString *)physicalMemorySize;
 + (TXFSLongInt)freeMemorySize;
 + (TXFSLongInt)totalMemorySize;
+
 + (NSString *)loadAveragesWithCores:(NSInteger)cores;
+
 + (NSString *)systemUptime;
 + (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue;
+
 + (NSString *)diskInfo;
-+ (NSString *)getNetworkStats;
++ (NSString *)networkStats;
 + (NSString *)graphicsCardInfo;
-+ (NSString *)getAllVolumesAndSizes;
++ (NSString *)allVolumesAndSizes;
 + (NSString *)applicationMemoryUsage;
-+ (NSString *)getAllScreenResolutions;
++ (NSString *)activeScreenResolutions;
 + (NSString *)applicationAndSystemUptime;
-+ (NSString *)getSystemLoadAverage;
-+ (NSString *)getTextualRunCount;
-+ (NSString *)getBandwidthStats:(IRCWorld *)world;
-+ (NSString *)getCurrentThemeInUse:(IRCWorld *)world;
++ (NSString *)systemLoadAverage;
++ (NSString *)applicationRunCount;
++ (NSString *)bandwidthStatsFrom:(IRCWorld *)world;
++ (NSString *)logThemeInformationFrom:(IRCWorld *)world;
+
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
 + (NSString *)formattedCPUFrequency:(TXNSDouble)rate;
 @end
