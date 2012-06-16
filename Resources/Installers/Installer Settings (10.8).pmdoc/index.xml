@@ -5,7 +5,7 @@
 
 \f0\fs26 \cf0 This installation provides add-ons for the Textual IRC Client that are no longer packaged by default because of difficulties with the Mac App Store sandbox environment. \
 \
-They require installation into an Apple-defined folder that the actual Textual application does not have permission to.\
+They require installation into an Apple-defined folder that the actual Textual application cannot write to.\
 \
 ----------------------------------------------------\
 \
