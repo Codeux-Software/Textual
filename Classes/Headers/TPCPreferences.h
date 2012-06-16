@@ -54,6 +54,8 @@ typedef enum {
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
 
++ (NSString *)masqueradeCTCPVersion;
+
 + (NSData *)applicationIcon;
 + (NSString *)applicationName;
 + (NSInteger)applicationProcessID;

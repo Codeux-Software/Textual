@@ -3950,13 +3950,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		} else if ([command isEqualToString:IRCCommandIndexTime]) {
 			[self sendCTCPReply:nick command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCCommandIndexVersion]) {
-			NSString *ref  = [TPCPreferences gitBuildReference];
-			NSString *name = [TPCPreferences applicationName];
-			NSString *vers = [[TPCPreferences textualInfoPlist] objectForKey:@"CFBundleVersion"];
-			
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref)];
-			
-			[self sendCTCPReply:nick command:command text:text];
+			NSString *fakever = [TPCPreferences masqueradeCTCPVersion];
+
+			if (NSObjectIsNotEmpty(fakever)) {
+				[self sendCTCPReply:nick command:command text:fakever];
+			} else {
+				NSString *ref  = [TPCPreferences gitBuildReference];
+				NSString *name = [TPCPreferences applicationName];
+				NSString *vers = [[TPCPreferences textualInfoPlist] objectForKey:@"CFBundleVersion"];
+				
+				NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref)];
+				
+				[self sendCTCPReply:nick command:command text:text];
+			}
 		} else if ([command isEqualToString:IRCCommandIndexUserinfo]) {
 			[self sendCTCPReply:nick command:command text:NSStringEmptyPlaceholder];
 		} else if ([command isEqualToString:IRCCommandIndexClientinfo]) {

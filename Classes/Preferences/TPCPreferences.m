@@ -369,6 +369,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() objectForKey:@"Preferences.General.ircop_alert_match"];
 }
 
++ (NSString *)masqueradeCTCPVersion
+{
+	return [_NSUserDefaults() objectForKey:@"Preferences.General.masquerade_ctcp_version"];
+}
+
 + (BOOL)trackConversations
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.track_conversations"];
