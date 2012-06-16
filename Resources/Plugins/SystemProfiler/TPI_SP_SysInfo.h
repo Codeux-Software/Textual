@@ -11,7 +11,7 @@
 + (NSString *)processorL2CacheSize;
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
-+ (NSString *)kernelArchitecture;
++ (NSString *)operatingSystemName;
 + (NSString *)getSystemMemoryUsage;
 + (NSString *)physicalMemorySize;
 + (TXFSLongInt)freeMemorySize;

@@ -89,16 +89,12 @@
 		sysinfo = [sysinfo stringByAppendingFormat:@" \002Load:\002 %@%% \002•\002", _loadavg];
 	}
 	
-	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (Build %3$@)",
+	NSString *osname = [self operatingSystemName];
+	
+	sysinfo = [sysinfo stringByAppendingFormat:@" \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)",
 			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
-			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], 
+			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], osname,
 			   [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]];
-	
-	NSString *arch = [self kernelArchitecture];
-	
-	if (NSObjectIsNotEmpty(arch)) {
-		sysinfo = [sysinfo stringByAppendingFormat:@" (%@ kernel)", arch];
-	}
 	
 	return sysinfo;
 }
@@ -169,7 +165,7 @@
 
 + (NSString *)getNetworkStats
 {
-	/* Based off the source code of the "top" command
+	/* Based off the source code of the "top" command:
 	 <http://src.gnu-darwin.org/DarwinSourceArchive/expanded/top/top-15/libtop.c> */
 	
 	NSMutableString *netstat = [NSMutableString string];
@@ -536,20 +532,22 @@
 	}
 }
 
-+ (NSString *)kernelArchitecture
++ (NSString *)operatingSystemName
 {
-	struct utsname name;
-	
-    if (uname(&name) >= 0) {
-		NSString *machine = [NSString stringWithFormat:@"%s", name.machine];
-		
-		if ([machine isEqualToString:@"x86_64"]) {
-			return @"64-bit";
-		} else {
-			return @"32-bit";
-		}
+	NSString *productVersion = [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"];
+
+	if ([productVersion contains:@"10.6"]) {
+		return @"Snow Leopard";
 	}
 	
+	if ([productVersion contains:@"10.7"]) {
+		return @"Lion";
+	}
+	
+	if ([productVersion contains:@"10.8"]) {
+		return @"Mountain Lion";
+	}
+
 	return nil;
 }
 
