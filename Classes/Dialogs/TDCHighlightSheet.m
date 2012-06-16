@@ -89,17 +89,17 @@
 		return _rowHeightMultiplier;
 	}
 	
-	NSRect columnRect;
-    
-    columnRect = [tableView rectOfColumn:1];
-    columnRect.size.width -= 6;
+	NSRect columnRect = [tableView rectOfColumn:1];
 	
 	NSArray *data = [self.list safeObjectAtIndex:row];
-    
-    NSInteger pixelHeight = [[data safeObjectAtIndex:2] pixelHeightInWidth:columnRect.size.width];
-    NSInteger lineCount   = (pixelHeight / 14); 
-    
-    return (_rowHeightMultiplier * lineCount);
+
+	NSAttributedString *baseString = [data safeObjectAtIndex:2];
+
+	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
+										 lineMultiplier:13.0
+											 forcedFont:[NSFont systemFontOfSize:13.0]];
+
+	return (totalLines * _rowHeightMultiplier);
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
