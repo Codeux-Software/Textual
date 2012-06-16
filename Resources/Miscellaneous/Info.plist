@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Build Number</key>
-	<string>10514</string>
+	<string>10537</string>
 	<key>Build Reference</key>
-	<string>2.1.1-130-g5766f39-appstore</string>
+	<string>2.1.1-131-g7d01853-debug</string>
 	<key>CFBundleExecutable</key>
 	<string>Textual</string>
 	<key>CFBundleIconFile</key>

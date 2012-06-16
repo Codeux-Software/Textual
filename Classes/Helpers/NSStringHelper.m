@@ -312,9 +312,9 @@ BOOL isUnicharDigit(unichar c)
     NSDictionary *input = [NSDictionary dictionaryWithObjectsAndKeys:defaultFont, @"attributedStringFont", nil];
 	
 	return [LVCLogRenderer renderBody:self 
-                        controller:nil 
-                        renderType:TVCLogRendererAttributedStringType 
-                        properties:input resultInfo:NULL];
+						   controller:nil 
+						   renderType:TVCLogRendererAttributedStringType 
+						   properties:input resultInfo:NULL];
 }
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont
@@ -627,23 +627,33 @@ BOOL isUnicharDigit(unichar c)
 	return ([matches count] >= 2 && [matches count] <= 7);
 }
 
-- (NSInteger)pixelHeightInWidth:(NSInteger)width
+
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
 {
-    NSTextStorage *textStorage = [NSTextStorage alloc];
-	NSLayoutManager *layoutManager = [NSLayoutManager new];
-	NSTextContainer *textContainer = [NSTextContainer alloc];
+	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
 	
-    (void)[textStorage initWithString:self];
-    (void)[textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
-    
-	[layoutManager addTextContainer:textContainer];
-	[textStorage addLayoutManager:layoutManager];
-	[textContainer setLineFragmentPadding:0.0];
-	[layoutManager glyphRangeForTextContainer:textContainer];
+	return (boundHeight / lineHeight);
+}
+
+
+- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
+{
+	NSMutableAttributedString *baseMutable = self.mutableCopy;
 	
-	NSInteger cellHeight = [layoutManager usedRectForTextContainer:textContainer].size.height;
-    
-    return cellHeight;
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
+	
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+	
+	[attributes setObject:font			 forKey:NSFontAttributeName];
+	[attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+	
+	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
+	
+	NSRect bounds = [baseMutable boundingRectWithSize:NSMakeSize(width, 0.0)
+											  options:NSStringDrawingUsesLineFragmentOrigin];
+	
+	return NSHeight(bounds);
 }
 
 @end
@@ -669,7 +679,7 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(TXNSDouble)value							{ return [NSString stringWithFormat:@"%f", value]; }
++ (NSString *)stringWithDouble:(TXNSDouble)value						{ return [NSString stringWithFormat:@"%f", value]; }
 
 @end
 
@@ -831,23 +841,42 @@ BOOL isUnicharDigit(unichar c)
     return lines;
 }
 
-- (NSInteger)pixelHeightInWidth:(NSInteger)width
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight
 {
-    NSTextStorage *textStorage = [NSTextStorage alloc];
-	NSLayoutManager *layoutManager = [NSLayoutManager new];
-	NSTextContainer *textContainer = [NSTextContainer alloc];
+	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight forcedFont:nil];
+}
+
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
+{	
+	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
 	
-    (void)[textStorage initWithAttributedString:self];
-    (void)[textContainer initWithContainerSize:NSMakeSize(width, FLT_MAX)];
-    
-	[layoutManager addTextContainer:textContainer];
-	[textStorage addLayoutManager:layoutManager];
-	[textContainer setLineFragmentPadding:0.0];
-	[layoutManager glyphRangeForTextContainer:textContainer];
+	return (boundHeight / lineHeight);
+}
+
+- (CGFloat)pixelHeightInWidth:(NSInteger)width
+{
+	return [self pixelHeightInWidth:width forcedFont:nil];
+}
+
+- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
+{
+	NSMutableAttributedString *baseMutable = self.mutableCopy;
 	
-	NSInteger cellHeight = [layoutManager usedRectForTextContainer:textContainer].size.height;
-    
-    return cellHeight;
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
+	
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
+
+	if (font) {
+		[attributes setObject:font forKey:NSFontAttributeName];
+	}
+
+	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
+
+	NSRect bounds = [baseMutable boundingRectWithSize:NSMakeSize(width, 0.0)
+											  options:NSStringDrawingUsesLineFragmentOrigin];
+	
+	return NSHeight(bounds);
 }
 
 @end
