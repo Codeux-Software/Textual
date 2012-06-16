@@ -80,7 +80,9 @@
 
 - (NSString *)reservedCharactersToIRCFormatting;
 
-- (NSInteger)pixelHeightInWidth:(NSInteger)width;
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
+
+- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
 @end
 
 #pragma mark 
@@ -131,7 +133,11 @@
 
 - (NSArray *)splitIntoLines;
 
-- (NSInteger)pixelHeightInWidth:(NSInteger)width;
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight;
+- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
+
+- (CGFloat)pixelHeightInWidth:(NSInteger)width;
+- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
 @end
 
 #pragma mark 
