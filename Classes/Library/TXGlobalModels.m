@@ -24,11 +24,6 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-void DevNullDestroyObject(BOOL condition, ...) // lol
-{
-	return;
-}
-
 NSString *TXTLS(NSString *key)
 {
 	return [TLOLanguagePreferences localizedStringWithKey:key];

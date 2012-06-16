@@ -385,8 +385,8 @@
 	CGLContextObj cglContext		= 0;
 	CGLPixelFormatObj pixelFormat	= NULL;
 	CGLContextObj curr_ctx			= CGLGetCurrentContext();
-	
-	DevNullDestroyObject(YES, curr_ctx);
+
+#pragma unused(curr_ctx)
 		
 	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
 	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
