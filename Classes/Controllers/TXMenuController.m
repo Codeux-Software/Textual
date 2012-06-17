@@ -5,7 +5,7 @@
 
 #define _noClient					(PointerIsEmpty(u))
 #define _noChannel					(PointerIsEmpty(c))
-#define	_noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
+#define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
 #define _isClient					(c.isTalk == NO && c.isChannel == NO && c.isClient == YES)
 #define _isChannel					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
 #define _isQuery					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
