@@ -292,7 +292,7 @@
 		
 		if (isGroupItem == NO) {
 			if (channel.isChannel) {
-				NSString *iconName = @"colloquyRoomTab";;
+				NSString *iconName = @"colloquyRoomTab";
 				
 				if ([TPCPreferences invertSidebarColors]) {
 					iconName = [iconName stringByAppendingString:@"Inverted"];
