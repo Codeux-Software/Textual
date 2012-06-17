@@ -2,33 +2,32 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
-/* That is a lot of defenitions … */
 #define _badgeMargin                                5.0
 #define _badgeHeight                                14.0
 #define _badgeWidth                                 18.0
 
 #define _badgeFont									[_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5]
-#define _badgeTextColorTS							[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1]
-#define _badgeTextColorNS							[NSColor whiteColor]
-#define _badgeShadowColor							[NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
+#define _badgeTextColorTS							TXInvertSidebarColor([NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1])
+#define _badgeTextColorNS							TXInvertSidebarColor([NSColor whiteColor])
+#define _badgeShadowColor							TXInvertSidebarColor([NSColor colorWithCalibratedWhite:1.00 alpha:0.60])
 
-#define _badgeMessageBackgroundColorTS				[NSColor whiteColor]
-#define _badgeMessageBackgroundColorQ				[NSColor internalCalibratedRed:186 green:0   blue:0   alpha:1]
-#define _badgeMessageBackgroundColorA				[NSColor internalCalibratedRed:157 green:0   blue:89  alpha:1]
-#define _badgeMessageBackgroundColorO				[NSColor internalCalibratedRed:210 green:105 blue:30  alpha:1]
-#define _badgeMessageBackgroundColorH				[NSColor internalCalibratedRed:48  green:128 blue:17  alpha:1]
-#define _badgeMessageBackgroundColorV				[NSColor internalCalibratedRed:57  green:154 blue:199 alpha:1]
-#define _badgeMessageBackgroundColorX				[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1]
+#define _badgeMessageBackgroundColorTS				TXInvertSidebarColor([NSColor whiteColor]
+#define _badgeMessageBackgroundColorQ				TXInvertSidebarColor([NSColor internalCalibratedRed:186 green:0   blue:0   alpha:1])
+#define _badgeMessageBackgroundColorA				TXInvertSidebarColor([NSColor internalCalibratedRed:157 green:0   blue:89  alpha:1])
+#define _badgeMessageBackgroundColorO				TXInvertSidebarColor([NSColor internalCalibratedRed:210 green:105 blue:30  alpha:1])
+#define _badgeMessageBackgroundColorH				TXInvertSidebarColor([NSColor internalCalibratedRed:48  green:128 blue:17  alpha:1])
+#define _badgeMessageBackgroundColorV				TXInvertSidebarColor([NSColor internalCalibratedRed:57  green:154 blue:199 alpha:1])
+#define _badgeMessageBackgroundColorX				TXInvertSidebarColor([NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1])
 
 #define _userCellFont								[NSFont fontWithName:@"LucidaGrande" size:11.0]
-#define _userCellFontColor							[NSColor blackColor]
-#define _userCellSelectionFontColor					[NSColor whiteColor]
+#define _userCellFontColor							TXInvertSidebarColor([NSColor blackColor])
+#define _userCellSelectionFontColor					TXInvertSidebarColor([NSColor whiteColor])
 #define _userCellSelectionFont						[NSFont fontWithName:@"LucidaGrande-Bold" size:11.0]
-#define _userCellShadowColor						[NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6]
-#define _userCellSelectionShadowColorAW				[NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
-#define _userCellSelectionShadowColorIA				[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
+#define _userCellShadowColor						TXInvertSidebarColor([NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6])
+#define _userCellSelectionShadowColorAW				TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.48])
+#define _userCellSelectionShadowColorIA				TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.30])
 
-#define _graphiteSelectionColorAW					[NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00]
+#define _graphiteSelectionColorAW					TXInvertSidebarColor([NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00])
 
 @implementation TVCMemberListCell
 
@@ -186,18 +185,12 @@
 		
 		/* Draw Background */
         
-		if (isSelected && isKeyWindow) {
-			/* We draw selected cells using images because the color
-			 that Apple uses for cells when the table is not in focus
-			 looks ugly in this developer's opinion. */
-			
+		if (isSelected) {
 			NSRect backgroundRect = cellFrame;
-			NSRect parentRect	  = [client.world.master.memberSplitView frame];
+			NSRect parentRect	  = [self.parent frame];
 			
-			backgroundRect.origin.x   = cellFrame.origin.x;
-            backgroundRect.origin.y  -= 1;
+			backgroundRect.origin.x   = parentRect.origin.x;
 			backgroundRect.size.width = parentRect.size.width;
-            backgroundRect.size.height = 18;
 			
 			NSString *backgroundImage;
 			
@@ -207,11 +200,23 @@
 				backgroundImage = @"ServerCellSelection";
 			}
 			
-			if (isGraphite) {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite.tif"];
+			if (isKeyWindow) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
 			} else {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua.tif"];
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
 			}
+			
+			if (isGraphite) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
+			} else {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
+			}
+			
+			if ([TPCPreferences invertSidebarColors]) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
+			}
+			
+			backgroundImage = [backgroundImage stringByAppendingString:@".tif"];
 			
 			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
 			

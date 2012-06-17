@@ -114,8 +114,13 @@
 - (void)drawDividerInRect:(NSRect)rect
 {
 	if (self.hidden) return;
-	
-	[[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
+
+	NSColor *dividerColor;
+
+	dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
+	dividerColor = TXInvertSidebarColor(dividerColor);
+
+	[dividerColor set];
 	
 	if ([self isVertical]) {
 		NSRectFill(rect);
