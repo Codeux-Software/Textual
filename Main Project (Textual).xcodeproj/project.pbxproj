@@ -179,6 +179,10 @@
 		4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */; };
 		4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA915811D29002EC37B /* BragSpam.bundle */; };
 		4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */; };
+		4C970759158D740A0005CF68 /* colloquyRoomTabInverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */; };
+		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
+		4C97075D158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */; };
+		4C97075E158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EE51580470C006FFE21 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE41580470C006FFE21 /* BlowfishEncryption.framework */; };
 		4CCF2EE71580471B006FFE21 /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE61580471B006FFE21 /* AutoHyperlinks.framework */; };
@@ -223,13 +227,7 @@
 		4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */; };
 		4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */; };
 		4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */; };
-		4CCF2F4315804847006FFE21 /* status-channel-active.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F4115804847006FFE21 /* status-channel-active.tif */; };
-		4CCF2F4415804847006FFE21 /* status-channel-inactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F4215804847006FFE21 /* status-channel-inactive.tif */; };
 		4CCF2F4A1580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */; };
-		4CCF2F4B1580484E006FFE21 /* ChannelCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F461580484E006FFE21 /* ChannelCellSelection_Aqua.tif */; };
-		4CCF2F4C1580484E006FFE21 /* ChannelCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F471580484E006FFE21 /* ChannelCellSelection_Graphite.tif */; };
-		4CCF2F4D1580484E006FFE21 /* ServerCellSelection_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F481580484E006FFE21 /* ServerCellSelection_Aqua.tif */; };
-		4CCF2F4E1580484E006FFE21 /* ServerCellSelection_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F491580484E006FFE21 /* ServerCellSelection_Graphite.tif */; };
 		4CCF2F501580485F006FFE21 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F4F1580485F006FFE21 /* Scripts */; };
 		4CCF2F5215804868006FFE21 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F5115804868006FFE21 /* Styles */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
@@ -348,6 +346,22 @@
 		4CCF300E15804C32006FFE21 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8B1580429D00846B64 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF300F15804C32006FFE21 /* TDCWelcomeSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46CB8C1580429D00846B64 /* TDCWelcomeSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCF30251580693E006FFE21 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCF30201580693E006FFE21 /* PLWeakCompatibilityStubs.m */; };
+		4CD0F3CC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */; };
+		4CD0F3CD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3BD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif */; };
+		4CD0F3CE158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3BE158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite_Inverted.tif */; };
+		4CD0F3CF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3BF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif */; };
+		4CD0F3D0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif */; };
+		4CD0F3D1158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C1158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua.tif */; };
+		4CD0F3D2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif */; };
+		4CD0F3D3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif */; };
+		4CD0F3D4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif */; };
+		4CD0F3D5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif */; };
+		4CD0F3D6158D6975009F2A0C /* ServerCellSelection_Focused_Graphite_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C6158D6975009F2A0C /* ServerCellSelection_Focused_Graphite_Inverted.tif */; };
+		4CD0F3D7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif */; };
+		4CD0F3D8158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C8158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua_Inverted.tif */; };
+		4CD0F3D9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif */; };
+		4CD0F3DA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3CA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif */; };
+		4CD0F3DB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3CB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -685,6 +699,10 @@
 		4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBA915811D29002EC37B /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
+		4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabInverted.tif; path = "Resources/Images/Status Badges/colloquyRoomTabInverted.tif"; sourceTree = SOURCE_ROOT; };
+		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
+		4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabInvertedHighlight.tif; path = "Resources/Images/Status Badges/colloquyRoomTabInvertedHighlight.tif"; sourceTree = SOURCE_ROOT; };
+		4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegularHighlight.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegularHighlight.tif"; sourceTree = SOURCE_ROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCF2EE41580470C006FFE21 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = Frameworks/Blowfish/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4CCF2EE61580471B006FFE21 /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = Frameworks/Adium/AutoHyperlinks/AutoHyperlinks.framework; sourceTree = "<group>"; };
@@ -732,13 +750,7 @@
 		4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_IRCopServices.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_IRCopServices.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Logs.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Logs.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Styles.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Styles.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F4115804847006FFE21 /* status-channel-active.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "status-channel-active.tif"; path = "Resources/Images/Status Badges/status-channel-active.tif"; sourceTree = SOURCE_ROOT; };
-		4CCF2F4215804847006FFE21 /* status-channel-inactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "status-channel-inactive.tif"; path = "Resources/Images/Status Badges/status-channel-inactive.tif"; sourceTree = SOURCE_ROOT; };
 		4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = AddTemplateWithDisclosureTriangle.tif; path = "Resources/Images/User Interface/AddTemplateWithDisclosureTriangle.tif"; sourceTree = SOURCE_ROOT; };
-		4CCF2F461580484E006FFE21 /* ChannelCellSelection_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Aqua.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Aqua.tif"; sourceTree = SOURCE_ROOT; };
-		4CCF2F471580484E006FFE21 /* ChannelCellSelection_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Graphite.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Graphite.tif"; sourceTree = SOURCE_ROOT; };
-		4CCF2F481580484E006FFE21 /* ServerCellSelection_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Aqua.tif; path = "Resources/Images/User Interface/ServerCellSelection_Aqua.tif"; sourceTree = SOURCE_ROOT; };
-		4CCF2F491580484E006FFE21 /* ServerCellSelection_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Graphite.tif; path = "Resources/Images/User Interface/ServerCellSelection_Graphite.tif"; sourceTree = SOURCE_ROOT; };
 		4CCF2F4F1580485F006FFE21 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5115804868006FFE21 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
@@ -746,6 +758,22 @@
 		4CCF2F5E158048A6006FFE21 /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/BragSpam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF2F6A158048BB006FFE21 /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/SystemProfiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF30201580693E006FFE21 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = PLWeakCompatibility/PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
+		4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3BD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Aqua.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3BE158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Graphite_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Graphite_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3BF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Graphite.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Graphite.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Unfocused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C1158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Unfocused_Aqua.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Aqua.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Unfocused_Graphite_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Graphite_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Unfocused_Graphite.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Graphite.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Focused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Focused_Aqua.tif; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Aqua.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C6158D6975009F2A0C /* ServerCellSelection_Focused_Graphite_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Focused_Graphite_Inverted.tif; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Graphite_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Focused_Graphite.tif; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Graphite.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C8158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3C9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Aqua.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Aqua.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3CA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Graphite_Inverted.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite_Inverted.tif"; sourceTree = SOURCE_ROOT; };
+		4CD0F3CB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Graphite.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite.tif"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1229,8 +1257,10 @@
 		4C46CC9C1580432400846B64 /* Status Badges */ = {
 			isa = PBXGroup;
 			children = (
-				4CCF2F4115804847006FFE21 /* status-channel-active.tif */,
-				4CCF2F4215804847006FFE21 /* status-channel-inactive.tif */,
+				4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */,
+				4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */,
+				4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */,
+				4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */,
 			);
 			name = "Status Badges";
 			sourceTree = "<group>";
@@ -1239,10 +1269,22 @@
 			isa = PBXGroup;
 			children = (
 				4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */,
-				4CCF2F461580484E006FFE21 /* ChannelCellSelection_Aqua.tif */,
-				4CCF2F471580484E006FFE21 /* ChannelCellSelection_Graphite.tif */,
-				4CCF2F481580484E006FFE21 /* ServerCellSelection_Aqua.tif */,
-				4CCF2F491580484E006FFE21 /* ServerCellSelection_Graphite.tif */,
+				4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */,
+				4CD0F3BD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif */,
+				4CD0F3BE158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite_Inverted.tif */,
+				4CD0F3BF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif */,
+				4CD0F3C0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif */,
+				4CD0F3C1158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua.tif */,
+				4CD0F3C2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif */,
+				4CD0F3C3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif */,
+				4CD0F3C4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif */,
+				4CD0F3C5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif */,
+				4CD0F3C6158D6975009F2A0C /* ServerCellSelection_Focused_Graphite_Inverted.tif */,
+				4CD0F3C7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif */,
+				4CD0F3C8158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua_Inverted.tif */,
+				4CD0F3C9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif */,
+				4CD0F3CA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif */,
+				4CD0F3CB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -1845,15 +1887,29 @@
 				4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */,
 				4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */,
 				4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */,
-				4CCF2F4315804847006FFE21 /* status-channel-active.tif in Resources */,
-				4CCF2F4415804847006FFE21 /* status-channel-inactive.tif in Resources */,
 				4CCF2F4A1580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif in Resources */,
-				4CCF2F4B1580484E006FFE21 /* ChannelCellSelection_Aqua.tif in Resources */,
-				4CCF2F4C1580484E006FFE21 /* ChannelCellSelection_Graphite.tif in Resources */,
-				4CCF2F4D1580484E006FFE21 /* ServerCellSelection_Aqua.tif in Resources */,
-				4CCF2F4E1580484E006FFE21 /* ServerCellSelection_Graphite.tif in Resources */,
 				4CCF2F501580485F006FFE21 /* Scripts in Resources */,
 				4CCF2F5215804868006FFE21 /* Styles in Resources */,
+				4CD0F3CC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif in Resources */,
+				4CD0F3CD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif in Resources */,
+				4CD0F3CE158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite_Inverted.tif in Resources */,
+				4CD0F3CF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif in Resources */,
+				4CD0F3D0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif in Resources */,
+				4CD0F3D1158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua.tif in Resources */,
+				4CD0F3D2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif in Resources */,
+				4CD0F3D3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif in Resources */,
+				4CD0F3D4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif in Resources */,
+				4CD0F3D5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif in Resources */,
+				4CD0F3D6158D6975009F2A0C /* ServerCellSelection_Focused_Graphite_Inverted.tif in Resources */,
+				4CD0F3D7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif in Resources */,
+				4CD0F3D8158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua_Inverted.tif in Resources */,
+				4CD0F3D9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif in Resources */,
+				4CD0F3DA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif in Resources */,
+				4CD0F3DB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif in Resources */,
+				4C970759158D740A0005CF68 /* colloquyRoomTabInverted.tif in Resources */,
+				4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */,
+				4C97075D158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif in Resources */,
+				4C97075E158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

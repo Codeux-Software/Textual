@@ -142,6 +142,9 @@
 	
 	[self.memberList setTarget:self.menu];    
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
+
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
 	
 	self.growl = [TLOGrowlController new];
 	self.growl.owner = self.world;

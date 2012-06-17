@@ -5,6 +5,7 @@
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, unsafe_unretained) id keyDelegate;
 
+- (void)updateBackgroundColor;
 - (void)toggleAddServerButton;
 @end
 
