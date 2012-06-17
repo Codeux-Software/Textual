@@ -126,6 +126,7 @@ typedef enum {
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
++ (BOOL)invertSidebarColors;
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;

@@ -6,23 +6,28 @@
 
 @synthesize keyDelegate;
 
-- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row 
+- (void)updateBackgroundColor
 {
+	[self setBackgroundColor:TXInvertSidebarColor([NSColor sourceListBackgroundColor])];
+}
+
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
+{ 
 	NSRect nrect = [super frameOfCellAtColumn:column row:row];
 	
 	id childItem = [self itemAtRow:row];
 	
 	if ([self isGroupItem:childItem] == NO) {
 		if ([TPCPreferences featureAvailableToOSXLion]) {
-			nrect.origin.x   += 35;
-			nrect.size.width  = ([self frame].size.width - 35);
+			nrect.origin.x   += 36;
+			nrect.size.width  = (self.frame.size.width - 36);
 		} else {
-			nrect.origin.x   += 35;
-			nrect.size.width -= 35;
+			nrect.origin.x   += 36;
+			nrect.size.width -= 36;
 		}
 	} else {
-		nrect.origin.x   += 15;
-		nrect.size.width -= 15;
+		nrect.origin.x   += 16;
+		nrect.size.width -= 16;
 	} 
 	
 	return nrect;

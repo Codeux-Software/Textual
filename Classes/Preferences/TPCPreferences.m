@@ -374,6 +374,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [_NSUserDefaults() objectForKey:@"Preferences.General.masquerade_ctcp_version"];
 }
 
++ (BOOL)invertSidebarColors
+{
+	return NO;
+}
+
 + (BOOL)trackConversations
 {
 	return [_NSUserDefaults() boolForKey:@"Preferences.General.track_conversations"];

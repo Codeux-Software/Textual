@@ -3,6 +3,7 @@
 // Converted to ARC Support on June 07, 2012
 
 @interface TVCMemberList : TVCListView
+- (void)updateBackgroundColor;
 @end
 
 @interface NSObject (MemberListViewDelegate)

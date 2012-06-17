@@ -6,6 +6,11 @@
 
 @synthesize keyDelegate;
 
+- (void)updateBackgroundColor
+{
+	[self setBackgroundColor:TXInvertSidebarColor([NSColor sourceListBackgroundColor])];
+}
+
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
@@ -22,7 +27,6 @@
 				break;
 		}
 	}
-    
 }
 
 - (void)drawContextMenuHighlightForRow:(int)row

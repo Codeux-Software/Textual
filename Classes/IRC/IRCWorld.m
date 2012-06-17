@@ -629,6 +629,9 @@
 
 - (void)reloadTheme
 {
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+	
 	self.viewTheme.name = [TPCPreferences themeName];
 	
 	NSMutableArray *logs = [NSMutableArray array];

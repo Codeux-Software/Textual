@@ -23,6 +23,21 @@
 	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 }
 
+- (NSColor *)invertColor
+{
+	NSColor *obj = [self colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+	
+	CGFloat red   = [obj redComponent];
+	CGFloat green = [obj greenComponent];
+	CGFloat blue  = [obj blueComponent];
+	CGFloat alpha = [obj alphaComponent];
+	
+	return [NSColor colorWithCalibratedRed:(1 - red)
+									 green:(1 - green)
+									  blue:(1 - blue)
+									 alpha:alpha];
+}
+
 #pragma mark -
 #pragma mark IRC Text Formatting Color Codes
 
@@ -223,6 +238,11 @@
 
 #pragma mark -
 #pragma mark Other Colors
+
++ (NSColor *)sourceListBackgroundColor
+{
+	return [NSColor colorWithCatalogName:@"System" colorName:@"_sourceListBackgroundColor"];
+}
 
 + (NSColor *)outlineViewHeaderTextColor
 {

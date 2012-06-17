@@ -3,8 +3,11 @@
 // Converted to ARC Support on June 08, 2012
 
 #define TXCalibratedRBGColor(r, b, g)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
+#define TXInvertSidebarColor(c)				(([TPCPreferences invertSidebarColors]) ? [c invertColor] : c)
 
 @interface NSColor (TXColorHelper)
+- (NSColor *)invertColor;
+
 + (NSColor *)formatterWhiteColor;
 + (NSColor *)formatterBlackColor;
 + (NSColor *)formatterNavyBlueColor;
@@ -27,6 +30,7 @@
 - (NSString *)hexadecimalValue;
 + (NSColor *)fromCSS:(NSString *)str;
 
++ (NSColor *)sourceListBackgroundColor;
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 
