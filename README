@@ -1,34 +1,10 @@
 #### Introduction ####
 
 Textual is a highly modified version of the open source project known 
-as LimeChat. It is designed as a replacement for those applications
-for Mac OS which have ceased to be maintained. Much of the app uses
-the open standard of WebKit which makes customization easy through the
-use of CSS 3 and HTML 5. Plugins written in Objective-C and scripts 
-written in AppleScript (and other languages) are also supported.
-
-#### Compiling Requirements ####
-
-Developers compiling the Textual source code using version 4.0 of 
-Xcode and later are asked to set Xcode to place the build product 
-of each compile in the location specified by the targets. This 
-setting can be changed by going to the "File" menu and then 
-"Project Settings" — If this is not done, then the plugins will 
-not be compiled in correct location for Textual to copy over. 
-
-Additionally, Textual comes pre-packaged with four build schemes
-for Xcode 4 users. It is recommended to only use these schemes
-and none that Xcode itself automatically generates. These schemes
-which are in the format "Textual (<build type>)" have already been 
-configured for the best results. 
-
-#### Friendly Request ####
-
-It is asked that those with knowledge of compiling Textual do not 
-abuse it to distribute binaries to large groups of individuals during 
-the time period that it is exclusive to the Apple Mac App Store. 
-We are simply asking to not abuse the BSD license too much so we do
-not have to lock down the software with more obscure licenses. 
+as LimeChat. Much of the app uses the open standard of WebKit which 
+makes customization easy through the use of CSS 3 and HTML 5. Plugins 
+written in Objective-C and scripts made with AppleScript (and other 
+languages) are also supported.
 
 #### Copyright ####
 
@@ -47,7 +23,7 @@ folder: [Project Root] -> Resources -> Documents -> Exported Documents
 Note: The below mentioned license was the one in place when the source
 code for LimeChat was forked for this project. The license used by 
 LimeChat has since changed. That is why the Textual IRC Client does
-not conform to the same GPL configuration as LimeChat.
+not conform to the same GPL license configuration as LimeChat.
 
 The New BSD License
 
