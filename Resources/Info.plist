@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>Textual</string>
+	<key>CFBundleIconFile</key>
+	<string>application.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.codeux.irc.textual</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Textual</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.1.1</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>application</string>
+			<key>CFBundleURLName</key>
+			<string>Internet Relay Chat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>irc</string>
+				<string>ircs</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>2.1.1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.6</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010, 2011, 2012 Codeux Software</string>
+	<key>NSMainNibFile</key>
+	<string>TXCMainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>TXBundleBuildNumber</key>
+	<string>10671</string>
+	<key>TXBundleBuildReference</key>
+	<string>2.1.1-145-g06a1d2d-appstore</string>
+</dict>
+</plist>
