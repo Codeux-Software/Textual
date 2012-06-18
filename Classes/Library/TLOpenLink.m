@@ -9,9 +9,9 @@
 	if ([TPCPreferences openBrowserInBackground]) {
 		[_NSWorkspace() openURLs:[NSArray arrayWithObject:url]
 		 withAppBundleIdentifier:nil
-						 options:NSWorkspaceLaunchWithoutActivation
-  additionalEventParamDescriptor:nil
-			   launchIdentifiers:nil];
+					  options:NSWorkspaceLaunchWithoutActivation
+    additionalEventParamDescriptor:nil
+			  launchIdentifiers:nil];
 	} else {
 		[_NSWorkspace() openURL:url];
 	}
@@ -20,6 +20,11 @@
 + (void)openAndActivate:(NSURL *)url
 {
 	[_NSWorkspace() openURL:url];
+}
+
++ (void)openWithString:(NSString *)url
+{
+	[self open:[NSURL URLWithString:url]];
 }
 
 @end

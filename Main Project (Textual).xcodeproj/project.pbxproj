@@ -1286,9 +1286,9 @@
 			children = (
 				4C8AF599158E99520026668C /* Cocoa (Objective-C) */,
 				4C8AF5A9158E99520026668C /* External Libraries */,
+				4C8AF5B0158E99520026668C /* Threading */,
 				4C8AF5AE158E99520026668C /* THOPluginItem.m */,
 				4C8AF5AF158E99520026668C /* THOUnicodeHelper.m */,
-				4C8AF5B0158E99520026668C /* Threading */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1484,13 +1484,13 @@
 				4C8AF5F0158E99520026668C /* Channel View */,
 				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF5FD158E99520026668C /* Server List */,
+				4C8AF606158E99520026668C /* User List */,
 				4C8AF600158E99520026668C /* TVCDockIcon.m */,
 				4C8AF601158E99520026668C /* TVCInputPromptDialog.m */,
 				4C8AF602158E99520026668C /* TVCListSeparatorCell.m */,
 				4C8AF603158E99520026668C /* TVCListView.m */,
 				4C8AF604158E99520026668C /* TVCMainWindow.m */,
 				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
-				4C8AF606158E99520026668C /* User List */,
 			);
 			path = Views;
 			sourceTree = "<group>";

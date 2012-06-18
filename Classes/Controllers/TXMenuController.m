@@ -661,8 +661,8 @@
 		s = [s gtm_stringByEscapingForURLArgument];
 		
 		NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", s];
-		
-		[TLOpenLink open:[NSURL URLWithString:urlStr]];
+
+		[TLOpenLink openWithString:urlStr];
 	}
 }
 

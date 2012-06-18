@@ -680,25 +680,29 @@
 
 - (void)onDownloadExtraAddons:(id)sender
 {
-	NSString *version = @"6";
+	NSString *version = @"No Sandbox";
+	
+	if ([TPCPreferences featureAvailableToOSXLion]) {
+		if ([TPCPreferences sandboxEnabled]) {
+			version = @"Lion";
+		} 
+	}
 	
 #ifdef TXUserScriptsFolderAvailable
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		if ([TPCPreferences sandboxEnabled]) {
-			version = @"8";
+			version = @"Mountain Lion";
 		}
 	} 
 #endif
-	
-	if ([TPCPreferences featureAvailableToOSXLion]) {
-		if ([TPCPreferences sandboxEnabled]) {
-			version = @"7";
-		} 
-	}
-	
-	NSString *base = [NSString stringWithFormat:@"https://raw.github.com/Codeux/Textual/master/Resources/Installers/Textual%20IRC%20Client%20Extras%20(10.%@).pkg", version];
-	
-	[TLOpenLink open:[NSURL URLWithString:base]];
+
+	NSMutableString *download = [NSMutableString string];
+
+	[download appendString:@"https://github.com/Codeux/Textual/blob/master/Resources/All%20Scripts/Sandbox%20Exceptions/Installers/Textual%20Extras%20%28"];
+	[download appendString:version];
+	[download appendString:@"%29.pkg?raw=true"];
+
+	[TLOpenLink openWithString:download];
 }
 
 #pragma mark -
