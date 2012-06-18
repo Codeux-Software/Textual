@@ -1146,6 +1146,7 @@
 	self.channelSheet = nil;
 }
 
+#warning FIX: Right clicking a user does not always work.
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
 	IRCClient *u = [self.world selectedClient];
