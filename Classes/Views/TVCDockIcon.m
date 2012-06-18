@@ -2,8 +2,6 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
-#define _NSMainScreen()		[NSScreen mainScreen]
-
 @interface TVCDockIcon (Private)
 + (NSString *)badgeFilename:(NSInteger)count;
 @end
