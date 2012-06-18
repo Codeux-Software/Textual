@@ -169,7 +169,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)gitBuildReference
 {
-	return [textualPlist objectForKey:@"Build Reference"];
+	return [textualPlist objectForKey:@"TXBundleBuildReference"];
 }
 
 + (NSString *)applicationBundleIdentifier
