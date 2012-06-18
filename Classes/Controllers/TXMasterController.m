@@ -142,7 +142,7 @@
 	
 	[self.memberList setTarget:self.menu];    
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
-
+	
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
 	
@@ -179,13 +179,13 @@
 	}
 	
 #ifdef IS_TRIAL_BINARY
-	[[PopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
-																title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
-														defaultButton:TXTLS(@"OkButton") 
-													  alternateButton:nil
-														  otherButton:nil
-													   suppressionKey:@"trial_period_info"
-													  suppressionText:nil];
+	[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
+																   title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
+														   defaultButton:TXTLS(@"OkButton") 
+														 alternateButton:nil
+															 otherButton:nil
+														  suppressionKey:@"trial_period_info"
+														 suppressionText:nil];
 #endif
 	
 }

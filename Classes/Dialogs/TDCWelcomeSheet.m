@@ -23,7 +23,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"WelcomeSheet" owner:self];
+		[NSBundle loadNibNamed:@"TDCWelcomeSheet" owner:self];
 		
 		self.channels = [NSMutableArray new];
 	}
