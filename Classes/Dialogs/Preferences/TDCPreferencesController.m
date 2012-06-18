@@ -688,13 +688,11 @@
 		} 
 	}
 	
-#ifdef TXUserScriptsFolderAvailable
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		if ([TPCPreferences sandboxEnabled]) {
 			version = @"Mountain Lion";
 		}
 	} 
-#endif
 
 	NSMutableString *download = [NSMutableString string];
 
