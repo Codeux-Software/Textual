@@ -187,10 +187,12 @@
         
 		if (isSelected) {
 			NSRect backgroundRect = cellFrame;
-			NSRect parentRect	  = [self.parent frame];
+			NSRect parentRect	  = [client.world.master.memberSplitView frame];
 			
-			backgroundRect.origin.x   = parentRect.origin.x;
+			backgroundRect.origin.x   = cellFrame.origin.x;
+            backgroundRect.origin.y  -= 1;
 			backgroundRect.size.width = parentRect.size.width;
+            backgroundRect.size.height = 18;
 			
 			NSString *backgroundImage;
 			
