@@ -52,6 +52,7 @@
 #endif
 
 /* Establish Common Pointers */
+#define _NSMainScreen()							[NSScreen mainScreen]
 #define _NSFileManager()						[NSFileManager defaultManager]
 #define _NSPasteboard()							[NSPasteboard generalPasteboard]
 #define _NSFontManager()						[NSFontManager sharedFontManager]
