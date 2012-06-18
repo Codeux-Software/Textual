@@ -82,7 +82,7 @@ typedef enum {
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 
 #ifdef IS_TRIAL_BINARY
-@property (nonatomic, strong) Timer *trialPeriodTimer;
+@property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 #endif
 
 @property (nonatomic, assign) NSInteger lastMessageReceived;

@@ -179,7 +179,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		isonTimer.selector	= @selector(onISONTimer:);
 		
 #ifdef IS_TRIAL_BINARY
-		trialPeriodTimer			= [Timer new];
+		trialPeriodTimer			= [TLOTimer new];
 		trialPeriodTimer.delegate	= self;
 		trialPeriodTimer.reqeat		= NO;
 		trialPeriodTimer.selector	= @selector(onTrialPeriodTimer:);	
