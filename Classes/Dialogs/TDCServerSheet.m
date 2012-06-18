@@ -230,7 +230,7 @@
 	self.nameText.stringValue		= self.config.name;
 	self.hostCombo.stringValue		= (([self hostFoundInServerList:self.config.host]) ?: self.config.host);
 	self.passwordText.stringValue	= self.config.password;
-	self.portText.integerValue		= self.config.port;
+	self.portText.stringValue		= [NSString stringWithInteger:self.config.port];
 	self.sslCheck.state				= self.config.useSSL;
 	self.bouncerModeCheck.state		= self.config.bouncerMode;
 	self.autoConnectCheck.state		= self.config.autoConnect;
@@ -276,7 +276,7 @@
 	[self.proxyCombo selectItemWithTag:self.config.proxyType];
 	
 	self.proxyHostText.stringValue		= self.config.proxyHost;
-	self.proxyPortText.integerValue		= self.config.proxyPort;
+	self.proxyPortText.stringValue		= [NSString stringWithInteger:self.config.proxyPort];
 	self.proxyUserText.stringValue		= self.config.proxyUser;
 	self.proxyPasswordText.stringValue	= self.config.proxyPassword;
 	
