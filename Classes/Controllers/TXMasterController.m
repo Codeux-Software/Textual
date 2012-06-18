@@ -190,6 +190,15 @@
 	
 }
 
+- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
+{
+	if (menu.isInFullScreenMode) {
+		/* Reset window frame if screen resolution is changed. */
+		
+		[window setFrame:[_NSMainScreen() frame] display:YES animate:YES];
+	}
+}
+
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
 	id sel = self.world.selected;
