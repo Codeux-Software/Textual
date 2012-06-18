@@ -573,7 +573,7 @@ BOOL isUnicharDigit(unichar c)
 		NSString *identHost = [self safeSubstringAfterIndex:[self stringPosition:@"!"]];
 		
 		if ([identHost contains:@"@"]) {
-			return [identHost safeSubstringAfterIndex:[identHost stringPosition:@"@"]];
+			return [identHost safeSubstringToIndex:[identHost stringPosition:@"@"]];
 		}
 	}
 	

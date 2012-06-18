@@ -2065,8 +2065,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 41: // Command: BAN
 		case 64: // Command: UNBAN
 		{
-#warning FIX: The "ban" command is using hostmask as indent. 
-
 			if (c) {
 				NSString *peer = s.getToken.string;
 				
@@ -4817,8 +4815,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			NSString *nick = [m paramAt:1];
 			
-			NSInteger idleStr = [[m paramAt:2] doubleValue];
-			NSInteger signOnStr = [[m paramAt:3] doubleValue];
+			NSInteger idleStr = [m paramAt:2].doubleValue;
+			NSInteger signOnStr = [m paramAt:3].doubleValue;
 			
 			NSString *idleTime = TXReadableTime(idleStr);
 			NSString *dateFromString = [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:signOnStr]];
@@ -4836,7 +4834,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 319:
 		{
 			NSString *nick = [m paramAt:1];
-			NSString *trail = [[m paramAt:2] trim];
+			NSString *trail = [m paramAt:2].trim;
 			
 			NSString *text = TXTFLS(@"IRCUserWhoisChannels", nick, trail);
 			
