@@ -45,8 +45,8 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>TXBundleBuildNumber</key>
-	<string>10677</string>
+	<string>10678</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-146-g3ef9537-debug</string>
+	<string>2.1.1-147-g08ee6d8-appstore</string>
 </dict>
 </plist>
