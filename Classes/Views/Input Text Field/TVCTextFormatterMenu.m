@@ -96,7 +96,7 @@
 		}
 		case 100:
 		{
-			BOOL condition = [_NSUserDefaults() boolForKey:@"EnableRainbow_formattingMenuItem"];
+			BOOL condition = [_NSUserDefaults() boolForKey:@"EnableRainbowFormattingMenuItem"];
 			
 			NSMenuItem *divider = [[item menu] itemWithTag:_formattingMenuRainbowColorMenuItemTag];
 			
