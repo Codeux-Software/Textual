@@ -1483,7 +1483,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if ([[world bundlesForUserInput] containsKey:command]) {
-		[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:str.string, nil, nil]];
+		[self.invokeInBackgroundThread processBundlesUserMessage:[NSArray arrayWithObjects:str.string, nil, nil]];
 	}
 	
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
@@ -2577,14 +2577,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 76: // Command: UNLOAD_PLUGINS
 		{
-			[[NSBundle invokeInBackgroundThread] deallocBundlesFromMemory:world];
+			[NSBundle.invokeInBackgroundThread deallocBundlesFromMemory:world];
 			
 			return YES;
 			break;
 		}
 		case 91: // Command: LOAD_PLUGINS
 		{
-			[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:world];
+			[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:world];
 			
 			return YES;
 			break;
@@ -2778,7 +2778,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSLog(TXTLS(@"PluginCommandClashErrorMessage") ,cmd);
 			} else {
 				if (pluginFound) {
-					[[self invokeInBackgroundThread] processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s.string], cmd, nil]];
+					[self.invokeInBackgroundThread processBundlesUserMessage:[NSArray arrayWithObjects:[NSString stringWithString:s.string], cmd, nil]];
 					
 					return YES;
 				} else {
@@ -2786,7 +2786,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                         NSDictionary *inputInfo = [NSDictionary dictionaryWithObjectsAndKeys:c.name, @"channel", scriptPath, @"path", s.string, @"input", 
                                                    NSNumberWithBOOL(completeTarget), @"completeTarget", targetChannelName, @"target", nil];
                         
-                        [[self invokeInBackgroundThread] executeTextualCmdScript:inputInfo];
+                        [self.invokeInBackgroundThread executeTextualCmdScript:inputInfo];
                         
                         return YES;
 					}

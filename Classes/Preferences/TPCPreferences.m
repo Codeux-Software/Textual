@@ -1054,7 +1054,7 @@ static NSInteger totalRunTime = 0;
 	
 #ifndef IS_TRIAL_BINARY
 	if (numberOfRuns >= 2) {
-		[[self invokeInBackgroundThread] defaultIRCClientPrompt];
+		[self.invokeInBackgroundThread defaultIRCClientPrompt];
 	} 
 #endif
 	
