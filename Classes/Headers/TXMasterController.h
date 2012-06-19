@@ -10,6 +10,7 @@
 @property (nonatomic, strong) TXMenuController *menu;
 @property (nonatomic, strong) TVCMainWindow *window;
 @property (nonatomic, strong) TVCMainWindowSegmentedControl *windowButtonController;
+@property (nonatomic, strong) TVCMainWindowSegmentedCell *windowButtonControllerCell;
 @property (nonatomic, strong) TVCInputTextField *text;
 @property (nonatomic, strong) TVCServerList *serverList;
 @property (nonatomic, strong) TVCMemberList *memberList;

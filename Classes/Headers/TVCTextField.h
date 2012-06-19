@@ -5,7 +5,7 @@
 @class TLOKeyEventHandler;
 
 #define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
-#define TXDefaultTextFieldFont                [NSFont fontWithName:@"Helvetica" size:12.0]
+#define TXDefaultTextFieldFont              [NSFont fontWithName:@"Helvetica" size:12.0]
 
 @interface TVCTextField : NSTextView 
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
