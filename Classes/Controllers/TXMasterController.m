@@ -1340,43 +1340,38 @@ typedef enum {
 - (void)updateSegmentedController
 {
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-	
+
+	/* Selection Settings. */
+	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
 	
 	if (PointerIsEmpty(c)) {
-		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:2];
+		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
 	} else {
-		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:2];
+		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
 	}
+
+	/* Nickname Change. */
+	[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 }
 
 - (void)buildSegmentedController
 {
+	self.windowButtonControllerCell.menuController = menu;
+	
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-	
+
+	/* Add Server/Channel Segment. */
 	NSMenu *segAddButton = [NSMenu new];
-	
-	NSMenuItem *addServer		= [self.treeMenu itemAtIndex:0].copy;
-	NSMenuItem *deleteServer	= [self.serverMenu.submenu itemWithTag:523].copy;
-	
-	NSMenuItem *addChannel		= [self.channelMenu.submenu itemWithTag:651].copy;
-	NSMenuItem *deleteChannel	= [self.channelMenu.submenu itemWithTag:652].copy;
+
+	NSMenuItem *addServer  = [self.treeMenu itemAtIndex:0].copy;
+	NSMenuItem *addChannel = [self.channelMenu.submenu itemWithTag:651].copy;
 	
 	[segAddButton addItem:addServer];
 	[segAddButton addItem:[NSMenuItem separatorItem]];
 	[segAddButton addItem:addChannel];
 
-	[windowButtonController setMenu:segAddButton.copy forSegment:0];
-
-	[segAddButton removeAllItems];
-
-	[segAddButton addItem:deleteServer];
-	[segAddButton addItem:[NSMenuItem separatorItem]];
-	[segAddButton addItem:deleteChannel];
-
-	[windowButtonController setMenu:segAddButton.copy forSegment:1];
-
-	segAddButton = nil;
+	[self.windowButtonController setMenu:segAddButton.copy forSegment:0];
 	
 	[self updateSegmentedController];
 }

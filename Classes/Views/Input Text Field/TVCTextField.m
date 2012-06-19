@@ -3,7 +3,7 @@
 // Converted to ARC Support on June 07, 2012
 
 #define _DefaultTextFieldWidthPadding		1.0
-#define _DefaultTextFieldHeightPadding		6.0
+#define _DefaultTextFieldHeightPadding		2.0
 
 @implementation TVCTextField
 

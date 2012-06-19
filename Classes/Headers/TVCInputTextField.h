@@ -11,5 +11,5 @@
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 @end
 
-@interface TVCInputTextFieldScroller : NSScrollView 
+@interface TVCInputTextFieldBackground : NSView
 @end

@@ -3,3 +3,7 @@
 
 @interface TVCMainWindowSegmentedControl : NSSegmentedControl
 @end
+
+@interface TVCMainWindowSegmentedCell : NSSegmentedCell
+@property (nonatomic, unsafe_unretained) TXMenuController *menuController;
+@end
