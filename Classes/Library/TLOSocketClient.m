@@ -282,23 +282,23 @@
 
 - (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	[[self iomt] onSocketWillConnect:sock];
-	[[self iomt] onSocket:sock didConnectToHost:ahost port:aport];
+	[self.iomt onSocketWillConnect:sock];
+	[self.iomt onSocket:sock didConnectToHost:ahost port:aport];
 }
 
 - (void)socketDidDisconnect:(id)sock withError:(NSError *)err
 {
-	[[self iomt] onSocket:sock willDisconnectWithError:err];
+	[self.iomt onSocket:sock willDisconnectWithError:err];
 }
 
 - (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[[self iomt] onSocket:sock didReadData:data withTag:tag];
+	[self.iomt onSocket:sock didReadData:data withTag:tag];
 }
 
 - (void)socket:(id)sock didWriteDataWithTag:(long)tag
 {
-	[[self iomt] onSocket:sock didWriteDataWithTag:tag];
+	[self.iomt onSocket:sock didWriteDataWithTag:tag];
 }
 
 @end

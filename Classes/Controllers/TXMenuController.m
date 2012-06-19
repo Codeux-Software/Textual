@@ -493,7 +493,7 @@
 - (void)showFindPanel:(id)sender
 {
 	if ([sender tag] == 1 || NSObjectIsEmpty(self.currentSearchPhrase)) {
-		[[self invokeInBackgroundThread] _onWantFindPanel:sender];
+		[self.invokeInBackgroundThread _onWantFindPanel:sender];
 	} else {
 		if ([sender tag] == 2) {
 			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
@@ -1593,12 +1593,12 @@
 										  alternateButton:TXTLS(@"CancelButton") 
 											 defaultInput:nil];
 	
-	[[self iomt] __onWantHostServVhostSet:sender andVhost:vhost];
+	[self.iomt __onWantHostServVhostSet:sender andVhost:vhost];
 }
 
 - (void)showSetVhostPrompt:(id)sender
 {
-	[[self invokeInBackgroundThread] _onWantHostServVhostSet:sender];
+	[self.invokeInBackgroundThread _onWantHostServVhostSet:sender];
 }
 
 - (void)showChannelBanList:(id)sender

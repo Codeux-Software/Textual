@@ -13,6 +13,7 @@
 @interface TXMasterController (Private)
 - (void)setColumnLayout;
 - (void)registerKeyHandlers;
+- (void)buildSegmentedController;
 @end
 
 @implementation TXMasterController
@@ -43,6 +44,7 @@
 @synthesize viewTheme;
 @synthesize welcomeSheet;
 @synthesize window;
+@synthesize windowButtonController;
 @synthesize world;
 
 #pragma mark -
@@ -160,7 +162,9 @@
 	
 	[self.viewTheme validateFilePathExistanceAndReload:YES];
 	
-	[[NSBundle invokeInBackgroundThread] loadBundlesIntoMemory:self.world];
+	[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
+
+	[self buildSegmentedController];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
@@ -1328,6 +1332,53 @@ typedef enum {
 	
 	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:0];
 	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:NSAlternateKeyMask];
+}
+
+#pragma mark -
+#pragma mark WindowSegmentedController Delegate
+
+- (void)updateSegmentedController
+{
+	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
+	
+	IRCChannel *c = world.selectedChannel;
+	
+	if (PointerIsEmpty(c)) {
+		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:2];
+	} else {
+		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:2];
+	}
+}
+
+- (void)buildSegmentedController
+{
+	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
+	
+	NSMenu *segAddButton = [NSMenu new];
+	
+	NSMenuItem *addServer		= [self.treeMenu itemAtIndex:0].copy;
+	NSMenuItem *deleteServer	= [self.serverMenu.submenu itemWithTag:523].copy;
+	
+	NSMenuItem *addChannel		= [self.channelMenu.submenu itemWithTag:651].copy;
+	NSMenuItem *deleteChannel	= [self.channelMenu.submenu itemWithTag:652].copy;
+	
+	[segAddButton addItem:addServer];
+	[segAddButton addItem:[NSMenuItem separatorItem]];
+	[segAddButton addItem:addChannel];
+
+	[windowButtonController setMenu:segAddButton.copy forSegment:0];
+
+	[segAddButton removeAllItems];
+
+	[segAddButton addItem:deleteServer];
+	[segAddButton addItem:[NSMenuItem separatorItem]];
+	[segAddButton addItem:deleteChannel];
+
+	[windowButtonController setMenu:segAddButton.copy forSegment:1];
+
+	segAddButton = nil;
+	
+	[self updateSegmentedController];
 }
 
 #pragma mark -

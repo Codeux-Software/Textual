@@ -341,6 +341,8 @@
 	}
 	
 	self.reloadingTree = YES;
+
+	[self.master updateSegmentedController];
 	
 	[self.serverList reloadData];
 	
