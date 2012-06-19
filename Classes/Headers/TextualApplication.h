@@ -131,6 +131,7 @@
 	#import "TVCLogScriptEventSink.h"
 	#import "TVCLogView.h"
 	#import "TVCMainWindow.h"
+	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
 	#import "TVCServerList.h"

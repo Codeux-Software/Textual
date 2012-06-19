@@ -9,6 +9,7 @@
 @property (nonatomic, strong) NSBox *logBase;
 @property (nonatomic, strong) TXMenuController *menu;
 @property (nonatomic, strong) TVCMainWindow *window;
+@property (nonatomic, strong) TVCMainWindowSegmentedControl *windowButtonController;
 @property (nonatomic, strong) TVCInputTextField *text;
 @property (nonatomic, strong) TVCServerList *serverList;
 @property (nonatomic, strong) TVCMemberList *memberList;
@@ -35,6 +36,8 @@
 - (void)loadWindowState;
 - (void)saveWindowState;
 - (void)showMemberListSplitView:(BOOL)showList;
+
+- (void)updateSegmentedController;
 
 - (void)textEntered;
 
