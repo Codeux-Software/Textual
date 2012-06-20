@@ -218,8 +218,6 @@
 				backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
 			}
 			
-			backgroundImage = [backgroundImage stringByAppendingString:@".tif"];
-			
 			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
 			
 			[origBackgroundImage drawInRect:backgroundRect

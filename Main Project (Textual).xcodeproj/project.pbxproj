@@ -43,6 +43,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */; };
+		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
+		4C28F4451592019900CD2CDE /* colloquyRoomTabInverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */; };
+		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
 		4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB51580468900846B64 /* libcrypto.dylib */; };
 		4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB61580468900846B64 /* libicucore.dylib */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
@@ -308,8 +312,6 @@
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C970759158D740A0005CF68 /* colloquyRoomTabInverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */; };
 		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
-		4C97075D158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */; };
-		4C97075E158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
@@ -332,7 +334,6 @@
 		4CCF2F271580481E006FFE21 /* FormattingColor_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F161580481E006FFE21 /* FormattingColor_13.png */; };
 		4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F171580481E006FFE21 /* FormattingColor_14.png */; };
 		4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F181580481E006FFE21 /* FormattingColor_15.png */; };
-		4CCF2F2A1580481E006FFE21 /* FormattingColor_Rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F191580481E006FFE21 /* FormattingColor_Rainbow.png */; };
 		4CCF2F3615804836006FFE21 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2B15804836006FFE21 /* TPWTB_Advanced.png */; };
 		4CCF2F3715804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2C15804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png */; };
 		4CCF2F3815804836006FFE21 /* TPWTB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2D15804836006FFE21 /* TPWTB_ChannelManagement.png */; };
@@ -468,6 +469,10 @@
 
 /* Begin PBXFileReference section */
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = FormattingColor_Rainbow.tif; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow.tif"; sourceTree = SOURCE_ROOT; };
+		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabInverted@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabInverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C46CCB51580468900846B64 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = ../../../../usr/lib/libcrypto.dylib; sourceTree = "<group>"; };
 		4C46CCB61580468900846B64 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = ../../../../usr/lib/libicucore.dylib; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -731,8 +736,6 @@
 		4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLMAsyncSocket.h; sourceTree = "<group>"; };
 		4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabInverted.tif; path = "Resources/Images/Status Badges/colloquyRoomTabInverted.tif"; sourceTree = SOURCE_ROOT; };
 		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
-		4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabInvertedHighlight.tif; path = "Resources/Images/Status Badges/colloquyRoomTabInvertedHighlight.tif"; sourceTree = SOURCE_ROOT; };
-		4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegularHighlight.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegularHighlight.tif"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -761,7 +764,6 @@
 		4CCF2F161580481E006FFE21 /* FormattingColor_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_13.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_13.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F171580481E006FFE21 /* FormattingColor_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_14.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_14.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F181580481E006FFE21 /* FormattingColor_15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_15.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_15.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F191580481E006FFE21 /* FormattingColor_Rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_Rainbow.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F2B15804836006FFE21 /* TPWTB_Advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Advanced.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Advanced.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F2C15804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TPWTB_Alerts-GrowlIcon.png"; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Alerts-GrowlIcon.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F2D15804836006FFE21 /* TPWTB_ChannelManagement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_ChannelManagement.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_ChannelManagement.png"; sourceTree = SOURCE_ROOT; };
@@ -990,7 +992,8 @@
 				4CCF2F161580481E006FFE21 /* FormattingColor_13.png */,
 				4CCF2F171580481E006FFE21 /* FormattingColor_14.png */,
 				4CCF2F181580481E006FFE21 /* FormattingColor_15.png */,
-				4CCF2F191580481E006FFE21 /* FormattingColor_Rainbow.png */,
+				4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */,
+				4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */,
 			);
 			name = "IRC Formatting Colors";
 			sourceTree = "<group>";
@@ -1018,8 +1021,8 @@
 			children = (
 				4C970757158D740A0005CF68 /* colloquyRoomTabInverted.tif */,
 				4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */,
-				4C97075B158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif */,
-				4C97075C158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif */,
+				4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */,
+				4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */,
 			);
 			name = "Status Badges";
 			sourceTree = "<group>";
@@ -1889,7 +1892,6 @@
 				4CCF2F271580481E006FFE21 /* FormattingColor_13.png in Resources */,
 				4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */,
 				4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */,
-				4CCF2F2A1580481E006FFE21 /* FormattingColor_Rainbow.png in Resources */,
 				4CCF2F3615804836006FFE21 /* TPWTB_Advanced.png in Resources */,
 				4CCF2F3715804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png in Resources */,
 				4CCF2F3815804836006FFE21 /* TPWTB_ChannelManagement.png in Resources */,
@@ -1920,8 +1922,6 @@
 				4CD0F3DB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif in Resources */,
 				4C970759158D740A0005CF68 /* colloquyRoomTabInverted.tif in Resources */,
 				4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */,
-				4C97075D158D7BED0005CF68 /* colloquyRoomTabInvertedHighlight.tif in Resources */,
-				4C97075E158D7BED0005CF68 /* colloquyRoomTabRegularHighlight.tif in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
 				4C8AF728158E9B330026668C /* TDCAboutPanel.xib in Resources */,
 				4C8AF729158E9B330026668C /* TDCAddressBookSheet.xib in Resources */,
@@ -1964,6 +1964,10 @@
 				4CDFA1B01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif in Resources */,
 				4CDFA1B11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif in Resources */,
 				4CDFA1B21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif in Resources */,
+				4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */,
+				4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */,
+				4C28F4451592019900CD2CDE /* colloquyRoomTabInverted@2x.tif in Resources */,
+				4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
