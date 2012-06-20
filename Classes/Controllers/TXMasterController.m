@@ -215,8 +215,8 @@
 	}
 	
     [self.world reloadTree];
-	
-	[text setNeedsDisplay:YES];
+
+	[text.backgroundView setWindowIsActive:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
@@ -231,7 +231,7 @@
     
     [self.world reloadTree];
 	
-	[text setNeedsDisplay:YES];
+	[text.backgroundView setWindowIsActive:NO];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag

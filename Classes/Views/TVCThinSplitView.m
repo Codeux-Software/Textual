@@ -231,7 +231,7 @@
 	
 	[self setNeedsDisplay:YES];
 	
-	[[self window] invalidateCursorRectsForView:self];
+	[self.window invalidateCursorRectsForView:self];
 }
 
 - (void)updatePosition

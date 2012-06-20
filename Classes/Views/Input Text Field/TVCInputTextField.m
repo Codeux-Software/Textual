@@ -50,7 +50,7 @@
     return [self.superview.superview.superview.subviews objectAtIndex:0];
 }
 
-- (NSView *)backgroundView
+- (TVCInputTextFieldBackground *)backgroundView
 {
 	return [self.superview.superview.superview.subviews objectAtIndex:2];
 }
@@ -129,8 +129,6 @@
 		[scroller	setFrame:textBoxFrame];
 		[superView	setFrame:superViewFrame];
 		[background setFrame:backgroundFrame];
-		
-		[scroller setNeedsDisplay:YES];
 	}
 }
 
@@ -198,6 +196,17 @@
 	BOOL _finishedFirstDraw;
 }
 
+@synthesize windowIsActive;
+
+- (void)setWindowIsActive:(BOOL)value
+{
+	if (NSDissimilarObjects(value, self.windowIsActive)) {
+		windowIsActive = value;
+	}
+
+	[self setNeedsDisplay:YES];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
 	NSWindow *parentWindow = [self window];
@@ -224,7 +233,7 @@
 	/* We force focused color during first run because we draw before
 	 our window has finished coming to the front so the wrong color
 	 is used for our border. */
-	if ([parentWindow isOnCurrentWorkspace] || _finishedFirstDraw == NO) {
+	if (windowIsActive || _finishedFirstDraw == NO) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
