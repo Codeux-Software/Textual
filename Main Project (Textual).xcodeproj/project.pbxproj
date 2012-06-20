@@ -58,6 +58,12 @@
 		4C4D5E691590D9CD0039A5D8 /* TXUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E671590D9CD0039A5D8 /* TXUserTemplate.pdf */; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
+		4C7188C71591AB7A00FC5E54 /* DIRedBadgeLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */; };
+		4C7188C81591AB7A00FC5E54 /* DIRedBadgeRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C51591AB7A00FC5E54 /* DIRedBadgeRight.png */; };
+		4C7188CC1591AB8600FC5E54 /* DIGreenBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C91591AB8600FC5E54 /* DIGreenBadgeCenter.png */; };
+		4C7188CD1591AB8600FC5E54 /* DIGreenBadgeLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188CA1591AB8600FC5E54 /* DIGreenBadgeLeft.png */; };
+		4C7188CE1591AB8600FC5E54 /* DIGreenBadgeRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188CB1591AB8600FC5E54 /* DIGreenBadgeRight.png */; };
 		4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */; };
 		4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA915811D29002EC37B /* BragSpam.bundle */; };
 		4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */; };
@@ -312,14 +318,6 @@
 		4CCF2EF3158047C8006FFE21 /* Acknowledgments.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
 		4CCF2EF4158047C8006FFE21 /* Contributors.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4CCF2EF8158047E9006FFE21 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF7158047E9006FFE21 /* application.icns */; };
-		4CCF2EFD158047F8006FFE21 /* DIbadge_Red_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF9158047F8006FFE21 /* DIbadge_Red_1&2.tiff */; };
-		4CCF2EFE158047F8006FFE21 /* DIbadge_Red_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EFA158047F8006FFE21 /* DIbadge_Red_3.tiff */; };
-		4CCF2EFF158047F8006FFE21 /* DIbadge_Red_4.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EFB158047F8006FFE21 /* DIbadge_Red_4.tiff */; };
-		4CCF2F00158047F8006FFE21 /* DIbadge_Red_5.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EFC158047F8006FFE21 /* DIbadge_Red_5.tiff */; };
-		4CCF2F051580480D006FFE21 /* DIbadge_Green_1&2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F011580480D006FFE21 /* DIbadge_Green_1&2.tiff */; };
-		4CCF2F061580480D006FFE21 /* DIbadge_Green_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F021580480D006FFE21 /* DIbadge_Green_3.tiff */; };
-		4CCF2F071580480D006FFE21 /* DIbadge_Green_4.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F031580480D006FFE21 /* DIbadge_Green_4.tiff */; };
-		4CCF2F081580480D006FFE21 /* DIbadge_Green_5.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F041580480D006FFE21 /* DIbadge_Green_5.tiff */; };
 		4CCF2F1A1580481E006FFE21 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F091580481E006FFE21 /* FormattingColor_0.png */; };
 		4CCF2F1B1580481E006FFE21 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F0A1580481E006FFE21 /* FormattingColor_1.png */; };
 		4CCF2F1C1580481E006FFE21 /* FormattingColor_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F0B1580481E006FFE21 /* FormattingColor_2.png */; };
@@ -472,6 +470,12 @@
 		4C4D5E671590D9CD0039A5D8 /* TXUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = TXUserTemplate.pdf; path = "Resources/Images/User Interface/TXUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
+		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
+		4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeLeft.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeLeft.png"; sourceTree = SOURCE_ROOT; };
+		4C7188C51591AB7A00FC5E54 /* DIRedBadgeRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeRight.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeRight.png"; sourceTree = SOURCE_ROOT; };
+		4C7188C91591AB8600FC5E54 /* DIGreenBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
+		4C7188CA1591AB8600FC5E54 /* DIGreenBadgeLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeLeft.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeLeft.png"; sourceTree = SOURCE_ROOT; };
+		4C7188CB1591AB8600FC5E54 /* DIGreenBadgeRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeRight.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeRight.png"; sourceTree = SOURCE_ROOT; };
 		4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBA915811D29002EC37B /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
@@ -730,14 +734,6 @@
 		4CCF2EF2158047C8006FFE21 /* Contributors.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Contributors.pdf; path = "Resources/Documents/Exported Documents/Contributors.pdf"; sourceTree = SOURCE_ROOT; };
 		4CCF2EF5158047D1006FFE21 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
 		4CCF2EF7158047E9006FFE21 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/Application/application.icns; sourceTree = SOURCE_ROOT; };
-		4CCF2EF9158047F8006FFE21 /* DIbadge_Red_1&2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DIbadge_Red_1&2.tiff"; path = "Resources/Images/Dock Icon Badges/Red/DIbadge_Red_1&2.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2EFA158047F8006FFE21 /* DIbadge_Red_3.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Red_3.tiff; path = "Resources/Images/Dock Icon Badges/Red/DIbadge_Red_3.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2EFB158047F8006FFE21 /* DIbadge_Red_4.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Red_4.tiff; path = "Resources/Images/Dock Icon Badges/Red/DIbadge_Red_4.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2EFC158047F8006FFE21 /* DIbadge_Red_5.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Red_5.tiff; path = "Resources/Images/Dock Icon Badges/Red/DIbadge_Red_5.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2F011580480D006FFE21 /* DIbadge_Green_1&2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DIbadge_Green_1&2.tiff"; path = "Resources/Images/Dock Icon Badges/Green/DIbadge_Green_1&2.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2F021580480D006FFE21 /* DIbadge_Green_3.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Green_3.tiff; path = "Resources/Images/Dock Icon Badges/Green/DIbadge_Green_3.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2F031580480D006FFE21 /* DIbadge_Green_4.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Green_4.tiff; path = "Resources/Images/Dock Icon Badges/Green/DIbadge_Green_4.tiff"; sourceTree = SOURCE_ROOT; };
-		4CCF2F041580480D006FFE21 /* DIbadge_Green_5.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DIbadge_Green_5.tiff; path = "Resources/Images/Dock Icon Badges/Green/DIbadge_Green_5.tiff"; sourceTree = SOURCE_ROOT; };
 		4CCF2F091580481E006FFE21 /* FormattingColor_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_0.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_0.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F0A1580481E006FFE21 /* FormattingColor_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_1.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_1.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F0B1580481E006FFE21 /* FormattingColor_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_2.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_2.png"; sourceTree = SOURCE_ROOT; };
@@ -939,14 +935,12 @@
 		4C46CC991580430700846B64 /* Dock Icon Badges */ = {
 			isa = PBXGroup;
 			children = (
-				4CCF2F011580480D006FFE21 /* DIbadge_Green_1&2.tiff */,
-				4CCF2F021580480D006FFE21 /* DIbadge_Green_3.tiff */,
-				4CCF2F031580480D006FFE21 /* DIbadge_Green_4.tiff */,
-				4CCF2F041580480D006FFE21 /* DIbadge_Green_5.tiff */,
-				4CCF2EF9158047F8006FFE21 /* DIbadge_Red_1&2.tiff */,
-				4CCF2EFA158047F8006FFE21 /* DIbadge_Red_3.tiff */,
-				4CCF2EFB158047F8006FFE21 /* DIbadge_Red_4.tiff */,
-				4CCF2EFC158047F8006FFE21 /* DIbadge_Red_5.tiff */,
+				4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */,
+				4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */,
+				4C7188C51591AB7A00FC5E54 /* DIRedBadgeRight.png */,
+				4C7188C91591AB8600FC5E54 /* DIGreenBadgeCenter.png */,
+				4C7188CA1591AB8600FC5E54 /* DIGreenBadgeLeft.png */,
+				4C7188CB1591AB8600FC5E54 /* DIGreenBadgeRight.png */,
 			);
 			name = "Dock Icon Badges";
 			sourceTree = "<group>";
@@ -1832,14 +1826,6 @@
 				4CCF2EF3158047C8006FFE21 /* Acknowledgments.pdf in Resources */,
 				4CCF2EF4158047C8006FFE21 /* Contributors.pdf in Resources */,
 				4CCF2EF8158047E9006FFE21 /* application.icns in Resources */,
-				4CCF2EFD158047F8006FFE21 /* DIbadge_Red_1&2.tiff in Resources */,
-				4CCF2EFE158047F8006FFE21 /* DIbadge_Red_3.tiff in Resources */,
-				4CCF2EFF158047F8006FFE21 /* DIbadge_Red_4.tiff in Resources */,
-				4CCF2F00158047F8006FFE21 /* DIbadge_Red_5.tiff in Resources */,
-				4CCF2F051580480D006FFE21 /* DIbadge_Green_1&2.tiff in Resources */,
-				4CCF2F061580480D006FFE21 /* DIbadge_Green_3.tiff in Resources */,
-				4CCF2F071580480D006FFE21 /* DIbadge_Green_4.tiff in Resources */,
-				4CCF2F081580480D006FFE21 /* DIbadge_Green_5.tiff in Resources */,
 				4CCF2F1A1580481E006FFE21 /* FormattingColor_0.png in Resources */,
 				4CCF2F1B1580481E006FFE21 /* FormattingColor_1.png in Resources */,
 				4CCF2F1C1580481E006FFE21 /* FormattingColor_2.png in Resources */,
@@ -1912,6 +1898,12 @@
 				4C0FA49C15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf in Resources */,
 				4C4D5E681590D9CD0039A5D8 /* AddItemTemplate.pdf in Resources */,
 				4C4D5E691590D9CD0039A5D8 /* TXUserTemplate.pdf in Resources */,
+				4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */,
+				4C7188C71591AB7A00FC5E54 /* DIRedBadgeLeft.png in Resources */,
+				4C7188C81591AB7A00FC5E54 /* DIRedBadgeRight.png in Resources */,
+				4C7188CC1591AB8600FC5E54 /* DIGreenBadgeCenter.png in Resources */,
+				4C7188CD1591AB8600FC5E54 /* DIGreenBadgeLeft.png in Resources */,
+				4C7188CE1591AB8600FC5E54 /* DIGreenBadgeRight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
