@@ -37,9 +37,10 @@
 		if (messageCount >= 1) {
 			textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:messageCount] attributes:attrs];
 			textSize   = [textString size];
-			
-			[redBadge compositeToPoint:NSMakePoint((appIcon.size.width - redBadge.size.width), 
-												   (appIcon.size.height - redBadge.size.height)) operation:NSCompositeSourceOver];
+
+			[redBadge drawAtPoint:NSMakePoint((appIcon.size.width - redBadge.size.width),
+											  (appIcon.size.height - redBadge.size.height))
+						 fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
 			
 			[textString drawAtPoint:NSMakePoint((appIcon.size.width - redBadge.size.width + ((redBadge.size.width - textSize.width) / 2)), 
 												(appIcon.size.height - redBadge.size.height + ((redBadge.size.height - textSize.height) / 2) + 1))];
@@ -48,10 +49,10 @@
 			if (highlightCount >= 1) {
 				textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:highlightCount] attributes:attrs];
 				textSize   = [textString size];
-			
-				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
-														 (appIcon.size.height - greenBadge.size.height - (redBadge.size.height - 5))) 
-								   operation:NSCompositeSourceOver];
+
+				[greenBadge drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
+													(appIcon.size.height - greenBadge.size.height - (redBadge.size.height - 5)))
+							   fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
 				
 				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)), 
 													(appIcon.size.height - greenBadge.size.height + ((greenBadge.size.height - textSize.height) / 2) - (redBadge.size.height - 6)))];
@@ -62,10 +63,11 @@
 				textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithInteger:highlightCount] attributes:attrs];
 				textSize   = [textString size];
 				
-				[greenBadge compositeToPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
-														 (appIcon.size.height - greenBadge.size.height)) operation:NSCompositeSourceOver];
+				[greenBadge drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width), 
+													(appIcon.size.height - greenBadge.size.height))
+							   fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
 				
-				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)), 
+				[textString drawAtPoint:NSMakePoint((appIcon.size.width - greenBadge.size.width + ((greenBadge.size.width - textSize.width) / 2)),
 													(appIcon.size.height - greenBadge.size.height + ((greenBadge.size.height - textSize.height) / 2) + 1))];
 				
 			}
