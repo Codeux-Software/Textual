@@ -7803,17 +7803,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">TXMasterController</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">windowButtonControllerCell</string>
-						<string key="NS.object.0">TVCMainWindowSegmentedCell</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">windowButtonControllerCell</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">windowButtonControllerCell</string>
-							<string key="candidateClassName">TVCMainWindowSegmentedCell</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TXMasterController.h</string>

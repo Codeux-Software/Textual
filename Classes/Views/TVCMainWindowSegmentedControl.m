@@ -11,7 +11,6 @@
 - (SEL)action
 {
     if (PointerIsEmpty([self menuForSegment:self.selectedSegment])) {
-		NSLog(@"%@", menuController);
 		[menuController showNicknameChangeDialog:nil];
 
 		return nil;

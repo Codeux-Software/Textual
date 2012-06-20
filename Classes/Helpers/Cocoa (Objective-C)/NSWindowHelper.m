@@ -54,7 +54,7 @@
 
 - (BOOL)isOnCurrentWorkspace
 {
-	return ([self isOnActiveSpace] && [self isVisible] && [NSApp keyWindow] == self);
+	return ([self isOnActiveSpace] && [self isMainWindow] && [self isVisible] && [NSApp keyWindow] == self);
 }
 
 - (BOOL)isInFullscreenMode
