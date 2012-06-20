@@ -61,8 +61,6 @@
 	NSRect redBadgeLeftFrame, greenBadgeLeftFrame;
 	NSRect redBadgeRightFrame, greenBadgeRightFrame;
 	NSRect redBadgeCenterFrame, greenBadgeCenterFrame;
-
-	NSRect redBadgeTextFrame, greeNbadgeTextFrame;
 	
 	[appIcon lockFocus];
 	

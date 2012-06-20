@@ -3049,7 +3049,7 @@
 													<string key="NSFrameSize">{188, 513}</string>
 													<reference key="NSSuperview" ref="649664949"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="718755093"/>
+													<reference key="NSNextKeyView" ref="678251316"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -3190,7 +3190,7 @@
 									<string key="NSFrameSize">{188, 513}</string>
 									<reference key="NSSuperview" ref="100056217"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="649664949"/>
+									<reference key="NSNextKeyView" ref="718755093"/>
 									<int key="NSsFlags">133648</int>
 									<reference key="NSVScroller" ref="678251316"/>
 									<reference key="NSHScroller" ref="718755093"/>
@@ -3266,7 +3266,7 @@
 																	<string key="NSFrameSize">{223, 513}</string>
 																	<reference key="NSSuperview" ref="337544634"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="941879084"/>
+																	<reference key="NSNextKeyView" ref="676679988"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																	<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -3364,7 +3364,7 @@
 													<string key="NSFrame">{{-1, 0}, {223, 513}}</string>
 													<reference key="NSSuperview" ref="752371143"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="337544634"/>
+													<reference key="NSNextKeyView" ref="941879084"/>
 													<int key="NSsFlags">133648</int>
 													<reference key="NSVScroller" ref="676679988"/>
 													<reference key="NSHScroller" ref="941879084"/>
@@ -3470,7 +3470,7 @@
 											<string key="NSFrameSize">{498, 18}</string>
 											<reference key="NSSuperview" ref="915392651"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="1016719665"/>
+											<reference key="NSNextKeyView" ref="821141213"/>
 											<string key="NSReuseIdentifierKey">_NS:3760</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="986559100">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -3566,6 +3566,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 									<string key="NSFrame">{{481, 1}, {16, 13}}</string>
 									<reference key="NSSuperview" ref="613525633"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:3774</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="613525633"/>
@@ -3591,7 +3592,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string key="NSFrame">{{144, 9}, {498, 18}}</string>
 							<reference key="NSSuperview" ref="606779342"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="915392651"/>
+							<reference key="NSNextKeyView" ref="1016719665"/>
 							<string key="NSReuseIdentifierKey">_NS:148</string>
 							<int key="NSsFlags">133648</int>
 							<reference key="NSVScroller" ref="821141213"/>
@@ -3625,7 +3626,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 										<double key="NSSegmentItemWidth">40</double>
 										<object class="NSCustomResource" key="NSSegmentItemImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">AddItemTemplate</string>
+											<string key="NSResourceName">NSAddTemplate</string>
 										</object>
 										<string key="NSSegmentItemTooltip">Add Server or Channel</string>
 										<int key="NSSegmentItemImageScaling">0</int>
@@ -3644,7 +3645,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 										<double key="NSSegmentItemWidth">40</double>
 										<object class="NSCustomResource" key="NSSegmentItemImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">TXUserTemplate</string>
+											<string key="NSResourceName">MainWindowSegmentedControlUserTemplate</string>
 										</object>
 										<string key="NSSegmentItemTooltip">Change Nickname</string>
 										<int key="NSSegmentItemTag">2</int>
@@ -7626,7 +7627,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="2647.CustomClassName">TVCMainWindowSegmentedControl</string>
 				<string key="2647.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2648.CustomClassName">TVCMainWindowSegmentedCell</string>
-				<integer value="0" key="2648.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="2" key="2648.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="2648.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="267.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2673.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7849,7 +7850,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="AddItemTemplate">{128, 128}</string>
 			<string key="FormattingColor_0">{16, 16}</string>
 			<string key="FormattingColor_1">{16, 16}</string>
 			<string key="FormattingColor_10">{16, 16}</string>
@@ -7867,10 +7867,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<string key="FormattingColor_8">{16, 16}</string>
 			<string key="FormattingColor_9">{16, 16}</string>
 			<string key="FormattingColor_Rainbow">{16, 16}</string>
+			<string key="MainWindowSegmentedControlUserTemplate">{128, 128}</string>
 			<string key="NSActionTemplate">{15, 15}</string>
+			<string key="NSAddTemplate">{8, 8}</string>
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
-			<string key="TXUserTemplate">{128, 128}</string>
 		</dictionary>
 	</data>
 </archive>
