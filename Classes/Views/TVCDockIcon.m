@@ -65,22 +65,22 @@
 	[appIcon lockFocus];
 	
 	/* Red Badge Size. */
-	redBadgeRightFrame.size.height	= 52;
-	redBadgeCenterFrame.size.height = 52;
-	redBadgeLeftFrame.size.height	= 52;
+	redBadgeRightFrame.size.height	= 44;
+	redBadgeCenterFrame.size.height = 44;
+	redBadgeLeftFrame.size.height	= 44;
 	
-	redBadgeLeftFrame.size.width    = 25;
+	redBadgeLeftFrame.size.width    = 21;
 	redBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:messageCount];
-	redBadgeRightFrame.size.width	= 24;
+	redBadgeRightFrame.size.width	= 20;
 	
 	/* Green Badge Size. */
-	greenBadgeRightFrame.size.height	= 52;
-	greenBadgeCenterFrame.size.height	= 52;
-	greenBadgeLeftFrame.size.height		= 52;
+	greenBadgeRightFrame.size.height	= 44;
+	greenBadgeCenterFrame.size.height	= 44;
+	greenBadgeLeftFrame.size.height		= 44;
 	
-	greenBadgeLeftFrame.size.width		= 25;
+	greenBadgeLeftFrame.size.width		= 21;
 	greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:highlightCount];
-	greenBadgeRightFrame.size.width		= 24;
+	greenBadgeRightFrame.size.width		= 20;
 	
 	/* ////////////////////////////////////////////////////////// */
 	
@@ -202,10 +202,10 @@
 + (NSInteger)badgeCenterTileWidth:(NSInteger)count
 {
 	switch (count) {
-		case 1 ... 9: return 1; break;
-		case 10 ... 99: return 12; break;
-		case 100 ... 999: return 22; break;
-		case 1000 ... 9999: return 32; break;
+		case 1 ... 9: return 5; break;
+		case 10 ... 99: return 16; break;
+		case 100 ... 999: return 28; break;
+		case 1000 ... 9999: return 38; break;
 		default: break;
 	}
 	
