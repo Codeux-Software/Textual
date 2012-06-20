@@ -264,8 +264,6 @@
 				backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
 			}
 			
-			backgroundImage = [backgroundImage stringByAppendingString:@".tif"];
-			
 			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
 			
 			[origBackgroundImage drawInRect:backgroundRect
@@ -298,12 +296,6 @@
 					iconName = [iconName stringByAppendingString:@"Inverted"];
 				} else {
 					iconName = [iconName stringByAppendingString:@"Regular"];
-				}
-				
-				if (isHighlight && channel.isActive) {
-					iconName = [iconName stringByAppendingString:@"Highlight.tif"];
-				} else {
-					iconName = [iconName stringByAppendingString:@".tif"];
 				}
 				
 				if (channel.isActive) {
