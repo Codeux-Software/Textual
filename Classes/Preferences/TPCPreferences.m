@@ -177,6 +177,11 @@ static NSMutableDictionary *commandIndex = nil;
 	return [[NSBundle mainBundle] bundleIdentifier];
 }
 
++ (BOOL)runningInHighResolutionMode
+{
+	return ([_NSMainScreen() backingScaleFactor] == 2.0f);
+}
+
 #pragma mark -
 #pragma mark Path Index
 

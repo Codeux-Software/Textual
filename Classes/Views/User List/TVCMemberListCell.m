@@ -133,12 +133,12 @@
 	badgeTextSize  = modeString.size;
 	badgeTextPoint = NSMakePoint( (NSMidX(badgeFrame) - (badgeTextSize.width / 2.0)),
 								 ((NSMidY(badgeFrame) - (badgeTextSize.height / 2.0)) + 1));
-    
-    if (mcstring == '+' || mcstring == '~' || mcstring == 'x') {
-        badgeTextPoint.y -= 1;
-    }
 	
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if (mcstring == '+' || mcstring == '~' || mcstring == 'x') {
+		badgeTextPoint.y -= 1;
+	}
+	
+	if ([TPCPreferences featureAvailableToOSXMountainLion] && [TPCPreferences runningInHighResolutionMode] == NO) {
 		badgeTextPoint.y -= 1;
 	}
     
@@ -277,7 +277,7 @@
 			[_NSGraphicsCurrentContext() saveGraphicsState];
 			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
 		}
-
+		
 		[newValue drawInRect:cellFrame];
 		
 		if ([TPCPreferences useLogAntialiasing] == NO) {
