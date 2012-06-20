@@ -61,27 +61,6 @@
 	[super rightMouseDown:e];
 }
 
-- (void)setFont:(NSFont *)font
-{
-	for (NSTableColumn *column in [self tableColumns]) {
-		[[column dataCell] setFont:font];
-	}
-	
-	NSRect f = [self frame];
-	
-	f.size.height = 1e+37;
-	
-	CGFloat height = ceil([[[[self tableColumns] safeObjectAtIndex:0] dataCell] cellSizeForBounds:f].height);
-	
-	[self setRowHeight:height];
-	[self setNeedsDisplay:YES];
-}
-
-- (NSFont *)font
-{
-	return [[[[self tableColumns] safeObjectAtIndex:0] dataCell] font];
-}
-
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {

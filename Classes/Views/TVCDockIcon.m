@@ -21,13 +21,14 @@
 {
 	messageCount   = ((messageCount   > 9999) ? 9999 : messageCount);
 	highlightCount = ((highlightCount > 9999) ? 9999 : highlightCount);
-
+	
 	BOOL showRedBadge = (messageCount >= 1);
-
+	BOOL showGreenBadge = (highlightCount >= 1);
+	
 	/* ////////////////////////////////////////////////////////// */
 	/* Define Text Drawing Globals. */
 	/* ////////////////////////////////////////////////////////// */
-
+	
 	NSSize badgeTextSize;
 	
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
@@ -134,61 +135,63 @@
 	/* ////////////////////////////////////////////////////////// */
 	/* Draw Badges. */
 	/* ////////////////////////////////////////////////////////// */
-
+	
 	/* Red Badge. */
 	if (showRedBadge) {
 		[redBadgeLeft	drawInRect:redBadgeLeftFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
 		[redBadgeCenter drawInRect:redBadgeCenterFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
 		[redBadgeRight	drawInRect:redBadgeRightFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-
+		
 		/* Red Badge Text. */
 		badgeText		= [badgeText initWithString:[NSString stringWithInteger:messageCount] attributes:badgeTextAttrs];
 		badgeTextSize   = [badgeText size];
-
+		
 		NSInteger redBadgeTotalWidth = (redBadgeLeftFrame.size.width +
 										redBadgeCenterFrame.size.width +
 										redBadgeRightFrame.size.width);
-
+		
 		NSInteger redBadgeTotalHeight = redBadgeCenterFrame.size.height;
 		
 		NSInteger redBadgeWidthCenter  = ((redBadgeTotalWidth - badgeTextSize.width) / 2);
 		NSInteger redBadgeHeightCenter = ((redBadgeTotalHeight - badgeTextSize.height) / 2);
 		
 		[badgeText drawAtPoint:NSMakePoint((appIcon.size.width - redBadgeTotalWidth + redBadgeWidthCenter),
-											(appIcon.size.height - redBadgeTotalHeight + redBadgeHeightCenter + 1))];
-	}
-
-	/* Green Badge. */
-	[greenBadgeLeft		drawInRect:greenBadgeLeftFrame		fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-	[greenBadgeCenter	drawInRect:greenBadgeCenterFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-	[greenBadgeRight	drawInRect:greenBadgeRightFrame		fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-
-	/* Green Badge Text. */
-	if (showRedBadge) {
-		[badgeText replaceCharactersInRange:NSMakeRange(0, badgeText.length) withString:[NSString stringWithInteger:highlightCount]];
-	} else {
-		badgeText = [badgeText initWithString:[NSString stringWithInteger:highlightCount] attributes:badgeTextAttrs];
+										   (appIcon.size.height - redBadgeTotalHeight + redBadgeHeightCenter + 1))];
 	}
 	
-	badgeTextSize = [badgeText size];
-	
-	NSInteger greenBadgeTotalWidth = (greenBadgeLeftFrame.size.width +
-									  greenBadgeCenterFrame.size.width +
-									  greenBadgeRightFrame.size.width);
-	
-	NSInteger greenBadgeTotalHeight = greenBadgeCenterFrame.size.height;
-	
-	NSInteger greenBadgeWidthCenter  = ((greenBadgeTotalWidth - badgeTextSize.width) / 2);
-	NSInteger greenBadgeHeightCenter = ((greenBadgeTotalHeight - badgeTextSize.height) / 2);
-
-	NSPoint badgeTextDrawPath = NSMakePoint((appIcon.size.width - greenBadgeTotalWidth + greenBadgeWidthCenter),
-											(appIcon.size.height - greenBadgeTotalHeight + greenBadgeHeightCenter + 1));
-
-	if (showRedBadge) {
-		badgeTextDrawPath.y -= (redBadgeCenterFrame.size.height + _badgeSeperationSpace);
+	if (showGreenBadge) {
+		/* Green Badge. */
+		[greenBadgeLeft		drawInRect:greenBadgeLeftFrame		fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+		[greenBadgeCenter	drawInRect:greenBadgeCenterFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+		[greenBadgeRight	drawInRect:greenBadgeRightFrame		fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+		
+		/* Green Badge Text. */
+		if (showRedBadge) {
+			[badgeText replaceCharactersInRange:NSMakeRange(0, badgeText.length) withString:[NSString stringWithInteger:highlightCount]];
+		} else {
+			badgeText = [badgeText initWithString:[NSString stringWithInteger:highlightCount] attributes:badgeTextAttrs];
+		}
+		
+		badgeTextSize = [badgeText size];
+		
+		NSInteger greenBadgeTotalWidth = (greenBadgeLeftFrame.size.width +
+										  greenBadgeCenterFrame.size.width +
+										  greenBadgeRightFrame.size.width);
+		
+		NSInteger greenBadgeTotalHeight = greenBadgeCenterFrame.size.height;
+		
+		NSInteger greenBadgeWidthCenter  = ((greenBadgeTotalWidth - badgeTextSize.width) / 2);
+		NSInteger greenBadgeHeightCenter = ((greenBadgeTotalHeight - badgeTextSize.height) / 2);
+		
+		NSPoint badgeTextDrawPath = NSMakePoint((appIcon.size.width - greenBadgeTotalWidth + greenBadgeWidthCenter),
+												(appIcon.size.height - greenBadgeTotalHeight + greenBadgeHeightCenter + 1));
+		
+		if (showRedBadge) {
+			badgeTextDrawPath.y -= (redBadgeCenterFrame.size.height + _badgeSeperationSpace);
+		}
+		
+		[badgeText drawAtPoint:badgeTextDrawPath];
 	}
-
-	[badgeText drawAtPoint:badgeTextDrawPath];
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Finish Icon. */
