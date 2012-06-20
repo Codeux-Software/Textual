@@ -194,6 +194,9 @@
 @end
 
 @implementation TVCInputTextFieldBackground
+{
+	BOOL _finishedFirstDraw;
+}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -216,15 +219,18 @@
 	[controlPath fill];
 	
 	/* Black Outline. */
-	controlFrame =  NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-	
-	if ([parentWindow isOnCurrentWorkspace]) {
+	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
+
+	/* We force focused color during first run because we draw before
+	 our window has finished coming to the front so the wrong color
+	 is used for our border. */
+	if ([parentWindow isOnCurrentWorkspace] || _finishedFirstDraw == NO) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
 	}
 	
-	controlPath  = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
 	
 	[controlColor set];
 	[controlPath fill];
@@ -244,6 +250,10 @@
 	
 	[controlColor set];
 	[controlPath fill];
+
+	if (_finishedFirstDraw == NO) {
+		_finishedFirstDraw = YES;
+	}
 }
 
 @end

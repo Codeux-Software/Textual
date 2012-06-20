@@ -45,6 +45,7 @@
 @synthesize welcomeSheet;
 @synthesize window;
 @synthesize windowButtonController;
+@synthesize windowButtonControllerCell;
 @synthesize world;
 
 #pragma mark -
@@ -214,6 +215,8 @@
 	}
 	
     [self.world reloadTree];
+	
+	[text setNeedsDisplay:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
@@ -227,6 +230,8 @@
 	}
     
     [self.world reloadTree];
+	
+	[text setNeedsDisplay:YES];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -291,6 +296,7 @@
 	[self.world save];
 	[self.world terminate];
 	[self.menu terminate];
+	
 	[self saveWindowState];
 	
 	[TPCPreferences updateTotalRunTime];
