@@ -43,7 +43,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C0FA49C15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C0FA49B15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf */; };
 		4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB51580468900846B64 /* libcrypto.dylib */; };
 		4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB61580468900846B64 /* libicucore.dylib */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
@@ -54,8 +53,7 @@
 		4C46CCC91580469E00846B64 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC01580469E00846B64 /* Security.framework */; };
 		4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
-		4C4D5E681590D9CD0039A5D8 /* AddItemTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E661590D9CD0039A5D8 /* AddItemTemplate.pdf */; };
-		4C4D5E691590D9CD0039A5D8 /* TXUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E671590D9CD0039A5D8 /* TXUserTemplate.pdf */; };
+		4C4D5E691590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -346,7 +344,6 @@
 		4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */; };
 		4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */; };
 		4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */; };
-		4CCF2F4A1580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */; };
 		4CCF2F5215804868006FFE21 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F5115804868006FFE21 /* Styles */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
 		4CCF2F9D15804BF8006FFE21 /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
@@ -366,6 +363,22 @@
 		4CD0F3D9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3C9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif */; };
 		4CD0F3DA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3CA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif */; };
 		4CD0F3DB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CD0F3CB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif */; };
+		4CDFA1A31591D761004BB3C2 /* ServerCellSelection_Focused_Graphite_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1931591D761004BB3C2 /* ServerCellSelection_Focused_Graphite_Inverted@2x.tif */; };
+		4CDFA1A41591D761004BB3C2 /* ServerCellSelection_Focused_Graphite@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1941591D761004BB3C2 /* ServerCellSelection_Focused_Graphite@2x.tif */; };
+		4CDFA1A51591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1951591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif */; };
+		4CDFA1A61591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1961591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite@2x.tif */; };
+		4CDFA1A71591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1971591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif */; };
+		4CDFA1A81591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1981591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite@2x.tif */; };
+		4CDFA1A91591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1991591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite_Inverted@2x.tif */; };
+		4CDFA1AA1591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19A1591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite@2x.tif */; };
+		4CDFA1AB1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19B1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua_Inverted@2x.tif */; };
+		4CDFA1AC1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19C1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua@2x.tif */; };
+		4CDFA1AD1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19D1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif */; };
+		4CDFA1AE1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19E1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua@2x.tif */; };
+		4CDFA1AF1591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA19F1591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua_Inverted@2x.tif */; };
+		4CDFA1B01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1A01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif */; };
+		4CDFA1B11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1A11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif */; };
+		4CDFA1B21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDFA1A21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -454,7 +467,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C0FA49B15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ActionTemplateWithDisclosureTemplate.pdf; path = "Resources/Images/User Interface/ActionTemplateWithDisclosureTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C46CCB51580468900846B64 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = ../../../../usr/lib/libcrypto.dylib; sourceTree = "<group>"; };
 		4C46CCB61580468900846B64 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = ../../../../usr/lib/libicucore.dylib; sourceTree = "<group>"; };
@@ -466,8 +478,7 @@
 		4C46CCC01580469E00846B64 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		4C46CCC11580469E00846B64 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		4C4D5E661590D9CD0039A5D8 /* AddItemTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = AddItemTemplate.pdf; path = "Resources/Images/User Interface/AddItemTemplate.pdf"; sourceTree = SOURCE_ROOT; };
-		4C4D5E671590D9CD0039A5D8 /* TXUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = TXUserTemplate.pdf; path = "Resources/Images/User Interface/TXUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
+		4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = MainWindowSegmentedControlUserTemplate.pdf; path = "Resources/Images/User Interface/MainWindowSegmentedControlUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -762,7 +773,6 @@
 		4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_IRCopServices.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_IRCopServices.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Logs.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Logs.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Styles.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Styles.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = AddTemplateWithDisclosureTriangle.tif; path = "Resources/Images/User Interface/AddTemplateWithDisclosureTriangle.tif"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5115804868006FFE21 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
 		4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
@@ -781,6 +791,22 @@
 		4CD0F3C9158D6975009F2A0C /* ServerCellSelection_Unfocused_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Aqua.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Aqua.tif"; sourceTree = SOURCE_ROOT; };
 		4CD0F3CA158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Graphite_Inverted.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite_Inverted.tif"; sourceTree = SOURCE_ROOT; };
 		4CD0F3CB158D6975009F2A0C /* ServerCellSelection_Unfocused_Graphite.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ServerCellSelection_Unfocused_Graphite.tif; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1931591D761004BB3C2 /* ServerCellSelection_Focused_Graphite_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Focused_Graphite_Inverted@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Graphite_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1941591D761004BB3C2 /* ServerCellSelection_Focused_Graphite@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Focused_Graphite@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Graphite@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1951591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1961591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Unfocused_Graphite@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Graphite@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1971591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1981591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Unfocused_Graphite@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Graphite@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1991591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Focused_Graphite_Inverted@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Graphite_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19A1591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Focused_Graphite@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Graphite@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19B1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Focused_Aqua_Inverted@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Aqua_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19C1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Focused_Aqua@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Focused_Aqua@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19D1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19E1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ServerCellSelection_Unfocused_Aqua@2x.tif"; path = "Resources/Images/User Interface/ServerCellSelection_Unfocused_Aqua@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA19F1591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Focused_Aqua_Inverted@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1A01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Focused_Aqua@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1A11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Unfocused_Aqua@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Aqua@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CDFA1A21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif"; path = "Resources/Images/User Interface/ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1001,9 +1027,7 @@
 		4C46CC9D1580432F00846B64 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C0FA49B15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf */,
-				4C4D5E661590D9CD0039A5D8 /* AddItemTemplate.pdf */,
-				4CCF2F451580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif */,
+				4CDFA1921591D753004BB3C2 /* Retina */,
 				4CD0F3BD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif */,
 				4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */,
 				4CD0F3BF158D6975009F2A0C /* ChannelCellSelection_Focused_Graphite.tif */,
@@ -1012,7 +1036,7 @@
 				4CD0F3C0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif */,
 				4CD0F3C3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif */,
 				4CD0F3C2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif */,
-				4C4D5E671590D9CD0039A5D8 /* TXUserTemplate.pdf */,
+				4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */,
 				4CD0F3C5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif */,
 				4CD0F3C4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif */,
 				4CD0F3C7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif */,
@@ -1598,6 +1622,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4CDFA1921591D753004BB3C2 /* Retina */ = {
+			isa = PBXGroup;
+			children = (
+				4CDFA1931591D761004BB3C2 /* ServerCellSelection_Focused_Graphite_Inverted@2x.tif */,
+				4CDFA1941591D761004BB3C2 /* ServerCellSelection_Focused_Graphite@2x.tif */,
+				4CDFA1951591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif */,
+				4CDFA1961591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite@2x.tif */,
+				4CDFA1971591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif */,
+				4CDFA1981591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite@2x.tif */,
+				4CDFA1991591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite_Inverted@2x.tif */,
+				4CDFA19A1591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite@2x.tif */,
+				4CDFA19B1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua_Inverted@2x.tif */,
+				4CDFA19C1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua@2x.tif */,
+				4CDFA19D1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif */,
+				4CDFA19E1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua@2x.tif */,
+				4CDFA19F1591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua_Inverted@2x.tif */,
+				4CDFA1A01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif */,
+				4CDFA1A11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif */,
+				4CDFA1A21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif */,
+			);
+			name = Retina;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1854,7 +1901,6 @@
 				4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */,
 				4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */,
 				4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */,
-				4CCF2F4A1580484E006FFE21 /* AddTemplateWithDisclosureTriangle.tif in Resources */,
 				4CCF2F5215804868006FFE21 /* Styles in Resources */,
 				4CD0F3CC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif in Resources */,
 				4CD0F3CD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif in Resources */,
@@ -1895,15 +1941,29 @@
 				4C8AF737158E9B330026668C /* TVCInputPromptDialog.xib in Resources */,
 				4C8AF738158E9B330026668C /* TXCMainMenu.xib in Resources */,
 				4C8AF73B158E9B530026668C /* BasicLanguage.strings in Resources */,
-				4C0FA49C15900D3000125038 /* ActionTemplateWithDisclosureTemplate.pdf in Resources */,
-				4C4D5E681590D9CD0039A5D8 /* AddItemTemplate.pdf in Resources */,
-				4C4D5E691590D9CD0039A5D8 /* TXUserTemplate.pdf in Resources */,
+				4C4D5E691590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */,
 				4C7188C71591AB7A00FC5E54 /* DIRedBadgeLeft.png in Resources */,
 				4C7188C81591AB7A00FC5E54 /* DIRedBadgeRight.png in Resources */,
 				4C7188CC1591AB8600FC5E54 /* DIGreenBadgeCenter.png in Resources */,
 				4C7188CD1591AB8600FC5E54 /* DIGreenBadgeLeft.png in Resources */,
 				4C7188CE1591AB8600FC5E54 /* DIGreenBadgeRight.png in Resources */,
+				4CDFA1A31591D761004BB3C2 /* ServerCellSelection_Focused_Graphite_Inverted@2x.tif in Resources */,
+				4CDFA1A41591D761004BB3C2 /* ServerCellSelection_Focused_Graphite@2x.tif in Resources */,
+				4CDFA1A51591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite_Inverted@2x.tif in Resources */,
+				4CDFA1A61591D761004BB3C2 /* ServerCellSelection_Unfocused_Graphite@2x.tif in Resources */,
+				4CDFA1A71591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite_Inverted@2x.tif in Resources */,
+				4CDFA1A81591D761004BB3C2 /* ChannelCellSelection_Unfocused_Graphite@2x.tif in Resources */,
+				4CDFA1A91591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite_Inverted@2x.tif in Resources */,
+				4CDFA1AA1591D761004BB3C2 /* ChannelCellSelection_Focused_Graphite@2x.tif in Resources */,
+				4CDFA1AB1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua_Inverted@2x.tif in Resources */,
+				4CDFA1AC1591D761004BB3C2 /* ServerCellSelection_Focused_Aqua@2x.tif in Resources */,
+				4CDFA1AD1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua_Inverted@2x.tif in Resources */,
+				4CDFA1AE1591D761004BB3C2 /* ServerCellSelection_Unfocused_Aqua@2x.tif in Resources */,
+				4CDFA1AF1591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua_Inverted@2x.tif in Resources */,
+				4CDFA1B01591D761004BB3C2 /* ChannelCellSelection_Focused_Aqua@2x.tif in Resources */,
+				4CDFA1B11591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua@2x.tif in Resources */,
+				4CDFA1B21591D761004BB3C2 /* ChannelCellSelection_Unfocused_Aqua_Inverted@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
