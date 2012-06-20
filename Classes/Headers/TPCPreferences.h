@@ -54,6 +54,8 @@ typedef enum {
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
 
++ (BOOL)runningInHighResolutionMode;
+
 + (NSString *)masqueradeCTCPVersion;
 
 + (NSData *)applicationIcon;
