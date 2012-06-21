@@ -8,7 +8,6 @@
 #define TXDefaultTextualLogStyle			@"resource:Simplified Light"
 #define TXDefaultTextualLogFont				@"Lucida Grande"
 #define TXDefaultTextualTimestampFormat		@"[%H:%M:%S]"
-#define TXDefaultTextualNicknameFormat		@"<%@%n>"
 
 typedef enum {
 	TXNicknameHighlightPartialMatchType = 0,

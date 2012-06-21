@@ -1130,7 +1130,7 @@ static NSInteger totalRunTime = 0;
 	[d setObject:TXTLS(@"KickReason")				forKey:@"Preferences.General.kick_message"];
 	[d setObject:TXDefaultTextualLogStyle			forKey:@"Preferences.Theme.name"];
 	[d setObject:TXDefaultTextualLogFont			forKey:@"Preferences.Theme.log_font_name"];
-	[d setObject:TXDefaultTextualNicknameFormat		forKey:@"Preferences.Theme.nick_format"];
+	[d setObject:TXLogLineUndefinedNicknameFormat		forKey:@"Preferences.Theme.nick_format"];
 	[d setObject:TXDefaultTextualTimestampFormat	forKey:@"Preferences.Theme.timestamp_format"];
 	[d setObject:@"~/Documents/Textual Logs"		forKey:@"Preferences.General.transcript_folder"];
 	

@@ -1,6 +1,7 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
+// Converted to ARC Support on June 21, 2012
 
 #import "IRCTreeItem.h" // superclass
 
@@ -158,21 +159,21 @@ typedef enum {
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate*)receivedAt;
-- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate*)receivedAt;
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate*)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate *)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate *)receivedAt;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate *)receivedAt;
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
-- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
-- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
-- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate*)receivedAt;
+- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
 - (void)printDebugInformation:(NSString *)m;
