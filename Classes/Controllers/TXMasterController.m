@@ -166,7 +166,7 @@
 	[self.viewTheme validateFilePathExistanceAndReload:YES];
 	
 	[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
-
+	
 	[self buildSegmentedController];
 }
 
@@ -199,10 +199,25 @@
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
-	if (menu.isInFullScreenMode) {
+	if (self.menu.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
 		
-		[window setFrame:[_NSMainScreen() frame] display:YES animate:YES];
+		[self.window setFrame:[_NSMainScreen() frame] display:YES animate:YES];
+	} else {
+		NSRect visibleRect = [_NSMainScreen() visibleFrame];
+		NSRect windowRect  = self.window.frame;
+		
+		if (visibleRect.size.height < windowRect.size.height) {
+			windowRect.size.height = visibleRect.size.height;
+		}
+		
+		if (visibleRect.size.width < windowRect.size.width) {
+			windowRect.size.width = visibleRect.size.width;
+		}
+
+		windowRect.origin = visibleRect.origin;
+
+		[self.window setFrame:windowRect display:NO];
 	}
 }
 
@@ -217,7 +232,7 @@
 	}
 	
     [self.world reloadTree];
-
+	
 	[text.backgroundView setWindowIsActive:YES];
 }
 
@@ -1348,7 +1363,7 @@ typedef enum {
 - (void)updateSegmentedController
 {
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-
+	
 	/* Selection Settings. */
 	IRCClient *u = world.selectedClient;
 	IRCChannel *c = world.selectedChannel;
@@ -1358,7 +1373,7 @@ typedef enum {
 	} else {
 		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
 	}
-
+	
 	/* Nickname Change. */
 	[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 }
@@ -1368,17 +1383,17 @@ typedef enum {
 	self.windowButtonControllerCell.menuController = menu;
 	
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-
+	
 	/* Add Server/Channel Segment. */
 	NSMenu *segAddButton = [NSMenu new];
-
+	
 	NSMenuItem *addServer  = [self.treeMenu itemAtIndex:0].copy;
 	NSMenuItem *addChannel = [self.channelMenu.submenu itemWithTag:651].copy;
 	
 	[segAddButton addItem:addServer];
 	[segAddButton addItem:[NSMenuItem separatorItem]];
 	[segAddButton addItem:addChannel];
-
+	
 	[self.windowButtonController setMenu:segAddButton.copy forSegment:0];
 	
 	[self updateSegmentedController];
