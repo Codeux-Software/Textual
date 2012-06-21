@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 #define _rendererURLAttribute					(1 << 31)
 #define _rendererAddressAttribute				(1 << 30) // deprecated
 #define _rendererChannelNameAttribute			(1 << 29)

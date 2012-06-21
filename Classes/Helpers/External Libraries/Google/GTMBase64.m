@@ -15,6 +15,8 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
+#import "TextualApplication.h"
+
 static const char *kBase64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const char *kWebSafeBase64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 static const char kBase64PaddingChar = '=';

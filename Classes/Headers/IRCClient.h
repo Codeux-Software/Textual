@@ -2,15 +2,10 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
-#import "IRCTreeItem.h"
-#import "TVCLogLine.h"
-#import "TLOGrowlController.h"
+#import "IRCTreeItem.h" // superclass
 
-@class IRCMessage;
-@class IRCChannel, IRCClientConfig, IRCConnection;
-@class IRCISupportInfo, IRCWorld, TLOFileLogger;
-@class TLOTimer, TDCListDialog, TDChanBanSheet;
-@class TDChanBanExceptionSheet, TDChanInviteExceptionSheet;
+#import "TVCLogLine.h"			// typedef enum
+#import "TLOGrowlController.h"	// typedef enum
 
 typedef enum {
 	IRCConnectNormalMode,

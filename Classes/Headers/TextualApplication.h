@@ -10,6 +10,91 @@
 
 	#import "StaticDefinitions.h"
 
+	/* Class Forwarders. */
+
+	@class IRCAddressBook;
+	@class IRCChannel;
+	@class IRCChannelConfig;
+	@class IRCChannelMode;
+	@class IRCClient;
+	@class IRCClientConfig;
+	@class IRCConnection;
+	@class IRCExtras;
+	@class IRCISupportInfo;
+	@class IRCMessage;
+	@class IRCModeInfo;
+	@class IRCPrefix;
+	@class IRCSendingMessage;
+	@class IRCTreeItem;
+	@class IRCUser;
+	@class IRCWorld;
+	@class IRCWorldConfig;
+	@class LVCLogRenderer;
+	@class TDCAboutPanelSWindowController;
+	@class TDCAddressBookSheet;
+	@class TDCHighlightSheet;
+	@class TDCInviteSheet;
+	@class TDCListDialog;
+	@class TDCModeSheet;
+	@class TDCNickSheet;
+	@class TDCPreferencesController;
+	@class TDCPreferencesScriptWrapper;
+	@class TDCPreferencesSoundWrapper;
+	@class TDCServerSheet;
+	@class TDCSheetBase;
+	@class TDCTopicSheet;
+	@class TDCWelcomeSheet;
+	@class TDChanBanExceptionSheet;
+	@class TDChanBanSheet;
+	@class TDChanInviteExceptionSheet;
+	@class TDChannelSheet;
+	@class THOPluginProtocol;
+	@class THOTextualPluginItem;
+	@class THOUnicodeHelper;
+	@class TLOFileLogger;
+	@class TLOFileWithContent;
+	@class TLOGrowlController;
+	@class TLOInputHistory;
+	@class TLOKeyEventHandler;
+	@class TLOLanguagePreferences;
+	@class TLOLinkParser;
+	@class TLONickCompletionStatus;
+	@class TLOPopupPrompts;
+	@class TLORegularExpression;
+	@class TLOSocketClient;
+	@class TLOSoundPlayer;
+	@class TLOTimer;
+	@class TLOTimerCommand;
+	@class TLOpenLink;
+	@class TPCOtherTheme;
+	@class TPCPreferences;
+	@class TPCViewTheme;
+	@class TVCDockIcon;
+	@class TVCImageURLParser;
+	@class TVCInputPromptDialog;
+	@class TVCInputTextField;
+	@class TVCInputTextFieldBackground;
+	@class TVCListSeparatorCell;
+	@class TVCListView;
+	@class TVCLogController;
+	@class TVCLogLine;
+	@class TVCLogPolicy;
+	@class TVCLogScriptEventSink;
+	@class TVCLogView;
+	@class TVCMainWindow;
+	@class TVCMainWindowSegmentedCell;
+	@class TVCMainWindowSegmentedControl;
+	@class TVCMemberList;
+	@class TVCMemberListCell;
+	@class TVCServerList;
+	@class TVCServerListCell;
+	@class TVCTextFieldSTextView;
+	@class TVCTextFormatterMenu;
+	@class TVCThinSplitView;
+	@class TVCWebViewAutoScroll;
+	@class TXMasterController;
+	@class TXMenuController;
+
 	/* 3rd Party Extensions. */
 
 	#import "AGKeychain.h"

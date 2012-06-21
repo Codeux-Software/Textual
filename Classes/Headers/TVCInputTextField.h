@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
-@class TVCInputTextFieldBackground;
+#import "TextualApplication.h"
 
 @interface TVCInputTextField : TVCTextField <NSTextViewDelegate>
 @property (nonatomic, unsafe_unretained) id actionTarget;

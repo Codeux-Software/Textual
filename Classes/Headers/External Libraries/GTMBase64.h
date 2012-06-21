@@ -25,6 +25,9 @@
 /// encoding.  You must use the webSafe* methods together, the data does not
 /// interop with the RFC methods.
 //
+
+#import "TextualApplication.h"
+
 @interface GTMBase64 : NSObject
 
 //

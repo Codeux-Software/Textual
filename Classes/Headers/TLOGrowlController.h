@@ -3,9 +3,9 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
-#import <Growl/Growl.h>
+#import "TextualApplication.h"
 
-@class IRCWorld;
+#import <Growl/Growl.h>
 
 typedef enum {
 	TXNotificationHighlightType				= 1000,

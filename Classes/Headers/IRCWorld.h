@@ -3,9 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 09, 2012
 
-@class TVCMainWindow, TPCViewTheme;
-@class TVCServerList, TVCMemberList, TVCInputTextField;
-@class TXMasterController, TXMenuController, IRCWorldConfig;
+#import "TextualApplication.h"
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, weak) TVCServerList *serverList;

@@ -45,12 +45,6 @@
 	#define TXFoundationBasedUUIDAvailable
 #endif
 
-/* Textual Specific Frameworks */
-#ifdef LinkTextualIRCFrameworks
-	#import <AutoHyperlinks/AutoHyperlinks.h>
-	#import <BlowfishEncryption/BlowfishEncryption.h>
-#endif
-
 /* Establish Common Pointers */
 #define _NSMainScreen()							[NSScreen mainScreen]
 #define _NSFileManager()						[NSFileManager defaultManager]

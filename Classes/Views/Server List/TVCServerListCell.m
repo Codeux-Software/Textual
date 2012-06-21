@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 /* This class and the one for the user list is based off the open source PXSourceList 
  toolkit developed by Alex Rozanski. */
 

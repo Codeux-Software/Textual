@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 09, 2012
 
-@class TDCPreferencesScriptWrapper;
+#import "TextualApplication.h"
 
 #define TXThemePreferenceChangedNotification				@"TXThemePreferenceChangedNotification"
 #define TXTransparencyPreferenceChangedNotification			@"TXTransparencyPreferenceChangedNotification"

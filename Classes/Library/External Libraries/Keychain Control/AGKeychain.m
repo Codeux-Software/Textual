@@ -8,6 +8,8 @@
 // agerson@mac.com
 //
 
+#import "TextualApplication.h"
+
 @implementation AGKeychain
 
 + (BOOL)checkForExistanceOfKeychainItem:(NSString *)keychainItemName 

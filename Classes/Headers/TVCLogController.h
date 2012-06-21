@@ -3,8 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
-@class TVCWebViewAutoScroll;
-@class TVCLogView, TVCLogPolicy, TVCLogScriptEventSink;
+#import "TextualApplication.h"
 
 typedef BOOL (^TVCLogMessageBlock)(void);
 

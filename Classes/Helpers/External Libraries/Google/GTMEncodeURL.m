@@ -15,6 +15,8 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
+#import "TextualApplication.h"
+
 @implementation NSString (GTMNSStringURLArgumentsAdditions)
 
 - (NSString *)gtm_stringByEscapingForURLArgument {

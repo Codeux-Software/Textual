@@ -16,6 +16,8 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 
+#import "TextualApplication.h"
+
 /// Utilities for NSStrings containing HTML
 @interface NSString (GTMNSStringHTMLAdditions)
 

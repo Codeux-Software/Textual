@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#import "TextualApplication.h"
+
 @interface NSObject (DDExtensions)
 - (id)iomt; // Invoke On Main Thread
 - (id)invokeOnThread:(NSThread *)thread;
