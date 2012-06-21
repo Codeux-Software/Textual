@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 @interface TLOSocketClient : NSObject
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, strong) NSMutableData *buffer; 

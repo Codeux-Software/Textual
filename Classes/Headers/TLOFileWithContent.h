@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 @interface TLOFileWithContent : NSObject
 @property (nonatomic, strong) NSString *filename;
 @property (nonatomic, weak) NSString *content;

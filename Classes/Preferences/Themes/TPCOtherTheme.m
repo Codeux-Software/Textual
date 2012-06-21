@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 @interface TPCOtherTheme (Private)
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
 - (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv;

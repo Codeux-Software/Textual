@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 09, 2012
 
+#import "TextualApplication.h"
+
 @interface IRCUser : NSObject
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSString *nick;

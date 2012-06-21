@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 #define TXIsAlpha(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define TXIsNumeric(c)						('0' <= (c) && (c) <= '9' && TXIsAlpha(c) == NO) 
 #define TXIsAlphaNumeric(c)				(TXIsAlpha(c) || TXIsNumeric(c))

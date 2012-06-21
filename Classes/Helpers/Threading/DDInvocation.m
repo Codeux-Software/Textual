@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#import "TextualApplication.h"
+
 @implementation DDInvocation
 
 @synthesize target;

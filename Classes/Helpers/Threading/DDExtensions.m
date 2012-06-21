@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#import "TextualApplication.h"
+
 @implementation NSObject (DDExtensions)
 
 - (id)invokeOnThread:(NSThread *)thread

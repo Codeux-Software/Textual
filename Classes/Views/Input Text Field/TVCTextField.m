@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 #define _DefaultTextFieldWidthPadding		1.0
 #define _DefaultTextFieldHeightPadding		2.0
 

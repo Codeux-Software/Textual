@@ -3,6 +3,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 #define _noClient					(PointerIsEmpty(u))
 #define _noChannel					(PointerIsEmpty(c))
 #define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))

@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 @interface TVCLogView : WebView
 @property (nonatomic, unsafe_unretained) id keyDelegate;
 @property (nonatomic, unsafe_unretained) id resizeDelegate;

@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 /* It is always best to trust native developer APIs. Therefore, on versions
  of Mac OS X that support NSRegularExpression let us use it instead of relying
  on open source libraries to do the work for us. */

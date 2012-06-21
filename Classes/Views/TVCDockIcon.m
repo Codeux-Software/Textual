@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 #define _badgeSeperationSpace		1
 
 #define _badgeTextFont				[NSFont fontWithName:@"Helvetica" size:22.0]

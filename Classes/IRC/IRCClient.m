@@ -2,10 +2,14 @@
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
 
+#import "TextualApplication.h"
+
 #warning FIX: Conversion to ARC not finished within this file.
 
 #import <arpa/inet.h>
 #import <mach/mach_time.h>
+
+#import <BlowfishEncryption/BlowfishEncryption.h>
 
 #define _timeoutInterval			360
 #define _pingInterval				270

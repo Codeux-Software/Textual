@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 NSPoint NSRectCenter(NSRect rect)
 {
 	return NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
