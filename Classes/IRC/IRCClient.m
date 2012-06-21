@@ -1304,7 +1304,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					NSLog(TXTLS(@"ScriptExecutionFailure"), [aserror localizedDescription]);
 				} else {
 					[applescript executeWithAppleEvent:event
-									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error){
+									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error) {
 										 
 										 if (PointerIsEmpty(result)) {
 											 NSLog(TXTLS(@"ScriptExecutionFailure"), [error localizedDescription]);
@@ -1573,7 +1573,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             s = [s initWithAttributedString:str];
         }
     }
-
+	
 	NSString *cmd = [s.getToken.string uppercaseString];
 	
 	if (NSObjectIsEmpty(cmd)) return NO;
@@ -2503,7 +2503,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSArray *data = [s.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			
 			[TVCDockIcon drawWithHilightCount:[data integerAtIndex:0] 
-							  messageCount:[data integerAtIndex:1]];
+								 messageCount:[data integerAtIndex:1]];
 			
 			return YES;
 			break;
@@ -3410,7 +3410,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if (channel && [[channel config] ihighlights] == NO) {
 				keywords     = [TPCPreferences keywords];
 				excludeWords = [TPCPreferences excludeWords];
-
+				
 				if (NSDissimilarObjects([TPCPreferences keywordMatchingMethod], TXNicknameHighlightRegularExpressionMatchType)) {
                     if ([TPCPreferences keywordCurrentNick]) {
                         NSMutableArray *ary = [keywords mutableCopy];
@@ -3642,12 +3642,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-													 withMatches:[NSArray arrayWithObjects:
-																  @"ignoreHighlights",
-																  @"ignorePMHighlights",
-																  @"ignoreNotices", 
-																  @"ignorePublicMsg", 
-																  @"ignorePrivateMsg", nil]];
+														withMatches:[NSArray arrayWithObjects:
+																	 @"ignoreHighlights",
+																	 @"ignorePMHighlights",
+																	 @"ignoreNotices", 
+																	 @"ignorePublicMsg", 
+																	 @"ignorePrivateMsg", nil]];
 	
 	
 	if ([target isChannelName]) {
@@ -3922,7 +3922,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-													 withMatches:[NSArray arrayWithObjects:@"ignoreCTCP", nil]];
+														withMatches:[NSArray arrayWithObjects:@"ignoreCTCP", nil]];
 	
 	if ([ignoreChecks ignoreCTCP] == YES) {
 		return;
@@ -3949,7 +3949,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self sendCTCPReply:nick command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCCommandIndexVersion]) {
 			NSString *fakever = [TPCPreferences masqueradeCTCPVersion];
-
+			
 			if (NSObjectIsNotEmpty(fakever)) {
 				[self sendCTCPReply:nick command:command text:fakever];
 			} else {
@@ -4002,7 +4002,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *command = s.getToken.uppercaseString;
 	
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-													 withMatches:[NSArray arrayWithObjects:@"ignoreCTCP", nil]];
+														withMatches:[NSArray arrayWithObjects:@"ignoreCTCP", nil]];
 	
 	if ([ignoreChecks ignoreCTCP] == YES) {
 		return;
@@ -4093,7 +4093,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
     IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-                                                     withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyJoins", nil]];
+														withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", @"notifyJoins", nil]];
     
     if ([ignoreChecks ignoreJPQE] == YES && myself == NO) {
         return;
@@ -4150,7 +4150,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             }
             
 			IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-															 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+																withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 			
 			if ([ignoreChecks ignoreJPQE] == YES) {
 				return;
@@ -4185,7 +4185,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             }
             
 			IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-															 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+																withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 			
 			if ([ignoreChecks ignoreJPQE] == YES) {
 				return;
@@ -4200,7 +4200,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[c deactivate];
 			
 			[self reloadTree];
-
+			
 			[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:nick text:comment];
 			
 			if ([TPCPreferences rejoinOnKick] && c.errLastJoin == NO) {
@@ -4220,13 +4220,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL myself = [nick isEqualNoCase:self.myNick];
 	
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
-													 withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
+														withMatches:[NSArray arrayWithObjects:@"ignoreJPQE", nil]];
 	
 	NSString *text = TXTFLS(@"IRCUserDisconnected", nick, m.sender.user, m.sender.address);
 	
 	if (NSObjectIsNotEmpty(comment)) {
 		if ([TLORegularExpression string:comment 
-					   isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
+						isMatchedByRegex:@"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$"]) {
 			
 			comment = TXTFLS(@"IRCServerHadNetsplitQuitMessage", comment);
 		}
@@ -4638,7 +4638,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self.isupport update:[m sequence:1] client:self];
 			
 			[self.config setNetwork:TXTFLS(@"IRCServerNetworkName", self.isupport.networkName)];
-				
+			
 			[self.world updateTitle];
 			
 			break;
@@ -4856,7 +4856,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
 			NSString *chname = [m paramAt:1];
 			NSString *modeStr;
-
+			
 			modeStr = [m sequence:2];
 			modeStr = [modeStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			
@@ -5006,7 +5006,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *hostmask	= [m paramAt:3];
 				NSString *username	= [m paramAt:2];
 				NSString *fields    = [m paramAt:6];
-
+				
 				BOOL isIRCOp = NO;
 				
 				// fields = G|H *| chanprefixes
@@ -5016,7 +5016,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				if ([fields hasPrefix:@"*"]) {
 					// The nick is an oper
 					fields = [fields substringFromIndex:1];
-
+					
 					isIRCOp = YES;
 				}
 				
@@ -5346,7 +5346,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				return;
 			}
-
+			
 			return;
 			break;
 		}
@@ -5354,9 +5354,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 437:   
         {
 			if (self.isLoggedIn) break;
-
+			
 			[self receiveNickCollisionError:m];
-
+			
 			return;
 			break;
         }
@@ -5587,12 +5587,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		if (self.config.isTrustedConnection == NO) {
 			BOOL status = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"SocketBadSSLCertificateErrorMessage") 
-														   title:TXTLS(@"SocketBadSSLCertificateErrorTitle") 
-												   defaultButton:TXTLS(@"TrustButton") 
-												 alternateButton:TXTLS(@"CancelButton")
-													 otherButton:nil
-												  suppressionKey:suppKey
-												 suppressionText:@"-"];
+															  title:TXTLS(@"SocketBadSSLCertificateErrorTitle") 
+													  defaultButton:TXTLS(@"TrustButton") 
+													alternateButton:TXTLS(@"CancelButton")
+														otherButton:nil
+													 suppressionKey:suppKey
+													suppressionText:@"-"];
 			
 			[_NSUserDefaults() setBool:status forKey:suppKey];
 			

@@ -50,6 +50,7 @@
 - (void)rightMouseDown:(NSEvent *)e
 {
 	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
+	
 	NSInteger i = [self rowAtPoint:p];
 	
 	if (i >= 0) {

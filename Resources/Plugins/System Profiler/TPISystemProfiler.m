@@ -22,31 +22,31 @@
 		
 		if ([channelName length] >= 1) {
 			if ([commandString isEqualToString:@"SYSINFO"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
 			} else if ([commandString isEqualToString:@"MEMORY"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
 				
 				if ([_NSUserDefaults() boolForKey:@"HideMemoryCommandExtraInfo"] == NO) {
-					[client.iomt printDebugInformation:TXTLS(@"SystemInformationApplicationMemoryUseInfoLink")];
+					[client printDebugInformation:TXTLS(@"SystemInformationApplicationMemoryUseInfoLink")];
 				}
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
 			} else if ([commandString isEqualToString:@"NETSTATS"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo networkStats]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo networkStats]];
 			} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo bandwidthStatsFrom:client.world]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo bandwidthStatsFrom:client.world]];
 			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo allVolumesAndSizes]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo allVolumesAndSizes]];
 			} else if ([commandString isEqualToString:@"THEME"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo logThemeInformationFrom:client.world]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo logThemeInformationFrom:client.world]];
 			} else if ([commandString isEqualToString:@"SCREENS"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo activeScreenResolutions]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo activeScreenResolutions]];
 			} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationRunCount]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationRunCount]];
 			} else if ([commandString isEqualToString:@"LOADAVG"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemLoadAverage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemLoadAverage]];
 			} else if ([commandString isEqualToString:@"SYSMEM"]) {
-				[client.iomt sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemMemoryUsage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemMemoryUsage]];
 			}
 		}
 	}
