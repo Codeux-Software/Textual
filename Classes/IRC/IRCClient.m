@@ -418,7 +418,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)autoConnect:(NSInteger)delay
 {
-	self.connectDelay = delay;
+	connectDelay = delay;
 	
 	[self connect];
 }
