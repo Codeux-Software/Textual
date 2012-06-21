@@ -648,6 +648,10 @@
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML
 {
 	if (NSObjectIsEmpty(line.body)) return NO;
+
+	if ([NSThread isMainThread] == NO) {
+		return [self.iomt print:line withHTML:rawHTML];
+	}
 	
 	TVCLogLineType type = line.lineType;
 	
