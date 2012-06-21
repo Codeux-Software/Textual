@@ -211,8 +211,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSWindow *parentWindow = [self window];
-	
 	NSRect cellBounds;
 	NSRect controlFrame;
 	
