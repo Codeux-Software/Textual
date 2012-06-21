@@ -58,6 +58,14 @@
 		4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C4D5E691590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */; };
+		4C63C6B61592F0B0009F1635 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */; };
+		4C63C6B71592F0B0009F1635 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */; };
+		4C63C6BC1592F360009F1635 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */; };
+		4C63C6BD1592F360009F1635 /* TPWTB_Extensions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BB1592F360009F1635 /* TPWTB_Extensions@2x.tif */; };
+		4C63C6C01592F710009F1635 /* TPWTB_Mentions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BE1592F710009F1635 /* TPWTB_Mentions.tif */; };
+		4C63C6C11592F710009F1635 /* TPWTB_Mentions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */; };
+		4C63C6C41592FF4E009F1635 /* TPWTB_Interface.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */; };
+		4C63C6C51592FF4E009F1635 /* TPWTB_Interface@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -334,17 +342,6 @@
 		4CCF2F271580481E006FFE21 /* FormattingColor_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F161580481E006FFE21 /* FormattingColor_13.png */; };
 		4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F171580481E006FFE21 /* FormattingColor_14.png */; };
 		4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F181580481E006FFE21 /* FormattingColor_15.png */; };
-		4CCF2F3615804836006FFE21 /* TPWTB_Advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2B15804836006FFE21 /* TPWTB_Advanced.png */; };
-		4CCF2F3715804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2C15804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png */; };
-		4CCF2F3815804836006FFE21 /* TPWTB_ChannelManagement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2D15804836006FFE21 /* TPWTB_ChannelManagement.png */; };
-		4CCF2F3915804836006FFE21 /* TPWTB_FloodControl.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2E15804836006FFE21 /* TPWTB_FloodControl.png */; };
-		4CCF2F3A15804836006FFE21 /* TPWTB_Highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F2F15804836006FFE21 /* TPWTB_Highlights.png */; };
-		4CCF2F3B15804836006FFE21 /* TPWTB_InstalledScripts-DropDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3015804836006FFE21 /* TPWTB_InstalledScripts-DropDown.png */; };
-		4CCF2F3C15804836006FFE21 /* TPWTB_InstalledScripts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3115804836006FFE21 /* TPWTB_InstalledScripts.png */; };
-		4CCF2F3D15804836006FFE21 /* TPWTB_Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3215804836006FFE21 /* TPWTB_Interface.png */; };
-		4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */; };
-		4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */; };
-		4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */; };
 		4CCF2F5215804868006FFE21 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F5115804868006FFE21 /* Styles */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
 		4CCF2F9D15804BF8006FFE21 /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
@@ -484,6 +481,14 @@
 		4C46CCC11580469E00846B64 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = MainWindowSegmentedControlUserTemplate.pdf; path = "Resources/Images/User Interface/MainWindowSegmentedControlUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
+		4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts.tif; sourceTree = "<group>"; };
+		4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts@2x.tif"; sourceTree = "<group>"; };
+		4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Extensions.tif; sourceTree = "<group>"; };
+		4C63C6BB1592F360009F1635 /* TPWTB_Extensions@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Extensions@2x.tif"; sourceTree = "<group>"; };
+		4C63C6BE1592F710009F1635 /* TPWTB_Mentions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Mentions.tif; sourceTree = "<group>"; };
+		4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Mentions@2x.tif"; sourceTree = "<group>"; };
+		4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Interface.tif; sourceTree = "<group>"; };
+		4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Interface@2x.tif"; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -764,17 +769,6 @@
 		4CCF2F161580481E006FFE21 /* FormattingColor_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_13.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_13.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F171580481E006FFE21 /* FormattingColor_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_14.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_14.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F181580481E006FFE21 /* FormattingColor_15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_15.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_15.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F2B15804836006FFE21 /* TPWTB_Advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Advanced.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Advanced.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F2C15804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TPWTB_Alerts-GrowlIcon.png"; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Alerts-GrowlIcon.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F2D15804836006FFE21 /* TPWTB_ChannelManagement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_ChannelManagement.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_ChannelManagement.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F2E15804836006FFE21 /* TPWTB_FloodControl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_FloodControl.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_FloodControl.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F2F15804836006FFE21 /* TPWTB_Highlights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Highlights.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Highlights.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3015804836006FFE21 /* TPWTB_InstalledScripts-DropDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TPWTB_InstalledScripts-DropDown.png"; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_InstalledScripts-DropDown.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3115804836006FFE21 /* TPWTB_InstalledScripts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_InstalledScripts.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_InstalledScripts.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3215804836006FFE21 /* TPWTB_Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Interface.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Interface.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_IRCopServices.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_IRCopServices.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Logs.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Logs.png"; sourceTree = SOURCE_ROOT; };
-		4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Styles.png; path = "Resources/Images/Preferences/Toolbar Icons/TPWTB_Styles.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5115804868006FFE21 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
 		4CD0F3BC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ChannelCellSelection_Focused_Aqua_Inverted.tif; path = "Resources/Images/User Interface/ChannelCellSelection_Focused_Aqua_Inverted.tif"; sourceTree = SOURCE_ROOT; };
@@ -934,8 +928,8 @@
 				4C46CC98158042FE00846B64 /* Application */,
 				4C46CC991580430700846B64 /* Dock Icon Badges */,
 				4C46CC9A1580431000846B64 /* IRC Formatting Colors */,
-				4C46CC9B1580431700846B64 /* Preferences Toolbar */,
 				4C46CC9C1580432400846B64 /* Status Badges */,
+				4C63C6AD1592F0B0009F1635 /* Toolbar Icons */,
 				4C46CC9D1580432F00846B64 /* User Interface */,
 			);
 			name = Images;
@@ -996,24 +990,6 @@
 				4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */,
 			);
 			name = "IRC Formatting Colors";
-			sourceTree = "<group>";
-		};
-		4C46CC9B1580431700846B64 /* Preferences Toolbar */ = {
-			isa = PBXGroup;
-			children = (
-				4CCF2F2B15804836006FFE21 /* TPWTB_Advanced.png */,
-				4CCF2F2C15804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png */,
-				4CCF2F2D15804836006FFE21 /* TPWTB_ChannelManagement.png */,
-				4CCF2F2E15804836006FFE21 /* TPWTB_FloodControl.png */,
-				4CCF2F2F15804836006FFE21 /* TPWTB_Highlights.png */,
-				4CCF2F3015804836006FFE21 /* TPWTB_InstalledScripts-DropDown.png */,
-				4CCF2F3115804836006FFE21 /* TPWTB_InstalledScripts.png */,
-				4CCF2F3215804836006FFE21 /* TPWTB_Interface.png */,
-				4CCF2F3315804836006FFE21 /* TPWTB_IRCopServices.png */,
-				4CCF2F3415804836006FFE21 /* TPWTB_Logs.png */,
-				4CCF2F3515804836006FFE21 /* TPWTB_Styles.png */,
-			);
-			name = "Preferences Toolbar";
 			sourceTree = "<group>";
 		};
 		4C46CC9C1580432400846B64 /* Status Badges */ = {
@@ -1164,6 +1140,22 @@
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
+		};
+		4C63C6AD1592F0B0009F1635 /* Toolbar Icons */ = {
+			isa = PBXGroup;
+			children = (
+				4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */,
+				4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */,
+				4C63C6BE1592F710009F1635 /* TPWTB_Mentions.tif */,
+				4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */,
+				4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */,
+				4C63C6BB1592F360009F1635 /* TPWTB_Extensions@2x.tif */,
+				4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */,
+				4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */,
+			);
+			name = "Toolbar Icons";
+			path = "Resources/Images/Preferences/Toolbar Icons";
+			sourceTree = SOURCE_ROOT;
 		};
 		4C8AF50F158E99520026668C /* Controllers */ = {
 			isa = PBXGroup;
@@ -1892,17 +1884,6 @@
 				4CCF2F271580481E006FFE21 /* FormattingColor_13.png in Resources */,
 				4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */,
 				4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */,
-				4CCF2F3615804836006FFE21 /* TPWTB_Advanced.png in Resources */,
-				4CCF2F3715804836006FFE21 /* TPWTB_Alerts-GrowlIcon.png in Resources */,
-				4CCF2F3815804836006FFE21 /* TPWTB_ChannelManagement.png in Resources */,
-				4CCF2F3915804836006FFE21 /* TPWTB_FloodControl.png in Resources */,
-				4CCF2F3A15804836006FFE21 /* TPWTB_Highlights.png in Resources */,
-				4CCF2F3B15804836006FFE21 /* TPWTB_InstalledScripts-DropDown.png in Resources */,
-				4CCF2F3C15804836006FFE21 /* TPWTB_InstalledScripts.png in Resources */,
-				4CCF2F3D15804836006FFE21 /* TPWTB_Interface.png in Resources */,
-				4CCF2F3E15804836006FFE21 /* TPWTB_IRCopServices.png in Resources */,
-				4CCF2F3F15804836006FFE21 /* TPWTB_Logs.png in Resources */,
-				4CCF2F4015804836006FFE21 /* TPWTB_Styles.png in Resources */,
 				4CCF2F5215804868006FFE21 /* Styles in Resources */,
 				4CD0F3CC158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua_Inverted.tif in Resources */,
 				4CD0F3CD158D6975009F2A0C /* ChannelCellSelection_Focused_Aqua.tif in Resources */,
@@ -1968,6 +1949,14 @@
 				4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4C28F4451592019900CD2CDE /* colloquyRoomTabInverted@2x.tif in Resources */,
 				4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */,
+				4C63C6B61592F0B0009F1635 /* TPWTB_Alerts.tif in Resources */,
+				4C63C6B71592F0B0009F1635 /* TPWTB_Alerts@2x.tif in Resources */,
+				4C63C6BC1592F360009F1635 /* TPWTB_Extensions.tif in Resources */,
+				4C63C6BD1592F360009F1635 /* TPWTB_Extensions@2x.tif in Resources */,
+				4C63C6C01592F710009F1635 /* TPWTB_Mentions.tif in Resources */,
+				4C63C6C11592F710009F1635 /* TPWTB_Mentions@2x.tif in Resources */,
+				4C63C6C41592FF4E009F1635 /* TPWTB_Interface.tif in Resources */,
+				4C63C6C51592FF4E009F1635 /* TPWTB_Interface@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

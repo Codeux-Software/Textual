@@ -23,13 +23,13 @@
  */
 
 @interface NSObject (DDExtensions)
-- (id)iomt;
+- (id)iomt; // Invoke On Main Thread
 - (id)invokeOnThread:(NSThread *)thread;
 - (id)invokeOnMainThread;
 - (id)invokeInBackgroundThread;
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 
-+ (id)iomt;
++ (id)iomt; // Invoke On Main Thread
 + (id)invokeOnThread:(NSThread *)thread;
 + (id)invokeOnMainThread;
 + (id)invokeInBackgroundThread;

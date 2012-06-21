@@ -106,8 +106,8 @@
 {		
 	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
 	
-	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"1", @"2", 
-			@"3", @"4", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
+	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
+			@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
 }
 
 - (void)setUpToolbarItemsAndMenus

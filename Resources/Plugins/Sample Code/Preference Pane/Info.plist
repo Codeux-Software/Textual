@@ -14,5 +14,7 @@
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
+	<key>NSPrincipalClass</key>
+	<string>TPI_PreferencePaneExample</string>
 </dict>
 </plist>
