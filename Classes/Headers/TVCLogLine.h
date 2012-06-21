@@ -5,6 +5,11 @@
 
 #import "TextualApplication.h"
 
+#define TXLogLineUndefinedNicknameFormat	@"<%@%n>"
+#define TXLogLineActionNicknameFormat		@"%@ "
+#define TXLogLineNoticeNicknameFormat		@"-%@-"
+#define TXLogLineCTCPTypeNicknameFormat		@"-%@ CTCP-"
+
 typedef enum {
 	TVCLogLineSystemType,
 	TVCLogLineErrorType,
