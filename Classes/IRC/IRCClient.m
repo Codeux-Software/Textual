@@ -4,8 +4,6 @@
 
 #import "TextualApplication.h"
 
-#warning FIX: Conversion to ARC not finished within this file.
-
 #import <arpa/inet.h>
 #import <mach/mach_time.h>
 
@@ -128,65 +126,67 @@ static NSDateFormatter *dateTimeFormatter = nil;
 @synthesize trialPeriodTimer;
 #endif
 
+#pragma mark -
+#pragma mark Initialization
+
 - (id)init
 {
 	if ((self = [super init])) {
-		tryingNickNumber = -1;
+		self.tryingNickNumber	= -1;
+		self.capPaused			= 0;
 		
-		capPaused = 0;
-		userhostInNames = NO;
-		multiPrefix = NO;
-		identifyMsg = NO;
-		identifyCTCP = NO;
+		self.isAway				= NO;
+		self.userhostInNames	= NO;
+		self.multiPrefix		= NO;
+		self.identifyMsg		= NO;
+		self.identifyCTCP		= NO;
+		self.hasIRCopAccess		= NO;
 		
-		channels     = [NSMutableArray new];
-		highlights   = [NSMutableArray new];
-		commandQueue = [NSMutableArray new];
-		acceptedCaps = [NSMutableArray new];
-		pendingCaps	 = [NSMutableArray new];
+		self.channels		= [NSMutableArray new];
+		self.highlights		= [NSMutableArray new];
+		self.commandQueue	= [NSMutableArray new];
+		self.acceptedCaps	= [NSMutableArray new];
+		self.pendingCaps	= [NSMutableArray new];
 		
-		trackedUsers = [NSMutableDictionary new];
+		self.trackedUsers	= [NSMutableDictionary new];
 		
-		isupport = [IRCISupportInfo new];
+		self.isupport = [IRCISupportInfo new];
 		
-		isAway		   = NO;
-		hasIRCopAccess = NO;
+		self.reconnectTimer				= [TLOTimer new];
+		self.reconnectTimer.delegate	= self;
+		self.reconnectTimer.reqeat		= NO;
+		self.reconnectTimer.selector	= @selector(onReconnectTimer:);
 		
-		reconnectTimer			= [TLOTimer new];
-		reconnectTimer.delegate = self;
-		reconnectTimer.reqeat	= NO;
-		reconnectTimer.selector = @selector(onReconnectTimer:);
+		self.retryTimer				= [TLOTimer new];
+		self.retryTimer.delegate	= self;
+		self.retryTimer.reqeat		= NO;
+		self.retryTimer.selector	= @selector(onRetryTimer:);
 		
-		retryTimer			= [TLOTimer new];
-		retryTimer.delegate = self;
-		retryTimer.reqeat	= NO;
-		retryTimer.selector = @selector(onRetryTimer:);
+		self.autoJoinTimer				= [TLOTimer new];
+		self.autoJoinTimer.delegate		= self;
+		self.autoJoinTimer.reqeat		= YES;
+		self.autoJoinTimer.selector		= @selector(onAutoJoinTimer:);
 		
-		autoJoinTimer			= [TLOTimer new];
-		autoJoinTimer.delegate	= self;
-		autoJoinTimer.reqeat	= YES;
-		autoJoinTimer.selector	= @selector(onAutoJoinTimer:);
+		self.commandQueueTimer				= [TLOTimer new];
+		self.commandQueueTimer.delegate		= self;
+		self.commandQueueTimer.reqeat		= NO;
+		self.commandQueueTimer.selector		= @selector(onCommandQueueTimer:);
 		
-		commandQueueTimer			= [TLOTimer new];
-		commandQueueTimer.delegate	= self;
-		commandQueueTimer.reqeat	= NO;
-		commandQueueTimer.selector	= @selector(onCommandQueueTimer:);
+		self.pongTimer				= [TLOTimer new];
+		self.pongTimer.delegate		= self;
+		self.pongTimer.reqeat		= YES;
+		self.pongTimer.selector		= @selector(onPongTimer:);
 		
-		pongTimer			= [TLOTimer new];
-		pongTimer.delegate	= self;
-		pongTimer.reqeat	= YES;
-		pongTimer.selector	= @selector(onPongTimer:);
-		
-		isonTimer			= [TLOTimer new];
-		isonTimer.delegate	= self;
-		isonTimer.reqeat	= YES;
-		isonTimer.selector	= @selector(onISONTimer:);
+		self.isonTimer				= [TLOTimer new];
+		self.isonTimer.delegate		= self;
+		self.isonTimer.reqeat		= YES;
+		self.isonTimer.selector		= @selector(onISONTimer:);
 		
 #ifdef IS_TRIAL_BINARY
-		trialPeriodTimer			= [TLOTimer new];
-		trialPeriodTimer.delegate	= self;
-		trialPeriodTimer.reqeat		= NO;
-		trialPeriodTimer.selector	= @selector(onTrialPeriodTimer:);	
+		self.trialPeriodTimer				= [TLOTimer new];
+		self.trialPeriodTimer.delegate		= self;
+		self.trialPeriodTimer.reqeat		= NO;
+		self.trialPeriodTimer.selector		= @selector(onTrialPeriodTimer:);	
 #endif
 	}
 	
@@ -195,35 +195,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)dealloc
 {
-	[autoJoinTimer stop];
-	[commandQueueTimer stop];
-	[conn close];
-	[isonTimer stop];
-	[pongTimer stop];
-	[reconnectTimer stop];
-	[retryTimer stop];
+	[self.autoJoinTimer		stop];
+	[self.commandQueueTimer stop];
+	[self.isonTimer			stop];
+	[self.pongTimer			stop];
+	[self.reconnectTimer	stop];
+	[self.retryTimer		stop];
+	
+	[self.conn close];
 	
 #ifdef IS_TRIAL_BINARY
-	[trialPeriodTimer stop];
+	[self.trialPeriodTimer stop];
 #endif
 	
 }
 
-#pragma mark -
-#pragma mark Init
-
 - (void)setup:(IRCClientConfig *)seed
 {
-	config = [seed mutableCopy];
+	self.config = [seed mutableCopy];
 }
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
-	config = nil;
+	self.config = nil;
+	self.config = [seed mutableCopy];
 	
-	config = [seed mutableCopy];
+	NSArray *chans = self.config.channels;
 	
-	NSArray *chans = config.channels;
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	for (IRCChannelConfig *i in chans) {
@@ -234,15 +232,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			[ary safeAddObject:c];
 			
-			[channels removeObjectIdenticalTo:c];
+			[self.channels removeObjectIdenticalTo:c];
 		} else {
-			c = [world createChannel:i client:self reload:NO adjust:NO];
+			c = [self.world createChannel:i client:self reload:NO adjust:NO];
 			
 			[ary safeAddObject:c];
 		}
 	}
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		if (c.isChannel) {
 			[self partChannel:c];
 		} else {
@@ -250,22 +248,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	[channels removeAllObjects];
-	[channels addObjectsFromArray:ary];
+	[self.channels removeAllObjects];
+	[self.channels addObjectsFromArray:ary];
 	
-	[config.channels removeAllObjects];
+	[self.config.channels removeAllObjects];
 	
-	[world reloadTree];
-	[world adjustSelection];
+	[self.world reloadTree];
+	[self.world adjustSelection];
 }
 
 - (IRCClientConfig *)storedConfig
 {
-	IRCClientConfig *u = [config mutableCopy];
+	IRCClientConfig *u = [self.config mutableCopy];
 	
 	[u.channels removeAllObjects];
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		if (c.isChannel) {
 			[u.channels safeAddObject:[c.config mutableCopy]];
 		}
@@ -276,10 +274,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary *dic = [config dictionaryValue];
+	NSMutableDictionary *dic = [self.config dictionaryValue];
+	
 	NSMutableArray *ary = [NSMutableArray array];
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		if (c.isChannel) {
 			[ary safeAddObject:[c dictionaryValue]];
 		}
@@ -295,12 +294,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (NSString *)name
 {
-	return config.name;
+	return self.config.name;
 }
 
 - (BOOL)IRCopStatus
 {
-	return hasIRCopAccess;
+	return self.hasIRCopAccess;
 }
 
 - (BOOL)isNewTalk
@@ -310,7 +309,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)isReconnecting
 {
-	return (reconnectTimer && reconnectTimer.isActive);
+	return (self.reconnectTimer && self.reconnectTimer.isActive);
 }
 
 #pragma mark -
@@ -324,25 +323,29 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if ([ignoreItem notifyJoins] == YES) {
 		NSString *text = TXTFLS(localKey, host, ignoreItem.hostmask);
 		
-		[self notifyEvent:TXNotificationAddressBookMatchType lineType:TVCLogLineNoticeType target:nil nick:nick text:text];
+		[self notifyEvent:TXNotificationAddressBookMatchType
+				 lineType:TVCLogLineNoticeType
+				   target:nil
+					 nick:nick
+					 text:text];
 	}
 }
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
 {
-	if (hasIRCopAccess) return;
-	if (isLoggedIn == NO) return;
+	if (self.hasIRCopAccess) return;
+	if (self.isLoggedIn == NO) return;
 	
-	if (PointerIsEmpty(trackedUsers)) {
-		trackedUsers = [NSMutableDictionary new];
+	if (PointerIsEmpty(self.trackedUsers)) {
+		self.trackedUsers = [NSMutableDictionary new];
 	}
 	
-	if (NSObjectIsNotEmpty(trackedUsers)) {
+	if (NSObjectIsNotEmpty(self.trackedUsers)) {
 		NSMutableDictionary *oldEntries = [NSMutableDictionary dictionary];
 		NSMutableDictionary *newEntries = [NSMutableDictionary dictionary];
 		
-		for (NSString *lname in trackedUsers) {
-			[oldEntries setObject:[trackedUsers objectForKey:lname] forKey:lname];
+		for (NSString *lname in self.trackedUsers) {
+			[oldEntries setObject:[self.trackedUsers objectForKey:lname] forKey:lname];
 		}
 		
 		for (IRCAddressBook *g in ignores) {
@@ -359,37 +362,63 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			}
 		}
 		
-		trackedUsers = newEntries;
+		self.trackedUsers = newEntries;
 	} else {
 		for (IRCAddressBook *g in ignores) {
 			if (g.notifyJoins) {
 				NSString *lname = [g trackingNickname];
 				
 				if ([lname isNickname]) {
-					[trackedUsers setBool:NO forKey:[g trackingNickname]];
+					[self.trackedUsers setBool:NO forKey:[g trackingNickname]];
 				}
 			}
 		}
 	}
 	
-	if (NSObjectIsNotEmpty(trackedUsers)) {
+	if (NSObjectIsNotEmpty(self.trackedUsers)) {
 		[self performSelector:@selector(startISONTimer)];
 	} else {
 		[self performSelector:@selector(stopISONTimer)];
 	}
 }
 
+- (void)startISONTimer
+{
+	if (self.isonTimer.isActive) return;
+	
+	[self.isonTimer start:_isonCheckIntervalL];
+}
+
+- (void)stopISONTimer
+{
+	[self.isonTimer stop];
+    
+	[self.trackedUsers removeAllObjects];
+}
+
+- (void)onISONTimer:(id)sender
+{
+	if (self.isLoggedIn) {
+		if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess) {
+			return [self stopISONTimer];
+		}
+		
+		NSMutableString *userstr = [NSMutableString string];
+		
+		for (NSString *name in self.trackedUsers) {
+			[userstr appendFormat:@" %@", name];
+		}
+		
+		[self send:IRCCommandIndexIson, userstr, nil];
+	}
+}
+
 #pragma mark -
 #pragma mark Utilities
 
-- (NSInteger)connectDelay
-{
-	return connectDelay;
-}
-
 - (void)autoConnect:(NSInteger)delay
 {
-	connectDelay = delay;
+	self.connectDelay = delay;
 	
 	[self connect];
 }
@@ -399,7 +428,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self quit];
 	[self closeDialogs];
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		[c terminate];
 	}
 	
@@ -408,28 +437,28 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)closeDialogs
 {
-	[channelListDialog close];
+	[self.channelListDialog close];
 }
 
 - (void)preferencesChanged
 {
-	log.maxLines = [TPCPreferences maxLogLines];
+	self.log.maxLines = [TPCPreferences maxLogLines];
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		[c preferencesChanged];
 	}
 }
 
 - (void)reloadTree
 {
-	[world reloadTree];
+	[self.world reloadTree];
 }
 
 - (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches
 {
 	host = [host lowercaseString];
 	
-	for (IRCAddressBook *g in config.ignores) {
+	for (IRCAddressBook *g in self.config.ignores) {
 		if ([g checkIgnore:host]) {
 			NSDictionary *ignoreDict = [g dictionaryValue];
 			
@@ -457,8 +486,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		raw = [raw stripEffects];
 	}
 	
-	NSString	 *rulekey = [TVCLogLine lineTypeString:type];
-	NSDictionary *rules   = world.bundlesWithOutputRules;
+	NSString *rulekey = [TVCLogLine lineTypeString:type];
+	
+	NSDictionary *rules = self.world.bundlesWithOutputRules;
 	
 	if (NSObjectIsNotEmpty(rules)) {
 		NSDictionary *ruleData = [rules dictionaryForKey:rulekey];
@@ -494,44 +524,44 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)createChanBanListDialog
 {
-	if (PointerIsEmpty(chanBanListSheet)) {
-		IRCClient *u = [world selectedClient];
-		IRCChannel *c = [world selectedChannel];
+	if (PointerIsEmpty(self.chanBanListSheet)) {
+		IRCClient *u = [self.world selectedClient];
+		IRCChannel *c = [self.world selectedChannel];
 		
 		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
 		
-		chanBanListSheet = [TDChanBanSheet new];
-		chanBanListSheet.delegate = self;
-		chanBanListSheet.window = world.window;
+		self.chanBanListSheet = [TDChanBanSheet new];
+		self.chanBanListSheet.delegate = self;
+		self.chanBanListSheet.window = self.world.window;
 	} else {
-		[chanBanListSheet ok:nil];
+		[self.chanBanListSheet ok:nil];
 		
-		chanBanListSheet = nil;
+		self.chanBanListSheet = nil;
 		
 		[self createChanBanListDialog];
 		
 		return;
 	}
 	
-	[chanBanListSheet show];
+	[self.chanBanListSheet show];
 }
 
 - (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender
 {
     [sender.list removeAllObjects];
     
-	[self send:IRCCommandIndexMode, [[world selectedChannel] name], @"+b", nil];
+	[self send:IRCCommandIndexMode, [self.world.selectedChannel name], @"+b", nil];
 }
 
 - (void)chanBanDialogWillClose:(TDChanBanSheet *)sender
 {
     if (NSObjectIsNotEmpty(sender.modes)) {
         for (NSString *mode in sender.modes) {
-            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [world selectedChannel].name, mode]];
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [self.world selectedChannel].name, mode]];
         }
     }
 	
-	chanBanListSheet = nil;
+	self.chanBanListSheet = nil;
 }
 
 #pragma mark -
@@ -539,22 +569,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)createChanInviteExceptionListDialog
 {
-	if (inviteExceptionSheet) {
-		[inviteExceptionSheet ok:nil];
+	if (self.inviteExceptionSheet) {
+		[self.inviteExceptionSheet ok:nil];
 		
-		inviteExceptionSheet = nil;
+		self.inviteExceptionSheet = nil;
 		
 		[self createChanInviteExceptionListDialog];
 	} else {
-		IRCClient *u = [world selectedClient];
-		IRCChannel *c = [world selectedChannel];
+		IRCClient *u = [self.world selectedClient];
+		IRCChannel *c = [self.world selectedChannel];
 		
 		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
 		
-		inviteExceptionSheet = [TDChanInviteExceptionSheet new];
-		inviteExceptionSheet.delegate = self;
-		inviteExceptionSheet.window = world.window;
-		[inviteExceptionSheet show];
+		self.inviteExceptionSheet = [TDChanInviteExceptionSheet new];
+		self.inviteExceptionSheet.delegate = self;
+		self.inviteExceptionSheet.window = self.world.window;
+		[self.inviteExceptionSheet show];
 	}
 }
 
@@ -562,18 +592,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
     [sender.list removeAllObjects];
     
-	[self send:IRCCommandIndexMode, [[world selectedChannel] name], @"+I", nil];
+	[self send:IRCCommandIndexMode, [self.world.selectedChannel name], @"+I", nil];
 }
 
 - (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender
 {
     if (NSObjectIsNotEmpty(sender.modes)) {
         for (NSString *mode in sender.modes) {
-            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [world selectedChannel].name, mode]];
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [self.world selectedChannel].name, mode]];
         }
     }
 	
-	inviteExceptionSheet = nil;
+	self.inviteExceptionSheet = nil;
 }
 
 #pragma mark -
@@ -581,44 +611,44 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)createChanBanExceptionListDialog
 {
-	if (PointerIsEmpty(banExceptionSheet)) {
-		IRCClient *u = [world selectedClient];
-		IRCChannel *c = [world selectedChannel];
+	if (PointerIsEmpty(self.banExceptionSheet)) {
+		IRCClient *u = [self.world selectedClient];
+		IRCChannel *c = [self.world selectedChannel];
 		
 		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
 		
-		banExceptionSheet = [TDChanBanExceptionSheet new];
-		banExceptionSheet.delegate = self;
-		banExceptionSheet.window = world.window;
+		self.banExceptionSheet = [TDChanBanExceptionSheet new];
+		self.banExceptionSheet.delegate = self;
+		self.banExceptionSheet.window = self.world.window;
 	} else {
-		[banExceptionSheet ok:nil];
+		[self.banExceptionSheet ok:nil];
 		
-		banExceptionSheet = nil;
+		self.banExceptionSheet = nil;
 		
 		[self createChanBanExceptionListDialog];
 		
 		return;
 	}
 	
-	[banExceptionSheet show];
+	[self.banExceptionSheet show];
 }
 
 - (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender
 {
     [sender.list removeAllObjects];
     
-	[self send:IRCCommandIndexMode, [[world selectedChannel] name], @"+e", nil];
+	[self send:IRCCommandIndexMode, [self.world.selectedChannel name], @"+e", nil];
 }
 
 - (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender
 {
     if (NSObjectIsNotEmpty(sender.modes)) {
         for (NSString *mode in sender.modes) {
-            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [world selectedChannel].name, mode]];
+            [self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, [self.world selectedChannel].name, mode]];
         }
     }
 	
-	banExceptionSheet = nil;
+	self.banExceptionSheet = nil;
 }
 
 #pragma mark -
@@ -626,12 +656,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)createChannelListDialog
 {
-	if (PointerIsEmpty(channelListDialog)) {
-		channelListDialog = [TDCListDialog new];
-		channelListDialog.delegate = self;
-		[channelListDialog start];
+	if (PointerIsEmpty(self.channelListDialog)) {
+		self.channelListDialog = [TDCListDialog new];
+		self.channelListDialog.delegate = self;
+		[self.channelListDialog start];
 	} else {
-		[channelListDialog show];
+		[self.channelListDialog show];
 	}
 }
 
@@ -649,65 +679,33 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
-	channelListDialog = nil;
+	self.channelListDialog = nil;
 }
 
 #pragma mark -
 #pragma mark Timers
 
-- (void)startISONTimer
-{
-	if (isonTimer.isActive) return;
-	
-	[isonTimer start:_isonCheckIntervalL];
-}
-
-- (void)stopISONTimer
-{
-	[isonTimer stop];
-    
-	[trackedUsers removeAllObjects];
-}
-
-- (void)onISONTimer:(id)sender
-{
-	if (isLoggedIn) {
-		if (hasIRCopAccess)					return [self stopISONTimer];
-		if (NSObjectIsEmpty(trackedUsers))	return [self stopISONTimer];
-		
-		NSMutableString *userstr = [NSMutableString string];
-		
-		for (NSString *name in trackedUsers) {
-			[userstr appendFormat:@" %@", name];
-		}
-		
-		[self send:IRCCommandIndexIson, userstr, nil];
-	}
-}
-
 - (void)startPongTimer
 {
-	if (pongTimer.isActive) return;
+	if (self.pongTimer.isActive) return;
 	
-	[pongTimer start:_pongCheckInterval];
+	[self.pongTimer start:_pongCheckInterval];
 }
 
 - (void)stopPongTimer
 {
-	if (pongTimer.isActive) {
-		[pongTimer stop];
+	if (self.pongTimer.isActive) {
+		[self.pongTimer stop];
 	}
 }
 
 - (void)onPongTimer:(id)sender
 {
-	if (isConnected == NO) {
-		[self stopPongTimer];
-		
-		return;
+	if (self.isConnected == NO) {
+		return [self stopPongTimer];
 	}
 	
-	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:lastMessageReceived];
+	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:self.lastMessageReceived];
 	NSInteger minsSpent = (timeSpent / 60);
 	
 	if (timeSpent >= _timeoutInterval) {
@@ -715,22 +713,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		
 		[self disconnect];
 	} else if (timeSpent >= _pingInterval) {
-		[self send:IRCCommandIndexPing, serverHostname, nil];
+		[self send:IRCCommandIndexPing, self.serverHostname, nil];
 	}
 }
 
 - (void)startReconnectTimer
 {
-	if (config.autoReconnect) {
-		if (reconnectTimer.isActive) return;
+	if (self.config.autoReconnect) {
+		if (self.reconnectTimer.isActive) return;
 		
-		[reconnectTimer start:_reconnectInterval];
+		[self.reconnectTimer start:_reconnectInterval];
 	}
 }
 
 - (void)stopReconnectTimer
 {
-	[reconnectTimer stop];
+	[self.reconnectTimer stop];
 }
 
 - (void)onReconnectTimer:(id)sender
@@ -740,14 +738,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)startRetryTimer
 {
-	if (retryTimer.isActive) return;
+	if (self.retryTimer.isActive) return;
 	
-	[retryTimer start:_retryInterval];
+	[self.retryTimer start:_retryInterval];
 }
 
 - (void)stopRetryTimer
 {
-	[retryTimer stop];
+	[self.retryTimer stop];
 }
 
 - (void)onRetryTimer:(id)sender
@@ -758,36 +756,36 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)startAutoJoinTimer
 {
-	[autoJoinTimer stop];
-	[autoJoinTimer start:_autojoinDelayInterval];
+	[self.autoJoinTimer stop];
+	[self.autoJoinTimer start:_autojoinDelayInterval];
 }
 
 - (void)stopAutoJoinTimer
 {
-	[autoJoinTimer stop];
+	[self.autoJoinTimer stop];
 }
 
 - (void)onAutoJoinTimer:(id)sender
 {
-	if ([TPCPreferences autojoinWaitForNickServ] == NO || NSObjectIsEmpty(config.nickPassword)) {
+	if ([TPCPreferences autojoinWaitForNickServ] == NO || NSObjectIsEmpty(self.config.nickPassword)) {
 		[self performAutoJoin];
 		
-		autojoinInitialized = YES;
+		self.autojoinInitialized = YES;
 	} else {
-		if (serverHasNickServ) {
-			if (autojoinInitialized) {
+		if (self.serverHasNickServ) {
+			if (self.autojoinInitialized) {
 				[self performAutoJoin];
 				
-				autojoinInitialized = YES;
+				self.autojoinInitialized = YES;
 			}
 		} else {
 			[self performAutoJoin];
 			
-			autojoinInitialized = YES;
+			self.autojoinInitialized = YES;
 		}
 	}
 	
-	[autoJoinTimer stop];
+	[self.autoJoinTimer stop];
 }
 
 #pragma mark -
@@ -802,68 +800,68 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	[self stopReconnectTimer];
 	
-	connectType    = mode;
-	disconnectType = IRCDisconnectNormalMode;
+	self.connectType    = mode;
+	self.disconnectType = IRCDisconnectNormalMode;
 	
-	if (isConnected) {
-		[conn close];
+	if (self.isConnected) {
+		[self.conn close];
 	}
 	
-	retryEnabled     = YES;
-	isConnecting     = YES;
-	reconnectEnabled = YES;
+	self.retryEnabled     = YES;
+	self.isConnecting     = YES;
+	self.reconnectEnabled = YES;
 	
-	NSString *host = config.host;
+	NSString *host = self.config.host;
 	
 	switch (mode) {
 		case IRCConnectNormalMode:
-			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, config.port)];
+			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, self.config.port)];
 			break;
 		case IRCNormalReconnectionMode:
 			[self printSystemBoth:nil text:TXTLS(@"IRCIsReconnecting")];
-			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, config.port)];
+			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, self.config.port)];
 			break;
 		case IRCConnectionRetryMode:
 			[self printSystemBoth:nil text:TXTLS(@"IRCIsRetryingConnection")];
-			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, config.port)];
+			[self printSystemBoth:nil text:TXTFLS(@"IRCIsConnecting", host, self.config.port)];
 			break;
 		default: break;
 	}
 	
-    if (PointerIsEmpty(conn)) {
-        conn = [IRCConnection new];
-        conn.delegate = self;
+    if (PointerIsEmpty(self.conn)) {
+        self.conn = [IRCConnection new];
+		self.conn.delegate = self;
 	}
     
-	conn.host	  = host;
-	conn.port	  = config.port;
-	conn.useSSL   = config.useSSL;
-	conn.encoding = config.encoding;
+	self.conn.host		= host;
+	self.conn.port		= self.config.port;
+	self.conn.useSSL	= self.config.useSSL;
+	self.conn.encoding	= self.config.encoding;
 	
-	switch (config.proxyType) {
+	switch (self.config.proxyType) {
 		case TXConnectionSystemSocksProxyType:
-			conn.useSystemSocks = YES;
+			self.conn.useSystemSocks = YES;
 		case TXConnectionSocks4ProxyType:
 		case TXConnectionSocks5ProxyType:
-			conn.useSocks      = YES;
-			conn.socksVersion  = config.proxyType;
-			conn.proxyHost     = config.proxyHost;
-			conn.proxyPort	   = config.proxyPort;
-			conn.proxyUser	   = config.proxyUser;
-			conn.proxyPassword = config.proxyPassword;
+			self.conn.useSocks			= YES;
+			self.conn.socksVersion		= self.config.proxyType;
+			self.conn.proxyHost			= self.config.proxyHost;
+			self.conn.proxyPort			= self.config.proxyPort;
+			self.conn.proxyUser			= self.config.proxyUser;
+			self.conn.proxyPassword		= self.config.proxyPassword;
 			break;
 		default: break;
 	}
 	
-	[conn open];
+	[self.conn open];
 	
 	[self reloadTree];
 }
 
 - (void)disconnect
 {
-	if (conn) {
-		[conn close];
+	if (self.conn) {
+		[self.conn close];
 	}
 	
 	[self stopPongTimer];
@@ -877,7 +875,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)quit:(NSString *)comment
 {
-	if (isLoggedIn == NO) {
+	if (self.isLoggedIn == NO) {
 		[self disconnect];
         
 		return;
@@ -885,12 +883,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	[self stopPongTimer];
 	
-	isQuitting = YES;
-	reconnectEnabled = NO;
+	self.isQuitting			= YES;
+	self.reconnectEnabled	= NO;
 	
-	[conn clearSendQueue];
-	
-	[self send:IRCCommandIndexQuit, ((comment) ?: config.leavingComment), nil];
+	[self.conn clearSendQueue];
+
+	if (NSObjectIsEmpty(comment)) {
+		comment = self.config.leavingComment;
+	}
+
+	[self send:IRCCommandIndexQuit, comment, nil];
 	
 	[self performSelector:@selector(disconnect) withObject:nil afterDelay:2.0];
 }
@@ -902,10 +904,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)changeNick:(NSString *)newNick
 {
-	if (isConnected == NO) return;
+	if (self.isConnected == NO) return;
 
-	inputNick = newNick;
-	sentNick = newNick;
+	self.inputNick = newNick;
+	self.sentNick = newNick;
 	
 	[self send:IRCCommandIndexNick, newNick, nil];
 }
@@ -943,7 +945,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)joinChannel:(IRCChannel *)channel password:(NSString *)password
 {
-	if (isLoggedIn == NO) return;
+	if (self.isLoggedIn == NO) return;
+	
 	if (channel.isActive) return;
 	if (channel.isChannel == NO) return;
 	
@@ -992,14 +995,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)partChannel:(IRCChannel *)channel withComment:(NSString *)comment
 {
-	if (isLoggedIn == NO) return;
+	if (self.isLoggedIn == NO) return;
+	
 	if (channel.isActive == NO) return;
 	if (channel.isChannel == NO) return;
 	
 	channel.status = IRCChannelParted;
 	
 	if (NSObjectIsEmpty(comment)) {
-		comment = config.leavingComment;
+		comment = self.config.leavingComment;
 	}
 	
 	[self send:IRCCommandIndexPart, channel.name, comment, nil];
@@ -1007,15 +1011,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendWhois:(NSString *)nick
 {
-	if (isLoggedIn == NO) return;
+	if (self.isLoggedIn == NO) return;
 	
 	[self send:IRCCommandIndexWhois, nick, nick, nil];
 }
 
 - (void)changeOp:(IRCChannel *)channel users:(NSArray *)inputUsers mode:(char)mode value:(BOOL)value
 {
-	if (isLoggedIn == NO || PointerIsEmpty(channel) || channel.isActive == NO || 
-		channel.isChannel == NO || channel.isOp == NO) return;
+	if (self.isLoggedIn == NO ||
+		PointerIsEmpty(channel) ||
+		channel.isActive == NO ||
+		channel.isChannel == NO ||
+		channel.isOp == NO) return;
 	
 	NSMutableArray *users = [NSMutableArray array];
 	
@@ -1029,7 +1036,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	NSInteger max = isupport.modesCount;
+	NSInteger max = self.isupport.modesCount;
 	
 	while (users.count) {
 		NSArray *ary = [users subarrayWithRange:NSMakeRange(0, MIN(max, users.count))];
@@ -1069,19 +1076,25 @@ static NSDateFormatter *dateTimeFormatter = nil;
         
         c.status = IRCChannelJoining;
 		
-		if (NSObjectIsNotEmpty(target)) [target appendString:@","];
+		if (NSObjectIsNotEmpty(target)) {
+			[target appendString:@","];
+		}
 		
 		[target appendString:c.name];
 		
 		if (NSObjectIsNotEmpty(c.password)) {
-			if (NSObjectIsNotEmpty(pass)) [pass appendString:@","];
+			if (NSObjectIsNotEmpty(pass)) {
+				[pass appendString:@","];
+			}
 			
 			[pass appendString:c.password];
 		}
 		
-		NSStringEncoding enc = conn.encoding;
+		NSStringEncoding enc = self.conn.encoding;
 		
-		if (enc == 0x0000) enc = NSUTF8StringEncoding;
+		if (enc == 0x0000) {
+			enc = NSUTF8StringEncoding;
+		}
 		
 		NSData *targetData = [target dataUsingEncoding:enc];
 		NSData *passData   = [pass dataUsingEncoding:enc];
@@ -1095,7 +1108,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				[target setString:c.name];
-				[pass setString:c.password];
+				[pass	setString:c.password];
 			} else {
 				if (NSObjectIsEmpty(c.password)) {
 					[self joinChannel:c];
@@ -1104,7 +1117,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 				
 				[target setString:NSStringEmptyPlaceholder];
-				[pass setString:NSStringEmptyPlaceholder];
+				[pass	setString:NSStringEmptyPlaceholder];
 			}
 		}
 	}
@@ -1120,14 +1133,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)updateAutoJoinStatus
 {
-	autojoinInitialized = NO;
+	self.autojoinInitialized = NO;
 }
 
 - (void)performAutoJoin
 {
 	NSMutableArray *ary = [NSMutableArray array];
 	
-	for (IRCChannel *c in channels) {
+	for (IRCChannel *c in self.channels) {
 		if (c.isChannel && c.config.autoJoin) {
 			if (c.isActive == NO) {
 				[ary safeAddObject:c];
@@ -1178,7 +1191,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self quickJoin:ary];
 	}
     
-    [world reloadTree];
+    [self.world reloadTree];
 }
 
 #pragma mark -
@@ -1188,20 +1201,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)startTrialPeriodTimer
 {
-	if (trialPeriodTimer.isActive) return;
+	if (self.trialPeriodTimer.isActive) return;
 	
-	[trialPeriodTimer start:_trialPeriodInterval];
+	[self.trialPeriodTimer start:_trialPeriodInterval];
 }
 
 - (void)stopTrialPeriodTimer
 {
-	[trialPeriodTimer stop];
+	[self.trialPeriodTimer stop];
 }
 
 - (void)onTrialPeriodTimer:(id)sender
 {
-	if (isLoggedIn) {
-		disconnectType = IRCTrialPeriodDisconnectMode;
+	if (self.isLoggedIn) {
+		self.disconnectType = IRCTrialPeriodDisconnectMode;
 		
 		[self quit];
 	}
@@ -1218,7 +1231,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (PointerIsEmpty(chan) == NO && *message) {
 			if ([chan isChannel] || [chan isTalk]) {
 				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish encodeData:*message key:chan.config.encryptionKey encoding:config.encoding];
+					NSString *newstr = [CSFWBlowfish encodeData:*message
+															key:chan.config.encryptionKey
+													   encoding:self.config.encoding];
 					
 					if ([newstr length] < 5) {
 						[self printDebugInformation:TXTLS(@"BlowfishEncryptionFailed") channel:chan];
@@ -1241,7 +1256,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (PointerIsEmpty(chan) == NO && *message) {
 			if ([chan isChannel] || [chan isTalk]) {
 				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish decodeData:*message key:chan.config.encryptionKey encoding:config.encoding];
+					NSString *newstr = [CSFWBlowfish decodeData:*message
+															key:chan.config.encryptionKey
+													   encoding:self.config.encoding];
 					
 					if (NSObjectIsNotEmpty(newstr)) {
 						*message = newstr;
@@ -1251,6 +1268,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 }
+
+#warning FIX: Conversion to ARC not finished within this file. \
+	Everything above line 1272 is finished. Everything below is not.
 
 #pragma mark -
 #pragma mark Plugins and Scripts
