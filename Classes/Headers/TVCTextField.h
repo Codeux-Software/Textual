@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
-@class TLOKeyEventHandler;
+#import "TextualApplication.h"
 
 #define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
 #define TXDefaultTextFieldFont              [NSFont fontWithName:@"Helvetica" size:12.0]

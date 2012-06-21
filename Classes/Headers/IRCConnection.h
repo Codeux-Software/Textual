@@ -3,7 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 09, 2012
 
-@class TLOSocketClient;
+#import "TextualApplication.h"
 
 @interface IRCConnection : NSObject
 @property (nonatomic, unsafe_unretained) id delegate;

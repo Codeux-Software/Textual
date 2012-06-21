@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#import "TextualApplication.h"
+
 typedef enum {
 	DDInvocationMainThread,
 	DDInvocationParentThread,

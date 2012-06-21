@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
+#import "TextualApplication.h"
+
 #define TXCalibratedRBGColor(r, b, g)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
 #define TXInvertSidebarColor(c)				(([TPCPreferences invertSidebarColors]) ? [c invertColor] : c)
 

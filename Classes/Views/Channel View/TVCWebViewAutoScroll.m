@@ -1,6 +1,8 @@
 // Created by Allan Odgaard.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 @implementation TVCWebViewAutoScroll
 
 @synthesize lastVisibleRect;

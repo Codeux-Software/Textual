@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 08, 2012
 
-#import "RLMAsyncSocket.h"
+#import "RLMAsyncSocket.h" // superclass
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
 + (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;

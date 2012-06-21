@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 07, 2012
 
+#import "TextualApplication.h"
+
 #define _badgeMargin                                5.0
 #define _badgeHeight                                14.0
 #define _badgeWidth                                 18.0

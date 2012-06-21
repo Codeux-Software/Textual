@@ -3,10 +3,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 // Converted to ARC Support on June 09, 2012
 
-#import "IRCTreeItem.h"
-
-@class IRCUser, TVCLogLine, TLOFileLogger;
-@class IRCClient, IRCChannelConfig, IRCChannelMode;
+#import "IRCTreeItem.h" // superclass
 
 typedef enum {
 	IRCChannelParted,
