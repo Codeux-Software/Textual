@@ -28,6 +28,10 @@
 @synthesize nick;
 @synthesize lastFadedWeights;
 @synthesize supportInfo;
+@synthesize isOp;
+@synthesize totalWeight;
+@synthesize mark;
+@synthesize isHalfOp;
 
 - (id)init
 {

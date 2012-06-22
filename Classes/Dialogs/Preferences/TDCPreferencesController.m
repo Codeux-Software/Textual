@@ -21,6 +21,7 @@
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
 
 - (void)changeItemFont:(NSFontManager *)sender;
+- (void)updateTranscriptFolder;
 @end
 
 @implementation TDCPreferencesController
@@ -48,7 +49,7 @@
 @synthesize preferenceSelectToolbar;
 @synthesize scriptLocationField;
 @synthesize scriptsController;
-@synthesize scriptsView;
+@synthesize scriptsView;			
 @synthesize stylesView;
 @synthesize themeButton;
 @synthesize alertButton;
@@ -58,6 +59,7 @@
 @synthesize addExcludeWordButton;
 @synthesize useGrowlButton;
 @synthesize disableAlertWhenAwayButton;
+@synthesize availableSounds;
 
 - (id)initWithWorldController:(IRCWorld *)word
 {

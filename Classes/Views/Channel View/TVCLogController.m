@@ -60,6 +60,7 @@
 @synthesize queueInProgress;
 @synthesize messageQueueDispatch;
 @synthesize lastVisitedHighlight;
+@synthesize viewingBottom;
 
 - (id)init
 {

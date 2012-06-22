@@ -100,8 +100,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
-												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]
-										   withLegacySupport:NO];
+												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 	}
 	
 	if (kcPassword) {
@@ -145,8 +144,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
-												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]
-										   withLegacySupport:NO];
+												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 	}
 	
 	if (kcPassword) {

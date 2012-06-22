@@ -39,6 +39,5 @@
 + (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName 
 							 withItemKind:(NSString *)keychainItemKind 
 							  forUsername:(NSString *)username
-							  serviceName:(NSString *)service
-						withLegacySupport:(BOOL)legacy;
+							  serviceName:(NSString *)service;
 @end
