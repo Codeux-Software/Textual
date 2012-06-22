@@ -75,7 +75,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         
         self.outgoingFloodControl            = NO;
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
-		self. floodControlDelayTimerInterval = TXFloodControlDefaultDelayTimer;
+		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
 		self.name        = TXTLS(@"DefaultNewConnectionName");
 		self.nick        = [TPCPreferences defaultNickname];
@@ -198,62 +198,42 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		self.cuid = (([dic integerForKey:@"cuid"]) ?: self.cuid);
+		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
 		
-		if ([dic stringForKey:@"guid"]) {
-			self.guid = [dic stringForKey:@"guid"];
-		}
+		self.cuid = NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
+		self.guid = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
+		self.name = NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
+		self.host = NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
+		self.port = NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.port);
+		self.nick = NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
+		self.username = NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
+		self.realName = NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
 		
-		if ([dic stringForKey:@"name"]) {
-			self.name = [dic stringForKey:@"name"];
-		}
-		
-		self.host = (([dic stringForKey:@"host"]) ?: NSStringEmptyPlaceholder);
-		self.port = (([dic integerForKey:@"port"]) ?: 6667);
-		
-		if ([dic stringForKey:@"nick"]) {
-			self.nick = [dic stringForKey:@"nick"];
-		}
-		
-		self.useSSL = [dic boolForKey:@"ssl"];
-		
-		if ([dic stringForKey:@"username"]) {
-			self.username = [dic stringForKey:@"username"];
-		}
-		
-		if ([dic stringForKey:@"realname"]) {
-			self.realName = [dic stringForKey:@"realname"];
-		}
-		
-		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
+		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
 		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxy"];
-		self.proxyPort       = (([dic integerForKey:@"proxy_port"]) ?: 1080);
-		self.proxyHost       = (([dic stringForKey:@"proxy_host"]) ?: NSStringEmptyPlaceholder);
-		self.proxyUser       = (([dic stringForKey:@"proxy_user"]) ?: NSStringEmptyPlaceholder);
-		self.proxyPassword   = (([dic stringForKey:@"proxy_password"]) ?: NSStringEmptyPlaceholder);
+		self.proxyPort       = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
+		self.proxyHost		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyHost);
+		self.proxyUser		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUser);
+		self.proxyPassword	 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerPassword", self.proxyPassword);
 		
-		self.autoConnect         = [dic boolForKey:@"auto_connect"];
-		self.autoReconnect       = [dic boolForKey:@"auto_reconnect"];
-		self.bouncerMode         = [dic boolForKey:@"bouncer_mode"];
-		self.encoding            = (([dic integerForKey:@"encoding"]) ?: NSUTF8StringEncoding);
-		self.fallbackEncoding    = (([dic integerForKey:@"fallback_encoding"]) ?: NSISOLatin1StringEncoding);
+		self.useSSL				 = [dic boolForKey:@"connectUsingSSL"];
+		self.autoConnect         = [dic boolForKey:@"connectOnLaunch"];
+		self.autoReconnect       = [dic boolForKey:@"connectOnDisconnect"];
+		self.bouncerMode         = [dic boolForKey:@"serverIsIRCBouncer"];
 		
-		if ([dic stringForKey:@"leaving_comment"]) {
-			self.leavingComment = [dic stringForKey:@"leaving_comment"];
-		}
+		self.encoding			 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.encoding);
+		self.fallbackEncoding	 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
+		self.leavingComment		 = NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.leavingComment);
+		self.sleepQuitMessage	 = NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectSleepModeMessage", self.sleepQuitMessage);
 		
-		if ([dic stringForKey:@"sleep_quit_message"]) {
-			self.sleepQuitMessage = [dic stringForKey:@"sleep_quit_message"];
-		}
+		self.prefersIPv6         = [dic boolForKey:@"DNSResolverPrefersIPv6"];
+		self.invisibleMode       = [dic boolForKey:@"setInvisibleOnConnect"];
+		self.isTrustedConnection = [dic boolForKey:@"trustedSSLConnection"];
 		
-		self.prefersIPv6         = [dic boolForKey:@"prefersIPv6"];
-		self.invisibleMode       = [dic boolForKey:@"invisible"];
-		self.isTrustedConnection = [dic boolForKey:@"trustedConnection"];
+		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
 		
-		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
-		
-		for (NSDictionary *e in [dic arrayForKey:@"channels"]) {
+		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
 			IRCChannelConfig *c;
 			
 			c = [IRCChannelConfig alloc];
@@ -263,7 +243,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			[self.channels safeAddObject:c];
 		}
 		
-		for (NSDictionary *e in [dic arrayForKey:@"ignores"]) {
+		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
 			IRCAddressBook *ignore;
 			
 			ignore = [IRCAddressBook alloc];
@@ -273,14 +253,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			[self.ignores safeAddObject:ignore];
 		}
 		
-		if ([dic containsKey:@"flood_control"]) {
-			NSDictionary *e = [dic dictionaryForKey:@"flood_control"];
+		if ([dic containsKey:@"floodControl"]) {
+			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
 			if (NSObjectIsNotEmpty(e)) {
-				self.outgoingFloodControl           = [e boolForKey:@"outgoing"];
-				
-				self.floodControlMaximumMessages    = (([e integerForKey:@"message_count"]) ?: TXFloodControlDefaultMessageCount);
-				self.floodControlDelayTimerInterval = (([e integerForKey:@"delay_timer"]) ?: TXFloodControlDefaultDelayTimer);
+				self.outgoingFloodControl           = [e boolForKey:@"serviceEnabled"];
+
+				self.floodControlMaximumMessages	= NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
+				self.floodControlDelayTimerInterval	= NSDictionaryIntegerKeyValueCompare(e, @"delayTimerInterval", TXFloodControlDefaultDelayTimer);
 			}
 		} else {
 			/* Enable flood control by default for Freenode servers. 
@@ -301,44 +281,44 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInteger:self.port				forKey:@"port"];
-	[dic setInteger:self.proxyType			forKey:@"proxy"];
-	[dic setInteger:self.proxyPort			forKey:@"proxy_port"];
-	[dic setInteger:self.encoding			forKey:@"encoding"];
-	[dic setInteger:self.fallbackEncoding	forKey:@"fallback_encoding"];
+	[dic setInteger:self.port				forKey:@"serverPort"];
+	[dic setInteger:self.proxyType			forKey:@"proxyServerType"];
+	[dic setInteger:self.proxyPort			forKey:@"proxyServerPort"];
+	[dic setInteger:self.encoding			forKey:@"characterEncodingDefault"];
+	[dic setInteger:self.fallbackEncoding	forKey:@"characterEncodingFallback"];
 	
-	[dic setBool:self.useSSL				forKey:@"ssl"];
-    [dic setBool:self.prefersIPv6			forKey:@"prefersIPv6"];
-	[dic setBool:self.autoConnect			forKey:@"auto_connect"];
-	[dic setBool:self.autoReconnect			forKey:@"auto_reconnect"];
-	[dic setBool:self.bouncerMode			forKey:@"bouncer_mode"];
-	[dic setBool:self.invisibleMode			forKey:@"invisible"];
-	[dic setBool:self.isTrustedConnection	forKey:@"trustedConnection"];
+	[dic setBool:self.useSSL				forKey:@"connectUsingSSL"];
+    [dic setBool:self.prefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
+	[dic setBool:self.autoConnect			forKey:@"connectOnLaunch"];
+	[dic setBool:self.autoReconnect			forKey:@"connectOnDisconnect"];
+	[dic setBool:self.bouncerMode			forKey:@"serverIsIRCBouncer"];
+	[dic setBool:self.invisibleMode			forKey:@"setInvisibleOnConnect"];
+	[dic setBool:self.isTrustedConnection	forKey:@"trustedSSLConnection"];
 	
-	if (self.cuid)				[dic setInteger:self.cuid				forKey:@"cuid"];
+	[dic setInteger:self.cuid				forKey:@"connectionID"];
 	
-	if (self.guid)				[dic setObject:self.guid				forKey:@"guid"];
-	if (self.name)				[dic setObject:self.name				forKey:@"name"];
-	if (self.host)				[dic setObject:self.host				forKey:@"host"];
-	if (self.nick)				[dic setObject:self.nick				forKey:@"nick"];
-	if (self.username)			[dic setObject:self.username			forKey:@"username"];
-	if (self.realName)			[dic setObject:self.realName			forKey:@"realname"];
-	if (self.altNicks)			[dic setObject:self.altNicks			forKey:@"alt_nicks"];
-	if (self.proxyHost)			[dic setObject:self.proxyHost			forKey:@"proxy_host"];
-	if (self.proxyUser)			[dic setObject:self.proxyUser			forKey:@"proxy_user"];
-	if (self.proxyPassword)		[dic setObject:self.proxyPassword		forKey:@"proxy_password"];
-	if (self.leavingComment)	[dic setObject:self.leavingComment		forKey:@"leaving_comment"];
-	if (self.sleepQuitMessage)	[dic setObject:self.sleepQuitMessage	forKey:@"sleep_quit_message"];
-	if (self.loginCommands)		[dic setObject:self.loginCommands		forKey:@"login_commands"];
+	[dic safeSetObject:self.guid				forKey:@"uniqueIdentifier"];
+	[dic safeSetObject:self.name				forKey:@"connectionName"];
+	[dic safeSetObject:self.host				forKey:@"serverAddress"];
+	[dic safeSetObject:self.nick				forKey:@"identityNickname"];
+	[dic safeSetObject:self.username			forKey:@"identityUsername"];
+	[dic safeSetObject:self.realName			forKey:@"identityRealname"];
+	[dic safeSetObject:self.altNicks			forKey:@"identityAlternateNicknames"];
+	[dic safeSetObject:self.proxyHost			forKey:@"proxyServerAddress"];
+	[dic safeSetObject:self.proxyUser			forKey:@"proxyServerUsername"];
+	[dic safeSetObject:self.proxyPassword		forKey:@"proxyServerPassword"];
+	[dic safeSetObject:self.leavingComment		forKey:@"connectionDisconnectDefaultMessage"];
+	[dic safeSetObject:self.sleepQuitMessage	forKey:@"connectionDisconnectSleepModeMessage"];
+	[dic safeSetObject:self.loginCommands		forKey:@"onConnectCommands"];
     
     NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
     
-    [floodControl setInteger:self.floodControlDelayTimerInterval	forKey:@"delay_timer"];
-    [floodControl setInteger:self.floodControlMaximumMessages		forKey:@"message_count"];
+    [floodControl setInteger:self.floodControlDelayTimerInterval	forKey:@"delayTimerInterval"];
+    [floodControl setInteger:self.floodControlMaximumMessages		forKey:@"maximumMessageCount"];
 	
-    [floodControl setBool:self.outgoingFloodControl forKey:@"outgoing"];
+    [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
-    [dic setObject:floodControl forKey:@"flood_control"];
+    [dic setObject:floodControl forKey:@"floodControl"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
@@ -351,10 +331,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	[dic setObject:channelAry forKey:@"channels"];
-	[dic setObject:ignoreAry forKey:@"ignores"];
+	[dic setObject:channelAry forKey:@"channelList"];
+	[dic setObject:ignoreAry forKey:@"ignoreList"];
 	
-	return dic;
+	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
+				forKey:TPCPreferencesMigrationAssistantVersionKey];
+	
+	return [dic sortedDictionary];
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone

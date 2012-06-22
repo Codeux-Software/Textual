@@ -270,7 +270,7 @@
 	NSArray *alertSounds = [self availableSounds];
 	
     for (NSString *alertSound in alertSounds) {
-        NSMenuItem *item = [[NSMenuItem alloc] init];
+        NSMenuItem *item = [NSMenuItem new];
 		
         [item setTitle:alertSound];
         
@@ -283,7 +283,7 @@
     NSMutableArray *alerts = [self sounds];
 	
     for (TDCPreferencesSoundWrapper *alert in alerts) {
-        NSMenuItem *item = [[NSMenuItem alloc] init];
+        NSMenuItem *item = [NSMenuItem new];
 		
         [item setTitle:alert.displayName];
         [item setTag:[alert eventType]];

@@ -114,7 +114,7 @@
 	
 #ifdef TXNativeNotificationCenterAvailable
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		NSUserNotification *notification = [[NSUserNotification alloc] init];
+		NSUserNotification *notification = [NSUserNotification new];
 		
 		notification.title = title;
 		notification.informativeText = desc;
