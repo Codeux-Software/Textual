@@ -476,10 +476,10 @@
 - (void)_onWantFindPanel:(id)sender
 {
 	NSString *newPhrase = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"FindSearchPanelPromptMessage")
-														title:TXTLS(@"FindSearchPanelPromptTitle")
-												defaultButton:TXTLS(@"FindSearchPanelPromptButton")
-											  alternateButton:TXTLS(@"CancelButton") 
-												 defaultInput:self.currentSearchPhrase];
+														   title:TXTLS(@"FindSearchPanelPromptTitle")
+												   defaultButton:TXTLS(@"FindSearchPanelPromptButton")
+												 alternateButton:TXTLS(@"CancelButton") 
+													defaultInput:self.currentSearchPhrase];
 	
 	if (NSObjectIsEmpty(newPhrase)) {
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
@@ -568,7 +568,7 @@
 	pc.world = self.world;
 	
 	self.preferencesController = pc;
-
+	
 	(void)[self.preferencesController initWithWorldController:self.world];
 	
 	[self.preferencesController show];
@@ -619,35 +619,26 @@
 	id t = [win firstResponder];
 	if (PointerIsEmpty(t)) return;
 	
-    if ([t respondsToSelector:@selector(requriesSpecialPaste)]) {
-        if ([self.window attachedSheet]) {
-            [t paste:self];
-        } else {
-            [self.text focus];
-            [self.text paste:self];
-        }
-    } else {
-        if (self.window == [NSApp keyWindow]) {
-            if (PointerIsEmpty([self.window attachedSheet])) {
-                [self.text focus];
-                [self.text paste:self];
-                
-                return;
-            }
-        }
-        
-        if ([t respondsToSelector:@selector(paste:)]) {
-            BOOL validated = YES;
-            
-            if ([t respondsToSelector:@selector(validateMenuItem:)]) {
-                validated = [t validateMenuItem:sender];
-            }
-            
-            if (validated) {
-                [t paste:sender];
-            }
-        }
-    }
+	if (self.window == [NSApp keyWindow]) {
+		if (PointerIsEmpty([self.window attachedSheet])) {
+			[self.text focus];
+			[self.text paste:self];
+			
+			return;
+		}
+	}
+	
+	if ([t respondsToSelector:@selector(paste:)]) {
+		BOOL validated = YES;
+		
+		if ([t respondsToSelector:@selector(validateMenuItem:)]) {
+			validated = [t validateMenuItem:sender];
+		}
+		
+		if (validated) {
+			[t paste:sender];
+		}
+	}
 }
 
 - (void)searchGoogle:(id)sender
@@ -661,7 +652,7 @@
 		s = [s gtm_stringByEscapingForURLArgument];
 		
 		NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", s];
-
+		
 		[TLOpenLink openWithString:urlStr];
 	}
 }
@@ -846,12 +837,12 @@
 	if (_noClient || _connected) return;
 	
 	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ServerDeletePromptMessage")
-												   title:TXTLS(@"ServerDeletePromptTitle")
-										   defaultButton:TXTLS(@"OkButton") 
-										 alternateButton:TXTLS(@"CancelButton")
-											 otherButton:nil
-										  suppressionKey:@"delete_server"
-										 suppressionText:nil];
+													  title:TXTLS(@"ServerDeletePromptTitle")
+											  defaultButton:TXTLS(@"OkButton") 
+											alternateButton:TXTLS(@"CancelButton")
+												otherButton:nil
+											 suppressionKey:@"delete_server"
+											suppressionText:nil];
 	
 	if (result == NO) {
 		return;
@@ -1067,12 +1058,12 @@
 	
 	if (_isChannel) {
 		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ChannelDeletePromptMessage") 
-													   title:TXTLS(@"ChannelDeletePromptTitle") 
-											   defaultButton:TXTLS(@"OkButton") 
-											 alternateButton:TXTLS(@"CancelButton") 
-												 otherButton:nil
-											  suppressionKey:@"delete_channel"
-											 suppressionText:nil];
+														  title:TXTLS(@"ChannelDeletePromptTitle") 
+												  defaultButton:TXTLS(@"OkButton") 
+												alternateButton:TXTLS(@"CancelButton") 
+													otherButton:nil
+												 suppressionKey:@"delete_channel"
+												suppressionText:nil];
 		
 		if (result == NO) {
 			return;
@@ -1533,12 +1524,12 @@
 		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
-										 title:TXTLS(@"LogPathDoesNotExistTitle")
-								 defaultButton:TXTLS(@"OkButton") 
-							   alternateButton:nil 
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil];
+											title:TXTLS(@"LogPathDoesNotExistTitle")
+									defaultButton:TXTLS(@"OkButton") 
+								  alternateButton:nil 
+									  otherButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
 	}
 }
 
@@ -1555,12 +1546,12 @@
 		[_NSWorkspace() openURL:[NSURL fileURLWithPath:path]];
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
-										 title:TXTLS(@"LogPathDoesNotExistTitle")
-								 defaultButton:TXTLS(@"OkButton")
-							   alternateButton:nil
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil];
+											title:TXTLS(@"LogPathDoesNotExistTitle")
+									defaultButton:TXTLS(@"OkButton")
+								  alternateButton:nil
+									  otherButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
 	}
 }
 
@@ -1590,10 +1581,10 @@
 - (void)_onWantHostServVhostSet:(id)sender
 {
 	NSString *vhost = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"SetUserVhostPromptMessage")
-													title:TXTLS(@"SetUserVhostPromptTitle") 
-											defaultButton:TXTLS(@"OkButton")  
-										  alternateButton:TXTLS(@"CancelButton") 
-											 defaultInput:nil];
+													   title:TXTLS(@"SetUserVhostPromptTitle") 
+											   defaultButton:TXTLS(@"OkButton")  
+											 alternateButton:TXTLS(@"CancelButton") 
+												defaultInput:nil];
 	
 	[self.iomt __onWantHostServVhostSet:sender andVhost:vhost];
 }
