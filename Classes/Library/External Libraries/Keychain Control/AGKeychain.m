@@ -217,7 +217,6 @@
 							 withItemKind:(NSString *)keychainItemKind 
 							  forUsername:(NSString *)username
 							  serviceName:(NSString *)service
-						withLegacySupport:(BOOL)legacy
 {
 	SecKeychainItemRef item;
 	SecKeychainSearchRef search;
@@ -240,7 +239,7 @@
 	
 	attributes[3].tag = kSecServiceItemAttr;
 	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)((legacy) ? [keychainItemName length] : [service length]);
+	attributes[3].length = (UInt32)[service length];
 	
 	list.count = 4;
 	list.attr = attributes;

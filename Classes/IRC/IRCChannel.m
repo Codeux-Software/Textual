@@ -28,6 +28,10 @@
 @synthesize status;
 @synthesize storedTopic;
 @synthesize topic;
+@synthesize isChannel;
+@synthesize isTalk;
+@synthesize password;
+@synthesize channelTypeString;
 
 - (id)init
 {

@@ -18,6 +18,11 @@
 @synthesize treeUnreadCount;
 @synthesize dockUnreadCount;
 @synthesize currentInputHistory;
+@synthesize isActive;
+@synthesize client;
+@synthesize label;
+@synthesize isClient;
+@synthesize name;
 
 - (void)resetLogView:(IRCWorld *)world
 		 withChannel:(IRCChannel *)c
