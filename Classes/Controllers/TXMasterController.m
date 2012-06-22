@@ -574,15 +574,15 @@ constrainMinCoordinate:(CGFloat)proposedMax
 									(rect.origin.y + (rect.size.height / 2)));
 			
 			NSInteger w = 800;
-			NSInteger h = 418;
+			NSInteger h = 474;
 			
 			rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 			
 			[self.window setFrame:rect display:YES animate:self.menu.isInFullScreenMode];
 		}
 		
-		self.serverSplitView.position = 170;
-		self.memberSplitView.position = 170;
+		self.serverSplitView.position = 165;
+		self.memberSplitView.position = 120;
 	}
 	
 	self.memberSplitViewOldPosition = self.memberSplitView.position;
