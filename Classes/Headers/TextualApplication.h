@@ -68,6 +68,7 @@
 	@class TLOpenLink;
 	@class TPCOtherTheme;
 	@class TPCPreferences;
+	@class TPCPreferencesMigrationAssistant;
 	@class TPCViewTheme;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
@@ -199,6 +200,7 @@
 
 	#import "TPCOtherTheme.h"
 	#import "TPCPreferences.h"
+	#import "TPCPreferencesMigrationAssistant.h"
 	#import "TPCViewTheme.h"
 
 	/* View Controllers. */

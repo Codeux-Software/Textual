@@ -285,7 +285,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 	
-	[dic setObject:ary forKey:@"channels"];
+	[dic setObject:ary forKey:@"channelList"];
 	
 	return dic;
 }
@@ -2275,7 +2275,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				NSString *hostmask = [u banMask];
 				
-				IRCAddressBook *g = [[IRCAddressBook alloc] init];
+				IRCAddressBook *g = [IRCAddressBook new];
 				
 				g.hostmask = hostmask;
                 
@@ -2356,7 +2356,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSInteger interval = [s.getToken.string integerValue];
 			
 			if (interval > 0) {
-				TLOTimerCommand *cmd = [[TLOTimerCommand alloc] init];
+				TLOTimerCommand *cmd = [TLOTimerCommand new];
 				
 				if ([s.string hasPrefix:@"/"]) {
                     [s deleteCharactersInRange:NSMakeRange(0, 1)];
@@ -2932,7 +2932,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (doTalk) {
 			return [self.world createTalk:name client:self];
 		} else {
-			IRCChannelConfig *seed = [[IRCChannelConfig alloc] init];
+			IRCChannelConfig *seed = [IRCChannelConfig new];
 			
 			seed.name = name;
 			
@@ -3068,7 +3068,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			chname = channel.name;
 			
 			if (type == TXNotificationHighlightType) {
-				if (channel.config.ihighlights) {
+				if (channel.config.ignoreHighlights) {
 					return YES;
 				}
 			} else if (channel.config.growl == NO) {
@@ -3446,7 +3446,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) {
 		if (NSDissimilarObjects(memberType, TVCLogMemberLocalUserType)) {
-			if (channel && channel.config.ihighlights == NO) {
+			if (channel && channel.config.ignoreHighlights == NO) {
 				keywords     = [TPCPreferences keywords];
 				excludeWords = [TPCPreferences excludeWords];
 				
@@ -4127,7 +4127,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 	
 	if (PointerIsEmpty([c findMember:nick])) {
-		IRCUser *u = [[IRCUser alloc] init];
+		IRCUser *u = [IRCUser new];
 		
 		u.o           = njoin;
 		u.nick        = nick;
@@ -4163,7 +4163,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
     }
     
 	if ([TPCPreferences showJoinLeave]) {
-        if (c.config.iJPQActivity) {
+        if (c.config.ignoreJPQActivity) {
             return;
         }
         
@@ -4191,7 +4191,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c removeMember:nick];
 		
 		if ([TPCPreferences showJoinLeave]) {
-            if (c.config.iJPQActivity) {
+            if (c.config.ignoreJPQActivity) {
                 return;
             }
             
@@ -4226,7 +4226,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[c removeMember:target];
 		
 		if ([TPCPreferences showJoinLeave]) {
-            if (c.config.iJPQActivity) {
+            if (c.config.ignoreJPQActivity) {
                 return;
             }
             
@@ -4282,7 +4282,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:nick]) {
-			if ([TPCPreferences showJoinLeave] && c.config.iJPQActivity == NO && [ignoreChecks ignoreJPQE] == NO) {
+			if ([TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO && [ignoreChecks ignoreJPQE] == NO) {
 				[self printChannel:c type:TVCLogLineQuitType text:text receivedAt:m.receivedAt];
 			}
 			
@@ -5072,7 +5072,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				IRCUser *u = [c findMember:nick];
 				
 				if (PointerIsEmpty(u)) {
-					IRCUser *u = [[IRCUser alloc] init];
+					IRCUser *u = [IRCUser new];
 					
 					u.nick			= nick;
 					u.isIRCOp		= isIRCOp;
@@ -5129,7 +5129,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					
 					if (NSObjectIsEmpty(nick)) continue;
 					
-					IRCUser *m = [[IRCUser alloc] init];
+					IRCUser *m = [IRCUser new];
 					
 					NSInteger i;
 					

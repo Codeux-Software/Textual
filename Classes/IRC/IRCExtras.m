@@ -216,19 +216,19 @@
     
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:server forKey:@"host"];
-	[dic setObject:server forKey:@"name"];
+	[dic setObject:server forKey:@"serverAddress"];
+	[dic setObject:server forKey:@"connectionName"];
 	
-	[dic setInteger:port forKey:@"port"];
+	[dic setInteger:port forKey:@"serverPort"];
 	
-	[dic setBool:useSSL forKey:@"ssl"];
-	[dic setBool:NO		forKey:@"auto_connect"];
+	[dic setBool:useSSL forKey:@"connectUsingSSL"];
+	[dic setBool:NO		forKey:@"connectOnLaunch"];
 	
-	[dic setObject:[TPCPreferences defaultNickname]			forKey:@"nickname"];
-	[dic setObject:[TPCPreferences defaultUsername]			forKey:@"username"];
-	[dic setObject:[TPCPreferences defaultRealname]			forKey:@"realname"];
+	[dic setObject:[TPCPreferences defaultNickname]			forKey:@"identityNckname"];
+	[dic setObject:[TPCPreferences defaultUsername]			forKey:@"identityUsername"];
+	[dic setObject:[TPCPreferences defaultRealname]			forKey:@"identityRealname"];
 	
-	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)	forKey:@"encoding"];
+	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)	forKey:@"characterEncodingDefault"];
 	
 	if (NSObjectIsNotEmpty(c)) {
 		NSMutableArray *channels = [NSMutableArray array];
@@ -240,20 +240,22 @@
                 cc = cc.trim;
                 
                 if ([cc isChannelName]) {
-                    [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:cc, @"name", 
-                                             NSNumberWithBOOL(YES), @"auto_join", 
-                                             NSNumberWithBOOL(YES), @"growl", nil]];	
+                    [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:
+											 cc, @"channelName",
+                                             NSNumberWithBOOL(YES), @"joinOnConnect",
+                                             NSNumberWithBOOL(YES), @"enableNotifications", nil]];	
                 }
             }
         } else {
             if ([c isChannelName]) {
-                [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:c, @"name", 
-                                         NSNumberWithBOOL(YES), @"auto_join", 
-                                         NSNumberWithBOOL(YES), @"growl", nil]];	
+                [channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										 c, @"channelName",
+										 NSNumberWithBOOL(YES), @"joinOnConnect",
+										 NSNumberWithBOOL(YES), @"enableNotifications", nil]];
             }
         }
 		
-		[dic setObject:channels forKey:@"channels"];
+		[dic setObject:channels forKey:@"channelList"];
 	}
 	
 	IRCClientConfig *cf = [[IRCClientConfig alloc] initWithDictionary:dic];

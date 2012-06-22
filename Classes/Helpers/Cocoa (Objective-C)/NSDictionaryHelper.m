@@ -115,9 +115,29 @@
 	return nil;
 }
 
+- (NSDictionary *)sortedDictionary
+{
+	NSArray *sortedKeys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
+	
+	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
+	
+	for (NSString *key in sortedKeys) {
+		[newDict setObject:[self objectForKey:key] forKey:key];
+	}
+
+	return newDict;
+}
+
 @end
 
 @implementation NSMutableDictionary (TXMutableDictionaryHelper)
+
+- (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey
+{
+	if (PointerIsNotEmpty(anObject)) {
+		[self setObject:anObject forKey:aKey];
+	}
+}
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
@@ -142,6 +162,19 @@
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
 	[self setObject:[NSValue valueWithPointer:value] forKey:key];
+}
+
+- (NSMutableDictionary *)sortedDictionary
+{
+	NSArray *sortedKeys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
+	
+	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
+	
+	for (NSString *key in sortedKeys) {
+		[newDict setObject:[self objectForKey:key] forKey:key];
+	}
+	
+	return newDict;
 }
 
 @end

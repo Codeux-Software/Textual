@@ -14,21 +14,21 @@
 @synthesize growl;
 @synthesize mode;
 @synthesize topic;
-@synthesize ihighlights;
+@synthesize ignoreHighlights;
 @synthesize encryptionKey;
-@synthesize iJPQActivity;
-@synthesize inlineImages;
+@synthesize ignoreJPQActivity;
+@synthesize ignoreInlineImages;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		self.type = IRCChannelNormalType;
 		
-        self.inlineImages	= NO;
-        self.iJPQActivity	= NO;
-        self.ihighlights	= NO;
-		self.autoJoin		= YES;
-		self.growl			= YES;
+        self.ignoreInlineImages	= NO;
+        self.ignoreJPQActivity	= NO;
+        self.ignoreHighlights	= NO;
+		self.autoJoin			= YES;
+		self.growl				= YES;
 		
 		self.name			= NSStringEmptyPlaceholder;
 		self.mode			= NSStringEmptyPlaceholder;
@@ -43,20 +43,22 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		self.type			= (IRCChannelType)[dic integerForKey:@"type"];
+		dic = [TPCPreferencesMigrationAssistant convertIRCChannelConfiguration:dic];
 		
-		self.name			= (([dic stringForKey:@"name"]) ?: NSStringEmptyPlaceholder);
-		self.password		= (([dic stringForKey:@"password"]) ?: NSStringEmptyPlaceholder);
+		self.type			= (IRCChannelType)[dic integerForKey:@"channelType"];
 		
-		self.growl			= [dic boolForKey:@"growl"];
-		self.autoJoin		= [dic boolForKey:@"auto_join"];
-		self.ihighlights	= [dic boolForKey:@"ignore_highlights"];
-		self.inlineImages	= [dic boolForKey:@"disable_images"];
-		self.iJPQActivity	= [dic boolForKey:@"ignore_join,leave"];
+		self.name			= (([dic stringForKey:@"channelName"])	 ?: NSStringEmptyPlaceholder);
+		self.password		= (([dic stringForKey:@"secretJoinKey"]) ?: NSStringEmptyPlaceholder);
 		
-		self.mode			= (([dic stringForKey:@"mode"]) ?: NSStringEmptyPlaceholder);
-		self.topic			= (([dic stringForKey:@"topic"]) ?: NSStringEmptyPlaceholder);
-		self.encryptionKey	= (([dic stringForKey:@"encryptionKey"]) ?: NSStringEmptyPlaceholder);
+		self.growl				= [dic boolForKey:@"enableNotifications"];
+		self.autoJoin			= [dic boolForKey:@"joinOnConnect"];
+		self.ignoreHighlights	= [dic boolForKey:@"ignoreHighlights"];
+		self.ignoreInlineImages	= [dic boolForKey:@"disableInlineMedia"];
+		self.ignoreJPQActivity	= [dic boolForKey:@"ignoreJPQActivity"];
+		
+		self.mode			= (([dic stringForKey:@"defaultMode"])		?: NSStringEmptyPlaceholder);
+		self.topic			= (([dic stringForKey:@"defaultTopic"])		?: NSStringEmptyPlaceholder);
+		self.encryptionKey	= (([dic stringForKey:@"encryptionKey"])	?: NSStringEmptyPlaceholder);
 		
 		return self;
 	}
@@ -69,21 +71,24 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setInteger:self.type forKey:@"type"];
+	[dic setInteger:self.type forKey:@"channelType"];
 	
-	[dic setBool:self.growl			forKey:@"growl"];
-	[dic setBool:self.autoJoin		forKey:@"auto_join"];
-    [dic setBool:self.ihighlights	forKey:@"ignore_highlights"];
-    [dic setBool:self.inlineImages	forKey:@"disable_images"];
-    [dic setBool:self.iJPQActivity	forKey:@"ignore_join,leave"];
+	[dic setBool:self.growl					forKey:@"enableNotifications"];
+	[dic setBool:self.autoJoin				forKey:@"joinOnConnect"];
+    [dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
+    [dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
+    [dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
 	
-	if (self.name)			[dic setObject:self.name			forKey:@"name"];
-	if (self.password)		[dic setObject:self.password		forKey:@"password"];
-	if (self.mode)			[dic setObject:self.mode			forKey:@"mode"];
-	if (self.topic)			[dic setObject:self.topic			forKey:@"topic"];
-	if (self.encryptionKey)	[dic setObject:self.encryptionKey	forKey:@"encryptionKey"];
+	[dic safeSetObject:self.name				forKey:@"channelName"];
+	[dic safeSetObject:self.password			forKey:@"secretJoinKey"];
+	[dic safeSetObject:self.mode				forKey:@"defaultMode"];
+	[dic safeSetObject:self.topic				forKey:@"defaultTopic"];
+	[dic safeSetObject:self.encryptionKey		forKey:@"encryptionKey"];
+
+	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
+				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
-	return dic;
+	return [dic sortedDictionary];
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone

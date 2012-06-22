@@ -118,9 +118,9 @@
 	
 	self.growlCheck.state			= self.config.growl;
 	self.autoJoinCheck.state		= self.config.autoJoin;
-	self.ihighlights.state			= self.config.ihighlights;
-    self.JPQActivityCheck.state		= self.config.iJPQActivity;
-    self.inlineImagesCheck.state	= self.config.inlineImages;
+	self.ihighlights.state			= self.config.ignoreHighlights;
+    self.JPQActivityCheck.state		= self.config.ignoreJPQActivity;
+    self.inlineImagesCheck.state	= self.config.ignoreInlineImages;
 }
 
 - (void)save
@@ -133,9 +133,9 @@
     
 	self.config.growl			= self.growlCheck.state;
 	self.config.autoJoin		= self.autoJoinCheck.state;
-    self.config.ihighlights		= self.ihighlights.state;
-    self.config.iJPQActivity	= self.JPQActivityCheck.state;
-    self.config.inlineImages	= self.inlineImagesCheck.state;
+    self.config.ignoreHighlights		= self.ihighlights.state;
+    self.config.ignoreJPQActivity	= self.JPQActivityCheck.state;
+    self.config.ignoreInlineImages	= self.inlineImagesCheck.state;
 	
 	if ([self.config.name isChannelName] == NO) {
 		self.config.name = [@"#" stringByAppendingString:self.config.name];

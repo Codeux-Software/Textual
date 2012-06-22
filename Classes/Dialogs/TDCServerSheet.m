@@ -507,7 +507,7 @@
 	IRCChannelConfig *conf;
 	
 	if (sel < 0) {
-		conf = [[IRCChannelConfig alloc] init];
+		conf = [IRCChannelConfig new];
 	} else {
 		IRCChannelConfig *c = [self.config.channels safeObjectAtIndex:sel];
 		
