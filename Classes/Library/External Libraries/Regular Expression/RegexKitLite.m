@@ -1938,7 +1938,7 @@ errorExit:
 //  The only 'caveat' is that the user needs to -retain any strings that they want to use past the point at which their ^block returns.  Logically, it is as if the following takes place:
 //  
 //  for(eachMatchOfRegexInStringToSearch) {
-//    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//    NSAutoreleasePool *pool = [NSAutoreleasePool new];
 //    callUsersBlock(capturedCount, capturedStrings, capturedStringRanges, stop);
 //    [pool release];
 //  }

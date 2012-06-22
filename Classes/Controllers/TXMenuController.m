@@ -801,7 +801,7 @@
 	
 	d.delegate = self;
 	d.window = self.window;
-	d.config = [[IRCClientConfig alloc] init];
+	d.config = [IRCClientConfig new];
 	d.uid = -1;
 	
 	[d startWithIgnoreTab:NSStringEmptyPlaceholder];
@@ -1041,7 +1041,7 @@
 	
 	d.delegate = self;
 	d.window = self.window;
-	d.config = [[IRCChannelConfig alloc] init];
+	d.config = [IRCChannelConfig new];
 	d.uid = u.uid;
 	d.cid = -1;
 	

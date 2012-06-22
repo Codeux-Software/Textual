@@ -71,11 +71,11 @@
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setBool:self.autoConnectCheck.state forKey:@"autoConnect"];
+	[dic setBool:self.autoConnectCheck.state forKey:@"connectOnLaunch"];
 	
-	[dic setObject:chans												forKey:@"channels"];
-	[dic setObject:self.nickText.stringValue							forKey:@"nick"];
-	[dic setObject:[self.hostCombo.stringValue cleanedServerHostmask]	forKey:@"host"];
+	[dic setObject:chans												forKey:@"channelList"];
+	[dic setObject:self.nickText.stringValue							forKey:@"identityNickname"];
+	[dic setObject:[self.hostCombo.stringValue cleanedServerHostmask]	forKey:@"serverAddress"];
 	
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
 		[self.delegate welcomeSheet:self onOK:dic];

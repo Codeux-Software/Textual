@@ -757,7 +757,7 @@
 	}
 	
 	if (isNormalMsg && NSObjectIsNotEmpty(urlRanges) && [TPCPreferences showInlineImages]) {
-		if (([self.channel isChannel] && self.channel.config.inlineImages == NO) || [self.channel isTalk]) {
+		if (([self.channel isChannel] && self.channel.config.ignoreInlineImages == NO) || [self.channel isTalk]) {
 			NSString *imageUrl  = nil;
 			
 			NSMutableArray *postedUrls = [NSMutableArray array];

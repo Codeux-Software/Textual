@@ -1408,23 +1408,24 @@ typedef enum {
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	for (NSString *s in [config objectForKey:@"channels"]) {
+	for (NSString *s in [config objectForKey:@"channelList"]) {
 		if ([s isChannelName]) {
-			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"name", 
-									 NSNumberWithBOOL(YES), @"auto_join", 
-									 NSNumberWithBOOL(YES), @"growl", nil]];	
+			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:
+									 s, @"channelName",
+									 NSNumberWithBOOL(YES), @"joinOnConnect", 
+									 NSNumberWithBOOL(YES), @"enableNotifications", nil]];	
 		}
 	}
 	
-	NSString *host = [config objectForKey:@"host"];
-	NSString *nick = [config objectForKey:@"nick"];
+	NSString *host = [config objectForKey:@"serverAddress"];
+	NSString *nick = [config objectForKey:@"identityNickname"];
 	
-	[dic setObject:host										forKey:@"host"];
-	[dic setObject:host										forKey:@"name"];
-	[dic setObject:nick										forKey:@"nick"];
-	[dic setObject:channels									forKey:@"channels"];
-	[dic setObject:[config objectForKey:@"autoConnect"]		forKey:@"auto_connect"];
-	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)	forKey:@"encoding"];
+	[dic setObject:host											forKey:@"serverAddress"];
+	[dic setObject:host											forKey:@"connectionName"];
+	[dic setObject:nick											forKey:@"identityNickname"];
+	[dic setObject:channels										forKey:@"channelList"];
+	[dic setObject:[config objectForKey:@"connectOnLaunch"]		forKey:@"connectOnLaunch"];
+	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)		forKey:@"characterEncodingDefault"];
 	
 	[self.window makeKeyAndOrderFront:nil];
 	

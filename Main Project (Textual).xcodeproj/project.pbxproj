@@ -47,6 +47,8 @@
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4451592019900CD2CDE /* colloquyRoomTabInverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
+		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
+		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; };
 		4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB51580468900846B64 /* libcrypto.dylib */; };
 		4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB61580468900846B64 /* libicucore.dylib */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
@@ -469,6 +471,8 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabInverted@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabInverted@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
+		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
 		4C46CCB51580468900846B64 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = ../../../../usr/lib/libcrypto.dylib; sourceTree = "<group>"; };
 		4C46CCB61580468900846B64 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = ../../../../usr/lib/libicucore.dylib; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -866,6 +870,14 @@
 			);
 			name = Resources;
 			path = Textual;
+			sourceTree = "<group>";
+		};
+		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */,
+			);
+			name = "Migration Assistant";
 			sourceTree = "<group>";
 		};
 		4C46CB001580429D00846B64 /* Source Code */ = {
@@ -1276,6 +1288,7 @@
 				4C8AF57C158E99520026668C /* TLOTimerCommand.h */,
 				4C8AF57D158E99520026668C /* TPCOtherTheme.h */,
 				4C8AF57E158E99520026668C /* TPCPreferences.h */,
+				4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */,
 				4C8AF57F158E99520026668C /* TPCViewTheme.h */,
 				4C8AF580158E99520026668C /* TVCDockIcon.h */,
 				4C8AF581158E99520026668C /* TVCImageURLParser.h */,
@@ -1487,6 +1500,7 @@
 		4C8AF5EA158E99520026668C /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Themes */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
 			);
@@ -1756,6 +1770,7 @@
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
+				4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2128,6 +2143,7 @@
 				4C8AF6E6158E99520026668C /* TVCMemberList.m in Sources */,
 				4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */,
 				4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */,
+				4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
