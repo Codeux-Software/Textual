@@ -25,10 +25,6 @@
 				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
 			} else if ([commandString isEqualToString:@"MEMORY"]) {
 				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
-				
-				if ([_NSUserDefaults() boolForKey:@"HideMemoryCommandExtraInfo"] == NO) {
-					[client printDebugInformation:TXTLS(@"SystemInformationApplicationMemoryUseInfoLink")];
-				}
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
 				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
 			} else if ([commandString isEqualToString:@"NETSTATS"]) {
