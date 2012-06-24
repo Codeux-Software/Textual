@@ -13,6 +13,8 @@
 
 @implementation IRCChannel
 
+@synthesize isActive = _isActive;
+@synthesize client = _client;
 
 - (id)init
 {
@@ -441,6 +443,16 @@
 - (NSString *)label
 {
 	return self.config.name;
+}
+
+- (BOOL)isActive
+{
+	return _isActive;
+}
+
+- (IRCClient *)client
+{
+	return _client;
 }
 
 #pragma mark -
