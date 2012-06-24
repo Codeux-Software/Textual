@@ -47,7 +47,7 @@
 		NSString *_exact_model = _model;
 		
 		if ([_all_models containsKey:_model]) {
-			_exact_model = [_all_models objectForKey:_model];
+			_exact_model = _all_models[_model];
 		}
 		
 		_new = TXTFLS(@"SystemInformationCompiledOutputModel", _exact_model);
@@ -106,7 +106,7 @@
 	NSArray *allScreens = [NSScreen screens];
 	
 	if (NSObjectIsNotEmpty(allScreens)) {		
-		NSScreen *maiScreen = [allScreens objectAtIndex:0];
+		NSScreen *maiScreen = allScreens[0];
 		
 		_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
 		
@@ -124,9 +124,9 @@
 	NSString *osname = [self operatingSystemName];
 	
 	_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], osname,
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]);
+				  [TPCPreferences systemInfoPlist][@"ProductName"], 
+				  [TPCPreferences systemInfoPlist][@"ProductVersion"], osname,
+				  [TPCPreferences systemInfoPlist][@"ProductBuildVersion"]);
 	
 	sysinfo = [sysinfo stringByAppendingString:_new];
 
@@ -139,7 +139,7 @@
 	NSArray *screens = [NSScreen screens];
 	
 	if ([screens count] == 1) {
-		NSScreen *maiScreen = [screens objectAtIndex:0];
+		NSScreen *maiScreen = screens[0];
 
 		return TXTFLS(@"SystemInformationScreensCommandResultSingle", maiScreen.frame.size.width, maiScreen.frame.size.height);
 	} else {
@@ -162,10 +162,10 @@
 + (NSString *)applicationAndSystemUptime
 {
 	NSString *systemUptime = TXSpecialReadableTime([self _internalSystemUptime], NO,
-												   [NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
+												   @[@"day", @"hour", @"minute", @"second"]);
 	
 	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[TPCPreferences startTime]], NO,
-													[NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
+													@[@"day", @"hour", @"minute", @"second"]);
 
 	return TXTFLS(@"SystemInformationUptimeCommandResult", systemUptime, textualUptime);
 }
@@ -236,12 +236,12 @@
 			
 			if (objectIndex == 0) {
 				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultBase",
-											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 @(ifa->ifa_name),
 											 [self formattedDiskSize:if_data->ifi_ibytes], 
 											 [self formattedDiskSize:if_data->ifi_obytes])];
 			} else {
 				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultMiddle",
-											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 @(ifa->ifa_name),
 											 [self formattedDiskSize:if_data->ifi_ibytes], 
 											 [self formattedDiskSize:if_data->ifi_obytes])];
 			}
@@ -427,7 +427,7 @@
 		CGLSetCurrentContext(cglContext);
 		
 		if (cglContext) {
-			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
+			NSString *model = @((const char *)glGetString(GL_RENDERER));
             
 			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:NSStringEmptyPlaceholder];
 		}
@@ -502,7 +502,7 @@
 	if (0 == sysctlbyname("machdep.cpu.brand_string", buffer, &sz, NULL, 0)) {
 		buffer[(sizeof(buffer) - 1)] = 0;
 		
-		return [NSString stringWithUTF8String:buffer];
+		return @(buffer);
 	} else {
 		return nil;
 	}	
@@ -517,7 +517,7 @@
 	if (0 == sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0)) {
 		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
 		
-		return [NSString stringWithUTF8String:modelBuffer];
+		return @(modelBuffer);
 	} else {
 		return nil;
 	}	
@@ -576,7 +576,7 @@
 
 + (NSString *)operatingSystemName
 {
-	NSString *productVersion = [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"];
+	NSString *productVersion = [TPCPreferences systemInfoPlist][@"ProductVersion"];
 	
 	if ([productVersion contains:@"10.6"]) {
 		return TXTLS(@"SystemInformationOSVersionSnowLeopard");

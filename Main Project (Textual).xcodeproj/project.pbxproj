@@ -428,7 +428,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4C52AED515811C2000940619 /* Copy Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
@@ -437,7 +437,7 @@
 				4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2002,7 +2002,7 @@
 		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -2010,7 +2010,7 @@
 			name = "Build Extensions";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
 			showEnvVarsInLog = 0;
