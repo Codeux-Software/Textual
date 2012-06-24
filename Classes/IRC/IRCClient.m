@@ -2756,12 +2756,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					return YES;
 				} else {
 					if (scriptFound) {
-                        NSDictionary *inputInfo = @{@"channel": c.name,
-												   @"path": scriptPath,
-												   @"input": s.string,
-                                                   @"completeTarget": @(completeTarget),
-												   @"target": targetChannelName};
-                        
+                        NSDictionary *inputInfo =
+						@{@"channel": NSStringNilValueSubstitute(c.name),
+						@"path": scriptPath,
+						@"input": s.string,
+						@"completeTarget": @(completeTarget),
+						@"target": NSStringNilValueSubstitute(targetChannelName)};
+						
                         [self.invokeInBackgroundThread executeTextualCmdScript:inputInfo];
                         
                         return YES;
@@ -3227,7 +3228,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
 {
 	NSString *format = [TPCPreferences themeNickFormat];
-
+	
 	if (NSObjectIsNotEmpty(self.world.viewTheme.other.nicknameFormat)) {
 		format = self.world.viewTheme.other.nicknameFormat;
 	}
@@ -3624,10 +3625,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.raw 
 														withMatches:@[@"ignoreHighlights",
-																	 @"ignorePMHighlights",
-																	 @"ignoreNotices", 
-																	 @"ignorePublicMsg", 
-																	 @"ignorePrivateMsg"]];
+									@"ignorePMHighlights",
+									@"ignoreNotices", 
+									@"ignorePublicMsg", 
+									@"ignorePrivateMsg"]];
 	
 	
 	if ([target isChannelName]) {
