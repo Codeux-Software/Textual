@@ -48,7 +48,7 @@
 		4C28F4451592019900CD2CDE /* colloquyRoomTabInverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4431592019900CD2CDE /* colloquyRoomTabInverted@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
 		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
-		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; };
+		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB51580468900846B64 /* libcrypto.dylib */; };
 		4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCB61580468900846B64 /* libicucore.dylib */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
@@ -1658,6 +1658,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */,
 				4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C8AF74B158EB6CA0026668C /* AGKeychain.h in Headers */,
 				4C8AF74C158EB6CA0026668C /* DDExtensions.h in Headers */,
@@ -1770,7 +1771,6 @@
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
-				4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
