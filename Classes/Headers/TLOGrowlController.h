@@ -7,7 +7,7 @@
 
 #import <Growl/Growl.h>
 
-typedef enum {
+typedef enum TXNotificationType : NSInteger {
 	TXNotificationHighlightType				= 1000,
 	TXNotificationNewQueryType				= 1001,
 	TXNotificationChannelMessageType		= 1002,

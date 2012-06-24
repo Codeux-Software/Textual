@@ -19,10 +19,10 @@
 {
 	NSArray *sheetInfo = (NSArray *)CFBridgingRelease(contextInfo);
 
-	NSString *suppressionKey = [sheetInfo objectAtIndex:0];
-	NSString *selectorName   = [sheetInfo objectAtIndex:2];
+	NSString *suppressionKey = sheetInfo[0];
+	NSString *selectorName   = sheetInfo[2];
 
-	id  targetClass  = [sheetInfo objectAtIndex:1];
+	id  targetClass  = sheetInfo[1];
 	SEL targetAction = NSSelectorFromString(selectorName);
 
 	if (NSObjectIsNotEmpty(suppressionKey)) {
@@ -35,7 +35,7 @@
 		return;
 	}
 	
-	objc_msgSend(targetClass, targetAction, [NSNumber numberWithInteger:returnCode]);
+	objc_msgSend(targetClass, targetAction, @(returnCode));
 }
 
 - (void)sheetWindowWithQuestion:(NSWindow *)window
@@ -84,8 +84,8 @@
 	
 	[[alert suppressionButton] setTitle:suppressText];
 
-	NSArray *context = [NSArray arrayWithObjects:__suppressionKey, targetClass,
-						NSStringFromSelector(actionSelector), nil];
+	NSArray *context = @[__suppressionKey, targetClass,
+						NSStringFromSelector(actionSelector)];
 
 	[alert beginSheetModalForWindow:window modalDelegate:[self class]
 					 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)

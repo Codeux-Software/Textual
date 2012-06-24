@@ -11,11 +11,6 @@
 
 @implementation TPCViewTheme
 
-@synthesize baseUrl;
-@synthesize core_js;
-@synthesize name;
-@synthesize other;
-@synthesize path;
 
 - (id)init
 {
@@ -32,7 +27,7 @@
 - (void)setName:(NSString *)value
 {
 	if (NSDissimilarObjects(self.name, value)) {
-		name = value;
+		_name = value;
 	}
 	
 	[self load];
@@ -46,26 +41,26 @@
 		
 		if (NSObjectIsNotEmpty(kind) && NSObjectIsNotEmpty(filename)) {
 			if ([kind isEqualToString:@"resource"]) {
-				path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
+				self.path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 			} else {
-				path = [[TPCPreferences whereThemesPath] stringByAppendingPathComponent:filename];
+				self.path = [[TPCPreferences whereThemesPath] stringByAppendingPathComponent:filename];
 			}
 			
-			if ([_NSFileManager() fileExistsAtPath:path] == NO) {
+			if ([_NSFileManager() fileExistsAtPath:self.path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
-					path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
+					self.path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
 					
 					if (reload) [self reload];
 				}
 			}
 			
-			if ([_NSFileManager() fileExistsAtPath:path] == NO) {
+			if ([_NSFileManager() fileExistsAtPath:self.path] == NO) {
 				NSLog(@"Error: No path to local resources.");
 				exit(0);
 			}
 			
-			self.baseUrl = [NSURL fileURLWithPath:path];
-			self.other.path = path;
+			self.baseUrl = [NSURL fileURLWithPath:self.path];
+			self.other.path = self.path;
 			
 			return;
 		}

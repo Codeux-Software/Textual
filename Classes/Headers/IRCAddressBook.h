@@ -4,7 +4,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum {
+typedef enum IRCAddressBookEntryType : NSInteger {
 	IRCAddressBookIgnoreEntryType,
 	IRCAddressBookUserTrackingEntryType
 } IRCAddressBookEntryType;

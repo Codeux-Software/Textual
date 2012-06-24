@@ -6,8 +6,6 @@
 
 @implementation TLONickCompletionStatus
 
-@synthesize text;
-@synthesize range;
 
 - (id)init
 {

@@ -311,7 +311,7 @@ BOOL isUnicharDigit(unichar c)
 		return [self stripEffects];
 	}
     
-    NSDictionary *input = [NSDictionary dictionaryWithObjectsAndKeys:defaultFont, @"attributedStringFont", nil];
+    NSDictionary *input = @{@"attributedStringFont": defaultFont};
 	
 	return [LVCLogRenderer renderBody:self 
 						   controller:nil 
@@ -647,8 +647,8 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	
-	[attributes setObject:font			 forKey:NSFontAttributeName];
-	[attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+	attributes[NSFontAttributeName] = font;
+	attributes[NSParagraphStyleAttributeName] = paragraphStyle;
 	
 	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
 	
@@ -870,7 +870,7 @@ BOOL isUnicharDigit(unichar c)
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
 
 	if (font) {
-		[attributes setObject:font forKey:NSFontAttributeName];
+		attributes[NSFontAttributeName] = font;
 	}
 
 	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];

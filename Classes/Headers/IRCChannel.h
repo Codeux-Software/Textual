@@ -5,7 +5,7 @@
 
 #import "IRCTreeItem.h" // superclass
 
-typedef enum {
+typedef enum IRCChannelStatus : NSInteger {
 	IRCChannelParted,
 	IRCChannelJoining,
 	IRCChannelJoined,

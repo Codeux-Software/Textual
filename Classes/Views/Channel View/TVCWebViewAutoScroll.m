@@ -5,9 +5,6 @@
 
 @implementation TVCWebViewAutoScroll
 
-@synthesize lastVisibleRect;
-@synthesize lastFrame;
-@synthesize webFrame;
 
 - (void)scrollViewToBottom:(NSView *)aView
 {
@@ -29,7 +26,7 @@
 		return;
 	}
 	
-	webFrame = aWebFrame;
+	_webFrame = aWebFrame;
 	
 	if (self.webFrame) {
 		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];

@@ -15,7 +15,7 @@
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config
 {
 	/* Has this configuration file already been migrated? */
-	NSString *lastUpgrade = [config objectForKey:TPCPreferencesMigrationAssistantVersionKey];
+	NSString *lastUpgrade = config[TPCPreferencesMigrationAssistantVersionKey];
 	
 	if (NSObjectIsNotEmpty(lastUpgrade)) {
 		if ([lastUpgrade isEqualToString:TPCPreferencesMigrationAssistantUpgradePath]) {
@@ -44,19 +44,19 @@
 	
 	[nconfig setInteger:[config integerForKey:@"cuid"]				forKey:@"connectionID"];
 	
-	[nconfig safeSetObject:[config objectForKey:@"guid"]				forKey:@"uniqueIdentifier"];
-	[nconfig safeSetObject:[config objectForKey:@"name"]				forKey:@"connectionName"];
-	[nconfig safeSetObject:[config objectForKey:@"host"]				forKey:@"serverAddress"];
-	[nconfig safeSetObject:[config objectForKey:@"nick"]				forKey:@"identityNickname"];
-	[nconfig safeSetObject:[config objectForKey:@"username"]			forKey:@"identityUsername"];
-	[nconfig safeSetObject:[config objectForKey:@"realname"]			forKey:@"identityRealname"];
-	[nconfig safeSetObject:[config objectForKey:@"alt_nicks"]			forKey:@"identityAlternateNicknames"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_host"]			forKey:@"proxyServerAddress"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_user"]			forKey:@"proxyServerUsername"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_password"]		forKey:@"proxyServerPassword"];
-	[nconfig safeSetObject:[config objectForKey:@"leaving_comment"]		forKey:@"connectionDisconnectDefaultMessage"];
-	[nconfig safeSetObject:[config objectForKey:@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
-	[nconfig safeSetObject:[config objectForKey:@"login_commands"]		forKey:@"onConnectCommands"];
+	[nconfig safeSetObject:config[@"guid"]				forKey:@"uniqueIdentifier"];
+	[nconfig safeSetObject:config[@"name"]				forKey:@"connectionName"];
+	[nconfig safeSetObject:config[@"host"]				forKey:@"serverAddress"];
+	[nconfig safeSetObject:config[@"nick"]				forKey:@"identityNickname"];
+	[nconfig safeSetObject:config[@"username"]			forKey:@"identityUsername"];
+	[nconfig safeSetObject:config[@"realname"]			forKey:@"identityRealname"];
+	[nconfig safeSetObject:config[@"alt_nicks"]			forKey:@"identityAlternateNicknames"];
+	[nconfig safeSetObject:config[@"proxy_host"]			forKey:@"proxyServerAddress"];
+	[nconfig safeSetObject:config[@"proxy_user"]			forKey:@"proxyServerUsername"];
+	[nconfig safeSetObject:config[@"proxy_password"]		forKey:@"proxyServerPassword"];
+	[nconfig safeSetObject:config[@"leaving_comment"]		forKey:@"connectionDisconnectDefaultMessage"];
+	[nconfig safeSetObject:config[@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
+	[nconfig safeSetObject:config[@"login_commands"]		forKey:@"onConnectCommands"];
 	
 	NSMutableDictionary *floodControl = [config dictionaryForKey:@"flood_control"].mutableCopy;
 	
@@ -65,10 +65,10 @@
 	
     [floodControl setBool:[floodControl boolForKey:@"outgoing"] forKey:@"serviceEnabled"];
     
-    [nconfig setObject:floodControl forKey:@"floodControl"];
+    nconfig[@"floodControl"] = floodControl;
 	
-	[nconfig setObject:[config objectForKey:@"channels"]	forKey:@"channelList"];
-	[nconfig setObject:[config objectForKey:@"ignores"]		forKey:@"ignoreList"];
+	nconfig[@"channelList"] = config[@"channels"];
+	nconfig[@"ignoreList"] = config[@"ignores"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];
@@ -79,7 +79,7 @@
 + (NSDictionary *)convertIRCChannelConfiguration:(NSDictionary *)config
 {
 	/* Has this configuration file already been migrated? */
-	NSString *lastUpgrade = [config objectForKey:TPCPreferencesMigrationAssistantVersionKey];
+	NSString *lastUpgrade = config[TPCPreferencesMigrationAssistantVersionKey];
 	
 	if (NSObjectIsNotEmpty(lastUpgrade)) {
 		if ([lastUpgrade isEqualToString:TPCPreferencesMigrationAssistantUpgradePath]) {
@@ -100,12 +100,12 @@
     [nconfig setBool:[config boolForKey:@"disable_images"]		forKey:@"disableInlineMedia"];
     [nconfig setBool:[config boolForKey:@"ignore_join,leave"]	forKey:@"ignoreJPQActivity"];
 	
-	[nconfig safeSetObject:[config objectForKey:@"name"]			forKey:@"channelName"];
-	[nconfig safeSetObject:[config objectForKey:@"password"]		forKey:@"secretJoinKey"];
-	[nconfig safeSetObject:[config objectForKey:@"mode"]			forKey:@"defaultMode"];
-	[nconfig safeSetObject:[config objectForKey:@"topic"]			forKey:@"defaultTopic"];
-	[nconfig safeSetObject:[config objectForKey:@"password"]		forKey:@"secretKey"];
-	[nconfig safeSetObject:[config objectForKey:@"encryptionKey"]	forKey:@"encryptionKey"];
+	[nconfig safeSetObject:config[@"name"]			forKey:@"channelName"];
+	[nconfig safeSetObject:config[@"password"]		forKey:@"secretJoinKey"];
+	[nconfig safeSetObject:config[@"mode"]			forKey:@"defaultMode"];
+	[nconfig safeSetObject:config[@"topic"]			forKey:@"defaultTopic"];
+	[nconfig safeSetObject:config[@"password"]		forKey:@"secretKey"];
+	[nconfig safeSetObject:config[@"encryptionKey"]	forKey:@"encryptionKey"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];

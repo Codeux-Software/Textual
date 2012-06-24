@@ -6,8 +6,6 @@
 
 @implementation TVCLogView
 
-@synthesize keyDelegate;
-@synthesize resizeDelegate;
 
 - (void)keyDown:(NSEvent *)e
 {
@@ -38,7 +36,7 @@
 	
 	[super setFrame:rect];
 	
-	if (self.resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
+	if (self.resizeDelegate && [self.resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
 		[self.resizeDelegate logViewDidResize];
 	}
 }

@@ -16,7 +16,7 @@
 #import "GCDAsyncSocket.h"
 
 #if TARGET_OS_IPHONE
-  #import <CFNetwork/CFNetwork.h>
+#import <CFNetwork/CFNetwork.h>
 #endif
 
 #import <mach/mach.h>
@@ -90,14 +90,14 @@ static const int logLevel = LOG_LEVEL_VERBOSE;
  * Seeing a return statements within an inner block
  * can sometimes be mistaken for a return point of the enclosing method.
  * This makes inline blocks a bit easier to read.
-**/
+ **/
 #define return_from_block  return
 
 /**
  * A socket file descriptor is really just an integer.
  * It represents the index of the socket within the kernel.
  * This makes invalid file descriptor comparisons easier to read.
-**/
+ **/
 #define SOCKET_NULL -1
 
 
@@ -151,7 +151,7 @@ enum GCDAsyncSocketConfig
 };
 
 #if TARGET_OS_IPHONE
-  static NSThread *cfstreamThread;  // Used for CFStreams
+static NSThread *cfstreamThread;  // Used for CFStreams
 #endif
 
 @interface GCDAsyncSocket (Private)
@@ -378,7 +378,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 - (void)dealloc
 {
 	kern_return_t result =
-	    vm_deallocate(mach_task_self(), (vm_address_t)ringBuffer, (vm_size_t)(ringBufferSize*2));
+	vm_deallocate(mach_task_self(), (vm_address_t)ringBuffer, (vm_size_t)(ringBufferSize*2));
 	
 	if (result != ERR_SUCCESS)
 	{
@@ -404,7 +404,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		memcpy((void *)newRingBuffer, (const void *)readPointer, (unsigned long)(availableBytes));
 		
 		kern_return_t result =
-		    vm_deallocate(mach_task_self(), (vm_address_t)ringBuffer, (vm_size_t)(ringBufferSize*2));
+		vm_deallocate(mach_task_self(), (vm_address_t)ringBuffer, (vm_size_t)(ringBufferSize*2));
 		
 		if (result != ERR_SUCCESS)
 		{
@@ -485,10 +485,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  *  - reading to a certain length
  *  - reading to a certain separator
  *  - or simply reading the first chunk of available data
-**/
+ **/
 @interface GCDAsyncReadPacket : NSObject
 {
-  @public
+@public
 	NSMutableData *buffer;
 	NSUInteger startOffset;
 	NSUInteger bytesDone;
@@ -563,7 +563,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 /**
  * Increases the length of the buffer (if needed) to ensure a read of the given size will fit.
-**/
+ **/
 - (void)ensureCapacityForAdditionalDataOfLength:(NSUInteger)bytesToRead
 {
 	NSUInteger buffSize = [buffer length];
@@ -585,7 +585,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * 
  * Furthermore, the shouldPreBuffer decision is based upon the packet type,
  * and whether the returned value would fit in the current buffer without requiring a resize of the buffer.
-**/
+ **/
 - (NSUInteger)optimalReadLengthWithDefault:(NSUInteger)defaultValue shouldPreBuffer:(BOOL *)shouldPreBufferPtr
 {
 	NSUInteger result;
@@ -650,7 +650,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * which is taken into consideration during the calculation.
  * 
  * The given hint MUST be greater than zero.
-**/
+ **/
 - (NSUInteger)readLengthForNonTermWithHint:(NSUInteger)bytesAvailable
 {
 	NSAssert(term == nil, @"This method does not apply to term reads");
@@ -703,7 +703,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * To optimize memory allocations, mem copies, and mem moves
  * the shouldPreBuffer boolean value will indicate if the data should be read into a prebuffer first,
  * or if the data can be read directly into the read packet's buffer.
-**/
+ **/
 - (NSUInteger)readLengthForTermWithHint:(NSUInteger)bytesAvailable shouldPreBuffer:(BOOL *)shouldPreBufferPtr
 {
 	NSAssert(term != nil, @"This method does not apply to non-term reads");
@@ -777,7 +777,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * without going over a terminator or the maxLength.
  * 
  * It is assumed the terminator has not already been read.
-**/
+ **/
 - (NSUInteger)readLengthForTermWithPreBuffer:(GCDAsyncSocketRingBuffer *)preBuffer found:(BOOL *)foundPtr
 {
 	NSAssert(term != nil, @"This method does not apply to non-term reads");
@@ -908,7 +908,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * Prerequisites:
  * The given number of bytes have been added to the end of our buffer.
  * Our bytesDone variable has NOT been changed due to the prebuffered bytes.
-**/
+ **/
 - (NSInteger)searchForTermAfterPreBuffering:(ssize_t)numBytes
 {
 	NSAssert(term != nil, @"This method does not apply to non-term reads");
@@ -951,10 +951,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 /**
  * The GCDAsyncWritePacket encompasses the instructions for any given write.
-**/
+ **/
 @interface GCDAsyncWritePacket : NSObject
 {
-  @public
+@public
 	NSData *buffer;
 	NSUInteger bytesDone;
 	long tag;
@@ -987,10 +987,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 /**
  * The GCDAsyncSpecialPacket encompasses special instructions for interruptions in the read/write queues.
  * This class my be altered to support more than just TLS in the future.
-**/
+ **/
 @interface GCDAsyncSpecialPacket : NSObject
 {
-  @public
+@public
 	NSDictionary *tlsSettings;
 }
 - (id)initWithTLSSettings:(NSDictionary *)settings;
@@ -1862,7 +1862,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * This method runs through the various checks required prior to a connection attempt.
  * It is shared between the connectToHost and connectToAddress methods.
  * 
-**/
+ **/
 - (BOOL)preConnectWithInterface:(NSString *)interface error:(NSError **)errPtr
 {
 	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
@@ -2306,7 +2306,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * Since the DNS lookup executed synchronously on a global concurrent queue,
  * the original connection request may have already been cancelled or timed-out by the time this method is invoked.
  * The lookupIndex tells us whether the lookup is still valid or not.
-**/
+ **/
 - (void)lookup:(int)aConnectIndex didFail:(NSError *)error
 {
 	LogTrace();
@@ -2455,10 +2455,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	
 	[self endConnectTimeout];
 	
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	// The endConnectTimeout method executed above incremented the connectIndex.
 	aConnectIndex = connectIndex;
-	#endif
+#endif
 	
 	// Setup read/write streams (as workaround for specific shortcomings in the iOS platform)
 	// 
@@ -2470,7 +2470,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	// This gives the delegate time to properly configure the streams if needed.
 	
 	dispatch_block_t SetupStreamsPart1 = ^{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		
 		if (![self createReadAndWriteStream])
 		{
@@ -2484,10 +2484,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			return;
 		}
 		
-		#endif
+#endif
 	};
 	dispatch_block_t SetupStreamsPart2 = ^{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		
 		if (aConnectIndex != connectIndex)
 		{
@@ -2507,7 +2507,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			return;
 		}
 		
-		#endif
+#endif
 	};
 	
 	// Notify delegate
@@ -2536,7 +2536,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		SetupStreamsPart1();
 		SetupStreamsPart2();
 	}
-		
+	
 	// Get the connected socket
 	
 	int socketFD = (socket4FD != SOCKET_NULL) ? socket4FD : socket6FD;
@@ -2667,7 +2667,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	
 	[preBuffer reset];
 	
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	{
 		if (readStream || writeStream)
 		{
@@ -2689,8 +2689,8 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			}
 		}
 	}
-	#endif
-	#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+#endif
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 	{
 		[sslReadBuffer setLength:0];
 		if (sslContext)
@@ -2700,15 +2700,15 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			
 			SSLClose(sslContext);
 			
-			#if !TARGET_OS_IPHONE
+#if !TARGET_OS_IPHONE
 			// SSLDisposeContext doesn't exist in iOS for some odd reason.
 			SSLDisposeContext(sslContext);
-			#endif
+#endif
 			
 			sslContext = NULL;
 		}
 	}
-	#endif
+#endif
 	
 	// For some crazy reason (in my opinion), cancelling a dispatch source doesn't
 	// invoke the cancel handler if the dispatch source is paused.
@@ -2718,14 +2718,14 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	if (!accept4Source && !accept6Source && !readSource && !writeSource)
 	{
 		LogVerbose(@"manually closing close");
-
+		
 		if (socket4FD != SOCKET_NULL)
 		{
 			LogVerbose(@"close(socket4FD)");
 			close(socket4FD);
 			socket4FD = SOCKET_NULL;
 		}
-
+		
 		if (socket6FD != SOCKET_NULL)
 		{
 			LogVerbose(@"close(socket6FD)");
@@ -2754,7 +2754,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			
 			accept6Source = NULL;
 		}
-	
+		
 		if (readSource)
 		{
 			LogVerbose(@"dispatch_source_cancel(readSource)");
@@ -2861,7 +2861,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * Closes the socket if possible.
  * That is, if all writes have completed, and we're set to disconnect after writing,
  * or if all reads have completed, and we're set to disconnect after reading.
-**/
+ **/
 - (void)maybeClose
 {
 	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
@@ -2929,7 +2929,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 {
 	NSString *errMsg = [NSString stringWithUTF8String:strerror(errno)];
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:errMsg, NSLocalizedDescriptionKey,
-	                                                                    reason, NSLocalizedFailureReasonErrorKey, nil];
+							  reason, NSLocalizedFailureReasonErrorKey, nil];
 	
 	return [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:userInfo];
 }
@@ -2963,7 +2963,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 /**
  * Returns a standard AsyncSocket maxed out error.
-**/
+ **/
 - (NSError *)readMaxedOutError
 {
 	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncSocketReadMaxedOutError",
@@ -2977,7 +2977,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 /**
  * Returns a standard AsyncSocket write timeout error.
-**/
+ **/
 - (NSError *)readTimeoutError
 {
 	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncSocketReadTimeoutError",
@@ -2991,7 +2991,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 /**
  * Returns a standard AsyncSocket write timeout error.
-**/
+ **/
 - (NSError *)writeTimeoutError
 {
 	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncSocketWriteTimeoutError",
@@ -3465,7 +3465,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * If a non-zero port parameter is provided, any port number in the interface description is ignored.
  * 
  * The returned value is a 'struct sockaddr' wrapped in an NSMutableData object.
-**/
+ **/
 - (void)getInterfaceAddress4:(NSMutableData **)interfaceAddr4Ptr
                     address6:(NSMutableData **)interfaceAddr6Ptr
              fromDescription:(NSString *)interfaceDescription
@@ -3705,7 +3705,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 
 - (BOOL)usingCFStreamForTLS
 {
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	{	
 		if ((flags & kSocketSecure) && (flags & kUsingCFStreamForTLS))
 		{
@@ -3717,18 +3717,18 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			return YES;
 		}
 	}
-	#endif
+#endif
 	
 	return NO;
 }
 
 - (BOOL)usingSecureTransportForTLS
 {
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	{
 		return ![self usingCFStreamForTLS];
 	}
-	#endif
+#endif
 	
 	return YES;
 }
@@ -3986,7 +3986,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * - immediately after the socket opens to handle any pending requests
  * 
  * This method also handles auto-disconnect post read/write completion.
-**/
+ **/
 - (void)maybeDequeueRead
 {
 	LogTrace();
@@ -4234,7 +4234,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	
 	if ([self usingCFStreamForTLS])
 	{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		
 		// Relegated to using CFStream... :( Boo! Give us a full SecureTransport stack Apple!
 		
@@ -4244,11 +4244,11 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		else
 			hasBytesAvailable = NO;
 		
-		#endif
+#endif
 	}
 	else
 	{
-		#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 		
 		estimatedBytesAvailable = socketFDBytesAvailable;
 		
@@ -4290,7 +4290,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		
 		hasBytesAvailable = (estimatedBytesAvailable > 0);
 		
-		#endif
+#endif
 	}
 	
 	if ((hasBytesAvailable == NO) && ([preBuffer availableBytes] == 0))
@@ -4319,14 +4319,14 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		{
 			if ([self usingSecureTransportForTLS])
 			{
-				#if SECURE_TRANSPORT_MAYBE_AVAILABLE
-			
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+				
 				// We are in the process of a SSL Handshake.
 				// We were waiting for incoming data which has just arrived.
 				
 				[self ssl_continueSSLHandshake];
-			
-				#endif
+				
+#endif
 			}
 		}
 		else
@@ -4384,7 +4384,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		// Copy bytes from prebuffer into packet buffer
 		
 		uint8_t *buffer = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset +
-		                                                                  currentRead->bytesDone;
+		currentRead->bytesDone;
 		
 		memcpy(buffer, [preBuffer readBuffer], bytesToCopy);
 		
@@ -4504,7 +4504,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		if (readIntoPreBuffer)
 		{
 			[preBuffer ensureCapacityForWrite:bytesToRead];
-						
+			
 			buffer = [preBuffer writeBuffer];
 		}
 		else
@@ -4522,7 +4522,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		{
 			if ([self usingCFStreamForTLS])
 			{
-				#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 				
 				CFIndex result = CFReadStreamRead(readStream, buffer, (CFIndex)bytesToRead);
 				LogVerbose(@"CFReadStreamRead(): result = %i", (int)result);
@@ -4546,12 +4546,12 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 				// So we reset our flag, and rely on the next callback to alert us of more data.
 				flags &= ~kSecureSocketHasBytesAvailable;
 				
-				#endif
+#endif
 			}
 			else
 			{
-				#if SECURE_TRANSPORT_MAYBE_AVAILABLE
-					
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+				
 				// The documentation from Apple states:
 				// 
 				//     "a read operation might return errSSLWouldBlock,
@@ -4595,7 +4595,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 				// Do not modify socketFDBytesAvailable.
 				// It will be updated via the SSLReadFunction().
 				
-				#endif
+#endif
 			}
 		}
 		else
@@ -4683,7 +4683,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 					// Copy bytes from prebuffer into read buffer
 					
 					uint8_t *readBuf = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset
-					                                                                 + currentRead->bytesDone;
+					+ currentRead->bytesDone;
 					
 					memcpy(readBuf, [preBuffer readBuffer], bytesToRead);
 					
@@ -4779,7 +4779,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 					// Copy bytes from prebuffer into read buffer
 					
 					uint8_t *readBuf = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset
-					                                                                 + currentRead->bytesDone;
+					+ currentRead->bytesDone;
 					
 					memcpy(readBuf, [preBuffer readBuffer], bytesRead);
 					
@@ -4891,9 +4891,9 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		
 		if ([self usingSecureTransportForTLS])
 		{
-			#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 			error = [self sslError:errSSLClosedAbort];
-			#endif
+#endif
 		}
 	}
 	else if (flags & kReadStreamClosed)
@@ -5089,8 +5089,8 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			NSTimeInterval timeoutExtension = 0.0;
 			
 			timeoutExtension = [theDelegate socket:self shouldTimeoutReadWithTag:theRead->tag
-			                                                             elapsed:theRead->timeout
-			                                                           bytesDone:theRead->bytesDone];
+										   elapsed:theRead->timeout
+										 bytesDone:theRead->bytesDone];
 			
 			dispatch_async(socketQueue, ^{ @autoreleasepool {
 				
@@ -5200,7 +5200,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
  * - immediately after the socket opens to handle any pending requests
  * 
  * This method also handles auto-disconnect post read/write completion.
-**/
+ **/
 - (void)maybeDequeueWrite
 {
 	LogTrace();
@@ -5311,14 +5311,14 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 		{
 			if ([self usingSecureTransportForTLS])
 			{
-				#if SECURE_TRANSPORT_MAYBE_AVAILABLE
-			
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+				
 				// We are in the process of a SSL Handshake.
 				// We were waiting for available space in the socket's internal OS buffer to continue writing.
-			
+				
 				[self ssl_continueSSLHandshake];
-			
-				#endif
+				
+#endif
 			}
 		}
 		else
@@ -5347,7 +5347,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	{
 		if ([self usingCFStreamForTLS])
 		{
-			#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 			
 			// 
 			// Writing data using CFStream (over internal TLS)
@@ -5361,10 +5361,10 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			{
 				bytesToWrite = SIZE_MAX;
 			}
-		
+			
 			CFIndex result = CFWriteStreamWrite(writeStream, buffer, (CFIndex)bytesToWrite);
 			LogVerbose(@"CFWriteStreamWrite(%lu) = %li", bytesToWrite, result);
-		
+			
 			if (result < 0)
 			{
 				error = (__bridge_transfer NSError *)CFWriteStreamCopyError(writeStream);
@@ -5379,11 +5379,11 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 				waiting = YES;
 			}
 			
-			#endif
+#endif
 		}
 		else
 		{
-			#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 			
 			// We're going to use the SSLWrite function.
 			// 
@@ -5468,8 +5468,8 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			if (hasNewDataToWrite)
 			{
 				const uint8_t *buffer = (const uint8_t *)[currentWrite->buffer bytes]
-				                                        + currentWrite->bytesDone
-				                                        + bytesWritten;
+				+ currentWrite->bytesDone
+				+ bytesWritten;
 				
 				NSUInteger bytesToWrite = [currentWrite->buffer length] - currentWrite->bytesDone - bytesWritten;
 				
@@ -5514,8 +5514,8 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 				} // while (keepLooping)
 				
 			} // if (hasNewDataToWrite)
-		
-			#endif
+			
+#endif
 		}
 	}
 	else
@@ -5717,8 +5717,8 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			NSTimeInterval timeoutExtension = 0.0;
 			
 			timeoutExtension = [theDelegate socket:self shouldTimeoutWriteWithTag:theWrite->tag
-			                                                              elapsed:theWrite->timeout
-			                                                            bytesDone:theWrite->bytesDone];
+										   elapsed:theWrite->timeout
+										 bytesDone:theWrite->bytesDone];
 			
 			dispatch_async(socketQueue, ^{ @autoreleasepool {
 				
@@ -5808,7 +5808,7 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 	{
 		BOOL canUseSecureTransport = YES;
 		
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		{
 			GCDAsyncSpecialPacket *tlsPacket = (GCDAsyncSpecialPacket *)currentRead;
 			NSDictionary *tlsSettings = tlsPacket->tlsSettings;
@@ -5831,19 +5831,19 @@ static void allocate_ring_buffer(uint8_t **ringBufferPtr, size_t ringBufferSize)
 			if (value && [value boolValue] == YES)
 				canUseSecureTransport = NO;
 		}
-		#endif
+#endif
 		
 		if (IS_SECURE_TRANSPORT_AVAILABLE && canUseSecureTransport)
 		{
-		#if SECURE_TRANSPORT_MAYBE_AVAILABLE
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 			[self ssl_startTLS];
-		#endif
+#endif
 		}
 		else
 		{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 			[self cf_startTLS];
-		#endif
+#endif
 		}
 	}
 }
@@ -6110,7 +6110,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	LogTrace();
 	
 	LogVerbose(@"Starting TLS (via SecureTransport)...");
-		
+	
 	OSStatus status;
 	
 	GCDAsyncSpecialPacket *tlsPacket = (GCDAsyncSpecialPacket *)currentRead;
@@ -6120,7 +6120,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	BOOL isServer = [[tlsSettings objectForKey:(NSString *)kCFStreamSSLIsServer] boolValue];
 	
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	{
 		if (isServer)
 			sslContext = SSLCreateContext(kCFAllocatorDefault, kSSLServerSide, kSSLStreamType);
@@ -6133,7 +6133,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 	}
-	#else
+#else
 	{
 		status = SSLNewContext(isServer, &sslContext);
 		if (status != noErr)
@@ -6142,7 +6142,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 	}
-	#endif
+#endif
 	
 	status = SSLSetIOFuncs(sslContext, &SSLReadFunction, &SSLWriteFunction);
 	if (status != noErr)
@@ -6196,9 +6196,9 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
 	if (value)
 	{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsAnyRoot");
-		#else
+#else
 		
 		BOOL allowsAnyRoot = [value boolValue];
 		
@@ -6209,7 +6209,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 		
-		#endif
+#endif
 	}
 	
 	// 3. kCFStreamSSLAllowsExpiredRoots
@@ -6217,9 +6217,9 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredRoots];
 	if (value)
 	{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsExpiredRoots");
-		#else
+#else
 		
 		BOOL allowsExpiredRoots = [value boolValue];
 		
@@ -6230,7 +6230,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 		
-		#endif
+#endif
 	}
 	
 	// 4. kCFStreamSSLValidatesCertificateChain
@@ -6238,9 +6238,9 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLValidatesCertificateChain];
 	if (value)
 	{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLValidatesCertificateChain");
-		#else
+#else
 		
 		BOOL validatesCertChain = [value boolValue];
 		
@@ -6251,7 +6251,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 		
-		#endif
+#endif
 	}
 	
 	// 5. kCFStreamSSLAllowsExpiredCertificates
@@ -6259,9 +6259,9 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
 	if (value)
 	{
-		#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsExpiredCertificates");
-		#else
+#else
 		
 		BOOL allowsExpiredCerts = [value boolValue];
 		
@@ -6272,7 +6272,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 		
-		#endif
+#endif
 	}
 	
 	// 6. kCFStreamSSLCertificates
@@ -6292,7 +6292,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	// 7. kCFStreamSSLLevel
 	
-	#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	{
 		NSString *sslLevel = [tlsSettings objectForKey:(NSString *)kCFStreamSSLLevel];
 		
@@ -6357,7 +6357,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			}
 		}
 	}
-	#else
+#else
 	{
 		value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLLevel];
 		if (value)
@@ -6413,7 +6413,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			}
 		}
 	}
-	#endif
+#endif
 	
 	// 8. GCDAsyncSocketSSLCipherSuites
 	
@@ -6441,7 +6441,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	// 9. GCDAsyncSocketSSLDiffieHellmanParameters
 	
-	#if !TARGET_OS_IPHONE
+#if !TARGET_OS_IPHONE
 	value = [tlsSettings objectForKey:GCDAsyncSocketSSLDiffieHellmanParameters];
 	if (value)
 	{
@@ -6454,7 +6454,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 			return;
 		}
 	}
-	#endif
+#endif
 	
 	// Setup the sslReadBuffer
 	// 
@@ -6550,7 +6550,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 		if (delegateQueue && [delegate respondsToSelector:@selector(socketDidSecure:)])
 		{
 			__strong id theDelegate = delegate;
-		
+			
 			dispatch_async(delegateQueue, ^{ @autoreleasepool {
 				
 				[theDelegate socketDidSecure:self];
@@ -6686,23 +6686,23 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 }
 
 + (void)cfstreamThread { @autoreleasepool
-{
-	[[NSThread currentThread] setName:GCDAsyncSocketThreadName];
-	
-	LogInfo(@"CFStreamThread: Started");
-	
-	// We can't run the run loop unless it has an associated input source or a timer.
-	// So we'll just create a timer that will never fire - unless the server runs for decades.
-	[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
-	                                 target:self
-	                               selector:@selector(doNothingAtAll:)
-	                               userInfo:nil
-	                                repeats:YES];
-	
-	[[NSRunLoop currentRunLoop] run];
-	
-	LogInfo(@"CFStreamThread: Stopped");
-}}
+	{
+		[[NSThread currentThread] setName:GCDAsyncSocketThreadName];
+		
+		LogInfo(@"CFStreamThread: Started");
+		
+		// We can't run the run loop unless it has an associated input source or a timer.
+		// So we'll just create a timer that will never fire - unless the server runs for decades.
+		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
+										 target:self
+									   selector:@selector(doNothingAtAll:)
+									   userInfo:nil
+										repeats:YES];
+		
+		[[NSRunLoop currentRunLoop] run];
+		
+		LogInfo(@"CFStreamThread: Stopped");
+	}}
 
 + (void)scheduleCFStreams:(GCDAsyncSocket *)asyncSocket
 {

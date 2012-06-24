@@ -4,7 +4,7 @@
 
 #import "TVCTextField.h" // superclass
 
-typedef enum {
+typedef enum IRCTextFormatterEffectType : NSInteger {
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
 	IRCTextFormatterUnderlineEffect,

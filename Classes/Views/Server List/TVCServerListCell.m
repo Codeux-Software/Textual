@@ -44,8 +44,6 @@
 
 @implementation TVCServerListCell
 
-@synthesize parent;
-@synthesize cellItem;
 
 #pragma mark -
 #pragma mark Status Icon
@@ -107,8 +105,8 @@
 		textColor = _badgeTextColorTS;
 	}
 	
-	[attributes setObject:_badgeFont forKey:NSFontAttributeName];
-	[attributes setObject:textColor  forKey:NSForegroundColorAttributeName];
+	attributes[NSFontAttributeName] = _badgeFont;
+	attributes[NSForegroundColorAttributeName] = textColor;
 	
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
 																   attributes:attributes];

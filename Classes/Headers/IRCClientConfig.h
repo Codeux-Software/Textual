@@ -8,7 +8,7 @@
 #define TXFloodControlDefaultDelayTimer       2
 #define TXFloodControlDefaultMessageCount     2
 
-typedef enum {
+typedef enum TXConnectionProxyType : NSInteger {
 	TXConnectionNoProxyType = 0,
 	TXConnectionSystemSocksProxyType = 1,
 	TXConnectionSocks4ProxyType = 4,

@@ -10,11 +10,6 @@
 
 @implementation TDChanInviteExceptionSheet
 
-@synthesize list;
-@synthesize table;
-@synthesize header;
-@synthesize modes;
-@synthesize delegate;
 
 - (id)init
 {
@@ -61,7 +56,7 @@
 
 - (void)addException:(NSString *)host tset:(NSString *)time setby:(NSString *)owner
 {
-    [self.list safeAddObject:[NSArray arrayWithObjects:host, [owner nicknameFromHostmask], time, nil]];
+    [self.list safeAddObject:@[host, [owner nicknameFromHostmask], time]];
     
     [self reloadTable];
 }

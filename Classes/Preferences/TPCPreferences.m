@@ -43,102 +43,102 @@ static NSMutableDictionary *commandIndex = nil;
 	/* This needs to be redesigned… */
 	commandIndex = [NSMutableDictionary new];
 	
-	[commandIndex setObject:@"3"   forKey:IRCCommandIndexAway];
-	[commandIndex setObject:@"4"   forKey:IRCCommandIndexError];
-	[commandIndex setObject:@"5"   forKey:IRCCommandIndexInvite];
-	[commandIndex setObject:@"6"   forKey:IRCCommandIndexIson];
-	[commandIndex setObject:@"7"   forKey:IRCCommandIndexJoin];
-	[commandIndex setObject:@"8"   forKey:IRCCommandIndexKick];
-	[commandIndex setObject:@"9"   forKey:IRCCommandIndexKill];
-	[commandIndex setObject:@"10"  forKey:IRCCommandIndexList];
-	[commandIndex setObject:@"11"  forKey:IRCCommandIndexMode];
-	[commandIndex setObject:@"12"  forKey:IRCCommandIndexNames];
-	[commandIndex setObject:@"13"  forKey:IRCCommandIndexNick];
-	[commandIndex setObject:@"14"  forKey:IRCCommandIndexNotice];
-	[commandIndex setObject:@"15"  forKey:IRCCommandIndexPart];
-	[commandIndex setObject:@"16"  forKey:IRCCommandIndexPass];
-	[commandIndex setObject:@"17"  forKey:IRCCommandIndexPing];
-	[commandIndex setObject:@"18"  forKey:IRCCommandIndexPong];
-	[commandIndex setObject:@"19"  forKey:IRCCommandIndexPrivmsg];
-	[commandIndex setObject:@"20"  forKey:IRCCommandIndexQuit];
-	[commandIndex setObject:@"21"  forKey:IRCCommandIndexTopic];
-	[commandIndex setObject:@"22"  forKey:IRCCommandIndexUser];
-	[commandIndex setObject:@"23"  forKey:IRCCommandIndexWho];
-	[commandIndex setObject:@"24"  forKey:IRCCommandIndexWhois];
-	[commandIndex setObject:@"25"  forKey:IRCCommandIndexWhowas];
-	[commandIndex setObject:@"27"  forKey:IRCCommandIndexAction];
-	[commandIndex setObject:@"28"  forKey:IRCCommandIndexDcc];
-	[commandIndex setObject:@"29"  forKey:IRCCommandIndexSend];
-	[commandIndex setObject:@"31"  forKey:IRCCommandIndexClientinfo];
-	[commandIndex setObject:@"32"  forKey:IRCCommandIndexCtcp];
-	[commandIndex setObject:@"33"  forKey:IRCCommandIndexCtcpreply];
-	[commandIndex setObject:@"34"  forKey:IRCCommandIndexTime];
-	[commandIndex setObject:@"35"  forKey:IRCCommandIndexUserinfo];
-	[commandIndex setObject:@"36"  forKey:IRCCommandIndexVersion];
-	[commandIndex setObject:@"38"  forKey:IRCCommandIndexOmsg];
-	[commandIndex setObject:@"39"  forKey:IRCCommandIndexOnotice];
-	[commandIndex setObject:@"41"  forKey:IRCCommandIndexBan];
-	[commandIndex setObject:@"42"  forKey:IRCCommandIndexClear];
-	[commandIndex setObject:@"43"  forKey:IRCCommandIndexClose];
-	[commandIndex setObject:@"44"  forKey:IRCCommandIndexCycle];
-	[commandIndex setObject:@"45"  forKey:IRCCommandIndexDehalfop];
-	[commandIndex setObject:@"46"  forKey:IRCCommandIndexDeop];
-	[commandIndex setObject:@"47"  forKey:IRCCommandIndexDevoice];
-	[commandIndex setObject:@"48"  forKey:IRCCommandIndexHalfop];
-	[commandIndex setObject:@"49"  forKey:IRCCommandIndexHop];
-	[commandIndex setObject:@"50"  forKey:IRCCommandIndexIgnore];
-	[commandIndex setObject:@"51"  forKey:IRCCommandIndexJ];
-	[commandIndex setObject:@"52"  forKey:IRCCommandIndexLeave];
-	[commandIndex setObject:@"53"  forKey:IRCCommandIndexM];
-	[commandIndex setObject:@"54"  forKey:IRCCommandIndexMe];
-	[commandIndex setObject:@"55"  forKey:IRCCommandIndexMsg];
-	[commandIndex setObject:@"56"  forKey:IRCCommandIndexOp];
-	[commandIndex setObject:@"57"  forKey:IRCCommandIndexRaw];
-	[commandIndex setObject:@"58"  forKey:IRCCommandIndexRejoin];
-	[commandIndex setObject:@"59"  forKey:IRCCommandIndexQuery];
-	[commandIndex setObject:@"60"  forKey:IRCCommandIndexQuote];
-	[commandIndex setObject:@"61"  forKey:IRCCommandIndexT];
-	[commandIndex setObject:@"62"  forKey:IRCCommandIndexTimer];
-	[commandIndex setObject:@"63"  forKey:IRCCommandIndexVoice];
-	[commandIndex setObject:@"64"  forKey:IRCCommandIndexUnban];
-	[commandIndex setObject:@"65"  forKey:IRCCommandIndexUnignore];
-	[commandIndex setObject:@"66"  forKey:IRCCommandIndexUmode];
+	commandIndex[IRCCommandIndexAway] = @"3";
+	commandIndex[IRCCommandIndexError] = @"4";
+	commandIndex[IRCCommandIndexInvite] = @"5";
+	commandIndex[IRCCommandIndexIson] = @"6";
+	commandIndex[IRCCommandIndexJoin] = @"7";
+	commandIndex[IRCCommandIndexKick] = @"8";
+	commandIndex[IRCCommandIndexKill] = @"9";
+	commandIndex[IRCCommandIndexList] = @"10";
+	commandIndex[IRCCommandIndexMode] = @"11";
+	commandIndex[IRCCommandIndexNames] = @"12";
+	commandIndex[IRCCommandIndexNick] = @"13";
+	commandIndex[IRCCommandIndexNotice] = @"14";
+	commandIndex[IRCCommandIndexPart] = @"15";
+	commandIndex[IRCCommandIndexPass] = @"16";
+	commandIndex[IRCCommandIndexPing] = @"17";
+	commandIndex[IRCCommandIndexPong] = @"18";
+	commandIndex[IRCCommandIndexPrivmsg] = @"19";
+	commandIndex[IRCCommandIndexQuit] = @"20";
+	commandIndex[IRCCommandIndexTopic] = @"21";
+	commandIndex[IRCCommandIndexUser] = @"22";
+	commandIndex[IRCCommandIndexWho] = @"23";
+	commandIndex[IRCCommandIndexWhois] = @"24";
+	commandIndex[IRCCommandIndexWhowas] = @"25";
+	commandIndex[IRCCommandIndexAction] = @"27";
+	commandIndex[IRCCommandIndexDcc] = @"28";
+	commandIndex[IRCCommandIndexSend] = @"29";
+	commandIndex[IRCCommandIndexClientinfo] = @"31";
+	commandIndex[IRCCommandIndexCtcp] = @"32";
+	commandIndex[IRCCommandIndexCtcpreply] = @"33";
+	commandIndex[IRCCommandIndexTime] = @"34";
+	commandIndex[IRCCommandIndexUserinfo] = @"35";
+	commandIndex[IRCCommandIndexVersion] = @"36";
+	commandIndex[IRCCommandIndexOmsg] = @"38";
+	commandIndex[IRCCommandIndexOnotice] = @"39";
+	commandIndex[IRCCommandIndexBan] = @"41";
+	commandIndex[IRCCommandIndexClear] = @"42";
+	commandIndex[IRCCommandIndexClose] = @"43";
+	commandIndex[IRCCommandIndexCycle] = @"44";
+	commandIndex[IRCCommandIndexDehalfop] = @"45";
+	commandIndex[IRCCommandIndexDeop] = @"46";
+	commandIndex[IRCCommandIndexDevoice] = @"47";
+	commandIndex[IRCCommandIndexHalfop] = @"48";
+	commandIndex[IRCCommandIndexHop] = @"49";
+	commandIndex[IRCCommandIndexIgnore] = @"50";
+	commandIndex[IRCCommandIndexJ] = @"51";
+	commandIndex[IRCCommandIndexLeave] = @"52";
+	commandIndex[IRCCommandIndexM] = @"53";
+	commandIndex[IRCCommandIndexMe] = @"54";
+	commandIndex[IRCCommandIndexMsg] = @"55";
+	commandIndex[IRCCommandIndexOp] = @"56";
+	commandIndex[IRCCommandIndexRaw] = @"57";
+	commandIndex[IRCCommandIndexRejoin] = @"58";
+	commandIndex[IRCCommandIndexQuery] = @"59";
+	commandIndex[IRCCommandIndexQuote] = @"60";
+	commandIndex[IRCCommandIndexT] = @"61";
+	commandIndex[IRCCommandIndexTimer] = @"62";
+	commandIndex[IRCCommandIndexVoice] = @"63";
+	commandIndex[IRCCommandIndexUnban] = @"64";
+	commandIndex[IRCCommandIndexUnignore] = @"65";
+	commandIndex[IRCCommandIndexUmode] = @"66";
   //[commandIndex setObject:@"67"  forKey:IRCCommandIndexVersion]; — Deprecated index. Duplicate.
-	[commandIndex setObject:@"68"  forKey:IRCCommandIndexWeights];
-	[commandIndex setObject:@"69"  forKey:IRCCommandIndexEcho];
-	[commandIndex setObject:@"70"  forKey:IRCCommandIndexDebug];
-	[commandIndex setObject:@"71"  forKey:IRCCommandIndexClearall];
-	[commandIndex setObject:@"72"  forKey:IRCCommandIndexAmsg];
-	[commandIndex setObject:@"73"  forKey:IRCCommandIndexAme];
-	[commandIndex setObject:@"74"  forKey:IRCCommandIndexMute]; 
-	[commandIndex setObject:@"75"  forKey:IRCCommandIndexUnmute]; 
-	[commandIndex setObject:@"76"  forKey:IRCCommandIndexUnloadPlugins]; 
-	[commandIndex setObject:@"77"  forKey:IRCCommandIndexRemove];  
-	[commandIndex setObject:@"79"  forKey:IRCCommandIndexKickban]; 
-	[commandIndex setObject:@"80"  forKey:IRCCommandIndexWallops]; 
-	[commandIndex setObject:@"81"  forKey:IRCCommandIndexIcbadge];
-	[commandIndex setObject:@"82"  forKey:IRCCommandIndexServer];
-	[commandIndex setObject:@"83"  forKey:IRCCommandIndexConn]; 
-	[commandIndex setObject:@"84"  forKey:IRCCommandIndexMyversion]; 
-	[commandIndex setObject:@"85"  forKey:IRCCommandIndexChatops]; 
-	[commandIndex setObject:@"86"  forKey:IRCCommandIndexGlobops]; 
-	[commandIndex setObject:@"87"  forKey:IRCCommandIndexLocops]; 
-	[commandIndex setObject:@"88"  forKey:IRCCommandIndexNachat]; 
-	[commandIndex setObject:@"89"  forKey:IRCCommandIndexAdchat]; 
-	[commandIndex setObject:@"91"  forKey:IRCCommandIndexLoadPlugins];
-	[commandIndex setObject:@"92"  forKey:IRCCommandIndexSme];
-	[commandIndex setObject:@"93"  forKey:IRCCommandIndexSmsg];
-	[commandIndex setObject:@"94"  forKey:IRCCommandIndexLagcheck];
-	[commandIndex setObject:@"95"  forKey:IRCCommandIndexMylag];
-	[commandIndex setObject:@"96"  forKey:IRCCommandIndexZline];
-	[commandIndex setObject:@"97"  forKey:IRCCommandIndexGline];
-	[commandIndex setObject:@"98"  forKey:IRCCommandIndexGzline];
-	[commandIndex setObject:@"99"  forKey:IRCCommandIndexShun];
-	[commandIndex setObject:@"100" forKey:IRCCommandIndexTempshun];
-	[commandIndex setObject:@"101" forKey:IRCCommandIndexAuthenticate];
-	[commandIndex setObject:@"102" forKey:IRCCommandIndexCap];
-	[commandIndex setObject:@"103" forKey:IRCCommandIndexCaps];
-	[commandIndex setObject:@"104" forKey:IRCCommandIndexCcbadge];
+	commandIndex[IRCCommandIndexWeights] = @"68";
+	commandIndex[IRCCommandIndexEcho] = @"69";
+	commandIndex[IRCCommandIndexDebug] = @"70";
+	commandIndex[IRCCommandIndexClearall] = @"71";
+	commandIndex[IRCCommandIndexAmsg] = @"72";
+	commandIndex[IRCCommandIndexAme] = @"73";
+	commandIndex[IRCCommandIndexMute] = @"74"; 
+	commandIndex[IRCCommandIndexUnmute] = @"75"; 
+	commandIndex[IRCCommandIndexUnloadPlugins] = @"76"; 
+	commandIndex[IRCCommandIndexRemove] = @"77";  
+	commandIndex[IRCCommandIndexKickban] = @"79"; 
+	commandIndex[IRCCommandIndexWallops] = @"80"; 
+	commandIndex[IRCCommandIndexIcbadge] = @"81";
+	commandIndex[IRCCommandIndexServer] = @"82";
+	commandIndex[IRCCommandIndexConn] = @"83"; 
+	commandIndex[IRCCommandIndexMyversion] = @"84"; 
+	commandIndex[IRCCommandIndexChatops] = @"85"; 
+	commandIndex[IRCCommandIndexGlobops] = @"86"; 
+	commandIndex[IRCCommandIndexLocops] = @"87"; 
+	commandIndex[IRCCommandIndexNachat] = @"88"; 
+	commandIndex[IRCCommandIndexAdchat] = @"89"; 
+	commandIndex[IRCCommandIndexLoadPlugins] = @"91";
+	commandIndex[IRCCommandIndexSme] = @"92";
+	commandIndex[IRCCommandIndexSmsg] = @"93";
+	commandIndex[IRCCommandIndexLagcheck] = @"94";
+	commandIndex[IRCCommandIndexMylag] = @"95";
+	commandIndex[IRCCommandIndexZline] = @"96";
+	commandIndex[IRCCommandIndexGline] = @"97";
+	commandIndex[IRCCommandIndexGzline] = @"98";
+	commandIndex[IRCCommandIndexShun] = @"99";
+	commandIndex[IRCCommandIndexTempshun] = @"100";
+	commandIndex[IRCCommandIndexAuthenticate] = @"101";
+	commandIndex[IRCCommandIndexCap] = @"102";
+	commandIndex[IRCCommandIndexCaps] = @"103";
+	commandIndex[IRCCommandIndexCcbadge] = @"104";
 }
 
 + (NSInteger)indexOfIRCommand:(NSString *)command 
@@ -166,7 +166,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)applicationName
 {
-	return [textualInfoPlist objectForKey:@"CFBundleName"];
+	return textualInfoPlist[@"CFBundleName"];
 }
 
 + (NSInteger)applicationProcessID
@@ -176,7 +176,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)gitBuildReference
 {
-	return [textualInfoPlist objectForKey:@"TXBundleBuildReference"];
+	return textualInfoPlist[@"TXBundleBuildReference"];
 }
 
 + (NSString *)applicationBundleIdentifier
@@ -881,7 +881,7 @@ static NSMutableArray *excludeWords = nil;
 	NSArray *ary = [_NSUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
 	
 	for (NSDictionary *e in ary) {
-		NSString *s = [e objectForKey:@"string"];
+		NSString *s = e[@"string"];
 		
 		if (NSObjectIsNotEmpty(s)) {
 			[keywords safeAddObject:s];
@@ -900,7 +900,7 @@ static NSMutableArray *excludeWords = nil;
 	NSArray *ary = [_NSUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
 	
 	for (NSDictionary *e in ary) {
-		NSString *s = [e objectForKey:@"string"];
+		NSString *s = e[@"string"];
 		
 		if (s) [excludeWords safeAddObject:s];
 	}
@@ -913,7 +913,7 @@ static NSMutableArray *excludeWords = nil;
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	for (NSDictionary *e in src) {
-		NSString *s = [e objectForKey:@"string"];
+		NSString *s = e[@"string"];
 		
 		if (NSObjectIsNotEmpty(s)) {
 			[ary safeAddObject:s];
@@ -927,7 +927,7 @@ static NSMutableArray *excludeWords = nil;
 	for (NSString *s in ary) {
 		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 		
-		[dic setObject:s forKey:@"string"];
+		dic[@"string"] = s;
 		
 		[saveAry safeAddObject:dic];
 	}
@@ -1083,20 +1083,20 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"NotificationType -> Address Bok Match -> Enabled"];
 	[d setBool:YES forKey:@"NotificationType -> Private Message (New) -> Enabled"];
 	
-	[d setObject:@"Glass"							forKey:@"NotificationType -> Highlight -> Sound"];
-	[d setObject:@"ircop alert"						forKey:@"ScanForIRCopAlertInServerNoticesMatch"];
-	[d setObject:@"Guest"							forKey:@"DefaultIdentity -> Nickname"];
-	[d setObject:@"textual"							forKey:@"DefaultIdentity -> Username"];
-	[d setObject:@"Textual User"					forKey:@"DefaultIdentity -> Realname"];
-	[d setObject:TXTLS(@"ShunReason")				forKey:@"IRCopDefaultLocalizaiton -> Shun Reason"];
-	[d setObject:TXTLS(@"KillReason")				forKey:@"IRCopDefaultLocalizaiton -> Kill Reason"];
-	[d setObject:TXTLS(@"GlineReason")				forKey:@"IRCopDefaultLocalizaiton -> G:Line Reason"];
-	[d setObject:TXTLS(@"KickReason")				forKey:@"ChannelOperatorDefaultLocalization -> Kick Reasone"];
-	[d setObject:TXDefaultTextualLogStyle			forKey:@"Theme -> Name"];
-	[d setObject:TXDefaultTextualLogFont			forKey:@"Theme -> Font Name"];
-	[d setObject:TXLogLineUndefinedNicknameFormat	forKey:@"Theme -> Nickname Format"];
-	[d setObject:TXDefaultTextualTimestampFormat	forKey:@"Theme -> Timestamp Format"];
-	[d setObject:@"~/Documents/Textual Logs"		forKey:@"LogTranscriptDestination"];
+	d[@"NotificationType -> Highlight -> Sound"] = @"Glass";
+	d[@"ScanForIRCopAlertInServerNoticesMatch"] = @"ircop alert";
+	d[@"DefaultIdentity -> Nickname"] = @"Guest";
+	d[@"DefaultIdentity -> Username"] = @"textual";
+	d[@"DefaultIdentity -> Realname"] = @"Textual User";
+	d[@"IRCopDefaultLocalizaiton -> Shun Reason"] = TXTLS(@"ShunReason");
+	d[@"IRCopDefaultLocalizaiton -> Kill Reason"] = TXTLS(@"KillReason");
+	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reasone"] = TXTLS(@"KickReason");
+	d[@"Theme -> Name"] = TXDefaultTextualLogStyle;
+	d[@"Theme -> Font Name"] = TXDefaultTextualLogFont;
+	d[@"Theme -> Nickname Format"] = TXLogLineUndefinedNicknameFormat;
+	d[@"Theme -> Timestamp Format"] = TXDefaultTextualTimestampFormat;
+	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
 	
 	[d setInteger:2										forKey:@"AutojoinMaximumChannelJoinCount"];
 	[d setInteger:300									forKey:@"ScrollbackMaximumLineCount"];

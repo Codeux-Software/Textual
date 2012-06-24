@@ -22,27 +22,6 @@
 
 @implementation TXMenuController
 
-@synthesize aboutPanel;
-@synthesize channelSheet;
-@synthesize closeWindowItem;
-@synthesize currentSearchPhrase;
-@synthesize highlightSheet;
-@synthesize inviteSheet;
-@synthesize isInFullScreenMode;
-@synthesize master;
-@synthesize memberList;
-@synthesize modeSheet;
-@synthesize nickSheet;
-@synthesize pointedChannelName;
-@synthesize pointedNick;
-@synthesize pointedUrl;
-@synthesize preferencesController;
-@synthesize serverList;
-@synthesize serverSheet;
-@synthesize text;
-@synthesize topicSheet;
-@synthesize window;
-@synthesize world;
 
 - (id)init
 {

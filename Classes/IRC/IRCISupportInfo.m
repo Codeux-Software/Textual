@@ -18,14 +18,6 @@
 
 @implementation IRCISupportInfo
 
-@synthesize nickLen;
-@synthesize modesCount;
-@synthesize networkName;
-@synthesize userModeQPrefix;
-@synthesize userModeAPrefix;
-@synthesize userModeOPrefix;
-@synthesize userModeHPrefix;
-@synthesize userModeVPrefix;
 
 - (id)init
 {

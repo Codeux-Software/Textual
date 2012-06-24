@@ -9,7 +9,7 @@
 - (id)safeObjectAtIndex:(NSInteger)n
 {
 	if (n >= 0 && n < self.count) {
-		return [self objectAtIndex:n];
+		return self[n];
 	}
 	
 	return nil;
@@ -143,22 +143,22 @@
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:NSNumberWithBOOL(value) atIndex:index];
+	[self safeInsertObject:@(value) atIndex:index];
 }
 
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:NSNumberWithInteger(value) atIndex:index];
+	[self safeInsertObject:@(value) atIndex:index];
 }
 
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:NSNumberWithLongLong(value) atIndex:index];
+	[self safeInsertObject:@(value) atIndex:index];
 }
 
 - (void)insertDouble:(TXNSDouble)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:NSNumberWithDouble(value) atIndex:index];
+	[self safeInsertObject:@(value) atIndex:index];
 }
 
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index
@@ -168,22 +168,22 @@
 
 - (void)addBool:(BOOL)value
 {
-	[self safeAddObject:NSNumberWithBOOL(value)];
+	[self safeAddObject:@(value)];
 }
 
 - (void)addInteger:(NSInteger)value
 {
-	[self safeAddObject:NSNumberWithInteger(value)];
+	[self safeAddObject:@(value)];
 }
 
 - (void)addLongLong:(long long)value
 {
-	[self safeAddObject:NSNumberWithLongLong(value)];
+	[self safeAddObject:@(value)];
 }
 	 
 - (void)addDouble:(TXNSDouble)value
 {
-	[self safeAddObject:NSNumberWithDouble(value)];
+	[self safeAddObject:@(value)];
 }
 
 - (void)addPointer:(void *)value
@@ -202,7 +202,7 @@
 	NSUInteger current_index = [self lastIndex];
 	
 	while (NSDissimilarObjects(current_index, NSNotFound)) {
-		[ary addObject:[NSNumber numberWithUnsignedInteger:current_index]];
+		[ary addObject:@(current_index)];
 		
 		current_index = [self indexLessThanIndex:current_index];
 	}

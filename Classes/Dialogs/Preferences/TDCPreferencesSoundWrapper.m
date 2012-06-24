@@ -6,12 +6,6 @@
 
 @implementation TDCPreferencesSoundWrapper
 
-@synthesize eventType;
-@synthesize displayName;
-@synthesize sound;
-@synthesize growl;
-@synthesize growlSticky;
-@synthesize disableWhileAway;
 
 - (id)initWithEventType:(TXNotificationType)aEventType
 {

@@ -6,11 +6,6 @@
 
 @implementation TDCTopicSheet
 
-@synthesize uid;
-@synthesize cid;
-@synthesize text;
-@synthesize header;
-@synthesize delegate;
 
 - (id)init
 {

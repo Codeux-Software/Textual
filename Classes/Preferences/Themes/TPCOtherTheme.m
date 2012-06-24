@@ -19,19 +19,11 @@
 
 @implementation TPCOtherTheme
 
-@synthesize path;
-@synthesize channelViewFont;
-@synthesize channelViewFontOverrode;
-@synthesize nicknameFormat;
-@synthesize timestampFormat;
-@synthesize underlyingWindowColor;
-@synthesize indentationOffset;
-@synthesize renderingEngineVersion;
 
 - (void)setPath:(NSString *)value
 {
 	if (NSDissimilarObjects(self.path, value)) {
-		path = value;
+		_path = value;
 	}
 	
 	[self reload];
@@ -103,14 +95,14 @@
 	NSDictionary *userInterface = [NSDictionary dictionaryWithContentsOfFile:[self.path stringByAppendingPathComponent:@"/userInterface.plist"]];
 	
 	self.renderingEngineVersion = [userInterface doubleForKey:@"Rendering Engine Version"];
-	self.underlyingWindowColor	= [self processColorStringValue:[userInterface objectForKey:@"Underlying Window Color"]
+	self.underlyingWindowColor	= [self processColorStringValue:userInterface[@"Underlying Window Color"]
 														   def:@"#000000"];
 	
 	
 	// ====================================================== //
 	
 	NSDictionary *preferencesOverride = [NSDictionary dictionaryWithContentsOfFile:[self.path stringByAppendingPathComponent:@"/preferencesOverride.plist"]];
-	NSDictionary *prefOChannelFont    = [preferencesOverride objectForKey:@"Override Channel Font"];
+	NSDictionary *prefOChannelFont    = preferencesOverride[@"Override Channel Font"];
 	
 	// ====================================================== //
 	
@@ -118,20 +110,20 @@
         self.indentationOffset = [preferencesOverride doubleForKey:@"Indentation Offset"];
     }
     
-	self.nicknameFormat  = [self processNSStringValue:[preferencesOverride objectForKey:@"Nickname Format"] def:nil];
-	self.timestampFormat = [self processNSStringValue:[preferencesOverride objectForKey:@"Timestamp Format"] def:nil];
+	self.nicknameFormat  = [self processNSStringValue:preferencesOverride[@"Nickname Format"] def:nil];
+	self.timestampFormat = [self processNSStringValue:preferencesOverride[@"Timestamp Format"] def:nil];
 	
-	self.channelViewFont = [self processFontValue:[prefOChannelFont objectForKey:@"Font Name"] 
+	self.channelViewFont = [self processFontValue:prefOChannelFont[@"Font Name"] 
 											 size:[prefOChannelFont integerForKey:@"Font Size"] 
 										 defaultv:[NSFont fontWithName:[TPCPreferences themeChannelViewFontName] size:[TPCPreferences themeChannelViewFontSize]]
 										preferred:[NSFont fontWithName:TXDefaultTextualLogFont size:12.0]
 									  allowCustom:YES
-										 overrode:&channelViewFontOverrode];
+										 overrode:&_channelViewFontOverrode];
 	
 	// ====================================================== //
 	
-	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Theme -> Nickname Format Preference Enabled"];
-	[[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Theme -> Timestamp Format Preference Enabled"];
+	[[_NSUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Theme -> Nickname Format Preference Enabled"];
+	[[_NSUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Theme -> Timestamp Format Preference Enabled"];
     [[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.channelViewFontOverrode))		forKey:@"Theme -> Channel Font Preference Enabled"];
 	
 	// ====================================================== //

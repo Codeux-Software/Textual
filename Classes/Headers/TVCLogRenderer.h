@@ -4,7 +4,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum {
+typedef enum TVCLogRendererType : NSInteger {
 	TVCLogRendererHTMLType,
 	TVCLogRendererAttributedStringType,
 } TVCLogRendererType;
