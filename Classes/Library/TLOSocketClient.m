@@ -41,7 +41,7 @@
 - (BOOL)useNewSocketEngine
 {
 	return (self.useSystemSocks == NO && self.useSocks == NO &&
-			[_NSUserDefaults() boolForKey:@"disableNewSocketEngine"] == NO);
+			[_NSUserDefaults() boolForKey:@"DisableNewSocketEngine"] == NO);
 }
 
 - (void)destroyDispatchQueue

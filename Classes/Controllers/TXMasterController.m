@@ -540,7 +540,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 
 - (void)loadWindowState
 {
-	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"MainWindow"];
+	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"Window -> Main Window"];
 	
 	if (dic) {
 		NSInteger x = [dic integerForKey:@"x"];
@@ -550,9 +550,9 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		[self.window setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.menu.isInFullScreenMode];
 		
-		[self.text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"GrammarChecking"]];
-		[self.text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"SpellChecking"]];
-		[self.text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"AutoSpellCorrection"]];
+		[self.text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
+		[self.text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
+		[self.text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
 		
 		self.serverSplitView.position = [dic integerForKey:@"serverList"];
 		self.memberSplitView.position = [dic integerForKey:@"memberList"];
@@ -618,9 +618,9 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	[dic setInteger:self.serverSplitView.position forKey:@"serverList"];
 	[dic setInteger:self.memberSplitView.position forKey:@"memberList"];
 	
-	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"GrammarChecking"];
-	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"SpellChecking"];
-	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"AutoSpellCorrection"];
+	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"TextFieldAutomaticGrammarCheck"];
+	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
+	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"TextFieldAutomaticSpellCorrection"];
 	
 	[TPCPreferences saveWindowState:dic name:@"MainWindow"];
 	[TPCPreferences sync];

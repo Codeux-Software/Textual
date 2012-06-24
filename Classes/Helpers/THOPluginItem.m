@@ -38,7 +38,7 @@
 			
 			if (NSObjectIsNotEmpty(pluginRules)) {
 				for (NSString *command in pluginRules) {
-					if ([TPCPreferences commandUIndex:command] >= 1) {
+					if ([TPCPreferences indexOfIRCommand:command] >= 1) {
 						id objectValue = [pluginRules objectForKey:command];
 						
 						if ([objectValue isKindOfClass:[NSArray class]]) {

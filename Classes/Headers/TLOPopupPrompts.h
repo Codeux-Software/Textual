@@ -4,7 +4,7 @@
 
 #import "TextualApplication.h"
 
-#define TXPopupPromptSuppressionPrefix		@"Preferences.prompts."
+#define TXPopupPromptSuppressionPrefix		@"Text Input Prompt Suppression -> "
 
 @interface TLOPopupPrompts : NSObject 
 + (void)popupPromptNULLSelector:(NSInteger)returnCode;
