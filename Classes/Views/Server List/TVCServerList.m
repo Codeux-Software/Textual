@@ -6,7 +6,6 @@
 
 @implementation TVCServerList
 
-@synthesize keyDelegate;
 
 - (void)updateBackgroundColor
 {

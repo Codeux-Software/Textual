@@ -8,12 +8,10 @@
 
 @implementation TVCMainWindowSegmentedCell
 
-@synthesize menuController;
-
 - (SEL)action
 {
     if (PointerIsEmpty([self menuForSegment:self.selectedSegment])) {
-		[menuController showNicknameChangeDialog:nil];
+		[self.menuController showNicknameChangeDialog:nil];
 
 		return nil;
     } else {

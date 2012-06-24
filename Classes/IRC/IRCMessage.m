@@ -10,11 +10,6 @@
 
 @implementation IRCMessage
 
-@synthesize receivedAt;
-@synthesize sender;
-@synthesize command;
-@synthesize numericReply;
-@synthesize params;
 
 - (id)init
 {

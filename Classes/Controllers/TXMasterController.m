@@ -20,35 +20,6 @@
 
 @implementation TXMasterController
 
-@synthesize addServerButton;
-@synthesize chanMenu;
-@synthesize channelMenu;
-@synthesize completionStatus;
-@synthesize extrac;
-@synthesize formattingMenu;
-@synthesize ghostMode;
-@synthesize growl;
-@synthesize inputHistory;
-@synthesize logBase;
-@synthesize logMenu;
-@synthesize memberList;
-@synthesize memberSplitView;
-@synthesize memberSplitViewOldPosition;
-@synthesize memberMenu;
-@synthesize menu;
-@synthesize serverList;
-@synthesize serverMenu;
-@synthesize serverSplitView;
-@synthesize terminating;
-@synthesize text;
-@synthesize treeMenu;
-@synthesize urlMenu;
-@synthesize viewTheme;
-@synthesize welcomeSheet;
-@synthesize window;
-@synthesize windowButtonController;
-@synthesize windowButtonControllerCell;
-@synthesize world;
 
 #pragma mark -
 #pragma mark NSApplication Delegate
@@ -233,7 +204,7 @@
 	
     [self.world reloadTree];
 	
-	[text.backgroundView setWindowIsActive:YES];
+	[_text.backgroundView setWindowIsActive:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
@@ -248,7 +219,7 @@
     
     [self.world reloadTree];
 	
-	[text.backgroundView setWindowIsActive:NO];
+	[_text.backgroundView setWindowIsActive:NO];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -490,8 +461,8 @@ constrainMaxCoordinate:(CGFloat)proposedMax
 		 ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *leftSide  = [splitView subviews][0];
+		NSView *rightSide = [splitView subviews][1];
 		
 		NSInteger leftWidth  = [leftSide bounds].size.width;
 		NSInteger rightWidth = [rightSide bounds].size.width;
@@ -507,8 +478,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		 ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *leftSide  = [splitView subviews][0];
+		NSView *rightSide = [splitView subviews][1];
 		
 		NSInteger leftWidth  = [leftSide bounds].size.width;
 		NSInteger rightWidth = [rightSide bounds].size.width;
@@ -522,13 +493,13 @@ constrainMinCoordinate:(CGFloat)proposedMax
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = [[splitView subviews] objectAtIndex:0];
+		NSView *leftSide = [splitView subviews][0];
         
 		if ([leftSide isEqual:subview]) {
 			return NO;
 		}
 	} else if ([splitView isEqual:self.serverSplitView]) {
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *rightSide = [splitView subviews][1];
 		
 		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.world.clients)) {
 			return NO;		
@@ -980,7 +951,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 #pragma mark -
 #pragma mark Keyboard Navigation
 
-typedef enum {
+typedef enum TXMoveKind : NSInteger {
 	TXMoveUpKind,
 	TXMoveDownKind,
 	TXMoveLeftKind,
@@ -1365,8 +1336,8 @@ typedef enum {
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
 	
 	/* Selection Settings. */
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
+	IRCClient *u = self.world.selectedClient;
+	IRCChannel *c = self.world.selectedChannel;
 	
 	if (PointerIsEmpty(c)) {
 		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
@@ -1380,7 +1351,7 @@ typedef enum {
 
 - (void)buildSegmentedController
 {
-	self.windowButtonControllerCell.menuController = menu;
+	self.windowButtonControllerCell.menuController = self.menu;
 	
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
 	
@@ -1408,24 +1379,23 @@ typedef enum {
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	for (NSString *s in [config objectForKey:@"channelList"]) {
+	for (NSString *s in config[@"channelList"]) {
 		if ([s isChannelName]) {
-			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:
-									 s, @"channelName",
-									 NSNumberWithBOOL(YES), @"joinOnConnect", 
-									 NSNumberWithBOOL(YES), @"enableNotifications", nil]];	
+			[channels safeAddObject:@{@"channelName": s,
+									 @"joinOnConnect": NSNumberWithBOOL(YES), 
+									 @"enableNotifications": NSNumberWithBOOL(YES)}];	
 		}
 	}
 	
-	NSString *host = [config objectForKey:@"serverAddress"];
-	NSString *nick = [config objectForKey:@"identityNickname"];
+	NSString *host = config[@"serverAddress"];
+	NSString *nick = config[@"identityNickname"];
 	
-	[dic setObject:host											forKey:@"serverAddress"];
-	[dic setObject:host											forKey:@"connectionName"];
-	[dic setObject:nick											forKey:@"identityNickname"];
-	[dic setObject:channels										forKey:@"channelList"];
-	[dic setObject:[config objectForKey:@"connectOnLaunch"]		forKey:@"connectOnLaunch"];
-	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)		forKey:@"characterEncodingDefault"];
+	dic[@"serverAddress"] = host;
+	dic[@"connectionName"] = host;
+	dic[@"identityNickname"] = nick;
+	dic[@"channelList"] = channels;
+	dic[@"connectOnLaunch"] = config[@"connectOnLaunch"];
+	dic[@"characterEncodingDefault"] = NSNumberWithLong(NSUTF8StringEncoding);
 	
 	[self.window makeKeyAndOrderFront:nil];
 	

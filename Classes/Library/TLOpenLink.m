@@ -9,7 +9,7 @@
 + (void)open:(NSURL *)url
 {
 	if ([TPCPreferences openBrowserInBackground]) {
-		[_NSWorkspace() openURLs:[NSArray arrayWithObject:url]
+		[_NSWorkspace() openURLs:@[url]
 		 withAppBundleIdentifier:nil
 					  options:NSWorkspaceLaunchWithoutActivation
     additionalEventParamDescriptor:nil

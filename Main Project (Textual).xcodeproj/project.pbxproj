@@ -428,7 +428,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4C52AED515811C2000940619 /* Copy Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
@@ -437,7 +437,7 @@
 				4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2002,7 +2002,7 @@
 		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -2010,7 +2010,7 @@
 			name = "Build Extensions";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
 			showEnvVarsInLog = 0;
@@ -2319,6 +2319,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2326,6 +2327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2333,6 +2335,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -2340,6 +2343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2347,6 +2351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -2354,6 +2359,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
 			};
@@ -2363,6 +2369,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
 			};
@@ -2372,6 +2379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
 				TEXTUAL_GITREF_BUILD_ID = trial;
 			};
@@ -2381,6 +2389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
@@ -2390,6 +2399,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = appstore;
 			};
@@ -2426,7 +2436,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2468,7 +2478,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2494,6 +2504,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2510,6 +2521,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2542,7 +2554,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2568,6 +2580,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2601,7 +2614,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2627,6 +2640,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -2660,7 +2674,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2686,6 +2700,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -2693,6 +2708,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2700,6 +2716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2707,6 +2724,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -2714,6 +2732,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2721,6 +2740,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};

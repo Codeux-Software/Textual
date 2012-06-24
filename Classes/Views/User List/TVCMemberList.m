@@ -6,7 +6,6 @@
 
 @implementation TVCMemberList
 
-@synthesize keyDelegate;
 
 - (void)updateBackgroundColor
 {

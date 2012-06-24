@@ -24,7 +24,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum {
+typedef enum DDInvocationThreadType : NSInteger {
 	DDInvocationMainThread,
 	DDInvocationParentThread,
 	DDInvocationBackgroundThread,

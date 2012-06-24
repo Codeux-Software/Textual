@@ -19,15 +19,15 @@
 	
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
-	[settings setObject:CFItemRefToID(kCFStreamSocketSecurityLevelNegotiatedSSL)	forKey:CFItemRefToID(kCFStreamSSLLevel)];
-	[settings setObject:CFItemRefToID(kCFNull)										forKey:CFItemRefToID(kCFStreamSSLPeerName)];
+	settings[CFItemRefToID(kCFStreamSSLLevel)] = CFItemRefToID(kCFStreamSocketSecurityLevelNegotiatedSSL);
+	settings[CFItemRefToID(kCFStreamSSLPeerName)] = CFItemRefToID(kCFNull);
 	
 	if (client.config.isTrustedConnection) {
-		[settings setObject:CFItemRefToID(kCFBooleanFalse)	forKey:CFItemRefToID(kCFStreamSSLIsServer)];
-		[settings setObject:CFItemRefToID(kCFBooleanTrue)	forKey:CFItemRefToID(kCFStreamSSLAllowsAnyRoot)];
-		[settings setObject:CFItemRefToID(kCFBooleanTrue)	forKey:CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)];
-		[settings setObject:CFItemRefToID(kCFBooleanTrue)	forKey:CFItemRefToID(kCFStreamSSLAllowsExpiredCertificates)];
-		[settings setObject:CFItemRefToID(kCFBooleanFalse)	forKey:CFItemRefToID(kCFStreamSSLValidatesCertificateChain)];
+		settings[CFItemRefToID(kCFStreamSSLIsServer)] = CFItemRefToID(kCFBooleanFalse);
+		settings[CFItemRefToID(kCFStreamSSLAllowsAnyRoot)] = CFItemRefToID(kCFBooleanTrue);
+		settings[CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)] = CFItemRefToID(kCFBooleanTrue);
+		settings[CFItemRefToID(kCFStreamSSLAllowsExpiredCertificates)] = CFItemRefToID(kCFBooleanTrue);
+		settings[CFItemRefToID(kCFStreamSSLValidatesCertificateChain)] = CFItemRefToID(kCFBooleanFalse);
 	}
 	
 	[socket startTLS:settings];
@@ -39,22 +39,21 @@
 	NSString  *domain = [error domain];
 	
 	if ([domain isEqualToString:TXkCFStreamErrorDomainSSL]) {
-		NSArray *errorCodes = [NSArray arrayWithObjects:
-							   NSNumberWithInteger(errSSLBadCert), 
-							   NSNumberWithInteger(errSSLNoRootCert), 
-							   NSNumberWithInteger(errSSLCertExpired),  
-							   NSNumberWithInteger(errSSLPeerBadCert), 
-							   NSNumberWithInteger(errSSLPeerCertRevoked), 
-							   NSNumberWithInteger(errSSLPeerCertExpired), 
-							   NSNumberWithInteger(errSSLPeerCertUnknown), 
-							   NSNumberWithInteger(errSSLUnknownRootCert), 
-							   NSNumberWithInteger(errSSLCertNotYetValid),
-							   NSNumberWithInteger(errSSLXCertChainInvalid), 
-							   NSNumberWithInteger(errSSLPeerUnsupportedCert), 
-							   NSNumberWithInteger(errSSLPeerUnknownCA), 
-							   NSNumberWithInteger(errSSLHostNameMismatch), nil];
+		NSArray *errorCodes = @[@(errSSLBadCert), 
+							   @(errSSLNoRootCert), 
+							   @(errSSLCertExpired),  
+							   @(errSSLPeerBadCert), 
+							   @(errSSLPeerCertRevoked), 
+							   @(errSSLPeerCertExpired), 
+							   @(errSSLPeerCertUnknown), 
+							   @(errSSLUnknownRootCert), 
+							   @(errSSLCertNotYetValid),
+							   @(errSSLXCertChainInvalid), 
+							   @(errSSLPeerUnsupportedCert), 
+							   @(errSSLPeerUnknownCA), 
+							   @(errSSLHostNameMismatch)];
 		
-		NSNumber *errorCode = NSNumberWithInteger(code);
+		NSNumber *errorCode = @(code);
 		
 		return [errorCodes containsObject:errorCode];
 	}
@@ -67,7 +66,7 @@
 	const char *error = strerror((int)code);
 	
 	if (error) {
-		return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
+		return @(error);
 	}
 	
 	return nil;
@@ -101,16 +100,16 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	if (version == 4) {
-		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion4) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
+		settings[CFItemRefToID(kCFStreamPropertySOCKSVersion)] = CFItemRefToID(kCFStreamSocketSOCKSVersion4);
 	} else {
-		[settings setObject:CFItemRefToID(kCFStreamSocketSOCKSVersion5) forKey:CFItemRefToID(kCFStreamPropertySOCKSVersion)];
+		settings[CFItemRefToID(kCFStreamPropertySOCKSVersion)] = CFItemRefToID(kCFStreamSocketSOCKSVersion5);
 	}
 	
-	[settings setObject:host	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyHost)];
+	settings[CFItemRefToID(kCFStreamPropertySOCKSProxyHost)] = host;
 	[settings setInteger:port	forKey:CFItemRefToID(kCFStreamPropertySOCKSProxyPort)];
 	
-	if (NSObjectIsNotEmpty(user))		[settings setObject:user		forKey:CFItemRefToID(kCFStreamPropertySOCKSUser)];
-	if (NSObjectIsNotEmpty(password))	[settings setObject:password	forKey:CFItemRefToID(kCFStreamPropertySOCKSPassword)];
+	if (NSObjectIsNotEmpty(user))		settings[CFItemRefToID(kCFStreamPropertySOCKSUser)] = user;
+	if (NSObjectIsNotEmpty(password))	settings[CFItemRefToID(kCFStreamPropertySOCKSPassword)] = password;
 
 	CFReadStreamSetProperty(theReadStream,		kCFStreamPropertySOCKSProxy, (__bridge CFStringRef)(settings));
 	CFWriteStreamSetProperty(theWriteStream,	kCFStreamPropertySOCKSProxy, (__bridge CFStringRef)(settings));

@@ -7,17 +7,6 @@
 
 @implementation TVCLogLine
 
-@synthesize receivedAt;
-@synthesize time;
-@synthesize nick;
-@synthesize body;
-@synthesize lineType;
-@synthesize keywords;
-@synthesize nickInfo;
-@synthesize identified;
-@synthesize memberType;
-@synthesize excludeWords;
-@synthesize nickColorNumber;
 
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {

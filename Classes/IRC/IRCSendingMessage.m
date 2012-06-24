@@ -6,10 +6,6 @@
 
 @implementation IRCSendingMessage
 
-@synthesize string;
-@synthesize command;
-@synthesize params;
-@synthesize completeColon;
 
 - (id)initWithCommand:(NSString *)aCommand
 {
@@ -88,7 +84,7 @@
 		
 		[d appendString:@"\r\n"];
 		
-		string = d;
+		_string = d;
 	}
 	
 	return self.string;

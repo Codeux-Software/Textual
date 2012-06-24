@@ -12,14 +12,6 @@
 
 @implementation TVCInputPromptDialog
 
-@synthesize finalModalValue;
-@synthesize buttonClicked;
-@synthesize dialogWindow;
-@synthesize defaultButton;
-@synthesize alternateButton;
-@synthesize dialogTitle;
-@synthesize userInputField;
-@synthesize informationalText;
 
 - (NSString *)promptValue
 {

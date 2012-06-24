@@ -8,9 +8,6 @@
 
 @implementation TLOInputHistory
 
-@synthesize buf;
-@synthesize pos;
-@synthesize lastHistoryItem;
 
 - (id)init
 {
@@ -44,7 +41,7 @@
 	if (NSObjectIsNotEmpty(s)) {
 		NSAttributedString *cur = nil;
 		
-		if (0 <= self.pos && self.pos < buf.count) {
+		if (0 <= self.pos && self.pos < self.buf.count) {
 			cur = [self.buf safeObjectAtIndex:self.pos];
 		}
 		

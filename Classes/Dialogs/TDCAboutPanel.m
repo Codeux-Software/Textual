@@ -6,8 +6,6 @@
 
 @implementation TDCAboutPanel
 
-@synthesize delegate;
-@synthesize versionInfo;
 
 - (id)init
 {
@@ -21,7 +19,7 @@
 - (void)show
 {	
 	[self.versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"AboutWindowBuildNumber"), 
-								 [[TPCPreferences textualInfoPlist] objectForKey:@"CFBundleVersion"]]];	
+								 [TPCPreferences textualInfoPlist][@"CFBundleVersion"]]];	
 	
 	[self.window center];
 	[self.window makeKeyAndOrderFront:nil];

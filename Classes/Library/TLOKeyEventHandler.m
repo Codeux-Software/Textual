@@ -8,9 +8,6 @@
 
 @implementation TLOKeyEventHandler
 
-@synthesize target;
-@synthesize codeHandlerMap;
-@synthesize characterHandlerMap;
 
 - (id)init
 {
@@ -24,53 +21,53 @@
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
+	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = [self.codeHandlerMap objectForKey:modsKey];
+	NSMutableDictionary *map = (self.codeHandlerMap)[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		[self.codeHandlerMap setObject:map forKey:modsKey];
+		(self.codeHandlerMap)[modsKey] = map;
 	}
 	
-	[map setObject:NSStringFromSelector(selector) forKey:NSNumberWithInteger(code)];
+	map[@(code)] = NSStringFromSelector(selector);
 }
 
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
+	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = [self.characterHandlerMap objectForKey:modsKey];
+	NSMutableDictionary *map = (self.characterHandlerMap)[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		[self.characterHandlerMap setObject:map forKey:modsKey];
+		(self.characterHandlerMap)[modsKey] = map;
 	}
 	
-	[map setObject:NSStringFromSelector(selector) forKey:NSNumberWithInteger(c)];
+	map[NSNumberWithInteger(c)] = NSStringFromSelector(selector);
 }
 
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods
 {
-	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:mods];
+	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = [self.characterHandlerMap objectForKey:modsKey];
+	NSMutableDictionary *map = (self.characterHandlerMap)[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		[self.characterHandlerMap setObject:map forKey:modsKey];
+		(self.characterHandlerMap)[modsKey] = map;
 	}
 	
 	NSInteger from = characterRange.location;
 	NSInteger to = NSMaxRange(characterRange);
 	
 	for (NSInteger i = from; i < to; ++i) {
-		NSNumber *charKey = NSNumberWithInteger(i);
+		NSNumber *charKey = @(i);
 		
-		[map setObject:NSStringFromSelector(selector) forKey:charKey];
+		map[charKey] = NSStringFromSelector(selector);
 	}
 }
 
@@ -84,12 +81,12 @@
 	m  = [e modifierFlags];
 	m &= (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask);
 	
-	NSNumber *modsKey = [NSNumber numberWithUnsignedInteger:m];
+	NSNumber *modsKey = @(m);
 	
-	NSMutableDictionary *codeMap = [self.codeHandlerMap objectForKey:modsKey];
+	NSMutableDictionary *codeMap = (self.codeHandlerMap)[modsKey];
 	
 	if (codeMap) {
-		NSString *selectorName = [codeMap objectForKey:NSNumberWithInteger([e keyCode])];
+		NSString *selectorName = codeMap[NSNumberWithInteger([e keyCode])];
 
 		if (selectorName) {
 			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
@@ -98,13 +95,13 @@
 		}
 	}
 	
-	NSMutableDictionary *characterMap = [self.characterHandlerMap objectForKey:modsKey];
+	NSMutableDictionary *characterMap = (self.characterHandlerMap)[modsKey];
 	
 	if (characterMap) {
 		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
 		
 		if (NSObjectIsNotEmpty(str)) {
-			NSString *selectorName = [characterMap objectForKey:NSNumberWithInteger([str characterAtIndex:0])];
+			NSString *selectorName = characterMap[NSNumberWithInteger([str characterAtIndex:0])];
 			
 			if (selectorName) {
 				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);

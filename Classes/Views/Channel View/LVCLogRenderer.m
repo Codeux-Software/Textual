@@ -96,7 +96,7 @@ NSInteger mapColorValue(NSColor *color)
 		CGFloat _alphac = [color alphaComponent];
 		
 		for (NSInteger i = 0; i <= 15; i++) {
-			NSArray *allColors = [possibleColors objectAtIndex:i];
+			NSArray *allColors = possibleColors[i];
 			
 			for (NSColor *mapped in allColors) {
 				if ([mapped numberOfComponents] == 4) {
@@ -180,7 +180,7 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 		}
 		
 		if (attr & _rendererUnderlineFormatAttribute) {
-			[body addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
+			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSSingleUnderlineStyle) range:r];
 		}
 		
 		if (attr & _rendererTextColorAttribute) {
@@ -279,7 +279,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
     
-    NSFont *attributedStringFont = [inputDictionary objectForKey:@"attributedStringFont"];
+    NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
 	
 	NSInteger len	= [body length];
 	NSInteger start = 0;
@@ -441,7 +441,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 			}
 			
-			[resultInfo setObject:urlAry forKey:@"URLRanges"];
+			resultInfo[@"URLRanges"] = urlAry;
 		}
 		
 		/* Word Matching — Highlights */

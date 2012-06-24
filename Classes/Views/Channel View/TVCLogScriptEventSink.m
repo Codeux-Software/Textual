@@ -8,11 +8,6 @@
 
 @implementation TVCLogScriptEventSink
 
-@synthesize owner;
-@synthesize policy;
-@synthesize x;
-@synthesize y;
-@synthesize lastClickTime;
 
 - (id)init
 {

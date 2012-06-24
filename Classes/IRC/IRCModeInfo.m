@@ -7,11 +7,6 @@
 
 @implementation IRCModeInfo
 
-@synthesize mode;
-@synthesize op;
-@synthesize plus;
-@synthesize simpleMode;
-@synthesize param;
 
 + (IRCModeInfo *)modeInfo
 {

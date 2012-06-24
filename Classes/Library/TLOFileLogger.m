@@ -7,10 +7,6 @@
 
 @implementation TLOFileLogger
 
-@synthesize client;
-@synthesize channel;
-@synthesize filename;
-@synthesize file;
 
 - (void)dealloc
 {

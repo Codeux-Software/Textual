@@ -11,21 +11,6 @@
 
 @implementation TDCModeSheet
 
-@synthesize mode;
-@synthesize delegate;
-@synthesize channelName;
-@synthesize uid;
-@synthesize cid;
-@synthesize sCheck;
-@synthesize pCheck;
-@synthesize nCheck;
-@synthesize tCheck;
-@synthesize iCheck;
-@synthesize mCheck;
-@synthesize kCheck;
-@synthesize lCheck;
-@synthesize kText;
-@synthesize lText;
 
 - (id)init
 {

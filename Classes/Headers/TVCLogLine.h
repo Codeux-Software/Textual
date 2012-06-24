@@ -10,7 +10,7 @@
 #define TXLogLineNoticeNicknameFormat		@"-%@-"
 #define TXLogLineCTCPTypeNicknameFormat		@"-%@ CTCP-"
 
-typedef enum {
+typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineSystemType,
 	TVCLogLineErrorType,
 	TVCLogLineErrorReplyType,
@@ -34,7 +34,7 @@ typedef enum {
 	TVCLogLineDebugType,
 } TVCLogLineType;
 
-typedef enum {
+typedef enum TVCLogMemberType : NSInteger {
 	TVCLogMemberNormalType,
 	TVCLogMemberLocalUserType,
 } TVCLogMemberType;

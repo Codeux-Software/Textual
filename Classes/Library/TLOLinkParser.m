@@ -23,7 +23,7 @@
 
 + (NSArray *)bannedURLRegexLineTypes
 {
-	return [NSArray arrayWithObjects:@"mode", @"join", @"nick", @"invite", nil];
+	return @[@"mode", @"join", @"nick", @"invite"];
 }
 
 @end

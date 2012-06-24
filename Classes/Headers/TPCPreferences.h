@@ -9,36 +9,36 @@
 #define TXDefaultTextualLogFont				@"Lucida Grande"
 #define TXDefaultTextualTimestampFormat		@"[%H:%M:%S]"
 
-typedef enum {
+typedef enum TXNicknameHighlightMatchType : NSInteger {
 	TXNicknameHighlightPartialMatchType = 0,
 	TXNicknameHighlightExactMatchType,
     TXNicknameHighlightRegularExpressionMatchType,
 } TXNicknameHighlightMatchType;
 
-typedef enum {
+typedef enum TXTabKeyActionType : NSInteger {
 	TXTabKeyActionNickCompleteType = 0,
 	TXTabKeyActionUnreadChannelType,
 	TXTabKeyActionNoneType = 100,
 } TXTabKeyActionType;
 
-typedef enum {
+typedef enum TXUserDoubleClickAction : NSInteger {
 	TXUserDoubleClickWhoisAction = 100,
 	TXUserDoubleClickQueryAction = 200,
 } TXUserDoubleClickAction;
 
-typedef enum {
+typedef enum TXNoticeSendLocationType : NSInteger {
 	TXNoticeSendServerConsoleType = 0,
 	TXNoticeSendCurrentChannelType = 1,
 } TXNoticeSendLocationType;
 
-typedef enum {
+typedef enum TXCmdWShortcutResponseType : NSInteger {
 	TXCmdWShortcutCloseWindowType = 0,
 	TXCmdWShortcutPartChannelType = 1,
 	TXCmdWShortcutDisconnectType = 2,
 	TXCmdWShortcutTerminateType = 3,
 } TXCmdWShortcutResponseType;
 
-typedef enum {
+typedef enum TXHostmaskBanFormat : NSInteger {
 	TXHostmaskBanWHNINFormat  = 0, // With Hostmask, No Username/Nickname
 	TXHostmaskBanWHAINNFormat = 1, // With Hostmask and Username, No Nickname
 	TXHostmaskBanWHANNIFormat = 2, // With Hostmask and Nickname, No Username

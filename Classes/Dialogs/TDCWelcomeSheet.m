@@ -12,15 +12,6 @@
 
 @implementation TDCWelcomeSheet
 
-@synthesize delegate;
-@synthesize okButton;
-@synthesize channels;
-@synthesize nickText;
-@synthesize hostCombo;
-@synthesize channelTable;
-@synthesize autoConnectCheck;
-@synthesize addChannelButton;
-@synthesize deleteChannelButton;
 
 - (id)init
 {
@@ -73,9 +64,9 @@
 	
 	[dic setBool:self.autoConnectCheck.state forKey:@"connectOnLaunch"];
 	
-	[dic setObject:chans												forKey:@"channelList"];
-	[dic setObject:self.nickText.stringValue							forKey:@"identityNickname"];
-	[dic setObject:[self.hostCombo.stringValue cleanedServerHostmask]	forKey:@"serverAddress"];
+	dic[@"channelList"] = chans;
+	dic[@"identityNickname"] = self.nickText.stringValue;
+	dic[@"serverAddress"] = [self.hostCombo.stringValue cleanedServerHostmask];
 	
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
 		[self.delegate welcomeSheet:self onOK:dic];
@@ -151,7 +142,7 @@
 	if (n >= 0) {
 		NSString *s = [[note object] textStorage].string.copy;
 		
-		[self.channels replaceObjectAtIndex:n withObject:s];
+		(self.channels)[n] = s;
 		
 		[self.channelTable reloadData];
 		[self.channelTable selectItemAtIndex:n];

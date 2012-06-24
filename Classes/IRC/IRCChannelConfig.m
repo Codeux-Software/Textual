@@ -7,17 +7,6 @@
 
 @implementation IRCChannelConfig
 
-@synthesize type;
-@synthesize name;
-@synthesize password;
-@synthesize autoJoin;
-@synthesize growl;
-@synthesize mode;
-@synthesize topic;
-@synthesize ignoreHighlights;
-@synthesize encryptionKey;
-@synthesize ignoreJPQActivity;
-@synthesize ignoreInlineImages;
 
 - (id)init
 {

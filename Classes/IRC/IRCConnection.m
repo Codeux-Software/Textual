@@ -12,24 +12,6 @@
 
 @implementation IRCConnection
 
-@synthesize conn;
-@synthesize delegate;
-@synthesize encoding;
-@synthesize host;
-@synthesize loggedIn;
-@synthesize maxMsgCount;
-@synthesize port;
-@synthesize proxyHost;
-@synthesize proxyPassword;
-@synthesize proxyPort;
-@synthesize proxyUser;
-@synthesize sendQueue;
-@synthesize sending;
-@synthesize socksVersion;
-@synthesize timer;
-@synthesize useSSL;
-@synthesize useSocks;
-@synthesize useSystemSocks;
 
 - (id)init
 {

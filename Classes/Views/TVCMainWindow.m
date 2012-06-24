@@ -6,7 +6,6 @@
 
 @implementation TVCMainWindow
 
-@synthesize keyHandler;
 
 - (BOOL)canBecomeMainWindow
 {

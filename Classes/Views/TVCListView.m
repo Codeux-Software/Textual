@@ -6,8 +6,6 @@
 
 @implementation TVCListView
 
-@synthesize keyDelegate;
-@synthesize textDelegate;
 
 - (NSInteger)countSelectedRows
 {
