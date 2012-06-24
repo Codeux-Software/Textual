@@ -6,11 +6,6 @@
 
 @implementation IRCPrefix
 
-@synthesize raw;
-@synthesize nick;
-@synthesize user;
-@synthesize address;
-@synthesize isServer;
 
 - (id)init
 {

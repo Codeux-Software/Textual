@@ -8,7 +8,7 @@
 
 - (BOOL)boolForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(boolValue)]) {
 		return [obj boolValue];
@@ -19,7 +19,7 @@
 
 - (NSInteger)integerForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(integerValue)]) {
 		return [obj integerValue];
@@ -30,7 +30,7 @@
 
 - (long long)longLongForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(longLongValue)]) {
 		return [obj longLongValue];
@@ -41,7 +41,7 @@
 
 - (TXNSDouble)doubleForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(doubleValue)]) {
 		return [obj doubleValue];
@@ -52,7 +52,7 @@
 
 - (NSString *)stringForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSString class]]) {
 		return obj;
@@ -63,7 +63,7 @@
 
 - (NSDictionary *)dictionaryForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSDictionary class]]) {
 		return obj;
@@ -74,7 +74,7 @@
 
 - (NSArray *)arrayForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSArray class]]) {
 		return obj;
@@ -85,7 +85,7 @@
 
 - (void *)pointerForKey:(NSString *)key
 {
-	id obj = [self objectForKey:key];
+	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSValue class]]) {
 		return [obj pointerValue];
@@ -122,7 +122,7 @@
 	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
 	
 	for (NSString *key in sortedKeys) {
-		[newDict setObject:[self objectForKey:key] forKey:key];
+		newDict[key] = self[key];
 	}
 
 	return newDict;
@@ -135,33 +135,33 @@
 - (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey
 {
 	if (PointerIsNotEmpty(anObject)) {
-		[self setObject:anObject forKey:aKey];
+		self[aKey] = anObject;
 	}
 }
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	[self setObject:NSNumberWithBOOL(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	[self setObject:NSNumberWithInteger(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	[self setObject:NSNumberWithLongLong(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setDouble:(TXNSDouble)value forKey:(NSString *)key
 {
-	[self setObject:NSNumberWithDouble(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
-	[self setObject:[NSValue valueWithPointer:value] forKey:key];
+	self[key] = [NSValue valueWithPointer:value];
 }
 
 - (NSMutableDictionary *)sortedDictionary
@@ -171,7 +171,7 @@
 	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
 	
 	for (NSString *key in sortedKeys) {
-		[newDict setObject:[self objectForKey:key] forKey:key];
+		newDict[key] = self[key];
 	}
 	
 	return newDict;

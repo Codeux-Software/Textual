@@ -21,9 +21,6 @@
 	NSInteger _lastDrawnLineCount;
 }
 
-@synthesize placeholderString;
-@synthesize actionTarget;
-@synthesize actionSelector;
 
 #pragma mark -
 #pragma mark Drawing
@@ -37,8 +34,8 @@
         
         NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
-        [attrs setObject:TXDefaultTextFieldFont forKey:NSFontAttributeName];
-        [attrs setObject:[NSColor grayColor]	forKey:NSForegroundColorAttributeName];
+        attrs[NSFontAttributeName] = TXDefaultTextFieldFont;
+        attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
         
         self.placeholderString = [NSAttributedString alloc];
         self.placeholderString = [self.placeholderString initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
@@ -49,12 +46,12 @@
 
 - (NSView *)splitterView
 {
-    return [self.superview.superview.superview.subviews objectAtIndex:0];
+    return (self.superview.superview.superview.subviews)[0];
 }
 
 - (TVCInputTextFieldBackground *)backgroundView
 {
-	return [self.superview.superview.superview.subviews objectAtIndex:2];
+	return (self.superview.superview.superview.subviews)[2];
 }
 
 - (void)resetTextFieldCellSize
@@ -198,12 +195,11 @@
 	BOOL _finishedFirstDraw;
 }
 
-@synthesize windowIsActive;
 
 - (void)setWindowIsActive:(BOOL)value
 {
 	if (NSDissimilarObjects(value, self.windowIsActive)) {
-		windowIsActive = value;
+		_windowIsActive = value;
 	}
 
 	[self setNeedsDisplay:YES];
@@ -233,7 +229,7 @@
 	/* We force focused color during first run because we draw before
 	 our window has finished coming to the front so the wrong color
 	 is used for our border. */
-	if (windowIsActive || _finishedFirstDraw == NO) {
+	if (self.windowIsActive || _finishedFirstDraw == NO) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];

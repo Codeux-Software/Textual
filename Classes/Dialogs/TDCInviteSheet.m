@@ -7,11 +7,6 @@
 
 @implementation TDCInviteSheet
 
-@synthesize delegate;
-@synthesize nicks;
-@synthesize uid;
-@synthesize titleLabel;
-@synthesize channelPopup;
 
 - (id)init
 {

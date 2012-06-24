@@ -7,11 +7,6 @@
 
 @implementation TDCNickSheet
 
-@synthesize uid;
-@synthesize sheet;
-@synthesize delegate;
-@synthesize currentText;
-@synthesize nicknameNewInfo;
 
 - (id)init
 {

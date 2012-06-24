@@ -13,25 +13,6 @@
 
 @implementation IRCChannel
 
-@synthesize log;
-@synthesize client;
-@synthesize config;
-@synthesize errLastJoin;
-@synthesize isActive;
-@synthesize isHalfOp;
-@synthesize isModeInit;
-@synthesize isOp;
-@synthesize logDate;
-@synthesize logFile;
-@synthesize members;
-@synthesize mode;
-@synthesize status;
-@synthesize storedTopic;
-@synthesize topic;
-@synthesize isChannel;
-@synthesize isTalk;
-@synthesize password;
-@synthesize channelTypeString;
 
 - (id)init
 {

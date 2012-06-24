@@ -62,7 +62,7 @@ NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix)
 {
 	if (NSObjectIsEmpty(orderMatrix)) {
-		orderMatrix = [NSArray arrayWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
+		orderMatrix = @[@"year", @"month", @"week", @"day", @"hour", @"minute", @"second"];
 	}
 	
 	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
@@ -124,7 +124,7 @@ NSInteger TXRandomNumber(NSInteger maxset)
 
 NSString *TXFormattedNumber(NSInteger number)
 {
-	NSNumber *numberbar = [NSNumber numberWithInteger:number];
+	NSNumber *numberbar = @(number);
 	
 	return [NSNumberFormatter localizedStringFromNumber:numberbar numberStyle:kCFNumberFormatterDecimalStyle];
 }

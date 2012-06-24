@@ -12,10 +12,6 @@
 
 @implementation TDCHighlightSheet
 
-@synthesize list;
-@synthesize table;
-@synthesize header;
-@synthesize delegate;
 
 - (id)init
 {

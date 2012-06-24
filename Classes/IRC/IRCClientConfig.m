@@ -11,41 +11,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @implementation IRCClientConfig
 
-@synthesize altNicks;
-@synthesize autoConnect;
-@synthesize autoReconnect;
-@synthesize bouncerMode;
-@synthesize channels;
-@synthesize cuid;
-@synthesize encoding;
-@synthesize fallbackEncoding;
-@synthesize guid;
-@synthesize host;
-@synthesize ignores;
-@synthesize prefersIPv6;
-@synthesize invisibleMode;
-@synthesize isTrustedConnection;
-@synthesize leavingComment;
-@synthesize loginCommands;
-@synthesize name;
-@synthesize network;
-@synthesize nick;
-@synthesize nickPassword;
-@synthesize password;
-@synthesize port;
-@synthesize proxyHost;
-@synthesize proxyPassword;
-@synthesize proxyPort;
-@synthesize proxyType;
-@synthesize proxyUser;
-@synthesize realName;
-@synthesize server;
-@synthesize sleepQuitMessage;
-@synthesize username;
-@synthesize useSSL;
-@synthesize outgoingFloodControl;
-@synthesize floodControlMaximumMessages;
-@synthesize floodControlDelayTimerInterval;
+@synthesize password = _password;
+@synthesize nickPassword = _nickPassword;
 
 - (id)init
 {
@@ -96,7 +63,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSObjectIsEmpty(nickPassword)) {
+	if (NSObjectIsEmpty(_nickPassword)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -104,18 +71,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:nickPassword] == NO) {
-			nickPassword = nil;
-			nickPassword = kcPassword;
+		if ([kcPassword isEqualToString:_nickPassword] == NO) {
+			_nickPassword = nil;
+			_nickPassword = kcPassword;
 		}
 	}
 	
-	return nickPassword;
+	return _nickPassword;
 }
 
 - (void)setNickPassword:(NSString *)pass
 {
-	if ([nickPassword isEqualToString:pass] == NO) {	
+	if ([_nickPassword isEqualToString:pass] == NO) {	
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
@@ -131,8 +98,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		}
 		
-		nickPassword = nil;
-		nickPassword = pass;
+		_nickPassword = nil;
+		_nickPassword = pass;
 	}
 }
 
@@ -140,7 +107,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSObjectIsEmpty(password)) {
+	if (NSObjectIsEmpty(_password)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -148,18 +115,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:password] == NO) {
-			password = nil;
-			password = kcPassword;
+		if ([kcPassword isEqualToString:_password] == NO) {
+			_password = nil;
+			_password = kcPassword;
 		}
 	}
 	
-	return password;
+	return _password;
 }
 
 - (void)setPassword:(NSString *)pass
 {
-	if ([password isEqualToString:pass] == NO) {
+	if ([_password isEqualToString:pass] == NO) {
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
@@ -174,8 +141,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];			
 		}
 		
-		password = nil;
-		password = pass;
+		_password = nil;
+		_password = pass;
 	}
 }
 
@@ -318,7 +285,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
     [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
-    [dic setObject:floodControl forKey:@"floodControl"];
+    dic[@"floodControl"] = floodControl;
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
@@ -331,8 +298,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	[dic setObject:channelAry forKey:@"channelList"];
-	[dic setObject:ignoreAry forKey:@"ignoreList"];
+	dic[@"channelList"] = channelAry;
+	dic[@"ignoreList"] = ignoreAry;
 	
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];

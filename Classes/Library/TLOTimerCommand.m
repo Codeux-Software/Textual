@@ -5,7 +5,4 @@
 #import "TextualApplication.h"
 
 @implementation TLOTimerCommand
-@synthesize time;
-@synthesize cid;
-@synthesize input;
 @end

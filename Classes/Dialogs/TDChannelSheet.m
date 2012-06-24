@@ -17,27 +17,6 @@
 
 @implementation TDChannelSheet
 
-@synthesize uid;
-@synthesize cid;
-@synthesize config;
-@synthesize delegate;
-@synthesize sheet;
-@synthesize okButton;
-@synthesize tabView;
-@synthesize nameText;
-@synthesize encryptKeyText;
-@synthesize passwordText;
-@synthesize modeText;
-@synthesize topicText;
-@synthesize autoJoinCheck;
-@synthesize growlCheck;
-@synthesize ihighlights;
-@synthesize contentView;
-@synthesize generalView;
-@synthesize encryptView;
-@synthesize defaultsView;
-@synthesize inlineImagesCheck;
-@synthesize JPQActivityCheck;
 
 - (id)init
 {

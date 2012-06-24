@@ -6,11 +6,6 @@
 
 @implementation TDCSheetBase
 
-@synthesize delegate;
-@synthesize window;
-@synthesize sheet;
-@synthesize okButton;
-@synthesize cancelButton;
 
 - (void)startSheet
 {

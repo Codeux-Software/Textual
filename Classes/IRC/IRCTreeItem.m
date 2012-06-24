@@ -7,22 +7,6 @@
 
 @implementation IRCTreeItem
 
-@synthesize uid;
-@synthesize log;
-@synthesize isKeyword;
-@synthesize isUnread;
-@synthesize isNewTalk;
-@synthesize isExpanded;
-@synthesize keywordCount;
-@synthesize inputHistory;
-@synthesize treeUnreadCount;
-@synthesize dockUnreadCount;
-@synthesize currentInputHistory;
-@synthesize isActive;
-@synthesize client;
-@synthesize label;
-@synthesize isClient;
-@synthesize name;
 
 - (void)resetLogView:(IRCWorld *)world
 		 withChannel:(IRCChannel *)c

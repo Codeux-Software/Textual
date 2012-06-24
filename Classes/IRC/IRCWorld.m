@@ -21,41 +21,6 @@
 
 @implementation IRCWorld;
 
-@synthesize allLoadedBundles;
-@synthesize bandwidthIn;
-@synthesize bandwidthOut;
-@synthesize bundlesForServerInput;
-@synthesize bundlesForUserInput;
-@synthesize bundlesWithPreferences;
-@synthesize bundlesWithOutputRules;
-@synthesize chanMenu;
-@synthesize channelMenu;
-@synthesize clients;
-@synthesize config;
-@synthesize dummyLog;
-@synthesize extrac;
-@synthesize growl;
-@synthesize itemId;
-@synthesize logBase;
-@synthesize logMenu;
-@synthesize master;
-@synthesize memberList;
-@synthesize memberMenu;
-@synthesize menuController;
-@synthesize messagesSent;
-@synthesize messagesReceived;
-@synthesize previousSelectedChannelId;
-@synthesize previousSelectedClientId;
-@synthesize selected;
-@synthesize serverMenu;
-@synthesize soundMuted;
-@synthesize text;
-@synthesize serverList;
-@synthesize treeMenu;
-@synthesize urlMenu;
-@synthesize viewTheme;
-@synthesize window;
-@synthesize reloadingTree;
 
 - (id)init
 {
@@ -134,7 +99,7 @@
 		[ary safeAddObject:[u dictionaryValue]];
 	}
 	
-	[dic setObject:ary forKey:@"clients"];
+	dic[@"clients"] = ary;
 	
 	return dic;
 }
@@ -215,8 +180,8 @@
 		
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
 		
-		NSArray  *entry = [NSArray arrayWithObjects:channel.name, time,
-						   [message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont], nil];
+		NSArray  *entry = @[channel.name, time,
+						   [message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
 		
 		/* We insert at head so that latest is always on top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
@@ -429,8 +394,8 @@
 
 - (void)updateTitle
 {
-	if (PointerIsEmpty(selected)) {
-		[window setTitle:[TPCPreferences applicationName]];
+	if (PointerIsEmpty(self.selected)) {
+		[self.window setTitle:[TPCPreferences applicationName]];
 		
 		return;
 	}
@@ -1071,7 +1036,7 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-	[_NSSpellChecker() setIgnoredWords:[NSArray array]
+	[_NSSpellChecker() setIgnoredWords:@[]
 				inSpellDocumentWithTag:self.text.spellCheckerDocumentTag];
 	
 	id nextItem = [self.serverList itemAtRow:[self.serverList selectedRow]];

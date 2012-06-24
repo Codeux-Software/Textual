@@ -6,8 +6,6 @@
 
 @implementation TDCPreferencesScriptWrapper
 
-@synthesize scripts;
-@synthesize world;
 
 - (id)init
 {

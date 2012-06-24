@@ -11,21 +11,6 @@
 
 @implementation TDCAddressBookSheet
 
-@synthesize ignore;
-@synthesize delegate;
-@synthesize newItem;
-@synthesize hostmask;
-@synthesize nickname;
-@synthesize ignorePublicMsg;
-@synthesize ignorePrivateMsg;
-@synthesize ignoreHighlights;
-@synthesize ignoreNotices;
-@synthesize ignoreCTCP;
-@synthesize ignoreJPQE;
-@synthesize notifyJoins;
-@synthesize ignorePMHighlights;
-@synthesize ignoreWindow;
-@synthesize notifyWindow;
 
 - (id)init
 {

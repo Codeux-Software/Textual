@@ -8,7 +8,7 @@
 
 - (NSArray *)pasteboardStringType
 {
-	return [NSArray arrayWithObject:NSStringPboardType];
+	return @[NSStringPboardType];
 }
 
 - (NSString *)stringContent

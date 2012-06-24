@@ -5,7 +5,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum {
+typedef enum IRCChannelType : NSInteger {
 	IRCChannelNormalType,
 	IRCChannelPrivateMessageType,
 } IRCChannelType;

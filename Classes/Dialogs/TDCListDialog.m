@@ -12,16 +12,6 @@
 
 @implementation TDCListDialog
 
-@synthesize delegate;
-@synthesize sortKey;
-@synthesize sortOrder;
-@synthesize networkName;
-@synthesize list;
-@synthesize filteredList;
-@synthesize table;
-@synthesize filterText;
-@synthesize updateButton;
-@synthesize channelCount;
 
 - (id)init
 {
@@ -83,8 +73,8 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = [NSArray arrayWithObjects:channel, NSNumberWithInteger(count), topic,
-						 [topic attributedStringWithIRCFormatting:TXDefaultListViewControllerFont], nil];
+		NSArray *item = @[channel, @(count), topic,
+						 [topic attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
 		
 		NSString *filter = [self.filterText stringValue];
 		

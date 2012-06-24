@@ -6,7 +6,6 @@
 
 @implementation IRCWorldConfig
 
-@synthesize clients;
 
 - (id)init
 {
@@ -25,7 +24,7 @@
 		for (NSDictionary *e in ary) {
 			IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:e];
 			
-			[clients safeAddObject:c];
+			[self.clients safeAddObject:c];
 		}
 		
 		return self;
@@ -44,7 +43,7 @@
 		[clientAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	[dic setObject:clientAry forKey:@"clients"];
+	dic[@"clients"] = clientAry;
 	
 	return dic;
 }

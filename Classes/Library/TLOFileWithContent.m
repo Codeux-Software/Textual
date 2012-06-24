@@ -11,13 +11,11 @@
 
 @implementation TLOFileWithContent
 
-@synthesize filename;
-@synthesize content;
 
 - (void)setFilename:(NSString *)value
 {
 	if (NSDissimilarObjects(self.filename, value)) {
-		filename = value;
+		_filename = value;
 	}
 	
 	[self reload];

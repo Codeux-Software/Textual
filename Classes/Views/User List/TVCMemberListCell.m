@@ -33,9 +33,6 @@
 
 @implementation TVCMemberListCell
 
-@synthesize member;
-@synthesize parent;
-@synthesize cellItem;
 
 #pragma mark -
 #pragma mark Status Badge
@@ -51,8 +48,8 @@
         textColor = _badgeTextColorTS;
     }
 	
-    [attributes setObject:_badgeFont forKey:NSFontAttributeName];
-	[attributes setObject:textColor  forKey:NSForegroundColorAttributeName];
+    attributes[NSFontAttributeName] = _badgeFont;
+	attributes[NSForegroundColorAttributeName] = textColor;
 	
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:badgeString
 																   attributes:attributes];

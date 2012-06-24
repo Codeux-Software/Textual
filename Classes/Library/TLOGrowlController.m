@@ -9,9 +9,6 @@
 
 @implementation TLOGrowlController
 
-@synthesize owner;
-@synthesize lastClickedContext;
-@synthesize lastClickedTime;
 
 - (id)init
 {
@@ -159,15 +156,14 @@
 
 - (NSDictionary *)registrationDictionaryForGrowl
 {
-	NSArray *allNotifications = [NSArray arrayWithObjects:
-									TXTLS(@"NotificationHighlightMessage"), TXTLS(@"NotificationNewPrivateQueryMessage"),
+	NSArray *allNotifications = @[TXTLS(@"NotificationHighlightMessage"), TXTLS(@"NotificationNewPrivateQueryMessage"),
 									TXTLS(@"NotificationChannelTalkMessage"), TXTLS(@"NotificationChannelNoticeMessage"),
 									TXTLS(@"NotificationPrivateQueryMessage"), TXTLS(@"NotificationPrivateNoticeMessage"),
 									TXTLS(@"NotificationKickedMessage"), TXTLS(@"NotificationInvitedMessage"),
 									TXTLS(@"NotificationConnectedMessage"), TXTLS(@"NotificationDisconnectMessage"),
-									TXTLS(@"TXNotificationAddressBookMatchType"), nil];
+									TXTLS(@"TXNotificationAddressBookMatchType")];
 	
-	return [NSDictionary dictionaryWithObjectsAndKeys:allNotifications, GROWL_NOTIFICATIONS_ALL, allNotifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
+	return @{GROWL_NOTIFICATIONS_ALL: allNotifications, GROWL_NOTIFICATIONS_DEFAULT: allNotifications};
 }
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context 
@@ -188,13 +184,13 @@
 	[NSApp activateIgnoringOtherApps:YES];
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
-		NSNumber *uid = [context objectForKey:@"client"];
+		NSNumber *uid = context[@"client"];
 		
 		IRCClient  *u = [self.owner findClientById:[uid integerValue]];
 		IRCChannel *c = nil;
 		
-		if ([context objectForKey:@"channel"]) {
-			NSNumber *cid = [context objectForKey:@"channel"];
+		if (context[@"channel"]) {
+			NSNumber *cid = context[@"channel"];
 			
 			c = [self.owner findChannelByClientId:[uid integerValue] channelId:[cid integerValue]];
 		}

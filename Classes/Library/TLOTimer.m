@@ -8,11 +8,6 @@
 
 @implementation TLOTimer
 
-@synthesize delegate;
-@synthesize reqeat;
-@synthesize selector;
-@synthesize timer;
-@synthesize isActive;
 
 - (id)init
 {

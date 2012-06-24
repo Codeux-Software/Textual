@@ -10,14 +10,6 @@
 
 @implementation TVCLogPolicy
 
-@synthesize menuController;
-@synthesize menu;
-@synthesize urlMenu;
-@synthesize memberMenu;
-@synthesize chanMenu;
-@synthesize url;
-@synthesize nick;
-@synthesize chan;
 
 - (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation
   modifierFlags:(NSUInteger)modifierFlags
@@ -145,7 +137,7 @@
 		
 		return ary;
 	} else {
-		return [NSArray array];
+		return @[];
 	}
 	
 	return defaultMenuItems;
@@ -160,7 +152,7 @@
 		case WebNavigationTypeLinkClicked:
 			[listener ignore];
 			
-			[TLOpenLink open:[actionInformation objectForKey:WebActionOriginalURLKey]];
+			[TLOpenLink open:actionInformation[WebActionOriginalURLKey]];
 			
 			break;
 		case WebNavigationTypeOther:

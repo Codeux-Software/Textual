@@ -6,25 +6,13 @@
 
 @implementation IRCAddressBook
 
-@synthesize cid;
-@synthesize hostmask;
-@synthesize entryType;
-@synthesize ignorePublicMsg;
-@synthesize ignorePrivateMsg;
-@synthesize ignoreHighlights;
-@synthesize ignoreNotices;
-@synthesize ignoreCTCP;
-@synthesize ignoreJPQE;
-@synthesize hostmaskRegex;
-@synthesize notifyJoins;
-@synthesize ignorePMHighlights;
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
 		self.cid = (([dic integerForKey:@"cid"]) ?: TXRandomNumber(9999));
 		
-		self.hostmask = [dic objectForKey:@"hostmask"];
+		self.hostmask = dic[@"hostmask"];
 		
 		self.ignorePublicMsg	= [dic boolForKey:@"ignorePublicMsg"];
 		self.ignorePrivateMsg	= [dic boolForKey:@"ignorePrivateMsg"];
@@ -109,7 +97,7 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:self.hostmask			forKey:@"hostmask"];
+	dic[@"hostmask"] = self.hostmask;
 	
 	[dic setBool:self.ignorePublicMsg		forKey:@"ignorePublicMsg"];
 	[dic setBool:self.ignorePrivateMsg		forKey:@"ignorePrivateMsg"];

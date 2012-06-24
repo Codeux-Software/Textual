@@ -26,40 +26,7 @@
 
 @implementation TDCPreferencesController
 
-@synthesize sounds;
-@synthesize alertsView;
-@synthesize channelManagementView;
-@synthesize contentView;
-@synthesize delegate;
-@synthesize excludeWordsArrayController;
-@synthesize excludeWordsTable;
-@synthesize experimentalSettingsView;
-@synthesize floodControlView;
-@synthesize generalView;
-@synthesize highlightView;
-@synthesize identityView;
-@synthesize installedScriptsMenu;
-@synthesize installedScriptsTable;
-@synthesize interfaceView;
-@synthesize IRCopServicesView;
-@synthesize keywordsArrayController;
-@synthesize keywordsTable;
-@synthesize logView;
-@synthesize world;
-@synthesize preferenceSelectToolbar;
-@synthesize scriptLocationField;
-@synthesize scriptsController;
 @synthesize scriptsView;			
-@synthesize stylesView;
-@synthesize themeButton;
-@synthesize alertButton;
-@synthesize alertSoundButton;
-@synthesize highlightNicknameButton;
-@synthesize transcriptFolderButton;
-@synthesize addExcludeWordButton;
-@synthesize useGrowlButton;
-@synthesize disableAlertWhenAwayButton;
-@synthesize availableSounds;
 
 - (id)initWithWorldController:(IRCWorld *)word
 {
@@ -110,8 +77,8 @@
 {		
 	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
 	
-	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
-			@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
+	return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
+			@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11"];
 }
 
 - (void)setUpToolbarItemsAndMenus
@@ -364,7 +331,7 @@
 
 - (NSMutableArray *)sounds
 {
-	if (NSObjectIsEmpty(sounds)) {
+	if (NSObjectIsEmpty(_sounds)) {
 		NSMutableArray *ary = [NSMutableArray new];
 		
 		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
@@ -382,7 +349,7 @@
 		self.sounds = ary;
 	}
 	
-	return sounds;
+	return _sounds;
 }
 
 #pragma mark -
@@ -443,7 +410,7 @@
 	
 	NSInteger tag = 0;
 	
-	NSArray *ary = [NSArray arrayWithObjects:[TPCPreferences whereThemesLocalPath], [TPCPreferences whereThemesPath], nil];
+	NSArray *ary = @[[TPCPreferences whereThemesLocalPath], [TPCPreferences whereThemesPath]];
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
@@ -555,7 +522,7 @@
 	[TPCPreferences setThemeChannelViewFontSize:[newFont pointSize]];
 	
 	[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
-	[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
+	[self setValue:@([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
 	
 	[self onStyleChanged:nil];
 }

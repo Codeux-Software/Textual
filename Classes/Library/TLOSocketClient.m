@@ -9,25 +9,6 @@
 
 @implementation TLOSocketClient
 
-@synthesize active;
-@synthesize buffer;
-@synthesize conn;
-@synthesize connected;
-@synthesize connecting;
-@synthesize delegate;
-@synthesize dispatchQueue;
-@synthesize host;
-@synthesize port;
-@synthesize proxyHost;
-@synthesize proxyPassword;
-@synthesize proxyPort;
-@synthesize proxyUser;
-@synthesize sendQueueSize;
-@synthesize socksVersion;
-@synthesize socketQueue;
-@synthesize useSocks;
-@synthesize useSSL;
-@synthesize useSystemSocks;
 
 - (id)init
 {

@@ -11,7 +11,7 @@
 						   command:(NSString *)command
 							client:(IRCClient *)client
 {
-	NSArray *cmdPlugins = [[world bundlesForUserInput] objectForKey:command];
+	NSArray *cmdPlugins = [world bundlesForUserInput][command];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
 		for (THOTextualPluginItem *plugin in cmdPlugins) {
@@ -26,23 +26,21 @@
 							  client:(IRCClient *)client
 							 message:(IRCMessage *)msg
 {
-	NSArray *cmdPlugins = [[world bundlesForServerInput] objectForKey:[msg command]];
+	NSArray *cmdPlugins = [world bundlesForServerInput][[msg command]];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
-		NSDictionary *senderData = [NSDictionary dictionaryWithObjectsAndKeys:
-									msg.sender.raw, @"senderHostmask",
-									msg.sender.nick, @"senderNickname",
-									msg.sender.user, @"senderUsername",
-									msg.sender.address, @"senderDNSMask", 
-									NSNumberWithBOOL(msg.sender.isServer), @"senderIsServer", nil];
+		NSDictionary *senderData = @{@"senderHostmask": msg.sender.raw,
+									@"senderNickname": msg.sender.nick,
+									@"senderUsername": msg.sender.user,
+									@"senderDNSMask": msg.sender.address, 
+									@"senderIsServer": @(msg.sender.isServer)};
 		
-		NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
-									 msg.command, @"messageCommand",
-									 msg.sequence, @"messageSequence",
-									 msg.params, @"messageParamaters",
-									 client.config.server, @"messageServer",
-									 client.config.network, @"messageNetwork",
-									 NSNumberWithInteger(msg.numericReply), @"messageNumericReply", nil];
+		NSDictionary *messageData = @{@"messageCommand": msg.command,
+									 @"messageSequence": msg.sequence,
+									 @"messageParamaters": msg.params,
+									 @"messageServer": client.config.server,
+									 @"messageNetwork": client.config.network,
+									 @"messageNumericReply": @(msg.numericReply)};
 		
 		for (THOTextualPluginItem *plugin in cmdPlugins) {
 			THOPluginProtocol *bundle = [plugin pluginPrimaryClass];

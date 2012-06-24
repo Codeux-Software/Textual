@@ -6,11 +6,6 @@
 
 @implementation TVCTextFormatterMenu
 
-@synthesize textField;
-@synthesize formatterMenu;
-@synthesize foregroundColorMenu;
-@synthesize backgroundColorMenu;
-@synthesize sheetOverrideEnabled;
 
 #define _formattingMenuForegroundColorEnabledTag		95005
 #define _formattingMenuBackgroundColorEnabledTag		95007
@@ -221,13 +216,13 @@
                 
                 if ([charValue isEqualToString:NSStringWhitespacePlaceholder]) {
                     [self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-                                                  value:NSNumberWithInteger(0)
+                                                  value:@0
                                                   range:charRange];
                 } else {
                     colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
                     
                     [self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-                                                  value:NSNumberWithInteger(colorChar)
+                                                  value:@(colorChar)
                                                   range:charRange];
                 }
                 
@@ -236,7 +231,7 @@
             }
         } else {
             [self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-                                          value:NSNumberWithInteger([sender tag])
+                                          value:@([sender tag])
                                           range:selectedTextRange];
         }
         
@@ -279,7 +274,7 @@
                 colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
                 
                 [self.textField setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                              value:NSNumberWithInteger(colorChar)
+                                              value:@(colorChar)
                                               range:charRange];
                 
                 charCountIndex++;
@@ -287,7 +282,7 @@
             }
         } else {
             [self.textField setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-                                          value:NSNumberWithInteger([sender tag])
+                                          value:@([sender tag])
                                           range:selectedTextRange];
         }
         

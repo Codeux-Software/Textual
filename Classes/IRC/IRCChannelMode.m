@@ -9,9 +9,6 @@
 
 @implementation IRCChannelMode
 
-@synthesize isupport;
-@synthesize allModes;
-@synthesize modeIndexes;
 
 - (id)init
 {
@@ -41,7 +38,7 @@
 
 - (NSArray *)badModes 
 {
-	return [NSArray arrayWithObjects:@"q", @"a", @"o", @"h", @"v", @"b", @"e", @"I", nil];
+	return @[@"q", @"a", @"o", @"h", @"v", @"b", @"e", @"I"];
 }
 
 - (NSArray *)update:(NSString *)str

@@ -8,14 +8,14 @@
 #import "TVCLogLine.h"			// typedef enum
 #import "TLOGrowlController.h"	// typedef enum
 
-typedef enum {
+typedef enum IRCConnectMode : NSInteger {
 	IRCConnectNormalMode,
 	IRCConnectionRetryMode,
 	IRCNormalReconnectionMode,
 	IRCBadSSLCertificateReconnectMode,
 } IRCConnectMode;
 
-typedef enum {
+typedef enum IRCDisconnectType : NSInteger {
 	IRCDisconnectNormalMode,
 	IRCTrialPeriodDisconnectMode,
 	IRCBadSSLCertificateDisconnectMode,

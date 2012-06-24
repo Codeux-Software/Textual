@@ -30,37 +30,6 @@
 
 @implementation TVCLogController
 
-@synthesize autoScroller;
-@synthesize becameVisible;
-@synthesize bottom;
-@synthesize chanMenu;
-@synthesize channel;
-@synthesize client;
-@synthesize count;
-@synthesize html;
-@synthesize js;
-@synthesize lineNumber;
-@synthesize loaded;
-@synthesize loadingImages;
-@synthesize maxLines;
-@synthesize memberMenu;
-@synthesize menu;
-@synthesize movingToBottom;
-@synthesize highlightedLineNumbers;
-@synthesize needsLimitNumberOfLines;
-@synthesize scrollBottom;
-@synthesize scrollTop;
-@synthesize policy;
-@synthesize sink;
-@synthesize theme;
-@synthesize urlMenu;
-@synthesize view;
-@synthesize world;
-@synthesize messageQueue;
-@synthesize queueInProgress;
-@synthesize messageQueueDispatch;
-@synthesize lastVisitedHighlight;
-@synthesize viewingBottom;
 
 - (id)init
 {
@@ -92,7 +61,7 @@
 - (void)setMaxLines:(NSInteger)value
 {
 	if (self.maxLines == value) return;
-	maxLines = value;
+	_maxLines = value;
 	
 	if (self.loaded == NO) return;
 	
@@ -185,7 +154,7 @@
 		if ([self.view isLoading] == NO) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				if (NSObjectIsNotEmpty(self.messageQueue)) {
-					BOOL srslt = ((TVCLogMessageBlock)[self.messageQueue objectAtIndex:0])();
+					BOOL srslt = ((TVCLogMessageBlock)(self.messageQueue)[0])();
 					
 					if (srslt) {						
 						[self.messageQueue removeObjectAtIndex:0];
@@ -261,7 +230,7 @@
 			NSString *body = [LVCLogRenderer renderBody:topic
 										  controller:nil
 										  renderType:TVCLogRendererHTMLType
-										  properties:[NSDictionary dictionaryWithObjectsAndKeys:NSNumberWithBOOL(YES), @"renderLinks", nil]
+										  properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
 										  resultInfo:NULL];
 			
 			DOMDocument *doc = [self mainFrameDocument];
@@ -290,7 +259,7 @@
 	DOMElement *body = [doc body];
 	
 	if (body) {
-		[body setValue:NSNumberWithInteger(0) forKey:@"scrollTop"];
+		[body setValue:@0 forKey:@"scrollTop"];
 	}
 }
 
@@ -421,7 +390,7 @@
 			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:NSNumberWithInteger((y - [self scrollbackCorrectionInit])) forKey:@"scrollTop"];
+		[[doc body] setValue:@(y - [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
 }
 
@@ -435,7 +404,7 @@
 	WebScriptObject *js_api = [self.view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:[NSArray array]]; 
+		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:@[]]; 
 	}
 	
 	DOMElement *body = [self body:doc];
@@ -479,7 +448,7 @@
 		return NO;
 	}
 	
-	if ([self.highlightedLineNumbers containsObject:NSNumberWithInteger(self.lastVisitedHighlight)] == NO) {
+	if ([self.highlightedLineNumbers containsObject:@(self.lastVisitedHighlight)] == NO) {
 		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
 	
@@ -517,7 +486,7 @@
 			t = (id)[t parentNode];
 		}
 		
-		[[doc body] setValue:NSNumberWithInteger((y -  [self scrollbackCorrectionInit])) forKey:@"scrollTop"];
+		[[doc body] setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
 }
 
@@ -532,7 +501,7 @@
 		return;
 	}
 	
-	id bhli = NSNumberWithInteger(self.lastVisitedHighlight);
+	id bhli = @(self.lastVisitedHighlight);
 	
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
@@ -562,7 +531,7 @@
 		return;
 	}
 	
-	id bhli = NSNumberWithInteger(self.lastVisitedHighlight);
+	id bhli = @(self.lastVisitedHighlight);
 	
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
@@ -638,7 +607,7 @@
 {
 	if (self.needsLimitNumberOfLines) return;
 	
-	needsLimitNumberOfLines = YES;
+	_needsLimitNumberOfLines = YES;
 	
 	[self limitNumberOfLines];
 }
@@ -667,18 +636,18 @@
 	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
 	BOOL drawLinks   = BOOLReverseValue([[TLOLinkParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
 	
-	NSArray *urlRanges = [NSArray array];
+	NSArray *urlRanges = @[];
 	
 	if (rawHTML == NO) {
 		NSMutableDictionary *inputDictionary  = [NSMutableDictionary dictionary];
 		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
 		
 		if (NSObjectIsNotEmpty(line.keywords)) {
-			[inputDictionary setObject:line.keywords forKey:@"keywords"];
+			inputDictionary[@"keywords"] = line.keywords;
 		}
 		
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
-			[inputDictionary setObject:line.excludeWords forKey:@"excludeWords"];
+			inputDictionary[@"excludeWords"] = line.excludeWords;
 		}
 		
 		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
@@ -785,7 +754,7 @@
 	if (oldRenderAbs || oldRenderAlt) {
 		[s appendString:@"</span></p>"];
 		
-		[attrs setObject:[TVCLogLine lineTypeString:type] forKey:@"type"];
+		attrs[@"type"] = [TVCLogLine lineTypeString:type];
 	} else {
 		[s appendFormat:@"</div>"];
 		
@@ -795,11 +764,11 @@
 			typeattr = [typeattr stringByAppendingFormat:@" %@", [TVCLogLine memberTypeString:line.memberType]];
 		}
 		
-		[attrs setObject:typeattr forKey:@"type"];
+		attrs[@"type"] = typeattr;
 	}
 	
-	[attrs setObject:((highlighted) ? @"true" : @"false")		forKey:@"highlight"];
-	[attrs setObject:((isText) ? @"line text" : @"line event")	forKey:@"class"];
+	attrs[@"highlight"] = ((highlighted) ? @"true" : @"false");
+	attrs[@"class"] = ((isText) ? @"line text" : @"line event");
 	
 	[self writeLine:s attributes:attrs];
 	
@@ -842,7 +811,7 @@
 		[(id)div setInnerHTML:aHtml];
 		
 		for (NSString *key in attrs) {
-			NSString *value = [attrs objectForKey:key];
+			NSString *value = attrs[key];
 			
 			[div setAttribute:key value:value];
 		}
@@ -855,15 +824,15 @@
 			[self setNeedsLimitNumberOfLines];
 		}
 		
-		if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-			[self.highlightedLineNumbers safeAddObject:[NSNumber numberWithInteger:self.lineNumber]];
+		if ([attrs[@"highlight"] isEqualToString:@"true"]) {
+			[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
 		}
 		
 		WebScriptObject *js_api = [self.view js_api];
 		
 		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 			[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
-						  withArguments:[NSArray arrayWithObjects:NSNumberWithInteger(self.lineNumber), nil]];  
+						  withArguments:@[@(self.lineNumber)]];  
 		} 
 		
 		return YES;
@@ -956,7 +925,7 @@
 	} else {
 		NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
 		NSString	 *time		 = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], other.timestampFormat);
-		NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
+		NSDictionary *attributes = @{NSFontAttributeName: font};	
 		
 		NSSize    textSize  = [time sizeWithAttributes:attributes]; 
 		NSInteger textWidth = (textSize.width + other.indentationOffset);
@@ -1033,7 +1002,7 @@
 		self.autoScroller = [TVCWebViewAutoScroll new];
 	}
 	
-	self.autoScroller.webFrame = view.mainFrame.frameView;
+	self.autoScroller.webFrame = self.view.mainFrame.frameView;
 	
 	if (self.html) {
 		DOMDocument *doc = [frame DOMDocument];
@@ -1048,7 +1017,7 @@
 			if (self.scrollBottom) {
 				[self moveToBottom];
 			} else if (self.scrollTop) {
-				[body setValue:NSNumberWithInteger(self.scrollTop) forKey:@"scrollTop"];
+				[body setValue:@(self.scrollTop) forKey:@"scrollTop"];
 			}
 		}
 	} else {
@@ -1078,7 +1047,7 @@
 	WebScriptObject *js_api = [self.view js_api];
 	
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:[NSArray array]]; 
+		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:@[]]; 
 	}
 }
 

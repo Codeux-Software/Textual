@@ -13,25 +13,6 @@
 
 @implementation IRCUser
 
-@synthesize username;
-@synthesize address;
-@synthesize q;
-@synthesize a;
-@synthesize o;
-@synthesize h;
-@synthesize v;
-@synthesize isMyself;
-@synthesize isIRCOp;
-@synthesize incomingWeight;
-@synthesize outgoingWeight;
-@synthesize colorNumber;
-@synthesize nick;
-@synthesize lastFadedWeights;
-@synthesize supportInfo;
-@synthesize isOp;
-@synthesize totalWeight;
-@synthesize mark;
-@synthesize isHalfOp;
 
 - (id)init
 {
@@ -64,11 +45,11 @@
 
 - (char)mark
 {
-	if (q) return [self.supportInfo.userModeQPrefix safeCharacterAtIndex:0]; 
-	if (a) return [self.supportInfo.userModeAPrefix safeCharacterAtIndex:0]; 
-	if (o) return [self.supportInfo.userModeOPrefix safeCharacterAtIndex:0]; 
-	if (h) return [self.supportInfo.userModeHPrefix safeCharacterAtIndex:0]; 
-	if (v) return [self.supportInfo.userModeVPrefix safeCharacterAtIndex:0];
+	if (self.q) return [self.supportInfo.userModeQPrefix safeCharacterAtIndex:0]; 
+	if (self.a) return [self.supportInfo.userModeAPrefix safeCharacterAtIndex:0]; 
+	if (self.o) return [self.supportInfo.userModeOPrefix safeCharacterAtIndex:0]; 
+	if (self.h) return [self.supportInfo.userModeHPrefix safeCharacterAtIndex:0]; 
+	if (self.v) return [self.supportInfo.userModeVPrefix safeCharacterAtIndex:0];
 	
 	return ' ';
 }
@@ -85,7 +66,7 @@
 
 - (NSInteger)colorNumber
 {
-	if (colorNumber < 0) {
+	if (_colorNumber < 0) {
 		if ([_NSUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
 			self.colorNumber = (CFHash((__bridge CFTypeRef)([NSString stringWithUUID])) % _colorNumberMax);
 		} else {
@@ -93,7 +74,7 @@
 		}
 	}
 	
-	return colorNumber;
+	return _colorNumber;
 }
 
 - (BOOL)hasMode:(char)mode

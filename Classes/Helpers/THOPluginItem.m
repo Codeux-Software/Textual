@@ -6,8 +6,6 @@
 
 @implementation THOTextualPluginItem
 
-@synthesize pluginBundle;
-@synthesize pluginPrimaryClass;
 
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle
@@ -39,7 +37,7 @@
 			if (NSObjectIsNotEmpty(pluginRules)) {
 				for (NSString *command in pluginRules) {
 					if ([TPCPreferences indexOfIRCommand:command] >= 1) {
-						id objectValue = [pluginRules objectForKey:command];
+						id objectValue = pluginRules[command];
 						
 						if ([objectValue isKindOfClass:[NSArray class]]) {
 							for (NSArray *commandRules in objectValue) {
@@ -51,18 +49,18 @@
 									NSNumber *console	= [commandRules safeObjectAtIndex:3];
 									
 									if (NSObjectIsNotEmpty(regex)) {
-										NSArray *boss_entry = [NSArray arrayWithObjects:console, channels, queries, nil];
+										NSArray *boss_entry = @[console, channels, queries];
 										
 										if ([newOutputRulesDict containsKey:command] == NO) {
-											[newOutputRulesDict setObject:[[NSMutableDictionary alloc] init] forKey:command];
+											newOutputRulesDict[command] = [[NSMutableDictionary alloc] init];
 										}
 										
-										NSDictionary *originalEntries = [newOutputRulesDict objectForKey:command];
+										NSDictionary *originalEntries = newOutputRulesDict[command];
 										
 										if ([originalEntries containsKeyIgnoringCase:regex]) {
 											NSLog(@"Extension Error: Found multiple entries of the same regular expression in an output rule. Using only first. (Command = \"%@\" Expression = \"%@\")", command, regex);
 										} else {
-											[[newOutputRulesDict objectForKey:command] setObject:boss_entry forKey:regex];
+											newOutputRulesDict[command][regex] = boss_entry;
 										}
 									}
 								}
@@ -83,14 +81,14 @@
 					for (__strong NSString *cmd in spdcmds) {
 						cmd = [cmd uppercaseString];
 						
-						NSArray *cmdDict = [newUserDict objectForKey:cmd];
+						NSArray *cmdDict = newUserDict[cmd];
 						
 						if (NSObjectIsEmpty(cmdDict)) {
-							[newUserDict setObject:[[NSMutableArray alloc] init] forKey:cmd];
+							newUserDict[cmd] = [[NSMutableArray alloc] init];
 						}
 						
 						if ([cmdDict containsObject:bundle] == NO) {
-							[[newUserDict objectForKey:cmd] safeAddObject:self];
+							[newUserDict[cmd] safeAddObject:self];
 						}
 					}
 				}
@@ -107,14 +105,14 @@
 					for (__strong NSString *cmd in spdcmds) {
 						cmd = [cmd uppercaseString];
 						
-						NSArray *cmdDict = [newServerDict objectForKey:cmd];
+						NSArray *cmdDict = newServerDict[cmd];
 						
 						if (NSObjectIsEmpty(cmdDict)) {
-							[newServerDict setObject:[[NSMutableArray alloc] init] forKey:cmd];
+							newServerDict[cmd] = [[NSMutableArray alloc] init];
 						}
 						
 						if ([cmdDict containsObject:bundle] == NO) {
-							[[newServerDict objectForKey:cmd] safeAddObject:self];
+							[newServerDict[cmd] safeAddObject:self];
 						}
 					}
 				}

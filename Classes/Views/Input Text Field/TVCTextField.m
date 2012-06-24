@@ -9,8 +9,6 @@
 
 @implementation TVCTextField
 
-@synthesize keyHandler;
-@synthesize formattingQueue;
 
 - (void)dealloc
 {
@@ -43,7 +41,7 @@
 
 - (dispatch_queue_t)formattingQueue
 {
-    return formattingQueue;
+    return _formattingQueue;
 }
 
 #pragma mark -
@@ -83,7 +81,7 @@
 
 - (NSArray *)readablePasteboardTypes
 {
-    return [NSArray arrayWithObjects:NSPasteboardTypeString, nil];
+    return @[NSPasteboardTypeString];
 }
 
 - (NSAttributedString *)attributedStringValue
