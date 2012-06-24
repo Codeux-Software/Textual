@@ -163,20 +163,24 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -265,10 +269,12 @@
 		4CAA3B4C12E0EC7C00FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -302,10 +308,12 @@
 		4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -339,10 +347,12 @@
 		4CCB84A31501C5690053A181 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};

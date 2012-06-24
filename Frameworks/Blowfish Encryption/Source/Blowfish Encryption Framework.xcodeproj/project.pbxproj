@@ -274,6 +274,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -284,6 +285,7 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -306,6 +308,7 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = BlowfishEncryption;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -333,6 +336,7 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = BlowfishEncryption;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_BUILDER = "Codeux Software";

@@ -26,7 +26,7 @@ static dhclass *keyExchanger;
 		if (keyExchanger->generate()) {
 			keyExchanger->get_public_key(publicKey);
 			
-			NSString *_publicKey = [NSString stringWithUTF8String:publicKey.c_str()];
+			NSString *_publicKey = @(publicKey.c_str());
 			
 			if ([_publicKey length] >= 1) {
 				return _publicKey;
