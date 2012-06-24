@@ -622,7 +622,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
 	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"TextFieldAutomaticSpellCorrection"];
 	
-	[TPCPreferences saveWindowState:dic name:@"MainWindow"];
+	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
 	[TPCPreferences sync];
 }
 

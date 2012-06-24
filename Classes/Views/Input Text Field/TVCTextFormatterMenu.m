@@ -96,17 +96,6 @@
 			return YES;
 			break;
 		}
-		case 100:
-		{
-			BOOL condition = [_NSUserDefaults() boolForKey:@"EnableRainbowFormattingMenuItem"];
-			
-			NSMenuItem *divider = [[item menu] itemWithTag:_formattingMenuRainbowColorMenuItemTag];
-			
-			[item	 setHidden:BOOLReverseValue(condition)];
-			[divider setHidden:BOOLReverseValue(condition)];
-			
-			return condition;
-		}
 		default: break;
 	}
 	
