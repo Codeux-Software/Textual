@@ -7,12 +7,7 @@
 
 #define _colorNumberMax		30
 
-@interface IRCUser (Private)
-- (void)decayConversation;
-@end
-
 @implementation IRCUser
-
 
 - (id)init
 {

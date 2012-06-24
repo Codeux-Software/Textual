@@ -6,7 +6,6 @@
 
 @implementation TDCTopicSheet
 
-
 - (id)init
 {
 	if ((self = [super init])) {

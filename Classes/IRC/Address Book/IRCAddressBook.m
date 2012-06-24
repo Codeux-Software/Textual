@@ -6,7 +6,6 @@
 
 @implementation IRCAddressBook
 
-
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {

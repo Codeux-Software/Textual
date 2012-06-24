@@ -195,7 +195,6 @@
 	BOOL _finishedFirstDraw;
 }
 
-
 - (void)setWindowIsActive:(BOOL)value
 {
 	if (NSDissimilarObjects(value, self.windowIsActive)) {

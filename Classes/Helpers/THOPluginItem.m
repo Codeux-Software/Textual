@@ -6,7 +6,6 @@
 
 @implementation THOTextualPluginItem
 
-
 - (void)initWithPluginClass:(Class)primaryClass 
 				  andBundle:(NSBundle *)bundle
 				andIRCWorld:(IRCWorld *)world

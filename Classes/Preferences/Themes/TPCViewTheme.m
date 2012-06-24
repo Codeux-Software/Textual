@@ -5,12 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TPCViewTheme (Private)
-- (void)load;
-@end
-
 @implementation TPCViewTheme
-
 
 - (id)init
 {

@@ -21,50 +21,7 @@
 
 static NSDateFormatter *dateTimeFormatter = nil;
 
-@interface IRCClient (Private)
-- (void)setKeywordState:(id)target;
-- (void)setNewTalkState:(id)target;
-- (void)setUnreadState:(id)target;
-
-- (void)receivePrivmsgAndNotice:(IRCMessage *)message;
-- (void)receiveJoin:(IRCMessage *)message;
-- (void)receivePart:(IRCMessage *)message;
-- (void)receiveKick:(IRCMessage *)message;
-- (void)receiveQuit:(IRCMessage *)message;
-- (void)receiveKill:(IRCMessage *)message;
-- (void)receiveNick:(IRCMessage *)message;
-- (void)receiveMode:(IRCMessage *)message;
-- (void)receiveTopic:(IRCMessage *)message;
-- (void)receiveInvite:(IRCMessage *)message;
-- (void)receiveError:(IRCMessage *)message;
-- (void)receivePing:(IRCMessage *)message;
-- (void)receiveNumericReply:(IRCMessage *)message;
-
-- (void)receiveInit:(IRCMessage *)message;
-- (void)receiveText:(IRCMessage *)m command:(NSString *)cmd text:(NSString *)text identified:(BOOL)identified;
-- (void)receiveCTCPQuery:(IRCMessage *)message text:(NSString *)text;
-- (void)receiveCTCPReply:(IRCMessage *)message text:(NSString *)text;
-- (void)receiveErrorNumericReply:(IRCMessage *)message;
-- (void)receiveNickCollisionError:(IRCMessage *)message;
-
-- (void)tryAnotherNick;
-- (void)changeStateOff;
-- (void)performAutoJoin;
-
-- (void)addCommandToCommandQueue:(TLOTimerCommand *)m;
-- (void)clearCommandQueue;
-
-- (void)handleUserTrackingNotification:(IRCAddressBook *)ignoreItem 
-							  nickname:(NSString *)nick
-							  hostmask:(NSString *)host
-							  langitem:(NSString *)localKey;
-@end
-
 @implementation IRCClient
-
-
-#ifdef IS_TRIAL_BINARY
-#endif
 
 #pragma mark -
 #pragma mark Initialization
@@ -418,7 +375,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	
 	return nil;
 }
-
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type
 {

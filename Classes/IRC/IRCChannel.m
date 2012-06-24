@@ -7,10 +7,6 @@
 
 #define _treeUserlistHeight    16.0
 
-@interface IRCChannel (Private)
-- (void)closeLogFile;
-@end
-
 @implementation IRCChannel
 
 @synthesize isActive = _isActive;

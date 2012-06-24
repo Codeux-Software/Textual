@@ -9,7 +9,6 @@
 
 @implementation TVCTextField
 
-
 - (void)dealloc
 {
 	dispatch_release(self.formattingQueue);

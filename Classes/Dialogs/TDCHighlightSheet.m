@@ -6,12 +6,7 @@
 
 #define _rowHeightMultiplier	17
 
-@interface TDCHighlightSheet (Private)
-- (void)reloadTable;
-@end
-
 @implementation TDCHighlightSheet
-
 
 - (id)init
 {

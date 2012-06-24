@@ -6,7 +6,6 @@
 
 @implementation TDCSheetBase
 
-
 - (void)startSheet
 {
 	[self startSheetWithWindow:self.window];

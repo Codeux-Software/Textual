@@ -4,12 +4,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDChanInviteExceptionSheet (Private)
-- (void)reloadTable;
-@end
-
 @implementation TDChanInviteExceptionSheet
-
 
 - (id)init
 {

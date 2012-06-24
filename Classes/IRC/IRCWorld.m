@@ -14,13 +14,7 @@
 #define _treeClientHeight		21.0
 #define _treeChannelHeight		18.0
 
-@interface IRCWorld (Private)
-- (void)storePreviousSelection;
-- (void)monitorView:(NSTimer *)timer;
-@end
-
 @implementation IRCWorld;
-
 
 - (id)init
 {

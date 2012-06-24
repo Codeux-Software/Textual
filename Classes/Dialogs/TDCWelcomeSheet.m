@@ -5,13 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCWelcomeSheet (Private)
-- (void)updateOKButton;
-- (void)tableViewSelectionIsChanging:(NSNotification *)note;
-@end
-
 @implementation TDCWelcomeSheet
-
 
 - (id)init
 {

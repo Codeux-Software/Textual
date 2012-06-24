@@ -6,7 +6,6 @@
 
 @implementation TVCLogView
 
-
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
