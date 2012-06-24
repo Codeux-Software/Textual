@@ -6,10 +6,6 @@
 
 #import <objc/objc-runtime.h>
 
-@interface TLOPopupPrompts (Private)
-+ (void)sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-@end
-
 @implementation TLOPopupPrompts
 
 #pragma mark -

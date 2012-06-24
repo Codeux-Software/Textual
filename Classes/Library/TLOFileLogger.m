@@ -7,7 +7,6 @@
 
 @implementation TLOFileLogger
 
-
 - (void)dealloc
 {
 	[self close];

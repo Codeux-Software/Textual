@@ -8,7 +8,6 @@
 
 @implementation TLOTimer
 
-
 - (id)init
 {
 	if ((self = [super init])) {

@@ -3,10 +3,6 @@
 
 #import "TextualApplication.h"
 
-@interface TPCPreferencesMigrationAssistant (Private)
-+ (void)migrateGlobalPreference:(NSString *)newKey from:(NSString *)oldKey;
-@end
-
 @implementation TPCPreferencesMigrationAssistant
 
 #pragma mark -

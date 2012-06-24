@@ -6,7 +6,6 @@
 
 @implementation IRCPrefix
 
-
 - (id)init
 {
 	if ((self = [super init])) {

@@ -6,10 +6,6 @@
 #define _localVolumeBaseDirectory		@"/Volumes"
 #define _systemMemoryDivisor			1.073741824
 
-@interface TPI_SP_SysInfo (Private)
-+ (NSInteger)_internalSystemUptime;
-@end
-
 @implementation TPI_SP_SysInfo
 
 #pragma mark -

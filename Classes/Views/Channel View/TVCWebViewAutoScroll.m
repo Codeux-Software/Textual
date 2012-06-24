@@ -5,7 +5,6 @@
 
 @implementation TVCWebViewAutoScroll
 
-
 - (void)scrollViewToBottom:(NSView *)aView
 {
 	NSRect visibleRect = [aView visibleRect];

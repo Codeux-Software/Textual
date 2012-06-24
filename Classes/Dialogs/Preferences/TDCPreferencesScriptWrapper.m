@@ -6,7 +6,6 @@
 
 @implementation TDCPreferencesScriptWrapper
 
-
 - (id)init
 {
 	if ((self = [super init])) {
@@ -56,7 +55,6 @@
 	
 	[self.scripts sortUsingSelector:@selector(compare:)];
 }
-
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {

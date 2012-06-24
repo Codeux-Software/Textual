@@ -9,7 +9,6 @@
 
 @implementation TLOGrowlController
 
-
 - (id)init
 {
 	if ((self = [super init])) {
@@ -26,7 +25,6 @@
 	
 	return self;
 }
-
 
 - (void)notify:(TXNotificationType)type title:(NSString *)title
 		  desc:(NSString *)desc userInfo:(NSDictionary *)info

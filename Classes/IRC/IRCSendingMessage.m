@@ -6,7 +6,6 @@
 
 @implementation IRCSendingMessage
 
-
 - (id)initWithCommand:(NSString *)aCommand
 {
 	if ((self = [super init])) {

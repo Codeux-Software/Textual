@@ -5,13 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCConnection (Private)
-- (void)updateTimer;
-- (BOOL)tryToSend;
-@end
-
 @implementation IRCConnection
-
 
 - (id)init
 {

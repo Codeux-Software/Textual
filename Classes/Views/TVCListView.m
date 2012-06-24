@@ -6,7 +6,6 @@
 
 @implementation TVCListView
 
-
 - (NSInteger)countSelectedRows
 {
 	return [[self selectedRowIndexes] count];

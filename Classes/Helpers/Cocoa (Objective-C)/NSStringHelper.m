@@ -629,14 +629,12 @@ BOOL isUnicharDigit(unichar c)
 	return ([matches count] >= 2 && [matches count] <= 7);
 }
 
-
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
 	
 	return (boundHeight / lineHeight);
 }
-
 
 - (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
 {

@@ -6,7 +6,6 @@
 
 @implementation IRCExtras
 
-
 - (void)parseIRCProtocolURI:(NSString *)location 
 {
     location = [location decodeURIFragement];

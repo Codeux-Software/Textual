@@ -5,20 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TPCOtherTheme (Private)
-- (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv;
-- (NSString *)processNSStringValue:(NSString *)value def:(NSString *)defaultv;
-- (NSInteger)processIntegerValue:(NSInteger)value def:(NSInteger)defaultv;
-- (NSFont *)processFontValue:(NSString *)style_value 
-						size:(NSInteger)style_size 
-					defaultv:(NSFont *)defaultf 
-				   preferred:(NSFont *)pref  
-				 allowCustom:(BOOL)custom
-					overrode:(BOOL *)overr;
-@end
-
 @implementation TPCOtherTheme
-
 
 - (void)setPath:(NSString *)value
 {
@@ -28,7 +15,6 @@
 	
 	[self reload];
 }
-
 
 - (NSColor *)processColorStringValue:(NSString *)value def:(NSString *)defaultv
 {
