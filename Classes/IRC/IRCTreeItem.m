@@ -7,7 +7,6 @@
 
 @implementation IRCTreeItem
 
-
 - (void)resetLogView:(IRCWorld *)world
 		 withChannel:(IRCChannel *)c
 		   andClient:(IRCClient *)u

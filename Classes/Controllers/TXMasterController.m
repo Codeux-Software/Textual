@@ -35,7 +35,7 @@
 	}
 	
 #if defined(DEBUG)
-    ghostMode = YES; // Do not use autoconnect during debug
+    self.ghostMode = YES; // Do not use autoconnect during debug
 #endif
 	
 	[self.window makeMainWindow];

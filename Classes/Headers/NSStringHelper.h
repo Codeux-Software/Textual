@@ -7,10 +7,12 @@
 
 #define TXIsAlpha(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define TXIsNumeric(c)						('0' <= (c) && (c) <= '9' && TXIsAlpha(c) == NO) 
-#define TXIsAlphaNumeric(c)				(TXIsAlpha(c) || TXIsNumeric(c))
+#define TXIsAlphaNumeric(c)					(TXIsAlpha(c) || TXIsNumeric(c))
 #define TXIsWordLetter(c)					(TXIsAlphaNumeric(c) || (c) == '_')
 #define TXIsIRCColor(c,f)					([NSNumber compareIRCColor:c against:f])
-#define TXIsAlphaWithDiacriticalMark(c)	(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+#define TXIsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+
+#define NSStringNilValueSubstitute(s)		((s == nil) ? NSStringEmptyPlaceholder : s)
 
 #pragma mark 
 #pragma mark String Helpers
