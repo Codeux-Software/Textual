@@ -8,10 +8,6 @@
  of Mac OS X that support NSRegularExpression let us use it instead of relying
  on open source libraries to do the work for us. */
 
-@interface TLORegularExpression (Private)
-+ (BOOL)useNewRegularExpressionEngine;
-@end
-
 @implementation TLORegularExpression
 
 + (BOOL)useNewRegularExpressionEngine

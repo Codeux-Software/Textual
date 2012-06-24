@@ -8,28 +8,7 @@
 #define _bottomEpsilon		0
 #define _timeBufferSize		256
 
-@interface NSScrollView (Private)
-- (void)setAllowsHorizontalScrolling:(BOOL)value;
-@end
-
-@interface TVCLogController (Private)
-- (void)savePosition;
-- (void)restorePosition;
-- (void)messageQueueLoop;
-- (void)setNeedsLimitNumberOfLines;
-- (void)writeLineInBackground:(NSString *)aHtml attributes:(NSDictionary *)attrs;
-- (void)writeLine:(NSString *)aHtml attributes:(NSDictionary *)attrs;
-- (NSString *)initialDocument:(NSString *)topic;
-- (NSString *)generateOverrideStyle;
-- (DOMNode *)html_head;
-- (DOMElement *)body:(DOMDocument *)doc;
-- (DOMElement *)topic:(DOMDocument *)doc;
-- (NSInteger)scrollbackCorrectionInit;
-- (void)loadAlternateHTML:(NSString *)newHTML;
-@end
-
 @implementation TVCLogController
-
 
 - (id)init
 {
@@ -970,7 +949,7 @@
 	[scrollView setHasVerticalScroller:YES];
 	
 	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
-		[(id)scrollView setAllowsHorizontalScrolling:NO];
+		[scrollView performSelector:@selector(setAllowsHorizontalScrolling:) withObject:NO];
 	}
 	
 #ifdef TXMacOSLionOrNewer

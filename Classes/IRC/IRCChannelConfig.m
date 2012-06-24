@@ -7,7 +7,6 @@
 
 @implementation IRCChannelConfig
 
-
 - (id)init
 {
 	if ((self = [super init])) {
@@ -54,7 +53,6 @@
 	
 	return nil;
 }
-
 
 - (NSMutableDictionary *)dictionaryValue
 {

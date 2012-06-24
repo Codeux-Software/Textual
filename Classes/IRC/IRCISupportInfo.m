@@ -8,16 +8,7 @@
 #define _isupportSuffix		@" are supported by this server"
 #define _opValue			100
 
-@interface IRCISupportInfo (Private)
-- (void)setValue:(NSInteger)value forMode:(unsigned char)m;
-- (NSInteger)valueForMode:(unsigned char)m;
-- (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus;
-- (void)parsePrefix:(NSString *)value;
-- (void)parseChanmodes:(NSString *)s;
-@end
-
 @implementation IRCISupportInfo
-
 
 - (id)init
 {

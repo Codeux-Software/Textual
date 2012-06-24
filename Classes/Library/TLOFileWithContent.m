@@ -5,12 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TLOFileWithContent (Private)
-- (void)reload;
-@end
-
 @implementation TLOFileWithContent
-
 
 - (void)setFilename:(NSString *)value
 {

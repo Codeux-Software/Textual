@@ -13,17 +13,6 @@
 #define _TXWindowToolbarHeight		82
 #define _addonsToolbarItemIndex		8
 
-@interface TDCPreferencesController (Private)
-- (void)updateTheme;
-- (void)updateAlert;
-
-- (void)setUpToolbarItemsAndMenus;
-- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
-
-- (void)changeItemFont:(NSFontManager *)sender;
-- (void)updateTranscriptFolder;
-@end
-
 @implementation TDCPreferencesController
 
 @synthesize scriptsView;			

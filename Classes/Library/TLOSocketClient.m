@@ -9,7 +9,6 @@
 
 @implementation TLOSocketClient
 
-
 - (id)init
 {
 	if ((self = [super init])) {

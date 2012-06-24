@@ -6,7 +6,6 @@
 
 @implementation TVCMemberList
 
-
 - (void)updateBackgroundColor
 {
 	[self setBackgroundColor:TXInvertSidebarColor([NSColor sourceListBackgroundColor])];

@@ -5,13 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCListDialog (Private)
-- (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary;
-- (void)reloadTable;
-@end
-
 @implementation TDCListDialog
-
 
 - (id)init
 {
@@ -28,7 +22,6 @@
 	
 	return self;
 }
-
 
 - (void)start
 {

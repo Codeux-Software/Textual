@@ -4,13 +4,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCAddressBookSheet (Private)
-- (void)updateButtons;
-- (void)reloadChannelTable;
-@end
-
 @implementation TDCAddressBookSheet
-
 
 - (id)init
 {

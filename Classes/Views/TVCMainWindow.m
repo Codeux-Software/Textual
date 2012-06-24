@@ -6,7 +6,6 @@
 
 @implementation TVCMainWindow
 
-
 - (BOOL)canBecomeMainWindow
 {
 	return YES;

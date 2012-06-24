@@ -6,7 +6,6 @@
 
 @implementation TDCPreferencesSoundWrapper
 
-
 - (id)initWithEventType:(TXNotificationType)aEventType
 {
 	if ((self = [super init])) {

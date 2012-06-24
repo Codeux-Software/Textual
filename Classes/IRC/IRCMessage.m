@@ -4,12 +4,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCMessage (Private)
-- (void)parseLine:(NSString *)line;
-@end
-
 @implementation IRCMessage
-
 
 - (id)init
 {

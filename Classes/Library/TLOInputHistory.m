@@ -8,7 +8,6 @@
 
 @implementation TLOInputHistory
 
-
 - (id)init
 {
 	if ((self = [super init])) {

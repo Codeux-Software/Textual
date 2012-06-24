@@ -8,10 +8,6 @@
 
 #define _badgeTextFont				[NSFont fontWithName:@"Helvetica" size:22.0]
 
-@interface TVCDockIcon (Private)
-+ (NSInteger)badgeCenterTileWidth:(NSInteger)count;
-@end
-
 @implementation TVCDockIcon
 
 + (void)drawWithoutCount

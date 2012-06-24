@@ -5,12 +5,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCModeSheet (Private)
-- (void)updateTextFields;
-@end
-
 @implementation TDCModeSheet
-
 
 - (id)init
 {

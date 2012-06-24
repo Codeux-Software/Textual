@@ -7,16 +7,7 @@
 
 #define _TXWindowToolbarHeight		25
 
-@interface TDChannelSheet (Private)
-- (void)load;
-- (void)save;
-- (void)update;
-
-- (void)firstPane:(NSView *)view;
-@end
-
 @implementation TDChannelSheet
-
 
 - (id)init
 {

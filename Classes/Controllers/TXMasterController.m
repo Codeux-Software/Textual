@@ -12,14 +12,7 @@
 #define _minimumSplitViewWidth		120
 #define _defaultSplitViewWidth		170
 
-@interface TXMasterController (Private)
-- (void)setColumnLayout;
-- (void)registerKeyHandlers;
-- (void)buildSegmentedController;
-@end
-
 @implementation TXMasterController
-
 
 #pragma mark -
 #pragma mark NSApplication Delegate

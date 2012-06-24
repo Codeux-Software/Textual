@@ -4,12 +4,7 @@
 
 #import "TextualApplication.h"
 
-@interface TVCThinSplitView (Private)
-- (void)updatePosition;
-@end
-
 @implementation TVCThinSplitView
-
 
 - (void)setUp
 {

@@ -4,12 +4,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDChanBanExceptionSheet (Private)
-- (void)reloadTable;
-@end
-
 @implementation TDChanBanExceptionSheet
-
 
 - (id)init
 {

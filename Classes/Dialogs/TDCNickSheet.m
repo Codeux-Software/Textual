@@ -7,7 +7,6 @@
 
 @implementation TDCNickSheet
 
-
 - (id)init
 {
 	if ((self = [super init])) {

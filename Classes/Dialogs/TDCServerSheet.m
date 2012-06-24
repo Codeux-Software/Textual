@@ -11,19 +11,7 @@
 #define _timeoutIntMin     0
 #define _timeoutIntMax     360
 
-@interface TDCServerSheet (Private)
-- (void)load;
-- (void)save;
-- (void)updateConnectionPage;
-- (void)updateChannelsPage;
-- (void)reloadChannelTable;
-- (void)updateIgnoresPage;
-- (void)reloadIgnoreTable;
-- (void)focusView:(NSView *)view atRow:(NSInteger)row;
-@end
-
 @implementation TDCServerSheet
-
 
 - (id)init
 {

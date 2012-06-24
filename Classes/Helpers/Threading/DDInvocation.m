@@ -26,7 +26,6 @@
 
 @implementation DDInvocation
 
-
 + (id)invocationGrabber
 {
     return [[self alloc] init];

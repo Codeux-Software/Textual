@@ -12,7 +12,6 @@
 
 @implementation TVCInputPromptDialog
 
-
 - (NSString *)promptValue
 {
 	return [self.finalModalValue trim];

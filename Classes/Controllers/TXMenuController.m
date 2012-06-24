@@ -5,23 +5,18 @@
 
 #import "TextualApplication.h"
 
-#define _noClient					(PointerIsEmpty(u))
-#define _noChannel					(PointerIsEmpty(c))
-#define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
-#define _isClient					(c.isTalk == NO && c.isChannel == NO && c.isClient == YES)
-#define _isChannel					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
-#define _isQuery					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
-#define _connected					(u && u.isConnected && u.isLoggedIn)
-#define _notConnected				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 #define _activate					(c && c.isActive)
+#define _connected					(u && u.isConnected && u.isLoggedIn)
+#define _isChannel					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
+#define _isClient					(c.isTalk == NO && c.isChannel == NO && c.isClient == YES)
+#define _isQuery					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
+#define _noChannel					(PointerIsEmpty(c))
+#define _noClient					(PointerIsEmpty(u))
+#define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
 #define _notActive					(c && c.isActive == NO)
-
-@interface TXMenuController (Private)
-- (TVCLogView *)currentWebView;
-@end
+#define _notConnected				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 
 @implementation TXMenuController
-
 
 - (id)init
 {
