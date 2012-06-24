@@ -109,7 +109,7 @@
         }
     } 
     
-    if (mcstring == ' ' && [_NSUserDefaults() boolForKey:@"Preferences.General.use_nomode_symbol"]) {
+    if (mcstring == ' ' && [_NSUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
         mcstring = 'x';
     }
     

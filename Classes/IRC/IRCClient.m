@@ -1633,7 +1633,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         [s deleteCharactersInRange:NSMakeRange(0, 1)];
 	}
 	
-	switch ([TPCPreferences commandUIndex:cmd]) {
+	switch ([TPCPreferences indexOfIRCommand:cmd]) {
 		case 3: // Command: AWAY
 		{
             NSString *msg = s.string;
@@ -5634,7 +5634,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender
 {
 	if (self.disconnectType == IRCBadSSLCertificateDisconnectMode) {
-		NSString *suppKey = [@"cert_trust_error." stringByAppendingString:self.config.guid];
+		NSString *supkeyHead = TXPopupPromptSuppressionPrefix;
+		NSString *supkeyBack = [NSString stringWithFormat:@"cert_trust_error.@", self.config.guid];
 		
 		if (self.config.isTrustedConnection == NO) {
 			BOOL status = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"SocketBadSSLCertificateErrorMessage") 
@@ -5642,10 +5643,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 													  defaultButton:TXTLS(@"TrustButton") 
 													alternateButton:TXTLS(@"CancelButton")
 														otherButton:nil
-													 suppressionKey:suppKey
+													 suppressionKey:supkeyBack
 													suppressionText:@"-"];
 			
-			[_NSUserDefaults() setBool:status forKey:suppKey];
+			[_NSUserDefaults() setBool:status forKey:[supkeyHead stringByAppendingString:supkeyBack]];
 			
 			if (status) {
 				self.config.isTrustedConnection = status;
@@ -5703,7 +5704,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (m.numericReply > 0) { 
 		[self receiveNumericReply:m];
 	} else {
-		switch ([TPCPreferences commandUIndex:cmd]) {	
+		switch ([TPCPreferences indexOfIRCommand:cmd]) {	
 			case 4: // Command: ERROR
             {
 				[self receiveError:m];
