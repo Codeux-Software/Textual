@@ -8,9 +8,9 @@
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"sysinfo", @"memory", @"uptime", @"netstats", 
+	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
 			@"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg",
-			@"sysmem", nil];
+			@"sysmem"];
 }
 
 - (void)messageSentByUser:(IRCClient *)client

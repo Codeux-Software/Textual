@@ -62,7 +62,7 @@
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
-	return [NSArray arrayWithObjects:@"setkey", @"delkey", @"key", @"keyx", nil];
+	return @[@"setkey", @"delkey", @"key", @"keyx"];
 }
 
 - (NSDictionary *)pluginOutputDisplayRules
@@ -71,13 +71,13 @@
 	
 	NSMutableDictionary *rules = [NSMutableDictionary dictionary];
 	
-	NSArray *privmsgRule_1 = [NSArray arrayWithObjects:[@"^" stringByAppendingString:TXExchangeRequestPrefix], 
-							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), nil];
+	NSArray *privmsgRule_1 = @[[@"^" stringByAppendingString:TXExchangeRequestPrefix], 
+							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
 	
-	NSArray *privmsgRule_2 = [NSArray arrayWithObjects:[@"^" stringByAppendingString:TXExchangeResponsePrefix], 
-							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), nil];
+	NSArray *privmsgRule_2 = @[[@"^" stringByAppendingString:TXExchangeResponsePrefix], 
+							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
 	
-	[rules setObject:[NSArray arrayWithObjects:privmsgRule_1, privmsgRule_2, nil] forKey:IRCCommandFromLineType(TVCLogLineNoticeType)];
+	rules[IRCCommandFromLineType(TVCLogLineNoticeType)] = @[privmsgRule_1, privmsgRule_2];
 	
 	return rules;
 }
