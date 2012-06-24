@@ -849,8 +849,14 @@
 	}
 	
 	[u.config destroyKeychains];
-	
-	[_NSUserDefaults() removeObjectForKey:[@"Preferences.prompts.cert_trust_error." stringByAppendingString:u.config.guid]];
+
+	NSString *supkey;
+
+	supkey = TXPopupPromptSuppressionPrefix;
+	supkey = [supkey stringByAppendingString:@"cert_trust_error."];
+	supkey = [supkey stringByAppendingString:u.config.guid];
+
+	[_NSUserDefaults() removeObjectForKey:supkey];
 	
 	[self.world destroyClient:u];
 	[self.world save];

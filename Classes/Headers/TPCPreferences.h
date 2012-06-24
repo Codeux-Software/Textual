@@ -92,7 +92,7 @@ typedef enum {
 + (void)setTranscriptFolder:(NSString *)value;
 
 + (NSDictionary *)commandIndexList;
-+ (NSInteger)commandUIndex:(NSString *)command;
++ (NSInteger)indexOfIRCommand:(NSString *)command;
 
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
@@ -196,9 +196,6 @@ typedef enum {
 
 + (NSString *)completionSuffix;
 + (void)setCompletionSuffix:(NSString *)value;
-
-+ (BOOL)registeredToGrowl;
-+ (void)setRegisteredToGrowl:(BOOL)value;
 
 + (NSDictionary *)loadWorld;
 + (void)saveWorld:(NSDictionary *)value;
