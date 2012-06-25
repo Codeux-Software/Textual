@@ -4,8 +4,6 @@
 
 #import "TextualApplication.h"
 
-@class NSRegularExpression;
-
 @interface TLORegularExpression : NSObject
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
