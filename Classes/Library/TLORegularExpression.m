@@ -4,11 +4,40 @@
 
 #import "TextualApplication.h"
 
+/* 
+	Designed to match latest version of the NSRegularExpression library.
+ 
+	typedef NS_OPTIONS(NSUInteger, NSRegularExpressionOptions) {
+		NSRegularExpressionCaseInsensitive             = 1 << 0,    
+		NSRegularExpressionAllowCommentsAndWhitespace  = 1 << 1,    
+		NSRegularExpressionIgnoreMetacharacters        = 1 << 2,    
+		NSRegularExpressionDotMatchesLineSeparators    = 1 << 3,    
+		NSRegularExpressionAnchorsMatchLines           = 1 << 4,   
+		NSRegularExpressionUseUnixLineSeparators       = 1 << 5,   
+		NSRegularExpressionUseUnicodeWordBoundaries    = 1 << 6   
+	};
+*/
+
+#define _TXRegularExpressionCaseInsensitive         (1 << 0)
+
 /* It is always best to trust native developer APIs. Therefore, on versions
  of Mac OS X that support NSRegularExpression let us use it instead of relying
- on open source libraries to do the work for us. */
+ on open source libraries to do the work for us. 
+ 
+ In order to work on Snow Leopard and earlier we turn NSRegularExpression into 
+ an id object which is defined using NSClassFromString so that Textual does not
+ crash from missing symbols. */
 
 @implementation TLORegularExpression
+
+static id _regularExpressionCaller;
+
++ (void)setupRegularExpressionEngine
+{
+	if ([self useNewRegularExpressionEngine]) {
+		_regularExpressionCaller = NSClassFromString(@"NSRegularExpression");
+	}
+}
 
 + (BOOL)useNewRegularExpressionEngine
 {
@@ -22,16 +51,18 @@
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	[self setupRegularExpressionEngine];
+	
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
 #ifdef TXNativeRegularExpressionAvailable
 	if ([self useNewRegularExpressionEngine]) {
-		NSRegularExpression *regex;
+		id regex;
         
         if (caseless) {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:_TXRegularExpressionCaseInsensitive error:NULL];
         } else {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:0 error:NULL];
         }
         
         NSUInteger numMatches = [regex numberOfMatchesInString:haystack options:0 range:strRange];
@@ -58,16 +89,18 @@
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	[self setupRegularExpressionEngine];
+	
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
 #ifdef TXNativeRegularExpressionAvailable
 	if ([self useNewRegularExpressionEngine]) {
-		NSRegularExpression *regex;
+		id regex;
         
         if (caseless) {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:_TXRegularExpressionCaseInsensitive error:NULL];
         } else {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:0 error:NULL];
         }
 		
 		NSRange resultRange = [regex rangeOfFirstMatchInString:haystack options:0 range:strRange];
@@ -89,11 +122,13 @@
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
+	[self setupRegularExpressionEngine];
+	
 #ifdef TXNativeRegularExpressionAvailable
 	if ([self useNewRegularExpressionEngine]) {
 		NSRange strRange = NSMakeRange(0, [haystack length]);
 		
-		NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+		id regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:0 error:NULL];
 		
 		NSString *newString = [regex stringByReplacingMatchesInString:haystack options:0 range:strRange withTemplate:puppy];
 		
@@ -115,6 +150,8 @@
 
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	[self setupRegularExpressionEngine];
+	
     NSRange strRange = NSMakeRange(0, [haystack length]);
     
 #ifdef TXNativeRegularExpressionAvailable
@@ -122,9 +159,9 @@
 		NSRegularExpression *regex;
         
         if (caseless) {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:_TXRegularExpressionCaseInsensitive error:NULL];
         } else {
-            regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+            regex = [_regularExpressionCaller regularExpressionWithPattern:needle options:0 error:NULL];
         }
 		
 		NSMutableArray *realMatches = [NSMutableArray array];
