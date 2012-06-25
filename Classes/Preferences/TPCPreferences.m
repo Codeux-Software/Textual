@@ -218,7 +218,7 @@ static NSMutableDictionary *commandIndex = nil;
 	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
 		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
-	
+
 	return dest;
 }
 

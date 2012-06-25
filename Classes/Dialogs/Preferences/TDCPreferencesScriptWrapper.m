@@ -17,16 +17,24 @@
 
 - (void)populateData;
 {
-	NSArray *scriptPaths = [NSArray arrayWithObjects:
-							
 #ifdef TXUserScriptsFolderAvailable
-							[TPCPreferences whereScriptsUnsupervisedPath],
+	NSArray *scriptPaths = @[
+	NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+	NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
+	NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+	];
+#else
+	NSArray *scriptPaths = @[
+	NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+	NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+	];
 #endif
-							
-							[TPCPreferences whereScriptsLocalPath],
-							[TPCPreferences whereScriptsPath], nil];
 	
 	for (NSString *path in scriptPaths) {
+		if (NSObjectIsEmpty(path)) {
+			continue;
+		}
+		
 		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 		
 		if (NSObjectIsNotEmpty(resourceFiles)) {
