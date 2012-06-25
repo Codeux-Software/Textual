@@ -285,7 +285,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
     [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
-    dic[@"floodControl"] = floodControl;
+	[dic safeSetObject:floodControl forKey:@"floodControl"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
@@ -298,8 +298,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	dic[@"channelList"] = channelAry;
-	dic[@"ignoreList"] = ignoreAry;
+	[dic safeSetObject:channelAry forKey:@"channelList"];
+	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
 	
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];

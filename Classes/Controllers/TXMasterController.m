@@ -178,9 +178,9 @@
 		if (visibleRect.size.width < windowRect.size.width) {
 			windowRect.size.width = visibleRect.size.width;
 		}
-
+		
 		windowRect.origin = visibleRect.origin;
-
+		
 		[self.window setFrame:windowRect display:NO];
 	}
 }
@@ -795,29 +795,35 @@ constrainMinCoordinate:(CGFloat)proposedMax
 			}
 		}
 		
-		NSArray *scriptPaths = [NSArray arrayWithObjects:
-								
 #ifdef TXUserScriptsFolderAvailable
-								[TPCPreferences whereScriptsUnsupervisedPath],
+		NSArray *scriptPaths = @[
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+		];
+#else
+		NSArray *scriptPaths = @[
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+		];
 #endif
-								
-								[TPCPreferences whereScriptsLocalPath],
-								[TPCPreferences whereScriptsPath], nil];
 		
 		for (NSString *path in scriptPaths) {
-			NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
-			
-			if (NSObjectIsNotEmpty(resourceFiles)) {
-				for (NSString *file in resourceFiles) {
-					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-						continue;
-					}
-					
-					NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-					NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-					
-					if ([choices containsObject:cmdl] == NO) {
-						[choices safeAddObject:cmdl];
+			if (NSObjectIsNotEmpty(path)) {
+				NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+				
+				if (NSObjectIsNotEmpty(resourceFiles)) {
+					for (NSString *file in resourceFiles) {
+						if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+							continue;
+						}
+						
+						NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+						NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+						
+						if ([choices containsObject:cmdl] == NO) {
+							[choices safeAddObject:cmdl];
+						}
 					}
 				}
 			}
@@ -1375,8 +1381,8 @@ typedef enum TXMoveKind : NSInteger {
 	for (NSString *s in config[@"channelList"]) {
 		if ([s isChannelName]) {
 			[channels safeAddObject:@{@"channelName": s,
-									 @"joinOnConnect": NSNumberWithBOOL(YES), 
-									 @"enableNotifications": NSNumberWithBOOL(YES)}];	
+			 @"joinOnConnect": NSNumberWithBOOL(YES), 
+			 @"enableNotifications": NSNumberWithBOOL(YES)}];	
 		}
 	}
 	

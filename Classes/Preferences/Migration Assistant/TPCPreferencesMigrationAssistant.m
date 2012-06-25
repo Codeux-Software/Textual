@@ -61,10 +61,10 @@
 	
     [floodControl setBool:[floodControl boolForKey:@"outgoing"] forKey:@"serviceEnabled"];
     
-    nconfig[@"floodControl"] = floodControl;
+	[nconfig safeSetObject:floodControl forKey:@"floodControl"];
 	
-	nconfig[@"channelList"] = config[@"channels"];
-	nconfig[@"ignoreList"] = config[@"ignores"];
+	[nconfig safeSetObject:config[@"channels"] forKey:@"channelList"];
+	[nconfig safeSetObject:config[@"ignores"] forKey:@"ignoreList"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];
