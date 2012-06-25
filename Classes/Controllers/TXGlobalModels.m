@@ -6,8 +6,6 @@
 
 #import <objc/objc-runtime.h>
 
-#define _timeBufferSize		256
-
 BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
