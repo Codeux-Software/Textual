@@ -640,7 +640,7 @@
 
 - (void)onDownloadExtraAddons:(id)sender
 {
-	NSString *version = @"No Sandbox";
+	NSString *version = @"No%20Sandbox";
 	
 	if ([TPCPreferences featureAvailableToOSXLion]) {
 		if ([TPCPreferences sandboxEnabled]) {
@@ -650,7 +650,7 @@
 	
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		if ([TPCPreferences sandboxEnabled]) {
-			version = @"Mountain Lion";
+			version = @"Mountain%20Lion";
 		}
 	} 
 

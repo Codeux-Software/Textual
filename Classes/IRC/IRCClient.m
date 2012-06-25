@@ -2670,20 +2670,29 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSString *command = [cmd lowercaseString];
 			
             NSArray *extensions = @[@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @""];
-			NSArray *scriptPaths = [NSArray arrayWithObjects:
-									
+			
 #ifdef TXUserScriptsFolderAvailable
-									[TPCPreferences whereScriptsUnsupervisedPath],
+			NSArray *scriptPaths = @[
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+			];
+#else
+			NSArray *scriptPaths = @[
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+			];
 #endif
-									
-									[TPCPreferences whereScriptsLocalPath],
-									[TPCPreferences whereScriptsPath], nil];
 			
             NSString *scriptPath = [NSString string];
             
             BOOL scriptFound = NO;
 			
 			for (NSString *path in scriptPaths) {
+				if (NSObjectIsEmpty(path)) {
+					continue;
+				}
+				
 				if (scriptFound == YES) {
 					break;
 				}
