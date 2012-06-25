@@ -56,8 +56,7 @@
 
 - (void)resetTextFieldCellSize
 {
-	BOOL drawCharCount = NO;
-	BOOL drawBezel     = YES;
+	BOOL drawBezel = YES;
 	
 	NSWindow     *mainWindow = self.window;
 	
@@ -78,14 +77,14 @@
 	if (NSObjectIsEmpty(stringv)) {
 		textBoxFrame.size.height    = _InputBoxDefaultHeight;
 		backgroundFrame.size.height = _InputBoxBackgroundDefaultHeight;
-		
-		contentBorder = _WindowContentBorderDefaultHeight;
+
+		if (_lastDrawnLineCount >= 2) {
+			drawBezel = YES;
+		}
+
+		_lastDrawnLineCount = 1;
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
-		
-		if (totalLinesBase >= 3) {
-			drawCharCount = YES;
-		}
 		
 		if (_lastDrawnLineCount == totalLinesBase) {
 			drawBezel = NO;
