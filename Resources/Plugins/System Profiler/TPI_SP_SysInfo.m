@@ -36,6 +36,15 @@
 	
 	_cpu_model = [_cpu_model trim];
 	
+	BOOL _show_cpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> CPU Model"];
+	BOOL _show_gpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> GPU Model"];
+	BOOL _show_diskinfo		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Disk Information"];
+	BOOL _show_sys_uptime	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> System Uptime"];
+	BOOL _show_sys_memory	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Memory Information"];
+	BOOL _show_screen_res	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Screen Resolution"];
+	BOOL _show_load_avg		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Load Average"];
+	BOOL _show_os_version	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> OS Version"];
+	
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
@@ -51,81 +60,99 @@
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* CPU Information. */
-	if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-		if (_cpu_count_int == 1) {
-			_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
-		} else {
-			_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
+	if (_show_cpu_model) {
+		/* CPU Information. */
+		if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
+			if (_cpu_count_int == 1) {
+				_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
+			} else {
+				_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
+			}
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
 		
-		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-	
-	/* L2 & L3 Cache. */
-	if (_cpu_l2) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
+		/* L2 & L3 Cache. */
+		if (_cpu_l2) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
 		
-		sysinfo = [sysinfo stringByAppendingString:_new];
+		if (_cpu_l3) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
 	}
 	
-	if (_cpu_l3) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
-		
-		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-	
-	if (_memory) {
+	if (_show_sys_memory && _memory) {
 		_new = TXTFLS(@"SystemInformationCompiledOutputMemory", _memory);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* System Uptime. */
-	_new = TXTFLS(@"SystemInformationCompiledOutputUptime", [self systemUptimeUsingShortValue:YES]);
-	
-	sysinfo = [sysinfo stringByAppendingString:_new];
-	
-	/* Disk Space Information. */
-	_new = TXTFLS(@"SystemInformationCompiledOutputDiskspace", [self diskInfo]);
-	
-	sysinfo = [sysinfo stringByAppendingString:_new];
-	
-	/* GPU Information. */
-	if (NSObjectIsNotEmpty(_gpu_model)) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputGraphics", _gpu_model);
+	if (_show_sys_uptime) {
+		/* System Uptime. */
+		_new = TXTFLS(@"SystemInformationCompiledOutputUptime", [self systemUptimeUsingShortValue:YES]);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* Screen Resolution. */
-	NSArray *allScreens = [NSScreen screens];
-	
-	if (NSObjectIsNotEmpty(allScreens)) {		
-		NSScreen *maiScreen = allScreens[0];
-		
-		_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
+	if (_show_diskinfo) {
+		/* Disk Space Information. */
+		_new = TXTFLS(@"SystemInformationCompiledOutputDiskspace", [self diskInfo]);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* Load Average. */
-	if (NSObjectIsNotEmpty(_loadavg)) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputLoad", _loadavg);
+	if (_show_gpu_model) {
+		/* GPU Information. */
+		if (NSObjectIsNotEmpty(_gpu_model)) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputGraphics", _gpu_model);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
+	}
+	
+	if (_show_screen_res) {
+		/* Screen Resolution. */
+		NSArray *allScreens = [NSScreen screens];
+		
+		if (NSObjectIsNotEmpty(allScreens)) {		
+			NSScreen *maiScreen = allScreens[0];
+			
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
+	}
+	
+	if (_show_load_avg) {
+		/* Load Average. */
+		if (NSObjectIsNotEmpty(_loadavg)) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputLoad", _loadavg);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
+	}
+	
+	if (_show_os_version) {
+		/* Operating System. */
+		NSString *osname = [self operatingSystemName];
+		
+		_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
+					  [TPCPreferences systemInfoPlist][@"ProductName"], 
+					  [TPCPreferences systemInfoPlist][@"ProductVersion"], osname,
+					  [TPCPreferences systemInfoPlist][@"ProductBuildVersion"]);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
-	
-	/* Operating System. */
-	NSString *osname = [self operatingSystemName];
-	
-	_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
-				  [TPCPreferences systemInfoPlist][@"ProductName"], 
-				  [TPCPreferences systemInfoPlist][@"ProductVersion"], osname,
-				  [TPCPreferences systemInfoPlist][@"ProductBuildVersion"]);
-	
-	sysinfo = [sysinfo stringByAppendingString:_new];
 
+	if ([sysinfo hasSuffix:@" \002•\002"]) {
+		sysinfo = [sysinfo safeSubstringToIndex:(sysinfo.length - 3)];
+	}
+	
 	/* Compiled Output. */
 	return sysinfo;
 }
@@ -136,7 +163,7 @@
 	
 	if ([screens count] == 1) {
 		NSScreen *maiScreen = screens[0];
-
+		
 		return TXTFLS(@"SystemInformationScreensCommandResultSingle", maiScreen.frame.size.width, maiScreen.frame.size.height);
 	} else {
 		NSMutableString *result = [NSMutableString string];
@@ -162,7 +189,7 @@
 	
 	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[TPCPreferences startTime]], NO,
 													@[@"day", @"hour", @"minute", @"second"]);
-
+	
 	return TXTFLS(@"SystemInformationUptimeCommandResult", systemUptime, textualUptime);
 }
 
@@ -284,7 +311,7 @@
 	}
 	
 	[result appendFormat:@"%c", 0x03];
-
+	
 	return TXTFLS(@"SystemInformationSysmemCommandResult",
 				  [self formattedDiskSize:freeMemory],
 				  [self formattedDiskSize:usedMemory],
@@ -439,7 +466,7 @@
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
-
+		
 		return TXTFLS(@"SystemInformationCompiledOutputDiskspaceExtended",
 					  [self formattedDiskSize:totalSpace],
 					  [self formattedDiskSize:freeSpace]);
