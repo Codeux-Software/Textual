@@ -218,7 +218,7 @@ static NSMutableDictionary *commandIndex = nil;
 	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
 		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
-
+	
 	return dest;
 }
 
@@ -292,29 +292,70 @@ static NSMutableDictionary *commandIndex = nil;
 #pragma mark -
 #pragma mark Logging
 
-+ (NSString *)transcriptFolder
+static NSURL *transcriptFolderResolvedBookmark;
+
++ (void)stopUsingTranscriptFolderBookmarkResources
 {
-	if ([self sandboxEnabled]) {
-		NSString *dest = [NSHomeDirectory() stringByAppendingPathComponent:@"Logs"];
+	if (NSObjectIsNotEmpty(transcriptFolderResolvedBookmark)) {
+		[transcriptFolderResolvedBookmark stopAccessingSecurityScopedResource];
 		
-		if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-			[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-		
-		return dest;
-	} else {
-		NSString *base;
-		
-		base = [_NSUserDefaults() objectForKey:@"LogTranscriptDestination"];
-		base = [base stringByExpandingTildeInPath];
-		
-		return base;
+		transcriptFolderResolvedBookmark = nil;
 	}
 }
 
-+ (void)setTranscriptFolder:(NSString *)value
++ (NSString *)transcriptFolder
 {
-	[_NSUserDefaults() setObject:value forKey:@"LogTranscriptDestination"];
+	if ([self sandboxEnabled] && [TPCPreferences securityScopedBookmarksAvailable]) {
+		if (NSObjectIsNotEmpty(transcriptFolderResolvedBookmark)) {
+			return [transcriptFolderResolvedBookmark path];
+		} else {
+			NSData *bookmark = [_NSUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
+			
+			if (NSObjectIsNotEmpty(bookmark)) {
+				NSError *error;
+				
+				NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
+																	options:NSURLBookmarkResolutionWithSecurityScope
+															  relativeToURL:nil
+														bookmarkDataIsStale:NO
+																	  error:&error];
+				
+				if (error) {
+					NSLog(@"Error creating bookmark for URL: %@", error);
+				} else {
+					[resolvedBookmark startAccessingSecurityScopedResource];
+					
+					transcriptFolderResolvedBookmark = resolvedBookmark;
+					
+					return [transcriptFolderResolvedBookmark path];
+				}
+			}
+		}
+
+		return nil;
+	} else {
+		NSString *base = [_NSUserDefaults() objectForKey:@"LogTranscriptDestination"];
+	
+		return [base stringByExpandingTildeInPath];
+	}
+}
+
++ (void)setTranscriptFolder:(id)value
+{
+	// "value" can either be returned as an absolute path on non-sandboxed
+	// versions of Textual or as an NSData object on sandboxed versions.
+	
+	if ([self sandboxEnabled]) {
+		if ([TPCPreferences securityScopedBookmarksAvailable] == NO) {
+			return;
+		}
+		
+		[self stopUsingTranscriptFolderBookmarkResources];
+		
+		[_NSUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+	} else {
+		[_NSUserDefaults() setObject:value forKey:@"LogTranscriptDestination"];
+	}
 }
 
 #pragma mark -
@@ -325,6 +366,23 @@ static NSMutableDictionary *commandIndex = nil;
 	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [TPCPreferences applicationBundleIdentifier]];
 	
 	return [NSHomeDirectory() hasSuffix:suffix];
+}
+
++ (BOOL)securityScopedBookmarksAvailable
+{
+	if ([TPCPreferences featureAvailableToOSXLion] == NO) {
+		return NO;
+	}
+
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		return YES;
+	}
+
+	NSString *osxversion = systemVersionPlist[@"ProductVersion"];
+
+	NSArray *matches = @[@"10.7", @"10.7.0", @"10.7.1", @"10.7.2"];
+
+	return ([matches containsObject:osxversion] == NO);
 }
 
 #pragma mark -
@@ -998,13 +1056,13 @@ static NSInteger totalRunTime = 0;
 		NSString *bundleID = [TPCPreferences applicationBundleIdentifier];
 		
 		OSStatus changeResult;
-
+		
 		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"irc",
 													   (__bridge CFStringRef)(bundleID));
 		
 		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"ircs",
 													   (__bridge CFStringRef)(bundleID));
-
+		
 #pragma unused(changeResult)
 	}
 }
@@ -1017,7 +1075,7 @@ static NSInteger totalRunTime = 0;
 	
     CFURLRef appURL = NULL;
     OSStatus status = LSGetApplicationForURL((__bridge CFURLRef)baseURL, kLSRolesAll, NULL, &appURL);
-
+	
 	if (status == noErr) {
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		NSBundle *baseBundle = [NSBundle bundleWithURL:CFBridgingRelease(appURL)];
@@ -1042,7 +1100,7 @@ static NSInteger totalRunTime = 0;
 + (void)initPreferences
 {
 	NSInteger numberOfRuns = 0;
-
+	
 	numberOfRuns  = [_NSUserDefaults() integerForKey:@"TXRunCount"];
 	numberOfRuns += 1;
 	
@@ -1113,20 +1171,20 @@ static NSInteger totalRunTime = 0;
 	[d setDouble:1.0  forKey:@"MainWindowTransparencyLevel"];
 	
 	// ====================================================== //
-
+	
 	[TPCPreferencesMigrationAssistant convertExistingGlobalPreferences];
-
+	
 	[_NSUserDefaults() registerDefaults:d];
 	
 	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
 	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-
+	
 	if (NSObjectIsEmpty(systemVersionPlist)) {
 		systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
 	}
-
+	
 	if (NSObjectIsEmpty(systemVersionPlist)) {
 		exit(10);
 	}
@@ -1139,7 +1197,8 @@ static NSInteger totalRunTime = 0;
 	
 	/* Sandbox Check */
 	
-	[_NSUserDefaults() setBool:[TPCPreferences sandboxEnabled] forKey:@"Security -> Sandbox Enabled"];
+	[_NSUserDefaults() setBool:[TPCPreferences sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
+	[_NSUserDefaults() setBool:[TPCPreferences securityScopedBookmarksAvailable]	forKey:@"Security -> Scoped Bookmarks Available"];
 	
 	/* Font Check */
 	
@@ -1151,7 +1210,7 @@ static NSInteger totalRunTime = 0;
 	
 	NSString *themeName = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	NSString *themePath;
-
+	
 	themePath = [TPCPreferences whereThemesPath];
 	themePath = [themePath stringByAppendingPathComponent:themeName];
 	

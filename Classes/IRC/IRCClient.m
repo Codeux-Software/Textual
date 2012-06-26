@@ -1182,7 +1182,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *userScriptsPath = [TPCPreferences whereScriptsUnsupervisedPath];
 	
 	if (NSObjectIsNotEmpty(userScriptsPath)) {
-		if ([scriptPath contains:[TPCPreferences whereScriptsUnsupervisedPath]]) {
+		if ([scriptPath contains:userScriptsPath]) {
 			MLNonsandboxedScript = YES;
 		}
 	}

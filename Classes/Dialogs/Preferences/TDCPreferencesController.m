@@ -67,7 +67,7 @@
 	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
 	
 	return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
-			@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11"];
+	@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11"];
 }
 
 - (void)setUpToolbarItemsAndMenus
@@ -346,21 +346,21 @@
 
 - (void)updateTranscriptFolder
 {
-	if ([TPCPreferences sandboxEnabled]) {
-		[self.transcriptFolderButton setHidden:YES];
-		
-		return;
-	}
-	
 	NSString *path = [[TPCPreferences transcriptFolder] stringByExpandingTildeInPath];
-	
-	NSImage *icon = [_NSWorkspace() iconForFile:path];
-	[icon setSize:NSMakeSize(16, 16)];
-	
-	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
-	
-	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
-	[item setImage:icon];
+
+	if (NSObjectIsEmpty(path)) {
+		NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
+		
+		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
+	} else {
+		NSImage *icon = [_NSWorkspace() iconForFile:path];
+		[icon setSize:NSMakeSize(16, 16)];
+		
+		NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
+		
+		[item setTitle:[[path lastPathComponent] decodeURIFragement]];
+		[item setImage:icon];
+	}
 }
 
 - (void)onTranscriptFolderChanged:(id)sender
@@ -373,16 +373,32 @@
 		[d setCanChooseDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		[d setCanCreateDirectories:YES];
-		
-		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
+
+		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];
 			
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
-				
-				NSString *path = [pathURL path];
-				
-				[TPCPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+
+				if ([TPCPreferences sandboxEnabled] && [TPCPreferences securityScopedBookmarksAvailable]) {
+					NSData *bookmark = nil;
+					
+					NSError *error = nil;
+					
+					bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+							 includingResourceValuesForKeys:nil
+											  relativeToURL:nil 
+													  error:&error];
+					if (error) {
+						NSLog(@"Error creating bookmark for URL (%@): %@", pathURL, error);
+					} else {
+						[TPCPreferences setTranscriptFolder:bookmark];
+					}
+				} else {
+					NSString *path = [pathURL path];
+					
+					[TPCPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+				}
 				
 				[self updateTranscriptFolder];
 			}
@@ -642,20 +658,18 @@
 {
 	NSString *version = @"No%20Sandbox";
 	
-	if ([TPCPreferences featureAvailableToOSXLion]) {
-		if ([TPCPreferences sandboxEnabled]) {
+	if ([TPCPreferences sandboxEnabled]) {
+		if ([TPCPreferences featureAvailableToOSXLion]) {
 			version = @"Lion";
-		} 
-	}
-	
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		if ([TPCPreferences sandboxEnabled]) {
+		}
+		
+		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 			version = @"Mountain%20Lion";
 		}
-	} 
-
+	}
+	
 	NSMutableString *download = [NSMutableString string];
-
+	
 	[download appendString:@"https://github.com/Codeux/Textual/blob/master/Resources/All%20Scripts/Sandbox%20Exceptions/Installers/Textual%20Extras%20%28"];
 	[download appendString:version];
 	[download appendString:@"%29.pkg?raw=true"];
