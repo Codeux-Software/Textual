@@ -283,6 +283,8 @@
 
 /* System Profiler Extension. */
 
+"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
+
 "SystemInformationCompiledOutputPrefix" = "System Information:";
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
 "SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
