@@ -121,6 +121,8 @@
 "LogPathDoesNotExistTitle" = "No Logs Found";
 "LogViewHideInlineImageMessage" = "Hide image by shift clicking.";
 
+"NoLogLocationDefinedMenuItem" = "No Log Location Selected";
+
 "NoButton" = "No";
 
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
