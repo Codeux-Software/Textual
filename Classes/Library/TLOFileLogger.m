@@ -58,6 +58,10 @@
 - (void)open
 {
 	[self close];
+
+	if ([TPCPreferences transcriptFolder] == nil) {
+		return;
+	}
 	
 	self.filename = [self buildFileName];
 	
