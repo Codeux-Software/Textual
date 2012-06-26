@@ -1168,7 +1168,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Plugins and Scripts
 
-- (void)executeTextualCmdScript:(NSDictionary *)details 
+-(void)executeTextualCmdScript:(NSDictionary *)details 
 {
 	if ([details containsKey:@"path"] == NO) {
 		return;
@@ -1179,8 +1179,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #ifdef TXUserScriptsFolderAvailable
 	BOOL MLNonsandboxedScript = NO;
 	
-	if ([scriptPath contains:[TPCPreferences whereScriptsUnsupervisedPath]]) {
-		MLNonsandboxedScript = YES;
+	NSString *userScriptsPath = [TPCPreferences whereScriptsUnsupervisedPath];
+	
+	if (NSObjectIsNotEmpty(userScriptsPath)) {
+		if ([scriptPath contains:[TPCPreferences whereScriptsUnsupervisedPath]]) {
+			MLNonsandboxedScript = YES;
+		}
 	}
 #endif
     

@@ -260,7 +260,7 @@ static NSMutableDictionary *commandIndex = nil;
 										   error:NULL].relativePath;
 	}
 	
-	return nil;
+	return NSStringEmptyPlaceholder;
 }
 #endif
 
