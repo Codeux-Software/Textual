@@ -47,6 +47,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 @interface TPCPreferences : NSObject
 + (BOOL)sandboxEnabled;
++ (BOOL)securityScopedBookmarksAvailable;
 
 + (NSInteger)startTime;
 + (NSInteger)totalRunTime;
@@ -89,7 +90,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)whereMainApplicationBundle;
 
 + (NSString *)transcriptFolder;
-+ (void)setTranscriptFolder:(NSString *)value;
++ (void)setTranscriptFolder:(id)value;
 
 + (NSDictionary *)commandIndexList;
 + (NSInteger)indexOfIRCommand:(NSString *)command;
