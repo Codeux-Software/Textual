@@ -4,13 +4,56 @@
 #import "TPISystemProfiler.h"
 #import "TPI_SP_SysInfo.h"
 
+@interface TPISystemProfiler ()
+@property (nonatomic, strong) IBOutlet NSView *preferencePaneView;
+@end
+
 @implementation TPISystemProfiler
+
+#pragma mark -
+#pragma mark Memory Allocation & Deallocation
+
+/* Allocation & Deallocation */
+- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+{
+	[NSBundle loadNibNamed:@"TPISystemProfiler" owner:self];
+	
+	NSDictionary *settingDefaults = @{
+	@"System Profiler Extension -> Feature Enabled -> CPU Model" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> Memory Information" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> System Uptime" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> Disk Information" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> GPU Model" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> Screen Resolution" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> Load Average" : @YES,
+	@"System Profiler Extension -> Feature Enabled -> OS Version" : @YES
+	};
+
+	[_NSUserDefaults() registerDefaults:settingDefaults];
+}
+
+#pragma mark -
+#pragma mark Preference Pane
+
+/* Preference Pane */
+- (NSView *)preferencesView
+{
+	return self.preferencePaneView;
+}
+
+- (NSString *)preferencesMenuItemName
+{
+	return TXTLS(@"SystemInformationPreferencePaneMenuItemTitle");
+}
+
+#pragma mark -
+#pragma mark User Input
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
 	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
-			@"msgcount", @"diskspace", @"theme", @"screens", @"runcount", @"loadavg",
-			@"sysmem"];
+	@"msgcount", @"diskspace", @"theme", @"screens",
+	@"runcount", @"loadavg", @"sysmem"];
 }
 
 - (void)messageSentByUser:(IRCClient *)client
