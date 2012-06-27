@@ -71,7 +71,8 @@
 	[dic safeSetObject:self.mode				forKey:@"defaultMode"];
 	[dic safeSetObject:self.topic				forKey:@"defaultTopic"];
 	[dic safeSetObject:self.encryptionKey		forKey:@"encryptionKey"];
-
+	
+	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	

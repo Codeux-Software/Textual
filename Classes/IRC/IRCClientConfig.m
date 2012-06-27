@@ -301,6 +301,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic safeSetObject:channelAry forKey:@"channelList"];
 	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
 	
+	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	

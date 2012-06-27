@@ -11,13 +11,13 @@
 	NSString *value = [self stringValue];
 	
 	if ([value isEqualToString:TXDefaultListSeperatorCellIndex]) {
-		CGFloat lineWidth = 0;
-		CGFloat lineX = 0;
-		CGFloat lineY = 0;
+		CGFloat lineWidth	= 0;
+		CGFloat lineX		= 0;
+		CGFloat lineY		= 0;
 		
 		lineWidth = cellFrame.size.width;
 		
-		lineY = ((cellFrame.size.height - 2) / 2);
+		lineY  = ((cellFrame.size.height - 2) / 2);
 		lineY += 1.0;
 		
 		NSRect lineRect = NSMakeRect((cellFrame.origin.x + lineX), 
