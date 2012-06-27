@@ -59,7 +59,6 @@
 		4C46CCC91580469E00846B64 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC01580469E00846B64 /* Security.framework */; };
 		4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
-		4C4D5E691590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */; };
 		4C63C6B61592F0B0009F1635 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */; };
 		4C63C6B71592F0B0009F1635 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */; };
 		4C63C6BC1592F360009F1635 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */; };
@@ -76,6 +75,7 @@
 		4C7188CC1591AB8600FC5E54 /* DIGreenBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C91591AB8600FC5E54 /* DIGreenBadgeCenter.png */; };
 		4C7188CD1591AB8600FC5E54 /* DIGreenBadgeLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188CA1591AB8600FC5E54 /* DIGreenBadgeLeft.png */; };
 		4C7188CE1591AB8600FC5E54 /* DIGreenBadgeRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188CB1591AB8600FC5E54 /* DIGreenBadgeRight.png */; };
+		4C7D80CC159BD16D00C5151C /* MainWindowSegmentedControlUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D80CB159BD16D00C5151C /* MainWindowSegmentedControlUserTemplate.pdf */; };
 		4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */; };
 		4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA915811D29002EC37B /* BragSpam.bundle */; };
 		4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */; };
@@ -483,7 +483,6 @@
 		4C46CCC01580469E00846B64 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		4C46CCC11580469E00846B64 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = MainWindowSegmentedControlUserTemplate.pdf; path = "Resources/Images/User Interface/MainWindowSegmentedControlUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts.tif; sourceTree = "<group>"; };
 		4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts@2x.tif"; sourceTree = "<group>"; };
 		4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Extensions.tif; sourceTree = "<group>"; };
@@ -500,6 +499,7 @@
 		4C7188C91591AB8600FC5E54 /* DIGreenBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
 		4C7188CA1591AB8600FC5E54 /* DIGreenBadgeLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeLeft.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeLeft.png"; sourceTree = SOURCE_ROOT; };
 		4C7188CB1591AB8600FC5E54 /* DIGreenBadgeRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIGreenBadgeRight.png; path = "Resources/Images/Dock Icon Badges/Green/DIGreenBadgeRight.png"; sourceTree = SOURCE_ROOT; };
+		4C7D80CB159BD16D00C5151C /* MainWindowSegmentedControlUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = MainWindowSegmentedControlUserTemplate.pdf; path = "Resources/Images/User Interface/MainWindowSegmentedControlUserTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBA915811D29002EC37B /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
 		4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
@@ -1025,7 +1025,7 @@
 				4CD0F3C0158D6975009F2A0C /* ChannelCellSelection_Unfocused_Aqua_Inverted.tif */,
 				4CD0F3C3158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite.tif */,
 				4CD0F3C2158D6975009F2A0C /* ChannelCellSelection_Unfocused_Graphite_Inverted.tif */,
-				4C4D5E671590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf */,
+				4C7D80CB159BD16D00C5151C /* MainWindowSegmentedControlUserTemplate.pdf */,
 				4CD0F3C5158D6975009F2A0C /* ServerCellSelection_Focused_Aqua.tif */,
 				4CD0F3C4158D6975009F2A0C /* ServerCellSelection_Focused_Aqua_Inverted.tif */,
 				4CD0F3C7158D6975009F2A0C /* ServerCellSelection_Focused_Graphite.tif */,
@@ -1933,7 +1933,6 @@
 				4C8AF737158E9B330026668C /* TVCInputPromptDialog.xib in Resources */,
 				4C8AF738158E9B330026668C /* TXCMainMenu.xib in Resources */,
 				4C8AF73B158E9B530026668C /* BasicLanguage.strings in Resources */,
-				4C4D5E691590D9CD0039A5D8 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */,
 				4C7188C71591AB7A00FC5E54 /* DIRedBadgeLeft.png in Resources */,
 				4C7188C81591AB7A00FC5E54 /* DIRedBadgeRight.png in Resources */,
@@ -1968,6 +1967,7 @@
 				4C63C6C11592F710009F1635 /* TPWTB_Mentions@2x.tif in Resources */,
 				4C63C6C41592FF4E009F1635 /* TPWTB_Interface.tif in Resources */,
 				4C63C6C51592FF4E009F1635 /* TPWTB_Interface@2x.tif in Resources */,
+				4C7D80CC159BD16D00C5151C /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

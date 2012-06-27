@@ -1353,7 +1353,7 @@ typedef enum TXMoveKind : NSInteger {
 		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
 	}
 	
-	/* Nickname Change. */
+	/* Open Address Book. */
 	[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 }
 

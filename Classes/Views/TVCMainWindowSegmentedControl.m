@@ -11,7 +11,7 @@
 - (SEL)action
 {
     if (PointerIsEmpty([self menuForSegment:self.selectedSegment])) {
-		[self.menuController showNicknameChangeDialog:nil];
+		[self.menuController showChannelIgnoreList:self];
 
 		return nil;
     } else {

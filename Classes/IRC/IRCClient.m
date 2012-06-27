@@ -2470,7 +2470,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			NSString *name = [TPCPreferences applicationName];
 			NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 			
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref)];
+			NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers,
+							  ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref),
+							  [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"]];
 			
 			if (c.isChannel == NO && c.isTalk == NO) {
 				[self printDebugInformationToConsole:text];
@@ -3911,7 +3913,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSString *name = [TPCPreferences applicationName];
 				NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 				
-				NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref)];
+				NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers,
+								  ((NSObjectIsEmpty(ref)) ? TXTLS(@"Unknown") : ref),
+								  [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"]];
 				
 				[self sendCTCPReply:nick command:command text:text];
 			}
