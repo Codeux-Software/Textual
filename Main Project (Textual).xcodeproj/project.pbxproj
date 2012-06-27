@@ -2440,7 +2440,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2490,7 +2490,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2572,7 +2572,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2639,7 +2639,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2706,7 +2706,7 @@
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

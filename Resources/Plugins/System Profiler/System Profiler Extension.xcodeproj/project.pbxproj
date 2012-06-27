@@ -212,7 +212,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -220,7 +219,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -322,7 +320,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -361,7 +358,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -400,7 +396,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
