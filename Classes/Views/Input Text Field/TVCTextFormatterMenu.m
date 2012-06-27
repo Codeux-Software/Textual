@@ -6,7 +6,6 @@
 
 @implementation TVCTextFormatterMenu
 
-
 #define _formattingMenuForegroundColorEnabledTag		95005
 #define _formattingMenuBackgroundColorEnabledTag		95007
 #define _formattingMenuForegroundColorDisabledTag		95004

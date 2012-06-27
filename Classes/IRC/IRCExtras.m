@@ -253,6 +253,10 @@
 		
 		dic[@"channelList"] = channels;
 	}
+
+	/* Migration Assistant Dictionary Addition. */
+	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
+				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	IRCClientConfig *cf = [[IRCClientConfig alloc] initWithDictionary:dic];
     

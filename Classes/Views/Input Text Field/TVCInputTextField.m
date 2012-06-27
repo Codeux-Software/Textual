@@ -21,7 +21,6 @@
 	NSInteger _lastDrawnLineCount;
 }
 
-
 #pragma mark -
 #pragma mark Drawing
 
