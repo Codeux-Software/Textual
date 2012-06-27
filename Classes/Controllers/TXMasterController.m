@@ -1405,6 +1405,10 @@ typedef enum TXMoveKind : NSInteger {
 	dic[@"connectOnLaunch"] = config[@"connectOnLaunch"];
 	dic[@"characterEncodingDefault"] = NSNumberWithLong(NSUTF8StringEncoding);
 	
+	/* Migration Assistant Dictionary Addition. */
+	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
+				forKey:TPCPreferencesMigrationAssistantVersionKey];
+	
 	[self.window makeKeyAndOrderFront:nil];
 	
 	IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:dic];
