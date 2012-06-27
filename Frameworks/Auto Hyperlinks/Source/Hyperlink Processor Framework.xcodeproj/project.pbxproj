@@ -227,14 +227,12 @@
 		DA8A8084085549EE00F24BB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		DA8A8085085549EE00F24BB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};

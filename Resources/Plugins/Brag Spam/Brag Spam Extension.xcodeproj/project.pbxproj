@@ -168,7 +168,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -180,7 +179,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -274,7 +272,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -313,7 +310,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -352,7 +348,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
