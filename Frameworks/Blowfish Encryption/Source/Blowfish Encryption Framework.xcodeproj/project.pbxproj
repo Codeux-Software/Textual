@@ -274,7 +274,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -285,7 +284,6 @@
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
