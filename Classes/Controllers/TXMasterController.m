@@ -170,18 +170,26 @@
 	} else {
 		NSRect visibleRect = [_NSMainScreen() visibleFrame];
 		NSRect windowRect  = self.window.frame;
+
+		BOOL redrawFrame = NO;
 		
 		if (visibleRect.size.height < windowRect.size.height) {
 			windowRect.size.height = visibleRect.size.height;
+			windowRect.origin.x = visibleRect.origin.x;
+
+			redrawFrame = YES;
 		}
 		
 		if (visibleRect.size.width < windowRect.size.width) {
 			windowRect.size.width = visibleRect.size.width;
+			windowRect.origin.y = visibleRect.origin.y;
+
+			redrawFrame = YES;
 		}
-		
-		windowRect.origin = visibleRect.origin;
-		
-		[self.window setFrame:windowRect display:NO];
+
+		if (redrawFrame) {
+			[self.window setFrame:windowRect display:YES animate:YES];
+		}
 	}
 }
 
