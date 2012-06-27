@@ -727,12 +727,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSInteger)inlineImagesMaxWidth
 {
-	return [_NSUserDefaults() integerForKey:@"InlineMediaScalingWidt"];
+	return [_NSUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
 }
 
 + (void)setInlineImagesMaxWidth:(NSInteger)value
 {
-	[_NSUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidt"];
+	[_NSUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidth"];
 }
 
 #pragma mark -
