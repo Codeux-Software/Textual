@@ -44,9 +44,11 @@
 	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>TXBundleBuildCodeName</key>
+	<string>Dave Matthews Band® Magic Brownies™ Encore Edition</string>
 	<key>TXBundleBuildNumber</key>
-	<string>11501</string>
+	<string>11507</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-196-gba10e56-appstore,llvm4.0</string>
+	<string>2.1.1-197-g8644d01-appstore,llvm4.0</string>
 </dict>
 </plist>
