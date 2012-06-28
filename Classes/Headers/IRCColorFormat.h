@@ -19,7 +19,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 - (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
                                        lineType:(TVCLogLineType)type 
                                         channel:(NSString *)chan 
-                                       hostmask:(NSString *)host;
+                                       hostmask:(NSString *)host; // Only Textual should be calling this.
 @end
 
 @interface TVCTextField (TextFieldFormattingHelper) 

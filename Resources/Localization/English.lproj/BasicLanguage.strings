@@ -51,11 +51,11 @@
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "IRCCTCPSupportedReplies" = "VERSION CLIENTINFO USERINFO PING TIME";
-"IRCCTCPVersionInfo" = "%1$@ %2$@ (Git Reference: %3$@)";
+"IRCCTCPVersionInfo" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
-"IRCChannelEmptyTopic"			= "(No Topic)";
+"IRCChannelEmptyTopic" = "(No Topic)";
 "IRCChannelHasModes" = "Mode is \002%@\002";
 "IRCChannelHasTopic" = "Topic is \002%@\002";
 "IRCChannelHasTopicAuthor" = "Set by \002%1$@\002 on %2$@";
@@ -297,7 +297,7 @@
 "SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
 "SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
 "SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
-"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
+"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@) (Flavor ";
 
 "SystemInformationOSVersionSnowLeopard" = "Snow Leopard";
 "SystemInformationOSVersionLion" = "Lion";
