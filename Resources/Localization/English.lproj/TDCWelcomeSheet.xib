@@ -512,7 +512,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="615461581">
 								<int key="NSCellFlags">69206017</int>
 								<int key="NSCellFlags2">4194304</int>
-								<string key="NSContents">Textual provides many features to help make IRC a more enjoyable experience.    First, we need to a add your first server.</string>
+								<string key="NSContents">Textual provides many features to help make IRC a more enjoyable experience.    First, we need to add a server.</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">12</double>
