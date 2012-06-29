@@ -29,7 +29,7 @@ NSInteger ctoi(unsigned char c);
 	return [[NSString alloc] initWithData:data encoding:encoding];
 }
 
-- (NSString *)safeSubstringWithRange:(NSRange)range;
+- (NSString *)safeSubstringWithRange:(NSRange)range
 {
 	if (range.location == NSNotFound) return nil;
 	if (range.length > [self length]) return nil;
