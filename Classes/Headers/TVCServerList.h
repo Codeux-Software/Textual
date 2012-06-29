@@ -10,6 +10,8 @@
 @property (nonatomic, weak) NSImage *defaultDisclosureTriangle;
 @property (nonatomic, weak) NSImage *alternateDisclosureTriangle;
 
+- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
+
 - (void)updateBackgroundColor;
 - (void)toggleAddServerButton;
 @end

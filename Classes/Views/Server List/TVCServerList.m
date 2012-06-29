@@ -6,18 +6,39 @@
 
 @implementation TVCServerList
 
-static NSColor *_invertedBackgroundColor;
+- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
+{
+	BOOL invertedColors = [TPCPreferences invertSidebarColors];
+	
+	if (invertedColors) {
+		if (up) {
+			if (selected) {
+				return [NSImage imageNamed:@"DarkServerListViewDisclosureUpSelected"];
+			} else {
+				return [NSImage imageNamed:@"DarkServerListViewDisclosureUp"];
+			}
+		} else {
+			if (selected) {
+				return [NSImage imageNamed:@"DarkServerListViewDisclosureDownSelected"];
+			} else {
+				return [NSImage imageNamed:@"DarkServerListViewDisclosureDown"];
+			}
+		}
+	} else {
+		if (up) {
+			return self.defaultDisclosureTriangle;
+		} else {
+			return self.alternateDisclosureTriangle;
+		}
+	}
+}
 
 - (void)updateBackgroundColor
 {
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-
+	
 	if (invertedColors) {
-		if (PointerIsEmpty(_invertedBackgroundColor)) {
-			_invertedBackgroundColor = [NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1];
-		}
-
-		[self setBackgroundColor:_invertedBackgroundColor];
+		[self setBackgroundColor:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 	} else {
 		[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
 	}
