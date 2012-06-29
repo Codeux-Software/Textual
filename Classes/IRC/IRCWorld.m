@@ -1028,6 +1028,7 @@
 	return YES;
 }
 
+
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(NSButtonCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	if (PointerIsEmpty(self.serverList.defaultDisclosureTriangle)) {
@@ -1039,31 +1040,22 @@
 	}
 
 	BOOL selected = (self.selected == item);
-	
-	if ([TPCPreferences invertSidebarColors]) {
-		NSImage *upTriangle;
-		NSImage *downTriangle;
 
-		if (selected) {
-			upTriangle	 = [NSImage imageNamed:@"DarkServerListViewDisclosureUpSelected"];
-			downTriangle = [NSImage imageNamed:@"DarkServerListViewDisclosureDownSelected"];
-		} else {
-			upTriangle	 = [NSImage imageNamed:@"DarkServerListViewDisclosureUp"];
-			downTriangle = [NSImage imageNamed:@"DarkServerListViewDisclosureDown"];
-		}
+	NSImage *primary = [self.serverList disclosureTriangleInContext:YES selected:selected];
+	NSImage *alterna = [self.serverList disclosureTriangleInContext:NO selected:selected];
 
+	if ([cell.image isEqual:primary] == NO) {
+		[cell setImage:primary];
 		
-		[cell setImage:upTriangle];
-		[cell setAlternateImage:downTriangle];
-	} else {
-		[cell setImage:self.serverList.defaultDisclosureTriangle];
-		[cell setAlternateImage:self.serverList.alternateDisclosureTriangle];
-
 		if (selected) {
 			[cell setBackgroundStyle:NSBackgroundStyleLowered];
 		} else {
 			[cell setBackgroundStyle:NSBackgroundStyleRaised];
 		}
+	}
+
+	if ([cell.alternateImage isEqual:alterna] == NO) {
+		[cell setAlternateImage:alterna];
 	}
 }
 

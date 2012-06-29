@@ -6,18 +6,12 @@
 
 @implementation TVCMemberList
 
-static NSColor *_invertedBackgroundColor;
-
 - (void)updateBackgroundColor
 {
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
 	
 	if (invertedColors) {
-		if (PointerIsEmpty(_invertedBackgroundColor)) {
-			_invertedBackgroundColor = [NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1];
-		}
-		
-		[self setBackgroundColor:_invertedBackgroundColor];
+		[self setBackgroundColor:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 	} else {
 		[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
 	}
