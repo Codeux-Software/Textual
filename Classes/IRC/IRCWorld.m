@@ -594,6 +594,9 @@
 {
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
+
+	[self.master.serverSplitView setNeedsDisplay:YES];
+	[self.master.memberSplitView setNeedsDisplay:YES];
 	
 	self.viewTheme.name = [TPCPreferences themeName];
 	
