@@ -3932,8 +3932,20 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			
 			if (time >= self.lastLagCheck) {
 				TXNSDouble delta = (time - self.lastLagCheck);
+
+				NSString *rating;
+
+					   if (delta <= 0.09) {					rating = TXTLS(@"LagCheckRequestReplyRating_01");
+				} else if (delta >= 0.1 && delta < 0.2) {	rating = TXTLS(@"LagCheckRequestReplyRating_02");
+				} else if (delta >= 0.2 && delta < 0.5) {	rating = TXTLS(@"LagCheckRequestReplyRating_03");
+				} else if (delta >= 0.5 && delta < 1.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_04");
+				} else if (delta >= 1.0 && delta < 2.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_05");
+				} else if (delta >= 2.0 && delta < 5.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_06");
+				} else if (delta >= 5.0 && delta < 10.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_07");
+				} else if (delta >= 10.0 && delta < 30.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_08");
+				} else if (delta >= 30.0) {					rating = TXTLS(@"LagCheckRequestReplyRating_09"); }
 				
-				text = TXTFLS(@"LagCheckRequestReplyMessage", self.config.server, delta);
+				text = TXTFLS(@"LagCheckRequestReplyMessage", self.config.server, delta, rating);
 			} else {
 				text = TXTLS(@"LagCheckRequestUnknownReply");
 			}
