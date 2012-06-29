@@ -7,8 +7,8 @@
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, unsafe_unretained) id keyDelegate;
 
-@property (nonatomic, weak) NSImage *defaultDisclosureTriangle;
-@property (nonatomic, weak) NSImage *alternateDisclosureTriangle;
+@property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
+@property (nonatomic, strong) NSImage *alternateDisclosureTriangle;
 
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
