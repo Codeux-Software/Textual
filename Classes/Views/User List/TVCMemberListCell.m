@@ -92,7 +92,7 @@ static BOOL _defaultDrawingColorsPopulated;
 		/* Black Aqua Colors. */
 		/* //////////////////////////////////////////////////// */
 		
-		_badgeTextColorTS				= [NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1];
+		_badgeTextColorTS				= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
 		_badgeTextColorNS				= [NSColor whiteColor];
 		_badgeShadowColor				= [NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1];
 		
@@ -105,9 +105,9 @@ static BOOL _defaultDrawingColorsPopulated;
 		_badgeMessageBackgroundColorX	= [NSColor internalCalibratedRed:48  green:48  blue:48 alpha:1];;
 		
 		_userCellFontColor				= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
-		_userCellSelectionFontColor		= [NSColor whiteColor];
+		_userCellSelectionFontColor		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
 		_userCellShadowColor			= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
-		_userCellSelectionShadowColorAW	= [NSColor colorWithCalibratedWhite:0.00 alpha:0.70];
+		_userCellSelectionShadowColorAW	= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		_userCellSelectionShadowColorIA	= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		
 		/* //////////////////////////////////////////////////// */
@@ -329,7 +329,11 @@ static BOOL _defaultDrawingColorsPopulated;
         if (isSelected == NO) {
             [itemShadow setShadowColor:_userCellShadowColor];
         } else {
-            [itemShadow setShadowBlurRadius:2.0];
+			if (_drawUsingInvertedColors) {
+				[itemShadow setShadowBlurRadius:1.0];
+			} else {
+				[itemShadow setShadowBlurRadius:2.0];
+			}
             
             if (isKeyWindow) {
                 if (isGraphite && _drawUsingInvertedColors == NO) {

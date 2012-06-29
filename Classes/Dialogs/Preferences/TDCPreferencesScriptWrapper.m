@@ -15,7 +15,7 @@
 	return self;
 }
 
-- (void)populateData;
+- (void)populateData
 {
 #ifdef TXUserScriptsFolderAvailable
 	NSArray *scriptPaths = @[

@@ -175,7 +175,7 @@
 		NSString *time  = [NSString stringWithInteger:[NSDate epochTime]];
 		
 		NSArray  *entry = @[channel.name, time,
-						   [message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
+		[message attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
 		
 		/* We insert at head so that latest is always on top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
@@ -302,7 +302,7 @@
 	}
 	
 	self.reloadingTree = YES;
-
+	
 	[self.master updateSegmentedController];
 	
 	[self.serverList reloadData];
@@ -1026,6 +1026,45 @@
 	item.isExpanded = NO;
 	
 	return YES;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(NSButtonCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	if (PointerIsEmpty(self.serverList.defaultDisclosureTriangle)) {
+		self.serverList.defaultDisclosureTriangle = [cell image];
+	}
+
+	if (PointerIsEmpty(self.serverList.alternateDisclosureTriangle)) {
+		self.serverList.alternateDisclosureTriangle = [cell alternateImage];
+	}
+
+	BOOL selected = (self.selected == item);
+	
+	if ([TPCPreferences invertSidebarColors]) {
+		NSImage *upTriangle;
+		NSImage *downTriangle;
+
+		if (selected) {
+			upTriangle	 = [NSImage imageNamed:@"DarkServerListViewDisclosureUpSelected"];
+			downTriangle = [NSImage imageNamed:@"DarkServerListViewDisclosureDownSelected"];
+		} else {
+			upTriangle	 = [NSImage imageNamed:@"DarkServerListViewDisclosureUp"];
+			downTriangle = [NSImage imageNamed:@"DarkServerListViewDisclosureDown"];
+		}
+
+		
+		[cell setImage:upTriangle];
+		[cell setAlternateImage:downTriangle];
+	} else {
+		[cell setImage:self.serverList.defaultDisclosureTriangle];
+		[cell setAlternateImage:self.serverList.alternateDisclosureTriangle];
+
+		if (selected) {
+			[cell setBackgroundStyle:NSBackgroundStyleLowered];
+		} else {
+			[cell setBackgroundStyle:NSBackgroundStyleRaised];
+		}
+	}
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note

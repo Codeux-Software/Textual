@@ -7,6 +7,9 @@
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, unsafe_unretained) id keyDelegate;
 
+@property (nonatomic, weak) NSImage *defaultDisclosureTriangle;
+@property (nonatomic, weak) NSImage *alternateDisclosureTriangle;
+
 - (void)updateBackgroundColor;
 - (void)toggleAddServerButton;
 @end

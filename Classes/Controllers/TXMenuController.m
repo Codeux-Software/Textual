@@ -560,7 +560,7 @@
 	[[NSApp keyWindow] performClose:nil];
 }
 
-- (void)centerMainWindow:(id)sender;
+- (void)centerMainWindow:(id)sender
 {
 	[[NSApp mainWindow] exactlyCenterWindow];
 }
@@ -649,7 +649,7 @@
 	[sel.log unmark];
 	[sel.log mark];
 }
-- (void)gotoScrollbackMarker:(id)sender;
+- (void)gotoScrollbackMarker:(id)sender
 {
 	IRCTreeItem *sel = self.world.selected;
 	
@@ -1513,7 +1513,7 @@
 	}
 }
 
-- (void)openChannelLogs:(id)sender;
+- (void)openChannelLogs:(id)sender
 {
 	IRCClient *u = [self.world selectedClient];
 	IRCChannel *c = [self.world selectedChannel];
