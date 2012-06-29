@@ -1391,7 +1391,8 @@ typedef enum TXMoveKind : NSInteger {
 		if ([s isChannelName]) {
 			[channels safeAddObject:@{@"channelName": s,
 			 @"joinOnConnect": NSNumberWithBOOL(YES), 
-			 @"enableNotifications": NSNumberWithBOOL(YES)}];	
+			 @"enableNotifications": NSNumberWithBOOL(YES),
+TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
 		}
 	}
 	
