@@ -4,46 +4,140 @@
 
 #import "TextualApplication.h"
 
-/* This class and the one for the user list is based off the open source PXSourceList 
- toolkit developed by Alex Rozanski. */
-
-#define _iconSpacing							6.0
-
-#define _badgeRightMargin						5.0		
-#define _badgeInsideMargin						5.0
-#define _badgeMinimumWidth						22.0
-#define _badgeHeight							14.0	
-
-#define _badgeFont								[_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5]
-#define _badgeTextColorTS						TXInvertSidebarColor([NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1])
-#define _badgeTextColorNS						TXInvertSidebarColor([NSColor whiteColor])
-#define _badgeShadowColor						TXInvertSidebarColor([NSColor colorWithCalibratedWhite:1.00 alpha:0.60])
-#define _badgeMessageBackgroundColorTS				TXInvertSidebarColor([NSColor whiteColor])
-#define _badgeHighlightBackgroundColor				TXInvertSidebarColor([NSColor internalCalibratedRed:210 green:15  blue:15  alpha:1])
-#define _badgeMessageBackgroundColorAqua			TXInvertSidebarColor([NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1])
-#define _badgeMessageBackgroundColorGraphite			TXInvertSidebarColor([NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1])
-
-#define _serverCellFont							[NSFont fontWithName:@"LucidaGrande-Bold" size:12.0]
-#define _serverCellFontColor						TXInvertSidebarColor([NSColor outlineViewHeaderTextColor])
-#define _serverCellFontColorDisabled				TXInvertSidebarColor([NSColor outlineViewHeaderDisabledTextColor])
-#define _serverCellSelectionFontColor				TXInvertSidebarColor([NSColor whiteColor])
-#define _serverCellSelectionShadowFontColorAW		TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.30])
-#define _serverCellSelectionShadowFontColorIA		TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.20])
-#define _serverCellShadowColorAW					TXInvertSidebarColor([NSColor colorWithCalibratedWhite:1.00 alpha:1.00])
-#define _serverCellShadowColorNA					TXInvertSidebarColor([NSColor colorWithCalibratedWhite:1.00 alpha:1.00])
-
-#define _channelCellFont							[NSFont fontWithName:@"LucidaGrande" size:11.0]
-#define _channelCellFontColor						TXInvertSidebarColor([NSColor blackColor])
-#define _channelCellSelectionFontColor				TXInvertSidebarColor([NSColor whiteColor])
-#define _channelCellSelectionFont					[NSFont fontWithName:@"LucidaGrande-Bold" size:11.0]
-#define _channelCellShadowColor					TXInvertSidebarColor([NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6])
-#define _channelCellSelectionShadowColor_AW			TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.48])
-#define _channelCellSelectionShadowColor_IA			TXInvertSidebarColor([NSColor colorWithCalibratedWhite:0.00 alpha:0.30])
-
-#define _graphiteSelectionColorAW					TXInvertSidebarColor([NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00])
-
 @implementation TVCServerListCell
 
+#pragma mark -
+#pragma mark Color Scheme
+
+/* We have a lot of variables to keep track of… */
+static NSInteger _iconSpacing		= 6.0;
+
+static NSInteger _badgeHeight			= 14.0;
+static NSInteger _badgeRightMargin		= 5.0;
+static NSInteger _badgeInsideMargin		= 5.0;
+static NSInteger _badgeMinimumWidth		= 22.0;
+
+static NSFont  *_badgeFont;
+static NSColor *_badgeTextColorNS;
+static NSColor *_badgeTextColorTS;
+static NSColor *_badgeShadowColor;
+static NSColor *_badgeHighlightBackgroundColor;
+static NSColor *_badgeMessageBackgroundColorAqua;
+static NSColor *_badgeMessageBackgroundColorGraphite;
+static NSColor *_badgeMessageBackgroundColorTS;
+
+static NSFont  *_serverCellFont;
+static NSColor *_serverCellFontColor;
+static NSColor *_serverCellFontColorDisabled;
+static NSColor *_serverCellSelectionFontColor_AW;
+static NSColor *_serverCellSelectionFontColor_IA;
+static NSColor *_serverCellSelectionShadowColorAW;
+static NSColor *_serverCellSelectionShadowColorIA;
+static NSColor *_serverCellShadowColorAW;
+static NSColor *_serverCellShadowColorNA;
+
+static NSFont  *_channelCellFont;
+static NSColor *_channelCellFontColor;
+static NSColor *_channelCellSelectionFontColor_AW;
+static NSColor *_channelCellSelectionFontColor_IA;
+static NSFont  *_channelCellSelectionFont;
+static NSColor *_channelCellShadowColor;
+static NSColor *_channelCellSelectionShadowColor_AW;
+static NSColor *_channelCellSelectionShadowColor_IA;
+
+static NSColor *_graphiteSelectionColorAW;
+
+static BOOL _drawUsingInvertedColors;
+static BOOL _defaultDrawingColorsPopulated;
+
+- (void)updateOutlineViewColorScheme
+{
+	BOOL invertedColors = [TPCPreferences invertSidebarColors];
+	
+	if (_drawUsingInvertedColors == invertedColors && _defaultDrawingColorsPopulated) {
+		return;
+	}
+	
+	_drawUsingInvertedColors = invertedColors;
+	
+	if (_defaultDrawingColorsPopulated == NO) {
+		_badgeFont					= [_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
+		
+		_channelCellFont			= [NSFont fontWithName:@"LucidaGrande"		size:11.0];
+		_channelCellSelectionFont	= [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
+		_serverCellFont				= [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+		
+		_defaultDrawingColorsPopulated = YES;
+	}
+	
+	if (_drawUsingInvertedColors == NO) {
+		/* //////////////////////////////////////////////////// */
+		/* Standard Aqua Colors. */
+		/* //////////////////////////////////////////////////// */
+		
+		_badgeTextColorNS						= [NSColor whiteColor];
+		_badgeTextColorTS						= [NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1];
+		_badgeShadowColor						= [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
+		_badgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:210 green:15  blue:15  alpha:1];
+		_badgeMessageBackgroundColorAqua		= [NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1];
+		_badgeMessageBackgroundColorGraphite	= [NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1];
+		_badgeMessageBackgroundColorTS			= [NSColor whiteColor];
+		
+		_serverCellFontColor					= [NSColor outlineViewHeaderTextColor];
+		_serverCellFontColorDisabled			= [NSColor outlineViewHeaderDisabledTextColor];
+		_serverCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_serverCellSelectionFontColor_IA		= [NSColor whiteColor];
+		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+		_serverCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.20];
+		_serverCellShadowColorAW				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+		_serverCellShadowColorNA				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+		
+		_channelCellFontColor					= [NSColor blackColor];
+		_channelCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_channelCellSelectionFontColor_IA		= [NSColor whiteColor];
+		_channelCellShadowColor					= [NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
+		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+		
+		_graphiteSelectionColorAW				= [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
+
+		/* //////////////////////////////////////////////////// */
+		/* Standard Aqua Colors. — @end */
+		/* //////////////////////////////////////////////////// */
+	} else {
+		/* //////////////////////////////////////////////////// */
+		/* Black Aqua Colors. */
+		/* //////////////////////////////////////////////////// */
+		
+		_badgeTextColorNS						= [NSColor whiteColor];
+		_badgeTextColorTS						= [NSColor whiteColor];
+		_badgeShadowColor						= [NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1];
+		_badgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1];
+		_badgeMessageBackgroundColorAqua		= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
+		_badgeMessageBackgroundColorGraphite	= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
+		_badgeMessageBackgroundColorTS			= [NSColor darkGrayColor];
+
+		_serverCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
+		_serverCellFontColorDisabled			= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7];
+		_serverCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_serverCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.70];
+		_serverCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+		_serverCellShadowColorAW				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+		_serverCellShadowColorNA				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+		
+		_channelCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
+		_channelCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_channelCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		_channelCellShadowColor					= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.70];
+		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+		
+		/* //////////////////////////////////////////////////// */
+		/* Black Aqua Colors. — @end */
+		/* //////////////////////////////////////////////////// */
+	}
+}
 
 #pragma mark -
 #pragma mark Status Icon
@@ -218,6 +312,8 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
+	[self updateOutlineViewColorScheme];
+	
 	NSInteger selectedRow = [self.parent selectedRow];
 	
 	if (self.cellItem) {
@@ -248,16 +344,18 @@
 				backgroundImage = @"ServerCellSelection";
 			}
 			
-			if (isKeyWindow) {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
-			} else {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
-			}
-			
-			if (isGraphite) {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
-			} else {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
+			if (_drawUsingInvertedColors == NO) {
+				if (isKeyWindow) {
+					backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
+				} else {
+					backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
+				}
+				
+				if (isGraphite) {
+					backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
+				} else {
+					backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
+				}
 			}
 			
 			if ([TPCPreferences invertSidebarColors]) {
@@ -290,13 +388,7 @@
 		
 		if (isGroupItem == NO) {
 			if (channel.isChannel) {
-				NSString *iconName = @"colloquyRoomTab";
-				
-				if ([TPCPreferences invertSidebarColors]) {
-					iconName = [iconName stringByAppendingString:@"Inverted"];
-				} else {
-					iconName = [iconName stringByAppendingString:@"Regular"];
-				}
+				NSString *iconName = @"colloquyRoomTabRegular";
 				
 				if (channel.isActive) {
 					[self drawStatusBadge:iconName inCell:cellFrame withAlpha:1.0];
@@ -317,16 +409,19 @@
 			}
 			
 			cellFrame.size.width -= (_badgeRightMargin * 2);
+
+			[itemShadow setShadowBlurRadius:1.0];
+			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
 			
 			if (isSelected == NO) {
-				[itemShadow setShadowOffset:NSMakeSize(1, -1)];
 				[itemShadow setShadowColor:_channelCellShadowColor];
 			} else {
-				[itemShadow setShadowBlurRadius:2.0];
-				[itemShadow setShadowOffset:NSMakeSize(1, -1)];
+				if (_drawUsingInvertedColors == NO) {
+					[itemShadow setShadowBlurRadius:2.0];
+				}
 				
 				if (isKeyWindow) {
-					if (isGraphite) {
+					if (isGraphite && _drawUsingInvertedColors == NO) {
 						[itemShadow setShadowColor:_graphiteSelectionColorAW];
 					} else {
 						[itemShadow setShadowColor:_channelCellSelectionShadowColor_AW];
@@ -343,24 +438,18 @@
 			
 			if (isSelected) {
 				[newValue addAttribute:NSFontAttributeName              value:_channelCellSelectionFont       range:textRange];
-				[newValue addAttribute:NSForegroundColorAttributeName	value:_channelCellSelectionFontColor range:textRange];
+
+				if (isKeyWindow) {
+					[newValue addAttribute:NSForegroundColorAttributeName value:_channelCellSelectionFontColor_AW range:textRange];
+				} else {
+					[newValue addAttribute:NSForegroundColorAttributeName value:_channelCellSelectionFontColor_IA range:textRange];
+				}
 			} else {
 				[newValue addAttribute:NSFontAttributeName              value:_channelCellFont         range:textRange];
 				[newValue addAttribute:NSForegroundColorAttributeName   value:_channelCellFontColor	range:textRange];
 			}
 			
 			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-			
-			if ([TPCPreferences useLogAntialiasing] == NO) {
-				[_NSGraphicsCurrentContext() saveGraphicsState];
-				[_NSGraphicsCurrentContext() setShouldAntialias: NO];
-			}
-			
-			[newValue drawInRect:cellFrame];
-			
-			if ([TPCPreferences useLogAntialiasing] == NO) {
-				[_NSGraphicsCurrentContext() restoreGraphicsState];
-			}
 		} else {
 			cellFrame.origin.y += 4;
 			
@@ -371,19 +460,27 @@
 				controlColor = _serverCellFontColorDisabled;
 			}
 			
-			[itemShadow setShadowOffset:NSMakeSize(1, -1)];
+			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+			
+			if (_drawUsingInvertedColors) {
+				[itemShadow setShadowBlurRadius:1.0];
+			}
 			
 			if (isSelected) {
-				controlColor = _serverCellSelectionFontColor;
+				if (isKeyWindow) {
+					controlColor = _serverCellSelectionFontColor_AW;
+				} else {
+					controlColor = _serverCellSelectionFontColor_IA;
+				}
 				
 				if (isKeyWindow) {
 					if (isGraphite) {
 						[itemShadow setShadowColor:_graphiteSelectionColorAW];
 					} else {
-						[itemShadow setShadowColor:_serverCellSelectionShadowFontColorAW];
+						[itemShadow setShadowColor:_serverCellSelectionShadowColorAW];
 					}
 				} else {
-					[itemShadow setShadowColor:_serverCellSelectionShadowFontColorIA];
+					[itemShadow setShadowColor:_serverCellSelectionShadowColorIA];
 				}
 			} else {
 				if (isKeyWindow) {
@@ -398,19 +495,18 @@
 			[newValue addAttribute:NSFontAttributeName				value:groupFont		range:textRange];
 			[newValue addAttribute:NSShadowAttributeName			value:itemShadow	range:textRange];
 			[newValue addAttribute:NSForegroundColorAttributeName	value:controlColor	range:textRange];
-			
-			if ([TPCPreferences useLogAntialiasing] == NO) {
-				[_NSGraphicsCurrentContext() saveGraphicsState];
-				[_NSGraphicsCurrentContext() setShouldAntialias: NO];
-			}
-			
-			[newValue drawInRect:cellFrame];
-			
-			if ([TPCPreferences useLogAntialiasing] == NO) {
-				[_NSGraphicsCurrentContext() restoreGraphicsState];
-			}
 		}
 		
+		if ([TPCPreferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() saveGraphicsState];
+			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+		}
+		
+		[newValue drawInRect:cellFrame];
+		
+		if ([TPCPreferences useLogAntialiasing] == NO) {
+			[_NSGraphicsCurrentContext() restoreGraphicsState];
+		}
 	}
 }
 

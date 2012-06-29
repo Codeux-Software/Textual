@@ -5,7 +5,7 @@
 #import "TextualApplication.h"
 
 #define TXCalibratedRBGColor(r, b, g)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
-#define TXInvertSidebarColor(c)				(([TPCPreferences invertSidebarColors]) ? [c invertColor] : c)
+#define TXInvertSidebarColor(c)				c // Deprecated, 2.1.1
 
 @interface NSColor (TXColorHelper)
 - (NSColor *)invertColor;

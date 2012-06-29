@@ -107,10 +107,11 @@
 {
 	if (self.hidden) return;
 
-	NSColor *dividerColor;
+	NSColor *dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
 
-	dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
-	dividerColor = TXInvertSidebarColor(dividerColor);
+	if ([TPCPreferences invertSidebarColors]) {
+		dividerColor = [dividerColor invertColor];
+	}
 
 	[dividerColor set];
 	
