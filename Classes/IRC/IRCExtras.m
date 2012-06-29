@@ -239,21 +239,23 @@
                 
                 if ([cc isChannelName]) {
                     [channels safeAddObject:@{@"channelName": cc,
-                                             @"joinOnConnect": NSNumberWithBOOL(YES),
-                                             @"enableNotifications": NSNumberWithBOOL(YES)}];	
+					 @"joinOnConnect": NSNumberWithBOOL(YES),
+					 @"enableNotifications": NSNumberWithBOOL(YES),
+TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
                 }
             }
         } else {
             if ([c isChannelName]) {
                 [channels safeAddObject:@{@"channelName": c,
-										 @"joinOnConnect": NSNumberWithBOOL(YES),
-										 @"enableNotifications": NSNumberWithBOOL(YES)}];
+				 @"joinOnConnect": NSNumberWithBOOL(YES),
+				 @"enableNotifications": NSNumberWithBOOL(YES),
+TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
             }
         }
 		
 		dic[@"channelList"] = channels;
 	}
-
+	
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
