@@ -110,9 +110,19 @@
 "KickReason" = "Your behavior is not conducive to the desired environment.";
 "KillReason" = "Your behavior is not conducive to the desired environment.";
 
-"LagCheckRequestReplyMessage" = "Received lag check reply from %@. Time elapsed: %1.5f seconds.";
+"LagCheckRequestReplyMessage" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
 "LagCheckRequestSentMessage" = "Waiting for response from lag check …";
 "LagCheckRequestUnknownReply" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
+
+"LagCheckRequestReplyRating_01" = "Too fast to be real.";
+"LagCheckRequestReplyRating_02" = "Almost No Lag.";
+"LagCheckRequestReplyRating_03" = "Very Fast.";
+"LagCheckRequestReplyRating_04" = "Fast.";
+"LagCheckRequestReplyRating_05" = "Average.";
+"LagCheckRequestReplyRating_06" = "Slow.";
+"LagCheckRequestReplyRating_07" = "Very Slow.";
+"LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
+"LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";	
 
 "ListDialogHasChannels" = "%i Public Channels";
 "ListDialogHasSearchResults" = "%1$i Public Channels - %2$i Search Results";
