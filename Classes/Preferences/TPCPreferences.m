@@ -443,7 +443,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)invertSidebarColors
 {
-	return NO;
+	return [_NSUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 
 + (BOOL)trackConversations

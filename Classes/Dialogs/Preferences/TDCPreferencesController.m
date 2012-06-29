@@ -15,7 +15,7 @@
 
 @implementation TDCPreferencesController
 
-@synthesize scriptsView;			
+@synthesize scriptsView;
 
 - (id)initWithWorldController:(IRCWorld *)word
 {
@@ -55,6 +55,9 @@
 	[self updateTranscriptFolder];
 	[self setUpToolbarItemsAndMenus];
 	[self onHighlightTypeChanged:nil];
+
+	[self.toggleDarkenedThemeCheck setTarget:self];
+	[self.toggleDarkenedThemeCheck setAction:@selector(onStyleChanged:)];
 	
 	[self firstPane:self.generalView selectedItem:0];
 }

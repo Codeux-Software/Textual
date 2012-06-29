@@ -100,7 +100,7 @@ static BOOL _defaultDrawingColorsPopulated;
 		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
 		
 		_graphiteSelectionColorAW				= [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
-
+		
 		/* //////////////////////////////////////////////////// */
 		/* Standard Aqua Colors. — @end */
 		/* //////////////////////////////////////////////////// */
@@ -116,21 +116,21 @@ static BOOL _defaultDrawingColorsPopulated;
 		_badgeMessageBackgroundColorAqua		= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
 		_badgeMessageBackgroundColorGraphite	= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
 		_badgeMessageBackgroundColorTS			= [NSColor darkGrayColor];
-
+		
 		_serverCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
 		_serverCellFontColorDisabled			= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7];
-		_serverCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_serverCellSelectionFontColor_AW		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
 		_serverCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
-		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.70];
+		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		_serverCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		_serverCellShadowColorAW				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
 		_serverCellShadowColorNA				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
 		
 		_channelCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
-		_channelCellSelectionFontColor_AW		= [NSColor whiteColor];
+		_channelCellSelectionFontColor_AW		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
 		_channelCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
 		_channelCellShadowColor					= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
-		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.70];
+		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 		
 		/* //////////////////////////////////////////////////// */
@@ -409,7 +409,7 @@ static BOOL _defaultDrawingColorsPopulated;
 			}
 			
 			cellFrame.size.width -= (_badgeRightMargin * 2);
-
+			
 			[itemShadow setShadowBlurRadius:1.0];
 			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
 			
@@ -438,7 +438,7 @@ static BOOL _defaultDrawingColorsPopulated;
 			
 			if (isSelected) {
 				[newValue addAttribute:NSFontAttributeName              value:_channelCellSelectionFont       range:textRange];
-
+				
 				if (isKeyWindow) {
 					[newValue addAttribute:NSForegroundColorAttributeName value:_channelCellSelectionFontColor_AW range:textRange];
 				} else {
