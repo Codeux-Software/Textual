@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *pointedChannelName;
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, strong) NSMenuItem *closeWindowItem;
+@property (nonatomic, assign) BOOL findPanelOpened;
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCNickSheet *nickSheet;
 @property (nonatomic, strong) TDCModeSheet *modeSheet;
