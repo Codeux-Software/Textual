@@ -98,6 +98,7 @@ static NSMutableDictionary *commandIndex = nil;
 	commandIndex[IRCCommandIndexNachat] = @"88"; 
 	commandIndex[IRCCommandIndexNames] = @"12";
 	commandIndex[IRCCommandIndexNick] = @"13";
+	commandIndex[IRCCommandIndexNncoloreset] = @"105";
 	commandIndex[IRCCommandIndexNotice] = @"14";
 	commandIndex[IRCCommandIndexOmsg] = @"38";
 	commandIndex[IRCCommandIndexOnotice] = @"39";

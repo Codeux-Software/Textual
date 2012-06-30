@@ -62,6 +62,7 @@
 #define IRCCommandIndexNachat				@"NACHAT"
 #define IRCCommandIndexNames				@"NAMES"
 #define IRCCommandIndexNick					@"NICK"
+#define IRCCommandIndexNncoloreset			@"NNCOLORESET"
 #define IRCCommandIndexNotice				@"NOTICE"
 #define IRCCommandIndexOmsg					@"OMSG"
 #define IRCCommandIndexOnotice				@"ONOTICE"
