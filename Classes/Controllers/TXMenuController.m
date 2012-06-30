@@ -449,12 +449,20 @@
 
 - (void)_onWantFindPanel:(id)sender
 {
+	if (self.findPanelOpened) {
+		return;
+	}
+
+	self.findPanelOpened = YES;
+
 	NSString *newPhrase = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"FindSearchPanelPromptMessage")
 														   title:TXTLS(@"FindSearchPanelPromptTitle")
 												   defaultButton:TXTLS(@"FindSearchPanelPromptButton")
 												 alternateButton:TXTLS(@"CancelButton") 
 													defaultInput:self.currentSearchPhrase];
-	
+
+	self.findPanelOpened = NO;
+
 	if (NSObjectIsEmpty(newPhrase)) {
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	} else {
