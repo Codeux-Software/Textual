@@ -254,11 +254,19 @@ static NSMutableDictionary *commandIndex = nil;
 + (NSString *)whereScriptsUnsupervisedPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		NSString *pathHead = [NSString stringWithFormat:@"/Library/Application Scripts/%@/", [TPCPreferences applicationBundleIdentifier]];
+		
+		return [NSHomeDirectory() stringByAppendingPathComponent:pathHead];
+		
+		/* // This was creating a lot of leaks in Mountain Lion Preview 4.
+		   // Commenting out for now… 
+		 
 		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
 										inDomain:NSUserDomainMask
 							   appropriateForURL:nil
 										  create:YES
 										   error:NULL].relativePath;
+		*/
 	}
 	
 	return NSStringEmptyPlaceholder;
