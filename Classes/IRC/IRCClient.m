@@ -2671,6 +2671,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
+		case 105: // Command: NNCOLORESET
+		{
+			if (PointerIsNotEmpty(c) && c.isChannel) {
+				for (IRCUser *u in c.members) {
+					u.colorNumber = -1;
+				}
+			}
+
+			return YES;
+			break;
+		}
 		default:
 		{	
             NSString *command = [cmd lowercaseString];
