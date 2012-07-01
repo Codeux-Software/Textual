@@ -136,7 +136,7 @@
 	[self.class migrateGlobalPreference:@"Highlight List -> Primary Matches"			from:@"keywords"];
 	[self.class migrateGlobalPreference:@"Highlight List -> Excluded Matches"			from:@"excludeWords"];
 
-	[self.class migrateGlobalPreference:@"ApplicationCTCPVersionMasquerade"						from:@"Preferences.General.masquerade_ctcp_version"];
+	[self.class migrateGlobalPreference:@"ApplicationCTCPVersionMasquerade"				from:@"Preferences.General.masquerade_ctcp_version"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> amsg"			from:@"Preferences.General.amsg_allconnections"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> away"			from:@"Preferences.General.away_allconnections"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> clearall"		from:@"Preferences.General.clear_only_active"];
@@ -145,13 +145,15 @@
 	[self.class migrateGlobalPreference:@"AutojoinMaximumChannelJoinCount"				from:@"Preferences.General.autojoin_maxchans"];
 	[self.class migrateGlobalPreference:@"AutojoinWaitsForNickservIdentification"		from:@"Preferences.General.nickserv_delay_autojoin"];
 	[self.class migrateGlobalPreference:@"AutomaticallyAddScrollbackMarker"				from:@"Preferences.General.autoadd_scrollbackmark"];
+	
 	[self.class migrateGlobalPreference:@"ChannelOperatorDefaultLocalization -> Kick Reason"	from:@"Preferences.General.kick_message"];
+	
 	[self.class migrateGlobalPreference:@"ConfirmApplicationQuit"						from:@"Preferences.General.confirm_quit"];
 	[self.class migrateGlobalPreference:@"CopyTextSelectionOnMouseUp"					from:@"Preferences.General.copyonselect"];
 	[self.class migrateGlobalPreference:@"DefaultBanCommandHostmaskFormat"				from:@"Preferences.General.banformat"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Nickname"							from:@"Preferences.Identity.nickname"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Realname"							from:@"Preferences.Identity.realname"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Username"							from:@"Preferences.Identity.username"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Nickname"					from:@"Preferences.Identity.nickname"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Realname"					from:@"Preferences.Identity.realname"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Username"					from:@"Preferences.Identity.username"];
 	[self.class migrateGlobalPreference:@"DestinationOfNonserverNotices"				from:@"Preferences.General.notices_sendto_location"];
 	[self.class migrateGlobalPreference:@"DisableNotificationsForActiveWindow"			from:@"Preferences.General.stop_growl_on_active"];
 	[self.class migrateGlobalPreference:@"DisableRemoteNicknameColorHashing"			from:@"Preferences.General.disable_nickname_colors"];
@@ -163,16 +165,16 @@
 	[self.class migrateGlobalPreference:@"DisplayServerMessageOfTheDayOnConnect"		from:@"Preferences.General.display_servmotd"];
 	[self.class migrateGlobalPreference:@"DisplayUserListNoModeSymbol"					from:@"Preferences.General.use_nomode_symbol"];
 	[self.class migrateGlobalPreference:@"FocusSelectionOnMessageCommandExecution"		from:@"Preferences.General.focus_on_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> G:Line Reason"			from:@"Preferences.General.ircop_gline_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Kill Reason"				from:@"Preferences.General.ircop_kill_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Shun Reason"				from:@"Preferences.General.ircop_shun_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> G:Line Reason"	from:@"Preferences.General.ircop_gline_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Kill Reason"		from:@"Preferences.General.ircop_kill_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Shun Reason"		from:@"Preferences.General.ircop_shun_message"];
 	[self.class migrateGlobalPreference:@"InlineMediaScalingWidth"						from:@"Preferences.General.inline_image_width"];
 	[self.class migrateGlobalPreference:@"Keyboard -> Command+W Action"					from:@"Preferences.General.keyboard_cmdw_response"];
 	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Action"					from:@"Preferences.General.tab_action"];
-	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Completion Suffix"				from:@"Preferences.General.completion_suffix"];
+	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Completion Suffix"		from:@"Preferences.General.completion_suffix"];
 	[self.class migrateGlobalPreference:@"LogHighlights"								from:@"Preferences.General.log_highlights"];
 	[self.class migrateGlobalPreference:@"LogTranscript"								from:@"Preferences.General.log_transcript"];
-	[self.class migrateGlobalPreference:@"LogTranscriptDestination"								from:@"Preferences.General.transcript_folder"];
+	[self.class migrateGlobalPreference:@"LogTranscriptDestination"						from:@"Preferences.General.transcript_folder"];
 	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Channel"		from:@"Preferences.Experimental.view_loop_channel_delay"];
 	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Console"		from:@"Preferences.Experimental.view_loop_console_delay"];
 	[self.class migrateGlobalPreference:@"MainWindowTransparencyLevel"					from:@"Preferences.Theme.transparency"];
@@ -186,7 +188,7 @@
 	[self.class migrateGlobalPreference:@"RightToLeftTextFormatting"					from:@"Preferences.General.rtl_formatting"];
 	[self.class migrateGlobalPreference:@"SaveInputHistoryPerSelection"					from:@"Preferences.Theme.inputhistory_per_channel"];
 	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNotices"				from:@"Preferences.General.handle_operalerts"];
-	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNoticesMatch"				from:@"Preferences.General.ircop_alert_match"];
+	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNoticesMatch"		from:@"Preferences.General.ircop_alert_match"];
 	[self.class migrateGlobalPreference:@"ScrollbackMaximumLineCount"					from:@"Preferences.General.max_log_lines"];
 	[self.class migrateGlobalPreference:@"ServerListDoubleClickConnectServer"			from:@"Preferences.General.connect_on_doubleclick"];
 	[self.class migrateGlobalPreference:@"ServerListDoubleClickDisconnectServer"		from:@"Preferences.General.disconnect_on_doubleclick"];
@@ -195,11 +197,11 @@
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticGrammarCheck"				from:@"GrammarChecking"];
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticSpellCheck"					from:@"SpellChecking"];
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticSpellCorrection"			from:@"AutoSpellCorrection"];
-	[self.class migrateGlobalPreference:@"Theme -> Font Name"									from:@"Preferences.Theme.log_font_name"];
+	[self.class migrateGlobalPreference:@"Theme -> Font Name"							from:@"Preferences.Theme.log_font_name"];
 	[self.class migrateGlobalPreference:@"Theme -> Font Size"							from:@"Preferences.Theme.log_font_size"];
-	[self.class migrateGlobalPreference:@"Theme -> Name"										from:@"Preferences.Theme.name"];
-	[self.class migrateGlobalPreference:@"Theme -> Nickname Format"								from:@"Preferences.Theme.nick_format"];
-	[self.class migrateGlobalPreference:@"Theme -> Timestamp Format"							from:@"Preferences.Theme.timestamp_format"];
+	[self.class migrateGlobalPreference:@"Theme -> Name"								from:@"Preferences.Theme.name"];
+	[self.class migrateGlobalPreference:@"Theme -> Nickname Format"						from:@"Preferences.Theme.nick_format"];
+	[self.class migrateGlobalPreference:@"Theme -> Timestamp Format"					from:@"Preferences.Theme.timestamp_format"];
 	[self.class migrateGlobalPreference:@"TrackConversationsWithColorHashing"			from:@"Preferences.General.track_conversations"];
 	[self.class migrateGlobalPreference:@"TrackNicknameHighlightsOfLocalUser"			from:@"Preferences.Keyword.current_nick"];
 	[self.class migrateGlobalPreference:@"UserListDoubleClickAction"					from:@"Preferences.General.user_doubleclick_action"];
