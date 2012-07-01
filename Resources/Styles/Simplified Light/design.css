@@ -76,20 +76,20 @@ a:hover {
     right: 0;
     z-index: 400;
     opacity: 0.95;
-    color: #575757;
+    color: #FFFFFF;
     position: fixed;
     padding: 2px 0.5em 3px;
     box-shadow: 0 1px 5px #777;
-    border-bottom: 1px solid #A9A9A9;
-	text-shadow: 1px 1px rgba(255, 255, 255, 0.7);
-	background: -webkit-linear-gradient(top, #ECECEC 0%, #CACACA 100%); 
+    border-bottom: 1px solid #61778F;
+	text-shadow: 1px 1px rgba(83, 86, 94, 0.7);
+	background: -webkit-linear-gradient(top, #A2B0D0 0%, #7385AD 100%);
 }
 
 #topic_bar a, 
 #topic_bar span.channel {
-    color: #575757;
-    border-color: #575757;
-	text-shadow: 1px 1px rgba(255, 255, 255, 0.7);
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+	text-shadow: 1px 1px rgba(83, 86, 94, 0.7);
 }
 
 /* Images */
