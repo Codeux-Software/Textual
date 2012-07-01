@@ -6,6 +6,7 @@
 #include <mach/mach.h>
 #include <mach/mach_host.h>
 #include <mach/host_info.h>
+#include <mach/mach_vm.h>
 
 #include <sys/mount.h>
 #include <sys/types.h>
