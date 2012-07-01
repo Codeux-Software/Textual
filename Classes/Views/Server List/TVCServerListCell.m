@@ -146,7 +146,7 @@ static BOOL _defaultDrawingColorsPopulated;
 {
 	NSInteger extraMath = 0;
 	
-	if ([iconName isEqualNoCase:@"NSUser"]) {
+	if ([iconName isEqualNoCase:@"NSUser"] || [iconName isEqualNoCase:@"DarkServerListViewSelectedQueryUser"]) {
 		extraMath = 1;
 	} 
 	
@@ -396,7 +396,11 @@ static BOOL _defaultDrawingColorsPopulated;
 					[self drawStatusBadge:iconName inCell:cellFrame withAlpha:0.5];
 				}
 			} else {
-				[self drawStatusBadge:@"NSUser" inCell:cellFrame withAlpha:0.8];
+				if (isSelected == NO && _drawUsingInvertedColors) {
+					[self drawStatusBadge:@"DarkServerListViewSelectedQueryUser" inCell:cellFrame withAlpha:0.8];
+				} else {
+					[self drawStatusBadge:@"NSUser" inCell:cellFrame withAlpha:0.8];
+				}
 			}
 			
 			if (unreadCount >= 1 && drawMessageBadge) {
