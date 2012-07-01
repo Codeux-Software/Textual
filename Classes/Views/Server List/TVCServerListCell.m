@@ -380,7 +380,7 @@ static BOOL _defaultDrawingColorsPopulated;
 		
 		BOOL drawMessageBadge = (isSelected == NO ||
 								 (isKeyWindow == NO && isSelected));
-		
+
 		NSInteger unreadCount  = self.cellItem.treeUnreadCount;
 		NSInteger keywordCount = self.cellItem.keywordCount;
 		
