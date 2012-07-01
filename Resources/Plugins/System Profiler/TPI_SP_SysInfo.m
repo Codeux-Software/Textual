@@ -148,7 +148,7 @@
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
-
+	
 	if ([sysinfo hasSuffix:@" \002•\002"]) {
 		sysinfo = [sysinfo safeSubstringToIndex:(sysinfo.length - 3)];
 	}
@@ -415,21 +415,17 @@
 
 + (NSString *)applicationMemoryUsage
 {
-	struct task_basic_info info;
-	
-	mach_msg_type_number_t size = sizeof(info);
-	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
-	
-	if (kerr == KERN_SUCCESS) {
-		return TXTFLS(@"SystemInformationApplicationMemoryUse", [self formattedDiskSize:info.resident_size]);
-	} 
-	
-	return nil;
+	NSDictionary *mem = [TPI_SP_SysInfo _applicationMemoryInternalInformation];
+
+	NSString *shared  = [self formattedDiskSize:[mem integerForKey:@"shared"]];
+	NSString *private = [self formattedDiskSize:[mem integerForKey:@"private"]];
+
+	return TXTFLS(@"SystemInformationApplicationMemoryUse", private, shared);
 }
 
 + (NSString *)graphicsCardInfo
 {
-	CGDirectDisplayID displayID		= CGMainDisplayID();
+	CGDirectDisplayID   displayID	= CGMainDisplayID();
 	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
     
 	GLint numPixelFormats			= 0;
@@ -648,6 +644,48 @@
 + (NSString *)physicalMemorySize
 {
 	return [self formattedDiskSize:[self totalMemorySize]];
+}
+
++ (NSDictionary *)_applicationMemoryInternalInformation
+{
+	kern_return_t kernr;
+	
+	mach_vm_address_t addr = 0;
+	
+	NSInteger shrdmem = 0;
+	NSInteger privmem = 0;
+	
+	int pagesize = getpagesize();
+	
+	while (1 == 1) {
+		mach_vm_address_t size;
+		
+		vm_region_top_info_data_t info;
+		
+		mach_msg_type_number_t count = VM_REGION_TOP_INFO_COUNT;
+		mach_port_t object_name;
+		
+		kernr = mach_vm_region(mach_task_self(), &addr, &size, VM_REGION_TOP_INFO,
+							   (vm_region_info_t)&info, &count, &object_name);
+		
+		if (NSDissimilarObjects(kernr, KERN_SUCCESS)) {
+			break;
+		}
+		
+		if (info.share_mode == SM_PRIVATE) {
+			privmem += (info.private_pages_resident * pagesize);
+			shrdmem += (info.shared_pages_resident * pagesize);
+		} else if (info.share_mode == SM_COW) {
+			privmem += (info.private_pages_resident * pagesize);
+			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
+		} else if (info.share_mode == SM_SHARED) {
+			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
+		}
+		
+		addr += size;
+	}
+	
+	return @{@"shared" : @(shrdmem), @"private" : @(privmem)};
 }
 
 @end

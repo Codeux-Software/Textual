@@ -47,8 +47,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Dave Matthews Band® Magic Brownies™ Encore Edition</string>
 	<key>TXBundleBuildNumber</key>
-	<string>11719</string>
+	<string>11729</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-214-g384398f-debug,llvm4.0</string>
+	<string>2.1.1-215-gccfaa5a-debug,llvm4.0</string>
 </dict>
 </plist>
