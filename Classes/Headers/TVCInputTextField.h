@@ -9,7 +9,9 @@
 @property (nonatomic, unsafe_unretained) SEL actionSelector;
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 
+- (void)updateTextDirection;
 - (void)resetTextFieldCellSize;
+
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 
 - (TVCInputTextFieldBackground *)backgroundView;

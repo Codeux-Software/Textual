@@ -39,7 +39,7 @@
         self.placeholderString = [NSAttributedString alloc];
         self.placeholderString = [self.placeholderString initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
     }
-
+	
     return self;
 }
 
@@ -51,6 +51,15 @@
 - (TVCInputTextFieldBackground *)backgroundView
 {
 	return (self.superview.superview.superview.subviews)[2];
+}
+
+- (void)updateTextDirection
+{
+	if ([TPCPreferences rightToLeftFormatting]) {
+		[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
+	} else {
+		[self setBaseWritingDirection:NSWritingDirectionLeftToRight];
+	}
 }
 
 - (void)resetTextFieldCellSize
@@ -76,11 +85,11 @@
 	if (NSObjectIsEmpty(stringv)) {
 		textBoxFrame.size.height    = _InputBoxDefaultHeight;
 		backgroundFrame.size.height = _InputBoxBackgroundDefaultHeight;
-
+		
 		if (_lastDrawnLineCount >= 2) {
 			drawBezel = YES;
 		}
-
+		
 		_lastDrawnLineCount = 1;
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
@@ -88,7 +97,7 @@
 		if (_lastDrawnLineCount == totalLinesBase) {
 			drawBezel = NO;
 		}
-
+		
 		_lastDrawnLineCount = totalLinesBase;
 		
 		if (drawBezel) {
@@ -139,7 +148,9 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect
-{	
+{
+	[self updateTextDirection];
+	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[_NSGraphicsCurrentContext() saveGraphicsState];
 		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
@@ -147,8 +158,10 @@
 	
 	NSString *value = [self stringValue];
 	
-	if (NSObjectIsEmpty(value) && NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-		[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+	if (NSObjectIsEmpty(value)) {
+		if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+			[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+		}
 	} else {
 		[super drawRect:dirtyRect];
 	}
@@ -198,7 +211,7 @@
 	if (NSDissimilarObjects(value, self.windowIsActive)) {
 		_windowIsActive = value;
 	}
-
+	
 	[self setNeedsDisplay:YES];
 }
 
@@ -222,7 +235,7 @@
 	
 	/* Black Outline. */
 	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-
+	
 	/* We force focused color during first run because we draw before
 	 our window has finished coming to the front so the wrong color
 	 is used for our border. */
@@ -252,7 +265,7 @@
 	
 	[controlColor set];
 	[controlPath fill];
-
+	
 	if (_finishedFirstDraw == NO) {
 		_finishedFirstDraw = YES;
 	}
