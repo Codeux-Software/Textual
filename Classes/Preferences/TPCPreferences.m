@@ -1,7 +1,6 @@
 // Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
 // Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
 // You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 08, 2012
 
 /* TPCPreferences is one of our highest level objects. It is a wrapper for a lot
  of the data handed down to the application beyond simple preference values. It also
