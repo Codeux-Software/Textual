@@ -74,7 +74,7 @@
 /* Miscellaneous functions to handle small tasks. */
 #define CFItemRefToID(s)					(id)s
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
-#define BOOLValueFromObject(b)				BOOLReverseValue(PointerIsEmpty(b))
+#define BOOLValueFromObject(b)				PointerIsNotEmpty(b)
 #define NSDissimilarObjects(o,n)			(o != n)
 
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))

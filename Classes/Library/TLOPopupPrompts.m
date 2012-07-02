@@ -47,7 +47,7 @@
 {
 	BOOL useSupression = NO;
 	
-	NSString *__suppressionKey = @"";
+	NSString *__suppressionKey = NSStringEmptyPlaceholder;
 	
 	if (NSObjectIsNotEmpty(suppressKey)) {
         __suppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
@@ -106,7 +106,7 @@
 {
 	BOOL useSupression = NO;
 	
-	NSString *__suppressKey = @"";
+	NSString *__suppressKey = NSStringEmptyPlaceholder;
 	
 	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
         __suppressKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];

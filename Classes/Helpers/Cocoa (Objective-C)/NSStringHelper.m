@@ -84,7 +84,7 @@ NSInteger ctoi(unsigned char c);
 	return nil;
 }
 
-- (const UniChar*)getCharactersBuffer
+- (const UniChar *)getCharactersBuffer
 {
 	NSUInteger len = self.length;
 	
@@ -579,7 +579,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	return @"";
+	return NSStringEmptyPlaceholder;
 }
 
 - (NSString *)hostFromHostmask
@@ -588,7 +588,7 @@ BOOL isUnicharDigit(unichar c)
 		return [self safeSubstringAfterIndex:[self stringPosition:@"@"]];
 	}
 	
-	return @"";
+	return NSStringEmptyPlaceholder;
 }
 
 - (NSString *)reservedCharactersToIRCFormatting
