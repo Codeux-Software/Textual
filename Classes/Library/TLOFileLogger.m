@@ -59,7 +59,9 @@
 {
 	[self close];
 
-	if ([TPCPreferences transcriptFolder] == nil) {
+	NSString *path = [TPCPreferences transcriptFolder];
+
+	if (NSObjectIsEmpty(path)) {
 		return;
 	}
 	

@@ -2686,7 +2686,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{	
             NSString *command = [cmd lowercaseString];
 			
-            NSArray *extensions = @[@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", @""];
+            NSArray *extensions = @[@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", NSStringEmptyPlaceholder];
 			
 #ifdef TXUserScriptsFolderAvailable
 			NSArray *scriptPaths = @[

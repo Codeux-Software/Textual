@@ -619,12 +619,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
-	
-	if ([TPCPreferences rightToLeftFormatting]) {
-		[self.text setBaseWritingDirection:NSWritingDirectionRightToLeft];
-	} else {
-		[self.text setBaseWritingDirection:NSWritingDirectionLeftToRight];
-	}
+
+	[self.text updateTextDirection];
 	
 	sf = (NSMutableString *)[sf trim];
 	
