@@ -591,12 +591,6 @@
 
 - (void)reloadTheme
 {
-	[self.serverList updateBackgroundColor];
-	[self.memberList updateBackgroundColor];
-
-	[self.master.serverSplitView setNeedsDisplay:YES];
-	[self.master.memberSplitView setNeedsDisplay:YES];
-	
 	self.viewTheme.name = [TPCPreferences themeName];
 	
 	NSMutableArray *logs = [NSMutableArray array];
@@ -612,6 +606,12 @@
 	for (TVCLogController *log in logs) {
 		[log reloadTheme];
 	}
+	
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+
+	[self.master.serverSplitView setNeedsDisplay:YES];
+	[self.master.memberSplitView setNeedsDisplay:YES];
 }
 
 - (void)changeTextSize:(BOOL)bigger

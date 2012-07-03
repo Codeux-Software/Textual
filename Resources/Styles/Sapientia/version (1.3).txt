@@ -1,0 +1,18 @@
+#Version Information, "Sapientia".
+
+2012-07-02 - Version 1.3
+	* Topic bar:
+		- Font size increased (13pt -> 15pt)
+		- Gradient background added.
+	* Override nickname style to %@%n
+	* Support for inverted sidebars in 2.1.1
+
+2012-06-08 - Version 1.2
+	* Updated for Textual 2.1, fixing bugs caused by the new version. 
+	* Brightened background colour, slightly.
+
+2011-04-10 - Version 1.1
+	* Changed highlight colours.
+
+2011-04-09 - Version 1.0
+	* First release.

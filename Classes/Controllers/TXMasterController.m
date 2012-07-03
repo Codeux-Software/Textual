@@ -31,7 +31,8 @@
 #endif
 	
 	[self.window makeMainWindow];
-	
+
+	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
 	
 	[self.text setBackgroundColor:[NSColor clearColor]];
@@ -616,6 +617,11 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	
 	if (self.viewTheme.other.channelViewFontOverrode) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
+		[sf appendString:NSStringNewlinePlaceholder];
+	}
+
+	if (self.viewTheme.other.forceInvertSidebarColors) {
+		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
