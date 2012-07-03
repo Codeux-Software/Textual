@@ -60,7 +60,10 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
+#ifndef DEBUG
 	if ([client isConnected]) {
+#endif
+		
 		NSString *channelName = client.world.selectedChannel.name;
 		
 		if ([channelName length] >= 1) {
@@ -88,7 +91,10 @@
 				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemMemoryUsage]];
 			}
 		}
+		
+#ifndef DEBUG
 	}
+#endif
 }
 
 @end

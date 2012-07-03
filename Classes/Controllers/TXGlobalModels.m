@@ -67,10 +67,17 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 	NSDate *date1 = [NSDate date];
 	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
 	
-	NSUInteger unitFlags = (NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | 
-							NSWeekCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+	NSUInteger unitFlags = 0;
+
+	if ([orderMatrix containsObject:@"year"])		unitFlags |= NSYearCalendarUnit;
+	if ([orderMatrix containsObject:@"month"])		unitFlags |= NSMonthCalendarUnit;
+	if ([orderMatrix containsObject:@"week"])		unitFlags |= NSWeekCalendarUnit;
+	if ([orderMatrix containsObject:@"day"])		unitFlags |= NSDayCalendarUnit;
+	if ([orderMatrix containsObject:@"hour"])		unitFlags |= NSHourCalendarUnit;
+	if ([orderMatrix containsObject:@"minute"])		unitFlags |= NSMinuteCalendarUnit;
+	if ([orderMatrix containsObject:@"second"])		unitFlags |= NSSecondCalendarUnit;
 	
-	NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1 toDate:date2  options:0];
+	NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1 toDate:date2 options:0];
 	
 	if (breakdownInfo) {
 		NSMutableString *finalResult = [NSMutableString string];
