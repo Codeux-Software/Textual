@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSString *nicknameFormat;
 @property (nonatomic, strong) NSString *timestampFormat;
 @property (nonatomic, assign) BOOL channelViewFontOverrode;
+@property (nonatomic, assign) BOOL forceInvertSidebarColors;
 @property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) TXNSDouble indentationOffset;
 @property (nonatomic, assign) TXNSDouble renderingEngineVersion;

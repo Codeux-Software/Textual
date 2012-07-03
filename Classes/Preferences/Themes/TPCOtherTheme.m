@@ -94,7 +94,9 @@
     if ([preferencesOverride containsKey:@"Indentation Offset"]) {
         self.indentationOffset = [preferencesOverride doubleForKey:@"Indentation Offset"];
     }
-    
+
+	self.forceInvertSidebarColors = [preferencesOverride boolForKey:@"Force Invert Sidebars"];
+
 	self.nicknameFormat  = [self processNSStringValue:preferencesOverride[@"Nickname Format"] def:nil];
 	self.timestampFormat = [self processNSStringValue:preferencesOverride[@"Timestamp Format"] def:nil];
 	
@@ -109,7 +111,8 @@
 	
 	[[_NSUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.nicknameFormat))				forKey:@"Theme -> Nickname Format Preference Enabled"];
 	[[_NSUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.timestampFormat))				forKey:@"Theme -> Timestamp Format Preference Enabled"];
-    [[_NSUserDefaultsController() values] setValue:NSNumberWithBOOL(BOOLReverseValue(self.channelViewFontOverrode))		forKey:@"Theme -> Channel Font Preference Enabled"];
+    [[_NSUserDefaultsController() values] setValue:@(BOOLReverseValue(self.channelViewFontOverrode))	forKey:@"Theme -> Channel Font Preference Enabled"];
+	[[_NSUserDefaultsController() values] setValue:@(BOOLReverseValue(self.forceInvertSidebarColors))	forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
 	
 	// ====================================================== //
 	

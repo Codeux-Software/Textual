@@ -12,6 +12,23 @@
 @implementation TPCPreferences
 
 #pragma mark -
+#pragma mark Master Controller
+
+__weak static TXMasterController *internalMasterController;
+
+- (TXMasterController *)masterController
+{
+	return internalMasterController;
+}
+
++ (void)setMasterController:(TXMasterController *)master
+{
+	if ([master isKindOfClass:[TXMasterController class]] && PointerIsEmpty(internalMasterController)) {
+		internalMasterController = master;
+	}
+}
+
+#pragma mark -
 #pragma mark Version Dictonaries
 
 static NSDictionary *textualInfoPlist	= nil;
@@ -451,6 +468,10 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)invertSidebarColors
 {
+	if (internalMasterController.viewTheme.other.forceInvertSidebarColors) {
+		return YES;
+	}
+	
 	return [_NSUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 

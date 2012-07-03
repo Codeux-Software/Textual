@@ -226,6 +226,7 @@
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 "ThemeChangeOverridePromptNicknameFormat" = "• Nickname Format";
 "ThemeChangeOverridePromptTimestampFormat" = "• Timestamp Format";
+"ThemeChangeOverridePromptWindowColors" = "• Window Colors";
 "ThemeChangeOverridePromptTitle" = "Preferred Selection";
 
 "TimeAgo" = "%@ Ago";

@@ -4884,6 +4884,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<string key="NSFrame">{{10, 10}, {515, 418}}</string>
 						<reference key="NSSuperview" ref="187127609"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="158203649"/>
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="15436948">
 								<string key="NSIdentifier">1</string>
@@ -5024,6 +5025,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 											<string key="NSFrame">{{10, 201}, {201, 18}}</string>
 											<reference key="NSSuperview" ref="158203649"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="646480114">
@@ -8003,6 +8005,22 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">7261</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: values.Theme -&gt; Invert Sidebar Colors Preference Enabled</string>
+						<reference key="source" ref="119407105"/>
+						<reference key="destination" ref="1032655829"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="119407105"/>
+							<reference key="NSDestination" ref="1032655829"/>
+							<string key="NSLabel">enabled: values.Theme -&gt; Invert Sidebar Colors Preference Enabled</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">values.Theme -&gt; Invert Sidebar Colors Preference Enabled</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">7263</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -11631,7 +11649,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">7261</int>
+			<int key="maxID">7263</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11669,7 +11687,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<string key="TPWTB_Alerts">{32, 32}</string>
 			<string key="TPWTB_Extensions">{32, 32}</string>
 			<string key="TPWTB_Interface">{32, 32}</string>
-			<string key="TPWTB_Mentions">{16, 16}</string>
+			<string key="TPWTB_Mentions">{32, 32}</string>
 			<string key="application">{512, 512}</string>
 		</dictionary>
 	</data>
