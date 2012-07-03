@@ -16,6 +16,12 @@
 
 __weak static TXMasterController *internalMasterController;
 
+/* masterController was only added to use with -invertSidebarColors, but
+ having a reference in this class can make some calls much simplier. Instead
+ of digging down through delegates to find something… we can just call this.
+ 
+ The master control has pointers to everything. */
+
 - (TXMasterController *)masterController
 {
 	return internalMasterController;
