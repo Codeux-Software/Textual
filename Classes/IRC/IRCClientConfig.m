@@ -166,18 +166,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
 		
-		self.cuid = NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
-		self.guid = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
-		self.name = NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
-		self.host = NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
-		self.port = NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.port);
-		self.nick = NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
-		self.username = NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
-		self.realName = NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
+		self.cuid		= NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
+		self.guid		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
+		self.name		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
+		self.host		= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
+		self.port		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.port);
+		self.nick		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
+		self.username	= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
+		self.realName	= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
 		
 		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
-		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxy"];
+		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxyServerType"];
 		self.proxyPort       = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
 		self.proxyHost		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyHost);
 		self.proxyUser		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUser);
