@@ -468,7 +468,7 @@
 		if ([newPhrase isNotEqualTo:self.currentSearchPhrase]) {
 			self.currentSearchPhrase = newPhrase;
 		}
-		
+
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[[self currentWebView] searchFor:newPhrase direction:YES caseSensitive:NO wrap:YES];
 		});
