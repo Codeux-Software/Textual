@@ -440,7 +440,10 @@
 		IRCChannelConfig *c = [self.config.channels safeObjectAtIndex:sel];
 		
 		conf = [c mutableCopy];
-		conf.name = NSStringEmptyPlaceholder;
+		
+		conf.name			= NSStringEmptyPlaceholder;
+		conf.password		= NSStringEmptyPlaceholder;
+		conf.encryptionKey	= NSStringEmptyPlaceholder;
 	}
 	
 	self.channelSheet = nil;
