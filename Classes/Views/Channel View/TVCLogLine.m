@@ -6,7 +6,6 @@
 
 @implementation TVCLogLine
 
-
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
 	switch (type) {
