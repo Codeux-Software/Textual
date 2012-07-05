@@ -23,6 +23,20 @@
 		
 		self.world			   = word;
 		self.scriptsController = [TDCPreferencesScriptWrapper new];
+
+		self.sounds = [NSMutableArray new];
+		
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
 	}
 	
 	return self;
@@ -315,29 +329,6 @@
 	}
 	
 	return sound_list;
-}
-
-- (NSMutableArray *)sounds
-{
-	if (NSObjectIsEmpty(_sounds)) {
-		NSMutableArray *ary = [NSMutableArray new];
-		
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
-		
-		self.sounds = ary;
-	}
-	
-	return _sounds;
 }
 
 #pragma mark -

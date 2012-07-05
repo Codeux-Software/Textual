@@ -206,13 +206,14 @@
 
 + (NSString *)bandwidthStatsFrom:(IRCWorld *)world
 {
+	CGFloat messageAvg = (world.messagesReceived / ([NSDate epochTime] - [TPCPreferences startTime]));
+	
 	return TXTFLS(@"SystemInformationMsgcountCommandResult",
 				  TXFormattedNumber(world.messagesSent),
 				  TXFormattedNumber(world.messagesReceived),
-				  (world.messagesReceived / ([NSDate epochTime] - [TPCPreferences startTime])),
 				  [self formattedDiskSize:world.bandwidthIn],
-				  [self formattedDiskSize:world.bandwidthOut]);
-	
+				  [self formattedDiskSize:world.bandwidthOut],
+				  messageAvg);
 }
 
 + (NSString *)systemLoadAverage

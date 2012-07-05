@@ -345,4 +345,4 @@
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";
 "SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%3$.2f\002 messages a second. Combined this comes to around \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
+"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%5$.2f\002 messages a second. Combined this comes to around \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";
