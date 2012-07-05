@@ -164,14 +164,14 @@
 {
 	BOOL result = [self.log print:line withHTML:rawHTML];
 	
-	if ([TPCPreferences logTranscript]) {
+	if ([TPCPreferences logTranscript] && rawHTML == NO) {
 		if (PointerIsEmpty(self.logFile)) {
 			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self.client;
 			self.logFile.channel = self;
 		}
 		
-		NSString *comp = [NSString stringWithFormat:@"%@", [[NSDate date] dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
+		NSString *comp = [NSString stringWithFormat:@"%@", [NSDate.date dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
 		
 		if (self.logDate) {
 			if ([self.logDate isEqualToString:comp] == NO) {
@@ -183,15 +183,11 @@
 			self.logDate = comp;
 		}
 		
-		NSString *nickStr = NSStringEmptyPlaceholder;
-		
-		if (line.nick) {
-			nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
+		NSString *logstr = [self.log renderedBodyForTranscriptLog:line];
+
+		if (NSObjectIsNotEmpty(logstr)) {
+			[self.logFile writeLine:logstr];
 		}
-		
-		NSString *s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
-		
-		[self.logFile writeLine:s];
 	}
 	
 	return result;

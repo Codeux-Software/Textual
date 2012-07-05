@@ -69,5 +69,7 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 - (BOOL)print:(TVCLogLine *)line;
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML;
 
+- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
+
 - (void)logViewOnDoubleClick:(NSString *)e;
 @end
