@@ -3540,7 +3540,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (NSString *)label
 {
-	return self.config.name;
+	return [self.config.name uppercaseString];
 }
 
 #pragma mark -
