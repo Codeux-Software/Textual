@@ -48,7 +48,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)sandboxEnabled;
 + (BOOL)securityScopedBookmarksAvailable;
 
-- (TXMasterController *)masterController;
++ (TXMasterController *)masterController;
 + (void)setMasterController:(TXMasterController *)master;
 
 + (NSInteger)startTime;
@@ -134,6 +134,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)invertSidebarColors;
++ (BOOL)hideMainWindowSegmentedController;
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;

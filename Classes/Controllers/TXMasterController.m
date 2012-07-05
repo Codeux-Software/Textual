@@ -31,7 +31,7 @@
 #endif
 	
 	[self.window makeMainWindow];
-
+	
 	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
 	
@@ -60,6 +60,7 @@
 	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
 	
     [self.text setReturnActionWithSelector:@selector(textEntered) owner:self];
+	[self.text redrawOriginPoints];
     
 	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
 	
@@ -170,23 +171,23 @@
 	} else {
 		NSRect visibleRect = [_NSMainScreen() visibleFrame];
 		NSRect windowRect  = self.window.frame;
-
+		
 		BOOL redrawFrame = NO;
 		
 		if (visibleRect.size.height < windowRect.size.height) {
 			windowRect.size.height = visibleRect.size.height;
 			windowRect.origin.x = visibleRect.origin.x;
-
+			
 			redrawFrame = YES;
 		}
 		
 		if (visibleRect.size.width < windowRect.size.width) {
 			windowRect.size.width = visibleRect.size.width;
 			windowRect.origin.y = visibleRect.origin.y;
-
+			
 			redrawFrame = YES;
 		}
-
+		
 		if (redrawFrame) {
 			[self.window setFrame:windowRect display:YES animate:YES];
 		}
@@ -593,7 +594,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"TextFieldAutomaticGrammarCheck"];
 	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
 	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"TextFieldAutomaticSpellCorrection"];
-
+	
 	[TPCPreferences stopUsingTranscriptFolderBookmarkResources];
 	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
 	[TPCPreferences sync];
@@ -619,12 +620,12 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
-
+	
 	if (self.viewTheme.other.forceInvertSidebarColors) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
-
+	
 	[self.text updateTextDirection];
 	
 	sf = (NSMutableString *)[sf trim];
@@ -1342,20 +1343,22 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)updateSegmentedController
 {
-	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-	
-	/* Selection Settings. */
-	IRCClient *u = self.world.selectedClient;
-	IRCChannel *c = self.world.selectedChannel;
-	
-	if (PointerIsEmpty(c)) {
-		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
-	} else {
-		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
+	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
+		[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
+		
+		/* Selection Settings. */
+		IRCClient *u = self.world.selectedClient;
+		IRCChannel *c = self.world.selectedChannel;
+		
+		if (PointerIsEmpty(c)) {
+			[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
+		} else {
+			[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
+		}
+		
+		/* Open Address Book. */
+		[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 	}
-	
-	/* Open Address Book. */
-	[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 }
 
 - (void)buildSegmentedController

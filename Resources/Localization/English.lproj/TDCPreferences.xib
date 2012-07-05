@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">12A248</string>
+		<string key="IBDocument.SystemVersion">12A256</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2541</string>
-		<string key="IBDocument.AppKitVersion">1183</string>
+		<string key="IBDocument.AppKitVersion">1185</string>
 		<string key="IBDocument.HIToolboxVersion">622.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -190,6 +190,7 @@
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182528</int>
 									<int key="NSButtonFlags2">2</int>
+									<reference key="NSNormalImage" ref="293674941"/>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -4998,7 +4999,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 											<string key="NSFrame">{{10, 229}, {357, 18}}</string>
 											<reference key="NSSuperview" ref="158203649"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="119407105"/>
+											<reference key="NSNextKeyView" ref="1064482317"/>
 											<string key="NSReuseIdentifierKey">_NS:239</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="374125543">
@@ -5022,7 +5023,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 										<object class="NSButton" id="119407105">
 											<reference key="NSNextResponder" ref="158203649"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{10, 201}, {201, 18}}</string>
+											<string key="NSFrame">{{10, 173}, {201, 18}}</string>
 											<reference key="NSSuperview" ref="158203649"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView"/>
@@ -5035,6 +5036,33 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<reference key="NSSupport" ref="90392730"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="119407105"/>
+												<int key="NSButtonFlags">1211912448</int>
+												<int key="NSButtonFlags2">2</int>
+												<reference key="NSNormalImage" ref="149444798"/>
+												<reference key="NSAlternateImage" ref="730435101"/>
+												<string key="NSAlternateContents"/>
+												<string key="NSKeyEquivalent"/>
+												<int key="NSPeriodicDelay">200</int>
+												<int key="NSPeriodicInterval">25</int>
+											</object>
+											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+										</object>
+										<object class="NSButton" id="1064482317">
+											<reference key="NSNextResponder" ref="158203649"/>
+											<int key="NSvFlags">268</int>
+											<string key="NSFrame">{{10, 201}, {275, 18}}</string>
+											<reference key="NSSuperview" ref="158203649"/>
+											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="119407105"/>
+											<string key="NSReuseIdentifierKey">_NS:9</string>
+											<bool key="NSEnabled">YES</bool>
+											<object class="NSButtonCell" key="NSCell" id="457428185">
+												<int key="NSCellFlags">-2080374784</int>
+												<int key="NSCellFlags2">268435456</int>
+												<string key="NSContents">Hide the buttons left of the input text field.</string>
+												<reference key="NSSupport" ref="90392730"/>
+												<string key="NSCellIdentifier">_NS:9</string>
+												<reference key="NSControlView" ref="1064482317"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="149444798"/>
@@ -6170,12 +6198,20 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<int key="connectionID">7151</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">toggleDarkenedThemeCheck</string>
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onStyleChanged:</string>
 						<reference key="source" ref="523994250"/>
 						<reference key="destination" ref="119407105"/>
 					</object>
-					<int key="connectionID">7259</int>
+					<int key="connectionID">7268</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onStyleChanged:</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="1064482317"/>
+					</object>
+					<int key="connectionID">7269</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -8021,6 +8057,22 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">7263</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.DisableMainWindowSegmentedController</string>
+						<reference key="source" ref="1064482317"/>
+						<reference key="destination" ref="1032655829"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1064482317"/>
+							<reference key="NSDestination" ref="1032655829"/>
+							<string key="NSLabel">value: values.DisableMainWindowSegmentedController</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.DisableMainWindowSegmentedController</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">7270</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -10381,6 +10433,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="372761478"/>
 							<reference ref="739515150"/>
 							<reference ref="675166357"/>
+							<reference ref="1064482317"/>
 							<reference ref="119407105"/>
 						</array>
 						<reference key="parent" ref="15436948"/>
@@ -10894,6 +10947,19 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<int key="objectID">7256</int>
 						<reference key="object" ref="646480114"/>
 						<reference key="parent" ref="119407105"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">7264</int>
+						<reference key="object" ref="1064482317"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="457428185"/>
+						</array>
+						<reference key="parent" ref="158203649"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">7265</int>
+						<reference key="object" ref="457428185"/>
+						<reference key="parent" ref="1064482317"/>
 					</object>
 				</array>
 			</object>
@@ -11644,18 +11710,31 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="7149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7255.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7256.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="7264.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="7265.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">7263</int>
+			<int key="maxID">7270</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCPreferencesController</string>
 					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">onStyleChanged:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">onStyleChanged:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">onStyleChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCPreferencesController.h</string>

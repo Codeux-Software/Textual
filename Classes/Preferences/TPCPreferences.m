@@ -22,7 +22,7 @@ __weak static TXMasterController *internalMasterController;
  
  The master control has pointers to everything. */
 
-- (TXMasterController *)masterController
++ (TXMasterController *)masterController
 {
 	return internalMasterController;
 }
@@ -478,6 +478,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	}
 	
 	return [_NSUserDefaults() boolForKey:@"InvertSidebarColors"];
+}
+
++ (BOOL)hideMainWindowSegmentedController
+{
+	return [_NSUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
 }
 
 + (BOOL)trackConversations
