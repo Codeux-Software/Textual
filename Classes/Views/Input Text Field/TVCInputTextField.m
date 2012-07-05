@@ -15,6 +15,9 @@
 #define _InputBoxBackgroundHeightMultiplier		14.0
 #define _WindowContentBorderDefaultHeight		38.0
 
+#define _WindowSegmentedControllerDefaultX		10.0
+#define _InputTextFieldOriginDefaultX			144.0
+
 @implementation TVCInputTextField
 {
 	NSInteger _lastDrawnLineCount;
@@ -40,6 +43,44 @@
     }
 	
     return self;
+}
+
+- (void)redrawOriginPoints
+{
+	TXMasterController *master = [TPCPreferences masterController];
+
+	NSInteger defaultSegmentX = _WindowSegmentedControllerDefaultX;
+	NSInteger defaultInputbxX = _InputTextFieldOriginDefaultX;
+
+	NSInteger resultOriginX = 0;
+	NSInteger resultSizeWth = (defaultInputbxX - defaultSegmentX);
+	
+	if ([TPCPreferences hideMainWindowSegmentedController]) {
+		[master.windowButtonController setHidden:YES];
+
+		resultOriginX = defaultSegmentX;
+	} else {
+		[master.windowButtonController setHidden:NO];
+		
+		resultOriginX  = defaultInputbxX;
+		resultSizeWth *= -1;
+	}
+
+	NSRect fronFrame = [self.scrollView		frame];
+	NSRect backFrame = [self.backgroundView frame];
+	
+	if (NSDissimilarObjects(resultOriginX, fronFrame.origin.x) &&
+		NSDissimilarObjects(resultOriginX, backFrame.origin.x)) {
+
+		fronFrame.size.width += resultSizeWth;
+		backFrame.size.width += resultSizeWth;
+		
+		fronFrame.origin.x = resultOriginX;
+		backFrame.origin.x = resultOriginX;
+		
+		[self.scrollView	 setFrame:fronFrame];
+		[self.backgroundView setFrame:backFrame];
+	}
 }
 
 - (NSView *)splitterView
@@ -201,12 +242,16 @@
 @end
 
 @implementation TVCInputTextFieldBackground
-{
-	BOOL _finishedFirstDraw;
-}
 
 - (void)setWindowIsActive:(BOOL)value
 {
+	/* We set a property stating we are active instead of
+	 calling our NSWindow and asking it because there are
+	 times that we are going to be drawing to a focused
+	 window, but it has not became visible yet. Therefore,
+	 the call to NSWindow would tell us to draw an inactive
+	 input box when it should be active. */
+	
 	if (NSDissimilarObjects(value, self.windowIsActive)) {
 		_windowIsActive = value;
 	}
@@ -235,10 +280,7 @@
 	/* Black Outline. */
 	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
 	
-	/* We force focused color during first run because we draw before
-	 our window has finished coming to the front so the wrong color
-	 is used for our border. */
-	if (self.windowIsActive || _finishedFirstDraw == NO) {
+	if (self.windowIsActive) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
@@ -264,10 +306,6 @@
 	
 	[controlColor set];
 	[controlPath fill];
-	
-	if (_finishedFirstDraw == NO) {
-		_finishedFirstDraw = YES;
-	}
 }
 
 @end

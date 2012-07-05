@@ -10,6 +10,7 @@
 
 - (void)updateTextDirection;
 - (void)resetTextFieldCellSize;
+- (void)redrawOriginPoints;
 
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
 
