@@ -612,6 +612,8 @@
 
 	[self.master.serverSplitView setNeedsDisplay:YES];
 	[self.master.memberSplitView setNeedsDisplay:YES];
+
+	[self.text redrawOriginPoints];
 }
 
 - (void)changeTextSize:(BOOL)bigger

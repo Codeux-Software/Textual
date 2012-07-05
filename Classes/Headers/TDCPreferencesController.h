@@ -39,7 +39,6 @@
 @property (nonatomic, strong) NSPopUpButton *alertSoundButton;
 @property (nonatomic, strong) NSButton *useGrowlButton;
 @property (nonatomic, strong) NSButton *disableAlertWhenAwayButton;
-@property (nonatomic, strong) NSButton *toggleDarkenedThemeCheck;
 @property (nonatomic, strong) NSMenu *installedScriptsMenu;
 @property (nonatomic, strong) NSTextField *scriptLocationField;
 @property (nonatomic, strong) NSToolbar *preferenceSelectToolbar;
