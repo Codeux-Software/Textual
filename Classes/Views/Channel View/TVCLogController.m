@@ -590,6 +590,29 @@
 	[self limitNumberOfLines];
 }
 
+- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
+{
+	if (NSObjectIsEmpty(line.body)) {
+		return nil;
+	}
+	
+	NSMutableString *s = [NSMutableString string];
+	
+	if (NSObjectIsNotEmpty(line.time)) {
+		[s appendString:line.time];
+		[s appendString:NSStringEmptyPlaceholder];
+	}
+	
+	if (NSObjectIsNotEmpty(line.nick)) {
+		[s appendString:line.nick];
+		[s appendString:NSStringEmptyPlaceholder];
+	} 
+
+	[s appendString:line.body];
+
+	return [s stripEffects];
+}
+
 - (BOOL)print:(TVCLogLine *)line
 {
 	return [self print:line withHTML:NO];
@@ -597,7 +620,9 @@
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML
 {
-	if (NSObjectIsEmpty(line.body)) return NO;
+	if (NSObjectIsEmpty(line.body)) {
+		return NO;
+	}
 
 	if ([NSThread isMainThread] == NO) {
 		return [self.iomt print:line withHTML:rawHTML];
