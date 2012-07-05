@@ -37,12 +37,11 @@ __weak static TXMasterController *internalMasterController;
 #pragma mark -
 #pragma mark Version Dictonaries
 
-static NSDictionary *textualInfoPlist	= nil;
 static NSDictionary *systemVersionPlist = nil;
 
 + (NSDictionary *)textualInfoPlist
 {
-	return textualInfoPlist;
+	return [[NSBundle mainBundle] infoDictionary];
 }
 
 + (NSDictionary *)systemInfoPlist 
@@ -188,7 +187,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)applicationName
 {
-	return textualInfoPlist[@"CFBundleName"];
+	return [TPCPreferences textualInfoPlist][@"CFBundleName"];
 }
 
 + (NSInteger)applicationProcessID
@@ -198,7 +197,7 @@ static NSMutableDictionary *commandIndex = nil;
 
 + (NSString *)gitBuildReference
 {
-	return textualInfoPlist[@"TXBundleBuildReference"];
+	return [TPCPreferences textualInfoPlist][@"TXBundleBuildReference"];
 }
 
 + (NSString *)applicationBundleIdentifier
@@ -1177,18 +1176,23 @@ static NSInteger totalRunTime = 0;
 	
 	d[@"NotificationType -> Highlight -> Sound"] = @"Glass";
 	d[@"ScanForIRCopAlertInServerNoticesMatch"] = @"ircop alert";
+	
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
+	
 	d[@"IRCopDefaultLocalizaiton -> Shun Reason"] = TXTLS(@"ShunReason");
 	d[@"IRCopDefaultLocalizaiton -> Kill Reason"] = TXTLS(@"KillReason");
 	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
-	d[@"ChannelOperatorDefaultLocalization -> Kick Reasone"] = TXTLS(@"KickReason");
+	
 	d[@"Theme -> Name"] = TXDefaultTextualLogStyle;
 	d[@"Theme -> Font Name"] = TXDefaultTextualLogFont;
 	d[@"Theme -> Nickname Format"] = TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"] = TXDefaultTextualTimestampFormat;
+	
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
+	
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reasone"] = TXTLS(@"KickReason");
 	
 	[d setInteger:2										forKey:@"AutojoinMaximumChannelJoinCount"];
 	[d setInteger:300									forKey:@"ScrollbackMaximumLineCount"];
@@ -1223,8 +1227,6 @@ static NSInteger totalRunTime = 0;
 	if (NSObjectIsEmpty(systemVersionPlist)) {
 		exit(10);
 	}
-	
-	textualInfoPlist = [[NSBundle mainBundle] infoDictionary];
 	
 	[self loadKeywords];
 	[self loadExcludeWords];
