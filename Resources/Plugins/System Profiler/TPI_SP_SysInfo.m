@@ -120,11 +120,11 @@
 		NSScreen *maiScreen = _NSMainScreen();
 		
 		if ([TPCPreferences runningInHighResolutionMode]) {
-			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution",
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolutionHighResoMode",
 						  maiScreen.frame.size.width,
 						  maiScreen.frame.size.height);
 		} else {
-			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolutionHighResoMode",
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution",
 						  maiScreen.frame.size.width,
 						  maiScreen.frame.size.height);
 		}
