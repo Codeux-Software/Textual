@@ -116,16 +116,20 @@
 	}
 	
 	if (_show_screen_res) {
-		/* Screen Resolution. */
-		NSArray *allScreens = [NSScreen screens];
+		/* Screen Resolution. */	
+		NSScreen *maiScreen = _NSMainScreen();
 		
-		if (NSObjectIsNotEmpty(allScreens)) {		
-			NSScreen *maiScreen = allScreens[0];
-			
-			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
-			
-			sysinfo = [sysinfo stringByAppendingString:_new];
+		if ([TPCPreferences runningInHighResolutionMode]) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution",
+						  maiScreen.frame.size.width,
+						  maiScreen.frame.size.height);
+		} else {
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolutionHighResoMode",
+						  maiScreen.frame.size.width,
+						  maiScreen.frame.size.height);
 		}
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
 	if (_show_load_avg) {
@@ -162,9 +166,17 @@
 	NSArray *screens = [NSScreen screens];
 	
 	if ([screens count] == 1) {
-		NSScreen *maiScreen = screens[0];
+		NSScreen *maiScreen = _NSMainScreen();
 		
-		return TXTFLS(@"SystemInformationScreensCommandResultSingle", maiScreen.frame.size.width, maiScreen.frame.size.height);
+		NSString *result = TXTFLS(@"SystemInformationScreensCommandResultSingle",
+								  maiScreen.frame.size.width,
+								  maiScreen.frame.size.height);
+		
+		if ([TPCPreferences runningInHighResolutionMode]) {
+			result = [result stringByAppendingString:TXTLS(@"SystemInformationScreensCommandResultHighResoMode")];
+		}
+		
+		return result;
 	} else {
 		NSMutableString *result = [NSMutableString string];
 		
@@ -172,9 +184,19 @@
 			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
 			
 			if (screenNumber == 1) {
-				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiBase", screenNumber, screen.frame.size.width, screen.frame.size.height)];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiBase",
+											screenNumber,
+											screen.frame.size.width,
+											screen.frame.size.height)];
 			} else {
-				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiMiddle", screenNumber, screen.frame.size.width, screen.frame.size.height)];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiMiddle",
+											screenNumber,
+											screen.frame.size.width,
+											screen.frame.size.height)];
+			}
+			
+			if ([screen backingScaleFactor] == 2.0f) {
+				[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
 			}
 		}
 		
@@ -417,10 +439,10 @@
 + (NSString *)applicationMemoryUsage
 {
 	NSDictionary *mem = [TPI_SP_SysInfo _applicationMemoryInternalInformation];
-
+	
 	NSString *shared  = [self formattedDiskSize:[mem integerForKey:@"shared"]];
 	NSString *private = [self formattedDiskSize:[mem integerForKey:@"private"]];
-
+	
 	return TXTFLS(@"SystemInformationApplicationMemoryUse", private, shared);
 }
 

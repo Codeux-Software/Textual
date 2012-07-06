@@ -307,6 +307,7 @@
 "SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
 "SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
 "SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
+"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
 "SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
 "SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
 
@@ -340,6 +341,7 @@
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
+"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
 
 "SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
