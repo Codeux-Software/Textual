@@ -37,6 +37,8 @@
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+
+		[self setUpToolbarItemsAndMenus];
 	}
 	
 	return self;
@@ -66,7 +68,6 @@
 	[self.window makeKeyAndOrderFront:nil];
 	
 	[self updateTranscriptFolder];
-	[self setUpToolbarItemsAndMenus];
 	[self onHighlightTypeChanged:nil];
 	
 	[self firstPane:self.generalView selectedItem:0];

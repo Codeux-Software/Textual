@@ -28,17 +28,17 @@
 	NSArray *cmdPlugins = [world bundlesForServerInput][[msg command]];
 	
 	if (NSObjectIsNotEmpty(cmdPlugins)) {
-		NSDictionary *senderData = @{@"senderHostmask": msg.sender.raw,
-									@"senderNickname": msg.sender.nick,
-									@"senderUsername": msg.sender.user,
-									@"senderDNSMask": msg.sender.address, 
+		NSDictionary *senderData = @{@"senderHostmask": NSStringNilValueSubstitute(msg.sender.raw),
+									@"senderNickname":  NSStringNilValueSubstitute(msg.sender.nick),
+									@"senderUsername":  NSStringNilValueSubstitute(msg.sender.user),
+									@"senderDNSMask":   NSStringNilValueSubstitute(msg.sender.address),
 									@"senderIsServer": @(msg.sender.isServer)};
 		
-		NSDictionary *messageData = @{@"messageCommand": msg.command,
-									 @"messageSequence": msg.sequence,
-									 @"messageParamaters": msg.params,
-									 @"messageServer": client.config.server,
-									 @"messageNetwork": client.config.network,
+		NSDictionary *messageData = @{@"messageParamaters": msg.params,
+									 @"messageCommand":  NSStringNilValueSubstitute(msg.command),
+									 @"messageSequence": NSStringNilValueSubstitute(msg.sequence),
+									 @"messageServer":   NSStringNilValueSubstitute(client.config.server),
+									 @"messageNetwork":  NSStringNilValueSubstitute(client.config.network),
 									 @"messageNumericReply": @(msg.numericReply)};
 		
 		for (THOTextualPluginItem *plugin in cmdPlugins) {
