@@ -582,17 +582,15 @@
 	[_NSNotificationCenter() postNotificationName:TXThemePreferenceChangedNotification object:nil userInfo:nil];
 }
 
-+ (void)openPathToThemesCallback:(NSNumber *)returnCode
++ (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
 {	
 	NSString *name = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	
-    NSInteger _returnCode = [returnCode integerValue];
-	
-	if (_returnCode == NSAlertSecondButtonReturn) {
+	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
     
-	if (_returnCode == NSAlertFirstButtonReturn) {
+	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:name];
 		
 		[_NSWorkspace() openFile:path];

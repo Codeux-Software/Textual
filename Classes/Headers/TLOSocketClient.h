@@ -29,6 +29,12 @@
 
 - (NSData *)readLine;
 - (void)write:(NSData *)data;
+
+- (void)openSSLCertificateTrustDialog;
+
+/* openSSLCertificateTrustDialog: results are not guaranteed 
+ when supplied with a suppression key. Pass nil to it for now. */
+- (void)openSSLCertificateTrustDialog:(NSString *)suppressKey;
 @end
 
 @interface NSObject (TCPClientDelegate)

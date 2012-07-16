@@ -80,6 +80,7 @@
 #define IRCCommandIndexSend					@"SEND"
 #define IRCCommandIndexServer				@"SERVER"
 #define IRCCommandIndexShun					@"SHUN"
+#define IRCCommandIndexSslcontext			@"SSLCONTEXT"
 #define IRCCommandIndexT					@"T"
 #define IRCCommandIndexTempshun				@"TEMPSHUN"
 #define IRCCommandIndexTime					@"TIME"
