@@ -10,6 +10,13 @@
 
 + (BOOL)badSSLCertErrorFound:(NSError *)error;
 + (NSString *)posixErrorStringFromErrno:(NSInteger)code;
+
+- (void)requestSSLTrustFor:(NSWindow *)docWindow
+			 modalDelegate:(id)adelegate
+			didEndSelector:(SEL)didEndSelector
+			   contextInfo:(void *)contextInfo
+			 defaultButton:(NSString *)defaultButton
+		   alternateButton:(NSString *)alternateButton;
 @end
 
 @interface AsyncSocket (RLMAsyncSocketExtensions)

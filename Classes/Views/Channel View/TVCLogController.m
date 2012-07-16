@@ -83,6 +83,8 @@
 	self.view.keyDelegate				= self;
 	self.view.resizeDelegate			= self;
 	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
+
+	[self.view setShouldUpdateWhileOffscreen:NO];
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
