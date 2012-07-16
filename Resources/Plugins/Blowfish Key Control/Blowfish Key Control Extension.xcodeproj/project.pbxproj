@@ -194,6 +194,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -213,10 +214,13 @@
 					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = bundle;
@@ -227,6 +231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -245,10 +250,13 @@
 					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
@@ -259,6 +267,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -277,10 +286,13 @@
 					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
@@ -302,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -320,10 +333,13 @@
 					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
@@ -345,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -363,10 +380,13 @@
 					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
