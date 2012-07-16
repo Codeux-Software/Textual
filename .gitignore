@@ -5,6 +5,8 @@
 *.perspectivev3
 *.pyc
 build/
+._build/
+BuildResults/
 *~
 Debug.xcconfig
 Resources/Plugins/Compiled
