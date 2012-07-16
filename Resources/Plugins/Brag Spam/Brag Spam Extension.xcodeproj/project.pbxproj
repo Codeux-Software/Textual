@@ -203,8 +203,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -230,8 +232,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -257,8 +261,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -295,8 +301,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -333,8 +341,10 @@
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};

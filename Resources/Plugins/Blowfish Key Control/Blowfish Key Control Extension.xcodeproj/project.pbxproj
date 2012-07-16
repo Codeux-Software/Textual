@@ -214,8 +214,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -244,8 +246,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -274,8 +278,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -315,8 +321,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -356,8 +364,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
