@@ -20,6 +20,8 @@
 
 "ChannelListNetworkName" = "Channel List for \"%@\"";
 
+"CloseButton" = "Close";
+
 "CmdWShortcutCloseQueryType" = "Close Query";
 "CmdWShortcutCloseWindowType" = "Close Window";
 "CmdWShortcutDisconnectServerType" = "Disconnect from %@";
@@ -64,6 +66,7 @@
 "IRCChannelTopicChanged" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "IRCConnectedToServer" = "Connection to host completed.";
 "IRCDisconnectedBySleepMode" = "Disconnect for Sleep Mode";
+"IRCDisconnectedByBadSSLCertificate" = "Disconnected from server because of an untrusted SSL certificate.";
 "IRCDisconnectedByTimeout" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRCDisconnectedByTrialPeriodTimer" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "IRCDisconnectedFromServer" = "Disconnected";

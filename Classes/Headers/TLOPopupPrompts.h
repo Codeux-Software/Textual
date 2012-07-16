@@ -5,10 +5,16 @@
 
 #define TXPopupPromptSuppressionPrefix		@"Text Input Prompt Suppression -> "
 
-@interface TLOPopupPrompts : NSObject 
-+ (void)popupPromptNULLSelector:(NSInteger)returnCode;
+typedef enum TLOPopupPromptReturnType : NSInteger {
+	TLOPopupPromptReturnPrimaryType,
+	TLOPopupPromptReturnSecondaryType,
+	TLOPopupPromptReturnOtherType,
+} TLOPopupPromptReturnType;
 
-+ (BOOL)dialogWindowWithQuestion:(NSString *)bodyText 
+@interface TLOPopupPrompts : NSObject
++ (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode;
+
++ (BOOL)dialogWindowWithQuestion:(NSString *)bodyText
 						   title:(NSString *)titleText
 				   defaultButton:(NSString *)buttonDefault
 				 alternateButton:(NSString *)buttonAlternate
@@ -16,7 +22,7 @@
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText;
 
-+ (NSString *)dialogWindowWithInput:(NSString *)bodyText 
++ (NSString *)dialogWindowWithInput:(NSString *)bodyText
 							  title:(NSString *)titleText
 					  defaultButton:(NSString *)buttonDefault
 					alternateButton:(NSString *)buttonAlternate
@@ -25,7 +31,7 @@
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
 						 action:(SEL)actionSelector
-						   body:(NSString *)bodyText 
+						   body:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate

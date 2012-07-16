@@ -192,6 +192,10 @@
 			[self.window setFrame:windowRect display:YES animate:YES];
 		}
 	}
+
+	/* Redraw dock icon on potential screen resolution changes. */
+
+	[self.world updateIcon];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note

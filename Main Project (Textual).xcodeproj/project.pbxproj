@@ -46,6 +46,7 @@
 		4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */; };
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
+		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
 		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */; };
@@ -461,6 +462,7 @@
 		4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = FormattingColor_Rainbow.tif; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
 		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
 		4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DarkServerListViewSelectedQueryUser.tif; sourceTree = "<group>"; };
@@ -805,6 +807,7 @@
 				4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */,
 				4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
+				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
 				4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
@@ -1099,6 +1102,7 @@
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4C46CCBF1580469E00846B64 /* IOKit.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,
+				4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */,
 				4C46CCC11580469E00846B64 /* SystemConfiguration.framework */,
 				4C46CCC21580469E00846B64 /* WebKit.framework */,
 			);
@@ -1806,7 +1810,7 @@
 		4C1DC5491580420500A47BC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Codeux Software";
 			};
 			buildConfigurationList = 4C1DC54C1580420500A47BC9 /* Build configuration list for PBXProject "Main Project (Textual)" */;
@@ -2307,6 +2311,7 @@
 		4C01B9FE1580C592007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2315,6 +2320,7 @@
 		4C01B9FF1580C592007E2DAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2323,6 +2329,7 @@
 		4C01BA001580C592007E2DAF /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2331,6 +2338,7 @@
 		4C01BA011580C592007E2DAF /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2339,6 +2347,7 @@
 		4C01BA021580C592007E2DAF /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2347,6 +2356,7 @@
 		4C01BA0615810DD8007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
@@ -2357,6 +2367,7 @@
 		4C01BA0715810DD8007E2DAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
@@ -2367,6 +2378,7 @@
 		4C01BA0815810DD8007E2DAF /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
@@ -2377,6 +2389,7 @@
 		4C01BA0915810DD8007E2DAF /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
@@ -2387,6 +2400,7 @@
 		4C01BA0A15810DD8007E2DAF /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
@@ -2407,7 +2421,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2458,7 +2471,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2499,6 +2511,7 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
@@ -2515,6 +2528,7 @@
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
@@ -2540,7 +2554,6 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2581,6 +2594,7 @@
 		4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
@@ -2607,7 +2621,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2648,6 +2661,7 @@
 		4CCF2F9115804987006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
@@ -2674,7 +2688,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2715,6 +2728,7 @@
 		4CCF2F97158049A8006FFE21 /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
@@ -2731,6 +2745,7 @@
 		4CCF301215804DCE006FFE21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2739,6 +2754,7 @@
 		4CCF301315804DCE006FFE21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2747,6 +2763,7 @@
 		4CCF301415804DCE006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2755,6 +2772,7 @@
 		4CCF301515804DCE006FFE21 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2763,6 +2781,7 @@
 		4CCF301615804DCE006FFE21 /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};

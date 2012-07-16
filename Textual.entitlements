@@ -6,12 +6,10 @@
 	<true/>
 	<key>com.apple.security.files.bookmarks.app-scope</key>
 	<true/>
-	<key>com.apple.security.network.client</key>
-	<true/>
 	<key>com.apple.security.files.user-selected.read-write</key>
 	<string>NSFileProtectionComplete</string>
-	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<string>/Library/Containers/com.codeux.irc.textual/</string>
+	<key>com.apple.security.network.client</key>
+	<true/>
 	<key>com.apple.security.temporary-exception.apple-events</key>
 	<array>
 		<string>com.apple.systemevents</string>
@@ -23,5 +21,7 @@
 		<string>com.operasoftware.opera</string>
 		<string>com.growl.growlhelperapp</string>
 	</array>
+	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
+	<string>/Library/Containers/com.codeux.irc.textual/</string>
 </dict>
 </plist>

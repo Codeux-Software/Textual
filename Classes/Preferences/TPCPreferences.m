@@ -140,6 +140,7 @@ static NSMutableDictionary *commandIndex = nil;
 	commandIndex[IRCCommandIndexShun] = @"99";
 	commandIndex[IRCCommandIndexSme] = @"92";
 	commandIndex[IRCCommandIndexSmsg] = @"93";
+	commandIndex[IRCCommandIndexSslcontext] = @"106";
 	commandIndex[IRCCommandIndexT] = @"61";
 	commandIndex[IRCCommandIndexTempshun] = @"100";
 	commandIndex[IRCCommandIndexTime] = @"34";
@@ -1087,11 +1088,9 @@ static NSInteger totalRunTime = 0;
 #pragma mark -
 #pragma mark Initialization
 
-+ (void)defaultIRCClientSheetCallback:(NSNumber *)returnCode 
++ (void)defaultIRCClientSheetCallback:(TLOPopupPromptReturnType)returnCode 
 {	
-    NSInteger _returnCode = [returnCode integerValue];
-    
-	if (_returnCode == NSAlertFirstButtonReturn) {
+	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *bundleID = [TPCPreferences applicationBundleIdentifier];
 		
 		OSStatus changeResult;
