@@ -345,11 +345,11 @@
 		4C8AF755158EB6CA0026668C /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF749158EB6CA0026668C /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
+		4C9E534515B4C19C000E84A9 /* Contributors.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
+		4C9E534615B4C1A6000E84A9 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
-		4CCF2EF3158047C8006FFE21 /* Acknowledgments.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
-		4CCF2EF4158047C8006FFE21 /* Contributors.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4CCF2EF8158047E9006FFE21 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF7158047E9006FFE21 /* application.icns */; };
 		4CCF2F1A1580481E006FFE21 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F091580481E006FFE21 /* FormattingColor_0.png */; };
 		4CCF2F1B1580481E006FFE21 /* FormattingColor_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F0A1580481E006FFE21 /* FormattingColor_1.png */; };
@@ -429,6 +429,18 @@
 				4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C9E534415B4C171000E84A9 /* Copy Acknowledgements */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Documentation;
+			dstSubfolderSpec = 7;
+			files = (
+				4C9E534615B4C1A6000E84A9 /* Acknowledgments.pdf in Copy Acknowledgements */,
+				4C9E534515B4C19C000E84A9 /* Contributors.pdf in Copy Acknowledgements */,
+			);
+			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */ = {
@@ -1791,6 +1803,7 @@
 				4C1DC54F1580420500A47BC9 /* Frameworks */,
 				4C01BA101581104D007E2DAF /* Build Extensions */,
 				4C52AED515811C2000940619 /* Copy Extensions */,
+				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
 			);
 			buildRules = (
 			);
@@ -1878,8 +1891,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */,
-				4CCF2EF3158047C8006FFE21 /* Acknowledgments.pdf in Resources */,
-				4CCF2EF4158047C8006FFE21 /* Contributors.pdf in Resources */,
 				4CCF2EF8158047E9006FFE21 /* application.icns in Resources */,
 				4CCF2F1A1580481E006FFE21 /* FormattingColor_0.png in Resources */,
 				4CCF2F1B1580481E006FFE21 /* FormattingColor_1.png in Resources */,
