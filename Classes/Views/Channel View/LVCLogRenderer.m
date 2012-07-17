@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 #define _rendererURLAttribute					(1 << 31)
-#define _rendererAddressAttribute				(1 << 30) // deprecated
 #define _rendererChannelNameAttribute			(1 << 29)
 #define _rendererBoldFormatAttribute			(1 << 28)
 #define _rendererUnderlineFormatAttribute		(1 << 27)
