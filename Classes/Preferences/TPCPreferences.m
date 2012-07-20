@@ -279,12 +279,24 @@ NSString *IRCCommandIndex(const char *key)
 
 NSString *IRCPrivateCommandIndex(const char *key)
 {
-	return [TPCPreferences IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:NO];
+	NSString *ckey = [NSString stringWithUTF8String:key];
+
+	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:NO];
+
+	DLog(@"IRCPrivateCommandIndex(): %@; %@", ckey, rkey);
+
+	return rkey;
 }
 
 NSString *IRCPublicCommandIndex(const char *key)
 {
-	return [TPCPreferences IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:NO];
+	NSString *ckey = [NSString stringWithUTF8String:key];
+
+	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:YES];
+
+	DLog(@"IRCPublicCommandIndex(): %@", ckey);
+
+	return rkey;
 }
 
 #pragma mark -
