@@ -61,22 +61,21 @@
 {
 	if (NSObjectIsEmpty(self.string)) {
 		BOOL forceCompleteColon = NO;
-		
-		if ([self.command isEqualToString:IRCCommandIndexPrivmsg] ||
-			[self.command isEqualToString:IRCCommandIndexNotice]) {
+		if ([self.command isEqualToString:IRCPrivateCommandIndex("privmsg")] ||
+			[self.command isEqualToString:IRCPrivateCommandIndex("notice")]) {
 			
 			forceCompleteColon = YES;
-		} else if ([self.command isEqualToString:IRCCommandIndexNick]
-				   || [self.command isEqualToString:IRCCommandIndexMode]
-				   || [self.command isEqualToString:IRCCommandIndexJoin]
-				   || [self.command isEqualToString:IRCCommandIndexNames]
-				   || [self.command isEqualToString:IRCCommandIndexWho]
-				   || [self.command isEqualToString:IRCCommandIndexList]
-				   || [self.command isEqualToString:IRCCommandIndexInvite]
-				   || [self.command isEqualToString:IRCCommandIndexWhois]
-				   || [self.command isEqualToString:IRCCommandIndexWhowas]
-				   || [self.command isEqualToString:IRCCommandIndexIson]
-				   || [self.command isEqualToString:IRCCommandIndexUser]) {
+		} else if (   [self.command isEqualToString:IRCPrivateCommandIndex("nick")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("mode")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("join")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("names")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("who")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("list")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("invite")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("whois")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("whowas")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("ison")]
+				   || [self.command isEqualToString:IRCPrivateCommandIndex("user")]) {
 			
 			self.completeColon = NO;
 		}

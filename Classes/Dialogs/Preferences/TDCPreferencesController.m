@@ -526,9 +526,7 @@
     newRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
     
     if (NSDissimilarObjects(oldRenderVersion, newRenderVersion)) {
-        for (IRCClient *u in self.world.clients) {
-            [u sendCommand:@"CLEARALL"];
-        }
+        [self.world destroyAllEvidence];
     }
 }
 
@@ -550,7 +548,7 @@
 	[TPCPreferences setThemeChannelViewFontName:[newFont fontName]];
 	[TPCPreferences setThemeChannelViewFontSize:[newFont pointSize]];
 	
-	[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
+	[self setValue:  [newFont fontName]		forKey:@"themeChannelViewFontName"];
 	[self setValue:@([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
 	
 	[self onStyleChanged:nil];

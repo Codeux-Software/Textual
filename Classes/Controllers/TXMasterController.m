@@ -67,7 +67,7 @@
 	
 	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
-	
+
 	[self.text setBackgroundColor:[NSColor clearColor]];
 	
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:TXThemePreferenceChangedNotification object:nil];
@@ -464,7 +464,7 @@
 
 - (void)textEntered
 {
-	[self sendText:IRCCommandIndexPrivmsg];
+	[self sendText:IRCPrivateCommandIndex("privmsg")];
 }
 
 - (void)showMemberListSplitView:(BOOL)showList
@@ -831,7 +831,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	if (commandMode) {
 		choices = [NSMutableArray array];
         
-		for (NSString *command in [TPCPreferences commandIndexList].allKeys) {
+		for (NSString *command in [TPCPreferences publicIRCCommandList]) {
 			[choices safeAddObject:[command lowercaseString]];
 		}
 		
@@ -1186,7 +1186,7 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)sendMsgAction:(NSEvent *)e
 {
-	[self sendText:IRCCommandIndexAction];
+	[self sendText:IRCPrivateCommandIndex("action")];
 }
 
 - (void)_moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event

@@ -42,6 +42,8 @@
 #define TXLogLineNoticeNicknameFormat		@"-%@-"
 #define TXLogLineCTCPTypeNicknameFormat		@"-%@ CTCP-"
 
+#define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
+
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineSystemType,
 	TVCLogLineErrorType,
