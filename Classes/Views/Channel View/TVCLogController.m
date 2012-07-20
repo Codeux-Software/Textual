@@ -816,12 +816,12 @@
 		
 		if (type == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
-				messageBody = [NSString stringWithFormat:@"• %@ %@", nicknameBody, line.body];
+				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody, line.body];
 			} else {
-				messageBody = [NSString stringWithFormat:@"• %@: %@", nicknameBody, line.body];
+				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardActionFormat, nicknameBody, line.body];
 			}
 		} else {
-			messageBody = [NSString stringWithFormat:@"%@ %@", nicknameBody, line.body];
+			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, nicknameBody, line.body];
 		}
 		
 		[self.world addHighlightInChannel:self.channel withMessage:messageBody];

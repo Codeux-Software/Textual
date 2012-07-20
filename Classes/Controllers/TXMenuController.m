@@ -806,7 +806,7 @@
 	if (_noClient || _notConnected) return;
 	
 	[u createChannelListDialog];
-	[u send:IRCCommandIndexList, nil];
+	[u send:IRCPrivateCommandIndex("list"), nil];
 }
 
 - (void)addServer:(id)sender
@@ -1000,7 +1000,7 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	if ([u encryptOutgoingMessage:&topic channel:c] == YES) {
-		[u send:IRCCommandIndexTopic, c.name, topic, nil];
+		[u send:IRCPrivateCommandIndex("topic"), c.name, topic, nil];
 	}
 }
 
@@ -1042,7 +1042,7 @@
 	NSString *changeStr = [c.mode getChangeCommand:sender.mode];
 	
 	if (NSObjectIsNotEmpty(changeStr)) {
-		[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, c.name, changeStr]];
+		[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), c.name, changeStr]];
 	}
 }
 
@@ -1263,7 +1263,7 @@
 	
 	if (u && NSObjectIsNotEmpty(channelName)) {
 		for (NSString *nick in sender.nicks) {
-			[u send:IRCCommandIndexInvite, nick, channelName, nil];
+			[u send:IRCPrivateCommandIndex("invite"), nick, channelName, nil];
 		}
 	}
 }
@@ -1295,7 +1295,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexTime text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_time") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1309,7 +1309,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexVersion text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_version") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1323,7 +1323,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexUserinfo text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1337,7 +1337,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexClientinfo text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1420,33 +1420,33 @@
 }
 
 - (void)memberModeChangeOp:(id)sender 
-{ 
-	[self processModeChange:sender mode:@"OP"]; 
+{
+	[self processModeChange:sender mode:IRCPublicCommandIndex("op")];
 }
 
 - (void)memberModeChangeDeop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("deop")]; 
 }
 
 - (void)memberModeChangeHalfop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"HALFOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("halfop")]; 
 }
 
 - (void)memberModeChangeDehalfop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEHALFOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("dehalfop")]; 
 }
 
 - (void)memberModeChangeVoice:(id)sender 
 { 
-	[self processModeChange:sender mode:@"VOICE"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("voice")]; 
 }
 
 - (void)memberModeChangeDevoice:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEVOICE"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("devoice")]; 
 }
 
 - (void)memberKickFromChannel:(id)sender
@@ -1471,7 +1471,7 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"BAN %@", m.nick] completeTarget:YES target:c.name];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), m.nick] completeTarget:YES target:c.name];
 	}
 	
 	[self deselectMembers:sender];
@@ -1485,7 +1485,8 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, [TPCPreferences defaultKickMessage]]
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("kickban"), m.nick, [TPCPreferences defaultKickMessage]]
 		completeTarget:YES target:c.name];
 	}
 	
@@ -1500,7 +1501,8 @@
 	if (_noClientOrChannel || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", m.nick, [TPCPreferences IRCopDefaultKillMessage]]];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("kill"), m.nick, [TPCPreferences IRCopDefaultKillMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -1517,7 +1519,8 @@
         if ([m.nick isEqualNoCase:u.myNick]) {
             [u printDebugInformation:TXTFLS(@"SelfBanDetectedMessage", u.serverHostname) channel:c];
         } else {
-            [u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, [TPCPreferences IRCopDefaultGlineMessage]]];
+            [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+							IRCPublicCommandIndex("gline"), m.nick, [TPCPreferences IRCopDefaultGlineMessage]]];
         }
     }
 	
@@ -1532,7 +1535,8 @@
 	if (_noClientOrChannel || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", m.nick, [TPCPreferences IRCopDefaultShunMessage]]];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("shun"), m.nick, [TPCPreferences IRCopDefaultShunMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -1623,7 +1627,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanBanListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+b", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
 }
 
 - (void)showChannelBanExceptionList:(id)sender
@@ -1633,7 +1637,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanBanExceptionListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+e", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
 }
 
 - (void)showChannelInviteExceptionList:(id)sender
@@ -1643,7 +1647,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanInviteExceptionListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+I", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender
@@ -1757,7 +1761,8 @@
 	
 	if (_noChannel || _isClient || _isQuery) return;
 	
-	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+											  IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
 }
 
 - (void)toggleChannelInviteMode:(id)sender
@@ -1766,7 +1771,8 @@
 	
 	if (_noChannel || _isClient || _isQuery) return;
 	
-	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+											  IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
 }
 
 - (void)toggleDeveloperMode:(id)sender

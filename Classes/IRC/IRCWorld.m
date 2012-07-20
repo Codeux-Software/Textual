@@ -199,6 +199,25 @@
 	self.bundlesWithOutputRules	= [NSDictionary new];
 }
 
+- (void)destroyAllEvidence
+{
+	for (IRCClient *u in self.clients) {
+		[self clearContentsOfClient:u];
+
+		for (IRCChannel *c in [u channels]) {
+			[self clearContentsOfChannel:c inClient:u];
+
+			[c setDockUnreadCount:0];
+			[c setTreeUnreadCount:0];
+			[c setKeywordCount:0];
+		}
+	}
+
+	[self updateIcon];
+	[self reloadTree];
+	[self markAllAsRead];
+}
+
 - (void)addHighlightInChannel:(IRCChannel *)channel withMessage:(NSString *)message
 {
 	if ([TPCPreferences logAllHighlightsToQuery]) {

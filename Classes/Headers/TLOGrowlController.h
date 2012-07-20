@@ -53,6 +53,13 @@ typedef enum TXNotificationType : NSInteger {
 	TXNotificationAddressBookMatchType		= 1010,
 } TXNotificationType;
 
+#define TXNotificationDialogStandardNicknameFormat		@"<%@>: %@"
+#define TXNotificationDialogActionNicknameFormat		@"• %@: %@"
+
+#define TXNotificationHighlightLogStandardActionFormat			@"• %@: %@"
+#define TXNotificationHighlightLogStandardMessageFormat			@"%@ %@"
+#define TXNotificationHighlightLogAlternativeActionFormat		@"• %@ %@"
+
 #ifdef TXNativeNotificationCenterAvailable
 	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate
 #else

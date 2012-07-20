@@ -160,7 +160,7 @@
 "LagCheckRequestReplyRating_06" = "Slow.";
 "LagCheckRequestReplyRating_07" = "Very Slow.";
 "LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
-"LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";	
+"LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";
 
 "ListDialogHasChannels" = "%i Public Channels";
 "ListDialogHasSearchResults" = "%1$i Public Channels - %2$i Search Results";

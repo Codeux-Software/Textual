@@ -68,7 +68,7 @@
 			
 			if (NSObjectIsNotEmpty(pluginRules)) {
 				for (NSString *command in pluginRules) {
-					if ([TPCPreferences indexOfIRCommand:command] >= 1) {
+					if ([TPCPreferences indexOfIRCommand:command publicSearch:NO] >= 1) {
 						id objectValue = pluginRules[command];
 						
 						if ([objectValue isKindOfClass:[NSArray class]]) {
