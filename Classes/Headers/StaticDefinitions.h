@@ -111,6 +111,7 @@
 #define NSDissimilarObjects(o,n)			(o != n)
 
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
+#define TEXTUAL_DEPRECATED					__attribute__((deprecated))
 
 /* Item types */
 typedef double				TXNSDouble;

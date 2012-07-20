@@ -128,8 +128,9 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (void)setTranscriptFolder:(id)value;
 + (void)stopUsingTranscriptFolderBookmarkResources;
 
-+ (NSDictionary *)commandIndexList;
++ (NSArray *)publicIRCCommandList;
 + (NSInteger)indexOfIRCommand:(NSString *)command;
++ (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic;
 
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
@@ -244,6 +245,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSArray *)keywords;
 + (NSArray *)excludeWords;
 + (void)cleanUpWords;
+
++ (void)defaultIRCClientPrompt:(BOOL)forced;
 
 + (void)initPreferences;
 + (void)sync;

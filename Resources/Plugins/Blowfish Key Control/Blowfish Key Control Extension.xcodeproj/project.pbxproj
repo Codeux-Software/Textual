@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C8AF6EA158E99F40026668C /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF6E9158E99F40026668C /* PLWeakCompatibilityStubs.m */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
 /* End PBXBuildFile section */
@@ -15,7 +14,6 @@
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C88849E158EB9B400747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
-		4C8AF6E9158E99F40026668C /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = "../External Libraries/ARC Weak Refrences/PLWeakCompatibilityStubs.m"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				4C888499158EB9B400747ABB /* ARC Weak Refrences */,
-				4C828A8A15811352007C7D92 /* PLWeakCompatibility */,
 				4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */,
 				4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */,
 			);
@@ -88,15 +85,6 @@
 				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
 			);
 			name = "System Frameworks";
-			sourceTree = "<group>";
-		};
-		4C828A8A15811352007C7D92 /* PLWeakCompatibility */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF6E9158E99F40026668C /* PLWeakCompatibilityStubs.m */,
-			);
-			name = PLWeakCompatibility;
-			path = ../../../Classes/Library/PLWeakCompatibility;
 			sourceTree = "<group>";
 		};
 		4C888499158EB9B400747ABB /* ARC Weak Refrences */ = {
@@ -161,7 +149,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */,
-				4C8AF6EA158E99F40026668C /* PLWeakCompatibilityStubs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

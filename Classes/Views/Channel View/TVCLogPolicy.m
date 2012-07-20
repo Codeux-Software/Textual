@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 #define _WebMenuItemTagInspectElement	2024
-#define _WebMenuItemTagIRCopServices		42354
+#define _WebMenuItemTagIRCopServices	42354
 
 @implementation TVCLogPolicy
 
