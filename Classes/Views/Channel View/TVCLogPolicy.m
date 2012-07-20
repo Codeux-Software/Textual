@@ -37,7 +37,9 @@
 
 #import "TextualApplication.h"
 
-#define _WebMenuItemTagInspectElement	2024
+#define _WebMenuItemTagInspectElementLion			2024
+#define _WebMenuItemTagInspectElementMountainLion	2025
+
 #define _WebMenuItemTagIRCopServices	42354
 
 @implementation TVCLogPolicy
@@ -131,13 +133,17 @@
 		for (NSMenuItem *item in defaultMenuItems) {
 			if ([item tag] == WebMenuItemTagLookUpInDictionary) {
 				lookupInDictionaryItem = item;
-			} else if ([item tag] == _WebMenuItemTagInspectElement) {
+			} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
+					   [item tag] == _WebMenuItemTagInspectElementMountainLion) {
+			
 				inspectElementItem = item;
 			}
 		}
 		
 		for (NSMenuItem *item in [self.menu itemArray]) {
-			if ([item tag] == _WebMenuItemTagInspectElement) {
+			if ([item tag] == _WebMenuItemTagInspectElementLion ||
+				[item tag] == _WebMenuItemTagInspectElementMountainLion) {
+
 				if (lookupInDictionaryItem) {
 					[ary safeAddObject:[lookupInDictionaryItem copy]];
 				}
