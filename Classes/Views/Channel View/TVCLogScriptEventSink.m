@@ -125,27 +125,22 @@
     }
 }
 
-- (void)setUrl:(NSString *)s
+- (void)setURLAddress:(NSString *)s
 {
 	[self.policy setUrl:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)setAddr:(NSString *)s
-{
-	[self.policy setAddr:[s gtm_stringByUnescapingFromHTML]];
-}
-
-- (void)setNick:(NSString *)s
+- (void)setNickname:(NSString *)s
 {
 	[self.policy setNick:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)setChan:(NSString *)s
+- (void)setChannelName:(NSString *)s
 {
 	[self.policy setChan:[s gtm_stringByUnescapingFromHTML]];
 }
 
-- (void)channelDoubleClicked
+- (void)channelNameDoubleClicked
 {
 	[self.policy channelDoubleClicked];
 }
