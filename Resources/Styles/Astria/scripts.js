@@ -1,22 +1,19 @@
-// Mechanism to pull in additional CSS or JavaScript files
+/* Defined in: "Textual.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
 
-// Textual.include_js("jquery.min.js");
-// Textual.include_css("more_theme.css");
+// Textual.includeStyleResourceFile("example_1.css");
+// Textual.includeStyleResourceFile("example_2.css");
+// Textual.includeScriptResourceFile("example.js");
 
+// Textual.viewInitiated = function(viewType, serverHash, channelHash, channelName) { app.logToConsole("[01] Hello world."); }
 
-// Function called when new message from IRC has been posted to display
-
-// Textual.newMessagePostedToDisplay = function(lineNumber)
-// {
-//		var newLine = document.getElementById("line" + lineNumber);
-// }
-
-
-// Functions called for contextual menus used within WebView
-// DO NOT change without knowledge of what to do. 
-// Safe to remove from source code if not needed. 
-
-// Textual.on_url = function() { app.setUrl(event.target.innerHTML); }
-// Textual.on_chname = function() { app.setChan(event.target.innerHTML); }
-// Textual.on_ct_nick: function() { app.setNick(event.target.innerHTML); }
-// Textual.on_nick = function() { app.setNick(event.target.getAttribute("nick")); }
+// Textual.newMessagePostedToView				= function(lineNumber)	{ app.logToConsole("[02] Hello world."); }
+// Textual.historyIndicatorAddedToView			= function()			{ app.logToConsole("[03] Hello world."); }
+// Textual.historyIndicatorRemovedFromView 		= function()			{ app.logToConsole("[04] Hello world."); }
+// Textual.themeWillChange 						= function()			{ app.logToConsole("[05] Hello world."); }
+// Textual.topicBarValueChanged 				= function(newTopic)	{ app.logToConsole("[06] Hello world."); }
+// Textual.viewContentsBeingCleared 			= function()			{ app.logToConsole("[07] Hello world."); }
+// Textual.viewFinishedLoading 					= function()			{ app.logToConsole("[08] Hello world."); }
+// Textual.viewPositionMovedToBottom			= function()			{ app.logToConsole("[09] Hello world."); }
+// Textual.viewPositionMovedToHistoryIndicator 	= function()			{ app.logToConsole("[10] Hello world."); }
+// Textual.viewPositionMovedToLine 				= function(lineNumber)	{ app.logToConsole("[11] Hello world."); }
+// Textual.viewPositionMovedToTop				= function()			{ app.logToConsole("[12] Hello world."); }

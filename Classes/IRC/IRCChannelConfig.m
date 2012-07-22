@@ -42,6 +42,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
+		self.guid = [NSString stringWithUUID];
+
 		self.type = IRCChannelNormalType;
 		
         self.ignoreInlineImages	= NO;
@@ -64,7 +66,7 @@
 {
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCChannelConfiguration:dic];
-		
+
 		self.type			= (IRCChannelType)[dic integerForKey:@"channelType"];
 		
 		self.name			= (([dic stringForKey:@"channelName"])	 ?: NSStringEmptyPlaceholder);

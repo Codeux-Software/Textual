@@ -643,6 +643,8 @@
 
 - (void)reloadTheme
 {
+	[self.dummyLog reloadTheme];
+
 	self.viewTheme.name = [TPCPreferences themeName];
 	
 	NSMutableArray *logs = [NSMutableArray array];

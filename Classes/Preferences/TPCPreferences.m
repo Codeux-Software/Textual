@@ -86,53 +86,53 @@ static NSArray *IRCInternalUseCommandIndexMap;
 + (void)populateCommandIndex
 {
 	IRCInternalUseCommandIndexMap = @[ // Open Key: 1051
-	@[@"action",			@"ACTION",				@(1002)],
-	@[@"adchat",			@"ADCHAT",				@(1003)],
-	@[@"away",				@"AWAY",				@(1050)],
-	@[@"cap",				@"CAP",					@(1004)],
-	@[@"cap_authenticate",	@"AUTHENTICATE",		@(1005)],
-	@[@"chatops",			@"CHATOPS",				@(1006)],
-	@[@"ctcp",				@"CTCP",				@(1007)],
-	@[@"ctcp_clientinfo",	@"CLIENTINFO",			@(1008)],
-	@[@"ctcp_ctcpreply",	@"CTCPREPLY",			@(1009)],
-	@[@"ctcp_lagcheck", 	@"LAGCHECK",			@(1010)],
-	@[@"ctcp_ping", 		@"PING",				@(1011)],
-	@[@"ctcp_time", 		@"TIME",				@(1012)],
-	@[@"ctcp_userinfo", 	@"USERINFO",			@(1013)],
-	@[@"ctcp_version", 		@"VERSION",				@(1014)],
-	@[@"dcc",				@"DCC",					@(1015)],
-	@[@"error",				@"ERROR",				@(1016)],
-	@[@"gline", 			@"GLINE",				@(1047)],
-	@[@"globops",			@"GLOBOPS",				@(1017)],
-	@[@"gzline", 			@"GZLINE",				@(1048)],
-	@[@"invite",			@"INVITE",				@(1018)],
-	@[@"ison",				@"ISON",				@(1019)],
-	@[@"ison",				@"ISON",				@(1043)],
-	@[@"join",				@"JOIN",				@(1020)],
-	@[@"kick",				@"KICK",				@(1021)],
-	@[@"kill",				@"KILL",				@(1022)],
-	@[@"list",				@"LIST",				@(1023)],
-	@[@"locops",			@"LOCOPS",				@(1024)],
-	@[@"mode",				@"MODE",				@(1026)],
-	@[@"nachat", 			@"NACHAT",				@(1027)],
-	@[@"names", 			@"NAMES",				@(1028)],
-	@[@"nick",				@"NICK",				@(1029)],
-	@[@"notice",			@"NOTICE",				@(1030)],
-	@[@"part",				@"PART",				@(1031)],
-	@[@"pass",				@"PASS",				@(1032)],
-	@[@"ping",				@"PING",				@(1033)],
-	@[@"pong",				@"PONG",				@(1034)],
-	@[@"privmsg", 			@"PRIVMSG",				@(1035)],
-	@[@"quit",				@"QUIT",				@(1036)],
-	@[@"shun",				@"SHUN",				@(1045)],
-	@[@"tempshun", 			@"TEMPSHUN",			@(1046)],
-	@[@"topic", 			@"TOPIC",				@(1039)],
-	@[@"user", 				@"USER",				@(1037)],
-	@[@"wallops", 			@"WALLOPS",				@(1038)],
-	@[@"who",				@"WHO",					@(1040)],
-	@[@"whois", 			@"WHOIS",				@(1042)],
-	@[@"whowas", 			@"WHOWAS",				@(1041)],
-	@[@"zline", 			@"ZLINE",				@(1049)],
+	@[@"action",			@"ACTION",				@(1002),		@(NO)],
+	@[@"adchat",			@"ADCHAT",				@(1003),		@(YES)],
+	@[@"away",				@"AWAY",				@(1050),		@(YES)],
+	@[@"cap",				@"CAP",					@(1004),		@(YES)],
+	@[@"cap_authenticate",	@"AUTHENTICATE",		@(1005),		@(YES)],
+	@[@"chatops",			@"CHATOPS",				@(1006),		@(YES)],
+	@[@"ctcp",				@"CTCP",				@(1007),		@(NO)],
+	@[@"ctcp_clientinfo",	@"CLIENTINFO",			@(1008),		@(NO)],
+	@[@"ctcp_ctcpreply",	@"CTCPREPLY",			@(1009),		@(NO)],
+	@[@"ctcp_lagcheck", 	@"LAGCHECK",			@(1010),		@(NO)],
+	@[@"ctcp_ping", 		@"PING",				@(1011),		@(NO)],
+	@[@"ctcp_time", 		@"TIME",				@(1012),		@(NO)],
+	@[@"ctcp_userinfo", 	@"USERINFO",			@(1013),		@(NO)],
+	@[@"ctcp_version", 		@"VERSION",				@(1014),		@(NO)],
+	@[@"dcc",				@"DCC",					@(1015),		@(NO)],
+	@[@"error",				@"ERROR",				@(1016),		@(YES)],
+	@[@"gline", 			@"GLINE",				@(1047),		@(YES)],
+	@[@"globops",			@"GLOBOPS",				@(1017),		@(YES)],
+	@[@"gzline", 			@"GZLINE",				@(1048),		@(YES)],
+	@[@"invite",			@"INVITE",				@(1018),		@(YES)],
+	@[@"ison",				@"ISON",				@(1019),		@(YES)],
+	@[@"ison",				@"ISON",				@(1043),		@(YES)],
+	@[@"join",				@"JOIN",				@(1020),		@(YES)],
+	@[@"kick",				@"KICK",				@(1021),		@(YES)],
+	@[@"kill",				@"KILL",				@(1022),		@(YES)],
+	@[@"list",				@"LIST",				@(1023),		@(YES)],
+	@[@"locops",			@"LOCOPS",				@(1024),		@(YES)],
+	@[@"mode",				@"MODE",				@(1026),		@(YES)],
+	@[@"nachat", 			@"NACHAT",				@(1027),		@(YES)],
+	@[@"names", 			@"NAMES",				@(1028),		@(YES)],
+	@[@"nick",				@"NICK",				@(1029),		@(YES)],
+	@[@"notice",			@"NOTICE",				@(1030),		@(YES)],
+	@[@"part",				@"PART",				@(1031),		@(YES)],
+	@[@"pass",				@"PASS",				@(1032),		@(YES)],
+	@[@"ping",				@"PING",				@(1033),		@(YES)],
+	@[@"pong",				@"PONG",				@(1034),		@(YES)],
+	@[@"privmsg", 			@"PRIVMSG",				@(1035),		@(YES)],
+	@[@"quit",				@"QUIT",				@(1036),		@(YES)],
+	@[@"shun",				@"SHUN",				@(1045),		@(YES)],
+	@[@"tempshun", 			@"TEMPSHUN",			@(1046),		@(YES)],
+	@[@"topic", 			@"TOPIC",				@(1039),		@(YES)],
+	@[@"user", 				@"USER",				@(1037),		@(YES)],
+	@[@"wallops", 			@"WALLOPS",				@(1038),		@(YES)],
+	@[@"who",				@"WHO",					@(1040),		@(YES)],
+	@[@"whois", 			@"WHOIS",				@(1042),		@(YES)],
+	@[@"whowas", 			@"WHOWAS",				@(1041),		@(YES)],
+	@[@"zline", 			@"ZLINE",				@(1049),		@(YES)],
 	];
 
 	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5085
@@ -283,7 +283,7 @@ NSString *IRCPrivateCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:NO];
 
-	DLog(@"IRCPrivateCommandIndex(): %@; %@", ckey, rkey);
+	DLog(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -294,7 +294,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:YES];
 
-	DLog(@"IRCPublicCommandIndex(): %@", ckey);
+	DLog(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -319,6 +319,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 			BOOL developerOnly = [indexInfo boolAtIndex:3];
 
 			if (inDevMode == NO && developerOnly) {
+				continue;
+			}
+		} else {
+			BOOL isNotSpecial = [indexInfo boolAtIndex:3];
+
+			if (isNotSpecial == NO) {
 				continue;
 			}
 		}
