@@ -677,8 +677,8 @@ BOOL isUnicharDigit(unichar c)
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	
-	attributes[NSFontAttributeName] = font;
-	attributes[NSParagraphStyleAttributeName] = paragraphStyle;
+	attributes[NSFontAttributeName]				= font;
+	attributes[NSParagraphStyleAttributeName]	= paragraphStyle;
 	
 	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
 	

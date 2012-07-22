@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 #define _bottomEpsilon		0
-#define _timeBufferSize		256
 
 @implementation TVCLogController
 
@@ -183,7 +182,17 @@
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
 	[(id)self.view setBackgroundColor:self.theme.other.underlyingWindowColor];
+
 	[[self.view mainFrame] loadHTMLString:newHTML baseURL:self.theme.baseUrl];
+}
+
+- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
+{
+	WebScriptObject *js_api = [self.view js_api];
+
+	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
+		[js_api callWebScriptMethod:command	withArguments:args];
+	}
 }
 
 - (NSInteger)scrollbackCorrectionInit
@@ -202,13 +211,15 @@
 
 - (DOMDocument *)mainFrameDocument
 {
-	return [self.view mainFrameDocument];
+	return [self.view.mainFrame DOMDocument];
 }
 
 - (DOMNode *)html_head
 {
 	DOMDocument *doc = [self mainFrameDocument];
+
 	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
+
 	DOMNode *head = [nodes item:0];
 	
 	return head;
@@ -253,6 +264,8 @@
 			if (PointerIsEmpty(topic_body)) return NO;
 			
 			[(id)topic_body setInnerHTML:body];
+
+			[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 		}
 		
 		return YES;
@@ -274,6 +287,8 @@
 	if (body) {
 		[body setValue:@0 forKey:@"scrollTop"];
 	}
+
+	[self executeScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
 
 - (void)moveToBottom
@@ -290,6 +305,8 @@
 	if (body) {
 		[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
 	}
+
+	[self executeScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
 
 - (BOOL)viewingBottom
@@ -351,10 +368,12 @@
 			
 			[self restorePosition];
 		}
+
+		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 		
 		return YES;
 	} copy];
-	
+
 	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
@@ -374,10 +393,12 @@
 			
 			--self.count;
 		}
-		
+
+		[self executeScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
+
 		return YES;
 	} copy];
-	
+
 	[self.messageQueue safeAddObject:messageBlock];
 	[self createViewLoop];
 }
@@ -405,29 +426,28 @@
 		
 		[[doc body] setValue:@(y - [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
+
+	[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 }
 
 - (void)reloadTheme
 {
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
-	WebScriptObject *js_api = [self.view js_api];
-	
-	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:@"willDoThemeChange" withArguments:@[]]; 
-	}
-	
+
+
+	[self executeScriptCommand:@"themeWillChange" withArguments:@[]];
+
 	DOMElement *body = [self body:doc];
 	if (PointerIsEmpty(body)) return;
-	
+
 	self.html = [(id)body innerHTML];
-	
+
 	self.scrollBottom = [self viewingBottom];
 	self.scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
-	
+
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
 
@@ -438,6 +458,8 @@
 	self.html = nil;
 	self.loaded = NO;
 	self.count  = 0;
+
+	[self executeScriptCommand:@"viewContentsBeingCleared" withArguments:@[]];
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 }
@@ -451,6 +473,8 @@
 	} else {
 		[self.view makeTextSmaller:nil];
 	}
+
+	[self executeScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
 	
 	[self restorePosition];
 }
@@ -501,6 +525,8 @@
 		
 		[[doc body] setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
+
+	[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[@(line)]];
 }
 
 - (void)nextHighlight
@@ -736,7 +762,7 @@
 	if (line.nick) {
 		NSString *htmltag = ((modernRender) ? @"div" : @"span");
 		
-		[s appendFormat:@"<%@ class=\"sender\" ondblclick=\"Textual.on_dblclick_nick()\" oncontextmenu=\"Textual.on_nick()\" type=\"%@\" nick=\"%@\"", htmltag, [TVCLogLine memberTypeString:line.memberType], line.nickInfo];
+		[s appendFormat:@"<%@ class=\"sender\" ondblclick=\"Textual.nicknameDoubleClicked()\" oncontextmenu=\"Textual.openStandardNicknameContextualMenu()\" type=\"%@\" nick=\"%@\"", htmltag, [TVCLogLine memberTypeString:line.memberType], line.nickInfo];
 		
 		if (line.memberType == TVCLogMemberNormalType && [TPCPreferences disableNicknameColors] == NO) {
 			[s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
@@ -781,7 +807,7 @@
 						[postedUrls safeAddObject:imageUrl];
 					}
 					
-					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hide_inline_image(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" title=\"%@\" /></a>", url, imageUrl, [TPCPreferences inlineImagesMaxWidth], TXTLS(@"LogViewHideInlineImageMessage")];
+					[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hideInlineImage(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" title=\"%@\" /></a>", url, imageUrl, [TPCPreferences inlineImagesMaxWidth], TXTLS(@"LogViewHideInlineImageMessage")];
 				}
 			}
 		}
@@ -806,7 +832,7 @@
 	}
 	
 	attrs[@"highlight"] = ((highlighted) ? @"true" : @"false");
-	attrs[@"class"] = ((isText) ? @"line text" : @"line event");
+	attrs[@"class"]		= ((isText) ? @"line text" : @"line event");
 	
 	[self writeLine:s attributes:attrs];
 	
@@ -866,12 +892,7 @@
 			[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
 		}
 		
-		WebScriptObject *js_api = [self.view js_api];
-		
-		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-			[js_api callWebScriptMethod:@"newMessagePostedToDisplay" 
-						  withArguments:@[@(self.lineNumber)]];  
-		} 
+		[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
 		
 		return YES;
 	} copy];
@@ -1029,9 +1050,29 @@
 	[self.js setValue:self.sink forKey:@"app"];
 }
 
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
+{
+	NSLog(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
+		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
+{
+	NSLog(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
+			identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
+}
+
+- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
+{
+	NSLog(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
+		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
+}
+
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	self.loaded		  = YES;
+	[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+
+	self.loaded	= YES;
 	self.loadingImages = 0;
 	
 	[self setUpScroller];
@@ -1081,12 +1122,21 @@
 		
 		e = next;
 	}
-	
-	WebScriptObject *js_api = [self.view js_api];
-	
-	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:@"doneThemeChange" withArguments:@[]]; 
+
+	NSString *viewType = @"server";
+
+	if (self.channel && self.channel.isChannel) {
+		viewType = @"channel";
+	} else if (self.channel && self.channel.isTalk) {
+		viewType = @"talk";
 	}
+
+	[self executeScriptCommand:@"viewInitiated" withArguments:@[
+	 NSStringNilValueSubstitute(viewType),
+	 NSStringNilValueSubstitute(self.client.config.guid),
+	 NSStringNilValueSubstitute(self.channel.config.guid),
+	 NSStringNilValueSubstitute(self.channel.name)
+	 ]];
 }
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource

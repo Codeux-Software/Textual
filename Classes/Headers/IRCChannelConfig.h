@@ -44,6 +44,7 @@ typedef enum IRCChannelType : NSInteger {
 
 @interface IRCChannelConfig : NSObject <NSMutableCopying>
 @property (nonatomic, assign) IRCChannelType type;
+@property (nonatomic, strong) NSString *guid;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, assign) BOOL autoJoin;

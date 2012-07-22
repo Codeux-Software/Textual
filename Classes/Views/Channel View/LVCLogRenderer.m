@@ -241,9 +241,9 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			link = [NSString stringWithFormat:@"http://%@", link];
 		}	
 		
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, logEscape(content)];
+		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.openURLManagementContextualMenu()\">%@</a>", link, logEscape(content)];
 	} else if (attr & _rendererChannelNameAttribute) {
-		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.on_dblclick_chname()\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
+		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.channelNameDoubleClicked()\" oncontextmenu=\"Textual.openChannelNameContextualMenu()\">%@</span>", logEscape(content)];
 	} else {
 		BOOL matchedUser = NO;
 		
@@ -259,7 +259,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                 if ([user.nick isEqualNoCase:client.myNick] == NO) {
                     matchedUser = YES;
 					
-                    [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
+                    [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.inlineNicknameDoubleClicked()\" oncontextmenu=\"Textual.openInlineNicknameContextualMenu()\" colornumber=\"%d\">", [user colorNumber]];
                 } 
             }
 		}

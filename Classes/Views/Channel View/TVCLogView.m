@@ -80,7 +80,7 @@
 
 - (NSString *)contentString
 {
-	DOMHTMLDocument *doc = (DOMHTMLDocument *)[self mainFrameDocument];
+	DOMDocument *doc = [self.mainFrame DOMDocument];
 	if (PointerIsEmpty(doc)) return NSStringEmptyPlaceholder;
 	
 	DOMElement *body = [doc body];
