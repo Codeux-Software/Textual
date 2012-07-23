@@ -41,7 +41,6 @@
 
 #import <objc/objc-runtime.h>
 
-#define _InputTextFiedMaxHeight					382.0
 #define _InputBoxDefaultHeight					18.0
 #define _InputBoxHeightMultiplier				14.0
 #define _InputBoxBackgroundMaxHeight			387.0
@@ -136,7 +135,12 @@
 	}
 }
 
-- (void)resetTextFieldCellSize
+- (NSInteger)backgroundViewMaximumHeight
+{
+	return (self.window.frame.size.height - 50);
+}
+
+- (void)resetTextFieldCellSize:(BOOL)force
 {
 	BOOL drawBezel = YES;
 	
@@ -168,7 +172,7 @@
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
 		
-		if (_lastDrawnLineCount == totalLinesBase) {
+		if (_lastDrawnLineCount == totalLinesBase && force == NO) {
 			drawBezel = NO;
 		}
 		
@@ -176,19 +180,35 @@
 		
 		if (drawBezel) {
 			NSInteger totalLinesMath = (totalLinesBase - 1);
-			
+
+			/* Calculate unfiltered height. */
 			textBoxFrame.size.height	= _InputBoxDefaultHeight;
 			backgroundFrame.size.height	= _InputBoxBackgroundDefaultHeight;
 			
 			textBoxFrame.size.height	+= (totalLinesMath * _InputBoxHeightMultiplier);
 			backgroundFrame.size.height += (totalLinesMath * _InputBoxBackgroundHeightMultiplier);
-			
-			if (textBoxFrame.size.height > _InputTextFiedMaxHeight) {
-				textBoxFrame.size.height = _InputTextFiedMaxHeight;
-			}
-			
-			if (backgroundFrame.size.height > _InputBoxBackgroundMaxHeight) {
-				backgroundFrame.size.height = _InputBoxBackgroundMaxHeight;
+
+			NSInteger backgroundViewMaxHeight = [self backgroundViewMaximumHeight];
+
+			/* Fix height if it exceeds are maximum. */
+			if (backgroundFrame.size.height > backgroundViewMaxHeight) {
+				for (NSInteger i = totalLinesMath; i >= 0; i--) {
+					NSInteger newSize = 0;
+
+					newSize  =	   _InputBoxBackgroundDefaultHeight;
+					newSize += (i * _InputBoxBackgroundHeightMultiplier);
+
+					if (newSize > backgroundViewMaxHeight) {
+						continue;
+					} else {
+						backgroundFrame.size.height  = newSize;
+
+						textBoxFrame.size.height  = _InputBoxDefaultHeight;
+						textBoxFrame.size.height += (i * _InputBoxHeightMultiplier);
+
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -214,7 +234,7 @@
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
-    [self resetTextFieldCellSize];
+    [self resetTextFieldCellSize:NO];
 	
 	if (NSObjectIsEmpty(self.stringValue)) {
 		[super sanitizeTextField:NO];
@@ -249,7 +269,7 @@
 {
     [super paste:self];
     
-    [self resetTextFieldCellSize];
+    [self resetTextFieldCellSize:NO];
 	[self sanitizeTextField:YES];
 }
 
@@ -264,7 +284,7 @@
     if (aSelector == @selector(insertNewline:)) {
 		objc_msgSend(self.actionTarget, self.actionSelector);
         
-        [self resetTextFieldCellSize];
+        [self resetTextFieldCellSize:NO];
 		[self sanitizeTextField:NO];
         
         return YES;
