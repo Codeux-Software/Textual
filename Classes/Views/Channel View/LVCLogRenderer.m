@@ -49,7 +49,13 @@
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
-#define _effectMask				(_rendererBoldFormatAttribute | _rendererUnderlineFormatAttribute | _rendererItalicFormatAttribute | _rendererTextColorAttribute | _rendererBackgroundColorAttribute)
+#define _effectMask				(												\
+									_rendererBoldFormatAttribute |				\
+									_rendererUnderlineFormatAttribute |			\
+									_rendererItalicFormatAttribute |			\
+									_rendererTextColorAttribute |				\
+									_rendererBackgroundColorAttribute			\
+								)
 
 NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context);
 
@@ -95,7 +101,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	return (len - start);
 }
 
-NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context) 
+NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
 {
 	return (s1.nick.length <= s2.nick.length);
 }
@@ -267,7 +273,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (attr & _effectMask) {
 			[s appendString:@"<span class=\"effect\" style=\""];
 			
-			if (attr & _rendererBoldFormatAttribute)	   [s appendString:@"font-weight:bold;"];
+			if (attr & _rendererBoldFormatAttribute)	  [s appendString:@"font-weight:bold;"];
 			if (attr & _rendererItalicFormatAttribute)    [s appendString:@"font-style:italic;"];
 			if (attr & _rendererUnderlineFormatAttribute) [s appendString:@"text-decoration:underline;"];
 			

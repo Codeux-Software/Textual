@@ -674,7 +674,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:[TLOPopupPrompts class]
-								 action:@selector(popupPromptNULLSelector:) 
+								 action:@selector(popupPromptNilSelector:)
 								   body:TXTFLS(@"ThemeChangeOverridePromptMessage", theme, sf)
 								  title:TXTLS(@"ThemeChangeOverridePromptTitle")
 						  defaultButton:TXTLS(@"OkButton")
