@@ -367,6 +367,11 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
+- (void)windowDidResize:(NSNotification *)notification
+{
+	[self.text resetTextFieldCellSize:YES];
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	id sel = self.world.selected;
@@ -1221,8 +1226,8 @@ typedef enum TXMoveKind : NSInteger {
         [self.text setAttributedStringValue:s];
 		[self.world focusInputText];
         
-        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize)]) {
-            [self.text resetTextFieldCellSize];
+        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize:)]) {
+            [self.text resetTextFieldCellSize:NO];
         }
 	}
 }
