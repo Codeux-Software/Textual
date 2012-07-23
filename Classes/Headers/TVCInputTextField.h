@@ -43,7 +43,7 @@
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 
 - (void)updateTextDirection;
-- (void)resetTextFieldCellSize;
+- (void)resetTextFieldCellSize:(BOOL)force;
 - (void)redrawOriginPoints;
 
 - (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
