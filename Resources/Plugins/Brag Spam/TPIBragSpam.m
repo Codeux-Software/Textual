@@ -40,8 +40,8 @@
 @implementation TPIBragSpam
 
 - (void)messageSentByUser:(IRCClient*)client
-				  message:(NSString*)messageString
-				  command:(NSString*)commandString
+				  message:(NSString *)messageString
+				  command:(NSString *)commandString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
 		if (client.world.selectedChannel.isChannel == NO) return;

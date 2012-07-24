@@ -404,18 +404,12 @@
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes
 {
 	if (clearAttributes) {
-		NSAttributedString *stringv = [NSAttributedString alloc];
-		NSAttributedString *stringn = [NSAttributedString emptyString];
-		
-		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-		
-		attrs[NSFontAttributeName] = TXDefaultTextFieldFont;
-		attrs[NSForegroundColorAttributeName] = TXDefaultTextFieldFontColor;
-		
-		(void)[stringv initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
-		
-		[self setAttributedStringValue:stringv];
-		[self setAttributedStringValue:stringn];
+		NSDictionary *attributes = @{
+		NSForegroundColorAttributeName	: TXDefaultTextFieldFontColor,
+		NSFontAttributeName				: TXDefaultTextFieldFont
+		};
+
+		[self setTypingAttributes:attributes];
 	} else {
 		[self setFont:TXDefaultTextFieldFont];
 	}
@@ -492,7 +486,9 @@
             }
             default: break;
         }
-        
+
+		[self addUndoActionForAttributes:dict inRange:effectiveRange];
+		
         [self setAttributes:newDict inRange:effectiveRange];
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
@@ -521,7 +517,7 @@
 				{
 					if ([baseFont fontTraitSet:NSBoldFontMask]) {
 						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSBoldFontMask];
-						
+					
 						if (baseFont) {
 							newDict[NSFontAttributeName] = baseFont;
                             
@@ -556,6 +552,7 @@
                     newDict[NSForegroundColorAttributeName] = defaultColor;
                     
                     [self setAttributes:newDict inRange:effectiveRange];
+					
                     [self removeAttribute:NSBackgroundColorAttributeName inRange:effectiveRange];
 					
 					break;
@@ -569,6 +566,8 @@
 				default: break;
 			}
 		}
+
+		[self addUndoActionForAttributes:dict inRange:effectiveRange];
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
                                  (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));

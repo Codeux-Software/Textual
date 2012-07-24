@@ -37,6 +37,11 @@
 
 #import "TextualApplication.h"
 
+BOOL NSRangeIsValid(NSRange r)
+{
+	return (NSDissimilarObjects(r.location, NSNotFound) && r.length >= 1);
+}
+
 NSPoint NSRectCenter(NSRect rect)
 {
 	return NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
