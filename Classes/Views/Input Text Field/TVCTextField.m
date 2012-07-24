@@ -71,11 +71,6 @@
     return self;
 }
 
-- (dispatch_queue_t)formattingQueue
-{
-    return _formattingQueue;
-}
-
 #pragma mark -
 #pragma mark Keyboard Shorcuts
 
@@ -138,6 +133,41 @@
     [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
 }
 
+#pragma mark -
+#pragma mark Attribute Management
+
+- (void)addUndoActionForAttributes:(NSDictionary *)attributes inRange:(NSRange)local
+{
+	if (NSObjectIsEmpty(attributes) || NSRangeIsValid(local) == NO) {
+		return;
+	}
+	
+	DLog(@"%@; %@", attributes, NSStringFromRange(local));
+
+	[self.undoManager registerUndoWithTarget:self
+									selector:@selector(setAttributesWithContext:)
+									  object:@[attributes, NSStringFromRange(local)]];
+}
+
+- (void)setAttributesWithContext:(NSArray *)contextArray /* @private */
+{
+	NSRange local = NSRangeFromString(contextArray[1]);
+
+	NSDictionary *attrs = [self.attributedString attributesAtIndex:0
+											 longestEffectiveRange:NULL
+														   inRange:local];
+
+	[self.undoManager registerUndoWithTarget:self
+									selector:@selector(setAttributesWithContext:)
+									  object:@[attrs, NSStringFromRange(local)]];
+
+	DLog(@"old: %@; new: %@", attrs, contextArray[0]);
+	
+	[self setAttributes:contextArray[0] inRange:local];
+}
+
+#pragma mark -
+
 - (void)removeAttribute:(id)attr inRange:(NSRange)local
 {
     [self.textStorage removeAttribute:attr range:local];
@@ -145,8 +175,10 @@
 
 - (void)setAttributes:(id)attrs inRange:(NSRange)local
 {
-    [self.textStorage setAttributes:attrs range:local];
+	[self.textStorage addAttributes:attrs range:local];
 }
+
+#pragma mark -
 
 - (void)sanitizeTextField:(BOOL)paste
 {

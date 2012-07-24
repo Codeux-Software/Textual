@@ -37,5 +37,9 @@
 
 #import "TextualApplication.h"
 
+/* This helper file is supposed to be for NSRect, but it was pointless to
+ create another file for NSRange so we are just shoving a helper for it in here. */
+TEXTUAL_EXTERN BOOL NSRangeIsValid(NSRange r);
+
 TEXTUAL_EXTERN NSPoint NSRectCenter(NSRect rect);
 TEXTUAL_EXTERN NSRect NSRectAdjustInRect(NSRect r, NSRect bounds);

@@ -148,8 +148,8 @@ typedef enum IRCDisconnectType : NSInteger {
 - (void)sendNextCap;
 - (void)pauseCap;
 - (void)resumeCap;
-- (BOOL)isCapAvailable:(NSString*)cap;
-- (void)cap:(NSString*)cap result:(BOOL)supported;
+- (BOOL)isCapAvailable:(NSString *)cap;
+- (void)cap:(NSString *)cap result:(BOOL)supported;
 
 - (void)joinChannels:(NSArray *)chans;
 - (void)joinChannel:(IRCChannel *)channel;

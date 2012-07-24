@@ -50,8 +50,6 @@
 - (NSInteger)selectedLineNumber;
 - (NSInteger)numberOfLines;
 
-- (dispatch_queue_t)formattingQueue;
-
 - (void)keyDownToSuper:(NSEvent *)e;
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
@@ -67,4 +65,6 @@
 
 - (void)removeAttribute:(id)attr inRange:(NSRange)local;
 - (void)setAttributes:(id)attrs inRange:(NSRange)local;
+
+- (void)addUndoActionForAttributes:(NSDictionary *)attributes inRange:(NSRange)local;
 @end

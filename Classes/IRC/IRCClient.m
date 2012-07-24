@@ -4467,7 +4467,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self sendNextCap];
 }
 
-- (BOOL)isCapAvailable:(NSString*)cap
+- (BOOL)isCapAvailable:(NSString *)cap
 {
 	return ([cap isEqualNoCase:@"identify-msg"] ||
 			[cap isEqualNoCase:@"identify-ctcp"] ||
@@ -4477,7 +4477,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(self.config.nickPassword)));
 }
 
-- (void)cap:(NSString*)cap result:(BOOL)supported
+- (void)cap:(NSString *)cap result:(BOOL)supported
 {
 	if (supported) {
 		if ([cap isEqualNoCase:@"sasl"]) {
