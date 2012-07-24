@@ -4391,7 +4391,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 			}
 
-			[self printBoth:c type:TVCLogLineModeType text:TXTFLS(@"IRCModeSet", nick, modeStr) receivedAt:m.receivedAt];
+			[self printBoth:c type:TVCLogLineModeType text:TXTFLS(@"IRCModeSet", nick, [c.mode string]) receivedAt:m.receivedAt];
 		}
 	} else {
 		[self printBoth:nil type:TVCLogLineModeType text:TXTFLS(@"IRCModeSet", nick, modeStr) receivedAt:m.receivedAt];
@@ -4886,7 +4886,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					c.isModeInit = YES;
 				}
 
-				[self printBoth:c type:TVCLogLineModeType text:TXTFLS(@"IRCChannelHasModes", modeStr) receivedAt:m.receivedAt];
+				[self printBoth:c type:TVCLogLineModeType text:TXTFLS(@"IRCChannelHasModes", [c.mode string]) receivedAt:m.receivedAt];
 			}
 
 			break;

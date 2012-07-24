@@ -157,13 +157,13 @@
 	[str appendString:@"+"];
 	
 	for (IRCModeInfo *h in self.allModes) {
-		if (maskK == YES) {
-			if (h.mode == 'k') continue;
-		}
-		
 		if (h.plus) {
-			if (h.param) {
-				[trail appendFormat:@" %@", h.param];
+			if (h.param && maskK == NO) {
+				if (h.mode == 'k') {
+					[trail appendFormat:@" ******"];
+				} else {
+					[trail appendFormat:@" %@", h.param];
+				}
 			}
 			
 			[str appendFormat:@"%c", h.mode];

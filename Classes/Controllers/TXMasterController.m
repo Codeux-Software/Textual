@@ -1224,6 +1224,7 @@ typedef enum TXMoveKind : NSInteger {
 	
 	if (s) {
         [self.text setAttributedStringValue:s];
+		
 		[self.world focusInputText];
         
         if ([self.text respondsToSelector:@selector(resetTextFieldCellSize:)]) {
