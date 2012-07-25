@@ -191,7 +191,7 @@ body[dir=ltr] div[type*=action] .sender:before {
 
 body[dir=ltr] div[type*=action] .sender:after {
 	content: "";
-	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=rtl] div[type*=action] .sender:before {
@@ -201,13 +201,14 @@ body[dir=rtl] div[type*=action] .sender:before {
 
 body[dir=rtl] div[type*=action] .sender:after {
 	content: "";
-	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 /* DEBUG/INVITE */
 
 body div.line[type*=invite],
-body div.line[type*=debug] {
+body div.line[type*=debug] ,
+body div.line[type*=rawhtml] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -235,7 +236,7 @@ body div.line[type*=topic] {
 body[dir=ltr] div[type*=join] .message:before {
 	content: "→";
   	color: #0c0;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=join] .message {
@@ -246,14 +247,14 @@ body[dir=ltr] div[type*=join] .message {
 body[dir=ltr] div[type*=kick] .message:before {
 	content: "✕";
   	color: #e00;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=part] .message:before,
 body[dir=ltr] div[type*=quit] .message:before {
 	content: "←";
   	color: #e00;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=kick] .message {
@@ -274,7 +275,7 @@ body[dir=ltr] div[type*=quit] .message {
 body[dir=ltr] div[type*=nick] .message:before {
 	content:"•";
   	color: #0090ff;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=nick] .message {
@@ -285,7 +286,7 @@ body[dir=ltr] div[type*=nick] .message {
 body[dir=ltr] div[type*=mode] .message:before {
 	content: "❖";
   	color: #b4a355;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=mode] .message {
@@ -296,7 +297,7 @@ body[dir=ltr] div[type*=mode] .message {
 body[dir=ltr] div[type*=topic] .message:before {
 	content: "✦";
   	color: #00a2ff;
-  	margin-right: 0.4em;
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=ltr] div[type*=topic] .message {
@@ -307,7 +308,7 @@ body[dir=ltr] div[type*=topic] .message {
 body[dir=rtl] div[type*=join] .message:before {
 	content: "→";
   	color: #0c0;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=join] .message {
@@ -318,14 +319,14 @@ body[dir=rtl] div[type*=join] .message {
 body[dir=rtl] div[type*=kick] .message:before {
 	content: "✕";
   	color: #e00;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=part] .message:before,
 body[dir=rtl] div[type*=quit] .message:before {
 	content: "←";
   	color: #e00;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=kick] .message {
@@ -346,7 +347,7 @@ body[dir=rtl] div[type*=quit] .message {
 body[dir=rtl] div[type*=nick] .message:before {
 	content:"•";
   	color: #0090ff;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=nick] .message {
@@ -357,7 +358,7 @@ body[dir=rtl] div[type*=nick] .message {
 body[dir=rtl] div[type*=mode] .message:before {
 	content: "❖";
   	color: #b4a355;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=mode] .message {
@@ -368,7 +369,7 @@ body[dir=rtl] div[type*=mode] .message {
 body[dir=rtl] div[type*=topic] .message:before {
 	content: "✦";
   	color: #00a2ff;
-  	margin-left: 0.4em;
+  	/* margin-left: 0.4em; */
 }
 
 body[dir=rtl] div[type*=topic] .message {

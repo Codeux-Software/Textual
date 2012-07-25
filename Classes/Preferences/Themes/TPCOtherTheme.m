@@ -113,7 +113,7 @@
 {
 	NSString *typestr = [TVCLogLine lineTypeString:type];
 
-	return [self templateWithName:[@"linetype_" stringByAppendingString:typestr]];
+	return [self templateWithName:[@"Line Types/" stringByAppendingString:typestr]];
 }
 
 - (GRMustacheTemplate *)templateWithName:(NSString *)name
@@ -170,7 +170,6 @@
 	self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color"];
 
 	self.indentationOffset			= [self doubleForKey:@"Indentation Offset"];
-	self.renderingEngineVersion		= [self doubleForKey:@"Rendering Engine Version"];
 
 	// ---- //
 

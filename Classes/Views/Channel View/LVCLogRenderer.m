@@ -193,6 +193,21 @@ NSColor *mapColorCode(NSInteger colorChar)
 	return nil;
 }
 
+NSString *TXRenderStyleTemplate(NSString *templateName, NSDictionary *templateTokens, TVCLogController *logController)
+{
+	GRMustacheTemplate *tmpl = [logController.theme.other templateWithName:templateName];
+
+	if (PointerIsNotEmpty(tmpl)) {
+		NSString *aHtml = [tmpl renderObject:templateTokens];
+
+		if (NSObjectIsNotEmpty(aHtml)) {
+			return aHtml;
+		}
+	}
+
+	return nil;
+}
+
 static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len, NSFont *font)
 {
 	NSRange r = NSMakeRange(start, len);
@@ -239,63 +254,77 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len, TVCLogController *log)
 {
 	NSString *content = [body safeSubstringWithRange:NSMakeRange(start, len)];
-	
-	if (attr & _rendererURLAttribute) {
+
+	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
+
+	if (attr & _rendererURLAttribute)
+	{
 		NSString *link = content;
 		
 		if ([link contains:@"://"] == NO) {
 			link = [NSString stringWithFormat:@"http://%@", link];
 		}	
+
+		templateTokens[@"anchorLocation"]	= link;
+		templateTokens[@"anchorTitle"]		= logEscape(content);
+
+		return TXRenderStyleTemplate(@"renderedStandardAnchorLinkResource", templateTokens, log);
+	}
+	else if (attr & _rendererChannelNameAttribute)
+	{
+		templateTokens[@"channelName"] = logEscape(content);
 		
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.openURLManagementContextualMenu()\">%@</a>", link, logEscape(content)];
-	} else if (attr & _rendererChannelNameAttribute) {
-		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.channelNameDoubleClicked()\" oncontextmenu=\"Textual.openChannelNameContextualMenu()\">%@</span>", logEscape(content)];
-	} else {
-		BOOL matchedUser = NO;
-		
+		return TXRenderStyleTemplate(@"renderedChannelNameLinkResource", templateTokens, log);
+	}
+	else
+	{
 		content = logEscape(content);
-		
-		NSMutableString *s = [NSMutableString string];
+
+		templateTokens[@"messageFragment"] = content;
+
+		// --- //
 		
 		if (attr & _rendererConversationTrackerAttribute) {
-            IRCClient   *client = log.client;
-			IRCUser     *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
+            IRCClient *client =  log.client;
+			IRCUser   *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
 			
 			if (PointerIsEmpty(user) == NO) {
                 if ([user.nick isEqualNoCase:client.myNick] == NO) {
-                    matchedUser = YES;
-					
-                    [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.inlineNicknameDoubleClicked()\" oncontextmenu=\"Textual.openInlineNicknameContextualMenu()\" colornumber=\"%d\">", [user colorNumber]];
+					templateTokens[@"inlineNicknameMatchFound"]  = @(YES);
+					templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
                 } 
             }
 		}
 		
+		// --- //
+		
 		if (attr & _effectMask) {
-			[s appendString:@"<span class=\"effect\" style=\""];
+			templateTokens[@"fragmentContainsFormattingSymbols"] = @(YES);
 			
-			if (attr & _rendererBoldFormatAttribute)	  [s appendString:@"font-weight:bold;"];
-			if (attr & _rendererItalicFormatAttribute)    [s appendString:@"font-style:italic;"];
-			if (attr & _rendererUnderlineFormatAttribute) [s appendString:@"text-decoration:underline;"];
+			if (attr & _rendererBoldFormatAttribute) {
+				templateTokens[@"fragmentIsBold"] = @(YES);
+			}
 			
-			[s appendString:@"\""];
+			if (attr & _rendererItalicFormatAttribute) {
+				templateTokens[@"fragmentIsItalicized"] = @(YES);
+			}
 			
-			if (attr & _rendererTextColorAttribute)		  [s appendFormat:@" color-number=\"%d\"", (attr & _textColorMask)];
-			if (attr & _rendererBackgroundColorAttribute) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & _backgroundColorMask) >> 4];
+			if (attr & _rendererUnderlineFormatAttribute) {
+				templateTokens[@"fragmentIsUnderlined"] = @(YES);
+			}
 			
-			[s appendFormat:@">%@</span>", content];
-		} else {
-			if (matchedUser == NO) {
-				return content;
-			} else {
-				[s appendString:content];
+			if (attr & _rendererTextColorAttribute) {
+				templateTokens[@"fragmentTextColor"] = @(attr & _textColorMask);
+			}
+			
+			if (attr & _rendererBackgroundColorAttribute) {
+				templateTokens[@"fragmentBackgroundColor"] = @((attr & _backgroundColorMask) >> 4);
 			}
 		}
+
+		// --- //
 		
-		if (matchedUser) {
-			[s appendString:@"</span>"];
-		}
-		
-		return s;
+		return TXRenderStyleTemplate(@"formattedMessageFragment", templateTokens, log);
 	}
 }
 
@@ -310,6 +339,8 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
 	
 	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
+	BOOL isNormalMsg	   = [inputDictionary boolForKey:@"normalMessage"];
+	
 	BOOL exactWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 	
@@ -536,7 +567,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
         } else {
 			NSString *curchan; 
 			
-			if (log) {
+			if (log && isNormalMsg) {
 				curchan = log.channel.name;
 			}
 			
@@ -674,7 +705,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		/* Conversation Tracking */
 		
 		if ([TPCPreferences trackConversations]) {
-			if (log) {
+			if (log && isNormalMsg) {
 				IRCChannel *log_channel = log.channel;
 				
 				if (log_channel) {
@@ -768,7 +799,9 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (drawingType == TVCLogRendererAttributedStringType) {
 			result = renderAttributedRange(result, t, start, n, attributedStringFont);	
 		} else {
-			[result appendString:renderRange(body, t, start, n, log)];
+			NSString *renderedRange = renderRange(body, t, start, n, log);
+			
+			[result appendString:renderedRange.trimNewlines];
 		}
 		
 		start += n;

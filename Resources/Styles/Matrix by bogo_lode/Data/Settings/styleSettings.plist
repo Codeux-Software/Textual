@@ -14,7 +14,7 @@
 		<integer>0</integer>
 	</dict>
 	<key>Indentation Offset</key>
-	<integer>0</integer>
+	<integer>6</integer>
 	<key>Underlying Window Color</key>
 	<string>#000000</string>
 </dict>

@@ -177,6 +177,11 @@ NSInteger ctoi(unsigned char c);
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (NSString *)trimNewlines
+{
+	return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+}
+
 - (BOOL)isNumericOnly
 {
 	NSUInteger len = self.length;
@@ -344,9 +349,11 @@ BOOL isUnicharDigit(unichar c)
 	}
     
     NSDictionary *input = @{@"attributedStringFont": defaultFont};
+
+	TXMasterController *master = [TPCPreferences masterController];
 	
 	return [LVCLogRenderer renderBody:self 
-						   controller:nil 
+						   controller:master.world.selected.log 
 						   renderType:TVCLogRendererAttributedStringType 
 						   properties:input resultInfo:NULL];
 }
