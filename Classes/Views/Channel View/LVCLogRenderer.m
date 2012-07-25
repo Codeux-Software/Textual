@@ -339,7 +339,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
 	
 	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
-	BOOL isNormalMsg	   = [inputDictionary boolForKey:@"normalMessage"];
+	BOOL isNormalMsg	   = [inputDictionary boolForKey:@"isNormalMessage"];
 	
 	BOOL exactWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
