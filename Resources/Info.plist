@@ -47,8 +47,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Turtle Soup</string>
 	<key>TXBundleBuildNumber</key>
-	<string>12080</string>
+	<string>12082</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-251-gd987731-appstore,llvm4.0</string>
+	<string>2.1.1-252-g4c2c37d-appstore,llvm4.0</string>
 </dict>
 </plist>
