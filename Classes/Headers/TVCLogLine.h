@@ -45,11 +45,7 @@
 #define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
 typedef enum TVCLogLineType : NSInteger {
-	TVCLogLineSystemType,
-	TVCLogLineErrorType,
-	TVCLogLineErrorReplyType,
 	TVCLogLineCTCPType,
-	TVCLogLineReplyType,
 	TVCLogLinePrivateMessageType,
 	TVCLogLinePrivateMessageNoHighlightType,
 	TVCLogLineNoticeType,

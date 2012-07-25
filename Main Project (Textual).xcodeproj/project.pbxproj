@@ -43,6 +43,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4C211D4C15BF1FCE00E218DA /* GRMustache.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4215BF1FCE00E218DA /* GRMustache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D4D15BF1FCE00E218DA /* GRMustacheAvailabilityMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4315BF1FCE00E218DA /* GRMustacheAvailabilityMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D4E15BF1FCE00E218DA /* GRMustacheError.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4415BF1FCE00E218DA /* GRMustacheError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D4F15BF1FCE00E218DA /* GRMustacheHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4515BF1FCE00E218DA /* GRMustacheHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5015BF1FCE00E218DA /* GRMustacheInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4615BF1FCE00E218DA /* GRMustacheInvocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5115BF1FCE00E218DA /* GRMustacheSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4715BF1FCE00E218DA /* GRMustacheSection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5215BF1FCE00E218DA /* GRMustacheTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4815BF1FCE00E218DA /* GRMustacheTemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5315BF1FCE00E218DA /* GRMustacheTemplateDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4915BF1FCE00E218DA /* GRMustacheTemplateDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5415BF1FCE00E218DA /* GRMustacheTemplateRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4A15BF1FCE00E218DA /* GRMustacheTemplateRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5515BF1FCE00E218DA /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C211D4B15BF1FCE00E218DA /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
 		4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */; };
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
@@ -471,6 +482,17 @@
 
 /* Begin PBXFileReference section */
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C211D4215BF1FCE00E218DA /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustache.h; sourceTree = "<group>"; };
+		4C211D4315BF1FCE00E218DA /* GRMustacheAvailabilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheAvailabilityMacros.h; sourceTree = "<group>"; };
+		4C211D4415BF1FCE00E218DA /* GRMustacheError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheError.h; sourceTree = "<group>"; };
+		4C211D4515BF1FCE00E218DA /* GRMustacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheHelper.h; sourceTree = "<group>"; };
+		4C211D4615BF1FCE00E218DA /* GRMustacheInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheInvocation.h; sourceTree = "<group>"; };
+		4C211D4715BF1FCE00E218DA /* GRMustacheSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheSection.h; sourceTree = "<group>"; };
+		4C211D4815BF1FCE00E218DA /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
+		4C211D4915BF1FCE00E218DA /* GRMustacheTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateDelegate.h; sourceTree = "<group>"; };
+		4C211D4A15BF1FCE00E218DA /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
+		4C211D4B15BF1FCE00E218DA /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
 		4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = FormattingColor_Rainbow.tif; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
@@ -822,6 +844,7 @@
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
 				4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
+				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +873,7 @@
 			isa = PBXGroup;
 			children = (
 				4C46CCCC158046BE00846B64 /* External Frameworks */,
+				4C211D3F15BF1F5E00E218DA /* External Libraries */,
 				4C46CCB91580469200846B64 /* System Frameworks */,
 				4C46CCB41580466C00846B64 /* System Libraries */,
 			);
@@ -867,6 +891,14 @@
 			);
 			name = Resources;
 			path = Textual;
+			sourceTree = "<group>";
+		};
+		4C211D3F15BF1F5E00E218DA /* External Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				4C211D5615BF21BA00E218DA /* libmustache.a */,
+			);
+			name = "External Libraries";
 			sourceTree = "<group>";
 		};
 		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
@@ -1622,6 +1654,16 @@
 				4C8AF741158EB6CA0026668C /* DDInvocation.h */,
 				4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */,
 				4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */,
+				4C211D4215BF1FCE00E218DA /* GRMustache.h */,
+				4C211D4315BF1FCE00E218DA /* GRMustacheAvailabilityMacros.h */,
+				4C211D4415BF1FCE00E218DA /* GRMustacheError.h */,
+				4C211D4515BF1FCE00E218DA /* GRMustacheHelper.h */,
+				4C211D4615BF1FCE00E218DA /* GRMustacheInvocation.h */,
+				4C211D4715BF1FCE00E218DA /* GRMustacheSection.h */,
+				4C211D4815BF1FCE00E218DA /* GRMustacheTemplate.h */,
+				4C211D4915BF1FCE00E218DA /* GRMustacheTemplateDelegate.h */,
+				4C211D4A15BF1FCE00E218DA /* GRMustacheTemplateRepository.h */,
+				4C211D4B15BF1FCE00E218DA /* GRMustacheVersion.h */,
 				4C8AF744158EB6CA0026668C /* GTMBase64.h */,
 				4C8AF745158EB6CA0026668C /* GTMDefines.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
@@ -1785,6 +1827,16 @@
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
+				4C211D4C15BF1FCE00E218DA /* GRMustache.h in Headers */,
+				4C211D4D15BF1FCE00E218DA /* GRMustacheAvailabilityMacros.h in Headers */,
+				4C211D4E15BF1FCE00E218DA /* GRMustacheError.h in Headers */,
+				4C211D4F15BF1FCE00E218DA /* GRMustacheHelper.h in Headers */,
+				4C211D5015BF1FCE00E218DA /* GRMustacheInvocation.h in Headers */,
+				4C211D5115BF1FCE00E218DA /* GRMustacheSection.h in Headers */,
+				4C211D5215BF1FCE00E218DA /* GRMustacheTemplate.h in Headers */,
+				4C211D5315BF1FCE00E218DA /* GRMustacheTemplateDelegate.h in Headers */,
+				4C211D5415BF1FCE00E218DA /* GRMustacheTemplateRepository.h in Headers */,
+				4C211D5515BF1FCE00E218DA /* GRMustacheVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2538,6 +2590,10 @@
 					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
+				);
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2558,6 +2614,10 @@
 					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
+				);
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2630,6 +2690,10 @@
 					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
+				);
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2703,6 +2767,10 @@
 					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
+				);
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -2776,6 +2844,10 @@
 					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
+				);
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

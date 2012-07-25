@@ -209,6 +209,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)themeTimestampFormat;
 + (TXNSDouble)themeTransparency;
 + (TXNSDouble)themeChannelViewFontSize;
++ (NSFont *)themeChannelViewFont;
 
 + (void)setThemeName:(NSString *)value;
 + (void)setThemeChannelViewFontName:(NSString *)value;

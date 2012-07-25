@@ -42,11 +42,7 @@
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
 	switch (type) {
-		case TVCLogLineSystemType:							return @"system";
-		case TVCLogLineErrorType:							return @"error";
-		case TVCLogLineReplyType:							return @"reply";
 		case TVCLogLineCTCPType:							return @"ctcp";
-		case TVCLogLineErrorReplyType:						return @"error_reply";
 		case TVCLogLinePrivateMessageType:					return @"privmsg";
 		case TVCLogLinePrivateMessageNoHighlightType:		return @"privmsg";
 		case TVCLogLineNoticeType:							return @"notice";
@@ -62,7 +58,7 @@
 		case TVCLogLineTopicType:							return @"topic";
 		case TVCLogLineInviteType:							return @"invite";
 		case TVCLogLineWebsiteType:							return @"website";
-		case TVCLogLineDebugType:							return @"debug_send";
+		case TVCLogLineDebugType:							return @"debug";
 	}
 	
 	return NSStringEmptyPlaceholder;

@@ -903,6 +903,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	[_NSUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
 }
 
++ (NSFont *)themeChannelViewFont
+{
+	return [NSFont fontWithName:[TPCPreferences themeChannelViewFontName]
+						   size:[TPCPreferences themeChannelViewFontSize]];
+}
+
 + (NSString *)themeNickFormat
 {
 	return [_NSUserDefaults() objectForKey:@"Theme -> Nickname Format"];

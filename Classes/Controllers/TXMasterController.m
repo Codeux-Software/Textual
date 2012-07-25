@@ -648,17 +648,17 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	
 	[self.world reloadTheme];
 	
-	if (self.viewTheme.other.nicknameFormat) {
+	if (NSObjectIsNotEmpty(self.viewTheme.other.nicknameFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptNicknameFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 	
-	if (self.viewTheme.other.timestampFormat) {
+	if (NSObjectIsNotEmpty(self.viewTheme.other.timestampFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptTimestampFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 	
-	if (self.viewTheme.other.channelViewFontOverrode) {
+	if (self.viewTheme.other.channelViewFont) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
