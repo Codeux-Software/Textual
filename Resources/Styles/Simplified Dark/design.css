@@ -4,7 +4,7 @@
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
-    word-wrap: break-word;
+	word-wrap: break-word;
 }	
 
 body {
@@ -22,9 +22,9 @@ body div#body_home {
 	left: 0;
 	right: 0;
 	bottom: 0;
-    width: 100%;
+	width: 100%;
 	z-index: 100;
-    max-height: 99.99%;
+	max-height: 99.99%;
 	position: absolute;
 }
 
@@ -37,82 +37,82 @@ body .line {
 }
 
 body[dir=rtl] .sender {
-    display: inline-block;
+	display: inline-block;
 }
 
 /* Time */
 
 body[dir=ltr] .time {
 	color: #666;
-    white-space: nowrap; 
+	white-space: nowrap; 
 }
 
 body[dir=rtl] .time {
 	color: #666;
-    white-space: nowrap; 
+	white-space: nowrap; 
 	padding-left: 0.4em;
-    display: inline-block;
+	display: inline-block;
 }
 
 /* Links */
 
 a {
-    color: #0080FF;
-    border-color: #0080FF;
-    text-decoration: none;
-    border-bottom: dotted 1px;
+	color: #0080FF;
+	border-color: #0080FF;
+	text-decoration: none;
+	border-bottom: dotted 1px;
 }
 
 a:hover {
-    color: #40A0FF;
-    border-color: #40A0FF;
+	color: #40A0FF;
+	border-color: #40A0FF;
 }
 
 /* Topic Bar */
 
 #topic_bar {
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 400;
-    opacity: 0.95;
-    color: #8E8E8E;
-    position: fixed;
-    padding: 2px 0.5em 3px;
-    box-shadow: 0 1px 5px #777;
-    border-bottom: 1px solid #404040;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 400;
+	opacity: 0.95;
+	color: #8E8E8E;
+	position: fixed;
+	padding: 2px 0.5em 3px;
+	box-shadow: 0 1px 5px #777;
+	border-bottom: 1px solid #404040;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: -webkit-linear-gradient(top, #0F0F0F 0%, #262626 100%);
 }
 
 #topic_bar a, 
 #topic_bar span.channel {
-    color: #8E8E8E;
-    border-color: #8E8E8E;
+	color: #8E8E8E;
+	border-color: #8E8E8E;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 }
 
 /* Images */
 
 body a img {
-    border: 0;
+	border: 0;
 }
 
 body img {
-    display: block;
-    max-width: 95%;
-    margin: 15px 15px 12px 15px;
+	display: block;
+	max-width: 95%;
+	margin: 15px 15px 12px 15px;
 }
 
 /* Remember Line */
 
 div[id=mark] {
-    position: relative;
-    z-index: 295;
-    margin-top: -1px;
-    border-bottom: 1px dashed;
-    border-color: #444;
-    -webkit-transition: 0.2s linear;
+	position: relative;
+	z-index: 295;
+	margin-top: -1px;
+	border-bottom: 1px dashed;
+	border-color: #444;
+	-webkit-transition: 0.2s linear;
 }
 
 /* NOTICE/CTCP/WALLOPS */
@@ -200,15 +200,10 @@ body[dir=rtl] div[type*=action] .sender:after {
 	margin-left: 0.4em;
 }
 
-/* REPLY/SYSTEM/ERROR/DEBUG/INVITE */
+/* DEBUG/INVITE */
 
-body div.line[type*=reply],
-body div.line[type*=error],
 body div.line[type*=invite],
-body div.line[type*=system],
-body div.line[type*=debug_send],
-body div.line[type*=error_reply],
-body div.line[type*=debug_receive] {
+body div.line[type*=debug] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -230,7 +225,7 @@ body div.line[type*=mode],
 body div.line[type*=topic],
 body div.line[type*=website] {
  	padding: 3px 5px 3px 5px;
-    color: #666;
+	color: #666;
 }
 
 body[dir=ltr] div[type*=join] .message:before {
@@ -276,7 +271,7 @@ body[dir=rtl] div[type*=nick] .message:before {
 /* Nickname Colors */
 
 body .inline_nickname {
-    font-weight: 700;
+	font-weight: 700;
 }
 
 body div[type*=privmsg] .sender[type*=myself] { 

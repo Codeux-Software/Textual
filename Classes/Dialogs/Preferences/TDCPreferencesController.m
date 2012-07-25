@@ -533,6 +533,10 @@
 - (void)onSelectFont:(id)sender
 {
 	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+
+	if (PointerIsEmpty(logfont)) {
+		logfont = [TPCPreferences themeChannelViewFont];
+	}
 	
 	[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
 	[_NSFontManager() orderFrontFontPanel:self];
@@ -541,9 +545,13 @@
 
 - (void)changeItemFont:(NSFontManager *)sender
 {
-	TPCOtherTheme *theme = self.world.viewTheme.other;
+	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+
+	if (PointerIsEmpty(logfont)) {
+		logfont = [TPCPreferences themeChannelViewFont];
+	}
 	
-	NSFont *newFont = [sender convertFont:theme.channelViewFont];
+	NSFont *newFont = [sender convertFont:logfont];
 	
 	[TPCPreferences setThemeChannelViewFontName:[newFont fontName]];
 	[TPCPreferences setThemeChannelViewFontSize:[newFont pointSize]];

@@ -246,6 +246,8 @@
 "SoundIsNotMuted" = "Sound is not muted.";
 "SoundIsNowMuted" = "Sound has been muted.";
 
+"StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
+
 "TXEmptySoundAlertLabel" = "None";
 
 "TXNotificationAddressBookMatchType"	= "Address Book Notification";

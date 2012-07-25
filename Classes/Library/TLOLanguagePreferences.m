@@ -45,11 +45,11 @@ static NSDictionary *themeLocalizations = nil;
 {
 	themeLocalizations = nil;
 	
-	NSString *filepath = [path stringByAppendingPathComponent:@"/BasicLanguage.plist"];
+	NSString *filepath = [path stringByAppendingPathComponent:@"/Data/Settings/styleLocalizations.plist"];
 	
 	if ([_NSFileManager() fileExistsAtPath:filepath]) {
 		NSDictionary *localkeys = [NSDictionary dictionaryWithContentsOfFile:filepath];
-	
+
 		if (localkeys) {
 			themeLocalizations = localkeys;
 		}
