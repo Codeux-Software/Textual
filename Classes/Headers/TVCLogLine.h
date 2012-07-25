@@ -62,6 +62,7 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineInviteType,
 	TVCLogLineWebsiteType,
 	TVCLogLineDebugType,
+	TVCLogLineRawHTMLType,
 } TVCLogLineType;
 
 typedef enum TVCLogMemberType : NSInteger {

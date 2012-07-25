@@ -59,6 +59,7 @@
 		case TVCLogLineInviteType:							return @"invite";
 		case TVCLogLineWebsiteType:							return @"website";
 		case TVCLogLineDebugType:							return @"debug";
+		case TVCLogLineRawHTMLType:							return @"rawhtml";
 	}
 	
 	return NSStringEmptyPlaceholder;

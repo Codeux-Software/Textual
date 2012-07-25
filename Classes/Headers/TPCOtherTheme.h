@@ -47,7 +47,6 @@
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
 @property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) TXNSDouble indentationOffset;
-@property (nonatomic, assign) TXNSDouble renderingEngineVersion;
 
 - (void)reload;
 

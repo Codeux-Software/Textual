@@ -501,9 +501,6 @@
 
 - (void)onChangedTheme:(id)sender
 {
-    TXNSDouble oldRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
-    TXNSDouble newRenderVersion = 0;
-    
 	NSMenuItem *item = [self.themeButton selectedItem];
 	
 	NSString *newThemeName = nil;
@@ -522,12 +519,6 @@
 	[TPCPreferences setThemeName:newThemeName];
 	
 	[self onStyleChanged:nil];
-    
-    newRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
-    
-    if (NSDissimilarObjects(oldRenderVersion, newRenderVersion)) {
-        [self.world destroyAllEvidence];
-    }
 }
 
 - (void)onSelectFont:(id)sender

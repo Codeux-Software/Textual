@@ -76,8 +76,6 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
 
-- (BOOL)viewIsTemplateBased;
-
 - (void)nextHighlight;
 - (void)previousHighlight;
 - (BOOL)highlightAvailable:(BOOL)previous;
