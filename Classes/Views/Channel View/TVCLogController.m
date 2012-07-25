@@ -258,10 +258,10 @@
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if ([[self topicValue] isEqualToString:topic] == NO) {
 			NSString *body = [LVCLogRenderer renderBody:topic
-										  controller:nil
-										  renderType:TVCLogRendererHTMLType
-										  properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
-										  resultInfo:NULL];
+											 controller:self
+											 renderType:TVCLogRendererHTMLType
+											 properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
+											 resultInfo:NULL];
 			
 			DOMDocument *doc = [self mainFrameDocument];
 			if (PointerIsEmpty(doc)) return NO;
@@ -683,11 +683,6 @@
 	return [s stripEffects];
 }
 
-- (BOOL)viewIsTemplateBased
-{
-	return NSDissimilarObjects(self.theme.other.renderingEngineVersion, 1.1);
-}
-
 - (BOOL)print:(TVCLogLine *)line
 {
 	return [self print:line withHTML:NO];
@@ -697,6 +692,10 @@
 {
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
+	}
+
+	if (rawHTML) {
+		line.lineType = TVCLogLineRawHTMLType;
 	}
 
 	if ([NSThread isMainThread] == NO) {
@@ -716,7 +715,7 @@
 	
 	BOOL isText	     = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
 	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
-	BOOL drawLinks   = BOOLReverseValue([[TLOLinkParser bannedURLRegexLineTypes] containsObject:lineTypeString]);
+	BOOL drawLinks   = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeString]);
 	
 	NSArray *urlRanges = @[];
 
@@ -725,29 +724,30 @@
 	if (rawHTML == NO) {
 		NSMutableDictionary *inputDictionary  = [NSMutableDictionary dictionary];
 		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
-		
+
 		if (NSObjectIsNotEmpty(line.keywords)) {
 			inputDictionary[@"keywords"] = line.keywords;
 		}
-		
+
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
 			inputDictionary[@"excludeWords"] = line.excludeWords;
 		}
-		
+
 		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
-		
+		[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
+
 		body = [LVCLogRenderer renderBody:line.body
-							controller:((isNormalMsg) ? self : nil) 
-							renderType:TVCLogRendererHTMLType 
-							properties:inputDictionary 
-							resultInfo:&outputDictionary];
-		
+							   controller:self
+							   renderType:TVCLogRendererHTMLType
+							   properties:inputDictionary
+							   resultInfo:&outputDictionary];
+
 		urlRanges   = [outputDictionary arrayForKey:@"URLRanges"];
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	} else {
 		body = line.body;
 	}
-	
+
 	// ************************************************************************** /
 	// Find all inline media.                                                     /
 	// ************************************************************************** /
@@ -773,124 +773,71 @@
 			}
 		}
 	}
-	
+
 	// ************************************************************************** /
 	// Draw to display.                                                                /
 	// ************************************************************************** /
-	
-	BOOL templateBased = ([self viewIsTemplateBased] && rawHTML == NO);
 
-	if (templateBased) {
-		NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 
-		attributes[@"isNicknameAvailable"] = @(NO);
+	// ---- //
 
-		// ---- //
+	attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
+	attributes[@"inlineMediaArray"]		= [NSMutableArray array];
 
-		if (NSObjectIsNotEmpty(line.time)) {
-			attributes[@"formattedTimestamp"] = line.time;
-		}
+	for (NSString *imageUrl in inlineImageLinks) {
+		NSString *url = [inlineImageLinks objectForKey:imageUrl];
 
-		// ---- //
-		
-		if (line.nick) {
-			attributes[@"isNicknameAvailable"] = @(YES);
-			
-			attributes[@"nicknameColorNumber"]			= @(line.nickColorNumber);
-			attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColors] == NO);
-			
-			attributes[@"formattedNickname"]	= line.nick.trim;
-			
-			attributes[@"nickname"]				= line.nickInfo;
-			attributes[@"nicknameType"]			= [TVCLogLine memberTypeString:line.memberType];
-		}
-
-		// ---- //
-		
-		attributes[@"lineType"] = [TVCLogLine lineTypeString:line.lineType];
-		
-		attributes[@"highlightAttributeRepresentation"] = ((highlighted) ? @"true" : @"false");
-		attributes[@"lineClassAttributeRepresentation"] = ((isText) ? @"text" : @"event");
-		
-		attributes[@"message"]				= line.body;
-		attributes[@"formattedMessage"]		= body;
-		
-		attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
-		attributes[@"isHighlight"]		= @(highlighted);
-
-		// ---- //
-
-		id templateRaw = [self.theme.other templateWithLineType:line.lineType];
-
-		[self writeLine:templateRaw attributes:attributes];
-	} else {
-		// ************************************************************************** /
-		// Old system.                                                                /
-		// ************************************************************************** /
-
-		NSMutableString *s = [NSMutableString string];
-
-		if (line.memberType == TVCLogMemberLocalUserType) {
-			[s appendFormat:@"<p type=\"%@\">", [TVCLogLine memberTypeString:line.memberType]];
-		} else {
-			[s appendFormat:@"<p>"];
-		}
-
-		// ---- //
-
-		if (NSObjectIsEmpty(line.time) && rawHTML == NO) {
-			return NO;
-		}
-
-		if (line.time) {
-			[s appendFormat:@"<span class=\"time\">%@</span>",  logEscape(line.time)];
-		}
-
-		// ---- //
-
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">", lineTypeString];
-
-		// ---- //
-		
-		if (line.nick) {
-			[s appendFormat:@"<span class=\"sender\" ondblclick=\"Textual.nicknameDoubleClicked()\" oncontextmenu=\"Textual.openStandardNicknameContextualMenu()\" type=\"%@\" nick=\"%@\"", [TVCLogLine memberTypeString:line.memberType], line.nickInfo];
-
-			if (line.memberType == TVCLogMemberNormalType && [TPCPreferences disableNicknameColors] == NO) {
-				[s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
-			}
-
-			[s appendFormat:@">%@</span> ", logEscape(line.nick)];
-		}
-
-		// ---- //
-		
-		[s appendString:body];
-
-		// ---- //
-
-		for (NSString *imageUrl in inlineImageLinks) {
-			NSString *url = [inlineImageLinks objectForKey:imageUrl];
-
-			[s appendFormat:@"<a href=\"%@\" onclick=\"return Textual.hideInlineImage(this)\"><img src=\"%@\" class=\"inlineimage\" style=\"max-width: %dpx;\" title=\"%@\" /></a>", url, imageUrl, [TPCPreferences inlineImagesMaxWidth], TXTLS(@"LogViewHideInlineImageMessage")];
-		}
-
-		// ---- //
-
-		[s appendString:@"</span></p>"];
-
-		// ---- //
-
-		NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-
-		attrs[@"type"]			= [TVCLogLine lineTypeString:type];
-		
-		attrs[@"class"]			= ((isText)			? @"line text"	: @"line event");
-		attrs[@"highlight"]		= ((highlighted)	? @"true"		: @"false");
-
-		// ---- //
-
-		[self writeLine:s attributes:attrs];
+		[(id)attributes[@"inlineMediaArray"] addObject:@{
+			@"imageURL"					: imageUrl,
+			@"anchorLink"				: url,
+			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+			@"localizedHideTitle"		: TXTLS(@"LogViewHideInlineImageMessage"),
+		 }];
 	}
+
+	// ---- //
+
+	attributes[@"isNicknameAvailable"] = @(NO);
+
+	// ---- //
+
+	if (NSObjectIsNotEmpty(line.time)) {
+		attributes[@"formattedTimestamp"] = line.time;
+	}
+
+	// ---- //
+
+	if (line.nick) {
+		attributes[@"isNicknameAvailable"] = @(YES);
+
+		attributes[@"nicknameColorNumber"]			= @(line.nickColorNumber);
+		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColors] == NO);
+
+		attributes[@"formattedNickname"]	= line.nick.trim;
+
+		attributes[@"nickname"]				= line.nickInfo;
+		attributes[@"nicknameType"]			= [TVCLogLine memberTypeString:line.memberType];
+	}
+
+	// ---- //
+
+	attributes[@"lineType"] = [TVCLogLine lineTypeString:line.lineType];
+
+	attributes[@"lineClassAttributeRepresentation"] = ((isText)			? @"text" : @"event");
+	attributes[@"highlightAttributeRepresentation"] = ((highlighted)	? @"true" : @"false");
+
+	attributes[@"message"]				= line.body;
+	attributes[@"formattedMessage"]		= body;
+
+	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
+	attributes[@"isHighlight"]		= @(highlighted);
+
+	// ---- //
+
+	id templateRaw = [self.theme.other templateWithLineType:line.lineType];
+
+	[self writeLine:templateRaw attributes:attributes];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
@@ -934,44 +881,22 @@
 
 		// ---- //
 
-		if ([line isKindOfClass:NSString.class]) {
-			DOMElement *div = [doc createElement:@"div"];
+		if ([line isKindOfClass:GRMustacheTemplate.class]) {
+			attrs[@"lineNumber"] = @(self.lineNumber);
 
 			// ---- //
-			
-			[(id)div setInnerHTML:line];
 
-			for (NSString *key in attrs) {
-				NSString *value = attrs[key];
+			NSString *aHtml = [line renderObject:attrs];
 
-				[div setAttribute:key value:value];
+			if (NSObjectIsEmpty(aHtml)) {
+				return NO;
 			}
 
 			// ---- //
 
-			[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", self.lineNumber]];
-
-			// ---- //
-			
-			[body appendChild:div];
-		} else {
-			if ([line isKindOfClass:GRMustacheTemplate.class]) {
-				attrs[@"lineNumber"] = @(self.lineNumber);
-
-				// ---- //
-				
-				NSString *aHtml = [line renderObject:attrs];
-
-				if (NSObjectIsEmpty(aHtml)) {
-					return NO;
-				}
-
-				// ---- //
-				
-				DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:aHtml
-																					baseURL:self.theme.baseUrl];
-				[body appendChild:frag];
-			}
+			DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:aHtml
+																				baseURL:self.theme.baseUrl];
+			[body appendChild:frag];
 		}
 
 		// ---- //
@@ -998,69 +923,51 @@
 
 - (NSString *)initialDocument:(NSString *)topic
 {
-	NSMutableString *bodyAttrs = [NSMutableString string];
+	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
+
+	// ---- //
+
+	templateTokens[@"cacheToken"]				= [NSString stringWithUUID];
+
+	templateTokens[@"activeStyleAbsolutePath"]	= self.theme.other.path;
+	templateTokens[@"applicationResourcePath"]	= [TPCPreferences whereResourcePath];
+
+	// ---- //
 	
 	if (self.channel) {
-		[bodyAttrs appendFormat:@"type=\"%@\"", [self.channel channelTypeString]];
-		
-		if ([self.channel isChannel]) {
-			[bodyAttrs appendFormat:@" channelname=\"%@\"", logEscape([self.channel name])];
-		}
-	} else {
-		[bodyAttrs appendString:@"type=\"server\""];
-	}
-	
-	if ([TPCPreferences rightToLeftFormatting]) {
-		[bodyAttrs appendString:@" dir=\"rtl\""];
-	} else {
-		[bodyAttrs appendString:@" dir=\"ltr\""];
-	}
-	
-	NSMutableString *s = [NSMutableString string];
-	
-	NSString *override_style = [self generateOverrideStyle];
-	
-	[s appendFormat:@"<html %@><head>", bodyAttrs];
-	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
-	
-	NSString *ti = [NSString stringWithUUID];
-	
-	[s appendFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"design.css?u=%@\" />", ti];
-	[s appendFormat:@"<script src=\"%@\" type=\"text/javascript\"></script>", self.theme.core_js.filename];
-	[s appendFormat:@"<script src=\"scripts.js?u=%@\" type=\"text/javascript\"></script>", ti];
-	
-	if (override_style) {
-		[s appendFormat:@"<style type=\"text/css\" id=\"textual_override_style\">%@</style>", override_style];
-	}
-	
-	[s appendFormat:@"</head><body %@>", bodyAttrs];
-	
-	if (NSObjectIsNotEmpty(self.html)) {
-		[s appendFormat:@"<div id=\"body_home\">%@</div>", self.html];
-	} else {
-		[s appendString:@"<div id=\"body_home\"></div>"];
-	}
-	
-	if (self.channel && (self.channel.isChannel || self.channel.isTalk)) {
+		templateTokens[@"isChannelView"]	= @(YES);
+		templateTokens[@"channelName"]		= logEscape(self.channel.name);
+		templateTokens[@"viewTypeToken"]	= [self.channel channelTypeString];
+
 		if (NSObjectIsNotEmpty(topic)) {
-			[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", topic];
+			templateTokens[@"formattedTopicValue"] = topic;
 		} else {
-			[s appendFormat:@"<div id=\"topic_bar\">%@</div></body>", TXTLS(@"IRCChannelEmptyTopic")];
+			templateTokens[@"formattedTopicValue"] = TXTLS(@"IRCChannelEmptyTopic");
 		}
+	} else {
+		templateTokens[@"viewTypeToken"] = @"server";
 	}
-	
-	[s appendString:@"</html>"];
-	
-	self.html = nil;
-	
-	return s;
+
+	// ---- //
+
+	if ([TPCPreferences rightToLeftFormatting]) {
+		 templateTokens[@"textDirectionToken"] = @"rtl";
+	} else {
+		 templateTokens[@"textDirectionToken"] = @"ltr";
+	}
+
+	// ---- //
+
+	return TXRenderStyleTemplate(@"baseLayout", templateTokens, self);
 }
 
-- (NSString *)generateOverrideStyle
+- (NSMutableDictionary *)generateOverrideStyle
 {
-	NSMutableString *sf = [NSMutableString string];
+	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
 	
 	TPCOtherTheme *other = self.world.viewTheme.other;
+
+	// ---- //
 	
 	NSFont *channelFont = other.channelViewFont;
 
@@ -1069,45 +976,39 @@
 	}
 	
 	NSString *name = [channelFont fontName];
-	
-	NSInteger  rsize	= [channelFont pointSize];
-	TXNSDouble dsize	= ([channelFont pointSize] * (72.0 / 96.0));
-	
-	[sf appendString:@"html, body, body[type], body {"];
-	[sf appendFormat:@"font-family:'%@';", name];
-	[sf appendFormat:@"font-size:%fpt;", dsize];
-	[sf appendString:@"}"];
+	CGFloat  rsize = [channelFont pointSize];
+
+	templateTokens[@"userConfiguredFontName"] = name;
+	templateTokens[@"userConfiguredFontSize"] = @(rsize * (72.0 / 96.0));
+
+	// ---- //
+
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		templateTokens[@"windowAntialiasingDisabled"] = @(YES);
+	}
+
+	// ---- //
 
 	NSInteger indentOffset = other.indentationOffset;
 	
 	if (indentOffset == TXThemeDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
-		return sf;
+		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
-		NSFont	     *font		 = [NSFont fontWithName:name size:round(rsize)];
-		NSString	 *time		 = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], other.timestampFormat);
+		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
 		
-		NSDictionary *attributes = @{NSFontAttributeName: font};	
+		NSString *time = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], other.timestampFormat);
+		
+		NSDictionary *attributes = @{NSFontAttributeName: channelFont};
 		
 		NSSize    textSize  = [time sizeWithAttributes:attributes]; 
 		NSInteger textWidth = (textSize.width + indentOffset);
-		
-		[sf appendString:@"body div#body_home p {"];
-		[sf appendFormat:@"margin-left: %dpx;", textWidth];
-		[sf appendFormat:@"text-indent: -%dpx;", textWidth];
-		[sf appendString:@"}"];
-		
-		[sf appendString:@"body .time {"];
-		[sf appendFormat:@"width: %dpx;", textWidth];
-		[sf appendString:@"}"];
+
+		templateTokens[@"predefinedTimestampWidth"] = @(textWidth);
 	}
 
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[sf appendString:@"body {"];
-		[sf appendString:@"-webkit-font-smoothing: none;"];
-		[sf appendString:@"}"];
-	}
-	
-	return sf;
+	// ---- //
+
+	return templateTokens;
 }
 
 - (void)setUpScroller

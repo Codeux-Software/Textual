@@ -81,7 +81,9 @@
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
 - (NSArray *)split:(NSString *)delimiter;
+
 - (NSString *)trim;
+- (NSString *)trimNewlines;
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference;
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
