@@ -668,6 +668,8 @@
 	[self.master.memberSplitView setNeedsDisplay:YES];
 
 	[self.text redrawOriginPoints];
+
+	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
 }
 
 - (void)changeTextSize:(BOOL)bigger

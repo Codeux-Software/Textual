@@ -44,11 +44,13 @@
 @property (nonatomic, strong) NSFont *channelViewFont;
 @property (nonatomic, strong) NSString *nicknameFormat;
 @property (nonatomic, strong) NSString *timestampFormat;
-@property (nonatomic, assign) BOOL channelViewFontOverrode;
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
 @property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) TXNSDouble indentationOffset;
 @property (nonatomic, assign) TXNSDouble renderingEngineVersion;
 
 - (void)reload;
+
+- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
+- (GRMustacheTemplate *)templateWithName:(NSString *)name;
 @end
