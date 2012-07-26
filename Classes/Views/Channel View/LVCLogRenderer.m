@@ -201,7 +201,7 @@ NSString *TXRenderStyleTemplate(NSString *templateName, NSDictionary *templateTo
 		NSString *aHtml = [tmpl renderObject:templateTokens];
 
 		if (NSObjectIsNotEmpty(aHtml)) {
-			return aHtml;
+			return aHtml.removeAllNewlines;
 		}
 	}
 
@@ -323,7 +323,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		}
 
 		// --- //
-		
+
 		return TXRenderStyleTemplate(@"formattedMessageFragment", templateTokens, log);
 	}
 }
@@ -801,7 +801,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		} else {
 			NSString *renderedRange = renderRange(body, t, start, n, log);
 			
-			[result appendString:renderedRange.trimNewlines];
+			[result appendString:renderedRange];
 		}
 		
 		start += n;
