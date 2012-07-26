@@ -40,6 +40,7 @@
 @interface TPCOtherTheme ()
 @property (nonatomic, strong) NSDictionary *styleSettings;
 @property (nonatomic, strong) GRMustacheTemplateRepository *templateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
 @end
 
 @implementation TPCOtherTheme
@@ -123,6 +124,14 @@
 	GRMustacheTemplate *tmpl = [self.templateRepository templateForName:name error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
+		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
+			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateForName:name error:&load_error];
+
+			if (PointerIsNotEmpty(tmpl)) {
+				return tmpl;
+			}
+		}
+		
 		NSLog(TXTLS(@"StyleTemplateLoadFailed"),
 			  name, [load_error localizedDescription]);
 
@@ -146,6 +155,18 @@
 
 	if (PointerIsEmpty(self.templateRepository)) {
 		exit(10);
+	}
+
+	// ---- //
+
+	if (PointerIsEmpty(self.appTemplateRepository)) {
+		dictPath = [[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"/Style Default Templates"];
+
+		self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+
+		if (PointerIsEmpty(self.appTemplateRepository)) {
+			exit(10);
+		}
 	}
 
 	// ---- //

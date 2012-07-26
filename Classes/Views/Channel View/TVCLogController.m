@@ -441,13 +441,8 @@
 
 - (void)reloadTheme
 {
-	if (self.loaded == NO) return;
-
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-
-
-	[self executeScriptCommand:@"themeWillChange" withArguments:@[]];
 
 	DOMElement *body = [self body:doc];
 	if (PointerIsEmpty(body)) return;
@@ -462,8 +457,6 @@
 
 - (void)clear
 {
-	if (self.loaded == NO) return;
-	
 	self.html = nil;
 	self.loaded = NO;
 	self.count  = 0;
@@ -932,10 +925,13 @@
 	templateTokens[@"activeStyleAbsolutePath"]	= self.theme.other.path;
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences whereResourcePath];
 
+	templateTokens[@"existingBody"]				= NSStringNilValueSubstitute(self.html);
+
 	// ---- //
 	
 	if (self.channel) {
 		templateTokens[@"isChannelView"]	= @(YES);
+		
 		templateTokens[@"channelName"]		= logEscape(self.channel.name);
 		templateTokens[@"viewTypeToken"]	= [self.channel channelTypeString];
 
@@ -1086,27 +1082,8 @@
 	
 	self.autoScroller.webFrame = self.view.mainFrame.frameView;
 	
-	if (self.html) {
-		DOMDocument *doc = [frame DOMDocument];
-		
-		if (doc) {
-			DOMElement *body = [self body:doc];
-			
-			[(id)body setInnerHTML:self.html];
-			
-			self.html = nil;
-			
-			if (self.scrollBottom) {
-				[self moveToBottom];
-			} else if (self.scrollTop) {
-				[body setValue:@(self.scrollTop) forKey:@"scrollTop"];
-			}
-		}
-	} else {
-		[self moveToBottom];
-		
-		self.bottom = YES;
-	}
+	[self moveToBottom];
+	self.bottom = YES;
 	
 	DOMDocument *doc = [frame DOMDocument];
 	if (PointerIsEmpty(doc)) return;
