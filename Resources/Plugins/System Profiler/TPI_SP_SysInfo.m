@@ -1,14 +1,44 @@
-// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TPI_SP_SysInfo.h"
 
 #define _localVolumeBaseDirectory		@"/Volumes"
 #define _systemMemoryDivisor			1.073741824
-
-@interface TPI_SP_SysInfo (Private)
-+ (NSInteger)_internalSystemUptime;
-@end
 
 @implementation TPI_SP_SysInfo
 
@@ -40,6 +70,15 @@
 	
 	_cpu_model = [_cpu_model trim];
 	
+	BOOL _show_cpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> CPU Model"];
+	BOOL _show_gpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> GPU Model"];
+	BOOL _show_diskinfo		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Disk Information"];
+	BOOL _show_sys_uptime	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> System Uptime"];
+	BOOL _show_sys_memory	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Memory Information"];
+	BOOL _show_screen_res	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Screen Resolution"];
+	BOOL _show_load_avg		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Load Average"];
+	BOOL _show_os_version	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> OS Version"];
+	
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
 		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
@@ -47,7 +86,7 @@
 		NSString *_exact_model = _model;
 		
 		if ([_all_models containsKey:_model]) {
-			_exact_model = [_all_models objectForKey:_model];
+			_exact_model = _all_models[_model];
 		}
 		
 		_new = TXTFLS(@"SystemInformationCompiledOutputModel", _exact_model);
@@ -55,81 +94,103 @@
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* CPU Information. */
-	if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-		if (_cpu_count_int == 1) {
-			_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
-		} else {
-			_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
+	if (_show_cpu_model) {
+		/* CPU Information. */
+		if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
+			if (_cpu_count_int == 1) {
+				_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
+			} else {
+				_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
+			}
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
 		
-		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-	
-	/* L2 & L3 Cache. */
-	if (_cpu_l2) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
+		/* L2 & L3 Cache. */
+		if (_cpu_l2) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
 		
-		sysinfo = [sysinfo stringByAppendingString:_new];
+		if (_cpu_l3) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
 	}
 	
-	if (_cpu_l3) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
-		
-		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-	
-	if (_memory) {
+	if (_show_sys_memory && _memory) {
 		_new = TXTFLS(@"SystemInformationCompiledOutputMemory", _memory);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* System Uptime. */
-	_new = TXTFLS(@"SystemInformationCompiledOutputUptime", [self systemUptimeUsingShortValue:YES]);
-	
-	sysinfo = [sysinfo stringByAppendingString:_new];
-	
-	/* Disk Space Information. */
-	_new = TXTFLS(@"SystemInformationCompiledOutputDiskspace", [self diskInfo]);
-	
-	sysinfo = [sysinfo stringByAppendingString:_new];
-	
-	/* GPU Information. */
-	if (NSObjectIsNotEmpty(_gpu_model)) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputGraphics", _gpu_model);
+	if (_show_sys_uptime) {
+		/* System Uptime. */
+		_new = TXTFLS(@"SystemInformationCompiledOutputUptime", [self systemUptimeUsingShortValue:YES]);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* Screen Resolution. */
-	NSArray *allScreens = [NSScreen screens];
-	
-	if (NSObjectIsNotEmpty(allScreens)) {		
-		NSScreen *maiScreen = [allScreens objectAtIndex:0];
-		
-		_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution", maiScreen.frame.size.width, maiScreen.frame.size.height);
+	if (_show_diskinfo) {
+		/* Disk Space Information. */
+		_new = TXTFLS(@"SystemInformationCompiledOutputDiskspace", [self diskInfo]);
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* Load Average. */
-	if (NSObjectIsNotEmpty(_loadavg)) {
-		_new = TXTFLS(@"SystemInformationCompiledOutputLoad", _loadavg);
+	if (_show_gpu_model) {
+		/* GPU Information. */
+		if (NSObjectIsNotEmpty(_gpu_model)) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputGraphics", _gpu_model);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
+	}
+	
+	if (_show_screen_res) {
+		/* Screen Resolution. */	
+		NSScreen *maiScreen = _NSMainScreen();
+		
+		if ([TPCPreferences runningInHighResolutionMode]) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolutionHighResoMode",
+						  maiScreen.frame.size.width,
+						  maiScreen.frame.size.height);
+		} else {
+			_new = TXTFLS(@"SystemInformationCompiledOutputScreenResolution",
+						  maiScreen.frame.size.width,
+						  maiScreen.frame.size.height);
+		}
 		
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 	
-	/* Operating System. */
-	NSString *osname = [self operatingSystemName];
+	if (_show_load_avg) {
+		/* Load Average. */
+		if (NSObjectIsNotEmpty(_loadavg)) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputLoad", _loadavg);
+			
+			sysinfo = [sysinfo stringByAppendingString:_new];
+		}
+	}
 	
-	_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductName"], 
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"], osname,
-				  [[TPCPreferences systemInfoPlist] objectForKey:@"ProductBuildVersion"]);
+	if (_show_os_version) {
+		/* Operating System. */
+		NSString *osname = [self operatingSystemName];
+		
+		_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
+					  [TPCPreferences systemInfoPlist][@"ProductName"], 
+					  [TPCPreferences systemInfoPlist][@"ProductVersion"], osname,
+					  [TPCPreferences systemInfoPlist][@"ProductBuildVersion"]);
+		
+		sysinfo = [sysinfo stringByAppendingString:_new];
+	}
 	
-	sysinfo = [sysinfo stringByAppendingString:_new];
-
+	if ([sysinfo hasSuffix:@" \002•\002"]) {
+		sysinfo = [sysinfo safeSubstringToIndex:(sysinfo.length - 3)];
+	}
+	
 	/* Compiled Output. */
 	return sysinfo;
 }
@@ -139,9 +200,17 @@
 	NSArray *screens = [NSScreen screens];
 	
 	if ([screens count] == 1) {
-		NSScreen *maiScreen = [screens objectAtIndex:0];
-
-		return TXTFLS(@"SystemInformationScreensCommandResultSingle", maiScreen.frame.size.width, maiScreen.frame.size.height);
+		NSScreen *maiScreen = _NSMainScreen();
+		
+		NSString *result = TXTFLS(@"SystemInformationScreensCommandResultSingle",
+								  maiScreen.frame.size.width,
+								  maiScreen.frame.size.height);
+		
+		if ([TPCPreferences runningInHighResolutionMode]) {
+			result = [result stringByAppendingString:TXTLS(@"SystemInformationScreensCommandResultHighResoMode")];
+		}
+		
+		return result;
 	} else {
 		NSMutableString *result = [NSMutableString string];
 		
@@ -149,9 +218,19 @@
 			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
 			
 			if (screenNumber == 1) {
-				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiBase", screenNumber, screen.frame.size.width, screen.frame.size.height)];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiBase",
+											screenNumber,
+											screen.frame.size.width,
+											screen.frame.size.height)];
 			} else {
-				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiMiddle", screenNumber, screen.frame.size.width, screen.frame.size.height)];
+				[result appendString:TXTFLS(@"SystemInformationScreensCommandResultMultiMiddle",
+											screenNumber,
+											screen.frame.size.width,
+											screen.frame.size.height)];
+			}
+			
+			if ([screen backingScaleFactor] == 2.0f) {
+				[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
 			}
 		}
 		
@@ -162,11 +241,11 @@
 + (NSString *)applicationAndSystemUptime
 {
 	NSString *systemUptime = TXSpecialReadableTime([self _internalSystemUptime], NO,
-												   [NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
+												   @[@"day", @"hour", @"minute", @"second"]);
 	
 	NSString *textualUptime = TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:[TPCPreferences startTime]], NO,
-													[NSArray arrayWithObjects:@"day", @"hour", @"minute", @"second", nil]);
-
+													@[@"day", @"hour", @"minute", @"second"]);
+	
 	return TXTFLS(@"SystemInformationUptimeCommandResult", systemUptime, textualUptime);
 }
 
@@ -183,13 +262,14 @@
 
 + (NSString *)bandwidthStatsFrom:(IRCWorld *)world
 {
+	CGFloat messageAvg = (world.messagesReceived / ([NSDate epochTime] - [TPCPreferences startTime]));
+	
 	return TXTFLS(@"SystemInformationMsgcountCommandResult",
 				  TXFormattedNumber(world.messagesSent),
 				  TXFormattedNumber(world.messagesReceived),
-				  (world.messagesReceived / ([NSDate epochTime] - [TPCPreferences startTime])),
 				  [self formattedDiskSize:world.bandwidthIn],
-				  [self formattedDiskSize:world.bandwidthOut]);
-	
+				  [self formattedDiskSize:world.bandwidthOut],
+				  messageAvg);
 }
 
 + (NSString *)systemLoadAverage
@@ -236,12 +316,12 @@
 			
 			if (objectIndex == 0) {
 				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultBase",
-											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 @(ifa->ifa_name),
 											 [self formattedDiskSize:if_data->ifi_ibytes], 
 											 [self formattedDiskSize:if_data->ifi_obytes])];
 			} else {
 				[netstat appendString:TXTFLS(@"SystemInformationNetstatsCommandResultMiddle",
-											 [NSString stringWithUTF8String:ifa->ifa_name],
+											 @(ifa->ifa_name),
 											 [self formattedDiskSize:if_data->ifi_ibytes], 
 											 [self formattedDiskSize:if_data->ifi_obytes])];
 			}
@@ -288,7 +368,7 @@
 	}
 	
 	[result appendFormat:@"%c", 0x03];
-
+	
 	return TXTFLS(@"SystemInformationSysmemCommandResult",
 				  [self formattedDiskSize:freeMemory],
 				  [self formattedDiskSize:usedMemory],
@@ -392,21 +472,17 @@
 
 + (NSString *)applicationMemoryUsage
 {
-	struct task_basic_info info;
+	NSDictionary *mem = [TPI_SP_SysInfo _applicationMemoryInternalInformation];
 	
-	mach_msg_type_number_t size = sizeof(info);
-	kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
+	NSString *shared  = [self formattedDiskSize:[mem integerForKey:@"shared"]];
+	NSString *private = [self formattedDiskSize:[mem integerForKey:@"private"]];
 	
-	if (kerr == KERN_SUCCESS) {
-		return TXTFLS(@"SystemInformationApplicationMemoryUse", [self formattedDiskSize:info.resident_size]);
-	} 
-	
-	return nil;
+	return TXTFLS(@"SystemInformationApplicationMemoryUse", private, shared);
 }
 
 + (NSString *)graphicsCardInfo
 {
-	CGDirectDisplayID displayID		= CGMainDisplayID();
+	CGDirectDisplayID   displayID	= CGMainDisplayID();
 	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
     
 	GLint numPixelFormats			= 0;
@@ -427,7 +503,7 @@
 		CGLSetCurrentContext(cglContext);
 		
 		if (cglContext) {
-			NSString *model = [NSString stringWithCString:(const char *)glGetString(GL_RENDERER) encoding:NSASCIIStringEncoding];
+			NSString *model = @((const char *)glGetString(GL_RENDERER));
             
 			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:NSStringEmptyPlaceholder];
 		}
@@ -443,7 +519,7 @@
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
-
+		
 		return TXTFLS(@"SystemInformationCompiledOutputDiskspaceExtended",
 					  [self formattedDiskSize:totalSpace],
 					  [self formattedDiskSize:freeSpace]);
@@ -502,7 +578,7 @@
 	if (0 == sysctlbyname("machdep.cpu.brand_string", buffer, &sz, NULL, 0)) {
 		buffer[(sizeof(buffer) - 1)] = 0;
 		
-		return [NSString stringWithUTF8String:buffer];
+		return @(buffer);
 	} else {
 		return nil;
 	}	
@@ -517,7 +593,7 @@
 	if (0 == sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0)) {
 		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
 		
-		return [NSString stringWithUTF8String:modelBuffer];
+		return @(modelBuffer);
 	} else {
 		return nil;
 	}	
@@ -576,7 +652,7 @@
 
 + (NSString *)operatingSystemName
 {
-	NSString *productVersion = [[TPCPreferences systemInfoPlist] objectForKey:@"ProductVersion"];
+	NSString *productVersion = [TPCPreferences systemInfoPlist][@"ProductVersion"];
 	
 	if ([productVersion contains:@"10.6"]) {
 		return TXTLS(@"SystemInformationOSVersionSnowLeopard");
@@ -625,6 +701,48 @@
 + (NSString *)physicalMemorySize
 {
 	return [self formattedDiskSize:[self totalMemorySize]];
+}
+
++ (NSDictionary *)_applicationMemoryInternalInformation
+{
+	kern_return_t kernr;
+	
+	mach_vm_address_t addr = 0;
+	
+	NSInteger shrdmem = 0;
+	NSInteger privmem = 0;
+	
+	int pagesize = getpagesize();
+	
+	while (1 == 1) {
+		mach_vm_address_t size;
+		
+		vm_region_top_info_data_t info;
+		
+		mach_msg_type_number_t count = VM_REGION_TOP_INFO_COUNT;
+		mach_port_t object_name;
+		
+		kernr = mach_vm_region(mach_task_self(), &addr, &size, VM_REGION_TOP_INFO,
+							   (vm_region_info_t)&info, &count, &object_name);
+		
+		if (NSDissimilarObjects(kernr, KERN_SUCCESS)) {
+			break;
+		}
+		
+		if (info.share_mode == SM_PRIVATE) {
+			privmem += (info.private_pages_resident * pagesize);
+			shrdmem += (info.shared_pages_resident * pagesize);
+		} else if (info.share_mode == SM_COW) {
+			privmem += (info.private_pages_resident * pagesize);
+			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
+		} else if (info.share_mode == SM_SHARED) {
+			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
+		}
+		
+		addr += size;
+	}
+	
+	return @{@"shared" : @(shrdmem), @"private" : @(privmem)};
 }
 
 @end

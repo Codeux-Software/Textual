@@ -1,7 +1,39 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 09, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
@@ -11,94 +43,23 @@
 #define _timeoutIntMin     0
 #define _timeoutIntMax     360
 
-@interface TDCServerSheet (Private)
-- (void)load;
-- (void)save;
-- (void)updateConnectionPage;
-- (void)updateChannelsPage;
-- (void)reloadChannelTable;
-- (void)updateIgnoresPage;
-- (void)reloadIgnoreTable;
-- (void)focusView:(NSView *)view atRow:(NSInteger)row;
-@end
-
 @implementation TDCServerSheet
-
-@synthesize delegate;
-@synthesize okButton;
-@synthesize sheet;
-@synthesize generalView;
-@synthesize identityView;
-@synthesize messagesView;
-@synthesize encodingView;
-@synthesize autojoinView;
-@synthesize ignoresView;
-@synthesize commandsView;
-@synthesize floodControlView;
-@synthesize floodControlToolView;
-@synthesize proxyServerView;
-@synthesize addChannelButton;
-@synthesize addIgnoreButton;
-@synthesize altNicksText;
-@synthesize prefersIPv6Check;
-@synthesize autoConnectCheck;
-@synthesize bouncerModeCheck;
-@synthesize autoReconnectCheck;
-@synthesize channelSheet;
-@synthesize channelTable;
-@synthesize client;
-@synthesize config;
-@synthesize contentView;
-@synthesize deleteChannelButton;
-@synthesize deleteIgnoreButton;
-@synthesize editChannelButton;
-@synthesize editIgnoreButton;
-@synthesize encodingCombo;
-@synthesize fallbackEncodingCombo;
-@synthesize hostCombo;
-@synthesize ignoreSheet;
-@synthesize ignoreTable;
-@synthesize invisibleCheck;
-@synthesize addIgnoreMenu;
-@synthesize leavingCommentText;
-@synthesize loginCommandsText;
-@synthesize nameText;
-@synthesize nickPasswordText;
-@synthesize nickText;
-@synthesize passwordText;
-@synthesize portText;
-@synthesize proxyCombo;
-@synthesize proxyHostText;
-@synthesize proxyPasswordText;
-@synthesize proxyPortText;
-@synthesize proxyUserText;
-@synthesize realNameText;
-@synthesize sleepQuitMessageText;
-@synthesize sslCheck;
-@synthesize tabView;
-@synthesize uid;
-@synthesize usernameText;
-@synthesize floodControlDelayTimer;
-@synthesize floodControlMessageCount;
-@synthesize outgoingFloodControl;
-@synthesize tabViewList;
-@synthesize serverList;
 
 - (id)init
 {
 	if ((self = [super init])) {
 		self.tabViewList = [NSMutableArray new];
 		
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"General",						@"1", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Identity",						@"2", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Message",						@"3", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Encoding",						@"4", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Autojoin",						@"5", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Ignores",						@"6", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Commands",						@"7", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:TXDefaultListSeperatorCellIndex,	@"-", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"Proxy",							@"8", NSNumberWithBOOL(NO), nil]];
-		[self.tabViewList addObject:[NSArray arrayWithObjects:@"FloodControl",					@"9", NSNumberWithBOOL(NO), nil]];
+		[self.tabViewList addObject:@[@"General",						@"1", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Identity",						@"2", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Message",						@"3", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Encoding",						@"4", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Autojoin",						@"5", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Ignores",						@"6", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Commands",						@"7", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"Proxy",							@"8", NSNumberWithBOOL(NO)]];
+		[self.tabViewList addObject:@[@"FloodControl",					@"9", NSNumberWithBOOL(NO)]];
 		
 		[NSBundle loadNibNamed:@"TDCServerSheet" owner:self];
 		
@@ -136,7 +97,7 @@
 - (NSString *)hostFoundInServerList:(NSString *)hosto
 {
 	for (NSString *key in self.serverList) {
-		NSString *host = [self.serverList objectForKey:key];
+		NSString *host = (self.serverList)[key];
 		
 		if ([hosto isEqualNoCase:host]) {
 			return key;
@@ -313,7 +274,7 @@
 		if (NSObjectIsEmpty(realHost)) {
 			self.config.host = hostname;
 		} else {
-			self.config.host = [self.serverList objectForKey:realHost];
+			self.config.host = (self.serverList)[realHost];
 		}
 	}
 	
@@ -512,7 +473,10 @@
 		IRCChannelConfig *c = [self.config.channels safeObjectAtIndex:sel];
 		
 		conf = [c mutableCopy];
-		conf.name = NSStringEmptyPlaceholder;
+		
+		conf.name			= NSStringEmptyPlaceholder;
+		conf.password		= NSStringEmptyPlaceholder;
+		conf.encryptionKey	= NSStringEmptyPlaceholder;
 	}
 	
 	self.channelSheet = nil;
@@ -566,7 +530,7 @@
 	if (n < 0) {
 		[self.config.channels safeAddObject:conf];
 	} else {
-		[self.config.channels replaceObjectAtIndex:n withObject:conf];
+		(self.config.channels)[n] = conf;
 	}
 	
 	[self reloadChannelTable];
@@ -715,7 +679,7 @@
 		} else if ([columnId isEqualToString:@"pass"]) {
 			return c.password;
 		} else if ([columnId isEqualToString:@"join"]) {
-			return NSNumberWithBOOL(c.autoJoin);
+			return @(c.autoJoin);
 		}
 	} else if (sender == self.tabView) {
 		NSArray *tabInfo = [self.tabViewList safeObjectAtIndex:row];
@@ -815,7 +779,7 @@
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
 	if (sender == self.channelTable) {
-		NSArray *ary = [NSArray arrayWithObject:NSNumberWithInteger([rows firstIndex])];
+		NSArray *ary = @[NSNumberWithInteger([rows firstIndex])];
         
 		[pboard declareTypes:_tableRowTypes owner:self];
 		

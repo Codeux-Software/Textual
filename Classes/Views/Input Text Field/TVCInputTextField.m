@@ -1,6 +1,39 @@
-// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 07, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
@@ -8,7 +41,6 @@
 
 #import <objc/objc-runtime.h>
 
-#define _InputTextFiedMaxHeight					382.0
 #define _InputBoxDefaultHeight					18.0
 #define _InputBoxHeightMultiplier				14.0
 #define _InputBoxBackgroundMaxHeight			387.0
@@ -16,14 +48,13 @@
 #define _InputBoxBackgroundHeightMultiplier		14.0
 #define _WindowContentBorderDefaultHeight		38.0
 
+#define _WindowSegmentedControllerDefaultX		10.0
+#define _InputTextFieldOriginDefaultX			144.0
+
 @implementation TVCInputTextField
 {
 	NSInteger _lastDrawnLineCount;
 }
-
-@synthesize placeholderString;
-@synthesize actionTarget;
-@synthesize actionSelector;
 
 #pragma mark -
 #pragma mark Drawing
@@ -37,30 +68,81 @@
         
         NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 		
-        [attrs setObject:TXDefaultTextFieldFont forKey:NSFontAttributeName];
-        [attrs setObject:[NSColor grayColor]	forKey:NSForegroundColorAttributeName];
+        attrs[NSFontAttributeName] = TXDefaultTextFieldFont;
+        attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
         
         self.placeholderString = [NSAttributedString alloc];
         self.placeholderString = [self.placeholderString initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
     }
-
+	
     return self;
+}
+
+- (void)redrawOriginPoints
+{
+	TXMasterController *master = [TPCPreferences masterController];
+
+	NSInteger defaultSegmentX = _WindowSegmentedControllerDefaultX;
+	NSInteger defaultInputbxX = _InputTextFieldOriginDefaultX;
+
+	NSInteger resultOriginX = 0;
+	NSInteger resultSizeWth = (defaultInputbxX - defaultSegmentX);
+	
+	if ([TPCPreferences hideMainWindowSegmentedController]) {
+		[master.windowButtonController setHidden:YES];
+
+		resultOriginX = defaultSegmentX;
+	} else {
+		[master.windowButtonController setHidden:NO];
+		
+		resultOriginX  = defaultInputbxX;
+		resultSizeWth *= -1;
+	}
+
+	NSRect fronFrame = [self.scrollView		frame];
+	NSRect backFrame = [self.backgroundView frame];
+	
+	if (NSDissimilarObjects(resultOriginX, fronFrame.origin.x) &&
+		NSDissimilarObjects(resultOriginX, backFrame.origin.x)) {
+
+		fronFrame.size.width += resultSizeWth;
+		backFrame.size.width += resultSizeWth;
+		
+		fronFrame.origin.x = resultOriginX;
+		backFrame.origin.x = resultOriginX;
+		
+		[self.scrollView	 setFrame:fronFrame];
+		[self.backgroundView setFrame:backFrame];
+	}
 }
 
 - (NSView *)splitterView
 {
-    return [self.superview.superview.superview.subviews objectAtIndex:0];
+    return (self.superview.superview.superview.subviews)[0];
 }
 
 - (TVCInputTextFieldBackground *)backgroundView
 {
-	return [self.superview.superview.superview.subviews objectAtIndex:2];
+	return (self.superview.superview.superview.subviews)[2];
 }
 
-- (void)resetTextFieldCellSize
+- (void)updateTextDirection
 {
-	BOOL drawCharCount = NO;
-	BOOL drawBezel     = YES;
+	if ([TPCPreferences rightToLeftFormatting]) {
+		[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
+	} else {
+		[self setBaseWritingDirection:NSWritingDirectionLeftToRight];
+	}
+}
+
+- (NSInteger)backgroundViewMaximumHeight
+{
+	return (self.window.frame.size.height - 50);
+}
+
+- (void)resetTextFieldCellSize:(BOOL)force
+{
+	BOOL drawBezel = YES;
 	
 	NSWindow     *mainWindow = self.window;
 	
@@ -82,35 +164,51 @@
 		textBoxFrame.size.height    = _InputBoxDefaultHeight;
 		backgroundFrame.size.height = _InputBoxBackgroundDefaultHeight;
 		
-		contentBorder = _WindowContentBorderDefaultHeight;
+		if (_lastDrawnLineCount >= 2) {
+			drawBezel = YES;
+		}
+		
+		_lastDrawnLineCount = 1;
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
 		
-		if (totalLinesBase >= 3) {
-			drawCharCount = YES;
-		}
-		
-		if (_lastDrawnLineCount == totalLinesBase) {
+		if (_lastDrawnLineCount == totalLinesBase && force == NO) {
 			drawBezel = NO;
 		}
-
+		
 		_lastDrawnLineCount = totalLinesBase;
 		
 		if (drawBezel) {
 			NSInteger totalLinesMath = (totalLinesBase - 1);
-			
+
+			/* Calculate unfiltered height. */
 			textBoxFrame.size.height	= _InputBoxDefaultHeight;
 			backgroundFrame.size.height	= _InputBoxBackgroundDefaultHeight;
 			
 			textBoxFrame.size.height	+= (totalLinesMath * _InputBoxHeightMultiplier);
 			backgroundFrame.size.height += (totalLinesMath * _InputBoxBackgroundHeightMultiplier);
-			
-			if (textBoxFrame.size.height > _InputTextFiedMaxHeight) {
-				textBoxFrame.size.height = _InputTextFiedMaxHeight;
-			}
-			
-			if (backgroundFrame.size.height > _InputBoxBackgroundMaxHeight) {
-				backgroundFrame.size.height = _InputBoxBackgroundMaxHeight;
+
+			NSInteger backgroundViewMaxHeight = [self backgroundViewMaximumHeight];
+
+			/* Fix height if it exceeds are maximum. */
+			if (backgroundFrame.size.height > backgroundViewMaxHeight) {
+				for (NSInteger i = totalLinesMath; i >= 0; i--) {
+					NSInteger newSize = 0;
+
+					newSize  =	   _InputBoxBackgroundDefaultHeight;
+					newSize += (i * _InputBoxBackgroundHeightMultiplier);
+
+					if (newSize > backgroundViewMaxHeight) {
+						continue;
+					} else {
+						backgroundFrame.size.height  = newSize;
+
+						textBoxFrame.size.height  = _InputBoxDefaultHeight;
+						textBoxFrame.size.height += (i * _InputBoxHeightMultiplier);
+
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -136,7 +234,7 @@
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
-    [self resetTextFieldCellSize];
+    [self resetTextFieldCellSize:NO];
 	
 	if (NSObjectIsEmpty(self.stringValue)) {
 		[super sanitizeTextField:NO];
@@ -144,7 +242,9 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect
-{	
+{
+	[self updateTextDirection];
+	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[_NSGraphicsCurrentContext() saveGraphicsState];
 		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
@@ -152,8 +252,10 @@
 	
 	NSString *value = [self stringValue];
 	
-	if (NSObjectIsEmpty(value) && NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-		[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+	if (NSObjectIsEmpty(value)) {
+		if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+			[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+		}
 	} else {
 		[super drawRect:dirtyRect];
 	}
@@ -167,7 +269,7 @@
 {
     [super paste:self];
     
-    [self resetTextFieldCellSize];
+    [self resetTextFieldCellSize:NO];
 	[self sanitizeTextField:YES];
 }
 
@@ -182,7 +284,7 @@
     if (aSelector == @selector(insertNewline:)) {
 		objc_msgSend(self.actionTarget, self.actionSelector);
         
-        [self resetTextFieldCellSize];
+        [self resetTextFieldCellSize:NO];
 		[self sanitizeTextField:NO];
         
         return YES;
@@ -194,18 +296,20 @@
 @end
 
 @implementation TVCInputTextFieldBackground
-{
-	BOOL _finishedFirstDraw;
-}
-
-@synthesize windowIsActive;
 
 - (void)setWindowIsActive:(BOOL)value
 {
+	/* We set a property stating we are active instead of
+	 calling our NSWindow and asking it because there are
+	 times that we are going to be drawing to a focused
+	 window, but it has not became visible yet. Therefore,
+	 the call to NSWindow would tell us to draw an inactive
+	 input box when it should be active. */
+	
 	if (NSDissimilarObjects(value, self.windowIsActive)) {
-		windowIsActive = value;
+		_windowIsActive = value;
 	}
-
+	
 	[self setNeedsDisplay:YES];
 }
 
@@ -229,11 +333,8 @@
 	
 	/* Black Outline. */
 	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-
-	/* We force focused color during first run because we draw before
-	 our window has finished coming to the front so the wrong color
-	 is used for our border. */
-	if (windowIsActive || _finishedFirstDraw == NO) {
+	
+	if (self.windowIsActive) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
@@ -259,10 +360,6 @@
 	
 	[controlColor set];
 	[controlPath fill];
-
-	if (_finishedFirstDraw == NO) {
-		_finishedFirstDraw = YES;
-	}
 }
 
 @end

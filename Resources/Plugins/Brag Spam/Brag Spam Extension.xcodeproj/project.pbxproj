@@ -163,6 +163,7 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -173,6 +174,7 @@
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -184,6 +186,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -200,9 +203,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -212,6 +220,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -227,9 +236,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -239,6 +253,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -254,9 +269,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -265,6 +285,7 @@
 		4CAA3B4C12E0EC7C00FB83EB /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -276,6 +297,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -291,9 +313,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -302,6 +329,7 @@
 		4CAA3B4E12E0EC7C00FB83EB /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -313,6 +341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -328,9 +357,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Classes/Headers/**\"";
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OBJROOT = ._build;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = BragSpam;
 				PROVISIONING_PROFILE = "";
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -339,6 +373,7 @@
 		4CCB84A31501C5690053A181 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

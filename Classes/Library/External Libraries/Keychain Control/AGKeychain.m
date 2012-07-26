@@ -280,7 +280,7 @@
 			strncpy(passwordBuffer, password, length);
 			passwordBuffer[length] = '\0';
 			
-			fpass = [NSString stringWithUTF8String:passwordBuffer];
+			fpass = @(passwordBuffer);
 		}
 		
 		if (password) {

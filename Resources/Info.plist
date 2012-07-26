@@ -44,9 +44,11 @@
 	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>TXBundleBuildCodeName</key>
+	<string>Turtle Soup</string>
 	<key>TXBundleBuildNumber</key>
-	<string>11368</string>
+	<string>12112</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-178-gf5e9cd9-appstore</string>
+	<string>2.1.1-257-g698aeb5-appstore,llvm4.0</string>
 </dict>
 </plist>

@@ -1,0 +1,55 @@
+<html type="{{viewTypeToken}}" 
+
+		{{#isChannelView}}
+			channelname="{{channelName}}" 
+		{{/isChannelView}}
+		
+		dir="{{textDirectionToken}}">
+		
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<link rel="stylesheet" type="text/css" href="{{activeStyleAbsolutePath}}/design.css?u={{cacheToken}}">
+		
+		<script src="{{applicationResourcePath}}/JavaScript/API/core.js" type="text/javascript"></script>
+		<script src="{{activeStyleAbsolutePath}}/scripts.js?u={{cacheToken}}" type="text/javascript"></script>
+		
+		<style type="text/css">
+			html, body, body[type], body {
+				font-family: '{{userConfiguredFontName}}';
+				font-size: {{userConfiguredFontSize}}pt;
+			}
+			
+			{{#nicknameIndentationAvailable}}
+				body div#body_home p {
+					margin-left: {{predefinedTimestampWidth}}px;
+					text-indent: -{{predefinedTimestampWidth}}px;
+				}
+			
+				body .time {
+					width: {{predefinedTimestampWidth}}px;
+				}
+			{{/nicknameIndentationAvailable}}
+			
+			{{#windowAntialiasingDisabled}}
+				body {
+					-webkit-font-smoothing: none;
+				}
+			{{/windowAntialiasingDisabled}}
+		</style>
+	</head>
+	
+	<body type="{{viewTypeToken}}" 
+
+		{{#isChannelView}}
+			channelname="{{channelName}}" 
+		{{/isChannelView}}
+		
+		dir="{{textDirectionToken}}">
+			<div id="body_home">{{{existingBody}}}</div>
+		
+			{{#isChannelView}}
+				<div id="topic_bar">{{{formattedTopicValue}}}</div>
+			{{/isChannelView}}
+	</body>
+</html>
