@@ -1,11 +1,41 @@
-// Created by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
-
-@interface TPCPreferencesMigrationAssistant (Private)
-+ (void)migrateGlobalPreference:(NSString *)newKey from:(NSString *)oldKey;
-@end
 
 @implementation TPCPreferencesMigrationAssistant
 
@@ -15,7 +45,7 @@
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config
 {
 	/* Has this configuration file already been migrated? */
-	NSString *lastUpgrade = [config objectForKey:TPCPreferencesMigrationAssistantVersionKey];
+	NSString *lastUpgrade = config[TPCPreferencesMigrationAssistantVersionKey];
 	
 	if (NSObjectIsNotEmpty(lastUpgrade)) {
 		if ([lastUpgrade isEqualToString:TPCPreferencesMigrationAssistantUpgradePath]) {
@@ -44,19 +74,19 @@
 	
 	[nconfig setInteger:[config integerForKey:@"cuid"]				forKey:@"connectionID"];
 	
-	[nconfig safeSetObject:[config objectForKey:@"guid"]				forKey:@"uniqueIdentifier"];
-	[nconfig safeSetObject:[config objectForKey:@"name"]				forKey:@"connectionName"];
-	[nconfig safeSetObject:[config objectForKey:@"host"]				forKey:@"serverAddress"];
-	[nconfig safeSetObject:[config objectForKey:@"nick"]				forKey:@"identityNickname"];
-	[nconfig safeSetObject:[config objectForKey:@"username"]			forKey:@"identityUsername"];
-	[nconfig safeSetObject:[config objectForKey:@"realname"]			forKey:@"identityRealname"];
-	[nconfig safeSetObject:[config objectForKey:@"alt_nicks"]			forKey:@"identityAlternateNicknames"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_host"]			forKey:@"proxyServerAddress"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_user"]			forKey:@"proxyServerUsername"];
-	[nconfig safeSetObject:[config objectForKey:@"proxy_password"]		forKey:@"proxyServerPassword"];
-	[nconfig safeSetObject:[config objectForKey:@"leaving_comment"]		forKey:@"connectionDisconnectDefaultMessage"];
-	[nconfig safeSetObject:[config objectForKey:@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
-	[nconfig safeSetObject:[config objectForKey:@"login_commands"]		forKey:@"onConnectCommands"];
+	[nconfig safeSetObject:config[@"guid"]				forKey:@"uniqueIdentifier"];
+	[nconfig safeSetObject:config[@"name"]				forKey:@"connectionName"];
+	[nconfig safeSetObject:config[@"host"]				forKey:@"serverAddress"];
+	[nconfig safeSetObject:config[@"nick"]				forKey:@"identityNickname"];
+	[nconfig safeSetObject:config[@"username"]			forKey:@"identityUsername"];
+	[nconfig safeSetObject:config[@"realname"]			forKey:@"identityRealname"];
+	[nconfig safeSetObject:config[@"alt_nicks"]			forKey:@"identityAlternateNicknames"];
+	[nconfig safeSetObject:config[@"proxy_host"]			forKey:@"proxyServerAddress"];
+	[nconfig safeSetObject:config[@"proxy_user"]			forKey:@"proxyServerUsername"];
+	[nconfig safeSetObject:config[@"proxy_password"]		forKey:@"proxyServerPassword"];
+	[nconfig safeSetObject:config[@"leaving_comment"]		forKey:@"connectionDisconnectDefaultMessage"];
+	[nconfig safeSetObject:config[@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
+	[nconfig safeSetObject:config[@"login_commands"]		forKey:@"onConnectCommands"];
 	
 	NSMutableDictionary *floodControl = [config dictionaryForKey:@"flood_control"].mutableCopy;
 	
@@ -65,10 +95,10 @@
 	
     [floodControl setBool:[floodControl boolForKey:@"outgoing"] forKey:@"serviceEnabled"];
     
-    [nconfig setObject:floodControl forKey:@"floodControl"];
+	[nconfig safeSetObject:floodControl forKey:@"floodControl"];
 	
-	[nconfig setObject:[config objectForKey:@"channels"]	forKey:@"channelList"];
-	[nconfig setObject:[config objectForKey:@"ignores"]		forKey:@"ignoreList"];
+	[nconfig safeSetObject:config[@"channels"] forKey:@"channelList"];
+	[nconfig safeSetObject:config[@"ignores"] forKey:@"ignoreList"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];
@@ -79,7 +109,7 @@
 + (NSDictionary *)convertIRCChannelConfiguration:(NSDictionary *)config
 {
 	/* Has this configuration file already been migrated? */
-	NSString *lastUpgrade = [config objectForKey:TPCPreferencesMigrationAssistantVersionKey];
+	NSString *lastUpgrade = config[TPCPreferencesMigrationAssistantVersionKey];
 	
 	if (NSObjectIsNotEmpty(lastUpgrade)) {
 		if ([lastUpgrade isEqualToString:TPCPreferencesMigrationAssistantUpgradePath]) {
@@ -100,12 +130,12 @@
     [nconfig setBool:[config boolForKey:@"disable_images"]		forKey:@"disableInlineMedia"];
     [nconfig setBool:[config boolForKey:@"ignore_join,leave"]	forKey:@"ignoreJPQActivity"];
 	
-	[nconfig safeSetObject:[config objectForKey:@"name"]			forKey:@"channelName"];
-	[nconfig safeSetObject:[config objectForKey:@"password"]		forKey:@"secretJoinKey"];
-	[nconfig safeSetObject:[config objectForKey:@"mode"]			forKey:@"defaultMode"];
-	[nconfig safeSetObject:[config objectForKey:@"topic"]			forKey:@"defaultTopic"];
-	[nconfig safeSetObject:[config objectForKey:@"password"]		forKey:@"secretKey"];
-	[nconfig safeSetObject:[config objectForKey:@"encryptionKey"]	forKey:@"encryptionKey"];
+	[nconfig safeSetObject:config[@"name"]			forKey:@"channelName"];
+	[nconfig safeSetObject:config[@"password"]		forKey:@"secretJoinKey"];
+	[nconfig safeSetObject:config[@"mode"]			forKey:@"defaultMode"];
+	[nconfig safeSetObject:config[@"topic"]			forKey:@"defaultTopic"];
+	[nconfig safeSetObject:config[@"password"]		forKey:@"secretKey"];
+	[nconfig safeSetObject:config[@"encryptionKey"]	forKey:@"encryptionKey"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];
@@ -140,7 +170,7 @@
 	[self.class migrateGlobalPreference:@"Highlight List -> Primary Matches"			from:@"keywords"];
 	[self.class migrateGlobalPreference:@"Highlight List -> Excluded Matches"			from:@"excludeWords"];
 
-	[self.class migrateGlobalPreference:@"ApplicationCTCPVersionMasquerade"						from:@"Preferences.General.masquerade_ctcp_version"];
+	[self.class migrateGlobalPreference:@"ApplicationCTCPVersionMasquerade"				from:@"Preferences.General.masquerade_ctcp_version"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> amsg"			from:@"Preferences.General.amsg_allconnections"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> away"			from:@"Preferences.General.away_allconnections"];
 	[self.class migrateGlobalPreference:@"ApplyCommandToAllConnections -> clearall"		from:@"Preferences.General.clear_only_active"];
@@ -149,13 +179,15 @@
 	[self.class migrateGlobalPreference:@"AutojoinMaximumChannelJoinCount"				from:@"Preferences.General.autojoin_maxchans"];
 	[self.class migrateGlobalPreference:@"AutojoinWaitsForNickservIdentification"		from:@"Preferences.General.nickserv_delay_autojoin"];
 	[self.class migrateGlobalPreference:@"AutomaticallyAddScrollbackMarker"				from:@"Preferences.General.autoadd_scrollbackmark"];
+	
 	[self.class migrateGlobalPreference:@"ChannelOperatorDefaultLocalization -> Kick Reason"	from:@"Preferences.General.kick_message"];
+	
 	[self.class migrateGlobalPreference:@"ConfirmApplicationQuit"						from:@"Preferences.General.confirm_quit"];
 	[self.class migrateGlobalPreference:@"CopyTextSelectionOnMouseUp"					from:@"Preferences.General.copyonselect"];
 	[self.class migrateGlobalPreference:@"DefaultBanCommandHostmaskFormat"				from:@"Preferences.General.banformat"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Nickname"							from:@"Preferences.Identity.nickname"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Realname"							from:@"Preferences.Identity.realname"];
-	[self.class migrateGlobalPreference:@"DefaultIdentity -> Username"							from:@"Preferences.Identity.username"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Nickname"					from:@"Preferences.Identity.nickname"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Realname"					from:@"Preferences.Identity.realname"];
+	[self.class migrateGlobalPreference:@"DefaultIdentity -> Username"					from:@"Preferences.Identity.username"];
 	[self.class migrateGlobalPreference:@"DestinationOfNonserverNotices"				from:@"Preferences.General.notices_sendto_location"];
 	[self.class migrateGlobalPreference:@"DisableNotificationsForActiveWindow"			from:@"Preferences.General.stop_growl_on_active"];
 	[self.class migrateGlobalPreference:@"DisableRemoteNicknameColorHashing"			from:@"Preferences.General.disable_nickname_colors"];
@@ -167,16 +199,16 @@
 	[self.class migrateGlobalPreference:@"DisplayServerMessageOfTheDayOnConnect"		from:@"Preferences.General.display_servmotd"];
 	[self.class migrateGlobalPreference:@"DisplayUserListNoModeSymbol"					from:@"Preferences.General.use_nomode_symbol"];
 	[self.class migrateGlobalPreference:@"FocusSelectionOnMessageCommandExecution"		from:@"Preferences.General.focus_on_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> G:Line Reason"			from:@"Preferences.General.ircop_gline_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Kill Reason"				from:@"Preferences.General.ircop_kill_message"];
-	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Shun Reason"				from:@"Preferences.General.ircop_shun_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> G:Line Reason"	from:@"Preferences.General.ircop_gline_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Kill Reason"		from:@"Preferences.General.ircop_kill_message"];
+	[self.class migrateGlobalPreference:@"IRCopDefaultLocalizaiton -> Shun Reason"		from:@"Preferences.General.ircop_shun_message"];
 	[self.class migrateGlobalPreference:@"InlineMediaScalingWidth"						from:@"Preferences.General.inline_image_width"];
 	[self.class migrateGlobalPreference:@"Keyboard -> Command+W Action"					from:@"Preferences.General.keyboard_cmdw_response"];
 	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Action"					from:@"Preferences.General.tab_action"];
-	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Completion Suffix"				from:@"Preferences.General.completion_suffix"];
+	[self.class migrateGlobalPreference:@"Keyboard -> Tab Key Completion Suffix"		from:@"Preferences.General.completion_suffix"];
 	[self.class migrateGlobalPreference:@"LogHighlights"								from:@"Preferences.General.log_highlights"];
 	[self.class migrateGlobalPreference:@"LogTranscript"								from:@"Preferences.General.log_transcript"];
-	[self.class migrateGlobalPreference:@"LogTranscriptDestination"								from:@"Preferences.General.transcript_folder"];
+	[self.class migrateGlobalPreference:@"LogTranscriptDestination"						from:@"Preferences.General.transcript_folder"];
 	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Channel"		from:@"Preferences.Experimental.view_loop_channel_delay"];
 	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Console"		from:@"Preferences.Experimental.view_loop_console_delay"];
 	[self.class migrateGlobalPreference:@"MainWindowTransparencyLevel"					from:@"Preferences.Theme.transparency"];
@@ -190,7 +222,7 @@
 	[self.class migrateGlobalPreference:@"RightToLeftTextFormatting"					from:@"Preferences.General.rtl_formatting"];
 	[self.class migrateGlobalPreference:@"SaveInputHistoryPerSelection"					from:@"Preferences.Theme.inputhistory_per_channel"];
 	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNotices"				from:@"Preferences.General.handle_operalerts"];
-	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNoticesMatch"				from:@"Preferences.General.ircop_alert_match"];
+	[self.class migrateGlobalPreference:@"ScanForIRCopAlertInServerNoticesMatch"		from:@"Preferences.General.ircop_alert_match"];
 	[self.class migrateGlobalPreference:@"ScrollbackMaximumLineCount"					from:@"Preferences.General.max_log_lines"];
 	[self.class migrateGlobalPreference:@"ServerListDoubleClickConnectServer"			from:@"Preferences.General.connect_on_doubleclick"];
 	[self.class migrateGlobalPreference:@"ServerListDoubleClickDisconnectServer"		from:@"Preferences.General.disconnect_on_doubleclick"];
@@ -199,11 +231,11 @@
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticGrammarCheck"				from:@"GrammarChecking"];
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticSpellCheck"					from:@"SpellChecking"];
 	[self.class migrateGlobalPreference:@"TextFieldAutomaticSpellCorrection"			from:@"AutoSpellCorrection"];
-	[self.class migrateGlobalPreference:@"Theme -> Font Name"									from:@"Preferences.Theme.log_font_name"];
+	[self.class migrateGlobalPreference:@"Theme -> Font Name"							from:@"Preferences.Theme.log_font_name"];
 	[self.class migrateGlobalPreference:@"Theme -> Font Size"							from:@"Preferences.Theme.log_font_size"];
-	[self.class migrateGlobalPreference:@"Theme -> Name"										from:@"Preferences.Theme.name"];
-	[self.class migrateGlobalPreference:@"Theme -> Nickname Format"								from:@"Preferences.Theme.nick_format"];
-	[self.class migrateGlobalPreference:@"Theme -> Timestamp Format"							from:@"Preferences.Theme.timestamp_format"];
+	[self.class migrateGlobalPreference:@"Theme -> Name"								from:@"Preferences.Theme.name"];
+	[self.class migrateGlobalPreference:@"Theme -> Nickname Format"						from:@"Preferences.Theme.nick_format"];
+	[self.class migrateGlobalPreference:@"Theme -> Timestamp Format"					from:@"Preferences.Theme.timestamp_format"];
 	[self.class migrateGlobalPreference:@"TrackConversationsWithColorHashing"			from:@"Preferences.General.track_conversations"];
 	[self.class migrateGlobalPreference:@"TrackNicknameHighlightsOfLocalUser"			from:@"Preferences.Keyword.current_nick"];
 	[self.class migrateGlobalPreference:@"UserListDoubleClickAction"					from:@"Preferences.General.user_doubleclick_action"];

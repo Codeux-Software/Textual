@@ -26,12 +26,6 @@
 
 @implementation DDInvocation
 
-@synthesize target;
-@synthesize invocation;
-@synthesize threadType;
-@synthesize parentThread;
-@synthesize waitUntilDone;
-
 + (id)invocationGrabber
 {
     return [[self alloc] init];

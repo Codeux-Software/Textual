@@ -104,10 +104,10 @@ static NSArray					*encKeys						= nil;
 		puncSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutablePuncSet bitmapRepresentation]];
 		endSet = [NSCharacterSet characterSetWithCharactersInString:@"\"',:;>)]}.?!@"];
 		hostnameComponentSeparatorSet = [NSCharacterSet characterSetWithCharactersInString:@"./"];
-		enclosureStartArray = [NSArray arrayWithObjects:@"(",@"[",@"{",nil];
+		enclosureStartArray = @[@"(",@"[",@"{"];
 		enclosureSet = [NSCharacterSet characterSetWithCharactersInString:@"()[]{}"];
-		enclosureStopArray = [NSArray arrayWithObjects:@")",@"]",@"}",nil];
-		encKeys = [NSArray arrayWithObjects:ENC_INDEX_KEY, ENC_CHAR_KEY, nil];
+		enclosureStopArray = @[@")",@"]",@"}"];
+		encKeys = @[ENC_INDEX_KEY, ENC_CHAR_KEY];
 	}
 }
 
@@ -121,7 +121,7 @@ static NSArray					*encKeys						= nil;
 	m_strictChecking = NO;
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
-	m_urlSchemes = [NSDictionary dictionaryWithObjectsAndKeys:@"ftp://", @"ftp", nil];
+	m_urlSchemes = @{@"ftp": @"ftp://"};
 	
 	return [self _allMatches];
 }
@@ -131,7 +131,7 @@ static NSArray					*encKeys						= nil;
 	m_strictChecking = YES;
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
-	m_urlSchemes = [NSDictionary dictionaryWithObjectsAndKeys:@"ftp://", @"ftp", nil];
+	m_urlSchemes = @{@"ftp": @"ftp://"};
 	
 	return [self _allMatches];
 }
@@ -213,7 +213,7 @@ static NSArray					*encKeys						= nil;
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
 			if (encIdx != NSNotFound) {
-				NSRange encRange = [m_scanString rangeOfString:[enclosureStopArray objectAtIndex:encIdx] options:NSBackwardsSearch range:scannedRange];
+				NSRange encRange = [m_scanString rangeOfString:enclosureStopArray[encIdx] options:NSBackwardsSearch range:scannedRange];
 				
 				scannedRange.location++; 
 				
@@ -333,7 +333,7 @@ static NSArray					*encKeys						= nil;
 		matchChar = [m_scanString substringWithRange:NSMakeRange(encScanLocation, 1)];
 		
 		if ([enclosureStartArray containsObject:matchChar]) {
-			encDict = [NSDictionary	dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedLong:encScanLocation], matchChar, nil]
+			encDict = [NSDictionary	dictionaryWithObjects:@[@(encScanLocation), matchChar]
 												  forKeys:encKeys];
 			
 			if (enclosureStack == nil) {
@@ -345,8 +345,8 @@ static NSArray					*encKeys						= nil;
 			NSEnumerator *encEnumerator = [enclosureStack objectEnumerator];
 			
 			while ((encDict = [encEnumerator nextObject])) {
-				unsigned long encTagIndex	 = [[encDict objectForKey:ENC_INDEX_KEY] unsignedLongValue];
-				unsigned long encStartIndex  = [enclosureStartArray indexOfObjectIdenticalTo:[encDict objectForKey:ENC_CHAR_KEY]];
+				unsigned long encTagIndex	 = [encDict[ENC_INDEX_KEY] unsignedLongValue];
+				unsigned long encStartIndex  = [enclosureStartArray indexOfObjectIdenticalTo:encDict[ENC_CHAR_KEY]];
 				
 				if ([enclosureStopArray indexOfObjectIdenticalTo:matchChar] == encStartIndex) {
 					NSRange encRange = NSMakeRange(encTagIndex, (encScanLocation - encTagIndex + 1));

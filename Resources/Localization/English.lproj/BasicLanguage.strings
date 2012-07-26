@@ -1,4 +1,39 @@
-/* Copyright © 2010, 2011, 2012 Codeux Software. */
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 "AboutWindowBuildNumber" = "Version %@";
 
@@ -19,6 +54,8 @@
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";
 
 "ChannelListNetworkName" = "Channel List for \"%@\"";
+
+"CloseButton" = "Close";
 
 "CmdWShortcutCloseQueryType" = "Close Query";
 "CmdWShortcutCloseWindowType" = "Close Window";
@@ -51,11 +88,11 @@
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "IRCCTCPSupportedReplies" = "VERSION CLIENTINFO USERINFO PING TIME";
-"IRCCTCPVersionInfo" = "%1$@ %2$@ (Git Reference: %3$@)";
+"IRCCTCPVersionInfo" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
-"IRCChannelEmptyTopic"			= "(No Topic)";
+"IRCChannelEmptyTopic" = "(No Topic)";
 "IRCChannelHasModes" = "Mode is \002%@\002";
 "IRCChannelHasTopic" = "Topic is \002%@\002";
 "IRCChannelHasTopicAuthor" = "Set by \002%1$@\002 on %2$@";
@@ -64,6 +101,7 @@
 "IRCChannelTopicChanged" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "IRCConnectedToServer" = "Connection to host completed.";
 "IRCDisconnectedBySleepMode" = "Disconnect for Sleep Mode";
+"IRCDisconnectedByBadSSLCertificate" = "Disconnected from server because of an untrusted SSL certificate.";
 "IRCDisconnectedByTimeout" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRCDisconnectedByTrialPeriodTimer" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "IRCDisconnectedFromServer" = "Disconnected";
@@ -110,9 +148,19 @@
 "KickReason" = "Your behavior is not conducive to the desired environment.";
 "KillReason" = "Your behavior is not conducive to the desired environment.";
 
-"LagCheckRequestReplyMessage" = "Received lag check reply from %@. Time elapsed: %1.5f seconds.";
+"LagCheckRequestReplyMessage" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
 "LagCheckRequestSentMessage" = "Waiting for response from lag check …";
 "LagCheckRequestUnknownReply" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
+
+"LagCheckRequestReplyRating_01" = "Too fast to be real.";
+"LagCheckRequestReplyRating_02" = "Almost No Lag.";
+"LagCheckRequestReplyRating_03" = "Very Fast.";
+"LagCheckRequestReplyRating_04" = "Fast.";
+"LagCheckRequestReplyRating_05" = "Average.";
+"LagCheckRequestReplyRating_06" = "Slow.";
+"LagCheckRequestReplyRating_07" = "Very Slow.";
+"LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
+"LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";
 
 "ListDialogHasChannels" = "%i Public Channels";
 "ListDialogHasSearchResults" = "%1$i Public Channels - %2$i Search Results";
@@ -120,6 +168,8 @@
 "LogPathDoesNotExistMessage" = "No logs were found for this chat session.";
 "LogPathDoesNotExistTitle" = "No Logs Found";
 "LogViewHideInlineImageMessage" = "Hide image by shift clicking.";
+
+"NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 
 "NoButton" = "No";
 
@@ -196,6 +246,8 @@
 "SoundIsNotMuted" = "Sound is not muted.";
 "SoundIsNowMuted" = "Sound has been muted.";
 
+"StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
+
 "TXEmptySoundAlertLabel" = "None";
 
 "TXNotificationAddressBookMatchType"	= "Address Book Notification";
@@ -214,6 +266,7 @@
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 "ThemeChangeOverridePromptNicknameFormat" = "• Nickname Format";
 "ThemeChangeOverridePromptTimestampFormat" = "• Timestamp Format";
+"ThemeChangeOverridePromptWindowColors" = "• Window Colors";
 "ThemeChangeOverridePromptTitle" = "Preferred Selection";
 
 "TimeAgo" = "%@ Ago";
@@ -281,6 +334,8 @@
 
 /* System Profiler Extension. */
 
+"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
+
 "SystemInformationCompiledOutputPrefix" = "System Information:";
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
 "SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
@@ -292,6 +347,7 @@
 "SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
 "SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
 "SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
+"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
 "SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
 "SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
 
@@ -299,7 +355,7 @@
 "SystemInformationOSVersionLion" = "Lion";
 "SystemInformationOSVersionMountainLion" = "Mountain Lion";
 
-"SystemInformationApplicationMemoryUse" = "Textual is currently using %@ of memory in 64-bit mode.";
+"SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
 
 "SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
 "SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
@@ -325,9 +381,10 @@
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
+"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
 
 "SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";
 "SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%3$.2f\002 messages a second. Combined this comes to around \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
+"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%5$.2f\002 messages a second. Combined this comes to around \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";
