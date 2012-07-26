@@ -2435,7 +2435,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "debug,llvm4.0";
+				TEXTUAL_GITREF_BUILD_ID = debug;
 			};
 			name = Debug;
 		};
@@ -2446,7 +2446,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "stdbuild,llvm4.0";
+				TEXTUAL_GITREF_BUILD_ID = stdbuild;
 			};
 			name = Release;
 		};
@@ -2457,7 +2457,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
-				TEXTUAL_GITREF_BUILD_ID = "trial,llvm4.0";
+				TEXTUAL_GITREF_BUILD_ID = trial;
 			};
 			name = "Release (Trial)";
 		};
@@ -2468,7 +2468,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox,llvm4.0";
+				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2479,7 +2479,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "appstore,llvm4.0";
+				TEXTUAL_GITREF_BUILD_ID = appstore;
 			};
 			name = "App Store Release";
 		};
