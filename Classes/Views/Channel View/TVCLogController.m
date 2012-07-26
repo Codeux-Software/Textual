@@ -785,7 +785,7 @@
 			@"imageURL"					: imageUrl,
 			@"anchorLink"				: url,
 			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
-			@"localizedHideTitle"		: TXTLS(@"LogViewHideInlineImageMessage"),
+			@"localizedHideImageTitle"	: TXTLS(@"LogViewHideInlineImageMessage"),
 		 }];
 	}
 
@@ -898,7 +898,7 @@
 			[self setNeedsLimitNumberOfLines];
 		}
 		
-		if ([attrs[@"highlight"] isEqualToString:@"true"]) {
+		if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
 			[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
 		}
 		
