@@ -182,6 +182,11 @@ NSInteger ctoi(unsigned char c);
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 
+- (NSString *)removeAllNewlines
+{
+	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
+}
+
 - (BOOL)isNumericOnly
 {
 	NSUInteger len = self.length;

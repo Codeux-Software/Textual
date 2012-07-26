@@ -85,6 +85,8 @@
 - (NSString *)trim;
 - (NSString *)trimNewlines;
 
+- (NSString *)removeAllNewlines;
+
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference;
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
 
