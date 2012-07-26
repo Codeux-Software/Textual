@@ -1,7 +1,39 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 09, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
@@ -13,53 +45,9 @@
 #define _TXWindowToolbarHeight		82
 #define _addonsToolbarItemIndex		8
 
-@interface TDCPreferencesController (Private)
-- (void)updateTheme;
-- (void)updateAlert;
-
-- (void)setUpToolbarItemsAndMenus;
-- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key;
-
-- (void)changeItemFont:(NSFontManager *)sender;
-- (void)updateTranscriptFolder;
-@end
-
 @implementation TDCPreferencesController
 
-@synthesize sounds;
-@synthesize alertsView;
-@synthesize channelManagementView;
-@synthesize contentView;
-@synthesize delegate;
-@synthesize excludeWordsArrayController;
-@synthesize excludeWordsTable;
-@synthesize experimentalSettingsView;
-@synthesize floodControlView;
-@synthesize generalView;
-@synthesize highlightView;
-@synthesize identityView;
-@synthesize installedScriptsMenu;
-@synthesize installedScriptsTable;
-@synthesize interfaceView;
-@synthesize IRCopServicesView;
-@synthesize keywordsArrayController;
-@synthesize keywordsTable;
-@synthesize logView;
-@synthesize world;
-@synthesize preferenceSelectToolbar;
-@synthesize scriptLocationField;
-@synthesize scriptsController;
-@synthesize scriptsView;			
-@synthesize stylesView;
-@synthesize themeButton;
-@synthesize alertButton;
-@synthesize alertSoundButton;
-@synthesize highlightNicknameButton;
-@synthesize transcriptFolderButton;
-@synthesize addExcludeWordButton;
-@synthesize useGrowlButton;
-@synthesize disableAlertWhenAwayButton;
-@synthesize availableSounds;
+@synthesize scriptsView;
 
 - (id)initWithWorldController:(IRCWorld *)word
 {
@@ -68,6 +56,22 @@
 		
 		self.world			   = word;
 		self.scriptsController = [TDCPreferencesScriptWrapper new];
+
+		self.sounds = [NSMutableArray new];
+		
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+
+		[self setUpToolbarItemsAndMenus];
 	}
 	
 	return self;
@@ -97,7 +101,6 @@
 	[self.window makeKeyAndOrderFront:nil];
 	
 	[self updateTranscriptFolder];
-	[self setUpToolbarItemsAndMenus];
 	[self onHighlightTypeChanged:nil];
 	
 	[self firstPane:self.generalView selectedItem:0];
@@ -110,8 +113,8 @@
 {		
 	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
 	
-	return [NSArray arrayWithObjects:@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
-			@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11", nil];
+	return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
+	@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11"];
 }
 
 - (void)setUpToolbarItemsAndMenus
@@ -362,49 +365,26 @@
 	return sound_list;
 }
 
-- (NSMutableArray *)sounds
-{
-	if (NSObjectIsEmpty(sounds)) {
-		NSMutableArray *ary = [NSMutableArray new];
-		
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
-		[ary addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
-		
-		self.sounds = ary;
-	}
-	
-	return sounds;
-}
-
 #pragma mark -
 #pragma mark Transcript Folder Popup
 
 - (void)updateTranscriptFolder
 {
-	if ([TPCPreferences sandboxEnabled]) {
-		[self.transcriptFolderButton setHidden:YES];
-		
-		return;
-	}
-	
 	NSString *path = [[TPCPreferences transcriptFolder] stringByExpandingTildeInPath];
-	
-	NSImage *icon = [_NSWorkspace() iconForFile:path];
-	[icon setSize:NSMakeSize(16, 16)];
-	
-	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
-	
-	[item setTitle:[[path lastPathComponent] decodeURIFragement]];
-	[item setImage:icon];
+
+	if (NSObjectIsEmpty(path)) {
+		NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
+		
+		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
+	} else {
+		NSImage *icon = [_NSWorkspace() iconForFile:path];
+		[icon setSize:NSMakeSize(16, 16)];
+		
+		NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
+		
+		[item setTitle:[[path lastPathComponent] decodeURIFragement]];
+		[item setImage:icon];
+	}
 }
 
 - (void)onTranscriptFolderChanged:(id)sender
@@ -417,16 +397,32 @@
 		[d setCanChooseDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		[d setCanCreateDirectories:YES];
-		
-		[d beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
+
+		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];
 			
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
-				
-				NSString *path = [pathURL path];
-				
-				[TPCPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+
+				if ([TPCPreferences sandboxEnabled] && [TPCPreferences securityScopedBookmarksAvailable]) {
+					NSData *bookmark = nil;
+					
+					NSError *error = nil;
+					
+					bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+							 includingResourceValuesForKeys:nil
+											  relativeToURL:nil 
+													  error:&error];
+					if (error) {
+						NSLog(@"Error creating bookmark for URL (%@): %@", pathURL, error);
+					} else {
+						[TPCPreferences setTranscriptFolder:bookmark];
+					}
+				} else {
+					NSString *path = [pathURL path];
+					
+					[TPCPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+				}
 				
 				[self updateTranscriptFolder];
 			}
@@ -443,7 +439,7 @@
 	
 	NSInteger tag = 0;
 	
-	NSArray *ary = [NSArray arrayWithObjects:[TPCPreferences whereThemesLocalPath], [TPCPreferences whereThemesPath], nil];
+	NSArray *ary = @[[TPCPreferences whereThemesLocalPath], [TPCPreferences whereThemesPath]];
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
@@ -505,9 +501,6 @@
 
 - (void)onChangedTheme:(id)sender
 {
-    TXNSDouble oldRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
-    TXNSDouble newRenderVersion = 0;
-    
 	NSMenuItem *item = [self.themeButton selectedItem];
 	
 	NSString *newThemeName = nil;
@@ -526,19 +519,15 @@
 	[TPCPreferences setThemeName:newThemeName];
 	
 	[self onStyleChanged:nil];
-    
-    newRenderVersion = self.world.viewTheme.other.renderingEngineVersion;
-    
-    if (NSDissimilarObjects(oldRenderVersion, newRenderVersion)) {
-        for (IRCClient *u in self.world.clients) {
-            [u sendCommand:@"CLEARALL"];
-        }
-    }
 }
 
 - (void)onSelectFont:(id)sender
 {
 	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+
+	if (PointerIsEmpty(logfont)) {
+		logfont = [TPCPreferences themeChannelViewFont];
+	}
 	
 	[_NSFontManager() setSelectedFont:logfont isMultiple:NO];
 	[_NSFontManager() orderFrontFontPanel:self];
@@ -547,15 +536,19 @@
 
 - (void)changeItemFont:(NSFontManager *)sender
 {
-	TPCOtherTheme *theme = self.world.viewTheme.other;
+	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+
+	if (PointerIsEmpty(logfont)) {
+		logfont = [TPCPreferences themeChannelViewFont];
+	}
 	
-	NSFont *newFont = [sender convertFont:theme.channelViewFont];
+	NSFont *newFont = [sender convertFont:logfont];
 	
 	[TPCPreferences setThemeChannelViewFontName:[newFont fontName]];
 	[TPCPreferences setThemeChannelViewFontSize:[newFont pointSize]];
 	
-	[self setValue:[newFont fontName]						forKey:@"themeChannelViewFontName"];
-	[self setValue:NSNumberWithDouble([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
+	[self setValue:  [newFont fontName]		forKey:@"themeChannelViewFontName"];
+	[self setValue:@([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
 	
 	[self onStyleChanged:nil];
 }
@@ -619,17 +612,15 @@
 	[_NSNotificationCenter() postNotificationName:TXThemePreferenceChangedNotification object:nil userInfo:nil];
 }
 
-+ (void)openPathToThemesCallback:(NSNumber *)returnCode
++ (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
 {	
 	NSString *name = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	
-    NSInteger _returnCode = [returnCode integerValue];
-	
-	if (_returnCode == NSAlertSecondButtonReturn) {
+	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
     
-	if (_returnCode == NSAlertFirstButtonReturn) {
+	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:name];
 		
 		[_NSWorkspace() openFile:path];
@@ -684,22 +675,20 @@
 
 - (void)onDownloadExtraAddons:(id)sender
 {
-	NSString *version = @"No Sandbox";
+	NSString *version = @"No%20Sandbox";
 	
-	if ([TPCPreferences featureAvailableToOSXLion]) {
-		if ([TPCPreferences sandboxEnabled]) {
+	if ([TPCPreferences sandboxEnabled]) {
+		if ([TPCPreferences featureAvailableToOSXLion]) {
 			version = @"Lion";
-		} 
+		}
+		
+		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+			version = @"Mountain%20Lion";
+		}
 	}
 	
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		if ([TPCPreferences sandboxEnabled]) {
-			version = @"Mountain Lion";
-		}
-	} 
-
 	NSMutableString *download = [NSMutableString string];
-
+	
 	[download appendString:@"https://github.com/Codeux/Textual/blob/master/Resources/All%20Scripts/Sandbox%20Exceptions/Installers/Textual%20Extras%20%28"];
 	[download appendString:version];
 	[download appendString:@"%29.pkg?raw=true"];

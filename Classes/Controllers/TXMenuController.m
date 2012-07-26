@@ -1,48 +1,54 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 08, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
-#define _noClient					(PointerIsEmpty(u))
-#define _noChannel					(PointerIsEmpty(c))
-#define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
-#define _isClient					(c.isTalk == NO && c.isChannel == NO && c.isClient == YES)
-#define _isChannel					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
-#define _isQuery					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
-#define _connected					(u && u.isConnected && u.isLoggedIn)
-#define _notConnected				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 #define _activate					(c && c.isActive)
+#define _connected					(u && u.isConnected && u.isLoggedIn)
+#define _isChannel					(c.isTalk == NO && c.isChannel == YES && c.isClient == NO)
+#define _isClient					(c.isTalk == NO && c.isChannel == NO && c.isClient == YES)
+#define _isQuery					(c.isTalk == YES && c.isChannel == NO && c.isClient == NO)
+#define _noChannel					(PointerIsEmpty(c))
+#define _noClient					(PointerIsEmpty(u))
+#define _noClientOrChannel			(PointerIsEmpty(u) || PointerIsEmpty(c))
 #define _notActive					(c && c.isActive == NO)
-
-@interface TXMenuController (Private)
-- (TVCLogView *)currentWebView;
-@end
+#define _notConnected				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 
 @implementation TXMenuController
-
-@synthesize aboutPanel;
-@synthesize channelSheet;
-@synthesize closeWindowItem;
-@synthesize currentSearchPhrase;
-@synthesize highlightSheet;
-@synthesize inviteSheet;
-@synthesize isInFullScreenMode;
-@synthesize master;
-@synthesize memberList;
-@synthesize modeSheet;
-@synthesize nickSheet;
-@synthesize pointedChannelName;
-@synthesize pointedNick;
-@synthesize pointedUrl;
-@synthesize preferencesController;
-@synthesize serverList;
-@synthesize serverSheet;
-@synthesize text;
-@synthesize topicSheet;
-@synthesize window;
-@synthesize world;
 
 - (id)init
 {
@@ -475,20 +481,30 @@
 
 - (void)_onWantFindPanel:(id)sender
 {
+	if (self.findPanelOpened) {
+		return;
+	}
+
+	self.findPanelOpened = YES;
+
 	NSString *newPhrase = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"FindSearchPanelPromptMessage")
 														   title:TXTLS(@"FindSearchPanelPromptTitle")
 												   defaultButton:TXTLS(@"FindSearchPanelPromptButton")
 												 alternateButton:TXTLS(@"CancelButton") 
 													defaultInput:self.currentSearchPhrase];
-	
+
+	self.findPanelOpened = NO;
+
 	if (NSObjectIsEmpty(newPhrase)) {
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	} else {
 		if ([newPhrase isNotEqualTo:self.currentSearchPhrase]) {
 			self.currentSearchPhrase = newPhrase;
 		}
-		
-		[[self.iomt currentWebView] searchFor:newPhrase direction:YES caseSensitive:NO wrap:YES];
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[[self currentWebView] searchFor:newPhrase direction:YES caseSensitive:NO wrap:YES];
+		});
 	}
 }
 
@@ -586,7 +602,7 @@
 	[[NSApp keyWindow] performClose:nil];
 }
 
-- (void)centerMainWindow:(id)sender;
+- (void)centerMainWindow:(id)sender
 {
 	[[NSApp mainWindow] exactlyCenterWindow];
 }
@@ -603,12 +619,12 @@
 
 - (void)showAcknowledgments:(id)sender
 {
-	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Acknowledgments.pdf"]]];
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Documentation/Acknowledgments.pdf"]]];
 }
 
 - (void)showContributors:(id)sender
 {
-	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Contributors.pdf"]]];
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Documentation/Contributors.pdf"]]];
 }
 
 - (void)performPaste:(id)sender
@@ -675,7 +691,7 @@
 	[sel.log unmark];
 	[sel.log mark];
 }
-- (void)gotoScrollbackMarker:(id)sender;
+- (void)gotoScrollbackMarker:(id)sender
 {
 	IRCTreeItem *sel = self.world.selected;
 	
@@ -790,7 +806,7 @@
 	if (_noClient || _notConnected) return;
 	
 	[u createChannelListDialog];
-	[u send:IRCCommandIndexList, nil];
+	[u send:IRCPrivateCommandIndex("list"), nil];
 }
 
 - (void)addServer:(id)sender
@@ -984,7 +1000,7 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	if ([u encryptOutgoingMessage:&topic channel:c] == YES) {
-		[u send:IRCCommandIndexTopic, c.name, topic, nil];
+		[u send:IRCPrivateCommandIndex("topic"), c.name, topic, nil];
 	}
 }
 
@@ -1026,7 +1042,7 @@
 	NSString *changeStr = [c.mode getChangeCommand:sender.mode];
 	
 	if (NSObjectIsNotEmpty(changeStr)) {
-		[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCCommandIndexMode, c.name, changeStr]];
+		[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), c.name, changeStr]];
 	}
 }
 
@@ -1247,7 +1263,7 @@
 	
 	if (u && NSObjectIsNotEmpty(channelName)) {
 		for (NSString *nick in sender.nicks) {
-			[u send:IRCCommandIndexInvite, nick, channelName, nil];
+			[u send:IRCPrivateCommandIndex("invite"), nick, channelName, nil];
 		}
 	}
 }
@@ -1279,7 +1295,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexTime text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_time") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1293,7 +1309,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexVersion text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_version") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1307,7 +1323,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexUserinfo text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1321,7 +1337,7 @@
 	if (_noClient || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:m.nick command:IRCCommandIndexClientinfo text:nil];
+		[u sendCTCPQuery:m.nick command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1404,33 +1420,33 @@
 }
 
 - (void)memberModeChangeOp:(id)sender 
-{ 
-	[self processModeChange:sender mode:@"OP"]; 
+{
+	[self processModeChange:sender mode:IRCPublicCommandIndex("op")];
 }
 
 - (void)memberModeChangeDeop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("deop")]; 
 }
 
 - (void)memberModeChangeHalfop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"HALFOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("halfop")]; 
 }
 
 - (void)memberModeChangeDehalfop:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEHALFOP"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("dehalfop")]; 
 }
 
 - (void)memberModeChangeVoice:(id)sender 
 { 
-	[self processModeChange:sender mode:@"VOICE"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("voice")]; 
 }
 
 - (void)memberModeChangeDevoice:(id)sender 
 { 
-	[self processModeChange:sender mode:@"DEVOICE"]; 
+	[self processModeChange:sender mode:IRCPublicCommandIndex("devoice")]; 
 }
 
 - (void)memberKickFromChannel:(id)sender
@@ -1455,7 +1471,7 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"BAN %@", m.nick] completeTarget:YES target:c.name];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), m.nick] completeTarget:YES target:c.name];
 	}
 	
 	[self deselectMembers:sender];
@@ -1469,7 +1485,8 @@
 	if (_noClientOrChannel || _isClient || _isQuery) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"KICKBAN %@ %@", m.nick, [TPCPreferences defaultKickMessage]]
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("kickban"), m.nick, [TPCPreferences defaultKickMessage]]
 		completeTarget:YES target:c.name];
 	}
 	
@@ -1484,7 +1501,8 @@
 	if (_noClientOrChannel || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"KILL %@ %@", m.nick, [TPCPreferences IRCopDefaultKillMessage]]];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("kill"), m.nick, [TPCPreferences IRCopDefaultKillMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -1501,7 +1519,8 @@
         if ([m.nick isEqualNoCase:u.myNick]) {
             [u printDebugInformation:TXTFLS(@"SelfBanDetectedMessage", u.serverHostname) channel:c];
         } else {
-            [u sendCommand:[NSString stringWithFormat:@"GLINE %@ %@", m.nick, [TPCPreferences IRCopDefaultGlineMessage]]];
+            [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+							IRCPublicCommandIndex("gline"), m.nick, [TPCPreferences IRCopDefaultGlineMessage]]];
         }
     }
 	
@@ -1516,7 +1535,8 @@
 	if (_noClientOrChannel || _isClient) return;
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"SHUN %@ %@", m.nick, [TPCPreferences IRCopDefaultShunMessage]]];
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+						IRCPublicCommandIndex("shun"), m.nick, [TPCPreferences IRCopDefaultShunMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -1539,7 +1559,7 @@
 	}
 }
 
-- (void)openChannelLogs:(id)sender;
+- (void)openChannelLogs:(id)sender
 {
 	IRCClient *u = [self.world selectedClient];
 	IRCChannel *c = [self.world selectedChannel];
@@ -1607,7 +1627,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanBanListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+b", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
 }
 
 - (void)showChannelBanExceptionList:(id)sender
@@ -1617,7 +1637,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanBanExceptionListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+e", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
 }
 
 - (void)showChannelInviteExceptionList:(id)sender
@@ -1627,7 +1647,7 @@
 	if (_noChannel || _isClient || _isQuery) return;
 	
 	[[self.world selectedClient] createChanInviteExceptionListDialog];
-	[[self.world selectedClient] send:IRCCommandIndexMode, [c name], @"+I", nil];
+	[[self.world selectedClient] send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
 }
 
 - (void)openHelpMenuLinkItem:(id)sender
@@ -1741,7 +1761,8 @@
 	
 	if (_noChannel || _isClient || _isQuery) return;
 	
-	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+											  IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
 }
 
 - (void)toggleChannelInviteMode:(id)sender
@@ -1750,7 +1771,8 @@
 	
 	if (_noChannel || _isClient || _isQuery) return;
 	
-	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"MODE %@ %@", [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
+	[[self.world selectedClient] sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
+											  IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
 }
 
 - (void)toggleDeveloperMode:(id)sender

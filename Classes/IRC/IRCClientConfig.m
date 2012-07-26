@@ -1,7 +1,39 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 09, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
@@ -11,41 +43,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 
 @implementation IRCClientConfig
 
-@synthesize altNicks;
-@synthesize autoConnect;
-@synthesize autoReconnect;
-@synthesize bouncerMode;
-@synthesize channels;
-@synthesize cuid;
-@synthesize encoding;
-@synthesize fallbackEncoding;
-@synthesize guid;
-@synthesize host;
-@synthesize ignores;
-@synthesize prefersIPv6;
-@synthesize invisibleMode;
-@synthesize isTrustedConnection;
-@synthesize leavingComment;
-@synthesize loginCommands;
-@synthesize name;
-@synthesize network;
-@synthesize nick;
-@synthesize nickPassword;
-@synthesize password;
-@synthesize port;
-@synthesize proxyHost;
-@synthesize proxyPassword;
-@synthesize proxyPort;
-@synthesize proxyType;
-@synthesize proxyUser;
-@synthesize realName;
-@synthesize server;
-@synthesize sleepQuitMessage;
-@synthesize username;
-@synthesize useSSL;
-@synthesize outgoingFloodControl;
-@synthesize floodControlMaximumMessages;
-@synthesize floodControlDelayTimerInterval;
+@synthesize password = _password;
+@synthesize nickPassword = _nickPassword;
 
 - (id)init
 {
@@ -96,7 +95,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSObjectIsEmpty(nickPassword)) {
+	if (NSObjectIsEmpty(_nickPassword)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -104,18 +103,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:nickPassword] == NO) {
-			nickPassword = nil;
-			nickPassword = kcPassword;
+		if ([kcPassword isEqualToString:_nickPassword] == NO) {
+			_nickPassword = nil;
+			_nickPassword = kcPassword;
 		}
 	}
 	
-	return nickPassword;
+	return _nickPassword;
 }
 
 - (void)setNickPassword:(NSString *)pass
 {
-	if ([nickPassword isEqualToString:pass] == NO) {	
+	if ([_nickPassword isEqualToString:pass] == NO) {	
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
@@ -131,8 +130,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		}
 		
-		nickPassword = nil;
-		nickPassword = pass;
+		_nickPassword = nil;
+		_nickPassword = pass;
 	}
 }
 
@@ -140,7 +139,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	NSString *kcPassword = nil;
 	
-	if (NSObjectIsEmpty(password)) {
+	if (NSObjectIsEmpty(_password)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password" 
 												 forUsername:nil 
@@ -148,18 +147,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	}
 	
 	if (kcPassword) {
-		if ([kcPassword isEqualToString:password] == NO) {
-			password = nil;
-			password = kcPassword;
+		if ([kcPassword isEqualToString:_password] == NO) {
+			_password = nil;
+			_password = kcPassword;
 		}
 	}
 	
-	return password;
+	return _password;
 }
 
 - (void)setPassword:(NSString *)pass
 {
-	if ([password isEqualToString:pass] == NO) {
+	if ([_password isEqualToString:pass] == NO) {
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
@@ -174,8 +173,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 									serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];			
 		}
 		
-		password = nil;
-		password = pass;
+		_password = nil;
+		_password = pass;
 	}
 }
 
@@ -200,18 +199,18 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
 		
-		self.cuid = NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
-		self.guid = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
-		self.name = NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
-		self.host = NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
-		self.port = NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.port);
-		self.nick = NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
-		self.username = NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
-		self.realName = NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
+		self.cuid		= NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
+		self.guid		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
+		self.name		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
+		self.host		= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
+		self.port		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.port);
+		self.nick		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
+		self.username	= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
+		self.realName	= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
 		
 		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
-		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxy"];
+		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxyServerType"];
 		self.proxyPort       = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
 		self.proxyHost		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyHost);
 		self.proxyUser		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUser);
@@ -318,7 +317,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
     [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
-    [dic setObject:floodControl forKey:@"floodControl"];
+	[dic safeSetObject:floodControl forKey:@"floodControl"];
 	
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
@@ -331,9 +330,10 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	[dic setObject:channelAry forKey:@"channelList"];
-	[dic setObject:ignoreAry forKey:@"ignoreList"];
+	[dic safeSetObject:channelAry forKey:@"channelList"];
+	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
 	
+	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	

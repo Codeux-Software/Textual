@@ -1,7 +1,39 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 08, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
@@ -12,43 +44,7 @@
 #define _minimumSplitViewWidth		120
 #define _defaultSplitViewWidth		170
 
-@interface TXMasterController (Private)
-- (void)setColumnLayout;
-- (void)registerKeyHandlers;
-- (void)buildSegmentedController;
-@end
-
 @implementation TXMasterController
-
-@synthesize addServerButton;
-@synthesize chanMenu;
-@synthesize channelMenu;
-@synthesize completionStatus;
-@synthesize extrac;
-@synthesize formattingMenu;
-@synthesize ghostMode;
-@synthesize growl;
-@synthesize inputHistory;
-@synthesize logBase;
-@synthesize logMenu;
-@synthesize memberList;
-@synthesize memberSplitView;
-@synthesize memberSplitViewOldPosition;
-@synthesize memberMenu;
-@synthesize menu;
-@synthesize serverList;
-@synthesize serverMenu;
-@synthesize serverSplitView;
-@synthesize terminating;
-@synthesize text;
-@synthesize treeMenu;
-@synthesize urlMenu;
-@synthesize viewTheme;
-@synthesize welcomeSheet;
-@synthesize window;
-@synthesize windowButtonController;
-@synthesize windowButtonControllerCell;
-@synthesize world;
 
 #pragma mark -
 #pragma mark NSApplication Delegate
@@ -64,13 +60,14 @@
 	}
 	
 #if defined(DEBUG)
-    ghostMode = YES; // Do not use autoconnect during debug
+    self.ghostMode = YES; // Do not use autoconnect during debug
 #endif
 	
 	[self.window makeMainWindow];
 	
+	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
-	
+
 	[self.text setBackgroundColor:[NSColor clearColor]];
 	
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:TXThemePreferenceChangedNotification object:nil];
@@ -96,6 +93,7 @@
 	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
 	
     [self.text setReturnActionWithSelector:@selector(textEntered) owner:self];
+	[self.text redrawOriginPoints];
     
 	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
 	
@@ -207,18 +205,30 @@
 		NSRect visibleRect = [_NSMainScreen() visibleFrame];
 		NSRect windowRect  = self.window.frame;
 		
+		BOOL redrawFrame = NO;
+		
 		if (visibleRect.size.height < windowRect.size.height) {
 			windowRect.size.height = visibleRect.size.height;
+			windowRect.origin.x = visibleRect.origin.x;
+			
+			redrawFrame = YES;
 		}
 		
 		if (visibleRect.size.width < windowRect.size.width) {
 			windowRect.size.width = visibleRect.size.width;
+			windowRect.origin.y = visibleRect.origin.y;
+			
+			redrawFrame = YES;
 		}
-
-		windowRect.origin = visibleRect.origin;
-
-		[self.window setFrame:windowRect display:NO];
+		
+		if (redrawFrame) {
+			[self.window setFrame:windowRect display:YES animate:YES];
+		}
 	}
+
+	/* Redraw dock icon on potential screen resolution changes. */
+
+	[self.world updateIcon];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -233,7 +243,7 @@
 	
     [self.world reloadTree];
 	
-	[text.backgroundView setWindowIsActive:YES];
+	[_text.backgroundView setWindowIsActive:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
@@ -248,7 +258,7 @@
     
     [self.world reloadTree];
 	
-	[text.backgroundView setWindowIsActive:NO];
+	[_text.backgroundView setWindowIsActive:NO];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -357,6 +367,11 @@
 #pragma mark -
 #pragma mark NSWindow Delegate
 
+- (void)windowDidResize:(NSNotification *)notification
+{
+	[self.text resetTextFieldCellSize:YES];
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	id sel = self.world.selected;
@@ -454,7 +469,7 @@
 
 - (void)textEntered
 {
-	[self sendText:IRCCommandIndexPrivmsg];
+	[self sendText:IRCPrivateCommandIndex("privmsg")];
 }
 
 - (void)showMemberListSplitView:(BOOL)showList
@@ -490,8 +505,8 @@ constrainMaxCoordinate:(CGFloat)proposedMax
 		 ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *leftSide  = [splitView subviews][0];
+		NSView *rightSide = [splitView subviews][1];
 		
 		NSInteger leftWidth  = [leftSide bounds].size.width;
 		NSInteger rightWidth = [rightSide bounds].size.width;
@@ -507,8 +522,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		 ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [[splitView subviews] objectAtIndex:0];
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *leftSide  = [splitView subviews][0];
+		NSView *rightSide = [splitView subviews][1];
 		
 		NSInteger leftWidth  = [leftSide bounds].size.width;
 		NSInteger rightWidth = [rightSide bounds].size.width;
@@ -522,13 +537,13 @@ constrainMinCoordinate:(CGFloat)proposedMax
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = [[splitView subviews] objectAtIndex:0];
+		NSView *leftSide = [splitView subviews][0];
         
 		if ([leftSide isEqual:subview]) {
 			return NO;
 		}
 	} else if ([splitView isEqual:self.serverSplitView]) {
-		NSView *rightSide = [[splitView subviews] objectAtIndex:1];
+		NSView *rightSide = [splitView subviews][1];
 		
 		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.world.clients)) {
 			return NO;		
@@ -622,6 +637,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
 	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"TextFieldAutomaticSpellCorrection"];
 	
+	[TPCPreferences stopUsingTranscriptFolderBookmarkResources];
 	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
 	[TPCPreferences sync];
 }
@@ -632,26 +648,27 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	
 	[self.world reloadTheme];
 	
-	if (self.viewTheme.other.nicknameFormat) {
+	if (NSObjectIsNotEmpty(self.viewTheme.other.nicknameFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptNicknameFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 	
-	if (self.viewTheme.other.timestampFormat) {
+	if (NSObjectIsNotEmpty(self.viewTheme.other.timestampFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptTimestampFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 	
-	if (self.viewTheme.other.channelViewFontOverrode) {
+	if (self.viewTheme.other.channelViewFont) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 	
-	if ([TPCPreferences rightToLeftFormatting]) {
-		[self.text setBaseWritingDirection:NSWritingDirectionRightToLeft];
-	} else {
-		[self.text setBaseWritingDirection:NSWritingDirectionLeftToRight];
+	if (self.viewTheme.other.forceInvertSidebarColors) {
+		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
+		[sf appendString:NSStringNewlinePlaceholder];
 	}
+	
+	[self.text updateTextDirection];
 	
 	sf = (NSMutableString *)[sf trim];
 	
@@ -662,7 +679,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:[TLOPopupPrompts class]
-								 action:@selector(popupPromptNULLSelector:) 
+								 action:@selector(popupPromptNilSelector:)
 								   body:TXTFLS(@"ThemeChangeOverridePromptMessage", theme, sf)
 								  title:TXTLS(@"ThemeChangeOverridePromptTitle")
 						  defaultButton:TXTLS(@"OkButton")
@@ -819,7 +836,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	if (commandMode) {
 		choices = [NSMutableArray array];
         
-		for (NSString *command in [TPCPreferences commandIndexList].allKeys) {
+		for (NSString *command in [TPCPreferences publicIRCCommandList]) {
 			[choices safeAddObject:[command lowercaseString]];
 		}
 		
@@ -831,29 +848,35 @@ constrainMinCoordinate:(CGFloat)proposedMax
 			}
 		}
 		
-		NSArray *scriptPaths = [NSArray arrayWithObjects:
-								
 #ifdef TXUserScriptsFolderAvailable
-								[TPCPreferences whereScriptsUnsupervisedPath],
+		NSArray *scriptPaths = @[
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+		];
+#else
+		NSArray *scriptPaths = @[
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+		];
 #endif
-								
-								[TPCPreferences whereScriptsLocalPath],
-								[TPCPreferences whereScriptsPath], nil];
 		
 		for (NSString *path in scriptPaths) {
-			NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
-			
-			if (NSObjectIsNotEmpty(resourceFiles)) {
-				for (NSString *file in resourceFiles) {
-					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-						continue;
-					}
-					
-					NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-					NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-					
-					if ([choices containsObject:cmdl] == NO) {
-						[choices safeAddObject:cmdl];
+			if (NSObjectIsNotEmpty(path)) {
+				NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+				
+				if (NSObjectIsNotEmpty(resourceFiles)) {
+					for (NSString *file in resourceFiles) {
+						if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+							continue;
+						}
+						
+						NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
+						NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
+						
+						if ([choices containsObject:cmdl] == NO) {
+							[choices safeAddObject:cmdl];
+						}
 					}
 				}
 			}
@@ -980,7 +1003,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 #pragma mark -
 #pragma mark Keyboard Navigation
 
-typedef enum {
+typedef enum TXMoveKind : NSInteger {
 	TXMoveUpKind,
 	TXMoveDownKind,
 	TXMoveLeftKind,
@@ -1168,7 +1191,7 @@ typedef enum {
 
 - (void)sendMsgAction:(NSEvent *)e
 {
-	[self sendText:IRCCommandIndexAction];
+	[self sendText:IRCPrivateCommandIndex("action")];
 }
 
 - (void)_moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
@@ -1201,10 +1224,11 @@ typedef enum {
 	
 	if (s) {
         [self.text setAttributedStringValue:s];
+		
 		[self.world focusInputText];
         
-        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize)]) {
-            [self.text resetTextFieldCellSize];
+        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize:)]) {
+            [self.text resetTextFieldCellSize:NO];
         }
 	}
 }
@@ -1362,25 +1386,27 @@ typedef enum {
 
 - (void)updateSegmentedController
 {
-	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-	
-	/* Selection Settings. */
-	IRCClient *u = world.selectedClient;
-	IRCChannel *c = world.selectedChannel;
-	
-	if (PointerIsEmpty(c)) {
-		[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
-	} else {
-		[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
+	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
+		[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
+		
+		/* Selection Settings. */
+		IRCClient *u = self.world.selectedClient;
+		IRCChannel *c = self.world.selectedChannel;
+		
+		if (PointerIsEmpty(c)) {
+			[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
+		} else {
+			[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
+		}
+		
+		/* Open Address Book. */
+		[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 	}
-	
-	/* Nickname Change. */
-	[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 }
 
 - (void)buildSegmentedController
 {
-	self.windowButtonControllerCell.menuController = menu;
+	self.windowButtonControllerCell.menuController = self.menu;
 	
 	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
 	
@@ -1408,24 +1434,28 @@ typedef enum {
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	for (NSString *s in [config objectForKey:@"channelList"]) {
+	for (NSString *s in config[@"channelList"]) {
 		if ([s isChannelName]) {
-			[channels safeAddObject:[NSDictionary dictionaryWithObjectsAndKeys:
-									 s, @"channelName",
-									 NSNumberWithBOOL(YES), @"joinOnConnect", 
-									 NSNumberWithBOOL(YES), @"enableNotifications", nil]];	
+			[channels safeAddObject:@{@"channelName": s,
+			 @"joinOnConnect": NSNumberWithBOOL(YES), 
+			 @"enableNotifications": NSNumberWithBOOL(YES),
+TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
 		}
 	}
 	
-	NSString *host = [config objectForKey:@"serverAddress"];
-	NSString *nick = [config objectForKey:@"identityNickname"];
+	NSString *host = config[@"serverAddress"];
+	NSString *nick = config[@"identityNickname"];
 	
-	[dic setObject:host											forKey:@"serverAddress"];
-	[dic setObject:host											forKey:@"connectionName"];
-	[dic setObject:nick											forKey:@"identityNickname"];
-	[dic setObject:channels										forKey:@"channelList"];
-	[dic setObject:[config objectForKey:@"connectOnLaunch"]		forKey:@"connectOnLaunch"];
-	[dic setObject:NSNumberWithLong(NSUTF8StringEncoding)		forKey:@"characterEncodingDefault"];
+	dic[@"serverAddress"] = host;
+	dic[@"connectionName"] = host;
+	dic[@"identityNickname"] = nick;
+	dic[@"channelList"] = channels;
+	dic[@"connectOnLaunch"] = config[@"connectOnLaunch"];
+	dic[@"characterEncodingDefault"] = NSNumberWithLong(NSUTF8StringEncoding);
+	
+	/* Migration Assistant Dictionary Addition. */
+	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
+				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	[self.window makeKeyAndOrderFront:nil];
 	

@@ -1,12 +1,43 @@
-// Created by Satoshi Nakagawa <psychs AT limechat DOT net> <http://github.com/psychs/limechat>
-// Modifications by Codeux Software <support AT codeux DOT com> <https://github.com/codeux/Textual>
-// You can redistribute it and/or modify it under the new BSD license.
-// Converted to ARC Support on June 07, 2012
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
 
 #import "TextualApplication.h"
 
 #define _rendererURLAttribute					(1 << 31)
-#define _rendererAddressAttribute				(1 << 30) // deprecated
 #define _rendererChannelNameAttribute			(1 << 29)
 #define _rendererBoldFormatAttribute			(1 << 28)
 #define _rendererUnderlineFormatAttribute		(1 << 27)
@@ -18,7 +49,13 @@
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
-#define _effectMask				(_rendererBoldFormatAttribute | _rendererUnderlineFormatAttribute | _rendererItalicFormatAttribute | _rendererTextColorAttribute | _rendererBackgroundColorAttribute)
+#define _effectMask				(												\
+									_rendererBoldFormatAttribute |				\
+									_rendererUnderlineFormatAttribute |			\
+									_rendererItalicFormatAttribute |			\
+									_rendererTextColorAttribute |				\
+									_rendererBackgroundColorAttribute			\
+								)
 
 NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context);
 
@@ -64,7 +101,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	return (len - start);
 }
 
-NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context) 
+NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
 {
 	return (s1.nick.length <= s2.nick.length);
 }
@@ -96,7 +133,7 @@ NSInteger mapColorValue(NSColor *color)
 		CGFloat _alphac = [color alphaComponent];
 		
 		for (NSInteger i = 0; i <= 15; i++) {
-			NSArray *allColors = [possibleColors objectAtIndex:i];
+			NSArray *allColors = possibleColors[i];
 			
 			for (NSColor *mapped in allColors) {
 				if ([mapped numberOfComponents] == 4) {
@@ -156,6 +193,21 @@ NSColor *mapColorCode(NSInteger colorChar)
 	return nil;
 }
 
+NSString *TXRenderStyleTemplate(NSString *templateName, NSDictionary *templateTokens, TVCLogController *logController)
+{
+	GRMustacheTemplate *tmpl = [logController.theme.other templateWithName:templateName];
+
+	if (PointerIsNotEmpty(tmpl)) {
+		NSString *aHtml = [tmpl renderObject:templateTokens];
+
+		if (NSObjectIsNotEmpty(aHtml)) {
+			return aHtml.removeAllNewlines;
+		}
+	}
+
+	return nil;
+}
+
 static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len, NSFont *font)
 {
 	NSRange r = NSMakeRange(start, len);
@@ -180,7 +232,7 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 		}
 		
 		if (attr & _rendererUnderlineFormatAttribute) {
-			[body addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:r];
+			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSSingleUnderlineStyle) range:r];
 		}
 		
 		if (attr & _rendererTextColorAttribute) {
@@ -202,63 +254,77 @@ static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedStrin
 static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len, TVCLogController *log)
 {
 	NSString *content = [body safeSubstringWithRange:NSMakeRange(start, len)];
-	
-	if (attr & _rendererURLAttribute) {
+
+	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
+
+	if (attr & _rendererURLAttribute)
+	{
 		NSString *link = content;
 		
 		if ([link contains:@"://"] == NO) {
 			link = [NSString stringWithFormat:@"http://%@", link];
 		}	
+
+		templateTokens[@"anchorLocation"]	= link;
+		templateTokens[@"anchorTitle"]		= logEscape(content);
+
+		return TXRenderStyleTemplate(@"renderedStandardAnchorLinkResource", templateTokens, log);
+	}
+	else if (attr & _rendererChannelNameAttribute)
+	{
+		templateTokens[@"channelName"] = logEscape(content);
 		
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"Textual.on_url()\">%@</a>", link, logEscape(content)];
-	} else if (attr & _rendererChannelNameAttribute) {
-		return [NSString stringWithFormat:@"<span class=\"channel\" ondblclick=\"Textual.on_dblclick_chname()\" oncontextmenu=\"Textual.on_chname()\">%@</span>", logEscape(content)];
-	} else {
-		BOOL matchedUser = NO;
-		
+		return TXRenderStyleTemplate(@"renderedChannelNameLinkResource", templateTokens, log);
+	}
+	else
+	{
 		content = logEscape(content);
-		
-		NSMutableString *s = [NSMutableString string];
+
+		templateTokens[@"messageFragment"] = content;
+
+		// --- //
 		
 		if (attr & _rendererConversationTrackerAttribute) {
-            IRCClient   *client = log.client;
-			IRCUser     *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
+            IRCClient *client =  log.client;
+			IRCUser   *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
 			
 			if (PointerIsEmpty(user) == NO) {
                 if ([user.nick isEqualNoCase:client.myNick] == NO) {
-                    matchedUser = YES;
-					
-                    [s appendFormat:@"<span class=\"inline_nickname\" ondblclick=\"Textual.on_dblclick_ct_nick()\" oncontextmenu=\"Textual.on_ct_nick()\" colornumber=\"%d\">", [user colorNumber]];
+					templateTokens[@"inlineNicknameMatchFound"]  = @(YES);
+					templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
                 } 
             }
 		}
 		
+		// --- //
+		
 		if (attr & _effectMask) {
-			[s appendString:@"<span class=\"effect\" style=\""];
+			templateTokens[@"fragmentContainsFormattingSymbols"] = @(YES);
 			
-			if (attr & _rendererBoldFormatAttribute)	   [s appendString:@"font-weight:bold;"];
-			if (attr & _rendererItalicFormatAttribute)    [s appendString:@"font-style:italic;"];
-			if (attr & _rendererUnderlineFormatAttribute) [s appendString:@"text-decoration:underline;"];
+			if (attr & _rendererBoldFormatAttribute) {
+				templateTokens[@"fragmentIsBold"] = @(YES);
+			}
 			
-			[s appendString:@"\""];
+			if (attr & _rendererItalicFormatAttribute) {
+				templateTokens[@"fragmentIsItalicized"] = @(YES);
+			}
 			
-			if (attr & _rendererTextColorAttribute)		  [s appendFormat:@" color-number=\"%d\"", (attr & _textColorMask)];
-			if (attr & _rendererBackgroundColorAttribute) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & _backgroundColorMask) >> 4];
+			if (attr & _rendererUnderlineFormatAttribute) {
+				templateTokens[@"fragmentIsUnderlined"] = @(YES);
+			}
 			
-			[s appendFormat:@">%@</span>", content];
-		} else {
-			if (matchedUser == NO) {
-				return content;
-			} else {
-				[s appendString:content];
+			if (attr & _rendererTextColorAttribute) {
+				templateTokens[@"fragmentTextColor"] = @(attr & _textColorMask);
+			}
+			
+			if (attr & _rendererBackgroundColorAttribute) {
+				templateTokens[@"fragmentBackgroundColor"] = @((attr & _backgroundColorMask) >> 4);
 			}
 		}
-		
-		if (matchedUser) {
-			[s appendString:@"</span>"];
-		}
-		
-		return s;
+
+		// --- //
+
+		return TXRenderStyleTemplate(@"formattedMessageFragment", templateTokens, log);
 	}
 }
 
@@ -273,13 +339,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
 	
 	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
+	BOOL isNormalMsg	   = [inputDictionary boolForKey:@"isNormalMessage"];
+	
 	BOOL exactWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 	
 	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
     
-    NSFont *attributedStringFont = [inputDictionary objectForKey:@"attributedStringFont"];
+    NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
 	
 	NSInteger len	= [body length];
 	NSInteger start = 0;
@@ -441,7 +509,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 			}
 			
-			[resultInfo setObject:urlAry forKey:@"URLRanges"];
+			resultInfo[@"URLRanges"] = urlAry;
 		}
 		
 		/* Word Matching — Highlights */
@@ -499,7 +567,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
         } else {
 			NSString *curchan; 
 			
-			if (log) {
+			if (log && isNormalMsg) {
 				curchan = log.channel.name;
 			}
 			
@@ -637,7 +705,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		/* Conversation Tracking */
 		
 		if ([TPCPreferences trackConversations]) {
-			if (log) {
+			if (log && isNormalMsg) {
 				IRCChannel *log_channel = log.channel;
 				
 				if (log_channel) {
@@ -731,7 +799,9 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (drawingType == TVCLogRendererAttributedStringType) {
 			result = renderAttributedRange(result, t, start, n, attributedStringFont);	
 		} else {
-			[result appendString:renderRange(body, t, start, n, log)];
+			NSString *renderedRange = renderRange(body, t, start, n, log);
+			
+			[result appendString:renderedRange];
 		}
 		
 		start += n;
