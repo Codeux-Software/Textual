@@ -39,7 +39,7 @@
 
 @interface TPCOtherTheme ()
 @property (nonatomic, strong) NSDictionary *styleSettings;
-@property (nonatomic, strong) GRMustacheTemplateRepository *templateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
 @property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
 @end
 
@@ -61,7 +61,7 @@
 	NSString *hexValue = [self.styleSettings objectForKey:key];
 
 	if ([hexValue length] == 7 || [hexValue length] == 4) {
-		[NSColor fromCSS:hexValue];
+		return [NSColor fromCSS:hexValue];
 	}
 
 	return nil;
@@ -121,7 +121,7 @@
 {
 	NSError *load_error;
 
-	GRMustacheTemplate *tmpl = [self.templateRepository templateForName:name error:&load_error];
+	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateForName:name error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
 		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
@@ -151,9 +151,9 @@
 	
 	dictPath = [self.path stringByAppendingPathComponent:@"/Data/Templates"];
 
-	self.templateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
 
-	if (PointerIsEmpty(self.templateRepository)) {
+	if (PointerIsEmpty(self.styleTemplateRepository)) {
 		exit(10);
 	}
 
@@ -191,6 +191,10 @@
 	self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color"];
 
 	self.indentationOffset			= [self doubleForKey:@"Indentation Offset"];
+
+	if (self.indentationOffset <= 0.0) {
+		self.indentationOffset = TXThemeDisabledIndentationOffset;
+	}
 
 	// ---- //
 
