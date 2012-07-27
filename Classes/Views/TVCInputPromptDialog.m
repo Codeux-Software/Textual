@@ -39,9 +39,9 @@
 
 // Dirty NSAlert substitution 
 
-#define _textContainerWidth				298.0
 #define _textContainerPadding			3
-#define _textContainerHeightFix			5
+
+#define _informativeTextFont		[NSFont fontWithName:@"Lucida Grande" size:11.0] 
 
 @implementation TVCInputPromptDialog
 
@@ -62,39 +62,27 @@
 		[self.userInputField setStringValue:userInputText];
 	}
 	
-	[self.dialogTitle setStringValue:messageTitle];
-	[self.defaultButton setTitle:defaultButtonTitle];
-	[self.alternateButton setTitle:alternateButtonTitle];
-	[self.informationalText setStringValue:informativeText];
+	[self.defaultButton			setTitle:defaultButtonTitle];
+	[self.alternateButton		setTitle:alternateButtonTitle];
+	
+	[self.dialogTitle			setStringValue:messageTitle];
+	[self.informationalText		setStringValue:informativeText];
 }
 
 - (void)runModal
 {
-	NSRect infoTextFrame = [self.informationalText frame];
-	
-	NSLayoutManager *layoutManager	= [NSLayoutManager new];
+	NSString *informativeText = [self.informationalText stringValue];
 
-	NSTextStorage	*textStorage	= [[NSTextStorage alloc] initWithString:[self.informationalText stringValue]];
-	NSTextContainer *textContainer	= [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(_textContainerWidth, FLT_MAX)];
+	NSRect infoTextFrame	= [self.informationalText frame];
+	NSRect windowFrame		= [self.dialogWindow frame];
+
+	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width
+												 forcedFont:_informativeTextFont];
+
+	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
 	
-	[layoutManager addTextContainer:textContainer];
-	
-	[textStorage addLayoutManager:layoutManager];
-	[textStorage addAttribute:NSFontAttributeName 
-						value:[NSFont fontWithName:@"Lucida Grande" size:11.0] 
-						range:NSMakeRange(0, [textStorage length])];
-	
-	[textContainer setLineFragmentPadding:0.0];
-	
-	[layoutManager glyphRangeForTextContainer:textContainer];
-	
-	NSInteger newHeight		= ([layoutManager usedRectForTextContainer:textContainer].size.height + _textContainerHeightFix);
-	NSInteger heightDiff	= (infoTextFrame.size.height - newHeight);
-	
-	NSRect windowFrame = [self.dialogWindow frame];
-	
-	infoTextFrame.size.height	= (newHeight + _textContainerPadding);
-	windowFrame.size.height		= ((windowFrame.size.height - heightDiff) + _textContainerPadding);
+	infoTextFrame.size.height = (newHeight + _textContainerPadding);
+	windowFrame.size.height	  = ((windowFrame.size.height - heightDiff) + _textContainerPadding);
 	
 	[self.dialogWindow setFrame:windowFrame display:NO animate:NO];
 	[self.dialogWindow makeKeyAndOrderFront:nil];
@@ -102,7 +90,7 @@
 	[self.informationalText setFrame:infoTextFrame];
 	
 	while ([self.dialogWindow isVisible]) {
-		continue;
+		continue; // Loop until we have a value.
 	}
 }
 
