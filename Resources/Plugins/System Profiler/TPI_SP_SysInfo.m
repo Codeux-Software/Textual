@@ -228,9 +228,12 @@
 											screen.frame.size.width,
 											screen.frame.size.height)];
 			}
-			
-			if ([screen backingScaleFactor] == 2.0f) {
-				[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
+			uint32_t version = 0;
+			Gestalt( gestaltSystemVersion, &version );
+			if (version >= 1070) {
+				if ([screen backingScaleFactor] == 2.0f) {
+					[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
+				}
 			}
 		}
 		
