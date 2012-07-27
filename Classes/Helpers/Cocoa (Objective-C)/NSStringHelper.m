@@ -682,8 +682,6 @@ BOOL isUnicharDigit(unichar c)
 
 - (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
 {
-	NSMutableAttributedString *baseMutable = self.mutableCopy;
-	
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
 	
@@ -691,9 +689,12 @@ BOOL isUnicharDigit(unichar c)
 	
 	attributes[NSFontAttributeName]				= font;
 	attributes[NSParagraphStyleAttributeName]	= paragraphStyle;
-	
-	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
-	
+
+	NSAttributedString *baseMutable;
+
+	baseMutable = [NSAttributedString alloc];
+	baseMutable = [baseMutable initWithString:self attributes:attributes];
+
 	NSRect bounds = [baseMutable boundingRectWithSize:NSMakeSize(width, 0.0)
 											  options:NSStringDrawingUsesLineFragmentOrigin];
 	
