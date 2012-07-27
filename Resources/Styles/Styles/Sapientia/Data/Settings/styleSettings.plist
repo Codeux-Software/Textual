@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Nickname Format</key>
-	<string></string>
+	<string>%@%n:</string>
 	<key>Timestamp Format</key>
 	<string></string>
 	<key>Override Channel Font</key>
@@ -16,6 +16,8 @@
 	<key>Indentation Offset</key>
 	<integer>6</integer>
 	<key>Underlying Window Color</key>
-	<string>#000000</string>
+	<string>#242323</string>
+	<key>Force Invert Sidebars</key>
+	<true/>
 </dict>
 </plist>
