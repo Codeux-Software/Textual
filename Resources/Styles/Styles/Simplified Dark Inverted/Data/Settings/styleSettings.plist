@@ -16,6 +16,6 @@
 	<key>Indentation Offset</key>
 	<integer>6</integer>
 	<key>Underlying Window Color</key>
-	<string>#000000</string>
+	<string>#FFFFFF</string>
 </dict>
 </plist>
