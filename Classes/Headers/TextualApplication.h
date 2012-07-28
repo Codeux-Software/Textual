@@ -189,6 +189,7 @@
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"
 	#import "NSRectHelper.h"
+	#import "NSScreenHelper.h"
 	#import "NSSplitViewHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTextFieldHelper.h"
