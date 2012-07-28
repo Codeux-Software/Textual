@@ -229,7 +229,7 @@
 											screen.frame.size.height)];
 			}
 			
-			if ([screen backingScaleFactor] == 2.0f) {
+			if ([screen runningInHighResolutionMode]) {
 				[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
 			}
 		}

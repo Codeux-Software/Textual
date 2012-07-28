@@ -73,6 +73,8 @@
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
+		4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */; };
+		4C5A6DC115C39BD600143574 /* NSScreenHelper.m in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
 		4C63C6B61592F0B0009F1635 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */; };
 		4C63C6B71592F0B0009F1635 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */; };
 		4C63C6BC1592F360009F1635 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */; };
@@ -513,6 +515,8 @@
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
+		4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScreenHelper.h; sourceTree = "<group>"; };
+		4C5A6DC015C39BD600143574 /* NSScreenHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSScreenHelper.m; sourceTree = "<group>"; };
 		4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts.tif; sourceTree = "<group>"; };
 		4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts@2x.tif"; sourceTree = "<group>"; };
 		4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Extensions.tif; sourceTree = "<group>"; };
@@ -1326,6 +1330,7 @@
 				4C8AF54E158E99520026668C /* NSOutlineViewHelper.h */,
 				4C8AF54F158E99520026668C /* NSPasteboardHelper.h */,
 				4C8AF550158E99520026668C /* NSRectHelper.h */,
+				4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */,
 				4C8AF551158E99520026668C /* NSSplitViewHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4C8AF553158E99520026668C /* NSTextFieldHelper.h */,
@@ -1425,6 +1430,7 @@
 				4C8AF5A2158E99520026668C /* NSOutlineViewHelper.m */,
 				4C8AF5A3158E99520026668C /* NSPasteboardHelper.m */,
 				4C8AF5A4158E99520026668C /* NSRectHelper.m */,
+				4C5A6DC015C39BD600143574 /* NSScreenHelper.m */,
 				4C8AF5A5158E99520026668C /* NSSplitViewHelper.m */,
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
 				4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */,
@@ -1848,6 +1854,8 @@
 				4C211D5315BF1FCE00E218DA /* GRMustacheTemplateDelegate.h in Headers */,
 				4C211D5415BF1FCE00E218DA /* GRMustacheTemplateRepository.h in Headers */,
 				4C211D5515BF1FCE00E218DA /* GRMustacheVersion.h in Headers */,
+				4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */,
+				4C5A6DC115C39BD600143574 /* NSScreenHelper.m in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

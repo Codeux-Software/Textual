@@ -377,7 +377,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (BOOL)runningInHighResolutionMode
 {
-	return ([_NSMainScreen() backingScaleFactor] == 2.0f);
+	return ([_NSMainScreen() runningInHighResolutionMode]);
 }
 
 #pragma mark -
