@@ -91,6 +91,8 @@
 - (void)terminate;
 - (void)prepareForSleep;
 
+- (void)runMessageQueueLoop:(TVCLogController *)sender;
+
 - (IRCClient *)findClient:(NSString *)name;
 - (IRCClient *)findClientById:(NSInteger)uid;
 - (IRCChannel *)findChannelByClientId:(NSInteger)uid channelId:(NSInteger)cid;

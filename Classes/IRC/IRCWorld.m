@@ -55,8 +55,6 @@
 
 		self.frontmostViewMessageQueue  = dispatch_queue_create("frontmostViewMessageQueue", NULL);
 		self.backgroundViewMessageQueue = dispatch_queue_create("backgroundViewMessageQueue", NULL);
-
-		[self runMessageQueueLoop];
 	}
 	
 	return self;
@@ -158,54 +156,38 @@
 
 - (void)fireMessageQueue:(TVCLogController *)log
 {
-	if (NSDissimilarObjects(log, self.selected.log)) {
-		if (log.queueInProgress == NO) {
-			if (log.messageQueue.count >= 25) {
-				static dispatch_once_t once;
+	if (log.messageQueue.count >= 25) {
+		static dispatch_once_t once;
 
-				/* Not 100% sure dispatch_once is
-				 designed to do something like this. */
-				dispatch_once(&once, ^{
-					[log runMessageQueueLoop];
-				});
-			} else {
-				[log runMessageQueueLoop];
-			}
-		}
+		/* Not 100% sure dispatch_once is
+		 designed to do something like this. */
+		dispatch_once(&once, ^{
+			[log runMessageQueueLoop];
+		});
+	} else {
+		[log runMessageQueueLoop];
 	}
 }
 
-- (void)runMessageQueueLoop
+- (void)runMessageQueueLoop:(TVCLogController *)sender
 {
-	/* Loop active view. */
-	dispatch_async(self.frontmostViewMessageQueue, ^{
-		while (1 == 1) {
-			IRCTreeItem *active = self.selected;
+	if (sender.queueInProgress) {
+		return; // Do not even add to queue if its already running…
+	}
 
-			if (PointerIsNotEmpty(active)) {
-				if (active.log.queueInProgress == NO) {
-					[active.log runMessageQueueLoop];
-				}
-			}
+	TVCLogController *active = self.selected.log;
+
+	if (PointerIsNotEmpty(active)) {
+		if (NSDissimilarObjects(sender, self.selected.log)) {
+			dispatch_async(self.backgroundViewMessageQueue, ^{
+				[self fireMessageQueue:sender];
+			});
+		} else {
+			dispatch_async(self.frontmostViewMessageQueue, ^{
+				[self fireMessageQueue:sender];
+			});
 		}
-	});
-
-	/* Loop background views.  */
-	dispatch_async(self.backgroundViewMessageQueue, ^{
-		while (1 == 1) {
-			IRCTreeItem *active = self.selected;
-
-			if (PointerIsNotEmpty(active)) {
-				for (IRCClient *c in self.clients) {
-					for (IRCChannel *u in c.channels) {
-						[self fireMessageQueue:u.log];
-					}
-
-					[self fireMessageQueue:c.log];
-				}
-			}
-		}
-	});
+	}
 }
 
 #pragma mark -
