@@ -246,6 +246,8 @@
 	} copy];
 	
 	[self.messageQueue safeAddObject:messageBlock];
+
+	[self.world runMessageQueueLoop:self];
 }
 
 - (void)moveToTop
@@ -348,6 +350,8 @@
 	} copy];
 
 	[self.messageQueue safeAddObject:messageBlock];
+
+	[self.world runMessageQueueLoop:self];
 }
 
 - (void)unmark
@@ -372,6 +376,8 @@
 	} copy];
 
 	[self.messageQueue safeAddObject:messageBlock];
+
+	[self.world runMessageQueueLoop:self];
 }
 
 - (void)goToMark
@@ -872,6 +878,8 @@
 	} copy];
 	
 	[self.messageQueue safeAddObject:messageBlock];
+
+	[self.world runMessageQueueLoop:self];
 }
 
 - (NSString *)initialDocument:(NSString *)topic
