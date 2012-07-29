@@ -73,8 +73,7 @@
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
-		4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */; };
-		4C5A6DC115C39BD600143574 /* NSScreenHelper.m in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
+		4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C63C6B61592F0B0009F1635 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */; };
 		4C63C6B71592F0B0009F1635 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */; };
 		4C63C6BC1592F360009F1635 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */; };
@@ -384,6 +383,7 @@
 		4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F181580481E006FFE21 /* FormattingColor_15.png */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
 		4CCF2F9D15804BF8006FFE21 /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
+		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1731,6 +1731,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */,
 				4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */,
 				4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C8AF74B158EB6CA0026668C /* AGKeychain.h in Headers */,
@@ -1854,8 +1855,6 @@
 				4C211D5315BF1FCE00E218DA /* GRMustacheTemplateDelegate.h in Headers */,
 				4C211D5415BF1FCE00E218DA /* GRMustacheTemplateRepository.h in Headers */,
 				4C211D5515BF1FCE00E218DA /* GRMustacheVersion.h in Headers */,
-				4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */,
-				4C5A6DC115C39BD600143574 /* NSScreenHelper.m in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2111,6 +2110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */,
 				4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */,
 				4C8AF60A158E99520026668C /* TXMasterController.m in Sources */,
 				4C8AF60B158E99520026668C /* TXMenuController.m in Sources */,

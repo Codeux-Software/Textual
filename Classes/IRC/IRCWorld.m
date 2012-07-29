@@ -52,6 +52,11 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
+
+		self.frontmostViewMessageQueue  = dispatch_queue_create("frontmostViewMessageQueue", NULL);
+		self.backgroundViewMessageQueue = dispatch_queue_create("backgroundViewMessageQueue", NULL);
+
+		[self runMessageQueueLoop];
 	}
 	
 	return self;
@@ -60,6 +65,12 @@
 - (void)dealloc
 {
 	[NSBundle deallocBundlesFromMemory:self];
+
+	dispatch_release(self.frontmostViewMessageQueue);
+	self.frontmostViewMessageQueue = nil;
+
+	dispatch_release(self.backgroundViewMessageQueue);
+	self.backgroundViewMessageQueue = nil;
 }
 
 - (void)setup:(IRCWorldConfig *)seed
@@ -75,8 +86,6 @@
 	}
 	
 	[self.config.clients removeAllObjects];
-	
-	[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(monitorView:) userInfo:nil repeats:YES];
 }
 
 - (void)setupTree
@@ -145,6 +154,71 @@
 }
 
 #pragma mark -
+#pragma mark View Run Loop
+
+- (void)runMessageQueueLoop
+{
+	/* Loop active view. */
+	dispatch_async(self.frontmostViewMessageQueue, ^{
+		while (1 == 1) {
+			IRCTreeItem *active = self.selected;
+
+			if (PointerIsNotEmpty(active)) {
+				if (active.log.queueInProgress == NO) {
+					[active.log runMessageQueueLoop];
+				}
+			}
+		}
+	});
+
+	/* Loop background views.  */
+	dispatch_async(self.backgroundViewMessageQueue, ^{
+		while (1 == 1) {
+			IRCTreeItem *active = self.selected;
+
+			if (PointerIsNotEmpty(active)) {
+				NSMutableArray *viewArray = [NSMutableArray array];
+
+				for (IRCClient *c in self.clients) {
+					[viewArray addPointer:(__bridge void *)(c.log)];
+
+					for (IRCChannel *u in c.channels) {
+						[viewArray addPointer:(__bridge void *)(u.log)];
+					}
+				}
+
+				NSArray *sortedViews = [viewArray sortedArrayUsingComparator:^NSComparisonResult(NSValue *a, NSValue *b) {
+					TVCLogController *la = [a pointerValue];
+					TVCLogController *lb = [a pointerValue];
+					
+					return (la.messageQueue.count < lb.messageQueue.count);
+				}];
+				
+				for (NSValue *pntr in sortedViews) {
+					TVCLogController *log = [pntr pointerValue];
+					
+					if (NSDissimilarObjects(log, active.log)) {
+						if (log.queueInProgress == NO) {
+							if (log.messageQueue.count >= 25) {
+								static dispatch_once_t once;
+
+								/* Not 100% sure dispatch_once is 
+								 designed to do something like this. */
+								dispatch_once(&once, ^{
+									[log runMessageQueueLoop];
+								});
+							} else {
+								[log runMessageQueueLoop];
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+}
+
+#pragma mark -
 #pragma mark Properties
 
 - (IRCClient *)selectedClient
@@ -173,21 +247,6 @@
 
 #pragma mark -
 #pragma mark Utilities
-
-- (void)monitorView:(NSTimer *)timer
-{
-	for (IRCClient *u in self.clients) {
-		if (u.log.queueInProgress == NO) {
-			[u.log destroyViewLoop];
-		}
-		
-		for (IRCChannel *c in u.channels) {
-			if (c.log.queueInProgress == NO) {
-				[c.log destroyViewLoop];
-			}
-		}
-	}
-}
 
 - (void)resetLoadedBundles
 {
