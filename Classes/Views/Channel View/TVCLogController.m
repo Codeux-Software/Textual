@@ -60,9 +60,6 @@
 - (void)dealloc
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	
-	self.queueInProgress = NO;
-	[self destroyViewLoop];
 }
 
 #pragma mark -
@@ -123,59 +120,30 @@
 	self.queueInProgress = NO;
 }
 
-- (void)destroyViewLoop
+- (void)runMessageQueueLoop
 {
-	if (self.queueInProgress) {
-		return;
-	}
+	self.queueInProgress = YES;
 	
-	if (PointerIsNotEmpty(self.messageQueueDispatch)) {
-		dispatch_release(self.messageQueueDispatch);
-		self.messageQueueDispatch = NULL;
-	}
-}
-
-- (void)createViewLoop
-{
-	if (self.queueInProgress) {
-		return;
-	} else {
-		self.queueInProgress = YES;
-	}
-	
-	if (PointerIsEmpty(self.messageQueueDispatch)) {
-		NSString *uuid = [NSString stringWithUUID];
-		
-		self.messageQueueDispatch = dispatch_queue_create([uuid UTF8String], NULL);
-	}
-	
-	dispatch_async(self.messageQueueDispatch, ^{
-		[self messageQueueLoop];
-	});
-}
-
-- (void)messageQueueLoop
-{
 	while (NSObjectIsNotEmpty(self.messageQueue)) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if ([self.view isLoading] == NO) {
+				if (NSObjectIsNotEmpty(self.messageQueue)) {
+					BOOL srslt = ((TVCLogMessageBlock)(self.messageQueue)[0])();
+
+					if (srslt) {
+						[self.messageQueue removeObjectAtIndex:0];
+					}
+				}
+			}
+		});
+
 		if (self.channel) {
 			[NSThread sleepForTimeInterval:[TPCPreferences viewLoopChannelDelay]];
 		} else {
 			[NSThread sleepForTimeInterval:[TPCPreferences viewLoopConsoleDelay]];
 		}
-		
-		if ([self.view isLoading] == NO) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				if (NSObjectIsNotEmpty(self.messageQueue)) {
-					BOOL srslt = ((TVCLogMessageBlock)(self.messageQueue)[0])();
-					
-					if (srslt) {						
-						[self.messageQueue removeObjectAtIndex:0];
-					}
-				}
-			});
-		}
 	}
-	
+
 	self.queueInProgress = NO;
 }
 
@@ -278,8 +246,6 @@
 	} copy];
 	
 	[self.messageQueue safeAddObject:messageBlock];
-	
-	[self createViewLoop];
 }
 
 - (void)moveToTop
@@ -382,8 +348,6 @@
 	} copy];
 
 	[self.messageQueue safeAddObject:messageBlock];
-	
-	[self createViewLoop];
 }
 
 - (void)unmark
@@ -408,8 +372,6 @@
 	} copy];
 
 	[self.messageQueue safeAddObject:messageBlock];
-	
-	[self createViewLoop];
 }
 
 - (void)goToMark
@@ -910,8 +872,6 @@
 	} copy];
 	
 	[self.messageQueue safeAddObject:messageBlock];
-	
-	[self createViewLoop];
 }
 
 - (NSString *)initialDocument:(NSString *)topic
