@@ -143,18 +143,37 @@
 {
 	if (self.serverMenu) return;
 	
-	self.serverMenu = [[item submenu] copy];
+	self.serverMenu = [item.submenu copy];
 }
 
 - (void)setChannelMenuItem:(NSMenuItem *)item
 {
 	if (self.channelMenu) return;
 	
-	self.channelMenu = [[item submenu] copy];
+	self.channelMenu = [item.submenu copy];
 }
 
 #pragma mark -
 #pragma mark View Run Loop
+
+- (void)fireMessageQueue:(TVCLogController *)log
+{
+	if (NSDissimilarObjects(log, self.selected.log)) {
+		if (log.queueInProgress == NO) {
+			if (log.messageQueue.count >= 25) {
+				static dispatch_once_t once;
+
+				/* Not 100% sure dispatch_once is
+				 designed to do something like this. */
+				dispatch_once(&once, ^{
+					[log runMessageQueueLoop];
+				});
+			} else {
+				[log runMessageQueueLoop];
+			}
+		}
+	}
+}
 
 - (void)runMessageQueueLoop
 {
@@ -177,41 +196,12 @@
 			IRCTreeItem *active = self.selected;
 
 			if (PointerIsNotEmpty(active)) {
-				NSMutableArray *viewArray = [NSMutableArray array];
-
 				for (IRCClient *c in self.clients) {
-					[viewArray addPointer:(__bridge void *)(c.log)];
-
 					for (IRCChannel *u in c.channels) {
-						[viewArray addPointer:(__bridge void *)(u.log)];
+						[self fireMessageQueue:u.log];
 					}
-				}
 
-				NSArray *sortedViews = [viewArray sortedArrayUsingComparator:^NSComparisonResult(NSValue *a, NSValue *b) {
-					TVCLogController *la = [a pointerValue];
-					TVCLogController *lb = [a pointerValue];
-					
-					return (la.messageQueue.count < lb.messageQueue.count);
-				}];
-				
-				for (NSValue *pntr in sortedViews) {
-					TVCLogController *log = [pntr pointerValue];
-					
-					if (NSDissimilarObjects(log, active.log)) {
-						if (log.queueInProgress == NO) {
-							if (log.messageQueue.count >= 25) {
-								static dispatch_once_t once;
-
-								/* Not 100% sure dispatch_once is 
-								 designed to do something like this. */
-								dispatch_once(&once, ^{
-									[log runMessageQueueLoop];
-								});
-							} else {
-								[log runMessageQueueLoop];
-							}
-						}
-					}
+					[self fireMessageQueue:c.log];
 				}
 			}
 		}
