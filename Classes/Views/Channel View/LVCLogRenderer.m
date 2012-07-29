@@ -345,6 +345,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
     BOOL regexWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 	
 	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
+	NSString *nick        = [inputDictionary objectForKey:@"nick"];
 	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
     
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
@@ -565,46 +566,65 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                 }
             }
         } else {
-			NSString *curchan; 
-			
-			if (log && isNormalMsg) {
-				curchan = log.channel.name;
-			}
-			
             for (__strong NSString *keyword in keywords) {
 				BOOL continueSearch = YES;
 				
 				if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"])) {
-					NSRange atsrange = [keyword rangeOfString:@";" options:NSBackwardsSearch];
+					NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
 					
-					NSString *excludeList = [keyword safeSubstringAfterIndex:atsrange.location];
+					NSArray *limitList = [[keyword safeSubstringAfterIndex:range.location] split:NSStringWhitespacePlaceholder];
+					keyword = [keyword safeSubstringToIndex:range.location];
 					
-					keyword = [keyword safeSubstringToIndex:atsrange.location];
-					
-					NSArray *excldlist = [excludeList split:NSStringWhitespacePlaceholder];
-					
-					for (NSString *exchan in excldlist) {
-						if ([exchan hasPrefix:@"-"] == NO && [exchan hasPrefix:@"+"] == NO) {
+					NSMutableArray *includeChannels = [NSMutableArray array];
+					NSMutableArray *excludeChannels = [NSMutableArray array];
+					NSMutableArray *includeNicks = [NSMutableArray array];
+					NSMutableArray *excludeNicks = [NSMutableArray array];
+					for (__strong NSString *limit in limitList) {
+						BOOL include = [limit hasPrefix:@"+"];
+						BOOL exclude = [limit hasPrefix:@"-"];
+						if (!exclude && !include)
 							continue;
-						}
 						
-						NSString *nchan = [exchan safeSubstringFromIndex:1];
+						limit = [[limit safeSubstringFromIndex:1] lowercaseString];
 						
-						if ([nchan isEqualToString:@"all"]) {
-							continueSearch = NO;
-						}
-						
-						if ([exchan hasPrefix:@"+"]) {
-							if ([nchan isEqualNoCase:curchan]) {
-								continueSearch = YES;
-							}
+						if ([limit hasPrefix:@"#"]) {
+							if (include)
+								[includeChannels addObject:limit];
+							else
+								[excludeChannels addObject:limit];
 						} else {
-							if ([exchan hasPrefix:@"-"]) {
-								if ([nchan isEqualNoCase:curchan]) {
-									continueSearch = NO;
-								}
-							}
+							if (include)
+								[includeNicks addObject:limit];
+							else
+								[excludeNicks addObject:limit];
 						}
+					}
+					NSString *currentChannel = [[[log channel] name] lowercaseString];
+					
+					if ([currentChannel hasPrefix:@"#"]) {
+						if ([includeChannels count]!=0 && [excludeChannels count]==0) {
+							if (![includeChannels containsObject:currentChannel])
+								continueSearch = NO;
+						} else {
+							if ([includeChannels containsObject:currentChannel])
+								continueSearch = YES;
+							if ([excludeChannels containsObject:currentChannel])
+								continueSearch = NO;
+						}
+					}
+					if (continueSearch && nick!=nil) {
+						nick = [nick lowercaseString];
+						if ([includeNicks count]!=0 && [excludeNicks count]==0) {
+							if (![includeNicks containsObject:nick])
+								continueSearch = NO;
+						} else {
+							if ([includeNicks containsObject:nick])
+								continueSearch = YES;
+							if ([excludeNicks containsObject:nick])
+								continueSearch = NO;
+						}
+					} else if (continueSearch && nick!=nil && [includeNicks count]!=0 && [excludeNicks count]==0) {
+						continueSearch = NO;
 					}
 				}
 				

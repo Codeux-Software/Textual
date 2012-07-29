@@ -721,6 +721,10 @@
 		if (NSObjectIsNotEmpty(line.keywords)) {
 			inputDictionary[@"keywords"] = line.keywords;
 		}
+        
+		if (NSObjectIsNotEmpty(line.keywords)) {
+			inputDictionary[@"nick"] = line.nickInfo;
+		}
 
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
 			inputDictionary[@"excludeWords"] = line.excludeWords;
