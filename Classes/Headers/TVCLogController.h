@@ -56,7 +56,6 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 @property (nonatomic, strong) WebScriptObject *js;
 @property (nonatomic, assign) BOOL bottom;
 @property (nonatomic, assign) BOOL loaded;
-@property (nonatomic, assign) BOOL queueInProgress;
 @property (nonatomic, assign) BOOL viewingBottom;
 @property (nonatomic, assign) BOOL scrollBottom;
 @property (nonatomic, assign) BOOL becameVisible;
@@ -68,9 +67,10 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 @property (nonatomic, assign) NSInteger lineNumber;
 @property (nonatomic, assign) NSInteger loadingImages;
 @property (nonatomic, assign) NSInteger lastVisitedHighlight;
-@property (nonatomic, strong) NSMutableArray *messageQueue;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
-@property (nonatomic, assign) dispatch_queue_t messageQueueDispatch;
+
+@property (strong) NSMutableArray *messageQueue;
+@property (assign) BOOL queueInProgress;
 
 - (void)setUp;
 - (void)restorePosition;
@@ -85,8 +85,7 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 - (void)moveToTop;
 - (void)moveToBottom;
 
-- (void)destroyViewLoop;
-- (void)createViewLoop;
+- (void)runMessageQueueLoop; // Only Textual should call this.
 
 - (void)setTopic:(NSString *)topic;
 

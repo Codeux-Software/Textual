@@ -73,6 +73,8 @@
 @property (nonatomic, strong) NSDictionary *bundlesForUserInput;
 @property (nonatomic, strong) NSDictionary *bundlesForServerInput;
 @property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
+@property (nonatomic, assign) dispatch_queue_t frontmostViewMessageQueue;
+@property (nonatomic, assign) dispatch_queue_t backgroundViewMessageQueue;
 
 - (void)setup:(IRCWorldConfig *)seed;
 - (void)setupTree;
