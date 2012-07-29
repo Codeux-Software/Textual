@@ -66,16 +66,21 @@
 	
 	NSMutableString *s = [line mutableCopy];
 	
-	if ([s hasPrefix:@"@t="]) { // znc server-time
-		NSString *t;
-		
-		t = [s getToken];
-		t = [t substringFromIndex:3];
-		
-		self.receivedAt = [NSDate dateWithTimeIntervalSince1970:[t longLongValue]];
-	} else {
-		self.receivedAt = [NSDate date];
+	NSMutableDictionary *extensions = [NSMutableDictionary dictionary];
+	if ([s hasPrefix:@"@"]) {
+		NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
+		NSArray *values = [t componentsSeparatedByString:@","];
+		for (unsigned int i=0; i<[values count]; i++) {
+			NSArray *info = [[values objectAtIndex:i] componentsSeparatedByString:@"="];
+			if ([info count]!=2)
+				continue;
+			[extensions setObject:[info objectAtIndex:1] forKey:[info objectAtIndex:0]];
+		}
 	}
+	if ([extensions objectForKey:@"t"]!=nil)
+		self.receivedAt = [NSDate dateWithTimeIntervalSince1970:[[extensions objectForKey:@"t"] longLongValue]];
+	else
+		self.receivedAt = [NSDate date];
 	
 	if ([s hasPrefix:@":"]) {
 		NSString *t;
