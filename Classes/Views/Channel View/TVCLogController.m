@@ -857,6 +857,7 @@
 
 			DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:aHtml
 																				baseURL:self.theme.baseUrl];
+			
 			[body appendChild:frag];
 		}
 
