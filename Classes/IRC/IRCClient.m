@@ -3967,13 +3967,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:nick command:command text:TXTLS(@"IRCCTCPSupportedReplies")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
-			if (self.lastLagCheck == 0) {
-				[self printDebugInformationToConsole:TXTFLS(@"IRCCTCPRequestIgnored", command, nick)];
-			}
-
 			TXNSDouble time = CFAbsoluteTimeGetCurrent();
 
-			if (time >= self.lastLagCheck) {
+			if (time >= self.lastLagCheck || self.lastLagCheck == 0 || [nick isEqualNoCase:self.myNick]) {
 				TXNSDouble delta = (time - self.lastLagCheck);
 
 				NSString *rating;
