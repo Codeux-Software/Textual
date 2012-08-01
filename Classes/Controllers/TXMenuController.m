@@ -1693,7 +1693,7 @@
 		if (self.isInFullScreenMode) {
 			[self.window toggleFullScreen:sender];
 			
-			[self.master loadWindowState];
+			[self.master loadWindowState:NO];
 		} else {
 			[self.master saveWindowState];
 			
@@ -1721,7 +1721,7 @@
 			[[self.window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
 			
 			[self.window setShowsResizeIndicator:YES];
-			[self.master loadWindowState];
+			[self.master loadWindowState:NO];
 			
 			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		}
