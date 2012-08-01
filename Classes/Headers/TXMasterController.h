@@ -68,7 +68,9 @@
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 
-- (void)loadWindowState;
+
+- (void)loadWindowState TEXTUAL_DEPRECATED;
+- (void)loadWindowState:(BOOL)honorFullscreen;
 - (void)saveWindowState;
 - (void)showMemberListSplitView:(BOOL)showList;
 
