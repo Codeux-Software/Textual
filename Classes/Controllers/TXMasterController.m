@@ -88,7 +88,7 @@
 	self.viewTheme		= [TPCViewTheme new];
 	self.viewTheme.name = [TPCPreferences themeName];
 	
-	[self loadWindowState];
+	[self loadWindowState:YES];
 	
 	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
 	
@@ -397,7 +397,7 @@
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-	[self loadWindowState];
+	[self loadWindowState:NO];
 	
 	self.menu.isInFullScreenMode = NO;
 }
@@ -555,6 +555,11 @@ constrainMinCoordinate:(CGFloat)proposedMax
 
 - (void)loadWindowState
 {
+	[self loadWindowState:NO];
+}
+
+- (void)loadWindowState:(BOOL)honorFullscreen
+{
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"Window -> Main Window"];
 	
 	if (dic) {
@@ -562,6 +567,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		NSInteger y = [dic integerForKey:@"y"];
 		NSInteger w = [dic integerForKey:@"w"];
 		NSInteger h = [dic integerForKey:@"h"];
+
+		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
 		
 		[self.window setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.menu.isInFullScreenMode];
 		
@@ -578,6 +585,10 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		if (self.memberSplitView.position < _minimumSplitViewWidth) {
 			self.memberSplitView.position = _defaultSplitViewWidth;
+		}
+
+		if (fullscreen && honorFullscreen) {
+			[self.menu performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
 		}
 	} else {
 		NSScreen *screen = [NSScreen mainScreen];
@@ -606,8 +617,10 @@ constrainMinCoordinate:(CGFloat)proposedMax
 - (void)saveWindowState
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	if (self.menu.isInFullScreenMode) {
+
+	BOOL fullscreen = self.menu.isInFullScreenMode;
+
+	if (fullscreen) {
 		[self.menu toggleFullscreenMode:nil];
 	}
 	
@@ -632,6 +645,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	
 	[dic setInteger:self.serverSplitView.position forKey:@"serverList"];
 	[dic setInteger:self.memberSplitView.position forKey:@"memberList"];
+
+	[dic setBool:fullscreen forKey:@"fullscreen"];
 	
 	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"TextFieldAutomaticGrammarCheck"];
 	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
