@@ -82,7 +82,7 @@
 			}
 			
 			if ([_NSFileManager() fileExistsAtPath:self.path] == NO) {
-				NSLog(@"Error: No path to local resources.");
+				LogToConsole(@"Error: No path to local resources.");
 				exit(0);
 			}
 			

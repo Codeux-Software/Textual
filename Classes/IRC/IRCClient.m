@@ -1257,15 +1257,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSError *aserror = [NSError new];
 
 				NSUserAppleScriptTask *applescript = [[NSUserAppleScriptTask alloc] initWithURL:[NSURL fileURLWithPath:scriptPath] error:&aserror];
-
+				
 				if (PointerIsEmpty(applescript)) {
-					NSLog(TXTLS(@"ScriptExecutionFailure"), [aserror localizedDescription]);
+					LogToConsole(TXTLS(@"ScriptExecutionFailure"), [aserror localizedDescription]);
 				} else {
 					[applescript executeWithAppleEvent:event
 									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error) {
 
 										 if (PointerIsEmpty(result)) {
-											 NSLog(TXTLS(@"ScriptExecutionFailure"), [error localizedDescription]);
+											 LogToConsole(TXTLS(@"ScriptExecutionFailure"), [error localizedDescription]);
 										 } else {
 											 NSString *finalResult = [result stringValue].trim;
 
@@ -1294,7 +1294,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
 
             if (errors && PointerIsEmpty(result)) {
-                NSLog(TXTLS(@"ScriptExecutionFailure"), errors);
+                LogToConsole(TXTLS(@"ScriptExecutionFailure"), errors);
             } else {
                 NSString *finalResult = [result stringValue].trim;
 
@@ -1303,7 +1303,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                 }
             }
         } else {
-            NSLog(TXTLS(@"ScriptExecutionFailure"), errors);
+            LogToConsole(TXTLS(@"ScriptExecutionFailure"), errors);
         }
 
     } else {
@@ -2759,7 +2759,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			BOOL pluginFound = BOOLValueFromObject([self.world.bundlesForUserInput objectForKey:cmd]);
 
 			if (pluginFound && scriptFound) {
-				NSLog(TXTLS(@"PluginCommandClashErrorMessage") ,cmd);
+				LogToConsole(TXTLS(@"PluginCommandClashErrorMessage") ,cmd);
 			} else {
 				if (pluginFound) {
 					[self.invokeInBackgroundThread processBundlesUserMessage:
@@ -2808,7 +2808,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self.conn sendLine:str];
 
 	if (self.rawModeEnabled) {
-		NSLog(@" << %@", str);
+		LogToConsole(@" << %@", str);
 	}
 
 	self.world.messagesSent++;
@@ -3300,24 +3300,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (PointerIsEmpty(self.logFile)) {
 			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self;
-		}
-
-		NSString *comp = [NSString stringWithFormat:@"%@", [NSDate.date dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
-
-		if (self.logDate) {
-			if ([self.logDate isEqualToString:comp] == NO) {
-				self.logDate = comp;
-
-				[self.logFile reopenIfNeeded];
-			}
-		} else {
-			self.logDate = comp;
+			self.logFile.writePlainText = YES;
+			self.logFile.hashFilename = NO;
 		}
 
 		NSString *logstr = [self.log renderedBodyForTranscriptLog:line];
 
 		if (NSObjectIsNotEmpty(logstr)) {
-			[self.logFile writeLine:logstr];
+			[self.logFile writePlainTextLine:logstr];
 		}
 	}
 
@@ -5647,7 +5637,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			s = [NSString stringWithData:data encoding:NSUTF8StringEncoding];
 
 			if (PointerIsEmpty(s)) {
-				NSLog(@"NSData decode failure. (%@)", data);
+				LogToConsole(@"NSData decode failure. (%@)", data);
 
 				return;
 			}
@@ -5658,7 +5648,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	self.world.bandwidthIn += [s length];
 
 	if (self.rawModeEnabled) {
-		NSLog(@" >> %@", s);
+		LogToConsole(@" >> %@", s);
 	}
 
 	if ([TPCPreferences removeAllFormatting]) {

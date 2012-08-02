@@ -90,7 +90,7 @@
 										NSDictionary *originalEntries = newOutputRulesDict[command];
 										
 										if ([originalEntries containsKeyIgnoringCase:regex]) {
-											NSLog(@"Extension Error: Found multiple entries of the same regular expression in an output rule. Using only first. (Command = \"%@\" Expression = \"%@\")", command, regex);
+											LogToConsole(@"Extension Error: Found multiple entries of the same regular expression in an output rule. Using only first. (Command = \"%@\" Expression = \"%@\")", command, regex);
 										} else {
 											newOutputRulesDict[command][regex] = boss_entry;
 										}

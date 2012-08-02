@@ -246,7 +246,7 @@
 		 guessed it was going to be assigned to the substringed value. */
 		cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
 		
-		DLog(@"cake: %@\nLength: %i", cake, totalCalculatedLength);
+		DebugLogToConsole(@"cake: %@\nLength: %i", cake, totalCalculatedLength);
 		
 		/* Truncate at first available space as long as it is within range. */
 		if (breakLoopAfterAppend && cake.length >= _textTruncationSpacePositionMaxDifferential) {
@@ -257,14 +257,14 @@
 													  options:NSBackwardsSearch
 														range:spaceCharSearchBase];
 			
-			DLog(@"spaceCharacter: %@", NSStringFromRange(spaceChar));
+			DebugLogToConsole(@"spaceCharacter: %@", NSStringFromRange(spaceChar));
 			
 			if (NSDissimilarObjects(spaceChar.location, NSNotFound)) {
 				totalCalculatedLength = spaceChar.location;
 				
 				cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
 
-				DLog(@"newCake: %@\nLength: %i", cake, totalCalculatedLength);
+				DebugLogToConsole(@"newCake: %@\nLength: %i", cake, totalCalculatedLength);
 			}
 		}
 		
@@ -299,7 +299,7 @@
 		effectiveRange.location += totalCalculatedLength;
 		effectiveRange.length    = (base.string.length - stringDeletionLength);
 		
-		DLog(@"effectiveRange: %@", NSStringFromRange(effectiveRange));
+		DebugLogToConsole(@"effectiveRange: %@", NSStringFromRange(effectiveRange));
 		
 		limitRange = effectiveRange;
 	}
@@ -309,7 +309,7 @@
 	
     [*string deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
 	
-	DLog(@"string: %@\nresult: %@\nrange: 0, %i", [*string string], result, stringDeletionLength);
+	DebugLogToConsole(@"string: %@\nresult: %@\nrange: 0, %i", [*string string], result, stringDeletionLength);
 	
     return result;
 }
