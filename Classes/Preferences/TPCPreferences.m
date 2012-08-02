@@ -283,7 +283,7 @@ NSString *IRCPrivateCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:NO];
 
-	DLog(@"%@; %@", ckey, rkey);
+	DebugLogToConsole(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -294,7 +294,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:YES];
 
-	DLog(@"%@; %@", ckey, rkey);
+	DebugLogToConsole(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -521,7 +521,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 																	  error:&error];
 
 				if (error) {
-					NSLog(@"Error creating bookmark for URL: %@", error);
+					LogToConsole(@"Error creating bookmark for URL: %@", error);
 				} else {
 					[resolvedBookmark startAccessingSecurityScopedResource];
 

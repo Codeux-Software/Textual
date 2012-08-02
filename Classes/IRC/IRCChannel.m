@@ -202,24 +202,14 @@
 			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self.client;
 			self.logFile.channel = self;
-		}
-		
-		NSString *comp = [NSString stringWithFormat:@"%@", [NSDate.date dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil]];
-		
-		if (self.logDate) {
-			if ([self.logDate isEqualToString:comp] == NO) {
-				self.logDate = comp;
-				
-				[self.logFile reopenIfNeeded];
-			}
-		} else {
-			self.logDate = comp;
+			self.logFile.writePlainText = YES;
+			self.logFile.hashFilename = NO;
 		}
 		
 		NSString *logstr = [self.log renderedBodyForTranscriptLog:line];
 
 		if (NSObjectIsNotEmpty(logstr)) {
-			[self.logFile writeLine:logstr];
+			[self.logFile writePlainTextLine:logstr];
 		}
 	}
 	

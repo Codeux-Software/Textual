@@ -96,7 +96,6 @@ typedef enum IRCDisconnectType : NSInteger {
 @property (nonatomic, assign) BOOL isIdentifiedWithSASL;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, assign) NSStringEncoding encoding;
-@property (nonatomic, strong) NSString *logDate;
 @property (nonatomic, strong) NSString *inputNick;
 @property (nonatomic, strong) NSString *sentNick;
 @property (nonatomic, strong) NSString *myNick;

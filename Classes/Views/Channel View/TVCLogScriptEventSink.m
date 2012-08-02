@@ -111,7 +111,7 @@
 
 - (void)logToConsole:(NSString *)message
 {
-    NSLog(@"JavaScript: %@", message);
+    LogToConsole(@"JavaScript: %@", message);
 }
 
 - (NSString *)hideInlineImage:(DOMHTMLAnchorElement *)object

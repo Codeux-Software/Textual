@@ -132,7 +132,7 @@
 			}
 		}
 		
-		NSLog(TXTLS(@"StyleTemplateLoadFailed"),
+		LogToConsole(TXTLS(@"StyleTemplateLoadFailed"),
 			  name, [load_error localizedDescription]);
 
 		return nil;

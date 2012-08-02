@@ -44,45 +44,120 @@
 	[self close];
 }
 
-- (void)close
-{
-	if (self.file) {
-		[self.file closeFile];
-		
-		self.file = nil;
-	}
-}
+#pragma mark -
+#pragma mark Writing API
 
-- (void)writeLine:(NSString *)s
+- (void)writePlainTextLine:(NSString *)s
 {
-    if (self.client.isConnected == NO) {
-        return;
-    }
-    
-	[self open];
-	
+	if (self.writePlainText == NO) {
+		return;
+	}
+
+	[self reopenIfNeeded];
+
 	if (self.file) {
 		s = [s stringByAppendingString:NSStringNewlinePlaceholder];
-		
+
 		NSData *data = [s dataUsingEncoding:self.client.encoding];
-		
+
 		if (NSObjectIsEmpty(data)) {
 			data = [s dataUsingEncoding:self.client.config.fallbackEncoding];
-			
+
 			if (NSObjectIsEmpty(data)) {
 				data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 			}
 		}
-		
+
 		if (data) {
 			[self.file writeData:data];
 		}
 	}
 }
 
+- (void)writePropertyListEntry:(NSDictionary *)s toKey:(NSString *)key
+{
+	if (self.writePlainText) {
+		return;
+	}
+
+	[self reopenIfNeeded];
+
+	if (self.file) {
+		NSMutableDictionary *propertyList = self.propertyList.mutableCopy;
+
+		if (PointerIsEmpty(propertyList)) {
+			return;
+		}
+
+		[propertyList setObject:s forKey:key];
+
+		// ---- //
+
+		NSString *writeError;
+
+		NSData *plist = [NSPropertyListSerialization dataFromPropertyList:propertyList
+																   format:NSPropertyListBinaryFormat_v1_0
+														 errorDescription:&writeError];
+
+		if (NSObjectIsEmpty(plist) || writeError) {
+			LogToConsole(@"Error Creating Property List: %@", writeError);
+		} else {
+			[self.file truncateFileAtOffset:0];
+			[self.file writeData:plist];
+		}
+	}
+}
+
+- (NSDictionary *)propertyList /* @private */
+{
+	if (self.file && self.writePlainText == NO) {
+		NSData *rawData = [self.file readDataToEndOfFile];
+
+		NSString *readError;
+
+		NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
+															   mutabilityOption:NSPropertyListImmutable
+																		 format:NULL
+															   errorDescription:&readError];
+
+		if (readError) {
+			LogToConsole(@"Error Reading Property List: %@", readError);
+
+			return nil;
+		}
+
+		return plist;
+	}
+
+	return nil;
+}
+
+#pragma mark -
+#pragma mark File Handle Management
+
+- (void)reset
+{
+	if (self.file) {
+		[self.file truncateFileAtOffset:0];
+	}
+}
+
+- (void)close
+{
+	if (self.file) {
+		[self.file closeFile];
+
+		self.file = nil;
+	}
+}
+
 - (void)reopenIfNeeded
 {
-	if (NSObjectIsEmpty(self.filename) || [self.filename isEqualToString:[self buildFileName]] == NO) {
+	if (NSObjectIsEmpty(self.filename) ||
+		([self.filename isEqualToString:self.buildFileName] == NO
+		 && self.hashFilename == NO)
+		) {
+
 		[self open];
 	}
 }
@@ -91,20 +166,30 @@
 {
 	[self close];
 
-	NSString *path = [TPCPreferences transcriptFolder];
+	NSString *path = self.fileWritePath;
+
+	DebugLogToConsole(@"%@", path);
 
 	if (NSObjectIsEmpty(path)) {
 		return;
 	}
-	
-	self.filename = [self buildFileName];
+
+	if (self.hashFilename == NO || NSObjectIsEmpty(self.filename)) {
+		self.filename = [self buildFileName];
+	}
 	
 	NSString *dir = [self.filename stringByDeletingLastPathComponent];
 	
 	BOOL isDir = NO;
 	
 	if ([_NSFileManager() fileExistsAtPath:dir isDirectory:&isDir] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+		NSError *fmerr;
+		
+		[_NSFileManager() createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&fmerr];
+
+		if (fmerr) {
+			LogToConsole(@"Error Creating Folder: %@", [fmerr localizedDescription]);
+		}
 	}
 	
 	if ([_NSFileManager() fileExistsAtPath:self.filename] == NO) {
@@ -116,34 +201,51 @@
 	if (self.file) {
 		[self.file seekToEndOfFile];
 	}
+
+	DebugLogToConsole(@"%@", self.filename);
+}
+
+#pragma mark -
+#pragma mark File Handle Path
+
+- (NSString *)fileWritePath
+{
+	if (NSObjectIsEmpty(_fileWritePath)) {
+		return [TPCPreferences transcriptFolder];
+	}
+
+	return _fileWritePath;
 }
 
 - (NSString *)buildPath
 {
-	NSString *base = [TPCPreferences transcriptFolder];
+	NSString *base = self.fileWritePath;
 
-	NSString *serv = [[self.client name] safeFileName];
-	NSString *chan = [[self.channel name] safeFileName];
+	if (self.hashFilename) {
+		return base;
+	}
+
+	NSString *serv = [self.client.name  safeFileName];
+	NSString *chan = [self.channel.name safeFileName];
 	
 	if (PointerIsEmpty(self.channel)) {
-		return [base stringByAppendingFormat:@"/%@/Console/", serv];
-	} else if ([self.channel isTalk]) {
-		return [base stringByAppendingFormat:@"/%@/Queries/%@/", serv, chan];
+		return [base stringByAppendingFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName];
+	} else if (self.channel.isTalk) {
+		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan];
 	} else {
-		return [base stringByAppendingFormat:@"/%@/Channels/%@/", serv, chan];
+		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan];
 	}
 }
 
 - (NSString *)buildFileName
 {
-	static NSDateFormatter *format = nil;
+	id date;
 	
-	if (PointerIsEmpty(format)) {
-		format = [NSDateFormatter new];
-		[format setDateFormat:@"yyyy-MM-dd"];
+	if (self.hashFilename) {
+		date = [NSString stringWithUUID];
+	} else {
+		date = [NSDate.date dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 	}
-	
-	NSString *date = [format stringFromDate:[NSDate date]];	
 	
 	return [NSString stringWithFormat:@"%@%@.txt", [self buildPath], date];
 }
