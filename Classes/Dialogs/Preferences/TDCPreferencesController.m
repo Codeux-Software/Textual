@@ -414,7 +414,7 @@
 											  relativeToURL:nil 
 													  error:&error];
 					if (error) {
-						NSLog(@"Error creating bookmark for URL (%@): %@", pathURL, error);
+						LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, error);
 					} else {
 						[TPCPreferences setTranscriptFolder:bookmark];
 					}

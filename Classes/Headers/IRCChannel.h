@@ -52,7 +52,6 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, weak) NSString *channelTypeString;
 @property (nonatomic, strong) NSString *topic;
 @property (nonatomic, strong) NSString *storedTopic;
-@property (nonatomic, strong) NSString *logDate;
 @property (nonatomic, assign) BOOL isOp;
 @property (nonatomic, assign) BOOL isHalfOp;
 @property (nonatomic, assign) BOOL isModeInit;

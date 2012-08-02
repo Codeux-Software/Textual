@@ -1020,19 +1020,19 @@
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
-	NSLog(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
+	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
 		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
 {
-	NSLog(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
+	LogToConsole(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
 			identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
-	NSLog(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
+	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
 		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 

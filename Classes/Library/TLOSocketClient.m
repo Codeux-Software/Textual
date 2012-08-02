@@ -117,7 +117,7 @@
 	}
 
 	if ([self.conn connectToHost:self.host onPort:self.port withTimeout:(-1) error:&connError] == NO) {
-		NSLog(@"Silently ignoring connection error: %@", [connError localizedDescription]);
+		LogToConsole(@"Silently ignoring connection error: %@", [connError localizedDescription]);
 	}
 
 	self.active     = YES;
@@ -219,10 +219,10 @@
 	IRCClient *clin = [self.delegate delegate];
 
 	if (clin.rawModeEnabled) {
-		NSLog(@"Debug Information:");
-		NSLog(@"	Connected Host: %@", [sock connectedHost]);
-		NSLog(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
-		NSLog(@"	Connected Port: %hu", [sock connectedPort]);
+		LogToConsole(@"Debug Information:");
+		LogToConsole(@"	Connected Host: %@", [sock connectedHost]);
+		LogToConsole(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
+		LogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
 	}
 }
 

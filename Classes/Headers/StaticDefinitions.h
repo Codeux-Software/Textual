@@ -78,11 +78,13 @@
 	#define TXFoundationBasedUUIDAvailable
 #endif
 
-/* http://stackoverflow.com/questions/969130/nslog-tips-and-tricks */
+#define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], \
+															__PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
 #ifdef DEBUG
-	#define DLog(fmt, ...) NSLog((@"%s [Line %d]: " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+	#define DebugLogToConsole(fmt, ...) LogToConsole(fmt, ##__VA_ARGS__);
 #else
-	#define DLog(...)
+	#define DebugLogToConsole(...)
 #endif
 
 /* Establish Common Pointers */
