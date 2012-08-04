@@ -1466,7 +1466,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 															  channel:channel.name
 															 hostmask:self.myHost];
 
-			[self printBoth:channel type:type nick:self.myNick text:newstr identified:YES];
+			[self printBoth:channel type:type nick:self.myNick text:newstr];
 
 			if ([self encryptOutgoingMessage:&newstr channel:channel] == NO) {
 				continue;
@@ -1877,7 +1877,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						}
 
 						if (c) {
-							[self printBoth:c type:type nick:self.myNick text:t identified:YES];
+							[self printBoth:c type:type nick:self.myNick text:t];
 
 							if ([self encryptOutgoingMessage:&t channel:c] == NO) {
 								continue;
@@ -3220,22 +3220,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text
 {
-	return [self printBoth:chan type:type nick:nil text:text identified:NO];
+	return [self printBoth:chan type:type nick:nil text:text];
 }
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printBoth:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+	return [self printBoth:chan type:type nick:nil text:text receivedAt:receivedAt];
 }
 
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
 {
-	return [self printBoth:chan type:type nick:nick text:text identified:identified receivedAt:[NSDate date]];
+	return [self printBoth:chan type:type nick:nick text:text receivedAt:[NSDate date]];
 }
 
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printChannel:chan type:type nick:nick text:text identified:identified receivedAt:receivedAt];
+	return [self printChannel:chan type:type nick:nick text:text receivedAt:receivedAt];
 }
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
@@ -3278,14 +3278,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return format;
 }
 
-- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
 {
-	return [self printChannel:chan type:type nick:nil text:text identified:identified receivedAt:[NSDate date]];
+	return [self printChannel:chan type:type nick:nil text:text receivedAt:[NSDate date]];
 }
 
 - (BOOL)printChannel:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printChannel:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+	return [self printChannel:chan type:type nick:nil text:text receivedAt:receivedAt];
 }
 
 - (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML
@@ -3335,14 +3335,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	c.memberType = TVCLogMemberNormalType;
 
 	if (showTime) {
-		NSString *time = TXFormattedTimestampWithOverride(receivedAt, [TPCPreferences themeTimestampFormat],
-														  self.world.viewTheme.other.timestampFormat);
-
-		if (NSObjectIsNotEmpty(time)) {
-			time = [time stringByAppendingString:NSStringWhitespacePlaceholder];
-		}
-
-		c.time = time;
+		c.receivedAt = receivedAt;
 	}
 
 	if (channel) {
@@ -3352,15 +3345,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 }
 
-- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:chan withLineType:type] == YES) {
 		return NO;
 	}
-
-	NSString *nickStr = nil;
-	NSString *time    = TXFormattedTimestampWithOverride(receivedAt, [TPCPreferences themeTimestampFormat],
-														self.world.viewTheme.other.timestampFormat);
 
 	IRCChannel *channel = nil;
 
@@ -3412,21 +3401,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		type = TVCLogLinePrivateMessageType;
 	}
 
-	if (NSObjectIsNotEmpty(time)) {
-		time = [time stringByAppendingString:NSStringWhitespacePlaceholder];
-	}
-
-	if (NSObjectIsNotEmpty(nick)) {
-		if (type == TVCLogLineActionType) {
-			nickStr = [NSString stringWithFormat:TXLogLineActionNicknameFormat, nick];
-		} else if (type == TVCLogLineNoticeType) {
-			nickStr = [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, nick];
-		} else {
-			nickStr = [self formatNick:nick channel:channel];
-		}
-	}
-
-	if (nick && channel && (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType)) {
+	if (nick && channel && (type == TVCLogLinePrivateMessageType
+							|| type == TVCLogLineActionType)) {
+		
 		IRCUser *user = [channel findMember:nick];
 
 		if (user) {
@@ -3434,14 +3411,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 
-	c.time = time;
-	c.nick = nickStr;
-	c.body = text;
+	c.body			= text;
+	c.nick			= nick;
+	c.receivedAt	= receivedAt;
 
 	c.lineType			= type;
 	c.memberType		= memberType;
-	c.nickInfo			= nick;
-	c.identified		= identified;
 	c.nickColorNumber	= colorNumber;
 
 	c.keywords		= keywords;
@@ -3453,7 +3428,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[self.world.window isOnCurrentWorkspace] == NO) {
 
 				if (channel.isUnread == NO) {
-					if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType || type == TVCLogLineNoticeType) {
+					if (type == TVCLogLinePrivateMessageType ||
+						type == TVCLogLineActionType ||
+						type == TVCLogLineNoticeType) {
+						
 						[channel.log unmark];
 						[channel.log mark];
 					}
@@ -3598,7 +3576,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			if ([[text uppercaseString] hasPrefix:@"ACTION "]) {
 				text = [text safeSubstringFromIndex:7];
 
-				[self receiveText:m command:IRCPrivateCommandIndex("action") text:text identified:identified];
+				[self receiveText:m command:IRCPrivateCommandIndex("action") text:text];
 			} else {
 				[self receiveCTCPQuery:m text:text];
 			}
@@ -3606,11 +3584,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[self receiveCTCPReply:m text:text];
 		}
 	} else {
-		[self receiveText:m command:m.command text:text identified:identified];
+		[self receiveText:m command:m.command text:text];
 	}
 }
 
-- (void)receiveText:(IRCMessage *)m command:(NSString *)cmd text:(NSString *)text identified:(BOOL)identified
+- (void)receiveText:(IRCMessage *)m command:(NSString *)cmd text:(NSString *)text
 {
 	NSString *anick  = m.sender.nick;
 	NSString *target = [m paramAt:0];
@@ -3663,11 +3641,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self decryptIncomingMessage:&text channel:c];
 
 		if (type == TVCLogLineNoticeType) {
-			[self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
+			[self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
 
 			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:anick text:text];
 		} else {
-			BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
+			BOOL highlight = [self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
 			BOOL postevent = NO;
 
 			if (highlight) {
@@ -3817,7 +3795,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					c = [self.world selectedChannelOn:self];
 				}
 
-				[self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
+				[self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
 
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"]) {
@@ -3860,7 +3838,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					[self notifyText:TXNotificationQueryNoticeType lineType:type target:c nick:anick text:text];
 				}
 			} else {
-				BOOL highlight = [self printBoth:c type:type nick:anick text:text identified:identified receivedAt:m.receivedAt];
+				BOOL highlight = [self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
 				BOOL postevent = NO;
 
 				if (highlight) {

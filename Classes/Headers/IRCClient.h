@@ -188,6 +188,8 @@ typedef enum IRCDisconnectType : NSInteger {
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk;
 
+- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel;
+
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
 - (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate *)receivedAt;
@@ -196,11 +198,11 @@ typedef enum IRCDisconnectType : NSInteger {
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
-- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
 - (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;
@@ -221,4 +223,8 @@ typedef enum IRCDisconnectType : NSInteger {
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
+
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified TEXTUAL_DEPRECATED;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 @end

@@ -66,6 +66,10 @@
 - (void)reset;
 - (void)reopenIfNeeded;
 
+- (id)data; // Types: (NSData if writePlainText == YES),
+			//		  (NSDictionary if writePlainText == NO)
+			//			or nil
+
 - (NSString *)buildPath;
 
 - (void)writePlainTextLine:(NSString *)s;
