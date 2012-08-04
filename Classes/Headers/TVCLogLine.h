@@ -74,17 +74,20 @@ typedef enum TVCLogMemberType : NSInteger {
 
 @interface TVCLogLine : NSObject
 @property (nonatomic, strong) NSDate *receivedAt;
-@property (nonatomic, strong) NSString *time;
 @property (nonatomic, strong) NSString *nick;
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogMemberType memberType;
-@property (nonatomic, strong) NSString *nickInfo;
-@property (nonatomic, assign) BOOL identified;
 @property (nonatomic, assign) NSInteger nickColorNumber;
 @property (nonatomic, strong) NSArray *keywords;
 @property (nonatomic, strong) NSArray *excludeWords;
 
+- (NSString *)formattedTimestamp;
+- (NSString *)formattedNickname:(IRCChannel *)owner;
+
 + (NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogMemberType)type;
+
+- (id)initWithDictionary:(NSDictionary *)dic;	// For internal use only. A plugin should not call.
+- (NSDictionary *)dictionaryValue;				// For internal use only. A plugin should not call.
 @end

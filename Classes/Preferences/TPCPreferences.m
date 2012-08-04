@@ -392,6 +392,11 @@ NSString *IRCPublicCommandIndex(const char *key)
 									   error:NULL].relativePath;
 }
 
++ (NSString *)whereTemporaryPath
+{
+	return NSTemporaryDirectory();
+}
+
 + (NSString *)whereApplicationSupportPath
 {
 	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/"];
@@ -449,15 +454,17 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 		return [NSHomeDirectory() stringByAppendingPathComponent:pathHead];
 
-		/* // This was creating a lot of leaks in Mountain Lion Preview 4.
+		 // This was creating a lot of leaks in Mountain Lion Preview 4.
 		 // Commenting out for now…
 
-		 return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
-		 inDomain:NSUserDomainMask
-		 appropriateForURL:nil
-		 create:YES
-		 error:NULL].relativePath;
-		 */
+		/*
+		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
+										inDomain:NSUserDomainMask
+							   appropriateForURL:nil
+										  create:YES
+										   error:NULL].relativePath;
+		*/
+		 
 	}
 
 	return NSStringEmptyPlaceholder;

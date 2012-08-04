@@ -37,8 +37,9 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n] : s)
+#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]   : s) 
 #define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
+#define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
 
 @interface NSDictionary (TXDictionaryHelper)
 - (BOOL)boolForKey:(NSString *)key;
