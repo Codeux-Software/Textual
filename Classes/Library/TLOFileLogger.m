@@ -129,11 +129,11 @@
 - (void)updatePropertyListCache /* @private */
 {
 	if (self.writePlainText == NO) {
-		/* We loop updatePropertyListCache every thirty seconds to write any unsaved property
+		/* We loop updatePropertyListCache every one minute to write any unsaved property
 		 list items to disk. Creating a property list and writing it to disk every time a new
 		 entry is created is probably a bad idea so we save periodically. */
 		
-		[self performSelector:@selector(updatePropertyListCache) withObject:nil afterDelay:30.0];
+		[self performSelector:@selector(updatePropertyListCache) withObject:nil afterDelay:60.0];
 
 		// ---- //
 		
@@ -162,7 +162,7 @@
 		// ---- //
 		
 		if (NSObjectIsEmpty(plist) || writeError) {
-			DebugLogToConsole(@"Error Creating Property List: %@", writeError);
+			LogToConsole(@"Error Creating Property List: %@", writeError);
 		} else {
 			[_NSFileManager() createFileAtPath:self.filename
 									  contents:plist
