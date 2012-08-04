@@ -68,11 +68,82 @@
 + (NSString *)memberTypeString:(TVCLogMemberType)type
 {
 	switch (type) {
-		case TVCLogMemberNormalType:		return @"normal";
+		case TVCLogMemberNormalType:	return @"normal";
 		case TVCLogMemberLocalUserType:	return @"myself";
 	}
 	
 	return NSStringEmptyPlaceholder;
+}
+
+- (NSString *)formattedTimestamp
+{
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
+	if (NSObjectIsNotEmpty(self.receivedAt)) {
+		NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
+
+		if (NSObjectIsNotEmpty(time)) {
+			return [time stringByAppendingString:NSStringWhitespacePlaceholder];
+		}
+	}
+
+	return nil;
+}
+
+- (NSString *)formattedNickname:(IRCChannel *)owner
+{
+	if (NSObjectIsNotEmpty(self.nick)) {
+		if (self.lineType == TVCLogLineActionType) {
+			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nick];
+		} else if (self.lineType == TVCLogLineNoticeType) {
+			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nick];
+		} else {
+			return [owner.client formatNick:self.nick channel:owner];
+		}
+	}
+
+	return nil;
+}
+
+- (id)initWithDictionary:(NSDictionary *)dic
+{
+	if ((self = [self init])) {
+		NSInteger receivedAt = NSDictionaryIntegerKeyValueCompare(dic, @"receivedAt",		[NSDate.date timeIntervalSince1970]);
+
+		self.nick			= NSDictionaryObjectKeyValueCompare(dic, @"nick",			NSStringEmptyPlaceholder);
+		self.body			= NSDictionaryObjectKeyValueCompare(dic, @"body",			NSStringEmptyPlaceholder);
+
+		self.keywords		= NSDictionaryObjectKeyValueCompare(dic, @"keywords",		@[]);
+		self.excludeWords	= NSDictionaryObjectKeyValueCompare(dic, @"excludeWords",	@[]);
+
+		self.lineType			= NSDictionaryIntegerKeyValueCompare(dic, @"lineType",			TVCLogLineRawHTMLType);
+		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType",		TVCLogMemberNormalType);
+		self.nickColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nickColorNumber",	0);
+
+		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (NSDictionary *)dictionaryValue
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+	[dict safeSetObject:@([self.receivedAt timeIntervalSince1970])		forKey:@"receivedAt"];
+	
+	[dict safeSetObject:self.nick					forKey:@"nick"];
+	[dict safeSetObject:self.body					forKey:@"body"];
+	[dict safeSetObject:self.keywords				forKey:@"keywords"];
+	[dict safeSetObject:self.excludeWords			forKey:@"excludeWords"];
+
+	[dict safeSetObject:@(self.lineType)			forKey:@"lineType"];
+	[dict safeSetObject:@(self.memberType)			forKey:@"memberType"];
+	[dict safeSetObject:@(self.nickColorNumber)		forKey:@"nickColorNumber"];
+
+	return dict;
 }
 
 @end

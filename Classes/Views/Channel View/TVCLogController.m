@@ -39,6 +39,10 @@
 
 #define _bottomEpsilon		0
 
+@interface TVCLogController ()
+@property (nonatomic, strong) TLOFileLogger *logFile;
+@end
+
 @implementation TVCLogController
 
 - (id)init
@@ -63,7 +67,6 @@
 }
 
 #pragma mark -
-#pragma mark Properties
 
 - (void)setMaxLines:(NSInteger)value
 {
@@ -79,7 +82,6 @@
 }
 
 #pragma mark -
-#pragma mark Utilities
 
 - (void)setUp
 {
@@ -90,11 +92,11 @@
 	
 	self.lastVisitedHighlight = -1;
 	
-	self.policy.menuController = [self.world menuController];
 	self.policy.menu			= self.menu;
 	self.policy.urlMenu			= self.urlMenu;
 	self.policy.chanMenu		= self.chanMenu;
 	self.policy.memberMenu		= self.memberMenu;
+	self.policy.menuController  = self.world.menuController;
 	
 	self.sink.owner  = self;
 	self.sink.policy = self.policy;
@@ -102,6 +104,11 @@
 	if (self.view) {
 		[self.view removeFromSuperview];
 	}
+
+	self.logFile = [TLOFileLogger new];
+	self.logFile.hashFilename = YES;
+	self.logFile.writePlainText = NO;
+	self.logFile.fileWritePath = [TPCPreferences whereTemporaryPath];
 	
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
@@ -112,13 +119,15 @@
 	self.view.keyDelegate				= self;
 	self.view.resizeDelegate			= self;
 	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
-
-	[self.view setShouldUpdateWhileOffscreen:NO];
+	
+	self.view.shouldUpdateWhileOffscreen	= NO;
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
 	self.queueInProgress = NO;
 }
+
+#pragma mark -
 
 - (void)runMessageQueueLoop
 {
@@ -169,6 +178,8 @@
 	}
 }
 
+#pragma mark -
+
 - (NSInteger)scrollbackCorrectionInit
 {
 	return (self.view.frame.size.height / 2);
@@ -208,6 +219,8 @@
 {
 	return [doc getElementById:@"topic_bar"];
 }
+
+#pragma mark -
 
 - (NSString *)topicValue
 {
@@ -249,6 +262,8 @@
 
 	[self.world runMessageQueueLoop:self];
 }
+
+#pragma mark -
 
 - (void)moveToTop
 {
@@ -319,6 +334,8 @@
 {
 	[self moveToBottom];
 }
+
+#pragma mark -
 
 - (void)mark
 {
@@ -429,6 +446,8 @@
 	self.loaded = NO;
 	self.count  = 0;
 
+	[self.logFile reset];
+
 	[self executeScriptCommand:@"viewContentsBeingCleared" withArguments:@[]];
 	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
@@ -448,6 +467,8 @@
 	
 	[self restorePosition];
 }
+
+#pragma mark -
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
@@ -621,6 +642,8 @@
 	[self limitNumberOfLines];
 }
 
+#pragma mark -
+
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
 {
 	if (NSObjectIsEmpty(line.body)) {
@@ -629,20 +652,24 @@
 	
 	NSMutableString *s = [NSMutableString string];
 	
-	if (NSObjectIsNotEmpty(line.time)) {
-		[s appendString:line.time];
-		[s appendString:NSStringEmptyPlaceholder];
+	if (NSObjectIsNotEmpty(line.receivedAt)) {
+		NSString *time = [line formattedTimestamp];
+		
+		[s appendString:time];
 	}
 	
 	if (NSObjectIsNotEmpty(line.nick)) {
-		[s appendString:line.nick];
-		[s appendString:NSStringEmptyPlaceholder];
+		NSString *nick = [line formattedNickname:self.channel];
+		
+		[s appendString:nick];
 	} 
 
 	[s appendString:line.body];
 
 	return [s stripEffects];
 }
+
+#pragma mark -
 
 - (BOOL)print:(TVCLogLine *)line
 {
@@ -763,8 +790,10 @@
 
 	// ---- //
 
-	if (NSObjectIsNotEmpty(line.time)) {
-		attributes[@"formattedTimestamp"] = line.time;
+	if (NSObjectIsNotEmpty(line.receivedAt)) {
+		NSString *time = [line formattedTimestamp];
+		
+		attributes[@"formattedTimestamp"] = time;
 	}
 
 	// ---- //
@@ -775,9 +804,9 @@
 		attributes[@"nicknameColorNumber"]			= @(line.nickColorNumber);
 		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColors] == NO);
 
-		attributes[@"formattedNickname"]	= line.nick.trim;
+		attributes[@"formattedNickname"]	= [line formattedNickname:self.channel].trim;
 
-		attributes[@"nickname"]				= line.nickInfo;
+		attributes[@"nickname"]				= line.nick;
 		attributes[@"nicknameType"]			= [TVCLogLine memberTypeString:line.memberType];
 	}
 
@@ -798,7 +827,7 @@
 
 	id templateRaw = [self.theme.other templateWithLineType:line.lineType];
 
-	[self writeLine:templateRaw attributes:attributes];
+	[self writeLine:templateRaw attributes:attributes contextInfo:line];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
@@ -806,7 +835,7 @@
 	
 	if (highlighted) {
 		NSString *messageBody;
-		NSString *nicknameBody = [line.nick trim];
+		NSString *nicknameBody = [line formattedNickname:self.channel];
 		
 		if (type == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
@@ -824,7 +853,7 @@
 	return highlighted;
 }
 
-- (void)writeLine:(id)line attributes:(NSMutableDictionary *)attrs
+- (void)writeLine:(id)line attributes:(NSMutableDictionary *)attrs contextInfo:(TVCLogLine *)context
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
@@ -874,6 +903,11 @@
 		[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
 
 		// ---- //
+
+		[self.logFile writePropertyListEntry:[context dictionaryValue]
+									   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero]];
+
+		// ---- //
 		
 		return YES;
 	} copy];
@@ -882,6 +916,8 @@
 
 	[self.world runMessageQueueLoop:self];
 }
+
+#pragma mark -
 
 - (NSString *)initialDocument:(NSString *)topic
 {
@@ -975,6 +1011,8 @@
 
 	return templateTokens;
 }
+
+#pragma mark -
 
 - (void)setUpScroller
 {
