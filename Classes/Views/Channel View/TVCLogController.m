@@ -905,7 +905,7 @@
 		// ---- //
 
 		[self.logFile writePropertyListEntry:[context dictionaryValue]
-									   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero]];
+									   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
 
 		// ---- //
 		
