@@ -62,16 +62,34 @@
 	return [bleh1 isEqualToString:bleh2];
 }
 
+- (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth
+{
+	NSInteger trlzp = (forcedWidth - self.stringValue.length);
+
+	if (trlzp <= 0) {
+		return self.stringValue;
+	} else {
+		NSMutableString *ints = [NSMutableString string];
+
+		for (NSInteger i = 0; i < trlzp; i++) {
+			[ints appendString:@"0"];
+		}
+
+		[ints appendString:self.stringValue];
+
+		return ints;
+	}
+}
+
 - (NSString *)integerWithLeadingZero
 {
-	NSString *ints = [self stringValue];
 	NSInteger intv = [self integerValue];
-	
+
 	if (intv >= 0 && intv <= 9) {
-		return [@"0" stringByAppendingString:ints];
+		return [@"0" stringByAppendingString:self.stringValue];
 	}
-	
-	return ints;
+
+	return self.stringValue;
 }
 
 @end

@@ -5758,4 +5758,23 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	}
 }
 
+#pragma mark -
+#pragma mark Deprecated
+
+
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
+{
+	return NO;
+}
+
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt
+{
+	return NO;
+}
+
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt
+{
+	return NO;
+}
+
 @end

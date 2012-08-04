@@ -44,4 +44,5 @@
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
 - (NSString *)integerWithLeadingZero;
+- (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth;
 @end
