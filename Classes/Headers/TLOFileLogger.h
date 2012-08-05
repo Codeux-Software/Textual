@@ -57,6 +57,7 @@
 @property (nonatomic, weak) IRCChannel *channel;
 @property (nonatomic, assign) BOOL writePlainText; // Plain text or property list.
 @property (nonatomic, assign) BOOL hashFilename; // UUID based, flat directory structure.
+@property (nonatomic, assign) NSInteger maxEntryCount; // Only used if (writePlainText == NO)
 @property (nonatomic, strong) NSString *filename;
 @property (nonatomic, strong) NSString *fileWritePath;
 @property (nonatomic, strong) NSFileHandle *file;
@@ -66,8 +67,8 @@
 - (void)reset;
 - (void)reopenIfNeeded;
 
-- (id)data; // Types: (NSData if writePlainText == YES),
-			//		  (NSDictionary if writePlainText == NO)
+- (id)data; // Types: (NSData			writePlainText == YES),
+			//		  (NSDictionary		writePlainText == NO)
 			//			or nil
 
 - (NSString *)buildPath;
