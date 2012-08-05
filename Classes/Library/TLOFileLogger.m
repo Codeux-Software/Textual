@@ -57,10 +57,42 @@
 	} else {
 		NSMutableDictionary *propertyList = self.propertyList.mutableCopy;
 
+		// ---- //
+		
 		if (NSObjectIsNotEmpty(_temporaryPropertyListItems)) {
 			[propertyList addEntriesFromDictionary:_temporaryPropertyListItems];
 		}
-		
+
+		// ---- //
+
+		if (self.maxEntryCount >= 1) {
+			if (propertyList.count >= self.maxEntryCount) {
+				NSArray *reverKkeys = propertyList.sortedDictionaryKeys.reverseObjectEnumerator.allObjects;
+
+				NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
+
+				NSInteger loopCount = 0;
+
+				// ---- //
+
+				for (NSString *key in reverKkeys) {
+					if (loopCount >= self.maxEntryCount) {
+						break;
+					}
+					
+					[newDict setObject:[propertyList objectForKey:key] forKey:key];
+
+					loopCount += 1;
+				}
+
+				// ---- //
+
+				return [newDict sortedDictionary];
+			}
+		}
+
+		// ---- //
+
 		return [propertyList sortedDictionary];
 	}
 

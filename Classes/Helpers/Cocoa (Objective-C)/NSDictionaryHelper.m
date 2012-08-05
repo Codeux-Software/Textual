@@ -180,9 +180,14 @@
 	return nil;
 }
 
-- (NSDictionary *)sortedDictionary
+- (NSArray *)sortedDictionaryKeys
 {
-	NSArray *sortedKeys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
+	return [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
+}
+
+- (id)sortedDictionary
+{
+	NSArray *sortedKeys = [self sortedDictionaryKeys];
 	
 	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
 	
@@ -227,19 +232,6 @@
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
 	self[key] = [NSValue valueWithPointer:value];
-}
-
-- (NSMutableDictionary *)sortedDictionary
-{
-	NSArray *sortedKeys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
-	
-	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-	
-	for (NSString *key in sortedKeys) {
-		newDict[key] = self[key];
-	}
-	
-	return newDict;
 }
 
 @end
