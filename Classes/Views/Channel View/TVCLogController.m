@@ -79,6 +79,8 @@
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
+	
+	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 }
 
 #pragma mark -
@@ -109,6 +111,7 @@
 	self.logFile.hashFilename = YES;
 	self.logFile.writePlainText = NO;
 	self.logFile.fileWritePath = [TPCPreferences whereTemporaryPath];
+	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 	
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	

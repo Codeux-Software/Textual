@@ -56,7 +56,8 @@
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
 
-- (NSDictionary *)sortedDictionary;
+- (NSArray *)sortedDictionaryKeys;
+- (id)sortedDictionary;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
@@ -66,6 +67,4 @@
 - (void)setLongLong:(long long)value forKey:(NSString *)key;
 - (void)setDouble:(TXNSDouble)value forKey:(NSString *)key;
 - (void)setPointer:(void *)value forKey:(NSString *)key;
-
-- (NSMutableDictionary *)sortedDictionary;
 @end
