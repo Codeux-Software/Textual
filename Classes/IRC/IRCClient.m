@@ -4434,11 +4434,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)isCapAvailable:(NSString *)cap
 {
+	// Information about several of these supported CAP
+	// extensions can be found at: http://ircv3.atheme.org
+	
 	return ([cap isEqualNoCase:@"identify-msg"] ||
 			[cap isEqualNoCase:@"identify-ctcp"] ||
 			[cap isEqualNoCase:@"multi-prefix"] ||
 			[cap isEqualNoCase:@"userhost-in-names"] ||
-			//[cap isEqualNoCase:@"znc.in/server-time"] ||
+			[cap isEqualNoCase:@"server-time"] ||
 			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(self.config.nickPassword)));
 }
 
@@ -4512,6 +4515,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             [authenticateData appendData:[self.config.nickPassword dataUsingEncoding:self.config.encoding allowLossyConversion:YES]];
 
             NSString *authString = [authenticateData base64EncodingWithLineLength:400];
+
             NSArray *authStrings = [authString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
             for (NSString *string in authStrings) {
