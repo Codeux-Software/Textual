@@ -50,8 +50,9 @@
 	if ((self = [super init])) {
 		self.bottom        = YES;
 		self.maxLines      = 300;
-		
-		self.messageQueue			= [NSMutableArray new];
+
+		self.normalMessageQueue		= [NSMutableArray new];
+		self.specialMessageQueue	= [NSMutableArray new];
 		self.highlightedLineNumbers	= [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -135,28 +136,97 @@
 - (void)runMessageQueueLoop
 {
 	self.queueInProgress = YES;
-	
-	while (NSObjectIsNotEmpty(self.messageQueue)) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			if ([self.view isLoading] == NO) {
-				if (NSObjectIsNotEmpty(self.messageQueue)) {
-					BOOL srslt = ((TVCLogMessageBlock)(self.messageQueue)[0])();
 
-					if (srslt) {
-						[self.messageQueue removeObjectAtIndex:0];
+	[self runMessageQueueLoop:self.specialMessageQueue honorLoopDelay:NO];
+	[self runMessageQueueLoop:self.normalMessageQueue  honorLoopDelay:YES];
+
+	self.queueInProgress = NO;
+}
+
+- (void)runMessageQueueLoop:(NSMutableArray *)messageQueue honorLoopDelay:(BOOL)delayLoop
+{
+	NSMutableString *result;
+
+	if (delayLoop == NO) {
+		result = [NSMutableString string];
+	}
+	
+	while (NSObjectIsNotEmpty(messageQueue)) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if (NSObjectIsNotEmpty(messageQueue)) {
+				if ([self.view isLoading] == NO) {
+					// Internally, TVCLogMessageBlock should only return a
+					// BOOL as NSValue or NSString absolute value.
+
+					BOOL rrslt = NO;
+
+					// ---- //
+
+					id stslt = ((TVCLogMessageBlock)messageQueue[0])();
+
+					// ---- //
+
+					if ([stslt isKindOfClass:NSString.class]) {
+						if (PointerIsNotEmpty(stslt)) {
+							if (delayLoop == NO) {
+								[result appendString:stslt];
+							} else {
+								[self appendToDocumentBody:stslt];
+							}
+
+							rrslt = YES;
+						}
+					} else {
+						rrslt = [stslt boolValue];
+					}
+
+					// ---- //
+					
+					if (rrslt) {
+						[messageQueue removeObjectAtIndex:0];
 					}
 				}
 			}
 		});
 
-		if (self.channel) {
-			[NSThread sleepForTimeInterval:[TPCPreferences viewLoopChannelDelay]];
-		} else {
-			[NSThread sleepForTimeInterval:[TPCPreferences viewLoopConsoleDelay]];
+		// ---- //
+
+		if (delayLoop) {
+			if (self.channel) {
+				[NSThread sleepForTimeInterval:[TPCPreferences viewLoopChannelDelay]];
+			} else {
+				[NSThread sleepForTimeInterval:[TPCPreferences viewLoopConsoleDelay]];
+			}
 		}
 	}
 
-	self.queueInProgress = NO;
+	// ---- //
+
+	if (delayLoop == NO && NSObjectIsNotEmpty(result)) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self appendToDocumentBody:result];
+		});
+	}
+}
+
+#pragma mark -
+
+- (void)appendToDocumentBody:(NSString *)html
+{
+	DOMDocument *doc = [self mainFrameDocument];
+	if (PointerIsEmpty(doc)) return;
+
+	DOMElement *body = [self body:doc];
+	if (PointerIsEmpty(body)) return;
+
+	// ---- //
+
+	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html
+																		baseURL:self.theme.baseUrl];
+
+	// ---- //
+
+	[body appendChild:frag];
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
@@ -248,20 +318,20 @@
 											 resultInfo:NULL];
 			
 			DOMDocument *doc = [self mainFrameDocument];
-			if (PointerIsEmpty(doc)) return NO;
+			if (PointerIsEmpty(doc)) return @(NO);
 			
 			DOMElement *topic_body = [self topic:doc];
-			if (PointerIsEmpty(topic_body)) return NO;
+			if (PointerIsEmpty(topic_body)) return @(NO);
 			
 			[(id)topic_body setInnerHTML:body];
 
 			[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 		}
 		
-		return YES;
+		return @(YES);
 	} copy];
-	
-	[self.messageQueue safeAddObject:messageBlock];
+
+	[self.normalMessageQueue safeAddObject:messageBlock];
 
 	[self.world runMessageQueueLoop:self];
 }
@@ -343,12 +413,12 @@
 - (void)mark
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if (self.loaded == NO) return NO;
+		if (self.loaded == NO) return @(NO);
 		
 		[self savePosition];
 		
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return NO;
+		if (PointerIsEmpty(doc)) return @(NO);
 		
 		DOMElement *body = [self body:doc];
 		
@@ -366,10 +436,10 @@
 
 		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 		
-		return YES;
+		return @(YES);
 	} copy];
 
-	[self.messageQueue safeAddObject:messageBlock];
+	[self.normalMessageQueue safeAddObject:messageBlock];
 
 	[self.world runMessageQueueLoop:self];
 }
@@ -377,10 +447,10 @@
 - (void)unmark
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if (self.loaded == NO) return NO;
+		if (self.loaded == NO) return @(NO);
 		
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return NO;
+		if (PointerIsEmpty(doc)) return @(NO);
 		
 		DOMElement *e = [doc getElementById:@"mark"];
 		
@@ -392,10 +462,10 @@
 
 		[self executeScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
 
-		return YES;
+		return @(YES);
 	} copy];
 
-	[self.messageQueue safeAddObject:messageBlock];
+	[self.normalMessageQueue safeAddObject:messageBlock];
 
 	[self.world runMessageQueueLoop:self];
 }
@@ -429,31 +499,31 @@
 
 - (void)reloadTheme
 {
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
-
-	DOMElement *body = [self body:doc];
-	if (PointerIsEmpty(body)) return;
-
-	self.html = [(id)body innerHTML];
-
-	self.scrollBottom = [self viewingBottom];
-	self.scrollTop    = [[[doc body] valueForKey:@"scrollTop"] integerValue];
-
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
-}
 
-- (void)clear
-{
-	self.html = nil;
-	self.loaded = NO;
-	self.count  = 0;
-
-	[self.logFile reset];
-
-	[self executeScriptCommand:@"viewContentsBeingCleared" withArguments:@[]];
+	// ---- //
 	
-	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
+	NSDictionary *oldLines = self.logFile.data;
+
+	if (NSObjectIsNotEmpty(oldLines)) {
+		NSArray *keys = oldLines.sortedDictionaryKeys;
+		
+		for (NSString *key in keys) {
+			NSDictionary *lineDic = [oldLines objectForKey:key];
+
+			TVCLogLine *line = [TVCLogLine.alloc initWithDictionary:lineDic];
+
+			if (PointerIsNotEmpty(line)) {
+				BOOL rawHTML = (line.lineType == TVCLogLineRawHTMLType);
+				
+				[self print:line withHTML:rawHTML specialWrite:YES];
+			}
+		}
+	}
+
+	// ---- //
+
+	[self moveToBottom];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -660,7 +730,7 @@
 		
 		[s appendString:time];
 	}
-	
+
 	if (NSObjectIsNotEmpty(line.nick)) {
 		NSString *nick = [line formattedNickname:self.channel];
 		
@@ -679,7 +749,12 @@
 	return [self print:line withHTML:NO];
 }
 
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML
+- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML
+{
+	return [self print:line withHTML:stripHTML specialWrite:NO];
+}
+
+- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial
 {
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
@@ -801,7 +876,7 @@
 
 	// ---- //
 
-	if (line.nick) {
+	if (NSObjectIsNotEmpty(line.nick)) {
 		attributes[@"isNicknameAvailable"] = @(YES);
 
 		attributes[@"nicknameColorNumber"]			= @(line.nickColorNumber);
@@ -830,13 +905,13 @@
 
 	id templateRaw = [self.theme.other templateWithLineType:line.lineType];
 
-	[self writeLine:templateRaw attributes:attributes contextInfo:line];
+	[self writeLine:templateRaw attributes:attributes contextInfo:line specialWrite:isSpecial];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
 	// ************************************************************************** /
 	
-	if (highlighted) {
+	if (highlighted && isSpecial == NO) {
 		NSString *messageBody;
 		NSString *nicknameBody = [line formattedNickname:self.channel];
 		
@@ -856,7 +931,10 @@
 	return highlighted;
 }
 
-- (void)writeLine:(id)line attributes:(NSMutableDictionary *)attrs contextInfo:(TVCLogLine *)context
+- (void)writeLine:(id)line
+	   attributes:(NSMutableDictionary *)attrs
+	  contextInfo:(TVCLogLine *)context
+	 specialWrite:(BOOL)isSpecial
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
@@ -867,10 +945,10 @@
 		// ---- //
 		
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return NO;
+		if (PointerIsEmpty(doc)) return nil;
 		
 		DOMElement *body = [self body:doc];
-		if (PointerIsEmpty(body)) return NO;
+		if (PointerIsEmpty(body)) return nil;
 
 		// ---- //
 
@@ -879,43 +957,46 @@
 
 			// ---- //
 
-			NSString *aHtml = [line renderObject:attrs];
+			NSString *html = [line renderObject:attrs];
 
-			if (NSObjectIsEmpty(aHtml)) {
-				return NO;
+			if (NSObjectIsEmpty(html)) {
+				return nil;
 			}
 
 			// ---- //
 
-			DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:aHtml
-																				baseURL:self.theme.baseUrl];
-			
-			[body appendChild:frag];
-		}
+			if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
+				[self setNeedsLimitNumberOfLines];
+			}
 
+			if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
+				[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
+			}
+
+			[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
+
+			// ---- //
+
+			if (isSpecial == NO) {
+				[self.logFile writePropertyListEntry:[context dictionaryValue]
+											   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
+			}
+
+			return (__bridge void *)html;
+		}
+		
 		// ---- //
 		
-		if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
-			[self setNeedsLimitNumberOfLines];
-		}
-		
-		if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-			[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
-		}
-		
-		[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
-
-		// ---- //
-
-		[self.logFile writePropertyListEntry:[context dictionaryValue]
-									   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
-
-		// ---- //
-		
-		return YES;
+		return nil;
 	} copy];
-	
-	[self.messageQueue safeAddObject:messageBlock];
+
+	// ---- //
+
+	if (isSpecial) {
+		[self.specialMessageQueue safeAddObject:messageBlock];
+	} else {
+		[self.normalMessageQueue safeAddObject:messageBlock];
+	}
 
 	[self.world runMessageQueueLoop:self];
 }
@@ -932,8 +1013,6 @@
 
 	templateTokens[@"activeStyleAbsolutePath"]	= self.theme.other.path;
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences whereResourcePath];
-
-	templateTokens[@"existingBody"]				= NSStringNilValueSubstitute(self.html);
 
 	// ---- //
 	
@@ -1182,6 +1261,14 @@
 - (void)logViewDidResize
 {
 	[self restorePosition];
+}
+
+#pragma mark -
+#pragma mark Deprecated
+
+- (void)clear
+{
+	// ---- //
 }
 
 @end

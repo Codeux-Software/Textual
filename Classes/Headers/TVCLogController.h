@@ -37,10 +37,9 @@
 
 #import "TextualApplication.h"
 
-typedef BOOL (^TVCLogMessageBlock)(void);
+typedef id (^TVCLogMessageBlock)(void);
 
 @interface TVCLogController : NSObject
-@property (nonatomic, strong) NSString *html;
 @property (nonatomic, weak) IRCWorld *world;
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, weak) IRCChannel *channel;
@@ -69,7 +68,8 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 @property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
-@property (strong) NSMutableArray *messageQueue;
+@property (strong) NSMutableArray *normalMessageQueue;  // Priority: Low
+@property (strong) NSMutableArray *specialMessageQueue; // Priority: High
 @property (assign) BOOL queueInProgress;
 
 - (void)setUp;
@@ -93,8 +93,9 @@ typedef BOOL (^TVCLogMessageBlock)(void);
 - (void)unmark;
 - (void)goToMark;
 
+- (void)clear TEXTUAL_DEPRECATED; // See IRCWorld.h for replacements.
+
 - (void)reloadTheme;
-- (void)clear;
 
 - (void)changeTextSize:(BOOL)bigger;
 
