@@ -156,7 +156,9 @@
 
 - (void)fireMessageQueue:(TVCLogController *)log
 {
-	if (log.messageQueue.count >= 25) {
+	if (log.normalMessageQueue.count >= 25 ||
+		log.specialMessageQueue.count >= 25) {
+		
 		static dispatch_once_t once;
 
 		/* Not 100% sure dispatch_once is
