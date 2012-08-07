@@ -73,8 +73,7 @@
 @property (nonatomic, strong) NSDictionary *bundlesForUserInput;
 @property (nonatomic, strong) NSDictionary *bundlesForServerInput;
 @property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
-@property (nonatomic, assign) dispatch_queue_t frontmostViewMessageQueue;
-@property (nonatomic, assign) dispatch_queue_t backgroundViewMessageQueue;
+@property (nonatomic, strong) NSOperationQueue *messageOperationQueue;
 
 - (void)setup:(IRCWorldConfig *)seed;
 - (void)setupTree;
@@ -90,8 +89,6 @@
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)terminate;
 - (void)prepareForSleep;
-
-- (void)runMessageQueueLoop:(TVCLogController *)sender;
 
 - (IRCClient *)findClient:(NSString *)name;
 - (IRCClient *)findClientById:(NSInteger)uid;
@@ -150,4 +147,15 @@
 - (void)destroyAllEvidence;
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
+@end
+
+@interface TKMessageBlockOperation : NSOperation
+@property (nonatomic, retain) TVCLogController *controller;
+@property (nonatomic, assign) BOOL special;
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
+																	 forController:(TVCLogController *)controller
+														 withSpecialPriority:(BOOL)special;
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
+																	 forController:(TVCLogController *)controller;
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block;
 @end
