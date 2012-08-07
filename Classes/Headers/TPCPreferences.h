@@ -102,9 +102,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (NSString *)gitBuildReference;
 
-+ (TXNSDouble)viewLoopConsoleDelay;
-+ (TXNSDouble)viewLoopChannelDelay;
-
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
 
