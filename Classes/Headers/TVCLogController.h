@@ -68,10 +68,6 @@ typedef id (^TVCLogMessageBlock)(void);
 @property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
-@property (strong) NSMutableArray *normalMessageQueue;  // Priority: Low
-@property (strong) NSMutableArray *specialMessageQueue; // Priority: High
-@property (assign) BOOL queueInProgress;
-
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
@@ -84,8 +80,6 @@ typedef id (^TVCLogMessageBlock)(void);
 
 - (void)moveToTop;
 - (void)moveToBottom;
-
-- (void)runMessageQueueLoop; // Only Textual should call this.
 
 - (void)setTopic:(NSString *)topic;
 
@@ -105,4 +99,8 @@ typedef id (^TVCLogMessageBlock)(void);
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
 
 - (void)logViewOnDoubleClick:(NSString *)e;
+
+- (void)handleMessageBlock:(id)block isSpecial:(BOOL)special;
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender isSpecial:(BOOL)special;
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
 @end
