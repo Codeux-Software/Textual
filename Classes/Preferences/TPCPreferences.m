@@ -732,16 +732,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return (TXHostmaskBanFormat)[_NSUserDefaults() integerForKey:@"DefaultBanCommandHostmaskFormat"];
 }
 
-+ (TXNSDouble)viewLoopConsoleDelay
-{
-	return [_NSUserDefaults() doubleForKey:@"LogViewMessageQueueLoopDelay -> Console"];
-}
-
-+ (TXNSDouble)viewLoopChannelDelay
-{
-	return [_NSUserDefaults() doubleForKey:@"LogViewMessageQueueLoopDelay -> Channel"];
-}
-
 + (BOOL)displayDockBadge
 {
 	return [_NSUserDefaults() boolForKey:@"DisplayDockBadges"];
@@ -1390,8 +1380,6 @@ static NSInteger totalRunTime = 0;
 	[d setInteger:TXNoticeSendServerConsoleType			forKey:@"DestinationOfNonserverNotices"];
 	[d setInteger:TXUserDoubleClickQueryAction			forKey:@"UserListDoubleClickAction"];
 
-	[d setDouble:0.05 forKey:@"LogViewMessageQueueLoopDelay -> Console"];
-	[d setDouble:0.07 forKey:@"LogViewMessageQueueLoopDelay -> Channel"];
 	[d setDouble:12.0 forKey:@"Theme -> Font Size"];
 	[d setDouble:1.0  forKey:@"MainWindowTransparencyLevel"];
 

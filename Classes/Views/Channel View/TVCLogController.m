@@ -861,7 +861,7 @@
 		if (PointerIsEmpty(body)) return nil;
 
 		// ---- //
-
+		
 		if ([line isKindOfClass:GRMustacheTemplate.class]) {
 			attrs[@"lineNumber"] = @(self.lineNumber);
 
@@ -875,19 +875,19 @@
 
 			// ---- //
 
-			if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
-				[self setNeedsLimitNumberOfLines];
-			}
-
-			if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-				[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
-			}
-
-			[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
-
-			// ---- //
-
 			if (isSpecial == NO) {
+				if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
+					[self setNeedsLimitNumberOfLines];
+				}
+
+				if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
+					[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
+				}
+
+				[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
+
+				// ---- //
+
 				[self.logFile writePropertyListEntry:[context dictionaryValue]
 											   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
 			}
@@ -896,14 +896,17 @@
 		}
 		
 		// ---- //
-		
+
 		return nil;
 	} copy];
+	
 	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:isSpecial];
 }
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
-{ [self enqueueMessageBlock:messageBlock fromSender:sender isSpecial:NO]; }
+{
+	[self enqueueMessageBlock:messageBlock fromSender:sender isSpecial:NO];
+}
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender isSpecial:(BOOL)special
 {
@@ -912,7 +915,7 @@
 	} forController:sender withSpecialPriority:special]];
 }
 
-- (void) handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
+- (void)handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
 {
 	// Internally, TVCLogMessageBlock should only return a
 	// BOOL as NSValue or NSString absolute value.
@@ -930,10 +933,11 @@
 	// ---- //
 
 	if ([stslt isKindOfClass:NSString.class]) {
-		if (PointerIsNotEmpty(stslt)) {
+		if (NSObjectIsNotEmpty(stslt)) {
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[self appendToDocumentBody:stslt];
 			}];
+			
 			rrslt = YES;
 		}
 	} else {
@@ -942,7 +946,9 @@
 
 	// ---- //
 
-	if (!rrslt)	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
+	if (rrslt == NO) {
+		[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
+	}
 }
 
 #pragma mark -
@@ -1103,6 +1109,8 @@
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
 	[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+
+	[self.world updateReadinessState:self];
 
 	self.loaded	= YES;
 	self.loadingImages = 0;

@@ -54,9 +54,9 @@
 		self.clients = [NSMutableArray new];
 		
 		self.messageOperationQueue = [NSOperationQueue new];
+		
 		self.messageOperationQueue.name = @"IRCWordMessageOperationQueue";
 		self.messageOperationQueue.maxConcurrentOperationCount = 1;
-// Only 1 at a time or else we get a race condition and out of order messages
 	}
 	
 	return self;
@@ -1353,51 +1353,86 @@
 	[self logKeyDown:e];
 }
 
+#pragma mark -
+
+- (void)updateReadinessState:(TVCLogController *)controller
+{
+	NSArray *queues = [self.messageOperationQueue operations];
+
+	for (TKMessageBlockOperation *op in queues) {
+		if (op.controller == controller) {
+			[op willChangeValueForKey:@"isReady"];
+			[op didChangeValueForKey:@"isReady"];
+		}
+	}
+}
+
+@end
+
+#pragma mark -
+
+@interface TKMessageBlockOperation () /* @private */
+@property (nonatomic, assign) BOOL isSpecial;
 @end
 
 @implementation TKMessageBlockOperation
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
-																	 forController:(TVCLogController *)controller
-														 withSpecialPriority:(BOOL)special
+
++ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
+								  forController:(TVCLogController *)controller
+							withSpecialPriority:(BOOL)special
 {
-	TKMessageBlockOperation * retval = [TKMessageBlockOperation new];
-	retval.completionBlock = block;
-	retval.controller = controller;
-	retval.special = special;
-	retval.queuePriority = retval.priority;
+	if (PointerIsEmpty(controller) || PointerIsEmpty(block)) {
+		return nil;
+	}
+	
+	TKMessageBlockOperation *retval = [TKMessageBlockOperation new];
+
+	retval.controller		= controller;
+	retval.isSpecial		= special;
+	
+	retval.queuePriority	= retval.priority;
+	retval.completionBlock	= block;
+	
 	return retval;
 }
 
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
-																	 forController:(TVCLogController *)controller
-{ return [self operationWithBlock:block forController:controller withSpecialPriority:NO]; }
-
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
-{ return [self operationWithBlock:block forController:nil withSpecialPriority:NO]; }
-
-- (id) init
++ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
+								  forController:(TVCLogController *)controller
 {
-	if (self = [super init]) {
-		self.special = NO;
-	}
-	return self;
+	return [self operationWithBlock:block forController:controller withSpecialPriority:NO];
 }
 
-- (NSOperationQueuePriority) priority
+- (NSOperationQueuePriority)priority
 {
-	if (!self.controller) return NSOperationQueuePriorityVeryHigh;
-	id target = self.controller.channel ?: self.controller.client;
+	id target	= self.controller.channel;
 	id selected = self.controller.world.selected;
+
+	if (PointerIsEmpty(target)) {
+		target = self.controller.client;
+	}
+
+	// ---- //
+
 	NSOperationQueuePriority retval = NSOperationQueuePriorityLow;
 
-	if ((target || selected) && target == selected) retval += 4L;
-	if (self.special) retval += 4L;
+	// ---- //
+	
+	if ((target || selected) && target == selected) {
+		retval += 4L;
+	}
+
+	if (self.isSpecial) {
+		retval += 4L;
+	}
+
+	// ---- //
+	
 	return retval;
 }
 
-- (BOOL) isReady
+- (BOOL)isReady
 {
-	if (!self.controller) return YES;
 	return ([self.controller.view isLoading] == NO);
 }
+
 @end
