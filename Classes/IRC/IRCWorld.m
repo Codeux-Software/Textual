@@ -52,9 +52,8 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
-
-		self.frontmostViewMessageQueue  = dispatch_queue_create("frontmostViewMessageQueue", NULL);
-		self.backgroundViewMessageQueue = dispatch_queue_create("backgroundViewMessageQueue", NULL);
+		
+		self.messageOperationQueue = [NSOperationQueue new];
 	}
 	
 	return self;
@@ -63,12 +62,6 @@
 - (void)dealloc
 {
 	[NSBundle deallocBundlesFromMemory:self];
-
-	dispatch_release(self.frontmostViewMessageQueue);
-	self.frontmostViewMessageQueue = nil;
-
-	dispatch_release(self.backgroundViewMessageQueue);
-	self.backgroundViewMessageQueue = nil;
 }
 
 - (void)setup:(IRCWorldConfig *)seed
@@ -149,47 +142,6 @@
 	if (self.channelMenu) return;
 	
 	self.channelMenu = [item.submenu copy];
-}
-
-#pragma mark -
-#pragma mark View Run Loop
-
-- (void)fireMessageQueue:(TVCLogController *)log
-{
-	if (log.normalMessageQueue.count >= 25 ||
-		log.specialMessageQueue.count >= 25) {
-		
-		static dispatch_once_t once;
-
-		/* Not 100% sure dispatch_once is
-		 designed to do something like this. */
-		dispatch_once(&once, ^{
-			[log runMessageQueueLoop];
-		});
-	} else {
-		[log runMessageQueueLoop];
-	}
-}
-
-- (void)runMessageQueueLoop:(TVCLogController *)sender
-{
-	if (sender.queueInProgress) {
-		return; // Do not even add to queue if its already running…
-	}
-
-	TVCLogController *active = self.selected.log;
-
-	if (PointerIsNotEmpty(active)) {
-		if (NSDissimilarObjects(sender, self.selected.log)) {
-			dispatch_async(self.backgroundViewMessageQueue, ^{
-				[self fireMessageQueue:sender];
-			});
-		} else {
-			dispatch_async(self.frontmostViewMessageQueue, ^{
-				[self fireMessageQueue:sender];
-			});
-		}
-	}
 }
 
 #pragma mark -
@@ -1398,4 +1350,51 @@
 	[self logKeyDown:e];
 }
 
+@end
+
+@implementation TKMessageBlockOperation
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
+																	 forController:(TVCLogController *)controller
+														 withSpecialPriority:(BOOL)special
+{
+	TKMessageBlockOperation * retval = [TKMessageBlockOperation new];
+	retval.completionBlock = block;
+	retval.controller = controller;
+	retval.special = special;
+	retval.queuePriority = retval.priority;
+	return retval;
+}
+
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
+																	 forController:(TVCLogController *)controller
+{ return [self operationWithBlock:block forController:controller withSpecialPriority:NO]; }
+
++ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
+{ return [self operationWithBlock:block forController:nil withSpecialPriority:NO]; }
+
+- (id) init
+{
+	if (self = [super init]) {
+		self.special = NO;
+	}
+	return self;
+}
+
+- (NSOperationQueuePriority) priority
+{
+	if (!self.controller) return NSOperationQueuePriorityVeryHigh;
+	id target = self.controller.channel ?: self.controller.client;
+	id selected = self.controller.world.selected;
+	NSOperationQueuePriority retval = NSOperationQueuePriorityLow;
+
+	if ((target || selected) && target == selected) retval += 4L;
+	if (self.special) retval += 4L;
+	return retval;
+}
+
+- (BOOL) isReady
+{
+	if (!self.controller) return YES;
+	return ([self.controller.view isLoading] == NO);
+}
 @end
