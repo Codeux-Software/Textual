@@ -209,8 +209,6 @@
 	[self.class migrateGlobalPreference:@"LogHighlights"								from:@"Preferences.General.log_highlights"];
 	[self.class migrateGlobalPreference:@"LogTranscript"								from:@"Preferences.General.log_transcript"];
 	[self.class migrateGlobalPreference:@"LogTranscriptDestination"						from:@"Preferences.General.transcript_folder"];
-	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Channel"		from:@"Preferences.Experimental.view_loop_channel_delay"];
-	[self.class migrateGlobalPreference:@"LogViewMessageQueueLoopDelay -> Console"		from:@"Preferences.Experimental.view_loop_console_delay"];
 	[self.class migrateGlobalPreference:@"MainWindowTransparencyLevel"					from:@"Preferences.Theme.transparency"];
 	[self.class migrateGlobalPreference:@"NicknameHighlightMatchingType"				from:@"Preferences.Keyword.matching_method"];
 	[self.class migrateGlobalPreference:@"OpenClickedLinksInBackgroundBrowser"			from:@"Preferences.General.open_browser_in_background"];

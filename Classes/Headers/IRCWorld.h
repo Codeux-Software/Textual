@@ -146,16 +146,20 @@
 
 - (void)destroyAllEvidence;
 
+- (void)updateReadinessState:(TVCLogController *)controller;
+
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
 @end
 
+#pragma mark -
+
 @interface TKMessageBlockOperation : NSOperation
-@property (nonatomic, retain) TVCLogController *controller;
-@property (nonatomic, assign) BOOL special;
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
-																	 forController:(TVCLogController *)controller
-														 withSpecialPriority:(BOOL)special;
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block
-																	 forController:(TVCLogController *)controller;
-+ (TKMessageBlockOperation *) operationWithBlock:(void(^)(void))block;
+@property (nonatomic, weak) TVCLogController *controller;
+
++ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
+								  forController:(TVCLogController *)controller
+							withSpecialPriority:(BOOL)special;
+
++ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
+								  forController:(TVCLogController *)controller;
 @end
