@@ -54,6 +54,9 @@
 		self.clients = [NSMutableArray new];
 		
 		self.messageOperationQueue = [NSOperationQueue new];
+		self.messageOperationQueue.name = @"IRCWordMessageOperationQueue";
+		self.messageOperationQueue.maxConcurrentOperationCount = 1;
+// Only 1 at a time or else we get a race condition and out of order messages
 	}
 	
 	return self;
