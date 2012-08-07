@@ -51,8 +51,6 @@
 		self.bottom        = YES;
 		self.maxLines      = 300;
 
-		self.normalMessageQueue		= [NSMutableArray new];
-		self.specialMessageQueue	= [NSMutableArray new];
 		self.highlightedLineNumbers	= [NSMutableArray new];
 		
 		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
@@ -127,86 +125,6 @@
 	self.view.shouldUpdateWhileOffscreen	= NO;
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
-	
-	self.queueInProgress = NO;
-}
-
-#pragma mark -
-
-- (void)runMessageQueueLoop
-{
-	self.queueInProgress = YES;
-
-	[self runMessageQueueLoop:self.specialMessageQueue honorLoopDelay:NO];
-	[self runMessageQueueLoop:self.normalMessageQueue  honorLoopDelay:YES];
-
-	self.queueInProgress = NO;
-}
-
-- (void)runMessageQueueLoop:(NSMutableArray *)messageQueue honorLoopDelay:(BOOL)delayLoop
-{
-	NSMutableString *result;
-
-	if (delayLoop == NO) {
-		result = [NSMutableString string];
-	}
-	
-	while (NSObjectIsNotEmpty(messageQueue)) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			if (NSObjectIsNotEmpty(messageQueue)) {
-				if ([self.view isLoading] == NO) {
-					// Internally, TVCLogMessageBlock should only return a
-					// BOOL as NSValue or NSString absolute value.
-
-					BOOL rrslt = NO;
-
-					// ---- //
-
-					id stslt = ((TVCLogMessageBlock)messageQueue[0])();
-
-					// ---- //
-
-					if ([stslt isKindOfClass:NSString.class]) {
-						if (PointerIsNotEmpty(stslt)) {
-							if (delayLoop == NO) {
-								[result appendString:stslt];
-							} else {
-								[self appendToDocumentBody:stslt];
-							}
-
-							rrslt = YES;
-						}
-					} else {
-						rrslt = [stslt boolValue];
-					}
-
-					// ---- //
-					
-					if (rrslt) {
-						[messageQueue removeObjectAtIndex:0];
-					}
-				}
-			}
-		});
-
-		// ---- //
-
-		if (delayLoop) {
-			if (self.channel) {
-				[NSThread sleepForTimeInterval:[TPCPreferences viewLoopChannelDelay]];
-			} else {
-				[NSThread sleepForTimeInterval:[TPCPreferences viewLoopConsoleDelay]];
-			}
-		}
-	}
-
-	// ---- //
-
-	if (delayLoop == NO && NSObjectIsNotEmpty(result)) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[self appendToDocumentBody:result];
-		});
-	}
 }
 
 #pragma mark -
@@ -331,9 +249,7 @@
 		return @(YES);
 	} copy];
 
-	[self.normalMessageQueue safeAddObject:messageBlock];
-
-	[self.world runMessageQueueLoop:self];
+	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 #pragma mark -
@@ -438,10 +354,7 @@
 		
 		return @(YES);
 	} copy];
-
-	[self.normalMessageQueue safeAddObject:messageBlock];
-
-	[self.world runMessageQueueLoop:self];
+	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)unmark
@@ -464,10 +377,7 @@
 
 		return @(YES);
 	} copy];
-
-	[self.normalMessageQueue safeAddObject:messageBlock];
-
-	[self.world runMessageQueueLoop:self];
+	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)goToMark
@@ -989,16 +899,50 @@
 		
 		return nil;
 	} copy];
+	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:isSpecial];
+}
+
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
+{ [self enqueueMessageBlock:messageBlock fromSender:sender isSpecial:NO]; }
+
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender isSpecial:(BOOL)special
+{
+	[self.world.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
+		[sender handleMessageBlock:messageBlock isSpecial:special];
+	} forController:sender withSpecialPriority:special]];
+}
+
+- (void) handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
+{
+	// Internally, TVCLogMessageBlock should only return a
+	// BOOL as NSValue or NSString absolute value.
+
+	BOOL rrslt = NO;
 
 	// ---- //
 
-	if (isSpecial) {
-		[self.specialMessageQueue safeAddObject:messageBlock];
+	__block id stslt = nil;
+
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		stslt = ((TVCLogMessageBlock)messageBlock)();
+	});
+
+	// ---- //
+
+	if ([stslt isKindOfClass:NSString.class]) {
+		if (PointerIsNotEmpty(stslt)) {
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[self appendToDocumentBody:stslt];
+			}];
+			rrslt = YES;
+		}
 	} else {
-		[self.normalMessageQueue safeAddObject:messageBlock];
+		rrslt = [stslt boolValue];
 	}
 
-	[self.world runMessageQueueLoop:self];
+	// ---- //
+
+	if (!rrslt)	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
 }
 
 #pragma mark -
