@@ -1,5 +1,4 @@
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/gl.h>
+#import <IOKit/IOKitLib.h>
 
 #import "TextualApplication.h"
 
