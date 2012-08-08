@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define TXMaximumIRCBodyLength				520
+#define TXMaximumIRCBodyLength				512
 #define TXMaximumNodesPerModeCommand		4
 
 /* Historically, we used a few dozen "IRCCommandIndex<command>" defines to match
