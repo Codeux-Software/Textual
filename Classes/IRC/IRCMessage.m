@@ -66,11 +66,11 @@
 	
 	NSMutableString *s = [line mutableCopy];
 	
-	if ([s hasPrefix:@"@t="]) { // znc server-time
+	if ([s hasPrefix:@"@time="]) { // server-time
 		NSString *t;
 		
 		t = [s getToken];
-		t = [t substringFromIndex:3];
+		t = [t substringFromIndex:6];
 		
 		self.receivedAt = [NSDate dateWithTimeIntervalSince1970:[t longLongValue]];
 	} else {
