@@ -1069,13 +1069,6 @@
 	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
 		[scrollView performSelector:@selector(setAllowsHorizontalScrolling:) withObject:NO];
 	}
-	
-#ifdef TXMacOSLionOrNewer
-	if ([TPCPreferences featureAvailableToOSXLion]) {
-		[scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
-		[scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
-	}
-#endif
 }
 
 #pragma mark -
