@@ -163,7 +163,6 @@ typedef enum IRCDisconnectType : NSInteger {
 
 - (void)sendWhois:(NSString *)nick;
 - (void)changeNick:(NSString *)newNick;
-- (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value;
 - (void)kick:(IRCChannel *)channel target:(NSString *)nick;
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text;
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text;
@@ -224,6 +223,7 @@ typedef enum IRCDisconnectType : NSInteger {
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
+- (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value TEXTUAL_DEPRECATED;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified TEXTUAL_DEPRECATED;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
