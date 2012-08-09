@@ -518,7 +518,7 @@
             CFRelease(serviceDictionary);
         }
 		
-        NSString *res = nil;
+        NSString *res = NSStringEmptyPlaceholder;
 		
         for (NSInteger i = 0; i < [gpuList count]; i++) {
             res = [res stringByAppendingString:[gpuList objectAtIndex:i]];
