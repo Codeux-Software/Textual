@@ -508,7 +508,7 @@
             const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
 			
             if (PointerIsNotEmpty(model)) {
-                if (CFGetTypeID(model) == CFDataGetTypeID()) {
+                if (CFGetTypeID(model) == CFDataGetTypeID() && CFDataGetLength(model) > 1) {
 					NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes] length:(CFDataGetLength(model)-1)
                                                    encoding:NSASCIIStringEncoding];
 					
