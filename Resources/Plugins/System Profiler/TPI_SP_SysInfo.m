@@ -517,18 +517,24 @@
 
             CFRelease(serviceDictionary);
         }
+
+		// ---- //
+
+		NSInteger objectIndex = 0;
 		
-        NSString *res = NSStringEmptyPlaceholder;
+        NSMutableString *result = [NSMutableString string];
+
+		for (NSString *model in gpuList) {
+			if (objectIndex == 0) {
+				[result appendString:TXTFLS(@"SystemInformationGraphicsInformationResultBase", model)];
+			} else {
+				[result appendString:TXTFLS(@"SystemInformationGraphicsInformationResultMiddle", model)];
+			}
+
+			objectIndex++;
+		}
 		
-        for (NSInteger i = 0; i < [gpuList count]; i++) {
-            res = [res stringByAppendingString:[gpuList objectAtIndex:i]];
-			
-            if (i + 1 < [gpuList count]) {
-                res = [res stringByAppendingString:@", "];
-            }
-        }
-		
-        return res;
+        return result;
     }
 	
     return nil;

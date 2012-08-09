@@ -351,6 +351,9 @@
 "SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
 "SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
 
+"SystemInformationGraphicsInformationResultBase" = "%@";
+"SystemInformationGraphicsInformationResultMiddle" = ", %@";
+
 "SystemInformationOSVersionSnowLeopard" = "Snow Leopard";
 "SystemInformationOSVersionLion" = "Lion";
 "SystemInformationOSVersionMountainLion" = "Mountain Lion";
