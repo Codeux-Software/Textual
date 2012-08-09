@@ -509,7 +509,8 @@
 			
             if (PointerIsNotEmpty(model)) {
                 if (CFGetTypeID(model) == CFDataGetTypeID()) {
-					NSString *s = [NSString stringWithData:(__bridge NSData *)model encoding:NSASCIIStringEncoding];
+					NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes] length:(CFDataGetLength(model)-1)
+                                                   encoding:NSASCIIStringEncoding];
 					
                     [gpuList addObject:s];
                 }
