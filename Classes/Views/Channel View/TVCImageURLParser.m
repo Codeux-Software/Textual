@@ -132,6 +132,30 @@
 				return [NSString stringWithFormat:@"http://img.f.hatena.ne.jp/images/fotolife/%@/%@/%@/%@.jpg", userIdHead, userId, photoIdHead, photoId];
 			}
 		}
+        } else if ([host isEqualToString:@"puu.sh"]) {
+                if (NSObjectIsNotEmpty(path)) {
+                        NSString *s = [path safeSubstringFromIndex:1];
+
+                        if ([s isAlphaNumOnly]) {
+                                return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
+                        }
+                }
+        } else if ([host hasSuffix:@"imgur.com"]) {
+                if ([path hasPrefix:@"/gallery/"]) {
+                        NSString *s = [path safeSubstringFromIndex:9];
+
+                        if ([s isAlphaNumOnly]) {
+                                return [NSString stringWithFormat:@"http://i.imgur.com/%@.png", s];
+                        }
+                }
+        } else if ([host hasSuffix:@"d.pr"]) {
+                if ([path hasPrefix:@"/i/"]) {
+                        NSString *s = [path safeSubstringFromIndex:3];
+
+                        if ([s isAlphaNumOnly]) {
+                                return [NSString stringWithFormat:@"http://d.pr/i/%@.png", s];
+                        }
+                }
 	} else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
 		NSString *vid = nil;
 		
