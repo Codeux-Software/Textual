@@ -483,46 +483,54 @@
 + (NSString *)graphicsCardInfo
 {
     CFMutableDictionaryRef pciDevices = IOServiceMatching("IOPCIDevice");
+	
     io_iterator_t entry_iterator;
-    if(IOServiceGetMatchingServices(kIOMasterPortDefault,
-                                    pciDevices,
-                                    &entry_iterator) == kIOReturnSuccess)
-    {
-        NSMutableArray *gpuList = [[NSMutableArray alloc] init];
+	
+    if (IOServiceGetMatchingServices(kIOMasterPortDefault, pciDevices, &entry_iterator) == kIOReturnSuccess) {
+        NSMutableArray *gpuList = [NSMutableArray new];
+		
         io_iterator_t serviceObject;
+		
         while ((serviceObject = IOIteratorNext(entry_iterator))) {
             CFMutableDictionaryRef serviceDictionary;
-            if (IORegistryEntryCreateCFProperties(serviceObject,
-                                                  &serviceDictionary,
-                                                  kCFAllocatorDefault,
-                                                  kNilOptions) != kIOReturnSuccess)
-            {
+
+			kern_return_t status = IORegistryEntryCreateCFProperties(serviceObject,
+																	 &serviceDictionary,
+																	 kCFAllocatorDefault,
+																	 kNilOptions);
+
+			if (NSDissimilarObjects(status, kIOReturnSuccess)) {
                 IOObjectRelease(serviceObject);
+				
                 continue;
             }
             
             const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
-            if (model != nil) {
+			
+            if (PointerIsNotEmpty(model)) {
                 if (CFGetTypeID(model) == CFDataGetTypeID()) {
-                    NSString *s = [[NSString alloc] initWithData:(__bridge NSData *)model
-                                                        encoding:NSASCIIStringEncoding];
+					NSString *s = [NSString stringWithData:(__bridge NSData *)model encoding:NSASCIIStringEncoding];
+					
                     [gpuList addObject:s];
                 }
             }
 
             CFRelease(serviceDictionary);
         }
-        NSString *res = [[NSString alloc] init];
-        for(int i=0; i < [gpuList count]; i++)
-        {
+		
+        NSString *res = nil;
+		
+        for (NSInteger i = 0; i < [gpuList count]; i++) {
             res = [res stringByAppendingString:[gpuList objectAtIndex:i]];
-            if(i + 1 < [gpuList count])
-            {
+			
+            if (i + 1 < [gpuList count]) {
                 res = [res stringByAppendingString:@", "];
             }
         }
+		
         return res;
     }
+	
     return nil;
 }
 
