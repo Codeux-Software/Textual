@@ -945,50 +945,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self send:IRCPrivateCommandIndex("whois"), nick, nick, nil];
 }
 
-- (void)changeOp:(IRCChannel *)channel users:(NSArray *)inputUsers mode:(char)mode value:(BOOL)value
-{
-	if (self.isLoggedIn == NO ||
-		PointerIsEmpty(channel) ||
-		channel.isActive == NO ||
-		channel.isChannel == NO ||
-		channel.isOp == NO) return;
-
-	NSMutableArray *users = [NSMutableArray array];
-
-	for (IRCUser *user in inputUsers) {
-		IRCUser *m = [channel findMember:user.nick];
-
-		if (m) {
-			if (NSDissimilarObjects(value, [m hasMode:mode])) {
-				[users safeAddObject:m];
-			}
-		}
-	}
-
-	NSInteger max = self.isupport.modesCount;
-
-	while (users.count) {
-		NSArray *ary = [users subarrayWithRange:NSMakeRange(0, MIN(max, users.count))];
-
-		NSMutableString *s = [NSMutableString string];
-
-		[s appendFormat:@"%@ %@ %c", IRCPrivateCommandIndex("mode"), channel.name, ((value) ? '+' : '-')];
-
-		for (NSInteger i = (ary.count - 1); i >= 0; --i) {
-			[s appendFormat:@"%c", mode];
-		}
-
-		for (IRCUser *m in ary) {
-			[s appendString:NSStringWhitespacePlaceholder];
-			[s appendString:m.nick];
-		}
-
-		[self sendLine:s];
-
-		[users removeObjectsInRange:NSMakeRange(0, ary.count)];
-	}
-}
-
 - (void)kick:(IRCChannel *)channel target:(NSString *)nick
 {
 	[self send:IRCPrivateCommandIndex("kick"), channel.name, nick, [TPCPreferences defaultKickMessage], nil];
@@ -5765,6 +5721,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Deprecated
 
+- (void)changeOp:(IRCChannel *)channel users:(NSArray *)inputUsers mode:(char)mode value:(BOOL)value
+{
+	return;
+}
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified
 {

@@ -18,6 +18,7 @@
 # -o -name '*.l'						– Lex Source
 # -o -name '*.pch'						— Pre-compiled Header File
 # -o -name '*.sh'						— Include Ourselves (joke!)
+# -o -name '*.mustache'					— Mustache template files.
 #
 # AppleScript files (.scpt) are not included in our search
 # because they are compiled so counting the number of lines
@@ -39,4 +40,5 @@ find ../../ \
 -o -name '*.l' \
 -o -name '*.pch' \
 -o -name '*.sh' \
+-o -name '*.mustache' \
 \) -print0 | xargs -0 wc -l
