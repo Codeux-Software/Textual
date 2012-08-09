@@ -482,34 +482,48 @@
 
 + (NSString *)graphicsCardInfo
 {
-	CGDirectDisplayID   displayID	= CGMainDisplayID();
-	CGOpenGLDisplayMask displayMask = CGDisplayIDToOpenGLDisplayMask(displayID);
-    
-	GLint numPixelFormats			= 0;
-	
-	CGLContextObj cglContext		= 0;
-	CGLPixelFormatObj pixelFormat	= NULL;
-	CGLContextObj curr_ctx			= CGLGetCurrentContext();
-	
-#pragma unused(curr_ctx)
-	
-	CGLPixelFormatAttribute attribs[] = {kCGLPFADisplayMask, displayMask, 0};
-	CGLChoosePixelFormat(attribs, &pixelFormat, &numPixelFormats);
-    
-	if (pixelFormat) {
-		CGLCreateContext(pixelFormat, NULL, &cglContext);
-		
-		CGLDestroyPixelFormat(pixelFormat);
-		CGLSetCurrentContext(cglContext);
-		
-		if (cglContext) {
-			NSString *model = @((const char *)glGetString(GL_RENDERER));
+    CFMutableDictionaryRef pciDevices = IOServiceMatching("IOPCIDevice");
+    io_iterator_t entry_iterator;
+    if(IOServiceGetMatchingServices(kIOMasterPortDefault,
+                                    pciDevices,
+                                    &entry_iterator) == kIOReturnSuccess)
+    {
+        NSMutableArray *gpuList = [[NSMutableArray alloc] init];
+        io_iterator_t serviceObject;
+        while ((serviceObject = IOIteratorNext(entry_iterator))) {
+            CFMutableDictionaryRef serviceDictionary;
+            if (IORegistryEntryCreateCFProperties(serviceObject,
+                                                  &serviceDictionary,
+                                                  kCFAllocatorDefault,
+                                                  kNilOptions) != kIOReturnSuccess)
+            {
+                IOObjectRelease(serviceObject);
+                continue;
+            }
             
-			return [model stringByReplacingOccurrencesOfString:@" OpenGL Engine" withString:NSStringEmptyPlaceholder];
-		}
-	}	
-	
-	return nil;
+            const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
+            if (model != nil) {
+                if (CFGetTypeID(model) == CFDataGetTypeID()) {
+                    NSString *s = [[NSString alloc] initWithData:(__bridge NSData *)model
+                                                        encoding:NSASCIIStringEncoding];
+                    [gpuList addObject:s];
+                }
+            }
+
+            CFRelease(serviceDictionary);
+        }
+        NSString *res = [[NSString alloc] init];
+        for(int i=0; i < [gpuList count]; i++)
+        {
+            res = [res stringByAppendingString:[gpuList objectAtIndex:i]];
+            if(i + 1 < [gpuList count])
+            {
+                res = [res stringByAppendingString:@", "];
+            }
+        }
+        return res;
+    }
+    return nil;
 }
 
 + (NSString *)diskInfo
