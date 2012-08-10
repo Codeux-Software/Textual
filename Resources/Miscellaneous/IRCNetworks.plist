@@ -22,6 +22,8 @@
 	<string>irc.mozor.net</string>
 	<key>QuakeNet</key>
 	<string>irc.quakenet.org</string>
+	<key>LightSpike</key>
+	<string>irc.lightspike.net</string>
 	<key>Rizon</key>
 	<string>irc.rizon.net</string>
 	<key>Snoonet</key>
