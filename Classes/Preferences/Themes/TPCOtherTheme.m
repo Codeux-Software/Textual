@@ -110,11 +110,16 @@
 	return nil;
 }
 
-- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
+- (NSString *)templateNameWithLineType:(TVCLogLineType)type
 {
 	NSString *typestr = [TVCLogLine lineTypeString:type];
 
-	return [self templateWithName:[@"Line Types/" stringByAppendingString:typestr]];
+	return [@"Line Types/" stringByAppendingString:typestr];
+}
+
+- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
+{
+	return [self templateWithName:[self templateNameWithLineType:type]];
 }
 
 - (GRMustacheTemplate *)templateWithName:(NSString *)name
