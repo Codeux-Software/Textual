@@ -16,10 +16,16 @@
 	<string>ircnet.choopa.net</string>
 	<key>Mibbit</key>
 	<string>irc.mibbit.com</string>
+	<key>Mozilla</key>
+	<string>irc.mozilla.org</string>
+	<key>Mozor</key>
+	<string>irc.mozor.net</string>
 	<key>QuakeNet</key>
 	<string>irc.quakenet.org</string>
 	<key>Rizon</key>
 	<string>irc.rizon.net</string>
+	<key>Snoonet</key>
+	<string>irc.snoonet.com</string>
 	<key>Technoid-IRC</key>
 	<string>irc.technoid-irc.net</string>
 	<key>Undernet</key>
