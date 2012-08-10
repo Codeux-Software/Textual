@@ -813,9 +813,7 @@
 
 	// ---- //
 
-	id templateRaw = [self.theme.other templateWithLineType:line.lineType];
-
-	[self writeLine:templateRaw attributes:attributes contextInfo:line specialWrite:isSpecial];
+	[self writeLine:line attributes:attributes specialWrite:isSpecial];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
@@ -841,9 +839,8 @@
 	return highlighted;
 }
 
-- (void)writeLine:(id)line
-	   attributes:(NSMutableDictionary *)attrs
-	  contextInfo:(TVCLogLine *)context
+- (void)writeLine:(TVCLogLine *)line
+	   attributes:(NSMutableDictionary *)attributes
 	 specialWrite:(BOOL)isSpecial
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
@@ -861,43 +858,38 @@
 		if (PointerIsEmpty(body)) return nil;
 
 		// ---- //
-		
-		if ([line isKindOfClass:GRMustacheTemplate.class]) {
-			attrs[@"lineNumber"] = @(self.lineNumber);
 
-			// ---- //
+		attributes[@"lineNumber"] = @(self.lineNumber);
 
-			NSString *html = [line renderObject:attrs];
-
-			if (NSObjectIsEmpty(html)) {
-				return nil;
-			}
-
-			// ---- //
-
-			if (isSpecial == NO) {
-				if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
-					[self setNeedsLimitNumberOfLines];
-				}
-
-				if ([attrs[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-					[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
-				}
-
-				[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
-
-				// ---- //
-
-				[self.logFile writePropertyListEntry:[context dictionaryValue]
-											   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
-			}
-
-			return (__bridge void *)html;
-		}
-		
 		// ---- //
 
-		return nil;
+		NSString *name = [self.theme.other templateNameWithLineType:line.lineType];
+		NSString *html = TXRenderStyleTemplate(name, attributes, self);
+
+		if (NSObjectIsEmpty(html)) {
+			return nil;
+		}
+
+		// ---- //
+
+		if (isSpecial == NO) {
+			if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
+				[self setNeedsLimitNumberOfLines];
+			}
+
+			if ([attributes[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
+				[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
+			}
+
+			[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
+
+			// ---- //
+
+			[self.logFile writePropertyListEntry:[line dictionaryValue]
+										   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
+		}
+
+		return (__bridge void *)html;
 	} copy];
 	
 	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:isSpecial];

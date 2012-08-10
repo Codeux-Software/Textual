@@ -50,6 +50,8 @@
 
 - (void)reload;
 
+- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
+
 - (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
 - (GRMustacheTemplate *)templateWithName:(NSString *)name;
 @end
