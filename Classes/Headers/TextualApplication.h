@@ -84,6 +84,7 @@
 	@class THOPluginProtocol;
 	@class THOTextualPluginItem;
 	@class THOUnicodeHelper;
+	@class TKMessageBlockOperation;
 	@class TLOFileLogger;
 	@class TLOFileWithContent;
 	@class TLOGrowlController;
