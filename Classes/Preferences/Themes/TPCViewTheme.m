@@ -43,9 +43,6 @@
 {
 	if ((self = [super init])) {
 		self.other = [TPCOtherTheme new];
-		
-		self.core_js = [TLOFileWithContent new];
-		self.core_js.filename = [[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"/JavaScript/API/core.js"];
 	}
 	
 	return self;

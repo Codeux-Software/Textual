@@ -42,7 +42,6 @@
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) TPCOtherTheme *other;
-@property (nonatomic, strong) TLOFileWithContent *core_js;
 
 - (void)reload;
 - (void)validateFilePathExistanceAndReload:(BOOL)reload;
