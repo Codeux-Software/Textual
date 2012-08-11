@@ -209,7 +209,9 @@
 {
 	if (self.writePlainText == NO) {
 		NSData *rawData = [_NSFileManager() contentsAtPath:self.filename];
-
+		if (PointerIsEmpty(rawData) || rawData.length == 0)
+			return [NSDictionary dictionary];
+		
 		NSString *readError;
 
 		NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
