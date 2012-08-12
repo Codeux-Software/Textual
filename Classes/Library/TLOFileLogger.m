@@ -179,7 +179,7 @@
 
 		// ---- //
 		
-		NSString *writeError;
+		NSString *parseError;
 
 #ifdef DEBUG
 		NSPropertyListFormat format = NSPropertyListXMLFormat_v1_0;
@@ -189,18 +189,22 @@
 
 		NSData *plist = [NSPropertyListSerialization dataFromPropertyList:propertyList
 																   format:format
-														 errorDescription:&writeError];
+														 errorDescription:&parseError];
 
 		// ---- //
 		
-		if (NSObjectIsEmpty(plist) || writeError) {
-			LogToConsole(@"Error Creating Property List: %@", writeError);
+		if (NSObjectIsEmpty(plist) || parseError) {
+			LogToConsole(@"Error Creating Property List: %@", parseError);
 		} else {
-			[_NSFileManager() createFileAtPath:self.filename
-									  contents:plist
-									attributes:nil];
+			NSError *dataWriteError;
 
-			[_temporaryPropertyListItems removeAllObjects];
+			[plist writeToFile:self.filename options:0 error:&dataWriteError];
+
+			if (dataWriteError) {
+				LogToConsole(@"Error Writing Property List: %@", [dataWriteError localizedDescription]);
+
+				[_temporaryPropertyListItems removeAllObjects];
+			}
 		}
 	}
 }
@@ -208,19 +212,35 @@
 - (NSDictionary *)propertyList /* @private */
 {
 	if (self.writePlainText == NO) {
-		NSData *rawData = [_NSFileManager() contentsAtPath:self.filename];
-		if (PointerIsEmpty(rawData) || rawData.length == 0)
-			return [NSDictionary dictionary];
+		NSError *readError;
 		
-		NSString *readError;
+		NSData *rawData = [NSString stringWithContentsOfFile:self.filename
+													encoding:NSUTF8StringEncoding
+													   error:&readError];
+
+		if (readError) {
+			LogToConsole(@"Error Reading Property List: %@", [readError localizedDescription]);
+
+			return [NSDictionary dictionary];
+		}
+
+		// ---- //
+
+		if (NSObjectIsEmpty(rawData)) {
+			return [NSDictionary dictionary];
+		}
+
+		// ---- //
+		
+		NSString *parseError;
 
 		NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
 															   mutabilityOption:NSPropertyListImmutable
 																		 format:NULL
-															   errorDescription:&readError];
+															   errorDescription:&parseError];
 
 		if (readError) {
-			DebugLogToConsole(@"Error Reading Property List: %@", readError);
+			DebugLogToConsole(@"Error Reading Property List: %@", parseError);
 		} else {
 			return plist;
 		}
