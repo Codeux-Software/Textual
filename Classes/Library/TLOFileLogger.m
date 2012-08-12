@@ -214,9 +214,9 @@
 	if (self.writePlainText == NO) {
 		NSError *readError;
 		
-		NSData *rawData = [NSString stringWithContentsOfFile:self.filename
-													encoding:NSUTF8StringEncoding
-													   error:&readError];
+		NSData *rawData = [NSData dataWithContentsOfFile:self.filename
+												 options:NSDataReadingUncached
+												   error:&readError];
 
 		if (readError) {
 			LogToConsole(@"Error Reading Property List: %@", [readError localizedDescription]);
