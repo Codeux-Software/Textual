@@ -278,7 +278,16 @@
 
 - (void)markAllAsRead
 {
+	[self markAllAsRead:nil];
+}
+
+- (void)markAllAsRead:(IRCClient *)limitedClient
+{
 	for (IRCClient *u in self.clients) {
+		if (PointerIsNotEmpty(limitedClient) && NSDissimilarObjects(u, limitedClient)) {
+			continue;
+		}
+		
 		u.isUnread = NO;
 		
 		for (IRCChannel *c in u.channels) {
