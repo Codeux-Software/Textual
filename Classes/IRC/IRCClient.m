@@ -4562,13 +4562,16 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 			break;
 		}
-		case 2 ... 4:
+		case 2:
+		case 3:
 		{
-			if ([m.sender.nick isNickname] == NO) {
-				[self.config setServer:m.sender.nick];
-			}
-
 			[self printReply:m];
+
+			break;
+		}
+		case 4:
+		{
+			[self.config setServer:[m paramAt:1]];
 
 			break;
 		}
