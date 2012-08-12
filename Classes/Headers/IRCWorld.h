@@ -109,6 +109,8 @@
 - (BOOL)inputText:(id)str command:(NSString *)command;
 
 - (void)markAllAsRead;
+- (void)markAllAsRead:(IRCClient *)limitedClient;
+
 - (void)markAllScrollbacks;
 
 - (void)updateIcon;
