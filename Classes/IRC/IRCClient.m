@@ -2318,7 +2318,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 				[self.world updateIcon];
 				[self.world reloadTree];
-				[self.world markAllAsRead];
+				[self.world markAllAsRead:self];
 			} else {
 				[self.world destroyAllEvidence];
 			}
