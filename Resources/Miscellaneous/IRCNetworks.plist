@@ -24,6 +24,8 @@
 	<string>irc.mozilla.org</string>
 	<key>Mozor</key>
 	<string>irc.mozor.net</string>
+	<key>NixtrixIRC</key>
+	<string>irc.nixtrixirc.net</string>
 	<key>QuakeNet</key>
 	<string>irc.quakenet.org</string>
 	<key>LightSpike</key>
