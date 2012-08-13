@@ -49,7 +49,11 @@ typedef enum IRCConnectMode : NSInteger {
 
 typedef enum IRCDisconnectType : NSInteger {
 	IRCDisconnectNormalMode,
+
+#ifdef TEXTUAL_TRIAL_BINARY
 	IRCTrialPeriodDisconnectMode,
+#endif
+
 	IRCBadSSLCertificateDisconnectMode,
     IRCSleepModeDisconnectMode,
 } IRCDisconnectType;
@@ -108,7 +112,7 @@ typedef enum IRCDisconnectType : NSInteger {
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 @property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 #endif
 

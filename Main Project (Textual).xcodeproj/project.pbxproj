@@ -2087,7 +2087,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
@@ -2101,7 +2101,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2442,7 +2442,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
 			};
 			name = Debug;
@@ -2453,7 +2453,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
 			};
 			name = Release;
@@ -2464,7 +2464,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual.trial;
+				TEXTUAL_BUNDLE_ID = com.codeux.textual;
 				TEXTUAL_GITREF_BUILD_ID = trial;
 			};
 			name = "Release (Trial)";
@@ -2475,7 +2475,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.textual;
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
 			name = "Release + No Sandbox";
@@ -2486,8 +2486,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = appstore;
+				TEXTUAL_BUNDLE_ID = com.codeux.textual;
+				TEXTUAL_GITREF_BUILD_ID = "appstore,modern";
 			};
 			name = "App Store Release";
 		};
@@ -2504,7 +2504,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Michael Morris";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2512,7 +2512,10 @@
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"TEXTUAL_NEW_APPSTORE_ACCOUNT=1",
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2522,7 +2525,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -2540,6 +2542,7 @@
 				SYMROOT = BuildResults;
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2557,7 +2560,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Michael Morris";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2574,7 +2577,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -2657,7 +2659,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Michael Morris";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2674,7 +2676,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -2734,14 +2735,14 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Michael Morris";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "IS_TRIAL_BINARY=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_TRIAL_BINARY=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2751,7 +2752,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -2811,14 +2811,14 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Michael Morris";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_NEW_APPSTORE_ACCOUNT=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2828,7 +2828,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

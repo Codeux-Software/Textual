@@ -47,9 +47,12 @@
 #define _retryInterval				240
 #define _reconnectInterval			20
 #define _isonCheckIntervalL			30
-#define _trialPeriodInterval		7200
 #define _autojoinDelayInterval		2
 #define _pongCheckInterval			30
+
+#ifdef TEXTUAL_TRIAL_BINARY
+#define _trialPeriodInterval		7200
+#endif
 
 static NSDateFormatter *dateTimeFormatter = nil;
 
@@ -111,7 +114,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		self.isonTimer.reqeat		= YES;
 		self.isonTimer.selector		= @selector(onISONTimer:);
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 		self.trialPeriodTimer				= [TLOTimer new];
 		self.trialPeriodTimer.delegate		= self;
 		self.trialPeriodTimer.reqeat		= NO;
@@ -133,7 +136,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 	[self.conn close];
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
 
@@ -1082,7 +1085,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Trial Period Timer
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 
 - (void)startTrialPeriodTimer
 {
@@ -4536,7 +4539,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self reloadTree];
 	[self populateISONTrackedUsersList:self.config.ignores];
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 	[self startTrialPeriodTimer];
 #endif
 
@@ -5443,7 +5446,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	switch (self.disconnectType) {
 		case IRCDisconnectNormalMode:				disconnectTXTLString = @"IRCDisconnectedFromServer"; break;
         case IRCSleepModeDisconnectMode:			disconnectTXTLString = @"IRCDisconnectedBySleepMode"; break;
+
+#ifdef TEXTUAL_TRIAL_BINARY
 		case IRCTrialPeriodDisconnectMode:			disconnectTXTLString = @"IRCDisconnectedByTrialPeriodTimer"; break;
+#endif
+
 		case IRCBadSSLCertificateDisconnectMode:	disconnectTXTLString = @"IRCDisconnectedByBadSSLCertificate"; break;
 		default: break;
 	}
@@ -5464,7 +5471,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 	}
 
-#ifdef IS_TRIAL_BINARY
+#ifdef TEXTUAL_TRIAL_BINARY
 	[self stopTrialPeriodTimer];
 #endif
 
