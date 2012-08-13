@@ -165,7 +165,7 @@
 	// ---- //
 
 	if (PointerIsEmpty(self.appTemplateRepository)) {
-		dictPath = [[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"/Style Default Templates"];
+		dictPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Style Default Templates"];
 
 		self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
 

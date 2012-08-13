@@ -92,7 +92,7 @@
     [self updateAlert];
 	[self onChangeAlert:nil];
 	
-	[self.scriptLocationField setStringValue:[TPCPreferences whereApplicationSupportPath]];
+	[self.scriptLocationField setStringValue:[TPCPreferences applicationSupportFolderPath]];
 	
 	if ([self.window isVisible] == NO) {
 		[self.window center];
@@ -439,7 +439,7 @@
 	
 	NSInteger tag = 0;
 	
-	NSArray *ary = @[[TPCPreferences whereThemesLocalPath], [TPCPreferences whereThemesPath]];
+	NSArray *ary = @[[TPCPreferences bundledThemeFolderPath], [TPCPreferences customThemeFolderPath]];
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
@@ -447,8 +447,8 @@
 		NSArray *files = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 		
 		for (NSString *file in files) {
-			if ([path isEqualToString:[TPCPreferences whereThemesLocalPath]]) {
-				if ([_NSFileManager() fileExistsAtPath:[[TPCPreferences whereThemesPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
+			if ([path isEqualToString:[TPCPreferences bundledThemeFolderPath]]) {
+				if ([_NSFileManager() fileExistsAtPath:[[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
 					continue;
 				}
 			}
@@ -621,12 +621,12 @@
 	}
     
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:name];
+		NSString *path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
 		
 		[_NSWorkspace() openFile:path];
 	} else {
-		NSString *newpath = [[TPCPreferences whereThemesPath]		stringByAppendingPathComponent:name];
-		NSString *oldpath = [[TPCPreferences whereThemesLocalPath]	stringByAppendingPathComponent:name];
+		NSString *newpath = [[TPCPreferences customThemeFolderPath]		stringByAppendingPathComponent:name];
+		NSString *oldpath = [[TPCPreferences bundledThemeFolderPath]	stringByAppendingPathComponent:name];
 		
 		[_NSFileManager() copyItemAtPath:oldpath toPath:newpath error:NULL];
 		
@@ -653,7 +653,7 @@
 						 suppressionKey:@"opening_local_style" 
 						suppressionText:nil];
     } else {
-		NSString *path = [[TPCPreferences whereThemesPath] stringByAppendingPathComponent:name];
+		NSString *path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:name];
 		
 		[_NSWorkspace() openFile:path];
     }
@@ -661,7 +661,7 @@
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[_NSWorkspace() openFile:[TPCPreferences whereApplicationSupportPath]];
+	[_NSWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
 }
 
 - (void)onHighlightLoggingChanged:(id)sender

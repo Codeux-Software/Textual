@@ -105,22 +105,22 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSDictionary *)textualInfoPlist;
 + (NSDictionary *)systemInfoPlist;
 
-+ (NSString *)whereTemporaryPath;
-+ (NSString *)whereScriptsPath;
-+ (NSString *)whereApplicationSupportPath;
-+ (NSString *)whereThemesPath;
-+ (NSString *)whereScriptsLocalPath;
++ (NSString *)applicationBundlePath;
++ (NSString *)applicationSupportFolderPath;
++ (NSString *)applicationTemporaryFolderPath;
++ (NSString *)applicationResourcesFolderPath;
++ (NSString *)customExtensionFolderPath;
++ (NSString *)customScriptFolderPath;
++ (NSString *)customThemeFolderPath;
++ (NSString *)bundledThemeFolderPath;
++ (NSString *)bundledExtensionFolderPath;
++ (NSString *)bundledScriptFolderPath;
++ (NSString *)appleStoreReceiptFilePath;
++ (NSString *)userHomeDirectoryPathOutsideSandbox;
 
 #ifdef TXUserScriptsFolderAvailable
-+ (NSString *)whereScriptsUnsupervisedPath;
++ (NSString *)systemUnsupervisedScriptFolderPath;
 #endif
-
-+ (NSString *)whereThemesLocalPath;
-+ (NSString *)whereResourcePath;
-+ (NSString *)wherePluginsPath;
-+ (NSString *)wherePluginsLocalPath;
-+ (NSString *)whereAppStoreReceipt;
-+ (NSString *)whereMainApplicationBundle;
 
 + (NSString *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;
@@ -203,7 +203,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (NSString *)themeName;
 + (NSString *)themeChannelViewFontName;
-+ (NSString *)themeNickFormat;
++ (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;
 + (TXNSDouble)themeTransparency;
 + (TXNSDouble)themeChannelViewFontSize;

@@ -63,7 +63,7 @@
 		
 		[NSBundle loadNibNamed:@"TDCServerSheet" owner:self];
 		
-		self.serverList = [NSDictionary dictionaryWithContentsOfFile:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
+		self.serverList = [NSDictionary dictionaryWithContentsOfFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"IRCNetworks.plist"]];
 		
 		NSArray *sortedKeys = [[self.serverList allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		

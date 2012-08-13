@@ -44,11 +44,7 @@
 #define TPCPreferencesMigrationAssistantNewBundleIdentifier		 [TPCPreferences applicationBundleIdentifier]
 
 @interface TPCPreferencesMigrationAssistant : NSObject
-
-#ifdef TEXTUAL_NEW_APPSTORE_ACCOUNT
 + (void)openConfigurationFileMigrationAssistantDialog;
-#endif
-
 + (void)convertExistingGlobalPreferences;
 
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config;

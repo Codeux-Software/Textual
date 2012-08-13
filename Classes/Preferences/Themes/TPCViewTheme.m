@@ -65,14 +65,14 @@
 		
 		if (NSObjectIsNotEmpty(kind) && NSObjectIsNotEmpty(filename)) {
 			if ([kind isEqualToString:@"resource"]) {
-				self.path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
+				self.path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 			} else {
-				self.path = [[TPCPreferences whereThemesPath] stringByAppendingPathComponent:filename];
+				self.path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
 			}
 			
 			if ([_NSFileManager() fileExistsAtPath:self.path] == NO) {
 				if ([kind isEqualToString:@"resource"] == NO) {
-					self.path = [[TPCPreferences whereThemesLocalPath] stringByAppendingPathComponent:filename];
+					self.path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 					
 					if (reload) [self reload];
 				}
