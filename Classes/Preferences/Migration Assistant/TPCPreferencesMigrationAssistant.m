@@ -53,7 +53,7 @@
 
 		NSString *oldContainer = [containerBed stringByAppendingPathComponent:containerHed];
 
-		if ([_NSFileManager() fileExistsAtPath:oldContainer] || YES == YES) {
+		if ([_NSFileManager() fileExistsAtPath:oldContainer]) {
 			BOOL downloadAssistant = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"OldSandboxContainerFoundDialogMessage")
 																		 title:TXTLS(@"OldSandboxContainerFoundDialogTitle")
 																 defaultButton:TXTLS(@"OldSandboxContainerFoundDialogPrimaryButton")
