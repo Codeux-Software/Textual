@@ -39,6 +39,10 @@
 
 #import <objc/objc-runtime.h>
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
 BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
@@ -165,4 +169,11 @@ NSString *TXFormattedNumber(NSInteger number)
 	NSNumber *numberbar = @(number);
 	
 	return [NSNumberFormatter localizedStringFromNumber:numberbar numberStyle:kCFNumberFormatterDecimalStyle];
+}
+
+NSString *NSActualHomeDirectory()
+{
+    struct passwd *pw = getpwuid(getuid());
+
+    return [NSString stringWithUTF8String:pw->pw_dir];
 }

@@ -1316,7 +1316,7 @@ static NSInteger totalRunTime = 0;
 
 	[_NSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
 
-#ifndef IS_TRIAL_BINARY
+#ifndef TEXTUAL_TRIAL_BINARY
 	if (numberOfRuns >= 2) {
 		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
 	}

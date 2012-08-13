@@ -40,7 +40,15 @@
 #define TPCPreferencesMigrationAssistantUpgradePath		@"2.1.1"
 #define TPCPreferencesMigrationAssistantVersionKey		@"MigrationAssistantVersion"
 
+#define TPCPreferencesMigrationAssistantOldBundleIdentifier		@"com.codeux.irc.textual"
+#define TPCPreferencesMigrationAssistantNewBundleIdentifier		 [TPCPreferences applicationBundleIdentifier]
+
 @interface TPCPreferencesMigrationAssistant : NSObject
+
+#ifdef TEXTUAL_NEW_APPSTORE_ACCOUNT
++ (void)openConfigurationFileMigrationAssistantDialog;
+#endif
+
 + (void)convertExistingGlobalPreferences;
 
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config;

@@ -856,7 +856,6 @@
 													  title:TXTLS(@"ServerDeletePromptTitle")
 											  defaultButton:TXTLS(@"OkButton") 
 											alternateButton:TXTLS(@"CancelButton")
-												otherButton:nil
 											 suppressionKey:@"delete_server"
 											suppressionText:nil];
 	
@@ -1082,8 +1081,7 @@
 		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ChannelDeletePromptMessage") 
 														  title:TXTLS(@"ChannelDeletePromptTitle") 
 												  defaultButton:TXTLS(@"OkButton") 
-												alternateButton:TXTLS(@"CancelButton") 
-													otherButton:nil
+												alternateButton:TXTLS(@"CancelButton")
 												 suppressionKey:@"delete_channel"
 												suppressionText:nil];
 		
@@ -1552,8 +1550,7 @@
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
 											title:TXTLS(@"LogPathDoesNotExistTitle")
 									defaultButton:TXTLS(@"OkButton") 
-								  alternateButton:nil 
-									  otherButton:nil
+								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
 	}
@@ -1575,7 +1572,6 @@
 											title:TXTLS(@"LogPathDoesNotExistTitle")
 									defaultButton:TXTLS(@"OkButton")
 								  alternateButton:nil
-									  otherButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
 	}

@@ -509,9 +509,13 @@
 			
             if (PointerIsNotEmpty(model)) {
                 if (CFGetTypeID(model) == CFDataGetTypeID() && CFDataGetLength(model) > 1) {
-					NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes]
-													 length:CFDataGetLength(model)
-                                                   encoding:NSASCIIStringEncoding];
+					NSString *s = nil;
+
+					s = [NSString stringWithBytes:[(__bridge NSData *)model bytes]
+										   length:CFDataGetLength(model)
+										 encoding:NSASCIIStringEncoding];
+					
+					s = [s stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
 					
                     [gpuList addObject:s];
                 }

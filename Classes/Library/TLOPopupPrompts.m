@@ -143,7 +143,6 @@
 						   title:(NSString *)titleText
 				   defaultButton:(NSString *)buttonDefault
 				 alternateButton:(NSString *)buttonAlternate
-					 otherButton:(NSString *)otherButton
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText
 {
@@ -164,7 +163,7 @@
 	NSAlert *alert = [NSAlert alertWithMessageText:titleText
 									 defaultButton:buttonDefault
 								   alternateButton:buttonAlternate
-									   otherButton:otherButton
+									   otherButton:nil
 						 informativeTextWithFormat:bodyText];
 
 	NSButton *button = [alert suppressionButton];

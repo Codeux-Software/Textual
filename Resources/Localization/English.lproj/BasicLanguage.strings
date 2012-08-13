@@ -171,6 +171,11 @@
 
 "NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 
+"OldSandboxContainerFoundDialogTitle" = "Migration Assistant";
+"OldSandboxContainerFoundDialogMessage" = "A set of configuration files associated with an earlier version of Textual has been found.\n\nTextual does not have permission to move the old files while within the Mac OS Sandbox so please download our migration assistant to move them into the correct location.";
+"OldSandboxContainerFoundDialogPrimaryButton" = "Do Not Download";
+"OldSandboxContainerFoundDialogSecondaryButton" = "Quit & Download Assistant";
+
 "NoButton" = "No";
 
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
