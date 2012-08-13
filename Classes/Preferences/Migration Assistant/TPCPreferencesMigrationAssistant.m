@@ -45,27 +45,33 @@
 + (void)openConfigurationFileMigrationAssistantDialog
 {
 	if ([TPCPreferences sandboxEnabled]) {
+		NSString *t210to211mad = @"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1.zip";
+
+		NSString *containerBed = [TPCPreferences userHomeDirectoryPathOutsideSandbox];
 		NSString *containerHed = [NSString stringWithFormat:@"/Library/Containers/%@/",
 								  TPCPreferencesMigrationAssistantOldBundleIdentifier];
-		
-		NSString *oldContainer = [NSActualHomeDirectory() stringByAppendingPathComponent:containerHed];
 
-		if ([_NSFileManager() fileExistsAtPath:oldContainer]) {
+		NSString *oldContainer = [containerBed stringByAppendingPathComponent:containerHed];
+
+		if ([_NSFileManager() fileExistsAtPath:oldContainer] || YES == YES) {
 			BOOL downloadAssistant = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"OldSandboxContainerFoundDialogMessage")
 																		 title:TXTLS(@"OldSandboxContainerFoundDialogTitle")
-																 defaultButton:TXTLS(@"OldSandboxContainerFoundDialogSecondaryButton")
-															   alternateButton:TXTLS(@"OldSandboxContainerFoundDialogPrimaryButton")
+																 defaultButton:TXTLS(@"OldSandboxContainerFoundDialogPrimaryButton")
+															   alternateButton:TXTLS(@"OldSandboxContainerFoundDialogSecondaryButton")
 																suppressionKey:nil
 															   suppressionText:nil];
 
 			if (downloadAssistant) {
 				if ([TPCPreferencesMigrationAssistantUpgradePath isEqualToString:@"2.1.1"]) {
-					[TLOpenLink openWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1.zip"];
+					[TLOpenLink openWithString:t210to211mad];
 
-					exit(0);
+					TXMasterController *master = [TPCPreferences masterController];
+
+					master.terminating			= YES;
+					master.skipTerminateSave	= YES;
+
+					[_NSSharedApplication() terminate:nil];
 				}
-			} else {
-				// Do Nothing.
 			}
 		}
 	}

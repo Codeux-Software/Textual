@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+#include <unistd.h>         // -------
+#include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
+#include <pwd.h>            // -------
+
 @implementation TPCPreferences
 
 #pragma mark -
@@ -392,12 +396,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 									   error:NULL].relativePath;
 }
 
-+ (NSString *)whereTemporaryPath
++ (NSString *)applicationTemporaryFolderPath
 {
 	return NSTemporaryDirectory();
 }
 
-+ (NSString *)whereApplicationSupportPath
++ (NSString *)applicationSupportFolderPath
 {
 	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/"];
 
@@ -408,7 +412,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
-+ (NSString *)whereScriptsPath
++ (NSString *)customScriptFolderPath
 {
 	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Scripts/"];
 
@@ -419,7 +423,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
-+ (NSString *)whereThemesPath
++ (NSString *)customThemeFolderPath
 {
 	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Styles/"];
 
@@ -430,7 +434,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
-+ (NSString *)wherePluginsPath
++ (NSString *)customExtensionFolderPath
 {
 	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Extensions/"];
 
@@ -441,13 +445,13 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
-+ (NSString *)whereScriptsLocalPath
++ (NSString *)bundledScriptFolderPath
 {
-	return [[self whereResourcePath] stringByAppendingPathComponent:@"Scripts"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Scripts"];
 }
 
 #ifdef TXUserScriptsFolderAvailable
-+ (NSString *)whereScriptsUnsupervisedPath
++ (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		NSString *pathHead = [NSString stringWithFormat:@"/Library/Application Scripts/%@/", [TPCPreferences applicationBundleIdentifier]];
@@ -471,29 +475,36 @@ NSString *IRCPublicCommandIndex(const char *key)
 }
 #endif
 
-+ (NSString *)whereThemesLocalPath
++ (NSString *)bundledThemeFolderPath
 {
-	return [[self whereResourcePath] stringByAppendingPathComponent:@"Styles"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Styles"];
 }
 
-+ (NSString *)wherePluginsLocalPath
++ (NSString *)bundledExtensionFolderPath
 {
-	return [[self whereResourcePath] stringByAppendingPathComponent:@"Extensions"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Extensions"];
 }
 
-+ (NSString *)whereAppStoreReceipt
++ (NSString *)appleStoreReceiptFilePath
 {
-	return [[self whereMainApplicationBundle] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+	return [[self applicationBundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
 }
 
-+ (NSString *)whereResourcePath
++ (NSString *)applicationResourcesFolderPath
 {
 	return [[NSBundle mainBundle] resourcePath];
 }
 
-+ (NSString *)whereMainApplicationBundle
++ (NSString *)applicationBundlePath
 {
 	return [[NSBundle mainBundle] bundlePath];
+}
+
++ (NSString *)userHomeDirectoryPathOutsideSandbox
+{
+	struct passwd *pw = getpwuid(getuid());
+
+	return [NSString stringWithUTF8String:pw->pw_dir];
 }
 
 #pragma mark -
@@ -906,7 +917,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 						   size:[TPCPreferences themeChannelViewFontSize]];
 }
 
-+ (NSString *)themeNickFormat
++ (NSString *)themeNicknameFormat
 {
 	return [_NSUserDefaults() objectForKey:@"Theme -> Nickname Format"];
 }
@@ -1422,11 +1433,11 @@ static NSInteger totalRunTime = 0;
 	NSString *themeName = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
 	NSString *themePath;
 
-	themePath = [TPCPreferences whereThemesPath];
+	themePath = [TPCPreferences customThemeFolderPath];
 	themePath = [themePath stringByAppendingPathComponent:themeName];
 
 	if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-		themePath = [TPCPreferences whereThemesLocalPath];
+		themePath = [TPCPreferences bundledThemeFolderPath];
         themePath = [themePath stringByAppendingPathComponent:themeName];
 
         if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {

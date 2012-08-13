@@ -40,6 +40,7 @@
 @interface TXMasterController : NSObject <NSSplitViewDelegate>
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
+@property (nonatomic, assign) BOOL skipTerminateSave;
 @property (nonatomic, strong) NSBox *logBase;
 @property (nonatomic, strong) TXMenuController *menu;
 @property (nonatomic, strong) TVCMainWindow *window;

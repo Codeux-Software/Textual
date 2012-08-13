@@ -101,6 +101,7 @@
 #define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
 #define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
 #define _NSSpellChecker()						[NSSpellChecker sharedSpellChecker]
+#define _NSSharedApplication()					[NSApplication sharedApplication]
 
 #ifdef TXNativeNotificationCenterAvailable
 	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]

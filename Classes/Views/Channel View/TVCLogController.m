@@ -109,7 +109,7 @@
 	self.logFile = [TLOFileLogger new];
 	self.logFile.hashFilename = YES;
 	self.logFile.writePlainText = NO;
-	self.logFile.fileWritePath = [TPCPreferences whereTemporaryPath];
+	self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
 	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 	
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
@@ -954,7 +954,7 @@
 	templateTokens[@"cacheToken"]				= [NSString stringWithUUID];
 
 	templateTokens[@"activeStyleAbsolutePath"]	= self.theme.other.path;
-	templateTokens[@"applicationResourcePath"]	= [TPCPreferences whereResourcePath];
+	templateTokens[@"applicationResourcePath"]	= [TPCPreferences applicationResourcesFolderPath];
 
 	// ---- //
 	

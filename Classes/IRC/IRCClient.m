@@ -1171,7 +1171,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #ifdef TXUserScriptsFolderAvailable
 	BOOL MLNonsandboxedScript = NO;
 
-	NSString *userScriptsPath = [TPCPreferences whereScriptsUnsupervisedPath];
+	NSString *userScriptsPath = [TPCPreferences systemUnsupervisedScriptFolderPath];
 
 	if (NSObjectIsNotEmpty(userScriptsPath)) {
 		if ([scriptPath contains:userScriptsPath]) {
@@ -2679,9 +2679,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 #ifdef TXUserScriptsFolderAvailable
 			NSArray *scriptPaths = @[
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath]),
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath])
+			NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
+			NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+			NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath])
 			];
 #else
 			NSArray *scriptPaths = @[
@@ -3199,7 +3199,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
 {
-	NSString *format	= [TPCPreferences themeNickFormat];
+	NSString *format	= [TPCPreferences themeNicknameFormat];
 	NSString *aformat	= self.world.viewTheme.other.nicknameFormat;
 
 	if (NSObjectIsNotEmpty(aformat)) {
