@@ -62,9 +62,7 @@
 				if ([TPCPreferencesMigrationAssistantUpgradePath isEqualToString:@"2.1.1"]) {
 					[TLOpenLink openWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1.zip"];
 
-					TPCPreferences.masterController.terminating = YES;
-
-					[NSApplication.sharedApplication terminate:nil];
+					exit(0);
 				}
 			} else {
 				// Do Nothing.
