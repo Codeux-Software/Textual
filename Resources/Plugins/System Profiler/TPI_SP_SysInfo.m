@@ -512,6 +512,7 @@
 					NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes]
 													 length:CFDataGetLength(model)
                                                    encoding:NSASCIIStringEncoding];
+                    s = [s stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
 					
                     [gpuList addObject:s];
                 }
