@@ -54,5 +54,3 @@ TEXTUAL_EXTERN NSString *TXReadableTime(NSInteger dateInterval);
 TEXTUAL_EXTERN NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix);
 
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
-
-TEXTUAL_EXTERN NSString *NSActualHomeDirectory(); // Home directory outside of sandbox.

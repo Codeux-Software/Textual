@@ -51,9 +51,10 @@
 
 - (void)awakeFromNib
 {
-#if defined(TEXTUAL_NEW_APPSTORE_ACCOUNT)
+	/* Our migration assistant was originally designed to be ran on only
+	 the app store version of Textual, but why forget about our loyal 
+	 newsletter subscribers? */
 	[TPCPreferencesMigrationAssistant openConfigurationFileMigrationAssistantDialog];
-#endif
 	
 #ifdef TXMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
@@ -324,12 +325,14 @@
 	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
 	
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
-	[self.world save];
-	[self.world terminate];
-	[self.menu terminate];
-	
-	[self saveWindowState];
+
+	if (self.skipTerminateSave == NO) {
+		[self.world save];
+		[self.world terminate];
+		[self.menu terminate];
+		
+		[self saveWindowState];
+	}
 	
 	[TPCPreferences updateTotalRunTime];
 }
@@ -870,9 +873,9 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 #ifdef TXUserScriptsFolderAvailable
 		NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
-		NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
 		];
 #else
 		NSArray *scriptPaths = @[

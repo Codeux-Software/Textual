@@ -52,9 +52,9 @@
 {
 #ifdef TXUserScriptsFolderAvailable
 	NSArray *scriptPaths = @[
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsUnsupervisedPath])
+	NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+	NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+	NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
 	];
 #else
 	NSArray *scriptPaths = @[

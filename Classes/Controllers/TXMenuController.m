@@ -619,12 +619,12 @@
 
 - (void)showAcknowledgments:(id)sender
 {
-	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Documentation/Acknowledgments.pdf"]]];
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Documentation/Acknowledgments.pdf"]]];
 }
 
 - (void)showContributors:(id)sender
 {
-	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences whereResourcePath] stringByAppendingPathComponent:@"Documentation/Contributors.pdf"]]];
+	[_NSWorkspace() openURL:[NSURL fileURLWithPath:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Documentation/Contributors.pdf"]]];
 }
 
 - (void)performPaste:(id)sender

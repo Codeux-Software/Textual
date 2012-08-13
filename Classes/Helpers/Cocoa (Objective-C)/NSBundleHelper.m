@@ -114,8 +114,8 @@
 
 + (void)loadBundlesIntoMemory:(IRCWorld *)world
 {
-    NSString *path_1 = [TPCPreferences wherePluginsPath];
-    NSString *path_2 = [TPCPreferences wherePluginsLocalPath];
+    NSString *path_1 = [TPCPreferences customExtensionFolderPath];
+    NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];;
     
     if (NSObjectIsNotEmpty(world.allLoadedBundles)) {
         [self deallocBundlesFromMemory:world];
