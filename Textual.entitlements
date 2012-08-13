@@ -22,6 +22,6 @@
 		<string>com.growl.growlhelperapp</string>
 	</array>
 	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<string>/Library/Containers/com.codeux.irc.textual/</string>
+	<string>/Library/Containers/com.codeux.textual/</string>
 </dict>
 </plist>

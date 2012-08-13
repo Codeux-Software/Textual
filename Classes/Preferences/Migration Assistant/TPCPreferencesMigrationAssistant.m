@@ -40,6 +40,40 @@
 @implementation TPCPreferencesMigrationAssistant
 
 #pragma mark -
+#pragma mark Dialogs
+
++ (void)openConfigurationFileMigrationAssistantDialog
+{
+	if ([TPCPreferences sandboxEnabled]) {
+		NSString *containerHed = [NSString stringWithFormat:@"/Library/Containers/%@/",
+								  TPCPreferencesMigrationAssistantOldBundleIdentifier];
+		
+		NSString *oldContainer = [NSActualHomeDirectory() stringByAppendingPathComponent:containerHed];
+
+		if ([_NSFileManager() fileExistsAtPath:oldContainer]) {
+			BOOL downloadAssistant = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"OldSandboxContainerFoundDialogMessage")
+																		 title:TXTLS(@"OldSandboxContainerFoundDialogTitle")
+																 defaultButton:TXTLS(@"OldSandboxContainerFoundDialogSecondaryButton")
+															   alternateButton:TXTLS(@"OldSandboxContainerFoundDialogPrimaryButton")
+																suppressionKey:nil
+															   suppressionText:nil];
+
+			if (downloadAssistant) {
+				if ([TPCPreferencesMigrationAssistantUpgradePath isEqualToString:@"2.1.1"]) {
+					[TLOpenLink openWithString:@"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1.zip"];
+
+					TPCPreferences.masterController.terminating = YES;
+
+					[NSApplication.sharedApplication terminate:nil];
+				}
+			} else {
+				// Do Nothing.
+			}
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark IRC Client & Channel Configuration
 
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config

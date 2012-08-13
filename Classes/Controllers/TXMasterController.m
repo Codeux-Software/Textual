@@ -51,6 +51,10 @@
 
 - (void)awakeFromNib
 {
+#if defined(TEXTUAL_NEW_APPSTORE_ACCOUNT)
+	[TPCPreferencesMigrationAssistant openConfigurationFileMigrationAssistantDialog];
+#endif
+	
 #ifdef TXMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
@@ -170,9 +174,22 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
-    [self.world focusInputText];
-    
+#ifdef TEXTUAL_TRIAL_BINARY
+	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
+										title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
+								defaultButton:TXTLS(@"OkButton")
+							  alternateButton:nil
+							   suppressionKey:@"trial_period_info"
+							  suppressionText:nil];
+#endif
+
+	// ---- //
+	
 	[self.window makeKeyAndOrderFront:nil];
+
+	[self.world focusInputText];
+
+	// ---- //
 	
 	if (self.world.clients.count < 1) {
 		self.welcomeSheet = [TDCWelcomeSheet new];
@@ -182,17 +199,6 @@
 	} else {
 		[self.world autoConnectAfterWakeup:NO];	
 	}
-	
-#ifdef IS_TRIAL_BINARY
-	[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
-																   title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
-														   defaultButton:TXTLS(@"OkButton") 
-														 alternateButton:nil
-															 otherButton:nil
-														  suppressionKey:@"trial_period_info"
-														 suppressionText:nil];
-#endif
-	
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -293,8 +299,7 @@
 		NSInteger result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ApplicationWantsToTerminatePromptMessage")
 															   title:TXTLS(@"ApplicationWantsToTerminatePromptTitle") 
 													   defaultButton:TXTLS(@"QuitButton") 
-													 alternateButton:TXTLS(@"CancelButton") 
-														 otherButton:nil
+													 alternateButton:TXTLS(@"CancelButton")
 													  suppressionKey:nil suppressionText:nil];
 		
 		if (result == NO) {
