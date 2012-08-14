@@ -12,168 +12,108 @@
 
 @implementation AGKeychain
 
-+ (BOOL)checkForExistanceOfKeychainItem:(NSString *)keychainItemName 
-						   withItemKind:(NSString *)keychainItemKind 
-							forUsername:(NSString *)username
-							serviceName:(NSString *)service
+#pragma mark -
+
++ (NSMutableDictionary *)newSearchDictionary:(NSString *)keychainItemName
+								withItemKind:(NSString *)keychainItemKind
+								 forUsername:(NSString *)username
+								 serviceName:(NSString *)service
 {
-	NSInteger numberOfItemsFound = 0;
-	
-	SecKeychainItemRef item;
-	SecKeychainSearchRef search;
-	SecKeychainAttributeList list;
-	SecKeychainAttribute attributes[4];
-	
-	OSErr result;
-	
-	attributes[0].tag = kSecAccountItemAttr;
-	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = (UInt32)[username length];
-	
-	attributes[1].tag = kSecDescriptionItemAttr;
-	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = (UInt32)[keychainItemKind length];
-	
-	attributes[2].tag = kSecLabelItemAttr;
-	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = (UInt32)[keychainItemName length];
-	
-	attributes[3].tag = kSecServiceItemAttr;
-	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)[service length];
-	
-	list.count = 4;
-	list.attr = attributes;
-	
-	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-	
-#pragma unused(result)
-	
-	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
-		CFRelease(item);
-		
-		numberOfItemsFound++;
-	}
-	
-	CFRelease(search);
-	
-	return numberOfItemsFound;
+	NSMutableDictionary *searchDictionary = [NSMutableDictionary dictionary];
+
+	[searchDictionary setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
+
+	[searchDictionary setObject:keychainItemName	forKey:(id)kSecAttrLabel];
+	[searchDictionary setObject:keychainItemKind	forKey:(id)kSecAttrDescription];
+	[searchDictionary setObject:username			forKey:(id)kSecAttrAccount];
+	[searchDictionary setObject:service				forKey:(id)kSecAttrService];
+
+	return searchDictionary;
 }
+
++ (NSData *)searchKeychainCopyMatching:(NSString *)keychainItemName
+						  withItemKind:(NSString *)keychainItemKind
+						   forUsername:(NSString *)username
+						   serviceName:(NSString *)service
+{
+	NSMutableDictionary *searchDictionary = [AGKeychain newSearchDictionary:keychainItemName
+															   withItemKind:keychainItemKind
+																forUsername:username
+																serviceName:service];
+	
+	[searchDictionary setObject:(id)kSecMatchLimitOne	forKey:(id)kSecMatchLimit];
+	[searchDictionary setObject:(id)kCFBooleanTrue		forKey:(id)kSecReturnData];
+
+	CFDataRef result = nil;
+
+	OSStatus status = SecItemCopyMatching((__bridge_retained CFDictionaryRef)searchDictionary,
+										  (CFTypeRef *)&result);
+
+#pragma unused(status)
+
+	return (__bridge_transfer NSData *)result;
+}
+
+#pragma mark -
 
 + (BOOL)deleteKeychainItem:(NSString *)keychainItemName
 			  withItemKind:(NSString *)keychainItemKind 
 			   forUsername:(NSString *)username
 			   serviceName:(NSString *)service
 {
-	BOOL status = NO;
+	NSMutableDictionary *dictionary = [AGKeychain newSearchDictionary:keychainItemName
+														 withItemKind:keychainItemKind
+														  forUsername:username
+														  serviceName:service];
+
+	// ---- //
 	
-	NSInteger numberOfItemsFound = 0;
+	OSStatus status = SecItemDelete((__bridge_retained CFDictionaryRef)dictionary);
 	
-	SecKeychainItemRef item;
-	SecKeychainSearchRef search;
-	SecKeychainAttributeList list;
-	SecKeychainAttribute attributes[4];
-	
-	OSErr result;
-	
-	attributes[0].tag = kSecAccountItemAttr;
-	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = (UInt32)[username length];
-	
-	attributes[1].tag = kSecDescriptionItemAttr;
-	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = (UInt32)[keychainItemKind length];
-	
-	attributes[2].tag = kSecLabelItemAttr;
-	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = (UInt32)[keychainItemName length];
-	
-	attributes[3].tag = kSecServiceItemAttr;
-	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)[service length];
-	
-	list.count = 4;
-	list.attr = attributes;
-	
-	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-	
-#pragma unused(result)
-	
-	while (SecKeychainSearchCopyNext(search, &item) == noErr) {
-		numberOfItemsFound++;
+	if (status == errSecSuccess) {
+		return YES;
 	}
-	
-	if (numberOfItemsFound) {
-		if (SecKeychainItemDelete(item)) {
-			status = YES;
-		}
-		
-		CFRelease(item);
-	}
-	
-	CFRelease(search);
-	
-	return status;
+
+	return NO;
 }
 
 + (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName 
 				   withItemKind:(NSString *)keychainItemKind 
 					forUsername:(NSString *)username 
 				withNewPassword:(NSString *)newPassword
-					withComment:(NSString *)comment
 					serviceName:(NSString *)service
 {
-	SecKeychainItemRef item;
-	SecKeychainSearchRef search;
-	SecKeychainAttributeList list;
-	SecKeychainAttribute attributes[5];
+	NSMutableDictionary *oldDictionary = [AGKeychain newSearchDictionary:keychainItemName
+														 withItemKind:keychainItemKind
+														  forUsername:username
+														  serviceName:service];
+
+	NSMutableDictionary *newDictionary = [NSMutableDictionary dictionary];
+
+	// ---- //
+
+	NSData *encodedPassword = [newPassword dataUsingEncoding:NSUTF8StringEncoding];
 	
-	OSErr result;
-	OSStatus status;
-	
-	attributes[0].tag = kSecAccountItemAttr;
-	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = (UInt32)[username length];
-	
-	attributes[1].tag = kSecDescriptionItemAttr;
-	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = (UInt32)[keychainItemKind length];
-	
-	attributes[2].tag = kSecLabelItemAttr;
-	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = (UInt32)[keychainItemName length];
-	
-	attributes[3].tag = kSecServiceItemAttr;
-	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)[service length];
-	
-	attributes[4].tag = kSecCommentItemAttr;
-	attributes[4].data = (void *)[comment UTF8String];
-	attributes[4].length = (UInt32)[comment length];
-	
-	list.count = 4;
-	list.attr = attributes;
-	
-	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-	
-#pragma unused(result)
-	
-	result = SecKeychainSearchCopyNext(search, &item);
-	
-	list.count = 5;
-	
-	if (result == errSecItemNotFound) {
-		status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, (UInt32)[newPassword length], 
-												  [newPassword UTF8String], NULL,NULL, &item);
-	} else {
-		status = SecKeychainItemModifyContent(item, &list, (UInt32)[newPassword length], [newPassword UTF8String]);
-		
-		CFRelease(item);
+	[newDictionary setObject:encodedPassword forKey:(id)kSecValueData];
+
+	// ---- //
+
+	OSStatus status = SecItemUpdate((__bridge_retained CFDictionaryRef)oldDictionary,
+									(__bridge_retained CFDictionaryRef)newDictionary);
+
+	if (status == errSecItemNotFound) {
+		return [AGKeychain addKeychainItem:keychainItemName
+							  withItemKind:keychainItemKind
+							   forUsername:username
+							  withPassword:newPassword
+							   serviceName:service];
 	}
 	
-	CFRelease(search);
+	if (status == errSecSuccess) {
+		return YES;
+	}
 	
-	return BOOLReverseValue(status);
+	return NO;
 }
 
 + (BOOL)addKeychainItem:(NSString *)keychainItemName 
@@ -181,116 +121,44 @@
 			forUsername:(NSString *)username 
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
-{	
-	SecKeychainItemRef item;
-	SecKeychainAttributeList list;
-	SecKeychainAttribute attributes[4];
+{
+	NSMutableDictionary *dictionary = [AGKeychain newSearchDictionary:keychainItemName
+														 withItemKind:keychainItemKind
+														  forUsername:username
+														  serviceName:service];
+
+	NSData *encodedPassword = [password dataUsingEncoding:NSUTF8StringEncoding];
+
+	// ---- //
 	
-	OSStatus status;
+	[dictionary setObject:encodedPassword forKey:(id)kSecValueData];
+
+	// ---- //
+
+	OSStatus status = SecItemAdd((__bridge_retained CFDictionaryRef)dictionary, NULL);
 	
-	attributes[0].tag = kSecAccountItemAttr;
-	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = (UInt32)[username length];
+	if (status == errSecSuccess) {
+		return YES;
+	}
 	
-	attributes[1].tag = kSecDescriptionItemAttr;
-	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = (UInt32)[keychainItemKind length];
-	
-	attributes[2].tag = kSecLabelItemAttr;
-	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = (UInt32)[keychainItemName length];
-	
-	attributes[3].tag = kSecServiceItemAttr;
-	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)[service length];
-	
-	list.count = 4;
-	list.attr = attributes;
-	
-	status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list, (UInt32)[password length], 
-											  [password UTF8String], NULL,NULL, &item);
-	
-	return BOOLReverseValue(status);
+	return NO;
 }
 
-+ (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName 
++ (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName
 							 withItemKind:(NSString *)keychainItemKind 
 							  forUsername:(NSString *)username
 							  serviceName:(NSString *)service
 {
-	SecKeychainItemRef item;
-	SecKeychainSearchRef search;
-	SecKeychainAttributeList list;
-	SecKeychainAttribute attributes[4];
+	NSData *passwordData = [AGKeychain searchKeychainCopyMatching:keychainItemName
+													 withItemKind:keychainItemKind
+													  forUsername:username
+													  serviceName:service];
 	
-	OSErr result;
-	
-	attributes[0].tag = kSecAccountItemAttr;
-	attributes[0].data = (void *)[username UTF8String];
-	attributes[0].length = (UInt32)[username length];
-	
-	attributes[1].tag = kSecDescriptionItemAttr;
-	attributes[1].data = (void *)[keychainItemKind UTF8String];
-	attributes[1].length = (UInt32)[keychainItemKind length];
-	
-	attributes[2].tag = kSecLabelItemAttr;
-	attributes[2].data = (void *)[keychainItemName UTF8String];
-	attributes[2].length = (UInt32)[keychainItemName length];
-	
-	attributes[3].tag = kSecServiceItemAttr;
-	attributes[3].data = (void *)[service UTF8String];
-	attributes[3].length = (UInt32)[service length];
-	
-	list.count = 4;
-	list.attr = attributes;
-	
-	result = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-
-#pragma unused(result)
-	
-	NSString *password = NSStringEmptyPlaceholder;
-	
-	if (SecKeychainSearchCopyNext(search, &item) == noErr) {
-		password = [self getPasswordFromSecKeychainItemRef:item];
-		
-		if (NSObjectIsEmpty(password)) {
-			password = NSStringEmptyPlaceholder;
-		}	
-		
-		CFRelease(item);
+	if (PointerIsNotEmpty(passwordData)) {
+		return [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
 	}
-	
-	CFRelease(search);
-	
-	return password;
-}
 
-+ (NSString *)getPasswordFromSecKeychainItemRef:(SecKeychainItemRef)item
-{
-	UInt32 length;
-	char *password;
-	
-	NSString *fpass = NSStringEmptyPlaceholder;
-	
-	OSStatus status = SecKeychainItemCopyContent(item, NULL, NULL, &length, (void **)&password);
-	
-	if (status == noErr) {
-		if (PointerIsEmpty(password) == NO) {
-			char passwordBuffer[1024];
-			strncpy(passwordBuffer, password, length);
-			passwordBuffer[length] = '\0';
-			
-			fpass = @(passwordBuffer);
-		}
-		
-		if (password) {
-			SecKeychainItemFreeContent(NULL, password);
-		}
-	} else {
-		fpass = NSStringEmptyPlaceholder;
-	}
-	
-	return fpass;
+	return NSStringEmptyPlaceholder;
 }
 
 @end
