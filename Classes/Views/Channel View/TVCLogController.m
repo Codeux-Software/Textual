@@ -439,10 +439,6 @@
 	// ---- //
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		[self moveToBottom];
-
-		// ---- //
-
 		self.reloading = NO;
 
 		// ---- //
