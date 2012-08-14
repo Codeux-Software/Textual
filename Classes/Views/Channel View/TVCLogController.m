@@ -164,11 +164,22 @@
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	WebScriptObject *js_api = [self.view js_api];
+	[self executeScriptCommand:command withArguments:args isSpecial:NO];
+}
 
-	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:command	withArguments:args];
-	}
+- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args isSpecial:(BOOL)special
+{
+	TVCLogMessageBlock (^messageBlock)(void) = [^{
+		WebScriptObject *js_api = [self.view js_api];
+
+		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
+			[js_api callWebScriptMethod:command	withArguments:args];
+		}
+
+		return @(YES);
+	} copy];
+
+	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
 }
 
 #pragma mark -
@@ -441,16 +452,14 @@
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		self.reloading = NO;
 
-		// ---- //
-
-		[self executeScriptCommand:@"viewFinishedReload" withArguments:@[]];
-
-		// ---- //
-
 		return @(YES);
 	} copy];
 
 	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:YES];
+
+	// ---- //
+
+	[self executeScriptCommand:@"viewFinishedReload" withArguments:@[] isSpecial:YES];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -1119,10 +1128,6 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	if (self.reloading == NO) {
-		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
-	}
-
 	[self.world updateReadinessState:self];
 
 	self.loaded	= YES;
@@ -1156,6 +1161,10 @@
 		
 		e = next;
 	}
+	
+	if (self.reloading == NO) {
+		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+	}
 
 	NSString *viewType = @"server";
 
@@ -1166,10 +1175,10 @@
 	}
 
 	[self executeScriptCommand:@"viewInitiated" withArguments:@[
-	 NSStringNilValueSubstitute(viewType),
-	 NSStringNilValueSubstitute(self.client.config.guid),
-	 NSStringNilValueSubstitute(self.channel.config.guid),
-	 NSStringNilValueSubstitute(self.channel.name)
+		NSStringNilValueSubstitute(viewType),
+		NSStringNilValueSubstitute(self.client.config.guid),
+		NSStringNilValueSubstitute(self.channel.config.guid),
+		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
 }
 
