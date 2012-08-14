@@ -52,10 +52,10 @@ Textual = {
 	newMessagePostedToView: 				function(lineNumber) {},
 	historyIndicatorAddedToView:	 		function() {},
 	historyIndicatorRemovedFromView: 		function() {},
-	themeWillChange: 						function() {},
 	topicBarValueChanged: 					function(newTopic) {},
 	viewContentsBeingCleared: 				function() {},
 	viewFinishedLoading: 					function() {},
+	viewFinishedReload: 					function() {},
 	viewFontSizeChanged:					function(bigger) {},
 	viewPositionMovedToBottom:				function() {},
 	viewPositionMovedToHistoryIndicator: 	function() {},
@@ -64,6 +64,23 @@ Textual = {
 	
 	/* *********************************************************************** */
 	
+	/* Loading screen. */
+	
+	fadeInLoadingScreen: function(bodyOp, topicOp)
+	{
+		/* Reserved element IDs. */
+		var bhe = document.getElementById("body_home");
+		var tbe = document.getElementById("topic_bar");
+		var lbe = document.getElementById("loading_screen");
+
+		lbe.style.opacity = 0.00;
+		bhe.style.opacity = bodyOp;
+
+		if (tbe != null) {
+			tbe.style.opacity = topicOp;
+		}
+	},
+
 	/* Resource management. */
 
 	includeStyleResourceFile: function(file)

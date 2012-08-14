@@ -46,7 +46,11 @@
 		{{/isChannelView}}
 		
 		dir="{{textDirectionToken}}">
-			<div id="body_home"></div>
+			<!-- The elements "body_home," "loading_screen," "topic_bar," and "mark" must always 
+			remain the same as the ID value of these elements are used internally by Textual. -->
+			
+			<div id="loading_screen">View is Loading…</div>
+			<div id="body_home"><!-- Filled at runtime. --></div>
 		
 			{{#isChannelView}}
 				<div id="topic_bar">{{{formattedTopicValue}}}</div>

@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 #define _bottomEpsilon			0
-#define _maximumRedrawCount		100
 
 @interface TVCLogController ()
 @property (nonatomic, strong) TLOFileLogger *logFile;
@@ -79,6 +78,8 @@
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
+	
+	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 }
 
 #pragma mark -
@@ -109,7 +110,7 @@
 	self.logFile.hashFilename = YES;
 	self.logFile.writePlainText = NO;
 	self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
-	self.logFile.maxEntryCount = _maximumRedrawCount; // [TPCPreferences maxLogLines];
+	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 
 	[self.logFile reopenIfNeeded];
 	
@@ -411,6 +412,8 @@
 
 - (void)reloadTheme
 {
+	self.reloading = YES;
+	
 	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 
 	// ---- //
@@ -419,17 +422,6 @@
 
 	if (NSObjectIsNotEmpty(oldLines)) {
 		NSArray *keys = oldLines.sortedDictionaryKeys;
-
-		if (keys.count >= _maximumRedrawCount) {
-			TVCLogLine *redrawLine = [TVCLogLine.alloc initWithLineType:TVCLogLineDebugType
-															 memberType:TVCLogMemberLocalUserType
-															 receivedAt:nil
-																   body:TXTLS(@"ThemeReloadCompletedBannerMessage")];
-
-			[self print:redrawLine withHTML:NO specialWrite:YES markAfter:YES];
-		}
-
-		// ---- //
 
 		for (NSString *key in keys) {
 			NSDictionary *lineDic = [oldLines objectForKey:key];
@@ -448,6 +440,16 @@
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self moveToBottom];
+
+		// ---- //
+
+		self.reloading = NO;
+
+		// ---- //
+
+		[self executeScriptCommand:@"viewFinishedReload" withArguments:@[]];
+
+		// ---- //
 
 		return @(YES);
 	} copy];
@@ -792,7 +794,6 @@
 			@"imageURL"					: imageUrl,
 			@"anchorLink"				: url,
 			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
-			@"localizedHideImageTitle"	: TXTLS(@"LogViewHideInlineImageMessage"),
 		 }];
 	}
 
@@ -1122,7 +1123,9 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+	if (self.reloading == NO) {
+		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+	}
 
 	[self.world updateReadinessState:self];
 
