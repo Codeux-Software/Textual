@@ -46,7 +46,7 @@
 
 	CFDataRef result = nil;
 
-	OSStatus status = SecItemCopyMatching((__bridge_retained CFDictionaryRef)searchDictionary,
+	OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)searchDictionary,
 										  (CFTypeRef *)&result);
 
 #pragma unused(status)
@@ -68,7 +68,7 @@
 
 	// ---- //
 	
-	OSStatus status = SecItemDelete((__bridge_retained CFDictionaryRef)dictionary);
+	OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
 	
 	if (status == errSecSuccess) {
 		return YES;
@@ -98,8 +98,8 @@
 
 	// ---- //
 
-	OSStatus status = SecItemUpdate((__bridge_retained CFDictionaryRef)oldDictionary,
-									(__bridge_retained CFDictionaryRef)newDictionary);
+	OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)oldDictionary,
+									(__bridge CFDictionaryRef)newDictionary);
 
 	if (status == errSecItemNotFound) {
 		return [AGKeychain addKeychainItem:keychainItemName
@@ -135,7 +135,7 @@
 
 	// ---- //
 
-	OSStatus status = SecItemAdd((__bridge_retained CFDictionaryRef)dictionary, NULL);
+	OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dictionary, NULL);
 	
 	if (status == errSecSuccess) {
 		return YES;
