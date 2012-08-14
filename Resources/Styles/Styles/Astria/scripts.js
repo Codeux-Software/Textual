@@ -11,9 +11,22 @@
 // Textual.historyIndicatorRemovedFromView 		= function()			{ app.logToConsole("[04] Hello world."); }
 // Textual.themeWillChange 						= function()			{ app.logToConsole("[05] Hello world."); }
 // Textual.topicBarValueChanged 				= function(newTopic)	{ app.logToConsole("[06] Hello world."); }
-// Textual.viewContentsBeingCleared 			= function()			{ app.logToConsole("[07] Hello world."); }
+// Textual.viewFontSizeChanged					= function(bigger)		{ app.logToConsole("[07] Hello world."); }
 // Textual.viewFinishedLoading 					= function()			{ app.logToConsole("[08] Hello world."); }
-// Textual.viewPositionMovedToBottom			= function()			{ app.logToConsole("[09] Hello world."); }
-// Textual.viewPositionMovedToHistoryIndicator 	= function()			{ app.logToConsole("[10] Hello world."); }
-// Textual.viewPositionMovedToLine 				= function(lineNumber)	{ app.logToConsole("[11] Hello world."); }
-// Textual.viewPositionMovedToTop				= function()			{ app.logToConsole("[12] Hello world."); }
+// Textual.viewFinishedReload					= function()			{ app.logToConsole("[09] Hello world."); }
+// Textual.viewPositionMovedToBottom			= function()			{ app.logToConsole("[10] Hello world."); }
+// Textual.viewPositionMovedToHistoryIndicator 	= function()			{ app.logToConsole("[11] Hello world."); }
+// Textual.viewPositionMovedToLine 				= function(lineNumber)	{ app.logToConsole("[12] Hello world."); }
+// Textual.viewPositionMovedToTop				= function()			{ app.logToConsole("[13] Hello world."); }
+
+// -------------------------------------- //
+
+Textual.viewFinishedLoading = function()
+{
+	Textual.fadeInLoadingScreen(1.00, 0.95);
+}
+
+Textual.viewFinishedReload = function()
+{
+	Textual.viewFinishedLoading();
+}

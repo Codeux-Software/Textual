@@ -22,10 +22,13 @@ body div#body_home {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	opacity: 0;
 	width: 100%;
 	z-index: 100;
 	max-height: 99.99%;
 	position: absolute;
+	opacity: 0; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
 }
 
 body[type=channel] div#body_home {
@@ -38,6 +41,26 @@ body .line {
 
 body[dir=rtl] .sender {
 	display: inline-block;
+}
+
+/* Loading Screen */
+
+body div#loading_screen {
+	position:absolute; 
+	top: 50%;
+	left: 50%;
+	margin-top: -11px;
+	margin-left: -150px;
+	width: 300px;
+	height: 21px;
+	font-size: 18px;
+	background: #181818;
+	border: 1px solid #333333;
+	border-radius: 5px;
+	padding: 5px;
+	padding-left: 10px;
+	opacity: 1; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
 }
 
 /* Time */
@@ -74,8 +97,8 @@ a:hover {
 	top: 0;
 	left: 0;
 	right: 0;
+	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
-	opacity: 0.95;
 	color: #8E8E8E;
 	position: fixed;
 	padding: 2px 0.5em 3px;
@@ -83,6 +106,7 @@ a:hover {
 	border-bottom: 1px solid #404040;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: -webkit-linear-gradient(top, #0F0F0F 0%, #262626 100%);
+	-webkit-transition: opacity 0.8s linear;
 }
 
 #topic_bar a, 
