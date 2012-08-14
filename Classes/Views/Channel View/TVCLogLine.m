@@ -65,6 +65,31 @@
 	return NSStringEmptyPlaceholder;
 }
 
+- (id)initWithLineType:(TVCLogLineType)lineType
+			memberType:(TVCLogMemberType)memberType
+			receivedAt:(NSDate *)receivedAt
+				  body:(NSString *)body
+{
+	if ((self = [self init])) {
+		self.receivedAt = receivedAt;
+		
+		self.nick = nil;
+		self.body = body;
+		
+		self.lineType	= lineType;
+		self.memberType = memberType;
+		
+		self.nickColorNumber = 0;
+		
+		self.keywords		= nil;
+		self.excludeWords	= nil;
+
+		return self;
+	}
+
+	return nil;
+}
+
 + (NSString *)memberTypeString:(TVCLogMemberType)type
 {
 	switch (type) {

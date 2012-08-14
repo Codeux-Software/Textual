@@ -176,6 +176,8 @@
 "OldSandboxContainerFoundDialogPrimaryButton" = "Quit & Download Assistant";
 "OldSandboxContainerFoundDialogSecondaryButton" = "Do Not Download";
 
+"ThemeReloadCompletedBannerMessage" = "Style reloaded. Last one-hundred messages now visible.";
+
 "NoButton" = "No";
 
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";

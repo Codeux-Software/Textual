@@ -88,6 +88,11 @@ typedef enum TVCLogMemberType : NSInteger {
 + (NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogMemberType)type;
 
+- (id)initWithLineType:(TVCLogLineType)lineType
+			memberType:(TVCLogMemberType)memberType
+			receivedAt:(NSDate *)receivedAt
+				  body:(NSString *)body; // For internal use only. A plugin should not call.
+
 - (id)initWithDictionary:(NSDictionary *)dic;	// For internal use only. A plugin should not call.
 - (NSDictionary *)dictionaryValue;				// For internal use only. A plugin should not call.
 @end

@@ -37,7 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define _bottomEpsilon		0
+#define _bottomEpsilon			0
+#define _maximumRedrawCount		100
 
 @interface TVCLogController ()
 @property (nonatomic, strong) TLOFileLogger *logFile;
@@ -78,8 +79,6 @@
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
-	
-	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 }
 
 #pragma mark -
@@ -110,7 +109,9 @@
 	self.logFile.hashFilename = YES;
 	self.logFile.writePlainText = NO;
 	self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
-	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
+	self.logFile.maxEntryCount = _maximumRedrawCount; // [TPCPreferences maxLogLines];
+
+	[self.logFile reopenIfNeeded];
 	
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
@@ -329,31 +330,31 @@
 - (void)mark
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if (self.loaded == NO) return @(NO);
-		
-		[self savePosition];
-		
-		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return @(NO);
-		
-		DOMElement *body = [self body:doc];
-		
-		if (body) {
-			DOMElement *e = [doc createElement:@"div"];
-			
-			[e setAttribute:@"id" value:@"mark"];
-			
-			[body appendChild:e];
-			
-			++self.count;
-			
-			[self restorePosition];
-		}
+		if (self.loaded == NO) return nil;
 
-		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+		// ---- //
+
+		[self savePosition];
+
+		// ---- //
+
+		DOMDocument *doc = [self mainFrameDocument];
+		if (PointerIsEmpty(doc)) return nil;
+
+		DOMElement *body = [self body:doc];
+		if (PointerIsEmpty(body)) return nil;
+
+		// ---- //
 		
-		return @(YES);
+		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+
+		// ---- //
+
+		NSString *html = TXRenderStyleTemplate(@"historyIndicator", nil, self);
+		
+		return (__bridge void *)html;
 	} copy];
+
 	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
@@ -377,6 +378,7 @@
 
 		return @(YES);
 	} copy];
+	
 	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
@@ -417,7 +419,18 @@
 
 	if (NSObjectIsNotEmpty(oldLines)) {
 		NSArray *keys = oldLines.sortedDictionaryKeys;
-		
+
+		if (keys.count >= _maximumRedrawCount) {
+			TVCLogLine *redrawLine = [TVCLogLine.alloc initWithLineType:TVCLogLineDebugType
+															 memberType:TVCLogMemberLocalUserType
+															 receivedAt:nil
+																   body:TXTLS(@"ThemeReloadCompletedBannerMessage")];
+
+			[self print:redrawLine withHTML:NO specialWrite:YES markAfter:YES];
+		}
+
+		// ---- //
+
 		for (NSString *key in keys) {
 			NSDictionary *lineDic = [oldLines objectForKey:key];
 
@@ -425,7 +438,7 @@
 
 			if (PointerIsNotEmpty(line)) {
 				BOOL rawHTML = (line.lineType == TVCLogLineRawHTMLType);
-				
+
 				[self print:line withHTML:rawHTML specialWrite:YES];
 			}
 		}
@@ -433,7 +446,13 @@
 
 	// ---- //
 
-	[self moveToBottom];
+	TVCLogMessageBlock (^messageBlock)(void) = [^{
+		[self moveToBottom];
+
+		return @(YES);
+	} copy];
+
+	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:YES];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -666,6 +685,11 @@
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial
 {
+	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO];
+}
+
+- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial markAfter:(BOOL)markAfter
+{
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
 	}
@@ -813,7 +837,7 @@
 
 	// ---- //
 
-	[self writeLine:line attributes:attributes specialWrite:isSpecial];
+	[self writeLine:line attributes:attributes specialWrite:isSpecial markAfter:markAfter];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
@@ -842,6 +866,7 @@
 - (void)writeLine:(TVCLogLine *)line
 	   attributes:(NSMutableDictionary *)attributes
 	 specialWrite:(BOOL)isSpecial
+		markAfter:(BOOL)markAfter
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
@@ -887,6 +912,10 @@
 
 			[self.logFile writePropertyListEntry:[line dictionaryValue]
 										   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
+		}
+
+		if (markAfter) {
+			html = [html stringByAppendingString:TXRenderStyleTemplate(@"historyIndicator", nil, self)];
 		}
 
 		return (__bridge void *)html;
