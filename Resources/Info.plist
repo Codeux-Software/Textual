@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.1-fr1</string>
+	<string>2.1.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -33,7 +33,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1.1</string>
+	<string>2.1.1-fr1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
@@ -47,8 +47,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Turtle Soup</string>
 	<key>TXBundleBuildNumber</key>
-	<string>12456</string>
+	<string>12457</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-rc1-329-g44af496-appstore,modern</string>
+	<string>2.1.1-fr1-331-g0b580ac-appstore,modern</string>
 </dict>
 </plist>
