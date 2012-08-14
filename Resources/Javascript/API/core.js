@@ -64,6 +64,13 @@ Textual = {
 	
 	/* *********************************************************************** */
 	
+	scrollToBottomOfView: function()
+	{
+		document.body.scrollTop = document.body.scrollHeight;
+		
+		Textual.viewPositionMovedToBottom();
+	},
+
 	/* Loading screen. */
 	
 	fadeInLoadingScreen: function(bodyOp, topicOp)
