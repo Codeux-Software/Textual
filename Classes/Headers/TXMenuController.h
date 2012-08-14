@@ -142,6 +142,7 @@
 - (void)openLogLocation:(id)sender;
 - (void)openChannelLogs:(id)sender;
 - (void)connectToTextualHelpChannel:(id)sender;
+- (void)connectToTextualTestingChannel:(id)sender;
 - (void)showSetVhostPrompt:(id)sender;
 - (void)showFindPanel:(id)sender;
 - (void)showChannelBanList:(id)sender;

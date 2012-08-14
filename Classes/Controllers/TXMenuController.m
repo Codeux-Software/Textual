@@ -1582,6 +1582,11 @@
 	[self.world createConnection:@"chat.freenode.net +6697" chan:@"#textual"];
 }
 
+- (void)connectToTextualTestingChannel:(id)sender
+{
+	[self.world createConnection:@"chat.freenode.net +6697" chan:@"#textual-testing"];
+}
+
 - (void)__onWantHostServVhostSet:(id)sender andVhost:(NSString *)vhost
 {
 	if (NSObjectIsNotEmpty(vhost)) {
