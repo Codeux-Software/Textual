@@ -1349,7 +1349,6 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"DisplayUserListNoModeSymbol"];
 	[d setBool:YES forKey:@"FocusSelectionOnMessageCommandExecution"];
 	[d setBool:YES forKey:@"LogHighlights"];
-	[d setBool:YES forKey:@"LogTranscript"];
 	[d setBool:YES forKey:@"ProcessChannelModesOnJoin"];
 	[d setBool:YES forKey:@"ReplyUnignoredExternalCTCPRequests"];
 	[d setBool:YES forKey:@"TextFieldAutomaticGrammarCheck"];
@@ -1379,7 +1378,7 @@ static NSInteger totalRunTime = 0;
 
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
 
-	d[@"ChannelOperatorDefaultLocalization -> Kick Reasone"] = TXTLS(@"KickReason");
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
 
 	[d setInteger:2										forKey:@"AutojoinMaximumChannelJoinCount"];
 	[d setInteger:300									forKey:@"ScrollbackMaximumLineCount"];
