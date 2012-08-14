@@ -25,6 +25,8 @@ body div#body_home {
 	z-index: 100;
 	max-height: 99.99%;
 	position: absolute;
+	opacity: 0; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
 }
 
 body[type=channel] div#body_home {
@@ -37,6 +39,26 @@ body .line {
 
 body[dir=rtl] .sender {
 	display: inline-block;
+}
+
+/* Loading Screen */
+
+body div#loading_screen {
+	position:absolute; 
+	top: 50%;
+	left: 50%;
+	margin-top: -11px;
+	margin-left: -150px;
+	width: 300px;
+	height: 21px;
+	font-size: 18px;
+	background: #181818;
+	border: 1px solid #333333;
+	border-radius: 5px;
+	padding: 5px;
+	padding-left: 10px;
+	opacity: 1; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
 }
 
 /* Time */
@@ -76,7 +98,7 @@ a:hover {
 	left: 0;
 	right: 0;
 	z-index: 400;
-	opacity: 0.85;
+	opacity: 0; /* Set by JavaScript */
 	color: #00ff00;
 	position: fixed;
 	text-align: center;
@@ -86,6 +108,7 @@ a:hover {
 	border-bottom: 0px solid #000;
 	-webkit-box-shadow: 0 1px 5px #00ff00;
 	background: -webkit-gradient(linear, left top, left bottom, from(#003300), to(#003300));
+	-webkit-transition: opacity 0.8s linear;
 }
 
 #topic_bar a {

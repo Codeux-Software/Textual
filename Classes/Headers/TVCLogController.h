@@ -68,6 +68,8 @@ typedef id (^TVCLogMessageBlock)(void);
 @property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
+@property (assign) BOOL reloading;
+
 - (void)setUp;
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
