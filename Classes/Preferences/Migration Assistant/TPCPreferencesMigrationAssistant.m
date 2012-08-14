@@ -45,7 +45,7 @@
 + (void)openConfigurationFileMigrationAssistantDialog
 {
 	if ([TPCPreferences sandboxEnabled]) {
-		NSString *t210to211mad = @"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1.zip";
+		NSString *t210to211mad = @"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1%20Download.zip";
 
 		NSString *containerBed = [TPCPreferences userHomeDirectoryPathOutsideSandbox];
 		NSString *containerHed = [NSString stringWithFormat:@"/Library/Containers/%@/",
