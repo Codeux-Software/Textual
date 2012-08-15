@@ -3510,15 +3510,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	NSString *text = [m paramAt:1];
 
-	BOOL identified = NO;
-
 	if (self.identifyCTCP && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
-		identified = [text hasPrefix:@"+"];
-
 		text = [text safeSubstringFromIndex:1];
 	} else if (self.identifyMsg && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
-		identified = [text hasPrefix:@"+"];
-
 		text = [text safeSubstringFromIndex:1];
 	}
 

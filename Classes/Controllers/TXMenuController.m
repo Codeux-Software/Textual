@@ -746,8 +746,8 @@
 	if (_noClient || _connected) return;
 	
 	[u connect];
-	
-	[self.world expandClient:u];
+
+	[self.world expandClient:u]; // Expand client on user opreated connect.
 }
 
 - (void)disconnect:(id)sender
@@ -841,7 +841,7 @@
 	
 	[self.world save];
 	
-	if (u.isExpanded) {
+	if (u.isExpanded) { // Only expand new client if old was expanded already.
 		[self.world expandClient:n];
 	}
 }

@@ -88,27 +88,30 @@
 	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 	
-	IRCClient *client = nil;
+	IRCClient *firstSelection = nil;
 	
 	for (IRCClient *e in self.clients) {
+		[self expandClient:e];
+		
 		if (e.config.autoConnect) {
-			client = e;
-			
-			break;
+			if (PointerIsNotEmpty(firstSelection)) {
+				firstSelection = e;
+			}
 		}
 	}
-    
-	if (client) {
-		[self.serverList expandItem:client];
-		
-		NSInteger n = [self.serverList rowForItem:client];
-		if (client.channels.count) ++n;
-		
+	
+	if (firstSelection) {
+		NSInteger n = [self.serverList rowForItem:firstSelection];
+
+		if (firstSelection.channels.count) {
+			++n;
+		}
+
 		[self.serverList selectItemAtIndex:n];
-	} else if (NSObjectIsNotEmpty(client)) {
+	} else if (NSObjectIsEmpty(firstSelection)) {
 		[self.serverList selectItemAtIndex:0];
 	}
-	
+
 	[self outlineViewSelectionDidChange:nil];
 }
 
