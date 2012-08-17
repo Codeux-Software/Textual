@@ -161,8 +161,6 @@
 					case '+': plus = YES; break;
 					default:
 					{
-						NSInteger v = [self valueForMode:c];
-						
 						IRCModeInfo *m = [IRCModeInfo modeInfo];
 						
 						if ([self hasParamForMode:c plus:plus]) {
@@ -172,7 +170,6 @@
 						} else {
 							m.mode = c;
 							m.plus = plus;
-							m.simpleMode = (v == 4);
 						}
 						
 						[ary safeAddObject:m];

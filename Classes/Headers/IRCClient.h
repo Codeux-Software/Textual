@@ -187,6 +187,9 @@ typedef enum IRCDisconnectType : NSInteger {
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name useTalk:(BOOL)doTalk;
 
+- (NSData *)convertToCommonEncoding:(NSString *)data;
+- (NSString *)convertFromCommonEncoding:(NSData *)data;
+
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;

@@ -38,12 +38,11 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection : NSObject
-@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, unsafe_unretained) IRCClient *delegate;
 @property (nonatomic, strong) TLOTimer *timer;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic, assign) NSInteger port;
 @property (nonatomic, assign) BOOL useSSL;
-@property (nonatomic, assign) NSStringEncoding encoding;
 @property (nonatomic, assign) BOOL useSystemSocks;
 @property (nonatomic, assign) BOOL useSocks;
 @property (nonatomic, assign) NSInteger socksVersion;

@@ -1,25 +1,25 @@
-/* ********************************************************************* 
-       _____        _               _    ___ ____   ____
-      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
-       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
-       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
-       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+/* *********************************************************************
+ _____        _               _    ___ ____   ____
+ |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+ | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+ | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+ |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
-        Please see Contributors.pdf and Acknowledgements.pdf
+ Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
 
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Textual IRC Client & Codeux Software nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ * Neither the name of the Textual IRC Client & Codeux Software nor the
+ names of its contributors may be used to endorse or promote products
+ derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,36 +37,35 @@
 
 #import "TextualApplication.h"
 
-/* Sloppy mode parser. */
-
 @implementation IRCChannelMode
 
 - (id)init
 {
 	if ((self = [super init])) {
-		self.allModes		= [NSMutableArray new];
-		self.modeIndexes	= [NSMutableDictionary new];
+		self.allModes = [NSMutableDictionary dictionary];
 	}
-	
+
 	return self;
 }
 
 - (id)initWithChannelMode:(IRCChannelMode *)other
 {
-	self.isupport		= other.isupport;
-	self.allModes		= other.allModes;
-	self.modeIndexes	= other.modeIndexes;
-	
-	return self;
+	if (self == [super init]) {
+		self.isupport = other.isupport;
+		self.allModes = other.allModes;
+
+		return self;
+	}
+
+	return nil;
 }
 
 - (void)clear
 {
-	[self.allModes		removeAllObjects];
-	[self.modeIndexes	removeAllObjects];
+	[self.allModes removeAllObjects];
 }
 
-- (NSArray *)badModes 
+- (NSArray *)badModes
 {
 	return @[@"q", @"a", @"o", @"h", @"v", @"b", @"e", @"I"];
 }
@@ -74,26 +73,21 @@
 - (NSArray *)update:(NSString *)str
 {
 	NSArray *ary = [self.isupport parseMode:str];
-	
+
 	for (IRCModeInfo *h in ary) {
-		if (h.op) continue;
-		
-		NSString *modec = [NSString stringWithChar:h.mode];
-		
-		if ([[self badModes] containsObject:modec]) continue;
-		
-		if ([self.modeIndexes containsKey:modec]) {
-			NSInteger moindex = [self.modeIndexes integerForKey:modec];
-			
-			[self.allModes safeRemoveObjectAtIndex:moindex];
-			[self.allModes safeInsertObject:h atIndex:moindex];
-		} else {
-			[self.allModes safeAddObject:h];
-			
-			[self.modeIndexes setInteger:[self.allModes indexOfObject:h] forKey:modec];
+		if (h.op) {
+			continue;
 		}
+
+		NSString *modec = [NSString stringWithChar:h.mode];
+
+		if ([self.badModes containsObject:modec]) {
+			continue;
+		}
+
+		[self.allModes setObject:h forKey:modec];
 	}
-	
+
 	return ary;
 }
 
@@ -101,21 +95,25 @@
 {
 	NSMutableString *str   = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
-	
-	for (IRCModeInfo *h in mode.allModes) {
+
+	NSArray *modes = mode.allModes.sortedDictionaryKeys;
+
+	for (NSString *mkey in modes) {
+		IRCModeInfo *h = [mode.allModes objectForKey:mkey];
+
 		if (h.plus == YES) {
 			if (h.param) {
 				[trail appendFormat:@" %@", h.param];
 			}
-			
+
 			[str appendFormat:@"+%c", h.mode];
 		} else {
 			if (h.param) {
 				[trail appendFormat:@" %@", h.param];
 			}
-			
+
 			[str appendFormat:@"-%c", h.mode];
-			
+
 			if (h.mode == 'k') {
 				h.param = NSStringEmptyPlaceholder;
 			} else {
@@ -125,38 +123,40 @@
 			}
 		}
 	}
-	
+
 	return [[str stringByAppendingString:trail] trim];
 }
 
 - (BOOL)modeIsDefined:(NSString *)mode
 {
-	return [self.modeIndexes containsKey:mode];
+	return [self.allModes containsKey:mode];
 }
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
 {
 	BOOL objk = [self modeIsDefined:mode];
-	
+
 	if (objk == NO) {
 		IRCModeInfo *m = [self.isupport createMode:mode];
-		
-		[self.allModes safeAddObject:m];
-		
-		[self.modeIndexes setInteger:[self.allModes indexOfObject:m] forKey:mode];
+
+		[self.allModes setObject:m forKey:mode];
 	}
-	
-	return [self.allModes safeObjectAtIndex:[self.modeIndexes integerForKey:mode]];
+
+	return [self.allModes objectForKey:mode];
 }
 
 - (NSString *)format:(BOOL)maskK
 {
 	NSMutableString *str   = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
-	
+
 	[str appendString:@"+"];
-	
-	for (IRCModeInfo *h in self.allModes) {
+
+	NSArray *modes = self.allModes.sortedDictionaryKeys;
+
+	for (NSString *mkey in modes) {
+		IRCModeInfo *h = [self.allModes objectForKey:mkey];
+
 		if (h.plus) {
 			if (h.param && maskK == NO) {
 				if (h.mode == 'k') {
@@ -165,11 +165,11 @@
 					[trail appendFormat:@" %@", h.param];
 				}
 			}
-			
+
 			[str appendFormat:@"%c", h.mode];
 		}
 	}
-	
+
 	return [[str stringByAppendingString:trail] trim];
 }
 

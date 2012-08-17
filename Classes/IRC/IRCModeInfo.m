@@ -39,7 +39,6 @@
 
 @implementation IRCModeInfo
 
-
 + (IRCModeInfo *)modeInfo
 {
 	return [IRCModeInfo new];

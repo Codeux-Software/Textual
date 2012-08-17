@@ -42,8 +42,6 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.encoding = NSUTF8StringEncoding;
-		
 		self.sendQueue = [NSMutableArray new];
 		
 		self.timer = [TLOTimer new];
@@ -146,13 +144,7 @@
 
 - (NSData *)convertToCommonEncoding:(NSString *)s
 {
-	NSData *data = [s dataUsingEncoding:self.encoding];
-	
-	if (NSObjectIsEmpty(data)) {
-		data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-	}
-	
-	return data;
+	return [self.delegate convertToCommonEncoding:s];
 }
 
 - (BOOL)tryToSend

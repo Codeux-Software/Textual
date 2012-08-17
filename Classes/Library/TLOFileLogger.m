@@ -119,17 +119,7 @@
 
 		// ---- //
 
-		NSData *data = [s dataUsingEncoding:self.client.config.encoding];
-
-		// ---- //
-		
-		if (NSObjectIsEmpty(data)) {
-			data = [s dataUsingEncoding:self.client.config.fallbackEncoding];
-
-			if (NSObjectIsEmpty(data)) {
-				data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-			}
-		}
+		NSData *data = [self.client convertToCommonEncoding:s];
 
 		// ---- //
 
