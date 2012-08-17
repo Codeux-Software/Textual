@@ -767,7 +767,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	self.conn.host		= host;
 	self.conn.port		= self.config.port;
 	self.conn.useSSL	= self.config.useSSL;
-	self.conn.encoding	= self.config.encoding;
 
 	switch (self.config.proxyType) {
 		case TXConnectionSystemSocksProxyType:
@@ -976,14 +975,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[pass appendString:c.password];
 		}
 
-		NSStringEncoding enc = self.conn.encoding;
-
-		if (enc == 0x0000) {
-			enc = NSUTF8StringEncoding;
-		}
-
-		NSData *targetData = [target dataUsingEncoding:enc];
-		NSData *passData   = [pass dataUsingEncoding:enc];
+		NSData *targetData = [self convertToCommonEncoding:target];
+		NSData *passData   = [self convertToCommonEncoding:pass];
 
 		if ((targetData.length + passData.length) > TXMaximumIRCBodyLength) {
 			if (NSObjectIsEmpty(prevTarget)) {
@@ -1296,7 +1289,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         [scriptTask launch];
         [scriptTask waitUntilExit];
 
-        NSData *outputData    = [filehandle readDataToEndOfFile];
+        NSData *outputData = [filehandle readDataToEndOfFile];
 
 		NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
 
@@ -2765,7 +2758,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self.conn sendLine:str];
 
 	if (self.rawModeEnabled) {
-		LogToConsole(@" << %@", str);
+		LogToConsole(@"<< %@", str);
 	}
 
 	self.world.messagesSent++;
@@ -5558,27 +5551,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	self.lastMessageReceived = [NSDate epochTime];
 
-	NSString *s = [NSString stringWithData:data encoding:self.config.encoding];
+	NSString *s = [self convertFromCommonEncoding:data];
 
-	if (PointerIsEmpty(s)) {
-		s = [NSString stringWithData:data encoding:self.config.fallbackEncoding];
-
-		if (PointerIsEmpty(s)) {
-			s = [NSString stringWithData:data encoding:NSUTF8StringEncoding];
-
-			if (PointerIsEmpty(s)) {
-				LogToConsole(@"NSData decode failure. (%@)", data);
-
-				return;
-			}
-		}
+	if (NSObjectIsEmpty(s)) {
+		return;
 	}
 
 	self.world.messagesReceived++;
 	self.world.bandwidthIn += [s length];
 
 	if (self.rawModeEnabled) {
-		LogToConsole(@" >> %@", s);
+		LogToConsole(@">> %@", s);
 	}
 
 	if ([TPCPreferences removeAllFormatting]) {
@@ -5708,6 +5691,57 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[dateTimeFormatter setDateStyle:NSDateFormatterLongStyle];
 		[dateTimeFormatter setTimeStyle:NSDateFormatterLongStyle];
 	}
+}
+
+#pragma mark -
+#pragma mark Encoding
+
+- (NSArray *)encodingDictionary
+{
+	return @[
+		@(self.config.encoding),
+		@(self.config.fallbackEncoding),
+		@(NSUTF8StringEncoding),
+		@(NSASCIIStringEncoding)
+	];
+}
+
+- (NSData *)convertToCommonEncoding:(NSString *)data
+{
+	NSArray *encodings = [self encodingDictionary];
+
+	for (id base in encodings) {
+		NSData *s = [data dataUsingEncoding:[base integerValue]];
+
+		if (NSObjectIsNotEmpty(s)) {
+			return s;
+		}
+	}
+
+	// ---- //
+
+	LogToConsole(@"NSData encode failure. (%@)", data);
+
+	return nil;
+}
+
+- (NSString *)convertFromCommonEncoding:(NSData *)data
+{
+	NSArray *encodings = [self encodingDictionary];
+
+	for (id base in encodings) {
+		NSString *s = [NSString stringWithData:data encoding:[base integerValue]];
+
+		if (NSObjectIsNotEmpty(s)) {
+			return s;
+		}
+	}
+
+	// ---- //
+
+	LogToConsole(@"NSData decode failure. (%@)", data);
+
+	return nil;
 }
 
 #pragma mark -

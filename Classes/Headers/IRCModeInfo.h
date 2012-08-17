@@ -40,7 +40,6 @@
 @interface IRCModeInfo : NSObject
 @property (nonatomic, assign) BOOL op;
 @property (nonatomic, assign) BOOL plus;
-@property (nonatomic, assign) BOOL simpleMode;
 @property (nonatomic, strong) NSString *param;
 @property (nonatomic, assign) unsigned char mode;
 
