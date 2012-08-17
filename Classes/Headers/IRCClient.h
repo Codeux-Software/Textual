@@ -68,49 +68,45 @@ typedef enum IRCDisconnectType : NSInteger {
 @property (nonatomic, assign) IRCConnectMode connectType;
 @property (nonatomic, assign) IRCDisconnectType disconnectType;
 @property (nonatomic, strong) NSMutableArray *channels;
-@property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
-@property (nonatomic, strong) NSMutableDictionary *trackedUsers;
+@property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSMutableArray *pendingCaps;
 @property (nonatomic, strong) NSMutableArray *acceptedCaps;
+@property (nonatomic, strong) NSMutableDictionary *trackedUsers;
 @property (nonatomic, assign) CFAbsoluteTime lastLagCheck;
 @property (nonatomic, assign, setter=autoConnect:) NSInteger connectDelay;
-@property (nonatomic, assign) NSInteger tryingNickNumber;
-@property (nonatomic, assign) NSUInteger capPaused;
-@property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign) BOOL inWhoInfoRun;
-@property (nonatomic, assign) BOOL inWhoWasRun;
-@property (nonatomic, assign) BOOL userhostInNames;
-@property (nonatomic, assign) BOOL multiPrefix;
-@property (nonatomic, assign) BOOL identifyMsg;
-@property (nonatomic, assign) BOOL identifyCTCP;
-@property (nonatomic, assign) BOOL inFirstISONRun;
-@property (nonatomic, assign) BOOL hasIRCopAccess;
-@property (nonatomic, assign) BOOL reconnectEnabled;
-@property (nonatomic, assign) BOOL rawModeEnabled;
-@property (nonatomic, assign) BOOL retryEnabled;
-@property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isConnected;
-@property (nonatomic, assign) BOOL isLoggedIn;
-@property (nonatomic, assign) BOOL isQuitting;
-@property (nonatomic, assign) BOOL inSASLRequest;
-@property (nonatomic, assign) BOOL serverHasNickServ;
-@property (nonatomic, assign) BOOL autojoinInitialized;
-@property (nonatomic, assign) BOOL sendLagcheckToChannel;
-@property (nonatomic, assign) BOOL isIdentifiedWithSASL;
+@property (nonatomic, assign) NSInteger tryingNickNumber;		// Used for nick collision connections.
+@property (nonatomic, assign) NSUInteger capPaused;				// Used as a BOOL, but can also represent an integer in special cases.
+@property (nonatomic, assign) BOOL isAway;					// YES if Textuak has knowledge of local user being away, else NO.
+@property (nonatomic, assign) BOOL inWhoInfoRun;			// YES if user invoked /WHO and should output results, else NO.
+@property (nonatomic, assign) BOOL inWhoWasRun;				// YES if WHOIS information should be treated as WHOWAS.
+@property (nonatomic, assign) BOOL userhostInNames;			// YES if userhost-in-names CAP supported.
+@property (nonatomic, assign) BOOL multiPrefix;				// YES if multi-prefix CAP supported.
+@property (nonatomic, assign) BOOL identifyMsg;				// YES if identify-msg CAP supported.
+@property (nonatomic, assign) BOOL identifyCTCP;			// YES if identify-ctcp CAP supported.
+@property (nonatomic, assign) BOOL inFirstISONRun;			// YES if first time running ISON command for user trackig, else NO.
+@property (nonatomic, assign) BOOL hasIRCopAccess;			// YES if local user is IRCOp, else NO.
+@property (nonatomic, assign) BOOL reconnectEnabled;		// YES if reconnection is allowed, else NO.
+@property (nonatomic, assign) BOOL rawModeEnabled;			// YES if sent & received data should be logged to console, else NO.
+@property (nonatomic, assign) BOOL isConnecting;			// YES if socket is connecting, else, NO. Set to NO on raw numeric 001.
+@property (nonatomic, assign) BOOL isConnected;				// YES if socket is connected, else NO.
+@property (nonatomic, assign) BOOL isLoggedIn;				// YES if connected to server, else NO. Set to YES on raw numeric 001.
+@property (nonatomic, assign) BOOL isQuitting;				// YES if connection to IRC server is being quit, else NO.
+@property (nonatomic, assign) BOOL inSASLRequest;			// YES if in SASL CAP authentication request, else NO.
+@property (nonatomic, assign) BOOL serverHasNickServ;		// YES if NickServ service was found on server, else NO.
+@property (nonatomic, assign) BOOL autojoinInitialized;		// YES if autojoin in process of running, else NO.
+@property (nonatomic, assign) BOOL sendLagcheckToChannel;	// YES if CTCP LAGCHECK reply should be posted to active channel, else NO.
+@property (nonatomic, assign) BOOL isIdentifiedWithSASL;	// YES if SASL authentication was successful, else NO.
 @property (nonatomic, strong) TLOFileLogger *logFile;
-@property (nonatomic, assign) NSStringEncoding encoding;
-@property (nonatomic, strong) NSString *inputNick;
-@property (nonatomic, strong) NSString *sentNick;
-@property (nonatomic, strong) NSString *myNick;
-@property (nonatomic, strong) NSString *myHost;
-@property (nonatomic, strong) NSString *serverHostname;
-@property (nonatomic, strong) TLOTimer *isonTimer;
+@property (nonatomic, strong) NSString *sentNick;			// Nickname used for nick collision connections. Is equal to myNick if there is no collision.
+@property (nonatomic, strong) NSString *myNick;				// Cached value of local user nickname.
+@property (nonatomic, strong) NSString *myHost;				// Host of local user cached during JOIN.
+@property (nonatomic, strong) TLOTimer *isonTimer;			// Timer responsible for sending ISON commands for user tracking.
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *autoJoinTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
-@property (nonatomic, strong) TLOTimer *commandQueueTimer;
+@property (nonatomic, strong) TLOTimer *commandQueueTimer;		// "/timer" command queue.
 
 #ifdef TEXTUAL_TRIAL_BINARY
 @property (nonatomic, strong) TLOTimer *trialPeriodTimer;
