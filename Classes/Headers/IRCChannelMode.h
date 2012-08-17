@@ -39,8 +39,7 @@
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
 @property (nonatomic, weak) IRCISupportInfo *isupport;
-@property (nonatomic, strong) NSMutableArray *allModes;
-@property (nonatomic, strong) NSMutableDictionary *modeIndexes;
+@property (nonatomic, strong) NSMutableDictionary *allModes;
 
 - (void)clear;
 
