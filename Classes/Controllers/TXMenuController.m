@@ -1515,7 +1515,7 @@
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
         if ([m.nick isEqualNoCase:u.myNick]) {
-            [u printDebugInformation:TXTFLS(@"SelfBanDetectedMessage", u.serverHostname) channel:c];
+            [u printDebugInformation:TXTFLS(@"SelfBanDetectedMessage", u.config.server) channel:c];
         } else {
             [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@",
 							IRCPublicCommandIndex("gline"), m.nick, [TPCPreferences IRCopDefaultGlineMessage]]];

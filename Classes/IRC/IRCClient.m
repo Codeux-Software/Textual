@@ -65,7 +65,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if ((self = [super init])) {
 		self.tryingNickNumber	= -1;
-		self.capPaused			= 0;
+		self.capPaused			=  0;
 
 		self.isAway				= NO;
 		self.userhostInNames	= NO;
@@ -644,7 +644,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 		[self disconnect];
 	} else if (timeSpent >= _pingInterval) {
-		[self send:IRCPrivateCommandIndex("ping"), self.serverHostname, nil];
+		[self send:IRCPrivateCommandIndex("ping"), self.config.server, nil];
 	}
 }
 
@@ -738,7 +738,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self.conn close];
 	}
 
-	self.retryEnabled     = YES;
 	self.isConnecting     = YES;
 	self.reconnectEnabled = YES;
 
@@ -838,7 +837,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	if (self.isConnected == NO) return;
 
-	self.inputNick = newNick;
 	self.sentNick = newNick;
 
 	[self send:IRCPrivateCommandIndex("nick"), newNick, nil];
@@ -3895,7 +3893,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 				NSString *rating;
 
-				if (delta <= 0.09) {					rating = TXTLS(@"LagCheckRequestReplyRating_01");
+				if (delta <= 0.09) {						rating = TXTLS(@"LagCheckRequestReplyRating_01");
 				} else if (delta >= 0.1 && delta < 0.2) {	rating = TXTLS(@"LagCheckRequestReplyRating_02");
 				} else if (delta >= 0.2 && delta < 0.5) {	rating = TXTLS(@"LagCheckRequestReplyRating_03");
 				} else if (delta >= 0.5 && delta < 1.0) {	rating = TXTLS(@"LagCheckRequestReplyRating_04");
@@ -4497,10 +4495,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	self.isLoggedIn = self.conn.loggedIn = self.inFirstISONRun	= YES;
 	self.isAway = self.isConnecting = self.hasIRCopAccess		= NO;
 
-	self.tryingNickNumber	= -1;
+	self.tryingNickNumber = -1;
 
-	self.serverHostname		= m.sender.raw;
-	self.myNick				= [m paramAt:0];
+	[self.config setServer:m.sender.raw];
+	
+	self.myNick	= [m paramAt:0];
 
 	[self notifyEvent:TXNotificationConnectType lineType:TVCLogLineDebugType];
 
@@ -4561,14 +4560,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 2:
 		case 3:
-		{
-			[self printReply:m];
-
-			break;
-		}
 		case 4:
 		{
-			[self.config setServer:[m paramAt:1]];
+			[self printReply:m];
 
 			break;
 		}
@@ -5482,14 +5476,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	self.isLoggedIn		= NO;
 	self.isConnected	= self.reconnectEnabled = YES;
 
-	self.encoding = self.config.encoding;
-
-	if (NSObjectIsEmpty(self.inputNick)) {
-		self.inputNick = self.config.nick;
-	}
-
-	self.sentNick = self.inputNick;
-	self.myNick   = self.inputNick;
+	self.sentNick = self.config.nick;
+	self.myNick   = self.config.nick;
 
 	[self.isupport reset];
 
@@ -5570,7 +5558,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	self.lastMessageReceived = [NSDate epochTime];
 
-	NSString *s = [NSString stringWithData:data encoding:self.encoding];
+	NSString *s = [NSString stringWithData:data encoding:self.config.encoding];
 
 	if (PointerIsEmpty(s)) {
 		s = [NSString stringWithData:data encoding:self.config.fallbackEncoding];

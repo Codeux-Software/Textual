@@ -119,7 +119,7 @@
 
 		// ---- //
 
-		NSData *data = [s dataUsingEncoding:self.client.encoding];
+		NSData *data = [s dataUsingEncoding:self.client.config.encoding];
 
 		// ---- //
 		
