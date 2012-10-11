@@ -116,6 +116,7 @@
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
 
+- (NSString *)stringWithValidURIScheme;
 + (NSString *)stringWithUUID;
 
 - (NSString *)reservedCharactersToIRCFormatting;
