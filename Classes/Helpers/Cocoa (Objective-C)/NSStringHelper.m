@@ -673,6 +673,15 @@ BOOL isUnicharDigit(unichar c)
 	return ([matches count] >= 2 && [matches count] <= 7);
 }
 
+- (NSString *)stringWithValidURIScheme
+{
+	if ([self contains:@"://"] == NO) {
+		return [NSString stringWithFormat:@"http://%@", self];
+	}
+
+	return self;
+}
+
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];

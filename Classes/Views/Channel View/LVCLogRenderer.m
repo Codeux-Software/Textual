@@ -259,13 +259,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 
 	if (attr & _rendererURLAttribute)
 	{
-		NSString *link = content;
-		
-		if ([link contains:@"://"] == NO) {
-			link = [NSString stringWithFormat:@"http://%@", link];
-		}	
-
-		templateTokens[@"anchorLocation"]	= link;
+		templateTokens[@"anchorLocation"]	= [content stringWithValidURIScheme];
 		templateTokens[@"anchorTitle"]		= logEscape(content);
 
 		return TXRenderStyleTemplate(@"renderedStandardAnchorLinkResource", templateTokens, log);
