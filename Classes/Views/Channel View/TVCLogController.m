@@ -796,8 +796,8 @@
 		NSString *url = [inlineImageLinks objectForKey:imageUrl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-			@"imageURL"					: imageUrl,
-			@"anchorLink"				: url,
+			@"imageURL"					: [imageUrl stringWithValidURIScheme],
+			@"anchorLink"				: [url stringWithValidURIScheme],
 			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
 		 }];
 	}
