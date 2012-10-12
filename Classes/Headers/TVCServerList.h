@@ -39,9 +39,39 @@
 
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, unsafe_unretained) id keyDelegate;
-
 @property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
 @property (nonatomic, strong) NSImage *alternateDisclosureTriangle;
+@property (nonatomic, assign) NSInteger layoutIconSpacing;
+@property (nonatomic, assign) NSInteger layoutBadgeHeight;
+@property (nonatomic, assign) NSInteger layoutBadgeRightMargin;
+@property (nonatomic, assign) NSInteger layoutBadgeInsideMargin;
+@property (nonatomic, assign) NSInteger layoutBadgeMinimumWidth;
+@property (nonatomic, strong) NSFont *layoutBadgeFont;
+@property (nonatomic, strong) NSFont *layoutServerCellFont;
+@property (nonatomic, strong) NSFont *layoutChannelCellFont;
+@property (nonatomic, strong) NSFont *layoutChannelCellSelectionFont;
+@property (nonatomic, strong) NSColor *layoutBadgeTextColorNS;
+@property (nonatomic, strong) NSColor *layoutBadgeTextColorTS;
+@property (nonatomic, strong) NSColor *layoutBadgeShadowColor;
+@property (nonatomic, strong) NSColor *layoutBadgeHighlightBackgroundColor;
+@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorAqua;
+@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorGraphite;
+@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorTS;
+@property (nonatomic, strong) NSColor *layoutServerCellFontColor;
+@property (nonatomic, strong) NSColor *layoutServerCellFontColorDisabled;
+@property (nonatomic, strong) NSColor *layoutServerCellSelectionFontColor_AW;
+@property (nonatomic, strong) NSColor *layoutServerCellSelectionFontColor_IA;
+@property (nonatomic, strong) NSColor *layoutServerCellSelectionShadowColorAW;
+@property (nonatomic, strong) NSColor *layoutServerCellSelectionShadowColorIA;
+@property (nonatomic, strong) NSColor *layoutServerCellShadowColorAW;
+@property (nonatomic, strong) NSColor *layoutServerCellShadowColorNA;
+@property (nonatomic, strong) NSColor *layoutChannelCellFontColor;
+@property (nonatomic, strong) NSColor *layoutChannelCellSelectionFontColor_AW;
+@property (nonatomic, strong) NSColor *layoutChannelCellSelectionFontColor_IA;
+@property (nonatomic, strong) NSColor *layoutChannelCellShadowColor;
+@property (nonatomic, strong) NSColor *layoutChannelCellSelectionShadowColor_AW;
+@property (nonatomic, strong) NSColor *layoutChannelCellSelectionShadowColor_IA;
+@property (nonatomic, strong) NSColor *layoutGraphiteSelectionColorAW;
 
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 

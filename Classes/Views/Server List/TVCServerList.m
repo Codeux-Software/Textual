@@ -75,6 +75,101 @@
 	} else {
 		[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
 	}
+
+	[self updateOutlineViewColorScheme];
+}
+
+- (void)updateOutlineViewColorScheme
+{
+	BOOL invertedColors = [TPCPreferences invertSidebarColors];
+
+	// ---- //
+
+	self.layoutBadgeFont					= [_NSFontManager() fontWithFamily:@"Helvetica"
+														 traits:NSBoldFontMask
+														 weight:15
+														   size:10.5];
+
+	self.layoutChannelCellFont				= [NSFont fontWithName:@"LucidaGrande"		size:11.0];
+	self.layoutChannelCellSelectionFont		= [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
+	self.layoutServerCellFont				= [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+
+	self.layoutIconSpacing				= 6.0;
+
+	self.layoutBadgeHeight				= 14.0;
+	self.layoutBadgeRightMargin			= 5.0;
+	self.layoutBadgeInsideMargin		= 5.0;
+	self.layoutBadgeMinimumWidth		= 22.0;
+
+	// ---- //
+
+	if (invertedColors == NO) {
+		/* //////////////////////////////////////////////////// */
+		/* Standard Aqua Colors. */
+		/* //////////////////////////////////////////////////// */
+
+		self.layoutBadgeTextColorNS							= [NSColor whiteColor];
+		self.layoutBadgeTextColorTS							= [NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1];
+		self.layoutBadgeShadowColor							= [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
+		self.layoutBadgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:210 green:15  blue:15  alpha:1];
+		self.layoutBadgeMessageBackgroundColorAqua			= [NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1];
+		self.layoutBadgeMessageBackgroundColorGraphite		= [NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1];
+		self.layoutBadgeMessageBackgroundColorTS			= [NSColor whiteColor];
+
+		self.layoutServerCellFontColor					= [NSColor outlineViewHeaderTextColor];
+		self.layoutServerCellFontColorDisabled			= [NSColor outlineViewHeaderDisabledTextColor];
+		self.layoutServerCellSelectionFontColor_AW		= [NSColor whiteColor];
+		self.layoutServerCellSelectionFontColor_IA		= [NSColor whiteColor];
+		self.layoutServerCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+		self.layoutServerCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.20];
+		self.layoutServerCellShadowColorAW				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+		self.layoutServerCellShadowColorNA				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+
+		self.layoutChannelCellFontColor						= [NSColor blackColor];
+		self.layoutChannelCellSelectionFontColor_AW			= [NSColor whiteColor];
+		self.layoutChannelCellSelectionFontColor_IA			= [NSColor whiteColor];
+		self.layoutChannelCellShadowColor					= [NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+		self.layoutChannelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
+		self.layoutChannelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+
+		self.layoutGraphiteSelectionColorAW				= [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
+
+		/* //////////////////////////////////////////////////// */
+		/* Standard Aqua Colors. — @end */
+		/* //////////////////////////////////////////////////// */
+	} else {
+		/* //////////////////////////////////////////////////// */
+		/* Black Aqua Colors. */
+		/* //////////////////////////////////////////////////// */
+
+		self.layoutBadgeTextColorNS							= [NSColor whiteColor];
+		self.layoutBadgeTextColorTS							= [NSColor whiteColor];
+		self.layoutBadgeShadowColor							= [NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1];
+		self.layoutBadgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1];
+		self.layoutBadgeMessageBackgroundColorAqua			= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
+		self.layoutBadgeMessageBackgroundColorGraphite		= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
+		self.layoutBadgeMessageBackgroundColorTS			= [NSColor darkGrayColor];
+
+		self.layoutServerCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
+		self.layoutServerCellFontColorDisabled			= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7];
+		self.layoutServerCellSelectionFontColor_AW		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		self.layoutServerCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		self.layoutServerCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+		self.layoutServerCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+		self.layoutServerCellShadowColorAW				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+		self.layoutServerCellShadowColorNA				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+
+		self.layoutChannelCellFontColor						= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
+		self.layoutChannelCellSelectionFontColor_AW			= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		self.layoutChannelCellSelectionFontColor_IA			= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
+		self.layoutChannelCellShadowColor					= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+		self.layoutChannelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+		self.layoutChannelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+
+		/* //////////////////////////////////////////////////// */
+		/* Black Aqua Colors. — @end */
+		/* //////////////////////////////////////////////////// */
+	}
 }
 
 - (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
