@@ -40,139 +40,6 @@
 @implementation TVCServerListCell
 
 #pragma mark -
-#pragma mark Color Scheme
-
-/* We have a lot of variables to keep track of… */
-static NSInteger _iconSpacing		= 6.0;
-
-static NSInteger _badgeHeight			= 14.0;
-static NSInteger _badgeRightMargin		= 5.0;
-static NSInteger _badgeInsideMargin		= 5.0;
-static NSInteger _badgeMinimumWidth		= 22.0;
-
-static NSFont  *_badgeFont;
-static NSColor *_badgeTextColorNS;
-static NSColor *_badgeTextColorTS;
-static NSColor *_badgeShadowColor;
-static NSColor *_badgeHighlightBackgroundColor;
-static NSColor *_badgeMessageBackgroundColorAqua;
-static NSColor *_badgeMessageBackgroundColorGraphite;
-static NSColor *_badgeMessageBackgroundColorTS;
-
-static NSFont  *_serverCellFont;
-static NSColor *_serverCellFontColor;
-static NSColor *_serverCellFontColorDisabled;
-static NSColor *_serverCellSelectionFontColor_AW;
-static NSColor *_serverCellSelectionFontColor_IA;
-static NSColor *_serverCellSelectionShadowColorAW;
-static NSColor *_serverCellSelectionShadowColorIA;
-static NSColor *_serverCellShadowColorAW;
-static NSColor *_serverCellShadowColorNA;
-
-static NSFont  *_channelCellFont;
-static NSColor *_channelCellFontColor;
-static NSColor *_channelCellSelectionFontColor_AW;
-static NSColor *_channelCellSelectionFontColor_IA;
-static NSFont  *_channelCellSelectionFont;
-static NSColor *_channelCellShadowColor;
-static NSColor *_channelCellSelectionShadowColor_AW;
-static NSColor *_channelCellSelectionShadowColor_IA;
-
-static NSColor *_graphiteSelectionColorAW;
-
-static BOOL _drawUsingInvertedColors;
-static BOOL _defaultDrawingColorsPopulated;
-
-- (void)updateOutlineViewColorScheme
-{
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-	
-	if (_drawUsingInvertedColors == invertedColors && _defaultDrawingColorsPopulated) {
-		return;
-	}
-	
-	_drawUsingInvertedColors = invertedColors;
-	
-	if (_defaultDrawingColorsPopulated == NO) {
-		_badgeFont					= [_NSFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
-		
-		_channelCellFont			= [NSFont fontWithName:@"LucidaGrande"		size:11.0];
-		_channelCellSelectionFont	= [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
-		_serverCellFont				= [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
-		
-		_defaultDrawingColorsPopulated = YES;
-	}
-	
-	if (_drawUsingInvertedColors == NO) {
-		/* //////////////////////////////////////////////////// */
-		/* Standard Aqua Colors. */
-		/* //////////////////////////////////////////////////// */
-		
-		_badgeTextColorNS						= [NSColor whiteColor];
-		_badgeTextColorTS						= [NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1];
-		_badgeShadowColor						= [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
-		_badgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:210 green:15  blue:15  alpha:1];
-		_badgeMessageBackgroundColorAqua		= [NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1];
-		_badgeMessageBackgroundColorGraphite	= [NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1];
-		_badgeMessageBackgroundColorTS			= [NSColor whiteColor];
-		
-		_serverCellFontColor					= [NSColor outlineViewHeaderTextColor];
-		_serverCellFontColorDisabled			= [NSColor outlineViewHeaderDisabledTextColor];
-		_serverCellSelectionFontColor_AW		= [NSColor whiteColor];
-		_serverCellSelectionFontColor_IA		= [NSColor whiteColor];
-		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
-		_serverCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.20];
-		_serverCellShadowColorAW				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
-		_serverCellShadowColorNA				= [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
-		
-		_channelCellFontColor					= [NSColor blackColor];
-		_channelCellSelectionFontColor_AW		= [NSColor whiteColor];
-		_channelCellSelectionFontColor_IA		= [NSColor whiteColor];
-		_channelCellShadowColor					= [NSColor internalColorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
-		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
-		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
-		
-		_graphiteSelectionColorAW				= [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
-		
-		/* //////////////////////////////////////////////////// */
-		/* Standard Aqua Colors. — @end */
-		/* //////////////////////////////////////////////////// */
-	} else {
-		/* //////////////////////////////////////////////////// */
-		/* Black Aqua Colors. */
-		/* //////////////////////////////////////////////////// */
-		
-		_badgeTextColorNS						= [NSColor whiteColor];
-		_badgeTextColorTS						= [NSColor whiteColor];
-		_badgeShadowColor						= [NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1];
-		_badgeHighlightBackgroundColor			= [NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1];
-		_badgeMessageBackgroundColorAqua		= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
-		_badgeMessageBackgroundColorGraphite	= [NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1];
-		_badgeMessageBackgroundColorTS			= [NSColor darkGrayColor];
-		
-		_serverCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
-		_serverCellFontColorDisabled			= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7];
-		_serverCellSelectionFontColor_AW		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
-		_serverCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
-		_serverCellSelectionShadowColorAW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
-		_serverCellSelectionShadowColorIA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
-		_serverCellShadowColorAW				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
-		_serverCellShadowColorNA				= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
-		
-		_channelCellFontColor					= [NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1];
-		_channelCellSelectionFontColor_AW		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
-		_channelCellSelectionFontColor_IA		= [NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1];
-		_channelCellShadowColor					= [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
-		_channelCellSelectionShadowColor_AW		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
-		_channelCellSelectionShadowColor_IA		= [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
-		
-		/* //////////////////////////////////////////////////// */
-		/* Black Aqua Colors. — @end */
-		/* //////////////////////////////////////////////////// */
-	}
-}
-
-#pragma mark -
 #pragma mark Status Icon
 
 - (void)drawStatusBadge:(NSString *)iconName inCell:(NSRect)cellFrame withAlpha:(CGFloat)alpha
@@ -184,7 +51,7 @@ static BOOL _defaultDrawingColorsPopulated;
 	} 
 	
 	NSSize iconSize = NSMakeSize(16, 16);
-	NSRect iconRect = NSMakeRect( (NSMinX(cellFrame) - iconSize.width - _iconSpacing),
+	NSRect iconRect = NSMakeRect( (NSMinX(cellFrame) - iconSize.width - self.parent.layoutIconSpacing),
 								 ((NSMidY(cellFrame) - (iconSize.width / 2.0f) - extraMath)),
 								 iconSize.width, iconSize.height);
 	
@@ -226,13 +93,13 @@ static BOOL _defaultDrawingColorsPopulated;
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	
-	NSColor *textColor = _badgeTextColorNS;
+	NSColor *textColor = self.parent.layoutBadgeTextColorNS;
 	
 	if (isSelected) {
-		textColor = _badgeTextColorTS;
+		textColor = self.parent.layoutBadgeTextColorTS;
 	}
 	
-	attributes[NSFontAttributeName] = _badgeFont;
+	attributes[NSFontAttributeName] = self.parent.layoutBadgeFont;
 	attributes[NSForegroundColorAttributeName] = textColor;
 	
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
@@ -246,14 +113,14 @@ static BOOL _defaultDrawingColorsPopulated;
 	NSRect badgeFrame;
 	
 	NSSize    messageCountSize  = [mcstring size];
-	NSInteger messageCountWidth = (messageCountSize.width + (_badgeInsideMargin * 2));
+	NSInteger messageCountWidth = (messageCountSize.width + (self.parent.layoutBadgeInsideMargin * 2));
 	
-	badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (_badgeRightMargin + messageCountWidth)),
-							(NSMidY(cellFrame) - (_badgeHeight / 2.0)),
-							messageCountWidth, _badgeHeight);
+	badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (self.parent.layoutBadgeRightMargin + messageCountWidth)),
+							(NSMidY(cellFrame) - (self.parent.layoutBadgeHeight / 2.0)),
+							messageCountWidth, self.parent.layoutBadgeHeight);
 	
-	if (badgeFrame.size.width < _badgeMinimumWidth) {
-		NSInteger widthDiff = (_badgeMinimumWidth - badgeFrame.size.width);
+	if (badgeFrame.size.width < self.parent.layoutBadgeMinimumWidth) {
+		NSInteger widthDiff = (self.parent.layoutBadgeMinimumWidth - badgeFrame.size.width);
 		
 		badgeFrame.size.width += widthDiff;
 		badgeFrame.origin.x   -= widthDiff;
@@ -277,32 +144,32 @@ static BOOL _defaultDrawingColorsPopulated;
 		shadowFrame.origin.y += 1;
 		
 		badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
-													xRadius:(_badgeHeight / 2.0)
-													yRadius:(_badgeHeight / 2.0)];
+													xRadius:(self.parent.layoutBadgeHeight / 2.0)
+													yRadius:(self.parent.layoutBadgeHeight / 2.0)];
 		
-		[_badgeShadowColor set];
+		[self.parent.layoutBadgeShadowColor set];
 		[badgePath fill];
 	}
 	
 	NSColor *backgroundColor;
 	
 	if (highlight) {
-		backgroundColor = _badgeHighlightBackgroundColor;
+		backgroundColor = self.parent.layoutBadgeHighlightBackgroundColor;
 	} else {
 		if (isSelected) {
-			backgroundColor = _badgeMessageBackgroundColorTS;
+			backgroundColor = self.parent.layoutBadgeMessageBackgroundColorTS;
 		} else {
 			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-				backgroundColor = _badgeMessageBackgroundColorGraphite;
+				backgroundColor = self.parent.layoutBadgeMessageBackgroundColorGraphite;
 			} else {
-				backgroundColor = _badgeMessageBackgroundColorAqua;
+				backgroundColor = self.parent.layoutBadgeMessageBackgroundColorAqua;
 			}
 		}
 	}
 	
 	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame
-												xRadius:(_badgeHeight / 2.0)
-												yRadius:(_badgeHeight / 2.0)];
+												xRadius:(self.parent.layoutBadgeHeight / 2.0)
+												yRadius:(self.parent.layoutBadgeHeight / 2.0)];
 	
 	[backgroundColor set];
 	[badgePath fill];
@@ -345,8 +212,10 @@ static BOOL _defaultDrawingColorsPopulated;
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	[self updateOutlineViewColorScheme];
-	
+	BOOL invertedColors = [TPCPreferences invertSidebarColors];
+
+	// ---- //
+
 	NSInteger selectedRow = [self.parent selectedRow];
 	
 	if (self.cellItem) {
@@ -377,7 +246,7 @@ static BOOL _defaultDrawingColorsPopulated;
 				backgroundImage = @"ServerCellSelection";
 			}
 			
-			if (_drawUsingInvertedColors == NO) {
+			if (invertedColors == NO) {
 				if (isKeyWindow) {
 					backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
 				} else {
@@ -385,7 +254,7 @@ static BOOL _defaultDrawingColorsPopulated;
 				}
 				
 				if (isGraphite) {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
+					backgroundImage = [backgroundImage stringByAppendingString:@"self.parent.layoutGraphite"];
 				} else {
 					backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
 				}
@@ -429,7 +298,7 @@ static BOOL _defaultDrawingColorsPopulated;
 					[self drawStatusBadge:iconName inCell:cellFrame withAlpha:0.5];
 				}
 			} else {
-				if (isSelected == NO && _drawUsingInvertedColors) {
+				if (isSelected == NO && invertedColors) {
 					[self drawStatusBadge:@"DarkServerListViewSelectedQueryUser" inCell:cellFrame withAlpha:0.8];
 				} else {
 					[self drawStatusBadge:@"NSUser" inCell:cellFrame withAlpha:0.8];
@@ -445,26 +314,26 @@ static BOOL _defaultDrawingColorsPopulated;
 				cellFrame.size.width -= badgeRect.size.width;
 			}
 			
-			cellFrame.size.width -= (_badgeRightMargin * 2);
+			cellFrame.size.width -= (self.parent.layoutBadgeRightMargin * 2);
 			
 			[itemShadow setShadowBlurRadius:1.0];
 			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
 			
 			if (isSelected == NO) {
-				[itemShadow setShadowColor:_channelCellShadowColor];
+				[itemShadow setShadowColor:self.parent.layoutChannelCellShadowColor];
 			} else {
-				if (_drawUsingInvertedColors == NO) {
+				if (invertedColors == NO) {
 					[itemShadow setShadowBlurRadius:2.0];
 				}
 				
 				if (isKeyWindow) {
-					if (isGraphite && _drawUsingInvertedColors == NO) {
-						[itemShadow setShadowColor:_graphiteSelectionColorAW];
+					if (isGraphite && invertedColors == NO) {
+						[itemShadow setShadowColor:self.parent.layoutGraphiteSelectionColorAW];
 					} else {
-						[itemShadow setShadowColor:_channelCellSelectionShadowColor_AW];
+						[itemShadow setShadowColor:self.parent.layoutChannelCellSelectionShadowColor_AW];
 					}
 				} else {
-					[itemShadow setShadowColor:_channelCellSelectionShadowColor_IA];
+					[itemShadow setShadowColor:self.parent.layoutChannelCellSelectionShadowColor_IA];
 				}
 			}
 			
@@ -474,56 +343,58 @@ static BOOL _defaultDrawingColorsPopulated;
 			NSRange textRange = NSMakeRange(0, [newValue length]);
 			
 			if (isSelected) {
-				[newValue addAttribute:NSFontAttributeName              value:_channelCellSelectionFont       range:textRange];
+				[newValue addAttribute:NSFontAttributeName              value:self.parent.layoutChannelCellSelectionFont       range:textRange];
 				
 				if (isKeyWindow) {
-					[newValue addAttribute:NSForegroundColorAttributeName value:_channelCellSelectionFontColor_AW range:textRange];
+					[newValue addAttribute:NSForegroundColorAttributeName value:self.parent.layoutChannelCellSelectionFontColor_AW range:textRange];
 				} else {
-					[newValue addAttribute:NSForegroundColorAttributeName value:_channelCellSelectionFontColor_IA range:textRange];
+					[newValue addAttribute:NSForegroundColorAttributeName value:self.parent.layoutChannelCellSelectionFontColor_IA range:textRange];
 				}
 			} else {
-				[newValue addAttribute:NSFontAttributeName              value:_channelCellFont         range:textRange];
-				[newValue addAttribute:NSForegroundColorAttributeName   value:_channelCellFontColor	range:textRange];
+				[newValue addAttribute:NSFontAttributeName              value:self.parent.layoutChannelCellFont         range:textRange];
+				[newValue addAttribute:NSForegroundColorAttributeName   value:self.parent.layoutChannelCellFontColor	range:textRange];
 			}
 			
 			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-		} else {
+		}
+		else // isGroupItem == NO
+		{ 
 			cellFrame.origin.y += 4;
 			
-			NSColor *controlColor	= _serverCellFontColor;
-			NSFont  *groupFont		= _serverCellFont;
+			NSColor *controlColor	= self.parent.layoutServerCellFontColor;
+			NSFont  *groupFont		= self.parent.layoutServerCellFont;
 			
 			if (self.cellItem.client.isConnected == NO) {
-				controlColor = _serverCellFontColorDisabled;
+				controlColor = self.parent.layoutServerCellFontColorDisabled;
 			}
 			
 			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
 			
-			if (_drawUsingInvertedColors) {
+			if (invertedColors) {
 				[itemShadow setShadowBlurRadius:1.0];
 			}
 			
 			if (isSelected) {
 				if (isKeyWindow) {
-					controlColor = _serverCellSelectionFontColor_AW;
+					controlColor = self.parent.layoutServerCellSelectionFontColor_AW;
 				} else {
-					controlColor = _serverCellSelectionFontColor_IA;
+					controlColor = self.parent.layoutServerCellSelectionFontColor_IA;
 				}
 				
 				if (isKeyWindow) {
 					if (isGraphite) {
-						[itemShadow setShadowColor:_graphiteSelectionColorAW];
+						[itemShadow setShadowColor:self.parent.layoutGraphiteSelectionColorAW];
 					} else {
-						[itemShadow setShadowColor:_serverCellSelectionShadowColorAW];
+						[itemShadow setShadowColor:self.parent.layoutServerCellSelectionShadowColorAW];
 					}
 				} else {
-					[itemShadow setShadowColor:_serverCellSelectionShadowColorIA];
+					[itemShadow setShadowColor:self.parent.layoutServerCellSelectionShadowColorIA];
 				}
 			} else {
 				if (isKeyWindow) {
-					[itemShadow setShadowColor:_serverCellShadowColorAW];
+					[itemShadow setShadowColor:self.parent.layoutServerCellShadowColorAW];
 				} else {
-					[itemShadow setShadowColor:_serverCellShadowColorNA];
+					[itemShadow setShadowColor:self.parent.layoutServerCellShadowColorNA];
 				}
 			}
 			
