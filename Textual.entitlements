@@ -12,16 +12,8 @@
 	<true/>
 	<key>com.apple.security.temporary-exception.apple-events</key>
 	<array>
-		<string>com.apple.systemevents</string>
-		<string>com.apple.finder</string>
 		<string>com.apple.itunes</string>
 		<string>com.apple.safari</string>
-		<string>com.spotify.client</string>
-		<string>com.google.chrome</string>
-		<string>com.operasoftware.opera</string>
-		<string>com.growl.growlhelperapp</string>
 	</array>
-	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<string>/Library/Containers/com.codeux.textual/</string>
 </dict>
 </plist>
