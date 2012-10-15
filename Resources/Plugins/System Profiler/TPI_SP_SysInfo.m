@@ -548,7 +548,7 @@
 
 + (NSString *)diskInfo
 {	
-	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
+	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:@"/" error:nil];
 	
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
