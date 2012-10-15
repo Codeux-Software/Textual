@@ -73,10 +73,11 @@
 #endif
 
 #ifdef TXMacOSMountainLionOrNewer
-	#define TXNativeNotificationCenterAvailable
 	#define TXUserScriptsFolderAvailable
 	#define TXFoundationBasedUUIDAvailable
 #endif
+
+//#define TXForceNativeNotificationCenterDispatch		— Force notification center use regardless of Growl's installation.
 
 #define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], \
 															__PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
