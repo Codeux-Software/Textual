@@ -3749,10 +3749,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 						if (NSObjectIsNotEmpty(self.config.nickPassword)) {
 							if ([self.config.server hasSuffix:@"dal.net"]) {
 								self.serverHasNickServ = YES;
+
 								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net",
 									[NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
-							} else if (isIdentifiedWithSASL == NO) {
+							} else if (self.isIdentifiedWithSASL == NO) {
 								self.serverHasNickServ = YES;
+								
 								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ",
 									[NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
 							}
