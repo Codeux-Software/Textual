@@ -44,7 +44,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-#ifdef TXNativeNotificationCenterAvailable
+#ifdef TXForceNativeNotificationCenterDispatch
 		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 			[_NSUserNotificationCenter() setDelegate:self];
 			
@@ -139,7 +139,7 @@
 		}
 	}
 	
-#ifdef TXNativeNotificationCenterAvailable
+#ifdef TXForceNativeNotificationCenterDispatch
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		NSUserNotification *notification = [NSUserNotification new];
 		
@@ -165,7 +165,7 @@
 
 /* NSUserNotificationCenter */
 
-#ifdef TXNativeNotificationCenterAvailable
+#ifdef TXForceNativeNotificationCenterDispatch
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center
 	   didActivateNotification:(NSUserNotification *)notification
