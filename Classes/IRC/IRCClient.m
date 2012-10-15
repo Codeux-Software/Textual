@@ -3742,19 +3742,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				[self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
 
 				if ([anick isEqualNoCase:@"NickServ"]) {
-					if ([text hasPrefix:@"This nickname is registered"]) {
-						if (NSObjectIsNotEmpty(self.config.nickPassword) && self.isIdentifiedWithSASL == NO) {
-							self.serverHasNickServ = YES;
-
-							[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ",
-							 [NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
-						}
-					} else if ([text hasPrefix:@"This nick is owned by someone else"]) {
-						if ([self.config.server hasSuffix:@"dal.net"]) {
-							if (NSObjectIsNotEmpty(self.config.nickPassword)) {
+					if ([text hasPrefix:@"This nickname is registered"] ||
+						[text hasPrefix:@"This nickname is owned by someone else"] ||
+						[text hasPrefix:@"This nick is owned by someone else"])
+					{
+						if (NSObjectIsNotEmpty(self.config.nickPassword)) {
+							if ([self.config.server hasSuffix:@"dal.net"]) {
 								self.serverHasNickServ = YES;
-
-								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", [NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
+								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net",
+									[NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
+							} else if (isIdentifiedWithSASL == NO) {
+								self.serverHasNickServ = YES;
+								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ",
+									[NSString stringWithFormat:@"IDENTIFY %@", self.config.nickPassword], nil];
 							}
 						}
 					} else {
@@ -3762,7 +3762,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 							if ([text hasPrefix:@"You are now identified"] ||
 								[text hasPrefix:@"You are already identified"] ||
 								[text hasSuffix:@"you are now recognized."] ||
-								[text hasPrefix:@"Password accepted for"]) {
+								[text hasPrefix:@"Password accepted"]) {
 
 								if (self.autojoinInitialized == NO && self.serverHasNickServ) {
 									self.autojoinInitialized = YES;
