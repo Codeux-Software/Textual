@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'Migrate 2.1.0 to 2.1.1' target in the 'Migrate 2.1.0 to 2.1.1' project
-//
-
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-#endif
