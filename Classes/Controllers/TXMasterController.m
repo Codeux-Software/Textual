@@ -50,12 +50,7 @@
 #pragma mark NSApplication Delegate
 
 - (void)awakeFromNib
-{
-	/* Our migration assistant was originally designed to be ran on only
-	 the app store version of Textual, but why forget about our loyal 
-	 newsletter subscribers? */
-	[TPCPreferencesMigrationAssistant openConfigurationFileMigrationAssistantDialog];
-	
+{	
 #ifdef TXMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
