@@ -40,44 +40,6 @@
 @implementation TPCPreferencesMigrationAssistant
 
 #pragma mark -
-#pragma mark Dialogs
-
-+ (void)openConfigurationFileMigrationAssistantDialog
-{
-	if ([TPCPreferences sandboxEnabled]) {
-		NSString *t210to211mad = @"https://raw.github.com/Codeux/Textual/master/Resources/Applications/Auxiliary/Migration/Migrate%202.1.0%20to%202.1.1%20Download.zip";
-
-		NSString *containerBed = [TPCPreferences userHomeDirectoryPathOutsideSandbox];
-		NSString *containerHed = [NSString stringWithFormat:@"/Library/Containers/%@/",
-								  TPCPreferencesMigrationAssistantOldBundleIdentifier];
-
-		NSString *oldContainer = [containerBed stringByAppendingPathComponent:containerHed];
-
-		if ([_NSFileManager() fileExistsAtPath:oldContainer]) {
-			BOOL downloadAssistant = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"OldSandboxContainerFoundDialogMessage")
-																		 title:TXTLS(@"OldSandboxContainerFoundDialogTitle")
-																 defaultButton:TXTLS(@"OldSandboxContainerFoundDialogPrimaryButton")
-															   alternateButton:TXTLS(@"OldSandboxContainerFoundDialogSecondaryButton")
-																suppressionKey:nil
-															   suppressionText:nil];
-
-			if (downloadAssistant) {
-				if ([TPCPreferencesMigrationAssistantUpgradePath isEqualToString:@"2.1.1"]) {
-					[TLOpenLink openWithString:t210to211mad];
-
-					TXMasterController *master = [TPCPreferences masterController];
-
-					master.terminating			= YES;
-					master.skipTerminateSave	= YES;
-
-					[_NSSharedApplication() terminate:nil];
-				}
-			}
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark IRC Client & Channel Configuration
 
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config

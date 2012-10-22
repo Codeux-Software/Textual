@@ -40,11 +40,7 @@
 #define TPCPreferencesMigrationAssistantUpgradePath		@"2.1.1"
 #define TPCPreferencesMigrationAssistantVersionKey		@"MigrationAssistantVersion"
 
-#define TPCPreferencesMigrationAssistantOldBundleIdentifier		@"com.codeux.irc.textual"
-#define TPCPreferencesMigrationAssistantNewBundleIdentifier		 [TPCPreferences applicationBundleIdentifier]
-
 @interface TPCPreferencesMigrationAssistant : NSObject
-+ (void)openConfigurationFileMigrationAssistantDialog;
 + (void)convertExistingGlobalPreferences;
 
 + (NSDictionary *)convertIRCClientConfiguration:(NSDictionary *)config;
