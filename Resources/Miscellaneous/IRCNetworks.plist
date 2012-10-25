@@ -18,6 +18,8 @@
 	<string>irc.irchighway.net</string>
 	<key>IRCNet</key>
 	<string>ircnet.choopa.net</string>
+	<key>IRCNode</key>
+	<string>irc.ircnode.org</string>
 	<key>Mibbit</key>
 	<string>irc.mibbit.com</string>
 	<key>Mozilla</key>
