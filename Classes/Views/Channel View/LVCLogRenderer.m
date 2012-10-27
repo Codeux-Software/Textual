@@ -564,31 +564,46 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			if (log && isNormalMsg) {
 				curchan = [log.channel.name lowercaseString];
 			}
-			NSString *curnick = [[inputDictionary objectForKey:@"nick"] lowercaseString];
+
+			// ---- //
+			
+			NSString *curnick;
+
+			curnick = [inputDictionary objectForKey:@"nick"];
+			curnick = [curnick lowercaseString];
+
+			// ---- //
 			
             for (__strong NSString *keyword in keywords) {
 				BOOL continueSearch = YES;
 				
-				if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"])) {
+				if ([keyword contains:@";"] &&
+					([keyword contains:@"-"] || [keyword contains:@"+"])) {
+					
+					// ---- //
+					
 					NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
 					
 					NSArray *limitList = [[keyword safeSubstringAfterIndex:range.location] split:NSStringWhitespacePlaceholder];
-					
+
+					// ---- //
+
 					keyword = [keyword safeSubstringToIndex:range.location];
 					
-					NSMutableArray *includeChannels = [NSMutableArray array];
-					NSMutableArray *excludeChannels = [NSMutableArray array];
-					NSMutableArray *includeNicks = [NSMutableArray array];
-					NSMutableArray *excludeNicks = [NSMutableArray array];
+					NSMutableArray *includeChannels		= [NSMutableArray array];
+					NSMutableArray *excludeChannels		= [NSMutableArray array];
+					NSMutableArray *includeNicks		= [NSMutableArray array];
+					NSMutableArray *excludeNicks		= [NSMutableArray array];
 					
 					for (__strong NSString *limit in limitList) {
 						BOOL include = [limit hasPrefix:@"+"];
 						BOOL exclude = [limit hasPrefix:@"-"];
-						if (!exclude && !include) {
+						
+						if (exclude == NO && include == NO) {
 							continue;
 						}
 						
-						limit = [[limit safeSubstringFromIndex:1] lowercaseString];
+						limit = [limit safeSubstringFromIndex:1].lowercaseString;
 						
 						if ([limit hasPrefix:@"#"]) {
 							if (include) {
@@ -604,9 +619,12 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							}
 						}
 					}
+					
 					if (curchan && [curchan hasPrefix:@"#"]) {
-						if ([includeChannels count]!=0 && [excludeChannels count]==0) {
-							if (![includeChannels containsObject:curchan]) {
+						if (NSObjectIsNotEmpty(includeChannels) &&
+							NSObjectIsEmpty(excludeChannels)) {
+							
+							if ([includeChannels containsObject:curchan] == NO) {
 								continueSearch = NO;
 							}
 						} else {
@@ -618,9 +636,12 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							}
 						}
 					}
+					
 					if (continueSearch && curnick) {
-						if ([includeNicks count]!=0 && [excludeNicks count]==0) {
-							if (![includeNicks containsObject:curnick]) {
+						if (NSObjectIsNotEmpty(includeNicks) &&
+							NSObjectIsEmpty(excludeNicks)) {
+							
+							if ([includeNicks containsObject:curnick] == NO) {
 								continueSearch = NO;
 							}
 						} else {
@@ -631,7 +652,10 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 								continueSearch = NO;
 							}
 						}
-					} else if (continueSearch && curnick && [includeNicks count]!=0 && [excludeNicks count]==0) {
+					} else if (continueSearch && curnick &&
+							NSObjectIsNotEmpty(includeNicks) &&
+							   NSObjectIsEmpty(excludeNicks)) {
+
 						continueSearch = NO;
 					}
 				}

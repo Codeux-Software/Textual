@@ -65,30 +65,45 @@
 	self.params = [NSMutableArray new];
 	
 	NSMutableString *s = [line mutableCopy];
+
+	// ---- //
 	
 	NSMutableDictionary *extensions = [NSMutableDictionary dictionary];
+	
 	if ([s hasPrefix:@"@"]) {
-		NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
+		NSString *t = [s.getToken substringFromIndex:1]; //Get token and remove @.
+		
 		NSArray *values = [t componentsSeparatedByString:@","];
-		for (unsigned int i=0; i<[values count]; i++) {
-			NSArray *info = [[values objectAtIndex:i] componentsSeparatedByString:@"="];
-			if ([info count]!=2) {
+
+		for (NSString *comp in values) {
+			NSArray *info = [comp componentsSeparatedByString:@"="];
+			
+			if (NSDissimilarObjects(info.count, 2)) {
 				continue;
 			}
-			[extensions setObject:[info objectAtIndex:1] forKey:[info objectAtIndex:0]];
+			
+			[extensions setObject:[info objectAtIndex:1]
+						   forKey:[info objectAtIndex:0]];
 		}
 	}
+
+	// ---- //
 	
-	NSString *serverTime = ([extensions objectForKey:@"t"] ? [extensions objectForKey:@"t"] : [extensions objectForKey:@"time"]);
-	if (serverTime) {
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	NSString *serverTime = NSDictionaryObjectKeyValueCompare(extensions, @"t", [extensions objectForKey:@"time"]);
+
+	if (NSObjectIsNotEmpty(serverTime)) {
+		NSDateFormatter *dateFormatter = [NSDateFormatter new];
+		
 		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-		[dateFormatter setDateFormat:@"yyy-MM-dd'T'HH:mm:ss.SSS'Z'"];//2011-10-19T16:40:51.620Z
+		[dateFormatter setDateFormat:@"yyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+		
 		NSDate *date = [dateFormatter dateFromString:serverTime];
-		if (!date) {//Try unix time if it's not ISO 8601:2004(E) 4.3.2.
+		
+		if (PointerIsEmpty(date)) {
 			date = [NSDate dateWithTimeIntervalSince1970:[serverTime doubleValue]];
 		}
-		if (!date) {//Incase something goes wrong.
+		
+		if (PointerIsEmpty(date)) {
 			date = [NSDate date];
 		}
 		
@@ -96,6 +111,8 @@
 	} else {
 		self.receivedAt = [NSDate date];
 	}
+
+	// ---- //
 	
 	if ([s hasPrefix:@":"]) {
 		NSString *t;
