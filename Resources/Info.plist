@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.1</string>
+	<string>2.1.2</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -33,7 +33,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1.1</string>
+	<string>2.1.2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
@@ -45,10 +45,10 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>TXBundleBuildCodeName</key>
-	<string>Turtle Soup</string>
+	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>12536</string>
+	<string>12541</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.1-346-g49ae3ca-debug</string>
+	<string>2.1.2-6-gb1cf27f-appstore,modern</string>
 </dict>
 </plist>
