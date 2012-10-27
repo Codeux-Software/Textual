@@ -559,46 +559,80 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                 }
             }
         } else {
-			NSString *curchan; 
+			NSString *curchan = nil;
 			
 			if (log && isNormalMsg) {
-				curchan = log.channel.name;
+				curchan = [log.channel.name lowercaseString];
 			}
+			NSString *curnick = [[inputDictionary objectForKey:@"nick"] lowercaseString];
 			
             for (__strong NSString *keyword in keywords) {
 				BOOL continueSearch = YES;
 				
 				if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"])) {
-					NSRange atsrange = [keyword rangeOfString:@";" options:NSBackwardsSearch];
+					NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
 					
-					NSString *excludeList = [keyword safeSubstringAfterIndex:atsrange.location];
+					NSArray *limitList = [[keyword safeSubstringAfterIndex:range.location] split:NSStringWhitespacePlaceholder];
 					
-					keyword = [keyword safeSubstringToIndex:atsrange.location];
+					keyword = [keyword safeSubstringToIndex:range.location];
 					
-					NSArray *excldlist = [excludeList split:NSStringWhitespacePlaceholder];
+					NSMutableArray *includeChannels = [NSMutableArray array];
+					NSMutableArray *excludeChannels = [NSMutableArray array];
+					NSMutableArray *includeNicks = [NSMutableArray array];
+					NSMutableArray *excludeNicks = [NSMutableArray array];
 					
-					for (NSString *exchan in excldlist) {
-						if ([exchan hasPrefix:@"-"] == NO && [exchan hasPrefix:@"+"] == NO) {
+					for (__strong NSString *limit in limitList) {
+						BOOL include = [limit hasPrefix:@"+"];
+						BOOL exclude = [limit hasPrefix:@"-"];
+						if (!exclude && !include) {
 							continue;
 						}
 						
-						NSString *nchan = [exchan safeSubstringFromIndex:1];
+						limit = [[limit safeSubstringFromIndex:1] lowercaseString];
 						
-						if ([nchan isEqualToString:@"all"]) {
-							continueSearch = NO;
-						}
-						
-						if ([exchan hasPrefix:@"+"]) {
-							if ([nchan isEqualNoCase:curchan]) {
-								continueSearch = YES;
+						if ([limit hasPrefix:@"#"]) {
+							if (include) {
+								[includeChannels addObject:limit];
+							} else {
+								[excludeChannels addObject:limit];
 							}
 						} else {
-							if ([exchan hasPrefix:@"-"]) {
-								if ([nchan isEqualNoCase:curchan]) {
-									continueSearch = NO;
-								}
+							if (include) {
+								[includeNicks addObject:limit];
+							} else {
+								[excludeNicks addObject:limit];
 							}
 						}
+					}
+					if (curchan && [curchan hasPrefix:@"#"]) {
+						if ([includeChannels count]!=0 && [excludeChannels count]==0) {
+							if (![includeChannels containsObject:curchan]) {
+								continueSearch = NO;
+							}
+						} else {
+							if ([includeChannels containsObject:curchan]) {
+								continueSearch = YES;
+							}
+							if ([excludeChannels containsObject:curchan]) {
+								continueSearch = NO;
+							}
+						}
+					}
+					if (continueSearch && curnick) {
+						if ([includeNicks count]!=0 && [excludeNicks count]==0) {
+							if (![includeNicks containsObject:curnick]) {
+								continueSearch = NO;
+							}
+						} else {
+							if ([includeNicks containsObject:curnick]) {
+								continueSearch = YES;
+							}
+							if ([excludeNicks containsObject:curnick]) {
+								continueSearch = NO;
+							}
+						}
+					} else if (continueSearch && curnick && [includeNicks count]!=0 && [excludeNicks count]==0) {
+						continueSearch = NO;
 					}
 				}
 				
