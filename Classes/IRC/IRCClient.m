@@ -4388,6 +4388,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			[cap isEqualNoCase:@"multi-prefix"] ||
 			[cap isEqualNoCase:@"userhost-in-names"] ||
 			[cap isEqualNoCase:@"server-time"] ||
+			[cap isEqualNoCase:@"znc.in/server-time"] ||
 			([cap isEqualNoCase:@"sasl"] && NSObjectIsNotEmpty(self.config.nickPassword)));
 }
 
