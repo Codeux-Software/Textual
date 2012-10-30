@@ -795,8 +795,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)reloadScrollbackOnLaunch
 {
-	return YES;
-	//return [_NSUserDefaults() boolForKey:@"ReloadScrollbackOnLaunch"];
+	return [_NSUserDefaults() boolForKey:@"ReloadScrollbackOnLaunch"];
 }
 
 + (BOOL)autoJoinOnInvite
