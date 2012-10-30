@@ -144,7 +144,7 @@
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
 	if ([TPCPreferences reloadScrollbackOnLaunch]) {
-		[self reloadOldLines]; // Populate old scrollback.
+		[self reloadOldLines:YES]; // Populate old scrollback.
 	}
 }
 
@@ -440,7 +440,7 @@
 	[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 }
 
-- (void)reloadOldLines
+- (void)reloadOldLines:(BOOL)markHistoric
 {
 	NSDictionary *oldLines = self.logFile.data;
 
@@ -460,7 +460,7 @@
 				   withHTML:rawHTML
 			   specialWrite:YES
 				  markAfter:markAfter
-			  historicWrite:YES];
+			  historicWrite:markHistoric];
 			}
 		}
 	}
@@ -474,7 +474,7 @@
 
 	// ---- //
 	
-	[self reloadOldLines];
+	[self reloadOldLines:NO];
 
 	// ---- //
 
