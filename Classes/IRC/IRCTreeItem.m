@@ -43,6 +43,8 @@
 		 withChannel:(IRCChannel *)c
 		   andClient:(IRCClient *)u
 {
+	[self.log clear];
+	
 	[self.log.view close];
 	
 	self.log = nil;

@@ -203,7 +203,7 @@
 			self.logFile.client = self.client;
 			self.logFile.channel = self;
 			self.logFile.writePlainText = YES;
-			self.logFile.hashFilename = NO;
+			self.logFile.flatFileStructure = NO;
 		}
 		
 		NSString *logstr = [self.log renderedBodyForTranscriptLog:line];

@@ -35,17 +35,6 @@
 
  *********************************************************************** */
 
-/* 
-	TLOFileLogger is designed to be used exclusively by Textual (not plugins)
-	for logging of IRC messages to plain text or property list files. Plain
-	text logging is used for normal IRC logging while the property list write
-	option is reserved for internal uses where the exact details of each message
-	is required for later processing. 
- 
-	The directory in which this class writes to reads the user configured path
-	unless a different one is specified by a class which implements TLOFileLogger.
- */
-
 #import "TextualApplication.h"
 
 #define TLOFileLoggerConsoleDirectoryName				@"Console"
@@ -56,9 +45,10 @@
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, weak) IRCChannel *channel;
 @property (nonatomic, assign) BOOL writePlainText; // Plain text or property list.
-@property (nonatomic, assign) BOOL hashFilename; // UUID based, flat directory structure.
+@property (nonatomic, assign) BOOL flatFileStructure; // UUID based, flat directory structure.
 @property (nonatomic, assign) NSInteger maxEntryCount; // Only used if (writePlainText == NO)
 @property (nonatomic, strong) NSString *filename;
+@property (nonatomic, strong) NSString *filenameOverride;
 @property (nonatomic, strong) NSString *fileWritePath;
 @property (nonatomic, strong) NSFileHandle *file;
 
@@ -66,6 +56,8 @@
 - (void)close;
 - (void)reset;
 - (void)reopenIfNeeded;
+
+- (void)updateCache; // Force update property list cache.
 
 - (id)data; // Types: (NSData			writePlainText == YES),
 			//		  (NSDictionary		writePlainText == NO)

@@ -53,11 +53,20 @@
 
 		self.highlightedLineNumbers	= [NSMutableArray new];
 		
-		[[WebPreferences standardPreferences] setCacheModel:WebCacheModelDocumentViewer];
-		[[WebPreferences standardPreferences] setUsesPageCache:NO];
+		[WebPreferences.standardPreferences setCacheModel:WebCacheModelDocumentViewer];
+		[WebPreferences.standardPreferences setUsesPageCache:NO];
 	}
 	
 	return self;
+}
+
+- (void)terminate
+{
+	if ([TPCPreferences reloadScrollbackOnLaunch]) {
+		[self.logFile updateCache];
+	} else {
+		[self clear];
+	}
 }
 
 - (void)dealloc
@@ -107,10 +116,16 @@
 	}
 
 	self.logFile = [TLOFileLogger new];
-	self.logFile.hashFilename = YES;
+	self.logFile.flatFileStructure = YES;
 	self.logFile.writePlainText = NO;
 	self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
 	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
+
+	if (PointerIsEmpty(self.channel)) {
+		self.logFile.filenameOverride = self.client.config.guid;
+	} else {
+		self.logFile.filenameOverride = self.channel.config.guid;
+	}
 
 	[self.logFile reopenIfNeeded];
 	
@@ -127,6 +142,10 @@
 	self.view.shouldUpdateWhileOffscreen	= NO;
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
+
+	if ([TPCPreferences reloadScrollbackOnLaunch]) {
+		[self reloadOldLines]; // Populate old scrollback.
+	}
 }
 
 #pragma mark -
@@ -421,14 +440,8 @@
 	[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 }
 
-- (void)reloadTheme
+- (void)reloadOldLines
 {
-	self.reloading = YES;
-	
-	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
-
-	// ---- //
-	
 	NSDictionary *oldLines = self.logFile.data;
 
 	if (NSObjectIsNotEmpty(oldLines)) {
@@ -440,12 +453,28 @@
 			TVCLogLine *line = [TVCLogLine.alloc initWithDictionary:lineDic];
 
 			if (PointerIsNotEmpty(line)) {
-				BOOL rawHTML = (line.lineType == TVCLogLineRawHTMLType);
+				BOOL rawHTML	= (line.lineType == TVCLogLineRawHTMLType);
+				BOOL markAfter	= ([key isEqualToString:keys.lastObject]);
 
-				[self print:line withHTML:rawHTML specialWrite:YES];
+				[self print:line
+				   withHTML:rawHTML
+			   specialWrite:YES
+				  markAfter:markAfter
+			  historicWrite:YES];
 			}
 		}
 	}
+}
+
+- (void)reloadTheme
+{
+	self.reloading = YES;
+	
+	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
+
+	// ---- //
+	
+	[self reloadOldLines];
 
 	// ---- //
 
@@ -651,6 +680,11 @@
 	[self limitNumberOfLines];
 }
 
+- (void)clear
+{
+	[self.logFile reset];
+}
+
 #pragma mark -
 
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
@@ -692,10 +726,14 @@
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial
 {
-	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO];
+	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO historicWrite:NO];
 }
 
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial markAfter:(BOOL)markAfter
+- (BOOL)print:(TVCLogLine *)line
+	 withHTML:(BOOL)rawHTML				// YES if input will not be sent through our renderer.
+ specialWrite:(BOOL)isSpecial			// YES if input should have high priority in queue.
+	markAfter:(BOOL)markAfter			// YES if a mark should be inserted after line.
+historicWrite:(BOOL)isHistoric			// YES if line is treated as being historic.
 {
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
@@ -832,8 +870,26 @@
 	// ---- //
 
 	attributes[@"lineType"] = [TVCLogLine lineTypeString:line.lineType];
+	
+	// ---- //
 
-	attributes[@"lineClassAttributeRepresentation"] = ((isText)			? @"text" : @"event");
+	NSString *classRep = NSStringEmptyPlaceholder;
+
+	if (isText) {
+		classRep = @"text";
+	} else {
+		classRep = @"event";
+	}
+	
+	if (isHistoric) {
+		classRep = [classRep stringByAppendingString:@" historic"];
+	}
+
+	attributes[@"lineClassAttributeRepresentation"] = classRep;
+
+	// ---- //
+
+
 	attributes[@"highlightAttributeRepresentation"] = ((highlighted)	? @"true" : @"false");
 
 	attributes[@"message"]				= line.body;
@@ -1236,14 +1292,6 @@
 - (void)logViewDidResize
 {
 	[self restorePosition];
-}
-
-#pragma mark -
-#pragma mark Deprecated
-
-- (void)clear
-{
-	// ---- //
 }
 
 @end

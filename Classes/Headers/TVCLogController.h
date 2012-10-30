@@ -74,6 +74,8 @@ typedef id (^TVCLogMessageBlock)(void);
 - (void)restorePosition;
 - (void)notifyDidBecomeVisible;
 
+- (void)terminate;
+
 - (void)nextHighlight;
 - (void)previousHighlight;
 - (BOOL)highlightAvailable:(BOOL)previous;
@@ -89,7 +91,7 @@ typedef id (^TVCLogMessageBlock)(void);
 - (void)unmark;
 - (void)goToMark;
 
-- (void)clear TEXTUAL_DEPRECATED; // See IRCWorld.h for replacements.
+- (void)clear;
 
 - (void)reloadTheme;
 

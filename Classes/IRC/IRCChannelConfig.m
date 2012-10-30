@@ -68,6 +68,8 @@
 		dic = [TPCPreferencesMigrationAssistant convertIRCChannelConfiguration:dic];
 
 		self.type			= (IRCChannelType)[dic integerForKey:@"channelType"];
+
+		self.guid			= (([dic stringForKey:@"uniqueIdentifier"]) ?: self.guid);
 		
 		self.name			= (([dic stringForKey:@"channelName"])	 ?: NSStringEmptyPlaceholder);
 		self.password		= (([dic stringForKey:@"secretJoinKey"]) ?: NSStringEmptyPlaceholder);
@@ -99,7 +101,8 @@
     [dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
     [dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
     [dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
-	
+
+	[dic safeSetObject:self.guid				forKey:@"uniqueIdentifier"];
 	[dic safeSetObject:self.name				forKey:@"channelName"];
 	[dic safeSetObject:self.password			forKey:@"secretJoinKey"];
 	[dic safeSetObject:self.mode				forKey:@"defaultMode"];
