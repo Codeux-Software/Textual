@@ -2492,7 +2492,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{83, 59}, {409, 18}}</string>
 											<reference key="NSSuperview" ref="528704917"/>
-											<reference key="NSNextKeyView"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="816692296">
 												<int key="NSCellFlags">-2080374784</int>
@@ -7961,27 +7960,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TrackConversationsWithColorHashing</string>
+						<string key="label">value: values.ReloadScrollbackOnLaunch</string>
 						<reference key="source" ref="365790970"/>
 						<reference key="destination" ref="1032655829"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="365790970"/>
-							<reference key="NSDestination" ref="1032655829"/>
-							<string key="NSLabel">value: values.TrackConversationsWithColorHashing</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TrackConversationsWithColorHashing</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">7274</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.ReloadScrollbackOnLaunch</string>
-						<reference key="source" ref="586580558"/>
-						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="586580558"/>
 							<reference key="NSDestination" ref="1032655829"/>
 							<string key="NSLabel">value: values.ReloadScrollbackOnLaunch</string>
 							<string key="NSBinding">value</string>
@@ -7989,7 +7972,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">7278</int>
+					<int key="connectionID">7279</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -11145,7 +11128,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<array class="NSMutableArray" key="5775.IBUserGuides">
 					<object class="IBUserGuide">
 						<reference key="view" ref="701822772"/>
-						<double key="location">69.334457397460938</double>
+						<double key="location">70</double>
 						<int key="affinity">0</int>
 					</object>
 					<object class="IBUserGuide">
@@ -11579,7 +11562,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">7278</int>
+			<int key="maxID">7279</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
