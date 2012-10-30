@@ -142,6 +142,13 @@ div[id=mark] {
 	-webkit-transition: 0.2s linear;
 }
 
+/* Historic Line */
+
+.historic 
+{
+	opacity: 0.6;
+}
+
 /* NOTICE/CTCP/WALLOPS */
 
 body div.line[type*=ctcp],

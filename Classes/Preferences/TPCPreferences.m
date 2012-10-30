@@ -793,6 +793,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [_NSUserDefaults() boolForKey:@"RejoinChannelOnLocalKick"];
 }
 
++ (BOOL)reloadScrollbackOnLaunch
+{
+	return YES;
+	//return [_NSUserDefaults() boolForKey:@"ReloadScrollbackOnLaunch"];
+}
+
 + (BOOL)autoJoinOnInvite
 {
 	return [_NSUserDefaults() boolForKey:@"AutojoinChannelOnInvite"];
