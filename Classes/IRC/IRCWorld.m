@@ -255,6 +255,8 @@
 {
 	for (IRCClient *c in self.clients) {
 		[c terminate];
+
+		[c.log terminate];
 	}
 }
 
@@ -722,9 +724,9 @@
 		c.inputHistory = [TLOInputHistory new];
 	}
 	
-	c.log = [self createLogWithClient:c channel:nil];
-	
 	[c setup:seed];
+	
+	c.log = [self createLogWithClient:c channel:nil];
 	
 	for (IRCChannelConfig *e in seed.channels) {
 		[self createChannel:e client:c reload:NO adjust:NO];

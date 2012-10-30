@@ -362,6 +362,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 	for (IRCChannel *c in self.channels) {
 		[c terminate];
+
+		[c.log terminate];
 	}
 
 	[self disconnect];
@@ -3251,7 +3253,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self;
 			self.logFile.writePlainText = YES;
-			self.logFile.hashFilename = NO;
+			self.logFile.flatFileStructure = NO;
 		}
 
 		NSString *logstr = [self.log renderedBodyForTranscriptLog:line];

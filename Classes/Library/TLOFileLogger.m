@@ -148,6 +148,17 @@
 
 #pragma mark -
 
+- (void)updateCache
+{
+	if (self.writePlainText) {
+		return;
+	}
+	
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+
+	[self updatePropertyListCache];
+}
+
 - (void)updatePropertyListCache /* @private */
 {
 	if (self.writePlainText == NO) {
@@ -276,7 +287,7 @@
 
 - (void)reopenIfNeeded
 {
-	if (NSObjectIsEmpty(self.filename) || ([self.filename isEqualToString:self.buildFileName] == NO && self.hashFilename == NO)) {
+	if ([self.filename isEqualToString:self.buildFileName] == NO) {
 		[self open];
 	}
 }
@@ -299,7 +310,7 @@
 		return;
 	}
 
-	if (self.hashFilename == NO || NSObjectIsEmpty(self.filename)) {
+	if (NSObjectIsEmpty(self.filename)) {
 		self.filename = [self buildFileName];
 	}
 
@@ -358,7 +369,7 @@
 {
 	NSString *base = self.fileWritePath;
 
-	if (self.hashFilename) {
+	if (self.flatFileStructure) {
 		return base;
 	}
 
@@ -379,11 +390,15 @@
 	id date;
 	id extn;
 	
-	if (self.hashFilename) {
+	if (self.flatFileStructure) {
 		extn = @"plist";
-		date = [NSString stringWithUUID];
 	} else {
 		extn = @"txt";
+	}
+
+	if (NSObjectIsNotEmpty(self.filenameOverride)) {
+		date = self.filenameOverride;
+	} else {
 		date = [NSDate.date dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 	}
 	
