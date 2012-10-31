@@ -444,6 +444,14 @@
 {
 	NSDictionary *oldLines = self.logFile.data;
 
+	if (markHistoric) {
+		/* We reset our property list when it is historic so 
+		 our isHistoric property can be applied to elements 
+		 within the new list. What? */
+		
+		[self.logFile reset];
+	}
+
 	if (NSObjectIsNotEmpty(oldLines)) {
 		NSArray *keys = oldLines.sortedDictionaryKeys;
 
@@ -456,11 +464,14 @@
 				BOOL rawHTML	= (line.lineType == TVCLogLineRawHTMLType);
 				BOOL markAfter	= ([key isEqualToString:keys.lastObject]);
 
+				if (markHistoric) {
+					line.isHistoric = YES;
+				}
+
 				[self print:line
 				   withHTML:rawHTML
-			   specialWrite:YES
-				  markAfter:markAfter
-			  historicWrite:markHistoric];
+			   specialWrite:(markHistoric == NO) // Priority determined by print:
+				  markAfter:markAfter];
 			}
 		}
 	}
@@ -726,14 +737,13 @@
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial
 {
-	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO historicWrite:NO];
+	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO];
 }
 
 - (BOOL)print:(TVCLogLine *)line
 	 withHTML:(BOOL)rawHTML				// YES if input will not be sent through our renderer.
  specialWrite:(BOOL)isSpecial			// YES if input should have high priority in queue.
 	markAfter:(BOOL)markAfter			// YES if a mark should be inserted after line.
-historicWrite:(BOOL)isHistoric			// YES if line is treated as being historic.
 {
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
@@ -881,7 +891,7 @@ historicWrite:(BOOL)isHistoric			// YES if line is treated as being historic.
 		classRep = @"event";
 	}
 	
-	if (isHistoric) {
+	if (line.isHistoric) {
 		classRep = [classRep stringByAppendingString:@" historic"];
 	}
 
@@ -984,7 +994,7 @@ historicWrite:(BOOL)isHistoric			// YES if line is treated as being historic.
 		return (__bridge void *)html;
 	} copy];
 	
-	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:isSpecial];
+	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:(isSpecial || line.isHistoric)];
 }
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
