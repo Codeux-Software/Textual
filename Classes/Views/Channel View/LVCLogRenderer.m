@@ -198,7 +198,8 @@ NSString *TXRenderStyleTemplate(NSString *templateName, NSDictionary *templateTo
 	GRMustacheTemplate *tmpl = [logController.theme.other templateWithName:templateName];
 
 	if (PointerIsNotEmpty(tmpl)) {
-		NSString *aHtml = [tmpl renderObject:templateTokens];
+		
+		NSString *aHtml = [tmpl renderObject:templateTokens error:NULL];
 
 		if (NSObjectIsNotEmpty(aHtml)) {
 			return aHtml.removeAllNewlines;

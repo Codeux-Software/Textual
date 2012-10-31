@@ -126,11 +126,11 @@
 {
 	NSError *load_error;
 
-	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateForName:name error:&load_error];
+	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateNamed:name error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
 		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
-			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateForName:name error:&load_error];
+			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateNamed:name error:&load_error];
 
 			if (PointerIsNotEmpty(tmpl)) {
 				return tmpl;
