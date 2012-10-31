@@ -84,6 +84,8 @@
 		self.keywords		= nil;
 		self.excludeWords	= nil;
 
+		self.isHistoric = NO;
+
 		return self;
 	}
 
@@ -145,6 +147,8 @@
 		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType",		TVCLogMemberNormalType);
 		self.nickColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nickColorNumber",	0);
 
+		self.isHistoric	= [dic boolForKey:@"isHistoric"];
+
 		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 
 		return self;
@@ -158,7 +162,7 @@
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
 	[dict safeSetObject:@([self.receivedAt timeIntervalSince1970])		forKey:@"receivedAt"];
-	
+
 	[dict safeSetObject:self.nick					forKey:@"nick"];
 	[dict safeSetObject:self.body					forKey:@"body"];
 	[dict safeSetObject:self.keywords				forKey:@"keywords"];
@@ -167,6 +171,8 @@
 	[dict safeSetObject:@(self.lineType)			forKey:@"lineType"];
 	[dict safeSetObject:@(self.memberType)			forKey:@"memberType"];
 	[dict safeSetObject:@(self.nickColorNumber)		forKey:@"nickColorNumber"];
+
+	[dict setBool:self.isHistoric					forKey:@"isHistoric"];
 
 	return dict;
 }
