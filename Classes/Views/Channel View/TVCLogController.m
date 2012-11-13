@@ -694,6 +694,7 @@
 - (void)clear
 {
 	[self.logFile reset];
+	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
 #pragma mark -
