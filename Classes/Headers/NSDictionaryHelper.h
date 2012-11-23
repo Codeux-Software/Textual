@@ -56,8 +56,10 @@
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
 
-- (NSArray *)sortedDictionaryKeys;
 - (id)sortedDictionary;
+- (id)sortedReversedDictionary;
+- (NSArray *)sortedDictionaryKeys;
+- (NSArray *)sortedDictionaryReversedKeys;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)

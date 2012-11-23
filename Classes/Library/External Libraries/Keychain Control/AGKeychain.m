@@ -25,7 +25,11 @@
 
 	[searchDictionary setObject:keychainItemName	forKey:(id)kSecAttrLabel];
 	[searchDictionary setObject:keychainItemKind	forKey:(id)kSecAttrDescription];
-	[searchDictionary setObject:username			forKey:(id)kSecAttrAccount];
+
+	if (NSObjectIsNotEmpty(username)) {
+		[searchDictionary setObject:username			forKey:(id)kSecAttrAccount];
+	}
+
 	[searchDictionary setObject:service				forKey:(id)kSecAttrService];
 
 	return searchDictionary;

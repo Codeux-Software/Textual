@@ -100,6 +100,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 												withItemKind:@"application password" 
 												 forUsername:[TPCPreferences applicationName] 
 												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
+
+		if (kcPassword) {
+			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
+													withItemKind:@"application password"
+													 forUsername:nil // Compatible with 2.1.0
+													 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
+		}
 	}
 	
 	if (kcPassword) {
@@ -142,6 +149,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 												withItemKind:@"application password" 
 												 forUsername:[TPCPreferences applicationName]
 												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
+
+		if (kcPassword) {
+			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
+													withItemKind:@"application password"
+													 forUsername:nil // Compatible with 2.1.0
+													 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
+		}
 	}
 	
 	if (kcPassword) {
@@ -216,7 +230,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.useSSL				 = [dic boolForKey:@"connectUsingSSL"];
 		self.autoConnect         = [dic boolForKey:@"connectOnLaunch"];
 		self.autoReconnect       = [dic boolForKey:@"connectOnDisconnect"];
-		self.bouncerMode         = [dic boolForKey:@"serverIsIRCBouncer"];
 		
 		self.encoding			 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.encoding);
 		self.fallbackEncoding	 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
@@ -287,7 +300,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
     [dic setBool:self.prefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
 	[dic setBool:self.autoConnect			forKey:@"connectOnLaunch"];
 	[dic setBool:self.autoReconnect			forKey:@"connectOnDisconnect"];
-	[dic setBool:self.bouncerMode			forKey:@"serverIsIRCBouncer"];
 	[dic setBool:self.invisibleMode			forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.isTrustedConnection	forKey:@"trustedSSLConnection"];
 	
