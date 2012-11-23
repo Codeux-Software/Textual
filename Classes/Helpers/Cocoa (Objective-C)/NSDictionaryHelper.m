@@ -180,17 +180,43 @@
 	return nil;
 }
 
-- (NSArray *)sortedDictionaryKeys
-{
-	return [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
-}
-
 - (id)sortedDictionary
 {
-	NSArray *sortedKeys = [self sortedDictionaryKeys];
+	return [self sortedDictionary:NO];
+}
+
+- (id)sortedReversedDictionary
+{
+	return [self sortedDictionary:YES];
+}
+
+- (NSArray *)sortedDictionaryKeys
+{
+	return [self sortedDictionaryKeys:NO];
+}
+
+- (NSArray *)sortedDictionaryReversedKeys
+{
+	return [self sortedDictionaryKeys:YES];
+}
+
+- (NSArray *)sortedDictionaryKeys:(BOOL)reversed
+{
+	NSArray *keys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
 	
+	if (reversed) {
+		return keys.reverseObjectEnumerator.allObjects;
+	}
+
+	return keys;
+}
+
+- (id)sortedDictionary:(BOOL)reversed
+{
+	NSArray *sortedKeys = [self sortedDictionaryKeys:reversed];
+
 	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-	
+
 	for (NSString *key in sortedKeys) {
 		newDict[key] = self[key];
 	}

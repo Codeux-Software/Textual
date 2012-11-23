@@ -62,7 +62,6 @@
 @property (nonatomic, strong) NSButton *prefersIPv6Check;
 @property (nonatomic, strong) NSButton *autoReconnectCheck;
 @property (nonatomic, strong) NSButton *autoConnectCheck;
-@property (nonatomic, strong) NSButton *bouncerModeCheck;
 @property (nonatomic, strong) NSComboBox *hostCombo;
 @property (nonatomic, strong) NSButton *sslCheck;
 @property (nonatomic, strong) NSTextField *portText;
@@ -108,7 +107,6 @@
 - (void)hostComboChanged:(id)sender;
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
-- (void)bouncerModeChanged:(id)sender;
 - (void)floodControlChanged:(id)sender;
 
 - (void)addChannel:(id)sender;
