@@ -37,7 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define _bottomEpsilon			0
+#define _bottomEpsilon					0
+#define _historicReloadLineCount		100
 
 @interface TVCLogController ()
 @property (nonatomic, strong) TLOFileLogger *logFile;
@@ -450,6 +451,36 @@
 		 within the new list. What? */
 		
 		[self.logFile reset];
+
+		// ---- //
+
+		NSInteger loopCount = 0;
+
+		// ---- //
+		
+		NSMutableDictionary *newLines = [NSMutableDictionary dictionary];
+
+		NSArray *newLineKeys = [oldLines sortedDictionaryReversedKeys];
+
+		// ---- //
+		
+		for (NSString *key in newLineKeys) {
+			[newLines setObject:[oldLines objectForKey:key] forKey:key];
+
+			// ---- //
+
+			loopCount += 1;
+
+			// ---- //
+			
+			if (loopCount >= _historicReloadLineCount) {
+				break;
+			}
+		}
+
+		// ---- //
+
+		oldLines = newLines;
 	}
 
 	if (NSObjectIsNotEmpty(oldLines)) {

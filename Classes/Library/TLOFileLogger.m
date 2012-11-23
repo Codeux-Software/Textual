@@ -67,7 +67,7 @@
 
 		if (self.maxEntryCount >= 1) {
 			if (propertyList.count >= self.maxEntryCount) {
-				NSArray *reverKkeys = propertyList.sortedDictionaryKeys.reverseObjectEnumerator.allObjects;
+				NSArray *reverKkeys = propertyList.sortedDictionaryReversedKeys;
 
 				NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
 

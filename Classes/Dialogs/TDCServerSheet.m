@@ -195,7 +195,6 @@
 	self.passwordText.stringValue	= self.config.password;
 	self.portText.stringValue		= [NSString stringWithInteger:self.config.port];
 	self.sslCheck.state				= self.config.useSSL;
-	self.bouncerModeCheck.state		= self.config.bouncerMode;
 	self.autoConnectCheck.state		= self.config.autoConnect;
 	self.autoReconnectCheck.state	= self.config.autoReconnect;
     self.prefersIPv6Check.state     = self.config.prefersIPv6;
@@ -260,7 +259,6 @@
 	/* General */
 	self.config.autoConnect		= self.autoConnectCheck.state;
 	self.config.autoReconnect	= self.autoReconnectCheck.state;
-	self.config.bouncerMode		= self.bouncerModeCheck.state;
 	self.config.prefersIPv6     = self.prefersIPv6Check.state;
 	
 	NSString *realHost		= nil;
@@ -366,10 +364,8 @@
 	NSInteger i = [self.channelTable selectedRow];
 	
 	BOOL count   = (i >= 0);
-	BOOL bouncer = BOOLReverseValue([self.bouncerModeCheck state]);
-	BOOL enabled = (count && bouncer);
+	BOOL enabled = count;
 	
-	[self.addChannelButton		setEnabled:bouncer];
 	[self.editChannelButton		setEnabled:enabled];
 	[self.deleteChannelButton	setEnabled:enabled];
 }
@@ -377,7 +373,6 @@
 - (void)reloadChannelTable
 {
 	[self.channelTable reloadData];
-	[self.channelTable setEnabled:BOOLReverseValue([self.bouncerModeCheck state])];
 }
 
 - (void)updateIgnoresPage
@@ -451,11 +446,6 @@
 	[self.proxyPortText		setEnabled:enabled];
 	[self.proxyUserText		setEnabled:enabled];
 	[self.proxyPasswordText	setEnabled:enabled];
-}
-
-- (void)bouncerModeChanged:(id)sender
-{
-	[self.channelTable setEnabled:BOOLReverseValue([self.bouncerModeCheck state])];
 }
 
 #pragma mark -
