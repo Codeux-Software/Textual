@@ -160,7 +160,7 @@
 
 + (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
 								  forController:(TVCLogController *)controller
-							withSpecialPriority:(BOOL)special;
+									withContext:(NSDictionary *)context;
 
 + (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
 								  forController:(TVCLogController *)controller;

@@ -50,7 +50,9 @@
 #pragma mark NSApplication Delegate
 
 - (void)awakeFromNib
-{	
+{
+	DebugLogToConsole(@"%@", [TPCPreferences applicationTemporaryFolderPath]);
+	
 #ifdef TXMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
