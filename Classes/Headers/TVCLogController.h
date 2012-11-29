@@ -68,7 +68,8 @@ typedef id (^TVCLogMessageBlock)(void);
 @property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
-@property (assign) BOOL reloading;
+@property (assign) BOOL reloadingBacklog;
+@property (assign) BOOL reloadingHistory;
 
 - (void)setUp;
 - (void)restorePosition;
@@ -105,6 +106,6 @@ typedef id (^TVCLogMessageBlock)(void);
 - (void)logViewOnDoubleClick:(NSString *)e;
 
 - (void)handleMessageBlock:(id)block isSpecial:(BOOL)special;
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender isSpecial:(BOOL)special;
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
 @end

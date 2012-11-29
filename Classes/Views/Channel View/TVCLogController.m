@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 #define _bottomEpsilon					0
-#define _historicReloadLineCount		100
 
 @interface TVCLogController ()
 @property (nonatomic, strong) TLOFileLogger *logFile;
@@ -53,11 +52,11 @@
 		self.maxLines      = 300;
 
 		self.highlightedLineNumbers	= [NSMutableArray new];
-		
+
 		[WebPreferences.standardPreferences setCacheModel:WebCacheModelDocumentViewer];
 		[WebPreferences.standardPreferences setUsesPageCache:NO];
 	}
-	
+
 	return self;
 }
 
@@ -81,14 +80,14 @@
 {
 	if (self.maxLines == value) return;
 	_maxLines = value;
-	
+
 	if (self.loaded == NO) return;
-	
+
 	if (self.maxLines > 0 && self.count > self.maxLines) {
 		[self savePosition];
 		[self setNeedsLimitNumberOfLines];
 	}
-	
+
 	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
 }
 
@@ -97,21 +96,21 @@
 - (void)setUp
 {
 	self.loaded = NO;
-	
+
 	self.policy = [TVCLogPolicy new];
 	self.sink   = [TVCLogScriptEventSink new];
-	
+
 	self.lastVisitedHighlight = -1;
-	
+
 	self.policy.menu			= self.menu;
 	self.policy.urlMenu			= self.urlMenu;
 	self.policy.chanMenu		= self.chanMenu;
 	self.policy.memberMenu		= self.memberMenu;
 	self.policy.menuController  = self.world.menuController;
-	
+
 	self.sink.owner  = self;
 	self.sink.policy = self.policy;
-	
+
 	if (self.view) {
 		[self.view removeFromSuperview];
 	}
@@ -129,9 +128,9 @@
 	}
 
 	[self.logFile reopenIfNeeded];
-	
+
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
-	
+
 	self.view.frameLoadDelegate			= self;
 	self.view.UIDelegate				= self.policy;
 	self.view.policyDelegate			= self.policy;
@@ -139,14 +138,10 @@
 	self.view.keyDelegate				= self;
 	self.view.resizeDelegate			= self;
 	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
-	
-	self.view.shouldUpdateWhileOffscreen	= NO;
-	
-	[self loadAlternateHTML:[self initialDocument:nil]];
 
-	if ([TPCPreferences reloadScrollbackOnLaunch]) {
-		[self reloadOldLines:YES]; // Populate old scrollback.
-	}
+	self.view.shouldUpdateWhileOffscreen	= NO;
+
+	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
 #pragma mark -
@@ -182,24 +177,29 @@
 	[[self.view mainFrame] loadHTMLString:newHTML baseURL:self.theme.baseUrl];
 }
 
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
+- (void)internalExecuteScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	[self executeScriptCommand:command withArguments:args isSpecial:NO];
+	WebScriptObject *js_api = [self.view js_api];
+
+	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
+		[js_api callWebScriptMethod:command	withArguments:args];
+	}
 }
 
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args isSpecial:(BOOL)special
+- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
+{
+	[self executeScriptCommand:command withArguments:args withContext:nil];
+}
+
+- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args withContext:(NSDictionary *)context
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		WebScriptObject *js_api = [self.view js_api];
-
-		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-			[js_api callWebScriptMethod:command	withArguments:args];
-		}
-
+		[self internalExecuteScriptCommand:command withArguments:args];
+		
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
+	[self enqueueMessageBlock:messageBlock fromSender:self withContext:context];
 }
 
 #pragma mark -
@@ -213,7 +213,7 @@
 {
 	if (self.becameVisible == NO) {
 		self.becameVisible = YES;
-		
+
 		[self moveToBottom];
 	}
 }
@@ -230,16 +230,16 @@
 	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
 
 	DOMNode *head = [nodes item:0];
-	
+
 	return head;
 }
 
-- (DOMElement *)body:(DOMDocument *)doc 
+- (DOMElement *)body:(DOMDocument *)doc
 {
 	return [doc getElementById:@"body_home"];
 }
 
-- (DOMElement *)topic:(DOMDocument *)doc 
+- (DOMElement *)topic:(DOMDocument *)doc
 {
 	return [doc getElementById:@"topic_bar"];
 }
@@ -250,16 +250,16 @@
 {
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return NSStringEmptyPlaceholder;
-	
+
 	return [(id)[self topic:doc] innerHTML];
 }
 
-- (void)setTopic:(NSString *)topic 
+- (void)setTopic:(NSString *)topic
 {
 	if (NSObjectIsEmpty(topic)) {
 		topic = TXTLS(@"IRCChannelEmptyTopic");
 	}
-	
+
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if ([[self topicValue] isEqualToString:topic] == NO) {
 			NSString *body = [LVCLogRenderer renderBody:topic
@@ -267,18 +267,18 @@
 											 renderType:TVCLogRendererHTMLType
 											 properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
 											 resultInfo:NULL];
-			
+
 			DOMDocument *doc = [self mainFrameDocument];
 			if (PointerIsEmpty(doc)) return @(NO);
-			
+
 			DOMElement *topic_body = [self topic:doc];
 			if (PointerIsEmpty(topic_body)) return @(NO);
-			
+
 			[(id)topic_body setInnerHTML:body];
 
 			[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 		}
-		
+
 		return @(YES);
 	} copy];
 
@@ -290,12 +290,12 @@
 - (void)moveToTop
 {
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	DOMElement *body = [doc body];
-	
+
 	if (body) {
 		[body setValue:@0 forKey:@"scrollTop"];
 	}
@@ -306,14 +306,14 @@
 - (void)moveToBottom
 {
 	self.movingToBottom = NO;
-	
+
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	DOMElement *body = [doc body];
-	
+
 	if (body) {
 		[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
 	}
@@ -325,23 +325,23 @@
 {
 	if (self.loaded == NO)   return YES;
 	if (self.movingToBottom) return YES;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return NO;
-	
+
 	DOMHTMLElement *body = [doc body];
-	
+
 	if (body) {
 		NSInteger viewHeight = self.view.frame.size.height;
-		
+
 		NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
 		NSInteger top    = [[body valueForKey:@"scrollTop"] integerValue];
-		
+
 		if (viewHeight == 0) return YES;
-		
+
 		return ((top + viewHeight) >= (height - _bottomEpsilon));
 	}
-	
+
 	return NO;
 }
 
@@ -377,13 +377,13 @@
 		if (PointerIsEmpty(body)) return nil;
 
 		// ---- //
-		
+
 		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 
 		// ---- //
 
 		NSString *html = TXRenderStyleTemplate(@"historyIndicator", nil, self);
-		
+
 		return (__bridge void *)html;
 	} copy];
 
@@ -394,15 +394,15 @@
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if (self.loaded == NO) return @(NO);
-		
+
 		DOMDocument *doc = [self mainFrameDocument];
 		if (PointerIsEmpty(doc)) return @(NO);
-		
+
 		DOMElement *e = [doc getElementById:@"mark"];
-		
+
 		if (e) {
 			[[e parentNode] removeChild:e];
-			
+
 			--self.count;
 		}
 
@@ -410,31 +410,31 @@
 
 		return @(YES);
 	} copy];
-	
+
 	[self enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)goToMark
 {
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	DOMElement *e = [doc getElementById:@"mark"];
-	
+
 	if (e) {
 		NSInteger y = 0;
 		DOMElement *t = e;
-		
+
 		while (t) {
 			if ([t isKindOfClass:[DOMElement class]]) {
 				y += [[t valueForKey:@"offsetTop"] integerValue];
 			}
-			
+
 			t = (id)[t parentNode];
 		}
-		
+
 		[[doc body] setValue:@(y - [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
 
@@ -446,41 +446,11 @@
 	NSDictionary *oldLines = self.logFile.data;
 
 	if (markHistoric) {
-		/* We reset our property list when it is historic so 
-		 our isHistoric property can be applied to elements 
+		/* We reset our property list when it is historic so
+		 our isHistoric property can be applied to elements
 		 within the new list. What? */
-		
+
 		[self.logFile reset];
-
-		// ---- //
-
-		NSInteger loopCount = 0;
-
-		// ---- //
-		
-		NSMutableDictionary *newLines = [NSMutableDictionary dictionary];
-
-		NSArray *newLineKeys = [oldLines sortedDictionaryReversedKeys];
-
-		// ---- //
-		
-		for (NSString *key in newLineKeys) {
-			[newLines setObject:[oldLines objectForKey:key] forKey:key];
-
-			// ---- //
-
-			loopCount += 1;
-
-			// ---- //
-			
-			if (loopCount >= _historicReloadLineCount) {
-				break;
-			}
-		}
-
-		// ---- //
-
-		oldLines = newLines;
 	}
 
 	if (NSObjectIsNotEmpty(oldLines)) {
@@ -508,35 +478,59 @@
 	}
 }
 
-- (void)reloadTheme
+- (void)reloadHistory
 {
-	self.reloading = YES;
-	
-	[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
+	self.reloadingHistory = YES;
 
-	// ---- //
-	
-	[self reloadOldLines:NO];
-
-	// ---- //
+	[self reloadOldLines:YES];
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		self.reloading = NO;
+		self.reloadingHistory = NO;
+
+		/* isHistoric queue items take priority over normal messages. Normal
+		 messages are not processed while reloadingHistory is YES. Therefore,
+		 when we are done reloading our history we reset our state so that
+		 normal messages know to hit the block. */
+
+		[self.world updateReadinessState:self];
+
+		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:YES];
+	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{
+		@"highPriority" : @(YES),
+		@"isHistoric" : @(YES)
+	 }];
+}
 
-	// ---- //
+- (void)reloadTheme
+{
+	if (self.reloadingHistory) {
+		return;
+	}
+	
+	self.reloadingBacklog = YES;
 
-	[self executeScriptCommand:@"viewFinishedReload" withArguments:@[] isSpecial:YES];
+	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+	[self reloadOldLines:NO];
+
+	TVCLogMessageBlock (^messageBlock)(void) = [^{
+		self.reloadingBacklog = NO;
+
+		[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		
+		return @(YES);
+	} copy];
+
+	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
 	[self savePosition];
-	
+
 	if (bigger) {
 		[self.view makeTextLarger:nil];
 	} else {
@@ -544,7 +538,7 @@
 	}
 
 	[self executeScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
-	
+
 	[self restorePosition];
 }
 
@@ -555,45 +549,45 @@
 	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return NO;
 	}
-	
+
 	if ([self.highlightedLineNumbers containsObject:@(self.lastVisitedHighlight)] == NO) {
 		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
-	
+
 	if (previous && [self.highlightedLineNumbers integerAtIndex:0] == self.lastVisitedHighlight) {
 		return NO;
 	}
-	
+
 	if ((previous == NO) && [self.highlightedLineNumbers.lastObject integerValue] == self.lastVisitedHighlight) {
 		return NO;
 	}
-	
+
 	return YES;
 }
 
-- (void)jumpToLine:(NSInteger)line 
+- (void)jumpToLine:(NSInteger)line
 {
 	NSString *lid = [NSString stringWithFormat:@"line%d", line];
-	
+
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	DOMElement *e = [doc getElementById:lid];
-	
+
 	if (e) {
 		NSInteger y = 0;
 		DOMElement *t = e;
-		
+
 		while (t) {
 			if ([t isKindOfClass:[DOMElement class]]) {
 				y += [[t valueForKey:@"offsetTop"] integerValue];
 			}
-			
+
 			t = (id)[t parentNode];
 		}
-		
+
 		[[doc body] setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 	}
 
@@ -603,22 +597,22 @@
 - (void)nextHighlight
 {
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return;
 	}
-	
+
 	id bhli = @(self.lastVisitedHighlight);
-	
+
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
 		NSInteger hli_ei = [self.highlightedLineNumbers indexOfObject:self.highlightedLineNumbers.lastObject];
-		
+
 		if (NSDissimilarObjects(hli_ci, hli_ei) == NO) {
-			// Return method since the last highlight we 
+			// Return method since the last highlight we
 			// visited was the end of array. Nothing ahead.
 		} else {
 			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci + 1)];
@@ -626,28 +620,28 @@
 	} else {
 		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
-	
+
 	[self jumpToLine:self.lastVisitedHighlight];
 }
 
 - (void)previousHighlight
 {
 	if (self.loaded == NO) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return;
 	}
-	
+
 	id bhli = @(self.lastVisitedHighlight);
-	
+
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
-		
+
 		if (NSDissimilarObjects(hli_ci, 0) == NO) {
-			// Return method since the last highlight we 
+			// Return method since the last highlight we
 			// visited was the start of array. Nothing ahead.
 		} else {
 			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci - 1)];
@@ -655,50 +649,50 @@
 	} else {
 		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
 	}
-	
+
 	[self jumpToLine:self.lastVisitedHighlight];
 }
 
 - (void)limitNumberOfLines
 {
 	self.needsLimitNumberOfLines = NO;
-	
+
 	NSInteger n = (self.count - self.maxLines);
 	if (self.loaded == NO || n <= 0 || self.count <= 0) return;
-	
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
-	
+
 	DOMElement *body = [self body:doc];
 	if (PointerIsEmpty(body)) return;
-	
+
 	DOMNodeList *nodeList = [body childNodes];
 	if (PointerIsEmpty(nodeList)) return;
-	
+
 	n = (nodeList.length - self.maxLines);
-	
+
 	for (NSInteger i = (n - 1); i >= 0; --i) {
 		[body removeChild:[nodeList item:(unsigned)i]];
 	}
-	
+
 	if (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
 		DOMNodeList *nodeList = [body childNodes];
-		
+
 		if (nodeList.length) {
 			DOMNode *firstNode = [nodeList item:0];
-			
+
 			if (firstNode) {
 				NSString *lineId = [firstNode valueForKey:@"id"];
-				
+
 				if (lineId && lineId.length > 4) {
 					NSString *lineNumStr = [lineId safeSubstringFromIndex:4];
 					NSInteger lineNum    = [lineNumStr integerValue];
-					
+
 					while (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
 						NSInteger i = [self.highlightedLineNumbers integerAtIndex:0];
-						
+
 						if (lineNum <= i) break;
-						
+
 						[self.highlightedLineNumbers safeRemoveObjectAtIndex:0];
 					}
 				}
@@ -707,24 +701,32 @@
 			[self.highlightedLineNumbers removeAllObjects];
 		}
 	}
-	
+
 	self.count -= n;
-	
+
 	if (self.count < 0) self.count = 0;
 }
 
 - (void)setNeedsLimitNumberOfLines
 {
 	if (self.needsLimitNumberOfLines) return;
-	
+
 	_needsLimitNumberOfLines = YES;
-	
+
 	[self limitNumberOfLines];
 }
 
 - (void)clear
 {
 	[self.logFile reset];
+
+	[self.world.messageOperationQueue cancelAllOperations];
+
+	[[NSOperationQueue mainQueue] cancelAllOperations];
+
+	self.reloadingHistory = NO;
+	self.reloadingBacklog = NO;
+	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
@@ -735,20 +737,20 @@
 	if (NSObjectIsEmpty(line.body)) {
 		return nil;
 	}
-	
+
 	NSMutableString *s = [NSMutableString string];
-	
+
 	if (NSObjectIsNotEmpty(line.receivedAt)) {
 		NSString *time = [line formattedTimestamp];
-		
+
 		[s appendString:time];
 	}
 
 	if (NSObjectIsNotEmpty(line.nick)) {
 		NSString *nick = [line formattedNickname:self.channel];
-		
+
 		[s appendString:nick];
-	} 
+	}
 
 	[s appendString:line.body];
 
@@ -792,22 +794,22 @@
 	// ************************************************************************** /
 	// Render our body.                                                           /
 	// ************************************************************************** /
-	
+
 	TVCLogLineType type = line.lineType;
-	
+
 	NSString *body			 = nil;
 	NSString *lineTypeString = [TVCLogLine lineTypeString:type];
-	
+
 	BOOL highlighted = NO;
-	
+
 	BOOL isText	     = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
 	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
 	BOOL drawLinks   = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeString]);
-	
+
 	NSArray *urlRanges = @[];
 
 	// ---- //
-	
+
 	if (rawHTML == NO) {
 		NSMutableDictionary *inputDictionary  = [NSMutableDictionary dictionary];
 		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
@@ -816,7 +818,7 @@
 			inputDictionary[@"keywords"]	= line.keywords;
 			inputDictionary[@"nick"]		= line.nick;
 		}
-		
+
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
 			inputDictionary[@"excludeWords"] = line.excludeWords;
 		}
@@ -877,9 +879,9 @@
 		NSString *url = [inlineImageLinks objectForKey:imageUrl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-			@"imageURL"					: [imageUrl stringWithValidURIScheme],
-			@"anchorLink"				: [url stringWithValidURIScheme],
-			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+		 @"imageURL"					: [imageUrl stringWithValidURIScheme],
+		 @"anchorLink"				: [url stringWithValidURIScheme],
+		 @"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
 		 }];
 	}
 
@@ -891,7 +893,7 @@
 
 	if (NSObjectIsNotEmpty(line.receivedAt)) {
 		NSString *time = [line formattedTimestamp];
-		
+
 		attributes[@"formattedTimestamp"] = time;
 	}
 
@@ -912,7 +914,7 @@
 	// ---- //
 
 	attributes[@"lineType"] = [TVCLogLine lineTypeString:line.lineType];
-	
+
 	// ---- //
 
 	NSString *classRep = NSStringEmptyPlaceholder;
@@ -922,7 +924,7 @@
 	} else {
 		classRep = @"event";
 	}
-	
+
 	if (line.isHistoric) {
 		classRep = [classRep stringByAppendingString:@" historic"];
 	}
@@ -947,11 +949,11 @@
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
 	// ************************************************************************** /
-	
+
 	if (highlighted && isSpecial == NO) {
 		NSString *messageBody;
 		NSString *nicknameBody = [line formattedNickname:self.channel];
-		
+
 		if (type == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
 				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody, line.body];
@@ -961,10 +963,10 @@
 		} else {
 			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, nicknameBody, line.body];
 		}
-		
+
 		[self.world addHighlightInChannel:self.channel withMessage:messageBody];
 	}
-	
+
 	return highlighted;
 }
 
@@ -975,15 +977,15 @@
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
-		
+
 		++self.lineNumber;
 		++self.count;
 
 		// ---- //
-		
+
 		DOMDocument *doc = [self mainFrameDocument];
 		if (PointerIsEmpty(doc)) return nil;
-		
+
 		DOMElement *body = [self body:doc];
 		if (PointerIsEmpty(body)) return nil;
 
@@ -1025,20 +1027,25 @@
 
 		return (__bridge void *)html;
 	} copy];
-	
-	[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:(isSpecial || line.isHistoric)];
+
+	[self enqueueMessageBlock:messageBlock
+				   fromSender:self
+				  withContext:@{
+					@"highPriority" : @(isSpecial || line.isHistoric),
+					@"isHistoric" : @(line.isHistoric)
+	 }];
 }
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
 {
-	[self enqueueMessageBlock:messageBlock fromSender:sender isSpecial:NO];
+	[self enqueueMessageBlock:messageBlock fromSender:sender withContext:nil];
 }
 
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender isSpecial:(BOOL)special
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
 {
 	[self.world.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
-		[sender handleMessageBlock:messageBlock isSpecial:special];
-	} forController:sender withSpecialPriority:special]];
+		[sender handleMessageBlock:messageBlock isSpecial:[context[@"highPriority"] boolValue]];
+	} forController:sender withContext:context]];
 }
 
 - (void)handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
@@ -1062,8 +1069,18 @@
 		if (NSObjectIsNotEmpty(stslt)) {
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[self appendToDocumentBody:stslt];
+
+				if (self.reloadingBacklog || self.reloadingHistory) {
+					// We move it to the top whenever a reload is in progress
+					// so our loading screen message is always visible. Without
+					// this call, each new message posted would scroll our view
+					// back to the bottom.
+					
+					[self moveToTop];
+					self.bottom = NO;
+				}
 			}];
-			
+
 			rrslt = YES;
 		}
 	} else {
@@ -1073,7 +1090,7 @@
 	// ---- //
 
 	if (rrslt == NO) {
-		[self enqueueMessageBlock:messageBlock fromSender:self isSpecial:special];
+		[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(special)}];
 	}
 }
 
@@ -1091,10 +1108,10 @@
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences applicationResourcesFolderPath];
 
 	// ---- //
-	
+
 	if (self.channel) {
 		templateTokens[@"isChannelView"]	= @(YES);
-		
+
 		templateTokens[@"channelName"]		= logEscape(self.channel.name);
 		templateTokens[@"viewTypeToken"]	= [self.channel channelTypeString];
 
@@ -1110,9 +1127,9 @@
 	// ---- //
 
 	if ([TPCPreferences rightToLeftFormatting]) {
-		 templateTokens[@"textDirectionToken"] = @"rtl";
+		templateTokens[@"textDirectionToken"] = @"rtl";
 	} else {
-		 templateTokens[@"textDirectionToken"] = @"ltr";
+		templateTokens[@"textDirectionToken"] = @"ltr";
 	}
 
 	// ---- //
@@ -1123,17 +1140,17 @@
 - (NSMutableDictionary *)generateOverrideStyle
 {
 	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
-	
+
 	TPCOtherTheme *other = self.world.viewTheme.other;
 
 	// ---- //
-	
+
 	NSFont *channelFont = other.channelViewFont;
 
 	if (PointerIsEmpty(channelFont)) {
 		channelFont = [TPCPreferences themeChannelViewFont];
 	}
-	
+
 	NSString *name = [channelFont fontName];
 	CGFloat  rsize = [channelFont pointSize];
 
@@ -1149,17 +1166,17 @@
 	// ---- //
 
 	NSInteger indentOffset = other.indentationOffset;
-	
+
 	if (indentOffset == TXThemeDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
-		
+
 		NSString *time = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], other.timestampFormat);
-		
+
 		NSDictionary *attributes = @{NSFontAttributeName: channelFont};
-		
-		NSSize    textSize  = [time sizeWithAttributes:attributes]; 
+
+		NSSize    textSize  = [time sizeWithAttributes:attributes];
 		NSInteger textWidth = (textSize.width + indentOffset);
 
 		templateTokens[@"predefinedTimestampWidth"] = @(textWidth);
@@ -1176,22 +1193,22 @@
 {
 	WebFrameView *frame = [[self.view mainFrame] frameView];
 	if (PointerIsEmpty(frame)) return;
-	
+
 	NSScrollView *scrollView = nil;
-	
+
 	for (NSView *v in [frame subviews]) {
 		if ([v isKindOfClass:[NSScrollView class]]) {
 			scrollView = (NSScrollView *)v;
-			
+
 			break;
 		}
 	}
-	
+
 	if (PointerIsEmpty(scrollView)) return;
-	
+
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
-	
+
 	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
 		[scrollView performSelector:@selector(setAllowsHorizontalScrolling:) withObject:NO];
 	}
@@ -1203,68 +1220,30 @@
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
 	self.js = windowObject;
-	
+
 	[self.js setValue:self.sink forKey:@"app"];
 }
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
-		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
+				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
 {
 	LogToConsole(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
-			identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
+				 identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
-		  [self description], [self.channel description], [self.client description], [error localizedDescription]);
+				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	[self.world updateReadinessState:self];
-
-	self.loaded	= YES;
-	self.loadingImages = 0;
-	
-	[self setUpScroller];
-	
-	if (PointerIsEmpty(self.autoScroller)) {
-		self.autoScroller = [TVCWebViewAutoScroll new];
-	}
-	
-	self.autoScroller.webFrame = self.view.mainFrame.frameView;
-	
-	[self moveToBottom];
-	self.bottom = YES;
-	
-	DOMDocument *doc = [frame DOMDocument];
-	if (PointerIsEmpty(doc)) return;
-	
-	DOMElement *body = [self body:doc];
-	DOMNode    *e    = [body firstChild];
-	
-	while (e) {
-		DOMNode *next = [e nextSibling];
-		
-		if ([e isKindOfClass:[DOMHTMLDivElement class]] == NO && 
-			[e isKindOfClass:[DOMHTMLHRElement class]] == NO) {
-			
-			[body removeChild:e];
-		}
-		
-		e = next;
-	}
-	
-	if (self.reloading == NO) {
-		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
-	}
-
 	NSString *viewType = @"server";
 
 	if (self.channel && self.channel.isChannel) {
@@ -1279,24 +1258,66 @@
 		NSStringNilValueSubstitute(self.channel.config.guid),
 		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
+
+	if ([TPCPreferences reloadScrollbackOnLaunch] && self.reloadingBacklog == NO) {
+		[self reloadHistory];
+	} else {
+		[self.world updateReadinessState:self];
+
+		if (self.reloadingBacklog == NO) {
+			[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+		}
+	}
+	
+	self.loaded	= YES;
+	self.loadingImages = 0;
+
+	[self setUpScroller];
+
+	if (PointerIsEmpty(self.autoScroller)) {
+		self.autoScroller = [TVCWebViewAutoScroll new];
+	}
+
+	self.autoScroller.webFrame = self.view.mainFrame.frameView;
+
+	[self moveToBottom];
+	self.bottom = YES;
+
+	DOMDocument *doc = [frame DOMDocument];
+	if (PointerIsEmpty(doc)) return;
+
+	DOMElement *body = [self body:doc];
+	DOMNode    *e    = [body firstChild];
+
+	while (e) {
+		DOMNode *next = [e nextSibling];
+
+		if ([e isKindOfClass:[DOMHTMLDivElement class]] == NO &&
+			[e isKindOfClass:[DOMHTMLHRElement class]] == NO) {
+
+			[body removeChild:e];
+		}
+
+		e = next;
+	}
 }
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
 {
 	NSString *scheme = [request.URL.scheme lowercaseString];
-	
-	if ([scheme isEqualToString:@"http"] || 
+
+	if ([scheme isEqualToString:@"http"] ||
 		[scheme isEqualToString:@"https"]) {
-		
+
 		if (self.loadingImages == 0) {
 			[self savePosition];
 		}
-		
+
 		++self.loadingImages;
-		
+
 		return self;
 	}
-	
+
 	return nil;
 }
 
@@ -1306,7 +1327,7 @@
 		if (self.loadingImages > 0) {
 			--self.loadingImages;
 		}
-		
+
 		if (self.loadingImages == 0) {
 			[self restorePosition];
 		}

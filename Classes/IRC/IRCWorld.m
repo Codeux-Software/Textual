@@ -1386,14 +1386,14 @@
 #pragma mark -
 
 @interface TKMessageBlockOperation () /* @private */
-@property (nonatomic, assign) BOOL isSpecial;
+@property (nonatomic, strong) NSDictionary *context;
 @end
 
 @implementation TKMessageBlockOperation
 
 + (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
 								  forController:(TVCLogController *)controller
-							withSpecialPriority:(BOOL)special
+									withContext:(NSDictionary *)context
 {
 	if (PointerIsEmpty(controller) || PointerIsEmpty(block)) {
 		return nil;
@@ -1402,7 +1402,7 @@
 	TKMessageBlockOperation *retval = [TKMessageBlockOperation new];
 
 	retval.controller		= controller;
-	retval.isSpecial		= special;
+	retval.context			= context;
 	
 	retval.queuePriority	= retval.priority;
 	retval.completionBlock	= block;
@@ -1413,7 +1413,7 @@
 + (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
 								  forController:(TVCLogController *)controller
 {
-	return [self operationWithBlock:block forController:controller withSpecialPriority:NO];
+	return [self operationWithBlock:block forController:controller withContext:nil];
 }
 
 - (NSOperationQueuePriority)priority
@@ -1432,10 +1432,14 @@
 	// ---- //
 	
 	if ((target || selected) && target == selected) {
+		retval = NSOperationQueuePriorityNormal;
+	}
+
+	if (NSObjectIsNotEmpty(self.context) && self.context[@"highPriority"]) {
 		retval += 4L;
 	}
 
-	if (self.isSpecial) {
+	if (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]) {
 		retval += 4L;
 	}
 
@@ -1446,7 +1450,17 @@
 
 - (BOOL)isReady
 {
-	return ([self.controller.view isLoading] == NO);
+	if (self.controller.reloadingHistory) {
+		BOOL isHistoric = (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]);
+
+		if (isHistoric) {
+			return ([self.controller.view isLoading] == NO);
+		}
+	} else {
+		return ([self.controller.view isLoading] == NO);
+	}
+
+	return NO;
 }
 
 @end

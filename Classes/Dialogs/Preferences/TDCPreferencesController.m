@@ -42,8 +42,9 @@
 #define _inlineImageMax		5000
 #define _inlineImageMin		40
 
-#define _TXWindowToolbarHeight		82
-#define _addonsToolbarItemIndex		8
+#define _TXWindowToolbarHeight				82
+#define _addonsToolbarItemIndex				8
+#define _addonsToolbarItemMultiplier		65
 
 @implementation TDCPreferencesController
 
@@ -121,7 +122,7 @@
 {
 	if (NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) {
 		for (THOTextualPluginItem *plugin in self.world.bundlesWithPreferences) {
-			NSInteger tagIndex = ([self.world.bundlesWithPreferences indexOfObject:plugin] + 20);
+			NSInteger tagIndex = ([self.world.bundlesWithPreferences indexOfObject:plugin] + _addonsToolbarItemMultiplier);
 			
 			NSMenuItem *pluginMenu = [NSMenuItem new];
 			
@@ -153,7 +154,7 @@
 		case 11: [self firstPane:self.experimentalSettingsView selectedItem:11]; break;
 		default:
 		{
-			THOTextualPluginItem *plugin = [self.world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - 20)];
+			THOTextualPluginItem *plugin = [self.world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - _addonsToolbarItemMultiplier)];
 			
 			if (plugin) {
 				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];

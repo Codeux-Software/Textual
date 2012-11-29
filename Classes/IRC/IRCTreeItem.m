@@ -44,7 +44,6 @@
 		   andClient:(IRCClient *)u
 {
 	[self.log clear];
-	
 	[self.log notifyDidBecomeVisible];
 }
 
