@@ -39,6 +39,8 @@
 
 @implementation NSNumber (TXNumberHelper)
 
+/* I wrote this method long ago and still don't understand what
+ it does or how it works… */
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber
 {
 	if (TXIsNumeric(c) && firstNumber < 2) {

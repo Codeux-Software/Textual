@@ -637,6 +637,28 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString *)reservedCharactersToIRCFormatting
 {
+	/* This is an interesting method. Long, long ago when Textual was still a young 
+	 fork of Limechat we were working on formatting support for the input text field.
+	 The feature was sorta, kinda rushed so "reserved characters" were settled on. 
+	 It was just a rip off of mIRC boxy things they use for formatting. 
+	 
+	 User would select a portion of text they wanted formatted, right click, select
+	 the formatting, then Textual would insert the boxes around the text. Of couse
+	 Textual now has a more modern system for formatting. This method still exists
+	 though so a theme can customize localizations with IRC formatting since the
+	 localizations do not support HTML.
+	 
+	 Maybe a new system is needed? Nah, no rush. No themes even change localizations.
+	 
+	 Format:
+			▤<foreground 1-15>,[background 1-15]<text>▤ — color
+			▥<text>▥ — bold
+			▧<text>▧ — italics
+			▨<text>▨ — underline
+	 
+	 It is 11:58 P.M. and I do not have Internet right now so I thought I would 
+	 write this… okay? deal with it. */
+
 	NSString *s = self;
 	
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x03] withString:@"▤"]; // color
