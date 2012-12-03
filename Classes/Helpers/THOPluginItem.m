@@ -46,16 +46,8 @@
 		withServerInputDict:(NSMutableDictionary **)serverDict
 		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict
 {
-	if ([primaryClass self]) {
-		NSString *className = NSStringFromClass(primaryClass);
+	self.pluginPrimaryClass = [primaryClass new];
 
-		__strong Class allocLass = NSClassFromString(className);
-
-		if ((allocLass = [[allocLass alloc] init])) {
-			self.pluginPrimaryClass = (id)allocLass;
-		}
-	}
-	
 	if (self.pluginPrimaryClass) {
 		NSMutableDictionary *newUserDict		= [*userDict mutableCopy];
 		NSMutableDictionary *newServerDict		= [*serverDict mutableCopy];
@@ -158,7 +150,6 @@
 		*userDict			= newUserDict;
 		*serverDict			= newServerDict;
 		*outputRulesDict	= newOutputRulesDict;
-		
 	}
 }
 
