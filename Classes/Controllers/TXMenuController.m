@@ -1660,7 +1660,6 @@
 		case 105: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/memory-management"]]; break;
 		case 106: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/styles"]]; break;
 		case 108: [_NSWorkspace() openURL:[NSURL URLWithString:@"https://wiki.github.com/codeux/Textual/feature-requests"]]; break;
-		case 110: [_NSWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/forum/"]]; break;
 	}
 }
 
