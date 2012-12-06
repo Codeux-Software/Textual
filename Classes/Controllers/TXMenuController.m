@@ -691,6 +691,7 @@
 	[sel.log unmark];
 	[sel.log mark];
 }
+
 - (void)gotoScrollbackMarker:(id)sender
 {
 	IRCTreeItem *sel = self.world.selected;
