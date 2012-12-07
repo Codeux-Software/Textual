@@ -449,8 +449,11 @@
 	
 	IRCTreeItem *sel = self.selected;
 	
+	IRCClient   *u;
+	IRCChannel  *c;
+
 	if (sel.isClient) {
-		IRCClient *u = (IRCClient *)sel;
+		u = (IRCClient *)sel;
 		
 		NSMutableString *title = [NSMutableString string];
 		
@@ -476,8 +479,8 @@
 		
 		[self.window setTitle:title];
 	} else {		
-		IRCClient  *u = sel.client;
-		IRCChannel *c = (IRCChannel *)sel;
+		u = sel.client;
+		c = (IRCChannel *)sel;
 		
 		NSMutableString *title = [NSMutableString string];
 		
@@ -508,6 +511,36 @@
 		}
 		
 		[self.window setTitle:title];
+	}
+
+	// ---- //
+
+	NSURL *iconURL = [NSBundle.mainBundle bundleURL];
+
+	if ([TPCPreferences logTranscript]) {
+		NSString *writePath;
+
+		if (c) {
+			writePath = c.logFile.fileWritePath;
+		} else {
+			writePath = u.logFile.fileWritePath;
+		}
+
+		if ([_NSFileManager() fileExistsAtPath:writePath]) {
+			iconURL = [NSURL URLWithString:writePath];
+		} 
+	}
+
+	[self.window setRepresentedURL:iconURL];
+
+	// ---- //
+	
+	if (u.config.useSSL) {
+		[[self.window standardWindowButton:NSWindowDocumentIconButton]
+		 setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
+	} else {
+		[[self.window standardWindowButton:NSWindowDocumentIconButton]
+		 setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
 	}
 }
 
