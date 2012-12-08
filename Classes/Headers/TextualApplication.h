@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#warning TODO: Check backwards compatibility and upgrade any 3rd			\
+	party libraries Textual Uses. (e.g. AsyncSocket, Mustache, etc…)
+
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <WebKit/WebKit.h>

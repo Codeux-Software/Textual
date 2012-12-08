@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _bottomEpsilon					0
-
 @interface TVCLogController ()
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @end
@@ -339,7 +337,7 @@
 
 		if (viewHeight == 0) return YES;
 
-		return ((top + viewHeight) >= (height - _bottomEpsilon));
+		return ((top + viewHeight) >= height);
 	}
 
 	return NO;

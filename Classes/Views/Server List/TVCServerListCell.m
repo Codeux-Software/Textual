@@ -185,7 +185,7 @@
 	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[_NSGraphicsCurrentContext() saveGraphicsState];
-		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+		[_NSGraphicsCurrentContext() setShouldAntialias:NO];
 	}
 	
 	[mcstring drawAtPoint:badgeTextPoint];
@@ -407,7 +407,7 @@
 		
 		if ([TPCPreferences useLogAntialiasing] == NO) {
 			[_NSGraphicsCurrentContext() saveGraphicsState];
-			[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+			[_NSGraphicsCurrentContext() setShouldAntialias:NO];
 		}
 		
 		[newValue drawInRect:cellFrame];
