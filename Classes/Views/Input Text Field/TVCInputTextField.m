@@ -247,7 +247,7 @@
 	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[_NSGraphicsCurrentContext() saveGraphicsState];
-		[_NSGraphicsCurrentContext() setShouldAntialias: NO];
+		[_NSGraphicsCurrentContext() setShouldAntialias:NO];
 	}
 	
 	NSString *value = [self stringValue];
