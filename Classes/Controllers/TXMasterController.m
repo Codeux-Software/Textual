@@ -51,7 +51,7 @@
 
 - (void)awakeFromNib
 {
-	DebugLogToConsole(@"%@", [TPCPreferences applicationTemporaryFolderPath]);
+	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
 #ifdef TXMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
