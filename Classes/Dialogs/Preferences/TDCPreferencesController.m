@@ -59,18 +59,26 @@
 		self.scriptsController = [TDCPreferencesScriptWrapper new];
 
 		self.sounds = [NSMutableArray new];
+
+		// self.sounds treats anything that is not a TDCPreferencesSoundWrapper as an 
+		// indicator that a [NSMenuItem separatorItem] should be placed in our menu.
 		
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+		[self.sounds addObject:@"-"];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+		[self.sounds addObject:@"--"];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
-		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+		[self.sounds addObject:@"---"];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+		[self.sounds addObject:@"----"];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
-		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
+		[self.sounds addObject:@"-----"];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewQueryType]];
+		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryMessageType]];
 		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationQueryNoticeType]];
-		[self.sounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
 
 		[self setUpToolbarItemsAndMenus];
 	}
@@ -280,19 +288,23 @@
         
         [self.alertSoundButton.menu addItem:item];
     }
-	
+
     [self.alertSoundButton selectItemAtIndex:0];
     [self.alertButton removeAllItems];
 	
     NSMutableArray *alerts = [self sounds];
 	
-    for (TDCPreferencesSoundWrapper *alert in alerts) {
-        NSMenuItem *item = [NSMenuItem new];
-		
-        [item setTitle:alert.displayName];
-        [item setTag:[alert eventType]];
-		
-        [self.alertButton.menu addItem:item];
+    for (id alert in alerts) {
+		if ([alert isKindOfClass:[TDCPreferencesSoundWrapper class]]) {
+			NSMenuItem *item = [NSMenuItem new];
+
+			[item setTitle:[alert displayName]];
+			[item setTag:[alert eventType]];
+
+			[self.alertButton.menu addItem:item];
+		} else {
+			[self.alertButton.menu addItem:[NSMenuItem separatorItem]];
+		}
     }
 	
     [self.alertButton selectItemAtIndex:0];
