@@ -1789,6 +1789,27 @@
     }
 }
 
+- (void)loadExtensionsIntoMemory:(id)sender
+{
+	[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
+}
+
+- (void)unloadExtensionsFromMemory:(id)sender
+{
+	[NSBundle.invokeInBackgroundThread deallocBundlesFromMemory:self.world];
+}
+
+- (void)resetDoNotAskMePopupWarnings:(id)sender
+{
+	NSDictionary *allSettings =	[_NSUserDefaults() dictionaryRepresentation];
+
+	for (NSString *key in allSettings) {
+		if ([key hasPrefix:TXPopupPromptSuppressionPrefix]) {
+			[_NSUserDefaults() setBool:NO forKey:key];
+		}
+	}
+}
+
 - (void)onNextHighlight:(id)sender
 {
 	[self.world.selected.log nextHighlight];

@@ -5511,7 +5511,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)ircBadSSLCertificateDisconnectCallback:(TLOPopupPromptReturnType)returnCode
 {
-	NSString *supKeyFull = [TXPopupPromptSuppressionPrefix stringByAppendingFormat:@"cert_trust_error.@", self.config.guid];;
+	NSString *supKeyFull = [TXPopupPromptSuppressionPrefix stringByAppendingFormat:@"cert_trust_error.%@", self.config.guid];;
 
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		[_NSUserDefaults() setBool:YES forKey:supKeyFull];
@@ -5525,7 +5525,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender
 {
 	if (self.disconnectType == IRCBadSSLCertificateDisconnectMode) {
-		NSString *supkeyBack = [NSString stringWithFormat:@"cert_trust_error.@", self.config.guid];
+		NSString *supkeyBack = [NSString stringWithFormat:@"cert_trust_error.%@", self.config.guid];
 
 		if (self.config.isTrustedConnection == NO) {
 			TLOPopupPrompts *prompt = [TLOPopupPrompts new];

@@ -75,6 +75,9 @@
 - (void)copyLogAsHtml:(id)sender;
 
 - (void)toggleDeveloperMode:(id)sender;
+- (void)loadExtensionsIntoMemory:(id)sender;
+- (void)unloadExtensionsFromMemory:(id)sender;
+- (void)resetDoNotAskMePopupWarnings:(id)sender;
 
 - (void)showHighlightSheet:(id)sender;
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
