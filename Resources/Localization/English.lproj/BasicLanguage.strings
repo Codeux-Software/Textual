@@ -78,7 +78,7 @@
 "DeleteQueryMenuItem" = "Close Query";
 
 "FindSearchPanelPromptButton" = "Search";
-"FindSearchPanelPromptMessage" = "Please enter a phrase to search for. Once a search is created the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
+"FindSearchPanelPromptMessage" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
 "FindSearchPanelPromptTitle" = "Search for Message";
 
 "ForceReloadThemeMenuItem" = "Force Reload Style";
@@ -117,7 +117,7 @@
 "IRCRecievedCTCPRequest" = "\002-CTCP-\002 %1$@ from %2$@";
 "IRCServerHadNetsplitQuitMessage" = "Netsplit: %@";
 "IRCServerNetworkName" = "%@ IRC Network";
-"IRCTimerCommandRequiresInteger" = "Timer command requires number for interval.";
+"IRCTimerCommandRequiresInteger" = "Timer command requires number for interval. Syntax: \"/timer <seconds> <command>\"";
 "IRCUserChangedNickname" = "%1$@ is now known as \002%2$@\002";
 "IRCUserDisconnected" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "IRCUserHasModes" = "Your user mode is %@";
@@ -170,6 +170,9 @@
 
 "NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 
+/* OldSandboxContainerFoundDialog* messages are actually not used in Textual 
+ as of the time that this comment was written. It used to be during beta testing
+ of an older version of Textual. It is being kept around in case it is needed again. */
 "OldSandboxContainerFoundDialogTitle" = "Migration Assistant";
 "OldSandboxContainerFoundDialogMessage" = "A set of configuration files associated with an earlier version of Textual have been found.\n\nTextual does not have permission to move the old files while within the Mac OS Sandbox so please download our migration assistant to move them into the correct location.";
 "OldSandboxContainerFoundDialogPrimaryButton" = "Quit & Download Assistant";
@@ -246,9 +249,9 @@
 "SocketBadSSLCertificateErrorTitle" = "Untrusted Connection";
 
 "SoundIsAlreadyMuted" = "Sound is already muted.";
-"SoundIsNoLongerMuted" = "Sound is no longer muted.";
+"SoundIsNoLongerMuted" = "Sound is no longer muted. ";
 "SoundIsNotMuted" = "Sound is not muted.";
-"SoundIsNowMuted" = "Sound has been muted.";
+"SoundIsNowMuted" = "Sound has been muted. This mute is server specific.";
 
 "StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
 
