@@ -1,9 +1,6 @@
 {{#inlineNicknameMatchFound}}
 <span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" colornumber="{{inlineNicknameColorNumber}}">
 {{/inlineNicknameMatchFound}}
-{{#fragmentIsBold}}<b>{{/fragmentIsBold}}
-{{#fragmentIsItalicized}}<i>{{/fragmentIsItalicized}}
-{{#fragmentIsUnderlined}}<u>{{/fragmentIsUnderlined}}
 {{#fragmentTextColor}}
 <span class="effect"
 	color-number="{{fragmentTextColor}}" 
@@ -13,6 +10,9 @@
 	{{/fragmentBackgroundColor}}
 >
 {{/fragmentTextColor}}
+{{#fragmentIsBold}}<b>{{/fragmentIsBold}}
+{{#fragmentIsItalicized}}<i>{{/fragmentIsItalicized}}
+{{#fragmentIsUnderlined}}<u>{{/fragmentIsUnderlined}}
 {{{messageFragment}}}
 {{#fragmentIsBold}}</b>{{/fragmentIsBold}}
 {{#fragmentIsItalicized}}</i>{{/fragmentIsItalicized}}
