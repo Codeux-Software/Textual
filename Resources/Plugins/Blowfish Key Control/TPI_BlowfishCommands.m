@@ -37,6 +37,13 @@
 
 #import "TPI_BlowfishCommands.h"
 
+/* It may seem confusing why these commands are an extension when
+ the actual encryption support is built into Textual. Well, it is
+ an extension just because the actual commands are considered 
+ not that important to be in the actual core when an everyday
+ user would use the actual user interface to set a key. These
+ are considered more an addon for "pro" users. */
+
 #define TXExchangeRequestPrefix			@"DH1080_INIT "
 #define TXExchangeResponsePrefix		@"DH1080_FINISH "
 
@@ -102,6 +109,8 @@
 - (NSDictionary *)pluginOutputDisplayRules
 {
 	/* This is an undocumented plugin call to suppress certain messages. */
+	/* These rules hide encryption request and replies in private messages. 
+	 Now Textual just needs to add actual support for them… */
 	
 	NSMutableDictionary *rules = [NSMutableDictionary dictionary];
 	
