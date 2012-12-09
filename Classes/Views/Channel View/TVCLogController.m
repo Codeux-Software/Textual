@@ -813,8 +813,11 @@
 		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
 
 		if (NSObjectIsNotEmpty(line.keywords)) {
-			inputDictionary[@"keywords"]	= line.keywords;
-			inputDictionary[@"nick"]		= line.nick;
+			inputDictionary[@"keywords"] = line.keywords;
+
+			if (NSObjectIsNotEmpty(line.nick)) {
+				inputDictionary[@"nick"] = line.nick;
+			}
 		}
 
 		if (NSObjectIsNotEmpty(line.excludeWords)) {
