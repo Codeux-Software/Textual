@@ -36,6 +36,15 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* Note by Textual:
+
+	This library is no longer maintained by the original author.
+	It is considered unmaintainable by us. It only exists because
+	of Snow Leopard. Something needs to be done with this…
+ 
+	It is very ugly.
+*/
+
 #ifdef    __OBJC__
 #import <Foundation/NSArray.h>
 #import <Foundation/NSError.h>

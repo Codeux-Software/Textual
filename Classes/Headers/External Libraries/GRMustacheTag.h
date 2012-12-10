@@ -65,6 +65,7 @@ typedef enum {
  * a variable tag {{ name }}, or a section tag {{# name }}...{{/}).
  */
 @interface GRMustacheTag: NSObject {
+@private
     id _expression;
     GRMustacheTemplateRepository *_templateRepository;
 }

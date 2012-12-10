@@ -229,6 +229,8 @@
  *                  an NSError object that describes the problem.
  *
  * @return The rendering of the tag.
+ *
+ * @since v6.0
  */
 - (NSString *)renderContentWithContext:(GRMustacheContext *)context HTMLSafe:(BOOL *)HTMLSafe error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
