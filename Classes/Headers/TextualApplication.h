@@ -35,9 +35,6 @@
 
  *********************************************************************** */
 
-#warning TODO: Check backwards compatibility and upgrade any 3rd			\
-	party libraries Textual Uses. (e.g. AsyncSocket, Mustache, etc…)
-
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <WebKit/WebKit.h>
@@ -151,7 +148,6 @@
 	#import "GRMustacheTemplateRepository.h"
 	#import "GRMustacheVersion.h"
 	#import "GRMustache.h"
-	#import "GTMBase64.h"
 	#import "GTMDefines.h"
 	#import "GTMGarbageCollection.h"
 	#import "GTMEncodeHTML.h"

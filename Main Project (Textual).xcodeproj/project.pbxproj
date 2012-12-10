@@ -243,7 +243,6 @@
 		4C8AF699158E99520026668C /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
 		4C8AF69A158E99520026668C /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */; };
 		4C8AF69B158E99520026668C /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A8158E99520026668C /* NSWindowHelper.m */; };
-		4C8AF69C158E99520026668C /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AB158E99520026668C /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C8AF69D158E99520026668C /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C8AF69F158E99520026668C /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AE158E99520026668C /* THOPluginItem.m */; };
@@ -341,7 +340,6 @@
 		4C8AF74D158EB6CA0026668C /* DDInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF741158EB6CA0026668C /* DDInvocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF750158EB6CA0026668C /* GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF744158EB6CA0026668C /* GTMBase64.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF751158EB6CA0026668C /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF745158EB6CA0026668C /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -687,7 +685,6 @@
 		4C8AF5A6158E99520026668C /* NSStringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHelper.m; sourceTree = "<group>"; };
 		4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextFieldHelper.m; sourceTree = "<group>"; };
 		4C8AF5A8158E99520026668C /* NSWindowHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWindowHelper.m; sourceTree = "<group>"; };
-		4C8AF5AB158E99520026668C /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMEncodeHTML.m; sourceTree = "<group>"; };
 		4C8AF5AD158E99520026668C /* GTMEncodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMEncodeURL.m; sourceTree = "<group>"; };
 		4C8AF5AE158E99520026668C /* THOPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOPluginItem.m; sourceTree = "<group>"; };
@@ -783,7 +780,6 @@
 		4C8AF741158EB6CA0026668C /* DDInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInvocation.h; sourceTree = "<group>"; };
 		4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
-		4C8AF744158EB6CA0026668C /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
 		4C8AF745158EB6CA0026668C /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeHTML.h; sourceTree = "<group>"; };
 		4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeURL.h; sourceTree = "<group>"; };
@@ -1452,7 +1448,6 @@
 		4C8AF5AA158E99520026668C /* Google */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5AB158E99520026668C /* GTMBase64.m */,
 				4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */,
 				4C8AF5AD158E99520026668C /* GTMEncodeURL.m */,
 			);
@@ -1684,7 +1679,6 @@
 				4CD09B2C1640B31A008F1A04 /* GRMustacheTemplate.h */,
 				4CD09B2D1640B31A008F1A04 /* GRMustacheTemplateRepository.h */,
 				4CD09B2E1640B31A008F1A04 /* GRMustacheVersion.h */,
-				4C8AF744158EB6CA0026668C /* GTMBase64.h */,
 				4C8AF745158EB6CA0026668C /* GTMDefines.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
@@ -1753,7 +1747,6 @@
 				4C8AF74D158EB6CA0026668C /* DDInvocation.h in Headers */,
 				4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */,
 				4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */,
-				4C8AF750158EB6CA0026668C /* GTMBase64.h in Headers */,
 				4C8AF751158EB6CA0026668C /* GTMDefines.h in Headers */,
 				4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */,
 				4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */,
@@ -2151,7 +2144,6 @@
 				4C8AF699158E99520026668C /* NSStringHelper.m in Sources */,
 				4C8AF69A158E99520026668C /* NSTextFieldHelper.m in Sources */,
 				4C8AF69B158E99520026668C /* NSWindowHelper.m in Sources */,
-				4C8AF69C158E99520026668C /* GTMBase64.m in Sources */,
 				4C8AF69D158E99520026668C /* GTMEncodeHTML.m in Sources */,
 				4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */,
 				4C8AF69F158E99520026668C /* THOPluginItem.m in Sources */,

@@ -126,3 +126,13 @@ typedef struct {
 + (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
+
+#import "GRMustacheTemplate.h"
+#import "GRMustacheTagDelegate.h"
+#import "GRMustacheTemplateRepository.h"
+#import "GRMustacheFilter.h"
+#import "GRMustacheError.h"
+#import "GRMustacheVersion.h"
+#import "GRMustacheContext.h"
+#import "GRMustacheRendering.h"
+#import "GRMustacheTag.h"

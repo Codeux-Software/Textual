@@ -6,14 +6,17 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not
 //  use this file except in compliance with the License.  You may obtain a copy
 //  of the License at
-// 
+//
 //  http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 //  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 //  License for the specific language governing permissions and limitations under
 //  the License.
+//
+
+// Last Update: Google — May 16, 2008
 
 #import "TextualApplication.h"
 
@@ -29,12 +32,11 @@
 ///
 /// This will also escape '%', so this should not be used on a string that has
 /// already been escaped unless double-escaping is the desired result.
-- (NSString *)gtm_stringByEscapingForURLArgument;
+- (NSString*)gtm_stringByEscapingForURLArgument;
 
 /// Returns the unescaped version of a URL argument
 //
 /// This has the same behavior as stringByReplacingPercentEscapesUsingEncoding:,
 /// except that it will also convert '+' to space.
-- (NSString *)gtm_stringByUnescapingFromURLArgument;
-
+- (NSString*)gtm_stringByUnescapingFromURLArgument;
 @end
