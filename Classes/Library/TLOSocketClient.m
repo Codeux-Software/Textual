@@ -53,6 +53,11 @@
 
 - (BOOL)useNewSocketEngine
 {
+	/* There is no known way to use a proxy with GCDAsyncSocket. That is why
+	 we also use the classic run loop based version of AsyncSocket when a 
+	 proxy is defined. That is the only way it is used unless you use
+	 the below defined hidden setting. */
+	
 	return (self.useSystemSocks == NO && self.useSocks == NO &&
 			[_NSUserDefaults() boolForKey:@"DisableNewSocketEngine"] == NO);
 }
