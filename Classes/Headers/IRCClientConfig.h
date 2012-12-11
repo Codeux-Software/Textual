@@ -69,6 +69,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 @property (nonatomic, strong) NSString *proxyPassword;
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
+@property (nonatomic, assign) BOOL autoSleepDisconnect;
 @property (nonatomic, assign) BOOL prefersIPv6;
 @property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) NSStringEncoding encoding;
