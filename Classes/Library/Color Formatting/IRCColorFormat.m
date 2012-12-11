@@ -141,7 +141,7 @@
 		baseMath += _textTruncationACTIONCommandConstant;
 	}
 	
-	NSInteger totalCalculatedLength = baseMath;
+	NSInteger totalCalculatedLength = 0;
 	NSInteger stringDeletionLength  = 0;
 	
 	NSRange effectiveRange;

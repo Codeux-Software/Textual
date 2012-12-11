@@ -50,7 +50,7 @@
 
 - (id)initWithChannelMode:(IRCChannelMode *)other
 {
-	if (self == [super init]) {
+	if ((self = [super init])) {
 		self.isupport = other.isupport;
 		self.allModes = other.allModes;
 
