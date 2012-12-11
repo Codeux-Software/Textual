@@ -56,6 +56,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.altNicks        = [NSMutableArray new];
 		self.channels        = [NSMutableArray new];
 		self.loginCommands   = [NSMutableArray new];
+
+		self.autoSleepDisconnect = YES;
 		
 		self.host         = NSStringEmptyPlaceholder;
 		self.port         = 6667;
@@ -218,6 +220,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.nick		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
 		self.username	= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 		self.realName	= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
+
+		self.autoSleepDisconnect = NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepDisconnect);
 		
 		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
@@ -302,6 +306,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setBool:self.autoReconnect			forKey:@"connectOnDisconnect"];
 	[dic setBool:self.invisibleMode			forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.isTrustedConnection	forKey:@"trustedSSLConnection"];
+	[dic setBool:self.autoSleepDisconnect	forKey:@"disconnectOnSleepMode"];
 	
 	[dic setInteger:self.cuid				forKey:@"connectionID"];
 	

@@ -241,7 +241,11 @@
 	if (afterWakeUp) delay += _reconnectAfterWakeupDelay;
 	
 	for (IRCClient *c in self.clients) {
-        if ((c.disconnectType == IRCSleepModeDisconnectMode && afterWakeUp) || afterWakeUp == NO) { 
+        if ((c.disconnectType == IRCSleepModeDisconnectMode &&
+			 afterWakeUp && c.config.autoSleepDisconnect)
+			
+			|| afterWakeUp == NO) {
+			
             if (c.config.autoConnect) {
                 [c autoConnect:delay];
 				
@@ -263,9 +267,11 @@
 - (void)prepareForSleep
 {
 	for (IRCClient *c in self.clients) {
-        c.disconnectType = IRCSleepModeDisconnectMode;
+		if (c.config.autoSleepDisconnect) {
+			c.disconnectType = IRCSleepModeDisconnectMode;
         
-		[c quit:c.config.sleepQuitMessage];
+			[c quit:c.config.sleepQuitMessage];
+		}
 	}
 }
 

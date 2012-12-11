@@ -62,6 +62,7 @@
 @property (nonatomic, strong) NSButton *prefersIPv6Check;
 @property (nonatomic, strong) NSButton *autoReconnectCheck;
 @property (nonatomic, strong) NSButton *autoConnectCheck;
+@property (nonatomic, strong) NSButton *autoDisconnectOnSleepCheck;
 @property (nonatomic, strong) NSComboBox *hostCombo;
 @property (nonatomic, strong) NSButton *sslCheck;
 @property (nonatomic, strong) NSTextField *portText;

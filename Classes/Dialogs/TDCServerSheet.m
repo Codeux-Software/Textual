@@ -198,6 +198,8 @@
 	self.autoConnectCheck.state		= self.config.autoConnect;
 	self.autoReconnectCheck.state	= self.config.autoReconnect;
     self.prefersIPv6Check.state     = self.config.prefersIPv6;
+
+	self.autoDisconnectOnSleepCheck.state = self.config.autoSleepDisconnect;
 	
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nick)) {
@@ -260,6 +262,8 @@
 	self.config.autoConnect		= self.autoConnectCheck.state;
 	self.config.autoReconnect	= self.autoReconnectCheck.state;
 	self.config.prefersIPv6     = self.prefersIPv6Check.state;
+	
+	self.config.autoSleepDisconnect = self.autoDisconnectOnSleepCheck.state;
 	
 	NSString *realHost		= nil;
 	NSString *hostname		= [self.hostCombo.stringValue cleanedServerHostmask];
