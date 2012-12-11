@@ -562,7 +562,7 @@
 					<object class="NSButton" id="313205111">
 						<reference key="NSNextResponder" ref="573791842"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{340, 170}, {70, 18}}</string>
+						<string key="NSFrame">{{328, 175}, {70, 18}}</string>
 						<reference key="NSSuperview" ref="573791842"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="961274504"/>
@@ -4154,11 +4154,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="858739632"/>
 							<reference ref="59119852"/>
 							<reference ref="929110250"/>
-							<reference ref="313205111"/>
 							<reference ref="997164220"/>
 							<reference ref="409634394"/>
 							<reference ref="685966950"/>
 							<reference ref="23547283"/>
+							<reference ref="313205111"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">General View</string>
@@ -6068,17 +6068,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCServerSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">autoDisconnectOnSleepCheck</string>
-						<string key="NS.object.0">NSButton</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">autoDisconnectOnSleepCheck</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">autoDisconnectOnSleepCheck</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCServerSheet.h</string>
