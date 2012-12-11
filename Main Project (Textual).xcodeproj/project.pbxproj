@@ -292,7 +292,7 @@
 		4C8AF6D0158E99520026668C /* TPCOtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCOtherTheme.m */; };
 		4C8AF6D1158E99520026668C /* TPCViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCViewTheme.m */; };
 		4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
-		4C8AF6D3158E99520026668C /* LVCLogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F1158E99520026668C /* LVCLogRenderer.m */; };
+		4C8AF6D3158E99520026668C /* TVCLogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F1158E99520026668C /* TVCLogRenderer.m */; };
 		4C8AF6D4158E99520026668C /* TVCImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F2158E99520026668C /* TVCImageURLParser.m */; };
 		4C8AF6D5158E99520026668C /* TVCLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F3158E99520026668C /* TVCLogController.m */; };
 		4C8AF6D6158E99520026668C /* TVCLogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F4158E99520026668C /* TVCLogLine.m */; };
@@ -734,7 +734,7 @@
 		4C8AF5EC158E99520026668C /* TPCOtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCOtherTheme.m; sourceTree = "<group>"; };
 		4C8AF5ED158E99520026668C /* TPCViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCViewTheme.m; sourceTree = "<group>"; };
 		4C8AF5EE158E99520026668C /* TPCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferences.m; sourceTree = "<group>"; };
-		4C8AF5F1158E99520026668C /* LVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVCLogRenderer.m; sourceTree = "<group>"; };
+		4C8AF5F1158E99520026668C /* TVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogRenderer.m; sourceTree = "<group>"; };
 		4C8AF5F2158E99520026668C /* TVCImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLParser.m; sourceTree = "<group>"; };
 		4C8AF5F3158E99520026668C /* TVCLogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogController.m; sourceTree = "<group>"; };
 		4C8AF5F4158E99520026668C /* TVCLogLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogLine.m; sourceTree = "<group>"; };
@@ -1620,7 +1620,7 @@
 		4C8AF5F0158E99520026668C /* Channel View */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5F1158E99520026668C /* LVCLogRenderer.m */,
+				4C8AF5F1158E99520026668C /* TVCLogRenderer.m */,
 				4C8AF5F2158E99520026668C /* TVCImageURLParser.m */,
 				4C8AF5F3158E99520026668C /* TVCLogController.m */,
 				4C8AF5F4158E99520026668C /* TVCLogLine.m */,
@@ -2193,7 +2193,7 @@
 				4C8AF6D0158E99520026668C /* TPCOtherTheme.m in Sources */,
 				4C8AF6D1158E99520026668C /* TPCViewTheme.m in Sources */,
 				4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */,
-				4C8AF6D3158E99520026668C /* LVCLogRenderer.m in Sources */,
+				4C8AF6D3158E99520026668C /* TVCLogRenderer.m in Sources */,
 				4C8AF6D4158E99520026668C /* TVCImageURLParser.m in Sources */,
 				4C8AF6D5158E99520026668C /* TVCLogController.m in Sources */,
 				4C8AF6D6158E99520026668C /* TVCLogLine.m in Sources */,
