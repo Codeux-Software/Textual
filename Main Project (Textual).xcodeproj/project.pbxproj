@@ -794,7 +794,6 @@
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = Resources/Miscellaneous/IRCNetworks.plist; sourceTree = SOURCE_ROOT; };
-		4CCF2EEF158047B7006FFE21 /* Textual.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Textual.entitlements; sourceTree = SOURCE_ROOT; };
 		4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Acknowledgments.pdf; path = "Resources/Documents/Exported Documents/Acknowledgments.pdf"; sourceTree = SOURCE_ROOT; };
 		4CCF2EF2158047C8006FFE21 /* Contributors.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Contributors.pdf; path = "Resources/Documents/Exported Documents/Contributors.pdf"; sourceTree = SOURCE_ROOT; };
 		4CCF2EF5158047D1006FFE21 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
@@ -958,7 +957,6 @@
 			isa = PBXGroup;
 			children = (
 				4C46CCA21580437400846B64 /* Documentation */,
-				4C46CC9F1580435700846B64 /* Important */,
 				4C46CC9E1580434E00846B64 /* Language */,
 				4C46CCA31580437B00846B64 /* Miscellaneous */,
 			);
@@ -1059,14 +1057,6 @@
 				4C8AF739158E9B530026668C /* BasicLanguage.strings */,
 			);
 			name = Language;
-			sourceTree = "<group>";
-		};
-		4C46CC9F1580435700846B64 /* Important */ = {
-			isa = PBXGroup;
-			children = (
-				4CCF2EEF158047B7006FFE21 /* Textual.entitlements */,
-			);
-			name = Important;
 			sourceTree = "<group>";
 		};
 		4C46CCA21580437400846B64 /* Documentation */ = {
@@ -2601,6 +2591,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2625,6 +2616,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2701,6 +2693,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2777,6 +2770,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2853,6 +2847,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
