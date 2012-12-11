@@ -1810,6 +1810,11 @@
 	}
 }
 
+- (void)openDefaultIRCClientDialog:(id)sender
+{
+	[TPCPreferences defaultIRCClientPrompt:YES];
+}
+
 - (void)onNextHighlight:(id)sender
 {
 	[self.world.selected.log nextHighlight];
