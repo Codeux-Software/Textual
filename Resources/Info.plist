@@ -29,6 +29,7 @@
 			<array>
 				<string>irc</string>
 				<string>ircs</string>
+				<string>textual</string>
 			</array>
 		</dict>
 	</array>
@@ -47,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>12674</string>
+	<string>12677</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.2-36-g5520e5d-debug</string>
+	<string>2.1.2-37-gfd1e4c4-appstore,modern</string>
 </dict>
 </plist>

@@ -57,6 +57,8 @@
 		location = [location safeSubstringFromIndex:7];
 		
 		useSSL = YES;
+	} else if ([location hasPrefix:@"textual://"]) {
+		location = [location safeSubstringFromIndex:10];
 	} else {
 		return;
 	}

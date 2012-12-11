@@ -93,6 +93,8 @@ ssh:\/\/                |
 telnet:\/\/             |
 rts?p:\/\/              |
 irc:\/\/                |
+ircs:\/\/               |
+textual:\/\/            |
 nntp:\/\/               |
 cifs:\/\/               |
 smb:\/\/                |
