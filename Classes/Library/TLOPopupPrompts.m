@@ -189,6 +189,13 @@
 	}
 }
 
+/* TLOPopupPrompts and TVCInputPromptDialog were originally developed because
+ we wanted the input text field in an NSAlert to be focused on run. In a a normal
+ NSAlert, the input text field would be an auxiliary view which Textual does not
+ have access to. Instead of using NSAlert for dialogs that require input, Textual
+ uses its own view which mimics system alerts. A normal user cannot tell the
+ difference. */
+
 + (NSString *)dialogWindowWithInput:(NSString *)bodyText
 							  title:(NSString *)titleText
 					  defaultButton:(NSString *)buttonDefault
