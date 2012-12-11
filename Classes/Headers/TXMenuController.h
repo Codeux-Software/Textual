@@ -78,6 +78,7 @@
 - (void)loadExtensionsIntoMemory:(id)sender;
 - (void)unloadExtensionsFromMemory:(id)sender;
 - (void)resetDoNotAskMePopupWarnings:(id)sender;
+- (void)openDefaultIRCClientDialog:(id)sender;
 
 - (void)showHighlightSheet:(id)sender;
 - (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
