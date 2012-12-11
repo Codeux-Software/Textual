@@ -62,7 +62,7 @@
 	@class IRCUser;
 	@class IRCWorld;
 	@class IRCWorldConfig;
-	@class LVCLogRenderer;
+	@class TVCLogRenderer;
 	@class TDCAboutPanelSWindowController;
 	@class TDCAddressBookSheet;
 	@class TDCHighlightSheet;
