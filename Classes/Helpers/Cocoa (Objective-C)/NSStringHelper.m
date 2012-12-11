@@ -357,7 +357,7 @@ BOOL isUnicharDigit(unichar c)
 
 	TXMasterController *master = [TPCPreferences masterController];
 	
-	return [LVCLogRenderer renderBody:self 
+	return [TVCLogRenderer renderBody:self 
 						   controller:master.world.selected.log 
 						   renderType:TVCLogRendererAttributedStringType 
 						   properties:input resultInfo:NULL];

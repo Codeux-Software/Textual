@@ -323,7 +323,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	}
 }
 
-@implementation LVCLogRenderer
+@implementation TVCLogRenderer
 
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log

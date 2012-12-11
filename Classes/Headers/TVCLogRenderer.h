@@ -52,7 +52,7 @@ TEXTUAL_EXTERN NSString *TXRenderStyleTemplate(NSString *templateName,
 											   NSDictionary *templateTokens,
 											   TVCLogController *logController);
 
-@interface LVCLogRenderer : NSObject
+@interface TVCLogRenderer : NSObject
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log
 			  renderType:(TVCLogRendererType)drawingType
