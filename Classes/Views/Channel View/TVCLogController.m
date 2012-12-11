@@ -260,7 +260,7 @@
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if ([[self topicValue] isEqualToString:topic] == NO) {
-			NSString *body = [LVCLogRenderer renderBody:topic
+			NSString *body = [TVCLogRenderer renderBody:topic
 											 controller:self
 											 renderType:TVCLogRendererHTMLType
 											 properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
@@ -827,7 +827,7 @@
 		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 		[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
 
-		body = [LVCLogRenderer renderBody:line.body
+		body = [TVCLogRenderer renderBody:line.body
 							   controller:self
 							   renderType:TVCLogRendererHTMLType
 							   properties:inputDictionary
