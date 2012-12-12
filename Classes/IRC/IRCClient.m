@@ -2815,6 +2815,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendLine:(NSString *)str
 {
+	if (self.isConnected == NO) {
+		return [self printDebugInformationToConsole:TXTLS(@"ServerNotConnectedLineSendError")];
+	}
+	
 	[self.conn sendLine:str];
 
 	if (self.rawModeEnabled) {
