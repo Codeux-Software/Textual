@@ -78,6 +78,16 @@ body[dir=rtl] .time {
 
 /* Links */
 
+/* Encryption Lock */
+
+.encryptionLock img {
+	margin: 0;
+	padding: 0;
+	height: 11px;
+	margin-bottom: -1px;
+	display: inline-block;
+}
+
 a {
 	color: #FF7F00;
 	border-color: #FF7F00;

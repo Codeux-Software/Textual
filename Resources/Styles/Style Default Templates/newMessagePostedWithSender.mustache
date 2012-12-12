@@ -10,6 +10,11 @@
 {{/isRemoteMessage}}
 
 		<span class="time">{{formattedTimestamp}} </span>
+		
+{{#isEncrypted}}
+	{{{encryptedMessageLockTemplate}}}
+{{/isEncrypted}}
+
 		<span class="message" type="{{lineType}}">
 			<span class="sender"
 				ondblclick="Textual.nicknameDoubleClicked()" 
