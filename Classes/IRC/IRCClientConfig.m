@@ -99,14 +99,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if (NSObjectIsEmpty(_nickPassword)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
-												withItemKind:@"application password" 
-												 forUsername:[TPCPreferences applicationName] 
+												withItemKind:@"application password"
+												 forUsername:nil
 												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 
 		if (kcPassword) {
 			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 													withItemKind:@"application password"
-													 forUsername:nil // Compatible with 2.1.0
+													 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
 													 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		}
 	}
@@ -127,12 +127,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 							  withItemKind:@"application password"
-							   forUsername:[TPCPreferences applicationName]
+							   forUsername:nil
 							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		} else {
 			[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
 								   withItemKind:@"application password"
-									forUsername:[TPCPreferences applicationName]
+									forUsername:nil
 								withNewPassword:pass
 									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 		}
@@ -148,14 +148,14 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	
 	if (NSObjectIsEmpty(_password)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
-												withItemKind:@"application password" 
-												 forUsername:[TPCPreferences applicationName]
+												withItemKind:@"application password"
+												 forUsername:nil 
 												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 
 		if (kcPassword) {
 			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 													withItemKind:@"application password"
-													 forUsername:nil // Compatible with 2.1.0
+													 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
 													 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 		}
 	}
@@ -176,12 +176,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		if (NSObjectIsEmpty(pass)) {
 			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 							  withItemKind:@"application password"
-							   forUsername:[TPCPreferences applicationName]
+							   forUsername:nil
 							   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 		} else {
 			[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
 								   withItemKind:@"application password"
-									forUsername:[TPCPreferences applicationName]
+									forUsername:nil
 								withNewPassword:pass
 									serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];			
 		}
@@ -195,12 +195,12 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {	
 	[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
 					  withItemKind:@"application password"
-					   forUsername:[TPCPreferences applicationName]
+					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.guid]];
 	
 	[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 					  withItemKind:@"application password"
-					   forUsername:[TPCPreferences applicationName]
+					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.guid]];
 }
 
