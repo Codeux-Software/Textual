@@ -82,6 +82,7 @@ typedef enum TVCLogMemberType : NSInteger {
 @property (nonatomic, strong) NSArray *keywords;
 @property (nonatomic, strong) NSArray *excludeWords;
 @property (nonatomic, assign) BOOL isHistoric;
+@property (nonatomic, assign) BOOL isEncrypted;
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedNickname:(IRCChannel *)owner;

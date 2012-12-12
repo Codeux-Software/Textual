@@ -1106,25 +1106,47 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Encryption and Decryption Handling
 
-- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan
+- (BOOL)isSupportedMessageEncryptionFormat:(NSString *)message channel:(IRCChannel *)chan
 {
-	if ([chan isKindOfClass:[IRCChannel class]]) {
-		if (PointerIsEmpty(chan) == NO && *message) {
-			if ([chan isChannel] || [chan isTalk]) {
+	if (NSObjectIsNotEmpty(message)) {
+		if ([chan isKindOfClass:[IRCChannel class]]) {
+			if (chan && (chan.isChannel || chan.isTalk)) {
 				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish encodeData:*message
-															key:chan.config.encryptionKey
-													   encoding:self.config.encoding];
-
-					if ([newstr length] < 5) {
-						[self printDebugInformation:TXTLS(@"BlowfishEncryptionFailed") channel:chan];
-
-						return NO;
-					} else {
-						*message = newstr;
-					}
+					return YES;
 				}
 			}
+		}
+	}
+
+	return NO;
+}
+
+- (BOOL)isMessageEncrypted:(NSString *)message channel:(IRCChannel *)chan
+{
+	BOOL isEncrypted = NO;
+
+	if ([self isSupportedMessageEncryptionFormat:message channel:chan]) {
+		if ([message hasPrefix:@"OK+ "]) {
+			isEncrypted = YES;
+		}
+	}
+
+	return isEncrypted;
+}
+
+- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)chan
+{
+	if ([self isSupportedMessageEncryptionFormat:*message channel:chan]) {
+		NSString *newstr = [CSFWBlowfish encodeData:*message
+												key:chan.config.encryptionKey
+										   encoding:self.config.encoding];
+
+		if ([newstr length] < 5) {
+			[self printDebugInformation:TXTLS(@"BlowfishEncryptionFailed") channel:chan];
+
+			return NO;
+		} else {
+			*message = newstr;
 		}
 	}
 
@@ -1133,19 +1155,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)chan
 {
-	if ([chan isKindOfClass:[IRCChannel class]]) {
-		if (PointerIsEmpty(chan) == NO && *message) {
-			if ([chan isChannel] || [chan isTalk]) {
-				if (NSObjectIsNotEmpty(chan.config.encryptionKey)) {
-					NSString *newstr = [CSFWBlowfish decodeData:*message
-															key:chan.config.encryptionKey
-													   encoding:self.config.encoding];
+	if ([self isSupportedMessageEncryptionFormat:*message channel:chan]) {
+		NSString *newstr = [CSFWBlowfish decodeData:*message
+												key:chan.config.encryptionKey
+										   encoding:self.config.encoding];
 
-					if (NSObjectIsNotEmpty(newstr)) {
-						*message = newstr;
-					}
-				}
-			}
+		if (NSObjectIsNotEmpty(newstr)) {
+			*message = newstr;
 		}
 	}
 }
@@ -3236,6 +3252,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return [self printChannel:chan type:type nick:nick text:text receivedAt:receivedAt];
 }
 
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
+{
+	return [self printChannel:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt];
+}
+
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
 {
 	NSString *format	= [TPCPreferences themeNicknameFormat];
@@ -3345,6 +3366,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
+	return [self printChannel:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt];
+}
+
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
+{
 	if ([self outputRuleMatchedInMessage:text inChannel:chan withLineType:type] == YES) {
 		return NO;
 	}
@@ -3417,6 +3443,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 		if (user) {
 			colorNumber = user.colorNumber;
+		}
+	}
+
+	if (channel && NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+		if (isEncrypted || memberType == TVCLogMemberLocalUserType) {
+			c.isEncrypted = YES;
 		}
 	}
 
@@ -3615,6 +3647,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 									@"ignorePublicMsg",
 									@"ignorePrivateMsg"]];
 
+	BOOL isEncrypted = NO;
 
 	if ([target isChannelName]) {
 		if ([ignoreChecks ignoreHighlights] == YES) {
@@ -3641,14 +3674,18 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return;
 		}
 
-		[self decryptIncomingMessage:&text channel:c];
+		isEncrypted = [self isMessageEncrypted:text channel:c];
 
+		if (isEncrypted) {
+			[self decryptIncomingMessage:&text channel:c];
+		}
+		
 		if (type == TVCLogLineNoticeType) {
-			[self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
+			[self printBoth:c type:type nick:anick text:text encrypted:isEncrypted receivedAt:m.receivedAt];
 
 			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:anick text:text];
 		} else {
-			BOOL highlight = [self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
+			BOOL highlight = [self printBoth:c type:type nick:anick text:text encrypted:isEncrypted receivedAt:m.receivedAt];
 			BOOL postevent = NO;
 
 			if (highlight) {
@@ -3775,7 +3812,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				c = [self findChannel:target];
 			}
 
-			[self decryptIncomingMessage:&text channel:c];
+			isEncrypted = [self isMessageEncrypted:text channel:c];
+
+			if (isEncrypted) {
+				[self decryptIncomingMessage:&text channel:c];
+			}
 
 			BOOL newTalk = NO;
 
@@ -3798,7 +3839,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					c = [self.world selectedChannelOn:self];
 				}
 
-				[self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
+				[self printBoth:c type:type nick:anick text:text encrypted:isEncrypted receivedAt:m.receivedAt];
 
 				if ([anick isEqualNoCase:@"NickServ"]) {
 					if ([text hasPrefix:@"This nickname is registered"] ||
@@ -3843,7 +3884,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 					[self notifyText:TXNotificationQueryNoticeType lineType:type target:c nick:anick text:text];
 				}
 			} else {
-				BOOL highlight = [self printBoth:c type:type nick:anick text:text receivedAt:m.receivedAt];
+				BOOL highlight = [self printBoth:c type:type nick:anick text:text encrypted:isEncrypted receivedAt:m.receivedAt];
 				BOOL postevent = NO;
 
 				if (highlight) {
@@ -4376,13 +4417,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 	IRCChannel *c = [self findChannel:chname];
 
-	[self decryptIncomingMessage:&topic channel:c];
+	BOOL isEncrypted = [self isMessageEncrypted:topic channel:c];
+
+	if (isEncrypted) {
+		[self decryptIncomingMessage:&topic channel:c];
+	}
 
 	if (c) {
 		[c		setTopic:topic];
 		[c.log	setTopic:topic];
 
-		[self printBoth:c type:TVCLogLineTopicType text:TXTFLS(@"IRCChannelTopicChanged", nick, topic) receivedAt:m.receivedAt];
+		[self printBoth:c type:TVCLogLineTopicType nick:nil text:TXTFLS(@"IRCChannelTopicChanged", nick, topic) encrypted:isEncrypted receivedAt:m.receivedAt];
 	}
 }
 
@@ -4874,13 +4919,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 			IRCChannel *c = [self findChannel:chname];
 
-			[self decryptIncomingMessage:&topic channel:c];
+			BOOL isEncrypted = [self isMessageEncrypted:topic channel:c];
+
+			if (isEncrypted) {
+				[self decryptIncomingMessage:&topic channel:c];
+			}
 
 			if (c && c.isActive) {
 				[c		setTopic:topic];
 				[c.log	setTopic:topic];
-
-				[self printBoth:c type:TVCLogLineTopicType text:TXTFLS(@"IRCChannelHasTopic", topic) receivedAt:m.receivedAt];
+				
+				[self printBoth:c type:TVCLogLineTopicType nick:nil text:TXTFLS(@"IRCChannelHasTopic", topic) encrypted:isEncrypted receivedAt:m.receivedAt];
 			}
 
 			break;
