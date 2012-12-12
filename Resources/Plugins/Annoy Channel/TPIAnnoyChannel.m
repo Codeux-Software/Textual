@@ -103,12 +103,60 @@
 						 sender:(NSDictionary *)senderDict
 						message:(NSDictionary *)messageDict
 {
-	/* We need to actually clone users now… */
+	if (NSObjectIsEmpty(self.clonedUsers)) {
+		return;
+	}
+
+	// ---- //
+
+	NSArray *params = messageDict[@"messageParamaters"];
+
+	NSString *chaname = params[0];
+	NSString *person = senderDict[@"senderNickname"];
+	NSString *message = messageDict[@"messageSequence"];
+
+	// ---- //
+
+	BOOL isAction = NO;
+
+	if ([message hasPrefix:@"ACTION "] && [message hasSuffix:@""]) {
+		isAction = YES;
+		
+		message = [message safeSubstringAfterIndex:7];
+		message = [message safeSubstringToIndex:(message.length - 1)];
+	}
+
+	// ---- //
+
+	IRCChannel *channel = [client findChannel:chaname];
+
+	if (channel) {
+		IRCUser *member = [channel findMember:person options:NSCaseInsensitiveSearch];
+
+		// ---- //
+		
+		if (PointerIsNotEmpty(member)) {
+			NSString *searchKey = [NSString stringWithFormat:@"clone: client = %@; channel = %@; user = %@;",
+								   client.config.guid, channel.name, member.nick.lowercaseString];
+
+			// ---- //
+			
+			if ([self.clonedUsers containsObject:searchKey]) {
+				NSString *command = IRCPrivateCommandIndex("privmsg");
+
+				if (isAction) {
+					command = IRCPrivateCommandIndex("action");
+				}
+
+				[client sendText:[NSAttributedString emptyStringWithBase:message] command:command channel:channel];
+			}
+		}
+	}
 }
 
 - (NSArray *)pluginSupportsServerInputCommands
 {
-	return [NSArray array];
+	return @[@"privmsg"];
 }
 
 #pragma mark -
