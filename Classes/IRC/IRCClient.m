@@ -1175,6 +1175,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		if (NSObjectIsEmpty(errord) && NSObjectIsNotEmpty(errorb)) {
 			errord = errorb;
 		}
+		
+		if (NSObjectIsEmpty(errorb) && NSObjectIsNotEmpty(errord)) {
+			errorb = errord;
+		}
 	}
 
 	if (NSObjectIsEmpty(scriptInput)) {
