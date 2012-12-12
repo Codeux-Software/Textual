@@ -225,6 +225,8 @@
 "ServerDeletePromptMessage" = "There is no undo and all data related to this server will be erased.";
 "ServerDeletePromptTitle" = "Do you want to delete the selection?";
 
+"ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
+
 "ServerNoticeTreeItemTitle"	= "Server Notices";
 
 "ServerSheetAutojoinNavigationTreeItem"	= "Autojoin";
