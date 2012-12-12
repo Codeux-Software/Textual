@@ -1153,10 +1153,43 @@ static NSDateFormatter *dateTimeFormatter = nil;
 #pragma mark -
 #pragma mark Plugins and Scripts
 
--(void)executeTextualCmdScript:(NSDictionary *)details
+- (void)outputTextualCmdScriptError:(NSString *)scriptPath
+							  input:(NSString *)scriptInput
+							context:(NSDictionary *)userInfo
+							  error:(NSError *)originalError
 {
 	BOOL devmode = [_NSUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+
+	NSString *script = [scriptPath lastPathComponent];
 	
+	id errord;
+	id errorb;
+	
+	if (NSObjectIsEmpty(userInfo) && PointerIsNotEmpty(originalError)) {
+		errord = [originalError localizedDescription];
+		errorb = [originalError localizedDescription];
+	} else {
+		errord = userInfo[NSAppleScriptErrorBriefMessage];
+		errorb = userInfo[NSLocalizedFailureReasonErrorKey];
+
+		if (NSObjectIsEmpty(errord) && NSObjectIsNotEmpty(errorb)) {
+			errord = errorb;
+		}
+	}
+
+	if (NSObjectIsEmpty(scriptInput)) {
+		scriptInput = @"(null)";
+	}
+	
+	if (devmode) {
+		[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
+	}
+
+	LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errorb);
+}
+
+- (void)executeTextualCmdScript:(NSDictionary *)details
+{
 	if ([details containsKey:@"path"] == NO) {
 		return;
 	}
@@ -1214,32 +1247,13 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSUserAppleScriptTask *applescript = [[NSUserAppleScriptTask alloc] initWithURL:[NSURL fileURLWithPath:scriptPath] error:&aserror];
 				
 				if (PointerIsEmpty(applescript)) {
-					if (devmode) {
-						NSDictionary *errorDetails = [aserror userInfo];
-
-						NSString *script = [scriptPath lastPathComponent];
-						NSString *errord = errorDetails[NSAppleScriptErrorBriefMessage];
-
-						DebugLogToConsole(@"....");
-						[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
-					}
-					
-					LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), [aserror localizedDescription]);
+					[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[aserror userInfo] error:aserror];
 				} else {
 					[applescript executeWithAppleEvent:event
 									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error) {
 
 										 if (PointerIsEmpty(result)) {
-											 if (devmode) {
-												 NSDictionary *errorDetails = [aserror userInfo];
-
-												 NSString *script = [scriptPath lastPathComponent];
-												 NSString *errord = errorDetails[NSAppleScriptErrorBriefMessage];
-
-												 [self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
-											 }
-											 
-											 LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), [error localizedDescription]);
+											 [self outputTextualCmdScriptError:scriptPath input:scriptInput context:[error userInfo] error:error];
 										 } else {
 											 NSString *finalResult = [result stringValue].trim;
 
@@ -1268,14 +1282,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
 
             if (errors && PointerIsEmpty(result)) {
-				if (devmode) {
-					NSString *script = [scriptPath lastPathComponent];
-					NSString *errord = errors[NSAppleScriptErrorBriefMessage];
-
-					[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
-				}
-				
-                LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errors);
+				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
             } else {
                 NSString *finalResult = [result stringValue].trim;
 
@@ -1284,7 +1291,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                 }
             }
         } else {
-            LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errors);
+			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
         }
 
     } else {
