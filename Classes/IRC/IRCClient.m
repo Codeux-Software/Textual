@@ -145,6 +145,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)setup:(IRCClientConfig *)seed
 {
 	self.config = [seed mutableCopy];
+
+	self.sentNick = self.config.nick;
+	self.myNick   = self.config.nick;
 }
 
 - (void)updateConfig:(IRCClientConfig *)seed
@@ -2722,6 +2725,107 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			return YES;
 			break;
 		}
+		case 5086: // Command: FAKEINDATA
+		{
+			// ===========================================================
+			// FAKEINDATA COMMAND BEGIN.
+			// ===========================================================
+			
+			NSMutableArray *allBots = [NSMutableArray array];
+
+			// ---- //
+
+			NSInteger indexCount = TXRandomNumber(10);
+
+			for (NSInteger i = 0; i <= indexCount; i++) {
+				[allBots addObject:[IRCUser botFakeHostmask]];
+			}
+
+			// ---- //
+
+			if (NSObjectIsNotEmpty(allBots)) {
+				NSArray *formats = @[
+					/* 0 = */ @":%@ PRIVMSG %@ :%@",
+					/* 1 = */ @":%@ PRIVMSG %@ :ACTION %@",
+					/* 2 = */ @":%@ NOTICE %@ :%@",
+					/* 3 = */ @":%@ TOPIC %@ :%@",
+					/* 4 = */ @":%@ NICK %@"
+				];
+
+				/* This array being created everytime this command is called will probably result in a large
+				 memory footprint. We are not worried about that though. This command is used for debugging
+				 purposes and is not one to be ran everyday. */
+				NSArray *messages = @[
+					/* 0 = */ @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.",
+					/* 1 = */ @"Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+					/* 2 = */ @"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.",
+					/* 3 = */ @"Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.",
+					/* 4 = */ @"Cras consequat magna ac tellus. Duis sed metus sit amet nunc faucibus blandit. Fusce tempus cursus urna. Sed bibendum, dolor et volutpat nonummy, wisi justo convallis neque, eu feugiat leo ligula nec quam. Nulla in mi. Integer ac mauris vel ligula laoreet tristique. Nunc eget tortor in diam rhoncus vehicula. Nulla quis mi. Fusce porta fringilla mauris. Vestibulum sed dolor. Aliquam tincidunt interdum arcu.",
+					/* 5 = */ @"Vestibulum eget lacus. Curabitur pellentesque egestas lectus. Duis dolor. Aliquam erat volutpat. Aliquam erat volutpat. Duis egestas rhoncus dui. Sed iaculis, metus et mollis tincidunt, mauris dolor ornare odio, in cursus justo felis sit amet arcu. Aenean sollicitudin. Duis lectus leo, eleifend mollis, consequat ut, venenatis at, ante.",
+					/* 6 = */ @"Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+					/* 7 = */ @"At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+				];
+				
+				// ---- //
+				
+				for (NSString *hostmask in allBots) {
+					NSString *ohostmask = hostmask;
+					
+					[self ircConnectionDidReceiveString:
+						[NSString stringWithFormat:@":%@ JOIN %@",
+						 ohostmask, c.name]];
+
+					// ---- //
+
+					for (NSString *message in messages) {
+						NSInteger frnk = TXRandomNumber((formats.count - 1));
+
+						NSString *tffr;
+
+						if (frnk == 4) { // NICK command.
+							NSString *newHost = [IRCUser botFakeHostmask];
+							NSString *newNick = [newHost safeSubstringToIndex:[newHost stringPosition:@"!"]];
+
+							tffr = [NSString stringWithFormat:formats[frnk], ohostmask, newNick];
+
+							ohostmask = newHost;
+						} else {
+							tffr = [NSString stringWithFormat:formats[frnk], ohostmask, c.name, message];
+						}
+
+						[self ircConnectionDidReceiveString:tffr];
+					}
+
+					// ---- //
+
+					[self ircConnectionDidReceiveString:
+					 [NSString stringWithFormat:@":%@ PART %@ %@",
+					  ohostmask, c.name, TXTLS(@"DefaultDisconnectQuitMessage")]];
+					
+					[self ircConnectionDidReceiveString:
+					 [NSString stringWithFormat:@":%@ JOIN %@",
+					  ohostmask, c.name]];
+
+					[self ircConnectionDidReceiveString:
+					 [NSString stringWithFormat:@":%@ QUIT %@",
+					  ohostmask, TXTLS(@"DefaultDisconnectQuitMessage")]];
+				}
+
+				messages = nil;
+				formats = nil;
+			}
+
+			// ---- //
+
+			[allBots removeAllObjects];
+			
+			// ===========================================================
+			// FAKEINDATA COMMAND END.
+			// ===========================================================
+
+			return YES;
+			break;
+		}
 		default:
 		{
             NSString *command = [cmd lowercaseString];
@@ -2779,11 +2883,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				} else {
 					if (scriptFound) {
                         NSDictionary *inputInfo = @{
-						@"channel": NSStringNilValueSubstitute(c.name),
-						@"path": scriptPath,
-						@"input": s.string,
-						@"completeTarget": @(completeTarget),
-						@"target": NSStringNilValueSubstitute(targetChannelName)
+							@"path": scriptPath,
+							@"input": s.string,
+							@"completeTarget": @(completeTarget),
+							@"channel": NSStringNilValueSubstitute(c.name),
+							@"target": NSStringNilValueSubstitute(targetChannelName)
 						};
 
                         [self.invokeInBackgroundThread executeTextualCmdScript:inputInfo];
@@ -4595,8 +4699,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self stopRetryTimer];
 	[self stopAutoJoinTimer];
 
-	[self.world.master showMemberListSplitView:YES];
-
 	self.sendLagcheckToChannel = self.serverHasNickServ			= NO;
 	self.isLoggedIn = self.conn.loggedIn = self.inFirstISONRun	= YES;
 	self.isAway = self.isConnecting = self.hasIRCopAccess		= NO;
@@ -5507,8 +5609,6 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	if (self.isLoggedIn == NO && self.isConnecting == NO) return;
 
 	BOOL prevConnected = self.isConnected;
-
-	[self.world.master showMemberListSplitView:NO];
 	
 	[self.acceptedCaps removeAllObjects];
 	self.capPaused = 0;
@@ -5659,6 +5759,11 @@ static NSDateFormatter *dateTimeFormatter = nil;
 - (void)ircConnectionDidError:(NSString *)error
 {
 	[self printError:error];
+}
+
+- (void)ircConnectionDidReceiveString:(NSString *)data
+{
+	[self ircConnectionDidReceive:[self convertToCommonEncoding:data]];
 }
 
 - (void)ircConnectionDidReceive:(NSData *)data
