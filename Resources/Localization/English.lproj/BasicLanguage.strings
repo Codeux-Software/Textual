@@ -401,3 +401,17 @@
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";
 "SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
 "SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%5$.2f\002 messages a second. Combined this comes to around \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";
+
+/* Annoy Channel Extension. */
+
+"AnnoyChannelInvalidInputErrorMessage" = "Invalid input.";
+
+"AnnoyChannelMassHighlightEmptyChannelMessage" = "Error: No users were found in %@.";
+
+"AnnoyChannelCloningUserDoesNotExistMessage" = "Failed to find user named \"\002%1$@\002\" in \002%2$@\002.";
+"AnnoyChannelCloningUserAlreadyClonedMessage" = "User \002%1$@\002 is already being cloned in \002%2$@\002.";
+"AnnoyChannelCloningUserNowBeingClonedMessage" = "User \002%1$@\002 is now being cloned in \002%2$@\002.";
+"AnnoyChannelCloningUserIsNotClonedMessage" = "User \002%1$@\002 is not being cloned in \002%2$@\002.";
+"AnnoyChannelCloningUnclonedOneUserMessage" = "User \002%1$@\002 is no longer being cloned in \002%2$@\002.";
+"AnnoyChannelCloningUnclonedAllUsersMessage" = "All users cloned by Textual have been removed.";
+"AnnoyChannelCloningNoUsersBeingClonedMessage" = "There are no users being cloned.";
