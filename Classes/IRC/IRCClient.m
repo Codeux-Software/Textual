@@ -4546,6 +4546,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	[self stopRetryTimer];
 	[self stopAutoJoinTimer];
 
+	[self.world.master showMemberListSplitView:YES];
+
 	self.sendLagcheckToChannel = self.serverHasNickServ			= NO;
 	self.isLoggedIn = self.conn.loggedIn = self.inFirstISONRun	= YES;
 	self.isAway = self.isConnecting = self.hasIRCopAccess		= NO;
@@ -5453,6 +5455,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 	BOOL prevConnected = self.isConnected;
 
+	[self.world.master showMemberListSplitView:NO];
+	
 	[self.acceptedCaps removeAllObjects];
 	self.capPaused = 0;
 

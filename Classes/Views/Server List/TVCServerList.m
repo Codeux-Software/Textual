@@ -197,9 +197,9 @@
 - (void)toggleAddServerButton
 {
 	NSRect clipRect = [self frame];
-	
-	TXMasterController *master = [self.keyDelegate master];
-	TXMenuController   *menucl = [master menu];
+
+	TXMasterController *master = TPCPreferences.masterController;
+	TXMenuController *menucl = master.menu;
 	
 	if (NSObjectIsEmpty([self.keyDelegate clients])) {
 		[master.addServerButton setHidden:NO];
