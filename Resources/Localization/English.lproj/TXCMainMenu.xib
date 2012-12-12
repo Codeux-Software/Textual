@@ -497,7 +497,7 @@
 								<object class="NSMenuItem" id="442725346">
 									<reference key="NSMenu" ref="280333478"/>
 									<string key="NSTitle">Increase Font Size</string>
-									<string key="NSKeyEquiv">+</string>
+									<string key="NSKeyEquiv">=</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
