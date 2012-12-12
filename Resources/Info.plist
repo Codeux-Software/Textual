@@ -40,7 +40,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010, 2011, 2012 Codeux Software</string>
+	<string>Copyright © 2010 — 2013 Codeux Software</string>
 	<key>NSMainNibFile</key>
 	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -48,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>12695</string>
+	<string>12696</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.2-47-gc0a8e9f-appstore,modern</string>
+	<string>2.1.2-49-ga0e88da-appstore,modern</string>
 </dict>
 </plist>
