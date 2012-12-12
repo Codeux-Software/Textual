@@ -37,6 +37,9 @@
 
 #import "TextualApplication.h"
 
+#define IRCUserFakeBotNicknameFormat		@"tbot[%i]"
+#define IRCUserFakeBotHostmaskFormat		@"!textual@FakeTextualBot.vhost"
+
 @interface IRCUser : NSObject
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSString *nick;
@@ -61,7 +64,9 @@
 + (NSString *)botFakeHostmask;
 
 - (BOOL)hasMode:(char)mode;
+
 - (NSString *)banMask;
+- (NSString *)hostMask;
 
 - (void)outgoingConversation;
 - (void)incomingConversation;
