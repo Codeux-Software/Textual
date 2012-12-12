@@ -2735,10 +2735,24 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 			// ---- //
 
-			NSInteger indexCount = TXRandomNumber(10);
+			BOOL botAlreadyJoined = NO;
 
-			for (NSInteger i = 0; i <= indexCount; i++) {
-				[allBots addObject:[IRCUser botFakeHostmask]];
+			for (IRCUser *user in c.members) {
+				if ([user.hostMask hasSuffix:IRCUserFakeBotHostmaskFormat]) {
+					[allBots addObject:user.hostMask];
+
+					botAlreadyJoined = YES;
+				}
+			}
+
+			// ---- //
+			
+			if (NSObjectIsEmpty(allBots)) {
+				NSInteger indexCount = TXRandomNumber(10);
+
+				for (NSInteger i = 0; i <= indexCount; i++) {
+					[allBots addObject:[IRCUser botFakeHostmask]];
+				}
 			}
 
 			// ---- //
@@ -2770,10 +2784,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				
 				for (NSString *hostmask in allBots) {
 					NSString *ohostmask = hostmask;
-					
-					[self ircConnectionDidReceiveString:
-						[NSString stringWithFormat:@":%@ JOIN %@",
-						 ohostmask, c.name]];
+
+					if (botAlreadyJoined == NO) {
+						[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ JOIN :%@", ohostmask, c.name]];
+					}
 
 					// ---- //
 
@@ -2784,9 +2798,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 						if (frnk == 4) { // NICK command.
 							NSString *newHost = [IRCUser botFakeHostmask];
-							NSString *newNick = [newHost safeSubstringToIndex:[newHost stringPosition:@"!"]];
 
-							tffr = [NSString stringWithFormat:formats[frnk], ohostmask, newNick];
+							tffr = [NSString stringWithFormat:formats[frnk], ohostmask, [newHost nicknameFromHostmask]];
 
 							ohostmask = newHost;
 						} else {
@@ -2798,17 +2811,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 					// ---- //
 
-					[self ircConnectionDidReceiveString:
-					 [NSString stringWithFormat:@":%@ PART %@ %@",
-					  ohostmask, c.name, TXTLS(@"DefaultDisconnectQuitMessage")]];
-					
-					[self ircConnectionDidReceiveString:
-					 [NSString stringWithFormat:@":%@ JOIN %@",
-					  ohostmask, c.name]];
-
-					[self ircConnectionDidReceiveString:
-					 [NSString stringWithFormat:@":%@ QUIT %@",
-					  ohostmask, TXTLS(@"DefaultDisconnectQuitMessage")]];
+					[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ PART %@ :%@", ohostmask, c.name, TXTLS(@"DefaultDisconnectQuitMessage")]];
+					[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ JOIN :%@", ohostmask, c.name]];
+					[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ QUIT :%@", ohostmask, TXTLS(@"DefaultDisconnectQuitMessage")]];
 				}
 
 				messages = nil;
@@ -2822,6 +2827,25 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			// ===========================================================
 			// FAKEINDATA COMMAND END.
 			// ===========================================================
+
+			return YES;
+			break;
+		}
+		case 5085: // Command: FAKEUSER
+		{
+			if ([s.string isEqualToString:@"-d"]) {
+				for (IRCUser *user in c.members) {
+					if ([user.hostMask hasSuffix:IRCUserFakeBotHostmaskFormat]) {
+						/* Delay because: "*** Collection <__NSArrayM: 0x1013aa290> was mutated while being enumerated." */
+						
+						[self performSelector:@selector(ircConnectionDidReceiveString:)
+								   withObject:[NSString stringWithFormat:@":%@ QUIT :%@", user.hostMask, TXTLS(@"DefaultDisconnectQuitMessage")]
+								   afterDelay:2.0];
+					}
+				}
+			} else {
+				[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ JOIN %@", [IRCUser botFakeHostmask], c.name]];
+			}
 
 			return YES;
 			break;

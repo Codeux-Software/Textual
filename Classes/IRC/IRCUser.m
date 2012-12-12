@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 #define _colorNumberMax				 30
-#define _fakeBotHostmaskFormat		@"tbot[%i]!textual@FakeTextualBot.vhost"
 
 @implementation IRCUser
 
@@ -55,9 +54,14 @@
 
 + (NSString *)botFakeHostmask
 {
-	NSInteger index = TXRandomNumber(9999);
+	NSString *nickname = [NSString stringWithFormat:IRCUserFakeBotNicknameFormat, TXRandomNumber(9999)];
 
-	return [NSString stringWithFormat:_fakeBotHostmaskFormat, index];
+	return [nickname stringByAppendingString:IRCUserFakeBotHostmaskFormat];
+}
+
+- (NSString *)hostMask
+{
+	return [NSString stringWithFormat:@"%@!%@@%@", self.nick, self.username, self.address];
 }
 
 - (NSString *)banMask

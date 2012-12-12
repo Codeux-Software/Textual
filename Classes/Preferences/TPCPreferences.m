@@ -163,6 +163,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 	@[@"devoice",					@"DEVOICE",				@(5021),		@(NO)],
 	@[@"echo",						@"ECHO",				@(5022),		@(NO)],
 	@[@"fakeindata",				@"FAKEINDATA",			@(5086),		@(YES)],
+	@[@"fakeuser",					@"FAKEUSER",			@(5085),		@(YES)],
 	@[@"gline",						@"GLINE",				@(5023),		@(NO)],
 	@[@"globops",					@"GLOBOPS",				@(5024),		@(NO)],
 	@[@"gzline",					@"GZLINE",				@(5025),		@(NO)],
