@@ -38,5 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TLOSoundPlayer : NSObject
-+ (void)play:(NSString *)name isMuted:(BOOL)muted;
++ (void)play:(NSString *)name;
++ (void)play:(NSString *)name isMuted:(BOOL)muted TEXTUAL_DEPRECATED;
 @end

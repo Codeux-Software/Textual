@@ -2991,8 +2991,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		chname = self.name;
 	}
 
-	[TLOSoundPlayer play:[TPCPreferences soundForEvent:type] isMuted:self.world.soundMuted];
-
+	if (self.world.soundMuted == NO) {
+		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+	}
+	
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) return YES;
 	if ([TPCPreferences stopGrowlOnActive] && [self.world.window isOnCurrentWorkspace]) return YES;
 	if ([TPCPreferences disableWhileAwayForEvent:type] == YES && self.isAway == YES) return YES;
@@ -3030,8 +3032,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		return NO;
 	}
 
-	[TLOSoundPlayer play:[TPCPreferences soundForEvent:type] isMuted:self.world.soundMuted];
-
+	if (self.world.soundMuted == NO) {
+		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+	}
+	
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) return YES;
 	if ([TPCPreferences stopGrowlOnActive] && [self.world.window isOnCurrentWorkspace]) return YES;
 	if ([TPCPreferences disableWhileAwayForEvent:type] == YES && self.isAway == YES) return YES;
