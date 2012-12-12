@@ -880,9 +880,9 @@
 		NSString *url = [inlineImageLinks objectForKey:imageUrl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-		 @"imageURL"					: [imageUrl stringWithValidURIScheme],
-		 @"anchorLink"				: [url stringWithValidURIScheme],
-		 @"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+			@"imageURL"					: [imageUrl stringWithValidURIScheme],
+			@"anchorLink"				:      [url stringWithValidURIScheme],
+			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
 		 }];
 	}
 
@@ -935,12 +935,13 @@
 	// ---- //
 
 
-	attributes[@"highlightAttributeRepresentation"] = ((highlighted)	? @"true" : @"false");
+	attributes[@"highlightAttributeRepresentation"] = ((highlighted) ? @"true" : @"false");
 
 	attributes[@"message"]				= line.body;
 	attributes[@"formattedMessage"]		= body;
 
 	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
+	attributes[@"isEncrypted"]		= @(line.isEncrypted);
 	attributes[@"isHighlight"]		= @(highlighted);
 
 	// ---- //
