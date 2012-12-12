@@ -2751,7 +2751,7 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRODUCT_NAME = Textual;
+				PRODUCT_NAME = "Textual Trial";
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
