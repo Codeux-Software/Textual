@@ -2088,7 +2088,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2498,10 +2498,7 @@
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					"TEXTUAL_NEW_APPSTORE_ACCOUNT=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
