@@ -3399,8 +3399,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		type = TVCLogLinePrivateMessageType;
 	}
 
-	if (nick && channel && (type == TVCLogLinePrivateMessageType
-							|| type == TVCLogLineActionType)) {
+	if (self.isLoggedIn == NO && NSObjectIsEmpty(nick)) {
+		if (type == TVCLogLinePrivateMessageType ||
+			type == TVCLogLineActionType ||
+			type == TVCLogLineNoticeType) {
+
+			nick = self.config.nick;
+			
+			memberType = TVCLogMemberLocalUserType;
+		}
+	}
+
+	if (nick && channel && (type == TVCLogLinePrivateMessageType ||
+							type == TVCLogLineActionType)) {
 		
 		IRCUser *user = [channel findMember:nick];
 
