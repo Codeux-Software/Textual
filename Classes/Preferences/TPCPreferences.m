@@ -361,7 +361,17 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)applicationName
 {
-	return [TPCPreferences textualInfoPlist][@"CFBundleName"];
+	NSString *name = [TPCPreferences textualInfoPlist][@"CFBundleName"];
+
+#ifdef TEXTUAL_TRIAL_BINARY
+	if ([name hasSuffix:@" Trial"]) {
+		NSInteger trialPos = [name stringPosition:@" Trial"];
+
+		name = [name safeSubstringToIndex:trialPos];
+	}
+#endif
+	
+	return name;
 }
 
 + (NSInteger)applicationProcessID

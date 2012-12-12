@@ -51,6 +51,17 @@
 
 - (void)awakeFromNib
 {
+#ifdef TEXTUAL_TRIAL_BINARY
+	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
+										title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
+								defaultButton:TXTLS(@"OkButton")
+							  alternateButton:nil
+							   suppressionKey:@"trial_period_info"
+							  suppressionText:nil];
+#endif
+
+	// ---- //
+	
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
 #ifdef TXMacOSLionOrNewer
@@ -172,17 +183,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
-#ifdef TEXTUAL_TRIAL_BINARY
-	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
-										title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
-								defaultButton:TXTLS(@"OkButton")
-							  alternateButton:nil
-							   suppressionKey:@"trial_period_info"
-							  suppressionText:nil];
-#endif
-
-	// ---- //
-	
 	[self.window makeKeyAndOrderFront:nil];
 
 	[self.world focusInputText];
