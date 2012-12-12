@@ -201,10 +201,11 @@ typedef enum IRCDisconnectType : NSInteger {
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
 - (void)printSystem:(id)channel text:(NSString *)text;
 - (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
 - (void)printSystemBoth:(id)channel text:(NSString *)text;

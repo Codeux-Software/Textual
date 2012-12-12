@@ -85,6 +85,7 @@
 		self.excludeWords	= nil;
 
 		self.isHistoric = NO;
+		self.isEncrypted = NO;
 
 		return self;
 	}
@@ -147,7 +148,8 @@
 		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType",		TVCLogMemberNormalType);
 		self.nickColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nickColorNumber",	0);
 
-		self.isHistoric	= [dic boolForKey:@"isHistoric"];
+		self.isHistoric		= NSDictionaryBOOLKeyValueCompare(dic, @"isHistoric", self.isHistoric);
+		self.isEncrypted	= NSDictionaryBOOLKeyValueCompare(dic, @"isEncrypted", self.isHistoric);
 
 		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 
@@ -173,6 +175,7 @@
 	[dict safeSetObject:@(self.nickColorNumber)		forKey:@"nickColorNumber"];
 
 	[dict setBool:self.isHistoric					forKey:@"isHistoric"];
+	[dict setBool:self.isEncrypted					forKey:@"isEncrypted"];
 
 	return dict;
 }
