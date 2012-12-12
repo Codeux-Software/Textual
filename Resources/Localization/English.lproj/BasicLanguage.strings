@@ -217,7 +217,8 @@
 
 "QuitButton" = "Quit";
 
-"ScriptExecutionFailure" = "Script Execution Failure: %@";
+"ScriptExecutionFailureBasic" = "Script Execution Failure: %@";
+"ScriptExecutionFailureDetailed" = "Script Execution Failure (%1$@: %2$@): %3$@";
 
 "SelfBanDetectedMessage" = "Textual has prevented you from banning yourself on %@.";
 
