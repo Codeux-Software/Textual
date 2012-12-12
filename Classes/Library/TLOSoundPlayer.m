@@ -39,9 +39,9 @@
 
 @implementation TLOSoundPlayer
 
-+ (void)play:(NSString *)name isMuted:(BOOL)muted
++ (void)play:(NSString *)name
 {
-	if (NSObjectIsEmpty(name) || muted) return;
+	if (NSObjectIsEmpty(name)) return;
 	
 	if ([name isEqualToString:@"Beep"]) {
 		NSBeep();
@@ -50,8 +50,15 @@
 		
 		if (sound) {
 			[sound play];
+		} else {
+			LogToConsole(@"Error: Unable to find sound \"%@\"", name);
 		}
 	}
+}
+
++ (void)play:(NSString *)name isMuted:(BOOL)muted
+{
+	return;
 }
 
 @end

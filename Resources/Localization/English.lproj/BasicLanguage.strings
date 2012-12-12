@@ -251,7 +251,7 @@
 "SoundIsAlreadyMuted" = "Sound is already muted.";
 "SoundIsNoLongerMuted" = "Sound is no longer muted. ";
 "SoundIsNotMuted" = "Sound is not muted.";
-"SoundIsNowMuted" = "Sound has been muted. This mute is server specific.";
+"SoundIsNowMuted" = "Sound has been muted.";
 
 "StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
 
