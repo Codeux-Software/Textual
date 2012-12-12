@@ -1155,11 +1155,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 -(void)executeTextualCmdScript:(NSDictionary *)details
 {
+	BOOL devmode = [_NSUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+	
 	if ([details containsKey:@"path"] == NO) {
 		return;
 	}
 
-    NSString *scriptPath = [details valueForKey:@"path"];
+	NSString *scriptInput = details[@"input"];
+    NSString *scriptPath  = details[@"path"];
 
 #ifdef TXUserScriptsFolderAvailable
 	BOOL MLNonsandboxedScript = NO;
@@ -1178,7 +1181,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		/* Event Descriptor */
 		/* /////////////////////////////////////////////////////// */
 
-		NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:details[@"input"]];
+		NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:scriptInput];
 		NSAppleEventDescriptor *parameters		= [NSAppleEventDescriptor listDescriptor];
 
 		[parameters insertDescriptor:firstParameter atIndex:1];
@@ -1211,13 +1214,32 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				NSUserAppleScriptTask *applescript = [[NSUserAppleScriptTask alloc] initWithURL:[NSURL fileURLWithPath:scriptPath] error:&aserror];
 				
 				if (PointerIsEmpty(applescript)) {
-					LogToConsole(TXTLS(@"ScriptExecutionFailure"), [aserror localizedDescription]);
+					if (devmode) {
+						NSDictionary *errorDetails = [aserror userInfo];
+
+						NSString *script = [scriptPath lastPathComponent];
+						NSString *errord = errorDetails[NSAppleScriptErrorBriefMessage];
+
+						DebugLogToConsole(@"....");
+						[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
+					}
+					
+					LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), [aserror localizedDescription]);
 				} else {
 					[applescript executeWithAppleEvent:event
 									 completionHandler:^(NSAppleEventDescriptor *result, NSError *error) {
 
 										 if (PointerIsEmpty(result)) {
-											 LogToConsole(TXTLS(@"ScriptExecutionFailure"), [error localizedDescription]);
+											 if (devmode) {
+												 NSDictionary *errorDetails = [aserror userInfo];
+
+												 NSString *script = [scriptPath lastPathComponent];
+												 NSString *errord = errorDetails[NSAppleScriptErrorBriefMessage];
+
+												 [self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
+											 }
+											 
+											 LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), [error localizedDescription]);
 										 } else {
 											 NSString *finalResult = [result stringValue].trim;
 
@@ -1246,7 +1268,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
             NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:&errors];
 
             if (errors && PointerIsEmpty(result)) {
-                LogToConsole(TXTLS(@"ScriptExecutionFailure"), errors);
+				if (devmode) {
+					NSString *script = [scriptPath lastPathComponent];
+					NSString *errord = errors[NSAppleScriptErrorBriefMessage];
+
+					[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
+				}
+				
+                LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errors);
             } else {
                 NSString *finalResult = [result stringValue].trim;
 
@@ -1255,7 +1284,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
                 }
             }
         } else {
-            LogToConsole(TXTLS(@"ScriptExecutionFailure"), errors);
+            LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errors);
         }
 
     } else {
@@ -1265,9 +1294,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
         NSMutableArray *args  = [NSMutableArray array];
 
-        NSString *input = [details valueForKey:@"input"];
-
-        for (NSString *i in [input componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]) {
+        for (NSString *i in [scriptInput componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]) {
             [args addObject:i];
         }
 
