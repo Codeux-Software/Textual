@@ -869,7 +869,12 @@
 	// Draw to display.                                                                /
 	// ************************************************************************** /
 
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+	NSMutableDictionary *specialAttributes = [NSMutableDictionary dictionary];
+
+	specialAttributes[@"activeStyleAbsolutePath"] = self.theme.other.path;
+	specialAttributes[@"applicationResourcePath"] = [TPCPreferences applicationResourcesFolderPath];
+
+	NSMutableDictionary *attributes = specialAttributes;
 
 	// ---- //
 
@@ -941,8 +946,13 @@
 	attributes[@"formattedMessage"]		= body;
 
 	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
-	attributes[@"isEncrypted"]		= @(line.isEncrypted);
 	attributes[@"isHighlight"]		= @(highlighted);
+
+	if (line.isEncrypted) {
+		attributes[@"isEncrypted"] = @(line.isEncrypted);
+		
+		attributes[@"encryptedMessageLockTemplate"]	= TXRenderStyleTemplate(@"encryptedMessageLock", specialAttributes, self);
+	}
 
 	// ---- //
 
