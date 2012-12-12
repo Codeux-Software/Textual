@@ -221,14 +221,20 @@
 		[self.delegate tcpClientDidConnect:self];
 	}
 
+#ifndef DEBUG
 	IRCClient *clin = [self.delegate delegate];
-
+	
 	if (clin.rawModeEnabled) {
+#endif
+		
 		LogToConsole(@"Debug Information:");
 		LogToConsole(@"	Connected Host: %@", [sock connectedHost]);
 		LogToConsole(@"	Connected Address: %@", [NSString stringWithData:[sock connectedAddress] encoding:NSUTF8StringEncoding]);
 		LogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
+
+#ifndef DEBUG
 	}
+#endif
 }
 
 - (void)onSocketDidDisconnect:(id)sock
