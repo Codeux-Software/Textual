@@ -383,6 +383,10 @@
 		4CD09B381640B31A008F1A04 /* GRMustacheTemplateRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD09B2D1640B31A008F1A04 /* GRMustacheTemplateRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD09B391640B31A008F1A04 /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD09B2E1640B31A008F1A04 /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
+		4CDDF3471678C5DF00FE8684 /* encryptionLockIconDark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */; };
+		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
+		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
+		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -826,6 +830,10 @@
 		4CD09B2C1640B31A008F1A04 /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
 		4CD09B2D1640B31A008F1A04 /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		4CD09B2E1640B31A008F1A04 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconDark.tif; sourceTree = "<group>"; };
+		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
+		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
+		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -969,6 +977,7 @@
 				4C46CC98158042FE00846B64 /* Application */,
 				4C46CC991580430700846B64 /* Dock Icon Badges */,
 				4C46CC9A1580431000846B64 /* IRC Formatting Colors */,
+				4CDDF3421678C5DF00FE8684 /* Encryption Badges */,
 				4C46CC9C1580432400846B64 /* Status Badges */,
 				4C63C6AD1592F0B0009F1635 /* Toolbar Icons */,
 				4C46CC9D1580432F00846B64 /* User Interface */,
@@ -1711,6 +1720,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4CDDF3421678C5DF00FE8684 /* Encryption Badges */ = {
+			isa = PBXGroup;
+			children = (
+				4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */,
+				4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */,
+				4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */,
+				4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */,
+			);
+			name = "Encryption Badges";
+			path = "Resources/Images/Encryption Badges";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2030,6 +2051,10 @@
 				4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif in Resources */,
 				4C52379415C18F6700414852 /* Style Default Templates in Resources */,
 				4C52379515C18F6700414852 /* Styles in Resources */,
+				4CDDF3471678C5DF00FE8684 /* encryptionLockIconDark.tif in Resources */,
+				4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */,
+				4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */,
+				4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2491,6 +2516,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2545,6 +2571,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2648,6 +2675,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2726,6 +2754,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2804,6 +2833,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
