@@ -2,4 +2,4 @@
 
 This style is based on the stripped down version of 
 the "Simplified" theme developed by "Cowboy" Ben Alman
-(http://benalman.com/). Copyright © 2010, 2011, 2012.
+(http://benalman.com/). Copyright Â© 2010, 2011, 2012.
