@@ -58,6 +58,8 @@
 @property (nonatomic, assign) CGFloat outgoingWeight;
 @property (nonatomic, assign) CFAbsoluteTime lastFadedWeights;
 
++ (NSString *)botFakeHostmask;
+
 - (BOOL)hasMode:(char)mode;
 - (NSString *)banMask;
 

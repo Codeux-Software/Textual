@@ -1233,7 +1233,6 @@
 	}
 	
 	if (self.selected.isClient ||
-		self.selected.client.isLoggedIn == NO ||
 		self.selected.log.channel.isTalk) {
 		
 		[self.master showMemberListSplitView:NO];
