@@ -2834,17 +2834,19 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		case 5085: // Command: FAKEUSER
 		{
 			if ([s.string isEqualToString:@"-d"]) {
+				NSMutableArray *hosts = [NSMutableArray array];
+
 				for (IRCUser *user in c.members) {
 					if ([user.hostMask hasSuffix:IRCUserFakeBotHostmaskFormat]) {
-						/* Delay because: "*** Collection <__NSArrayM: 0x1013aa290> was mutated while being enumerated." */
-						
-						[self performSelector:@selector(ircConnectionDidReceiveString:)
-								   withObject:[NSString stringWithFormat:@":%@ QUIT :%@", user.hostMask, TXTLS(@"DefaultDisconnectQuitMessage")]
-								   afterDelay:2.0];
+						[hosts addObject:user.hostMask];
 					}
 				}
+
+				for (NSString *host in hosts) {
+					[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ QUIT :%@", host, TXTLS(@"DefaultDisconnectQuitMessage")]];
+				}
 			} else {
-				[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ JOIN %@", [IRCUser botFakeHostmask], c.name]];
+				[self ircConnectionDidReceiveString:[NSString stringWithFormat:@":%@ JOIN :%@", [IRCUser botFakeHostmask], c.name]];
 			}
 
 			return YES;

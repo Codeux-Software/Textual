@@ -48,6 +48,7 @@
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
+		4C357E5316795C2000D4C12A /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C357E5116795C1700D4C12A /* SpammerParadise.bundle */; };
 		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
 		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */; };
@@ -349,7 +350,6 @@
 		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
 		4C9E534515B4C19C000E84A9 /* Contributors.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4C9E534615B4C1A6000E84A9 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
-		4CC041DA1678E45000D2C07C /* AnnoyChannel.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CC041D21678E42100D2C07C /* AnnoyChannel.bundle */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
@@ -405,13 +405,6 @@
 			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
 			remoteInfo = "Update Version Info";
 		};
-		4CC041D81678E42B00D2C07C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CC041D41678E42B00D2C07C /* Annoy Channel Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = AnnoyChannel;
-		};
 		4CCC6B69158E8CCC003A102B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */;
@@ -449,9 +442,9 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4CC041DA1678E45000D2C07C /* AnnoyChannel.bundle in Copy Extensions */,
 				4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */,
 				4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */,
+				4C357E5316795C2000D4C12A /* SpammerParadise.bundle in Copy Extensions */,
 				4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
@@ -502,6 +495,8 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
+		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
+		4C357E5116795C1700D4C12A /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = Resources/Plugins/Compiled/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
 		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
 		4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DarkServerListViewSelectedQueryUser.tif; sourceTree = "<group>"; };
@@ -800,8 +795,6 @@
 		4C8AF749158EB6CA0026668C /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLMAsyncSocket.h; sourceTree = "<group>"; };
 		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
-		4CC041D21678E42100D2C07C /* AnnoyChannel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AnnoyChannel.bundle; path = Resources/Plugins/Compiled/AnnoyChannel.bundle; sourceTree = SOURCE_ROOT; };
-		4CC041D41678E42B00D2C07C /* Annoy Channel Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Annoy Channel Extension.xcodeproj"; path = "Resources/Plugins/Annoy Channel/Annoy Channel Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1125,9 +1118,9 @@
 		4C46CCA7158043C000846B64 /* Binaries */ = {
 			isa = PBXGroup;
 			children = (
-				4CC041D21678E42100D2C07C /* AnnoyChannel.bundle */,
 				4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */,
 				4C88DBA915811D29002EC37B /* BragSpam.bundle */,
+				4C357E5116795C1700D4C12A /* SpammerParadise.bundle */,
 				4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */,
 			);
 			name = Binaries;
@@ -1136,10 +1129,10 @@
 		4C46CCA8158043D500846B64 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				4CC041D41678E42B00D2C07C /* Annoy Channel Extension.xcodeproj */,
 				4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */,
 				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
 				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
+				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
 			);
 			name = Projects;
 			sourceTree = "<group>";
@@ -1701,14 +1694,6 @@
 			path = "External Libraries";
 			sourceTree = "<group>";
 		};
-		4CC041D51678E42B00D2C07C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CC041D91678E42B00D2C07C /* AnnoyChannel.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4CCC6B46158E8C1B003A102B /* Build Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1938,10 +1923,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 4CC041D51678E42B00D2C07C /* Products */;
-					ProjectRef = 4CC041D41678E42B00D2C07C /* Annoy Channel Extension.xcodeproj */;
-				},
-				{
 					ProductGroup = 4CCC6B63158E8CCC003A102B /* Products */;
 					ProjectRef = 4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */;
 				},
@@ -1965,13 +1946,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4CC041D91678E42B00D2C07C /* AnnoyChannel.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AnnoyChannel.bundle;
-			remoteRef = 4CC041D81678E42B00D2C07C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -2131,7 +2105,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Annoy Channel\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
