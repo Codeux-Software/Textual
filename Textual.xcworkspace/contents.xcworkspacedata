@@ -11,9 +11,6 @@
       location = "group:Frameworks/Auto Hyperlinks/Source/Hyperlink Processor Framework.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Resources/Plugins/Annoy Channel/Annoy Channel Extension.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Frameworks/Blowfish/Source/../../../Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj">
    </FileRef>
    <FileRef
@@ -21,5 +18,8 @@
    </FileRef>
    <FileRef
       location = "group:Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
    </FileRef>
 </Workspace>
