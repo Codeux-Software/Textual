@@ -2500,7 +2500,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2531,7 +2531,6 @@
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2556,7 +2555,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2583,7 +2582,6 @@
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2656,7 +2654,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2683,7 +2681,6 @@
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2732,7 +2729,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2759,7 +2756,6 @@
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2808,7 +2804,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
@@ -2835,7 +2831,6 @@
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = Textual;
-				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";

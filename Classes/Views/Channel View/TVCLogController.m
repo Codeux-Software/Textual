@@ -1237,6 +1237,11 @@
 				 identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+{
+	[[challenge sender] cancelAuthenticationChallenge:challenge];
+}
+
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
