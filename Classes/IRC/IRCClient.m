@@ -2731,6 +2731,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 			// FAKEINDATA COMMAND BEGIN.
 			// ===========================================================
 			
+			if (PointerIsEmpty(c) || c.isTalk) {
+				return YES;
+			}
+			
 			NSMutableArray *allBots = [NSMutableArray array];
 
 			// ---- //
@@ -2830,6 +2834,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 5085: // Command: FAKEUSER
 		{
+			if (PointerIsEmpty(c) || c.isTalk) {
+				return YES;
+			}
+			
 			if ([s.string isEqualToString:@"-d"]) {
 				NSMutableArray *hosts = [NSMutableArray array];
 
