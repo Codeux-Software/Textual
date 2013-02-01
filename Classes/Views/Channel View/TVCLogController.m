@@ -380,7 +380,7 @@
 
 		// ---- //
 
-		NSString *html = TXRenderStyleTemplate(@"historyIndicator", nil, self);
+		NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
 		return (__bridge void *)html;
 	} copy];
@@ -950,8 +950,9 @@
 
 	if (line.isEncrypted) {
 		attributes[@"isEncrypted"] = @(line.isEncrypted);
-		
-		attributes[@"encryptedMessageLockTemplate"]	= TXRenderStyleTemplate(@"encryptedMessageLock", specialAttributes, self);
+
+		attributes[@"encryptedMessageLockTemplate"]	=
+		[TVCLogRenderer renderTemplate:@"encryptedMessageLock" attributes:specialAttributes];
 	}
 
 	// ---- //
@@ -1008,7 +1009,7 @@
 		// ---- //
 
 		NSString *name = [self.theme.other templateNameWithLineType:line.lineType];
-		NSString *html = TXRenderStyleTemplate(name, attributes, self);
+		NSString *html = [TVCLogRenderer renderTemplate:name attributes:attributes];
 
 		if (NSObjectIsEmpty(html)) {
 			return nil;
@@ -1034,7 +1035,7 @@
 		}
 
 		if (markAfter) {
-			html = [html stringByAppendingString:TXRenderStyleTemplate(@"historyIndicator", nil, self)];
+			html = [html stringByAppendingString:[TVCLogRenderer renderTemplate:@"historyIndicator"]];
 		}
 
 		return (__bridge void *)html;
@@ -1146,7 +1147,7 @@
 
 	// ---- //
 
-	return TXRenderStyleTemplate(@"baseLayout", templateTokens, self);
+	return [TVCLogRenderer renderTemplate:@"baseLayout" attributes:templateTokens];
 }
 
 - (NSMutableDictionary *)generateOverrideStyle
