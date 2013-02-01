@@ -193,22 +193,6 @@ NSColor *mapColorCode(NSInteger colorChar)
 	return nil;
 }
 
-NSString *TXRenderStyleTemplate(NSString *templateName, NSDictionary *templateTokens, TVCLogController *logController)
-{
-	GRMustacheTemplate *tmpl = [logController.theme.other templateWithName:templateName];
-
-	if (PointerIsNotEmpty(tmpl)) {
-		
-		NSString *aHtml = [tmpl renderObject:templateTokens error:NULL];
-
-		if (NSObjectIsNotEmpty(aHtml)) {
-			return aHtml.removeAllNewlines;
-		}
-	}
-
-	return nil;
-}
-
 static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len, NSFont *font)
 {
 	NSRange r = NSMakeRange(start, len);
@@ -263,13 +247,13 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		templateTokens[@"anchorLocation"]	= [content stringWithValidURIScheme];
 		templateTokens[@"anchorTitle"]		= logEscape(content);
 
-		return TXRenderStyleTemplate(@"renderedStandardAnchorLinkResource", templateTokens, log);
+		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if (attr & _rendererChannelNameAttribute)
 	{
 		templateTokens[@"channelName"] = logEscape(content);
-		
-		return TXRenderStyleTemplate(@"renderedChannelNameLinkResource", templateTokens, log);
+
+		return [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
 	else
 	{
@@ -319,11 +303,34 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 
 		// --- //
 
-		return TXRenderStyleTemplate(@"formattedMessageFragment", templateTokens, log);
+		return [TVCLogRenderer renderTemplate:@"formattedMessageFragment" attributes:templateTokens];
 	}
 }
 
 @implementation TVCLogRenderer
+
++ (NSString *)renderTemplate:(NSString *)templateName
+{
+	return [TVCLogRenderer renderTemplate:templateName attributes:nil];
+}
+
++ (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateTokens
+{
+	TXMasterController *master = [TPCPreferences masterController];
+
+	GRMustacheTemplate *tmpl = [master.viewTheme.other templateWithName:templateName];
+
+	if (PointerIsNotEmpty(tmpl)) {
+
+		NSString *aHtml = [tmpl renderObject:templateTokens error:NULL];
+
+		if (NSObjectIsNotEmpty(aHtml)) {
+			return aHtml.removeAllNewlines;
+		}
+	}
+
+	return nil;
+}
 
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log

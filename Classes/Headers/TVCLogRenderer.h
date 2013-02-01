@@ -48,11 +48,10 @@ TEXTUAL_EXTERN NSString *logEscapeWithNil(NSString *s);
 TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
 TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);
 
-TEXTUAL_EXTERN NSString *TXRenderStyleTemplate(NSString *templateName,
-											   NSDictionary *templateTokens,
-											   TVCLogController *logController);
-
 @interface TVCLogRenderer : NSObject
++ (NSString *)renderTemplate:(NSString *)templateName;
++ (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateToken;
+
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log
 			  renderType:(TVCLogRendererType)drawingType
