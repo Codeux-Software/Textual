@@ -433,6 +433,13 @@
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
 		};
+		4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D576316048677EA00EA77CD;
+			remoteInfo = SpammerParadise;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -495,7 +502,7 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
-		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
+		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C357E5116795C1700D4C12A /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = Resources/Plugins/Compiled/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
 		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
@@ -1738,6 +1745,14 @@
 			path = "Resources/Images/Encryption Badges";
 			sourceTree = SOURCE_ROOT;
 		};
+		4CF4D48316BC54C2000C5AC8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1931,6 +1946,10 @@
 					ProjectRef = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
 				},
 				{
+					ProductGroup = 4CF4D48316BC54C2000C5AC8 /* Products */;
+					ProjectRef = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
+				},
+				{
 					ProductGroup = 4CCC6B78158E8CF6003A102B /* Products */;
 					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
 				},
@@ -1965,6 +1984,13 @@
 			fileType = wrapper.cfbundle;
 			path = SystemProfiler.bundle;
 			remoteRef = 4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SpammerParadise.bundle;
+			remoteRef = 4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
