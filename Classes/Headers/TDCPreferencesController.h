@@ -87,7 +87,7 @@
 - (void)onHighlightTypeChanged:(id)sender;
 - (void)onSelectFont:(id)sender;
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 - (void)onDownloadExtraAddons:(id)sender;
 #endif
 

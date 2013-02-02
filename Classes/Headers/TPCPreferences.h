@@ -118,7 +118,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)appleStoreReceiptFilePath;
 + (NSString *)userHomeDirectoryPathOutsideSandbox;
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 + (NSString *)systemUnsupervisedScriptFolderPath;
 #endif
 

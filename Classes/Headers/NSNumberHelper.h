@@ -37,7 +37,14 @@
 
 #import "TextualApplication.h"
 
-#define TXDirtyCGFloatsMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+#define TXDirtyCGFloatMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+
+#define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
+#define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
+#define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
+#define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
+#define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
+#define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
 @interface NSNumber (TXNumberHelper)
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;

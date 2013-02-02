@@ -369,7 +369,7 @@
 					CGFloat defaultWhite = [defaultColor whiteComponent];
 					CGFloat compareWhite = [compareColor whiteComponent];
 					
-					if (TXDirtyCGFloatsMatch(defaultWhite, compareWhite)) {
+					if (TXDirtyCGFloatMatch(defaultWhite, compareWhite)) {
 						return NO;
 					}
 					
