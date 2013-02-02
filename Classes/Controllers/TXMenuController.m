@@ -1753,7 +1753,7 @@
 
 - (void)forceReloadTheme:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:TXThemePreferenceChangedNotification object:nil userInfo:nil];
+	[self.master themeStyleDidChange];
 }
 
 - (void)toggleChannelModerationMode:(id)sender
