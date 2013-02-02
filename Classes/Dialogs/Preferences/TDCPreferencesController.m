@@ -568,7 +568,7 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:TXTransparencyPreferenceChangedNotification object:nil userInfo:nil];
+	[TPCPreferences.masterController transparencyDidChange];
 }
 
 #pragma mark -
@@ -617,17 +617,22 @@
 
 - (void)onInputHistorySchemeChanged:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:TXInputHistorySchemePreferenceChangedNotification object:nil userInfo:nil];
+	[TPCPreferences.masterController inputHistorySchemeDidChange];
 }
 
 - (void)onStyleChanged:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:TXThemePreferenceChangedNotification object:nil userInfo:nil];
+	[TPCPreferences.masterController themeStyleDidChange];
 }
 
 - (void)onMainWindowSegmentedControllerChanged:(id)sender
 {
-	[_NSNotificationCenter() postNotificationName:TXMainWindowSegmentedControllerPreferenceChangeNotification object:nil userInfo:nil];
+	[TPCPreferences.masterController reloadSegmentedControllerOrigin];
+}
+
+- (void)onSidebarColorInversionChanged:(id)sender
+{
+	[TPCPreferences.masterController sidebarColorInversionDidChange];
 }
 
 + (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
@@ -708,6 +713,7 @@
 	NSMutableString *download = [NSMutableString string];
 	
 	[download appendString:@"http://www.codeux.com/textual/private/downloads/installers/"];
+	[download appendString:@"Textual-Extra-Scripts-"];
 	[download appendString:version];
 	[download appendString:@".pkg"];
 

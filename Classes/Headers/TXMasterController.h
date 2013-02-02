@@ -79,6 +79,13 @@
 
 - (void)textEntered;
 
+- (void)themeStyleDidChange;
+- (void)transparencyDidChange;
+- (void)inputHistorySchemeDidChange;
+- (void)sidebarColorInversionDidChange;
+
+- (void)reloadSegmentedControllerOrigin;
+
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;
 - (void)selectNextSelection:(NSEvent *)e;
