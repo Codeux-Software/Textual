@@ -82,11 +82,6 @@
 	[TPCPreferences initPreferences];
 
 	[self.text setBackgroundColor:[NSColor clearColor]];
-	
-	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:TXThemePreferenceChangedNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TXTransparencyPreferenceChangedNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:TXInputHistorySchemePreferenceChangedNotification object:nil];
-	[_NSNotificationCenter() addObserver:self selector:@selector(reloadSegmentedControllerOrigin) name:TXMainWindowSegmentedControllerPreferenceChangeNotification object:nil];
 
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
@@ -663,7 +658,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	[TPCPreferences sync];
 }
 
-- (void)themeStyleDidChange:(NSNotification *)note
+- (void)themeStyleDidChange
 {
 	NSMutableString *sf = [NSMutableString string];
 	
@@ -711,12 +706,21 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	}
 }
 
-- (void)transparencyDidChange:(NSNotification *)note
+- (void)sidebarColorInversionDidChange
+{
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+
+	[self.serverSplitView setNeedsDisplay:YES];
+	[self.memberSplitView setNeedsDisplay:YES];
+}
+
+- (void)transparencyDidChange
 {
 	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
 }
 
-- (void)inputHistorySchemeChanged:(NSNotification *)note
+- (void)inputHistorySchemeDidChange
 {
 	if (self.inputHistory) {
 		self.inputHistory = nil;
