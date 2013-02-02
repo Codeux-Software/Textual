@@ -86,7 +86,8 @@
 	[_NSNotificationCenter() addObserver:self selector:@selector(themeStyleDidChange:) name:TXThemePreferenceChangedNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(transparencyDidChange:) name:TXTransparencyPreferenceChangedNotification object:nil];
 	[_NSNotificationCenter() addObserver:self selector:@selector(inputHistorySchemeChanged:) name:TXInputHistorySchemePreferenceChangedNotification object:nil];
-	
+	[_NSNotificationCenter() addObserver:self selector:@selector(reloadSegmentedControllerOrigin) name:TXMainWindowSegmentedControllerPreferenceChangeNotification object:nil];
+
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
@@ -1403,6 +1404,11 @@ typedef enum TXMoveKind : NSInteger {
 
 #pragma mark -
 #pragma mark WindowSegmentedController Delegate
+
+- (void)reloadSegmentedControllerOrigin
+{
+	[self.text redrawOriginPoints];
+}
 
 - (void)updateSegmentedController
 {

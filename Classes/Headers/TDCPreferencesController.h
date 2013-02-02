@@ -37,9 +37,10 @@
 
 #import "TextualApplication.h"
 
-#define TXThemePreferenceChangedNotification				@"TXThemePreferenceChangedNotification"
-#define TXTransparencyPreferenceChangedNotification			@"TXTransparencyPreferenceChangedNotification"
-#define TXInputHistorySchemePreferenceChangedNotification	@"TXInputHistorySchemePreferenceChangedNotification"
+#define TXThemePreferenceChangedNotification							@"TXThemePreferenceChangedNotification"
+#define TXTransparencyPreferenceChangedNotification						@"TXTransparencyPreferenceChangedNotification"
+#define TXInputHistorySchemePreferenceChangedNotification				@"TXInputHistorySchemePreferenceChangedNotification"
+#define TXMainWindowSegmentedControllerPreferenceChangeNotification		@"TXMainWindowSegmentedControllerPreferenceChangeNotification"
 
 @interface TDCPreferencesController : NSWindowController
 @property (nonatomic, weak) IRCWorld *world;
@@ -99,6 +100,7 @@
 - (void)onChangeAlertSound:(id)sender;
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onHighlightLoggingChanged:(id)sender;
+- (void)onMainWindowSegmentedControllerChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
 - (void)onPrefPaneSelected:(id)sender;
 - (void)onOpenPathToThemes:(id)sender;
