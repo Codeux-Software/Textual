@@ -1689,7 +1689,7 @@
 
 - (void)toggleFullscreenMode:(id)sender
 {
-#ifdef TXMacOSLionOrNewer
+#ifdef TXSystemIsMacOSLionOrNewer
 	if ([TPCPreferences featureAvailableToOSXLion]) {
 		if (self.isInFullScreenMode) {
 			[self.window toggleFullScreen:sender];
@@ -1727,7 +1727,7 @@
 			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
 		}
 		
-#ifdef TXMacOSLionOrNewer
+#ifdef TXSystemIsMacOSLionOrNewer
 	}
 #endif
 	

@@ -50,7 +50,7 @@
 
 - (void)populateData
 {
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 	NSArray *scriptPaths = @[
 	NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
 	NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),

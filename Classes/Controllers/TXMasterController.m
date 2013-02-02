@@ -64,7 +64,7 @@
 	
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
-#ifdef TXMacOSLionOrNewer
+#ifdef TXSystemIsMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
 	
@@ -868,7 +868,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 			}
 		}
 		
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 		NSArray *scriptPaths = @[
 		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
 		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),

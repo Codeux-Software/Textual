@@ -1220,7 +1220,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	NSString *scriptInput = details[@"input"];
     NSString *scriptPath  = details[@"path"];
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 	BOOL MLNonsandboxedScript = NO;
 
 	NSString *userScriptsPath = [TPCPreferences systemUnsupervisedScriptFolderPath];
@@ -1262,7 +1262,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		/* Execute Event — Mountain Lion, Non-sandboxed Script */
 		/* /////////////////////////////////////////////////////// */
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 		if (MLNonsandboxedScript) {
 			if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 				NSError *aserror = [NSError new];
@@ -2863,7 +2863,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
             NSArray *extensions = @[@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", NSStringEmptyPlaceholder];
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 			NSArray *scriptPaths = @[
 			NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
 			NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),

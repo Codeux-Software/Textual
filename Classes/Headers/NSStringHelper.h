@@ -37,12 +37,16 @@
 
 #import "TextualApplication.h"
 
-#define TXIsAlpha(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
-#define TXIsNumeric(c)						('0' <= (c) && (c) <= '9' && TXIsAlpha(c) == NO) 
-#define TXIsAlphaNumeric(c)					(TXIsAlpha(c) || TXIsNumeric(c))
-#define TXIsWordLetter(c)					(TXIsAlphaNumeric(c) || (c) == '_')
-#define TXIsIRCColor(c,f)					([NSNumber compareIRCColor:c against:f])
-#define TXIsAlphaWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+#define TXStringIsAlphabetic(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
+#define TXStringIsNumeric(c)							('0' <= (c) && (c) <= '9' && TXStringIsAlphabetic(c) == NO) 
+#define TXStringIsAlphabeticNumeric(c)					(TXStringIsAlphabetic(c) || TXStringIsNumeric(c))
+#define TXStringIsWordLetter(c)							(TXStringIsAlphabeticNumeric(c) || (c) == '_')
+#define TXStringIsIRCColor(c,f)							([NSNumber compareIRCColor:c against:f])
+#define TXStringIsAlphabeticWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+
+#define NSStringEmptyPlaceholder			@""
+#define NSStringNewlinePlaceholder			@"\n"
+#define NSStringWhitespacePlaceholder		@" "
 
 #define NSStringNilValueSubstitute(s)		((s == nil) ? NSStringEmptyPlaceholder : s)
 
