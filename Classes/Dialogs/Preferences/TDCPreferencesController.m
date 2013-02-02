@@ -625,6 +625,11 @@
 	[_NSNotificationCenter() postNotificationName:TXThemePreferenceChangedNotification object:nil userInfo:nil];
 }
 
+- (void)onMainWindowSegmentedControllerChanged:(id)sender
+{
+	[_NSNotificationCenter() postNotificationName:TXMainWindowSegmentedControllerPreferenceChangeNotification object:nil userInfo:nil];
+}
+
 + (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
 {	
 	NSString *name = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
