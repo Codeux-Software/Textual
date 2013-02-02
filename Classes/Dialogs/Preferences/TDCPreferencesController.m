@@ -693,7 +693,7 @@
 
 - (void)onDownloadExtraAddons:(id)sender
 {
-	NSString *version = @"No%20Sandbox";
+	NSString *version = @"No-Sandbox";
 	
 	if ([TPCPreferences sandboxEnabled]) {
 		if ([TPCPreferences featureAvailableToOSXLion]) {
@@ -701,15 +701,15 @@
 		}
 		
 		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-			version = @"Mountain%20Lion";
+			version = @"Mountain-Lion";
 		}
 	}
-	
+
 	NSMutableString *download = [NSMutableString string];
 	
-	[download appendString:@"https://github.com/Codeux/Textual/blob/master/Resources/All%20Scripts/Sandbox%20Exceptions/Installers/Textual%20Extras%20%28"];
+	[download appendString:@"http://www.codeux.com/textual/private/downloads/installers/"];
 	[download appendString:version];
-	[download appendString:@"%29.pkg?raw=true"];
+	[download appendString:@".pkg"];
 
 	[TLOpenLink openWithString:download];
 }
