@@ -198,7 +198,7 @@ NSInteger ctoi(unsigned char c);
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		
-		if (TXIsNumeric(c) == NO) {
+		if (TXStringIsNumeric(c) == NO) {
 			return NO;
 		}
 	}
@@ -217,7 +217,7 @@ NSInteger ctoi(unsigned char c);
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buffer[i];
 		
-		if (TXIsAlphaNumeric(c) == NO) {
+		if (TXStringIsAlphabeticNumeric(c) == NO) {
 			return NO;
 		}
 	}
@@ -314,7 +314,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = 0; i < len; ++i) {
 		UniChar c = buf[i];
 		
-		if (TXIsWordLetter(c)) {
+		if (TXStringIsWordLetter(c)) {
 			dest[n++] = c;
 		} else {
 			dest[n++] = '_';
@@ -403,7 +403,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar e = src[i+1];
-					if (TXIsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) continue;
+					if (TXStringIsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) continue;
 					i++;
 					
 					if ((e == ',') == NO) {
@@ -423,7 +423,7 @@ BOOL isUnicharDigit(unichar c)
 					
 					if ((i + 1) >= len) continue;
 					unichar h = src[i+1];
-					if (TXIsIRCColor(h, (g - '0')) == NO) continue;
+					if (TXStringIsIRCColor(h, (g - '0')) == NO) continue;
 					i++;
 					
 					break;
@@ -493,7 +493,7 @@ BOOL isUnicharDigit(unichar c)
 	if (0 <= prev && prev < len) {
 		UniChar c = [self characterAtIndex:prev];
 		
-		if (TXIsWordLetter(c)) {
+		if (TXStringIsWordLetter(c)) {
 			return NSMakeRange(NSNotFound, 0);
 		}
 	}
@@ -503,7 +503,7 @@ BOOL isUnicharDigit(unichar c)
 	if (next < len) {
 		UniChar c = [self characterAtIndex:next];
 		
-		if (TXIsWordLetter(c)) {
+		if (TXStringIsWordLetter(c)) {
 			return NSMakeRange(NSNotFound, 0);
 		}
 	}
@@ -528,7 +528,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
 		
-		if (TXIsWordLetter(c) || c == '-' || c == '.' || c == '~') {
+		if (TXStringIsWordLetter(c) || c == '-' || c == '.' || c == '~') {
 			*dest++ = c;
 		} else {
 			*dest++ = '%';
@@ -557,7 +557,7 @@ BOOL isUnicharDigit(unichar c)
 	for (NSInteger i = (len - 1); i >= 0; --i) {
 		unsigned char c = *src++;
 		
-		if (TXIsWordLetter(c)
+		if (TXStringIsWordLetter(c)
 			|| c == '#' || c == '%'
 			|| c == '&' || c == '+'
 			|| c == ',' || c == '-'

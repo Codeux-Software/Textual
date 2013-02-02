@@ -142,8 +142,8 @@ NSInteger mapColorValue(NSColor *color)
 					CGFloat greenc = [mapped greenComponent];
 					CGFloat alphac = [mapped alphaComponent];
 					
-					if (TXDirtyCGFloatsMatch(_redc, redc)     && TXDirtyCGFloatsMatch(_bluec, bluec) &&
-						TXDirtyCGFloatsMatch(_greenc, greenc) && TXDirtyCGFloatsMatch(_alphac, alphac)) {
+					if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
+						TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
 						
 						return i;
 					}
@@ -388,7 +388,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 					if ((i + 1) < len) {
 						c = source[i+1];
 						
-						if (TXIsNumeric(c)) {
+						if (TXStringIsNumeric(c)) {
 							++i;
 							
 							textColor = (c - '0');
@@ -396,7 +396,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							if ((i + 1) < len) {
 								c = source[i+1];
 								
-								if (TXIsIRCColor(c, textColor)) {
+								if (TXStringIsIRCColor(c, textColor)) {
 									++i;
 									
 									textColor = (textColor * 10 + c - '0');
@@ -411,7 +411,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 										if ((i + 1) < len) {
 											c = source[i+1];
 											
-											if (TXIsNumeric(c)) {
+											if (TXStringIsNumeric(c)) {
 												++i;
 												
 												backgroundColor = (c - '0');
@@ -419,7 +419,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 												if ((i + 1) < len) {
 													c = source[i+1];
 													
-													if (TXIsIRCColor(c, backgroundColor)) {
+													if (TXStringIsIRCColor(c, backgroundColor)) {
 														++i;
 														
 														backgroundColor = (backgroundColor * 10 + c - '0');

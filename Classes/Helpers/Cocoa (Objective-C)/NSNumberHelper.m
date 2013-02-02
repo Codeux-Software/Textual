@@ -43,7 +43,7 @@
  it does or how it works… */
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber
 {
-	if (TXIsNumeric(c) && firstNumber < 2) {
+	if (TXStringIsNumeric(c) && firstNumber < 2) {
 		NSInteger ci = (c - '0');
 		
 		if ((firstNumber == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 

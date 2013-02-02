@@ -462,7 +462,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Scripts"];
 }
 
-#ifdef TXUserScriptsFolderAvailable
+#ifdef TXUnsupervisedScriptFolderAvailable
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {

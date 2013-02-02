@@ -93,7 +93,7 @@
 
 - (BOOL)isInFullscreenMode
 {
-#ifdef TXMacOSLionOrNewer
+#ifdef TXSystemIsMacOSLionOrNewer
 	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
 #else
 	return NO;

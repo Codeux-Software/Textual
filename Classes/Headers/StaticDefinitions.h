@@ -48,16 +48,16 @@
 	#define keyASSubroutineName 'snam'
 #endif
 
-/* Availability Macros */
-#define TXLoadMacOSLibraries 1
+/* Availability Macros. */
+#define TXLoadMacOSVersionSpecificFeatures 1
 
-#if TXLoadMacOSLibraries
+#if TXLoadMacOSVersionSpecificFeatures
 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER) 
-		#define TXMacOSMountainLionOrNewer
+		#define TXSystemIsMacOSMountainLionOrNewer
 	#endif
 
 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER) 
-		#define TXMacOSLionOrNewer
+		#define TXSystemIsMacOSLionOrNewer
 	#endif
 #endif
 
@@ -68,12 +68,12 @@
 #define PointerIsEmpty(s)				(s == NULL || s == nil)
 #define PointerIsNotEmpty(s)			(s != NULL && s != nil)
 
-#ifdef TXMacOSLionOrNewer
+#ifdef TXSystemIsMacOSLionOrNewer
 	#define TXNativeRegularExpressionAvailable
 #endif
 
-#ifdef TXMacOSMountainLionOrNewer
-	#define TXUserScriptsFolderAvailable
+#ifdef TXSystemIsMacOSMountainLionOrNewer
+	#define TXUnsupervisedScriptFolderAvailable
 	#define TXFoundationBasedUUIDAvailable
 #endif
 
@@ -88,21 +88,21 @@
 	#define DebugLogToConsole(...)
 #endif
 
-/* Establish Common Pointers */
-#define _NSMainScreen()							[NSScreen mainScreen]
-#define _NSFileManager()						[NSFileManager defaultManager]
-#define _NSPasteboard()							[NSPasteboard generalPasteboard]
-#define _NSFontManager()						[NSFontManager sharedFontManager]
-#define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
-#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
-#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
-#define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
-#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
-#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
-#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
-#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
-#define _NSSpellChecker()						[NSSpellChecker sharedSpellChecker]
-#define _NSSharedApplication()					[NSApplication sharedApplication]
+/* Establish Common Pointers. */
+#define _NSMainScreen()							[NSScreen							mainScreen]
+#define _NSFileManager()						[NSFileManager						defaultManager]
+#define _NSPasteboard()							[NSPasteboard						generalPasteboard]
+#define _NSFontManager()						[NSFontManager						sharedFontManager]
+#define _NSGraphicsCurrentContext()				[NSGraphicsContext					currentContext]
+#define _NSNotificationCenter()					[NSNotificationCenter				defaultCenter]
+#define _NSWorkspace()							[NSWorkspace						sharedWorkspace]
+#define _NSWorkspaceNotificationCenter()		[_NSWorkspace()						notificationCenter]
+#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter	defaultCenter]
+#define _NSAppleEventManager()					[NSAppleEventManager				sharedAppleEventManager]
+#define _NSUserDefaults()						[NSUserDefaults						standardUserDefaults]
+#define _NSUserDefaultsController()				[NSUserDefaultsController			sharedUserDefaultsController]
+#define _NSSpellChecker()						[NSSpellChecker						sharedSpellChecker]
+#define _NSSharedApplication()					[NSApplication						sharedApplication]
 
 #ifdef TXNativeNotificationCenterAvailable
 	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
@@ -117,21 +117,9 @@
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED					__attribute__((deprecated))
 
-/* Item types */
+/* Item types. */
 typedef double				TXNSDouble;
 typedef unsigned long long	TXFSLongInt; // filesizes
 
-/* Number Handling */
-#define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
-#define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
-#define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
-#define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
-#define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
-#define NSNumberInRange(n,s,e)				(n >= s && n <= e)
-
-/* Everything Else */
-#define NSStringEmptyPlaceholder			@""
-#define NSStringNewlinePlaceholder			@"\n"
-#define NSStringWhitespacePlaceholder		@" "
-
+/* Everything else. */
 #define TXDeveloperEnvironmentToken			@"TextualDeveloperEnvironment"
