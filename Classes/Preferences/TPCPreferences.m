@@ -1300,6 +1300,9 @@ static NSInteger totalRunTime = 0;
 
 		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"ircs",
 													   (__bridge CFStringRef)(bundleID));
+		
+		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"textual",
+													   (__bridge CFStringRef)(bundleID));
 
 #pragma unused(changeResult)
 	}
@@ -1318,7 +1321,7 @@ static NSInteger totalRunTime = 0;
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		NSBundle *baseBundle = [NSBundle bundleWithURL:CFBridgingRelease(appURL)];
 
-		if ([[baseBundle bundleIdentifier] isNotEqualTo:[mainBundle bundleIdentifier]] || forced) {
+		if ([baseBundle.bundleIdentifier isNotEqualTo:mainBundle.bundleIdentifier] || forced) {
 			TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
 			[prompt sheetWindowWithQuestion:[NSApp keyWindow]
@@ -1377,21 +1380,21 @@ static NSInteger totalRunTime = 0;
 	[d setBool:YES forKey:@"NotificationType -> Address Bok Match -> Enabled"];
 	[d setBool:YES forKey:@"NotificationType -> Private Message (New) -> Enabled"];
 
-	d[@"NotificationType -> Highlight -> Sound"] = @"Glass";
-	d[@"ScanForIRCopAlertInServerNoticesMatch"] = @"ircop alert";
+	d[@"NotificationType -> Highlight -> Sound"]	= @"Glass";
+	d[@"ScanForIRCopAlertInServerNoticesMatch"]		= @"ircop alert";
 
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
 
-	d[@"IRCopDefaultLocalizaiton -> Shun Reason"] = TXTLS(@"ShunReason");
-	d[@"IRCopDefaultLocalizaiton -> Kill Reason"] = TXTLS(@"KillReason");
+	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= TXTLS(@"ShunReason");
+	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"KillReason");
 	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
 
-	d[@"Theme -> Name"] = TXDefaultTextualLogStyle;
-	d[@"Theme -> Font Name"] = TXDefaultTextualLogFont;
-	d[@"Theme -> Nickname Format"] = TXLogLineUndefinedNicknameFormat;
-	d[@"Theme -> Timestamp Format"] = TXDefaultTextualTimestampFormat;
+	d[@"Theme -> Name"]					= TXDefaultTextualLogStyle;
+	d[@"Theme -> Font Name"]			= TXDefaultTextualLogFont;
+	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
+	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
 

@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TDCPreferencesController : NSWindowController
-@property (nonatomic, weak) IRCWorld *world;
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic, weak) NSArray *availableSounds;
 @property (nonatomic, weak) NSMutableArray *sounds;
@@ -55,6 +54,7 @@
 @property (nonatomic, strong) NSView *IRCopServicesView;
 @property (nonatomic, strong) NSView *channelManagementView;
 @property (nonatomic, strong) NSView *experimentalSettingsView;
+@property (nonatomic, strong) IBOutlet NSView *commandScopeSettingsView;
 @property (nonatomic, strong) NSButton *highlightNicknameButton;
 @property (nonatomic, strong) NSButton *addExcludeWordButton;
 @property (nonatomic, strong) NSTableView *keywordsTable;
@@ -73,8 +73,6 @@
 @property (nonatomic, strong) NSToolbar *preferenceSelectToolbar;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
-- (id)initWithWorldController:(IRCWorld *)word;
-
 - (void)show;
 
 - (void)onAddKeyword:(id)sender;
@@ -86,6 +84,8 @@
 #ifdef TXUnsupervisedScriptFolderAvailable
 - (void)onDownloadExtraAddons:(id)sender;
 #endif
+
+- (IBAction)setTextualAsDefaultIRCClient:(id)sender;
 
 - (void)onUseGrowl:(id)sender;
 - (void)onStyleChanged:(id)sender;
