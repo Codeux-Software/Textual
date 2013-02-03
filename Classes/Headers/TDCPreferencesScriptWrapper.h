@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TDCPreferencesScriptWrapper : NSObject <NSTableViewDelegate, NSTableViewDataSource>
-@property (nonatomic, weak) IRCWorld *world;
 @property (nonatomic, strong) NSMutableArray *scripts;
 
 - (void)populateData;

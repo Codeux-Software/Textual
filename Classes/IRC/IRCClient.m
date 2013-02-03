@@ -2865,14 +2865,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 #ifdef TXUnsupervisedScriptFolderAvailable
 			NSArray *scriptPaths = @[
-			NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
-			NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-			NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath])
+				NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
+				NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+				NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath])
 			];
 #else
 			NSArray *scriptPaths = @[
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath])
+				NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
+				NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath])
 			];
 #endif
 
@@ -2892,7 +2892,8 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				for (NSString *i in extensions) {
 					NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
 
-					scriptPath  = [path stringByAppendingPathComponent:filename];
+					scriptPath = [path stringByAppendingPathComponent:filename];
+					
 					scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
 
 					if (scriptFound == YES) {
@@ -2907,18 +2908,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				LogToConsole(TXTLS(@"PluginCommandClashErrorMessage") ,cmd);
 			} else {
 				if (pluginFound) {
-					[self.invokeInBackgroundThread processBundlesUserMessage:
-					 @[[NSString stringWithString:s.string], cmd]];
+					[self.invokeInBackgroundThread processBundlesUserMessage:@[[NSString stringWithString:s.string], cmd]];
 
 					return YES;
 				} else {
 					if (scriptFound) {
                         NSDictionary *inputInfo = @{
-							@"path": scriptPath,
-							@"input": s.string,
-							@"completeTarget": @(completeTarget),
-							@"channel": NSStringNilValueSubstitute(c.name),
-							@"target": NSStringNilValueSubstitute(targetChannelName)
+							@"path"				: scriptPath,
+							@"input"			: s.string,
+							@"completeTarget"	: @(completeTarget),
+							@"channel"			: NSStringNilValueSubstitute(c.name),
+							@"target"			: NSStringNilValueSubstitute(targetChannelName)
 						};
 
                         [self.invokeInBackgroundThread executeTextualCmdScript:inputInfo];

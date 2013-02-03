@@ -875,14 +875,14 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 #ifdef TXUnsupervisedScriptFolderAvailable
 		NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
+			NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+			NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+			NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
 		];
 #else
 		NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
 		];
 #endif
 		
@@ -895,12 +895,17 @@ constrainMinCoordinate:(CGFloat)proposedMax
 						if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
 							continue;
 						}
+
+						NSString *script = file.lowercaseString;
+
+						if ([script contains:@"."]) {
+							NSArray *nameParts = [script componentsSeparatedByString:@"."];
+
+							script = [nameParts safeObjectAtIndex:0];
+						}
 						
-						NSArray  *parts = [NSArray arrayWithArray:[file componentsSeparatedByString:@"."]];
-						NSString *cmdl  = [[parts stringAtIndex:0] lowercaseString];
-						
-						if ([choices containsObject:cmdl] == NO) {
-							[choices safeAddObject:cmdl];
+						if ([choices containsObject:script] == NO) {
+							[choices safeAddObject:script];
 						}
 					}
 				}
@@ -946,7 +951,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		[lowerNicks safeAddObject:@"operserv"];
 		[lowerNicks safeAddObject:@"hostserv"];
 		[lowerNicks safeAddObject:@"chanserv"];
-		[lowerNicks safeAddObject:[TPCPreferences applicationName]];
+		[lowerNicks safeAddObject:[TPCPreferences applicationName].lowercaseString];
 		
 		choices      = nicks;
 		lowerChoices = lowerNicks;
@@ -1463,26 +1468,30 @@ typedef enum TXMoveKind : NSInteger {
 	NSMutableArray *channels = [NSMutableArray array];
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+	// ---- //
 	
 	for (NSString *s in config[@"channelList"]) {
 		if ([s isChannelName]) {
 			[channels safeAddObject:@{@"channelName": s,
 			 @"joinOnConnect": NSNumberWithBOOL(YES), 
 			 @"enableNotifications": NSNumberWithBOOL(YES),
-TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
+
+			 /* Migration Assistant Dictionary Addition. */
+			TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
 		}
 	}
 	
 	NSString *host = config[@"serverAddress"];
 	NSString *nick = config[@"identityNickname"];
 	
-	dic[@"serverAddress"] = host;
-	dic[@"connectionName"] = host;
-	dic[@"identityNickname"] = nick;
-	dic[@"channelList"] = channels;
-	dic[@"connectOnLaunch"] = config[@"connectOnLaunch"];
-	dic[@"characterEncodingDefault"] = NSNumberWithLong(NSUTF8StringEncoding);
-	
+	dic[@"serverAddress"]				= host;
+	dic[@"connectionName"]				= host;
+	dic[@"identityNickname"]			= nick;
+	dic[@"channelList"]					= channels;
+	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
+	dic[@"characterEncodingDefault"]	= NSNumberWithLong(NSUTF8StringEncoding);
+
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];

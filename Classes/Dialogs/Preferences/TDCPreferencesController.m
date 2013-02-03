@@ -50,12 +50,11 @@
 
 @synthesize scriptsView;
 
-- (id)initWithWorldController:(IRCWorld *)word
+- (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"TDCPreferences" owner:self];
 		
-		self.world			   = word;
 		self.scriptsController = [TDCPreferencesScriptWrapper new];
 
 		self.sounds = [NSMutableArray new];
@@ -91,7 +90,6 @@
 
 - (void)show
 {
-	self.scriptsController.world = self.world;
 	[self.scriptsController populateData];
 	
 	self.installedScriptsTable.dataSource = self.scriptsController;
@@ -118,19 +116,79 @@
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
+/*
+	Toolbar Design:
+		[tag]: [label]
+ 
+		0: General
+ 
+			— Blank Space —
+ 
+		3: Alerts
+		1: Highlights
+		4: Style
+		2: Interface
+		9: Identity
+ 
+			— Blank Space —
+ 
+		13: Addons — Menu that includes list of preference
+				panes created by loaded extensions. Top item of 
+				list is "Installed Addons" with tag 10. The tag 
+				of each other item is dynamically determined based 
+				on the _addonsToolbarItemMultiplier. 
+ 
+		10: Addons — Button, "Installed Addons" — no menu. Used
+				if there are no extensions loaded that create
+				custom preference panes.
+ 
+		11: Advanced — Menu. 
+ 
+					7:	IRCop Services
+					8:	Channel Management
+					12: Command Scope
+					6:	Flood Control
+					5:	Log Location
+					11: Experimental Settings
+ 
+	The tag of each toolbar item (and menu item) should not 
+	conflict with any other in order to function with 
+	onPrefPaneSelected: properly which each item calls.
+ */
+
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
-{		
-	NSString *addonID = ((NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) ? @"13" : @"10");
+{
+	IRCWorld *world = TPCPreferences.masterController.world;
 	
-	return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", 
-	@"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, addonID, @"11"];
+	NSString *addonID = @"10";
+
+	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
+		addonID = @"13";
+	}
+	
+	return @[
+		@"0",
+		NSToolbarFlexibleSpaceItemIdentifier,
+		@"3",
+		@"1",
+		@"4",
+		@"2",
+		@"9",
+		NSToolbarFlexibleSpaceItemIdentifier,
+		addonID,
+		@"11"
+	];
 }
 
 - (void)setUpToolbarItemsAndMenus
 {
-	if (NSObjectIsNotEmpty(self.world.bundlesWithPreferences)) {
-		for (THOTextualPluginItem *plugin in self.world.bundlesWithPreferences) {
-			NSInteger tagIndex = ([self.world.bundlesWithPreferences indexOfObject:plugin] + _addonsToolbarItemMultiplier);
+	IRCWorld *world = TPCPreferences.masterController.world;
+
+	NSArray *bundles = world.bundlesWithPreferences;
+
+	if (NSObjectIsNotEmpty(bundles)) {
+		for (THOTextualPluginItem *plugin in bundles) {
+			NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
 			
 			NSMenuItem *pluginMenu = [NSMenuItem new];
 			
@@ -147,22 +205,25 @@
 
 - (void)onPrefPaneSelected:(id)sender 
 {
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
 	switch ([sender tag]) {
-		case 0: [self firstPane:self.generalView selectedItem:0]; break;
-		case 1: [self firstPane:self.highlightView selectedItem:1]; break;
-		case 2: [self firstPane:self.interfaceView selectedItem:2]; break;
-		case 3: [self firstPane:self.alertsView selectedItem:3]; break;
-		case 4: [self firstPane:self.stylesView selectedItem:4]; break;
-		case 5: [self firstPane:self.logView selectedItem:11]; break;
-		case 6: [self firstPane:self.floodControlView selectedItem:11]; break;
-		case 7: [self firstPane:self.IRCopServicesView selectedItem:11]; break;
-		case 8: [self firstPane:self.channelManagementView selectedItem:11]; break;
-		case 9: [self firstPane:self.identityView selectedItem:9]; break;
-		case 10: [self firstPane:self.scriptsView selectedItem:10]; break;
-		case 11: [self firstPane:self.experimentalSettingsView selectedItem:11]; break;
+		case 0:		[self firstPane:self.generalView				selectedItem:0]; break;
+		case 1:		[self firstPane:self.highlightView				selectedItem:1]; break;
+		case 2:		[self firstPane:self.interfaceView				selectedItem:2]; break;
+		case 3:		[self firstPane:self.alertsView					selectedItem:3]; break;
+		case 4:		[self firstPane:self.stylesView					selectedItem:4]; break;
+		case 5:		[self firstPane:self.logView					selectedItem:11]; break;
+		case 6:		[self firstPane:self.floodControlView			selectedItem:11]; break;
+		case 7:		[self firstPane:self.IRCopServicesView			selectedItem:11]; break;
+		case 8:		[self firstPane:self.channelManagementView		selectedItem:11]; break;
+		case 9:		[self firstPane:self.identityView				selectedItem:9]; break;
+		case 10:	[self firstPane:self.scriptsView				selectedItem:10]; break;
+		case 11:	[self firstPane:self.experimentalSettingsView	selectedItem:11]; break;
+		case 12:	[self firstPane:self.commandScopeSettingsView	selectedItem:11]; break;
 		default:
 		{
-			THOTextualPluginItem *plugin = [self.world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - _addonsToolbarItemMultiplier)];
+			THOTextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - _addonsToolbarItemMultiplier)];
 			
 			if (plugin) {
 				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];
@@ -187,15 +248,15 @@
 	windowFrame.size.height = ([view frame].size.height + _TXWindowToolbarHeight);
 	
 	windowFrame.origin.y	= NSMaxY([self.window frame]) -
-	([view frame].size.height + _TXWindowToolbarHeight);
+										(view.frame.size.height + _TXWindowToolbarHeight);
 	
-	if (NSObjectIsNotEmpty([self.contentView subviews])) {
+	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
 		[[self.contentView.subviews safeObjectAtIndex:0] removeFromSuperview];
 	}
 	
 	[self.window setFrame:windowFrame display:YES animate:YES];
 	
-	[self.contentView setFrame:[view frame]];
+	[self.contentView setFrame:view.frame];
 	[self.contentView addSubview:view];	
 	
 	[self.window recalculateKeyViewLoop];
@@ -278,6 +339,8 @@
 - (void)updateAlert 
 {
 	[self.alertSoundButton removeAllItems];
+
+	// ---- //
 	
 	NSArray *alertSounds = [self availableSounds];
 	
@@ -289,8 +352,13 @@
         [self.alertSoundButton.menu addItem:item];
     }
 
+	// ---- //
+
     [self.alertSoundButton selectItemAtIndex:0];
+	
     [self.alertButton removeAllItems];
+
+	// ---- //
 	
     NSMutableArray *alerts = [self sounds];
 	
@@ -306,6 +374,8 @@
 			[self.alertButton.menu addItem:[NSMenuItem separatorItem]];
 		}
     }
+
+	// ---- //
 	
     [self.alertButton selectItemAtIndex:0];
 }
@@ -449,10 +519,15 @@
 - (void)updateTheme
 {
 	[self.themeButton removeAllItems];
+
+	// ---- //
 	
 	NSInteger tag = 0;
 	
-	NSArray *ary = @[[TPCPreferences bundledThemeFolderPath], [TPCPreferences customThemeFolderPath]];
+	NSArray *ary = @[	[TPCPreferences bundledThemeFolderPath],
+						[TPCPreferences customThemeFolderPath]];
+
+	// ---- //
 	
 	for (NSString *path in ary) {
 		NSMutableSet *set = [NSMutableSet set];
@@ -460,28 +535,39 @@
 		NSArray *files = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
 		
 		for (NSString *file in files) {
+			NSString *filename = [file lastPathComponent];
+			
 			if ([path isEqualToString:[TPCPreferences bundledThemeFolderPath]]) {
-				if ([_NSFileManager() fileExistsAtPath:[[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:[file lastPathComponent]]]) {
+				NSString *customFolderItemPath = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+				
+				if ([_NSFileManager() fileExistsAtPath:customFolderItemPath]) {
 					continue;
 				}
 			}
+
+			NSString *cssfilelocal = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]];
 			
-			if ([_NSFileManager() fileExistsAtPath:[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/design.css", file]]]) {
+			if ([_NSFileManager() fileExistsAtPath:cssfilelocal]) {
 				[set addObject:[file stringByDeletingPathExtension]];
 			}
 		}
+
+		// ---- //
 		
-		files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+		files = [set.allObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 		
 		if (files.count) {
 			NSInteger i = 0;
 			
 			for (NSString *f in files) {
-				NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:NSStringEmptyPlaceholder];
+				NSMenuItem *cell = [NSMenuItem new];
+
+				[cell setTag:i];
+				[cell setTitle:f];
+				[cell setAction:nil];
+				[cell setKeyEquivalent:NSStringEmptyPlaceholder];
 				
-				[item setTag:tag];
-				
-				[self.themeButton.menu addItem:item];
+				[self.themeButton.menu addItem:cell];
 				
 				++i;
 			}
@@ -489,6 +575,8 @@
 		
 		++tag;
 	}
+
+	// ---- //
 	
 	NSString *kind = [TPCViewTheme extractThemeSource:[TPCPreferences themeName]];
 	NSString *name = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
@@ -504,7 +592,7 @@
 	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem *item = [self.themeButton itemAtIndex:i];
 		
-		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
+		if ([item tag] == targetTag && [item.title isEqualToString:name]) {
 			[self.themeButton selectItemAtIndex:i];
 			
 			break;
@@ -536,7 +624,9 @@
 
 - (void)onSelectFont:(id)sender
 {
-	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
+	NSFont *logfont = world.viewTheme.other.channelViewFont;
 
 	if (PointerIsEmpty(logfont)) {
 		logfont = [TPCPreferences themeChannelViewFont];
@@ -549,7 +639,9 @@
 
 - (void)changeItemFont:(NSFontManager *)sender
 {
-	NSFont *logfont = self.world.viewTheme.other.channelViewFont;
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
+	NSFont *logfont = world.viewTheme.other.channelViewFont;
 
 	if (PointerIsEmpty(logfont)) {
 		logfont = [TPCPreferences themeChannelViewFont];
@@ -577,18 +669,18 @@
 - (void)onHighlightTypeChanged:(id)sender 
 {
     if ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
-        [self.highlightNicknameButton setEnabled:NO];
-        [self.addExcludeWordButton setEnabled:YES];
-        [self.excludeWordsTable setEnabled:YES];
+        [self.highlightNicknameButton	setEnabled:NO];
+        [self.addExcludeWordButton		setEnabled:YES];
+        [self.excludeWordsTable			setEnabled:YES];
     } else {
         [self.highlightNicknameButton setEnabled:YES];
         
         if ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightPartialMatchType) {
-            [self.addExcludeWordButton setEnabled:YES];
-            [self.excludeWordsTable setEnabled:YES];
+            [self.addExcludeWordButton	setEnabled:YES];
+            [self.excludeWordsTable		setEnabled:YES];
         } else {
-            [self.addExcludeWordButton setEnabled:NO];
-            [self.excludeWordsTable setEnabled:NO];
+            [self.addExcludeWordButton	setEnabled:NO];
+            [self.excludeWordsTable		setEnabled:NO];
         }
     }
 }
@@ -650,10 +742,16 @@
 	} else {
 		NSString *newpath = [[TPCPreferences customThemeFolderPath]		stringByAppendingPathComponent:name];
 		NSString *oldpath = [[TPCPreferences bundledThemeFolderPath]	stringByAppendingPathComponent:name];
-		
-		[_NSFileManager() copyItemAtPath:oldpath toPath:newpath error:NULL];
-		
-		[_NSWorkspace() openFile:newpath];
+
+		NSError *copyError;
+
+		[_NSFileManager() copyItemAtPath:oldpath toPath:newpath error:&copyError];
+
+		if (copyError) {
+			LogToConsole(@"%@", [copyError localizedDescription]);
+		} else {
+			[_NSWorkspace() openFile:newpath];
+		}
 	}
 }
 
@@ -689,8 +787,10 @@
 
 - (void)onHighlightLoggingChanged:(id)sender
 {
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
 	if ([TPCPreferences logAllHighlightsToQuery] == NO) {
-		for (IRCClient *u in self.world.clients) {
+		for (IRCClient *u in world.clients) {
 			[u.highlights removeAllObjects];
 		}
 	}
@@ -718,6 +818,11 @@
 	[download appendString:@".pkg"];
 
 	[TLOpenLink openWithString:download];
+}
+
+- (void)setTextualAsDefaultIRCClient:(id)sender
+{
+	[TPCPreferences defaultIRCClientPrompt:YES];
 }
 
 #pragma mark -

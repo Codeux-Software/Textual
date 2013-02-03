@@ -581,12 +581,10 @@
 	TDCPreferencesController *pc = [TDCPreferencesController alloc];
 	
 	pc.delegate = self;
-	pc.world = self.world;
 	
 	self.preferencesController = pc;
 	
-	(void)[self.preferencesController initWithWorldController:self.world];
-	
+	[self.preferencesController init];
 	[self.preferencesController show];
 }
 
