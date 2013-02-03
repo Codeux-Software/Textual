@@ -584,7 +584,8 @@
 	
 	self.preferencesController = pc;
 	
-	[self.preferencesController init];
+	(void)[self.preferencesController init];
+	
 	[self.preferencesController show];
 }
 
