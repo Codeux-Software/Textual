@@ -50,16 +50,18 @@
 
 - (void)populateData
 {
+	IRCWorld *world = TPCPreferences.masterController.world;
+	
 #ifdef TXUnsupervisedScriptFolderAvailable
 	NSArray *scriptPaths = @[
-	NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-	NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
-	NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
+		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
 	];
 #else
 	NSArray *scriptPaths = @[
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
+		NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
 	];
 #endif
 	
@@ -75,9 +77,14 @@
 				if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
 					continue;
 				}
-				
-				NSArray  *nameParts = [file componentsSeparatedByString:@"."];
-				NSString *script    = [nameParts stringAtIndex:0].lowercaseString;
+
+				NSString *script = file.lowercaseString;
+
+				if ([script contains:@"."]) {
+					NSArray *nameParts = [script componentsSeparatedByString:@"."];
+
+					script = [nameParts safeObjectAtIndex:0];
+				}
 				
 				if ([self.scripts containsObject:script] == NO) {
 					[self.scripts safeAddObject:script];
@@ -86,7 +93,7 @@
 		}
 	}
     
-	for (__strong NSString *cmd in self.world.bundlesForUserInput) {
+	for (__strong NSString *cmd in world.bundlesForUserInput) {
 		cmd = [cmd lowercaseString];
 		
 		if ([self.scripts containsObject:cmd] == NO) {
