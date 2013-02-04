@@ -1129,7 +1129,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	BOOL isEncrypted = NO;
 
 	if ([self isSupportedMessageEncryptionFormat:message channel:chan]) {
-		if ([message hasPrefix:@"OK+ "]) {
+		if ([message hasPrefix:@"+OK "]) {
 			isEncrypted = YES;
 		}
 	}
@@ -2950,15 +2950,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendLine:(NSString *)str
 {
+	if (self.rawModeEnabled) {
+		LogToConsole(@"<< %@", str);
+	}
+	
 	if (self.isConnected == NO) {
 		return [self printDebugInformationToConsole:TXTLS(@"ServerNotConnectedLineSendError")];
 	}
 	
 	[self.conn sendLine:str];
-
-	if (self.rawModeEnabled) {
-		LogToConsole(@"<< %@", str);
-	}
 
 	self.world.messagesSent++;
 	self.world.bandwidthOut += [str length];
