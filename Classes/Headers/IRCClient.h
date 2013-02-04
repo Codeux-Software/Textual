@@ -77,7 +77,7 @@ typedef enum IRCDisconnectType : NSInteger {
 @property (nonatomic, assign, setter=autoConnect:) NSInteger connectDelay;
 @property (nonatomic, assign) NSInteger tryingNickNumber;		// Used for nick collision connections.
 @property (nonatomic, assign) NSUInteger capPaused;				// Used as a BOOL, but can also represent an integer in special cases.
-@property (nonatomic, assign) BOOL isAway;					// YES if Textuak has knowledge of local user being away, else NO.
+@property (nonatomic, assign) BOOL isAway;					// YES if Textual has knowledge of local user being away, else NO.
 @property (nonatomic, assign) BOOL inWhoInfoRun;			// YES if user invoked /WHO and should output results, else NO.
 @property (nonatomic, assign) BOOL inWhoWasRun;				// YES if WHOIS information should be treated as WHOWAS.
 @property (nonatomic, assign) BOOL userhostInNames;			// YES if userhost-in-names CAP supported.
