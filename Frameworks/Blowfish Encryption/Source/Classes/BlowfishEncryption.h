@@ -35,5 +35,4 @@
 
  *********************************************************************** */
 
-#include <BlowfishEncryption/DH1080.h>
 #include <BlowfishEncryption/Encryption.h>
