@@ -36,35 +36,32 @@
  *********************************************************************** */
 
 #import "DH1080.h"
-#import "dh1080_be.hpp"
+#import "DH1080Base.h"
 
 #define requiredPublicKeyLength		135
 
 @implementation CFDH1080
 
-static dhclass *keyExchanger;
+static DH1080Base *keyExchanger;
 
 - (void)dealloc
 {
-	if (keyExchanger) {
-		free(keyExchanger);
-	}
+	keyExchanger = nil;
 }
 
-- (NSString *)generatePublicKey
+- (NSString *)generatePublicKey:(NSStringEncoding)encoding
 {
-	std::string publicKey;
+	NSString *publicKey;
 	
-	keyExchanger = new dhclass;
+	keyExchanger = [DH1080Base alloc];
+	keyExchanger = [keyExchanger initWithEncoding:encoding];
 	
 	if (keyExchanger) {
-		if (keyExchanger->generate()) {
-			keyExchanger->get_public_key(publicKey);
+		if ([keyExchanger generate]) {
+			[keyExchanger publicKey:&publicKey];
 			
-			NSString *_publicKey = @(publicKey.c_str());
-			
-			if ([_publicKey length] >= 1) {
-				return _publicKey;
+			if ([publicKey length] >= 1) {
+				return publicKey;
 			}
 		}
 	}
@@ -74,30 +71,26 @@ static dhclass *keyExchanger;
 
 - (NSString *)secretKeyFromPublicKey:(NSString *)publicKey
 {
-	std::string specialPrivateKey;
-	std::string specialPublicKey([publicKey UTF8String]);
+	NSString *__privateKey;
+	NSString *__publicKey = publicKey;
 	
-	dh_base64decode(specialPublicKey);
+	//dh_base64decode(specialPublicKey);
 
-	if (specialPublicKey.size() < requiredPublicKeyLength ||
-		specialPublicKey.size() > requiredPublicKeyLength) {
+	if (publicKey.length < requiredPublicKeyLength ||
+		publicKey.length > requiredPublicKeyLength) {
 		
 		return nil;
 	}
+
+	[keyExchanger setKey:&__publicKey];
 	
-	keyExchanger->set_her_key(specialPublicKey);
-	
-	if (keyExchanger->compute() == NO) {
+	if ([keyExchanger compute] == NO) {
 		return nil;
 	}
+
+	[keyExchanger secretString:&__privateKey];
 	
-	keyExchanger->get_secret(specialPrivateKey);
-	
-	NSString *privateKey = [[NSString alloc] initWithBytes:specialPrivateKey.c_str()
-													length:specialPrivateKey.length()
-												 encoding:NSASCIIStringEncoding];
-	
-	return privateKey;
+	return __privateKey;
 }
 
 @end
