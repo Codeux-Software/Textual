@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 #define TXFloodControlDefaultDelayTimer       2
-#define TXFloodControlDefaultMessageCount     2
+#define TXFloodControlDefaultMessageCount     6
 
 typedef enum TXConnectionProxyType : NSInteger {
 	TXConnectionNoProxyType = 0,

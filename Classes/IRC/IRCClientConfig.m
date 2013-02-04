@@ -74,7 +74,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.encoding         = NSUTF8StringEncoding;
 		self.fallbackEncoding = NSISOLatin1StringEncoding;
         
-        self.outgoingFloodControl            = NO;
+        self.outgoingFloodControl            = YES;
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
 		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
@@ -275,15 +275,8 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 				self.floodControlMaximumMessages	= NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
 				self.floodControlDelayTimerInterval	= NSDictionaryIntegerKeyValueCompare(e, @"delayTimerInterval", TXFloodControlDefaultDelayTimer);
 			}
-		} else {
-			/* Enable flood control by default for Freenode servers. 
-			 They are very strict about flooding. This is required. */
-			
-			if ([self.host hasSuffix:@"freenode.net"]) {
-				self.outgoingFloodControl = YES;
-			}
 		}
-		
+
 		return self;
 	}
 	
