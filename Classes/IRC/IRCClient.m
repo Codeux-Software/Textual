@@ -4570,16 +4570,10 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		[self sendNextCap];
     } else {
         if ([star isEqualToString:@"+"]) {
-            NSData *usernameData = [self.config.nick dataUsingEncoding:self.config.encoding allowLossyConversion:YES];
-
-            NSMutableData *authenticateData = [usernameData mutableCopy];
-
-            [authenticateData appendBytes:"\0" length:1];
-            [authenticateData appendData:usernameData];
-            [authenticateData appendBytes:"\0" length:1];
-            [authenticateData appendData:[self.config.nickPassword dataUsingEncoding:self.config.encoding allowLossyConversion:YES]];
-
-            NSString *authString = [authenticateData base64EncodingWithLineLength:400];
+			NSString *authData = [NSString stringWithFormat:@"%C%@%C%@", 0x00, self.config.nick,
+																		 0x00, self.config.nickPassword];
+			
+            NSString *authString = [authData base64EncodingWithLineLength:400];
 
             NSArray *authStrings = [authString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 

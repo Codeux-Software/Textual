@@ -732,6 +732,34 @@ BOOL isUnicharDigit(unichar c)
 	return NSHeight(bounds);
 }
 
+- (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength
+{
+	NSString *encodedResult = [CSFWBase64Encoding encodeData:self];
+	
+	if (NSObjectIsNotEmpty(encodedResult)) {
+		NSMutableString *resultString = [NSMutableString string];
+		
+		if (encodedResult.length > lineLength) {
+			NSInteger rlc = ceil(encodedResult.length / lineLength);
+
+			for (NSInteger i = 1; i <= rlc; i++) {
+				NSString *append = [encodedResult safeSubstringToIndex:lineLength];
+
+				[resultString appendString:append];
+				[resultString appendString:NSStringNewlinePlaceholder];
+
+				encodedResult = [encodedResult safeSubstringFromIndex:lineLength];
+			}
+		}
+		
+		[resultString appendString:encodedResult];
+
+		return resultString;
+	}
+
+	return nil;
+}
+
 @end
 
 @implementation NSString (NSStringNumberHelper)
