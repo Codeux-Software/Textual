@@ -128,6 +128,8 @@
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
+
+- (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength;
 @end
 
 #pragma mark 

@@ -61,7 +61,7 @@
 #endif
 
 	// ---- //
-	
+
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
 #ifdef TXSystemIsMacOSLionOrNewer

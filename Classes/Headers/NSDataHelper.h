@@ -42,6 +42,4 @@
 
 - (NSString *)validateUTF8;
 - (NSString *)validateUTF8WithCharacter:(UniChar)malformChar;
-
-- (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength;
 @end
