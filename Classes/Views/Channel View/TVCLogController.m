@@ -759,12 +759,12 @@
 
 - (BOOL)print:(TVCLogLine *)line
 {
-	return [self print:line withHTML:NO];
+	return [self print:line withHTML:NO specialWrite:NO markAfter:NO];
 }
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML
 {
-	return [self print:line withHTML:stripHTML specialWrite:NO];
+	return [self print:line withHTML:stripHTML specialWrite:NO markAfter:NO];
 }
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial

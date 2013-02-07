@@ -3248,22 +3248,22 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text
 {
-	return [self printBoth:chan type:type nick:nil text:text];
+	return [self printChannel:chan type:type nick:nil text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printBoth:chan type:type nick:nil text:text receivedAt:receivedAt];
+	return [self printChannel:chan type:type nick:nil text:text encrypted:NO receivedAt:receivedAt];
 }
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
 {
-	return [self printBoth:chan type:type nick:nick text:text receivedAt:[NSDate date]];
+	return [self printChannel:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printChannel:chan type:type nick:nick text:text receivedAt:receivedAt];
+	return [self printChannel:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt];
 }
 
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
@@ -3313,12 +3313,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
 {
-	return [self printChannel:chan type:type nick:nil text:text receivedAt:[NSDate date]];
+	return [self printChannel:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (BOOL)printChannel:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self printChannel:chan type:type nick:nil text:text receivedAt:receivedAt];
+	return [self printChannel:chan type:type nick:nil text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML
@@ -3383,7 +3383,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 	return [self printChannel:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt];
 }
 
-- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:chan withLineType:type] == YES) {
 		return NO;
@@ -3506,47 +3506,47 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)printSystem:(id)channel text:(NSString *)text
 {
-	[self printChannel:channel type:TVCLogLineDebugType text:text receivedAt:[NSDate date]];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	[self printChannel:channel type:TVCLogLineDebugType text:text receivedAt:receivedAt];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printSystemBoth:(id)channel text:(NSString *)text
 {
-	[self printSystemBoth:channel text:text receivedAt:[NSDate date]];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:text receivedAt:[NSDate date]];
 }
 
 - (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	[self printBoth:channel type:TVCLogLineDebugType text:text receivedAt:receivedAt];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printReply:(IRCMessage *)m
 {
-	[self printBoth:nil type:TVCLogLineDebugType text:[m sequence:1] receivedAt:m.receivedAt];
+	[self printChannel:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt];
 }
 
 - (void)printUnknownReply:(IRCMessage *)m
 {
-	[self printBoth:nil type:TVCLogLineDebugType text:[m sequence:1] receivedAt:m.receivedAt];
+	[self printChannel:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[self printDebugInformation:m channel:[self.world selectedChannelOn:self]];
+	[self printChannel:[self.world selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self printDebugInformation:m channel:nil];
+	[self printChannel:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
-	[self printBoth:channel type:TVCLogLineDebugType text:m];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
 }
 
 - (void)printErrorReply:(IRCMessage *)m
@@ -3558,12 +3558,12 @@ static NSDateFormatter *dateTimeFormatter = nil;
 {
 	NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence]);
 
-	[self printBoth:channel type:TVCLogLineDebugType text:text receivedAt:m.receivedAt];
+	[self printChannel:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt];
 }
 
 - (void)printError:(NSString *)error
 {
-	[self printBoth:nil type:TVCLogLineDebugType text:error];
+	[self printChannel:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date]];
 }
 
 #pragma mark -
