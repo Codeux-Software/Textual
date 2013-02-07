@@ -50,7 +50,6 @@ typedef enum TXConnectionProxyType : NSInteger {
 NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context);
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
-@property (nonatomic, assign) NSInteger cuid;
 @property (nonatomic, strong) NSString *guid;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *host;
