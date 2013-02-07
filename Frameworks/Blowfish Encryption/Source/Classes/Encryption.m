@@ -55,6 +55,8 @@
 {
 	if ([input hasPrefix:@"+OK "] && [input length] >= 5) {
 		input = [input substringFromIndex:4];
+	} else {
+		return nil;
 	}
 
 	NSString *result = [BlowfishBase decrypt:input key:phrase encoding:local];

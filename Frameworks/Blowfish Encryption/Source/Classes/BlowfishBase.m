@@ -22,10 +22,6 @@
 
 #import "BlowfishBase.h"
 
-/* Private framework interface for Blowfish.
- This is an Objective-C++ wrapper for the original
- C++ library developed by Samuel Lidén Borell. */
-
 #include <openssl/blowfish.h>
 
 /* =============================================== */
@@ -102,7 +98,7 @@ static const signed char fish_unbase64[256] = {
         for (size_t i = 0; i < 8; i++) {
             c = message[i];
 			
-            binary[i >> 2] |= c << (8 * (3 - (i & 3)));
+            binary[i >> 2] |= (c << (8 * (3 - (i & 3))));
 			
             if (c == '\0') {
 				break;
@@ -117,7 +113,7 @@ static const signed char fish_unbase64[256] = {
         unsigned char word = 1;
 
         for (int i = 0; i < 12; i++) {
-            unsigned char d = fish_base64[(binary[word] >> bit) & 63];
+            unsigned char d = fish_base64[((binary[word] >> bit) & 63)];
 
 			*(end++) = d;
 			
@@ -176,6 +172,8 @@ static const signed char fish_unbase64[256] = {
 		return nil;
 	}
 
+	BOOL breakloop = NO;
+
     while (*message) {
         BF_LONG binary[2] = {0, 0};
 		
@@ -183,13 +181,15 @@ static const signed char fish_unbase64[256] = {
         unsigned char word = 1;
 
         for (size_t i = 0; i < 12; i++) {
-            unsigned char d = fish_unbase64[(const unsigned char) * (message++)];
+            unsigned char d = fish_unbase64[(const unsigned char)*(message++)];
 
             if (d == IB) {
-				goto decrypt_end;
+				breakloop = YES;
+
+				break;
 			}
 			
-            binary[word] |= d << bit;
+            binary[word] |= (d << bit);
 			
             bit += 6;
 
@@ -199,13 +199,16 @@ static const signed char fish_unbase64[256] = {
             }
         }
 
+		if (breakloop) { // Old implementation used "goto" for this. eww…
+			break;
+		}
+
         BF_decrypt(binary, &bfkey);
 
         GET_BYTES(end, binary[0]);
         GET_BYTES(end, binary[1]);
     }
 
-decrypt_end:
     *end = '\0';
 	
 	// ========================================== //

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CD8862116C09BD60000CF8D /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
 /* End PBXBuildFile section */
@@ -14,6 +15,7 @@
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C88849E158EB9B400747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
+		4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = "../../../Frameworks/Blowfish Encryption/BlowfishEncryption.framework"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -27,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
+				4CD8862116C09BD60000CF8D /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +84,8 @@
 		4C828A861581128D007C7D92 /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
-				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				4CD8861E16C09BA60000CF8D /* External Frameworks */,
+				4CD8861D16C09BA00000CF8D /* System Frameworks */,
 			);
 			name = "System Frameworks";
 			sourceTree = "<group>";
@@ -94,6 +97,23 @@
 			);
 			name = "ARC Weak Refrences";
 			path = "../../../Classes/Library/External Libraries/ARC Weak Refrences";
+			sourceTree = "<group>";
+		};
+		4CD8861D16C09BA00000CF8D /* System Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CEE0DD012E09A1900C5096E /* Cocoa.framework */,
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+			);
+			name = "System Frameworks";
+			sourceTree = "<group>";
+		};
+		4CD8861E16C09BA60000CF8D /* External Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */,
+			);
+			name = "External Frameworks";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -158,8 +158,6 @@
 	if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
 		[self.pluginPrimaryClass pluginUnloadedFromMemory];
 	}
-	
-	
 }
 
 @end
