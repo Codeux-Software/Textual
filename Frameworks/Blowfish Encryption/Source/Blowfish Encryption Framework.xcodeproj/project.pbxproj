@@ -12,9 +12,15 @@
 		4C1AD75912DF636E00B4AD56 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1AD75812DF636E00B4AD56 /* libssl.dylib */; };
 		4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* Encryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* Encryption.m */; };
+		4C500F3C16C06C5A001692AF /* DH1080Base.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3A16C06C5A001692AF /* DH1080Base.h */; };
+		4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F3B16C06C5A001692AF /* DH1080Base.mm */; };
+		4C500F4116C06C79001692AF /* DH1080.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3F16C06C79001692AF /* DH1080.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C500F4216C06C79001692AF /* DH1080.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F4016C06C79001692AF /* DH1080.mm */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */; };
 		4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */; };
+		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -29,9 +35,15 @@
 		4C1AD75812DF636E00B4AD56 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		4C292F7D12DFD69400BE23FE /* Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* Encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encryption.m; sourceTree = "<group>"; };
+		4C500F3A16C06C5A001692AF /* DH1080Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080Base.h; sourceTree = "<group>"; };
+		4C500F3B16C06C5A001692AF /* DH1080Base.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080Base.mm; sourceTree = "<group>"; };
+		4C500F3F16C06C79001692AF /* DH1080.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080.h; sourceTree = "<group>"; };
+		4C500F4016C06C79001692AF /* DH1080.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080.mm; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishBase.m; sourceTree = "<group>"; };
 		4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = "../../../Classes/Library/External Libraries/ARC Weak Refrences/PLWeakCompatibilityStubs.m"; sourceTree = "<group>"; };
+		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; };
+		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CEC815C133F13140026DFAE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlowfishEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,11 +144,13 @@
 		4C1AD6AF12DF618E00B4AD56 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				4CA0F08712DFFF22007624C5 /* Core */,
-				4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */,
-				4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */,
+				4C8455A816C18FDE00AD9203 /* Core */,
+				4CCE47E716C0EEF800915F60 /* Base64Encoding.h */,
+				4CCE47E816C0EEF800915F60 /* Base64Encoding.m */,
 				4C292F7D12DFD69400BE23FE /* Encryption.h */,
 				4C292F7E12DFD69400BE23FE /* Encryption.m */,
+				4C500F3F16C06C79001692AF /* DH1080.h */,
+				4C500F4016C06C79001692AF /* DH1080.mm */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -150,19 +164,23 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		4C8455A816C18FDE00AD9203 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				4C500F3A16C06C5A001692AF /* DH1080Base.h */,
+				4C500F3B16C06C5A001692AF /* DH1080Base.mm */,
+				4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */,
+				4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		4C88845D158EB77700747ABB /* Weak Refrences */ = {
 			isa = PBXGroup;
 			children = (
 				4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */,
 			);
 			name = "Weak Refrences";
-			sourceTree = "<group>";
-		};
-		4CA0F08712DFFF22007624C5 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,8 +191,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */,
+				4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */,
 				4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */,
+				4C500F4116C06C79001692AF /* DH1080.h in Headers */,
 				4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */,
+				4C500F3C16C06C5A001692AF /* DH1080Base.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +256,9 @@
 				4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */,
 				4C292F8012DFD69400BE23FE /* Encryption.m in Sources */,
 				4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */,
+				4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */,
+				4C500F4216C06C79001692AF /* DH1080.mm in Sources */,
+				4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

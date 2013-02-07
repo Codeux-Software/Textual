@@ -35,4 +35,6 @@
 
  *********************************************************************** */
 
+#include <BlowfishEncryption/Base64Encoding.h>
 #include <BlowfishEncryption/Encryption.h>
+#include <BlowfishEncryption/DH1080.h>

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -35,21 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-@interface TPI_BlowfishCommands : NSObject 
-
-- (NSDictionary *)pluginOutputDisplayRules;
-
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
-
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict;
-
-- (NSArray *)pluginSupportsServerInputCommands;
-- (NSArray *)pluginSupportsUserInputCommands;
-
+@interface CSFWBase64Encoding : NSObject
++ (NSString *)encodeData:(NSString *)input;
++ (NSString *)decodeData:(NSString *)input;
 @end

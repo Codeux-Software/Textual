@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define IRCUserFakeBotNicknameFormat		@"tbot[%i]"
-#define IRCUserFakeBotHostmaskFormat		@"!textual@FakeTextualBot.vhost"
-
 @interface IRCUser : NSObject
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSString *nick;
@@ -60,8 +57,6 @@
 @property (nonatomic, assign) CGFloat incomingWeight;
 @property (nonatomic, assign) CGFloat outgoingWeight;
 @property (nonatomic, assign) CFAbsoluteTime lastFadedWeights;
-
-+ (NSString *)botFakeHostmask;
 
 - (BOOL)hasMode:(char)mode;
 

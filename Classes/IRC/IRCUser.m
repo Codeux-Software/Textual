@@ -52,13 +52,6 @@
 	return self;
 }
 
-+ (NSString *)botFakeHostmask
-{
-	NSString *nickname = [NSString stringWithFormat:IRCUserFakeBotNicknameFormat, TXRandomNumber(9999)];
-
-	return [nickname stringByAppendingString:IRCUserFakeBotHostmaskFormat];
-}
-
 - (NSString *)hostMask
 {
 	return [NSString stringWithFormat:@"%@!%@@%@", self.nick, self.username, self.address];
