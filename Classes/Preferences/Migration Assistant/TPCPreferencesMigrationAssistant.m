@@ -71,9 +71,7 @@
 	[nconfig setBool:[config boolForKey:@"bouncer_mode"]		forKey:@"serverIsIRCBouncer"];
 	[nconfig setBool:[config boolForKey:@"invisible"]			forKey:@"setInvisibleOnConnect"];
 	[nconfig setBool:[config boolForKey:@"trustedConnection"]	forKey:@"trustedSSLConnection"];
-	
-	[nconfig setInteger:[config integerForKey:@"cuid"]				forKey:@"connectionID"];
-	
+
 	[nconfig safeSetObject:config[@"guid"]				forKey:@"uniqueIdentifier"];
 	[nconfig safeSetObject:config[@"name"]				forKey:@"connectionName"];
 	[nconfig safeSetObject:config[@"host"]				forKey:@"serverAddress"];
