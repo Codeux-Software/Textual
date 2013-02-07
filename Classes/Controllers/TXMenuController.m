@@ -833,9 +833,8 @@
 	
 	IRCClientConfig *config = u.storedConfig;
 	
-	config.name  = [config.name stringByAppendingString:@"_"];
-	config.guid  = [NSString stringWithUUID];
-	config.cuid += 1;
+	config.name = [config.name stringByAppendingString:@"_"];
+	config.guid = [NSString stringWithUUID];
 	
 	IRCClient *n = [self.world createClient:config reload:YES];
 	

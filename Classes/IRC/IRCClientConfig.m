@@ -49,7 +49,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 - (id)init
 {
 	if ((self = [super init])) {
-		self.cuid = TXRandomNumber(9999);
 		self.guid = [NSString stringWithUUID];
 		
 		self.ignores         = [NSMutableArray new];
@@ -57,18 +56,25 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.channels        = [NSMutableArray new];
 		self.loginCommands   = [NSMutableArray new];
 
+		self.autoConnect         = NO;
+		self.autoReconnect       = NO;
 		self.autoSleepDisconnect = YES;
 		
 		self.host         = NSStringEmptyPlaceholder;
 		self.port         = 6667;
+		self.useSSL		  = NO;
 		self.password     = NSStringEmptyPlaceholder;
 		self.nickPassword = NSStringEmptyPlaceholder;
 		
+		self.invisibleMode       = NO;
+		self.isTrustedConnection = NO;
+
+		self.proxyType		 = TXConnectionNoProxyType;
 		self.proxyHost       = NSStringEmptyPlaceholder;
 		self.proxyPort       = 1080;
 		self.proxyUser       = NSStringEmptyPlaceholder;
 		self.proxyPassword   = NSStringEmptyPlaceholder;
-        
+
         self.prefersIPv6 = NO;
 		
 		self.encoding         = NSUTF8StringEncoding;
@@ -78,13 +84,13 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
 		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
-		self.name        = TXTLS(@"DefaultNewConnectionName");
-		self.nick        = [TPCPreferences defaultNickname];
-		self.username    = [TPCPreferences defaultUsername];
-		self.realName    = [TPCPreferences defaultRealname];
+		self.name       = TXTLS(@"DefaultNewConnectionName");
+		self.nick		= [TPCPreferences defaultNickname];
+		self.username	= [TPCPreferences defaultUsername];
+		self.realName	= [TPCPreferences defaultRealname];
 		
-		self.leavingComment      = TXTLS(@"DefaultDisconnectQuitMessage");
-		self.sleepQuitMessage    = TXTLS(@"OSXGoingToSleepQuitMessage");
+		self.leavingComment   = TXTLS(@"DefaultDisconnectQuitMessage");
+		self.sleepQuitMessage = TXTLS(@"OSXGoingToSleepQuitMessage");
 	}
 	
 	return self;
@@ -211,8 +217,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 {
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
-		
-		self.cuid		= NSDictionaryIntegerKeyValueCompare(dic, @"connectionID", self.cuid);
+
 		self.guid		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.guid);
 		self.name		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.name);
 		self.host		= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.host);
@@ -220,48 +225,39 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 		self.nick		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nick);
 		self.username	= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 		self.realName	= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realName);
-
-		self.autoSleepDisconnect = NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepDisconnect);
 		
 		[self.altNicks addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
-		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxyServerType"];
+		self.proxyType       = (TXConnectionProxyType)NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerType", self.proxyType);
 		self.proxyPort       = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
 		self.proxyHost		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyHost);
 		self.proxyUser		 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUser);
 		self.proxyPassword	 = NSDictionaryObjectKeyValueCompare(dic, @"proxyServerPassword", self.proxyPassword);
 		
-		self.useSSL				 = [dic boolForKey:@"connectUsingSSL"];
-		self.autoConnect         = [dic boolForKey:@"connectOnLaunch"];
-		self.autoReconnect       = [dic boolForKey:@"connectOnDisconnect"];
+		self.useSSL				 = NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.useSSL);
+		self.autoConnect         = NSDictionaryBOOLKeyValueCompare(dic, @"connectOnLaunch", self.autoConnect);
+		self.autoReconnect       = NSDictionaryBOOLKeyValueCompare(dic, @"connectOnDisconnect", self.autoReconnect);
+		self.autoSleepDisconnect = NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepDisconnect);
 		
 		self.encoding			 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.encoding);
 		self.fallbackEncoding	 = NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
 		self.leavingComment		 = NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.leavingComment);
 		self.sleepQuitMessage	 = NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectSleepModeMessage", self.sleepQuitMessage);
 		
-		self.prefersIPv6         = [dic boolForKey:@"DNSResolverPrefersIPv6"];
-		self.invisibleMode       = [dic boolForKey:@"setInvisibleOnConnect"];
-		self.isTrustedConnection = [dic boolForKey:@"trustedSSLConnection"];
+		self.prefersIPv6         = NSDictionaryBOOLKeyValueCompare(dic, @"DNSResolverPrefersIPv6", self.prefersIPv6);
+		self.invisibleMode       = NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
+		self.isTrustedConnection = NSDictionaryBOOLKeyValueCompare(dic, @"trustedSSLConnection", self.isTrustedConnection);
 		
 		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
 		
 		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
-			IRCChannelConfig *c;
-			
-			c = [IRCChannelConfig alloc];
-			c = [c initWithDictionary:e];
-			c = c;
+			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 			
 			[self.channels safeAddObject:c];
 		}
 		
 		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
-			IRCAddressBook *ignore;
-			
-			ignore = [IRCAddressBook alloc];
-			ignore = [ignore initWithDictionary:e];
-			ignore = ignore;
+			IRCAddressBook *ignore = [[IRCAddressBook alloc] initWithDictionary:e];
 			
 			[self.ignores safeAddObject:ignore];
 		}
@@ -270,7 +266,7 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
 			if (NSObjectIsNotEmpty(e)) {
-				self.outgoingFloodControl           = [e boolForKey:@"serviceEnabled"];
+				self.outgoingFloodControl           = NSDictionaryBOOLKeyValueCompare(e, @"serviceEnabled", self.outgoingFloodControl);
 
 				self.floodControlMaximumMessages	= NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
 				self.floodControlDelayTimerInterval	= NSDictionaryIntegerKeyValueCompare(e, @"delayTimerInterval", TXFloodControlDefaultDelayTimer);
@@ -300,8 +296,6 @@ NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context
 	[dic setBool:self.invisibleMode			forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.isTrustedConnection	forKey:@"trustedSSLConnection"];
 	[dic setBool:self.autoSleepDisconnect	forKey:@"disconnectOnSleepMode"];
-	
-	[dic setInteger:self.cuid				forKey:@"connectionID"];
 	
 	[dic safeSetObject:self.guid				forKey:@"uniqueIdentifier"];
 	[dic safeSetObject:self.name				forKey:@"connectionName"];

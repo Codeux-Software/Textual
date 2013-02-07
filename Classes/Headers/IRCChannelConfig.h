@@ -56,6 +56,8 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, strong) NSString *topic;
 @property (nonatomic, strong) NSString *encryptionKey;
 
+- (void)destroyKeychains;
+
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 @end
