@@ -37,15 +37,14 @@
 
 #import "TPISpammerParadise.h"
 
-/* A lot of admins will hate me for writing this extension. 
- I say… BRING IT ON! 
- 
- It is 10:49 A.M., I am bored, been up since 6:00, home alone,
- waiting for loved one to return… so I wrote this. Hate me. */
-
 @interface TPISpammerParadise ()
 @property (nonatomic, strong) NSMutableArray *clonedUsers;
 @end
+
+#define _ActionMessagePrefix		[NSString stringWithFormat:@"%CACTION ", 0x01]
+#define _ActionMessageSuffix		[NSString stringWithFormat:@"%C", 0x01]
+
+#define _ClonedUserRegistrationKey		@"clone: client = %@; channel = %@; user = %@;"
 
 @implementation TPISpammerParadise
 
@@ -59,35 +58,25 @@
 	if (PointerIsEmpty(self.clonedUsers)) {
 		self.clonedUsers = [NSMutableArray array];
 	}
-
-	// ---- //
 	
 	IRCChannel *channel = client.world.selectedChannel;
 
-	if (channel.isChannel == NO) {
-		return;
-	}
+	if (channel.isChannel) {
+		NSInteger spacePos = [messageString stringPosition:NSStringWhitespacePlaceholder];
 
-	// ---- //
-	
-	NSString *jerk = messageString;
-
-	/* Get everything up to first space… */
-	NSInteger spacePos = [messageString stringPosition:NSStringWhitespacePlaceholder];
-
-	if (spacePos >= 2) {
-		jerk = [jerk safeSubstringToIndex:spacePos];
-	}
-	
-	/* Let the fun begin… */
-	if ([commandString isEqualToString:@"CLONE"]) {
-		[self addCloneOn:client in:channel nickname:jerk];
-	} else if ([commandString isEqualToString:@"UNCLONE"]) {
-		[self removeCloneOn:client in:channel nickname:jerk];
-	} else if ([commandString isEqualToString:@"CLONED"]) {
-		[self listAllClones:client];
-	} else if ([commandString isEqualToString:@"HSPAM"] && channel.isTalk == NO) {
-		[self highlightEveryoneIn:channel on:client];
+		if (spacePos >= 2) {
+			messageString = [messageString safeSubstringToIndex:spacePos];
+		}
+		
+		if ([commandString isEqualToString:@"CLONE"]) {
+			[self addCloneOn:client in:channel nickname:messageString];
+		} else if ([commandString isEqualToString:@"UNCLONE"]) {
+			[self removeCloneOn:client in:channel nickname:messageString];
+		} else if ([commandString isEqualToString:@"CLONED"]) {
+			[self listAllClones:client];
+		} else if ([commandString isEqualToString:@"HSPAM"] && channel.isTalk == NO) {
+			[self highlightEveryoneIn:channel on:client];
+		}
 	}
 }
 
@@ -111,32 +100,33 @@
 
 	NSArray *params = messageDict[@"messageParamaters"];
 
-	NSString *chaname = params[0];
-	NSString *person  = senderDict[@"senderNickname"];
+	NSString *nickname = senderDict[@"senderNickname"];
 	NSString *message = messageDict[@"messageSequence"];
 
 	// ---- //
 
 	BOOL isAction = NO;
 
-	if ([message hasPrefix:@"ACTION "] && [message hasSuffix:@""]) {
+	if ([message hasPrefix:_ActionMessagePrefix] &&
+		[message hasSuffix:_ActionMessageSuffix]) {
+		
 		isAction = YES;
 		
-		message = [message safeSubstringAfterIndex:7];
+		message = [message safeSubstringFromIndex:[_ActionMessagePrefix length]];
 		message = [message safeSubstringToIndex:(message.length - 1)];
 	}
 
 	// ---- //
 
-	IRCChannel *channel = [client findChannel:chaname];
+	IRCChannel *channel = [client findChannel:params[0]];
 
 	if (channel) {
-		IRCUser *member = [channel findMember:person options:NSCaseInsensitiveSearch];
+		IRCUser *member = [channel findMember:nickname options:NSCaseInsensitiveSearch];
 
 		// ---- //
 		
 		if (PointerIsNotEmpty(member)) {
-			NSString *searchKey = [NSString stringWithFormat:@"clone: client = %@; channel = %@; user = %@;",
+			NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
 								   client.config.guid, channel.name, member.nick.lowercaseString];
 
 			// ---- //
@@ -162,12 +152,13 @@
 #pragma mark -
 #pragma mark Mass Highlight
 
-/* This right here is what will piss people off… */
 - (void)highlightEveryoneIn:(IRCChannel *)channel on:(IRCClient *)client
 {
 	if (NSObjectIsEmpty(channel.members)) {
 		return [client printDebugInformation:TXTFLS(@"SpammerParadiseMassHighlightEmptyChannelMessage", channel.name) channel:channel];
 	}
+
+	// ---- //
 	
 	NSString *userList = NSStringEmptyPlaceholder;
 
@@ -183,21 +174,23 @@
 #pragma mark -
 #pragma mark Handle Clones
 
-- (void)addCloneOn:(IRCClient *)client in:(IRCChannel *)channel nickname:(NSString *)person
+- (void)addCloneOn:(IRCClient *)client in:(IRCChannel *)channel nickname:(NSString *)nickname
 {
 	NSString *cloneResult;
 
-	if (NSObjectIsEmpty(person)) {
+	if (NSObjectIsEmpty(nickname)) {
 		cloneResult = TXTLS(@"SpammerParadiseInvalidInputErrorMessage");
 	} else {
-		IRCUser *member = [channel findMember:person options:NSCaseInsensitiveSearch];
+		IRCUser *member = [channel findMember:nickname options:NSCaseInsensitiveSearch];
 
 		if (PointerIsEmpty(member)) {
-			cloneResult = TXTFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", person, channel.name);
+			cloneResult = TXTFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", nickname, channel.name);
 		} else {
-			NSString *searchKey = [NSString stringWithFormat:@"clone: client = %@; channel = %@; user = %@;",
+			NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
 								   client.config.guid, channel.name, member.nick.lowercaseString];
 
+			// ---- //
+			
 			if ([self.clonedUsers containsObject:searchKey]) {
 				cloneResult = TXTFLS(@"SpammerParadiseCloningUserIsAlreadyClonedMessage", member.nick, channel.name);
 			} else {
@@ -211,26 +204,28 @@
 	[client printDebugInformation:cloneResult channel:channel];
 }
 
-- (void)removeCloneOn:(IRCClient *)client in:(IRCChannel *)channel nickname:(NSString *)person
+- (void)removeCloneOn:(IRCClient *)client in:(IRCChannel *)channel nickname:(NSString *)nickname
 {
 	NSString *cloneResult;
 
-	if (NSObjectIsEmpty(person)) {
+	if (NSObjectIsEmpty(nickname)) {
 		cloneResult = TXTLS(@"SpammerParadiseInvalidInputErrorMessage");
 	} else {
-		if ([person isEqualToString:@"-a"]) {
+		if ([nickname isEqualToString:@"-a"]) {
 			cloneResult = TXTLS(@"SpammerParadiseCloningUnclonedAllUsersMessage");
 
 			[self.clonedUsers removeAllObjects];
 		} else {
-			IRCUser *member = [channel findMember:person options:NSCaseInsensitiveSearch];
+			IRCUser *member = [channel findMember:nickname options:NSCaseInsensitiveSearch];
 
 			if (PointerIsEmpty(member)) {
-				cloneResult = TXTFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", person, channel.name);
+				cloneResult = TXTFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", nickname, channel.name);
 			} else {
-				NSString *searchKey = [NSString stringWithFormat:@"clone: client = %@; channel = %@; user = %@;",
+				NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
 									   client.config.guid, channel.name, member.nick.lowercaseString];
 
+				// ---- //
+				
 				if ([self.clonedUsers containsObject:searchKey]) {
 					cloneResult = TXTFLS(@"SpammerParadiseCloningUnclonedSingleUserMessage", member.nick, channel.name);
 
