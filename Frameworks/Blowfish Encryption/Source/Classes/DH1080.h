@@ -35,21 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-@interface TPI_BlowfishCommands : NSObject 
-
-- (NSDictionary *)pluginOutputDisplayRules;
-
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
-
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict;
-
-- (NSArray *)pluginSupportsServerInputCommands;
-- (NSArray *)pluginSupportsUserInputCommands;
-
+@interface CFDH1080 : NSObject
+- (NSString *)generatePublicKey;
+- (NSString *)secretKeyFromPublicKey:(NSString *)publicKey;
 @end

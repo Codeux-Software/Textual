@@ -35,21 +35,66 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "DH1080.h"
+#import "DH1080Base.h"
 
-@interface TPI_BlowfishCommands : NSObject 
+@interface CFDH1080 ()
+@property (nonatomic, strong) DH1080Base *keyExchanger;
+@end
 
-- (NSDictionary *)pluginOutputDisplayRules;
+@implementation CFDH1080
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
+#pragma mark -
 
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict;
+- (id)init
+{
+	if ((self = [super init])) {
+		self.keyExchanger = [DH1080Base new];
+		
+		return self;
+	}
 
-- (NSArray *)pluginSupportsServerInputCommands;
-- (NSArray *)pluginSupportsUserInputCommands;
+	return nil;
+}
+
+- (void)dealloc
+{
+	self.keyExchanger = nil;
+}
+
+#pragma mark -
+
+- (NSString *)generatePublicKey
+{
+	NSString *publicKey = [self.keyExchanger publicKeyValue];
+		
+	if (publicKey.length >= 1) {
+		return publicKey;
+	}
+
+	return nil;
+}
+
+- (NSString *)secretKeyFromPublicKey:(NSString *)publicKey
+{
+	publicKey = [self.keyExchanger base64Decode:publicKey];
+
+	if (publicKey.length < DH1080RequiredKeyLength ||
+		publicKey.length > DH1080RequiredKeyLength) {
+
+		return nil;
+	}
+
+	[self.keyExchanger setKeyForComputation:publicKey];
+	[self.keyExchanger computeKey];
+
+	NSString *secretString = [self.keyExchanger secretStringValue];
+
+	if (secretString.length <= 0) {
+		return nil;
+	}
+
+	return secretString;
+}
 
 @end
