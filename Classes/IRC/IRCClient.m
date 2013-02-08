@@ -1430,9 +1430,15 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
 {
-    NSAttributedString *new = [NSAttributedString emptyStringWithBase:message];
+	IRCChannel *selectedChannel = [self.world selectedChannelOn:self];
 
-	[self sendText:new command:IRCPrivateCommandIndex("privmsg") channel:[self.world selectedChannelOn:self]];
+	if (PointerIsEmpty(selectedChannel)) {
+		return;
+	}
+
+	NSAttributedString *new = [NSAttributedString emptyStringWithBase:message];
+
+	[self sendText:new command:IRCPrivateCommandIndex("privmsg") channel:selectedChannel];
 }
 
 - (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel

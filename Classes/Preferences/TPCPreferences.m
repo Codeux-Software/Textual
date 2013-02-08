@@ -1256,6 +1256,11 @@ static NSMutableArray *excludeWords = nil;
 static NSInteger startUpTime = 0;
 static NSInteger totalRunTime = 0;
 
++ (NSInteger)runCount
+{
+	return [_NSUserDefaults() integerForKey:@"TXRunCount"];
+}
+
 + (NSInteger)startTime
 {
 	return startUpTime;
@@ -1343,7 +1348,7 @@ static NSInteger totalRunTime = 0;
 {
 	NSInteger numberOfRuns = 0;
 
-	numberOfRuns  = [_NSUserDefaults() integerForKey:@"TXRunCount"];
+	numberOfRuns  = [TPCPreferences runCount];
 	numberOfRuns += 1;
 
 	[_NSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
