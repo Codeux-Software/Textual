@@ -106,7 +106,7 @@
 		self.menuController.pointedNick = self.nick;
 		self.nick = nil;
 		
-		BOOL isIRCop = self.menuController.world.selectedClient.IRCopStatus;
+		BOOL isIRCop = self.menuController.world.selectedClient.hasIRCopAccess;
 		
 		for (NSMenuItem *item in [self.memberMenu itemArray]) {
 			if ([item tag] == _WebMenuItemTagIRCopServices && isIRCop == NO) {

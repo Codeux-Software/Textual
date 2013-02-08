@@ -116,6 +116,7 @@
 
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED					__attribute__((deprecated))
+#define TEXTUAL_DEPRECATED_ASSERT			NSAssert(NO, @"Deprecated Method.");
 
 /* Item types. */
 typedef double				TXNSDouble;

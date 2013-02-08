@@ -556,7 +556,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 
 - (void)loadWindowState
 {
-	[self loadWindowState:NO];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (void)loadWindowState:(BOOL)honorFullscreen
