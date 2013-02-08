@@ -58,7 +58,7 @@
 
 + (void)play:(NSString *)name isMuted:(BOOL)muted
 {
-	return;
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 @end

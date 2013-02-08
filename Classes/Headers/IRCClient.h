@@ -124,6 +124,7 @@ typedef enum IRCDisconnectType : NSInteger {
 - (NSMutableDictionary *)dictionaryValue;
 
 - (void)autoConnect:(NSInteger)delay;
+
 - (void)terminate;
 - (void)closeDialogs;
 - (void)preferencesChanged;
@@ -141,8 +142,6 @@ typedef enum IRCDisconnectType : NSInteger {
 - (void)quit;
 - (void)quit:(NSString *)comment;
 - (void)cancelReconnect;
-
-- (BOOL)IRCopStatus;
 
 - (void)sendNextCap;
 - (void)pauseCap;
@@ -194,31 +193,6 @@ typedef enum IRCDisconnectType : NSInteger {
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate *)receivedAt;
-
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
-- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
-- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
-- (void)printSystem:(id)channel text:(NSString *)text;
-- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (void)printSystemBoth:(id)channel text:(NSString *)text;
-- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (void)printReply:(IRCMessage *)m;
-- (void)printUnknownReply:(IRCMessage *)m;
-- (void)printDebugInformation:(NSString *)m;
-- (void)printDebugInformationToConsole:(NSString *)m;
-- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel;
-- (void)printErrorReply:(IRCMessage *)m;
-- (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
-- (void)printError:(NSString *)error;
-
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(id)target nick:(NSString *)nick text:(NSString *)text;
@@ -227,8 +201,48 @@ typedef enum IRCDisconnectType : NSInteger {
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
-- (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value TEXTUAL_DEPRECATED;
+#pragma mark -
+
+- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
+- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
+
+- (void)printReply:(IRCMessage *)m;
+- (void)printUnknownReply:(IRCMessage *)m;
+
+- (void)printDebugInformation:(NSString *)m;
+- (void)printDebugInformationToConsole:(NSString *)m;
+- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel;
+
+- (void)printError:(NSString *)error;
+- (void)printErrorReply:(IRCMessage *)m;
+- (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
+@end
+
+@interface IRCClient (NSDeprecated)
+- (BOOL)IRCopStatus TEXTUAL_DEPRECATED;
+
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printRawHTMLToCurrentChannelWithoutTime:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printRawHTMLToCurrentChannel:(NSString *)text withTimestamp:(BOOL)showTime receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text TEXTUAL_DEPRECATED;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text TEXTUAL_DEPRECATED;
+- (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified TEXTUAL_DEPRECATED;
 - (BOOL)printBoth:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (BOOL)printChannel:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 - (BOOL)printChannel:(IRCChannel *)channel type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text identified:(BOOL)identified receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+
+- (void)printSystem:(id)channel text:(NSString *)text TEXTUAL_DEPRECATED;
+- (void)printSystem:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+
+- (void)printSystemBoth:(id)channel text:(NSString *)text TEXTUAL_DEPRECATED;
+- (void)printSystemBoth:(id)channel text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+
+- (void)changeOp:(IRCChannel *)channel users:(NSArray *)users mode:(char)mode value:(BOOL)value TEXTUAL_DEPRECATED;
 @end
