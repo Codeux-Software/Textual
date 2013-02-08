@@ -279,6 +279,8 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 NSString *IRCCommandIndex(const char *key)
 {
+	TEXTUAL_DEPRECATED_ASSERT_C;
+	
 	return nil;
 }
 

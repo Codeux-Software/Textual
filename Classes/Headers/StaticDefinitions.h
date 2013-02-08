@@ -89,34 +89,37 @@
 #endif
 
 /* Establish Common Pointers. */
-#define _NSMainScreen()							[NSScreen							mainScreen]
+#define _NSAppleEventManager()					[NSAppleEventManager				sharedAppleEventManager]
+#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter	defaultCenter]
 #define _NSFileManager()						[NSFileManager						defaultManager]
-#define _NSPasteboard()							[NSPasteboard						generalPasteboard]
 #define _NSFontManager()						[NSFontManager						sharedFontManager]
 #define _NSGraphicsCurrentContext()				[NSGraphicsContext					currentContext]
+#define _NSMainScreen()							[NSScreen							mainScreen]
 #define _NSNotificationCenter()					[NSNotificationCenter				defaultCenter]
-#define _NSWorkspace()							[NSWorkspace						sharedWorkspace]
-#define _NSWorkspaceNotificationCenter()		[_NSWorkspace()						notificationCenter]
-#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter	defaultCenter]
-#define _NSAppleEventManager()					[NSAppleEventManager				sharedAppleEventManager]
+#define _NSPasteboard()							[NSPasteboard						generalPasteboard]
+#define _NSProcessInfo()						[NSProcessInfo						processInfo]
+#define _NSSharedApplication()					[NSApplication						sharedApplication]
+#define _NSSpellChecker()						[NSSpellChecker						sharedSpellChecker]
 #define _NSUserDefaults()						[NSUserDefaults						standardUserDefaults]
 #define _NSUserDefaultsController()				[NSUserDefaultsController			sharedUserDefaultsController]
-#define _NSSpellChecker()						[NSSpellChecker						sharedSpellChecker]
-#define _NSSharedApplication()					[NSApplication						sharedApplication]
+#define _NSWorkspace()							[NSWorkspace						sharedWorkspace]
+#define _NSWorkspaceNotificationCenter()		[_NSWorkspace()						notificationCenter]
 
 #ifdef TXNativeNotificationCenterAvailable
 	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #endif
 
 /* Miscellaneous functions to handle small tasks. */
-#define CFItemRefToID(s)					(id)s
 #define BOOLReverseValue(b)					((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)				PointerIsNotEmpty(b)
+#define CFItemRefToID(s)					(id)s
 #define NSDissimilarObjects(o,n)			(o != n)
 
 #define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED					__attribute__((deprecated))
-#define TEXTUAL_DEPRECATED_ASSERT			NSAssert(NO, @"Deprecated Method.");
+
+#define TEXTUAL_DEPRECATED_ASSERT			NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
+#define TEXTUAL_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
 /* Item types. */
 typedef double				TXNSDouble;

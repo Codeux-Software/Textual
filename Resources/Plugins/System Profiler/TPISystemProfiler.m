@@ -53,14 +53,14 @@
 	[NSBundle loadNibNamed:@"TPISystemProfiler" owner:self];
 	
 	NSDictionary *settingDefaults = @{
-	@"System Profiler Extension -> Feature Enabled -> CPU Model" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> Memory Information" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> System Uptime" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> Disk Information" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> GPU Model" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> Screen Resolution" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> Load Average" : @YES,
-	@"System Profiler Extension -> Feature Enabled -> OS Version" : @YES
+		@"System Profiler Extension -> Feature Enabled -> CPU Model"			: @YES,
+		@"System Profiler Extension -> Feature Enabled -> Memory Information"	: @YES,
+		@"System Profiler Extension -> Feature Enabled -> System Uptime"		: @YES,
+		@"System Profiler Extension -> Feature Enabled -> Disk Information"		: @YES,
+		@"System Profiler Extension -> Feature Enabled -> GPU Model"			: @YES,
+		@"System Profiler Extension -> Feature Enabled -> Screen Resolution"	: @YES,
+		@"System Profiler Extension -> Feature Enabled -> Load Average"			: @YES,
+		@"System Profiler Extension -> Feature Enabled -> OS Version"			: @YES
 	};
 
 	[_NSUserDefaults() registerDefaults:settingDefaults];
