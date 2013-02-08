@@ -279,7 +279,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 NSString *IRCCommandIndex(const char *key)
 {
-	return IRCPublicCommandIndex(key);
+	return nil;
 }
 
 NSString *IRCPrivateCommandIndex(const char *key)
