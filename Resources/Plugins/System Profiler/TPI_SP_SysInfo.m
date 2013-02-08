@@ -42,6 +42,11 @@
 
 @implementation TPI_SP_CompiledOutput
 
++ (NSString *)systemVisibleWindowCount
+{
+	return TXTFLS(@"SystemInformationWindowCCommandResult", [TPI_SP_SysInfo visibleWindowCount]);
+}
+
 + (NSString *)applicationActiveStyle
 {
 	NSString *fname = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
@@ -569,6 +574,15 @@
 
 #pragma mark -
 #pragma mark System Information
+
++ (NSInteger)visibleWindowCount
+{
+	NSInteger count = 0;
+
+	NSCountWindows(&count);
+
+	return count;
+}
 
 + (NSInteger)systemUptime
 {

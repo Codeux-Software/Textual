@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CD8862116C09BD60000CF8D /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */; };
+		4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../.tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C88849E158EB9B400747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
-		4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = "../../../Frameworks/Blowfish Encryption/BlowfishEncryption.framework"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -29,7 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
-				4CD8862116C09BD60000CF8D /* BlowfishEncryption.framework in Frameworks */,
+				4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,7 +50,8 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C828A861581128D007C7D92 /* System Frameworks */,
+				4CD8861E16C09BA60000CF8D /* External Frameworks */,
+				4CD8861D16C09BA00000CF8D /* System Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -81,15 +82,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4C828A861581128D007C7D92 /* System Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4CD8861E16C09BA60000CF8D /* External Frameworks */,
-				4CD8861D16C09BA00000CF8D /* System Frameworks */,
-			);
-			name = "System Frameworks";
-			sourceTree = "<group>";
-		};
 		4C888499158EB9B400747ABB /* ARC Weak Refrences */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,7 +103,7 @@
 		4CD8861E16C09BA60000CF8D /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CD8861B16C09B9A0000CF8D /* BlowfishEncryption.framework */,
+				4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
@@ -123,8 +115,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "BlowfishCommandLine" */;
 			buildPhases = (
-				8D576311048677EA00EA77CD /* Sources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
+				8D576311048677EA00EA77CD /* Sources */,
 			);
 			buildRules = (
 			);
@@ -178,10 +170,9 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../.tmp/SharedBuildProducts\"",
 				);
 			};
 			name = Debug;
@@ -189,10 +180,9 @@
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../.tmp/SharedBuildProducts\"",
 				);
 			};
 			name = Release;
@@ -203,18 +193,28 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"${PROJECT_DIR}/../../../Classes/Headers/**\"",
@@ -222,13 +222,17 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -240,17 +244,27 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"${PROJECT_DIR}/../../../Classes/Headers/**\"",
@@ -258,158 +272,21 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = BlowfishCommandLine;
 				PROVISIONING_PROFILE = "";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
-		};
-		4CAA3B2212E0EC3800FB83EB /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLY_RULES_IN_COPY_FILES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"${PROJECT_DIR}/../../../Classes/Headers/**\"",
-					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
-				);
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRODUCT_NAME = BlowfishCommandLine;
-				PROVISIONING_PROFILE = "";
-				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = "App Store Release";
-		};
-		4CAA3B2312E0EC3800FB83EB /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
-			};
-			name = "App Store Release";
-		};
-		4CAA3B2412E0EC3800FB83EB /* Release (Trial) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLY_RULES_IN_COPY_FILES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"${PROJECT_DIR}/../../../Classes/Headers/**\"",
-					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
-				);
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRODUCT_NAME = BlowfishCommandLine;
-				PROVISIONING_PROFILE = "";
-				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = "Release (Trial)";
-		};
-		4CAA3B2512E0EC3800FB83EB /* Release (Trial) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
-			};
-			name = "Release (Trial)";
-		};
-		4CCB849F1501C4A30053A181 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLY_RULES_IN_COPY_FILES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ../Compiled;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "\"${PROJECT_DIR}/../../../Frameworks/**\"";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"${PROJECT_DIR}/../../../Classes/Headers/**\"",
-					"\"${PROJECT_DIR}/../../../Frameworks/**\"",
-				);
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRODUCT_NAME = BlowfishCommandLine;
-				PROVISIONING_PROFILE = "";
-				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
-				VERSION_INFO_BUILDER = "Codeux Software";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = "Release + No Sandbox";
-		};
-		4CCB84A01501C4A30053A181 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
-			};
-			name = "Release + No Sandbox";
 		};
 /* End XCBuildConfiguration section */
 
@@ -419,9 +296,6 @@
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
 				1DEB911C08733D790010E9CD /* Release */,
-				4CCB84A01501C4A30053A181 /* Release + No Sandbox */,
-				4CAA3B2312E0EC3800FB83EB /* App Store Release */,
-				4CAA3B2512E0EC3800FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -431,9 +305,6 @@
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,
 				1DEB912008733D790010E9CD /* Release */,
-				4CCB849F1501C4A30053A181 /* Release + No Sandbox */,
-				4CAA3B2212E0EC3800FB83EB /* App Store Release */,
-				4CAA3B2412E0EC3800FB83EB /* Release (Trial) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

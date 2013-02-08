@@ -48,7 +48,7 @@
 "CancelButton" = "Cancel";
 
 "ChannelApplicationTitleModeValue" = " (%@)";
-"ChannelApplicationTitleUserCount" = " (%i Users)";
+"ChannelApplicationTitleUserCount" = " (%ld Users)";
 
 "ChannelDeletePromptMessage" = "There is no undo and all data related to this channel will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";
@@ -102,11 +102,11 @@
 "IRCConnectedToServer" = "Connection to host completed.";
 "IRCDisconnectedBySleepMode" = "Disconnect for Sleep Mode";
 "IRCDisconnectedByBadSSLCertificate" = "Disconnected from server because of an untrusted SSL certificate.";
-"IRCDisconnectedByTimeout" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"IRCDisconnectedByTimeout" = "%ld minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRCDisconnectedByTrialPeriodTimer" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "IRCDisconnectedFromServer" = "Disconnected";
 "IRCHadRawError" = "Message(%1$d): %2$@";
-"IRCIsConnecting" = "Connecting to [%1$@] on port %2$i";
+"IRCIsConnecting" = "Connecting to [%1$@] on port %2$ld";
 "IRCIsReconnecting" = "Reconnecting …";
 "IRCIsRetryingConnection" = "Retrying …";
 "IRCModeSet" = "\002%1$@\002 sets mode \002%2$@\002";
@@ -162,8 +162,8 @@
 "LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
 "LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";
 
-"ListDialogHasChannels" = "%i Public Channels";
-"ListDialogHasSearchResults" = "%1$i Public Channels - %2$i Search Results";
+"ListDialogHasChannels" = "%ld Public Channels";
+"ListDialogHasSearchResults" = "%1$ld Public Channels - %2$ld Search Results";
 
 "LogPathDoesNotExistMessage" = "No logs were found for this chat session.";
 "LogPathDoesNotExistTitle" = "No Logs Found";
@@ -343,7 +343,7 @@
 "BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
 "BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
 "BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
-"BragspamPluginNormalResult" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
+"BragspamPluginNormalResult" = "I am in %ld channels while connected to %ld networks. I have %ld o:lines, %ld ops, %ld halfops, and %ld voices with power over %ld individual users.";
 
 /* System Profiler Extension. */
 
@@ -353,7 +353,7 @@
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
 "SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
 "SystemInformationCompiledOutputCPUMultiCore" = " \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002";
-"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$i:\002 %2$@ \002•\002";
+"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
 "SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
 "SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
 "SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
@@ -395,10 +395,11 @@
 "SystemInformationStyleCommandResultError" = "\002Current Style:\002 Unknown";
 
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
+"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %ld: %.0f x %.0f";
+"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %ld: %.0f x %.0f";
 "SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
 
+"SystemInformationWindowCCommandResult" = "\002Open Windows:\002 %ld";
 "SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";

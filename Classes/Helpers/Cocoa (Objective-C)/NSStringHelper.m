@@ -772,9 +772,10 @@ BOOL isUnicharDigit(unichar c)
 + (NSString *)stringWithUnsignedShort:(unsigned short)value				{ return [NSString stringWithFormat:@"%hu", value]; }
 
 + (NSString *)stringWithInt:(int)value									{ return [NSString stringWithFormat:@"%i", value]; }
-+ (NSString *)stringWithInteger:(NSInteger)value						{ return [NSString stringWithFormat:@"%d", value]; }
++ (NSString *)stringWithInteger:(NSInteger)value						{ return [NSString stringWithFormat:@"%ld", value]; }
+
 + (NSString *)stringWithUnsignedInt:(unsigned int)value					{ return [NSString stringWithFormat:@"%u", value]; }
-+ (NSString *)stringWithUnsignedInteger:(NSUInteger)value				{ return [NSString stringWithFormat:@"%u", value]; }
++ (NSString *)stringWithUnsignedInteger:(NSUInteger)value				{ return [NSString stringWithFormat:@"%lu", value]; }
 
 + (NSString *)stringWithLong:(long)value								{ return [NSString stringWithFormat:@"%ld", value]; }
 + (NSString *)stringWithUnsignedLong:(unsigned long)value				{ return [NSString stringWithFormat:@"%lu", value]; }

@@ -565,7 +565,7 @@
 
 - (void)jumpToLine:(NSInteger)line
 {
-	NSString *lid = [NSString stringWithFormat:@"line%d", line];
+	NSString *lid = [NSString stringWithFormat:@"line%ld", line];
 
 	if (self.loaded == NO) return;
 
