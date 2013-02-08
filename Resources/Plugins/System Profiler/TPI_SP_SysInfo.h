@@ -49,6 +49,7 @@
 + (NSString *)systemInformation;
 + (NSString *)systemMemoryInformation;
 + (NSString *)systemNetworkInformation;
++ (NSString *)systemVisibleWindowCount;
 @end
 
 @interface TPI_SP_SysInfo : NSObject
@@ -61,6 +62,8 @@
 + (NSString *)processorClockSpeed;
 
 + (NSString *)operatingSystemName;
+
++ (NSInteger)visibleWindowCount;
 
 + (NSInteger)systemUptime;
 + (NSInteger)applicationUptime;

@@ -132,7 +132,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	
 	unsigned char *primeBuffer = (unsigned char *)[primeData cStringUsingEncoding:[NSString defaultCStringEncoding]];
 
-	BIGNUM *ret = BN_bin2bn(primeBuffer, primeData.length, self.DHStatus->p);
+	BIGNUM *ret = BN_bin2bn(primeBuffer, (int)primeData.length, self.DHStatus->p);
 
 	DHAssertYES(ret == 0);
 	DHAssertYES(self.DHStatus->g == 0);
@@ -187,7 +187,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	unsigned char *publicKeyBuffer = (unsigned char *)[publicKey cStringUsingEncoding:[NSString defaultCStringEncoding]];
 	
-	BIGNUM *ret = BN_bin2bn(publicKeyBuffer, publicKey.length, self.publicBigNum);
+	BIGNUM *ret = BN_bin2bn(publicKeyBuffer, (int)publicKey.length, self.publicBigNum);
 
 	DHAssertYES(ret == 0);
 	DHAssertYES(self.publicBigNum == 0);

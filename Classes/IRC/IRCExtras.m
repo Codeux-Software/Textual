@@ -187,7 +187,7 @@
         [servsubmit appendString:@"-SSL "];
     }
     
-    [servsubmit appendFormat:@"%@:%d", server, port];
+    [servsubmit appendFormat:@"%@:%ld", server, port];
     
     [self createConnectionAndJoinChannel:servsubmit chan:target];
 }
