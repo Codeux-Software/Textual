@@ -67,13 +67,13 @@ static const signed char fish_unbase64[256] = {
 	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
 
-	size_t keylen = secretKey.length;
-	size_t msglen = rawInput.length;
+	NSInteger keylen = secretKey.length;
+	NSInteger msglen = rawInput.length;
 
 	/* =============================================== */
 
 	BF_KEY bfkey;
-    BF_set_key(&bfkey, keylen, (const unsigned char *)secrkey);
+    BF_set_key(&bfkey, (int)keylen, (const unsigned char *)secrkey);
 
 	NSInteger mallocSize = msglen;
 
@@ -157,13 +157,13 @@ static const signed char fish_unbase64[256] = {
 	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
 
-	size_t keylen = secretKey.length;
-	size_t msglen = rawInput.length;
+	NSInteger keylen = secretKey.length;
+	NSInteger msglen = rawInput.length;
 
 	/* =============================================== */
 
 	BF_KEY bfkey;
-    BF_set_key(&bfkey, keylen, (const unsigned char *)secrkey);
+    BF_set_key(&bfkey, (int)keylen, (const unsigned char *)secrkey);
 
     char *decrypted = malloc((msglen + 1));
     char *end = decrypted;

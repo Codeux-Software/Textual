@@ -48,7 +48,6 @@
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
-		4C357E5316795C2000D4C12A /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C357E5116795C1700D4C12A /* SpammerParadise.bundle */; };
 		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
 		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */; };
@@ -60,7 +59,6 @@
 		4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
 		4C46CCC81580469E00846B64 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBF1580469E00846B64 /* IOKit.framework */; };
 		4C46CCC91580469E00846B64 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC01580469E00846B64 /* Security.framework */; };
-		4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
@@ -73,6 +71,15 @@
 		4C63C6C11592F710009F1635 /* TPWTB_Mentions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */; };
 		4C63C6C41592FF4E009F1635 /* TPWTB_Interface.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */; };
 		4C63C6C51592FF4E009F1635 /* TPWTB_Interface@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */; };
+		4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
+		4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
+		4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
+		4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
+		4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
+		4C68426816C5B1280005A59E /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426016C5B1020005A59E /* BlowfishCommandLine.bundle */; };
+		4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426116C5B1020005A59E /* BragSpam.bundle */; };
+		4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426216C5B1020005A59E /* SpammerParadise.bundle */; };
+		4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426316C5B1020005A59E /* SystemProfiler.bundle */; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -106,9 +113,6 @@
 		4C73F945159DD38E00C1BB5F /* DarkServerListViewDisclosureUpSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C73F93C159DD38E00C1BB5F /* DarkServerListViewDisclosureUpSelected.tif */; };
 		4C73F946159DD38E00C1BB5F /* ServerCellSelection_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C73F93D159DD38E00C1BB5F /* ServerCellSelection_Inverted.tif */; };
 		4C73F947159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C73F93E159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif */; };
-		4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */; };
-		4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBA915811D29002EC37B /* BragSpam.bundle */; };
-		4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -314,8 +318,6 @@
 		4C8AF6E5158E99520026668C /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
 		4C8AF6E6158E99520026668C /* TVCMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF607158E99520026668C /* TVCMemberList.m */; };
 		4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF608158E99520026668C /* TVCMemberListCell.m */; };
-		4C8AF6F2158E9AEB0026668C /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8AF6F1158E9AEB0026668C /* BlowfishEncryption.framework */; };
-		4C8AF6F4158E9AF20026668C /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8AF6F3158E9AF20026668C /* AutoHyperlinks.framework */; };
 		4C8AF728158E9B330026668C /* TDCAboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF706158E9B330026668C /* TDCAboutPanel.xib */; };
 		4C8AF729158E9B330026668C /* TDCAddressBookSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF708158E9B330026668C /* TDCAddressBookSheet.xib */; };
 		4C8AF72A158E9B330026668C /* TDChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF70A158E9B330026668C /* TDChanBanExceptionSheet.xib */; };
@@ -334,8 +336,6 @@
 		4C8AF737158E9B330026668C /* TVCInputPromptDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF724158E9B330026668C /* TVCInputPromptDialog.xib */; };
 		4C8AF738158E9B330026668C /* TXCMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF726158E9B330026668C /* TXCMainMenu.xib */; };
 		4C8AF73B158E9B530026668C /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF739158E9B530026668C /* BasicLanguage.strings */; };
-		4C8AF73C158EB6200026668C /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8AF6F3158E9AF20026668C /* AutoHyperlinks.framework */; };
-		4C8AF73D158EB6230026668C /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8AF6F1158E9AEB0026668C /* BlowfishEncryption.framework */; };
 		4C8AF74B158EB6CA0026668C /* AGKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF73F158EB6CA0026668C /* AGKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74C158EB6CA0026668C /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF740158EB6CA0026668C /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74D158EB6CA0026668C /* DDInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF741158EB6CA0026668C /* DDInvocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -371,7 +371,6 @@
 		4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F171580481E006FFE21 /* FormattingColor_14.png */; };
 		4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F181580481E006FFE21 /* FormattingColor_15.png */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
-		4CCF2F9D15804BF8006FFE21 /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CD09B2F1640B31A008F1A04 /* GRMustache.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD09B241640B31A008F1A04 /* GRMustache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD09B301640B31A008F1A04 /* GRMustacheAvailabilityMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD09B251640B31A008F1A04 /* GRMustacheAvailabilityMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD09B311640B31A008F1A04 /* GRMustacheContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD09B261640B31A008F1A04 /* GRMustacheContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -388,6 +387,7 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
+		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -449,10 +449,10 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4C88DBAE15811D3A002EC37B /* BlowfishCommandLine.bundle in Copy Extensions */,
-				4C88DBAF15811D3A002EC37B /* BragSpam.bundle in Copy Extensions */,
-				4C357E5316795C2000D4C12A /* SpammerParadise.bundle in Copy Extensions */,
-				4C88DBB015811D3A002EC37B /* SystemProfiler.bundle in Copy Extensions */,
+				4C68426816C5B1280005A59E /* BlowfishCommandLine.bundle in Copy Extensions */,
+				4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */,
+				4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */,
+				4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,9 +486,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CCF2F9D15804BF8006FFE21 /* Growl.framework in Copy Additional Frameworks */,
-				4C8AF73C158EB6200026668C /* AutoHyperlinks.framework in Copy Additional Frameworks */,
-				4C8AF73D158EB6230026668C /* BlowfishEncryption.framework in Copy Additional Frameworks */,
+				4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */,
+				4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */,
+				4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */,
 			);
 			name = "Copy Additional Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,7 +503,6 @@
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
-		4C357E5116795C1700D4C12A /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = Resources/Plugins/Compiled/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
 		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
 		4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedQueryUser.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DarkServerListViewSelectedQueryUser.tif; sourceTree = "<group>"; };
@@ -529,6 +528,12 @@
 		4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Mentions@2x.tif"; sourceTree = "<group>"; };
 		4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Interface.tif; sourceTree = "<group>"; };
 		4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Interface@2x.tif"; sourceTree = "<group>"; };
+		4C68425516C5AF730005A59E /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = .tmp/SharedBuildProducts/AutoHyperlinks.framework; sourceTree = "<group>"; };
+		4C68425616C5AF730005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = .tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
+		4C68426016C5B1020005A59E /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = .tmp/SharedBuildProducts/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
+		4C68426116C5B1020005A59E /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = .tmp/SharedBuildProducts/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
+		4C68426216C5B1020005A59E /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
+		4C68426316C5B1020005A59E /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -562,9 +567,6 @@
 		4C73F93C159DD38E00C1BB5F /* DarkServerListViewDisclosureUpSelected.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DarkServerListViewDisclosureUpSelected.tif; sourceTree = "<group>"; };
 		4C73F93D159DD38E00C1BB5F /* ServerCellSelection_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ServerCellSelection_Inverted.tif; sourceTree = "<group>"; };
 		4C73F93E159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "ServerCellSelection_Inverted@2x.tif"; sourceTree = "<group>"; };
-		4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = Resources/Plugins/Compiled/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
-		4C88DBA915811D29002EC37B /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = Resources/Plugins/Compiled/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
-		4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = Resources/Plugins/Compiled/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
@@ -770,8 +772,6 @@
 		4C8AF605158E99520026668C /* TVCThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCThinSplitView.m; sourceTree = "<group>"; };
 		4C8AF607158E99520026668C /* TVCMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberList.m; sourceTree = "<group>"; };
 		4C8AF608158E99520026668C /* TVCMemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCell.m; sourceTree = "<group>"; };
-		4C8AF6F1158E9AEB0026668C /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = "Frameworks/Blowfish Encryption/BlowfishEncryption.framework"; sourceTree = "<group>"; };
-		4C8AF6F3158E9AF20026668C /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = "Frameworks/Auto Hyperlinks/AutoHyperlinks.framework"; sourceTree = "<group>"; };
 		4C8AF707158E9B330026668C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCAboutPanel.xib; sourceTree = SOURCE_ROOT; };
 		4C8AF709158E9B330026668C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCAddressBookSheet.xib; sourceTree = SOURCE_ROOT; };
 		4C8AF70B158E9B330026668C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDChanBanExceptionSheet.xib; sourceTree = SOURCE_ROOT; };
@@ -853,8 +853,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
-				4C8AF6F4158E9AF20026668C /* AutoHyperlinks.framework in Frameworks */,
-				4C8AF6F2158E9AEB0026668C /* BlowfishEncryption.framework in Frameworks */,
+				4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */,
+				4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
 				4C46CCC61580469E00846B64 /* CoreServices.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
@@ -862,11 +862,11 @@
 				4C46CCC81580469E00846B64 /* IOKit.framework in Frameworks */,
 				4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */,
 				4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */,
+				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
-				4C46CCCA1580469E00846B64 /* SystemConfiguration.framework in Frameworks */,
+				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
-				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1125,10 +1125,10 @@
 		4C46CCA7158043C000846B64 /* Binaries */ = {
 			isa = PBXGroup;
 			children = (
-				4C88DBA815811D29002EC37B /* BlowfishCommandLine.bundle */,
-				4C88DBA915811D29002EC37B /* BragSpam.bundle */,
-				4C357E5116795C1700D4C12A /* SpammerParadise.bundle */,
-				4C88DBAA15811D29002EC37B /* SystemProfiler.bundle */,
+				4C68426016C5B1020005A59E /* BlowfishCommandLine.bundle */,
+				4C68426116C5B1020005A59E /* BragSpam.bundle */,
+				4C68426216C5B1020005A59E /* SpammerParadise.bundle */,
+				4C68426316C5B1020005A59E /* SystemProfiler.bundle */,
 			);
 			name = Binaries;
 			sourceTree = "<group>";
@@ -1172,8 +1172,8 @@
 		4C46CCCC158046BE00846B64 /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF6F3158E9AF20026668C /* AutoHyperlinks.framework */,
-				4C8AF6F1158E9AEB0026668C /* BlowfishEncryption.framework */,
+				4C68425516C5AF730005A59E /* AutoHyperlinks.framework */,
+				4C68425616C5AF730005A59E /* BlowfishEncryption.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 			);
 			name = "External Frameworks";
@@ -1898,8 +1898,8 @@
 				4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */,
 				4CCF2F9A15804BE1006FFE21 /* Copy Additional Frameworks */,
 				4CCF2F9E15804C18006FFE21 /* Headers */,
-				4C1DC54E1580420500A47BC9 /* Sources */,
 				4C1DC54F1580420500A47BC9 /* Frameworks */,
+				4C1DC54E1580420500A47BC9 /* Sources */,
 				4C01BA101581104D007E2DAF /* Build Extensions */,
 				4C52AED515811C2000940619 /* Copy Extensions */,
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
@@ -2104,7 +2104,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nfind \"$PROJECT_DIR\" -type d -name \"build\" -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"._build\" -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"BuildResults\" -exec rm -rf '{}' +\n\nfind \"$PROJECT_DIR\" -type d -name \"Compiled\" -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"AutoHyperlinks.framework\" -exec rm -rf '{}' +\nfind \"$PROJECT_DIR\" -type d -name \"BlowfishEncryption.framework\" -exec rm -rf '{}' +\n";
+			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -R \"${PROJECT_DIR}/BuildResults/\"\nrm -R \"${PROJECT_DIR}/.tmp/\"\n";
 		};
 		4C01BA0B15810DDE007E2DAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2117,7 +2117,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"TXBundleBuildNumber\\\"\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\ngitRefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\n\nbuildRef=\"${bundleVersion}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: $gitRefInfo)\"\n\nif [ ${#gitRefInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" $TEXTUAL_BUNDLE_ID\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildReference\\\" $buildRef\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildNumber\\\" $buildNumber\" Info.plist\nfi\n";
+			shellScript = "\ncd \"${PROJECT_DIR}/Resources/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"TXBundleBuildNumber\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\nbuildNumber=$(($buildNumber + 1))\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\ngitRefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\n\nbuildRef=\"${bundleVersion}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: ${gitRefInfo})\"\n\nif [ ${#gitRefInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" ${TEXTUAL_BUNDLE_ID}\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildReference\\\" ${buildRef}\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildNumber\\\" ${buildNumber}\" Info.plist\nfi\n";
 		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2131,7 +2131,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"$CONFIGURATION\" NATIVE_ARCH=\"$NATIVE_ARCH\" FRAMEWORK_SEARCH_PATHS=\"$PROJECT_DIR/Frameworks/**\" HEADER_SEARCH_PATHS=\"$PROJECT_DIR/Classes/Headers/**\" BUNDLE_LOADER=\"$CODESIGNING_FOLDER_PATH/Contents/MacOS/$EXECUTABLE_NAME\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
@@ -2145,7 +2145,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"$NATIVE_ARCH\" CODE_SIGN_IDENTITY=\"$CODE_SIGN_IDENTITY\" CODE_SIGN_ENTITLEMENTS=\"$PROJECT_DIR/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"$OTHER_CFLAGS\" SHARED_PRECOMPS_DIR=/tmp/com.codeux.irc.textual/SharedPCH\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2439,7 +2439,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2448,7 +2447,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2457,7 +2455,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -2466,7 +2463,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2475,7 +2471,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};
@@ -2484,7 +2479,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
 			};
@@ -2495,7 +2489,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = stdbuild;
 			};
@@ -2506,7 +2499,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = trial;
 			};
@@ -2517,7 +2509,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
@@ -2528,7 +2519,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = "appstore,modern";
 			};
@@ -2537,21 +2527,24 @@
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/Frameworks/**",
+					"${SRCROOT}/.tmp/SharedBuildProducts/**",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2566,18 +2559,22 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
+				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2592,21 +2589,24 @@
 		4C1DC56F1580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/Frameworks/**",
+					"${SRCROOT}/.tmp/SharedBuildProducts/**",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2620,18 +2620,22 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
+				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2646,71 +2650,40 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
-					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
-				);
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = Debug;
 		};
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
-					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
-				);
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = Release;
 		};
 		4CCF2F8E1580497B006FFE21 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/Frameworks/**",
+					"${SRCROOT}/.tmp/SharedBuildProducts/**",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2724,18 +2697,22 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
+				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2750,46 +2727,32 @@
 		4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
-					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
-				);
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = "Release + No Sandbox";
 		};
 		4CCF2F9015804987006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/Frameworks/**",
+					"${SRCROOT}/.tmp/SharedBuildProducts/**",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2803,18 +2766,22 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
+				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = "Textual Trial";
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2829,46 +2796,32 @@
 		4CCF2F9115804987006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
-					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
-				);
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = "Release (Trial)";
 		};
 		4CCF2F96158049A8006FFE21 /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/**\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/Frameworks/**",
+					"${SRCROOT}/.tmp/SharedBuildProducts/**",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2882,18 +2835,22 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
+				LD_NO_PIE = YES;
+				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -2908,25 +2865,8 @@
 		4CCF2F97158049A8006FFE21 /* App Store Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
-				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Blowfish Encryption\"",
-					"\"$(SRCROOT)/Frameworks/Auto Hyperlinks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/Mustache Templates\"",
-				);
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = "App Store Release";
 		};
@@ -2935,7 +2875,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2944,7 +2883,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2953,7 +2891,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "Release (Trial)";
 		};
@@ -2962,7 +2899,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "Release + No Sandbox";
 		};
@@ -2971,7 +2907,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = "App Store Release";
 		};

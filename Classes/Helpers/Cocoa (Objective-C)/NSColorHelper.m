@@ -196,9 +196,9 @@
 		greenIntValue = (greenFloatValue * 255.99999f);
 		blueIntValue  = (blueFloatValue  * 255.99999f);
 
-		redHexValue   = [NSString stringWithFormat:@"%02d", redIntValue];
-		greenHexValue = [NSString stringWithFormat:@"%02d", greenIntValue];
-		blueHexValue  = [NSString stringWithFormat:@"%02d", blueIntValue];
+		redHexValue   = [NSString stringWithFormat:@"%02ld", redIntValue];
+		greenHexValue = [NSString stringWithFormat:@"%02ld", greenIntValue];
+		blueHexValue  = [NSString stringWithFormat:@"%02ld", blueIntValue];
 
 		return [NSString stringWithFormat:@"#%@%@%@", redHexValue, greenHexValue, blueHexValue];
 	}
