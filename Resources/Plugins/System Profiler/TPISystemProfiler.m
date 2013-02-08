@@ -86,7 +86,7 @@
 - (NSArray *)pluginSupportsUserInputCommands
 {
 	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
-	@"msgcount", @"diskspace", @"theme", @"screens",
+	@"msgcount", @"diskspace", @"style", @"screens",
 	@"runcount", @"loadavg", @"sysmem"];
 }
 
@@ -102,27 +102,27 @@
 		
 		if ([channelName length] >= 1) {
 			if ([commandString isEqualToString:@"SYSINFO"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo compiledOutput]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemInformation]];
 			} else if ([commandString isEqualToString:@"MEMORY"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationMemoryUsage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationMemoryUsage]];
 			} else if ([commandString isEqualToString:@"UPTIME"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationAndSystemUptime]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationAndSystemUptime]];
 			} else if ([commandString isEqualToString:@"NETSTATS"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo networkStats]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
 			} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo bandwidthStatsFrom:client.world]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.world]];
 			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo allVolumesAndSizes]];
-			} else if ([commandString isEqualToString:@"THEME"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo logThemeInformationFrom:client.world]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
+			} else if ([commandString isEqualToString:@"STYLE"]) {
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationActiveStyle]];
 			} else if ([commandString isEqualToString:@"SCREENS"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo activeScreenResolutions]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDisplayInformation]];
 			} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo applicationRunCount]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationRuntimeStatistics]];
 			} else if ([commandString isEqualToString:@"LOADAVG"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemLoadAverage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemCPULoadInformation]];
 			} else if ([commandString isEqualToString:@"SYSMEM"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_SysInfo systemMemoryUsage]];
+				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemMemoryInformation]];
 			}
 		}
 		
