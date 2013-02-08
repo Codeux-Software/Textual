@@ -37,10 +37,23 @@
 
 #include "SystemProfiler.h"
 
-@interface TPI_SP_SysInfo : NSObject 
-+ (NSString *)compiledOutput;
+@interface TPI_SP_CompiledOutput : NSObject
++ (NSString *)applicationActiveStyle;
++ (NSString *)applicationAndSystemUptime;
++ (NSString *)applicationBandwidthStatistics:(IRCWorld *)world;
++ (NSString *)applicationMemoryUsage;
++ (NSString *)applicationRuntimeStatistics;
++ (NSString *)systemCPULoadInformation;
++ (NSString *)systemDiskspaceInformation;
++ (NSString *)systemDisplayInformation;
++ (NSString *)systemInformation;
++ (NSString *)systemMemoryInformation;
++ (NSString *)systemNetworkInformation;
+@end
 
+@interface TPI_SP_SysInfo : NSObject
 + (NSString *)model;
+
 + (NSString *)processor;
 + (NSString *)processorCount;
 + (NSString *)processorL2CacheSize;
@@ -49,28 +62,19 @@
 
 + (NSString *)operatingSystemName;
 
-+ (NSString *)systemMemoryUsage;
-+ (NSString *)physicalMemorySize;
++ (NSInteger)systemUptime;
++ (NSInteger)applicationUptime;
+
++ (NSString *)loadAverageWithCores:(NSInteger)cores;
+
 + (TXFSLongInt)freeMemorySize;
 + (TXFSLongInt)totalMemorySize;
 
-+ (NSString *)loadAveragesWithCores:(NSInteger)cores;
++ (NSDictionary *)applicationMemoryInformation;
 
-+ (NSString *)systemUptime;
-+ (NSString *)systemUptimeUsingShortValue:(BOOL)shortValue;
-
-+ (NSString *)diskInfo;
-+ (NSString *)networkStats;
-+ (NSString *)graphicsCardInfo;
-+ (NSString *)allVolumesAndSizes;
-+ (NSString *)applicationMemoryUsage;
-+ (NSString *)activeScreenResolutions;
-+ (NSString *)applicationAndSystemUptime;
-+ (NSString *)systemLoadAverage;
-+ (NSString *)applicationRunCount;
-+ (NSString *)bandwidthStatsFrom:(IRCWorld *)world;
-+ (NSString *)logThemeInformationFrom:(IRCWorld *)world;
-
++ (NSString *)formattedGraphicsCardInformation;
++ (NSString *)formattedLocalVolumeDiskUsage;
++ (NSString *)formattedTotalMemorySize;
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
 + (NSString *)formattedCPUFrequency:(TXNSDouble)rate;
 @end

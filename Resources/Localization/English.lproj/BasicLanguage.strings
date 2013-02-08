@@ -332,6 +332,7 @@
 "BlowfishKeyExchangeResponseSent" = "Key exchange response has been sent to \002%@\002.";
 "BlowfishKeyExchangeResponseReceived" = "Received key exchange response from \002%@\002. Processing …";
 "BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
+
 "BlowfishNoEncryptionKeySet" = "No encryption key is set.";
 
 /* Brag Spam Extension. */
@@ -390,8 +391,8 @@
 "SystemInformationFilesizeMB" = "%.2f MB";
 "SystemInformationFilesizeKB" = "%.2f KB";
 
-"SystemInformationThemeCommandResult" = "\002Current Theme:\002 %@";
-"SystemInformationThemeCommandResultError" = "\002Current Theme:\002 Unknown";
+"SystemInformationStyleCommandResult" = "\002Current Style:\002 %@";
+"SystemInformationStyleCommandResultError" = "\002Current Style:\002 Unknown";
 
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";

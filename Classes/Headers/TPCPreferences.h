@@ -84,6 +84,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (TXMasterController *)masterController;
 + (void)setMasterController:(TXMasterController *)master;
 
++ (NSInteger)runCount;
 + (NSInteger)startTime;
 + (NSInteger)totalRunTime;
 + (void)updateTotalRunTime;
