@@ -2719,6 +2719,7 @@
 		4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
