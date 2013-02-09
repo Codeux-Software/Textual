@@ -2097,7 +2097,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -R \"${PROJECT_DIR}/BuildResults/\"\nrm -R \"${PROJECT_DIR}/.tmp/\"\n";
+			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -R \"${PROJECT_DIR}/Build Results/\"\nrm -R \"${PROJECT_DIR}/.tmp/\"\n";
 		};
 		4C01BA0B15810DDE007E2DAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2124,7 +2124,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
@@ -2138,7 +2138,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
+			shellScript = "\ncd \"$PROJECT_DIR/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"$PROJECT_DIR/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2570,7 +2570,7 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				SYMROOT = BuildResults;
+				SYMROOT = "Build Results";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
 				VERSION_INFO_BUILDER = "${USER}";
@@ -2631,7 +2631,7 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				SYMROOT = BuildResults;
+				SYMROOT = "Build Results";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2708,7 +2708,7 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				SYMROOT = BuildResults;
+				SYMROOT = "Build Results";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2777,7 +2777,7 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				SYMROOT = BuildResults;
+				SYMROOT = "Build Results";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
@@ -2846,7 +2846,7 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				SYMROOT = BuildResults;
+				SYMROOT = "Build Results";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
 				VERSION_INFO_BUILDER = "Codeux Software";
