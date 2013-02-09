@@ -104,7 +104,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)gitBuildReference;
 
 + (NSDictionary *)textualInfoPlist;
-+ (NSDictionary *)systemInfoPlist;
 
 + (NSString *)applicationBundlePath;
 + (NSString *)applicationSupportFolderPath;

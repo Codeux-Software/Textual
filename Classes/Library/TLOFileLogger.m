@@ -241,7 +241,7 @@
 															   errorDescription:&parseError];
 
 		if (readError) {
-			DebugLogToConsole(@"Error Reading Property List: %@", parseError);
+			//DebugLogToConsole(@"Error Reading Property List: %@", parseError);
 		} else {
 			return plist;
 		}
