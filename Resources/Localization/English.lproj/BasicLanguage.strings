@@ -337,12 +337,6 @@
 
 /* Brag Spam Extension. */
 
-"BragspamPluginChannelResult" = "I am within the channels %@, ";
-"BragspamPluginChannelResultEndItem" = "and %1$@ on the %2$@.";
-"BragspamPluginChannelResultMiddleItem" = "%@, ";
-"BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
-"BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
-"BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
 "BragspamPluginNormalResult" = "I am in %ld channels while connected to %ld networks. I have %ld o:lines, %ld ops, %ld halfops, and %ld voices with power over %ld individual users.";
 
 /* System Profiler Extension. */
@@ -351,8 +345,7 @@
 
 "SystemInformationCompiledOutputPrefix" = "System Information:";
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
-"SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
-"SystemInformationCompiledOutputCPUMultiCore" = " \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002";
+"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Cores: %3$lu Physical, %4$lu Virtual) @ %5$@ \002•\002";
 "SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
 "SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
 "SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
