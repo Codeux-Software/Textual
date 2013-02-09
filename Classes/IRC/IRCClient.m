@@ -142,9 +142,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 }
 
-- (void)setup:(IRCClientConfig *)seed
+- (void)setup:(id)seed
 {
-	self.config = [seed mutableCopy];
+	if ([seed isKindOfClass:[NSDictionary class]]) {
+		if (NSObjectIsNotEmpty(seed)) {
+			self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
+		}
+	} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
+		self.config = seed;
+	} else {
+		return;
+	}
 
 	self.sentNick = self.config.nick;
 	self.myNick   = self.config.nick;
@@ -194,7 +202,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 - (IRCClientConfig *)storedConfig
 {
-	IRCClientConfig *u = [self.config mutableCopy];
+	IRCClientConfig *u = self.config;
 
 	[u.channels removeAllObjects];
 

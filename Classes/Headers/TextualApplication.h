@@ -62,7 +62,6 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class IRCWorldConfig;
 	@class TVCLogRenderer;
 	@class TDCAboutPanelSWindowController;
 	@class TDCAddressBookSheet;
@@ -176,7 +175,6 @@
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCWorld.h"
-	#import "IRCWorldConfig.h"
 
 	/* Framework Extensions (Helpers). */
 

@@ -59,7 +59,6 @@
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXFSLongInt bandwidthIn;
 @property (nonatomic, assign) TXFSLongInt bandwidthOut;
-@property (nonatomic, strong) IRCWorldConfig *config;
 @property (nonatomic, strong) NSMutableArray *clients;
 @property (nonatomic, assign) NSInteger itemId;
 @property (nonatomic, assign) BOOL soundMuted;
@@ -75,7 +74,7 @@
 @property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
 @property (nonatomic, strong) NSOperationQueue *messageOperationQueue;
 
-- (void)setup:(IRCWorldConfig *)seed;
+- (void)setup;
 - (void)setupTree;
 - (void)save;
 
@@ -130,7 +129,7 @@
 - (void)reloadTheme;
 - (void)changeTextSize:(BOOL)bigger;
 
-- (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload;
+- (IRCClient *)createClient:(id)seed reload:(BOOL)reload;
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (IRCChannel *)createTalk:(NSString *)nick client:(IRCClient *)client;
 
