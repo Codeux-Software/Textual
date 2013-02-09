@@ -74,6 +74,8 @@
 	<string>MacBook Pro (15-inch Mid-2012)</string>
 	<key>MacBookPro10,1</key>
 	<string>MacBook Pro (15-inch Retina Mid-2012)</string>
+	<key>MacBookPro10,2</key>
+	<string>MacBook Pro (13-inch Retina Mid-2012)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2.1</key>
@@ -98,6 +100,10 @@
 	<string>Mac Mini (2011)</string>
 	<key>Macmini5,3</key>
 	<string>Mac Mini Server (2011)</string>
+	<key>Macmini6,1</key>
+	<string>Mac Mini (Late 2012)</string>
+	<key>Macmini6,2</key>
+	<string>Mac Mini (Late 2012)</string>
 	<key>Xserve1,1</key>
 	<string>Xserve (Original)</string>
 	<key>Xserve2,1</key>
@@ -118,6 +124,10 @@
 	<string>iMac (21.5-inch 2011)</string>
 	<key>iMac12,2</key>
 	<string>iMac (27-inch Mid-2011)</string>
+	<key>iMac13,1</key>
+	<string>iMac (21.5-inch Late 2012)</string>
+	<key>iMac13,2</key>
+	<string>iMac (27-inch Late 2012)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
