@@ -68,6 +68,8 @@
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
 
+	// ---- //
+
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		self.ghostMode = YES;
 	}
@@ -76,21 +78,23 @@
     self.ghostMode = YES; // Do not use autoconnect during debug.
 #endif
 	
-	[self.window makeMainWindow];
-	
 	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
 
-	[self.text setBackgroundColor:[NSColor clearColor]];
-    [self.text setFieldEditor:YES];
-    
+	[self loadWindowState:YES];
+
+	[self.window makeMainWindow];
+
 	self.serverSplitView.fixedViewIndex = 0;
 	self.memberSplitView.fixedViewIndex = 1;
+
+	[self loadingScreenPopWindow];
+
+	[self.text setBackgroundColor:[NSColor clearColor]];
+    [self.text setFieldEditor:YES];
 	
 	self.viewTheme		= [TPCViewTheme new];
 	self.viewTheme.name = [TPCPreferences themeName];
-	
-	[self loadWindowState:YES];
 	
 	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
 	
@@ -159,10 +163,6 @@
 	[self.memberList setTarget:self.menu];
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 
-	[self.window makeKeyAndOrderFront:nil];
-
-	[self.world focusInputText];
-
 	[self.invokeInBackgroundThread awakeFromNibBackgroundTasks];
 }
 
@@ -195,6 +195,8 @@
 	} else {
 		[self.world autoConnectAfterWakeup:NO];	
 	}
+
+	[self hideLoadingScreen];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -330,6 +332,25 @@
 	}
 	
 	[TPCPreferences updateTotalRunTime];
+}
+
+#pragma mark -
+#pragma mark Configuration Loading Screen
+
+- (void)loadingScreenPopWindow
+{
+	[self.loadingViewProgressIndicator startAnimation:nil];
+
+	[self.window makeKeyAndOrderFront:nil];
+
+	[self.world focusInputText];
+}
+
+- (void)hideLoadingScreen
+{
+	[self.loadingViewBackground.animator setAlphaValue:0];
+
+	[self.loadingViewProgressIndicator stopAnimation:nil];
 }
 
 #pragma mark -

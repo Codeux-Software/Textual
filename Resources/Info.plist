@@ -48,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>13499</string>
+	<string>13533</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.2-93-g3aeb246-appstore,modern</string>
+	<string>2.1.2-94-g6eda9af-stdbuild,nosndbox</string>
 </dict>
 </plist>
