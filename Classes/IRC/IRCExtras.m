@@ -334,17 +334,21 @@
                 
                 if ([cc isChannelName]) {
                     [channels safeAddObject:@{@"channelName": cc,
-					 @"joinOnConnect": NSNumberWithBOOL(YES),
-					 @"enableNotifications": NSNumberWithBOOL(YES),
-TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
+					 @"joinOnConnect" : NSNumberWithBOOL(YES),
+					 @"enableNotifications" : NSNumberWithBOOL(YES),
+
+					 /* Migration Assistant Dictionary Addition. */
+					TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
                 }
             }
         } else {
             if ([c isChannelName]) {
                 [channels safeAddObject:@{@"channelName": c,
-				 @"joinOnConnect": NSNumberWithBOOL(YES),
-				 @"enableNotifications": NSNumberWithBOOL(YES),
-TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
+				 @"joinOnConnect" : NSNumberWithBOOL(YES),
+				 @"enableNotifications" : NSNumberWithBOOL(YES),
+
+				 /* Migration Assistant Dictionary Addition. */
+				TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
             }
         }
 		
@@ -355,13 +359,11 @@ TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpg
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
-	IRCClientConfig *cf = [[IRCClientConfig alloc] initWithDictionary:dic];
-    
+	IRCClient *uf = [self.world createClient:dic reload:YES];
+
 	if (NSObjectIsNotEmpty(password)) {
-		cf.password = password;
-	}	
-	
-	IRCClient *uf = [self.world createClient:cf reload:YES];
+		[uf.config setPassword:password];
+	}
 	
 	[self.world save];
 	
