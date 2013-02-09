@@ -215,15 +215,17 @@
 
 	NSString *_model			= [TPI_SP_SysInfo model];
 	NSString *_cpu_model		= [TPI_SP_SysInfo processor];
-	NSString *_cpu_count		= [TPI_SP_SysInfo processorCount];
 	NSString *_cpu_speed		= [TPI_SP_SysInfo processorClockSpeed];
-	NSInteger _cpu_count_int	= [_cpu_count integerValue];
+
+	NSUInteger _cpu_count_p		= [TPI_SP_SysInfo processorPhysicalCoreCount];
+	NSUInteger _cpu_count_v		= [TPI_SP_SysInfo processorVirtualCoreCount];
+	NSUInteger _cpu_count_vt	= (_cpu_count_v - _cpu_count_p);
 
 	NSString *_cpu_l2		= [TPI_SP_SysInfo processorL2CacheSize];
 	NSString *_cpu_l3		= [TPI_SP_SysInfo processorL3CacheSize];
 	NSString *_memory		= [TPI_SP_SysInfo formattedTotalMemorySize];
 	NSString *_gpu_model	= [TPI_SP_SysInfo formattedGraphicsCardInformation];
-	NSString *_loadavg		= [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_int];
+	NSString *_loadavg		= [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v];
 
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 
@@ -262,12 +264,8 @@
 
 	if (_show_cpu_model) {
 		/* CPU Information. */
-		if (_cpu_count_int >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-			if (_cpu_count_int == 1) {
-				_new = TXTFLS(@"SystemInformationCompiledOutputCPUSingleCore", _cpu_model, _cpu_count, _cpu_speed);
-			} else {
-				_new = TXTFLS(@"SystemInformationCompiledOutputCPUMultiCore", _cpu_model, _cpu_count, _cpu_speed);
-			}
+		if (_cpu_count_p >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
+			_new = TXTFLS(@"SystemInformationCompiledOutputCPUCore", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_count_vt, _cpu_speed);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
@@ -630,9 +628,9 @@
 		buffer[(sizeof(buffer) - 1)] = 0;
 		
 		return @(buffer);
-	} else {
-		return nil;
-	}	
+	}
+
+	return nil;
 }
 
 + (NSString *)model
@@ -645,21 +643,35 @@
 		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
 		
 		return @(modelBuffer);
-	} else {
-		return nil;
-	}	
-}
-
-+ (NSString *)processorCount
-{
-	host_basic_info_data_t hostInfo;
-	mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;
-	
-	if (host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount) == KERN_SUCCESS) {
-		return [NSString stringWithUnsignedInteger:hostInfo.max_cpus];
 	}
 
 	return nil;
+}
+
++ (NSUInteger)processorPhysicalCoreCount
+{
+	u_int64_t size = 0L;
+
+	size_t len = sizeof(size);
+
+	if (sysctlbyname("hw.physicalcpu", &size, &len, NULL, 0) == 0) {
+		return size;
+	}
+
+	return 0;
+}
+
++ (NSUInteger)processorVirtualCoreCount
+{
+	u_int64_t size = 0L;
+
+	size_t len = sizeof(size);
+
+	if (sysctlbyname("hw.activecpu", &size, &len, NULL, 0) == 0) {
+		return size;
+	}
+
+	return 0;
 }
 
 + (NSString *)processorL2CacheSize

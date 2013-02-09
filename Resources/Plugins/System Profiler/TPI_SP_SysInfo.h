@@ -56,7 +56,8 @@
 + (NSString *)model;
 
 + (NSString *)processor;
-+ (NSString *)processorCount;
++ (NSUInteger)processorPhysicalCoreCount;
++ (NSUInteger)processorVirtualCoreCount;
 + (NSString *)processorL2CacheSize;
 + (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
