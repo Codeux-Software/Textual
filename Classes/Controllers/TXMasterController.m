@@ -67,13 +67,13 @@
 #ifdef TXSystemIsMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 #endif
-	
+
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		self.ghostMode = YES;
 	}
-	
+
 #if defined(DEBUG)
-    self.ghostMode = YES; // Do not use autoconnect during debug
+    self.ghostMode = YES; // Do not use autoconnect during debug.
 #endif
 	
 	[self.window makeMainWindow];
@@ -82,13 +82,6 @@
 	[TPCPreferences initPreferences];
 
 	[self.text setBackgroundColor:[NSColor clearColor]];
-
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
-	
-	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
     [self.text setFieldEditor:YES];
     
 	self.serverSplitView.fixedViewIndex = 0;
@@ -103,8 +96,14 @@
 	
     [self.text setReturnActionWithSelector:@selector(textEntered) owner:self];
 	[self.text redrawOriginPoints];
+
+	[self buildSegmentedController];
     
 	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
+
+	[self.formattingMenu enableWindowField:self.text];
+
+	[self registerKeyHandlers];
 	
 	self.extrac = [IRCExtras new];
 	self.world  = [IRCWorld new];
@@ -124,65 +123,70 @@
 	self.world.viewTheme		= self.viewTheme;
 	self.world.menuController	= self.menu;
 	self.world.serverList		= self.serverList;
-	
+
 	[self.world setServerMenuItem:self.serverMenu];
 	[self.world setChannelMenuItem:self.channelMenu];
-	
-	[self.world setup];
-	
+
 	self.extrac.world = self.world;
-	
+
 	self.serverSplitView.delegate = self;
 	self.memberSplitView.delegate = self;
-	
-	self.serverList.dataSource		= self.world;
-	self.serverList.delegate		= self.world;
-    self.memberList.keyDelegate		= self.world;
-	self.serverList.keyDelegate		= self.world;
-	[self.serverList reloadData];
-	
-	[self.world setupTree];
-	
+
 	self.menu.world			= self.world;
 	self.menu.window		= self.window;
 	self.menu.serverList	= self.serverList;
 	self.menu.memberList	= self.memberList;
 	self.menu.text			= self.text;
 	self.menu.master		= self;
-	
-	[self.memberList setTarget:self.menu];    
-	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
-	
+
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
-	
-	self.growl = [TLOGrowlController new];
-	self.growl.owner = self.world;
-	self.world.growl = self.growl;
-	
-	[self.formattingMenu enableWindowField:self.text];
-	
-	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-		self.inputHistory = [TLOInputHistory new];
-	}
-	
-	[self registerKeyHandlers];
-	
-	[self.viewTheme validateFilePathExistanceAndReload:YES];
-	
-	[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
-	
-	[self buildSegmentedController];
-}
 
-- (void)applicationDidFinishLaunching:(NSNotification *)note
-{
+	[self.viewTheme validateFilePathExistanceAndReload:YES];
+
+	[self.world setupDummyLog];
+	[self.world setupConfiguration];
+
+	self.serverList.dataSource		= self.world;
+	self.serverList.delegate		= self.world;
+    self.memberList.keyDelegate		= self.world;
+	self.serverList.keyDelegate		= self.world;
+
+	[self.serverList reloadData];
+	
+	[self.world setupTree];
+
+	[self.memberList setTarget:self.menu];
+	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
+
 	[self.window makeKeyAndOrderFront:nil];
 
 	[self.world focusInputText];
 
-	// ---- //
+	[self.invokeInBackgroundThread awakeFromNibBackgroundTasks];
+}
+
+- (void)awakeFromNibBackgroundTasks
+{
+	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
+		self.inputHistory = [TLOInputHistory new];
+	}
+
+	self.growl = [TLOGrowlController new];
+	self.growl.owner = self.world;
+	self.world.growl = self.growl;
 	
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
+
+	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
+	
+	[NSBundle loadBundlesIntoMemory:self.world];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)note
+{
 	if (self.world.clients.count < 1) {
 		self.welcomeSheet = [TDCWelcomeSheet new];
 		self.welcomeSheet.delegate = self;
@@ -241,7 +245,7 @@
 	
     [self.world reloadTree];
 	
-	[_text.backgroundView setWindowIsActive:YES];
+	[self.text.backgroundView setWindowIsActive:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note

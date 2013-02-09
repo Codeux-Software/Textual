@@ -38,10 +38,13 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController ()
+@property (nonatomic, assign) BOOL isDummyLog;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @end
 
 @implementation TVCLogController
+
+#define isDummyLog(r)				if (self.isDummyLog) { return r; }
 
 - (id)init
 {
@@ -60,6 +63,8 @@
 
 - (void)terminate
 {
+	isDummyLog();
+	
 	if ([TPCPreferences reloadScrollbackOnLaunch]) {
 		[self.logFile updateCache];
 	} else {
@@ -76,6 +81,8 @@
 
 - (void)setMaxLines:(NSInteger)value
 {
+	isDummyLog();
+	
 	if (self.maxLines == value) return;
 	_maxLines = value;
 
@@ -93,50 +100,57 @@
 
 - (void)setUp
 {
-	self.loaded = NO;
+	self.isDummyLog = (PointerIsEmpty(self.client) && PointerIsEmpty(self.channel));
 
-	self.policy = [TVCLogPolicy new];
-	self.sink   = [TVCLogScriptEventSink new];
+	if (self.isDummyLog == NO) {
+		self.loaded = NO;
 
-	self.lastVisitedHighlight = -1;
+		self.policy = [TVCLogPolicy new];
+		self.sink   = [TVCLogScriptEventSink new];
 
-	self.policy.menu			= self.menu;
-	self.policy.urlMenu			= self.urlMenu;
-	self.policy.chanMenu		= self.chanMenu;
-	self.policy.memberMenu		= self.memberMenu;
-	self.policy.menuController  = self.world.menuController;
+		self.lastVisitedHighlight = -1;
 
-	self.sink.owner  = self;
-	self.sink.policy = self.policy;
+		self.policy.menu			= self.menu;
+		self.policy.urlMenu			= self.urlMenu;
+		self.policy.chanMenu		= self.chanMenu;
+		self.policy.memberMenu		= self.memberMenu;
+		self.policy.menuController  = self.world.menuController;
+
+		self.sink.owner  = self;
+		self.sink.policy = self.policy;
+
+		self.logFile = [TLOFileLogger new];
+		self.logFile.flatFileStructure = YES;
+		self.logFile.writePlainText = NO;
+		self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
+		self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
+
+		if (PointerIsEmpty(self.channel)) {
+			self.logFile.filenameOverride = self.client.config.guid;
+		} else {
+			self.logFile.filenameOverride = self.channel.config.guid;
+		}
+
+		[self.logFile reopenIfNeeded];
+	}
 
 	if (self.view) {
 		[self.view removeFromSuperview];
 	}
 
-	self.logFile = [TLOFileLogger new];
-	self.logFile.flatFileStructure = YES;
-	self.logFile.writePlainText = NO;
-	self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
-	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
-
-	if (PointerIsEmpty(self.channel)) {
-		self.logFile.filenameOverride = self.client.config.guid;
-	} else {
-		self.logFile.filenameOverride = self.channel.config.guid;
-	}
-
-	[self.logFile reopenIfNeeded];
-
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 
 	self.view.frameLoadDelegate			= self;
-	self.view.UIDelegate				= self.policy;
-	self.view.policyDelegate			= self.policy;
 	self.view.resourceLoadDelegate		= self;
-	self.view.keyDelegate				= self;
 	self.view.resizeDelegate			= self;
 	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
 
+	if (self.isDummyLog == NO) {
+		self.view.UIDelegate			= self.policy;
+		self.view.policyDelegate		= self.policy;
+		self.view.keyDelegate			= self;
+	}
+	
 	self.view.shouldUpdateWhileOffscreen	= NO;
 
 	[self loadAlternateHTML:[self initialDocument:nil]];
@@ -146,6 +160,8 @@
 
 - (void)appendToDocumentBody:(NSString *)html
 {
+	isDummyLog();
+	
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return;
 
@@ -191,6 +207,8 @@
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args withContext:(NSDictionary *)context
 {
+	isDummyLog();
+
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self internalExecuteScriptCommand:command withArguments:args];
 		
@@ -246,6 +264,8 @@
 
 - (NSString *)topicValue
 {
+	isDummyLog(nil);
+
 	DOMDocument *doc = [self mainFrameDocument];
 	if (PointerIsEmpty(doc)) return NSStringEmptyPlaceholder;
 
@@ -254,6 +274,8 @@
 
 - (void)setTopic:(NSString *)topic
 {
+	isDummyLog();
+
 	if (NSObjectIsEmpty(topic)) {
 		topic = TXTLS(@"IRCChannelEmptyTopic");
 	}
@@ -287,6 +309,8 @@
 
 - (void)moveToTop
 {
+	isDummyLog();
+
 	if (self.loaded == NO) return;
 
 	DOMDocument *doc = [self mainFrameDocument];
@@ -303,6 +327,8 @@
 
 - (void)moveToBottom
 {
+	isDummyLog();
+
 	self.movingToBottom = NO;
 
 	if (self.loaded == NO) return;
@@ -321,6 +347,8 @@
 
 - (BOOL)viewingBottom
 {
+	isDummyLog(NO);
+
 	if (self.loaded == NO)   return YES;
 	if (self.movingToBottom) return YES;
 
@@ -345,6 +373,8 @@
 
 - (void)savePosition
 {
+	isDummyLog();
+
 	if (self.loadingImages == 0) {
 		self.bottom = [self viewingBottom];
 	}
@@ -352,6 +382,8 @@
 
 - (void)restorePosition
 {
+	isDummyLog();
+
 	[self moveToBottom];
 }
 
@@ -359,6 +391,8 @@
 
 - (void)mark
 {
+	isDummyLog();
+
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if (self.loaded == NO) return nil;
 
@@ -390,6 +424,8 @@
 
 - (void)unmark
 {
+	isDummyLog();
+
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		if (self.loaded == NO) return @(NO);
 
@@ -414,6 +450,8 @@
 
 - (void)goToMark
 {
+	isDummyLog();
+
 	if (self.loaded == NO) return;
 
 	DOMDocument *doc = [self mainFrameDocument];
@@ -441,6 +479,8 @@
 
 - (void)reloadOldLines:(BOOL)markHistoric
 {
+	isDummyLog();
+
 	NSDictionary *oldLines = self.logFile.data;
 
 	if (markHistoric) {
@@ -478,6 +518,8 @@
 
 - (void)reloadHistory
 {
+	isDummyLog();
+
 	self.reloadingHistory = YES;
 
 	[self reloadOldLines:YES];
@@ -512,21 +554,26 @@
 	self.reloadingBacklog = YES;
 
 	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
-	[self reloadOldLines:NO];
 
-	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		self.reloadingBacklog = NO;
+	if ([self isDummyLog] == NO) {
+		[self reloadOldLines:NO];
 
-		[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
-		
-		return @(YES);
-	} copy];
+		TVCLogMessageBlock (^messageBlock)(void) = [^{
+			self.reloadingBacklog = NO;
 
-	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+			[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
+
+			return @(YES);
+		} copy];
+
+		[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+	}
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
+	isDummyLog();
+
 	[self savePosition];
 
 	if (bigger) {
@@ -544,6 +591,8 @@
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
+	isDummyLog(NO);
+
 	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
 		return NO;
 	}
@@ -565,6 +614,8 @@
 
 - (void)jumpToLine:(NSInteger)line
 {
+	isDummyLog();
+
 	NSString *lid = [NSString stringWithFormat:@"line%ld", line];
 
 	if (self.loaded == NO) return;
@@ -594,6 +645,8 @@
 
 - (void)nextHighlight
 {
+	isDummyLog();
+
 	if (self.loaded == NO) return;
 
 	DOMDocument *doc = [self mainFrameDocument];
@@ -624,6 +677,8 @@
 
 - (void)previousHighlight
 {
+	isDummyLog();
+
 	if (self.loaded == NO) return;
 
 	DOMDocument *doc = [self mainFrameDocument];
@@ -653,6 +708,8 @@
 
 - (void)limitNumberOfLines
 {
+	isDummyLog();
+
 	self.needsLimitNumberOfLines = NO;
 
 	NSInteger n = (self.count - self.maxLines);
@@ -707,6 +764,8 @@
 
 - (void)setNeedsLimitNumberOfLines
 {
+	isDummyLog();
+
 	if (self.needsLimitNumberOfLines) return;
 
 	_needsLimitNumberOfLines = YES;
@@ -732,6 +791,8 @@
 
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
 {
+	isDummyLog(nil);
+
 	if (NSObjectIsEmpty(line.body)) {
 		return nil;
 	}
@@ -777,6 +838,8 @@
  specialWrite:(BOOL)isSpecial			// YES if input should have high priority in queue.
 	markAfter:(BOOL)markAfter			// YES if a mark should be inserted after line.
 {
+	isDummyLog(NO);
+
 	if (NSObjectIsEmpty(line.body)) {
 		return NO;
 	}
@@ -988,6 +1051,8 @@
 	 specialWrite:(BOOL)isSpecial
 		markAfter:(BOOL)markAfter
 {
+	isDummyLog();
+
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self savePosition];
 
@@ -1056,6 +1121,8 @@
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
 {
+	isDummyLog();
+
 	[self.world.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
 		[sender handleMessageBlock:messageBlock isSpecial:[context[@"highPriority"] boolValue]];
 	} forController:sender withContext:context]];
@@ -1063,6 +1130,8 @@
 
 - (void)handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
 {
+	isDummyLog();
+
 	// Internally, TVCLogMessageBlock should only return a
 	// BOOL as NSValue or NSString absolute value.
 
@@ -1204,6 +1273,8 @@
 
 - (void)setUpScroller
 {
+	isDummyLog();
+
 	WebFrameView *frame = [[self.view mainFrame] frameView];
 	if (PointerIsEmpty(frame)) return;
 
@@ -1232,6 +1303,8 @@
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
+	isDummyLog();
+
 	self.js = windowObject;
 
 	[self.js setValue:self.sink forKey:@"app"];
@@ -1257,6 +1330,8 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
+	isDummyLog();
+
 	NSString *viewType = @"server";
 
 	if (self.channel && self.channel.isChannel) {
@@ -1281,7 +1356,7 @@
 			[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 		}
 	}
-	
+
 	self.loaded	= YES;
 	self.loadingImages = 0;
 
@@ -1317,6 +1392,8 @@
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
 {
+	isDummyLog(self);
+
 	NSString *scheme = [request.URL.scheme lowercaseString];
 
 	if ([scheme isEqualToString:@"http"] ||
@@ -1336,6 +1413,8 @@
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 {
+	isDummyLog();
+
 	if (identifier) {
 		if (self.loadingImages > 0) {
 			--self.loadingImages;
