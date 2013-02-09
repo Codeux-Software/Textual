@@ -262,7 +262,7 @@
     
     [self.world reloadTree];
 	
-	[_text.backgroundView setWindowIsActive:NO];
+	[self.text.backgroundView setWindowIsActive:NO];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -348,9 +348,14 @@
 
 - (void)hideLoadingScreen
 {
+	[NSAnimationContext beginGrouping];
+	[_NSAnimationCurrentContext() setDuration:0.7];
+	
 	[self.loadingViewBackground.animator setAlphaValue:0];
 
 	[self.loadingViewProgressIndicator stopAnimation:nil];
+	
+	[NSAnimationContext endGrouping];
 }
 
 #pragma mark -
