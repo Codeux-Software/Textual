@@ -346,9 +346,9 @@
 		NSString *osname = [TPI_SP_SysInfo operatingSystemName];
 
 		_new = TXTFLS(@"SystemInformationCompiledOutputOSVersion",
-					  [TPCPreferences systemInfoPlist][@"ProductName"],
-					  [TPCPreferences systemInfoPlist][@"ProductVersion"], osname,
-					  [TPCPreferences systemInfoPlist][@"ProductBuildVersion"]);
+					  [CSFWSystemInformation systemOperatingSystemName],
+					  [CSFWSystemInformation systemStandardVersion], osname,
+					  [CSFWSystemInformation systemBuildVersion]);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
@@ -703,7 +703,7 @@
 
 + (NSString *)operatingSystemName
 {
-	NSString *productVersion = [TPCPreferences systemInfoPlist][@"ProductVersion"];
+	NSString *productVersion = [CSFWSystemInformation systemStandardVersion];
 	
 	if ([productVersion contains:@"10.6"]) {
 		return TXTLS(@"SystemInformationOSVersionSnowLeopard");

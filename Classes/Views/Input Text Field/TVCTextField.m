@@ -142,7 +142,7 @@
 		return;
 	}
 	
-	DebugLogToConsole(@"%@; %@", attributes, NSStringFromRange(local));
+	//DebugLogToConsole(@"%@; %@", attributes, NSStringFromRange(local));
 
 	[self.undoManager registerUndoWithTarget:self
 									selector:@selector(setAttributesWithContext:)
@@ -161,7 +161,7 @@
 									selector:@selector(setAttributesWithContext:)
 									  object:@[attrs, NSStringFromRange(local)]];
 
-	DebugLogToConsole(@"old: %@; new: %@", attrs, contextArray[0]);
+	//DebugLogToConsole(@"old: %@; new: %@", attrs, contextArray[0]);
 	
 	[self setAttributes:contextArray[0] inRange:local];
 }
