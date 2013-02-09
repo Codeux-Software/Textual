@@ -68,7 +68,8 @@
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
-
+@property (nonatomic, strong) NSBox *loadingViewBackground;
+@property (nonatomic, strong) NSProgressIndicator *loadingViewProgressIndicator;
 
 - (void)loadWindowState TEXTUAL_DEPRECATED;
 - (void)loadWindowState:(BOOL)honorFullscreen;
