@@ -89,6 +89,7 @@
 #endif
 
 /* Establish Common Pointers. */
+#define _NSAnimationCurrentContext()			[NSAnimationContext					currentContext]
 #define _NSAppleEventManager()					[NSAppleEventManager				sharedAppleEventManager]
 #define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter	defaultCenter]
 #define _NSFileManager()						[NSFileManager						defaultManager]
