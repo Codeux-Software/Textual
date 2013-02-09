@@ -106,8 +106,6 @@
     
 	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
 	
-	IRCWorldConfig *seed = [[IRCWorldConfig alloc] initWithDictionary:[TPCPreferences loadWorld]];
-	
 	self.extrac = [IRCExtras new];
 	self.world  = [IRCWorld new];
 	
@@ -130,7 +128,7 @@
 	[self.world setServerMenuItem:self.serverMenu];
 	[self.world setChannelMenuItem:self.channelMenu];
 	
-	[self.world setup:seed];
+	[self.world setup];
 	
 	self.extrac.world = self.world;
 	
@@ -1498,12 +1496,11 @@ typedef enum TXMoveKind : NSInteger {
 	
 	[self.window makeKeyAndOrderFront:nil];
 	
-	IRCClientConfig *c = [[IRCClientConfig alloc] initWithDictionary:dic];
-	IRCClient		*u = [self.world createClient:c reload:YES];
+	IRCClient *u = [self.world createClient:dic reload:YES];
 	
 	[self.world save];
 	
-	if (c.autoConnect) {
+	if (u.config.autoConnect) {
 		[u connect];
 	}
 }

@@ -67,19 +67,20 @@
 	[NSBundle deallocBundlesFromMemory:self];
 }
 
-- (void)setup:(IRCWorldConfig *)seed
+- (void)setup
 {
-	self.config = [seed mutableCopy];
+	NSDictionary *config = [TPCPreferences loadWorld];
+
 	self.dummyLog = [self createLogWithClient:nil channel:nil];
-	
+
 	self.logBase.contentView = self.dummyLog.view;
 	[self.dummyLog notifyDidBecomeVisible];
-	
-	for (IRCClientConfig *e in self.config.clients) {
+
+	for (NSDictionary *e in config[@"clients"]) {
 		[self createClient:e reload:YES];
 	}
-	
-	[self.config.clients removeAllObjects];
+
+	config = nil;
 }
 
 - (void)setupTree
@@ -123,7 +124,7 @@
 
 - (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary *dic = [self.config dictionaryValue];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	NSMutableArray *ary = [NSMutableArray array];
 	
@@ -752,7 +753,7 @@
 	[self.extrac createConnectionAndJoinChannel:str chan:channel];
 }
 
-- (IRCClient *)createClient:(IRCClientConfig *)seed reload:(BOOL)reload
+- (IRCClient *)createClient:(id)seed reload:(BOOL)reload
 {
 	IRCClient *c = [IRCClient new];
 	
@@ -762,12 +763,16 @@
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];
 	}
-	
+
 	[c setup:seed];
+
+	if (PointerIsEmpty(c.config)) {
+		return nil;
+	}
 	
 	c.log = [self createLogWithClient:c channel:nil];
 	
-	for (IRCChannelConfig *e in seed.channels) {
+	for (IRCChannelConfig *e in c.config.channels) {
 		[self createChannel:e client:c reload:NO adjust:NO];
 	}
 	

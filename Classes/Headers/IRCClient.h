@@ -118,7 +118,7 @@ typedef enum IRCDisconnectType : NSInteger {
 @property (nonatomic, strong) TDChanBanExceptionSheet *banExceptionSheet;
 @property (nonatomic, strong) TDChanInviteExceptionSheet *inviteExceptionSheet;
 
-- (void)setup:(IRCClientConfig *)seed;
+- (void)setup:(id)seed;
 - (void)updateConfig:(IRCClientConfig *)seed;
 - (IRCClientConfig *)storedConfig;
 - (NSMutableDictionary *)dictionaryValue;
