@@ -41,6 +41,7 @@
 	#import <Security/Security.h>
 	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
+	#import <SystemInformation/CSFWSystemInformation.h>
 
 	#import "StaticDefinitions.h"
 

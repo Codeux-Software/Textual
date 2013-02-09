@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -69,16 +69,9 @@ __weak static TXMasterController *internalMasterController;
 #pragma mark -
 #pragma mark Version Dictonaries
 
-static NSDictionary *systemVersionPlist = nil;
-
 + (NSDictionary *)textualInfoPlist
 {
-	return [[NSBundle mainBundle] infoDictionary];
-}
-
-+ (NSDictionary *)systemInfoPlist
-{
-	return systemVersionPlist;
+	return [NSBundle.mainBundle infoDictionary];
 }
 
 #pragma mark -
@@ -280,7 +273,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 NSString *IRCCommandIndex(const char *key)
 {
 	TEXTUAL_DEPRECATED_ASSERT_C;
-	
+
 	return nil;
 }
 
@@ -290,7 +283,7 @@ NSString *IRCPrivateCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:NO];
 
-	DebugLogToConsole(@"%@; %@", ckey, rkey);
+	//DebugLogToConsole(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -301,7 +294,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:YES];
 
-	DebugLogToConsole(@"%@; %@", ckey, rkey);
+	//DebugLogToConsole(@"%@; %@", ckey, rkey);
 
 	return rkey;
 }
@@ -373,7 +366,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 		name = [name safeSubstringToIndex:trialPos];
 	}
 #endif
-	
+
 	return name;
 }
 
@@ -471,17 +464,17 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 		return [NSHomeDirectory() stringByAppendingPathComponent:pathHead];
 
-		 // This was creating a lot of leaks in Mountain Lion Preview 4.
-		 // Commenting out for now…
+		// This was creating a lot of leaks in Mountain Lion Preview 4.
+		// Commenting out for now…
 
 		/*
-		return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
-										inDomain:NSUserDomainMask
-							   appropriateForURL:nil
-										  create:YES
-										   error:NULL].relativePath;
-		*/
-		 
+		 return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
+		 inDomain:NSUserDomainMask
+		 appropriateForURL:nil
+		 create:YES
+		 error:NULL].relativePath;
+		 */
+
 	}
 
 	return NSStringEmptyPlaceholder;
@@ -609,7 +602,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 		return YES;
 	}
 
-	NSString *osxversion = systemVersionPlist[@"ProductVersion"];
+	NSString *osxversion = [CSFWSystemInformation systemStandardVersion];
 
 	NSArray *matches = @[@"10.7", @"10.7.0", @"10.7.1", @"10.7.2"];
 
@@ -1306,7 +1299,7 @@ static NSInteger totalRunTime = 0;
 
 		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"ircs",
 													   (__bridge CFStringRef)(bundleID));
-		
+
 		changeResult = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)@"textual",
 													   (__bridge CFStringRef)(bundleID));
 
@@ -1428,16 +1421,6 @@ static NSInteger totalRunTime = 0;
 	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
 	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
-	systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/ServerVersion.plist"];
-
-	if (NSObjectIsEmpty(systemVersionPlist)) {
-		systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-	}
-
-	if (NSObjectIsEmpty(systemVersionPlist)) {
-		exit(10);
-	}
-
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self populateCommandIndex];
@@ -1466,11 +1449,11 @@ static NSInteger totalRunTime = 0;
         themePath = [themePath stringByAppendingPathComponent:themeName];
 
         if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-            [_NSUserDefaults() setObject:TXDefaultTextualLogStyle forKey:@"Theme -> Name"];
+			[TPCPreferences setThemeName:TXDefaultTextualLogStyle];
         } else {
             NSString *newName = [NSString stringWithFormat:@"resource:%@", themeName];
-			
-            [_NSUserDefaults() setObject:newName forKey:@"Theme -> Name"];
+
+			[TPCPreferences setThemeName:newName];
         }
 	}
 }

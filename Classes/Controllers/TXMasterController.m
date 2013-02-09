@@ -62,7 +62,7 @@
 
 	// ---- //
 
-	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
+	//DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
 #ifdef TXSystemIsMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];

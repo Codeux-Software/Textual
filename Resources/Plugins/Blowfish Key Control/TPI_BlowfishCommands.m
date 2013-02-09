@@ -214,10 +214,10 @@
 
 	requestData = [requestData safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
 
-	DebugLogToConsole(@"Key Exchange Request Received:");
-	DebugLogToConsole(@"	Client: %@", client);
-	DebugLogToConsole(@"	Channel: %@", channel);
-	DebugLogToConsole(@"	Message: %@", requestData);
+	//DebugLogToConsole(@"Key Exchange Request Received:");
+	//DebugLogToConsole(@"	Client: %@", client);
+	//DebugLogToConsole(@"	Channel: %@", channel);
+	//DebugLogToConsole(@"	Message: %@", requestData);
 	
 	[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
 
@@ -233,7 +233,7 @@
 			return [client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
 		}
 
-		DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 
 		channel.config.encryptionKey = theSecret;
 
@@ -265,10 +265,10 @@
 	if (NSObjectIsNotEmpty(exchangeData)) {
 		responseData = [responseData safeSubstringFromIndex:[TXExchangeResponsePrefix length]];
 		
-		DebugLogToConsole(@"Key Exchange Response Received:");
-		DebugLogToConsole(@"	Response Key: %@", responseKey);
-		DebugLogToConsole(@"	Response Info: %@", exchangeData);
-		DebugLogToConsole(@"	Message: %@", responseData);
+		//DebugLogToConsole(@"Key Exchange Response Received:");
+		//DebugLogToConsole(@"	Response Key: %@", responseKey);
+		//DebugLogToConsole(@"	Response Info: %@", exchangeData);
+		//DebugLogToConsole(@"	Message: %@", responseData);
 
 		CFDH1080 *request = exchangeData[0];
 		IRCChannel *channel = exchangeData[1];
@@ -284,7 +284,7 @@
 			return [client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
 		}
 		
-		DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 
 		channel.config.encryptionKey = theSecret;
 

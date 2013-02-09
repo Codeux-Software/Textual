@@ -94,43 +94,35 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-#ifndef DEBUG
-	if ([client isConnected]) {
-#endif
-		
-		NSString *channelName = client.world.selectedChannel.name;
-		
-		if ([channelName length] >= 1) {
-			if ([commandString isEqualToString:@"SYSINFO"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemInformation]];
-			} else if ([commandString isEqualToString:@"MEMORY"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationMemoryUsage]];
-			} else if ([commandString isEqualToString:@"UPTIME"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationAndSystemUptime]];
-			} else if ([commandString isEqualToString:@"NETSTATS"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
-			} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.world]];
-			} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
-			} else if ([commandString isEqualToString:@"STYLE"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationActiveStyle]];
-			} else if ([commandString isEqualToString:@"SCREENS"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDisplayInformation]];
-			} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationRuntimeStatistics]];
-			} else if ([commandString isEqualToString:@"LOADAVG"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemCPULoadInformation]];
-			} else if ([commandString isEqualToString:@"SYSMEM"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemMemoryInformation]];
-			} else if ([commandString isEqualToString:@"WINDOWC"]) {
-				[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemVisibleWindowCount]];
-			}
+	NSString *channelName = client.world.selectedChannel.name;
+	
+	if ([channelName length] >= 1) {
+		if ([commandString isEqualToString:@"SYSINFO"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemInformation]];
+		} else if ([commandString isEqualToString:@"MEMORY"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationMemoryUsage]];
+		} else if ([commandString isEqualToString:@"UPTIME"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationAndSystemUptime]];
+		} else if ([commandString isEqualToString:@"NETSTATS"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
+		} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.world]];
+		} else if ([commandString isEqualToString:@"DISKSPACE"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
+		} else if ([commandString isEqualToString:@"STYLE"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationActiveStyle]];
+		} else if ([commandString isEqualToString:@"SCREENS"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDisplayInformation]];
+		} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationRuntimeStatistics]];
+		} else if ([commandString isEqualToString:@"LOADAVG"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemCPULoadInformation]];
+		} else if ([commandString isEqualToString:@"SYSMEM"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemMemoryInformation]];
+		} else if ([commandString isEqualToString:@"WINDOWC"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemVisibleWindowCount]];
 		}
-		
-#ifndef DEBUG
 	}
-#endif
 }
 
 @end

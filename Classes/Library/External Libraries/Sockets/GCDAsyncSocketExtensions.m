@@ -117,7 +117,7 @@
 {
 	SecTrustRef trust = [self sslCertificateTrustInformation];
 	
-	DebugLogToConsole(@"SSL Trust Ref: %@", trust);
+	//DebugLogToConsole(@"SSL Trust Ref: %@", trust);
 
 	if (PointerIsNotEmpty(trust)) {
 		SFCertificatePanel *panel = [SFCertificatePanel sharedCertificatePanel];
@@ -141,7 +141,7 @@
 	dispatch_block_t block = ^{
 		OSStatus status = SSLCopyPeerTrust(self.sslContext, &trust);
 
-		DebugLogToConsole(@"SSL Context: %@\nTrust Ref: %@\nCopy Status: %i", self.sslContext, trust, status);
+		//DebugLogToConsole(@"SSL Context: %@\nTrust Ref: %@\nCopy Status: %i", self.sslContext, trust, status);
 
 #pragma unused(status)
 	};
