@@ -74,7 +74,8 @@
 @property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
 @property (nonatomic, strong) NSOperationQueue *messageOperationQueue;
 
-- (void)setup;
+- (void)setupConfiguration;
+- (void)setupDummyLog;
 - (void)setupTree;
 - (void)save;
 

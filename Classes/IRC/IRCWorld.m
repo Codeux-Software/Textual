@@ -67,14 +67,17 @@
 	[NSBundle deallocBundlesFromMemory:self];
 }
 
-- (void)setup
+- (void)setupDummyLog
 {
-	NSDictionary *config = [TPCPreferences loadWorld];
-
 	self.dummyLog = [self createLogWithClient:nil channel:nil];
 
 	self.logBase.contentView = self.dummyLog.view;
 	[self.dummyLog notifyDidBecomeVisible];
+}
+
+- (void)setupConfiguration
+{
+	NSDictionary *config = [TPCPreferences loadWorld];
 
 	for (NSDictionary *e in config[@"clients"]) {
 		[self createClient:e reload:YES];
