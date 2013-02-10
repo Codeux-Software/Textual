@@ -77,6 +77,8 @@
 
 - (void)setupConfiguration
 {
+	self.isPopulatingSeeds = YES;
+	
 	NSDictionary *config = [TPCPreferences loadWorld];
 
 	for (NSDictionary *e in config[@"clients"]) {
@@ -84,6 +86,8 @@
 	}
 
 	config = nil;
+
+	self.isPopulatingSeeds = NO;
 }
 
 - (void)setupTree
@@ -356,6 +360,18 @@
 	}
 }
 
+- (void)reloadLoadingScreen
+{
+	if (self.isPopulatingSeeds == NO) {
+		if (self.clients.count <= 0) {
+			[self.master.loadingScreen hideAll:NO];
+			[self.master.loadingScreen popWelcomeAddServerView];
+		} else {
+			[self.master.loadingScreen hideAll:YES];
+		}
+	}
+}
+
 - (void)reloadTree
 {
 	if (self.reloadingTree) {
@@ -525,25 +541,7 @@
 
 	// ---- //
 
-	NSURL *iconURL = [NSBundle.mainBundle bundleURL];
-
-	if ([TPCPreferences logTranscript]) {
-		NSString *writePath;
-
-		if (c) {
-			writePath = c.logFile.fileWritePath;
-		} else {
-			writePath = u.logFile.fileWritePath;
-		}
-
-		if ([_NSFileManager() fileExistsAtPath:writePath]) {
-			iconURL = [NSURL URLWithString:writePath];
-		} 
-	}
-
-	[self.window setRepresentedURL:iconURL];
-
-	// ---- //
+	[self.window setRepresentedURL:[NSBundle.mainBundle bundleURL]];
 	
 	if (u.config.useSSL) {
 		[[self.window standardWindowButton:NSWindowDocumentIconButton]
@@ -784,6 +782,8 @@
 	if (reload) {
 		[self reloadTree];
 	}
+
+	[self reloadLoadingScreen];
 	
 	return c;
 }
@@ -937,6 +937,9 @@
 		[self reloadTree];
 		[self adjustSelection];
 	}
+
+	[self updateTitle];
+	[self reloadLoadingScreen];
 }
 
 - (void)destroyChannel:(IRCChannel *)c
