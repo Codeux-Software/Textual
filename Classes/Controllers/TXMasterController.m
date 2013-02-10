@@ -64,9 +64,7 @@
 
 	//DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
-#ifdef TXSystemIsMacOSLionOrNewer
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-#endif
 
 	// ---- //
 
@@ -1266,12 +1264,9 @@ typedef enum TXMoveKind : NSInteger {
 	
 	if (s) {
         [self.text setAttributedStringValue:s];
-		
+		[self.text resetTextFieldCellSize:NO];
+
 		[self.world focusInputText];
-        
-        if ([self.text respondsToSelector:@selector(resetTextFieldCellSize:)]) {
-            [self.text resetTextFieldCellSize:NO];
-        }
 	}
 }
 

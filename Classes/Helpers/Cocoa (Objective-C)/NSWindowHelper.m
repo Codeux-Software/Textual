@@ -93,11 +93,7 @@
 
 - (BOOL)isInFullscreenMode
 {
-#ifdef TXSystemIsMacOSLionOrNewer
 	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
-#else
-	return NO;
-#endif
 }
 
 - (void)closeExistingSheet

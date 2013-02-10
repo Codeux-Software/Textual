@@ -15,7 +15,6 @@
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../.tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
-		4C88849E158EB9B400747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
 		4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_BlowfishCommands.m; sourceTree = "<group>"; };
@@ -67,7 +66,6 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C888499158EB9B400747ABB /* ARC Weak Refrences */,
 				4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */,
 				4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */,
 			);
@@ -80,15 +78,6 @@
 				8D576316048677EA00EA77CD /* BlowfishCommandLine.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4C888499158EB9B400747ABB /* ARC Weak Refrences */ = {
-			isa = PBXGroup;
-			children = (
-				4C88849E158EB9B400747ABB /* PLWeakCompatibilityStubs.m */,
-			);
-			name = "ARC Weak Refrences";
-			path = "../../../Classes/Library/External Libraries/ARC Weak Refrences";
 			sourceTree = "<group>";
 		};
 		4CD8861D16C09BA00000CF8D /* System Frameworks */ = {
@@ -223,7 +212,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -273,7 +262,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

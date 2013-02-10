@@ -272,9 +272,7 @@
 		4C8AF6B1158E99520026668C /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C3158E99520026668C /* IRCUser.m */; };
 		4C8AF6B2158E99520026668C /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C4158E99520026668C /* IRCWorld.m */; };
 		4C8AF6B4158E99520026668C /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C8158E99520026668C /* IRCColorFormat.m */; };
-		4C8AF6B9158E99520026668C /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5CF158E99520026668C /* PLWeakCompatibilityStubs.m */; };
 		4C8AF6BA158E99520026668C /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D1158E99520026668C /* AGKeychain.m */; };
-		4C8AF6BB158E99520026668C /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D3158E99520026668C /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C8AF6BC158E99520026668C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C8AF6BD158E99520026668C /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */; };
 		4C8AF6BE158E99520026668C /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -728,9 +726,7 @@
 		4C8AF5C3158E99520026668C /* IRCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCUser.m; sourceTree = "<group>"; };
 		4C8AF5C4158E99520026668C /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
 		4C8AF5C8158E99520026668C /* IRCColorFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCColorFormat.m; sourceTree = "<group>"; };
-		4C8AF5CF158E99520026668C /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		4C8AF5D1158E99520026668C /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
-		4C8AF5D3158E99520026668C /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketExtensions.m; sourceTree = "<group>"; };
 		4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLMAsyncSocket.m; sourceTree = "<group>"; };
@@ -1547,20 +1543,10 @@
 		4C8AF5C9158E99520026668C /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5CA158E99520026668C /* ARC Weak Refrences */,
 				4C8AF5D0158E99520026668C /* Keychain Control */,
-				4C8AF5D2158E99520026668C /* Regular Expression */,
 				4C8AF5D4158E99520026668C /* Sockets */,
 			);
 			path = "External Libraries";
-			sourceTree = "<group>";
-		};
-		4C8AF5CA158E99520026668C /* ARC Weak Refrences */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF5CF158E99520026668C /* PLWeakCompatibilityStubs.m */,
-			);
-			path = "ARC Weak Refrences";
 			sourceTree = "<group>";
 		};
 		4C8AF5D0158E99520026668C /* Keychain Control */ = {
@@ -1569,14 +1555,6 @@
 				4C8AF5D1158E99520026668C /* AGKeychain.m */,
 			);
 			path = "Keychain Control";
-			sourceTree = "<group>";
-		};
-		4C8AF5D2158E99520026668C /* Regular Expression */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF5D3158E99520026668C /* RegexKitLite.m */,
-			);
-			path = "Regular Expression";
 			sourceTree = "<group>";
 		};
 		4C8AF5D4158E99520026668C /* Sockets */ = {
@@ -2220,9 +2198,7 @@
 				4C8AF6B1158E99520026668C /* IRCUser.m in Sources */,
 				4C8AF6B2158E99520026668C /* IRCWorld.m in Sources */,
 				4C8AF6B4158E99520026668C /* IRCColorFormat.m in Sources */,
-				4C8AF6B9158E99520026668C /* PLWeakCompatibilityStubs.m in Sources */,
 				4C8AF6BA158E99520026668C /* AGKeychain.m in Sources */,
-				4C8AF6BB158E99520026668C /* RegexKitLite.m in Sources */,
 				4C8AF6BC158E99520026668C /* GCDAsyncSocket.m in Sources */,
 				4C8AF6BD158E99520026668C /* GCDAsyncSocketExtensions.m in Sources */,
 				4C8AF6BE158E99520026668C /* RLMAsyncSocket.m in Sources */,
@@ -2570,7 +2546,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
@@ -2631,7 +2607,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
@@ -2708,7 +2684,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
@@ -2778,7 +2754,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",
@@ -2847,7 +2823,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "${SRCROOT}/.tmp/SharedBuildResults";
 				OTHER_CFLAGS = (
 					"-Xclang",

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C6B5F3716C62084000AD629 /* CSFWSystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B5F3516C62084000AD629 /* CSFWSystemInformation.m */; };
 		4C6B5F3816C62084000AD629 /* CSFWSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,7 +19,6 @@
 		32DBCF5E0370ADEE00C91783 /* SystemInformation_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInformation_Prefix.pch; sourceTree = "<group>"; };
 		4C6B5F3516C62084000AD629 /* CSFWSystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFWSystemInformation.m; sourceTree = "<group>"; };
 		4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFWSystemInformation.h; sourceTree = "<group>"; };
-		4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = "../../../Classes/Library/External Libraries/ARC Weak Refrences/PLWeakCompatibilityStubs.m"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* SystemInformation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SystemInformation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -94,7 +92,6 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4C88845D158EB77700747ABB /* Weak Refrences */,
 				32DBCF5E0370ADEE00C91783 /* SystemInformation_Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -107,14 +104,6 @@
 				4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		4C88845D158EB77700747ABB /* Weak Refrences */ = {
-			isa = PBXGroup;
-			children = (
-				4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */,
-			);
-			name = "Weak Refrences";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +171,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */,
 				4C6B5F3716C62084000AD629 /* CSFWSystemInformation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,7 +227,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -290,7 +278,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

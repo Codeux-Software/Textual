@@ -1687,48 +1687,16 @@
 
 - (void)toggleFullscreenMode:(id)sender
 {
-#ifdef TXSystemIsMacOSLionOrNewer
-	if ([TPCPreferences featureAvailableToOSXLion]) {
-		if (self.isInFullScreenMode) {
-			[self.window toggleFullScreen:sender];
-			
-			[self.master loadWindowState:NO];
-		} else {
-			[self.master saveWindowState];
-			
-			[self.window toggleFullScreen:sender];
-		}
+	if (self.isInFullScreenMode) {
+		[self.window toggleFullScreen:sender];
+
+		[self.master loadWindowState:NO];
 	} else {
-#endif
+		[self.master saveWindowState];
 		
-		if (self.isInFullScreenMode == NO) {
-			[self.master saveWindowState];
-			
-			[NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar)];
-			
-			[[self.window standardWindowButton:NSWindowZoomButton] setHidden:YES];
-			[[self.window standardWindowButton:NSWindowCloseButton] setHidden:YES];
-			[[self.window standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
-			
-			[self.window setShowsResizeIndicator:NO];
-			
-			[self.window setFrame:[self.window frameRectForContentRect:[[self.window screen] frame]]
-						  display:YES animate:YES];
-		} else {
-			[[self.window standardWindowButton:NSWindowZoomButton] setHidden:NO];
-			[[self.window standardWindowButton:NSWindowCloseButton] setHidden:NO];
-			[[self.window standardWindowButton:NSWindowMiniaturizeButton] setHidden:NO];
-			
-			[self.window setShowsResizeIndicator:YES];
-			[self.master loadWindowState:NO];
-			
-			[NSApp setPresentationOptions:NSApplicationPresentationDefault];
-		}
-		
-#ifdef TXSystemIsMacOSLionOrNewer
+		[self.window toggleFullScreen:sender];
 	}
-#endif
-	
+
 	self.isInFullScreenMode = BOOLReverseValue(self.isInFullScreenMode);
 }
 
