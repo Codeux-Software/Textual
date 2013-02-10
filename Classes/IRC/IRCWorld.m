@@ -469,6 +469,7 @@
 {
 	if (PointerIsEmpty(self.selected)) {
 		[self.window setTitle:[TPCPreferences applicationName]];
+		[self.window setRepresentedURL:nil]; // Hide lock.
 		
 		return;
 	}

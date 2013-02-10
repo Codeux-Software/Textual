@@ -110,7 +110,7 @@
 {
 	if (self.stackLocked == NO) {
 		for (NSView *alv in [self allViews]) {
-			if (alv.isHidden == NO && animate) {
+			if (alv.isHidden == NO) {
 				[self hideView:alv animate:animate];
 			}
 		}
@@ -136,25 +136,25 @@
 
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
-	CGFloat _animationDelay = 0.7;
-
-	if (animate == NO) {
-		_animationDelay = 0.0;
-	}
-
 	[self enableBackgroundControls];
-		
-	[_NSAnimationCurrentContext() setDuration:_animationDelay];
-
-	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-		self.stackLocked = YES;
-
-		[self.animator setAlphaValue:0.0];
-	} completionHandler:^{
+	
+	if (animate == NO) {
 		[view setHidden:YES];
+		
+		[self setAlphaValue:0.0];
+	} else {
+		[_NSAnimationCurrentContext() setDuration:0.8];
 
-		self.stackLocked = NO;
-	}];
+		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+			self.stackLocked = animate;
+
+			[self.animator setAlphaValue:0.0];
+		} completionHandler:^{
+			[view setHidden:YES];
+
+			self.stackLocked = NO;
+		}];
+	}
 }
 
 #pragma mark -
@@ -195,14 +195,16 @@
 			activeView = alv;
 		} 
 	}
-	
-	NSRect newtRect = activeView.frame;
 
-	newtRect.origin.x  = ((self.window.frame.size.width  / 2) - (newtRect.size.width / 2));
-	newtRect.origin.y  = ((self.window.frame.size.height / 2) - (newtRect.size.height / 2));
-	newtRect.origin.y -= 24;
+	if (activeView) {
+		NSRect newtRect = activeView.frame;
 
-	[activeView setFrame:newtRect];
+		newtRect.origin.x  = ((self.window.frame.size.width  / 2) - (newtRect.size.width / 2));
+		newtRect.origin.y  = ((self.window.frame.size.height / 2) - (newtRect.size.height / 2));
+		newtRect.origin.y -= 24;
+
+		[activeView setFrame:newtRect];
+	}
 
 	[super drawRect:dirtyRect];
 }
