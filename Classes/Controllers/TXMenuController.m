@@ -175,6 +175,12 @@
 			return BOOLValueFromObject(u);
 			break;
 		}
+		case 590: // address book
+		case 591: // ignore list
+		{
+			return PointerIsNotEmpty(self.world.selectedClient);
+			break;
+		}
 		case 592:	// textual logs
 		{
 			return [TPCPreferences logTranscript];
