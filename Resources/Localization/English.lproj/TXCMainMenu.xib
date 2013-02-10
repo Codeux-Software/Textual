@@ -1272,6 +1272,7 @@
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">590</int>
 								</object>
 								<object class="NSMenuItem" id="829662713">
 									<reference key="NSMenu" ref="272041888"/>
@@ -1281,6 +1282,7 @@
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="222848805"/>
 									<reference key="NSMixedImage" ref="852898728"/>
+									<int key="NSTag">591</int>
 								</object>
 								<object class="NSMenuItem" id="138370719">
 									<reference key="NSMenu" ref="272041888"/>
@@ -1465,7 +1467,6 @@
 												<int key="NSTag">106</int>
 											</object>
 										</array>
-										<bool key="NSMenuExcludeMarkColumn">YES</bool>
 									</object>
 								</object>
 								<object class="NSMenuItem" id="976177585">
@@ -3096,7 +3097,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{600, 250}</string>
 				<object class="NSView" key="NSWindowView" id="606779342">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSView" id="1064184631">
@@ -3196,7 +3197,7 @@
 											<reference key="NSDocView" ref="991887117"/>
 											<reference key="NSBGColor" ref="317973488"/>
 											<object class="NSCursor" key="NSCursor">
-												<string key="NSHotSpot">{5, 5}</string>
+												<string key="NSHotSpot">{1, -1}</string>
 												<int key="NSCursorType">0</int>
 											</object>
 											<int key="NScvFlags">2</int>
@@ -3925,7 +3926,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{652, 550}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="1064184631"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
