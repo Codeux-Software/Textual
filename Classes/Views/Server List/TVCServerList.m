@@ -194,30 +194,6 @@
 	return nrect;
 }
 
-- (void)toggleAddServerButton
-{
-	NSRect clipRect = [self frame];
-
-	TXMasterController *master = TPCPreferences.masterController;
-	TXMenuController *menucl = master.menu;
-	
-	if (NSObjectIsEmpty([self.keyDelegate clients])) {
-		[master.addServerButton setHidden:NO];
-		[master.addServerButton setTarget:menucl];
-		[master.addServerButton setAction:@selector(addServer:)];
-		
-		NSRect winRect = [master.serverSplitView frame];
-		NSRect oldRect = [master.addServerButton frame];
-		
-		oldRect.origin = NSMakePoint((NSMidX(clipRect) - (oldRect.size.width / 2.0)), 
-									 (NSMidY(winRect) - (oldRect.size.height / 2.0)));
-		
-		[master.addServerButton setFrame:oldRect];
-	} else {
-		[master.addServerButton setHidden:YES];
-	}
-}
-
 - (NSMenu *)menuForEvent:(NSEvent *)e
 {
 	NSPoint   p = [self convertPoint:[e locationInWindow] fromView:nil];
@@ -248,13 +224,6 @@
 				break;
 		}
 	}
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	[super drawRect:dirtyRect];
-	
-	[self toggleAddServerButton];
 }
 
 @end

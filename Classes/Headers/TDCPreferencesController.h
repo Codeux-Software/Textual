@@ -85,7 +85,7 @@
 - (void)onDownloadExtraAddons:(id)sender;
 #endif
 
-- (IBAction)setTextualAsDefaultIRCClient:(id)sender;
+- (void)setTextualAsDefaultIRCClient:(id)sender;
 
 - (void)onUseGrowl:(id)sender;
 - (void)onStyleChanged:(id)sender;

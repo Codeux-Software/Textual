@@ -118,12 +118,12 @@
 
 - (NSView *)splitterView
 {
-    return (self.superview.superview.superview.subviews)[0];
+    return [(self.superview.superview.superview.superview.subviews)[1] subviews][0];
 }
 
 - (TVCInputTextFieldBackground *)backgroundView
 {
-	return (self.superview.superview.superview.subviews)[2];
+	return (self.superview.superview.superview.subviews)[0];
 }
 
 - (void)updateTextDirection

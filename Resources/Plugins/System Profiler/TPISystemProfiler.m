@@ -39,7 +39,7 @@
 #import "TPI_SP_SysInfo.h"
 
 @interface TPISystemProfiler ()
-@property (nonatomic, strong) IBOutlet NSView *preferencePaneView;
+@property (nonatomic, strong) NSView *preferencePaneView;
 @end
 
 @implementation TPISystemProfiler

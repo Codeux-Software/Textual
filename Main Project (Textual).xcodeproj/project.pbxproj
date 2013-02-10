@@ -347,6 +347,8 @@
 		4C8AF754158EB6CA0026668C /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF755158EB6CA0026668C /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF749158EB6CA0026668C /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8EE97A16C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */; };
+		4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
 		4C9E534515B4C19C000E84A9 /* Contributors.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4C9E534615B4C1A6000E84A9 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
@@ -801,6 +803,8 @@
 		4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		4C8AF749158EB6CA0026668C /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLMAsyncSocket.h; sourceTree = "<group>"; };
+		4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowLoadingScreen.m; sourceTree = "<group>"; };
+		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
 		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
@@ -1399,6 +1403,7 @@
 				4C8AF58A158E99520026668C /* TVCLogScriptEventSink.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
+				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
@@ -1623,6 +1628,7 @@
 				4C8AF602158E99520026668C /* TVCListSeparatorCell.m */,
 				4C8AF603158E99520026668C /* TVCListView.m */,
 				4C8AF604158E99520026668C /* TVCMainWindow.m */,
+				4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */,
 				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
 				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
 			);
@@ -1760,6 +1766,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4CD09B2F1640B31A008F1A04 /* GRMustache.h in Headers */,
 				4CD09B301640B31A008F1A04 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4CD09B311640B31A008F1A04 /* GRMustacheContext.h in Headers */,
@@ -2130,7 +2137,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
+			shellScript = "\ncd \"${PROJECT_DIR}/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" FRAMEWORK_SEARCH_PATHS=\"${FRAMEWORK_SEARCH_PATHS}\" HEADER_SEARCH_PATHS=\"${HEADER_SEARCH_PATHS}\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\" CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
@@ -2144,7 +2151,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Frameworks/System Information/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
+			shellScript = "\ncd \"${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n\ncd \"${PROJECT_DIR}/Frameworks/System Information/Source/\"\nxcodebuild -alltargets -configuration \"Release\" NATIVE_ARCH=\"${NATIVE_ARCH}\" CODE_SIGN_IDENTITY=\"${CODE_SIGN_IDENTITY}\" CODE_SIGN_ENTITLEMENTS=\"${PROJECT_DIR}/Resources/Sandbox/Exceptions/Auxiliary.entitlements\" OTHER_CFLAGS=\"${OTHER_CFLAGS}\" SYMROOT=\"${OBJROOT}\" OBJROOT=\"${OBJROOT}\" BUILD_DIR=\"${OBJROOT}\" TARGET_TEMP_DIR=\"${OBJROOT}\" SHARED_PRECOMPS_DIR=\"${SHARED_PRECOMPS_DIR}\"  CONFIGURATION_BUILD_DIR=\"${PROJECT_DIR}/.tmp/SharedBuildProducts\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2261,6 +2268,7 @@
 				4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */,
 				4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */,
+				4C8EE97A16C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
