@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C393AAD121AE217004C66F4 /* TPIBragSpam.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPIBragSpam.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
-		4C8884A8158EB9C200747ABB /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8884A6158EB9C200747ABB /* PLWeakCompatibilityStubs.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,7 +16,6 @@
 		4C393AAB121AE217004C66F4 /* TPIBragSpam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBragSpam.h; sourceTree = "<group>"; };
 		4C393AAC121AE217004C66F4 /* TPIBragSpam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIBragSpam.m; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		4C8884A6158EB9C200747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* BragSpam.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BragSpam.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,7 +63,6 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C8884A1158EB9C200747ABB /* ARC Weak Refrences */,
 				4C393AAB121AE217004C66F4 /* TPIBragSpam.h */,
 				4C393AAC121AE217004C66F4 /* TPIBragSpam.m */,
 			);
@@ -78,15 +75,6 @@
 				8D576316048677EA00EA77CD /* BragSpam.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4C8884A1158EB9C200747ABB /* ARC Weak Refrences */ = {
-			isa = PBXGroup;
-			children = (
-				4C8884A6158EB9C200747ABB /* PLWeakCompatibilityStubs.m */,
-			);
-			name = "ARC Weak Refrences";
-			path = "../../../Classes/Library/External Libraries/ARC Weak Refrences";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,7 +141,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C393AAD121AE217004C66F4 /* TPIBragSpam.m in Sources */,
-				4C8884A8158EB9C200747ABB /* PLWeakCompatibilityStubs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +198,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -264,7 +251,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

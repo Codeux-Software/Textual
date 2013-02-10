@@ -594,19 +594,15 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)securityScopedBookmarksAvailable
 {
-	if ([TPCPreferences featureAvailableToOSXLion] == NO) {
-		return NO;
-	}
-
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) { // Covers 10.8 and later.
 		return YES;
+	} else {
+		NSString *osxversion = [CSFWSystemInformation systemStandardVersion];
+
+		NSArray *matches = @[@"10.7", @"10.7.0", @"10.7.1", @"10.7.2"];
+
+		return ([matches containsObject:osxversion] == NO);
 	}
-
-	NSString *osxversion = [CSFWSystemInformation systemStandardVersion];
-
-	NSArray *matches = @[@"10.7", @"10.7.0", @"10.7.1", @"10.7.2"];
-
-	return ([matches containsObject:osxversion] == NO);
 }
 
 #pragma mark -

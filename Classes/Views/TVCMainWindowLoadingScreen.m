@@ -112,8 +112,6 @@
 		for (NSView *alv in [self allViews]) {
 			if (alv.isHidden == NO && animate) {
 				[self hideView:alv animate:animate];
-			} else {
-				[alv setHidden:YES];
 			}
 		}
 	}
@@ -136,37 +134,27 @@
 #pragma mark -
 #pragma mark Hide View (Private).
 
-- (void)hideViewAfterAnimation:(NSView *)view
-{
-	[view setHidden:YES];
-
-	self.stackLocked = NO;
-}
-
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
+	CGFloat _animationDelay = 0.7;
+
 	if (animate == NO) {
-		[view setHidden:YES];
+		_animationDelay = 0.0;
+	}
 
-		[self setAlphaValue:0.0];
-
-		[self enableBackgroundControls];
-	} else {
-		CGFloat	_animationDelay = 0.7;
+	[self enableBackgroundControls];
 		
+	[_NSAnimationCurrentContext() setDuration:_animationDelay];
+
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
 		self.stackLocked = YES;
-		
-		[NSAnimationContext beginGrouping];
-
-		[_NSAnimationCurrentContext() setDuration:_animationDelay];
 
 		[self.animator setAlphaValue:0.0];
+	} completionHandler:^{
+		[view setHidden:YES];
 
-		[self performSelector:@selector(enableBackgroundControls) withObject:nil];
-		[self performSelector:@selector(hideViewAfterAnimation:) withObject:view afterDelay:(_animationDelay + 0.1)];
-
-		[NSAnimationContext endGrouping];
-	}
+		self.stackLocked = NO;
+	}];
 }
 
 #pragma mark -

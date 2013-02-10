@@ -41,13 +41,7 @@
 
 - (BOOL)runningInHighResolutionMode
 {
-	if ([self respondsToSelector:@selector(backingScaleFactor)]) {
-		CGFloat scale = [self backingScaleFactor];
-
-		return (scale == 2.0f);
-	}
-
-	return NO;
+	return ([self backingScaleFactor] == 2.0f);
 }
 
 @end

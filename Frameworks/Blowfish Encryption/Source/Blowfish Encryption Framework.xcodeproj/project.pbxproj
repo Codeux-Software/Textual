@@ -18,7 +18,6 @@
 		4C500F4216C06C79001692AF /* DH1080.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F4016C06C79001692AF /* DH1080.mm */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */; };
-		4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */; };
 		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -41,7 +40,6 @@
 		4C500F4016C06C79001692AF /* DH1080.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080.mm; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishBase.m; sourceTree = "<group>"; };
-		4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = "../../../Classes/Library/External Libraries/ARC Weak Refrences/PLWeakCompatibilityStubs.m"; sourceTree = "<group>"; };
 		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; };
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CEC815C133F13140026DFAE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4C88845D158EB77700747ABB /* Weak Refrences */,
 				4CEC815C133F13140026DFAE /* BlowfishEncryption.h */,
 				32DBCF5E0370ADEE00C91783 /* BlowfishEncryption_Prefix.pch */,
 			);
@@ -173,14 +170,6 @@
 				4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		4C88845D158EB77700747ABB /* Weak Refrences */ = {
-			isa = PBXGroup;
-			children = (
-				4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */,
-			);
-			name = "Weak Refrences";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,7 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */,
 				4C292F8012DFD69400BE23FE /* Encryption.m in Sources */,
 				4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */,
 				4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */,
@@ -304,6 +292,7 @@
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -314,7 +303,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
@@ -355,6 +344,7 @@
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -365,7 +355,7 @@
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_NO_PIE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",
