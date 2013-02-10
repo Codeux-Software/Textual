@@ -562,7 +562,7 @@
 			for (NSString *f in files) {
 				NSMenuItem *cell = [NSMenuItem new];
 
-				[cell setTag:i];
+				[cell setTag:tag];
 				[cell setTitle:f];
 				[cell setAction:nil];
 				[cell setKeyEquivalent:NSStringEmptyPlaceholder];
@@ -591,7 +591,7 @@
 	
 	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem *item = [self.themeButton itemAtIndex:i];
-		
+
 		if ([item tag] == targetTag && [item.title isEqualToString:name]) {
 			[self.themeButton selectItemAtIndex:i];
 			
