@@ -717,15 +717,15 @@
 {
 	NSString *productVersion = [CSFWSystemInformation systemStandardVersion];
 	
-	if ([productVersion contains:@"10.6"]) {
+	if ([productVersion hasPrefix:@"10.6"]) {
 		return TXTLS(@"SystemInformationOSVersionSnowLeopard");
 	}
 	
-	if ([productVersion contains:@"10.7"]) {
+	if ([productVersion hasPrefix:@"10.7"]) {
 		return TXTLS(@"SystemInformationOSVersionLion");
 	}
 	
-	if ([productVersion contains:@"10.8"]) {
+	if ([productVersion hasPrefix:@"10.8"]) {
 		return TXTLS(@"SystemInformationOSVersionMountainLion");
 	}
 	

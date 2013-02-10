@@ -38,7 +38,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.6.6</string>
+	<string>10.7.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 — 2013 Codeux Software</string>
 	<key>NSMainNibFile</key>
@@ -48,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>13732</string>
+	<string>13744</string>
 	<key>TXBundleBuildReference</key>
-	<string>2.1.2-102-g7fef2a2-debug</string>
+	<string>2.1.2-103-g214e0f0-appstore,modern</string>
 </dict>
 </plist>
