@@ -68,10 +68,6 @@
 #define PointerIsEmpty(s)				(s == NULL || s == nil)
 #define PointerIsNotEmpty(s)			(s != NULL && s != nil)
 
-#ifdef TXSystemIsMacOSLionOrNewer
-	#define TXNativeRegularExpressionAvailable
-#endif
-
 #ifdef TXSystemIsMacOSMountainLionOrNewer
 	#define TXUnsupervisedScriptFolderAvailable
 	#define TXFoundationBasedUUIDAvailable

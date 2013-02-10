@@ -179,13 +179,8 @@
 	id childItem = [self itemAtRow:row];
 	
 	if ([self isGroupItem:childItem] == NO) {
-		if ([TPCPreferences featureAvailableToOSXLion]) {
-			nrect.origin.x   += 36;
-			nrect.size.width  = (self.frame.size.width - 36);
-		} else {
-			nrect.origin.x   += 36;
-			nrect.size.width -= 36;
-		}
+		nrect.origin.x   += 36;
+		nrect.size.width  = (self.frame.size.width - 36);
 	} else {
 		nrect.origin.x   += 16;
 		nrect.size.width -= 16;

@@ -155,7 +155,6 @@
 	#import "GTMEncodeHTML.h"
 	#import "GTMEncodeURL.h"
 	#import "RLMAsyncSocket.h"
-	#import "RegexKitLite.h"
 
 	/* IRC Controllers — Core. */
 
