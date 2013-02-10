@@ -63,6 +63,7 @@
 @property (nonatomic, assign) NSInteger itemId;
 @property (nonatomic, assign) BOOL soundMuted;
 @property (nonatomic, assign) BOOL reloadingTree;
+@property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, weak) IRCExtras *extrac;
 @property (nonatomic, strong) IRCTreeItem *selected;
 @property (nonatomic, assign) NSInteger previousSelectedClientId;

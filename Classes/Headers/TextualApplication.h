@@ -118,6 +118,7 @@
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
+	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
@@ -263,6 +264,7 @@
 	#import "TVCLogScriptEventSink.h"
 	#import "TVCLogView.h"
 	#import "TVCMainWindow.h"
+	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"

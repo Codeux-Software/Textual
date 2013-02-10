@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSBox *logBase;
 @property (nonatomic, strong) TXMenuController *menu;
 @property (nonatomic, strong) TVCMainWindow *window;
+@property (nonatomic, strong) TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, strong) TVCMainWindowSegmentedControl *windowButtonController;
 @property (nonatomic, strong) TVCMainWindowSegmentedCell *windowButtonControllerCell;
 @property (nonatomic, strong) TVCInputTextField *text;
@@ -54,7 +55,6 @@
 @property (nonatomic, strong) TVCTextFormatterMenu *formattingMenu;
 @property (nonatomic, strong) NSMenuItem *serverMenu;
 @property (nonatomic, strong) NSMenuItem *channelMenu;
-@property (nonatomic, strong) NSButton *addServerButton;
 @property (nonatomic, strong) NSMenu *logMenu;
 @property (nonatomic, strong) NSMenu *urlMenu;
 @property (nonatomic, strong) NSMenu *treeMenu;
@@ -68,8 +68,6 @@
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
-@property (nonatomic, strong) NSBox *loadingViewBackground;
-@property (nonatomic, strong) NSProgressIndicator *loadingViewProgressIndicator;
 
 - (void)loadWindowState TEXTUAL_DEPRECATED;
 - (void)loadWindowState:(BOOL)honorFullscreen;
@@ -77,6 +75,8 @@
 - (void)showMemberListSplitView:(BOOL)showList;
 
 - (void)updateSegmentedController;
+
+- (void)openWelcomeSheet:(id)sender;
 
 - (void)textEntered;
 

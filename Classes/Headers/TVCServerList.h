@@ -76,7 +76,6 @@
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
 - (void)updateBackgroundColor;
-- (void)toggleAddServerButton;
 @end
 
 @interface NSObject (ServerListDelegate)

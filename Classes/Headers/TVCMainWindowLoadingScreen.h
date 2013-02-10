@@ -35,7 +35,28 @@
 
  *********************************************************************** */
 
-@interface CSFWBase64Encoding : NSObject
-+ (NSString *)encodeData:(NSString *)input;
-+ (NSString *)decodeData:(NSString *)input;
+#import "TextualApplication.h"
+
+@interface TVCMainWindowLoadingScreenView : NSBox
+@property (nonatomic, unsafe_unretained) TXMasterController *master;
+
+@property (nonatomic, strong) NSView *backgroundContentView;
+
+@property (nonatomic, strong) NSView *welcomeAddServerView;
+@property (nonatomic, strong) NSButton *welcomeAddServerViewButton;
+
+@property (nonatomic, strong) NSView *loadingConfigurationView;
+@property (nonatomic, strong) NSProgressIndicator *loadingConfigurationViewPI;
+
+- (void)popWelcomeAddServerView;
+- (void)popLoadingConfigurationView;
+
+- (void)hideAll;
+- (void)hideAll:(BOOL)animate;
+
+- (void)hideWelcomeAddServerView;
+- (void)hideWelcomeAddServerView:(BOOL)animate;
+
+- (void)hideLoadingConfigurationView;
+- (void)hideLoadingConfigurationView:(BOOL)animate;
 @end

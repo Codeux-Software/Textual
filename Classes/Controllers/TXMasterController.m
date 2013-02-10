@@ -88,7 +88,14 @@
 	self.serverSplitView.fixedViewIndex = 0;
 	self.memberSplitView.fixedViewIndex = 1;
 
-	[self loadingScreenPopWindow];
+	self.loadingScreen.master = self;
+
+	[self.loadingScreen hideAll:NO];
+	[self.loadingScreen popLoadingConfigurationView];
+
+	[self.window makeKeyAndOrderFront:nil];
+
+	[self.world focusInputText];
 
 	[self.text setBackgroundColor:[NSColor clearColor]];
     [self.text setFieldEditor:YES];
@@ -188,15 +195,15 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
 	if (self.world.clients.count < 1) {
-		self.welcomeSheet = [TDCWelcomeSheet new];
-		self.welcomeSheet.delegate = self;
-		self.welcomeSheet.window = self.window;
-		[self.welcomeSheet show];
+		[self.loadingScreen hideAll:NO];
+		[self.loadingScreen popWelcomeAddServerView];
+
+		[self openWelcomeSheet:nil];
 	} else {
+		[self.loadingScreen hideLoadingConfigurationView];
+		
 		[self.world autoConnectAfterWakeup:NO];	
 	}
-
-	[self hideLoadingScreen];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -326,36 +333,13 @@
 	if (self.skipTerminateSave == NO) {
 		[self.world save];
 		[self.world terminate];
+		
 		[self.menu terminate];
 		
 		[self saveWindowState];
 	}
 	
 	[TPCPreferences updateTotalRunTime];
-}
-
-#pragma mark -
-#pragma mark Configuration Loading Screen
-
-- (void)loadingScreenPopWindow
-{
-	[self.loadingViewProgressIndicator startAnimation:nil];
-
-	[self.window makeKeyAndOrderFront:nil];
-
-	[self.world focusInputText];
-}
-
-- (void)hideLoadingScreen
-{
-	[NSAnimationContext beginGrouping];
-	[_NSAnimationCurrentContext() setDuration:0.7];
-	
-	[self.loadingViewBackground.animator setAlphaValue:0];
-
-	[self.loadingViewProgressIndicator stopAnimation:nil];
-	
-	[NSAnimationContext endGrouping];
 }
 
 #pragma mark -
@@ -519,7 +503,7 @@
 			self.memberSplitView.position = self.memberSplitViewOldPosition;
 		}
 	} else {
-		if (self.memberSplitView.hidden == NO) {
+		if (self.memberSplitView.isHidden == NO) {
 			self.memberSplitView.hidden   = YES;
 			self.memberSplitView.inverted = YES;
 		}
@@ -1491,6 +1475,15 @@ typedef enum TXMoveKind : NSInteger {
 #pragma mark -
 #pragma mark WelcomeSheet Delegate
 
+- (void)openWelcomeSheet:(id)sender
+{
+	self.welcomeSheet = [TDCWelcomeSheet new];
+	self.welcomeSheet.delegate = self;
+	self.welcomeSheet.window = self.window;
+	
+	[self.welcomeSheet show];
+}
+
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config
 {
 	NSMutableArray *channels = [NSMutableArray array];
@@ -1501,9 +1494,10 @@ typedef enum TXMoveKind : NSInteger {
 	
 	for (NSString *s in config[@"channelList"]) {
 		if ([s isChannelName]) {
-			[channels safeAddObject:@{@"channelName": s,
-			 @"joinOnConnect": NSNumberWithBOOL(YES), 
-			 @"enableNotifications": NSNumberWithBOOL(YES),
+			[channels safeAddObject:@{
+			 @"channelName" : s,
+			 @"joinOnConnect" : NSNumberWithBOOL(YES), 
+			 @"enableNotifications" : NSNumberWithBOOL(YES),
 
 			 /* Migration Assistant Dictionary Addition. */
 			TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
