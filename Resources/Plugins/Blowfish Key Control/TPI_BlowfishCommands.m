@@ -42,9 +42,6 @@
 
 #define TXExchangeReuqestTimeoutDelay		10
 
-#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
-#define TPIFLS(k, ...)			TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
-
 @interface TPI_BlowfishCommands ()
 /* 
 	  key format:	STRING("<client UUID> —> <remote nickname>")
