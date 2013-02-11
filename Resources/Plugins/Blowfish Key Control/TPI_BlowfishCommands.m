@@ -126,7 +126,7 @@
 			if (NSObjectIsEmpty(messageString)) {
 				c.config.encryptionKey = nil;
 				
-				[client printDebugInformation:TPILS(@"BlowfishEncryptionStopped") channel:c];
+				[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 			} else {
 				if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
@@ -136,7 +136,7 @@
 					if (c.isTalk) {
 						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInQuery") channel:c];
 					} else {
-						[client printDebugInformation:TPILS(@"BlowfishEncryptionStarted") channel:c];
+						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 					}
 				}
 				
@@ -145,7 +145,7 @@
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			c.config.encryptionKey = nil;
 			
-			[client printDebugInformation:TPILS(@"BlowfishEncryptionStopped") channel:c];
+			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
 				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
@@ -257,7 +257,8 @@
 				 channel:channel];
 
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
 	}
 }
 
@@ -292,7 +293,8 @@
 		channel.config.encryptionKey = theSecret;
 
 		/* Finish up. */
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
 		
 		[self.keyExchangeRequests removeObjectForKey:responseKey];
 	}
