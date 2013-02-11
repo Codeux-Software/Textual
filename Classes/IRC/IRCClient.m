@@ -5670,7 +5670,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         }
     }
 
-   [self.invokeInBackgroundThread processBundlesServerMessage:m];
+	[self.invokeInBackgroundThread processBundlesServerMessage:m];
 
     [self.world updateTitle];
 }
