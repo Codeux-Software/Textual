@@ -64,7 +64,7 @@
 
 - (NSString *)preferencesMenuItemName
 {
-	return TXTLS(@"SystemInformationPreferencePaneMenuItemTitle");
+	return TPILS(@"SystemInformationPreferencePaneMenuItemTitle");
 }
 
 #pragma mark -
