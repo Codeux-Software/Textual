@@ -233,7 +233,7 @@
 	};
 	
 	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
+		if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
 			[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
 		}
 	}
