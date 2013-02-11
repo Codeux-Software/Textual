@@ -68,11 +68,6 @@
 @property (nonatomic, strong) IRCTreeItem *selected;
 @property (nonatomic, assign) NSInteger previousSelectedClientId;
 @property (nonatomic, assign) NSInteger previousSelectedChannelId;
-@property (nonatomic, strong) NSArray *allLoadedBundles;
-@property (nonatomic, strong) NSArray *bundlesWithPreferences;
-@property (nonatomic, strong) NSDictionary *bundlesForUserInput;
-@property (nonatomic, strong) NSDictionary *bundlesForServerInput;
-@property (nonatomic, strong) NSDictionary *bundlesWithOutputRules;
 @property (nonatomic, strong) NSOperationQueue *messageOperationQueue;
 
 - (void)setupConfiguration;
@@ -84,8 +79,6 @@
 
 - (void)setServerMenuItem:(NSMenuItem *)item;
 - (void)setChannelMenuItem:(NSMenuItem *)item;
-
-- (void)resetLoadedBundles;
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)terminate;

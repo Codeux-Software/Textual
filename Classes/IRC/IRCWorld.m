@@ -64,7 +64,7 @@
 
 - (void)dealloc
 {
-	[NSBundle deallocBundlesFromMemory:self];
+	[_THOPluginManager() unloadPlugins];
 }
 
 - (void)setupDummyLog
@@ -187,16 +187,6 @@
 
 #pragma mark -
 #pragma mark Utilities
-
-- (void)resetLoadedBundles
-{
-	self.allLoadedBundles		= [NSArray new];
-	self.bundlesWithPreferences	= [NSArray new];
-	
-	self.bundlesForUserInput	= [NSDictionary new];
-	self.bundlesForServerInput	= [NSDictionary new];
-	self.bundlesWithOutputRules	= [NSDictionary new];
-}
 
 - (void)destroyAllEvidence
 {

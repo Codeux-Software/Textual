@@ -166,7 +166,7 @@
 						NSString *requestKey = [self keyExchangeDictionaryKey:c];
 						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
 
-						[self.keyExchangeRequests setObject:@[keyRequest, c] forKey:requestKey];
+						[self.keyExchangeRequests safeSetObject:@[keyRequest, c] forKey:requestKey];
 
 						[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
 								 command:IRCPrivateCommandIndex("notice")

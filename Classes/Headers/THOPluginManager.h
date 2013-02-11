@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+;/* ********************************************************************* 
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -37,17 +37,28 @@
 
 #import "TextualApplication.h"
 
-@interface NSBundle (TXBundleHelper)
-+ (void)reloadBundles:(IRCWorld *)world;
-+ (void)loadBundlesIntoMemory:(IRCWorld *)world;
-+ (void)deallocBundlesFromMemory:(IRCWorld *)world;
+#define _THOPluginManager()			[THOPluginManager defaultManager]
 
-+ (void)sendUserInputDataToBundles:(IRCWorld *)world
+@interface THOPluginManager : NSObject
++ (THOPluginManager *)defaultManager;
+
+- (void)loadPlugins;
+- (void)unloadPlugins;
+
+- (NSArray *)supportedUserInputCommands;
+- (NSArray *)supportedServerInputCommands;
+
+- (id)supportedAppleScriptCommands;
+- (id)supportedAppleScriptCommands:(BOOL)returnPathInfo;
+
+- (NSArray *)pluginsWithPreferencePanes;
+
+- (NSArray *)outputRulesForCommand:(NSString *)command;
+
+- (void)sendUserInputDataToBundles:(IRCClient *)client
 						   message:(NSString *)message
-						   command:(NSString *)command
-							client:(IRCClient *)client;
+						   command:(NSString *)command;
 
-+ (void)sendServerInputDataToBundles:(IRCWorld *)world
-							  client:(IRCClient *)client
-							 message:(IRCMessage *)msg;
+- (void)sendServerInputDataToBundles:(IRCClient *)client
+							 message:(IRCMessage *)message;
 @end

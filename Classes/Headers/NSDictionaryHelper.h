@@ -63,7 +63,9 @@
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
-- (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey;
+- (void)safeSetObject:(id)value forKey:(NSString *)key;
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key;
+
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;

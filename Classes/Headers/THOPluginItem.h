@@ -37,14 +37,12 @@
 
 #import "TextualApplication.h"
 
-@interface THOTextualPluginItem : NSObject
-@property (nonatomic, strong) NSBundle *pluginBundle;
-@property (nonatomic, strong) THOPluginProtocol *pluginPrimaryClass;
+@interface THOPluginItem : NSObject
+@property (nonatomic, readonly, strong) id primaryClass;
+@property (nonatomic, readonly, assign) BOOL hasPreferencePaneView;
+@property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
+@property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
+@property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
 
-- (void)initWithPluginClass:(Class)primaryClass 
-				  andBundle:(NSBundle *)bundle
-				andIRCWorld:(IRCWorld *)world
-		  withUserInputDict:(NSMutableDictionary **)userDict
-		withServerInputDict:(NSMutableDictionary **)serverDict
-		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict;
+- (void)loadBundle:(NSBundle *)bundle;
 @end
