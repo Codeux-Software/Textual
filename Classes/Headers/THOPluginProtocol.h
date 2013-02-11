@@ -37,8 +37,8 @@
 
 #import "TextualApplication.h"
 
-//#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
-//#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+#define TPILS(k)			 TSBLS(k, [NSBundle bundleForClass:[self class]])
+#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
 
 @protocol THOPluginProtocol <NSObject>
 
