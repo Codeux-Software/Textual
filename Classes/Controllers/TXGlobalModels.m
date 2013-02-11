@@ -39,14 +39,17 @@
 
 #import <objc/objc-runtime.h>
 
+#pragma mark -
+#pragma mark Validity.
+
 BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
 		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(length)] < 1);
-	} else {
-		if ([obj respondsToSelector:@selector(count)]) {
-			return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(count)] < 1);
-		}
+	}
+
+	if ([obj respondsToSelector:@selector(count)]) {
+		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(count)] < 1);
 	}
 	
 	return PointerIsEmpty(obj);
@@ -57,30 +60,18 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-NSString *TXTLS(NSString *key)
-{
-	return [TLOLanguagePreferences localizedStringWithKey:key];
-}
-
-NSString *TXTFLS(NSString *key, ...)
-{
-	NSString *formattedString = [NSString alloc];
-	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key];
-	
-	va_list args;
-	va_start(args, key);
-	
-	formattedString = [formattedString initWithFormat:languageString arguments:args];
-	
-	va_end(args);
-	
-	return formattedString;
-}
+#pragma mark -
+#pragma mark Time.
 
 NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override) 
 {
-	if (NSObjectIsEmpty(format))      format = TXDefaultTextualTimestampFormat;
-	if (NSObjectIsNotEmpty(override)) format = override;
+	if (NSObjectIsEmpty(format)) {
+		format = TXDefaultTextualTimestampFormat;
+	}
+
+	if (NSObjectIsNotEmpty(override)) {
+		format = override;
+	}
 	
 	return [NSString stringWithFormat:@"%@", [date dateWithCalendarFormat:format timeZone:nil]];
 }
@@ -155,6 +146,52 @@ NSString *TXReadableTime(NSInteger dateInterval)
 	return TXSpecialReadableTime(dateInterval, NO, nil);
 }
 
+#pragma mark -
+#pragma mark Localized String File.
+
+NSString *TXTLS(NSString *key)
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key];
+}
+
+NSString *TSBLS(NSString *key, NSBundle *bundle)
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
+}
+
+NSString *TXTFLS(NSString *key, ...)
+{
+	NSString *formattedString = [NSString alloc];
+	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key];
+
+	va_list args;
+	va_start(args, key);
+	
+	formattedString = [formattedString initWithFormat:languageString arguments:args];
+
+	va_end(args);
+
+	return formattedString;
+}
+
+NSString *TSBFLS(NSString *key, NSBundle *bundle, ...)
+{
+	NSString *formattedString = [NSString alloc];
+	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
+
+	va_list args;
+	va_start(args, bundle);
+
+	formattedString = [formattedString initWithFormat:languageString arguments:args];
+
+	va_end(args);
+
+	return formattedString;
+}
+
+#pragma mark -
+#pragma mark Misc.
+
 NSInteger TXRandomNumber(NSInteger maxset)
 {
 	return ((1 + arc4random()) % (maxset + 1));
@@ -162,7 +199,5 @@ NSInteger TXRandomNumber(NSInteger maxset)
 
 NSString *TXFormattedNumber(NSInteger number)
 {
-	NSNumber *numberbar = @(number);
-	
-	return [NSNumberFormatter localizedStringFromNumber:numberbar numberStyle:kCFNumberFormatterDecimalStyle];
+	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:kCFNumberFormatterDecimalStyle];
 }

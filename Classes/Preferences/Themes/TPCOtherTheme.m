@@ -183,6 +183,16 @@
 	if ([_NSFileManager() fileExistsAtPath:dictPath]) {
 		self.styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 	}
+	
+	// ---- //
+
+	self.languageLocalizations = nil;
+
+	dictPath = [self.path stringByAppendingPathComponent:@"/Data/Settings/styleLocalizations.plist"];
+
+	if ([_NSFileManager() fileExistsAtPath:dictPath]) {
+		self.languageLocalizations = [NSDictionary dictionaryWithContentsOfFile:dictPath];
+	}
 
 	// ---- //
 

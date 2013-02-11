@@ -75,7 +75,7 @@
 #if defined(DEBUG)
     self.ghostMode = YES; // Do not use autoconnect during debug.
 #endif
-	
+
 	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
 
@@ -107,8 +107,6 @@
 	[self.text redrawOriginPoints];
 
 	[self buildSegmentedController];
-    
-	[TLOLanguagePreferences setThemeForLocalization:self.viewTheme.path];
 
 	[self.formattingMenu enableWindowField:self.text];
 

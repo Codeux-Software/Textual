@@ -45,6 +45,9 @@ TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
 TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
 
+TEXTUAL_EXTERN NSString *TSBLS(NSString *key, NSBundle *bundle); // Textual Secondary Bundle (aka plugin) Language String
+TEXTUAL_EXTERN NSString *TSBFLS(NSString *key, NSBundle *bundle, ...); // Textual Secondary Bundle (aka plugin) Formatted Language String
+
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
 
 TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);

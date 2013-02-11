@@ -35,31 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+"SpammerParadiseInvalidInputErrorMessage" = "Invalid input.";
 
-//#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
-//#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+"SpammerParadiseMassHighlightEmptyChannelMessage" = "Error: No users were found in %@.";
 
-@protocol THOPluginProtocol <NSObject>
-
-@optional
-
-- (NSArray *)pluginSupportsUserInputCommands;
-- (NSArray *)pluginSupportsServerInputCommands;
-
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
-
-- (void)messageReceivedByServer:(IRCClient *)client 
-						 sender:(NSDictionary *)senderDict 
-						message:(NSDictionary *)messageDict;
-
-- (NSDictionary *)pluginOutputDisplayRules;
-
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-- (void)pluginUnloadedFromMemory;
-
-- (NSView *)preferencesView;
-- (NSString *)preferencesMenuItemName;
-@end
+"SpammerParadiseCloningUserDoesNotExistMessage" = "Failed to find user named \"\002%1$@\002\" in \002%2$@\002.";
+"SpammerParadiseCloningUserIsAlreadyClonedMessage" = "User \002%1$@\002 is already being cloned in \002%2$@\002.";
+"SpammerParadiseCloningUserIsNowBeingClonedMessage" = "User \002%1$@\002 is now being cloned in \002%2$@\002.";
+"SpammerParadiseCloningUserIsNotClonedMessage" = "User \002%1$@\002 is not being cloned in \002%2$@\002.";
+"SpammerParadiseCloningUnclonedSingleUserMessage" = "User \002%1$@\002 is no longer being cloned in \002%2$@\002.";
+"SpammerParadiseCloningUnclonedAllUsersMessage" = "All users cloned by Textual have been removed.";
+"SpammerParadiseCloningNoUsersBeingClonedMessage" = "There are no users being cloned.";
