@@ -165,6 +165,13 @@
 	if (PointerIsEmpty(anObject) == NO) {
 		[self addObject:anObject];
 	}
+	
+}
+- (void)safeAddObjectWithoutDuplication:(id)anObject
+{
+	if (PointerIsEmpty(anObject) == NO && [self containsObject:anObject] == NO) {
+		[self addObject:anObject];
+	}
 }
 
 - (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index

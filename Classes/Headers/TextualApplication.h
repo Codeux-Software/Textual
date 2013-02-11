@@ -82,8 +82,8 @@
 	@class TDChanBanSheet;
 	@class TDChanInviteExceptionSheet;
 	@class TDChannelSheet;
-	@class THOPluginProtocol;
-	@class THOTextualPluginItem;
+	@class THOPluginItem;
+	@class THOPluginManager;
 	@class THOUnicodeHelper;
 	@class TKMessageBlockOperation;
 	@class TLOFileLogger;
@@ -180,7 +180,6 @@
 	/* Framework Extensions (Helpers). */
 
 	#import "NSArrayHelper.h"
-	#import "NSBundleHelper.h"
 	#import "NSColorHelper.h"
 	#import "NSDataHelper.h"
 	#import "NSDateHelper.h"
@@ -220,6 +219,7 @@
 	/* Helpers. */
 
 	#import "THOPluginItem.h"
+	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
 	#import "THOUnicodeHelper.h"
 

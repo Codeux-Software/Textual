@@ -1763,12 +1763,12 @@
 
 - (void)loadExtensionsIntoMemory:(id)sender
 {
-	[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
+	[_THOPluginManager() loadPlugins];
 }
 
 - (void)unloadExtensionsFromMemory:(id)sender
 {
-	[NSBundle.invokeInBackgroundThread deallocBundlesFromMemory:self.world];
+	[_THOPluginManager() unloadPlugins];
 }
 
 - (void)resetDoNotAskMePopupWarnings:(id)sender

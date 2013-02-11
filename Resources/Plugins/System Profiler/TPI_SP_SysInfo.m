@@ -234,14 +234,14 @@
 
 	_cpu_model = [_cpu_model trim];
 
-	BOOL _show_cpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> CPU Model"];
-	BOOL _show_gpu_model	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> GPU Model"];
-	BOOL _show_diskinfo		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Disk Information"];
-	BOOL _show_sys_uptime	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> System Uptime"];
-	BOOL _show_sys_memory	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Memory Information"];
-	BOOL _show_screen_res	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Screen Resolution"];
-	BOOL _show_load_avg		= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> Load Average"];
-	BOOL _show_os_version	= [_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Enabled -> OS Version"];
+	BOOL _show_cpu_model	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> CPU Model"] == NO);
+	BOOL _show_gpu_model	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> GPU Model"] == NO);
+	BOOL _show_diskinfo		= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Disk Information"] == NO);
+	BOOL _show_sys_uptime	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
+	BOOL _show_sys_memory	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
+	BOOL _show_screen_res	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
+	BOOL _show_load_avg		= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Load Average"] == NO);
+	BOOL _show_os_version	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
 
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {

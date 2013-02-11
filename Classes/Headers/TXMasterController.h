@@ -64,6 +64,7 @@
 @property (nonatomic, strong) IRCExtras *extrac;
 @property (nonatomic, strong) TPCViewTheme *viewTheme;
 @property (nonatomic, strong) TDCWelcomeSheet *welcomeSheet;
+@property (nonatomic, strong) THOPluginManager *pluginManager;
 @property (nonatomic, strong) TLOGrowlController *growl;
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;

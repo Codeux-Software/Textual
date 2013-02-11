@@ -80,7 +80,7 @@
 						break;
 					}
 					
-					[newDict setObject:[propertyList objectForKey:key] forKey:key];
+					[newDict safeSetObject:[propertyList objectForKey:key] forKey:key];
 
 					loopCount += 1;
 				}
@@ -142,7 +142,7 @@
 
 		// ---- //
 
-		[_temporaryPropertyListItems setObject:s forKey:key];
+		[_temporaryPropertyListItems safeSetObject:s forKey:key];
 	}
 }
 

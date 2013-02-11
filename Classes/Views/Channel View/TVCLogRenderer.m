@@ -639,6 +639,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							if ([includeChannels containsObject:curchan]) {
 								continueSearch = YES;
 							}
+							
 							if ([excludeChannels containsObject:curchan]) {
 								continueSearch = NO;
 							}
@@ -656,6 +657,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							if ([includeNicks containsObject:curnick]) {
 								continueSearch = YES;
 							}
+							
 							if ([excludeNicks containsObject:curnick]) {
 								continueSearch = NO;
 							}

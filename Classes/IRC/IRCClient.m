@@ -425,31 +425,26 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		raw = [raw stripEffects];
 	}
 
-	NSString *rulekey = [TVCLogLine lineTypeString:type];
+	NSArray *rules = [_THOPluginManager() outputRulesForCommand:IRCCommandFromLineType(type)];
 
-	NSDictionary *rules = self.world.bundlesWithOutputRules;
+	for (NSArray *ruleData in rules) {
+		NSString *ruleRegex = ruleData[0];
+		
+		if ([TLORegularExpression string:raw isMatchedByRegex:ruleRegex]) {
+			BOOL console = [ruleData boolAtIndex:0];
+			BOOL channel = [ruleData boolAtIndex:1];
+			BOOL queries = [ruleData boolAtIndex:2];
 
-	if (NSObjectIsNotEmpty(rules)) {
-		NSDictionary *ruleData = [rules dictionaryForKey:rulekey];
-
-		if (NSObjectIsNotEmpty(ruleData)) {
-			for (NSString *ruleRegex in ruleData) {
-				if ([TLORegularExpression string:raw isMatchedByRegex:ruleRegex]) {
-					NSArray *regexData = [ruleData arrayForKey:ruleRegex];
-
-					BOOL console = [regexData boolAtIndex:0];
-					BOOL channel = [regexData boolAtIndex:1];
-					BOOL queries = [regexData boolAtIndex:2];
-
-					if ([chan isKindOfClass:[IRCChannel class]]) {
-						if ((chan.isTalk && queries) || (chan.isChannel && channel) || (chan.isClient && console)) {
-							return YES;
-						}
-					} else {
-						if (console) {
-							return YES;
-						}
-					}
+			if ([chan isKindOfClass:[IRCChannel class]]) {
+				if ((chan.isTalk	&& queries) ||
+					(chan.isClient	&& console) ||
+					(chan.isChannel && channel)) {
+					
+					return YES;
+				}
+			} else {
+				if (console) {
+					return YES;
 				}
 			}
 		}
@@ -1358,26 +1353,17 @@ static NSDateFormatter *dateTimeFormatter = nil;
         if (NSObjectIsNotEmpty(outputString)) {
             [self.world.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
         }
-
     }
 }
 
-- (void)processBundlesUserMessage:(NSArray *)info
+- (void)processBundlesUserMessage:(NSString *)message command:(NSString *)command
 {
-	NSString *command = NSStringEmptyPlaceholder;
-	NSString *message = [info safeObjectAtIndex:0];
-
-	if ([info count] == 2) {
-		command = [info safeObjectAtIndex:1];
-		command = [command uppercaseString];
-	}
-
-	[NSBundle sendUserInputDataToBundles:self.world message:message command:command client:self];
+	[_THOPluginManager() sendUserInputDataToBundles:self message:message command:command];
 }
 
-- (void)processBundlesServerMessage:(IRCMessage *)msg
+- (void)processBundlesServerMessage:(IRCMessage *)message
 {
-	[NSBundle sendServerInputDataToBundles:self.world client:self message:msg];
+	[_THOPluginManager() sendServerInputDataToBundles:self message:message];
 }
 
 #pragma mark -
@@ -1465,9 +1451,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		type = TVCLogLinePrivateMessageType;
 	}
 
-	if ([self.world.bundlesForUserInput containsKey:command]) {
-		[self.invokeInBackgroundThread processBundlesUserMessage:@[str.string, (id)nil]];
-	}
+	[self.invokeInBackgroundThread processBundlesUserMessage:str.string command:NSStringEmptyPlaceholder];
 
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 
@@ -2558,14 +2542,14 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		}
 		case 5074: // Command: UNLOAD_PLUGINS
 		{
-			[NSBundle.invokeInBackgroundThread deallocBundlesFromMemory:self.world];
+			[_THOPluginManager() unloadPlugins];
 
 			return YES;
 			break;
 		}
 		case 5038: // Command: LOAD_PLUGINS
 		{
-			[NSBundle.invokeInBackgroundThread loadBundlesIntoMemory:self.world];
+			[_THOPluginManager() loadPlugins];
 
 			return YES;
 			break;
@@ -2745,54 +2729,28 @@ static NSDateFormatter *dateTimeFormatter = nil;
 		{
             NSString *command = [cmd lowercaseString];
 
-            NSArray *extensions = @[@".scpt", @".py", @".pyc", @".rb", @".pl", @".sh", @".bash", NSStringEmptyPlaceholder];
+			/* Scan scripts first. */
+			NSDictionary *scriptPaths = [_THOPluginManager() supportedAppleScriptCommands:YES];
 
-#ifdef TXUnsupervisedScriptFolderAvailable
-			NSArray *scriptPaths = @[
-				NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
-				NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-				NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath])
-			];
-#else
-			NSArray *scriptPaths = @[
-				NSStringNilValueSubstitute([TPCPreferences whereScriptsPath]),
-				NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath])
-			];
-#endif
+			NSString *scriptPath;
 
-            NSString *scriptPath = [NSString string];
-
-            BOOL scriptFound = NO;
-
-			for (NSString *path in scriptPaths) {
-				if (NSObjectIsEmpty(path)) {
-					continue;
+			for (NSString *scriptCommand in scriptPaths) {
+				if ([scriptCommand isEqualToString:command]) {
+					scriptPath = [scriptPaths objectForKey:command];
 				}
+			}
 
-				if (scriptFound == YES) {
-					break;
-				}
+			BOOL scriptFound = NSObjectIsNotEmpty(scriptPath);
 
-				for (NSString *i in extensions) {
-					NSString *filename = [NSString stringWithFormat:@"%@%@", command, i];
+			/* Scan plugins second. */
+			BOOL pluginFound = [[_THOPluginManager() supportedUserInputCommands] containsObject:command];
 
-					scriptPath = [path stringByAppendingPathComponent:filename];
-					
-					scriptFound = [_NSFileManager() fileExistsAtPath:scriptPath];
-
-					if (scriptFound == YES) {
-						break;
-					}
-				}
-            }
-
-			BOOL pluginFound = BOOLValueFromObject([self.world.bundlesForUserInput objectForKey:cmd]);
-
+			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
 				LogToConsole(TXTLS(@"PluginCommandClashErrorMessage") ,cmd);
 			} else {
 				if (pluginFound) {
-					[self.invokeInBackgroundThread processBundlesUserMessage:@[[NSString stringWithString:s.string], cmd]];
+					[self.invokeInBackgroundThread processBundlesUserMessage:s.string command:command];
 
 					return YES;
 				} else {
@@ -2812,6 +2770,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 				}
 			}
 
+			/* Panic. Send to server. */
 			if (cutColon) {
                 [s insertAttributedString:[NSAttributedString emptyStringWithBase:@":"] atIndex:0];
 			}
@@ -5290,7 +5249,9 @@ static NSDateFormatter *dateTimeFormatter = nil;
         }
 		default:
 		{
-			if ([self.world.bundlesForServerInput containsKey:[NSString stringWithInteger:m.numericReply]]) {
+			NSString *numericString = [NSString stringWithInteger:m.numericReply];
+			
+			if ([[_THOPluginManager() supportedServerInputCommands] containsObject:numericString]) {
 				break;
 			}
 
@@ -5711,9 +5672,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
         }
     }
 
-    if ([self.world.bundlesForServerInput containsKey:cmd]) {
-        [self.invokeInBackgroundThread processBundlesServerMessage:m];
-    }
+   [self.invokeInBackgroundThread processBundlesServerMessage:m];
 
     [self.world updateTitle];
 }
