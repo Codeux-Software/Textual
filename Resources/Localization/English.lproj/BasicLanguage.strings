@@ -45,6 +45,11 @@
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
 
+"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
+"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
+"BlowfishEncryptionStarted" = "Encryption started.";
+"BlowfishEncryptionStopped" = "Encryption stopped.";
+
 "CancelButton" = "Cancel";
 
 "ChannelApplicationTitleModeValue" = " (%@)";
@@ -313,102 +318,3 @@
 "UserTrackingNicknameNowAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
 
 "YesButton" = "Yes";
-
-/* Blowfish Encryption Extension. */
-
-"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
-"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
-"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
-"BlowfishEncryptionStarted" = "Encryption started.";
-"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
-"BlowfishEncryptionStopped" = "Encryption stopped.";
-
-"BlowfishKeyExchangeSuccessful" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
-"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
-"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
-"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from \002%@\002. Processing …";
-"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
-"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for \002%@\002 has expired.";
-"BlowfishKeyExchangeResponseSent" = "Key exchange response has been sent to \002%@\002.";
-"BlowfishKeyExchangeResponseReceived" = "Received key exchange response from \002%@\002. Processing …";
-"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
-
-"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
-
-/* Brag Spam Extension. */
-
-"BragspamPluginNormalResult" = "I am in %ld channels while connected to %ld networks. I have %ld o:lines, %ld ops, %ld halfops, and %ld voices with power over %ld individual users.";
-
-/* System Profiler Extension. */
-
-"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
-
-"SystemInformationCompiledOutputPrefix" = "System Information:";
-"SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
-"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Cores: %3$lu Physical, %4$lu Virtual) @ %5$@ \002•\002";
-"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
-"SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
-"SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
-"SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
-"SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
-"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
-"SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
-"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
-
-"SystemInformationGraphicsInformationResultBase" = "%@";
-"SystemInformationGraphicsInformationResultMiddle" = ", %@";
-
-"SystemInformationOSVersionSnowLeopard" = "Snow Leopard";
-"SystemInformationOSVersionLion" = "Lion";
-"SystemInformationOSVersionMountainLion" = "Mountain Lion";
-
-"SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
-
-"SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
-"SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
-
-"SystemInformationDiskspaceCommandResultPrefix" = "\002Mounted Drives:\002 %@";
-"SystemInformationDiskspaceCommandResultBase" = "%@: Total: %@; Free: %@";
-"SystemInformationDiskspaceCommandResultMiddle" = " — %@: Total: %@; Free: %@";
-"SystemInformationDiskspaceCommandResultError" = "Error: Unable to find any mounted drives."; // what are we running on?
-
-"SystemInformationNetstatsCommandResultPrefix" = "\002Network Traffic:\002%@";
-"SystemInformationNetstatsCommandResultBase" = " [%@]: %@ in, %@ out";
-"SystemInformationNetstatsCommandResultMiddle" = " — [%@]: %@ in, %@ out";
-"SystemInformationNetstatsCommandResultError" = "Error: Unable to locate any network statistics. ";
-
-"SystemInformationFilesizeTB" = "%.2f TB";
-"SystemInformationFilesizeGB" = "%.2f GB";
-"SystemInformationFilesizeMB" = "%.2f MB";
-"SystemInformationFilesizeKB" = "%.2f KB";
-
-"SystemInformationStyleCommandResult" = "\002Current Style:\002 %@";
-"SystemInformationStyleCommandResultError" = "\002Current Style:\002 Unknown";
-
-"SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %ld: %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %ld: %.0f x %.0f";
-"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
-
-"SystemInformationWindowCCommandResult" = "\002Open Windows:\002 %ld";
-"SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
-"SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
-"SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";
-"SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%5$.2f\002 messages a second. Combined this comes to around \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";
-
-/* Spammer Paradise Extension. */
-
-"SpammerParadiseInvalidInputErrorMessage" = "Invalid input.";
-
-"SpammerParadiseMassHighlightEmptyChannelMessage" = "Error: No users were found in %@.";
-
-"SpammerParadiseCloningUserDoesNotExistMessage" = "Failed to find user named \"\002%1$@\002\" in \002%2$@\002.";
-"SpammerParadiseCloningUserIsAlreadyClonedMessage" = "User \002%1$@\002 is already being cloned in \002%2$@\002.";
-"SpammerParadiseCloningUserIsNowBeingClonedMessage" = "User \002%1$@\002 is now being cloned in \002%2$@\002.";
-"SpammerParadiseCloningUserIsNotClonedMessage" = "User \002%1$@\002 is not being cloned in \002%2$@\002.";
-"SpammerParadiseCloningUnclonedSingleUserMessage" = "User \002%1$@\002 is no longer being cloned in \002%2$@\002.";
-"SpammerParadiseCloningUnclonedAllUsersMessage" = "All users cloned by Textual have been removed.";
-"SpammerParadiseCloningNoUsersBeingClonedMessage" = "There are no users being cloned.";
