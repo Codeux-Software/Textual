@@ -39,6 +39,7 @@
 
 "SpammerParadiseMassHighlightEmptyChannelMessage" = "Error: No users were found in %@.";
 
+"SpammerParadiseCloningUserCannotCloneSelfMessage" = "Cannot clone self.";
 "SpammerParadiseCloningUserDoesNotExistMessage" = "Failed to find user named \"\002%1$@\002\" in \002%2$@\002.";
 "SpammerParadiseCloningUserIsAlreadyClonedMessage" = "User \002%1$@\002 is already being cloned in \002%2$@\002.";
 "SpammerParadiseCloningUserIsNowBeingClonedMessage" = "User \002%1$@\002 is now being cloned in \002%2$@\002.";
