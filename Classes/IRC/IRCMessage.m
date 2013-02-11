@@ -82,8 +82,8 @@
 				continue;
 			}
 			
-			[extensions setObject:[info objectAtIndex:1]
-						   forKey:[info objectAtIndex:0]];
+			[extensions safeSetObject:[info objectAtIndex:1]
+							   forKey:[info objectAtIndex:0]];
 		}
 	}
 

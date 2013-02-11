@@ -921,7 +921,7 @@
 					if ([inlineImageLinks containsKey:imageUrl]) {
 						continue;
 					} else {
-						[inlineImageLinks setObject:url forKey:imageUrl];
+						[inlineImageLinks safeSetObject:url forKey:imageUrl];
 					}
 				}
 			}

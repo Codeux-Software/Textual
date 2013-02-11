@@ -41,10 +41,6 @@
 
 - (BOOL)boolForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return NO;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(boolValue)]) {
@@ -56,10 +52,6 @@
 
 - (NSInteger)integerForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(integerValue)]) {
@@ -71,10 +63,6 @@
 
 - (long long)longLongForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(longLongValue)]) {
@@ -86,10 +74,6 @@
 
 - (TXNSDouble)doubleForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(doubleValue)]) {
@@ -101,10 +85,6 @@
 
 - (NSString *)stringForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSString class]]) {
@@ -116,10 +96,6 @@
 
 - (NSDictionary *)dictionaryForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -131,10 +107,6 @@
 
 - (NSArray *)arrayForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSArray class]]) {
@@ -146,10 +118,6 @@
 
 - (void *)pointerForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSValue class]]) {
@@ -228,10 +196,17 @@
 
 @implementation NSMutableDictionary (TXMutableDictionaryHelper)
 
-- (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey
+- (void)safeSetObject:(id)value forKey:(NSString *)key
 {
-	if (PointerIsNotEmpty(anObject)) {
-		self[aKey] = anObject;
+	if (PointerIsNotEmpty(value)) {
+		self[key] = value;
+	}
+}
+
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
+{
+	if (PointerIsNotEmpty(value) && [self containsKey:key] == NO) {
+		self[key] = value;
 	}
 }
 

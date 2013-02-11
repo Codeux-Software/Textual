@@ -186,8 +186,10 @@
 	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 
 	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
-	[NSBundle loadBundlesIntoMemory:self.world];
+
+	self.pluginManager = [THOPluginManager new];
+
+	[self.pluginManager loadPlugins];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
@@ -874,53 +876,9 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		for (NSString *command in [TPCPreferences publicIRCCommandList]) {
 			[choices safeAddObject:[command lowercaseString]];
 		}
-		
-		for (NSString *command in [self.world bundlesForUserInput].allKeys) {
-			NSString *cmdl = [command lowercaseString];
-			
-			if ([choices containsObject:cmdl] == NO) {
-				[choices safeAddObject:cmdl];
-			}
-		}
-		
-#ifdef TXUnsupervisedScriptFolderAvailable
-		NSArray *scriptPaths = @[
-			NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-			NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
-			NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
-		];
-#else
-		NSArray *scriptPaths = @[
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-			NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
-		];
-#endif
-		
-		for (NSString *path in scriptPaths) {
-			if (NSObjectIsNotEmpty(path)) {
-				NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
-				
-				if (NSObjectIsNotEmpty(resourceFiles)) {
-					for (NSString *file in resourceFiles) {
-						if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-							continue;
-						}
 
-						NSString *script = file.lowercaseString;
-
-						if ([script contains:@"."]) {
-							NSArray *nameParts = [script componentsSeparatedByString:@"."];
-
-							script = [nameParts safeObjectAtIndex:0];
-						}
-						
-						if ([choices containsObject:script] == NO) {
-							[choices safeAddObject:script];
-						}
-					}
-				}
-			}
-		}
+		[choices addObjectsFromArray:[_THOPluginManager() supportedUserInputCommands]];
+		[choices addObjectsFromArray:[_THOPluginManager() supportedAppleScriptCommands]];
         
 		lowerChoices = choices;
 	} else if (channelMode) {
@@ -931,7 +889,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		for (IRCChannel *c in u.channels) {
 			[channels      safeAddObject:c.name];
-			[lowerChannels safeAddObject:[c.name lowercaseString]];
+			[lowerChannels safeAddObject:c.name.lowercaseString];
 		}
 		
 		choices      = channels;
@@ -945,7 +903,7 @@ constrainMinCoordinate:(CGFloat)proposedMax
 		
 		for (IRCUser *m in users) {
 			[nicks      safeAddObject:m.nick];
-			[lowerNicks safeAddObject:[m.nick lowercaseString]];
+			[lowerNicks safeAddObject:m.nick.lowercaseString];
 		}
 		
 		[nicks      safeAddObject:@"NickServ"];

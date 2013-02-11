@@ -37,7 +37,7 @@
 
 #include "SystemProfiler.h"
 
-@interface TPISystemProfiler : NSObject
+@interface TPISystemProfiler : NSObject <THOPluginProtocol>
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;

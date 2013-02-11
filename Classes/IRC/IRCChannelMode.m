@@ -85,7 +85,7 @@
 			continue;
 		}
 
-		[self.allModes setObject:h forKey:modec];
+		[self.allModes safeSetObject:h forKey:modec];
 	}
 
 	return ary;
@@ -139,7 +139,7 @@
 	if (objk == NO) {
 		IRCModeInfo *m = [self.isupport createMode:mode];
 
-		[self.allModes setObject:m forKey:mode];
+		[self.allModes safeSetObject:m forKey:mode];
 	}
 
 	return [self.allModes objectForKey:mode];

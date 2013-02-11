@@ -158,11 +158,9 @@
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-	IRCWorld *world = TPCPreferences.masterController.world;
-	
 	NSString *addonID = @"10";
 
-	if (NSObjectIsNotEmpty(world.bundlesWithPreferences)) {
+	if (NSObjectIsNotEmpty([_THOPluginManager() pluginsWithPreferencePanes])) {
 		addonID = @"13";
 	}
 	
@@ -182,31 +180,27 @@
 
 - (void)setUpToolbarItemsAndMenus
 {
-	IRCWorld *world = TPCPreferences.masterController.world;
+	NSArray *bundles = [_THOPluginManager() pluginsWithPreferencePanes];
 
-	NSArray *bundles = world.bundlesWithPreferences;
-
-	if (NSObjectIsNotEmpty(bundles)) {
-		for (THOTextualPluginItem *plugin in bundles) {
-			NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
-			
-			NSMenuItem *pluginMenu = [NSMenuItem new];
-			
-			[pluginMenu setAction:@selector(onPrefPaneSelected:)];
-			[pluginMenu setTarget:self];
-			
-			[pluginMenu setTitle:[plugin.pluginPrimaryClass preferencesMenuItemName]];
-			[pluginMenu setTag:tagIndex];
-			
-			[self.installedScriptsMenu addItem:pluginMenu];
-		}
+	for (THOPluginItem *plugin in bundles) {
+		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
+		
+		NSMenuItem *pluginMenu = [NSMenuItem new];
+		
+		[pluginMenu setAction:@selector(onPrefPaneSelected:)];
+		[pluginMenu setTarget:self];
+		
+		[pluginMenu setTitle:[plugin.primaryClass preferencesMenuItemName]];
+		[pluginMenu setTag:tagIndex];
+		
+		[self.installedScriptsMenu addItem:pluginMenu];
 	}
 }
 
 - (void)onPrefPaneSelected:(id)sender 
 {
-	IRCWorld *world = TPCPreferences.masterController.world;
-	
+	NSInteger pluginIndex = ([sender tag] - _addonsToolbarItemMultiplier);
+
 	switch ([sender tag]) {
 		case 0:		[self firstPane:self.generalView				selectedItem:0]; break;
 		case 1:		[self firstPane:self.highlightView				selectedItem:1]; break;
@@ -223,10 +217,10 @@
 		case 12:	[self firstPane:self.commandScopeSettingsView	selectedItem:11]; break;
 		default:
 		{
-			THOTextualPluginItem *plugin = [world.bundlesWithPreferences safeObjectAtIndex:([sender tag] - _addonsToolbarItemMultiplier)];
+			THOPluginItem *plugin = [_THOPluginManager() pluginsWithPreferencePanes][pluginIndex];
 			
 			if (plugin) {
-				NSView *prefsView = [plugin.pluginPrimaryClass preferencesView];
+				NSView *prefsView = [plugin.primaryClass preferencesView];
 				
 				if (prefsView) {
 					[self firstPane:prefsView selectedItem:13];
@@ -242,16 +236,15 @@
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
 {							   
-	NSRect windowFrame = [self.window frame];
+	NSRect windowFrame = self.window.frame;
 	
-	windowFrame.size.width	= [view frame].size.width;
-	windowFrame.size.height = ([view frame].size.height + _TXWindowToolbarHeight);
+	windowFrame.size.width	=  view.frame.size.width;
+	windowFrame.size.height = (view.frame.size.height + _TXWindowToolbarHeight);
 	
-	windowFrame.origin.y	= NSMaxY([self.window frame]) -
-										(view.frame.size.height + _TXWindowToolbarHeight);
+	windowFrame.origin.y	= (NSMaxY(self.window.frame) - (view.frame.size.height + _TXWindowToolbarHeight));
 	
 	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
-		[[self.contentView.subviews safeObjectAtIndex:0] removeFromSuperview];
+		[self.contentView.subviews[0] removeFromSuperview];
 	}
 	
 	[self.window setFrame:windowFrame display:YES animate:YES];
