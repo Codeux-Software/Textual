@@ -35,31 +35,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
+"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
 
-//#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
-//#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
 
-@protocol THOPluginProtocol <NSObject>
-
-@optional
-
-- (NSArray *)pluginSupportsUserInputCommands;
-- (NSArray *)pluginSupportsServerInputCommands;
-
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
-
-- (void)messageReceivedByServer:(IRCClient *)client 
-						 sender:(NSDictionary *)senderDict 
-						message:(NSDictionary *)messageDict;
-
-- (NSDictionary *)pluginOutputDisplayRules;
-
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-- (void)pluginUnloadedFromMemory;
-
-- (NSView *)preferencesView;
-- (NSString *)preferencesMenuItemName;
-@end
+"BlowfishKeyExchangeSuccessful" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
+"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
+"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
+"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from \002%@\002. Processing …";
+"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
+"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for \002%@\002 has expired.";
+"BlowfishKeyExchangeResponseSent" = "Key exchange response has been sent to \002%@\002.";
+"BlowfishKeyExchangeResponseReceived" = "Received key exchange response from \002%@\002. Processing …";
+"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";

@@ -2525,7 +2525,6 @@
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"${SRCROOT}/Frameworks/**",
@@ -2557,7 +2556,6 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
@@ -2587,7 +2585,6 @@
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"${SRCROOT}/Frameworks/**",
@@ -2618,7 +2615,6 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
@@ -2664,7 +2660,6 @@
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"${SRCROOT}/Frameworks/**",
@@ -2695,7 +2690,6 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
@@ -2734,7 +2728,6 @@
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"${SRCROOT}/Frameworks/**",
@@ -2765,7 +2758,6 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = "Textual Trial";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";
@@ -2803,7 +2795,6 @@
 				CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"${SRCROOT}/Frameworks/**",
@@ -2834,7 +2825,6 @@
 					"-fobjc-runtime-has-weak",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = Textual;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "${SRCROOT}/.tmp/SharedPCH";

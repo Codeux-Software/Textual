@@ -2831,9 +2831,7 @@ static NSDateFormatter *dateTimeFormatter = nil;
 
 		[s appendString:NSStringWhitespacePlaceholder];
 
-		if (i == (count - 1) && (NSObjectIsEmpty(e) || [e hasPrefix:@":"] ||
-								 [e contains:NSStringWhitespacePlaceholder])) {
-
+		if (i == (count - 1) && (NSObjectIsEmpty(e) || [e hasPrefix:@":"] || [e contains:NSStringWhitespacePlaceholder])) {
 			[s appendString:@":"];
 		}
 

@@ -42,6 +42,9 @@
 
 #define TXExchangeReuqestTimeoutDelay		10
 
+#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
+#define TPIFLS(k, ...)			TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+
 @interface TPI_BlowfishCommands ()
 /* 
 	  key format:	STRING("<client UUID> —> <remote nickname>")
@@ -123,17 +126,17 @@
 			if (NSObjectIsEmpty(messageString)) {
 				c.config.encryptionKey = nil;
 				
-				[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+				[client printDebugInformation:TPILS(@"BlowfishEncryptionStopped") channel:c];
 			} else {
 				if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
+						[client printDebugInformation:TPILS(@"BlowfishEncryptionKeyChanged") channel:c];
 					}
 				} else {
 					if (c.isTalk) {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStartedInQuery") channel:c];
+						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInQuery") channel:c];
 					} else {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+						[client printDebugInformation:TPILS(@"BlowfishEncryptionStarted") channel:c];
 					}
 				}
 				
@@ -142,26 +145,26 @@
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			c.config.encryptionKey = nil;
 			
-			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+			[client printDebugInformation:TPILS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
-				[client printDebugInformation:TXTFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
+				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
 			} else {	
-				[client printDebugInformation:TXTLS(@"BlowfishNoEncryptionKeySet") channel:c];
+				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
 			if (c.isTalk == NO) {
-				[client printDebugInformation:TXTLS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
+				[client printDebugInformation:TPILS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
 			} else {
 				if ([self keyExchangeRequestExists:c]) {
-					[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
+					[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
 				} else {
 					CFDH1080 *keyRequest = [CFDH1080 new];
 
 					NSString *publicKey = [keyRequest generatePublicKey];
 
 					if (NSObjectIsEmpty(publicKey)) {
-						[client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:c];
+						[client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:c];
 					} else {
 						NSString *requestKey = [self keyExchangeDictionaryKey:c];
 						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
@@ -174,7 +177,7 @@
 
 						[self performSelectorOnMainThread:@selector(keyExchangeSetupTimeoutTimer:) withObject:requestKey waitUntilDone:NO];
 						
-						[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestSent", c.name) channel:c];
+						[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestSent", c.name) channel:c];
 					}
 				}
 			}
@@ -219,10 +222,10 @@
 	//DebugLogToConsole(@"	Channel: %@", channel);
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
-	[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+	[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
 
 	if ([self keyExchangeRequestExists:channel]) {
-		[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestAlreadyExists", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", channel.name) channel:channel];
 	} else {
 		CFDH1080 *keyRequest = [CFDH1080 new];
 
@@ -230,7 +233,7 @@
 		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
+			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
 		}
 
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
@@ -243,7 +246,7 @@
 		NSString *publicKey = [keyRequest generatePublicKey];
 
 		if (NSObjectIsEmpty(publicKey)) {
-			return [client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
+			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
 		}
 
 		/* Finish up. */
@@ -253,8 +256,8 @@
 				 command:IRCPrivateCommandIndex("notice")
 				 channel:channel];
 
-		[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
-		[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
 	}
 }
 
@@ -273,7 +276,7 @@
 		CFDH1080 *request = exchangeData[0];
 		IRCChannel *channel = exchangeData[1];
 		
-		[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeResponseReceived", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseReceived", channel.name) channel:channel];
 		
 		/* Compute the public key received against our own. Our original public key
 		 was sent to the user which has responded by computing their own against 
@@ -281,7 +284,7 @@
 		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TXTLS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
+			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
@@ -289,7 +292,7 @@
 		channel.config.encryptionKey = theSecret;
 
 		/* Finish up. */
-		[client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful", channel.name) channel:channel];
 		
 		[self.keyExchangeRequests removeObjectForKey:responseKey];
 	}
@@ -310,7 +313,7 @@
 	if (NSObjectIsNotEmpty(requestKey)) {
 		IRCChannel *channel = requestData[1];
 		
-		[channel.client printDebugInformation:TXTFLS(@"BlowfishKeyExchangeRequestTimedOut", channel.name) channel:channel];
+		[channel.client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestTimedOut", channel.name) channel:channel];
 
 		[self.keyExchangeRequests removeObjectForKey:requestKey];
 	}

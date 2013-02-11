@@ -38,6 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TLOLanguagePreferences : NSObject 
-+ (void)setThemeForLocalization:(NSString *)path;
 + (NSString *)localizedStringWithKey:(NSString *)key;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
 @end

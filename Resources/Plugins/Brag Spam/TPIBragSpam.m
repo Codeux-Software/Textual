@@ -37,6 +37,9 @@
 
 #import "TPIBragSpam.h"
 
+#define TPILS(k)				 TSBLS(k, [NSBundle bundleForClass:[self class]])
+#define TPIFLS(k, ...)			TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+
 @implementation TPIBragSpam
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -107,8 +110,10 @@
 			
 		}
 		
-		NSString *result = TXTFLS(@"BragspamPluginNormalResult", channelCount, networkCount, operCount, 
-								  chanOpCount, chanHopCount, chanVopCount, powerOverCount);
+		NSString *result = TPIFLS(@"BragspamPluginNormalResult",
+								  channelCount, networkCount, operCount,
+								  chanOpCount, chanHopCount, chanVopCount,
+								  powerOverCount);
 		
 		[client sendPrivmsgToSelectedChannel:result];
 	}

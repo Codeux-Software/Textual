@@ -39,36 +39,26 @@
 
 @implementation TLOLanguagePreferences
 
-static NSDictionary *themeLocalizations = nil;
-
-+ (void)setThemeForLocalization:(NSString *)path
-{
-	themeLocalizations = nil;
-	
-	NSString *filepath = [path stringByAppendingPathComponent:@"/Data/Settings/styleLocalizations.plist"];
-	
-	if ([_NSFileManager() fileExistsAtPath:filepath]) {
-		NSDictionary *localkeys = [NSDictionary dictionaryWithContentsOfFile:filepath];
-
-		if (localkeys) {
-			themeLocalizations = localkeys;
-		}
-	}
-}
-
 + (NSString *)localizedStringWithKey:(NSString *)key
 {
-	if (PointerIsEmpty(themeLocalizations)) {
-		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);
-	} else {
-		NSString *localstring = themeLocalizations[key];
-		
-		if (localstring) {
-			return [localstring reservedCharactersToIRCFormatting];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:[NSBundle mainBundle]];
+}
+
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
+{
+	TXMasterController *master = [TPCPreferences masterController];
+
+	if (master) {
+		TPCOtherTheme *other = [master.viewTheme other];
+
+		if (other && [other.languageLocalizations containsKey:key]) {
+			NSString *localString = [other.languageLocalizations stringForKey:key];
+
+			return [localString reservedCharactersToIRCFormatting];
 		}
-		
-		return NSLocalizedStringFromTable(key, @"BasicLanguage", nil);
 	}
+	
+	return NSLocalizedStringFromTableInBundle(key, @"BasicLanguage", bundle, nil);
 }
 
 @end
