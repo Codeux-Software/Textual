@@ -333,7 +333,8 @@
                 cc = cc.trim;
                 
                 if ([cc isChannelName]) {
-                    [channels safeAddObject:@{@"channelName": cc,
+                    [channels safeAddObject:@{
+					 @"channelName" : cc,
 					 @"joinOnConnect" : NSNumberWithBOOL(YES),
 					 @"enableNotifications" : NSNumberWithBOOL(YES),
 
@@ -343,7 +344,8 @@
             }
         } else {
             if ([c isChannelName]) {
-                [channels safeAddObject:@{@"channelName": c,
+                [channels safeAddObject:@{
+				 @"channelName" : c,
 				 @"joinOnConnect" : NSNumberWithBOOL(YES),
 				 @"enableNotifications" : NSNumberWithBOOL(YES),
 
