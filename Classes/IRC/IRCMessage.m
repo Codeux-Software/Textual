@@ -95,7 +95,7 @@
 		NSDateFormatter *dateFormatter = [NSDateFormatter new];
 		
 		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-		[dateFormatter setDateFormat:@"yyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
 		
 		NSDate *date = [dateFormatter dateFromString:serverTime];
 		
