@@ -417,7 +417,7 @@
 		self.previousSelectedChannelId = nil;
 	} else if (self.selectedItem.isClient) {
 		self.previousSelectedClientId = self.selectedItem.treeUUID;
-		self.previousSelectedChannelId = 0;
+		self.previousSelectedChannelId = nil;
 	} else {		
 		self.previousSelectedClientId = self.selectedItem.client.treeUUID;
 		self.previousSelectedChannelId = self.selectedItem.treeUUID;
