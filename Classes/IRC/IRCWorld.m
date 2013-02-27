@@ -859,8 +859,6 @@
 
 - (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart
 {
-	[c terminate];
-	
 	IRCClient *u = c.client;
 	
 	if (c.isChannel && forcePart) {
@@ -868,6 +866,8 @@
 			[u partChannel:c];
 		}
 	}
+    
+	[c terminate];
 	
 	if (u.lastSelectedChannel == c) {
 		u.lastSelectedChannel = nil;
