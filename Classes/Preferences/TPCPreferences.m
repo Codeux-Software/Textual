@@ -264,7 +264,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 		if ([matValue isEqualIgnoringCase:command]) {
 			BOOL isNotSpecial = [indexInfo boolAtIndex:3];
 
-			if ((isPublic == NO && isNotSpecial == NO) && (isPublic && inDevMode == NO && isNotSpecial)) {
+			if ((isPublic == NO && isNotSpecial == NO) || (isPublic && inDevMode == NO && isNotSpecial)) {
 				continue;
 			}
 
