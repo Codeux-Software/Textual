@@ -1162,6 +1162,18 @@
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
 	NSObjectIsEmptyAssertReturn(items, NO);
@@ -1171,7 +1183,7 @@
 	NSString *s = i.treeUUID;
 	
 	if (i.isClient == NO) {
-		s = [NSString stringWithFormat:@"%@-%@", i.client.treeUUID, i.treeUUID];
+		s = [NSString stringWithFormat:@"%@ %@", i.client.treeUUID, i.treeUUID];
 	}
 	
 	[pboard declareTypes:_treeDragItemTypes owner:self];
@@ -1185,8 +1197,8 @@
 {
 	NSObjectIsEmptyAssertReturn(s, nil);
 	
-	if ([s contains:@"-"]) {
-		NSArray *ary = [s componentsSeparatedByString:@"-"];
+	if ([s contains:@" "]) {
+		NSArray *ary = [s split:@" "];
 
 		NSString *uid = [ary objectAtIndex:0];
 		NSString *cid = [ary objectAtIndex:1];
