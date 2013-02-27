@@ -52,6 +52,7 @@
 		
 		self.floodTimer = [TLOTimer new];
 		self.floodTimer.delegate = self;
+        self.floodTimer.selector = @selector(timerOnTimer:);
 
 		self.maxMsgCount = 0;
 
@@ -191,6 +192,8 @@
 - (void)timerOnTimer:(id)sender
 {
 	self.maxMsgCount = 0;
+
+    LogToConsole(@"%i", self.maxMsgCount);
 	
 	if (NSObjectIsNotEmpty(self.sendQueue)) {
 		while (self.sendQueue.count >= 1) {
