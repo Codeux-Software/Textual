@@ -1154,7 +1154,7 @@
 	[self updateIcon];
 	[self updateTitle];
 
-    if ([self.serverList isGroupItem:self.previouslySelectedItem]) {
+    if (self.previouslySelectedItem && [self.serverList isGroupItem:self.previouslySelectedItem]) {
         /* Draw the view again if our previous selection was a server.
          This is done to redraw the disclosure triangles in dark mode. */
         
