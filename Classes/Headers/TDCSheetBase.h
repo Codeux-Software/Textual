@@ -38,11 +38,11 @@
 #import "TextualApplication.h"
 
 @interface TDCSheetBase : NSObject
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, unsafe_unretained) NSWindow *window;
-@property (nonatomic, strong) NSWindow *sheet;
-@property (nonatomic, strong) NSButton *okButton;
-@property (nonatomic, strong) NSButton *cancelButton;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, uweak) NSWindow *window;
+@property (nonatomic, uweak) NSWindow *sheet;
+@property (nonatomic, nweak) NSButton *okButton;
+@property (nonatomic, nweak) NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

@@ -37,23 +37,17 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultListViewControllerFont		[NSFont fontWithName:@"Lucida Grande" size:12.0]
+#define TXDefaultListViewControllerFont			[NSFont fontWithName:@"Lucida Grande" size:12.0]
 
 @interface TVCListView : NSTableView
-@property (nonatomic, unsafe_unretained) id keyDelegate;
-@property (nonatomic, unsafe_unretained) id textDelegate;
+@property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, uweak) id textEditingDelegate;
 
-- (NSInteger)countSelectedRows;
 - (NSArray *)selectedRows;
+- (NSInteger)countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;
 
 - (void)selectRows:(NSArray *)indices;
 - (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend;
-@end
-
-@interface NSObject (ListViewDelegate)
-- (void)listViewDelete;
-- (void)listViewMoveUp;
-- (void)listViewKeyDown:(NSEvent *)e;
 @end

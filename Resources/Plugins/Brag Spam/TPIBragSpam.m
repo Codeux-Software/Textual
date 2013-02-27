@@ -44,7 +44,7 @@
 				  command:(NSString *)commandString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		if (client.world.selectedChannel.isChannel == NO) return;
+		NSAssertReturn(client.worldController.selectedChannel.isChannel);
 		
 		NSInteger operCount      = 0;
 		NSInteger chanOpCount    = 0;
@@ -54,7 +54,7 @@
 		NSInteger networkCount   = 0;
 		NSInteger powerOverCount = 0;
 		
-		for (IRCClient *c in [client.world clients]) {
+		for (IRCClient *c in client.worldController.clients) {
 			if (c.isConnected == NO) continue;
 			
 			networkCount++;
@@ -70,7 +70,7 @@
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch findMember:c.myNick];
+				IRCUser *myself = [ch findMember:client.localNickname];
 				
 				if (myself.q || myself.a || myself.o) {
 					chanOpCount++;
@@ -80,7 +80,7 @@
 					chanVopCount++;
 				}
 				
-				for (IRCUser *m in ch.members) {
+				for (IRCUser *m in ch.memberList) {
 					if ([m isEqual:myself]) continue;
 					
 					BOOL addUser = NO;
@@ -96,10 +96,10 @@
 					}
 					
 					if (addUser == YES) {
-						if ([trackedUsers containsObject:m.nick] == NO) {
+						if ([trackedUsers containsObject:m.nickname] == NO) {
 							powerOverCount++;
 							
-							[trackedUsers addObject:m.nick];	
+							[trackedUsers addObject:m.nickname];
 						}
 					}
 				}

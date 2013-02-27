@@ -50,8 +50,8 @@
 
 - (void)populateData
 {
-	[self.scripts addObjectsFromArray:[_THOPluginManager() supportedAppleScriptCommands]];
-	[self.scripts addObjectsFromArray:[_THOPluginManager() supportedUserInputCommands]];
+	[self.scripts addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
+	[self.scripts addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
 	
 	[self.scripts sortUsingSelector:@selector(compare:)];
 }

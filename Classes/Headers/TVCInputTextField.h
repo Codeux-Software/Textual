@@ -38,15 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TVCInputTextField : TVCTextField <NSTextViewDelegate>
-@property (nonatomic, unsafe_unretained) id actionTarget;
-@property (nonatomic, unsafe_unretained) SEL actionSelector;
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 
 - (void)updateTextDirection;
-- (void)resetTextFieldCellSize:(BOOL)force;
+- (void)updateTextColor;
 - (void)redrawOriginPoints;
-
-- (void)setReturnActionWithSelector:(SEL)selector owner:(id)owner;
+- (void)resetTextFieldCellSize:(BOOL)force;
 
 - (TVCInputTextFieldBackground *)backgroundView;
 @end

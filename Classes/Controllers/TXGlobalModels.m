@@ -94,13 +94,13 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 	
 	NSUInteger unitFlags = 0;
 
-	if ([orderMatrix containsObject:@"year"])		unitFlags |= NSYearCalendarUnit;
-	if ([orderMatrix containsObject:@"month"])		unitFlags |= NSMonthCalendarUnit;
-	if ([orderMatrix containsObject:@"week"])		unitFlags |= NSWeekCalendarUnit;
-	if ([orderMatrix containsObject:@"day"])		unitFlags |= NSDayCalendarUnit;
-	if ([orderMatrix containsObject:@"hour"])		unitFlags |= NSHourCalendarUnit;
-	if ([orderMatrix containsObject:@"minute"])		unitFlags |= NSMinuteCalendarUnit;
-	if ([orderMatrix containsObject:@"second"])		unitFlags |= NSSecondCalendarUnit;
+	if ([orderMatrix containsObject:@"year"])		{ unitFlags |= NSYearCalendarUnit;		}
+	if ([orderMatrix containsObject:@"month"])		{ unitFlags |= NSMonthCalendarUnit;		}
+	if ([orderMatrix containsObject:@"week"])		{ unitFlags |= NSWeekCalendarUnit;		}
+	if ([orderMatrix containsObject:@"day"])		{ unitFlags |= NSDayCalendarUnit;		}
+	if ([orderMatrix containsObject:@"hour"])		{ unitFlags |= NSHourCalendarUnit;		}
+	if ([orderMatrix containsObject:@"minute"])		{ unitFlags |= NSMinuteCalendarUnit;	}
+	if ([orderMatrix containsObject:@"second"])		{ unitFlags |= NSSecondCalendarUnit;	}
 	
 	NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1 toDate:date2 options:0];
 	
@@ -132,7 +132,7 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 		}
 		
 		if ([finalResult length] >= 3) {
-			[finalResult safeDeleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+			[finalResult safeDeleteCharactersInRange:NSMakeRange((finalResult.length - 2), 2)];
 		}
 		
 		return finalResult;

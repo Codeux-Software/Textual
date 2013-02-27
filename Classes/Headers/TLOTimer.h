@@ -38,16 +38,13 @@
 #import "TextualApplication.h"
 
 @interface TLOTimer : NSObject
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, unsafe_unretained) SEL selector;
-@property (nonatomic, assign) BOOL reqeat;
-@property (nonatomic, readonly) BOOL isActive;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, uweak) SEL selector;
+
+@property (nonatomic, assign) BOOL reqeatTimer;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;
-@end
 
-@interface NSObject (TimerDelegate)
-- (void)timerOnTimer:(TLOTimer *)sender;
+- (BOOL)timerIsActive;
 @end

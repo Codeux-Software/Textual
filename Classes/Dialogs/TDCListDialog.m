@@ -70,10 +70,10 @@
 	
 	IRCClient *client = self.delegate;
 	
-	NSString *network = client.config.network;
+	NSString *network = [client networkName];
 	
 	if (NSObjectIsEmpty(network)) {
-		network = client.config.name;
+		network = client.config.clientName;
 	}
 	
 	[self.networkName setStringValue:TXTFLS(@"ChannelListNetworkName", network)];

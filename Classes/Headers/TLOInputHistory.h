@@ -38,9 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TLOInputHistory : NSObject
-@property (nonatomic, strong) id lastHistoryItem;
-@property (nonatomic, strong) NSMutableArray *buf;
-@property (nonatomic, assign) NSInteger pos;
+@property (nonatomic, assign) NSInteger historyBufferPosition;
+@property (nonatomic, strong) NSMutableArray *historyBuffer;
+
+/* lastHistoryItem is not manipulated by TLOInputHistory. It is used
+ for a temporary store when input history is configured to be channel
+ specific. lastHistoryItem is set to the value of the input text field
+ of the previous selection when switching views. */
+@property (nonatomic, strong) NSAttributedString *lastHistoryItem;
 
 - (void)add:(NSAttributedString *)s;
 

@@ -37,15 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define TXModesSize		52
-
 @interface IRCISupportInfo : NSObject
-{
-	unsigned char modes[TXModesSize];
-}
-
-@property (nonatomic, assign) NSInteger nickLen;
+@property (nonatomic, strong) NSDictionary *channelModes;
+@property (nonatomic, assign) NSInteger nicknameLength;
 @property (nonatomic, assign) NSInteger modesCount;
+@property (nonatomic, strong) NSString *networkAddress;
 @property (nonatomic, strong) NSString *networkName;
 @property (nonatomic, strong) NSString *userModeQPrefix;
 @property (nonatomic, strong) NSString *userModeAPrefix;
@@ -54,8 +50,8 @@
 @property (nonatomic, strong) NSString *userModeVPrefix;
 
 - (void)reset;
-- (BOOL)update:(NSString *)s client:(IRCClient *)client;
+- (void)update:(NSString *)configData client:(IRCClient *)client;
 
-- (NSArray *)parseMode:(NSString *)s;
+- (NSArray *)parseMode:(NSString *)modeString;
 - (IRCModeInfo *)createMode:(NSString *)mode;
 @end

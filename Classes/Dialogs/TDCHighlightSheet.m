@@ -37,7 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define _rowHeightMultiplier	17
+#define _rowHeightMultiplier		17
+
+@interface TDCHighlightSheet ()
+@property (nonatomic, readonly, nweak) NSMutableArray *highlightList;
+@end
 
 @implementation TDCHighlightSheet
 
@@ -52,77 +56,54 @@
 
 - (void)show
 {
-	TXMenuController *menu = self.delegate;
-	
-	IRCClient *currentNetwork = [menu.world selectedClient];
+	IRCClient *currentNetwork = self.worldController.selectedClient;
 
-	NSString *currentHeader = nil;
-	NSString *network = currentNetwork.config.network;
-	
-	if (NSObjectIsEmpty(network)) {
-		network = currentNetwork.config.name;
-	}
-	
-	currentHeader = [self.header stringValue];
-	currentHeader = [NSString stringWithFormat:currentHeader, network];
-	
-	[self.header setStringValue:currentHeader];
-    [self.table setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+	NSString *network = [currentNetwork altNetworkName];
+
+	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, network];
+
+	self.highlightListTable.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
 	
     [self startSheet];
 }
 
-- (void)ok:(id)sender
-{
-	[self endSheet];
-	
-	if ([self.delegate respondsToSelector:@selector(highlightSheetWillClose:)]) {
-		[self.delegate highlightSheetWillClose:self];
-	}
-}
-
-- (void)clear
-{
-    [self.list removeAllObjects];
-	
-    [self reloadTable];
-}
-
-- (void)reloadTable
-{
-    [self.table reloadData];
-}
-
-#pragma mark -
-#pragma mark Actions
-
 - (void)onClearList:(id)sender
 {
-	[self clear];
+    [self.highlightList removeAllObjects];
+
+    [self reloadTable];
 }
 
 #pragma mark -
 #pragma mark NSTableView Delegate
 
+- (NSMutableArray *)highlightList
+{
+	return self.worldController.selectedClient.highlights;
+}
+
+- (void)reloadTable
+{
+    [self.highlightListTable reloadData];
+}
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.list.count;
+    return self.highlightList.count;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	if (self.list.count <= 0) {
-		return _rowHeightMultiplier;
-	}
+	NSObjectIsEmptyAssertReturn(self.highlightList, _rowHeightMultiplier);
 	
 	NSRect columnRect = [tableView rectOfColumn:1];
 	
-	NSArray *data = [self.list safeObjectAtIndex:row];
+	NSArray *data = [self.highlightList safeObjectAtIndex:row];
 
 	NSAttributedString *baseString = [data safeObjectAtIndex:2];
 
 	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
-										 lineMultiplier:13.0
+										 lineMultiplier:_rowHeightMultiplier
 											 forcedFont:[NSFont systemFontOfSize:13.0]];
 
 	return (totalLines * _rowHeightMultiplier);
@@ -130,19 +111,27 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray  *item = [self.list safeObjectAtIndex:row];
+    NSArray *item = [self.highlightList safeObjectAtIndex:row];
 	
-    NSString *col  = [column identifier];
-    
-    if ([col isEqualToString:@"chan"]) {
+    if ([column.identifier isEqualToString:@"chan"]) {
 		return [item safeObjectAtIndex:0];
-	} else if ([col isEqualToString:@"time"]) {
-		NSInteger time = [item integerAtIndex:1];
+	} else if ([column.identifier isEqualToString:@"time"]) {
+		NSInteger timeInterval = [item integerAtIndex:1];
 		
-		return TXTFLS(@"TimeAgo", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:time], YES, nil));
+		return TXTFLS(@"TimeAgo", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:timeInterval], YES, nil));
     } else {
         return [item safeObjectAtIndex:2];
     }
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(highlightSheetWillClose:)]) {
+		[self.delegate highlightSheetWillClose:self];
+	}
 }
 
 @end

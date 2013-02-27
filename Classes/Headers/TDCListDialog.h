@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDCListDialog : NSWindowController
-@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, uweak) id delegate;
 @property (nonatomic, assign) NSInteger sortKey;
 @property (nonatomic, assign) NSComparisonResult sortOrder;
 @property (nonatomic, strong) NSMutableArray *list;

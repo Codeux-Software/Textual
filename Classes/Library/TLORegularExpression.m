@@ -46,9 +46,9 @@
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
-	id regex;
+	NSRegularExpression *regex;
 
 	if (caseless) {
 		regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
@@ -68,9 +68,9 @@
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
-	id regex;
+	NSRegularExpression *regex;
 
 	if (caseless) {
 		regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
@@ -85,9 +85,9 @@
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
-	NSRange strRange = NSMakeRange(0, [haystack length]);
+	NSRange strRange = NSMakeRange(0, haystack.length);
 
-	id regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
 
 	NSString *newString = [regex stringByReplacingMatchesInString:haystack options:0 range:strRange withTemplate:puppy];
 
@@ -101,7 +101,7 @@
 
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
 	NSRegularExpression *regex;
 
@@ -116,11 +116,9 @@
 	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
 
 	for (NSTextCheckingResult *result in matches) {
-		NSString *newStr = [haystack safeSubstringWithRange:[result range]];
+		NSString *newStr = [haystack safeSubstringWithRange:result.range];
 
-		if (NSObjectIsNotEmpty(newStr)) {
-			[realMatches safeAddObject:newStr];
-		}
+		[realMatches safeAddObject:newStr];
 	}
 
 	return realMatches;

@@ -38,24 +38,28 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController ()
-@property (nonatomic, assign) BOOL isDummyLog;
-@property (nonatomic, strong) TLOFileLogger *logFile;
+@property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @end
 
 @implementation TVCLogController
 
-#define isDummyLog(r)				if (self.isDummyLog) { return r; }
+#pragma mark -
+#pragma mark Initialization
 
 - (id)init
 {
 	if ((self = [super init])) {
-		self.bottom        = YES;
-		self.maxLines      = 300;
-
 		self.highlightedLineNumbers	= [NSMutableArray new];
+		
+		self.activeLineCount = 0;
+		self.lastVisitedHighlight = -1;
 
-		[WebPreferences.standardPreferences setCacheModel:WebCacheModelDocumentViewer];
-		[WebPreferences.standardPreferences setUsesPageCache:NO];
+		self.isLoaded = NO;
+		self.reloadingBacklog = NO;
+		self.reloadingHistory = NO;
+		self.needsLimitNumberOfLines = NO;
+		
+		self.maximumLineCount = 300;
 	}
 
 	return self;
@@ -63,13 +67,12 @@
 
 - (void)terminate
 {
-	isDummyLog();
-	
-	if ([TPCPreferences reloadScrollbackOnLaunch]) {
-		[self.logFile updateCache];
-	} else {
-		[self clear];
-	}
+	[self closeHistoricLog];
+}
+
+- (void)preferencesChanged
+{
+	self.maximumLineCount = [TPCPreferences maxLogLines];
 }
 
 - (void)dealloc
@@ -78,122 +81,172 @@
 }
 
 #pragma mark -
-
-- (void)setMaxLines:(NSInteger)value
-{
-	isDummyLog();
-	
-	if (self.maxLines == value) return;
-	_maxLines = value;
-
-	if (self.loaded == NO) return;
-
-	if (self.maxLines > 0 && self.count > self.maxLines) {
-		[self savePosition];
-		[self setNeedsLimitNumberOfLines];
-	}
-
-	self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
-}
-
-#pragma mark -
+#pragma mark Create View
 
 - (void)setUp
 {
-	self.isDummyLog = (PointerIsEmpty(self.client) && PointerIsEmpty(self.channel));
-
-	if (self.isDummyLog == NO) {
-		self.loaded = NO;
-
-		self.policy = [TVCLogPolicy new];
-		self.sink   = [TVCLogScriptEventSink new];
-
-		self.lastVisitedHighlight = -1;
-
-		self.policy.menu			= self.menu;
-		self.policy.urlMenu			= self.urlMenu;
-		self.policy.chanMenu		= self.chanMenu;
-		self.policy.memberMenu		= self.memberMenu;
-		self.policy.menuController  = self.world.menuController;
-
-		self.sink.owner  = self;
-		self.sink.policy = self.policy;
-
-		self.logFile = [TLOFileLogger new];
-		self.logFile.flatFileStructure = YES;
-		self.logFile.writePlainText = NO;
-		self.logFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
-		self.logFile.maxEntryCount = [TPCPreferences maxLogLines];
-
-		if (PointerIsEmpty(self.channel)) {
-			self.logFile.filenameOverride = self.client.config.guid;
-		} else {
-			self.logFile.filenameOverride = self.channel.config.guid;
-		}
-
-		[self.logFile reopenIfNeeded];
-	}
-
 	if (self.view) {
-		[self.view removeFromSuperview];
+		NSAssert(NO, @"View is already initialized.");
 	}
+
+	[self openHistoricLog];
+
+	self.policy = [TVCLogPolicy new];
+
+	self.sink = [TVCLogScriptEventSink new];
+	self.sink.owner = self;
 
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
-
-	self.view.frameLoadDelegate			= self;
-	self.view.resourceLoadDelegate		= self;
-	self.view.resizeDelegate			= self;
-	self.view.autoresizingMask			= (NSViewWidthSizable | NSViewHeightSizable);
-
-	if (self.isDummyLog == NO) {
-		self.view.UIDelegate			= self.policy;
-		self.view.policyDelegate		= self.policy;
-		self.view.keyDelegate			= self;
-	}
 	
-	self.view.shouldUpdateWhileOffscreen	= NO;
+	self.view.autoresizingMask		= (NSViewWidthSizable | NSViewHeightSizable);
+	self.view.keyDelegate			= self;
+	self.view.frameLoadDelegate		= self;
+	self.view.resourceLoadDelegate	= self;
+	self.view.policyDelegate		= self.policy;
+	self.view.UIDelegate			= self.policy;
 
+	self.view.shouldUpdateWhileOffscreen = NO;
+
+	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
+	[self.view.preferences setUsesPageCache:NO];
+	
 	[self loadAlternateHTML:[self initialDocument:nil]];
-}
-
-#pragma mark -
-
-- (void)appendToDocumentBody:(NSString *)html
-{
-	isDummyLog();
-	
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
-
-	DOMElement *body = [self body:doc];
-	if (PointerIsEmpty(body)) return;
-
-	// ---- //
-
-	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html
-																		baseURL:self.theme.baseUrl];
-
-	// ---- //
-
-	[body appendChild:frag];
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	NSColor *windowColor = self.theme.other.underlyingWindowColor;
+	NSColor *windowColor = self.themeSettings.underlyingWindowColor;
 
 	if (PointerIsEmpty(windowColor)) {
 		windowColor = [NSColor blackColor];
 	}
 
 	[(id)self.view setBackgroundColor:windowColor];
+	
+	[self.view.mainFrame loadHTMLString:newHTML baseURL:[self baseURL]];
+}
 
-	[[self.view mainFrame] loadHTMLString:newHTML baseURL:self.theme.baseUrl];
+#pragma mark -
+#pragma mark Manage Historic Log
+
+- (void)openHistoricLog
+{
+	if (PointerIsNotEmpty(self.historicLogFile)) {
+		return;
+	}
+	
+	self.historicLogFile = [TLOFileLogger new];
+	self.historicLogFile.flatFileStructure = YES;
+	self.historicLogFile.writePlainText = NO;
+	self.historicLogFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
+	self.historicLogFile.maxEntryCount = [TPCPreferences maxLogLines];
+
+	if (PointerIsEmpty(self.channel)) {
+		self.historicLogFile.filenameOverride = self.client.config.itemUUID;
+	} else {
+		self.historicLogFile.filenameOverride = [NSString stringWithFormat:@"%@-%@", self.client.config.itemUUID, self.channel.name];
+	}
+	
+	[self.historicLogFile reopenIfNeeded];
+}
+
+- (void)closeHistoricLog
+{
+	PointerIsEmptyAssert(self.historicLogFile);
+
+	/* The historic log file is always open regardless of whether the user asked
+	 Textual to remember the history between restarts. It is always open because
+	 the reloading of a theme uses it to fill in the backlog after a reload. 
+	 
+	 closeHistoricLog is the point where we decide to actually save the file 
+	 or erase it. If the user has Textual configured to remember between restarts,
+	 then we call a save before terminating. Or, we just erase the file from the
+	 path that it is written to entirely. */
+	
+	if ([TPCPreferences reloadScrollbackOnLaunch]) {
+		[self.historicLogFile updateCache];
+	} else {
+		[self.historicLogFile reset];
+	}
+	
+	self.historicLogFile = nil;
+}
+
+#pragma mark -
+#pragma mark Properties
+
+- (void)setMaximumLineCount:(NSInteger)value
+{
+	if (NSDissimilarObjects(self.maximumLineCount, value)) {
+		_maximumLineCount = value;
+
+		NSAssertReturn(self.isLoaded);
+
+		if (self.maximumLineCount > 0 && self.activeLineCount > self.maximumLineCount) {
+			[self setNeedsLimitNumberOfLines];
+		}
+
+		self.historicLogFile.maxEntryCount = value;
+	}
+}
+
+- (TPCThemeSettings *)themeSettings
+{
+	return self.masterController.themeController.customSettings;
+}
+
+- (NSURL *)baseURL
+{
+	return self.masterController.themeController.baseURL;
+}
+
+- (NSInteger)scrollbackCorrectionInit
+{
+	return (self.view.frame.size.height / 2);
+}
+
+- (DOMDocument *)mainFrameDocument
+{
+	return [self.view.mainFrame DOMDocument];
+}
+
+- (DOMElement *)documentBody
+{
+	DOMDocument *doc = [self mainFrameDocument];
+
+	PointerIsEmptyAssertReturn(doc, nil);
+
+	return [doc getElementById:@"body_home"];
+}
+
+- (DOMElement *)documentChannelTopicBar
+{
+	DOMDocument *doc = [self mainFrameDocument];
+
+	PointerIsEmptyAssertReturn(doc, nil);
+
+	return [doc getElementById:@"topic_bar"];
+}
+
+#pragma mark -
+#pragma mark Document Append & JavaScript Controller
+
+- (void)appendToDocumentBody:(NSString *)html
+{
+	DOMDocument *doc = [self mainFrameDocument];
+	PointerIsEmptyAssert(doc);
+
+	DOMElement *body = [self documentBody];
+	PointerIsEmptyAssert(body);
+
+	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
+
+	[body appendChild:frag];
 }
 
 - (void)internalExecuteScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	WebScriptObject *js_api = [self.view js_api];
+	WebScriptObject *js_api = [self.view javaScriptAPI];
 
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:command	withArguments:args];
@@ -207,8 +260,6 @@
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args withContext:(NSDictionary *)context
 {
-	isDummyLog();
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self internalExecuteScriptCommand:command withArguments:args];
 		
@@ -219,82 +270,37 @@
 }
 
 #pragma mark -
-
-- (NSInteger)scrollbackCorrectionInit
-{
-	return (self.view.frame.size.height / 2);
-}
-
-- (void)notifyDidBecomeVisible
-{
-	if (self.becameVisible == NO) {
-		self.becameVisible = YES;
-
-		[self moveToBottom];
-	}
-}
-
-- (DOMDocument *)mainFrameDocument
-{
-	return [self.view.mainFrame DOMDocument];
-}
-
-- (DOMNode *)html_head
-{
-	DOMDocument *doc = [self mainFrameDocument];
-
-	DOMNodeList *nodes = [doc getElementsByTagName:@"head"];
-
-	DOMNode *head = [nodes item:0];
-
-	return head;
-}
-
-- (DOMElement *)body:(DOMDocument *)doc
-{
-	return [doc getElementById:@"body_home"];
-}
-
-- (DOMElement *)topic:(DOMDocument *)doc
-{
-	return [doc getElementById:@"topic_bar"];
-}
-
-#pragma mark -
+#pragma mark Channel Topic Bar
 
 - (NSString *)topicValue
 {
-	isDummyLog(nil);
+	DOMElement *topicBar = [self documentChannelTopicBar];
+	
+	PointerIsEmptyAssertReturn(topicBar, NSStringEmptyPlaceholder);
 
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return NSStringEmptyPlaceholder;
-
-	return [(id)[self topic:doc] innerHTML];
+	return [(id)topicBar innerHTML];
 }
 
 - (void)setTopic:(NSString *)topic
 {
-	isDummyLog();
-
 	if (NSObjectIsEmpty(topic)) {
 		topic = TXTLS(@"IRCChannelEmptyTopic");
 	}
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if ([[self topicValue] isEqualToString:topic] == NO) {
+		if ([self.topicValue isEqualToString:topic] == NO)
+		{
+			DOMElement *topicBar = [self documentChannelTopicBar];
+			
+			PointerIsEmptyAssertReturn(topicBar, @(NO));
+			
 			NSString *body = [TVCLogRenderer renderBody:topic
 											 controller:self
 											 renderType:TVCLogRendererHTMLType
-											 properties:@{@"renderLinks": NSNumberWithBOOL(YES)}
+											 properties:@{@"renderLinks" : NSNumberWithBOOL(YES)}
 											 resultInfo:NULL];
 
-			DOMDocument *doc = [self mainFrameDocument];
-			if (PointerIsEmpty(doc)) return @(NO);
-
-			DOMElement *topic_body = [self topic:doc];
-			if (PointerIsEmpty(topic_body)) return @(NO);
-
-			[(id)topic_body setInnerHTML:body];
+			[(id)topicBar setInnerHTML:body];
 
 			[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 		}
@@ -306,113 +312,78 @@
 }
 
 #pragma mark -
+#pragma mark Move to Bottom/Top
 
 - (void)moveToTop
 {
-	isDummyLog();
-
-	if (self.loaded == NO) return;
+	NSAssertReturn(self.isLoaded);
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
+	PointerIsEmptyAssert(doc);
 
 	DOMElement *body = [doc body];
+	PointerIsEmptyAssert(body);
 
-	if (body) {
-		[body setValue:@0 forKey:@"scrollTop"];
-	}
-
+	[body setValue:@0 forKey:@"scrollTop"];
+	
 	[self executeScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
 
 - (void)moveToBottom
 {
-	isDummyLog();
-
-	self.movingToBottom = NO;
-
-	if (self.loaded == NO) return;
+	NSAssertReturn(self.isLoaded);
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
+	PointerIsEmptyAssert(doc);
 
 	DOMElement *body = [doc body];
+	PointerIsEmptyAssert(body);
 
-	if (body) {
-		[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
-	}
+	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
 
 	[self executeScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
 
 - (BOOL)viewingBottom
 {
-	isDummyLog(NO);
-
-	if (self.loaded == NO)   return YES;
-	if (self.movingToBottom) return YES;
+	NSAssertReturnR(self.isLoaded, NO);
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return NO;
+	PointerIsEmptyAssertReturn(doc, NO);
 
-	DOMHTMLElement *body = [doc body];
+	DOMElement *body = [doc body];
+	PointerIsEmptyAssertReturn(body, NO);
+	
+	NSInteger viewHeight = self.view.frame.size.height;
 
-	if (body) {
-		NSInteger viewHeight = self.view.frame.size.height;
+	NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
+	NSInteger scrtop = [[body valueForKey:@"scrollTop"] integerValue];
 
-		NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
-		NSInteger top    = [[body valueForKey:@"scrollTop"] integerValue];
+	NSAssertReturnR((viewHeight > 0), YES);
 
-		if (viewHeight == 0) return YES;
-
-		return ((top + viewHeight) >= height);
-	}
-
-	return NO;
-}
-
-- (void)savePosition
-{
-	isDummyLog();
-
-	if (self.loadingImages == 0) {
-		self.bottom = [self viewingBottom];
-	}
-}
-
-- (void)restorePosition
-{
-	isDummyLog();
-
-	[self moveToBottom];
+	return ((scrtop + viewHeight) >= height);
 }
 
 #pragma mark -
+#pragma mark Add/Remove History Mark
 
 - (void)mark
 {
-	isDummyLog();
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if (self.loaded == NO) return nil;
-
-		// ---- //
-
-		[self savePosition];
-
-		// ---- //
+		NSAssertReturnR(self.isLoaded, nil);
 
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return nil;
+		PointerIsEmptyAssertReturn(doc, nil);
+		
+		DOMElement *e = [doc getElementById:@"mark"];
 
-		DOMElement *body = [self body:doc];
-		if (PointerIsEmpty(body)) return nil;
+		while (e) {
+			[e.parentNode removeChild:e];
 
-		// ---- //
-
+			e = [doc getElementById:@"mark"];
+		}
+		
 		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
-
-		// ---- //
 
 		NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
@@ -424,20 +395,18 @@
 
 - (void)unmark
 {
-	isDummyLog();
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		if (self.loaded == NO) return @(NO);
+		NSAssertReturnR(self.isLoaded, @(NO));
 
 		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return @(NO);
+		PointerIsEmptyAssertReturn(doc, @(NO));
 
 		DOMElement *e = [doc getElementById:@"mark"];
 
-		if (e) {
-			[[e parentNode] removeChild:e];
+		while (e) {
+			[e.parentNode removeChild:e];
 
-			--self.count;
+			e = [doc getElementById:@"mark"];
 		}
 
 		[self executeScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
@@ -450,76 +419,45 @@
 
 - (void)goToMark
 {
-	isDummyLog();
-
-	if (self.loaded == NO) return;
-
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
-
-	DOMElement *e = [doc getElementById:@"mark"];
-
-	if (e) {
-		NSInteger y = 0;
-		DOMElement *t = e;
-
-		while (t) {
-			if ([t isKindOfClass:[DOMElement class]]) {
-				y += [[t valueForKey:@"offsetTop"] integerValue];
-			}
-
-			t = (id)[t parentNode];
-		}
-
-		[[doc body] setValue:@(y - [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
+	if ([self jumpToElementID:@"mark"]) {
+		[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 	}
-
-	[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 }
+
+#pragma mark - 
+#pragma mark Reload Scrollback
 
 - (void)reloadOldLines:(BOOL)markHistoric
 {
-	isDummyLog();
+	NSDictionary *oldLines = self.historicLogFile.data;
 
-	NSDictionary *oldLines = self.logFile.data;
+	[self.historicLogFile reset];
 
-	if (markHistoric) {
-		/* We reset our property list when it is historic so
-		 our isHistoric property can be applied to elements
-		 within the new list. What? */
+	NSObjectIsEmptyAssert(oldLines);
 
-		[self.logFile reset];
-	}
+	/* The dictionary keys of the historic log file is the line number
+	 of each line prefixed with a couple zeros (0). For example, 0000001,
+	 0000002, 0000003, etc. Sorting the dictionary puts these keys in
+	 order so that each message is rendered in the correct order it
+	 was originally printed. */
+	
+	NSArray *keys = oldLines.sortedDictionaryKeys;
 
-	if (NSObjectIsNotEmpty(oldLines)) {
-		NSArray *keys = oldLines.sortedDictionaryKeys;
+	for (NSString *key in keys) {
+		TVCLogLine *line = [[TVCLogLine alloc] initWithDictionary:[oldLines objectForKey:key]];
 
-		for (NSString *key in keys) {
-			NSDictionary *lineDic = [oldLines objectForKey:key];
+		PointerIsEmptyAssertLoopContinue(line);
 
-			TVCLogLine *line = [TVCLogLine.alloc initWithDictionary:lineDic];
-
-			if (PointerIsNotEmpty(line)) {
-				BOOL rawHTML	= (line.lineType == TVCLogLineRawHTMLType);
-				BOOL markAfter	= ([key isEqualToString:keys.lastObject]);
-
-				if (markHistoric) {
-					line.isHistoric = YES;
-				}
-
-				[self print:line
-				   withHTML:rawHTML
-			   specialWrite:(markHistoric == NO) // Priority determined by print:
-				  markAfter:markAfter];
-			}
+		if (markHistoric) {
+			line.isHistoric = YES;
 		}
+
+		[self print:line withHTML:(line.lineType == TVCLogLineRawHTMLType) specialWrite:YES];
 	}
 }
 
 - (void)reloadHistory
 {
-	isDummyLog();
-
 	self.reloadingHistory = YES;
 
 	[self reloadOldLines:YES];
@@ -532,7 +470,9 @@
 		 when we are done reloading our history we reset our state so that
 		 normal messages know to hit the block. */
 
-		[self.world updateReadinessState:self];
+		[self mark];
+
+		[self.worldController updateReadinessState:self];
 
 		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 
@@ -547,35 +487,73 @@
 
 - (void)reloadTheme
 {
-	if (self.reloadingHistory) {
-		return;
-	}
+	NSAssertReturn(self.reloadingHistory == NO);
+
+	[self clearWithReset:NO];
 	
 	self.reloadingBacklog = YES;
 
-	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+	[self reloadOldLines:NO];
 
-	if ([self isDummyLog] == NO) {
-		[self reloadOldLines:NO];
+	TVCLogMessageBlock (^messageBlock)(void) = [^{
+		self.reloadingBacklog = NO;
 
-		TVCLogMessageBlock (^messageBlock)(void) = [^{
-			self.reloadingBacklog = NO;
+		[self mark];
 
-			[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
 
-			return @(YES);
-		} copy];
+		return @(YES);
+	} copy];
 
-		[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (void)jumpToLine:(NSInteger)line
+{
+	NSString *lid = [NSString stringWithFormat:@"line%ld", line];
+
+	if ([self jumpToElementID:lid]) {
+		[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[@(line)]];
 	}
+}
+
+- (BOOL)jumpToElementID:(NSString *)elementID
+{
+	NSAssertReturnR(self.isLoaded, NO);
+
+	DOMDocument *doc = [self mainFrameDocument];
+	PointerIsEmptyAssertReturn(doc, NO);
+
+	DOMElement *e = [doc getElementById:elementID];
+	PointerIsEmptyAssertReturn(e, NO);
+
+	NSInteger y = 0;
+
+	DOMElement *t = e;
+
+	while (t) {
+		if ([t isKindOfClass:[DOMElement class]]) {
+			y += [[t valueForKey:@"offsetTop"] integerValue];
+		}
+
+		t = (id)[t parentNode];
+	}
+
+	[doc.body setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
+
+	return YES;
+}
+
+- (void)notifyDidBecomeVisible
+{
+	[self moveToBottom];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	isDummyLog();
-
-	[self savePosition];
-
 	if (bigger) {
 		[self.view makeTextLarger:nil];
 	} else {
@@ -583,19 +561,14 @@
 	}
 
 	[self executeScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
-
-	[self restorePosition];
 }
 
 #pragma mark -
+#pragma mark Manage Highlights
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
-	isDummyLog(NO);
-
-	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
-		return NO;
-	}
+	NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
 	if ([self.highlightedLineNumbers containsObject:@(self.lastVisitedHighlight)] == NO) {
 		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
@@ -612,49 +585,14 @@
 	return YES;
 }
 
-- (void)jumpToLine:(NSInteger)line
-{
-	isDummyLog();
-
-	NSString *lid = [NSString stringWithFormat:@"line%ld", line];
-
-	if (self.loaded == NO) return;
-
-	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
-
-	DOMElement *e = [doc getElementById:lid];
-
-	if (e) {
-		NSInteger y = 0;
-		DOMElement *t = e;
-
-		while (t) {
-			if ([t isKindOfClass:[DOMElement class]]) {
-				y += [[t valueForKey:@"offsetTop"] integerValue];
-			}
-
-			t = (id)[t parentNode];
-		}
-
-		[[doc body] setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
-	}
-
-	[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[@(line)]];
-}
-
 - (void)nextHighlight
 {
-	isDummyLog();
-
-	if (self.loaded == NO) return;
+	NSAssertReturn(self.isLoaded);
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
+	PointerIsEmptyAssert(doc);
 
-	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
-		return;
-	}
+	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
 	id bhli = @(self.lastVisitedHighlight);
 
@@ -662,7 +600,7 @@
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
 		NSInteger hli_ei = [self.highlightedLineNumbers indexOfObject:self.highlightedLineNumbers.lastObject];
 
-		if (NSDissimilarObjects(hli_ci, hli_ei) == NO) {
+		if (hli_ci == hli_ei) {
 			// Return method since the last highlight we
 			// visited was the end of array. Nothing ahead.
 		} else {
@@ -677,23 +615,19 @@
 
 - (void)previousHighlight
 {
-	isDummyLog();
-
-	if (self.loaded == NO) return;
+	NSAssertReturn(self.isLoaded);
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
+	PointerIsEmptyAssert(doc);
 
-	if (NSObjectIsEmpty(self.highlightedLineNumbers)) {
-		return;
-	}
+	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
 	id bhli = @(self.lastVisitedHighlight);
 
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
 
-		if (NSDissimilarObjects(hli_ci, 0) == NO) {
+		if (hli_ci == 0) {
 			// Return method since the last highlight we
 			// visited was the start of array. Nothing ahead.
 		} else {
@@ -706,96 +640,104 @@
 	[self jumpToLine:self.lastVisitedHighlight];
 }
 
+#pragma mark - 
+#pragma mark Manage Scrollback Size
+
 - (void)limitNumberOfLines
 {
-	isDummyLog();
-
 	self.needsLimitNumberOfLines = NO;
 
-	NSInteger n = (self.count - self.maxLines);
-	if (self.loaded == NO || n <= 0 || self.count <= 0) return;
+	NSInteger n = (self.activeLineCount - self.maximumLineCount);
+	
+	if (self.isLoaded == NO || n <= 0 || self.activeLineCount <= 0) {
+		return;
+	}
 
 	DOMDocument *doc = [self mainFrameDocument];
-	if (PointerIsEmpty(doc)) return;
+	PointerIsEmptyAssert(doc);
 
-	DOMElement *body = [self body:doc];
-	if (PointerIsEmpty(body)) return;
+	DOMElement *body = [self documentBody];
+	PointerIsEmptyAssert(body);
 
 	DOMNodeList *nodeList = [body childNodes];
-	if (PointerIsEmpty(nodeList)) return;
+	PointerIsEmptyAssert(nodeList);
 
-	n = (nodeList.length - self.maxLines);
+	n = (nodeList.length - self.maximumLineCount);
 
+	/* Remove old lines. */
 	for (NSInteger i = (n - 1); i >= 0; --i) {
 		[body removeChild:[nodeList item:(unsigned)i]];
 	}
 
-	if (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
-		DOMNodeList *nodeList = [body childNodes];
+	self.activeLineCount -= n;
 
-		if (nodeList.length) {
-			DOMNode *firstNode = [nodeList item:0];
+	if (self.activeLineCount < 0) {
+		self.activeLineCount = 0;
+	}
 
-			if (firstNode) {
-				NSString *lineId = [firstNode valueForKey:@"id"];
+	/* Update highlight index. */
+	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
-				if (lineId && lineId.length > 4) {
-					NSString *lineNumStr = [lineId safeSubstringFromIndex:4];
-					NSInteger lineNum    = [lineNumStr integerValue];
+	NSMutableArray *newList = [NSMutableArray array];
 
-					while (NSObjectIsNotEmpty(self.highlightedLineNumbers)) {
-						NSInteger i = [self.highlightedLineNumbers integerAtIndex:0];
+	for (NSNumber *lineNumber in self.highlightedLineNumbers) {
+		NSString *lid = [NSString stringWithFormat:@"line%ld", lineNumber.integerValue];
 
-						if (lineNum <= i) break;
+		DOMElement *e = [doc getElementById:lid];
 
-						[self.highlightedLineNumbers safeRemoveObjectAtIndex:0];
-					}
-				}
-			}
-		} else {
-			[self.highlightedLineNumbers removeAllObjects];
+		/* If the element does not exist, then it means 
+		 that we removed it up above. */
+		if (e) {
+			[newList safeAddObject:lineNumber];
 		}
 	}
 
-	self.count -= n;
-
-	if (self.count < 0) self.count = 0;
+	self.highlightedLineNumbers = newList;
 }
 
 - (void)setNeedsLimitNumberOfLines
 {
-	isDummyLog();
-
-	if (self.needsLimitNumberOfLines) return;
-
+	if (self.needsLimitNumberOfLines) {
+		return;
+	}
+	
 	_needsLimitNumberOfLines = YES;
 
 	[self limitNumberOfLines];
 }
 
-- (void)clear
+- (void)clearWithReset:(BOOL)resetQueue
 {
-	[self.logFile reset];
+	if (resetQueue) {
+		[self.historicLogFile reset];
 
-	[self.world.messageOperationQueue cancelAllOperations];
+		[self.worldController.messageOperationQueue cancelAllOperations];
 
-	[[NSOperationQueue mainQueue] cancelAllOperations];
+		[[NSOperationQueue mainQueue] cancelAllOperations];
+	}
+	
+	self.activeLineCount = 0;
+	self.lastVisitedHighlight = -1;
 
-	self.reloadingHistory = NO;
+	self.isLoaded = NO;
 	self.reloadingBacklog = NO;
+	self.reloadingHistory = NO;
+	self.needsLimitNumberOfLines = NO;
 	
 	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
+- (void)clear
+{
+	[self clearWithReset:YES];
+}
+
 #pragma mark -
+#pragma mark Print
 
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
 {
-	isDummyLog(nil);
-
-	if (NSObjectIsEmpty(line.body)) {
-		return nil;
-	}
+	NSObjectIsEmptyAssertReturn(line.messageBody, nil);
 
 	NSMutableString *s = [NSMutableString string];
 
@@ -805,51 +747,39 @@
 		[s appendString:time];
 	}
 
-	if (NSObjectIsNotEmpty(line.nick)) {
+	if (NSObjectIsNotEmpty(line.nickname)) {
 		NSString *nick = [line formattedNickname:self.channel];
 
 		[s appendString:nick];
 	}
 
-	[s appendString:line.body];
+	[s appendString:line.messageBody];
 
-	return [s stripEffects];
+	return [s stripIRCEffects];
 }
 
 #pragma mark -
 
 - (BOOL)print:(TVCLogLine *)line
 {
-	return [self print:line withHTML:NO specialWrite:NO markAfter:NO];
+	return [self print:line withHTML:NO specialWrite:NO];
 }
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML
 {
-	return [self print:line withHTML:stripHTML specialWrite:NO markAfter:NO];
+	return [self print:line withHTML:stripHTML specialWrite:NO];
 }
 
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML specialWrite:(BOOL)isSpecial
 {
-	return [self print:line withHTML:rawHTML specialWrite:isSpecial markAfter:NO];
-}
-
-- (BOOL)print:(TVCLogLine *)line
-	 withHTML:(BOOL)rawHTML				// YES if input will not be sent through our renderer.
- specialWrite:(BOOL)isSpecial			// YES if input should have high priority in queue.
-	markAfter:(BOOL)markAfter			// YES if a mark should be inserted after line.
-{
-	isDummyLog(NO);
-
-	if (NSObjectIsEmpty(line.body)) {
-		return NO;
-	}
+	NSObjectIsEmptyAssertReturn(line.messageBody, NO);
 
 	if (rawHTML) {
 		line.lineType = TVCLogLineRawHTMLType;
 	}
 
 	if ([NSThread isMainThread] == NO) {
-		return [self.iomt print:line withHTML:rawHTML];
+		return [self.iomt print:line withHTML:rawHTML specialWrite:isSpecial];
 	}
 
 	// ************************************************************************** /
@@ -858,74 +788,41 @@
 
 	TVCLogLineType type = line.lineType;
 
-	NSString *body			 = nil;
-	NSString *lineTypeString = [TVCLogLine lineTypeString:type];
+	NSString *renderedBody = nil;
+	NSString *lineTypeStng = [TVCLogLine lineTypeString:type];
 
 	BOOL highlighted = NO;
 
-	BOOL isText	     = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
+	BOOL isPlainText = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
 	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
-	BOOL drawLinks   = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeString]);
+	
+	BOOL drawLinks = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeStng]);
 
 	NSArray *urlRanges = @[];
 
 	// ---- //
 
 	if (rawHTML == NO) {
-		NSMutableDictionary *inputDictionary  = [NSMutableDictionary dictionary];
+		NSMutableDictionary *inputDictionary = [NSMutableDictionary dictionary];
 		NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
 
-		if (NSObjectIsNotEmpty(line.keywords)) {
-			inputDictionary[@"keywords"] = line.keywords;
-
-			if (NSObjectIsNotEmpty(line.nick)) {
-				inputDictionary[@"nick"] = line.nick;
-			}
-		}
-
-		if (NSObjectIsNotEmpty(line.excludeWords)) {
-			inputDictionary[@"excludeWords"] = line.excludeWords;
-		}
+		[inputDictionary safeSetObject:line.highlightKeywords forKey:@"highlightKeywords"];
+		[inputDictionary safeSetObject:line.excludeKeywords forKey:@"excludeKeywords"];
+		[inputDictionary safeSetObject:line.nickname forKey:@"nickname"];
 
 		[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 		[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
 
-		body = [TVCLogRenderer renderBody:line.body
-							   controller:self
-							   renderType:TVCLogRendererHTMLType
-							   properties:inputDictionary
-							   resultInfo:&outputDictionary];
+		renderedBody = [TVCLogRenderer renderBody:line.messageBody
+									   controller:self
+									   renderType:TVCLogRendererHTMLType
+									   properties:inputDictionary
+									   resultInfo:&outputDictionary];
 
-		urlRanges   = [outputDictionary arrayForKey:@"URLRanges"];
+		urlRanges = [outputDictionary arrayForKey:@"URLRanges"];
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	} else {
-		body = line.body;
-	}
-
-	// ************************************************************************** /
-	// Find all inline media.                                                     /
-	// ************************************************************************** /
-
-	NSMutableDictionary *inlineImageLinks = [NSMutableDictionary dictionary];
-
-	if (isNormalMsg && NSObjectIsNotEmpty(urlRanges) && [TPCPreferences showInlineImages]) {
-		if (([self.channel isChannel] && self.channel.config.ignoreInlineImages == NO) || [self.channel isTalk]) {
-			NSString *imageUrl  = nil;
-
-			for (NSValue *rangeValue in urlRanges) {
-				NSString *url = [line.body safeSubstringWithRange:[rangeValue rangeValue]];
-
-				imageUrl = [TVCImageURLParser imageURLFromBase:url];
-
-				if (imageUrl) {
-					if ([inlineImageLinks containsKey:imageUrl]) {
-						continue;
-					} else {
-						[inlineImageLinks safeSetObject:url forKey:imageUrl];
-					}
-				}
-			}
-		}
+		renderedBody = line.messageBody;
 	}
 
 	// ************************************************************************** /
@@ -934,29 +831,47 @@
 
 	NSMutableDictionary *specialAttributes = [NSMutableDictionary dictionary];
 
-	specialAttributes[@"activeStyleAbsolutePath"] = self.theme.other.path;
+	specialAttributes[@"activeStyleAbsolutePath"] = [self baseURL].absoluteString;
 	specialAttributes[@"applicationResourcePath"] = [TPCPreferences applicationResourcesFolderPath];
 
 	NSMutableDictionary *attributes = specialAttributes;
+	
+	// ************************************************************************** /
+	// Find all inline media.                                                     /
+	// ************************************************************************** /
 
-	// ---- //
+	NSMutableDictionary *inlineImageLinks = [NSMutableDictionary dictionary];
 
+	if (isNormalMsg && [TPCPreferences showInlineImages]) {
+		if (self.channel.config.ignoreInlineImages == NO) {
+			for (NSValue *linkRange in urlRanges) {
+				NSString *nurl = [line.messageBody safeSubstringWithRange:linkRange.rangeValue];
+				NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
+
+				NSObjectIsEmptyAssertLoopContinue(iurl);
+
+				if ([inlineImageLinks containsKey:iurl]) {
+					continue;
+				} else {
+					[inlineImageLinks safeSetObject:nurl forKey:iurl];
+				}
+			}
+		}
+	}
+
+	
 	attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
 	attributes[@"inlineMediaArray"]		= [NSMutableArray array];
 
-	for (NSString *imageUrl in inlineImageLinks) {
-		NSString *url = [inlineImageLinks objectForKey:imageUrl];
+	for (NSString *iurl in inlineImageLinks) {
+		NSString *nurl = [inlineImageLinks objectForKey:iurl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-			@"imageURL"					: [imageUrl stringWithValidURIScheme],
-			@"anchorLink"				:      [url stringWithValidURIScheme],
 			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+			@"anchorLink"				: [nurl stringWithValidURIScheme],
+			@"imageURL"					: [iurl stringWithValidURIScheme],
 		 }];
 	}
-
-	// ---- //
-
-	attributes[@"isNicknameAvailable"] = @(NO);
 
 	// ---- //
 
@@ -968,27 +883,29 @@
 
 	// ---- //
 
-	if (NSObjectIsNotEmpty(line.nick)) {
+	if (NSObjectIsNotEmpty(line.nickname)) {
 		attributes[@"isNicknameAvailable"] = @(YES);
 
-		attributes[@"nicknameColorNumber"]			= @(line.nickColorNumber);
-		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColors] == NO);
+		attributes[@"nicknameColorNumber"]			= @(line.nicknameColorNumber);
+		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColorHashing] == NO);
 
 		attributes[@"formattedNickname"]	= [line formattedNickname:self.channel].trim;
 
-		attributes[@"nickname"]				= line.nick;
+		attributes[@"nickname"]				= line.nickname;
 		attributes[@"nicknameType"]			= [TVCLogLine memberTypeString:line.memberType];
+	} else {
+		attributes[@"isNicknameAvailable"] = @(NO);
 	}
 
 	// ---- //
 
-	attributes[@"lineType"] = [TVCLogLine lineTypeString:line.lineType];
+	attributes[@"lineType"] = lineTypeStng;
 
 	// ---- //
 
 	NSString *classRep = NSStringEmptyPlaceholder;
 
-	if (isText) {
+	if (isPlainText) {
 		classRep = @"text";
 	} else {
 		classRep = @"event";
@@ -1002,116 +919,89 @@
 
 	// ---- //
 
-
-	attributes[@"highlightAttributeRepresentation"] = ((highlighted) ? @"true" : @"false");
-
-	attributes[@"message"]				= line.body;
-	attributes[@"formattedMessage"]		= body;
-
-	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
-	attributes[@"isHighlight"]		= @(highlighted);
-
-	if (line.isEncrypted) {
-		attributes[@"isEncrypted"] = @(line.isEncrypted);
-
-		attributes[@"encryptedMessageLockTemplate"]	=
-		[TVCLogRenderer renderTemplate:@"encryptedMessageLock" attributes:specialAttributes];
+	if (highlighted) {
+		attributes[@"highlightAttributeRepresentation"] = @"true";
+	} else {
+		attributes[@"highlightAttributeRepresentation"] = @"false";
 	}
 
 	// ---- //
 
-	[self writeLine:line attributes:attributes specialWrite:isSpecial markAfter:markAfter];
+	attributes[@"message"]				= line.messageBody;
+	attributes[@"formattedMessage"]		= renderedBody;
+
+	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
+	attributes[@"isHighlight"]		= @(highlighted);
+
+	// ---- //
+
+	if (line.isEncrypted) {
+		attributes[@"isEncrypted"] = @(line.isEncrypted);
+		
+		attributes[@"encryptedMessageLockTemplate"]	= [TVCLogRenderer renderTemplate:@"encryptedMessageLock" attributes:specialAttributes];
+	}
+
+	// ---- //
+
+	[self writeLine:line attributes:attributes specialWrite:isSpecial];
 
 	// ************************************************************************** /
 	// Log highlight (if any).                                                    /
 	// ************************************************************************** /
 
 	if (highlighted && isSpecial == NO) {
-		NSString *messageBody;
-		NSString *nicknameBody = [line formattedNickname:self.channel];
-
-		if (type == TVCLogLineActionType) {
-			if ([nicknameBody hasSuffix:@":"]) {
-				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody, line.body];
-			} else {
-				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardActionFormat, nicknameBody, line.body];
-			}
-		} else {
-			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, nicknameBody, line.body];
-		}
-
-		[self.world addHighlightInChannel:self.channel withMessage:messageBody];
+		[self.worldController addHighlightInChannel:self.channel withLogLine:line];
 	}
 
 	return highlighted;
 }
 
-- (void)writeLine:(TVCLogLine *)line
-	   attributes:(NSMutableDictionary *)attributes
-	 specialWrite:(BOOL)isSpecial
-		markAfter:(BOOL)markAfter
+- (void)writeLine:(TVCLogLine *)line attributes:(NSMutableDictionary *)attributes specialWrite:(BOOL)isSpecial
 {
-	isDummyLog();
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		[self savePosition];
-
-		++self.lineNumber;
-		++self.count;
+		DOMElement *body = [self documentBody];
+		PointerIsEmptyAssertReturn(body, nil);
 
 		// ---- //
 
-		DOMDocument *doc = [self mainFrameDocument];
-		if (PointerIsEmpty(doc)) return nil;
+		self.activeLineNumber += 1;
+		self.activeLineCount += 1;
 
-		DOMElement *body = [self body:doc];
-		if (PointerIsEmpty(body)) return nil;
-
-		// ---- //
-
-		attributes[@"lineNumber"] = @(self.lineNumber);
+		attributes[@"lineNumber"] = @(self.activeLineNumber);
 
 		// ---- //
 
-		NSString *name = [self.theme.other templateNameWithLineType:line.lineType];
-		NSString *html = [TVCLogRenderer renderTemplate:name attributes:attributes];
+		NSString *html = [TVCLogRenderer renderTemplate:[self.themeSettings templateNameWithLineType:line.lineType]
+											 attributes:attributes];
 
-		if (NSObjectIsEmpty(html)) {
-			return nil;
-		}
+		NSObjectIsEmptyAssertReturn(html, nil);
 
 		// ---- //
 
 		if (isSpecial == NO) {
-			if (self.maxLines > 0 && (self.count - 10) > self.maxLines) {
+			if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
 				[self setNeedsLimitNumberOfLines];
 			}
-
-			if ([attributes[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-				[self.highlightedLineNumbers safeAddObject:@(self.lineNumber)];
-			}
-
-			[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.lineNumber)]];
-
-			// ---- //
-
-			[self.logFile writePropertyListEntry:[line dictionaryValue]
-										   toKey:[NSNumberWithInteger(self.lineNumber) integerWithLeadingZero:10]];
 		}
 
-		if (markAfter) {
-			html = [html stringByAppendingString:[TVCLogRenderer renderTemplate:@"historyIndicator"]];
+		if ([attributes[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
+			[self.highlightedLineNumbers safeAddObject:@(self.activeLineNumber)];
 		}
 
+		[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.activeLineCount)]];
+
+		[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
+											   toKey:[@(self.activeLineNumber) integerWithLeadingZero:10]];
+		
 		return (__bridge void *)html;
 	} copy];
 
 	[self enqueueMessageBlock:messageBlock
 				   fromSender:self
 				  withContext:@{
-					@"highPriority" : @(isSpecial || line.isHistoric),
-					@"isHistoric" : @(line.isHistoric)
-	 }];
+						@"isHistoric" : @(line.isHistoric),
+						@"highPriority" : @(isSpecial)
+					} ];
 }
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
@@ -1121,17 +1011,13 @@
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
 {
-	isDummyLog();
-
-	[self.world.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
-		[sender handleMessageBlock:messageBlock isSpecial:[context[@"highPriority"] boolValue]];
+	[self.worldController.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
+		[sender handleMessageBlock:messageBlock withContext:context];
 	} forController:sender withContext:context]];
 }
 
-- (void)handleMessageBlock:(id)messageBlock isSpecial:(BOOL)special
+- (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context
 {
-	isDummyLog();
-
 	// Internally, TVCLogMessageBlock should only return a
 	// BOOL as NSValue or NSString absolute value.
 
@@ -1147,7 +1033,7 @@
 
 	// ---- //
 
-	if ([stslt isKindOfClass:NSString.class]) {
+	if ([stslt isKindOfClass:[NSString class]]) {
 		if (NSObjectIsNotEmpty(stslt)) {
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[self appendToDocumentBody:stslt];
@@ -1159,7 +1045,6 @@
 					// back to the bottom.
 					
 					[self moveToTop];
-					self.bottom = NO;
 				}
 			}];
 
@@ -1172,11 +1057,12 @@
 	// ---- //
 
 	if (rrslt == NO) {
-		[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(special)}];
+		[self enqueueMessageBlock:messageBlock fromSender:self withContext:context];
 	}
 }
 
 #pragma mark -
+#pragma mark Initial Document
 
 - (NSString *)initialDocument:(NSString *)topic
 {
@@ -1184,23 +1070,23 @@
 
 	// ---- //
 
-	templateTokens[@"cacheToken"]				= [NSString stringWithUUID];
-
-	templateTokens[@"activeStyleAbsolutePath"]	= self.theme.other.path;
+	templateTokens[@"activeStyleAbsolutePath"]	= [self baseURL].absoluteString;
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences applicationResourcesFolderPath];
+	
+	templateTokens[@"cacheToken"]				= [NSString stringWithInteger:TXRandomNumber(5000)];
 
 	// ---- //
 
 	if (self.channel) {
-		templateTokens[@"isChannelView"]	= @(YES);
+		templateTokens[@"isChannelView"]  = @(YES);
 
-		templateTokens[@"channelName"]		= logEscape(self.channel.name);
-		templateTokens[@"viewTypeToken"]	= [self.channel channelTypeString];
+		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:self.channel.name];
+		templateTokens[@"viewTypeToken"]  = [self.channel channelTypeString];
 
-		if (NSObjectIsNotEmpty(topic)) {
-			templateTokens[@"formattedTopicValue"] = topic;
-		} else {
+		if (NSObjectIsEmpty(topic)) {
 			templateTokens[@"formattedTopicValue"] = TXTLS(@"IRCChannelEmptyTopic");
+		} else {
+			templateTokens[@"formattedTopicValue"] = topic;
 		}
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
@@ -1223,21 +1109,16 @@
 {
 	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
 
-	TPCOtherTheme *other = self.world.viewTheme.other;
-
 	// ---- //
 
-	NSFont *channelFont = other.channelViewFont;
+	NSFont *channelFont = self.themeSettings.channelViewFont;
 
 	if (PointerIsEmpty(channelFont)) {
 		channelFont = [TPCPreferences themeChannelViewFont];
 	}
 
-	NSString *name = [channelFont fontName];
-	CGFloat  rsize = [channelFont pointSize];
-
-	templateTokens[@"userConfiguredFontName"] = name;
-	templateTokens[@"userConfiguredFontSize"] = @(rsize * (72.0 / 96.0));
+	templateTokens[@"userConfiguredFontName"] =   channelFont.fontName;
+	templateTokens[@"userConfiguredFontSize"] = @(channelFont.pointSize * (72.0 / 96.0));
 
 	// ---- //
 
@@ -1247,21 +1128,18 @@
 
 	// ---- //
 
-	NSInteger indentOffset = other.indentationOffset;
+	NSInteger indentOffset = self.themeSettings.indentationOffset;
 
 	if (indentOffset == TXThemeDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
 
-		NSString *time = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], other.timestampFormat);
+		NSString *time = TXFormattedTimestampWithOverride([NSDate date], [TPCPreferences themeTimestampFormat], self.themeSettings.timestampFormat);
 
-		NSDictionary *attributes = @{NSFontAttributeName: channelFont};
+		NSSize textSize = [time sizeWithAttributes:@{NSFontAttributeName : channelFont}];
 
-		NSSize    textSize  = [time sizeWithAttributes:attributes];
-		NSInteger textWidth = (textSize.width + indentOffset);
-
-		templateTokens[@"predefinedTimestampWidth"] = @(textWidth);
+		templateTokens[@"predefinedTimestampWidth"] = @(textSize.width + indentOffset);
 	}
 
 	// ---- //
@@ -1273,14 +1151,22 @@
 
 - (void)setUpScroller
 {
-	isDummyLog();
+	WebFrameView *frame = [self.view.mainFrame frameView];
+	PointerIsEmptyAssert(frame);
 
-	WebFrameView *frame = [[self.view mainFrame] frameView];
-	if (PointerIsEmpty(frame)) return;
+	// ---- //
+
+	if (PointerIsEmpty(self.autoScroller)) {
+		self.autoScroller = [TVCWebViewAutoScroll new];
+	}
+
+	self.autoScroller.webFrame = frame;
+
+	// ---- //
 
 	NSScrollView *scrollView = nil;
 
-	for (NSView *v in [frame subviews]) {
+	for (NSView *v in frame.subviews) {
 		if ([v isKindOfClass:[NSScrollView class]]) {
 			scrollView = (NSScrollView *)v;
 
@@ -1288,27 +1174,14 @@
 		}
 	}
 
-	if (PointerIsEmpty(scrollView)) return;
+	PointerIsEmptyAssert(scrollView);
 
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
-
-	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
-		[scrollView performSelector:@selector(setAllowsHorizontalScrolling:) withObject:NO];
-	}
 }
 
 #pragma mark -
 #pragma mark WebView Delegate
-
-- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
-{
-	isDummyLog();
-
-	self.js = windowObject;
-
-	[self.js setValue:self.sink forKey:@"app"];
-}
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
@@ -1328,102 +1201,40 @@
 				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
+{
+	[windowObject setValue:self.sink forKey:@"app"];
+}
+
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	isDummyLog();
-
 	NSString *viewType = @"server";
 
-	if (self.channel && self.channel.isChannel) {
-		viewType = @"channel";
-	} else if (self.channel && self.channel.isTalk) {
-		viewType = @"talk";
+	if (self.channel) {
+		viewType = [self.channel channelTypeString];
 	}
 
 	[self executeScriptCommand:@"viewInitiated" withArguments:@[
 		NSStringNilValueSubstitute(viewType),
-		NSStringNilValueSubstitute(self.client.config.guid),
-		NSStringNilValueSubstitute(self.channel.config.guid),
+		NSStringNilValueSubstitute(self.client.config.itemUUID),
+		NSStringNilValueSubstitute(self.channel.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
 
 	if ([TPCPreferences reloadScrollbackOnLaunch] && self.reloadingBacklog == NO) {
 		[self reloadHistory];
 	} else {
-		[self.world updateReadinessState:self];
+		[self.worldController updateReadinessState:self];
 
 		if (self.reloadingBacklog == NO) {
 			[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 		}
 	}
 
-	self.loaded	= YES;
-	self.loadingImages = 0;
+	self.isLoaded = YES;
 
 	[self setUpScroller];
-
-	if (PointerIsEmpty(self.autoScroller)) {
-		self.autoScroller = [TVCWebViewAutoScroll new];
-	}
-
-	self.autoScroller.webFrame = self.view.mainFrame.frameView;
-
 	[self moveToBottom];
-	self.bottom = YES;
-
-	DOMDocument *doc = [frame DOMDocument];
-	if (PointerIsEmpty(doc)) return;
-
-	DOMElement *body = [self body:doc];
-	DOMNode    *e    = [body firstChild];
-
-	while (e) {
-		DOMNode *next = [e nextSibling];
-
-		if ([e isKindOfClass:[DOMHTMLDivElement class]] == NO &&
-			[e isKindOfClass:[DOMHTMLHRElement class]] == NO) {
-
-			[body removeChild:e];
-		}
-
-		e = next;
-	}
-}
-
-- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
-{
-	isDummyLog(self);
-
-	NSString *scheme = [request.URL.scheme lowercaseString];
-
-	if ([scheme isEqualToString:@"http"] ||
-		[scheme isEqualToString:@"https"]) {
-
-		if (self.loadingImages == 0) {
-			[self savePosition];
-		}
-
-		++self.loadingImages;
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource
-{
-	isDummyLog();
-
-	if (identifier) {
-		if (self.loadingImages > 0) {
-			--self.loadingImages;
-		}
-
-		if (self.loadingImages == 0) {
-			[self restorePosition];
-		}
-	}
 }
 
 #pragma mark -
@@ -1431,22 +1242,12 @@
 
 - (void)logViewKeyDown:(NSEvent *)e
 {
-	[self.world logKeyDown:e];
+	[self.worldController logKeyDown:e];
 }
 
 - (void)logViewOnDoubleClick:(NSString *)e
 {
-	[self.world logDoubleClick:e];
-}
-
-- (void)logViewWillResize
-{
-	[self savePosition];
-}
-
-- (void)logViewDidResize
-{
-	[self restorePosition];
+	[self.worldController logDoubleClick:e];
 }
 
 @end

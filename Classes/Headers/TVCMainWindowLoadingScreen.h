@@ -38,15 +38,11 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowLoadingScreenView : NSBox
-@property (nonatomic, unsafe_unretained) TXMasterController *master;
-
-@property (nonatomic, strong) NSView *backgroundContentView;
-
-@property (nonatomic, strong) NSView *welcomeAddServerView;
-@property (nonatomic, strong) NSButton *welcomeAddServerViewButton;
-
-@property (nonatomic, strong) NSView *loadingConfigurationView;
-@property (nonatomic, strong) NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, nweak) NSView *backgroundContentView;
+@property (nonatomic, nweak) NSView *welcomeAddServerView;
+@property (nonatomic, nweak) NSView *loadingConfigurationView;
+@property (nonatomic, uweak) id welcomeAddServerViewButton;
+@property (nonatomic, uweak) id loadingConfigurationViewPI;
 
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;

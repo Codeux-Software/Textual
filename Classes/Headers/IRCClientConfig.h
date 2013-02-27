@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define IRCConnectionDefaultServerPort		6667
+
 #define TXFloodControlDefaultDelayTimer       2
 #define TXFloodControlDefaultMessageCount     6
 
@@ -47,43 +49,41 @@ typedef enum TXConnectionProxyType : NSInteger {
 	TXConnectionSocks5ProxyType = 5,
 } TXConnectionProxyType;
 
-NSComparisonResult channelDataSort(IRCChannel *s1, IRCChannel *s2, void *context);
+NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *context);
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
-@property (nonatomic, strong) NSString *guid;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *host;
-@property (nonatomic, assign) NSInteger port;
-@property (nonatomic, assign) BOOL useSSL;
-@property (nonatomic, strong) NSString *nick;
-@property (nonatomic, strong) NSString *password;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *realName;
-@property (nonatomic, strong) NSString *nickPassword;
-@property (nonatomic, strong) NSMutableArray *altNicks;
-@property (nonatomic, assign) TXConnectionProxyType proxyType;
-@property (nonatomic, strong) NSString *proxyHost;
-@property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, strong) NSString *proxyUser;
-@property (nonatomic, strong) NSString *proxyPassword;
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
-@property (nonatomic, assign) BOOL autoSleepDisconnect;
-@property (nonatomic, assign) BOOL prefersIPv6;
-@property (nonatomic, assign) BOOL isTrustedConnection;
-@property (nonatomic, assign) NSStringEncoding encoding;
-@property (nonatomic, assign) NSStringEncoding fallbackEncoding;
-@property (nonatomic, strong) NSString *leavingComment;
-@property (nonatomic, strong) NSString *sleepQuitMessage;
+@property (nonatomic, assign) BOOL autoSleepModeDisconnect;
+@property (nonatomic, assign) BOOL connectionPrefersIPv6;
+@property (nonatomic, assign) BOOL connectionUsesSSL;
 @property (nonatomic, assign) BOOL invisibleMode;
-@property (nonatomic, strong) NSMutableArray *loginCommands;
-@property (nonatomic, strong) NSMutableArray *channels;
-@property (nonatomic, strong) NSMutableArray *ignores;
-@property (nonatomic, strong) NSString *server;
-@property (nonatomic, strong) NSString *network;
+@property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
-@property (nonatomic, assign) NSInteger floodControlMaximumMessages;
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
+@property (nonatomic, assign) NSInteger floodControlMaximumMessages;
+@property (nonatomic, assign) NSStringEncoding fallbackEncoding;
+@property (nonatomic, assign) NSStringEncoding primaryEncoding;
+@property (nonatomic, assign) TXConnectionProxyType proxyType;
+@property (nonatomic, strong) NSMutableArray *alternateNicknames;
+@property (nonatomic, strong) NSMutableArray *channelList;
+@property (nonatomic, strong) NSMutableArray *ignoreList;
+@property (nonatomic, strong) NSMutableArray *loginCommands;
+@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, strong) NSString *clientName;
+@property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, strong) NSString *nicknamePassword;
+@property (nonatomic, strong) NSString *proxyAddress;
+@property (nonatomic, assign) NSInteger proxyPort;
+@property (nonatomic, strong) NSString *proxyPassword;
+@property (nonatomic, strong) NSString *proxyUsername;
+@property (nonatomic, strong) NSString *realname;
+@property (nonatomic, strong) NSString *serverAddress;
+@property (nonatomic, assign) NSInteger serverPort;
+@property (nonatomic, strong) NSString *serverPassword;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *normalLeavingComment;
+@property (nonatomic, strong) NSString *sleepModeLeavingComment;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;

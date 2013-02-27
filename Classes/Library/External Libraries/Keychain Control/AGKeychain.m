@@ -12,8 +12,6 @@
 
 @implementation AGKeychain
 
-#pragma mark -
-
 + (NSMutableDictionary *)newSearchDictionary:(NSString *)keychainItemName
 								withItemKind:(NSString *)keychainItemKind
 								 forUsername:(NSString *)username
@@ -23,35 +21,34 @@
 
 	[searchDictionary setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
 
-	[searchDictionary setObject:keychainItemName	forKey:(id)kSecAttrLabel];
-	[searchDictionary setObject:keychainItemKind	forKey:(id)kSecAttrDescription];
+	[searchDictionary setObject:keychainItemName forKey:(id)kSecAttrLabel];
+	[searchDictionary setObject:keychainItemKind forKey:(id)kSecAttrDescription];
 
 	if (NSObjectIsNotEmpty(username)) {
-		[searchDictionary setObject:username			forKey:(id)kSecAttrAccount];
+		[searchDictionary setObject:username forKey:(id)kSecAttrAccount];
 	}
 
-	[searchDictionary setObject:service				forKey:(id)kSecAttrService];
+	[searchDictionary setObject:service	forKey:(id)kSecAttrService];
 
 	return searchDictionary;
 }
 
-+ (NSData *)searchKeychainCopyMatching:(NSString *)keychainItemName
-						  withItemKind:(NSString *)keychainItemKind
-						   forUsername:(NSString *)username
-						   serviceName:(NSString *)service
++ (NSData *)searchKeychainMatching:(NSString *)keychainItemName
+					  withItemKind:(NSString *)keychainItemKind
+					   forUsername:(NSString *)username
+					   serviceName:(NSString *)service
 {
 	NSMutableDictionary *searchDictionary = [AGKeychain newSearchDictionary:keychainItemName
 															   withItemKind:keychainItemKind
 																forUsername:username
 																serviceName:service];
-	
-	[searchDictionary setObject:(id)kSecMatchLimitOne	forKey:(id)kSecMatchLimit];
-	[searchDictionary setObject:(id)kCFBooleanTrue		forKey:(id)kSecReturnData];
+
+	[searchDictionary setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
+	[searchDictionary setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
 
 	CFDataRef result = nil;
 
-	OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)searchDictionary,
-										  (CFTypeRef *)&result);
+	OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)searchDictionary, (CFTypeRef *)&result);
 
 #pragma unused(status)
 
@@ -61,7 +58,7 @@
 #pragma mark -
 
 + (BOOL)deleteKeychainItem:(NSString *)keychainItemName
-			  withItemKind:(NSString *)keychainItemKind 
+			  withItemKind:(NSString *)keychainItemKind
 			   forUsername:(NSString *)username
 			   serviceName:(NSString *)service
 {
@@ -70,37 +67,27 @@
 														  forUsername:username
 														  serviceName:service];
 
-	// ---- //
-	
 	OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
-	
-	if (status == errSecSuccess) {
-		return YES;
-	}
 
-	return NO;
+	return (status == errSecSuccess);
 }
 
-+ (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName 
-				   withItemKind:(NSString *)keychainItemKind 
-					forUsername:(NSString *)username 
++ (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName
+				   withItemKind:(NSString *)keychainItemKind
+					forUsername:(NSString *)username
 				withNewPassword:(NSString *)newPassword
 					serviceName:(NSString *)service
 {
 	NSMutableDictionary *oldDictionary = [AGKeychain newSearchDictionary:keychainItemName
-														 withItemKind:keychainItemKind
-														  forUsername:username
-														  serviceName:service];
+															withItemKind:keychainItemKind
+															 forUsername:username
+															 serviceName:service];
 
 	NSMutableDictionary *newDictionary = [NSMutableDictionary dictionary];
 
-	// ---- //
-
 	NSData *encodedPassword = [newPassword dataUsingEncoding:NSUTF8StringEncoding];
-	
-	[newDictionary setObject:encodedPassword forKey:(id)kSecValueData];
 
-	// ---- //
+	[newDictionary setObject:encodedPassword forKey:(id)kSecValueData];
 
 	OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)oldDictionary,
 									(__bridge CFDictionaryRef)newDictionary);
@@ -112,17 +99,13 @@
 							  withPassword:newPassword
 							   serviceName:service];
 	}
-	
-	if (status == errSecSuccess) {
-		return YES;
-	}
-	
-	return NO;
+
+	return (status == errSecSuccess);
 }
 
-+ (BOOL)addKeychainItem:(NSString *)keychainItemName 
-		   withItemKind:(NSString *)keychainItemKind 
-			forUsername:(NSString *)username 
++ (BOOL)addKeychainItem:(NSString *)keychainItemName
+		   withItemKind:(NSString *)keychainItemKind
+			forUsername:(NSString *)username
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
 {
@@ -133,36 +116,26 @@
 
 	NSData *encodedPassword = [password dataUsingEncoding:NSUTF8StringEncoding];
 
-	// ---- //
-	
 	[dictionary setObject:encodedPassword forKey:(id)kSecValueData];
 
-	// ---- //
-
 	OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dictionary, NULL);
-	
-	if (status == errSecSuccess) {
-		return YES;
-	}
-	
-	return NO;
+
+	return (status == errSecSuccess);
 }
 
 + (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName
-							 withItemKind:(NSString *)keychainItemKind 
+							 withItemKind:(NSString *)keychainItemKind
 							  forUsername:(NSString *)username
 							  serviceName:(NSString *)service
 {
-	NSData *passwordData = [AGKeychain searchKeychainCopyMatching:keychainItemName
-													 withItemKind:keychainItemKind
-													  forUsername:username
-													  serviceName:service];
-	
-	if (PointerIsNotEmpty(passwordData)) {
-		return [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
-	}
+	NSData *passwordData = [AGKeychain searchKeychainMatching:keychainItemName
+												 withItemKind:keychainItemKind
+												  forUsername:username
+												  serviceName:service];
 
-	return NSStringEmptyPlaceholder;
+	NSObjectIsEmptyAssertReturn(passwordData, nil);
+
+	return [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
 }
 
 @end

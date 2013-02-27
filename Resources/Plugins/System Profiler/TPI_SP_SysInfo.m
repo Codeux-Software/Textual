@@ -49,7 +49,7 @@
 
 + (NSString *)applicationActiveStyle
 {
-	NSString *fname = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
+	NSString *fname = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
 
 	if (NSObjectIsNotEmpty(fname)) {
 		return TPIFLS(@"SystemInformationStyleCommandResult", fname);
@@ -92,8 +92,8 @@
 + (NSString *)applicationRuntimeStatistics
 {
 	return TPIFLS(@"SystemInformationRuncountCommandResult",
-				  TXFormattedNumber([TPCPreferences runCount]),
-				  TXReadableTime([TPCPreferences totalRunTime]));
+				  TXFormattedNumber([TPCPreferences applicationRunCount]),
+				  TXReadableTime([TPCPreferences timeIntervalSinceApplicationInstall]));
 }
 
 + (NSString *)systemCPULoadInformation
@@ -105,7 +105,7 @@
 {
 	NSMutableString *result = [NSMutableString string];
 
-	NSArray *drives = [_NSFileManager() contentsOfDirectoryAtPath:_localVolumeBaseDirectory error:NULL];
+	NSArray *drives = [RZFileManager() contentsOfDirectoryAtPath:_localVolumeBaseDirectory error:NULL];
 
 	NSInteger objectIndex = 0;
 
@@ -131,10 +131,10 @@
 
 		if (isVolume) {
 			if (statfs(fsRep, &stat) == 0) {
-				NSString *fileSystemName = [_NSFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
+				NSString *fileSystemName = [RZFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
 
 				if ([fileSystemName isEqualToString:@"hfs"]) {
-					NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
+					NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 
 					if (diskInfo) {
 						TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
@@ -169,7 +169,7 @@
 	NSArray *screens = [NSScreen screens];
 
 	if (screens.count == 1) {
-		NSScreen *maiScreen = _NSMainScreen();
+		NSScreen *maiScreen = RZMainScreen();
 
 		NSString *result = TPIFLS(@"SystemInformationScreensCommandResultSingle",
 								  maiScreen.frame.size.width,
@@ -234,14 +234,14 @@
 
 	_cpu_model = [_cpu_model trim];
 
-	BOOL _show_cpu_model	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> CPU Model"] == NO);
-	BOOL _show_gpu_model	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> GPU Model"] == NO);
-	BOOL _show_diskinfo		= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Disk Information"] == NO);
-	BOOL _show_sys_uptime	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
-	BOOL _show_sys_memory	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
-	BOOL _show_screen_res	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
-	BOOL _show_load_avg		= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Load Average"] == NO);
-	BOOL _show_os_version	= ([_NSUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
+	BOOL _show_cpu_model	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> CPU Model"] == NO);
+	BOOL _show_gpu_model	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> GPU Model"] == NO);
+	BOOL _show_diskinfo		= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Disk Information"] == NO);
+	BOOL _show_sys_uptime	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
+	BOOL _show_sys_memory	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
+	BOOL _show_screen_res	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
+	BOOL _show_load_avg		= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Load Average"] == NO);
+	BOOL _show_os_version	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
 
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
@@ -315,7 +315,7 @@
 
 	if (_show_screen_res) {
 		/* Screen Resolution. */
-		NSScreen *maiScreen = _NSMainScreen();
+		NSScreen *maiScreen = RZMainScreen();
 
 		if ([TPCPreferences runningInHighResolutionMode]) {
 			_new = TPIFLS(@"SystemInformationCompiledOutputScreenResolutionHighResoMode",
@@ -490,7 +490,7 @@
 
 + (NSString *)formattedLocalVolumeDiskUsage
 {
-	NSDictionary *diskInfo = [_NSFileManager() attributesOfFileSystemForPath:@"/" error:nil];
+	NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:@"/" error:nil];
 
 	if (diskInfo) {
 		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
@@ -597,7 +597,7 @@
 
 + (NSInteger)applicationUptime
 {
-	return [NSDate secondsSinceUnixTimestamp:TPCPreferences.startTime];
+	return [TPCPreferences timeIntervalSinceApplicationLaunch];
 }
 
 + (NSString *)loadAverageWithCores:(NSInteger)cores

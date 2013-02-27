@@ -37,14 +37,16 @@
 
 #import "TextualApplication.h"
 
-#define _THOPluginManager()			[THOPluginManager defaultManager]
+#define RZPluginManager()			[THOPluginManager defaultManager]
 
 @interface THOPluginManager : NSObject
 + (THOPluginManager *)defaultManager;
 
+/* Manage loaded plugins. */
 - (void)loadPlugins;
 - (void)unloadPlugins;
 
+/* Information about loaded plugins. */
 - (NSArray *)supportedUserInputCommands;
 - (NSArray *)supportedServerInputCommands;
 
@@ -55,6 +57,7 @@
 
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 
+/* Talk to plugins. */
 - (void)sendUserInputDataToBundles:(IRCClient *)client
 						   message:(NSString *)message
 						   command:(NSString *)command;

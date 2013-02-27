@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C6B5F3716C62084000AD629 /* CSFWSystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B5F3516C62084000AD629 /* CSFWSystemInformation.m */; };
-		4C6B5F3816C62084000AD629 /* CSFWSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6B5F3716C62084000AD629 /* SystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B5F3516C62084000AD629 /* SystemInformation.m */; };
+		4C6B5F3816C62084000AD629 /* SystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B5F3616C62084000AD629 /* SystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -17,8 +17,8 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* SystemInformation_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInformation_Prefix.pch; sourceTree = "<group>"; };
-		4C6B5F3516C62084000AD629 /* CSFWSystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFWSystemInformation.m; sourceTree = "<group>"; };
-		4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFWSystemInformation.h; sourceTree = "<group>"; };
+		4C6B5F3516C62084000AD629 /* SystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInformation.m; sourceTree = "<group>"; };
+		4C6B5F3616C62084000AD629 /* SystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInformation.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* SystemInformation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SystemInformation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,8 +100,8 @@
 		4C1AD69F12DF617E00B4AD56 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4C6B5F3516C62084000AD629 /* CSFWSystemInformation.m */,
-				4C6B5F3616C62084000AD629 /* CSFWSystemInformation.h */,
+				4C6B5F3516C62084000AD629 /* SystemInformation.m */,
+				4C6B5F3616C62084000AD629 /* SystemInformation.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -113,7 +113,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6B5F3816C62084000AD629 /* CSFWSystemInformation.h in Headers */,
+				4C6B5F3816C62084000AD629 /* SystemInformation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6B5F3716C62084000AD629 /* CSFWSystemInformation.m in Sources */,
+				4C6B5F3716C62084000AD629 /* SystemInformation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +236,7 @@
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = SystemInformation;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = framework;
@@ -287,6 +288,7 @@
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = SystemInformation;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = framework;

@@ -42,56 +42,50 @@
 - (id)init
 {
     if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDChanInviteExceptionSheet" owner:self];
-		
-		self.list  = [NSMutableArray new];
-        self.modes = [NSMutableArray new];
+		[NSBundle loadNibNamed:@"TDChanBanExceptionSheet" owner:self];
+
+		self.exceptionList = [NSMutableArray new];
+        self.changeModeList = [NSMutableArray new];
     }
-    
+
     return self;
 }
 
 - (void)show
 {
-	IRCClient  *u = self.delegate;
-	IRCChannel *c = [u.world selectedChannel];
-	
-	NSString *nheader;
-	
-	nheader = [self.header stringValue];
-	nheader = [NSString stringWithFormat:nheader, c.name];
-	
-	[self.header setStringValue:nheader];
-	
+	IRCChannel *c = self.worldController.selectedChannel;
+
+	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, c.name];
+
     [self startSheet];
 }
 
-- (void)ok:(id)sender
+- (void)cancel:(id)sender
 {
-	[self endSheet];
-	
 	if ([self.delegate respondsToSelector:@selector(chanInviteExceptionDialogWillClose:)]) {
 		[self.delegate chanInviteExceptionDialogWillClose:self];
 	}
+
+	[super cancel:nil];
 }
 
 - (void)clear
 {
-    [self.list removeAllObjects];
-	
+    [self.exceptionList removeAllObjects];
+
     [self reloadTable];
 }
 
-- (void)addException:(NSString *)host tset:(NSString *)time setby:(NSString *)owner
+- (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-    [self.list safeAddObject:@[host, [owner nicknameFromHostmask], time]];
-    
+    [self.exceptionList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
+
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [self.table reloadData];
+    [self.exceptionTable reloadData];
 }
 
 #pragma mark -
@@ -107,43 +101,43 @@
 - (void)onRemoveExceptions:(id)sender
 {
     NSString *modeString;
-    
-	NSMutableString *str   = [NSMutableString stringWithString:@"-"];
+
+	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
-	
-	NSIndexSet *indexes = [self.table selectedRowIndexes];
-	
+
+	NSIndexSet *indexes = [self.exceptionTable selectedRowIndexes];
+
     NSInteger indexTotal = 0;
-    
+
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
         indexTotal++;
-        
-		NSArray *iteml = [self.list safeObjectAtIndex:[index unsignedIntegerValue]];
-		
+
+		NSArray *iteml = [self.exceptionList safeObjectAtIndex:index.unsignedIntegerValue];
+
 		if (NSObjectIsNotEmpty(iteml)) {
-			[str   appendString:@"I"];
+			[mdstr appendString:@"I"];
 			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
 		}
-        
+
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
-            modeString = (id)[str stringByAppendingString:trail];
-            
-            [self.modes safeAddObject:modeString];
-            
-            [str   setString:@"-"];
+            modeString = (id)[mdstr stringByAppendingString:trail];
+
+            [self.changeModeList safeAddObject:modeString];
+
+            [mdstr setString:@"-"];
             [trail setString:NSStringEmptyPlaceholder];
-            
+
             indexTotal = 0;
         }
 	}
-	
-    if (NSObjectIsNotEmpty(trail)) {
-        modeString = (id)[str stringByAppendingString:trail];
-        
-        [self.modes safeAddObject:modeString];
+
+    if (NSObjectIsNotEmpty(mdstr)) {
+        modeString = (id)[mdstr stringByAppendingString:trail];
+
+        [self.changeModeList safeAddObject:modeString];
     }
-    
-	[self ok:sender];
+
+	[self cancel:nil];
 }
 
 #pragma mark -
@@ -151,18 +145,16 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.list.count;
+    return self.exceptionList.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [self.list safeObjectAtIndex:row];
+    NSArray *item = [self.exceptionList safeObjectAtIndex:row];
 
-    NSString *col = [column identifier];
-    
-    if ([col isEqualToString:@"mask"]) {
+    if ([column.identifier isEqualToString:@"mask"]) {
 		return [item safeObjectAtIndex:0];
-    } else if ([col isEqualToString:@"setby"]) {
+    } else if ([column.identifier isEqualToString:@"setby"]) {
 		return [item safeObjectAtIndex:1];
     } else {
 		return [item safeObjectAtIndex:2];

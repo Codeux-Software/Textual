@@ -68,6 +68,7 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{778, 247}</string>
 											<reference key="NSSuperview" ref="1032368448"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="480913022"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -77,6 +78,7 @@
 												<int key="NSvFlags">256</int>
 												<string key="NSFrameSize">{778, 17}</string>
 												<reference key="NSSuperview" ref="480913022"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1032368448"/>
 												<reference key="NSTableView" ref="415331954"/>
 											</object>
@@ -244,6 +246,7 @@
 									</array>
 									<string key="NSFrame">{{1, 17}, {778, 247}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="415331954"/>
 									<reference key="NSDocView" ref="415331954"/>
 									<reference key="NSBGColor" ref="603230879"/>
@@ -254,6 +257,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{764, 17}, {15, 229.52600000000001}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="486414944"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="404099830"/>
@@ -265,6 +269,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 246.52600000000001}, {763, 15}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="241616504"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -280,6 +285,7 @@
 									</array>
 									<string key="NSFrame">{{1, 0}, {778, 17}}</string>
 									<reference key="NSSuperview" ref="404099830"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="905760757"/>
 									<reference key="NSDocView" ref="905760757"/>
 									<reference key="NSBGColor" ref="603230879"/>
@@ -288,6 +294,7 @@
 							</array>
 							<string key="NSFrame">{{-1, 43}, {780, 265}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1032368448"/>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="25596151"/>
@@ -304,6 +311,7 @@
 							<int key="NSvFlags">292</int>
 							<string key="NSFrame">{{5, 4}, {185, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="823344825"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="693935051">
@@ -326,6 +334,7 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{575, 4}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1038096040"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="361386213">
@@ -348,6 +357,7 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{686, 4}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1035773828">
 								<int key="NSCellFlags">67108864</int>
@@ -369,6 +379,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 320}, {666, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="404099830"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="435133985">
@@ -394,6 +405,7 @@
 					</array>
 					<string key="NSFrameSize">{778, 350}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="584376579"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -406,35 +418,11 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">table</string>
+						<string key="label">banTable</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="415331954"/>
 					</object>
-					<int key="connectionID">20</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onRemoveBans:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="241616504"/>
-					</object>
-					<int key="connectionID">24</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onUpdate:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="823344825"/>
-					</object>
-					<int key="connectionID">25</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">okButton</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="1038096040"/>
-					</object>
-					<int key="connectionID">28</int>
+					<int key="connectionID">38</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -442,15 +430,23 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="1038096040"/>
 					</object>
-					<int key="connectionID">29</int>
+					<int key="connectionID">39</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">ok:</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">headerTitleField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="584376579"/>
+					</object>
+					<int key="connectionID">40</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">okButton</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="1038096040"/>
 					</object>
-					<int key="connectionID">31</int>
+					<int key="connectionID">41</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -458,15 +454,39 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="1005"/>
 					</object>
-					<int key="connectionID">32</int>
+					<int key="connectionID">42</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cancel:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1038096040"/>
+					</object>
+					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onRemoveBans:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="241616504"/>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onUpdate:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="823344825"/>
+					</object>
+					<int key="connectionID">45</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">header</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="584376579"/>
+						<string key="label">delegate</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="1001"/>
 					</object>
-					<int key="connectionID">37</int>
+					<int key="connectionID">46</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -689,9 +709,102 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">37</int>
+			<int key="maxID">46</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">TDCSheetBase</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancel:">id</string>
+						<string key="ok:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancel:">
+							<string key="name">cancel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ok:">
+							<string key="name">ok:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="cancelButton">NSButton</string>
+						<string key="okButton">NSButton</string>
+						<string key="sheet">NSWindow</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="okButton">
+							<string key="name">okButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sheet">
+							<string key="name">sheet</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TDCSheetBase.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TDChanBanSheet</string>
+					<string key="superclassName">TDCSheetBase</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="ok:">id</string>
+						<string key="onRemoveBans:">id</string>
+						<string key="onUpdate:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="ok:">
+							<string key="name">ok:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onRemoveBans:">
+							<string key="name">onRemoveBans:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onUpdate:">
+							<string key="name">onUpdate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="banTable">TVCListView</string>
+						<string key="headerTitleField">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="banTable">
+							<string key="name">banTable</string>
+							<string key="candidateClassName">TVCListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerTitleField">
+							<string key="name">headerTitleField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TDChanBanSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TVCListView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TVCListView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
@@ -700,7 +813,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4000" key="NS.object.0"/>
+			<real value="4500" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

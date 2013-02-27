@@ -52,7 +52,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="384784036">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="481879213">
@@ -538,6 +538,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{369, 438}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="481879213"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -560,7 +561,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="217074493">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="820038802">
@@ -799,6 +800,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{369, 290}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="820038802"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -819,75 +821,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignorePublicMsg</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="836454392"/>
-					</object>
-					<int key="connectionID">574</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignorePrivateMsg</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="349188448"/>
-					</object>
-					<int key="connectionID">575</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignorePMHighlights</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="572487361"/>
-					</object>
-					<int key="connectionID">576</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreNotices</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="465769188"/>
-					</object>
-					<int key="connectionID">577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreJPQE</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="913963536"/>
-					</object>
-					<int key="connectionID">578</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreHighlights</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="166223484"/>
-					</object>
-					<int key="connectionID">579</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreCTCP</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="688035853"/>
-					</object>
-					<int key="connectionID">580</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">cancelButton</string>
 						<reference key="source" ref="877383788"/>
 						<reference key="destination" ref="220034958"/>
 					</object>
 					<int key="connectionID">582</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">notifyJoins</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="500416227"/>
-					</object>
-					<int key="connectionID">584</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -923,35 +861,99 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreWindow</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="782939970"/>
-					</object>
-					<int key="connectionID">590</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">notifyWindow</string>
-						<reference key="source" ref="877383788"/>
-						<reference key="destination" ref="199606493"/>
-					</object>
-					<int key="connectionID">591</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">hostmask</string>
+						<string key="label">hostmaskField</string>
 						<reference key="source" ref="877383788"/>
 						<reference key="destination" ref="774933793"/>
 					</object>
-					<int key="connectionID">592</int>
+					<int key="connectionID">598</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">nickname</string>
+						<string key="label">ignoreView</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="782939970"/>
+					</object>
+					<int key="connectionID">599</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignoreJPQECheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="913963536"/>
+					</object>
+					<int key="connectionID">601</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignoreCTCPCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="688035853"/>
+					</object>
+					<int key="connectionID">602</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignoreNoticesCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="465769188"/>
+					</object>
+					<int key="connectionID">603</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">notifyView</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="199606493"/>
+					</object>
+					<int key="connectionID">607</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">notifyJoinsCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="500416227"/>
+					</object>
+					<int key="connectionID">608</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nicknameField</string>
 						<reference key="source" ref="877383788"/>
 						<reference key="destination" ref="784264407"/>
 					</object>
-					<int key="connectionID">593</int>
+					<int key="connectionID">609</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignorePrivateHighlightsCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="572487361"/>
+					</object>
+					<int key="connectionID">610</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignorePrivateMessagesCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="349188448"/>
+					</object>
+					<int key="connectionID">613</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignorePublicHighlightsCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="166223484"/>
+					</object>
+					<int key="connectionID">614</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignorePublicMessagesCheck</string>
+						<reference key="source" ref="877383788"/>
+						<reference key="destination" ref="836454392"/>
+					</object>
+					<int key="connectionID">616</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1498,13 +1500,24 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">597</int>
+			<int key="maxID">616</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCAddressBookSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">nicknameField</string>
+						<string key="NS.object.0">NSTextField</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">nicknameField</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">nicknameField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCAddressBookSheet.h</string>
@@ -1528,7 +1541,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4000" key="NS.object.0"/>
+			<real value="4500" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

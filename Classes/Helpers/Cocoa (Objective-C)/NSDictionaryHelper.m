@@ -129,7 +129,7 @@
 
 - (BOOL)containsKey:(NSString *)baseKey
 {	
-	return BOOLValueFromObject([self objectForKey:baseKey]);
+	return [self.allKeys containsObject:baseKey];
 }
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
@@ -140,7 +140,7 @@
 - (NSString *)keyIgnoringCase:(NSString *)baseKey
 {
 	for (NSString *key in [self allKeys]) {
-		if ([key isEqualNoCase:baseKey]) {
+		if ([key isEqualIgnoringCase:baseKey]) {
 			return key;
 		} 
 	}
@@ -212,27 +212,27 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setDouble:(TXNSDouble)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
-	self[key] = [NSValue valueWithPointer:value];
+	[self safeSetObject:[NSValue valueWithPointer:value] forKey:key];
 }
 
 @end

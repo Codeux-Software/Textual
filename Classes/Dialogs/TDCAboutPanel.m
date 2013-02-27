@@ -49,9 +49,10 @@
 }
 
 - (void)show
-{	
-	[self.versionInfo setStringValue:[NSString stringWithFormat:TXTLS(@"AboutWindowBuildNumber"), 
-								 [TPCPreferences textualInfoPlist][@"CFBundleVersion"]]];	
+{
+	NSString *bundleVersion = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
+	
+	[self.versionInfoField setStringValue:TXTFLS(@"AboutWindowBuildNumber", bundleVersion)];
 	
 	[self.window center];
 	[self.window makeKeyAndOrderFront:nil];

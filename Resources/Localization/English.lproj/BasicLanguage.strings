@@ -62,7 +62,7 @@
 
 "CloseButton" = "Close";
 
-"CmdWShortcutCloseQueryType" = "Close Query";
+"CmdWShortcutClosePrivateMessageType" = "Close Query";
 "CmdWShortcutCloseWindowType" = "Close Window";
 "CmdWShortcutDisconnectServerType" = "Disconnect from %@";
 "CmdWShortcutLeaveChannelType" = "Leave Channel";
@@ -80,7 +80,7 @@
 "DeleteButton" = "Delete";
 
 "DeleteChannelMenuItem" = "Delete Channel";
-"DeleteQueryMenuItem" = "Close Query";
+"DeletePrivateMessageMenuItem" = "Close Query";
 
 "FindSearchPanelPromptButton" = "Search";
 "FindSearchPanelPromptMessage" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
@@ -112,11 +112,13 @@
 "IRCDisconnectedFromServer" = "Disconnected";
 "IRCHadRawError" = "Message(%1$d): %2$@";
 "IRCIsConnecting" = "Connecting to [%1$@] on port %2$ld";
+"IRCIsConnectingWithNormalProxy" = "Connecting to [%1$@, port %2$ld] via [%3$@, port %4$ld]";
+"IRCIsConnectingWithSystemProxy" = "Connecting to [%1$@, port %2$ld] via System Socks";
 "IRCIsReconnecting" = "Reconnecting …";
 "IRCIsRetryingConnection" = "Retrying …";
 "IRCModeSet" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRCRawModeIsDisabled" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"IRCRawModeIsEnabled" = "Raw mode has been enabled. Textual will now output all data that it receives and sends to the IRC server in the Mac OS X \"Console\" application. To disable, execute \"/debug raw off\"";
+"IRCRawModeIsEnabled" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the Mac OS X \"Console\" application. To disable, execute \"/debug raw off\"";
 "IRCRecievedCTCPPingReply" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "IRCRecievedCTCPReply" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "IRCRecievedCTCPRequest" = "\002-CTCP-\002 %1$@ from %2$@";
@@ -139,8 +141,6 @@
 "IRCUserWhoisUptime" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRCUserWhowasConnectedFrom" = "%1$@ was connected to %2$@ on %3$@";
 "IRCUserWhowasHostmask" = "%1$@ had userhost %2$@@%3$@ and real name \"%4$@\"";
-"IRCWeightsCommandNoResults" = "No information available.";
-"IRCWeightsCommandResultRow" = "%@ — sent: %f; receive: %f; total: %f;";
 
 "InputRequiredToContinue" = "Input Required to Continue";
 
@@ -186,27 +186,21 @@
 "NoButton" = "No";
 
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
-"NotificationChannelNoticeMessage"			= "Channel Notice Received";
-"NotificationChannelNoticeMessageTitle"		= "Notice: %@";
-"NotificationChannelTalkMessage"			= "Channel Message Received";
-"NotificationConnectedMessage"				= "Connected";
+"NotificationChannelMessageMessageTitle"	= "Channel Message: %@";
+"NotificationChannelNoticeMessageTitle"		= "Channel Notice: %@";
 "NotificationConnectedMessageTitle"			= "Connected: %@";
-"NotificationDisconnectMessage"				= "Disconnected";
 "NotificationDisconnectMessageTitle"		= "Disconnected: %@";
-"NotificationHighlightMessage"				= "Name is Mentioned";
 "NotificationHighlightMessageTitle"			= "Highlight: %@";
-"NotificationInvitedMessage"				= "Invited to Channel";
-"NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
 "NotificationInvitedMessageTitle"			= "Invited: %@";
-"NotificationKickedMessage"					= "Kicked from Channel";
-"NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 "NotificationKickedMessageTitle"			= "Kicked: %@";
-"NotificationNewPrivateQueryMessage"		= "New Private Message Started";
-"NotificationNewPrivateQueryMessageTitle"	= "New Private Message";
-"NotificationPrivateNoticeMessage"			= "Private Notice Received";
+"NotificationNewPrivateMessageMessageTitle"	= "New Private Message";
+"NotificationPrivateMessageMessageTitle"	= "Private Message";
 "NotificationPrivateNoticeMessageTitle"		= "Private Notice";
-"NotificationPrivateQueryMessage"			= "Private Message Received";
-"NotificationPrivateQueryMessageTitle"		= "Private Message";
+
+"NotificationConnectedMessageDescription"	= "Connection successful.";
+"NotificationDisconnectMessageDescription"	= "Disconnection successful.";
+"NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
+"NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 
 "OSXGoingToSleepQuitMessage" = "Computer has gone to sleep.";
 
@@ -273,9 +267,9 @@
 "TXNotificationHighlightType"			= "Highlight";
 "TXNotificationInviteType"				= "Channel Invitation";
 "TXNotificationKickType"				= "Kicked from Channel";
-"TXNotificationNewQueryType"			= "Private Message (new)";
-"TXNotificationQueryMessageType"		= "Private Message";
-"TXNotificationQueryNoticeType"			= "Private Notice";
+"TXNotificationNewPrivateMessageType"	= "Private Message (new)";
+"TXNotificationPrivateMessageType"		= "Private Message";
+"TXNotificationPrivateNoticeType"		= "Private Notice";
 
 "ThemeChangeOverridePromptChannelFont" = "• Channel View Font";
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";

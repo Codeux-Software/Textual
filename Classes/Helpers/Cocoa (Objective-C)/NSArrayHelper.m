@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#include <objc/message.h>
+
 @implementation NSArray (TXArrayHelper)
 
 - (id)safeObjectAtIndex:(NSInteger)n
@@ -140,7 +142,7 @@
 {
 	for (id object in self) {
 		if ([object isKindOfClass:[NSString class]]) {
-			if ([object isEqualNoCase:anObject]) {
+			if ([object isEqualIgnoringCase:anObject]) {
 				return YES;
 			}
 		} 
@@ -229,6 +231,21 @@
 - (void)addPointer:(void *)value
 {
 	[self safeAddObject:[NSValue valueWithPointer:value]];
+}
+
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
+{
+	NSMutableArray *oldArray = [self mutableCopy];
+
+	[self removeAllObjects];
+
+	for (__strong id object in oldArray) {
+		if ([object respondsToSelector:performSelector]) {
+			object = objc_msgSend(object, performSelector);
+		}
+
+		[self safeAddObject:object];
+	}
 }
 
 @end

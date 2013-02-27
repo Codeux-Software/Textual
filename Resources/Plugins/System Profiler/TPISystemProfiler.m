@@ -39,7 +39,7 @@
 #import "TPI_SP_SysInfo.h"
 
 @interface TPISystemProfiler ()
-@property (nonatomic, weak) NSView *preferencePaneView;
+@property (nonatomic, nweak) NSView *preferencePaneView;
 @end
 
 @implementation TPISystemProfiler
@@ -81,7 +81,7 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	NSString *channelName = client.world.selectedChannel.name;
+	NSString *channelName = client.worldController.selectedChannel.name;
 	
 	if ([channelName length] >= 1) {
 		if ([commandString isEqualToString:@"SYSINFO"]) {
@@ -93,7 +93,7 @@
 		} else if ([commandString isEqualToString:@"NETSTATS"]) {
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
 		} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.world]];
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.worldController]];
 		} else if ([commandString isEqualToString:@"DISKSPACE"]) {
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
 		} else if ([commandString isEqualToString:@"STYLE"]) {

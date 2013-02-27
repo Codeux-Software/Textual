@@ -38,14 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TDCNickSheet : TDCSheetBase
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, strong) NSTextField *currentText;
-@property (nonatomic, strong) NSTextField *nicknameNewInfo;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, nweak) NSTextField *tnewNicknameField;
+@property (nonatomic, nweak) NSTextField *toldNicknameField;
 
-- (void)start:(NSString *)nick;
+- (void)start:(NSString *)nickname;
 @end
 
-@interface NSObject (TXNickSheetDelegate)
-- (void)nickSheet:(TDCNickSheet *)sender didInputNick:(NSString *)nick;
+@interface NSObject (TDCNickSheetDelegate)
+- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname;
 - (void)nickSheetWillClose:(TDCNickSheet *)sender;
 @end

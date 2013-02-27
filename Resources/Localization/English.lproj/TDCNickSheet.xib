@@ -51,7 +51,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="439514479">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="928839383">
@@ -59,6 +59,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{17, 95}, {121, 17}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1021133016"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="1062982351">
@@ -97,6 +98,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{141, 95}, {139, 17}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="333153136"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="43130792">
@@ -119,6 +121,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{144, 61}, {138, 22}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="971650439"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="920571185">
@@ -151,6 +154,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{38, 64}, {100, 17}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="981261291"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="869827104">
@@ -169,6 +173,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{134, 12}, {154, 32}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="148149786">
 								<int key="NSCellFlags">67108864</int>
@@ -191,6 +196,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{52, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="439514479"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="431223173"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="463156378">
@@ -211,6 +217,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{302, 132}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="928839383"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -247,14 +255,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">currentText</string>
-						<reference key="source" ref="967581152"/>
-						<reference key="destination" ref="1021133016"/>
-					</object>
-					<int key="connectionID">33</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">sheet</string>
 						<reference key="source" ref="967581152"/>
 						<reference key="destination" ref="494388649"/>
@@ -263,11 +263,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">nicknameNewInfo</string>
+						<string key="label">cancelButton</string>
+						<reference key="source" ref="967581152"/>
+						<reference key="destination" ref="971650439"/>
+					</object>
+					<int key="connectionID">41</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tnewNicknameField</string>
 						<reference key="source" ref="967581152"/>
 						<reference key="destination" ref="981261291"/>
 					</object>
-					<int key="connectionID">38</int>
+					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">toldNicknameField</string>
+						<reference key="source" ref="967581152"/>
+						<reference key="destination" ref="1021133016"/>
+					</object>
+					<int key="connectionID">45</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -438,22 +454,81 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">38</int>
+			<int key="maxID">45</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">TDCNickSheet</string>
+					<string key="superclassName">TDCSheetBase</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">toldNicknameField</string>
+						<string key="NS.object.0">NSTextField</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">toldNicknameField</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">toldNicknameField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TDCNickSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TDCSheetBase</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancel:">id</string>
+						<string key="ok:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancel:">
+							<string key="name">cancel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ok:">
+							<string key="name">ok:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="cancelButton">NSButton</string>
+						<string key="okButton">NSButton</string>
+						<string key="sheet">NSWindow</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="okButton">
+							<string key="name">okButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sheet">
+							<string key="name">sheet</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TDCSheetBase.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<real value="1070" key="NS.object.0"/>
 		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
-		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4000" key="NS.object.0"/>
+			<real value="4500" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

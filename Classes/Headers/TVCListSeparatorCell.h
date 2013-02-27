@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultListSeperatorCellIndex		@"----"
+#define TXDefaultListSeperatorCellIndex		@"<TVCListSeparatorCell>"
 
 @interface TVCListSeparatorCell : NSTextFieldCell
 @end

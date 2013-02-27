@@ -37,14 +37,15 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]   : s) 
+#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]  : s) 
 #define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
 #define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
 
 @interface NSDictionary (TXDictionaryHelper)
+- (NSString *)stringForKey:(NSString *)key;
+
 - (BOOL)boolForKey:(NSString *)key;
 - (NSArray *)arrayForKey:(NSString *)key;
-- (NSString *)stringForKey:(NSString *)key;
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
 - (NSInteger)integerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
@@ -58,6 +59,7 @@
 
 - (id)sortedDictionary;
 - (id)sortedReversedDictionary;
+
 - (NSArray *)sortedDictionaryKeys;
 - (NSArray *)sortedDictionaryReversedKeys;
 @end

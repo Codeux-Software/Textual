@@ -3,11 +3,11 @@
 
 int main(int argc, const char *argv[])
 {
-	[_NSUserDefaults() addSuiteNamed:@"com.codeux.textual"];
-	[_NSUserDefaults() addSuiteNamed:@"com.codeux.irc.textual"];
-	[_NSUserDefaults() addSuiteNamed:@"com.codeux.irc.textual.trial"];
-
 	@autoreleasepool {
+		[RZUserDefaults() addSuiteNamed:@"com.codeux.textual"];
+		[RZUserDefaults() addSuiteNamed:@"com.codeux.irc.textual"];
+		[RZUserDefaults() addSuiteNamed:@"com.codeux.irc.textual.trial"];
+
 		NSApplicationMain(argc, argv);
 	}
 	

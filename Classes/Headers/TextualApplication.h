@@ -39,9 +39,11 @@
 	#import <Cocoa/Cocoa.h>
 	#import <WebKit/WebKit.h>
 	#import <Security/Security.h>
-	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
-	#import <SystemInformation/CSFWSystemInformation.h>
+
+	#import <BlowfishEncryption/BlowfishEncryption.h>
+	#import <SystemInformation/SystemInformation.h>
+	#import <AutoHyperlinks/AutoHyperlinks.h>
 
 	#import "StaticDefinitions.h"
 
@@ -84,10 +86,8 @@
 	@class TDChannelSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
-	@class THOUnicodeHelper;
 	@class TKMessageBlockOperation;
 	@class TLOFileLogger;
-	@class TLOFileWithContent;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
 	@class TLOKeyEventHandler;
@@ -96,15 +96,14 @@
 	@class TLONickCompletionStatus;
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
-	@class TLOSocketClient;
 	@class TLOSoundPlayer;
 	@class TLOTimer;
 	@class TLOTimerCommand;
 	@class TLOpenLink;
-	@class TPCOtherTheme;
 	@class TPCPreferences;
 	@class TPCPreferencesMigrationAssistant;
-	@class TPCViewTheme;
+	@class TPCThemeController;
+	@class TPCThemeSettings;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
 	@class TVCInputPromptDialog;
@@ -167,6 +166,7 @@
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
 	#import "IRCConnection.h"
+	#import "IRCConnectionSocket.h"
 	#import "IRCExtras.h"
 	#import "IRCISupportInfo.h"
 	#import "IRCMessage.h"
@@ -181,13 +181,13 @@
 
 	#import "NSArrayHelper.h"
 	#import "NSColorHelper.h"
-	#import "NSDataHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSNumberHelper.h"
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"
+	#import "NSRangeHelper.h"
 	#import "NSRectHelper.h"
 	#import "NSScreenHelper.h"
 	#import "NSSplitViewHelper.h"
@@ -221,12 +221,10 @@
 	#import "THOPluginItem.h"
 	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
-	#import "THOUnicodeHelper.h"
 
 	/* Library. */
 
 	#import "TLOFileLogger.h"
-	#import "TLOFileWithContent.h"
 	#import "TLOGrowlController.h"
 	#import "TLOInputHistory.h"
 	#import "TLOKeyEventHandler.h"
@@ -235,7 +233,6 @@
 	#import "TLONickCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLORegularExpression.h"
-	#import "TLOSocketClient.h"
 	#import "TLOSoundPlayer.h"
 	#import "TLOTimer.h"
 	#import "TLOTimerCommand.h"
@@ -243,10 +240,10 @@
 
 	/* Preferences. */
 
-	#import "TPCOtherTheme.h"
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesMigrationAssistant.h"
-	#import "TPCViewTheme.h"
+	#import "TPCThemeController.h"
+	#import "TPCThemeSettings.h"
 
 	/* View Controllers. */
 

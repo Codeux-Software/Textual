@@ -43,13 +43,13 @@ const CGFloat kRotationForItalicText = -14.0;
 
 - (NSFont *)convertToItalics
 { 
-	NSFont *theFont = [_NSFontManager() convertFont:self toHaveTrait:NSItalicFontMask];  
+	NSFont *theFont = [RZFontManager() convertFont:self toHaveTrait:NSItalicFontMask];  
 	
 	if ([self fontTraitSet:NSItalicFontMask] == NO) {       
-		NSAffineTransform *fontTransform	= [NSAffineTransform transform];    
+		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
 		NSAffineTransform *italicTransform	= [NSAffineTransform transform];  
 		
-		[fontTransform scaleBy:[self pointSize]];           
+		[fontTransform scaleBy:self.pointSize];
 		
 		NSAffineTransformStruct italicTransformData;   
 		
@@ -57,8 +57,8 @@ const CGFloat kRotationForItalicText = -14.0;
 		italicTransformData.m12 = 0;       
 		italicTransformData.m21 = (-tanf(kRotationForItalicText * (acosf(0) / 90)));        
 		italicTransformData.m22 = 1;         
-		italicTransformData.tX  = 0;       
-		italicTransformData.tY  = 0;      
+		italicTransformData.tX = 0;       
+		italicTransformData.tY = 0;      
 		     
 		[italicTransform setTransformStruct:italicTransformData];      
 		[fontTransform appendTransform:italicTransform]; 
@@ -73,35 +73,27 @@ const CGFloat kRotationForItalicText = -14.0;
 	return self;
 }
 
-- (BOOL)fontMatchesFont:(NSFont *)otherFont
-{
-	NSString *oldName = [self fontName];
-	NSString *newName = [otherFont fontName];
-	
-	NSInteger oldSize = [self pointSize];
-	NSInteger newSize = [otherFont pointSize];
-	
-	return ([oldName isEqualToString:newName] && oldSize == newSize);
-}
-
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait
 {
-	NSFontTraitMask fontTraits = [_NSFontManager() traitsOfFont:self];    
+	NSFontTraitMask fontTraits = [RZFontManager() traitsOfFont:self];    
 	
 	return ((fontTraits & trait) == trait);
 }
 
 + (BOOL)fontIsAvailable:(NSString *)fontName
 {
-	NSArray *systemFonts = [_NSFontManager() availableFonts];
-	NSFont  *createdFont = [NSFont fontWithName:fontName size:9.0];
+	if ([NSFont fontWithName:fontName size:9.0]) {
+		return YES;
+	}
 	
-	return (createdFont || [systemFonts containsObjectIgnoringCase:fontName]);
+	NSArray *systemFonts = [RZFontManager() availableFonts];
+	
+	return ([systemFonts containsObjectIgnoringCase:fontName]);
 }
 
 - (BOOL)fontMatchesName:(NSString *)fontName
 {
-	return ([[self fontName] isEqualNoCase:fontName]);
+	return ([self.fontName isEqualIgnoringCase:fontName]);
 }
 
 @end

@@ -51,8 +51,8 @@
 	if (self.stackLocked == NO) {
 		[self displayView:self.welcomeAddServerView];
 
-		[self.welcomeAddServerViewButton setTarget:self.master.menu];
 		[self.welcomeAddServerViewButton setAction:@selector(addServer:)];
+		[self.welcomeAddServerViewButton setTarget:self.masterController.menuController];
 	}
 }
 
@@ -127,6 +127,7 @@
 	[view setHidden:NO];
 	[view setAlphaValue:1.0];
 	
+	[self setHidden:NO];
 	[self setAlphaValue:1.0];
 	[self displayIfNeeded];
 }
@@ -136,14 +137,20 @@
 
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
+	/* The primary view and background view must be set to hidden instead of simply setting
+	 it to 0.0 alpha. If only the alpha is changed, then the underlying WebView will not be
+	 able to register mouse movements over elements because the views are invisible and on
+	 top of the WebView itself. */
+	
 	[self enableBackgroundControls];
 	
 	if (animate == NO) {
 		[view setHidden:YES];
 		
+		[self setHidden:YES];
 		[self setAlphaValue:0.0];
 	} else {
-		[_NSAnimationCurrentContext() setDuration:0.8];
+		[RZAnimationCurrentContext() setDuration:0.8];
 
 		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
 			self.stackLocked = animate;
@@ -151,6 +158,7 @@
 			[self.animator setAlphaValue:0.0];
 		} completionHandler:^{
 			[view setHidden:YES];
+			[self setHidden:YES];
 
 			self.stackLocked = NO;
 		}];
@@ -169,16 +177,16 @@
 
 - (void)disableBackgroundControls
 {
-	[self.master.text setEditable:NO];
-	[self.master.text setSelectable:NO];
+	[self.masterController.inputTextField setEditable:NO];
+	[self.masterController.inputTextField setSelectable:NO];
 
 	[self.backgroundContentView setHidden:YES];
 }
 
 - (void)enableBackgroundControls
 {
-	[self.master.text setEditable:YES];
-	[self.master.text setSelectable:YES];
+	[self.masterController.inputTextField setEditable:YES];
+	[self.masterController.inputTextField setSelectable:YES];
 
 	[self.backgroundContentView setHidden:NO];
 }

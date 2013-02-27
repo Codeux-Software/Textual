@@ -55,7 +55,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
                                        hostmask:(NSString *)host; // Only Textual should be calling this.
 @end
 
-@interface TVCTextField (TextFieldFormattingHelper) 
+@interface TVCTextField (TVCTextFieldFormattingHelper) 
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes;
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 

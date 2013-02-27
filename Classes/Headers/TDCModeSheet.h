@@ -38,26 +38,26 @@
 #import "TextualApplication.h"
 
 @interface TDCModeSheet : TDCSheetBase
-@property (nonatomic, weak) IRCChannelMode *mode;
-@property (nonatomic, strong) NSString *channelName;
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, strong) NSButton *sCheck;
-@property (nonatomic, strong) NSButton *pCheck;
-@property (nonatomic, strong) NSButton *nCheck;
-@property (nonatomic, strong) NSButton *tCheck;
-@property (nonatomic, strong) NSButton *iCheck;
-@property (nonatomic, strong) NSButton *mCheck;
-@property (nonatomic, strong) NSButton *kCheck;
-@property (nonatomic, strong) NSButton *lCheck;
-@property (nonatomic, strong) NSTextField *kText;
-@property (nonatomic, strong) NSTextField *lText;
+@property (nonatomic, strong) IRCChannelMode *mode;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, nweak) NSButton *sCheck;
+@property (nonatomic, nweak) NSButton *pCheck;
+@property (nonatomic, nweak) NSButton *nCheck;
+@property (nonatomic, nweak) NSButton *tCheck;
+@property (nonatomic, nweak) NSButton *iCheck;
+@property (nonatomic, nweak) NSButton *mCheck;
+@property (nonatomic, nweak) NSButton *kCheck;
+@property (nonatomic, nweak) NSButton *lCheck;
+@property (nonatomic, nweak) NSTextField *kText;
+@property (nonatomic, nweak) NSTextField *lText;
 
 - (void)start;
+
 - (void)onChangeCheck:(id)sender;
 @end
 
-@interface NSObject (TXModeSheetDelegate)
+@interface NSObject (TDCModeSheetDelegate)
 - (void)modeSheetOnOK:(TDCModeSheet *)sender;
 - (void)modeSheetWillClose:(TDCModeSheet *)sender;
 @end
