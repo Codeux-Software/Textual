@@ -12,8 +12,7 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-#import "TextualApplication.h"
-
+#import "RLMAsyncSocket.h"
 #import <sys/socket.h>
 #import <netinet/in.h>
 #import <arpa/inet.h>
@@ -1913,9 +1912,9 @@ Failed:
 	// Setup read stream callbacks
 
 	CFOptionFlags readStreamEvents = kCFStreamEventHasBytesAvailable |
-	kCFStreamEventErrorOccurred     |
-	kCFStreamEventEndEncountered    |
-	kCFStreamEventOpenCompleted;
+    kCFStreamEventErrorOccurred     |
+    kCFStreamEventEndEncountered    |
+    kCFStreamEventOpenCompleted;
 
 	if (!CFReadStreamSetClient(theReadStream,
 							   readStreamEvents,
@@ -1934,9 +1933,9 @@ Failed:
 	// Setup write stream callbacks
 
 	CFOptionFlags writeStreamEvents = kCFStreamEventCanAcceptBytes |
-	kCFStreamEventErrorOccurred  |
-	kCFStreamEventEndEncountered |
-	kCFStreamEventOpenCompleted;
+    kCFStreamEventErrorOccurred  |
+    kCFStreamEventEndEncountered |
+    kCFStreamEventOpenCompleted;
 
 	if (!CFWriteStreamSetClient (theWriteStream,
 								 writeStreamEvents,
@@ -3246,8 +3245,8 @@ Failed:
 			percentDone = 100.0F;
 
 		[ms appendString: [NSString stringWithFormat:@"currently read %u bytes (%d%% done), ",
-						   (unsigned int)[theCurrentRead->buffer length],
-						   theCurrentRead->bytesDone ? percentDone : 0]];
+                           (unsigned int)[theCurrentRead->buffer length],
+                           theCurrentRead->bytesDone ? percentDone : 0]];
 	}
 
 	if (theCurrentWrite == nil || [theCurrentWrite isKindOfClass:[AsyncSpecialPacket class]])
@@ -3257,8 +3256,8 @@ Failed:
 		int percentDone = (float)theCurrentWrite->bytesDone / (float)[theCurrentWrite->buffer length] * 100.0F;
 
 		[ms appendString: [NSString stringWithFormat:@"currently written %u (%d%%), ",
-						   (unsigned int)[theCurrentWrite->buffer length],
-						   theCurrentWrite->bytesDone ? percentDone : 0]];
+                           (unsigned int)[theCurrentWrite->buffer length],
+                           theCurrentWrite->bytesDone ? percentDone : 0]];
 	}
 
 	[ms appendString:[NSString stringWithFormat:@"read stream %p %s, ", theReadStream, statstr[rs]]];
@@ -3812,8 +3811,8 @@ Failed:
 	if([theDelegate respondsToSelector:@selector(onSocket:shouldTimeoutReadWithTag:elapsed:bytesDone:)])
 	{
 		timeoutExtension = [theDelegate onSocket:self shouldTimeoutReadWithTag:theCurrentRead->tag
-										 elapsed:theCurrentRead->timeout
-									   bytesDone:theCurrentRead->bytesDone];
+                                         elapsed:theCurrentRead->timeout
+                                       bytesDone:theCurrentRead->bytesDone];
 	}
 
 	if(timeoutExtension > 0.0)
@@ -4048,8 +4047,8 @@ Failed:
 	if([theDelegate respondsToSelector:@selector(onSocket:shouldTimeoutWriteWithTag:elapsed:bytesDone:)])
 	{
 		timeoutExtension = [theDelegate onSocket:self shouldTimeoutWriteWithTag:theCurrentWrite->tag
-										 elapsed:theCurrentWrite->timeout
-									   bytesDone:theCurrentWrite->bytesDone];
+                                         elapsed:theCurrentWrite->timeout
+                                       bytesDone:theCurrentWrite->bytesDone];
 	}
 
 	if(timeoutExtension > 0.0)
@@ -4115,9 +4114,9 @@ Failed:
 		AsyncSpecialPacket *tlsPacket = (AsyncSpecialPacket *)theCurrentRead;
 
 		BOOL didStartOnReadStream = CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings,
-															(__bridge CFDictionaryRef)tlsPacket->tlsSettings);
+                                                            (__bridge CFDictionaryRef)tlsPacket->tlsSettings);
 		BOOL didStartOnWriteStream = CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings,
-															  (__bridge CFDictionaryRef)tlsPacket->tlsSettings);
+                                                              (__bridge CFDictionaryRef)tlsPacket->tlsSettings);
 
 		if(!didStartOnReadStream || !didStartOnWriteStream)
 		{

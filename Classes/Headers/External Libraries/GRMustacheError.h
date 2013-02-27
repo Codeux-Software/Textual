@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
+
 
 /**
  * The codes of a GRMustache-generated NSError
  *
  * @since v1.0
  */
-typedef enum {
+typedef NS_ENUM(NSInteger, GRMustacheErrorCode) {
     /**
      * The error code for parse errors.
      *
@@ -41,8 +43,15 @@ typedef enum {
      * @since v1.0
      */
     GRMustacheErrorCodeTemplateNotFound AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
+    
+    /**
+     * The error code for not rendering errors.
+     *
+     * @since v6.3
+     */
+    GRMustacheErrorCodeRenderingError AVAILABLE_GRMUSTACHE_VERSION_6_3_AND_LATER,
 
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+} AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 
 /**
@@ -50,19 +59,13 @@ typedef enum {
  *
  * @since v1.0
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+extern NSString *const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 
 /**
- * The name of exceptions raised by GRMustache when rendering a template,
- * whenever:
- *
- * - a filter is missing.
- * - an object expected to conform to the <GRMustacheFilter> protocol does not.
- *
- * @see GRMustacheFilter protocol
+ * The name of exceptions raised by GRMustache when rendering a template.
  *
  * @since v5.1
  */
-extern NSString * const GRMustacheRenderingException AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+extern NSString *const GRMustacheRenderingException AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
