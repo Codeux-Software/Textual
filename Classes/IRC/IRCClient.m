@@ -3344,7 +3344,7 @@
 
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:oldNick]) {
-			if ((myself == NO && [ignoreChecks ignoreJPQE]) || myself == YES) {
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
 
 				[self print:c type:TVCLogLineNickType nick:nil text:text receivedAt:m.receivedAt];
