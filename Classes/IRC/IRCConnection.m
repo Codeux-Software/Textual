@@ -192,8 +192,6 @@
 - (void)timerOnTimer:(id)sender
 {
 	self.maxMsgCount = 0;
-
-    LogToConsole(@"%i", self.maxMsgCount);
 	
 	if (NSObjectIsNotEmpty(self.sendQueue)) {
 		while (self.sendQueue.count >= 1) {
