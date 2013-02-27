@@ -2513,8 +2513,11 @@
 
 	IRCMessage *m = [[IRCMessage alloc] initWithLine:s];
 
-	if (m.sender.isServer == NO) {
-		NSObjectIsEmptyAssert(m.sender.nickname);
+    /* It turns out irc.twit.tv sends a PING during connection registration that does not
+     have a nickname or server address associated with it? What the hell? Check nickname
+     length before making sure it has username and address. */
+    
+	if (m.sender.nickname.length >= 1 && [m.sender.nickname isNickname]) {
 		NSObjectIsEmptyAssert(m.sender.username);
 		NSObjectIsEmptyAssert(m.sender.address);
 	}
