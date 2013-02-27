@@ -39,6 +39,5 @@
 
 @interface TLOpenLink : NSObject
 + (void)open:(NSURL *)url;
-+ (void)openAndActivate:(NSURL *)url;
 + (void)openWithString:(NSString *)url;
 @end

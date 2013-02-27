@@ -41,23 +41,21 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:[NSBundle mainBundle]];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle()];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
 {
-	TXMasterController *master = [TPCPreferences masterController];
+	TXMasterController *master = [TLOLanguagePreferences masterController];
 
-	if (master) {
-		TPCOtherTheme *other = [master.viewTheme other];
+	TPCThemeSettings *customSettings = master.themeController.customSettings;
 
-		if (other && [other.languageLocalizations containsKey:key]) {
-			NSString *localString = [other.languageLocalizations stringForKey:key];
+	if (customSettings && [customSettings.languageLocalizations containsKey:key]) {
+		NSString *localString = [customSettings.languageLocalizations stringForKey:key];
 
-			return [localString reservedCharactersToIRCFormatting];
-		}
+		return [localString reservedCharactersToIRCFormatting];
 	}
-	
+
 	return NSLocalizedStringFromTableInBundle(key, @"BasicLanguage", bundle, nil);
 }
 

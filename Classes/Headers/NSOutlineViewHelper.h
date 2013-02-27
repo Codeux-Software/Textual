@@ -41,7 +41,9 @@
 - (NSArray *)groupItems;
 - (BOOL)isGroupItem:(id)item;
 
-- (NSInteger)rowsInGroup:(id)group;
+- (NSArray *)rowsInGroup:(id)group;
+- (NSArray *)rowsFromParentGroup:(id)child;
+
 - (NSInteger)countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;

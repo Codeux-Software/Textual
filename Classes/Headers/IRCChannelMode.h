@@ -38,16 +38,19 @@
 #import "TextualApplication.h"
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
-@property (nonatomic, weak) IRCISupportInfo *isupport;
-@property (nonatomic, strong) NSMutableDictionary *allModes;
+@property (nonatomic, nweak) IRCISupportInfo *isupport;
 
 - (void)clear;
 
 - (NSArray *)update:(NSString *)str;
+
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode;
+
+- (NSDictionary *)modeInformation;
 
 - (NSString *)string;
 - (NSString *)titleString;
+
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode;
 
 - (BOOL)modeIsDefined:(NSString *)mode;

@@ -42,7 +42,7 @@ Textual = {
 	 viewInitiated:
 
 		@viewType:		Type of view being represented. Server console, channel, query, etc. 
-						Possible values: server, channel, talk. — talk = private message.
+						Possible values: server, channel, query. — query = private message.
 		@serverHash:	A unique identifier to differentiate between each server a view may represent.
 		@channelHash:	A unique identifier to differentiate between each channel a view may represent.
 		@channelName:	Name of the view. Actual channel name, nickname for a private message, or blank for console.

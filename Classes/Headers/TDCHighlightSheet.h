@@ -38,14 +38,16 @@
 #import "TextualApplication.h"
 
 @interface TDCHighlightSheet : TDCSheetBase
-@property (nonatomic, strong) TVCListView *table;
-@property (nonatomic, strong) NSTextField *header;
-@property (nonatomic, weak) NSMutableArray *list;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) TVCListView *highlightListTable;
 
 - (void)show;
+
+- (void)reloadTable;
+
 - (void)onClearList:(id)sender;
 @end
 
-@interface NSObject (TXHighlightSheetDelegate)
+@interface NSObject (TDCHighlightSheetDelegate)
 - (void)highlightSheetWillClose:(TDCHighlightSheet *)sender;
 @end

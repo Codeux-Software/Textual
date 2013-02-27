@@ -44,7 +44,8 @@
 	NSView *leftSide  = [self subviews][0];
 	NSView *rightSide = [self subviews][1];
 	
-	return ([self isSubviewCollapsed:leftSide] || [self isSubviewCollapsed:rightSide]);
+	return ([self isSubviewCollapsed:leftSide] ||
+			[self isSubviewCollapsed:rightSide]);
 }
 
 @end

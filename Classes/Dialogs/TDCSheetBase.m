@@ -46,8 +46,6 @@
 
 - (void)startSheetWithWindow:(NSWindow *)awindow
 {
-	[[self.window fieldEditor:NO forObject:nil] setFieldEditor:NO];
-	
 	[NSApp beginSheet:self.sheet
 	   modalForWindow:awindow
 		modalDelegate:self
@@ -60,9 +58,7 @@
 	[NSApp endSheet:self.sheet];
 }
 
-- (void)sheetDidEnd:(NSWindow *)sender
-		 returnCode:(NSInteger)returnCode
-		contextInfo:(void *)contextInfo
+- (void)sheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	[self.sheet close];
 }

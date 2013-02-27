@@ -39,5 +39,4 @@
 
 @interface TLOSoundPlayer : NSObject
 + (void)play:(NSString *)name;
-+ (void)play:(NSString *)name isMuted:(BOOL)muted TEXTUAL_DEPRECATED;
 @end

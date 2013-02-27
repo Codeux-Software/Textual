@@ -54,7 +54,8 @@
 #define TXKeyUpArrowCode		0x7E
 
 @interface TLOKeyEventHandler : NSObject
-@property (nonatomic, unsafe_unretained) id target;
+@property (nonatomic, uweak) id target;
+
 @property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
 @property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
 

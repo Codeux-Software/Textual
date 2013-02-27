@@ -40,10 +40,10 @@
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
 + (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
-+ (void)useSSLWithConnection:(id)socket delegate:(id)theDelegate;
+- (void)useSSLWithClient:(IRCClient *)client;
 
-+ (BOOL)badSSLCertErrorFound:(NSError *)error;
-+ (NSString *)posixErrorStringFromErrno:(NSInteger)code;
++ (BOOL)badSSLCertificateErrorFound:(NSError *)error;
++ (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
 
 - (void)requestSSLTrustFor:(NSWindow *)docWindow
 			 modalDelegate:(id)adelegate
@@ -57,9 +57,9 @@
 + (id)socketWithDelegate:(id)delegate;
 
 - (void)useSystemSocksProxy;
-- (void)useSocksProxyVersion:(NSInteger)version 
-						host:(NSString *)host 
-						port:(NSInteger)port 
-						user:(NSString *)user 
+- (void)useSocksProxyVersion:(NSInteger)version
+					 address:(NSString *)address
+						port:(NSInteger)port
+					username:(NSString *)username
 					password:(NSString *)password;
 @end

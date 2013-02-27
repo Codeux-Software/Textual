@@ -39,86 +39,71 @@
 
 @implementation IRCSendingMessage
 
-- (id)initWithCommand:(NSString *)aCommand
++ (NSInteger)colonIndexForCommand:(NSString *)command
 {
-	if ((self = [super init])) {
-		self.completeColon = YES;
-		
-		self.params = [NSMutableArray new];
-		
-		self.command = [aCommand uppercaseString];
-	}
+	/* The command index that Textual uses is complex for anyone who 
+	 has never seen it before, but on the other hand, it is also very
+	 convenient for storing static information about any IRC command
+	 that Textual may handle. For example, the internal command list
+	 keeps track of where the colon (:) should be placed for specific
+	 outgoing commands. Better than guessing. */
 	
-	return self;
+	NSArray *searchPath = [TPCPreferences IRCCommandIndex:NO];
+
+	for (NSArray *indexInfo in searchPath) {
+		if (indexInfo.count == 5) {
+			NSString *matValue = indexInfo[1];
+
+			if ([matValue isEqualIgnoringCase:command] && [indexInfo boolAtIndex:3] == YES) {
+				return [indexInfo integerAtIndex:4];
+			}
+		}
+ 	}
+	
+	return -1;
 }
 
-- (void)addParameter:(NSString *)parameter
++ (NSString *)stringWithCommand:(NSString *)command arguments:(NSArray *)argList
 {
-	[self.params safeAddObject:parameter];
-}
+	NSMutableString *builtString = [NSMutableString string];
 
-- (NSString *)string
-{
-	if (NSObjectIsEmpty(self.string)) {
-		BOOL forceCompleteColon = NO;
-		if ([self.command isEqualToString:IRCPrivateCommandIndex("privmsg")] ||
-			[self.command isEqualToString:IRCPrivateCommandIndex("notice")]) {
+	[builtString appendString:command.uppercaseString];
+
+	NSObjectIsEmptyAssertReturn(argList, builtString);
+
+	NSInteger colonIndexBase = [IRCSendingMessage colonIndexForCommand:command];
+	NSInteger colonIndexCount = 0;
+
+	for (NSString *param in argList) {
+		NSObjectIsEmptyAssertLoopContinue(param);
+		
+		[builtString appendString:NSStringWhitespacePlaceholder];
+
+		if (colonIndexBase == -1) {
+			// Guess where the colon (:) should go.
+			//
+			// A colon is supposed to represent a section of an outgoing command
+			// that has a paramater which contains spaces. For example, PRIVMSG
+			// is in the formoat "PRIVMSG #channel :long message" — The message
+			// will have spaces part of it, so we inform the server.
 			
-			forceCompleteColon = YES;
-		} else if (   [self.command isEqualToString:IRCPrivateCommandIndex("nick")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("mode")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("join")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("names")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("who")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("list")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("invite")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("whois")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("whowas")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("ison")]
-				   || [self.command isEqualToString:IRCPrivateCommandIndex("user")]) {
+			if (colonIndexCount == (argList.count - 1) && ([param hasPrefix:@":"] || [param contains:NSStringWhitespacePlaceholder])) {
+				[builtString appendString:@":"];
+			}
+		} else {
+			// We know where it goes thanks to the command index.
 			
-			self.completeColon = NO;
+			if (colonIndexCount == colonIndexBase) {
+				[builtString appendString:@":"];
+			}
 		}
-		
-		NSMutableString *d = [NSMutableString new];
-		
-		[d appendString:self.command];
-		
-		NSInteger count = [self.params count];
-		
-		if (NSObjectIsNotEmpty(self.params)) {
-			for (NSInteger i = 0; i < (count - 1); ++i) {
-				NSString *s = [self.params safeObjectAtIndex:i];
-				
-				[d appendString:NSStringWhitespacePlaceholder];
-				[d appendString:s];
-			}
-			
-			[d appendString:NSStringWhitespacePlaceholder];
-			
-			NSString *s = [self.params safeObjectAtIndex:(count - 1)];
-			
-			BOOL firstColonOrSpace = NO;
-			
-			if (NSObjectIsNotEmpty(s)) {
-				UniChar c = [s characterAtIndex:0];
-				
-				firstColonOrSpace = (c == ' ' || c == ':');
-			}
-			
-			if (forceCompleteColon || (self.completeColon && (NSObjectIsEmpty(s) || firstColonOrSpace))) {
-				[d appendString:@":"];
-			}
-			
-			[d appendString:s];
-		}
-		
-		[d appendString:@"\r\n"];
-		
-		_string = d;
+
+		[builtString appendString:param];
+
+		colonIndexCount += 1;
 	}
-	
-	return self.string;
+
+	return builtString;
 }
 
 @end

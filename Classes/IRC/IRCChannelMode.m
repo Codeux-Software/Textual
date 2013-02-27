@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface IRCChannelMode ()
+@property (nonatomic, strong) NSMutableDictionary *allModes;
+@end
+
 @implementation IRCChannelMode
 
 - (id)init
@@ -65,6 +69,11 @@
 	[self.allModes removeAllObjects];
 }
 
+- (NSDictionary *)modeInformation
+{
+	return self.allModes;
+}
+
 - (NSArray *)badModes
 {
 	return @[@"q", @"a", @"o", @"h", @"v", @"b", @"e", @"I"];
@@ -75,17 +84,11 @@
 	NSArray *ary = [self.isupport parseMode:str];
 
 	for (IRCModeInfo *h in ary) {
-		if (h.op) {
+		if ([self.badModes containsObject:h.modeToken]) {
 			continue;
 		}
-
-		NSString *modec = [NSString stringWithChar:h.mode];
-
-		if ([self.badModes containsObject:modec]) {
-			continue;
-		}
-
-		[self.allModes safeSetObject:h forKey:modec];
+		
+		[self.allModes safeSetObject:h forKey:h.modeToken];
 	}
 
 	return ary;
@@ -93,38 +96,59 @@
 
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode
 {
-	NSMutableString *str   = [NSMutableString string];
+	NSMutableString *frstr = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
+	NSMutableString *track = [NSMutableString string];
 
-	NSArray *modes = mode.allModes.sortedDictionaryKeys;
+	NSArray *modes = mode.modeInformation.sortedDictionaryKeys;
 
+	/* Build the removals first. */
 	for (NSString *mkey in modes) {
 		IRCModeInfo *h = [mode.allModes objectForKey:mkey];
 
-		if (h.plus == YES) {
-			if (h.param) {
-				[trail appendFormat:@" %@", h.param];
+		if (h.modeIsSet) {
+			if (NSObjectIsNotEmpty(h.modeParamater)) {
+				[trail appendFormat:@" %@", h.modeParamater];
 			}
 
-			[str appendFormat:@"+%c", h.mode];
-		} else {
-			if (h.param) {
-				[trail appendFormat:@" %@", h.param];
-			}
+			[track appendString:h.modeToken];
 
-			[str appendFormat:@"-%c", h.mode];
-
-			if (h.mode == 'k') {
-				h.param = NSStringEmptyPlaceholder;
+			if ([h.modeToken isEqualToString:@"k"]) {
+				h.modeParamater = NSStringEmptyPlaceholder;
 			} else {
-				if (h.mode == 'l') {
-					h.param = 0;
+				if ([h.modeToken isEqualToString:@"l"]) {
+					h.modeParamater = 0;
 				}
 			}
 		}
 	}
 
-	return [[str stringByAppendingString:trail] trim];
+	if (track) {
+		[frstr appendString:@"+"];
+		[frstr appendString:track];
+
+		[track setString:NSStringEmptyPlaceholder];
+	}
+
+	/* Build the additions next. */
+	for (NSString *mkey in modes) {
+		IRCModeInfo *h = [mode.allModes objectForKey:mkey];
+
+		if (h.modeIsSet == NO) {
+			if (NSObjectIsNotEmpty(h.modeParamater)) {
+				[trail appendFormat:@" %@", h.modeParamater];
+			}
+
+			[track appendString:h.modeToken];
+		}
+	}
+	
+	if (track) {
+		[frstr appendString:@"-"];
+		[frstr appendString:track];
+	}
+
+	return [frstr stringByAppendingString:trail];
 }
 
 - (BOOL)modeIsDefined:(NSString *)mode
@@ -134,9 +158,7 @@
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
 {
-	BOOL objk = [self modeIsDefined:mode];
-
-	if (objk == NO) {
+	if ([self modeIsDefined:mode] == NO) {
 		IRCModeInfo *m = [self.isupport createMode:mode];
 
 		[self.allModes safeSetObject:m forKey:mode];
@@ -147,30 +169,30 @@
 
 - (NSString *)format:(BOOL)maskK
 {
-	NSMutableString *str   = [NSMutableString string];
+	NSMutableString *frstr = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
 
-	[str appendString:@"+"];
+	[frstr appendString:@"+"];
 
 	NSArray *modes = self.allModes.sortedDictionaryKeys;
 
 	for (NSString *mkey in modes) {
 		IRCModeInfo *h = [self.allModes objectForKey:mkey];
 
-		if (h.plus) {
-			if (h.param && maskK == NO) {
-				if (h.mode == 'k') {
+		if (h.modeIsSet) {
+			if (h.modeParamater && maskK == NO) {
+				if ([h.modeToken isEqualToString:@"k"]) {
 					[trail appendFormat:@" ******"];
 				} else {
-					[trail appendFormat:@" %@", h.param];
+					[trail appendFormat:@" %@", h.modeParamater];
 				}
 			}
 
-			[str appendFormat:@"%c", h.mode];
+			[frstr appendFormat:@"%@", h.modeToken];
 		}
 	}
 
-	return [[str stringByAppendingString:trail] trim];
+	return [frstr stringByAppendingString:trail];
 }
 
 - (NSString *)string

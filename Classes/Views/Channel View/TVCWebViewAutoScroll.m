@@ -8,7 +8,7 @@
 {
 	NSRect visibleRect = [aView visibleRect];
 	
-	visibleRect.origin.y = (NSHeight([aView frame]) - NSHeight(visibleRect));
+	visibleRect.origin.y = (NSHeight(aView.frame) - NSHeight(visibleRect));
 	
 	[aView scrollRectToVisible:visibleRect];
 }
@@ -27,33 +27,33 @@
 	_webFrame = aWebFrame;
 	
 	if (self.webFrame) {
-		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
-		[_NSNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
+		[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
+		[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
-		self.lastFrame		 = [[self.webFrame documentView] frame];
-		self.lastVisibleRect = [[self.webFrame documentView] visibleRect];
+		self.lastFrame		 = [self.webFrame.documentView frame];
+		self.lastVisibleRect = [self.webFrame.documentView visibleRect];
 	} else {
-		[_NSNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
-		[_NSNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
+		[RZNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
+		[RZNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
 	}
 }
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSClipView *clipView = [[[self.webFrame documentView] enclosingScrollView] contentView];
+	NSClipView *clipView = [self.webFrame.documentView.enclosingScrollView contentView];
 	
-	if (NSDissimilarObjects(clipView, [aNotification object])) {
+	if (NSDissimilarObjects(clipView, aNotification.object)) {
 		return;
 	}
 	
-	self.lastVisibleRect = [[clipView documentView] visibleRect];
+	self.lastVisibleRect = [clipView.documentView visibleRect];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
 	NSView *view = [aNotification object];
 	
-	if (NSDissimilarObjects(view, self.webFrame) && NSDissimilarObjects(view, [self.webFrame documentView])) {
+	if (NSDissimilarObjects(view, self.webFrame) && NSDissimilarObjects(view, self.webFrame.documentView)) {
 		return;
 	}
 	

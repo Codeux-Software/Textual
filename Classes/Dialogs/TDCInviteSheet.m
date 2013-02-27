@@ -52,35 +52,35 @@
 {
 	NSString *target = nil;
 	
-	if (self.nicks.count == 1) {
-		target = [self.nicks safeObjectAtIndex:0];
-	} else if (self.nicks.count == 2) {
-		NSString *first = [self.nicks safeObjectAtIndex:0];
-		NSString *second = [self.nicks safeObjectAtIndex:1];
+	if (self.nicknames.count == 1) {
+		target = [self.nicknames safeObjectAtIndex:0];
+	} else if (self.nicknames.count == 2) {
+		NSString *firstn = [self.nicknames safeObjectAtIndex:0];
+		NSString *second = [self.nicknames safeObjectAtIndex:1];
 		
-		target = TXTFLS(@"InviteSheetTwoPeopleSelected", first, second);
+		target = TXTFLS(@"InviteSheetTwoPeopleSelected", firstn, second);
 	} else {
-		target = TXTFLS(@"InviteSheetMultiplePeopleSelected", self.nicks.count);
+		target = TXTFLS(@"InviteSheetMultiplePeopleSelected", self.nicknames.count);
 	}
 	
-	self.titleLabel.stringValue = TXTFLS(@"InviteSheetTargetDescription", target);
+	self.headerTitleField.stringValue = TXTFLS(@"InviteSheetTargetDescription", target);
 	
 	for (NSString *s in channels) {
-		[self.channelPopup addItemWithTitle:s];
+		[self.channelListPopup addItemWithTitle:s];
 	}
 	
 	[self startSheet];
 }
 
-- (void)invite:(id)sender
+- (void)ok:(id)sender
 {
-	NSString *channelName = [self.channelPopup selectedItem].title;
+	NSString *channelName = self.channelListPopup.selectedItem.title;
 	
 	if ([self.delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
 		[self.delegate inviteSheet:self onSelectChannel:channelName];
 	}
-	
-	[self endSheet];
+
+	[super ok:nil];
 }
 
 #pragma mark -

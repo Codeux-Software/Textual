@@ -51,27 +51,27 @@
 - (void)start
 {
 	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		self.sheet = self.ignoreWindow;
+		self.sheet = self.ignoreView;
 		
 		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
-			[self.hostmask setStringValue:self.ignore.hostmask];
+			[self.hostmaskField setStringValue:self.ignore.hostmask];
 		} 
 	} else {
-		self.sheet = self.notifyWindow;
+		self.sheet = self.notifyView;
 		
 		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
-			[self.nickname setStringValue:self.ignore.hostmask];
+			[self.nicknameField setStringValue:self.ignore.hostmask];
 		} 
 	}
 	
-	[self.ignorePublicMsg		setState:self.ignore.ignorePublicMsg];
-	[self.ignorePrivateMsg		setState:self.ignore.ignorePrivateMsg];
-	[self.ignoreHighlights		setState:self.ignore.ignoreHighlights];
-	[self.ignoreNotices			setState:self.ignore.ignoreNotices];
-	[self.ignoreCTCP			setState:self.ignore.ignoreCTCP];
-	[self.ignoreJPQE			setState:self.ignore.ignoreJPQE];
-	[self.notifyJoins			setState:self.ignore.notifyJoins];
-	[self.ignorePMHighlights	setState:self.ignore.ignorePMHighlights];
+	[self.ignoreCTCPCheck				setState:self.ignore.ignoreCTCP];
+	[self.ignoreJPQECheck				setState:self.ignore.ignoreJPQE];
+	[self.ignoreNoticesCheck			setState:self.ignore.ignoreNotices];
+	[self.ignorePrivateHighlightsCheck	setState:self.ignore.ignorePrivateHighlights];
+	[self.ignorePrivateMessagesCheck	setState:self.ignore.ignorePrivateMessages];
+	[self.ignorePublicHighlightsCheck	setState:self.ignore.ignorePublicHighlights];
+	[self.ignorePublicMessagesCheck		setState:self.ignore.ignorePublicMessages];
+	[self.notifyJoinsCheck				setState:self.ignore.notifyJoins];
 	
 	[self startSheet];
 }
@@ -79,27 +79,25 @@
 - (void)ok:(id)sender
 {
 	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		self.ignore.hostmask = [self.hostmask stringValue];
+		self.ignore.hostmask = self.hostmaskField.firstTokenStringValue;
 	} else {
-		self.ignore.hostmask = [self.nickname stringValue];
+		self.ignore.hostmask = self.nicknameField.firstTokenStringValue;
 	}
-	
-	self.ignore.ignorePublicMsg		= [self.ignorePublicMsg state];
-	self.ignore.ignorePrivateMsg	= [self.ignorePrivateMsg state];
-	self.ignore.ignoreHighlights	= [self.ignoreHighlights state];
-	self.ignore.ignoreNotices		= [self.ignoreNotices state];
-	self.ignore.ignoreCTCP			= [self.ignoreCTCP state];
-	self.ignore.ignoreJPQE			= [self.ignoreJPQE state];
-	self.ignore.notifyJoins			= [self.notifyJoins state];
-	self.ignore.ignorePMHighlights	= [self.ignorePMHighlights state];
-	
-	[self.ignore processHostMaskRegex];
+
+	self.ignore.ignoreCTCP					= [self.ignoreCTCPCheck state];
+	self.ignore.ignoreJPQE					= [self.ignoreJPQECheck state];
+	self.ignore.ignoreNotices				= [self.ignoreNoticesCheck state];
+	self.ignore.ignorePrivateHighlights		= [self.ignorePrivateHighlightsCheck state];
+	self.ignore.ignorePrivateMessages		= [self.ignorePrivateMessagesCheck state];
+	self.ignore.ignorePublicHighlights		= [self.ignorePublicHighlightsCheck state];
+	self.ignore.ignorePublicMessages		= [self.ignorePublicMessagesCheck state];
+	self.ignore.notifyJoins					= [self.notifyJoinsCheck state];
 	
 	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
 		[self.delegate ignoreItemSheetOnOK:self];
 	}
 	
-	[super ok:sender];
+	[super ok:nil];
 }
 
 #pragma mark -

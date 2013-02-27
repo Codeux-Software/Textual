@@ -48,20 +48,22 @@
 	return self;
 }
 
-- (void)start:(NSString *)nick
+- (void)start:(NSString *)nickname
 {
-	[self.nicknameNewInfo setStringValue:nick];
-	[self.currentText setStringValue:nick];
+	[self.tnewNicknameField setStringValue:nickname];
+	[self.toldNicknameField setStringValue:nickname];
 	
-	[self.sheet makeFirstResponder:self.nicknameNewInfo];
+	[self.sheet makeFirstResponder:self.tnewNicknameField];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-		[self.delegate nickSheet:self didInputNick:self.nicknameNewInfo.stringValue];
+	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
+		NSString *newNickname = self.tnewNicknameField.firstTokenStringValue;
+		
+		[self.delegate nickSheet:self didInputNickname:newNickname];
 	}
 	
 	[super ok:sender];

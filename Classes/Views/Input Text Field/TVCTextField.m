@@ -42,12 +42,6 @@
 
 @implementation TVCTextField
 
-- (void)dealloc
-{
-	dispatch_release(self.formattingQueue);
-	self.formattingQueue = NULL;
-}
-
 - (id)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
@@ -58,9 +52,12 @@
 		} else {
             [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
 		}
+
+		[self setTextColor:TXDefaultTextFieldFontColor];
+		[self setInsertionPointColor:TXDefaultTextFieldFontColor];
         
         [super setTextContainerInset:NSMakeSize(_DefaultTextFieldWidthPadding, _DefaultTextFieldHeightPadding)];
-        
+
         if (PointerIsEmpty(self.keyHandler)) {
             self.keyHandler = [TLOKeyEventHandler new];
         }
@@ -69,6 +66,41 @@
     }
 	
     return self;
+}
+
+- (void)dealloc
+{
+	dispatch_release(self.formattingQueue);
+
+	self.formattingQueue = NULL;
+}
+
+#pragma mark -
+#pragma mark Color
+
+- (NSColor *)defaultTextColor
+{
+	/* The IRC color formatting engine is a subclass of TVCTextField because the
+	 input text field on the main window is not the only input source that supports
+	 formatting. The topic sheet does as well. The formatting engine needs to know
+	 the default text color to use when there is no formatting. Therefore, we must
+	 place the color inversion in TVCTextField and not TVCInputTextField. The local
+	 property allowColorInversion is defined exclusively for TVCInputTextField so 
+	 that we know to invert those colors and not those for other input fields such
+	 as the channel topic sheet. 
+	 
+	 Color inversion is a hidden setting for the input text field right now. This is
+	 done because even though the code is there to reverse the color to a darker one,
+	 the actual surrounding user interface is still a gray gradient. I am not a graphics
+	 designer so I cannot redesign the default Apple UI to a darker one with matching 
+	 buttons that represent different states such as mouse click or disabled. 
+	 
+	 Simply reversing the color of the input text field and nothing around it seemed 
+	 very cheap. */
+	
+	return [NSColor defineUserInterfaceItem:TXDefaultTextFieldFontColor
+							   invertedItem:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]
+							   withOperator:(self.allowColorInversion && [TPCPreferences invertInputTextFieldColors])];
 }
 
 #pragma mark -
@@ -206,9 +238,7 @@
 	NSRange blr;
 	NSRange selr = self.selectedRange;
 	
-	NSString *stringv = self.stringValue;
-	
-	if (selr.location <= stringv.length) {
+	if (selr.location <= self.stringLength) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:selr.location effectiveRange:&blr];
 	} else {
 		return -1;
@@ -225,10 +255,8 @@
 	
 	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-		
-		if (blr.location == lineRange.location &&
-			blr.length == lineRange.length) {
-			
+
+		if (NSEqualRanges(blr, lineRange)) {
 			return (numberOfLines + 1);
 		}
 		

@@ -39,11 +39,6 @@
 
 @implementation NSPasteboard (TXPasteboardHelper)
 
-- (NSArray *)pasteboardStringType
-{
-	return @[NSStringPboardType];
-}
-
 - (NSString *)stringContent
 {
 	return [self stringForType:NSStringPboardType];
@@ -51,7 +46,7 @@
 
 - (void)setStringContent:(NSString *)s
 {
-	[self declareTypes:[self pasteboardStringType] owner:nil];
+	[self declareTypes:@[NSStringPboardType] owner:nil];
 	
 	[self setString:s forType:NSStringPboardType];
 }

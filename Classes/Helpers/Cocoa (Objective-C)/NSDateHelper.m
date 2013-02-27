@@ -39,12 +39,12 @@
 
 @implementation NSDate (TXDateHelper)
  
-+ (NSInteger)secondsSinceUnixTimestamp:(NSInteger)stamp
++ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)stamp
 {
 	return ([self epochTime] - stamp);
 }
 
-+ (NSInteger)epochTime
++ (NSTimeInterval)epochTime
 {
 	return [[NSDate date] timeIntervalSince1970];
 }

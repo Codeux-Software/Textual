@@ -38,6 +38,5 @@
 #import "TextualApplication.h"
 
 @interface TVCServerListCell : NSTextFieldCell 
-@property (nonatomic, weak) TVCServerList *parent;
-@property (nonatomic, weak) IRCTreeItem *cellItem;
+@property (nonatomic, nweak) IRCTreeItem *cellItem;
 @end

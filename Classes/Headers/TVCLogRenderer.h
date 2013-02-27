@@ -42,13 +42,13 @@ typedef enum TVCLogRendererType : NSInteger {
 	TVCLogRendererAttributedStringType,
 } TVCLogRendererType;
 
-TEXTUAL_EXTERN NSString *logEscape(NSString *s);
-TEXTUAL_EXTERN NSString *logEscapeWithNil(NSString *s);
-
-TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
-TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);
-
 @interface TVCLogRenderer : NSObject
++ (NSString *)escapeString:(NSString *)s;
++ (NSString *)escapeStringWithoutNil:(NSString *)s;
+
++ (NSInteger)mapColorValue:(NSColor *)color;
++ (NSColor *)mapColorCode:(NSInteger)colorCode;
+
 + (NSString *)renderTemplate:(NSString *)templateName;
 + (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateToken;
 

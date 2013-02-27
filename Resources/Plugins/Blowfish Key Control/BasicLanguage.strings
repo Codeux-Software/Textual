@@ -38,10 +38,10 @@
 "BlowfishNoEncryptionKeySet" = "No encryption key is set.";
 "BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
 
-"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
+"BlowfishEncryptionStartedInPrivateMessage" = "Encryption started in query. If this query is closed, then the key must be set again.";
 
 "BlowfishKeyExchangeSuccessful_1" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
-"BlowfishKeyExchangeSuccessful_2" = "\002Warning:\002 If this query is closed, then a new key exchange is required for encrypted chat.";
+"BlowfishKeyExchangeSuccessful_2" = "\002Warning:\002 If this query is closed, then a new key exchange is required to continue encrypted chat.";
 "BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
 "BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
 "BlowfishKeyExchangeRequestReceived" = "Received key exchange request from \002%@\002. Processing …";

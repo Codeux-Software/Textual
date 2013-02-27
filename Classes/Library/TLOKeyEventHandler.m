@@ -44,8 +44,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.codeHandlerMap			= [NSMutableDictionary new];
-		self.characterHandlerMap	= [NSMutableDictionary new];
+		self.codeHandlerMap = [NSMutableDictionary new];
+		self.characterHandlerMap = [NSMutableDictionary new];
 	}
 	
 	return self;
@@ -78,7 +78,7 @@
 		(self.characterHandlerMap)[modsKey] = map;
 	}
 	
-	map[NSNumberWithInteger(c)] = NSStringFromSelector(selector);
+	map[@(c)] = NSStringFromSelector(selector);
 }
 
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods
@@ -106,7 +106,10 @@
 - (BOOL)processKeyEvent:(NSEvent *)e
 {
 	NSInputManager *im = [NSInputManager currentInputManager];
-	if (im && [im markedRange].length > 0) return NO;
+
+	if (im && im.markedRange.length > 0) {
+		return NO;
+	}
 	
 	NSUInteger m;
 
@@ -118,7 +121,7 @@
 	NSMutableDictionary *codeMap = (self.codeHandlerMap)[modsKey];
 	
 	if (codeMap) {
-		NSString *selectorName = codeMap[NSNumberWithInteger([e keyCode])];
+		NSString *selectorName = codeMap[@(e.keyCode)];
 
 		if (selectorName) {
 			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
@@ -130,10 +133,10 @@
 	NSMutableDictionary *characterMap = (self.characterHandlerMap)[modsKey];
 	
 	if (characterMap) {
-		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
+		NSString *str = [e.charactersIgnoringModifiers lowercaseString];
 		
 		if (NSObjectIsNotEmpty(str)) {
-			NSString *selectorName = characterMap[NSNumberWithInteger([str characterAtIndex:0])];
+			NSString *selectorName = characterMap[@([str characterAtIndex:0])];
 			
 			if (selectorName) {
 				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);

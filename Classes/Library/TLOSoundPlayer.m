@@ -41,7 +41,7 @@
 
 + (void)play:(NSString *)name
 {
-	if (NSObjectIsEmpty(name)) return;
+	NSObjectIsEmptyAssert(name);
 	
 	if ([name isEqualToString:@"Beep"]) {
 		NSBeep();
@@ -54,11 +54,6 @@
 			LogToConsole(@"Error: Unable to find sound \"%@\"", name);
 		}
 	}
-}
-
-+ (void)play:(NSString *)name isMuted:(BOOL)muted
-{
-	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 @end

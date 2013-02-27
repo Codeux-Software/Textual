@@ -37,6 +37,15 @@
 
 #import "TextualApplication.h"
 
+/* TPILS and TPIFLS allow a plugin to use localized text within the plugin itself using
+ Textual's own API. TPILS takes a single paramater and that is the key to look inside 
+ the .strings file for. TPIFLS takes a key then as many paramaters as needed after. 
+ TPIFLS takes the key given, finds the localized string, then formats it similar to 
+ NSString stringWithFormat:… 
+ 
+ These calls expect the localized strings to be inside the filename "BasicLanguage.strings"
+ Any other name will not work unless the actual cocoa APIs for accessing localized strings
+ is used in place of these. */
 #define TPILS(k)			 TSBLS(k, [NSBundle bundleForClass:[self class]])
 #define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
 

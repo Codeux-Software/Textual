@@ -43,6 +43,9 @@
 @interface TVCTextField : NSTextView 
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
+@property (nonatomic, assign) BOOL allowColorInversion; // Do not call. 
+
+- (NSColor *)defaultTextColor;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;
@@ -51,7 +54,9 @@
 - (NSInteger)numberOfLines;
 
 - (void)keyDownToSuper:(NSEvent *)e;
+
 - (void)setKeyHandlerTarget:(id)target;
+
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 

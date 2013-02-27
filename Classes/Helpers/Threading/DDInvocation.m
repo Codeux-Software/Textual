@@ -89,11 +89,11 @@
 {
 	/* Mac OS does not automatically place background threads in an
 	 autorelease pool like the default application run loop. For that
-	 reason let us invoke the invocation within our autorelease pool. */
+	 reason, let us invoke the invocation within our autorelease pool. */
 	
 	@autoreleasepool {
 		[anInvocation invoke];
 	}
 }
 
-@end 
+@end

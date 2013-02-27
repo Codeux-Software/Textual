@@ -81,17 +81,17 @@ typedef struct {
  * 
  * One way to achieve this is to add `-DDEBUG` to the "Other C Flags" setting of
  * your development configuration, and to wrap the
- * `preventNSUndefinedKeyExceptionAttack` method call in a #if block, like:
+ * `prevenRZUndefinedKeyExceptionAttack` method call in a #if block, like:
  * 
  *     #ifdef DEBUG
- *     [GRMustache preventNSUndefinedKeyExceptionAttack];
+ *     [GRMustache prevenRZUndefinedKeyExceptionAttack];
  *     #endif
  * 
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime.md
  * 
  * @since v1.7
  */
-+ (void)preventNSUndefinedKeyExceptionAttack AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
++ (void)prevenRZUndefinedKeyExceptionAttack AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Returns a rendering object that is able to render the argument _object_ for

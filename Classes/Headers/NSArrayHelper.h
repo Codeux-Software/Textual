@@ -39,6 +39,7 @@
 
 @interface NSArray (TXArrayHelper)
 - (id)safeObjectAtIndex:(NSInteger)n;
+
 - (BOOL)boolAtIndex:(NSInteger)n;
 - (NSArray *)arrayAtIndex:(NSInteger)n;
 - (NSString *)stringAtIndex:(NSInteger)n;
@@ -70,6 +71,8 @@
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index;
 - (void)insertDouble:(TXNSDouble)value atIndex:(NSUInteger)index;
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index;
+
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)
