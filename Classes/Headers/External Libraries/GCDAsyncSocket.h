@@ -1028,8 +1028,8 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * Note that this method may be called multiple times for a single read if you return positive numbers.
  **/
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
-				 elapsed:(NSTimeInterval)elapsed
-			   bytesDone:(NSUInteger)length;
+                 elapsed:(NSTimeInterval)elapsed
+               bytesDone:(NSUInteger)length;
 
 /**
  * Called if a write operation has reached its timeout without completing.
@@ -1043,8 +1043,8 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * Note that this method may be called multiple times for a single write if you return positive numbers.
  **/
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
-				 elapsed:(NSTimeInterval)elapsed
-			   bytesDone:(NSUInteger)length;
+                 elapsed:(NSTimeInterval)elapsed
+               bytesDone:(NSUInteger)length;
 
 /**
  * Conditionally called if the read stream closes, but the write stream may still be writeable.
