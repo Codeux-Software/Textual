@@ -163,7 +163,7 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 	
-	if ([TPCPreferences reloadScrollbackOnLaunch]) {
+	if ([TPCPreferences reloadScrollbackOnLaunch] && (self.channel && self.channel.isChannel)) {
 		[self.historicLogFile updateCache];
 	} else {
 		[self.historicLogFile reset];
