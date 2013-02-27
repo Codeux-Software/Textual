@@ -1153,6 +1153,13 @@
 
 	[self updateIcon];
 	[self updateTitle];
+
+    if ([self.serverList isGroupItem:self.previouslySelectedItem]) {
+        /* Draw the view again if our previous selection was a server.
+         This is done to redraw the disclosure triangles in dark mode. */
+        
+        [self.serverList setNeedsDisplay];
+    }
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
