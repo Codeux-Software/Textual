@@ -39,10 +39,7 @@
 
 @interface NSWindow (TXWindowHelper)
 - (void)exactlyCenterWindow;
-- (void)centerOfWindow:(NSWindow *)window;
 
 - (BOOL)isOnCurrentWorkspace;
 - (BOOL)isInFullscreenMode;
-
-- (void)closeExistingSheet;
 @end

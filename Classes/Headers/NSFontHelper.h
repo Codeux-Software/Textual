@@ -38,11 +38,11 @@
 #import "TextualApplication.h"
 
 @interface NSFont (TXFontHelper)
++ (BOOL)fontIsAvailable:(NSString *)fontName;
+
 - (NSFont *)convertToItalics;
 
-- (BOOL)fontMatchesFont:(NSFont *)otherFont;
 - (BOOL)fontMatchesName:(NSString *)fontName;
 
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait;
-+ (BOOL)fontIsAvailable:(NSString *)fontName;
 @end

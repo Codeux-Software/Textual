@@ -39,11 +39,6 @@
 
 @implementation TVCMainWindow
 
-- (BOOL)canBecomeMainWindow
-{
-	return YES;
-}
-
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
@@ -92,6 +87,11 @@
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
 	}
+}
+
+- (BOOL)canBecomeMainWindow
+{
+	return YES;
 }
 
 @end

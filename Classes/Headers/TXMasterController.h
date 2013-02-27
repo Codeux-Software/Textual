@@ -38,54 +38,49 @@
 #import "TextualApplication.h"
 
 @interface TXMasterController : NSObject <NSSplitViewDelegate>
+@property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, assign) BOOL skipTerminateSave;
-@property (nonatomic, strong) NSBox *logBase;
-@property (nonatomic, strong) TXMenuController *menu;
-@property (nonatomic, strong) TVCMainWindow *window;
-@property (nonatomic, strong) TVCMainWindowLoadingScreenView *loadingScreen;
-@property (nonatomic, strong) TVCMainWindowSegmentedControl *windowButtonController;
-@property (nonatomic, strong) TVCMainWindowSegmentedCell *windowButtonControllerCell;
-@property (nonatomic, strong) TVCInputTextField *text;
-@property (nonatomic, strong) TVCServerList *serverList;
-@property (nonatomic, strong) TVCMemberList *memberList;
-@property (nonatomic, strong) TVCThinSplitView *serverSplitView;
-@property (nonatomic, strong) TVCThinSplitView *memberSplitView;
-@property (nonatomic, strong) TVCTextFormatterMenu *formattingMenu;
-@property (nonatomic, strong) NSMenuItem *serverMenu;
-@property (nonatomic, strong) NSMenuItem *channelMenu;
-@property (nonatomic, strong) NSMenu *logMenu;
-@property (nonatomic, strong) NSMenu *urlMenu;
-@property (nonatomic, strong) NSMenu *treeMenu;
-@property (nonatomic, strong) NSMenu *chanMenu;
-@property (nonatomic, strong) NSMenu *memberMenu;
-@property (nonatomic, strong) IRCWorld *world;
-@property (nonatomic, strong) IRCExtras *extrac;
-@property (nonatomic, strong) TPCViewTheme *viewTheme;
-@property (nonatomic, strong) TDCWelcomeSheet *welcomeSheet;
+@property (nonatomic, assign) BOOL isInFullScreenMode;
+@property (nonatomic, nweak) NSBox *channelViewBox;
+@property (nonatomic, nweak) NSMenu *addServerMenu;
+@property (nonatomic, nweak) NSMenu *channelViewMenu;
+@property (nonatomic, nweak) NSMenu *tcopyURLMenu;
+@property (nonatomic, nweak) NSMenu *joinChannelMenu;
+@property (nonatomic, nweak) NSMenu *userControlMenu;
+@property (nonatomic, nweak) NSMenu *segmentedControllerMenu;
+@property (nonatomic, nweak) NSMenuItem *channelMenuItem;
+@property (nonatomic, nweak) NSMenuItem *serverMenuItem;
+@property (nonatomic, nweak) NSMenuItem *closeWindowMenuItem;
 @property (nonatomic, strong) THOPluginManager *pluginManager;
-@property (nonatomic, strong) TLOGrowlController *growl;
-@property (nonatomic, strong) TLOInputHistory *inputHistory;
+@property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
+@property (nonatomic, strong) TPCThemeController *themeController;
+@property (nonatomic, strong) TLOInputHistory *inputHistory;
+@property (nonatomic, nweak) TVCMemberList *memberList;
+@property (nonatomic, nweak) TVCServerList *serverList;
+@property (nonatomic, nweak) TVCThinSplitView *memberSplitView;
+@property (nonatomic, nweak) TVCThinSplitView *serverSplitView;
+@property (nonatomic, nweak) TXMenuController *menuController;
+@property (nonatomic, uweak) TVCInputTextField *inputTextField;
+@property (nonatomic, nweak) TVCTextFormatterMenu *formattingMenu;
+@property (nonatomic, uweak) TVCMainWindow *mainWindow;
+@property (nonatomic, nweak) TVCMainWindowLoadingScreenView *mainWindowLoadingScreen;
+@property (nonatomic, nweak) TVCMainWindowSegmentedCell *mainWindowButtonControllerCell;
+@property (nonatomic, nweak) TVCMainWindowSegmentedControl *mainWindowButtonController;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 
-- (void)loadWindowState TEXTUAL_DEPRECATED;
 - (void)loadWindowState:(BOOL)honorFullscreen;
 - (void)saveWindowState;
-- (void)showMemberListSplitView:(BOOL)showList;
 
-- (void)updateSegmentedController;
+- (void)showMemberListSplitView:(BOOL)showList;
 
 - (void)openWelcomeSheet:(id)sender;
 
 - (void)textEntered;
 
-- (void)themeStyleDidChange;
-- (void)transparencyDidChange;
-- (void)inputHistorySchemeDidChange;
-- (void)sidebarColorInversionDidChange;
-
+- (void)updateSegmentedController;
 - (void)reloadSegmentedControllerOrigin;
 
 - (void)selectNextServer:(NSEvent *)e;
@@ -100,4 +95,12 @@
 - (void)selectPreviousActiveServer:(NSEvent *)e;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
+@end
+
+@interface NSObject (TXMasterControllerObjectExtension)
+- (TXMasterController *)masterController;
++ (TXMasterController *)masterController;
+
+- (IRCWorld *)worldController;
++ (IRCWorld *)worldController;
 @end

@@ -41,7 +41,7 @@
 
 - (NSInteger)countSelectedRows
 {
-	return [[self selectedRowIndexes] count];
+	return self.selectedRowIndexes.count;
 }
 
 - (NSArray *)selectedRows
@@ -60,6 +60,7 @@
 - (void)selectItemAtIndex:(NSInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+	
 	[self scrollRowToVisible:index];
 }
 
@@ -81,12 +82,12 @@
 
 - (void)rightMouseDown:(NSEvent *)e
 {
-	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
+	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
 	
 	NSInteger i = [self rowAtPoint:p];
 	
 	if (i >= 0) {
-		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
+		if ([self.selectedRowIndexes containsIndex:i] == NO) {
 			[self selectItemAtIndex:i];
 		}
 	}
@@ -94,53 +95,10 @@
 	[super rightMouseDown:e];
 }
 
-- (void)keyDown:(NSEvent *)e
-{
-	if (self.keyDelegate) {
-		switch ([e keyCode]) {
-			case 51:
-			case 117:	
-				if ([self countSelectedRows] > 0) {
-					if ([self.keyDelegate respondsToSelector:@selector(listViewDelete)]) {
-						[self.keyDelegate listViewDelete];
-						
-						return;
-					}
-				}
-				break;
-			case 126:	
-			{
-				NSIndexSet *set = [self selectedRowIndexes];
-				
-				if (NSObjectIsNotEmpty(set) && [set containsIndex:0]) {
-					if ([self.keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
-						[self.keyDelegate listViewMoveUp];
-						
-						return;
-					}
-				}
-				break;
-			}
-			case 116:
-			case 121:
-			case 123 ... 125:	
-				break;
-			default:
-				if ([self.keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
-					[self.keyDelegate listViewKeyDown:e];
-				}
-				
-				break;
-		}
-	}
-	
-	[super keyDown:e];
-}
-
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	if ([self.textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-		[self.textDelegate textDidEndEditing:note];
+	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+		[self.textEditingDelegate textDidEndEditing:note];
 	} else {
 		[super textDidEndEditing:note];
 	}

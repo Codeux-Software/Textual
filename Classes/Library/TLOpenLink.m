@@ -42,19 +42,14 @@
 + (void)open:(NSURL *)url
 {
 	if ([TPCPreferences openBrowserInBackground]) {
-		[_NSWorkspace() openURLs:@[url]
-		 withAppBundleIdentifier:nil
-					  options:NSWorkspaceLaunchWithoutActivation
-    additionalEventParamDescriptor:nil
+		[RZWorkspace() openURLs:@[url]
+		withAppBundleIdentifier:nil
+						options:NSWorkspaceLaunchWithoutActivation
+ additionalEventParamDescriptor:nil
 			  launchIdentifiers:nil];
 	} else {
-		[_NSWorkspace() openURL:url];
+		[RZWorkspace() openURL:url];
 	}
-}
-
-+ (void)openAndActivate:(NSURL *)url
-{
-	[_NSWorkspace() openURL:url];
 }
 
 + (void)openWithString:(NSString *)url

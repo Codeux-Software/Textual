@@ -37,13 +37,13 @@
 
 #import "TextualApplication.h"
 
-#define IRCTextFormatterMenuTag		53037
+#define IRCTextFormatterMenuTag			53037
 
 @interface TVCTextFormatterMenu : NSObject
-@property (nonatomic, unsafe_unretained) TVCTextField *textField;
-@property (nonatomic, strong) NSMenuItem *formatterMenu;
-@property (nonatomic, strong) NSMenu *foregroundColorMenu;
-@property (nonatomic, strong) NSMenu *backgroundColorMenu;
+@property (nonatomic, uweak) TVCTextField *textField;
+@property (nonatomic, nweak) NSMenuItem *formatterMenu;
+@property (nonatomic, nweak) NSMenu *foregroundColorMenu;
+@property (nonatomic, nweak) NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(TVCTextField *)field;

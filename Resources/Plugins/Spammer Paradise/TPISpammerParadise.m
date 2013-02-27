@@ -59,7 +59,7 @@
 		self.clonedUsers = [NSMutableArray array];
 	}
 	
-	IRCChannel *channel = client.world.selectedChannel;
+	IRCChannel *channel = client.worldController.selectedChannel;
 
 	if (channel.isChannel) {
 		NSInteger spacePos = [messageString stringPosition:NSStringWhitespacePlaceholder];
@@ -74,7 +74,7 @@
 			[self removeCloneOn:client in:channel nickname:messageString];
 		} else if ([commandString isEqualToString:@"CLONED"]) {
 			[self listAllClones:client];
-		} else if ([commandString isEqualToString:@"HSPAM"] && channel.isTalk == NO) {
+		} else if ([commandString isEqualToString:@"HSPAM"] && channel.isPrivateMessage == NO) {
 			[self highlightEveryoneIn:channel on:client];
 		}
 	}
@@ -127,7 +127,7 @@
 		
 		if (PointerIsNotEmpty(member)) {
 			NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
-								   client.config.guid, channel.name, member.nick.lowercaseString];
+								   client.config.itemUUID, channel.name, member.nickname.lowercaseString];
 
 			// ---- //
 			
@@ -154,7 +154,7 @@
 
 - (void)highlightEveryoneIn:(IRCChannel *)channel on:(IRCClient *)client
 {
-	if (NSObjectIsEmpty(channel.members)) {
+	if (NSObjectIsEmpty(channel.memberList)) {
 		return [client printDebugInformation:TPIFLS(@"SpammerParadiseMassHighlightEmptyChannelMessage", channel.name) channel:channel];
 	}
 
@@ -162,8 +162,8 @@
 	
 	NSString *userList = NSStringEmptyPlaceholder;
 
-	for (IRCUser *user in channel.members) {
-		userList = [userList stringByAppendingFormat:@"%@ ", user.nick];
+	for (IRCUser *user in channel.memberList) {
+		userList = [userList stringByAppendingFormat:@"%@ ", user.nickname];
 	}
 
 	[client sendText:[NSAttributedString emptyStringWithBase:userList]
@@ -186,20 +186,20 @@
 		if (PointerIsEmpty(member)) {
 			cloneResult = TPIFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", nickname, channel.name);
 		} else {
-			if ([member.nick isEqualNoCase:client.myNick]) {
+			if ([member.nickname isEqualIgnoringCase:client.localNickname]) {
 				cloneResult = TPILS(@"SpammerParadiseCloningUserCannotCloneSelfMessage");
 			} else {
 				NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
-									   client.config.guid, channel.name, member.nick.lowercaseString];
+									   client.config.itemUUID, channel.name, member.nickname.lowercaseString];
 
 				// ---- //
 
 				if ([self.clonedUsers containsObject:searchKey]) {
-					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsAlreadyClonedMessage", member.nick, channel.name);
+					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsAlreadyClonedMessage", member.nickname, channel.name);
 				} else {
 					[self.clonedUsers addObject:searchKey];
 
-					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsNowBeingClonedMessage", member.nick, channel.name);
+					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsNowBeingClonedMessage", member.nickname, channel.name);
 				}
 			}
 		}
@@ -226,16 +226,16 @@
 				cloneResult = TPIFLS(@"SpammerParadiseCloningUserDoesNotExistMessage", nickname, channel.name);
 			} else {
 				NSString *searchKey = [NSString stringWithFormat:_ClonedUserRegistrationKey,
-									   client.config.guid, channel.name, member.nick.lowercaseString];
+									   client.config.itemUUID, channel.name, member.nickname.lowercaseString];
 
 				// ---- //
 				
 				if ([self.clonedUsers containsObject:searchKey]) {
-					cloneResult = TPIFLS(@"SpammerParadiseCloningUnclonedSingleUserMessage", member.nick, channel.name);
+					cloneResult = TPIFLS(@"SpammerParadiseCloningUnclonedSingleUserMessage", member.nickname, channel.name);
 
 					[self.clonedUsers removeObject:searchKey];
 				} else {
-					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsNotClonedMessage", member.nick, channel.name);
+					cloneResult = TPIFLS(@"SpammerParadiseCloningUserIsNotClonedMessage", member.nickname, channel.name);
 				}
 			}
 		}

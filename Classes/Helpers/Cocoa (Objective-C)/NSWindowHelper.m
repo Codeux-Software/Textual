@@ -39,34 +39,6 @@
 
 @implementation NSWindow (TXWindowHelper)
 
-- (void)centerOfWindow:(NSWindow *)window
-{
-	NSPoint p = NSRectCenter(window.frame);
-	
-	NSRect frame = self.frame;
-	NSSize size = frame.size;
-	
-	p.x -= (size.width / 2);
-	p.y -= (size.height / 2);
-	
-	NSScreen *screen = window.screen;
-	
-	if (screen) {
-		NSRect screenFrame = [screen visibleFrame];
-		NSRect r = frame;
-		
-		r.origin = p;
-		
-		if (NSContainsRect(screenFrame, r) == NO) {
-			r = NSRectAdjustInRect(r, screenFrame);
-			
-			p = r.origin;
-		}
-	}
-	
-	[self setFrameOrigin:p];
-}
-
 - (void)exactlyCenterWindow
 {
 	NSScreen *screen = [NSScreen mainScreen];
@@ -88,25 +60,14 @@
 
 - (BOOL)isOnCurrentWorkspace
 {
+	/* Is all this really necessary?… */
+	
 	return ([self isOnActiveSpace] && [self isMainWindow] && [self isVisible] && [NSApp keyWindow] == self);
 }
 
 - (BOOL)isInFullscreenMode
 {
 	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
-}
-
-- (void)closeExistingSheet
-{
-	id awindow = [self attachedSheet];
-	
-	if (PointerIsNotEmpty(awindow)) {
-		id windel = [awindow delegate];
-		
-		if ([windel respondsToSelector:@selector(endSheet)]) {
-			[windel performSelector:@selector(endSheet)];
-		}
-	}
 }
 
 @end

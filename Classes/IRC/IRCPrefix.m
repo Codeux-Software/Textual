@@ -42,9 +42,9 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.raw		= NSStringEmptyPlaceholder;
-		self.nick		= NSStringEmptyPlaceholder;
-		self.user		= NSStringEmptyPlaceholder;
+		self.hostmask	= NSStringEmptyPlaceholder;
+		self.nickname	= NSStringEmptyPlaceholder;
+		self.username	= NSStringEmptyPlaceholder;
 		self.address	= NSStringEmptyPlaceholder;
 	}
 

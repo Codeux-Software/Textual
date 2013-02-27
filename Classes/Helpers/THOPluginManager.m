@@ -49,7 +49,7 @@
 
 + (THOPluginManager *)defaultManager
 {
-	TXMasterController *master = [TPCPreferences masterController];
+	TXMasterController *master = [THOPluginManager masterController];
 
 	if (master) {
 		return master.pluginManager;
@@ -77,8 +77,8 @@
 	
     NSMutableArray *resourceBundles = [NSMutableArray array];
 
-    NSArray *resourceFiles_1 = [_NSFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
-    NSArray *resourceFiles_2 = [_NSFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
+    NSArray *resourceFiles_1 = [RZFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
+    NSArray *resourceFiles_2 = [RZFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
 
     NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
 
@@ -92,7 +92,7 @@
         if ([file hasSuffix:@".bundle"]) {
             NSString *fullPath = [path_1 stringByAppendingPathComponent:file];
 
-            if ([_NSFileManager() fileExistsAtPath:fullPath] == NO) {
+            if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
                 fullPath = [path_2 stringByAppendingPathComponent:file];
             }
 
@@ -117,13 +117,11 @@
 
 - (void)unloadPlugins
 {
-	TXMasterController *master = [TPCPreferences masterController];
-
-	TDCPreferencesController *prefController = master.menu.preferencesController;
+	id prefController = [self.masterController.menuController windowFromWindowList:@"TDCPreferencesController"];
 
 	if (prefController) {
-		if (prefController.isWindowLoaded) {
-			[prefController.window close];
+		if ([prefController isWindowLoaded]) {
+			[[prefController window] close];
 		}
 	}
 
@@ -216,9 +214,9 @@
 	NSString *cmdl = message.command.lowercaseString;
 
 	NSDictionary *senderData = @{
-		@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.raw),
-		@"senderNickname"	: NSStringNilValueSubstitute(message.sender.nick),
-		@"senderUsername"	: NSStringNilValueSubstitute(message.sender.user),
+		@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.hostmask),
+		@"senderNickname"	: NSStringNilValueSubstitute(message.sender.nickname),
+		@"senderUsername"	: NSStringNilValueSubstitute(message.sender.username),
 		@"senderDNSMask"	: NSStringNilValueSubstitute(message.sender.address),
 		@"senderIsServer"	: @(message.sender.isServer)
 	};
@@ -227,8 +225,8 @@
 		@"messageParamaters"	: message.params,
 		@"messageCommand"		: NSStringNilValueSubstitute(message.command),
 		@"messageSequence"		: NSStringNilValueSubstitute(message.sequence),
-		@"messageServer"		: NSStringNilValueSubstitute(client.config.server),
-		@"messageNetwork"		: NSStringNilValueSubstitute(client.config.network),
+		@"messageServer"		: NSStringNilValueSubstitute([client networkAddress]),
+		@"messageNetwork"		: NSStringNilValueSubstitute([client networkName]),
 		@"messageNumericReply"	: @(message.numericReply)
 	};
 	
@@ -249,20 +247,13 @@
 
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
 {
-	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"bash"];
+	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 	
-#ifdef TXUnsupervisedScriptFolderAvailable
 	NSArray *scriptPaths = @[
 		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
 		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
 		NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
 	];
-#else
-	NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath])
-	];
-#endif
 
 	id returnData;
 
@@ -274,7 +265,7 @@
 
 	for (NSString *path in scriptPaths) {
 		if (NSObjectIsNotEmpty(path)) {
-			NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
+			NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
 			if (NSObjectIsNotEmpty(resourceFiles)) {
 				for (NSString *file in resourceFiles) {

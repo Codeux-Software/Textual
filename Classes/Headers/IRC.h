@@ -38,17 +38,8 @@
 #import "TextualApplication.h"
 
 #define TXMaximumIRCBodyLength				512
+#define TXMaximumIRCNicknameLength			50
 #define TXMaximumNodesPerModeCommand		4
-
-/* Historically, we used a few dozen "IRCCommandIndex<command>" defines to match
- a define against the actual IRC command it represents. Instead, we now hand a
- key sent to IRC[*]CommandIndex() down to our lower level APIs to match the key
- against the actual IRC Command. The key does not necessarily match the actual
- command being sent either. For example, CTCP commands have the ctcp_ prefix.
- 
- This thing is overly complex for no good reasons… */
-
-TEXTUAL_EXTERN NSString *IRCCommandIndex(const char *key) TEXTUAL_DEPRECATED;
 
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
 TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 

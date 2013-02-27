@@ -37,12 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define TXStringIsAlphabetic(c)							('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
-#define TXStringIsNumeric(c)							('0' <= (c) && (c) <= '9' && TXStringIsAlphabetic(c) == NO) 
-#define TXStringIsAlphabeticNumeric(c)					(TXStringIsAlphabetic(c) || TXStringIsNumeric(c))
-#define TXStringIsWordLetter(c)							(TXStringIsAlphabeticNumeric(c) || (c) == '_')
-#define TXStringIsIRCColor(c,f)							([NSNumber compareIRCColor:c against:f])
-#define TXStringIsAlphabeticWithDiacriticalMark(c)		(0xc0 <= c && c <= 0xff && c != 0xd7 && c != 0xf7)
+#define TXStringIsAlphabetic(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
+#define TXStringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
+#define TXStringIsAlphabeticNumeric(c)				(TXStringIsAlphabetic(c) || TXStringIsBase10Numeric(c))
+#define TXStringIsWordLetter(c)						(TXStringIsAlphabeticNumeric(c) || (c) == '_')
+#define TXStringIsIRCColor(c,f)						([NSNumber compareIRCColor:c against:f])
 
 #define NSStringEmptyPlaceholder			@""
 #define NSStringNewlinePlaceholder			@"\n"
@@ -57,29 +56,27 @@
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
 + (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
++ (NSString *)stringWithUUID;
+
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;
-
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringWithRange:(NSRange)range;
 
-- (NSString *)stringCharacterAtIndex:(NSInteger)index;
+- (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
 - (NSString *)nicknameFromHostmask;
-- (NSString *)identFromHostmask;
-- (NSString *)hostFromHostmask;
+- (NSString *)usernameFromHostmask;
+- (NSString *)addressFromHostmask;
 - (NSString *)hostmaskFromRawString;
 
 - (NSString *)cleanedServerHostmask;
 
-- (BOOL)isEqualNoCase:(NSString *)other;
+- (BOOL)isEqualIgnoringCase:(NSString *)other;
 
 - (BOOL)contains:(NSString *)str;
 - (BOOL)containsIgnoringCase:(NSString *)str;
-
-- (NSInteger)findCharacter:(UniChar)c;
-- (NSInteger)findCharacter:(UniChar)c start:(NSInteger)start;
 
 - (NSInteger)stringPosition:(NSString *)needle;
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
@@ -91,22 +88,17 @@
 
 - (NSString *)removeAllNewlines;
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont followFormattingPreference:(BOOL)formattingPreference;
+- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont honorFormattingPreference:(BOOL)formattingPreference;
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
 
-- (UniChar)safeCharacterAtIndex:(NSInteger)index;
+- (UniChar)safeCharacterAtIndex:(NSInteger)anIndex;
 
-- (BOOL)isAlphaNumOnly;
+- (BOOL)isAlphabeticNumericOnly;
 - (BOOL)isNumericOnly;
 
-- (NSInteger)firstCharCodePoint;
-- (NSInteger)lastCharCodePoint;
+- (NSString *)safeFilename;
 
-- (NSString *)safeUsername;
-- (NSString *)safeFileName;
-- (NSString *)canonicalName;
-
-- (NSString *)stripEffects;
+- (NSString *)stripIRCEffects;
 
 - (NSRange)rangeOfChannelName;
 - (NSRange)rangeOfChannelNameStart:(NSInteger)start;
@@ -115,13 +107,13 @@
 - (NSString *)encodeURIFragment;
 - (NSString *)decodeURIFragement;
 
+- (BOOL)isHostmask;
 - (BOOL)isNickname;
 - (BOOL)isIPv6Address;
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
 
 - (NSString *)stringWithValidURIScheme;
-+ (NSString *)stringWithUUID;
 
 - (NSString *)reservedCharactersToIRCFormatting;
 
@@ -158,6 +150,7 @@
 
 @interface NSMutableString (TXMutableStringHelper)
 - (NSString *)getToken;
+
 - (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
 

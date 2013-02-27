@@ -44,20 +44,22 @@ typedef enum IRCChannelType : NSInteger {
 
 @interface IRCChannelConfig : NSObject <NSMutableCopying>
 @property (nonatomic, assign) IRCChannelType type;
-@property (nonatomic, strong) NSString *guid;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, strong) NSString *channelName;
+@property (nonatomic, strong) NSString *defaultTopic;
+@property (nonatomic, strong) NSString *defaultModes;
+@property (nonatomic, strong) NSString *encryptionKey;
+@property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, assign) BOOL autoJoin;
-@property (nonatomic, assign) BOOL growl;
+@property (nonatomic, assign) BOOL pushNotifications;
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreJPQActivity;
-@property (nonatomic, strong) NSString *mode;
-@property (nonatomic, strong) NSString *topic;
-@property (nonatomic, strong) NSString *encryptionKey;
 
 - (void)destroyKeychains;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
+
++ (NSDictionary *)seedDictionary:(NSString *)channelName;
 @end

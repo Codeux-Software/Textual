@@ -38,12 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TDCAboutPanel : NSWindowController
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, strong) NSTextField *versionInfo;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, nweak) NSTextField *versionInfoField;
 
 - (void)show;
 @end
 
-@interface NSObject (TXAboutPanelDelegate)
+@interface NSObject (TDCAboutPanelDelegate)
 - (void)aboutPanelWillClose:(TDCAboutPanel *)sender;
 @end

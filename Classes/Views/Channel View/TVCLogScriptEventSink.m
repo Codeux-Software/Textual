@@ -51,7 +51,6 @@
 	return self;
 }
 
-
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
 	return NO;
@@ -85,17 +84,17 @@
 
 - (BOOL)shouldStopDoubleClick:(id)e
 {
-	NSInteger d  = _doubleClickRadius;
+	NSInteger dr = _doubleClickRadius;
 	NSInteger cx = [[e valueForKey:@"clientX"] integerValue];
 	NSInteger cy = [[e valueForKey:@"clientY"] integerValue];
 	
 	BOOL res = NO;
 	
-	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+	NSTimeInterval now = [NSDate epochTime];
 	
-	if ((self.x - d) <= cx && cx <= (self.x + d) && 
-		(self.y - d) <= cy && cy <= (self.y + d)) {
-		
+	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
+		(self.y - dr) <= cy && cy <= (self.y + dr))
+	{
 		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
 			res = YES;
 		}
@@ -114,40 +113,44 @@
     LogToConsole(@"JavaScript: %@", message);
 }
 
-- (NSString *)hideInlineImage:(DOMHTMLAnchorElement *)object
-{	
-    if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-        [object.parentNode removeChild:object];
-        
-        return @"false";
-    } else {
-        return @"true";
-    }
+- (NSString *)hideInlineImage:(id)object
+{
+	if ([object isKindOfClass:[DOMHTMLAnchorElement class]]) {
+		DOMHTMLAnchorElement *anchor = object;
+		
+		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+			[anchor.parentNode removeChild:object];
+			
+			return @"false";
+		}
+	}
+
+	return @"true";
 }
 
 - (void)setURLAddress:(NSString *)s
 {
-	[self.policy setUrl:[s gtm_stringByUnescapingFromHTML]];
+	[self.owner.policy setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNickname:(NSString *)s
 {
-	[self.policy setNick:[s gtm_stringByUnescapingFromHTML]];
+	[self.owner.policy setNickname:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChannelName:(NSString *)s
 {
-	[self.policy setChan:[s gtm_stringByUnescapingFromHTML]];
+	[self.owner.policy setChannelName:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelNameDoubleClicked
 {
-	[self.policy channelDoubleClicked];
+	[self.owner.policy channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-	[self.policy nicknameDoubleClicked];
+	[self.owner.policy nicknameDoubleClicked];
 }
 
 - (void)print:(NSString *)s

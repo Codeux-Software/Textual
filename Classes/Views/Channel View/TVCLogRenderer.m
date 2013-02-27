@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+typedef uint32_t attr_t;
+
 #define _rendererURLAttribute					(1 << 31)
 #define _rendererChannelNameAttribute			(1 << 29)
 #define _rendererBoldFormatAttribute			(1 << 28)
@@ -57,9 +59,10 @@
 									_rendererBackgroundColorAttribute			\
 								)
 
-NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context);
-
-typedef uint32_t attr_t;
+NSComparisonResult IRCNicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
+{
+	return (s1.nickname.length <= s2.nickname.length);
+}
 
 static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
@@ -78,7 +81,9 @@ static BOOL isClear(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len
 	attr_t *end = (target + len);
 	
 	while (target < end) {
-		if (*target & flag) return NO;
+		if (*target & flag) {
+			return NO;
+		}
 		
 		++target;
 	}
@@ -101,203 +106,126 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	return (len - start);
 }
 
-NSComparisonResult nicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
-{
-	return (s1.nick.length <= s2.nick.length);
-}
+@implementation TVCLogRenderer
 
-NSString *logEscape(NSString *s)
-{
-	return [s.gtm_stringByEscapingForHTML stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
-}
+// ====================================================== //
+// Begin renderer.										  //
+// ====================================================== //
 
-NSString *logEscapeWithNil(NSString *s)
++ (id)renderAttributedRange:(NSMutableAttributedString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength baseFont:(NSFont *)defaultFont
 {
-    NSString *escaped = logEscape(s);
-    
-    if (NSObjectIsEmpty(escaped)) {
-        return NSStringEmptyPlaceholder;
-    }
-    
-    return escaped;
-}
+	NSRange r = NSMakeRange(rangeStart, rangeLength);
 
-NSInteger mapColorValue(NSColor *color)
-{
-	NSArray *possibleColors = [NSColor possibleFormatterColors];
-	
-	if ([color numberOfComponents] == 4) {
-		CGFloat _redc   = [color redComponent];
-		CGFloat _bluec  = [color blueComponent];
-		CGFloat _greenc = [color greenComponent];
-		CGFloat _alphac = [color alphaComponent];
-		
-		for (NSInteger i = 0; i <= 15; i++) {
-			NSArray *allColors = possibleColors[i];
-			
-			for (NSColor *mapped in allColors) {
-				if ([mapped numberOfComponents] == 4) {
-					CGFloat redc   = [mapped redComponent];
-					CGFloat bluec  = [mapped blueComponent];
-					CGFloat greenc = [mapped greenComponent];
-					CGFloat alphac = [mapped alphaComponent];
-					
-					if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
-						TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
-						
-						return i;
-					}
-				} else {
-					if ([color isEqual:mapped]) {
-						return i;
-					}
-				}
-			}
+	if (attrArray & _effectMask) {
+		NSFont *boldItalic = defaultFont;
+
+		if (attrArray & _rendererBoldFormatAttribute) {
+			boldItalic = [RZFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
 		}
-	} else {
-		for (NSInteger i = 0; i <= 15; i++) {
-			NSColor *mapped = mapColorCode(i);
-			
-			if ([color isEqual:mapped]) {
-				return i;
-			}
-		}
-	}
-	
-	return -1;
-}
 
-NSColor *mapColorCode(NSInteger colorChar) 
-{
-	/* See NSColorHelper.m under Helpers */
-	
-	switch (colorChar) {
-		case 0:  return [NSColor formatterWhiteColor];
-		case 1:  return [NSColor formatterBlackColor];
-		case 2:  return [NSColor formatterNavyBlueColor]; 
-		case 3:  return [NSColor formatterDarkGreenColor];
-		case 4:  return [NSColor formatterRedColor];
-		case 5:  return [NSColor formatterBrownColor];
-		case 6:  return [NSColor formatterPurpleColor];
-		case 7:  return [NSColor formatterOrangeColor];
-		case 8:  return [NSColor formatterYellowColor];
-		case 9:  return [NSColor formatterLimeGreenColor];
-		case 10: return [NSColor formatterTealColor];
-		case 11: return [NSColor formatterAquaCyanColor];
-		case 12: return [NSColor formatterLightBlueColor];
-		case 13: return [NSColor formatterFuchsiaPinkColor];
-		case 14: return [NSColor formatterNormalGrayColor];
-		case 15: return [NSColor formatterLightGrayColor];
-	}
-	
-	return nil;
-}
+		if (attrArray & _rendererItalicFormatAttribute) {
+			boldItalic = [RZFontManager() convertFont:boldItalic toHaveTrait:NSItalicFontMask];
 
-static NSMutableAttributedString *renderAttributedRange(NSMutableAttributedString *body, attr_t attr, NSInteger start, NSInteger len, NSFont *font)
-{
-	NSRange r = NSMakeRange(start, len);
-	
-	if (attr & _effectMask) {
-		NSFont *boldItalic = font;
-		
-		if (attr & _rendererBoldFormatAttribute) {
-			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
-		}
-		
-		if (attr & _rendererItalicFormatAttribute) {
-			boldItalic = [_NSFontManager() convertFont:boldItalic toHaveTrait:NSItalicFontMask];
-            
             if ([boldItalic fontTraitSet:NSItalicFontMask] == NO) {
                 boldItalic = [boldItalic convertToItalics];
             }
         }
-		
+
 		if (boldItalic) {
 			[body addAttribute:NSFontAttributeName value:boldItalic range:r];
 		}
-		
-		if (attr & _rendererUnderlineFormatAttribute) {
+
+		if (attrArray & _rendererUnderlineFormatAttribute) {
 			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSSingleUnderlineStyle) range:r];
 		}
-		
-		if (attr & _rendererTextColorAttribute) {
-			NSInteger colorCode = (attr & _textColorMask);
-			
-			[body addAttribute:NSForegroundColorAttributeName value:mapColorCode(colorCode) range:r];
+
+		if (attrArray & _rendererTextColorAttribute) {
+			NSInteger colorCode = (attrArray & _textColorMask);
+
+			[body addAttribute:NSForegroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:r];
 		}
-		
-		if (attr & _rendererBackgroundColorAttribute) {
-			NSInteger colorCode = ((attr & _backgroundColorMask) >> 4);
-			
-			[body addAttribute:NSBackgroundColorAttributeName value:mapColorCode(colorCode) range:r];
+
+		if (attrArray & _rendererBackgroundColorAttribute) {
+			NSInteger colorCode = ((attrArray & _backgroundColorMask) >> 4);
+
+			[body addAttribute:NSBackgroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:r];
 		}
 	}
-	
+
 	return body;
 }
 
-static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInteger len, TVCLogController *log)
++ (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength for:(TVCLogController *)logController
 {
-	NSString *content = [body safeSubstringWithRange:NSMakeRange(start, len)];
+	NSString *contentne = [body safeSubstringWithRange:NSMakeRange(rangeStart, rangeLength)];
+	NSString *contentes = [TVCLogRenderer escapeString:contentne];
 
 	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
 
-	if (attr & _rendererURLAttribute)
+	if (attrArray & _rendererURLAttribute)
 	{
-		templateTokens[@"anchorLocation"]	= [content stringWithValidURIScheme];
-		templateTokens[@"anchorTitle"]		= logEscape(content);
+		templateTokens[@"anchorTitle"]		=  contentes;
+		templateTokens[@"anchorLocation"]	= [contentne stringWithValidURIScheme];
 
 		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
-	else if (attr & _rendererChannelNameAttribute)
+	else if (attrArray & _rendererChannelNameAttribute)
 	{
-		templateTokens[@"channelName"] = logEscape(content);
+		templateTokens[@"channelName"] = contentes;
 
 		return [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
 	else
 	{
-		content = logEscape(content);
-
-		templateTokens[@"messageFragment"] = content;
+		templateTokens[@"messageFragment"] = contentes;
 
 		// --- //
-		
-		if (attr & _rendererConversationTrackerAttribute) {
-            IRCClient *client =  log.client;
-			IRCUser   *user   = [log.channel findMember:content options:NSCaseInsensitiveSearch];
-			
+
+		if (attrArray & _rendererConversationTrackerAttribute) {
+			IRCUser *user = [logController.channel findMember:contentes options:NSCaseInsensitiveSearch];
+
 			if (PointerIsEmpty(user) == NO) {
-                if ([user.nick isEqualNoCase:client.myNick] == NO) {
-					templateTokens[@"inlineNicknameMatchFound"]  = @(YES);
+                if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
+					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 					templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
-                } 
+                }
             }
 		}
-		
+
 		// --- //
-		
-		if (attr & _effectMask) {
+
+		if (attrArray & _effectMask) {
 			templateTokens[@"fragmentContainsFormattingSymbols"] = @(YES);
-			
-			if (attr & _rendererBoldFormatAttribute) {
+
+			if (attrArray & _rendererBoldFormatAttribute) {
 				templateTokens[@"fragmentIsBold"] = @(YES);
 			}
-			
-			if (attr & _rendererItalicFormatAttribute) {
+
+			if (attrArray & _rendererItalicFormatAttribute) {
 				templateTokens[@"fragmentIsItalicized"] = @(YES);
 			}
-			
-			if (attr & _rendererUnderlineFormatAttribute) {
+
+			if (attrArray & _rendererUnderlineFormatAttribute) {
 				templateTokens[@"fragmentIsUnderlined"] = @(YES);
 			}
-			
-			if (attr & _rendererTextColorAttribute) {
-				templateTokens[@"fragmentTextColor"] = @(attr & _textColorMask);
+
+			if (attrArray & _rendererTextColorAttribute) {
+				NSInteger colorCode = (attrArray & _textColorMask);
+
+				/* We have to tell the template that the color is actually set
+				 because if it only checked the value of "fragmentTextColor" in
+				 an if statement the color white (code 0) would not show because
+				 zero would show as a null value to the if statement. */
+				
+				templateTokens[@"fragmentTextColorIsSet"] = @(YES);
+				templateTokens[@"fragmentTextColor"] = @(colorCode);
 			}
-			
-			if (attr & _rendererBackgroundColorAttribute) {
-				templateTokens[@"fragmentBackgroundColor"] = @((attr & _backgroundColorMask) >> 4);
+
+			if (attrArray & _rendererBackgroundColorAttribute) {
+				NSInteger colorCode = ((attrArray & _backgroundColorMask) >> 4);
+
+				templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
+				templateTokens[@"fragmentBackgroundColor"] = @(colorCode);
 			}
 		}
 
@@ -307,31 +235,6 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	}
 }
 
-@implementation TVCLogRenderer
-
-+ (NSString *)renderTemplate:(NSString *)templateName
-{
-	return [TVCLogRenderer renderTemplate:templateName attributes:nil];
-}
-
-+ (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateTokens
-{
-	TXMasterController *master = [TPCPreferences masterController];
-
-	GRMustacheTemplate *tmpl = [master.viewTheme.other templateWithName:templateName];
-
-	if (PointerIsNotEmpty(tmpl)) {
-
-		NSString *aHtml = [tmpl renderObject:templateTokens error:NULL];
-
-		if (NSObjectIsNotEmpty(aHtml)) {
-			return aHtml.removeAllNewlines;
-		}
-	}
-
-	return nil;
-}
-
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log
 			  renderType:(TVCLogRendererType)drawingType
@@ -339,33 +242,41 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 			  resultInfo:(NSDictionary **)outputDictionary
 {
 	NSMutableDictionary *resultInfo = [NSMutableDictionary dictionary];
+
+	/* Input information. */
+	BOOL renderLinks = [inputDictionary boolForKey:@"renderLinks"];
+	BOOL isNormalMsg = [inputDictionary boolForKey:@"isNormalMessage"];
+
+	NSString *currentNickname = [inputDictionary objectForKey:@"nickname"];
+
+	BOOL exactWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType);
+    BOOL regexWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 	
-	BOOL renderLinks	   = [inputDictionary boolForKey:@"renderLinks"];
-	BOOL isNormalMsg	   = [inputDictionary boolForKey:@"isNormalMessage"];
-	
-	BOOL exactWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightExactMatchType);
-    BOOL regexWordMatching = ([TPCPreferences keywordMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
-	
-	NSArray *keywords	  = [inputDictionary arrayForKey:@"keywords"];
-	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeWords"];
+	NSArray *highlightWords	= [inputDictionary arrayForKey:@"highlightKeywords"];
+	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeKeywords"];
     
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
+
+	/* This is the most important part of the entire process of rendering each line.
+	 The following code will scan each character of the input body one by one judging
+	 each character based on what surrounds it in order to find formatting related to 
+	 bold, color, italics, and underline. */
 	
-	NSInteger len	= [body length];
-	NSInteger start = 0;
-	NSInteger n		= 0;
+	NSInteger length = body.length;
+	NSInteger start  = 0;
+	NSInteger n		 = 0;
 	
-	attr_t attrBuf[len];
+	attr_t attrBuf[length];
 	attr_t currentAttr = 0;
 	
-	memset(attrBuf, 0, (len * sizeof(attr_t)));
+	memset(attrBuf, 0, (length * sizeof(attr_t)));
 	
-	UniChar dest[len];
-	UniChar source[len];
+	UniChar dest[length];
+	UniChar source[length];
 	
-	CFStringGetCharacters((__bridge CFStringRef)body, CFRangeMake(0, len), source);
+	CFStringGetCharacters((__bridge CFStringRef)body, CFRangeMake(0, length), source);
 	
-	for (NSInteger i = 0; i < len; i++) {
+	for (NSInteger i = 0; i < length; i++) {
 		UniChar c = source[i];
 		
 		if (c < 0x20) {
@@ -382,42 +293,42 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				}
 				case 0x03:
 				{
-					NSInteger textColor       = -1;
+					NSInteger foregoundColor  = -1;
 					NSInteger backgroundColor = -1;
 					
-					if ((i + 1) < len) {
-						c = source[i+1];
+					if ((i + 1) < length) {
+						c = source[(i + 1)];
 						
-						if (TXStringIsNumeric(c)) {
+						if (TXStringIsBase10Numeric(c)) {
 							++i;
 							
-							textColor = (c - '0');
+							foregoundColor = (c - '0');
 							
-							if ((i + 1) < len) {
-								c = source[i+1];
+							if ((i + 1) < length) {
+								c = source[(i + 1)];
 								
-								if (TXStringIsIRCColor(c, textColor)) {
+								if (TXStringIsIRCColor(c, foregoundColor)) {
 									++i;
 									
-									textColor = (textColor * 10 + c - '0');
+									foregoundColor = (foregoundColor * 10 + c - '0');
 								}
 								
-								if ((i + 1) < len) {
-									c = source[i+1];
+								if ((i + 1) < length) {
+									c = source[(i + 1)];
 									
 									if (c == ',') {
 										++i;
 										
-										if ((i + 1) < len) {
-											c = source[i+1];
+										if ((i + 1) < length) {
+											c = source[(i + 1)];
 											
-											if (TXStringIsNumeric(c)) {
+											if (TXStringIsBase10Numeric(c)) {
 												++i;
 												
 												backgroundColor = (c - '0');
 												
-												if ((i + 1) < len) {
-													c = source[i+1];
+												if ((i + 1) < length) {
+													c = source[(i + 1)];
 													
 													if (TXStringIsIRCColor(c, backgroundColor)) {
 														++i;
@@ -440,16 +351,16 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							backgroundColor %= 16;
 							
 							currentAttr |= _rendererBackgroundColorAttribute;
-							currentAttr |= (backgroundColor << 4) & _backgroundColorMask;
+							currentAttr |= ((backgroundColor << 4) & _backgroundColorMask);
 						} else {
 							currentAttr &= ~(_rendererBackgroundColorAttribute | _backgroundColorMask);
 						}
 						
-						if (textColor >= 0) {
-							textColor %= 16;
+						if (foregoundColor >= 0) {
+							foregoundColor %= 16;
 							
 							currentAttr |= _rendererTextColorAttribute;
-							currentAttr |= textColor & _textColorMask;
+							currentAttr |= (foregoundColor & _textColorMask);
 						} else {
 							currentAttr &= ~(_rendererTextColorAttribute | _textColorMask);
 						}
@@ -459,6 +370,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 				case 0x0F:
 				{
 					currentAttr = 0;
+					
 					continue;
 				}
 				case 0x16:
@@ -485,49 +397,59 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		}
 		
 		attrBuf[n] = currentAttr;
+		
 		dest[n++] = c;
 	}
 	
-	len = n;
+	length = n;
+
+	/* Now that we have scanned the input body for all fomatting characters,
+	 we will now build upon the string minus those. */
 	body = [NSString stringWithCharacters:dest length:n];
-	
+
+	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
+	 in finding as much information about the message as possible. Information
+	 that it looks for includes nicknames from the channel the message is being
+	 sent to, any links (with or without a scheme), highlight keywords, and
+	 channel names. This information is completely ignored when rendering the
+	 body into an attributed string. */
 	if (drawingType == TVCLogRendererHTMLType) {
-		/* Links */
+		/* Scan the body for links. */
 		
 		if (renderLinks) {
 			NSMutableArray *urlAry = [NSMutableArray array];
 			
 			NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:body];
 			
-			if (NSObjectIsNotEmpty(urlAryRanges)) {
-				for (NSString *rn in urlAryRanges) {
-					NSRange r = NSRangeFromString(rn);
+			for (NSString *rn in urlAryRanges) {
+				NSRange r = NSRangeFromString(rn);
+				
+				if (r.length >= 1) {
+					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
 					
-					if (r.length >= 1) {
-						setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
-						
-						[urlAry safeAddObject:[NSValue valueWithRange:r]];
-					}
+					[urlAry safeAddObject:[NSValue valueWithRange:r]];
 				}
 			}
-			
+
 			resultInfo[@"URLRanges"] = urlAry;
 		}
 		
-		/* Word Matching — Highlights */
-		
+		/* Word Matching — Highlights. */
 		BOOL foundKeyword = NO;
 		
 		NSMutableArray *excludeRanges = [NSMutableArray array];
-		
+
+		/* If we are not looking for the exact match of a keyword, we have
+		 to scan the message body first to find any place that an excluded
+		 keyword may be found. */
 		if (exactWordMatching == NO) {
 			for (NSString *excludeWord in excludeWords) {
 				start = 0;
 				
-				while (start < len) {
+				while (start < length) {
 					NSRange r = [body rangeOfString:excludeWord 
 											options:NSCaseInsensitiveSearch 
-											  range:NSMakeRange(start, (len - start))];
+											  range:NSMakeRange(start, (length - start))];
 					
 					if (r.location == NSNotFound) {
 						break;
@@ -541,7 +463,9 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		}
 		
         if (regexWordMatching) {
-            for (NSString *keyword in keywords) {
+			/* Regular expression keyword matching. */
+			
+            for (NSString *keyword in highlightWords) {
                 NSRange matchRange = [TLORegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
                 
                 if (matchRange.location == NSNotFound) {
@@ -550,13 +474,15 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                     BOOL enabled = YES;
                     
                     for (NSValue *e in excludeRanges) {
-                        if (NSIntersectionRange(matchRange, [e rangeValue]).length > 0) {
+						/* Did the regular expression find a match inside an excluded range? */
+                        if (NSIntersectionRange(matchRange, e.rangeValue).length > 0) {
                             enabled = NO;
                             
                             break;
                         }
                     }
-                    
+
+					/* Found a match. */
                     if (enabled) {
                         setFlag(attrBuf, _rendererKeywordHighlightAttribute, matchRange.location, matchRange.length);
                         
@@ -567,116 +493,113 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
                 }
             }
         } else {
-			NSString *curchan = nil;
+			/* Normal keyword matching. Partial and absolute. */
+			NSString *channelName = nil;
 			
 			if (log && isNormalMsg) {
-				curchan = [log.channel.name lowercaseString];
+				channelName = log.channel.name.lowercaseString;
 			}
 
 			// ---- //
 			
-			NSString *curnick;
-
-			curnick = [inputDictionary objectForKey:@"nick"];
-			curnick = [curnick lowercaseString];
-
-			// ---- //
-			
-            for (__strong NSString *keyword in keywords) {
+            for (__strong NSString *keyword in highlightWords) {
 				BOOL continueSearch = YES;
-				
-				if ([keyword contains:@";"] &&
-					([keyword contains:@"-"] || [keyword contains:@"+"])) {
-					
-					// ---- //
-					
-					NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
-					
-					NSArray *limitList = [[keyword safeSubstringAfterIndex:range.location] split:NSStringWhitespacePlaceholder];
 
-					// ---- //
+				if (currentNickname && channelName) {
+					if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"]))
+					{
+						// ---- //
+						
+						NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
 
-					keyword = [keyword safeSubstringToIndex:range.location];
-					
-					NSMutableArray *includeChannels		= [NSMutableArray array];
-					NSMutableArray *excludeChannels		= [NSMutableArray array];
-					NSMutableArray *includeNicks		= [NSMutableArray array];
-					NSMutableArray *excludeNicks		= [NSMutableArray array];
-					
-					for (__strong NSString *limit in limitList) {
-						BOOL include = [limit hasPrefix:@"+"];
-						BOOL exclude = [limit hasPrefix:@"-"];
+						NSString *cutBody = [keyword safeSubstringAfterIndex:range.location];
 						
-						if (exclude == NO && include == NO) {
-							continue;
-						}
+						NSArray *limitList = [cutBody split:NSStringWhitespacePlaceholder];
+
+						// ---- //
+
+						keyword = [keyword safeSubstringToIndex:range.location];
 						
-						limit = [limit safeSubstringFromIndex:1].lowercaseString;
+						NSMutableArray *includeChannels	 = [NSMutableArray array];
+						NSMutableArray *excludeChannels	 = [NSMutableArray array];
+						NSMutableArray *includeNicks	 = [NSMutableArray array];
+						NSMutableArray *excludeNicks	 = [NSMutableArray array];
 						
-						if ([limit hasPrefix:@"#"]) {
-							if (include) {
-								[includeChannels addObject:limit];
+						for (__strong NSString *limit in limitList) {
+							limit = limit.lowercaseString;
+							
+							BOOL include = [limit hasPrefix:@"+"];
+							BOOL exclude = [limit hasPrefix:@"-"];
+							
+							if (exclude == NO && include == NO) {
+								continue;
+							}
+							
+							limit = [limit safeSubstringFromIndex:1];
+							
+							if ([limit isChannelName]) {
+								if (include) {
+									[includeChannels addObject:limit];
+								} else {
+									[excludeChannels addObject:limit];
+								}
 							} else {
-								[excludeChannels addObject:limit];
-							}
-						} else {
-							if (include) {
-								[includeNicks addObject:limit];
-							} else {
-								[excludeNicks addObject:limit];
+								if (include) {
+									[includeNicks addObject:limit];
+								} else {
+									[excludeNicks addObject:limit];
+								}
 							}
 						}
-					}
-					
-					if (curchan && [curchan hasPrefix:@"#"]) {
-						if (NSObjectIsNotEmpty(includeChannels) &&
-							NSObjectIsEmpty(excludeChannels)) {
-							
-							if ([includeChannels containsObject:curchan] == NO) {
-								continueSearch = NO;
-							}
-						} else {
-							if ([includeChannels containsObject:curchan]) {
-								continueSearch = YES;
-							}
-							
-							if ([excludeChannels containsObject:curchan]) {
-								continueSearch = NO;
-							}
-						}
-					}
-					
-					if (continueSearch && curnick) {
-						if (NSObjectIsNotEmpty(includeNicks) &&
-							NSObjectIsEmpty(excludeNicks)) {
-							
-							if ([includeNicks containsObject:curnick] == NO) {
-								continueSearch = NO;
-							}
-						} else {
-							if ([includeNicks containsObject:curnick]) {
-								continueSearch = YES;
-							}
-							
-							if ([excludeNicks containsObject:curnick]) {
-								continueSearch = NO;
-							}
-						}
-					} else if (continueSearch && curnick &&
-							NSObjectIsNotEmpty(includeNicks) &&
-							   NSObjectIsEmpty(excludeNicks)) {
 
-						continueSearch = NO;
+						// ---- //
+
+						BOOL hasIncludedChannels = NSObjectIsNotEmpty(includeChannels);
+						BOOL hasExcludedChannels = NSObjectIsNotEmpty(excludeChannels);
+						
+						if ([channelName isChannelName]) {
+							if (hasIncludedChannels && hasExcludedChannels == NO) {
+								if ([includeChannels containsObject:channelName] == NO) {
+									continueSearch = NO;
+								}
+							} else {
+								if ([includeChannels containsObject:channelName]) {
+									continueSearch = YES;
+								}
+								
+								if ([excludeChannels containsObject:channelName]) {
+									continueSearch = NO;
+								}
+							}
+						}
+						
+						if (continueSearch) {
+							if (hasIncludedChannels && hasExcludedChannels == NO) {
+								if ([includeNicks containsObject:currentNickname] == NO) {
+									continueSearch = NO;
+								}
+							} else {
+								if ([includeNicks containsObject:currentNickname]) {
+									continueSearch = YES;
+								}
+								
+								if ([excludeNicks containsObject:currentNickname]) {
+									continueSearch = NO;
+								}
+							}
+						}
 					}
 				}
+
+				// ---- //
 				
 				if (continueSearch) {
 					start = 0;
 					
-					while (start < len) {
+					while (start < length) {
 						NSRange r = [body rangeOfString:keyword 
 												options:NSCaseInsensitiveSearch 
-												  range:NSMakeRange(start, (len - start))];
+												  range:NSMakeRange(start, (length - start))];
 						
 						if (r.location == NSNotFound) {
 							break;
@@ -685,7 +608,7 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 						BOOL enabled = YES;
 						
 						for (NSValue *e in excludeRanges) {
-							if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+							if (NSIntersectionRange(r, e.rangeValue).length > 0) {
 								enabled = NO;
 								
 								break;
@@ -696,13 +619,13 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							if (enabled) {
 								UniChar c = [body characterAtIndex:r.location];
 								
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
+								if (TXStringIsAlphabeticNumeric(c)) {
 									NSInteger prev = (r.location - 1);
 									
-									if (0 <= prev && prev < len) {
+									if (0 <= prev && prev < length) {
 										UniChar c = [body characterAtIndex:prev];
 										
-										if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
+										if (TXStringIsAlphabeticNumeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -712,13 +635,13 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 							if (enabled) {
 								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 								
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
+								if (TXStringIsAlphabeticNumeric(c)) {
 									NSInteger next = NSMaxRange(r);
 									
-									if (next < len) {
+									if (next < length) {
 										UniChar c = [body characterAtIndex:next];
 										
-										if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
+										if (TXStringIsAlphabeticNumeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -738,19 +661,22 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 						
 						start = (NSMaxRange(r) + 1);
 					}
-					
-					if (foundKeyword) break;
+
+					/* We break after finding a keyword because as long as there is one
+					 amongst many, that is all the end user really cares about. */
+					if (foundKeyword) {
+						break;
+					}
 				}
             }
         }
         
 		[resultInfo setBool:foundKeyword forKey:@"wordMatchFound"];
 		
-		/* Channel Name Detection */
-		
+		/* Channel Name Detection. */
 		start = 0;
 		
-		while (start < len) {
+		while (start < length) {
 			NSRange r = [body rangeOfChannelNameStart:start];
 			
 			if (r.location == NSNotFound) {
@@ -765,70 +691,65 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		}
 		
 		/* Conversation Tracking */
-		
 		if ([TPCPreferences trackConversations]) {
 			if (log && isNormalMsg) {
-				IRCChannel *log_channel = log.channel;
-				
-				if (log_channel) {
-					NSArray *channel_members = [[NSArray arrayWithArray:log_channel.members] sortedArrayUsingFunction:nicknameLengthSort context:nil];
+				IRCChannel *logChannel = log.channel;
+
+				NSArray *sortedMembers = [logChannel.memberList sortedArrayUsingFunction:IRCNicknameLengthSort context:nil];
 					
-					if (channel_members) {
-						for (IRCUser *user in channel_members) {
-							start = 0;
+				for (IRCUser *user in sortedMembers) {
+					start = 0;
+					
+					while (start < length) {
+						NSRange r = [body rangeOfString:user.nickname
+												options:NSCaseInsensitiveSearch 
+												  range:NSMakeRange(start, (length - start))];
+						
+						if (r.location == NSNotFound) {
+							break;
+						}
+						
+						BOOL cleanMatch = YES;
+						
+						UniChar c = [body characterAtIndex:r.location];
+						
+						if (TXStringIsAlphabeticNumeric(c)) {
+							NSInteger prev = (r.location - 1);
 							
-							while (start < len) {
-								NSRange r = [body rangeOfString:user.nick 
-														options:NSCaseInsensitiveSearch 
-														  range:NSMakeRange(start, (len - start))];
+							if (0 <= prev && prev < length) {
+								UniChar c = [body characterAtIndex:prev];
 								
-								if (r.location == NSNotFound) {
-									break;
+								if (TXStringIsAlphabeticNumeric(c)) {
+									cleanMatch = NO;
 								}
-								
-								BOOL cleanMatch = YES;
-								
-								UniChar c = [body characterAtIndex:r.location];
-								
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
-									NSInteger prev = (r.location - 1);
-									
-									if (0 <= prev && prev < len) {
-										UniChar c = [body characterAtIndex:prev];
-										
-										if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
-											cleanMatch = NO;
-										}
-									}
-								}
-								
-								if (cleanMatch) {
-									UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-									
-									if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
-										NSInteger next = NSMaxRange(r);
-										
-										if (next < len) {
-											UniChar c = [body characterAtIndex:next];
-											
-											if ([THOUnicodeHelper isAlphabeticalCodePoint:c]) {
-												cleanMatch = NO;
-											}
-										}
-									}
-								}
-								
-								if (cleanMatch) {
-									if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
-										isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length)) {
-										
-										setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
-									}
-								}
-								
-								start = (NSMaxRange(r) + 1);
 							}
 						}
+						
+						if (cleanMatch) {
+							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+							
+							if (TXStringIsAlphabeticNumeric(c)) {
+								NSInteger next = NSMaxRange(r);
+								
+								if (next < length) {
+									UniChar c = [body characterAtIndex:next];
+									
+									if (TXStringIsAlphabeticNumeric(c)) {
+										cleanMatch = NO;
+									}
+								}
+							}
+						}
+						
+						if (cleanMatch) {
+							if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
+								isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
+							{
+								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
+							}
+						}
+						
+						start = (NSMaxRange(r) + 1);
 					}
 				}
 			}
@@ -837,10 +758,11 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 		if (PointerIsEmpty(outputDictionary) == NO) {
 			*outputDictionary = resultInfo;
 		}
+
+		/* End HTML drawing. */
 	}
 	
 	/* Draw Actual Result */
-	
 	id result = nil;
 	
 	if (drawingType == TVCLogRendererAttributedStringType) {
@@ -851,17 +773,17 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	
 	start = 0;
 	
-	while (start < len) {
-		NSInteger n = getNextAttributeRange(attrBuf, start, len);
-		
-		if (n <= 0) break;
+	while (start < length) {
+		NSInteger n = getNextAttributeRange(attrBuf, start, length);
+
+		NSAssertReturnLoopBreak(n > 0);
 		
 		attr_t t = attrBuf[start];
 		
 		if (drawingType == TVCLogRendererAttributedStringType) {
-			result = renderAttributedRange(result, t, start, n, attributedStringFont);	
+			result = [TVCLogRenderer renderAttributedRange:result attributes:t start:start length:n baseFont:attributedStringFont];
 		} else {
-			NSString *renderedRange = renderRange(body, t, start, n, log);
+			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log];
 			
 			[result appendString:renderedRange];
 		}
@@ -870,6 +792,120 @@ static NSString *renderRange(NSString *body, attr_t attr, NSInteger start, NSInt
 	}
 	
 	return result;
+}
+
+// ====================================================== //
+// End renderer.										  //
+// ====================================================== //
+
++ (NSString *)renderTemplate:(NSString *)templateName
+{
+	return [TVCLogRenderer renderTemplate:templateName attributes:nil];
+}
+
++ (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateTokens
+{
+	TXMasterController *master = [TVCLogRenderer masterController];
+
+	GRMustacheTemplate *tmpl = [master.themeController.customSettings templateWithName:templateName];
+
+	PointerIsEmptyAssertReturn(tmpl, nil);
+
+	NSString *aHtml = [tmpl renderObject:templateTokens error:NULL];
+
+	NSObjectIsEmptyAssertReturn(aHtml, nil);
+
+	return aHtml.removeAllNewlines;
+}
+
++ (NSString *)escapeString:(NSString *)s
+{
+	s = [s gtm_stringByEscapingForHTML];
+
+	s = [s stringByReplacingOccurrencesOfString:@"	" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
+	s = [s stringByReplacingOccurrencesOfString:@"  " withString:@"&nbsp;&nbsp;"];
+
+	return s;
+}
+
++ (NSString *)escapeStringWithoutNil:(NSString *)s
+{
+    NSString *escaped = [TVCLogRenderer escapeString:s];
+
+    if (NSObjectIsEmpty(escaped)) {
+        return NSStringEmptyPlaceholder;
+    }
+
+    return escaped;
+}
+
++ (NSInteger)mapColorValue:(NSColor *)color
+{
+	NSArray *possibleColors = [NSColor possibleFormatterColors];
+
+	if ([color numberOfComponents] == 4) {
+		CGFloat _redc   = [color redComponent];
+		CGFloat _bluec  = [color blueComponent];
+		CGFloat _greenc = [color greenComponent];
+		CGFloat _alphac = [color alphaComponent];
+
+		for (NSInteger i = 0; i <= 15; i++) {
+			NSColor *mapped = possibleColors[i];
+
+			if ([mapped numberOfComponents] == 4) {
+				CGFloat redc   = [mapped redComponent];
+				CGFloat bluec  = [mapped blueComponent];
+				CGFloat greenc = [mapped greenComponent];
+				CGFloat alphac = [mapped alphaComponent];
+
+				if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
+					TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
+
+					return i;
+				}
+			} else {
+				if ([color isEqual:mapped]) {
+					return i;
+				}
+			}
+		}
+	} else {
+		for (NSInteger i = 0; i <= 15; i++) {
+			NSColor *mapped = [TVCLogRenderer mapColorCode:i];
+
+			if ([color isEqual:mapped]) {
+				return i;
+			}
+		}
+	}
+	
+	return -1;
+}
+
++ (NSColor *)mapColorCode:(NSInteger)colorCode
+{
+	/* See NSColorHelper.m under Helpers */
+
+	switch (colorCode) {
+		case 0:  return [NSColor formatterWhiteColor];
+		case 1:  return [NSColor formatterBlackColor];
+		case 2:  return [NSColor formatterNavyBlueColor];
+		case 3:  return [NSColor formatterDarkGreenColor];
+		case 4:  return [NSColor formatterRedColor];
+		case 5:  return [NSColor formatterBrownColor];
+		case 6:  return [NSColor formatterPurpleColor];
+		case 7:  return [NSColor formatterOrangeColor];
+		case 8:  return [NSColor formatterYellowColor];
+		case 9:  return [NSColor formatterLimeGreenColor];
+		case 10: return [NSColor formatterTealColor];
+		case 11: return [NSColor formatterAquaCyanColor];
+		case 12: return [NSColor formatterLightBlueColor];
+		case 13: return [NSColor formatterFuchsiaPinkColor];
+		case 14: return [NSColor formatterNormalGrayColor];
+		case 15: return [NSColor formatterLightGrayColor];
+	}
+
+	return nil;
 }
 
 @end

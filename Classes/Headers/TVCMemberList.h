@@ -38,32 +38,38 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberList : TVCListView
-@property (nonatomic, strong) NSFont *layoutBadgeFont;
-@property (nonatomic, strong) NSFont *layoutUserCellFont;
-@property (nonatomic, strong) NSFont *layoutUserCellSelectionFont;
-@property (nonatomic, assign) NSInteger layoutBadgeMargin;
-@property (nonatomic, assign) NSInteger layoutBadgeHeight;
-@property (nonatomic, assign) NSInteger layoutBadgeWidth;
-@property (nonatomic, strong) NSColor *layoutBadgeTextColorTS;
-@property (nonatomic, strong) NSColor *layoutBadgeTextColorNS;
-@property (nonatomic, strong) NSColor *layoutBadgeShadowColor;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorTS;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorQ;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorA;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorO;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorH;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorV;
-@property (nonatomic, strong) NSColor *layoutBadgeMessageBackgroundColorX;
-@property (nonatomic, strong) NSColor *layoutUserCellFontColor;
-@property (nonatomic, strong) NSColor *layoutUserCellSelectionFontColor;
-@property (nonatomic, strong) NSColor *layoutUserCellShadowColor;
-@property (nonatomic, strong) NSColor *layoutUserCellSelectionShadowColorAW;
-@property (nonatomic, strong) NSColor *layoutUserCellSelectionShadowColorIA;
-@property (nonatomic, strong) NSColor *layoutGraphiteSelectionColorAW;
-
 - (void)updateBackgroundColor;
+
+/* User interface elements. */
+- (NSColor *)normalCellTextColor;
+- (NSColor *)normalCellTextShadowColor;
+- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
+- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
+- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
+
+- (NSColor *)selectedCellTextColor;
+
+- (NSColor *)userMarkBadgeBackgroundColor_A;
+- (NSColor *)userMarkBadgeBackgroundColor_H;
+- (NSColor *)userMarkBadgeBackgroundColor_O;
+- (NSColor *)userMarkBadgeBackgroundColor_Q;
+- (NSColor *)userMarkBadgeBackgroundColor_V;
+- (NSColor *)userMarkBadgeBackgroundColor_XAqua;
+- (NSColor *)userMarkBadgeBackgroundColor_XGraphite;
+- (NSColor *)userMarkBadgeNormalTextColor;
+- (NSColor *)userMarkBadgeSelectedBackgroundColor;
+- (NSColor *)userMarkBadgeSelectedTextColor;
+- (NSColor *)userMarkBadgeShadowColor;
+
+- (NSFont *)normalCellFont;
+- (NSFont *)selectedCellFont;
+- (NSFont *)userMarkBadgeFont;
+
+- (NSInteger)userMarkBadgeHeight;
+- (NSInteger)userMarkBadgeMargin;
+- (NSInteger)userMarkBadgeWidth;
 @end
 
-@interface NSObject (MemberListViewDelegate)
+@interface NSObject (TVCMemberListDelegate)
 - (void)memberListViewKeyDown:(NSEvent *)e;
 @end

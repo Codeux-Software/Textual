@@ -45,7 +45,7 @@
 - (SEL)action
 {
     if (PointerIsEmpty([self menuForSegment:self.selectedSegment])) {
-		[self.menuController showChannelIgnoreList:self];
+		[self.masterController.menuController showChannelIgnoreList:self];
 
 		return nil;
     } else {

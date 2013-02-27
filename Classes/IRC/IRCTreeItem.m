@@ -39,12 +39,15 @@
 
 @implementation IRCTreeItem
 
-- (void)resetLogView:(IRCWorld *)world
-		 withChannel:(IRCChannel *)c
-		   andClient:(IRCClient *)u
+- (id)init
 {
-	[self.log clear];
-	[self.log notifyDidBecomeVisible];
+    if ((self = [super init])) {
+		self.treeUUID = [NSString stringWithUUID];
+
+		return self;
+    }
+	
+    return nil;
 }
 
 - (IRCClient *)client
@@ -62,11 +65,16 @@
 	return NO;
 }
 
+- (BOOL)isUnread
+{
+	return (self.treeUnreadCount > 0);
+}
+
 - (void)resetState
 {
-	self.keywordCount = 0;
-	self.dockUnreadCount = self.treeUnreadCount = 0;
-	self.isKeyword = self.isUnread = self.isNewTalk = NO;
+	self.dockUnreadCount = 0;
+	self.treeUnreadCount = 0;
+	self.nicknameHighlightCount = 0;
 }
 
 - (NSInteger)numberOfChildren

@@ -42,22 +42,20 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
-		self.cid = (([dic integerForKey:@"cid"]) ?: TXRandomNumber(9999));
+		self.itemUUID = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", [NSString stringWithUUID]);
+
+		self.hostmask = NSDictionaryObjectKeyValueCompare(dic, @"hostmask", nil);
 		
-		self.hostmask = dic[@"hostmask"];
-		
-		self.ignorePublicMsg	= [dic boolForKey:@"ignorePublicMsg"];
-		self.ignorePrivateMsg	= [dic boolForKey:@"ignorePrivateMsg"];
-		self.ignoreHighlights	= [dic boolForKey:@"ignoreHighlights"];
-		self.ignoreNotices		= [dic boolForKey:@"ignoreNotices"];
-		self.ignoreCTCP			= [dic boolForKey:@"ignoreCTCP"];
-		self.ignoreJPQE			= [dic boolForKey:@"ignoreJPQE"];
-		self.notifyJoins		= [dic boolForKey:@"notifyJoins"];
-		self.ignorePMHighlights	= [dic boolForKey:@"ignorePMHighlights"];
-		
-		self.entryType = (IRCAddressBookEntryType)[dic integerForKey:@"entryType"];
-		
-		[self processHostMaskRegex];
+		self.notifyJoins				= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
+		self.ignoreCTCP					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
+		self.ignoreJPQE					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
+		self.ignoreNotices				= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreNotices", NO);
+		self.ignorePrivateHighlights	= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePMHighlights", NO);
+		self.ignorePrivateMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePrivateMsg", NO);
+		self.ignorePublicHighlights		= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", NO);
+		self.ignorePublicMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
+
+		self.entryType = NSDictionaryIntegerKeyValueCompare(dic, @"entryType", IRCAddressBookIgnoreEntryType);
 
 		return self;
 	}
@@ -65,101 +63,103 @@
 	return nil;
 }
 
-- (void)processHostMaskRegex
-{
-	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
-		NSString *nickname = [self trackingNickname];
-		
-		self.hostmaskRegex = nil;
-		self.hostmask = nil;
-		
-		self.hostmask	  = nickname;
-		self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", nickname];
-	} else {
-		if (NSObjectIsEmpty(self.hostmaskRegex)) {
-			NSString *nhostmask = self.hostmask;
-			
-			if ([nhostmask contains:@"@"] == NO) {
-				nhostmask = [nhostmask stringByAppendingString:@"@*"];
-			} 
-			
-			NSRange atsrange = [nhostmask rangeOfString:@"@" options:NSBackwardsSearch];
-			
-			if ([nhostmask length] >= 2) {
-				NSString *first = [nhostmask safeSubstringToIndex:atsrange.location];
-				NSString *second = [nhostmask safeSubstringFromIndex:(atsrange.location + 1)];
-				
-				if (NSObjectIsEmpty(first)) {
-					first = @"*";
-				}
-				
-				if ([first contains:@"!"] == NO) {
-					nhostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
-				}
-			}
-			
-			if (NSDissimilarObjects(self.hostmask, nhostmask)) {
-				self.hostmask = nhostmask;
-			}
-			
-			/* There probably is an easier way to escape characters before making
-			 our regular expression, but let us do it the hard way instead. More fun. */
-			
-			NSString *new_hostmask = self.hostmask;
-			
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
-			
-			self.hostmaskRegex = nil;
-			self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
-		}
-	}
-}
-
-- (NSDictionary *)dictionaryValue
-{
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	dic[@"hostmask"] = self.hostmask;
-	
-	[dic setBool:self.ignorePublicMsg		forKey:@"ignorePublicMsg"];
-	[dic setBool:self.ignorePrivateMsg		forKey:@"ignorePrivateMsg"];
-	[dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
-	[dic setBool:self.ignorePMHighlights	forKey:@"ignorePMHighlights"];
-	[dic setBool:self.ignoreNotices			forKey:@"ignoreNotices"];
-	[dic setBool:self.ignoreCTCP			forKey:@"ignoreCTCP"];
-	[dic setBool:self.ignoreJPQE			forKey:@"ignoreJPQE"];
-	[dic setBool:self.notifyJoins			forKey:@"notifyJoins"];
-	
-	[dic setInteger:self.entryType			forKey:@"entryType"];
-	[dic setInteger:self.cid				forKey:@"cid"];
-	
-	return dic;
-}
-
 - (BOOL)checkIgnore:(NSString *)thehost
 {
 	if (self.hostmaskRegex && thehost) {
-        return [TLORegularExpression string:thehost
-						  isMatchedByRegex:self.hostmaskRegex
-							   withoutCase:YES];
+        return [TLORegularExpression string:thehost isMatchedByRegex:self.hostmaskRegex withoutCase:YES];
 	}
-	
+
 	return NO;
 }
 
 - (NSString *)trackingNickname
 {
 	return [self.hostmask nicknameFromHostmask];
+}
+
+- (void)setHostmask:(NSString *)hostmask
+{
+	if ([hostmask isEqualToString:self.hostmask]) {
+		return;
+	}
+	
+	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
+        hostmask = [hostmask nicknameFromHostmask];
+        
+		if ([hostmask isNickname]) {
+            _hostmask = hostmask;
+
+			self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
+		}
+	} else {
+		/* Make valid hostmask. */
+		
+		if ([hostmask contains:@"@"] == NO) {
+			hostmask = [hostmask stringByAppendingString:@"@*"];
+		} 
+		
+		NSRange atsrange = [hostmask rangeOfString:@"@" options:NSBackwardsSearch];
+		
+		if (hostmask.length > 2) {
+			NSString *first = [hostmask safeSubstringToIndex:atsrange.location];
+			NSString *second = [hostmask safeSubstringAfterIndex:atsrange.location];
+			
+			if (NSObjectIsEmpty(first)) {
+				first = @"*";
+			}
+			
+			if ([first contains:@"!"] == NO) {
+				hostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
+			}
+		}
+		
+		/* There probably is an easier way to escape characters before making
+		 our regular expression, but let us do it the hard way instead. More fun. */
+		
+		NSString *new_hostmask = hostmask;
+		
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
+
+		_hostmask = hostmask;
+		
+		self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
+	}
+}
+
+- (NSDictionary *)dictionaryValue
+{
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+	[dic safeSetObject:self.itemUUID forKey:@"uniqueIdentifier"];
+	[dic safeSetObject:self.hostmask forKey:@"hostmask"];
+
+	[dic setInteger:self.entryType forKey:@"entryType"];
+	
+	[dic setBool:self.ignorePublicMessages		forKey:@"ignorePublicMsg"];
+	[dic setBool:self.ignorePrivateMessages		forKey:@"ignorePrivateMsg"];
+	[dic setBool:self.ignorePublicHighlights	forKey:@"ignoreHighlights"];
+	[dic setBool:self.ignorePrivateMessages		forKey:@"ignorePMHighlights"];
+	[dic setBool:self.ignoreNotices				forKey:@"ignoreNotices"];
+	[dic setBool:self.ignoreCTCP				forKey:@"ignoreCTCP"];
+	[dic setBool:self.ignoreJPQE				forKey:@"ignoreJPQE"];
+	[dic setBool:self.notifyJoins				forKey:@"notifyJoins"];
+	
+	return dic;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	return [[IRCAddressBook allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

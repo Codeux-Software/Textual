@@ -37,42 +37,7 @@
 
 #import "TextualApplication.h"
 
-#include <unistd.h>         // -------
-#include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
-#include <pwd.h>            // -------
-
 @implementation TPCPreferences
-
-#pragma mark -
-#pragma mark Master Controller
-
-__weak static TXMasterController *internalMasterController;
-
-/* masterController was only added to use with -invertSidebarColors, but
- having a reference in this class can make some calls much simplier. Instead
- of digging down through delegates to find something… we can just call this.
-
- The master control has pointers to everything. */
-
-+ (TXMasterController *)masterController
-{
-	return internalMasterController;
-}
-
-+ (void)setMasterController:(TXMasterController *)master
-{
-	if ([master isKindOfClass:[TXMasterController class]] && PointerIsEmpty(internalMasterController)) {
-		internalMasterController = master;
-	}
-}
-
-#pragma mark -
-#pragma mark Version Dictonaries
-
-+ (NSDictionary *)textualInfoPlist
-{
-	return [NSBundle.mainBundle infoDictionary];
-}
 
 #pragma mark -
 #pragma mark Command Index
@@ -83,141 +48,141 @@ static NSArray *IRCInternalUseCommandIndexMap;
 + (void)populateCommandIndex
 {
 	IRCInternalUseCommandIndexMap = @[ // Open Key: 1051
-	@[@"action",			@"ACTION",				@(1002),		@(NO)],
-	@[@"adchat",			@"ADCHAT",				@(1003),		@(YES)],
-	@[@"away",				@"AWAY",				@(1050),		@(YES)],
-	@[@"cap",				@"CAP",					@(1004),		@(YES)],
-	@[@"cap_authenticate",	@"AUTHENTICATE",		@(1005),		@(YES)],
-	@[@"chatops",			@"CHATOPS",				@(1006),		@(YES)],
-	@[@"ctcp",				@"CTCP",				@(1007),		@(NO)],
-	@[@"ctcp_clientinfo",	@"CLIENTINFO",			@(1008),		@(NO)],
-	@[@"ctcp_ctcpreply",	@"CTCPREPLY",			@(1009),		@(NO)],
-	@[@"ctcp_lagcheck", 	@"LAGCHECK",			@(1010),		@(NO)],
-	@[@"ctcp_ping", 		@"PING",				@(1011),		@(NO)],
-	@[@"ctcp_time", 		@"TIME",				@(1012),		@(NO)],
-	@[@"ctcp_userinfo", 	@"USERINFO",			@(1013),		@(NO)],
-	@[@"ctcp_version", 		@"VERSION",				@(1014),		@(NO)],
-	@[@"dcc",				@"DCC",					@(1015),		@(NO)],
-	@[@"error",				@"ERROR",				@(1016),		@(YES)],
-	@[@"gline", 			@"GLINE",				@(1047),		@(YES)],
-	@[@"globops",			@"GLOBOPS",				@(1017),		@(YES)],
-	@[@"gzline", 			@"GZLINE",				@(1048),		@(YES)],
-	@[@"invite",			@"INVITE",				@(1018),		@(YES)],
-	@[@"ison",				@"ISON",				@(1019),		@(YES)],
-	@[@"ison",				@"ISON",				@(1043),		@(YES)],
-	@[@"join",				@"JOIN",				@(1020),		@(YES)],
-	@[@"kick",				@"KICK",				@(1021),		@(YES)],
-	@[@"kill",				@"KILL",				@(1022),		@(YES)],
-	@[@"list",				@"LIST",				@(1023),		@(YES)],
-	@[@"locops",			@"LOCOPS",				@(1024),		@(YES)],
-	@[@"mode",				@"MODE",				@(1026),		@(YES)],
-	@[@"nachat", 			@"NACHAT",				@(1027),		@(YES)],
-	@[@"names", 			@"NAMES",				@(1028),		@(YES)],
-	@[@"nick",				@"NICK",				@(1029),		@(YES)],
-	@[@"notice",			@"NOTICE",				@(1030),		@(YES)],
-	@[@"part",				@"PART",				@(1031),		@(YES)],
-	@[@"pass",				@"PASS",				@(1032),		@(YES)],
-	@[@"ping",				@"PING",				@(1033),		@(YES)],
-	@[@"pong",				@"PONG",				@(1034),		@(YES)],
-	@[@"privmsg", 			@"PRIVMSG",				@(1035),		@(YES)],
-	@[@"quit",				@"QUIT",				@(1036),		@(YES)],
-	@[@"shun",				@"SHUN",				@(1045),		@(YES)],
-	@[@"tempshun", 			@"TEMPSHUN",			@(1046),		@(YES)],
-	@[@"topic", 			@"TOPIC",				@(1039),		@(YES)],
-	@[@"user", 				@"USER",				@(1037),		@(YES)],
-	@[@"wallops", 			@"WALLOPS",				@(1038),		@(YES)],
-	@[@"who",				@"WHO",					@(1040),		@(YES)],
-	@[@"whois", 			@"WHOIS",				@(1042),		@(YES)],
-	@[@"whowas", 			@"WHOWAS",				@(1041),		@(YES)],
-	@[@"zline", 			@"ZLINE",				@(1049),		@(YES)],
+	//		 key				 command				 index		  is special	  outgoing colon index
+		@[@"action",			@"ACTION",				@(1002),		@(NO),			@(NSNotFound)],
+		@[@"adchat",			@"ADCHAT",				@(1003),		@(YES),			@(0)],
+		@[@"away",				@"AWAY",				@(1050),		@(YES),			@(0)],
+		@[@"cap",				@"CAP",					@(1004),		@(YES),			@(NSNotFound)],
+		@[@"cap_authenticate",	@"AUTHENTICATE",		@(1005),		@(YES),			@(NSNotFound)],
+		@[@"chatops",			@"CHATOPS",				@(1006),		@(YES),			@(0)],
+		@[@"ctcp",				@"CTCP",				@(1007),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_clientinfo",	@"CLIENTINFO",			@(1008),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_ctcpreply",	@"CTCPREPLY",			@(1009),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_lagcheck", 	@"LAGCHECK",			@(1010),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_ping", 		@"PING",				@(1011),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_time", 		@"TIME",				@(1012),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_userinfo", 	@"USERINFO",			@(1013),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_version", 		@"VERSION",				@(1014),		@(NO),			@(NSNotFound)],
+		@[@"dcc",				@"DCC",					@(1015),		@(NO),			@(NSNotFound)],
+		@[@"error",				@"ERROR",				@(1016),		@(YES),			@(0)],
+		@[@"gline", 			@"GLINE",				@(1047),		@(YES),			@(2)],
+		@[@"globops",			@"GLOBOPS",				@(1017),		@(YES),			@(0)],
+		@[@"gzline", 			@"GZLINE",				@(1048),		@(YES),			@(2)],
+		@[@"invite",			@"INVITE",				@(1018),		@(YES),			@(NSNotFound)],
+		@[@"ison",				@"ISON",				@(1019),		@(YES),			@(NSNotFound)],
+		@[@"join",				@"JOIN",				@(1020),		@(YES),			@(NSNotFound)],
+		@[@"kick",				@"KICK",				@(1021),		@(YES),			@(2)],
+		@[@"kill",				@"KILL",				@(1022),		@(YES),			@(1)],
+		@[@"list",				@"LIST",				@(1023),		@(YES),			@(NSNotFound)],
+		@[@"locops",			@"LOCOPS",				@(1024),		@(YES),			@(0)],
+		@[@"mode",				@"MODE",				@(1026),		@(YES),			@(NSNotFound)],
+		@[@"nachat", 			@"NACHAT",				@(1027),		@(YES),			@(0)],
+		@[@"names", 			@"NAMES",				@(1028),		@(YES),			@(NSNotFound)],
+		@[@"nick",				@"NICK",				@(1029),		@(YES),			@(NSNotFound)],
+		@[@"notice",			@"NOTICE",				@(1030),		@(YES),			@(1)],
+		@[@"part",				@"PART",				@(1031),		@(YES),			@(1)],
+		@[@"pass",				@"PASS",				@(1032),		@(YES),			@(NSNotFound)],
+		@[@"ping",				@"PING",				@(1033),		@(YES),			@(NSNotFound)],
+		@[@"pong",				@"PONG",				@(1034),		@(YES),			@(NSNotFound)],
+		@[@"privmsg", 			@"PRIVMSG",				@(1035),		@(YES),			@(1)],
+		@[@"quit",				@"QUIT",				@(1036),		@(YES),			@(0)],
+		@[@"shun",				@"SHUN",				@(1045),		@(YES),			@(2)],
+		@[@"tempshun", 			@"TEMPSHUN",			@(1046),		@(YES),			@(1)],
+		@[@"topic", 			@"TOPIC",				@(1039),		@(YES),			@(1)],
+		@[@"user", 				@"USER",				@(1037),		@(YES),			@(3)],
+		@[@"wallops", 			@"WALLOPS",				@(1038),		@(YES),			@(0)],
+		@[@"who",				@"WHO",					@(1040),		@(YES),			@(NSNotFound)],
+		@[@"whois", 			@"WHOIS",				@(1042),		@(YES),			@(NSNotFound)],
+		@[@"whowas", 			@"WHOWAS",				@(1041),		@(YES),			@(NSNotFound)],
+		@[@"zline", 			@"ZLINE",				@(1049),		@(YES),			@(2)],
 	];
 
 	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5088
-	@[@"adchat",					@"ADCHAT",				@(5001),		@(NO)],
-	@[@"ame",						@"AME",					@(5002),		@(NO)],
-	@[@"amsg",						@"AMSG",				@(5003),		@(NO)],
-	@[@"away",						@"AWAY",				@(5004),		@(NO)],
-	@[@"ban",						@"BAN",					@(5005),		@(NO)],
-	@[@"cap",						@"CAP",					@(5006),		@(NO)],
-	@[@"caps",						@"CAPS",				@(5007),		@(NO)],
-	@[@"ccbadge",					@"CCBADGE",				@(5008),		@(YES)],
-	@[@"chatops",					@"CHATOPS",				@(5009),		@(NO)],
-	@[@"clear",						@"CLEAR",				@(5010),		@(NO)],
-	@[@"clearall",					@"CLEARALL",			@(5011),		@(NO)],
-	@[@"close",						@"CLOSE",				@(5012),		@(NO)],
-	@[@"conn",						@"CONN",				@(5013),		@(NO)],
-	@[@"ctcp",						@"CTCP",				@(5014),		@(NO)],
-	@[@"ctcpreply",					@"CTCPREPLY",			@(5015),		@(NO)],
-	@[@"cycle",						@"CYCLE",				@(5016),		@(NO)],
-	@[@"dcc",						@"DCC",					@(5017),		@(NO)],
-	@[@"debug",						@"DEBUG",				@(5018),		@(NO)],
-	@[@"dehalfop",					@"DEHALFOP",			@(5019),		@(NO)],
-	@[@"deop",						@"DEOP",				@(5020),		@(NO)],
-	@[@"devoice",					@"DEVOICE",				@(5021),		@(NO)],
-	@[@"echo",						@"ECHO",				@(5022),		@(NO)],
-	@[@"fakerawdata",				@"FAKERAWDATA",			@(5087),		@(YES)],
-	@[@"gline",						@"GLINE",				@(5023),		@(NO)],
-	@[@"globops",					@"GLOBOPS",				@(5024),		@(NO)],
-	@[@"gzline",					@"GZLINE",				@(5025),		@(NO)],
-	@[@"halfop",					@"HALFOP",				@(5026),		@(NO)],
-	@[@"hop",						@"HOP",					@(5027),		@(NO)],
-	@[@"icbadge",					@"ICBADGE",				@(5028),		@(YES)],
-	@[@"ignore",					@"IGNORE",				@(5029),		@(NO)],
-	@[@"invite",					@"INVITE",				@(5030),		@(NO)],
-	@[@"j",							@"J",					@(5031),		@(NO)],
-	@[@"join",						@"JOIN",				@(5032),		@(NO)],
-	@[@"kb",						@"KB"	,				@(5083),		@(NO)],
-	@[@"kick",						@"KICK",				@(5033),		@(NO)],
-	@[@"kickban",					@"KICKBAN",				@(5034),		@(NO)],
-	@[@"kill",						@"KILL",				@(5035),		@(NO)],
-	@[@"lagcheck",					@"LAGCHECK",			@(5084),		@(NO)],
-	@[@"leave",						@"LEAVE",				@(5036),		@(NO)],
-	@[@"list",						@"LIST",				@(5037),		@(NO)],
-	@[@"load_plugins",				@"LOAD_PLUGINS",		@(5038),		@(YES)],
-	@[@"locops",					@"LOCOPS",				@(5039),		@(NO)],
-	@[@"m",							@"M",					@(5040),		@(NO)],
-	@[@"me",						@"ME",					@(5041),		@(NO)],
-	@[@"mode",						@"MODE",				@(5042),		@(NO)],
-	@[@"msg",						@"MSG",					@(5043),		@(NO)],
-	@[@"mute",						@"MUTE",				@(5044),		@(NO)],
-	@[@"mylag",						@"MYLAG",				@(5045),		@(NO)],
-	@[@"myversion",					@"MYVERSION",			@(5046),		@(NO)],
-	@[@"nachat",					@"NACHAT",				@(5047),		@(NO)],
-	@[@"nick",						@"NICK",				@(5048),		@(NO)],
-	@[@"nncoloreset",				@"NNCOLORESET",			@(5049),		@(YES)],
-	@[@"notice",					@"NOTICE",				@(5050),		@(NO)],
-	@[@"omsg",						@"OMSG",				@(5051),		@(NO)],
-	@[@"onotice",					@"ONOTICE",				@(5052),		@(NO)],
-	@[@"op",						@"OP",					@(5053),		@(NO)],
-	@[@"part",						@"PART",				@(5054),		@(NO)],
-	@[@"pass",						@"PASS",				@(5055),		@(NO)],
-	@[@"query",						@"QUERY",				@(5056),		@(NO)],
-	@[@"quit",						@"QUIT",				@(5057),		@(NO)],
-	@[@"quote",						@"QUOTE",				@(5058),		@(NO)],
-	@[@"raw",						@"RAW",					@(5059),		@(NO)],
-	@[@"rejoin",					@"REJOIN",				@(5060),		@(NO)],
-	@[@"remove",					@"REMOVE",				@(5061),		@(NO)],
-	@[@"server",					@"SERVER",				@(5062),		@(NO)],
-	@[@"shun",						@"SHUN",				@(5063),		@(NO)],
-	@[@"sme",						@"SME",					@(5064),		@(NO)],
-	@[@"smsg",						@"SMSG",				@(5065),		@(NO)],
-	@[@"sslcontext",				@"SSLCONTEXT",			@(5066),		@(NO)],
-	@[@"t",							@"T",					@(5067),		@(NO)],
-	@[@"tempshun",					@"TEMPSHUN",			@(5068),		@(NO)],
-	@[@"timer",						@"TIMER",				@(5069),		@(NO)],
-	@[@"topic",						@"TOPIC",				@(5070),		@(NO)],
-	@[@"umode",						@"UMODE",				@(5071),		@(NO)],
-	@[@"unban",						@"UNBAN",				@(5072),		@(NO)],
-	@[@"unignore",					@"UNIGNORE",			@(5073),		@(NO)],
-	@[@"unload_plugins",			@"UNLOAD_PLUGINS",		@(5074),		@(YES)],
-	@[@"unmute",					@"UNMUTE",				@(5075),		@(NO)],
-	@[@"voice",						@"VOICE",				@(5076),		@(NO)],
-	@[@"wallops",					@"WALLOPS",				@(5077),		@(NO)],
-	@[@"weights",					@"WEIGHTS",				@(5078),		@(NO)],
-	@[@"who",						@"WHO",					@(5079),		@(NO)],
-	@[@"whois",						@"WHOIS",				@(5080),		@(NO)],
-	@[@"whowas",					@"WHOWAS",				@(5081),		@(NO)],
-	@[@"zline",						@"ZLINE",				@(5082),		@(NO)],
+	//		 key						 command				 index		developer mode
+		@[@"adchat",					@"ADCHAT",				@(5001),		@(NO)],
+		@[@"ame",						@"AME",					@(5002),		@(NO)],
+		@[@"amsg",						@"AMSG",				@(5003),		@(NO)],
+		@[@"away",						@"AWAY",				@(5004),		@(NO)],
+		@[@"ban",						@"BAN",					@(5005),		@(NO)],
+		@[@"cap",						@"CAP",					@(5006),		@(NO)],
+		@[@"caps",						@"CAPS",				@(5007),		@(NO)],
+		@[@"ccbadge",					@"CCBADGE",				@(5008),		@(YES)],
+		@[@"chatops",					@"CHATOPS",				@(5009),		@(NO)],
+		@[@"clear",						@"CLEAR",				@(5010),		@(NO)],
+		@[@"clearall",					@"CLEARALL",			@(5011),		@(NO)],
+		@[@"close",						@"CLOSE",				@(5012),		@(NO)],
+		@[@"conn",						@"CONN",				@(5013),		@(NO)],
+		@[@"ctcp",						@"CTCP",				@(5014),		@(NO)],
+		@[@"ctcpreply",					@"CTCPREPLY",			@(5015),		@(NO)],
+		@[@"cycle",						@"CYCLE",				@(5016),		@(NO)],
+		@[@"dcc",						@"DCC",					@(5017),		@(NO)],
+		@[@"debug",						@"DEBUG",				@(5018),		@(NO)],
+		@[@"dehalfop",					@"DEHALFOP",			@(5019),		@(NO)],
+		@[@"deop",						@"DEOP",				@(5020),		@(NO)],
+		@[@"devoice",					@"DEVOICE",				@(5021),		@(NO)],
+		@[@"echo",						@"ECHO",				@(5022),		@(NO)],
+		@[@"fakerawdata",				@"FAKERAWDATA",			@(5087),		@(YES)],
+		@[@"gline",						@"GLINE",				@(5023),		@(NO)],
+		@[@"globops",					@"GLOBOPS",				@(5024),		@(NO)],
+		@[@"gzline",					@"GZLINE",				@(5025),		@(NO)],
+		@[@"halfop",					@"HALFOP",				@(5026),		@(NO)],
+		@[@"hop",						@"HOP",					@(5027),		@(NO)],
+		@[@"icbadge",					@"ICBADGE",				@(5028),		@(YES)],
+		@[@"ignore",					@"IGNORE",				@(5029),		@(NO)],
+		@[@"invite",					@"INVITE",				@(5030),		@(NO)],
+		@[@"j",							@"J",					@(5031),		@(NO)],
+		@[@"join",						@"JOIN",				@(5032),		@(NO)],
+		@[@"kb",						@"KB"	,				@(5083),		@(NO)],
+		@[@"kick",						@"KICK",				@(5033),		@(NO)],
+		@[@"kickban",					@"KICKBAN",				@(5034),		@(NO)],
+		@[@"kill",						@"KILL",				@(5035),		@(NO)],
+		@[@"lagcheck",					@"LAGCHECK",			@(5084),		@(NO)],
+		@[@"leave",						@"LEAVE",				@(5036),		@(NO)],
+		@[@"list",						@"LIST",				@(5037),		@(NO)],
+		@[@"load_plugins",				@"LOAD_PLUGINS",		@(5038),		@(YES)],
+		@[@"locops",					@"LOCOPS",				@(5039),		@(NO)],
+		@[@"m",							@"M",					@(5040),		@(NO)],
+		@[@"me",						@"ME",					@(5041),		@(NO)],
+		@[@"mode",						@"MODE",				@(5042),		@(NO)],
+		@[@"msg",						@"MSG",					@(5043),		@(NO)],
+		@[@"mute",						@"MUTE",				@(5044),		@(NO)],
+		@[@"mylag",						@"MYLAG",				@(5045),		@(NO)],
+		@[@"myversion",					@"MYVERSION",			@(5046),		@(NO)],
+		@[@"nachat",					@"NACHAT",				@(5047),		@(NO)],
+		@[@"nick",						@"NICK",				@(5048),		@(NO)],
+		@[@"nncoloreset",				@"NNCOLORESET",			@(5049),		@(YES)],
+		@[@"notice",					@"NOTICE",				@(5050),		@(NO)],
+		@[@"omsg",						@"OMSG",				@(5051),		@(NO)],
+		@[@"onotice",					@"ONOTICE",				@(5052),		@(NO)],
+		@[@"op",						@"OP",					@(5053),		@(NO)],
+		@[@"part",						@"PART",				@(5054),		@(NO)],
+		@[@"pass",						@"PASS",				@(5055),		@(NO)],
+		@[@"query",						@"QUERY",				@(5056),		@(NO)],
+		@[@"quit",						@"QUIT",				@(5057),		@(NO)],
+		@[@"quote",						@"QUOTE",				@(5058),		@(NO)],
+		@[@"raw",						@"RAW",					@(5059),		@(NO)],
+		@[@"rejoin",					@"REJOIN",				@(5060),		@(NO)],
+		@[@"remove",					@"REMOVE",				@(5061),		@(NO)],
+		@[@"server",					@"SERVER",				@(5062),		@(NO)],
+		@[@"shun",						@"SHUN",				@(5063),		@(NO)],
+		@[@"sme",						@"SME",					@(5064),		@(NO)],
+		@[@"smsg",						@"SMSG",				@(5065),		@(NO)],
+		@[@"sslcontext",				@"SSLCONTEXT",			@(5066),		@(NO)],
+		@[@"t",							@"T",					@(5067),		@(NO)],
+		@[@"tempshun",					@"TEMPSHUN",			@(5068),		@(NO)],
+		@[@"timer",						@"TIMER",				@(5069),		@(NO)],
+		@[@"topic",						@"TOPIC",				@(5070),		@(NO)],
+		@[@"umode",						@"UMODE",				@(5071),		@(NO)],
+		@[@"unban",						@"UNBAN",				@(5072),		@(NO)],
+		@[@"unignore",					@"UNIGNORE",			@(5073),		@(NO)],
+		@[@"unload_plugins",			@"UNLOAD_PLUGINS",		@(5074),		@(YES)],
+		@[@"unmute",					@"UNMUTE",				@(5075),		@(NO)],
+		@[@"voice",						@"VOICE",				@(5076),		@(NO)],
+		@[@"wallops",					@"WALLOPS",				@(5077),		@(NO)],
+		@[@"who",						@"WHO",					@(5079),		@(NO)],
+		@[@"whois",						@"WHOIS",				@(5080),		@(NO)],
+		@[@"whowas",					@"WHOWAS",				@(5081),		@(NO)],
+		@[@"zline",						@"ZLINE",				@(5082),		@(NO)],
 	];
 }
 
@@ -236,7 +201,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 {
 	NSMutableArray *index = [NSMutableArray array];
 
-	BOOL inDevMode = [_NSUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+	BOOL inDevMode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
 
 	for (NSArray *indexInfo in IRCUserAccessibleCommandIndexMap) {
 		BOOL developerOnly = [indexInfo boolAtIndex:3];
@@ -255,12 +220,12 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 + (NSString *)IRCCommandFromIndexKey:(NSString *)key publicSearch:(BOOL)isPublic
 {
-	NSArray *searchPath = [self.class IRCCommandIndex:isPublic];
+	NSArray *searchPath = [self IRCCommandIndex:isPublic];
 
 	for (NSArray *indexInfo in searchPath) {
 		NSString *matchKey = indexInfo[0];
 
-		if ([matchKey isEqualNoCase:key]) {
+		if ([matchKey isEqualIgnoringCase:key]) {
 			return indexInfo[1];
 		}
  	}
@@ -270,66 +235,39 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 #pragma mark -
 
-NSString *IRCCommandIndex(const char *key)
-{
-	TEXTUAL_DEPRECATED_ASSERT_C;
-
-	return nil;
-}
-
 NSString *IRCPrivateCommandIndex(const char *key)
 {
-	NSString *ckey = [NSString stringWithUTF8String:key];
-
-	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:NO];
-
-	//DebugLogToConsole(@"%@; %@", ckey, rkey);
-
-	return rkey;
+	return [TPCPreferences IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:NO];
 }
 
 NSString *IRCPublicCommandIndex(const char *key)
 {
-	NSString *ckey = [NSString stringWithUTF8String:key];
-
-	NSString *rkey = [TPCPreferences IRCCommandFromIndexKey:ckey publicSearch:YES];
-
-	//DebugLogToConsole(@"%@; %@", ckey, rkey);
-
-	return rkey;
+	return [TPCPreferences IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:YES];
 }
 
 #pragma mark -
 
 + (NSInteger)indexOfIRCommand:(NSString *)command
 {
-	return [self.class indexOfIRCommand:command publicSearch:YES];
+	return [self indexOfIRCommand:command publicSearch:YES];
 }
 
 + (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic
 {
-	NSArray *searchPath = [self.class IRCCommandIndex:isPublic];
+	NSArray *searchPath = [self IRCCommandIndex:isPublic];
 
-	BOOL inDevMode = [_NSUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+	BOOL inDevMode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
 
 	for (NSArray *indexInfo in searchPath) {
 		NSString *matValue = indexInfo[1];
 
-		if (isPublic) {
-			BOOL developerOnly = [indexInfo boolAtIndex:3];
-
-			if (inDevMode == NO && developerOnly) {
-				continue;
-			}
-		} else {
+		if ([matValue isEqualIgnoringCase:command]) {
 			BOOL isNotSpecial = [indexInfo boolAtIndex:3];
 
-			if (isNotSpecial == NO) {
+			if ((isPublic == NO && isNotSpecial == NO) && (isPublic && inDevMode == NO && isNotSpecial)) {
 				continue;
 			}
-		}
 
-		if ([matValue isEqualNoCase:command]) {
 			return [indexInfo integerAtIndex:2];
 		}
  	}
@@ -338,7 +276,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 }
 
 #pragma mark -
-#pragma mark Application Information
+#pragma mark System Information
 
 + (BOOL)featureAvailableToOSXLion
 {
@@ -350,14 +288,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
 }
 
-+ (NSData *)applicationIcon
-{
-	return [[NSApp applicationIconImage] TIFFRepresentation];
-}
+#pragma mark -
+#pragma mark Application Information
 
 + (NSString *)applicationName
 {
-	NSString *name = [TPCPreferences textualInfoPlist][@"CFBundleName"];
+	NSString *name = [RZMainBundle() infoDictionary][@"CFBundleName"];
 
 #ifdef TEXTUAL_TRIAL_BINARY
 	if ([name hasSuffix:@" Trial"]) {
@@ -372,35 +308,31 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSInteger)applicationProcessID
 {
-	return [[NSProcessInfo processInfo] processIdentifier];
-}
-
-+ (NSString *)gitBuildReference
-{
-	return [TPCPreferences textualInfoPlist][@"TXBundleBuildReference"];
+	return [RZProcessInfo() processIdentifier];
 }
 
 + (NSString *)applicationBundleIdentifier
 {
-	return [[NSBundle mainBundle] bundleIdentifier];
+	return [RZMainBundle() bundleIdentifier];
 }
 
 + (BOOL)runningInHighResolutionMode
 {
-	return ([_NSMainScreen() runningInHighResolutionMode]);
+	return [RZMainScreen() runningInHighResolutionMode];
+}
+
++ (NSDictionary *)textualInfoPlist
+{
+	return [RZMainBundle() infoDictionary];
+}
+
++ (NSString *)gitBuildReference
+{
+	return [RZMainBundle() infoDictionary][@"TXBundleBuildReference"];
 }
 
 #pragma mark -
 #pragma mark Path Index
-
-+ (NSString *)_whereApplicationSupportPath
-{
-	return [_NSFileManager() URLForDirectory:NSApplicationSupportDirectory
-									inDomain:NSUserDomainMask
-						   appropriateForURL:nil
-									  create:YES
-									   error:NULL].relativePath;
-}
 
 + (NSString *)applicationTemporaryFolderPath
 {
@@ -409,10 +341,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)applicationSupportFolderPath
 {
-	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/"];
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 
-	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	NSString *dest = [searchArray[0] stringByAppendingPathComponent:@"/Textual IRC/"];
+
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 
 	return dest;
@@ -420,10 +354,10 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)customScriptFolderPath
 {
-	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Scripts/"];
+	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
 
-	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 
 	return dest;
@@ -431,10 +365,10 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)customThemeFolderPath
 {
-	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Styles/"];
+	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];
 
-	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 
 	return dest;
@@ -442,10 +376,10 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[self _whereApplicationSupportPath] stringByAppendingPathComponent:@"/Textual IRC/Extensions/"];
+	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
 
-	if ([_NSFileManager() fileExistsAtPath:dest] == NO) {
-		[_NSFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 
 	return dest;
@@ -453,64 +387,42 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)bundledScriptFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Scripts"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
 }
-
-#ifdef TXUnsupervisedScriptFolderAvailable
-+ (NSString *)systemUnsupervisedScriptFolderPath
-{
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		NSString *pathHead = [NSString stringWithFormat:@"/Library/Application Scripts/%@/", [TPCPreferences applicationBundleIdentifier]];
-
-		return [NSHomeDirectory() stringByAppendingPathComponent:pathHead];
-
-		// This was creating a lot of leaks in Mountain Lion Preview 4.
-		// Commenting out for now…
-
-		/*
-		 return [_NSFileManager() URLForDirectory:NSApplicationScriptsDirectory
-		 inDomain:NSUserDomainMask
-		 appropriateForURL:nil
-		 create:YES
-		 error:NULL].relativePath;
-		 */
-
-	}
-
-	return NSStringEmptyPlaceholder;
-}
-#endif
 
 + (NSString *)bundledThemeFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Styles"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Styles/"];
 }
 
 + (NSString *)bundledExtensionFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"Extensions"];
-}
-
-+ (NSString *)appleStoreReceiptFilePath
-{
-	return [[self applicationBundlePath] stringByAppendingPathComponent:@"/Contents/_MASReceipt/receipt"];
+	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
 }
 
 + (NSString *)applicationResourcesFolderPath
 {
-	return [[NSBundle mainBundle] resourcePath];
+	return [RZMainBundle() resourcePath];
 }
 
 + (NSString *)applicationBundlePath
 {
-	return [[NSBundle mainBundle] bundlePath];
+	return [RZMainBundle() bundlePath];
 }
 
-+ (NSString *)userHomeDirectoryPathOutsideSandbox
++ (NSString *)systemUnsupervisedScriptFolderPath
 {
-	struct passwd *pw = getpwuid(getuid());
+	if ([self featureAvailableToOSXMountainLion]) {
+		NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 
-	return [NSString stringWithUTF8String:pw->pw_dir];
+		return searchArray[0];
+	}
+
+	/* We return an empty string instead of nil because
+	 the result of this method may be inserted into an 
+	 array and a nil value would throw an exception. */
+	
+	return NSStringEmptyPlaceholder;
 }
 
 #pragma mark -
@@ -518,47 +430,56 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 static NSURL *transcriptFolderResolvedBookmark;
 
-+ (void)stopUsingTranscriptFolderBookmarkResources
++ (void)startUsingTranscriptFolderSecurityScopedBookmark
 {
-	if (NSObjectIsNotEmpty(transcriptFolderResolvedBookmark)) {
-		[transcriptFolderResolvedBookmark stopAccessingSecurityScopedResource];
+	NSAssertReturn([self sandboxEnabled]);
+	NSAssertReturn([self securityScopedBookmarksAvailable]);
 
-		transcriptFolderResolvedBookmark = nil;
+	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
+
+	NSObjectIsEmptyAssert(bookmark);
+
+	NSError *resolveError;
+
+	NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
+														options:NSURLBookmarkResolutionWithSecurityScope
+												  relativeToURL:nil
+											bookmarkDataIsStale:NO
+														  error:&resolveError];
+
+	if (resolveError) {
+		LogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
+	} else {
+		if (transcriptFolderResolvedBookmark) {
+			[self stopUsingTranscriptFolderSecurityScopedBookmark];
+		}
+
+		 transcriptFolderResolvedBookmark = resolvedBookmark;
+		[transcriptFolderResolvedBookmark startAccessingSecurityScopedResource];  
 	}
 }
 
++ (void)stopUsingTranscriptFolderSecurityScopedBookmark
+{
+	NSObjectIsEmptyAssert(transcriptFolderResolvedBookmark);
+
+	[transcriptFolderResolvedBookmark stopAccessingSecurityScopedResource];
+
+	transcriptFolderResolvedBookmark = nil;
+}
+
+#pragma mark -
+
 + (NSString *)transcriptFolder
 {
-	if ([self sandboxEnabled] && [TPCPreferences securityScopedBookmarksAvailable]) {
-		if (NSObjectIsNotEmpty(transcriptFolderResolvedBookmark)) {
-			return [transcriptFolderResolvedBookmark path];
-		} else {
-			NSData *bookmark = [_NSUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
+	if ([self sandboxEnabled]) {
+		if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
+			[self startUsingTranscriptFolderSecurityScopedBookmark];
+		} 
 
-			if (NSObjectIsNotEmpty(bookmark)) {
-				NSError *error;
-
-				NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
-																	options:NSURLBookmarkResolutionWithSecurityScope
-															  relativeToURL:nil
-														bookmarkDataIsStale:NO
-																	  error:&error];
-
-				if (error) {
-					LogToConsole(@"Error creating bookmark for URL: %@", error);
-				} else {
-					[resolvedBookmark startAccessingSecurityScopedResource];
-
-					transcriptFolderResolvedBookmark = resolvedBookmark;
-
-					return [transcriptFolderResolvedBookmark path];
-				}
-			}
-		}
-
-		return nil;
+		return [transcriptFolderResolvedBookmark path];
 	} else {
-		NSString *base = [_NSUserDefaults() objectForKey:@"LogTranscriptDestination"];
+		NSString *base = [RZUserDefaults() objectForKey:@"LogTranscriptDestination"];
 
 		return [base stringByExpandingTildeInPath];
 	}
@@ -570,15 +491,13 @@ static NSURL *transcriptFolderResolvedBookmark;
 	// versions of Textual or as an NSData object on sandboxed versions.
 
 	if ([self sandboxEnabled]) {
-		if ([TPCPreferences securityScopedBookmarksAvailable] == NO) {
-			return;
-		}
+		NSAssertReturn([self securityScopedBookmarksAvailable]);
 
-		[self stopUsingTranscriptFolderBookmarkResources];
+		[self stopUsingTranscriptFolderSecurityScopedBookmark];
 
-		[_NSUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+		[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
 	} else {
-		[_NSUserDefaults() setObject:value forKey:@"LogTranscriptDestination"];
+		[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestination"];
 	}
 }
 
@@ -587,14 +506,14 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)sandboxEnabled
 {
-	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [TPCPreferences applicationBundleIdentifier]];
+	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [self applicationBundleIdentifier]];
 
 	return [NSHomeDirectory() hasSuffix:suffix];
 }
 
 + (BOOL)securityScopedBookmarksAvailable
 {
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) { // Covers 10.8 and later.
+	if ([self featureAvailableToOSXMountainLion]) { // Covers 10.8 and later.
 		return YES;
 	} else {
 		NSString *osxversion = [CSFWSystemInformation systemStandardVersion];
@@ -610,279 +529,293 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)defaultNickname
 {
-	return [_NSUserDefaults() objectForKey:@"DefaultIdentity -> Nickname"];
+	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Nickname"];
 }
 
 + (NSString *)defaultUsername
 {
-	return [_NSUserDefaults() objectForKey:@"DefaultIdentity -> Username"];
+	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Username"];
 }
 
 + (NSString *)defaultRealname
 {
-	return [_NSUserDefaults() objectForKey:@"DefaultIdentity -> Realname"];
+	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Realname"];
 }
 
 #pragma mark -
 #pragma mark General Preferences
 
+/* There is no specific order to these. */
+
 + (NSInteger)autojoinMaxChannelJoins
 {
-	return [_NSUserDefaults() integerForKey:@"AutojoinMaximumChannelJoinCount"];
+	return [RZUserDefaults() integerForKey:@"AutojoinMaximumChannelJoinCount"];
 }
 
 + (NSString *)defaultKickMessage
 {
-	return [_NSUserDefaults() objectForKey:@"ChannelOperatorDefaultLocalization -> Kick Reason"];
+	return [RZUserDefaults() objectForKey:@"ChannelOperatorDefaultLocalization -> Kick Reason"];
 }
 
 + (NSString *)IRCopDefaultKillMessage
 {
-	return [_NSUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Kill Reason"];
+	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Kill Reason"];
 }
 
 + (NSString *)IRCopDefaultGlineMessage
 {
-	return [_NSUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> G:Line Reason"];
+	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> G:Line Reason"];
 }
 
 + (NSString *)IRCopDefaultShunMessage
 {
-	return [_NSUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Shun Reason"];
+	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Shun Reason"];
 }
 
 + (NSString *)IRCopAlertMatch
 {
-	return [_NSUserDefaults() objectForKey:@"ScanForIRCopAlertInServerNoticesMatch"];
+	return [RZUserDefaults() objectForKey:@"ScanForIRCopAlertInServerNoticesMatch"];
 }
 
 + (NSString *)masqueradeCTCPVersion
 {
-	return [_NSUserDefaults() objectForKey:@"ApplicationCTCPVersionMasquerade"];
+	return [RZUserDefaults() objectForKey:@"ApplicationCTCPVersionMasquerade"];
+}
+
++ (BOOL)setAwayOnScreenSleep
+{
+	return [RZUserDefaults() boolForKey:@"SetAwayOnScreenSleep"];
 }
 
 + (BOOL)invertSidebarColors
 {
-	if (internalMasterController.viewTheme.other.forceInvertSidebarColors) {
+	TXMasterController *master = [self masterController];
+	
+	if (master.themeController.customSettings.forceInvertSidebarColors) {
 		return YES;
 	}
 
-	return [_NSUserDefaults() boolForKey:@"InvertSidebarColors"];
+	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
+}
+
++ (BOOL)invertInputTextFieldColors
+{
+	return [RZUserDefaults() boolForKey:@"InvertInputTextFieldColors"];
 }
 
 + (BOOL)hideMainWindowSegmentedController
 {
-	return [_NSUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
+	return [RZUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
 }
 
 + (BOOL)trackConversations
 {
-	return [_NSUserDefaults() boolForKey:@"TrackConversationsWithColorHashing"];
+	return [RZUserDefaults() boolForKey:@"TrackConversationsWithColorHashing"];
 }
 
-+ (BOOL)autojoinWaitForNickServ
++ (BOOL)autojoinWaitsForNickServ
 {
-	return [_NSUserDefaults() boolForKey:@"AutojoinWaitsForNickservIdentification"];
+	return [RZUserDefaults() boolForKey:@"AutojoinWaitsForNickservIdentification"];
 }
 
-+ (BOOL)logAllHighlightsToQuery
++ (BOOL)logHighlights
 {
-	return [_NSUserDefaults() boolForKey:@"LogHighlights"];
+	return [RZUserDefaults() boolForKey:@"LogHighlights"];
 }
 
 + (BOOL)clearAllOnlyOnActiveServer
 {
-	return [_NSUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
+	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
 
 + (BOOL)displayServerMOTD
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];
+	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];
 }
 
 + (BOOL)copyOnSelect
 {
-	return [_NSUserDefaults() boolForKey:@"CopyTextSelectionOnMouseUp"];
+	return [RZUserDefaults() boolForKey:@"CopyTextSelectionOnMouseUp"];
 }
 
 + (BOOL)replyToCTCPRequests
 {
-	return [_NSUserDefaults() boolForKey:@"ReplyUnignoredExternalCTCPRequests"];
+	return [RZUserDefaults() boolForKey:@"ReplyUnignoredExternalCTCPRequests"];
 }
 
 + (BOOL)autoAddScrollbackMark
 {
-	return [_NSUserDefaults() boolForKey:@"AutomaticallyAddScrollbackMarker"];
+	return [RZUserDefaults() boolForKey:@"AutomaticallyAddScrollbackMarker"];
 }
 
 + (BOOL)removeAllFormatting
 {
-	return [_NSUserDefaults() boolForKey:@"RemoveIRCTextFormatting"];
+	return [RZUserDefaults() boolForKey:@"RemoveIRCTextFormatting"];
 }
 
 + (BOOL)useLogAntialiasing
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayMainWindowWithAntialiasing"];
+	return [RZUserDefaults() boolForKey:@"DisplayMainWindowWithAntialiasing"];
 }
 
-+ (BOOL)disableNicknameColors
++ (BOOL)disableNicknameColorHashing
 {
-	return [_NSUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
+	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
 + (BOOL)rightToLeftFormatting
 {
-	return [_NSUserDefaults() boolForKey:@"RightToLeftTextFormatting"];
+	return [RZUserDefaults() boolForKey:@"RightToLeftTextFormatting"];
 }
 
-+ (NSString *)completionSuffix
++ (NSString *)tabCompletionSuffix
 {
-	return [_NSUserDefaults() objectForKey:@"Keyboard -> Tab Key Completion Suffix"];
-}
-
-+ (TXHostmaskBanFormat)banFormat
-{
-	return (TXHostmaskBanFormat)[_NSUserDefaults() integerForKey:@"DefaultBanCommandHostmaskFormat"];
+	return [RZUserDefaults() objectForKey:@"Keyboard -> Tab Key Completion Suffix"];
 }
 
 + (BOOL)displayDockBadge
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayDockBadges"];
+	return [RZUserDefaults() boolForKey:@"DisplayDockBadges"];
 }
 
 + (BOOL)handleIRCopAlerts
 {
-	return [_NSUserDefaults() boolForKey:@"ScanForIRCopAlertInServerNotices"];
+	return [RZUserDefaults() boolForKey:@"ScanForIRCopAlertInServerNotices"];
 }
 
 + (BOOL)handleServerNotices
 {
-	return [_NSUserDefaults() boolForKey:@"ProcessServerNoticesForIRCop"];
+	return [RZUserDefaults() boolForKey:@"ProcessServerNoticesForIRCop"];
 }
 
 + (BOOL)amsgAllConnections
 {
-	return [_NSUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> amsg"];
+	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> amsg"];
 }
 
 + (BOOL)awayAllConnections
 {
-	return [_NSUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> away"];
+	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> away"];
 }
 
-+ (BOOL)giveFocusOnMessage
++ (BOOL)giveFocusOnMessageCommand
 {
-	return [_NSUserDefaults() boolForKey:@"FocusSelectionOnMessageCommandExecution"];
+	return [RZUserDefaults() boolForKey:@"FocusSelectionOnMessageCommandExecution"];
 }
 
 + (BOOL)nickAllConnections
 {
-	return [_NSUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> nick"];
+	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> nick"];
 }
 
 + (BOOL)confirmQuit
 {
-	return [_NSUserDefaults() boolForKey:@"ConfirmApplicationQuit"];
+	return [RZUserDefaults() boolForKey:@"ConfirmApplicationQuit"];
 }
 
 + (BOOL)processChannelModes
 {
-	return [_NSUserDefaults() boolForKey:@"ProcessChannelModesOnJoin"];
+	return [RZUserDefaults() boolForKey:@"ProcessChannelModesOnJoin"];
 }
 
 + (BOOL)rejoinOnKick
 {
-	return [_NSUserDefaults() boolForKey:@"RejoinChannelOnLocalKick"];
+	return [RZUserDefaults() boolForKey:@"RejoinChannelOnLocalKick"];
 }
 
 + (BOOL)reloadScrollbackOnLaunch
 {
-	return [_NSUserDefaults() boolForKey:@"ReloadScrollbackOnLaunch"];
+	return [RZUserDefaults() boolForKey:@"ReloadScrollbackOnLaunch"];
 }
 
 + (BOOL)autoJoinOnInvite
 {
-	return [_NSUserDefaults() boolForKey:@"AutojoinChannelOnInvite"];
+	return [RZUserDefaults() boolForKey:@"AutojoinChannelOnInvite"];
 }
 
 + (BOOL)connectOnDoubleclick
 {
-	return [_NSUserDefaults() boolForKey:@"ServerListDoubleClickConnectServer"];
+	return [RZUserDefaults() boolForKey:@"ServerListDoubleClickConnectServer"];
 }
 
 + (BOOL)disconnectOnDoubleclick
 {
-	return [_NSUserDefaults() boolForKey:@"ServerListDoubleClickDisconnectServer"];
+	return [RZUserDefaults() boolForKey:@"ServerListDoubleClickDisconnectServer"];
 }
 
 + (BOOL)joinOnDoubleclick
 {
-	return [_NSUserDefaults() boolForKey:@"ServerListDoubleClickJoinChannel"];
+	return [RZUserDefaults() boolForKey:@"ServerListDoubleClickJoinChannel"];
 }
 
 + (BOOL)leaveOnDoubleclick
 {
-	return [_NSUserDefaults() boolForKey:@"ServerListDoubleClickLeaveChannel"];
+	return [RZUserDefaults() boolForKey:@"ServerListDoubleClickLeaveChannel"];
 }
 
 + (BOOL)logTranscript
 {
-	return [_NSUserDefaults() boolForKey:@"LogTranscript"];
+	return [RZUserDefaults() boolForKey:@"LogTranscript"];
 }
 
 + (BOOL)openBrowserInBackground
 {
-	return [_NSUserDefaults() boolForKey:@"OpenClickedLinksInBackgroundBrowser"];
+	return [RZUserDefaults() boolForKey:@"OpenClickedLinksInBackgroundBrowser"];
 }
 
 + (BOOL)showInlineImages
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayEventInLogView -> Inline Media"];
+	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Inline Media"];
 }
 
 + (BOOL)showJoinLeave
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayEventInLogView -> Join, Part, Quit"];
+	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Join, Part, Quit"];
 }
 
 + (BOOL)stopGrowlOnActive
 {
-	return [_NSUserDefaults() boolForKey:@"DisableNotificationsForActiveWindow"];
+	return [RZUserDefaults() boolForKey:@"DisableNotificationsForActiveWindow"];
 }
 
-+ (BOOL)countPublicMessagesInIconBadge
++ (BOOL)displayPublicMessageCountOnDockBadge
 {
-	return [_NSUserDefaults() boolForKey:@"DisplayPublicMessageCountInDockBadge"];
+	return [RZUserDefaults() boolForKey:@"DisplayPublicMessageCountInDockBadge"];
 }
 
-+ (TXTabKeyActionType)tabAction
++ (BOOL)highlightCurrentNickname
 {
-	return (TXTabKeyActionType)[_NSUserDefaults() integerForKey:@"Keyboard -> Tab Key Action"];
+	return [RZUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
 }
 
-+ (BOOL)keywordCurrentNick
++ (TXTabKeyAction)tabKeyAction
 {
-	return [_NSUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
+	return (TXTabKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Tab Key Action"];
 }
 
-+ (TXNicknameHighlightMatchType)keywordMatchingMethod
++ (TXNicknameHighlightMatchType)highlightMatchingMethod
 {
-	return (TXNicknameHighlightMatchType)[_NSUserDefaults() integerForKey:@"NicknameHighlightMatchingType"];
+	return (TXNicknameHighlightMatchType)[RZUserDefaults() integerForKey:@"NicknameHighlightMatchingType"];
 }
 
 + (TXUserDoubleClickAction)userDoubleClickOption
 {
-	return (TXUserDoubleClickAction)[_NSUserDefaults() integerForKey:@"UserListDoubleClickAction"];
+	return (TXUserDoubleClickAction)[RZUserDefaults() integerForKey:@"UserListDoubleClickAction"];
 }
 
 + (TXNoticeSendLocationType)locationToSendNotices
 {
-	return (TXNoticeSendLocationType)[_NSUserDefaults() integerForKey:@"DestinationOfNonserverNotices"];
+	return (TXNoticeSendLocationType)[RZUserDefaults() integerForKey:@"DestinationOfNonserverNotices"];
 }
 
-+ (TXCmdWShortcutResponseType)cmdWResponseType
++ (TXCommandWKeyAction)commandWKeyAction
 {
-	return (TXCmdWShortcutResponseType)[_NSUserDefaults() integerForKey:@"Keyboard -> Command+W Action"];
+	return (TXCommandWKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Command+W Action"];
+}
+
++ (TXHostmaskBanFormat)banFormat
+{
+	return (TXHostmaskBanFormat)[RZUserDefaults() integerForKey:@"DefaultBanCommandHostmaskFormat"];
 }
 
 #pragma mark -
@@ -890,66 +823,66 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)themeName
 {
-	return [_NSUserDefaults() objectForKey:@"Theme -> Name"];
+	return [RZUserDefaults() objectForKey:@"Theme -> Name"];
 }
 
 + (void)setThemeName:(NSString *)value
 {
-	[_NSUserDefaults() setObject:value forKey:@"Theme -> Name"];
+	[RZUserDefaults() setObject:value forKey:@"Theme -> Name"];
 }
 
 + (NSString *)themeChannelViewFontName
 {
-	return [_NSUserDefaults() objectForKey:@"Theme -> Font Name"];
+	return [RZUserDefaults() objectForKey:@"Theme -> Font Name"];
 }
 
 + (void)setThemeChannelViewFontName:(NSString *)value
 {
-	[_NSUserDefaults() setObject:value forKey:@"Theme -> Font Name"];
+	[RZUserDefaults() setObject:value forKey:@"Theme -> Font Name"];
 }
 
 + (TXNSDouble)themeChannelViewFontSize
 {
-	return [_NSUserDefaults() doubleForKey:@"Theme -> Font Size"];
+	return [RZUserDefaults() doubleForKey:@"Theme -> Font Size"];
 }
 
 + (void)setThemeChannelViewFontSize:(TXNSDouble)value
 {
-	[_NSUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
+	[RZUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
 }
 
 + (NSFont *)themeChannelViewFont
 {
-	return [NSFont fontWithName:[TPCPreferences themeChannelViewFontName]
-						   size:[TPCPreferences themeChannelViewFontSize]];
+	return [NSFont fontWithName:[self themeChannelViewFontName]
+						   size:[self themeChannelViewFontSize]];
 }
 
 + (NSString *)themeNicknameFormat
 {
-	return [_NSUserDefaults() objectForKey:@"Theme -> Nickname Format"];
+	return [RZUserDefaults() objectForKey:@"Theme -> Nickname Format"];
 }
 
 + (BOOL)inputHistoryIsChannelSpecific
 {
-	return [_NSUserDefaults() boolForKey:@"SaveInputHistoryPerSelection"];
+	return [RZUserDefaults() boolForKey:@"SaveInputHistoryPerSelection"];
 }
 
 + (NSString *)themeTimestampFormat
 {
-	return [_NSUserDefaults() objectForKey:@"Theme -> Timestamp Format"];
+	return [RZUserDefaults() objectForKey:@"Theme -> Timestamp Format"];
 }
 
 + (TXNSDouble)themeTransparency
 {
-	return [_NSUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
+	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
 }
 
 #pragma mark -
 #pragma mark Completion Suffix
 
-+ (void)setCompletionSuffix:(NSString *)value
++ (void)setTabCompletionSuffix:(NSString *)value
 {
-	[_NSUserDefaults() setObject:value forKey:@"Keyboard -> Tab Key Completion Suffix"];
+	[RZUserDefaults() setObject:value forKey:@"Keyboard -> Tab Key Completion Suffix"];
 }
 
 #pragma mark -
@@ -957,12 +890,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSInteger)inlineImagesMaxWidth
 {
-	return [_NSUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
+	return [RZUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
 }
 
 + (void)setInlineImagesMaxWidth:(NSInteger)value
 {
-	[_NSUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidth"];
+	[RZUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidth"];
 }
 
 #pragma mark -
@@ -970,32 +903,32 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSInteger)maxLogLines
 {
-	return [_NSUserDefaults() integerForKey:@"ScrollbackMaximumLineCount"];
+	return [RZUserDefaults() integerForKey:@"ScrollbackMaximumLineCount"];
 }
 
 + (void)setMaxLogLines:(NSInteger)value
 {
-	[_NSUserDefaults() setInteger:value forKey:@"ScrollbackMaximumLineCount"];
+	[RZUserDefaults() setInteger:value forKey:@"ScrollbackMaximumLineCount"];
 }
 
 #pragma mark -
-#pragma mark Events
+#pragma mark Growl
 
 + (NSString *)titleForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationHighlightType:			return TXTLS(@"TXNotificationHighlightType");
-		case TXNotificationNewQueryType:		    return TXTLS(@"TXNotificationNewQueryType");
-		case TXNotificationChannelMessageType:		return TXTLS(@"TXNotificationChannelMessageType");
-		case TXNotificationChannelNoticeType:		return TXTLS(@"TXNotificationChannelNoticeType");
-		case TXNotificationQueryMessageType:		return TXTLS(@"TXNotificationQueryMessageType");
-		case TXNotificationQueryNoticeType:			return TXTLS(@"TXNotificationQueryNoticeType");
-		case TXNotificationKickType:				return TXTLS(@"TXNotificationKickType");
-		case TXNotificationInviteType:				return TXTLS(@"TXNotificationInviteType");
-		case TXNotificationConnectType:				return TXTLS(@"TXNotificationConnectType");
-		case TXNotificationDisconnectType:			return TXTLS(@"TXNotificationDisconnectType");
-		case TXNotificationAddressBookMatchType:	return TXTLS(@"TXNotificationAddressBookMatchType");
-		default: return nil;
+		case TXNotificationAddressBookMatchType:	{ return TXTLS(@"TXNotificationAddressBookMatchType");			}
+		case TXNotificationChannelMessageType:		{ return TXTLS(@"TXNotificationChannelMessageType");			}
+		case TXNotificationChannelNoticeType:		{ return TXTLS(@"TXNotificationChannelNoticeType");				}
+		case TXNotificationConnectType:				{ return TXTLS(@"TXNotificationConnectType");					}
+		case TXNotificationDisconnectType:			{ return TXTLS(@"TXNotificationDisconnectType");				}
+		case TXNotificationInviteType:				{ return TXTLS(@"TXNotificationInviteType");					}
+		case TXNotificationKickType:				{ return TXTLS(@"TXNotificationKickType");						}
+		case TXNotificationNewPrivateMessageType:	{ return TXTLS(@"TXNotificationNewPrivateMessageType");			}
+		case TXNotificationPrivateMessageType:		{ return TXTLS(@"TXNotificationPrivateMessageType");			}
+		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"TXNotificationPrivateNoticeType");				}
+		case TXNotificationHighlightType:			{ return TXTLS(@"TXNotificationHighlightType");					}
+		default: { return nil; }
 	}
 
 	return nil;
@@ -1004,18 +937,18 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (NSString *)keyForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationHighlightType:			return @"NotificationType -> Highlight";
-		case TXNotificationNewQueryType:			return @"NotificationType -> Private Message (New)";
-		case TXNotificationChannelMessageType:		return @"NotificationType -> Public Message";
-		case TXNotificationChannelNoticeType:		return @"NotificationType -> Public Notice";
-		case TXNotificationQueryMessageType:		return @"NotificationType -> Private Message";
-		case TXNotificationQueryNoticeType:			return @"NotificationType -> Private Notice";
-		case TXNotificationKickType:				return @"NotificationType -> Kicked from Channel";
-		case TXNotificationInviteType:				return @"NotificationType -> Channel Invitation";
-		case TXNotificationConnectType:				return @"NotificationType -> Connected";
-		case TXNotificationDisconnectType:			return @"NotificationType -> Disconnected";
-		case TXNotificationAddressBookMatchType:	return @"NotificationType -> Address Bok Match";
-		default: return nil;
+		case TXNotificationAddressBookMatchType:	{ return @"NotificationType -> Address Bok Match";				}
+		case TXNotificationChannelMessageType:		{ return @"NotificationType -> Public Message";					}
+		case TXNotificationChannelNoticeType:		{ return @"NotificationType -> Public Notice";					}
+		case TXNotificationConnectType:				{ return @"NotificationType -> Connected";						}
+		case TXNotificationDisconnectType:			{ return @"NotificationType -> Disconnected";					}
+		case TXNotificationHighlightType:			{ return @"NotificationType -> Highlight";						}
+		case TXNotificationInviteType:				{ return @"NotificationType -> Channel Invitation";				}
+		case TXNotificationKickType:				{ return @"NotificationType -> Kicked from Channel";			}
+		case TXNotificationNewPrivateMessageType:	{ return @"NotificationType -> Private Message (New)";			}
+		case TXNotificationPrivateMessageType:		{ return @"NotificationType -> Private Message";				}
+		case TXNotificationPrivateNoticeType:		{ return @"NotificationType -> Private Notice";					}
+		default: { return nil; }
 	}
 
 	return nil;
@@ -1025,104 +958,66 @@ static NSURL *transcriptFolderResolvedBookmark;
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return nil;
-	}
+	NSObjectIsEmptyAssertReturn(okey, nil);
 
 	NSString *key = [okey stringByAppendingString:@" -> Sound"];
 
-	return [_NSUserDefaults() objectForKey:key];
+	return [RZUserDefaults() objectForKey:key];
 }
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return;
-	}
+	NSObjectIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Sound"];
 
-	[_NSUserDefaults() setObject:value forKey:key];
+	[RZUserDefaults() setObject:value forKey:key];
 }
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return NO;
-	}
+	NSObjectIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
 
-	return [_NSUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:key];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return;
-	}
+	NSObjectIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
 
-	[_NSUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:key];
 }
 
-+ (BOOL)growlStickyForEvent:(TXNotificationType)event
++ (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return NO;
-	}
-
-	NSString *key = [okey stringByAppendingString:@" -> Sticky"];
-
-	return [_NSUserDefaults() boolForKey:key];
-}
-
-+ (void)setGrowlSticky:(BOOL)value forEvent:(TXNotificationType)event
-{
-	NSString *okey = [self keyForEvent:event];
-
-	if (NSObjectIsEmpty(okey)) {
-		return;
-	}
-
-	NSString *key = [okey stringByAppendingString:@" -> Sticky"];
-
-	[_NSUserDefaults() setBool:value forKey:key];
-}
-
-+ (BOOL)disableWhileAwayForEvent:(TXNotificationType)event
-{
-	NSString *okey = [self keyForEvent:event];
-
-	if (NSObjectIsEmpty(okey)) {
-		return NO;
-	}
+	NSObjectIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
 
-	return [_NSUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:key];
 }
 
-+ (void)setDisableWhileAway:(BOOL)value forEvent:(TXNotificationType)event
++ (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
 
-	if (NSObjectIsEmpty(okey)) {
-		return;
-	}
+	NSObjectIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
 
-	[_NSUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:key];
 }
 
 #pragma mark -
@@ -1130,12 +1025,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSDictionary *)loadWorld
 {
-	return [_NSUserDefaults() objectForKey:@"World Controller"];
+	return [RZUserDefaults() objectForKey:@"World Controller"];
 }
 
 + (void)saveWorld:(NSDictionary *)value
 {
-	[_NSUserDefaults() setObject:value forKey:@"World Controller"];
+	[RZUserDefaults() setObject:value forKey:@"World Controller"];
 }
 
 #pragma mark -
@@ -1143,68 +1038,70 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSDictionary *)loadWindowStateWithName:(NSString *)name
 {
-	return [_NSUserDefaults() objectForKey:name];
+	return [RZUserDefaults() objectForKey:name];
 }
 
 + (void)saveWindowState:(NSDictionary *)value name:(NSString *)name
 {
-	[_NSUserDefaults() setObject:value forKey:name];
+	[RZUserDefaults() setObject:value forKey:name];
 }
 
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray *keywords     = nil;
-static NSMutableArray *excludeWords = nil;
+static NSMutableArray *matchKeywords = nil;
+static NSMutableArray *excludeKeywords = nil;
 
-+ (void)loadKeywords
++ (void)loadMatchKeywords
 {
-	if (keywords) {
-		[keywords removeAllObjects];
+	if (matchKeywords) {
+		[matchKeywords removeAllObjects];
 	} else {
-		keywords = [NSMutableArray new];
+		matchKeywords = [NSMutableArray new];
 	}
 
-	NSArray *ary = [_NSUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
+	NSArray *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
 
 	for (NSDictionary *e in ary) {
 		NSString *s = e[@"string"];
 
-		if (NSObjectIsNotEmpty(s)) {
-			[keywords safeAddObject:s];
-		}
+		NSObjectIsEmptyAssertLoopContinue(s);
+
+		[matchKeywords safeAddObject:s];
 	}
 }
 
-+ (void)loadExcludeWords
++ (void)loadExcludeKeywords
 {
-	if (excludeWords) {
-		[excludeWords removeAllObjects];
+	if (excludeKeywords) {
+		[excludeKeywords removeAllObjects];
 	} else {
-		excludeWords = [NSMutableArray new];
+		excludeKeywords = [NSMutableArray new];
 	}
 
-	NSArray *ary = [_NSUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
+	NSArray *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
 
 	for (NSDictionary *e in ary) {
 		NSString *s = e[@"string"];
 
-		if (s) [excludeWords safeAddObject:s];
+		NSObjectIsEmptyAssertLoopContinue(s);
+
+		[excludeKeywords safeAddObject:s];
 	}
 }
 
-+ (void)cleanUpWords:(NSString *)key
++ (void)cleanUpKeywords:(NSString *)key
 {
-	NSArray *src = [_NSUserDefaults() objectForKey:key];
+	NSArray *src = [RZUserDefaults() objectForKey:key];
 
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (NSDictionary *e in src) {
 		NSString *s = e[@"string"];
 
-		if (NSObjectIsNotEmpty(s)) {
-			[ary safeAddObject:s];
-		}
+		NSObjectIsEmptyAssertLoopContinue(s);
+
+		[ary safeAddObject:s];
 	}
 
 	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
@@ -1212,60 +1109,59 @@ static NSMutableArray *excludeWords = nil;
 	NSMutableArray *saveAry = [NSMutableArray array];
 
 	for (NSString *s in ary) {
-		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-		dic[@"string"] = s;
-
-		[saveAry safeAddObject:dic];
+		[saveAry safeAddObject:[@{@"string" : s} mutableCopy]];
 	}
 
-	[_NSUserDefaults() setObject:saveAry forKey:key];
-	[_NSUserDefaults() synchronize];
+	[RZUserDefaults() setObject:saveAry forKey:key];
+	[RZUserDefaults() synchronize];
 }
 
-+ (void)cleanUpWords
++ (void)cleanUpHighlightKeywords
 {
-	[self cleanUpWords:@"Highlight List -> Primary Matches"];
-	[self cleanUpWords:@"Highlight List -> Excluded Matches"];
+	[self cleanUpKeywords:@"Highlight List -> Primary Matches"];
+	[self cleanUpKeywords:@"Highlight List -> Excluded Matches"];
 }
 
-+ (NSArray *)keywords
++ (NSArray *)highlightMatchKeywords
 {
-	return keywords;
+	return matchKeywords;
 }
 
-+ (NSArray *)excludeWords
++ (NSArray *)highlightExcludeKeywords
 {
-	return excludeWords;
+	return excludeKeywords;
 }
 
 #pragma mark -
 #pragma mark Start/Run Time Monitoring
 
-static NSInteger startUpTime = 0;
-static NSInteger totalRunTime = 0;
-
-+ (NSInteger)runCount
++ (NSTimeInterval)timeIntervalSinceApplicationLaunch
 {
-	return [_NSUserDefaults() integerForKey:@"TXRunCount"];
+	NSRunningApplication *runningApp = [NSRunningApplication currentApplication];
+
+	return [NSDate secondsSinceUnixTimestamp:runningApp.launchDate.timeIntervalSince1970];
 }
 
-+ (NSInteger)startTime
++ (NSTimeInterval)timeIntervalSinceApplicationInstall
 {
-	return startUpTime;
+	NSTimeInterval appStartTime = [self timeIntervalSinceApplicationLaunch];
+
+	return ([RZUserDefaults() integerForKey:@"TXRunTime"] + appStartTime);
 }
 
-+ (NSInteger)totalRunTime
++ (void)saveTimeIntervalSinceApplicationInstall
 {
-	totalRunTime  = [_NSUserDefaults() integerForKey:@"TXRunTime"];
-	totalRunTime += [NSDate secondsSinceUnixTimestamp:startUpTime];
-
-	return totalRunTime;
+	[RZUserDefaults() setInteger:[self timeIntervalSinceApplicationInstall] forKey:@"TXRunTime"];
 }
 
-+ (void)updateTotalRunTime
++ (NSInteger)applicationRunCount
 {
-	[_NSUserDefaults() setInteger:[self totalRunTime] forKey:@"TXRunTime"];
+	return [RZUserDefaults() integerForKey:@"TXRunCount"];
+}
+
++ (void)updateApplicationRunCount
+{
+	[RZUserDefaults() setInteger:([self applicationRunCount] + 1) forKey:@"TXRunCount"];
 }
 
 #pragma mark -
@@ -1274,9 +1170,9 @@ static NSInteger totalRunTime = 0;
 + (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([key isEqualToString:@"Highlight List -> Primary Matches"]) {
-		[self loadKeywords];
+		[self loadMatchKeywords];
 	} else if ([key isEqualToString:@"Highlight List -> Excluded Matches"]) {
-		[self loadExcludeWords];
+		[self loadExcludeKeywords];
 	}
 }
 
@@ -1286,7 +1182,7 @@ static NSInteger totalRunTime = 0;
 + (void)defaultIRCClientSheetCallback:(TLOPopupPromptReturnType)returnCode
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *bundleID = [TPCPreferences applicationBundleIdentifier];
+		NSString *bundleID = [self applicationBundleIdentifier];
 
 		OSStatus changeResult;
 
@@ -1303,80 +1199,82 @@ static NSInteger totalRunTime = 0;
 	}
 }
 
-+ (void)defaultIRCClientPrompt:(BOOL)forced
++ (BOOL)isDefaultIRCClient
 {
-	[NSThread sleepForTimeInterval:1.5];
-
 	NSURL *baseURL = [NSURL URLWithString:@"irc:"];
 
     CFURLRef appURL = NULL;
+	
     OSStatus status = LSGetApplicationForURL((__bridge CFURLRef)baseURL, kLSRolesAll, NULL, &appURL);
 
 	if (status == noErr) {
-		NSBundle *mainBundle = [NSBundle mainBundle];
 		NSBundle *baseBundle = [NSBundle bundleWithURL:CFBridgingRelease(appURL)];
 
-		if ([baseBundle.bundleIdentifier isNotEqualTo:mainBundle.bundleIdentifier] || forced) {
-			TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+		return [baseBundle.bundleIdentifier isEqualTo:RZMainBundle().bundleIdentifier];
+	}
 
-			[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-									 target:self
-									 action:@selector(defaultIRCClientSheetCallback:)
-									   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
-									  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
-							  defaultButton:TXTLS(@"YesButton")
-							alternateButton:TXTLS(@"NoButton")
-								otherButton:nil
-							 suppressionKey:@"default_irc_client"
-							suppressionText:nil];
-		}
+	return NO;
+}
+
++ (void)defaultIRCClientPrompt:(BOOL)forced
+{
+	if ([self isDefaultIRCClient] == NO || forced) {
+		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+
+		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
+								 target:self
+								 action:@selector(defaultIRCClientSheetCallback:)
+								   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
+								  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
+						  defaultButton:TXTLS(@"YesButton")
+						alternateButton:TXTLS(@"NoButton")
+							otherButton:nil
+						 suppressionKey:@"default_irc_client"
+						suppressionText:nil];
 	}
 }
 
 + (void)initPreferences
 {
-	NSInteger numberOfRuns = 0;
+	[self updateApplicationRunCount];
 
-	numberOfRuns  = [TPCPreferences runCount];
-	numberOfRuns += 1;
-
-	[_NSUserDefaults() setInteger:numberOfRuns forKey:@"TXRunCount"];
-
+	NSInteger numberOfRuns = [self applicationRunCount];
+	
 #ifndef TEXTUAL_TRIAL_BINARY
 	if (numberOfRuns >= 2) {
 		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
 	}
 #endif
 
-	startUpTime = [NSDate epochTime];
-
 	// ====================================================== //
 
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 
-	[d setBool:YES forKey:@"AutomaticallyAddScrollbackMarker"];
-	[d setBool:YES forKey:@"ConfirmApplicationQuit"];
-	[d setBool:YES forKey:@"DisableNotificationsForActiveWindow"];
-	[d setBool:YES forKey:@"DisplayDockBadges"];
-	[d setBool:YES forKey:@"DisplayEventInLogView -> Join, Part, Quit"];
-	[d setBool:YES forKey:@"DisplayMainWindowWithAntialiasing"];
-	[d setBool:YES forKey:@"DisplayServerMessageOfTheDayOnConnect"];
-	[d setBool:YES forKey:@"DisplayUserListNoModeSymbol"];
-	[d setBool:YES forKey:@"FocusSelectionOnMessageCommandExecution"];
-	[d setBool:YES forKey:@"LogHighlights"];
-	[d setBool:YES forKey:@"ProcessChannelModesOnJoin"];
-	[d setBool:YES forKey:@"ReplyUnignoredExternalCTCPRequests"];
-	[d setBool:YES forKey:@"TextFieldAutomaticGrammarCheck"];
-	[d setBool:YES forKey:@"TextFieldAutomaticSpellCheck"];
-	[d setBool:YES forKey:@"TrackConversationsWithColorHashing"];
-	[d setBool:YES forKey:@"TrackNicknameHighlightsOfLocalUser"];
-	[d setBool:YES forKey:@"WebKitDeveloperExtras"];
-	[d setBool:YES forKey:@"NotificationType -> Highlight -> Enabled"];
-	[d setBool:YES forKey:@"NotificationType -> Address Bok Match -> Enabled"];
-	[d setBool:YES forKey:@"NotificationType -> Private Message (New) -> Enabled"];
+	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
+	d[@"ConfirmApplicationQuit"]						= @(YES);
+	d[@"DisableNotificationsForActiveWindow"]			= @(YES);
+	d[@"DisplayDockBadges"]								= @(YES);
+	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
+	d[@"DisplayMainWindowWithAntialiasing"]				= @(YES);
+	d[@"DisplayServerMessageOfTheDayOnConnect"]			= @(YES);
+	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
+	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
+	d[@"LogHighlights"]									= @(YES);
+	d[@"ProcessChannelModesOnJoin"]						= @(YES);
+	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
+	d[@"TextFieldAutomaticGrammarCheck"]				= @(YES);
+	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
+	d[@"TrackConversationsWithColorHashing"]			= @(YES);
+	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
+	d[@"WebKitDeveloperExtras"]							= @(YES);
 
-	d[@"NotificationType -> Highlight -> Sound"]	= @"Glass";
-	d[@"ScanForIRCopAlertInServerNoticesMatch"]		= @"ircop alert";
+	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
+	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
+	
+	d[@"NotificationType -> Address Bok Match -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
+	
+	d[@"ScanForIRCopAlertInServerNoticesMatch"]	= @"ircop alert";
 
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> Username"] = @"textual";
@@ -1386,77 +1284,76 @@ static NSInteger totalRunTime = 0;
 	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"KillReason");
 	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
 
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
+
 	d[@"Theme -> Name"]					= TXDefaultTextualLogStyle;
 	d[@"Theme -> Font Name"]			= TXDefaultTextualLogFont;
 	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
-
-	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
-
-	[d setInteger:2										forKey:@"AutojoinMaximumChannelJoinCount"];
-	[d setInteger:300									forKey:@"ScrollbackMaximumLineCount"];
-	[d setInteger:300									forKey:@"InlineMediaScalingWidth"];
-	[d setInteger:TXTabKeyActionNickCompleteType		forKey:@"Keyboard -> Tab Key Action"];
-	[d setInteger:TXCmdWShortcutCloseWindowType			forKey:@"Keyboard -> Command+W Action"];
-	[d setInteger:TXNicknameHighlightExactMatchType		forKey:@"NicknameHighlightMatchingType"];
-	[d setInteger:TXHostmaskBanWHAINNFormat				forKey:@"DefaultBanCommandHostmaskFormat"];
-	[d setInteger:TXNoticeSendServerConsoleType			forKey:@"DestinationOfNonserverNotices"];
-	[d setInteger:TXUserDoubleClickQueryAction			forKey:@"UserListDoubleClickAction"];
-
-	[d setDouble:12.0 forKey:@"Theme -> Font Size"];
-	[d setDouble:1.0  forKey:@"MainWindowTransparencyLevel"];
+	
+	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
+	d[@"ScrollbackMaximumLineCount"]			= @(300);
+	d[@"InlineMediaScalingWidth"]				= @(300);
+	d[@"Keyboard -> Tab Key Action"]			= @(TXTabKeyNickCompleteAction);
+	d[@"Keyboard -> Command+W Action"]			= @(TXCommandWKeyCloseWindowAction);
+	d[@"NicknameHighlightMatchingType"]			= @(TXNicknameHighlightExactMatchType);
+	d[@"DefaultBanCommandHostmaskFormat"]		= @(TXHostmaskBanWHAINNFormat);
+	d[@"DestinationOfNonserverNotices"]			= @(TXNoticeSendServerConsoleType);
+	d[@"UserListDoubleClickAction"]				= @(TXUserDoubleClickPrivateMessageAction);
+	
+	d[@"MainWindowTransparencyLevel"]		= @(1.0);
+	d[@"Theme -> Font Size"]				= @(12.0);
 
 	// ====================================================== //
 
 	[TPCPreferencesMigrationAssistant convertExistingGlobalPreferences];
 
-	[_NSUserDefaults() registerDefaults:d];
+	[RZUserDefaults() registerDefaults:d];
 
-	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
-	[_NSUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
-	[self loadKeywords];
-	[self loadExcludeWords];
+	[self loadMatchKeywords];
+	[self loadExcludeKeywords];
 	[self populateCommandIndex];
 
 	/* Sandbox Check */
 
-	[_NSUserDefaults() setBool:[TPCPreferences sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
-	[_NSUserDefaults() setBool:[TPCPreferences securityScopedBookmarksAvailable]	forKey:@"Security -> Scoped Bookmarks Available"];
+	[RZUserDefaults() setBool:[self sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
+	[RZUserDefaults() setBool:[self securityScopedBookmarksAvailable]	forKey:@"Security -> Scoped Bookmarks Available"];
 
 	/* Font Check */
 
-	if ([NSFont fontIsAvailable:[TPCPreferences themeChannelViewFontName]] == NO) {
-		[_NSUserDefaults() setObject:TXDefaultTextualLogFont forKey:@"Theme -> Font Name"];
+	if ([NSFont fontIsAvailable:[self themeChannelViewFontName]] == NO) {
+		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:@"Theme -> Font Name"];
 	}
 
 	/* Theme Check */
 
-	NSString *themeName = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
-	NSString *themePath;
+	NSString *themeName = [TPCThemeController extractThemeName:[self themeName]];
+	NSString *themeType = [TPCThemeController extractThemeSource:[self themeName]];
 
-	themePath = [TPCPreferences customThemeFolderPath];
-	themePath = [themePath stringByAppendingPathComponent:themeName];
+	if ([themeType isEqualToString:@"user"]) {
+		NSString *customPath = [[self customThemeFolderPath] stringByAppendingPathComponent:themeName];
+		NSString *bundlePath = [[self bundledThemeFolderPath] stringByAppendingPathComponent:themeName];
 
-	if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-		themePath = [TPCPreferences bundledThemeFolderPath];
-        themePath = [themePath stringByAppendingPathComponent:themeName];
+		if ([RZFileManager() fileExistsAtPath:customPath] == NO) {
+			if ([RZFileManager() fileExistsAtPath:bundlePath] == NO) {
+				[self setThemeName:TXDefaultTextualLogStyle];
+			} else {
+				NSString *newName = [TPCThemeController buildResourceFilename:themeName];
 
-        if ([_NSFileManager() fileExistsAtPath:themePath] == NO) {
-			[TPCPreferences setThemeName:TXDefaultTextualLogStyle];
-        } else {
-            NSString *newName = [NSString stringWithFormat:@"resource:%@", themeName];
-
-			[TPCPreferences setThemeName:newName];
-        }
+				[self setThemeName:newName];
+			}
+		}
 	}
 }
 
 + (void)sync
 {
-	[_NSUserDefaults() synchronize];
+	[RZUserDefaults() synchronize];
 }
 
 @end

@@ -40,45 +40,35 @@
 typedef id (^TVCLogMessageBlock)(void);
 
 @interface TVCLogController : NSObject
-@property (nonatomic, weak) IRCWorld *world;
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, weak) IRCChannel *channel;
-@property (nonatomic, strong) NSMenu *menu;
-@property (nonatomic, strong) NSMenu *urlMenu;
-@property (nonatomic, strong) NSMenu *chanMenu;
-@property (nonatomic, strong) NSMenu *memberMenu;
-@property (nonatomic, strong) TPCViewTheme *theme;
+@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, nweak) IRCChannel *channel;
+@property (nonatomic, assign) BOOL isLoaded;
+@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
+@property (nonatomic, strong) TLOFileLogger *historicLogFile;
+@property (nonatomic, assign) NSInteger activeLineCount;
+@property (nonatomic, assign) NSInteger activeLineNumber;
+@property (nonatomic, assign) NSInteger lastVisitedHighlight;
+@property (nonatomic, assign) NSInteger maximumLineCount;
 @property (nonatomic, strong) TVCLogView *view;
 @property (nonatomic, strong) TVCLogPolicy *policy;
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
-@property (nonatomic, strong) WebScriptObject *js;
-@property (nonatomic, assign) BOOL bottom;
-@property (nonatomic, assign) BOOL loaded;
-@property (nonatomic, assign) BOOL viewingBottom;
-@property (nonatomic, assign) BOOL scrollBottom;
-@property (nonatomic, assign) BOOL becameVisible;
-@property (nonatomic, assign) BOOL movingToBottom;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) NSInteger count;
-@property (nonatomic, assign) NSInteger scrollTop;
-@property (nonatomic, assign) NSInteger maxLines;
-@property (nonatomic, assign) NSInteger lineNumber;
-@property (nonatomic, assign) NSInteger loadingImages;
-@property (nonatomic, assign) NSInteger lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
+/* These two properties are VERY important to be in sync accross 
+ multiple threads. Therefore, these are not delcared nonatomic. */
 @property (assign) BOOL reloadingBacklog;
 @property (assign) BOOL reloadingHistory;
 
 - (void)setUp;
-- (void)restorePosition;
 - (void)notifyDidBecomeVisible;
 
+- (void)preferencesChanged;
 - (void)terminate;
 
 - (void)nextHighlight;
 - (void)previousHighlight;
+
 - (BOOL)highlightAvailable:(BOOL)previous;
 
 - (DOMDocument *)mainFrameDocument;
@@ -86,6 +76,7 @@ typedef id (^TVCLogMessageBlock)(void);
 - (void)moveToTop;
 - (void)moveToBottom;
 
+- (NSString *)topicValue;
 - (void)setTopic:(NSString *)topic;
 
 - (void)mark;
@@ -105,7 +96,8 @@ typedef id (^TVCLogMessageBlock)(void);
 
 - (void)logViewOnDoubleClick:(NSString *)e;
 
-- (void)handleMessageBlock:(id)block isSpecial:(BOOL)special;
+- (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context;
+
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
 @end

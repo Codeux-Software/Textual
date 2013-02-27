@@ -38,19 +38,18 @@
 #import "TextualApplication.h"
 
 @interface TVCLogView : WebView
-@property (nonatomic, unsafe_unretained) id keyDelegate;
-@property (nonatomic, unsafe_unretained) id resizeDelegate;
+@property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, uweak) id resizeDelegate;
 
 - (NSString *)contentString;
-- (WebScriptObject *)js_api;
 
-- (void)clearSelection;
+- (WebScriptObject *)javaScriptAPI;
+
 - (BOOL)hasSelection;
+- (void)clearSelection;
 - (NSString *)selection;
 @end
 
-@interface NSObject (LogViewDelegate)
+@interface NSObject (TVCLogViewDelegate)
 - (void)logViewKeyDown:(NSEvent *)e;
-- (void)logViewWillResize;
-- (void)logViewDidResize;
 @end

@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCMemberListCell ()
+@property (nonatomic, readonly, uweak) TVCMemberList *memberList;
+@end
+
 @implementation TVCMemberListCell
 
 #pragma mark -
@@ -44,17 +48,19 @@
 
 - (NSAttributedString *)modeBadgeText:(NSString *)badgeString isSelected:(BOOL)selected
 {
-    /* Pick which font size best aligns with badge heights. */
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+	NSObjectIsEmptyAssertReturn(badgeString, nil);
 
-	NSColor *textColor = self.parent.layoutBadgeTextColorNS;
+    /* Pick which font size best aligns with the badge. */
+	NSColor *textColor = self.memberList.userMarkBadgeNormalTextColor;
     
     if (selected) {
-        textColor = self.parent.layoutBadgeTextColorTS;
+        textColor = self.memberList.userMarkBadgeSelectedTextColor;
     }
-	
-    attributes[NSFontAttributeName] = self.parent.layoutBadgeFont;
-	attributes[NSForegroundColorAttributeName] = textColor;
+
+	NSDictionary *attributes = @{
+		NSForegroundColorAttributeName : textColor,
+		NSFontAttributeName : self.memberList.userMarkBadgeFont
+	};
 	
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:badgeString
 																   attributes:attributes];
@@ -62,99 +68,101 @@
 	return mcstring;
 }
 
-- (void)drawModeBadge:(char)mcstring inCell:(NSRect)badgeFrame isSelected:(BOOL)selected
+- (void)drawModeBadge:(NSString *)mcnstring inCell:(NSRect)badgeFrame isSelected:(BOOL)selected
 {
-    badgeFrame = NSMakeRect((badgeFrame.origin.x + self.parent.layoutBadgeMargin),
-                            (NSMidY(badgeFrame) - (self.parent.layoutBadgeHeight / 2.0)),
-                            self.parent.layoutBadgeWidth, self.parent.layoutBadgeHeight);
-    
+	/* Align the badge. */
+    badgeFrame = NSMakeRect((badgeFrame.origin.x + self.memberList.userMarkBadgeMargin),
+                            (NSMidY(badgeFrame) - (self.memberList.userMarkBadgeHeight / 2.0)),
+												   self.memberList.userMarkBadgeWidth,
+												   self.memberList.userMarkBadgeHeight);
+
+	char mcstring = [mcnstring characterAtIndex:0];
+	
     NSBezierPath *badgePath = nil;
     
 	if (selected == NO) {
-        NSRect shadowFrame;
-        
-        shadowFrame = badgeFrame;
+		/* If the badge is not selected, then change the Y origin
+		 by a value of 1 to compensate for the shadow that will be
+		 drawn to the badge. Selected badges do not have a drop 
+		 shadow. */
+		
+        NSRect shadowFrame = badgeFrame;
+		
         shadowFrame.origin.y += 1;
         
-        badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
-                                                    xRadius:4.0
-                                                    yRadius:4.0];
+        badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:4.0 yRadius:4.0];
         
-        NSColor *shadow = self.parent.layoutBadgeShadowColor;
-        
-        if (shadow) {
-            [shadow set];
-            
-            if (badgePath) {
-                [badgePath fill];
-            }
-        }
+		[self.memberList.userMarkBadgeShadowColor set];
+		
+		[badgePath fill];
 	} else {
         badgeFrame.size.width += 1;
     }
-    
+
+	/* Determin the badge's background color. White is the default
+	 because that is the color used when the badge is selected. */
     NSColor *backgroundColor = [NSColor whiteColor];
     
     if (selected == NO) {
         if (mcstring == '~') {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorQ;
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_Q];
         } else if (mcstring == '&' || mcstring == '!') {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorA;
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_A];
         } else if (mcstring == '@') {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorO;
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_O];
         } else if (mcstring == '%') {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorH;
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_H];
         } else if (mcstring == '+') {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorV;
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_V];
         } else {
-            backgroundColor = self.parent.layoutBadgeMessageBackgroundColorX;
+			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+				backgroundColor = [self.memberList userMarkBadgeBackgroundColor_XGraphite];
+			} else {
+				backgroundColor = [self.memberList userMarkBadgeBackgroundColor_XAqua];
+			}
         }
-    } 
-    
-    if (mcstring == ' ' && [_NSUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
-        mcstring = 'x';
     }
-    
-	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame
-												xRadius:4.0
-												yRadius:4.0];
 	
-    if (backgroundColor) {
-        [backgroundColor set];
-        
-        if (badgePath) {
-            [badgePath fill];
-        }
+    if (NSObjectIsEmpty(mcnstring) && [RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
+        mcstring = 'x';
+		mcnstring = @"x";
     }
-    
-    NSAttributedString *modeString;
-    
-	NSPoint badgeTextPoint;
-	NSSize  badgeTextSize;
-    
-    modeString = [self modeBadgeText:[NSString stringWithChar:mcstring] isSelected:selected];
-    
-	badgeTextSize  = modeString.size;
-	badgeTextPoint = NSMakePoint( (NSMidX(badgeFrame) - (badgeTextSize.width / 2.0)),
-								 ((NSMidY(badgeFrame) - (badgeTextSize.height / 2.0)) + 1));
+
+	/* Fill in the background. */
+	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame xRadius:4.0 yRadius:4.0];
+	
+    [backgroundColor set];
+        
+	[badgePath fill];
+
+	/* Draw the actual mode symbol. */
+    NSAttributedString *modeString = [self modeBadgeText:mcnstring isSelected:selected];
+
+	NSObjectIsEmptyAssert(modeString);
+
+	/* Center the mode symbol relative to the badge itself. */
+	NSPoint badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (modeString.size.width / 2.0)),
+										((NSMidY(badgeFrame) - (modeString.size.height / 2.0)) + 1));
 	
 	if (mcstring == '+' || mcstring == '~' || mcstring == 'x') {
 		badgeTextPoint.y -= 1;
 	}
-	
+
+	/* Mountain Lion didn't like our origin. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion] && [TPCPreferences runningInHighResolutionMode] == NO) {
 		badgeTextPoint.y -= 1;
 	}
     
 	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[_NSGraphicsCurrentContext() saveGraphicsState];
-		[_NSGraphicsCurrentContext() setShouldAntialias:NO];
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
 	}
-	
+
+	/* The actual draw. */
     [modeString drawAtPoint:badgeTextPoint];
 	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[_NSGraphicsCurrentContext() restoreGraphicsState];
+		[RZGraphicsCurrentContext() restoreGraphicsState];
 	}
 }
 
@@ -173,132 +181,142 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)view
 {
+	PointerIsEmptyAssert(self.channelPointer);
+	PointerIsEmptyAssert(self.memberPointer);
+
+	/* Declare variables. */
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
 
-	// ---- //
+	IRCChannel *channel = self.channelPointer;
+	IRCUser *member = self.memberPointer;
 
-    NSArray *selectedRows = [self.parent selectedRows];
-    
-    if (self.cellItem) {
-		IRCChannel *channel = (id)[self.parent dataSource];
-        IRCClient  *client  = [channel client];
-        
-        NSInteger rowIndex = [self.parent rowAtPoint:cellFrame.origin];
-		
-		NSWindow *parentWindow = [client.world window];
-        
-		BOOL isKeyWindow = [parentWindow isOnCurrentWorkspace];
-        BOOL isGraphite  = ([NSColor currentControlTint] == NSGraphiteControlTint);
-        BOOL isSelected  = [selectedRows containsObject:[NSNumber numberWithUnsignedInteger:rowIndex]];
-		
-		/* Draw Background */
-        
-		if (isSelected) {
-			NSRect backgroundRect = cellFrame;
-			NSRect parentRect	  = [client.world.master.memberSplitView frame];
-			
-			backgroundRect.origin.x   = cellFrame.origin.x;
-            backgroundRect.origin.y  -= 1;
-			backgroundRect.size.width = parentRect.size.width;
-            backgroundRect.size.height = 18;
-			
-			NSString *backgroundImage;
-			
-			if (channel.isChannel || channel.isTalk) {
-				backgroundImage = @"ChannelCellSelection";
-			} else {
-				backgroundImage = @"ServerCellSelection";
-			}
-			
-			if (invertedColors == NO) {
-				if (isKeyWindow) {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
-				} else {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
-				}
-				
-				if (isGraphite) {
-					backgroundImage = [backgroundImage stringByAppendingString:@"self.parent.layoutGraphite"];
-				} else {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
-				}
-			}
-			
-			if ([TPCPreferences invertSidebarColors]) {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
-			}
-			
-			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
-			
-			[origBackgroundImage drawInRect:backgroundRect
-								   fromRect:NSZeroRect
-								  operation:NSCompositeSourceOver
-								   fraction:1
-							 respectFlipped:YES hints:nil];
-		}
-		
-		/* Draw Badges, Text, and Status Icon */
-        
-        [self drawModeBadge:self.member.mark inCell:cellFrame isSelected:isSelected];
-		
-		NSAttributedString			*stringValue	= [self attributedStringValue];	
-		NSMutableAttributedString	*newValue		= nil;
-        
-        newValue = [NSMutableAttributedString alloc];
-        newValue = [newValue initWithString:self.member.nick attributes:[stringValue attributes]];
-		
-		NSShadow *itemShadow = [NSShadow new];
-		
-		[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-		
-        if (isSelected == NO) {
-            [itemShadow setShadowColor:self.parent.layoutUserCellShadowColor];
-        } else {
-			if (invertedColors) {
-				[itemShadow setShadowBlurRadius:1.0];
-			} else {
-				[itemShadow setShadowBlurRadius:2.0];
-			}
-            
-            if (isKeyWindow) {
-                if (isGraphite && invertedColors == NO) {
-                    [itemShadow setShadowColor:self.parent.layoutGraphiteSelectionColorAW];
-                } else {
-                    [itemShadow setShadowColor:self.parent.layoutUserCellSelectionShadowColorAW];
-                }
-            } else {
-                [itemShadow setShadowColor:self.parent.layoutUserCellSelectionShadowColorIA];
-            }
-        }
-        
-        cellFrame.origin.y += 1;
-        cellFrame.origin.x += 29;
-        cellFrame.size.width -= 29;
+	NSInteger rowIndex = [self.memberList rowAtPoint:cellFrame.origin];
+	
+	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
+	BOOL isKeyWindow = [self.masterController.mainWindow isOnCurrentWorkspace];
+	BOOL isSelected = ([self.memberList.selectedRows containsObject:@(rowIndex)]);
 
-        NSRange textRange = NSMakeRange(0, [newValue length]);
-        
-        if (isSelected) {
-            [newValue addAttribute:NSFontAttributeName              value:self.parent.layoutUserCellSelectionFont       range:textRange];
-            [newValue addAttribute:NSForegroundColorAttributeName	value:self.parent.layoutUserCellSelectionFontColor range:textRange];
-        } else {
-            [newValue addAttribute:NSFontAttributeName              value:self.parent.layoutUserCellFont        range:textRange];
-            [newValue addAttribute:NSForegroundColorAttributeName   value:self.parent.layoutUserCellFontColor  range:textRange];
-        }
-        
-        [newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
+	/* Draw Background */
+	if (isSelected) {
+		NSRect backgdRect = cellFrame;
+		NSRect parentRect = self.masterController.memberSplitView.frame;
+
+		// ---- //
 		
-		if ([TPCPreferences useLogAntialiasing] == NO) {
-			[_NSGraphicsCurrentContext() saveGraphicsState];
-			[_NSGraphicsCurrentContext() setShouldAntialias:NO];
+		backgdRect.origin.x = cellFrame.origin.x;
+		backgdRect.origin.y -= 1;
+		
+		backgdRect.size.width = parentRect.size.width;
+		backgdRect.size.height = 18;
+
+		// ---- //
+		
+		NSString *backgroundImage;
+		
+		if (channel.isChannel || channel.isPrivateMessage) {
+			backgroundImage = @"ChannelCellSelection";
+		} else {
+			backgroundImage = @"ServerCellSelection";
 		}
 		
-		[newValue drawInRect:cellFrame];
-		
-		if ([TPCPreferences useLogAntialiasing] == NO) {
-			[_NSGraphicsCurrentContext() restoreGraphicsState];
+		if (invertedColors == NO) {
+			if (isKeyWindow) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
+			} else {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
+			}
+			
+			if (isGraphite) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
+			} else {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
+			}
 		}
 		
+		if (invertedColors) {
+			backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
+		}
+
+		// ---- //
+		
+		NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
+		
+		[origBackgroundImage drawInRect:backgdRect
+							   fromRect:NSZeroRect
+							  operation:NSCompositeSourceOver
+							   fraction:1
+						 respectFlipped:YES
+								  hints:nil];
 	}
+		
+	/* Draw Badges, Text, and Status Icon */
+	[self drawModeBadge:member.mark inCell:cellFrame isSelected:isSelected];
+	
+	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:member.nickname
+																					attributes:self.attributedStringValue.attributes];
+
+	/* Prepare the drop shadow. */
+	NSShadow *itemShadow = [NSShadow new];
+	
+	[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+	
+	if (isSelected == NO) {
+		[itemShadow setShadowColor:[self.memberList normalCellTextShadowColor]];
+	} else {
+		if (invertedColors) {
+			[itemShadow setShadowBlurRadius:1.0];
+		} else {
+			[itemShadow setShadowBlurRadius:2.0];
+		}
+		
+		if (isKeyWindow) {
+			if (isGraphite && invertedColors == NO) {
+				[itemShadow setShadowColor:self.memberList.graphiteSelectedCellTextShadowColorForActiveWindow];
+			} else {
+				[itemShadow setShadowColor:self.memberList.normalSelectedCellTextShadowColorForActiveWindow];
+			}
+		} else {
+			[itemShadow setShadowColor:self.memberList.normalSelectedCellTextShadowColorForInactiveWindow];
+		}
+	}
+
+	/* Update our origin. Probaby not a good idea to have such values hard-coded into
+	 here, but stuff like this is all over the codebase of Textual so it is not something
+	 that is new to us. */
+	cellFrame.origin.y += 1;
+	cellFrame.origin.x += 29;
+	
+	cellFrame.size.width -= 29;
+
+	NSRange textRange = NSMakeRange(0, newStrValue.length);
+
+	/* Define our attributes. */
+	if (isSelected) {
+		[newStrValue addAttribute:NSFontAttributeName value:self.memberList.selectedCellFont range:textRange];
+		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.selectedCellTextColor range:textRange];
+	} else {
+		[newStrValue addAttribute:NSFontAttributeName value:self.memberList.normalCellFont range:textRange];
+		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.normalCellTextColor range:textRange];
+	}
+	
+	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
+	
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
+	}
+
+	/* Do the actual draw. */
+	[newStrValue drawInRect:cellFrame];
+	
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() restoreGraphicsState];
+	}
+}
+
+- (TVCMemberList *)memberList
+{
+	return self.masterController.memberList;
 }
 
 @end

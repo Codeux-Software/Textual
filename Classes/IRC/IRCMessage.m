@@ -120,21 +120,21 @@
 		t = [s getToken];
 		t = [t safeSubstringFromIndex:1];
 		
-		self.sender.raw = t;
+		self.sender.hostmask = t;
 		
-		NSInteger i = [t findCharacter:'!'];
+		NSInteger i = [t stringPosition:@"!"];
 		
 		if (i < 0) {
-			self.sender.nick = t;
+			self.sender.nickname = t;
 			self.sender.isServer = YES;
 		} else {
-			self.sender.nick = [t safeSubstringToIndex:i];
+			self.sender.nickname = [t safeSubstringToIndex:i];
 			
 			t = [t safeSubstringAfterIndex:i];
-			i = [t findCharacter:'@'];
+			i = [t stringPosition:@"@"];
 			
 			if (i >= 0) {
-				self.sender.user = [t safeSubstringToIndex:i];
+				self.sender.username = [t safeSubstringToIndex:i];
 				self.sender.address = [t safeSubstringAfterIndex:i];
 			}
 		}

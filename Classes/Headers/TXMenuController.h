@@ -38,28 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TXMenuController : NSObject
-@property (nonatomic, weak) IRCWorld *world;
-@property (nonatomic, weak) TXMasterController *master;
-@property (nonatomic, weak) TVCServerList *serverList;
-@property (nonatomic, weak) TVCMemberList *memberList;
-@property (nonatomic, unsafe_unretained) TVCMainWindow *window;
-@property (nonatomic, unsafe_unretained) TVCInputTextField *text;
 @property (nonatomic, strong) NSString *pointedUrl;
-@property (nonatomic, strong) NSString *pointedNick;
+@property (nonatomic, strong) NSString *pointedNickname;
 @property (nonatomic, strong) NSString *pointedChannelName;
 @property (nonatomic, strong) NSString *currentSearchPhrase;
-@property (nonatomic, strong) NSMenuItem *closeWindowItem;
 @property (nonatomic, assign) BOOL findPanelOpened;
-@property (nonatomic, strong) TDChannelSheet *channelSheet;
-@property (nonatomic, strong) TDCNickSheet *nickSheet;
-@property (nonatomic, strong) TDCModeSheet *modeSheet;
-@property (nonatomic, strong) TDCAboutPanel *aboutPanel;
-@property (nonatomic, strong) TDCTopicSheet *topicSheet;
-@property (nonatomic, strong) TDCServerSheet *serverSheet;
-@property (nonatomic, strong) TDCInviteSheet *inviteSheet;
-@property (nonatomic, strong) TDCHighlightSheet *highlightSheet;
-@property (nonatomic, strong) TDCPreferencesController *preferencesController;
-@property (nonatomic, assign) BOOL isInFullScreenMode;
+@property (nonatomic, strong) NSDictionary *openWindowList;
 
 - (void)terminate;
 
@@ -67,9 +51,16 @@
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item;
 - (void)deselectMembers:(NSMenuItem *)sender;
 
+- (void)addWindowToWindowList:(id)window;
+- (void)removeWindowFromWindowList:(NSString *)windowClass;
+
+- (id)windowFromWindowList:(NSString *)windowClass;
+
+- (BOOL)popWindowViewIfExists:(NSString *)windowClass;
+- (void)popWindowSheetIfExists;
+
 - (void)showPreferencesDialog:(id)sender;
 
-- (void)performPaste:(id)sender;
 - (void)searchGoogle:(id)sender;
 - (void)closeWindow:(id)sender;
 - (void)copyLogAsHtml:(id)sender;
@@ -113,7 +104,7 @@
 
 - (void)memberListDoubleClicked:(id)sender;
 - (void)memberSendWhois:(id)sender;
-- (void)memberStartQuery:(id)sender;
+- (void)memberStartPrivateMessage:(id)sender;
 - (void)memberSendInvite:(id)sender;
 - (void)memberSendCTCPPing:(id)sender;
 - (void)memberSendCTCPTime:(id)sender;

@@ -44,7 +44,20 @@
 #define _minimumSplitViewWidth		120
 #define _defaultSplitViewWidth		170
 
+__weak static TXMasterController *TXGlobalMasterControllerClassReference;
+
 @implementation TXMasterController
+
+- (id)init
+{
+    if ((self = [super init])) {
+		TXGlobalMasterControllerClassReference = self;
+
+		return self;
+    }
+
+    return nil;
+}
 
 #pragma mark -
 #pragma mark NSApplication Delegate
@@ -62,10 +75,8 @@
 
 	// ---- //
 
-	//DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
+	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 	
-	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-
 	// ---- //
 
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
@@ -76,143 +87,111 @@
     self.ghostMode = YES; // Do not use autoconnect during debug.
 #endif
 
-	[TPCPreferences setMasterController:self];
 	[TPCPreferences initPreferences];
 
 	[self loadWindowState:YES];
 
-	[self.window makeMainWindow];
+	[self.mainWindow makeMainWindow];
 
 	self.serverSplitView.fixedViewIndex = 0;
 	self.memberSplitView.fixedViewIndex = 1;
 
-	self.loadingScreen.master = self;
+	[self.mainWindowLoadingScreen hideAll:NO];
+	[self.mainWindowLoadingScreen popLoadingConfigurationView];
 
-	[self.loadingScreen hideAll:NO];
-	[self.loadingScreen popLoadingConfigurationView];
-
-	[self.window makeKeyAndOrderFront:nil];
-
-	[self.world focusInputText];
-
-	[self.text setBackgroundColor:[NSColor clearColor]];
-    [self.text setFieldEditor:YES];
+	/* The most important part of this call is to get the main window
+	 to the user as soon as possible. We only put what is absolutely 
+	 needed above this request for the main window. The more time we
+	 take to get to the main window, the longer the end user has to
+	 wait for it. That is the purpose of the loading screen. To give
+	 the end user acknowledgement that we are waking up and not just
+	 sitting here doing nothing. 
+	 
+	 On a 2009 Intel i7 2.80 GHz iMac running 10.8.2 the time it took 
+	 to pop our window was on average 0.058 seconds or 58 milliseconds. */
 	
-	self.viewTheme		= [TPCViewTheme new];
-	self.viewTheme.name = [TPCPreferences themeName];
+	[self.mainWindow makeKeyAndOrderFront:nil];
+	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
 	
-	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
-	
-    [self.text setReturnActionWithSelector:@selector(textEntered) owner:self];
-	[self.text redrawOriginPoints];
+	self.themeController = [TPCThemeController new];
+	[self.themeController load];
 
-	[self buildSegmentedController];
+	[self.inputTextField setAllowColorInversion:YES];
 
-	[self.formattingMenu enableWindowField:self.text];
+	[self.inputTextField focus];
+	[self.inputTextField updateTextColor];
+	[self.inputTextField redrawOriginPoints];
+	[self.inputTextField updateTextDirection];
+
+	[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 
 	[self registerKeyHandlers];
-	
-	self.extrac = [IRCExtras new];
-	self.world  = [IRCWorld new];
-	
-	self.world.window			= self.window;
-	self.world.growl			= self.growl;
-	self.world.master			= self;
-	self.world.extrac			= self.extrac;
-	self.world.text				= self.text;
-	self.world.logBase			= self.logBase;
-	self.world.memberList		= self.memberList;
-	self.world.treeMenu			= self.treeMenu;
-	self.world.logMenu			= self.logMenu;
-	self.world.urlMenu			= self.urlMenu;
-	self.world.chanMenu			= self.chanMenu;
-	self.world.memberMenu		= self.memberMenu;
-	self.world.viewTheme		= self.viewTheme;
-	self.world.menuController	= self.menu;
-	self.world.serverList		= self.serverList;
 
-	[self.world setServerMenuItem:self.serverMenu];
-	[self.world setChannelMenuItem:self.channelMenu];
-
-	self.extrac.world = self.world;
+	[self.formattingMenu enableWindowField:self.inputTextField];
+	
+	self.world = [IRCWorld new];
 
 	self.serverSplitView.delegate = self;
 	self.memberSplitView.delegate = self;
 
-	self.menu.world			= self.world;
-	self.menu.window		= self.window;
-	self.menu.serverList	= self.serverList;
-	self.menu.memberList	= self.memberList;
-	self.menu.text			= self.text;
-	self.menu.master		= self;
-
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
 
-	[self.viewTheme validateFilePathExistanceAndReload:YES];
+	[self.worldController setupConfiguration];
 
-	[self.world setupDummyLog];
-	[self.world setupConfiguration];
-
-	self.serverList.dataSource		= self.world;
-	self.serverList.delegate		= self.world;
-    self.memberList.keyDelegate		= self.world;
-	self.serverList.keyDelegate		= self.world;
+	self.serverList.delegate = self.worldController;
+	self.serverList.dataSource = self.worldController;
+    self.memberList.keyDelegate	= self.worldController;
+	self.serverList.keyDelegate	= self.worldController;
 
 	[self.serverList reloadData];
 	
-	[self.world setupTree];
+	[self.worldController setupTree];
 
-	[self.memberList setTarget:self.menu];
+	[self.memberList setTarget:self.menuController];
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 
-	[self.invokeInBackgroundThread awakeFromNibBackgroundTasks];
-}
-
-- (void)awakeFromNibBackgroundTasks
-{
 	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
 		self.inputHistory = [TLOInputHistory new];
 	}
 
-	self.growl = [TLOGrowlController new];
-	self.growl.owner = self.world;
-	self.world.growl = self.growl;
-	
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-	[_NSWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
+	self.growlController = [TLOGrowlController new];
 
-	[_NSAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
+	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
+	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
+	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
+
+	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 
 	self.pluginManager = [THOPluginManager new];
-
 	[self.pluginManager loadPlugins];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
-	if (self.world.clients.count < 1) {
-		[self.loadingScreen hideAll:NO];
-		[self.loadingScreen popWelcomeAddServerView];
+	if (self.worldController.clients.count < 1) {
+		[self.mainWindowLoadingScreen hideAll:NO];
+		[self.mainWindowLoadingScreen popWelcomeAddServerView];
 
 		[self openWelcomeSheet:nil];
 	} else {
-		[self.loadingScreen hideLoadingConfigurationView];
+		[self.mainWindowLoadingScreen hideLoadingConfigurationView];
 		
-		[self.world autoConnectAfterWakeup:NO];	
+		[self.worldController autoConnectAfterWakeup:NO];	
 	}
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
-	if (self.menu.isInFullScreenMode) {
+	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
 		
-		[self.window setFrame:[_NSMainScreen() frame] display:YES animate:YES];
+		[self.mainWindow setFrame:[RZMainScreen() frame] display:YES animate:YES];
 	} else {
-		NSRect visibleRect = [_NSMainScreen() visibleFrame];
-		NSRect windowRect  = self.window.frame;
+		NSRect visibleRect = RZMainScreen().visibleFrame;
+		NSRect windowRect = self.mainWindow.frame;
 		
 		BOOL redrawFrame = NO;
 		
@@ -231,65 +210,38 @@
 		}
 		
 		if (redrawFrame) {
-			[self.window setFrame:windowRect display:YES animate:YES];
+			[self.mainWindow setFrame:windowRect display:YES animate:YES];
 		}
 	}
 
 	/* Redraw dock icon on potential screen resolution changes. */
-
-	[self.world updateIcon];
+	[self.worldController reloadTree];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
-	id sel = self.world.selected;
+	id sel = self.worldController.selectedItem;
     
 	if (sel) {
 		[sel resetState];
-		
-		[self.world updateIcon];
 	}
+
+    [self.worldController reloadTree];
 	
-    [self.world reloadTree];
-	
-	[self.text.backgroundView setWindowIsActive:YES];
+	[self.inputTextField.backgroundView setWindowIsActive:YES];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
-	id sel = self.world.selected;
+	id sel = self.worldController.selectedItem;
     
 	if (sel) {
 		[sel resetState];
-		
-		[self.world updateIcon];
 	}
-    
-    [self.world reloadTree];
-	
-	[self.text.backgroundView setWindowIsActive:NO];
-}
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
-{
-	[self.window makeKeyAndOrderFront:nil];
+    [self.worldController reloadTree];
 	
-	return YES;
-}
-
-- (void)applicationDidReceiveHotKey:(id)sender
-{
-	if ([self.window isVisible] == NO || [NSApp isActive] == NO) {
-		if (NSObjectIsEmpty(self.world.clients)) {
-			[NSApp activateIgnoringOtherApps:YES];
-			
-			[self.window makeKeyAndOrderFront:nil];
-			
-			[self.text focus];
-		}
-	} else {
-		[NSApp hide:nil];
-	}
+	[self.inputTextField.backgroundView setWindowIsActive:NO];
 }
 
 - (BOOL)queryTerminate
@@ -305,9 +257,7 @@
 													 alternateButton:TXTLS(@"CancelButton")
 													  suppressionKey:nil suppressionText:nil];
 		
-		if (result == NO) {
-			return NO;
-		}
+		return result;
 	}
 	
 	return YES;
@@ -316,6 +266,8 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	if ([self queryTerminate]) {
+		self.terminating = YES;
+
 		return NSTerminateNow;
 	} else {
 		return NSTerminateCancel;
@@ -329,15 +281,22 @@
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 
 	if (self.skipTerminateSave == NO) {
-		[self.world save];
-		[self.world terminate];
+		[self.worldController save];
+		[self.worldController terminate];
 		
-		[self.menu terminate];
+		[self.menuController terminate];
 		
 		[self saveWindowState];
 	}
 	
-	[TPCPreferences updateTotalRunTime];
+	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+	[self.mainWindow makeKeyAndOrderFront:nil];
+
+	return YES;
 }
 
 #pragma mark -
@@ -346,19 +305,29 @@
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event
 		withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-	NSString *url = [[event descriptorAtIndex:1] stringValue];
-	
-    [self.extrac parseIRCProtocolURI:url];
+	NSAppleEventDescriptor *desc = [event descriptorAtIndex:1];
+
+	[IRCExtras parseIRCProtocolURI:desc.stringValue];
+}
+
+- (void)computerScreenWillSleep:(NSNotification *)note
+{
+	//[self.worldController prepareForScreenSleep];
+}
+
+- (void)computerScreenDidWake:(NSNotification *)note
+{
+	//[self.worldController awakeFomScreenSleep];
 }
 
 - (void)computerWillSleep:(NSNotification *)note
 {
-	[self.world prepareForSleep];
+	[self.worldController prepareForSleep];
 }
 
 - (void)computerDidWakeUp:(NSNotification *)note
 {
-	[self.world autoConnectAfterWakeup:YES];
+	[self.worldController autoConnectAfterWakeup:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note
@@ -370,7 +339,7 @@
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-	[self.window makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 	
 	return YES;
 }
@@ -380,20 +349,18 @@
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	[self.text resetTextFieldCellSize:YES];
+	[self.inputTextField resetTextFieldCellSize:YES];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	id sel = self.world.selected;
+	id sel = self.worldController.selectedItem;
 	
 	if (sel) {
 		[sel resetState];
-		
-		[self.world updateIcon];
 	}
-	
-    [self.world reloadTree];
+
+    [self.worldController reloadTree];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
@@ -403,23 +370,23 @@
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
 {
-	self.menu.isInFullScreenMode = YES;
+	self.isInFullScreenMode = YES;
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
 	[self loadWindowState:NO];
 	
-	self.menu.isInFullScreenMode = NO;
+	self.isInFullScreenMode = NO;
 }
 
 - (NSSize)windowWillResize:(NSWindow *)awindow toSize:(NSSize)newSize
 {
-	if (NSDissimilarObjects(awindow, self.window)) {
+	if (NSDissimilarObjects(awindow, self.mainWindow)) {
 		return newSize; 
 	} else {
-		if (self.menu.isInFullScreenMode) {
-			return [awindow frame].size;
+		if (self.isInFullScreenMode) {
+			return awindow.frame.size;
 		} else {
 			return newSize;
 		}
@@ -428,30 +395,30 @@
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
 {
-	if (NSDissimilarObjects(self.window, awindow)) {
+	if (NSDissimilarObjects(self.mainWindow, awindow)) {
 		return YES;
 	} else {
-		return BOOLReverseValue(self.menu.isInFullScreenMode);
+		return BOOLReverseValue(self.isInFullScreenMode);
 	}
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-    NSMenu	   *editorMenu = self.text.menu;
+    NSMenu	   *editorMenu = self.inputTextField.menu;
     NSMenuItem *formatMenu = self.formattingMenu.formatterMenu;
     
     if (formatMenu) {
-        NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
+        NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:formatMenu.title];
         
         if (fmtrIndex == -1) {
             [editorMenu addItem:[NSMenuItem separatorItem]];
             [editorMenu addItem:formatMenu];
         }
         
-        [self.text setMenu:editorMenu];
+        [self.inputTextField setMenu:editorMenu];
     }
     
-    return self.text;
+    return self.inputTextField;
 }
 
 #pragma mark -
@@ -459,18 +426,14 @@
 
 - (void)sendText:(NSString *)command
 {
-	NSAttributedString *as = [self.text attributedStringValue];
+	NSAttributedString *as = [self.inputTextField attributedStringValue];
 	
-	[self.text setAttributedStringValue:[NSAttributedString emptyString]];
-	
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		self.world.selected.inputHistory.lastHistoryItem = nil;
-	}
-	
+	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
+
 	if (NSObjectIsNotEmpty(as)) {
-		if ([self.world inputText:as command:command]) {
-			[self.inputHistory add:as];
-		}
+		[self.worldController inputText:as command:command];
+		
+		[self.inputHistory add:as];
 	}
 	
 	if (self.completionStatus) {
@@ -483,44 +446,42 @@
 	[self sendText:IRCPrivateCommandIndex("privmsg")];
 }
 
+#pragma mark -
+#pragma mark Split Views
+
 - (void)showMemberListSplitView:(BOOL)showList
 {
-	self.memberSplitViewOldPosition = self.memberSplitView.position;
+	self.memberSplitViewOldPosition = self.memberSplitView.dividerPosition;
 	
 	if (showList) {
-		NSView *rightView = [[self.memberSplitView subviews] safeObjectAtIndex:1];
+		NSView *rightView = [self.memberSplitView.subviews safeObjectAtIndex:1];
 		
-		self.memberSplitView.hidden	 = NO;
-		self.memberSplitView.inverted = NO;
+		self.memberSplitView.viewIsHidden = NO;
+		self.memberSplitView.viewIsInverted = NO;
 		
 		if ([self.memberSplitView isSubviewCollapsed:rightView] == NO) {
 			if (self.memberSplitViewOldPosition < _minimumSplitViewWidth) {
 				self.memberSplitViewOldPosition = _minimumSplitViewWidth;
 			}
 			
-			self.memberSplitView.position = self.memberSplitViewOldPosition;
+			self.memberSplitView.dividerPosition = self.memberSplitViewOldPosition;
 		}
 	} else {
-		if (self.memberSplitView.isHidden == NO) {
-			self.memberSplitView.hidden   = YES;
-			self.memberSplitView.inverted = YES;
+		if (self.memberSplitView.viewIsHidden == NO) {
+			self.memberSplitView.viewIsHidden = YES;
+			self.memberSplitView.viewIsInverted = YES;
 		}
 	}
 }
 
-#pragma mark -
-#pragma mark Preferences
-
-- (CGFloat)splitView:(NSSplitView *)splitView
-constrainMaxCoordinate:(CGFloat)proposedMax
-		 ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [splitView subviews][0];
-		NSView *rightSide = [splitView subviews][1];
+		NSView *leftSide = splitView.subviews[0];
+		NSView *rightSide = splitView.subviews[1];
 		
-		NSInteger leftWidth  = [leftSide bounds].size.width;
-		NSInteger rightWidth = [rightSide bounds].size.width;
+		NSInteger leftWidth  = leftSide.bounds.size.width;
+		NSInteger rightWidth = rightSide.bounds.size.width;
 		
 		return ((leftWidth + rightWidth) - _minimumSplitViewWidth);
 	}
@@ -528,16 +489,14 @@ constrainMaxCoordinate:(CGFloat)proposedMax
 	return _maximumSplitViewWidth;
 }
 
-- (CGFloat)splitView:(NSSplitView *)splitView
-constrainMinCoordinate:(CGFloat)proposedMax
-		 ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide  = [splitView subviews][0];
-		NSView *rightSide = [splitView subviews][1];
-		
-		NSInteger leftWidth  = [leftSide bounds].size.width;
-		NSInteger rightWidth = [rightSide bounds].size.width;
+		NSView *leftSide = splitView.subviews[0];
+		NSView *rightSide = splitView.subviews[1];
+
+		NSInteger leftWidth  = leftSide.bounds.size.width;
+		NSInteger rightWidth = rightSide.bounds.size.width;
 		
 		return ((leftWidth + rightWidth) - _maximumSplitViewWidth);
 	}
@@ -548,15 +507,15 @@ constrainMinCoordinate:(CGFloat)proposedMax
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
 	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = [splitView subviews][0];
+		NSView *leftSide = splitView.subviews[0];
         
 		if ([leftSide isEqual:subview]) {
 			return NO;
 		}
 	} else if ([splitView isEqual:self.serverSplitView]) {
-		NSView *rightSide = [splitView subviews][1];
+		NSView *rightSide = splitView.subviews[1];
 		
-		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.world.clients)) {
+		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.worldController.clients)) {
 			return NO;		
 		} 
 	}
@@ -564,10 +523,8 @@ constrainMinCoordinate:(CGFloat)proposedMax
 	return YES;
 }
 
-- (void)loadWindowState
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
+#pragma mark -
+#pragma mark Preferences
 
 - (void)loadWindowState:(BOOL)honorFullscreen
 {
@@ -581,184 +538,90 @@ constrainMinCoordinate:(CGFloat)proposedMax
 
 		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
 		
-		[self.window setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.menu.isInFullScreenMode];
+		[self.mainWindow setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.isInFullScreenMode];
 		
-		[self.text setGrammarCheckingEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
-		[self.text setContinuousSpellCheckingEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
-		[self.text setAutomaticSpellingCorrectionEnabled:[_NSUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
+		[self.inputTextField setGrammarCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
+		[self.inputTextField setContinuousSpellCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
+		[self.inputTextField setAutomaticSpellingCorrectionEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
 		
-		self.serverSplitView.position = [dic integerForKey:@"serverList"];
-		self.memberSplitView.position = [dic integerForKey:@"memberList"];
+		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
+		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
 		
-		if (self.serverSplitView.position < _minimumSplitViewWidth) {
-			self.serverSplitView.position = _defaultSplitViewWidth;
+		if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
+			self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
 		}
 		
-		if (self.memberSplitView.position < _minimumSplitViewWidth) {
-			self.memberSplitView.position = _defaultSplitViewWidth;
+		if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
+			self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
 		}
 
 		if (fullscreen && honorFullscreen) {
-			[self.menu performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
+			[self.menuController performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
 		}
 	} else {
-		NSScreen *screen = [NSScreen mainScreen];
+		NSRect rect = [RZMainScreen() visibleFrame];
 		
-		if (screen) {
-			NSRect rect = [screen visibleFrame];
-			
-			NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
-									(rect.origin.y + (rect.size.height / 2)));
-			
-			NSInteger w = 800;
-			NSInteger h = 474;
-			
-			rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
-			
-			[self.window setFrame:rect display:YES animate:self.menu.isInFullScreenMode];
-		}
+		NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
+								(rect.origin.y + (rect.size.height / 2)));
 		
-		self.serverSplitView.position = 165;
-		self.memberSplitView.position = 120;
+		NSInteger w = 800;
+		NSInteger h = 474;
+		
+		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
+		
+		[self.mainWindow setFrame:rect display:YES animate:self.isInFullScreenMode];
+
+		self.serverSplitView.dividerPosition = 165;
+		self.memberSplitView.dividerPosition = 120;
 	}
 	
-	self.memberSplitViewOldPosition = self.memberSplitView.position;
+	self.memberSplitViewOldPosition = self.memberSplitView.dividerPosition;
 }
 
 - (void)saveWindowState
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
-	BOOL fullscreen = self.menu.isInFullScreenMode;
+	BOOL fullscreen = self.isInFullScreenMode;
 
 	if (fullscreen) {
-		[self.menu toggleFullscreenMode:nil];
+		[self.menuController toggleFullscreenMode:nil];
 	}
 	
-	NSRect rect = self.window.frame;
+	NSRect rect = self.mainWindow.frame;
 	
-	[dic setInteger:rect.origin.x		forKey:@"x"];
-	[dic setInteger:rect.origin.y		forKey:@"y"];
-	[dic setInteger:rect.size.width		forKey:@"w"];
-	[dic setInteger:rect.size.height	forKey:@"h"];
+	[dic setInteger:rect.origin.x forKey:@"x"];
+	[dic setInteger:rect.origin.y forKey:@"y"];
+	[dic setInteger:rect.size.width	forKey:@"w"];
+	[dic setInteger:rect.size.height forKey:@"h"];
 	
-	if (self.serverSplitView.position < _minimumSplitViewWidth) {
-		self.serverSplitView.position = _defaultSplitViewWidth;
+	if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
+		self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
 	}
 	
-	if (self.memberSplitView.position < _minimumSplitViewWidth) {
+	if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
 		if (self.memberSplitViewOldPosition < _minimumSplitViewWidth) {
-			self.memberSplitView.position = _defaultSplitViewWidth;
+			self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
 		} else {
-			self.memberSplitView.position = self.memberSplitViewOldPosition;
+			self.memberSplitView.dividerPosition = self.memberSplitViewOldPosition;
 		}
 	}
 	
-	[dic setInteger:self.serverSplitView.position forKey:@"serverList"];
-	[dic setInteger:self.memberSplitView.position forKey:@"memberList"];
+	[dic setInteger:self.serverSplitView.dividerPosition forKey:@"serverList"];
+	[dic setInteger:self.memberSplitView.dividerPosition forKey:@"memberList"];
 
 	[dic setBool:fullscreen forKey:@"fullscreen"];
 	
-	[_NSUserDefaults() setBool:[self.text isGrammarCheckingEnabled]				forKey:@"TextFieldAutomaticGrammarCheck"];
-	[_NSUserDefaults() setBool:[self.text isContinuousSpellCheckingEnabled]		forKey:@"TextFieldAutomaticSpellCheck"];
-	[_NSUserDefaults() setBool:[self.text isAutomaticSpellingCorrectionEnabled]	forKey:@"TextFieldAutomaticSpellCorrection"];
-	
-	[TPCPreferences stopUsingTranscriptFolderBookmarkResources];
+	[RZUserDefaults() setBool:[self.inputTextField isGrammarCheckingEnabled] forKey:@"TextFieldAutomaticGrammarCheck"];
+	[RZUserDefaults() setBool:[self.inputTextField isContinuousSpellCheckingEnabled] forKey:@"TextFieldAutomaticSpellCheck"];
+	[RZUserDefaults() setBool:[self.inputTextField isAutomaticSpellingCorrectionEnabled] forKey:@"TextFieldAutomaticSpellCorrection"];
+
+	if (self.terminating) {
+		[TPCPreferences stopUsingTranscriptFolderSecurityScopedBookmark];
+	}
+
 	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
 	[TPCPreferences sync];
-}
-
-- (void)themeStyleDidChange
-{
-	NSMutableString *sf = [NSMutableString string];
-	
-	[self.world reloadTheme];
-	
-	if (NSObjectIsNotEmpty(self.viewTheme.other.nicknameFormat)) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptNicknameFormat")];
-		[sf appendString:NSStringNewlinePlaceholder];
-	}
-	
-	if (NSObjectIsNotEmpty(self.viewTheme.other.timestampFormat)) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptTimestampFormat")];
-		[sf appendString:NSStringNewlinePlaceholder];
-	}
-	
-	if (self.viewTheme.other.channelViewFont) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
-		[sf appendString:NSStringNewlinePlaceholder];
-	}
-	
-	if (self.viewTheme.other.forceInvertSidebarColors) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
-		[sf appendString:NSStringNewlinePlaceholder];
-	}
-	
-	[self.text updateTextDirection];
-	
-	sf = (NSMutableString *)[sf trim];
-	
-	if (NSObjectIsNotEmpty(sf)) {		
-		NSString *theme = [TPCViewTheme extractThemeName:[TPCPreferences themeName]];
-		
-		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-		
-		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-								 target:[TLOPopupPrompts class]
-								 action:@selector(popupPromptNilSelector:)
-								   body:TXTFLS(@"ThemeChangeOverridePromptMessage", theme, sf)
-								  title:TXTLS(@"ThemeChangeOverridePromptTitle")
-						  defaultButton:TXTLS(@"OkButton")
-						alternateButton:nil 
-							otherButton:nil
-						 suppressionKey:@"theme_override_info" 
-						suppressionText:nil];
-	}
-}
-
-- (void)sidebarColorInversionDidChange
-{
-	[self.serverList updateBackgroundColor];
-	[self.memberList updateBackgroundColor];
-
-	[self.serverSplitView setNeedsDisplay:YES];
-	[self.memberSplitView setNeedsDisplay:YES];
-}
-
-- (void)transparencyDidChange
-{
-	[self.window setAlphaValue:[TPCPreferences themeTransparency]];
-}
-
-- (void)inputHistorySchemeDidChange
-{
-	if (self.inputHistory) {
-		self.inputHistory = nil;
-	}
-	
-	for (IRCClient *c in self.world.clients) {
-		if (c.inputHistory) {
-			c.inputHistory = nil;
-		}
-		
-		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-			c.inputHistory = [TLOInputHistory new];
-		}
-		
-		for (IRCChannel *u in c.channels) {
-			if (u.inputHistory) {
-				u.inputHistory = nil;
-			}
-			
-			if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-				u.inputHistory = [TLOInputHistory new];
-			}
-		}
-	}
-	
-	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-		self.inputHistory = [TLOInputHistory new];
-	}
 }
 
 #pragma mark -
@@ -766,344 +629,203 @@ constrainMinCoordinate:(CGFloat)proposedMax
 
 - (void)completeNick:(BOOL)forward
 {
-	IRCClient *client = [self.world selectedClient];
-	IRCChannel *channel = [self.world selectedChannel];
-	
-	if (PointerIsEmpty(client)) {
-		return;
-	}
-	
-	if ([self.text isFocused] == NO) {
-		[self.world focusInputText];
-	}
-	
-	NSText *fe = [self.window fieldEditor:YES forObject:self.text];
-	if (PointerIsEmpty(fe)) return;
-	
-	NSRange selectedRange = [fe selectedRange];
-	if (selectedRange.location == NSNotFound) return;
-	
 	if (PointerIsEmpty(self.completionStatus)) {
 		self.completionStatus = [TLONickCompletionStatus new];
 	}
-	
-	TLONickCompletionStatus *status = self.completionStatus;
-    
-	NSString *s = [self.text stringValue];
-	
-	if ([status.text isEqualToString:s]
-		&& NSDissimilarObjects(status.range.location, NSNotFound)
-		&& NSMaxRange(status.range) == selectedRange.location
-		&& selectedRange.length == 0) {
-		
-		selectedRange = status.range;
-	}
-	
-	BOOL head = YES;
-	
-	NSString *pre = [s safeSubstringToIndex:selectedRange.location];
-	NSString *sel = [s safeSubstringWithRange:selectedRange];
-	
-	for (NSInteger i = (pre.length - 1); i >= 0; --i) {
-		UniChar c = [pre characterAtIndex:i];
-		
-		if (c == ' ') {
-			++i;
-			
-			if (i == pre.length) return;
-			
-			head = NO;
-			pre = [pre safeSubstringFromIndex:i];
-			
-			break;
-		}
-	}
-	
-	if (NSObjectIsEmpty(pre)) return;
-	
-	BOOL channelMode = NO;
-	BOOL commandMode = NO;
-	
-	UniChar c = [pre characterAtIndex:0];
-	
-	if (head && c == '/') {
-		commandMode = YES;
-		
-		pre = [pre safeSubstringFromIndex:1];
-		
-		if (NSObjectIsEmpty(pre)) return;
-	} else if (c == '@') {
-		if (PointerIsEmpty(channel)) return;
-		
-		pre = [pre safeSubstringFromIndex:1];
-		
-		if (NSObjectIsEmpty(pre)) return;
-	} else if (c == '#') {
-		channelMode = YES;
-		
-		if (NSObjectIsEmpty(pre)) return;
-	}
-	
-	NSString *current = [pre stringByAppendingString:sel];
-	
-	NSInteger len = current.length;
-	
-	for (NSInteger i = 0; i < len; ++i) {
-		UniChar c = [current characterAtIndex:i];
-		
-		if (NSDissimilarObjects(c, ' ') && NSDissimilarObjects(c, ':')) {
-			;
-		} else {
-			current = [current safeSubstringToIndex:i];
-			
-			break;
-		}
-	}
-	
-	if (NSObjectIsEmpty(current)) return;
-	
-	NSString *lowerPre     = [pre lowercaseString];
-	NSString *lowerCurrent = [current lowercaseString];
-	
-	NSArray		   *lowerChoices;
-	NSMutableArray *choices;
-	
-	if (commandMode) {
-		choices = [NSMutableArray array];
-        
-		for (NSString *command in [TPCPreferences publicIRCCommandList]) {
-			[choices safeAddObject:[command lowercaseString]];
-		}
 
-		[choices addObjectsFromArray:[_THOPluginManager() supportedUserInputCommands]];
-		[choices addObjectsFromArray:[_THOPluginManager() supportedAppleScriptCommands]];
-        
-		lowerChoices = choices;
-	} else if (channelMode) {
-		NSMutableArray *channels      = [NSMutableArray array];
-		NSMutableArray *lowerChannels = [NSMutableArray array];
-		
-		IRCClient *u = [self.world selectedClient];
-		
-		for (IRCChannel *c in u.channels) {
-			[channels      safeAddObject:c.name];
-			[lowerChannels safeAddObject:c.name.lowercaseString];
-		}
-		
-		choices      = channels;
-		lowerChoices = lowerChannels;
-	} else {
-		NSMutableArray *users = [channel.members mutableCopy];
-		[users sortUsingSelector:@selector(compareUsingWeights:)];
-		
-		NSMutableArray *nicks      = [NSMutableArray array];
-		NSMutableArray *lowerNicks = [NSMutableArray array];
-		
-		for (IRCUser *m in users) {
-			[nicks      safeAddObject:m.nick];
-			[lowerNicks safeAddObject:m.nick.lowercaseString];
-		}
-		
-		[nicks      safeAddObject:@"NickServ"];
-		[nicks      safeAddObject:@"RootServ"];
-		[nicks      safeAddObject:@"OperServ"];
-		[nicks      safeAddObject:@"HostServ"];
-		[nicks      safeAddObject:@"ChanServ"];
-		[nicks      safeAddObject:@"MemoServ"];
-		[nicks      safeAddObject:[TPCPreferences applicationName]];
-		
-		[lowerNicks safeAddObject:@"nickserv"];
-		[lowerNicks safeAddObject:@"rootserv"];
-		[lowerNicks safeAddObject:@"operserv"];
-		[lowerNicks safeAddObject:@"hostserv"];
-		[lowerNicks safeAddObject:@"chanserv"];
-		[lowerNicks safeAddObject:[TPCPreferences applicationName].lowercaseString];
-		
-		choices      = nicks;
-		lowerChoices = lowerNicks;
-	}
-	
-	NSMutableArray *currentChoices      = [NSMutableArray array];
-	NSMutableArray *currentLowerChoices = [NSMutableArray array];
-	
-	NSInteger i = 0;
-	
-	for (NSString *s in lowerChoices) {
-		if ([s hasPrefix:lowerPre]) {
-			[currentLowerChoices safeAddObject:s];
-			[currentChoices      safeAddObject:[choices safeObjectAtIndex:i]];
-		}
-		
-		++i;
-	}
-	
-	if (currentChoices.count < 1) return;
-	
-	NSString *t = nil;
-	
-	NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
-	
-	if (index == NSNotFound) {
-		t = [currentChoices safeObjectAtIndex:0];
-	} else {
-		if (forward) {
-			++index;
-			
-			if (currentChoices.count <= index) {
-				index = 0;
-			}
-		} else {
-			if (index == 0) {
-				index = (currentChoices.count - 1);
-			} else {
-				--index;
-			}
-		}
-		
-		t = [currentChoices safeObjectAtIndex:index];
-	}
-	
-	[_NSSpellChecker() ignoreWord:t inSpellDocumentWithTag:self.text.spellCheckerDocumentTag];
-	
-	if ((commandMode || channelMode) || head == NO) {
-		t = [t stringByAppendingString:NSStringWhitespacePlaceholder];
-	} else {
-		if (NSObjectIsNotEmpty([TPCPreferences completionSuffix])) {
-			t = [t stringByAppendingString:[TPCPreferences completionSuffix]];
-		}
-	}
-	
-	NSRange r = selectedRange;
-	
-	r.location -= pre.length;
-	r.length += pre.length;
-	
-	[fe replaceCharactersInRange:r withString:t];
-	[fe scrollRangeToVisible:fe.selectedRange];
-	
-	r.location += t.length;
-	r.length = 0;
-	
-	fe.selectedRange = r;
-	
-	if (currentChoices.count == 1) {
-		[status clear];
-	} else {
-		selectedRange.length = (t.length - pre.length);
-		
-		status.text = [self.text stringValue];
-		status.range = selectedRange;
-	}
+	[self.completionStatus completeNick:forward];
 }
 
 #pragma mark -
 #pragma mark Keyboard Navigation
 
 typedef enum TXMoveKind : NSInteger {
-	TXMoveUpKind,
-	TXMoveDownKind,
-	TXMoveLeftKind,
-	TXMoveRightKind,
-	TXMoveAllKind,
-	TXMoveActiveKind,
-	TXMoveUnreadKind,
+	TXMoveUpKind,      // Channel
+	TXMoveDownKind,    // Channel
+	TXMoveLeftKind,    // Server
+	TXMoveRightKind,   // Server
+	TXMoveAllKind,     // Move to next item.
+	TXMoveActiveKind,  // Move to next active item.
+	TXMoveUnreadKind,  // Move to next unread item. 
 } TXMoveKind;
 
 - (void)move:(TXMoveKind)dir target:(TXMoveKind)target
 {
-	if (dir == TXMoveUpKind || dir == TXMoveDownKind) {
-		id sel = self.world.selected;
-		if (PointerIsEmpty(sel)) return;
-		
-		NSInteger n = [self.serverList rowForItem:sel];
-		if (n < 0) return;
-		
+	/* ************************************************************** */
+	/* Start: Channel Movement Actions.								  */
+	/* Design: The channel movement actions are designed to be local
+	 to each server. Moving up or down a channel will keep it within
+	 the list of channels associated with the selected server. All 
+	 other channels are ignored.									  */
+	/* ************************************************************** */
+	
+	if (dir == TXMoveUpKind || dir == TXMoveDownKind)
+	{
+		IRCTreeItem *selected = self.worldController.selectedItem;
+
+		NSArray *scannedRows = [self.serverList rowsFromParentGroup:selected];
+
+		PointerIsEmptyAssert(selected);
+
+		NSInteger n = -1;
+
+		if ([selected isClient] == NO) {
+			n = [scannedRows indexOfObject:selected];
+		}
+
 		NSInteger start = n;
-		NSInteger count = [self.serverList numberOfRows];
-		
-		if (count <= 1) return;
-		
+		NSInteger count = scannedRows.count;
+
+		NSAssertReturn(count > 1);
+
 		while (1 == 1) {
-			if (dir == TXMoveUpKind) {
-				--n;
-				
-				if (n < 0) n = (count - 1);
+			if (dir == TXMoveDownKind) {
+				n += 1;
 			} else {
-				++n;
-				
-				if (count <= n) n = 0;
+				n -= 1;
 			}
-			
-			if (n == start) break;
-			
-			id i = [self.serverList itemAtRow:n];
-			
-			if (i) {
-				if (target == TXMoveActiveKind) {
-					if ([i isClient] == NO && [i isActive]) {
-						[self.world select:i];
-						
+
+			if (n >= count || n < 0) {
+				if (dir == TXMoveUpKind && n < 0) {
+					n = (count - 1);
+				} else {
+					n = 0;
+				}
+			}
+
+			if (n == start) {
+				break;
+			}
+
+			id i = [scannedRows objectAtIndex:n];
+
+			if ([i isChannel] || [i isPrivateMessage]) {
+				if (target == TXMoveAllKind) {
+					[self.worldController select:i];
+
+					break;
+				} else if (target == TXMoveActiveKind) {
+					if ([i isActive]) {
+						[self.worldController select:i];
+
 						break;
 					}
 				} else if (target == TXMoveUnreadKind) {
 					if ([i isUnread]) {
-						[self.world select:i];
-						
+						[self.worldController select:i];
+
 						break;
 					}
-				} else {
-					[self.world select:i];
-					
-					break;
 				}
 			}
 		}
-	} else if (dir == TXMoveLeftKind || dir == TXMoveRightKind) {
-		IRCClient *client = [self.world selectedClient];
-		if (PointerIsEmpty(client)) return;
-		
-		NSUInteger pos = [self.world.clients indexOfObjectIdenticalTo:client];
-		if (pos == NSNotFound) return;
-		
-		NSInteger n = pos;
+
+		return;
+	}
+
+	/* ************************************************************** */
+	/* End: Channel Movement Actions.								  */
+	/* ************************************************************** */
+
+	/* ************************************************************** */
+	/* Start: Server Movement Actions.								  */
+	/* Design: Unlike channel movement, server movement is much more
+	 simple. We only have to switch between each server depdngin on 
+	 the type of movement asked for.								  */
+	/* ************************************************************** */
+
+	if (dir == TXMoveLeftKind || dir == TXMoveRightKind)
+	{
+		IRCTreeItem *selected = self.worldController.selectedItem;
+
+		NSArray *scannedRows = [self.serverList groupItems];
+
+		PointerIsEmptyAssert(selected);
+
+		NSInteger n = -1;
+
+		if ([selected isClient]) {
+			n = [scannedRows indexOfObject:selected];
+		}
+
 		NSInteger start = n;
-		
-		NSInteger count = self.world.clients.count;
-		if (count <= 1) return;
-		
+		NSInteger count = scannedRows.count;
+
+		NSAssertReturn(count > 1);
+
 		while (1 == 1) {
-			if (dir == TXMoveLeftKind) {
-				--n;
-				
-				if (n < 0) n = (count - 1);
+			if (dir == TXMoveRightKind) {
+				n += 1;
 			} else {
-				++n;
-				
-				if (count <= n) n = 0;
+				n -= 1;
 			}
-			
-			if (n == start) break;
-			
-			client = [self.world.clients safeObjectAtIndex:n];
-			
-			if (client) {
-				if (target == TXMoveActiveKind) {
-					if (client.isLoggedIn) {
-						id t = ((client.lastSelectedChannel) ?: (id)client);
-						
-						[self.world select:t];
-						
-						break;
-					}
+
+			if (n >= count || n < 0) {
+				if (dir == TXMoveLeftKind && n < 0) {
+					n = (count - 1);
 				} else {
-					id t = ((client.lastSelectedChannel) ?: (id)client);
-					
-					[self.world select:t];
-					
+					n = 0;
+				}
+			}
+
+			if (n == start) {
+				break;
+			}
+
+			id i = [scannedRows objectAtIndex:n];
+
+			if (target == TXMoveAllKind) {
+				[self.worldController select:i];
+
+				break;
+			} else if (target == TXMoveActiveKind) {
+				if ([i isActive]) {
+					[self.worldController select:i];
+
 					break;
 				}
 			}
 		}
+		
+		return;
+	}
+
+	/* ************************************************************** */
+	/* End: Server Movement Actions.								  */
+	/* ************************************************************** */
+	
+	/* ************************************************************** */
+	/* Start: All Movement Actions.									  */
+	/* Design: Move to next item regardless of its type.			  */
+	/* ************************************************************** */
+	
+	/* ************************************************************** */
+	/* End: All Movement Actions.									  */
+	/* ************************************************************** */
+
+	if (dir == TXMoveAllKind && target == TXMoveDownKind)
+	{
+		IRCTreeItem *selected = self.worldController.selectedItem;
+
+		PointerIsEmptyAssert(selected);
+
+		NSInteger count = self.serverList.numberOfRows;
+
+		NSAssertReturn(count > 1);
+		
+		NSInteger n = [self.serverList rowForItem:selected];
+
+		n += 1;
+
+		if (n >= count || n < 0) {
+			n = 0;
+		}
+
+		id i = [self.serverList itemAtRow:n];
+
+		[self.worldController select:i];
+		
+		return;
 	}
 }
 
@@ -1159,29 +881,33 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)selectPreviousSelection:(NSEvent *)e
 {
-	[self.world selectPreviousItem];
+	[self.worldController selectPreviousItem];
 }
 
 - (void)selectNextSelection:(NSEvent *)e
 {
-	[self move:TXMoveDownKind target:TXMoveAllKind];
+	[self move:TXMoveAllKind target:TXMoveDownKind];
 }
 
 - (void)tab:(NSEvent *)e
 {
-	switch ([TPCPreferences tabAction]) {
-		case TXTabKeyActionNickCompleteType: [self completeNick:YES];					break;
-		case TXTabKeyActionUnreadChannelType:		[self move:TXMoveDownKind target:TXMoveUnreadKind];	break;
-		default: break;
+	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
+
+	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+		[self completeNick:YES];
+	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
+		[self move:TXMoveDownKind target:TXMoveUnreadKind];
 	}
 }
 
 - (void)shiftTab:(NSEvent *)e
 {
-	switch ([TPCPreferences tabAction]) {
-		case TXTabKeyActionNickCompleteType: [self completeNick:NO];					break;
-		case TXTabKeyActionUnreadChannelType:		[self move:TXMoveUpKind target:TXMoveUnreadKind]; break;
-		default: break;
+	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
+
+	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+		[self completeNick:NO];
+	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
+		[self move:TXMoveUpKind target:TXMoveUnreadKind];
 	}
 }
 
@@ -1190,20 +916,20 @@ typedef enum TXMoveKind : NSInteger {
 	[self sendText:IRCPrivateCommandIndex("action")];
 }
 
-- (void)_moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
+- (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
 {
 	if (scroll) {
-		NSInteger nol = [self.text numberOfLines];
+		NSInteger nol = [self.inputTextField numberOfLines];
 		
 		if (nol >= 2) {
-			BOOL atTop    = [self.text isAtTopOfView];
-			BOOL atBottom = [self.text isAtBottomOfView];
+			BOOL atTop = [self.inputTextField isAtTopOfView];
+			BOOL atBottom = [self.inputTextField isAtBottomOfView];
 			
 			if ((atTop && event.keyCode == TXKeyDownArrowCode) ||
 				(atBottom && event.keyCode == TXKeyUpArrowCode) ||
 				(atTop == NO && atBottom == NO)) {
 				
-				[self.text keyDownToSuper:event];
+				[self.inputTextField keyDownToSuper:event];
 				
 				return;
 			}
@@ -1213,37 +939,36 @@ typedef enum TXMoveKind : NSInteger {
 	NSAttributedString *s;
 	
 	if (up) {
-		s = [self.inputHistory up:[self.text attributedStringValue]];
+		s = [self.inputHistory up:[self.inputTextField attributedStringValue]];
 	} else {
-		s = [self.inputHistory down:[self.text attributedStringValue]];
+		s = [self.inputHistory down:[self.inputTextField attributedStringValue]];
 	}
 	
 	if (s) {
-        [self.text setAttributedStringValue:s];
-		[self.text resetTextFieldCellSize:NO];
-
-		[self.world focusInputText];
+        [self.inputTextField setAttributedStringValue:s];
+		[self.inputTextField resetTextFieldCellSize:NO];
+		[self.inputTextField focus];
 	}
 }
 
 - (void)inputHistoryUp:(NSEvent *)e
 {
-	[self _moveInputHistory:YES checkScroller:NO event:e];
+	[self moveInputHistory:YES checkScroller:NO event:e];
 }
 
 - (void)inputHistoryDown:(NSEvent *)e
 {
-	[self _moveInputHistory:NO checkScroller:NO event:e];
+	[self moveInputHistory:NO checkScroller:NO event:e];
 }
 
 - (void)inputHistoryUpWithScrollCheck:(NSEvent *)e
 {
-	[self _moveInputHistory:YES checkScroller:YES event:e];
+	[self moveInputHistory:YES checkScroller:YES event:e];
 }
 
 - (void)inputHistoryDownWithScrollCheck:(NSEvent *)e
 {
-	[self _moveInputHistory:NO checkScroller:YES event:e];
+	[self moveInputHistory:NO checkScroller:YES event:e];
 }
 
 - (void)textFormattingBold:(NSEvent *)e
@@ -1283,9 +1008,7 @@ typedef enum TXMoveKind : NSInteger {
 		fieldRect.origin.y -= 200;
 		fieldRect.origin.x += 100;
 		
-		[self.formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil
-															   atLocation:fieldRect.origin
-																   inView:self.formattingMenu.textField];
+		[self.formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.formattingMenu.textField];
 	}
 }
 
@@ -1300,59 +1023,54 @@ typedef enum TXMoveKind : NSInteger {
 			fieldRect.origin.y -= 200;
 			fieldRect.origin.x += 100;
 			
-			[self.formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil
-																   atLocation:fieldRect.origin
-																	   inView:self.formattingMenu.textField];
+			[self.formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.formattingMenu.textField];
 		}
 	}
 }
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-    if (self.menu.isInFullScreenMode && [self.text isFocused] == NO) {
-        [self.menu toggleFullscreenMode:nil];
+    if (self.isInFullScreenMode && [self.inputTextField isFocused] == NO) {
+        [self.menuController toggleFullscreenMode:nil];
     } else {
-        [self.text keyDown:e];
+        [self.inputTextField keyDown:e];
     }
 }
 
 - (void)focusWebview
 {
-    [self.window makeFirstResponder:self.world.selected.log.view];
+    [self.mainWindow makeFirstResponder:self.worldController.selectedViewController.view];
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[self.window registerKeyHandler:sel key:keyCode modifiers:mods];
-}
-
-- (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
-{
-	[self.text registerKeyHandler:sel key:keyCode modifiers:mods];
-}
-
-- (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
-{
-	[self.text registerKeyHandler:sel character:c modifiers:mods];
+	[self.mainWindow registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[self.window registerKeyHandler:sel character:c modifiers:mods];
+	[self.mainWindow registerKeyHandler:sel character:c modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
+{
+	[self.inputTextField registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[self.inputTextField registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)registerKeyHandlers
 {
-	[self.window	setKeyHandlerTarget:self];
-	[self.text      setKeyHandlerTarget:self];
+	[self.mainWindow setKeyHandlerTarget:self];
+	[self.inputTextField setKeyHandlerTarget:self];
     
     [self handler:@selector(exitFullscreenMode:) code:TXKeyEscapeCode mods:0];
 	
-	[self handler:@selector(tab:)		code:TXKeyTabCode mods:0];
-	[self handler:@selector(shiftTab:)	code:TXKeyTabCode mods:NSShiftKeyMask];
-	
-	[self handler:@selector(sendMsgAction:) code:TXKeyEnterCode	mods:NSCommandKeyMask];
-	[self handler:@selector(sendMsgAction:) code:TXKeyEnterCode mods:NSCommandKeyMask];
+	[self handler:@selector(tab:) code:TXKeyTabCode mods:0];
+	[self handler:@selector(shiftTab:) code:TXKeyTabCode mods:NSShiftKeyMask];
 	
 	[self handler:@selector(selectPreviousSelection:) code:TXKeyTabCode mods:NSAlternateKeyMask];
 	
@@ -1362,10 +1080,13 @@ typedef enum TXMoveKind : NSInteger {
     [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	[self handler:@selector(textFormattingBackgroundColor:) char:'h' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	
-	[self handler:@selector(inputHistoryUp:)	char:'p' mods:NSControlKeyMask];
-	[self handler:@selector(inputHistoryDown:)	char:'n' mods:NSControlKeyMask];
-    
-    [self inputHandler:@selector(focusWebview) char:'l' mods:(NSControlKeyMask | NSCommandKeyMask)];
+	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
+
+	[self inputHandler:@selector(sendMsgAction:) code:TXKeyReturnCode mods:NSCommandKeyMask];
+	[self inputHandler:@selector(sendMsgAction:) code:TXKeyEnterCode mods:NSCommandKeyMask];
+	
+    [self inputHandler:@selector(focusWebview) char:'l' mods:(NSAlternateKeyMask | NSCommandKeyMask)];
     
 	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:0];
 	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:NSAlternateKeyMask];
@@ -1379,48 +1100,29 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)reloadSegmentedControllerOrigin
 {
-	[self.text redrawOriginPoints];
+	[self.inputTextField redrawOriginPoints];
 }
 
 - (void)updateSegmentedController
 {
 	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-		[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
+		[self.mainWindowButtonController setEnabled:(self.worldController.clients.count >= 1)];
 		
 		/* Selection Settings. */
-		IRCClient *u = self.world.selectedClient;
-		IRCChannel *c = self.world.selectedChannel;
+		IRCClient *u = self.worldController.selectedClient;
+		IRCChannel *c = self.worldController.selectedChannel;
 		
 		if (PointerIsEmpty(c)) {
-			[self.windowButtonController setMenu:self.serverMenu.submenu forSegment:1];
+			[self.mainWindowButtonController setMenu:self.serverMenuItem.submenu forSegment:1];
 		} else {
-			[self.windowButtonController setMenu:self.channelMenu.submenu forSegment:1];
+			[self.mainWindowButtonController setMenu:self.channelMenuItem.submenu forSegment:1];
 		}
+
+		[self.mainWindowButtonController setMenu:self.segmentedControllerMenu forSegment:0];
 		
 		/* Open Address Book. */
-		[self.windowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
+		[self.mainWindowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];
 	}
-}
-
-- (void)buildSegmentedController
-{
-	self.windowButtonControllerCell.menuController = self.menu;
-	
-	[self.windowButtonController setEnabled:(self.world.clients.count >= 1)];
-	
-	/* Add Server/Channel Segment. */
-	NSMenu *segAddButton = [NSMenu new];
-	
-	NSMenuItem *addServer  = [self.treeMenu itemAtIndex:0].copy;
-	NSMenuItem *addChannel = [self.channelMenu.submenu itemWithTag:651].copy;
-	
-	[segAddButton addItem:addServer];
-	[segAddButton addItem:[NSMenuItem separatorItem]];
-	[segAddButton addItem:addChannel];
-	
-	[self.windowButtonController setMenu:segAddButton.copy forSegment:0];
-	
-	[self updateSegmentedController];
 }
 
 #pragma mark -
@@ -1428,61 +1130,80 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)openWelcomeSheet:(id)sender
 {
-	self.welcomeSheet = [TDCWelcomeSheet new];
-	self.welcomeSheet.delegate = self;
-	self.welcomeSheet.window = self.window;
+	[self.menuController popWindowSheetIfExists];
 	
-	[self.welcomeSheet show];
+	TDCWelcomeSheet *welcomeSheet = [TDCWelcomeSheet new];
+
+	welcomeSheet.delegate = self;
+	welcomeSheet.window = self.mainWindow;
+	
+	[welcomeSheet show];
+
+	[self.menuController addWindowToWindowList:welcomeSheet];
 }
 
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config
 {
-	NSMutableArray *channels = [NSMutableArray array];
-	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	// ---- //
 	
-	for (NSString *s in config[@"channelList"]) {
-		if ([s isChannelName]) {
-			[channels safeAddObject:@{
-			 @"channelName" : s,
-			 @"joinOnConnect" : NSNumberWithBOOL(YES), 
-			 @"enableNotifications" : NSNumberWithBOOL(YES),
+	NSString *serverad = config[@"serverAddress"];
+	NSString *nickname = config[@"identityNickname"];
 
-			 /* Migration Assistant Dictionary Addition. */
-			TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
-		}
+	NSMutableArray *channels = [NSMutableArray array];
+
+	for (NSString *s in config[@"channelList"]) {
+		[channels safeAddObject:[IRCChannelConfig seedDictionary:s]];
 	}
 	
-	NSString *host = config[@"serverAddress"];
-	NSString *nick = config[@"identityNickname"];
-	
-	dic[@"serverAddress"]				= host;
-	dic[@"connectionName"]				= host;
-	dic[@"identityNickname"]			= nick;
+	dic[@"serverAddress"]				= serverad;
+	dic[@"connectionName"]				= serverad;
+	dic[@"identityNickname"]			= nickname;
 	dic[@"channelList"]					= channels;
 	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
-	dic[@"characterEncodingDefault"]	= NSNumberWithLong(NSUTF8StringEncoding);
+	dic[@"characterEncodingDefault"]	= @(NSUTF8StringEncoding);
 
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
-	[self.window makeKeyAndOrderFront:nil];
+	IRCClient *u = [self.worldController createClient:dic reload:YES];
 	
-	IRCClient *u = [self.world createClient:dic reload:YES];
-	
-	[self.world save];
+	[self.worldController save];
 	
 	if (u.config.autoConnect) {
 		[u connect];
 	}
+	
+	[self.mainWindow makeKeyAndOrderFront:nil];
 }
 
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender
 {
-	self.welcomeSheet = nil;
+	[self.menuController removeWindowFromWindowList:@"TDCWelcomeSheet"];
+}
+
+@end
+
+@implementation NSObject (TXMasterControllerObjectExtension)
+
+- (TXMasterController *)masterController
+{
+	return TXGlobalMasterControllerClassReference;
+}
+
++ (TXMasterController *)masterController
+{
+	return TXGlobalMasterControllerClassReference;
+}
+
+- (IRCWorld *)worldController
+{
+	return [TXGlobalMasterControllerClassReference world];
+}
+
++ (IRCWorld *)worldController
+{
+	return [TXGlobalMasterControllerClassReference world];
 }
 
 @end

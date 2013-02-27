@@ -45,36 +45,32 @@ typedef enum IRCChannelStatus : NSInteger {
 } IRCChannelStatus;
 
 @interface IRCChannel : IRCTreeItem
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, strong) IRCChannelMode *mode;
-@property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, strong) NSMutableArray *members;
-@property (nonatomic, weak) NSString *channelTypeString;
+@property (nonatomic, nweak) NSString *name;
 @property (nonatomic, strong) NSString *topic;
-@property (nonatomic, strong) NSString *storedTopic;
-@property (nonatomic, assign) BOOL isOp;
-@property (nonatomic, assign) BOOL isHalfOp;
-@property (nonatomic, assign) BOOL isModeInit;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL errLastJoin;
-@property (nonatomic, assign) IRCChannelStatus status;
-@property (nonatomic, assign) BOOL isChannel;
-@property (nonatomic, assign) BOOL isTalk;
 @property (nonatomic, strong) TLOFileLogger *logFile;
-@property (nonatomic, weak) NSString *name;
-@property (nonatomic, weak) NSString *password;
+@property (nonatomic, strong) IRCChannelMode *modeInfo;
+@property (nonatomic, strong) IRCChannelConfig *config;
+@property (nonatomic, assign) IRCChannelStatus status;
+@property (nonatomic, strong) NSMutableArray *memberList;
+@property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
+@property (nonatomic, assign) BOOL isGatheringModeInfo;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
 - (NSMutableDictionary *)dictionaryValue;
 
+- (NSString *)secretKey;
+
+- (BOOL)isChannel;
+- (BOOL)isPrivateMessage;
+
+- (NSString *)channelTypeString;
+
 - (void)terminate;
-- (void)closeDialogs;
 - (void)preferencesChanged;
 
 - (void)activate;
 - (void)deactivate;
-- (void)detectOutgoingConversation:(NSString *)text;
 
 - (BOOL)print:(TVCLogLine *)line;
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
@@ -88,7 +84,7 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)renameMember:(NSString *)fromNick to:(NSString *)toNick;
 
 - (void)updateOrAddMember:(IRCUser *)user;
-- (void)changeMember:(NSString *)nick mode:(char)mode value:(BOOL)value;
+- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value;
 
 - (void)clearMembers;
 

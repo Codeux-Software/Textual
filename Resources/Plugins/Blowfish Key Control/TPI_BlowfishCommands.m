@@ -110,9 +110,9 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	IRCChannel *c = [client.world selectedChannelOn:client];
+	IRCChannel *c = [client.worldController selectedChannelOn:client];
 	
-	if (c.isChannel || c.isTalk) {
+	if (c.isChannel || c.isPrivateMessage) {
 		messageString = messageString.trim;
 		
 		if ([messageString contains:NSStringWhitespacePlaceholder]) {
@@ -127,11 +127,11 @@
 			} else {
 				if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
-						[client printDebugInformation:TPILS(@"BlowfishEncryptionKeyChanged") channel:c];
+						[client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
 					}
 				} else {
-					if (c.isTalk) {
-						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInQuery") channel:c];
+					if (c.isPrivateMessage) {
+						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInPrivateMessage") channel:c];
 					} else {
 						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 					}
@@ -150,7 +150,7 @@
 				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-			if (c.isTalk == NO) {
+			if (c.isPrivateMessage == NO) {
 				[client printDebugInformation:TPILS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
 			} else {
 				if ([self keyExchangeRequestExists:c]) {
@@ -210,7 +210,7 @@
 
 - (void)keyExchangeRequestReceived:(NSString *)requestData on:(IRCClient *)client from:(NSString *)requestSender
 {
-	IRCChannel *channel = [client findChannelOrCreate:requestSender useTalk:YES];
+	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
 	requestData = [requestData safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
 
@@ -352,11 +352,11 @@
 
 - (NSString *)keyExchangeDictionaryKey:(IRCChannel *)channel
 {
-	if (PointerIsEmpty(channel) || channel.isTalk == NO) {
+	if (PointerIsEmpty(channel) || channel.isPrivateMessage == NO) {
 		return nil;
 	}
 	
-	return [NSString stringWithFormat:@"%@ –> %@", channel.client.config.guid, channel.name];
+	return [NSString stringWithFormat:@"%@ –> %@", channel.client.config.itemUUID, channel.name];
 }
 
 @end

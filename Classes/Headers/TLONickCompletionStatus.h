@@ -38,8 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TLONickCompletionStatus : NSObject
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, assign) NSRange range;
+@property (nonatomic, strong) NSString *stringValue;
+@property (nonatomic, assign) NSRange stringRange;
 
+- (void)completeNick:(BOOL)forward;
 - (void)clear;
 @end

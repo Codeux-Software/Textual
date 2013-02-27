@@ -38,9 +38,9 @@
 #import "TextualApplication.h"
 
 @interface IRCPrefix : NSObject
-@property (nonatomic, strong) NSString *raw;
-@property (nonatomic, strong) NSString *nick;
-@property (nonatomic, strong) NSString *user;
+@property (nonatomic, strong) NSString *hostmask;
+@property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, assign) BOOL isServer;
 @end

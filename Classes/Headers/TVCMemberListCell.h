@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListCell : NSTextFieldCell
-@property (nonatomic, unsafe_unretained) id cellItem;
-@property (nonatomic, weak) IRCUser *member;
-@property (nonatomic, weak) TVCMemberList *parent;
+@property (nonatomic, nweak) IRCChannel *channelPointer;
+@property (nonatomic, nweak) IRCUser *memberPointer;
 @end

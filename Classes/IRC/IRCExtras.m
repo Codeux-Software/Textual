@@ -39,337 +39,293 @@
 
 @implementation IRCExtras
 
-/* Textual handles the following syntax for irc, ircs, and textual links.
- 
- irc://irc.example.com:0000/#channel,needssl
- 
- irc:// is a normal IRC connection.
- ircs:// is an IRC connection that defaults to SSL.
- textual:// is an alias of irc://
- 
- IPv6 addresses can be used by surrounding them by the standard square 
- brackets used by the HTTP scheme.
- 
- The port is not required nor is anything after the forward slash.
- 
- "needssl" should appear last in URL and should be proceeded by a comma.
- It tells Textual to favor SSL when ircs:// is not used.
- 
- The channel wanted to be joined is the first item after the forward
- slash. Only a single channel can be specified.
- 
- Examples:
- 
-	irc://irc.example.com
-	irc://irc.example.com:6667
-	irc://irc.example.com/#channel — normal connection to #channel
- 
-	ircs://irc.example.com:6697/#channel			— SSL based connection to #channel
-	irc://irc.example.com:6697/#channel,needssl		— SSL based connection to #channel
- 
- parseIRCProtocolURI: does not actually create any connections. It only
- formats the input into a form that createConnectionAndJoinChannel:chan:
- can understand. See comments below for more information.
- */
-
-- (void)parseIRCProtocolURI:(NSString *)location 
++ (void)parseIRCProtocolURI:(NSString *)location
 {
+	NSObjectIsEmptyAssert(location);
+
+	/* Basic input clean up. */
     location = [location decodeURIFragement];
-    
-	NSInteger port = 6667;
-	
-	NSString *server  = nil;
-    NSString *target  = nil;
-    NSString *tempval = nil;
-    
-    BOOL useSSL = NO;
-    
-    if ([location hasPrefix:@"irc://"]) {
-        location = [location safeSubstringFromIndex:6];
-	} else if ([location hasPrefix:@"ircs://"]) {
-		location = [location safeSubstringFromIndex:7];
-		
-		useSSL = YES;
-	} else if ([location hasPrefix:@"textual://"]) {
-		location = [location safeSubstringFromIndex:10];
-	} else {
+	location = [location trim];
+
+	/* We will scan our input to look for each slash in it.
+	 There is supposed to be one (minus the scheme), so let's
+	 hope there is, but just incase, count the slashes in our
+	 entire input. We need two for the scheme and one to
+	 seperate the channel name from the server name. If there
+	 is more than three, then our input is already invalid and
+	 we do not want to go any further with it. */
+
+	NSArray *slashMatches = [TLORegularExpression matchesInString:location withRegex:@"([/])"];
+
+	if (NSNumberInRange(slashMatches.count, 2, 3) == NO) {
 		return;
 	}
-	
-	if ([location contains:@"/"] == NO) {
-		location = [NSString stringWithFormat:@"%@/", location];
-	}
-	
-	NSInteger slashPos = [location stringPosition:@"/"];
-	
-	tempval = [location safeSubstringToIndex:slashPos];
-	
-	/* Server Address */
-	if ([tempval hasPrefix:@"["]) {
-		if ([tempval contains:@"]"]) {
-			NSInteger startPos = ([tempval stringPosition:@"["] + 1);
-			NSInteger endPos   =  [tempval stringPosition:@"]"];
-			
-			NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
-			
-			server  = [tempval safeSubstringWithRange:servRange];
-			tempval = [tempval safeSubstringAfterIndex:endPos];
-		} else {
-			return;
-		}
-	} else {
-		if ([tempval contains:@":"]) {
-			NSInteger cutPos = [tempval stringPosition:@":"];
-			
-			server  = [tempval safeSubstringToIndex:cutPos];
-			tempval = [tempval safeSubstringFromIndex:cutPos];
-		} else {
-			server  = tempval;
-			tempval = nil;
+
+	/* Now that we have established that our input is valid in a
+	 very basic way; we move on to doing more work on it. The next
+	 step will be to seperate the sections of the one slash dividing
+	 the channel list from that of the server address and port. After
+	 they are seperated, we will run the server address section through
+	 NSURL. If NSURL does not result in a valid result, then we can
+	 consider the beginning of our URL trash and invalid. */
+
+	NSString *serverInfo = location;
+	NSString *channelInfo = nil;
+
+	if (slashMatches.count == 3) { // Only cut if we do have an extra slash.
+		NSRange backwardRange = [location rangeOfString:@"/" options:NSBackwardsSearch];
+
+		if (NSDissimilarObjects(backwardRange.location, NSNotFound)) {
+			serverInfo = [location safeSubstringToIndex:backwardRange.location];
+			channelInfo = [location safeSubstringAfterIndex:backwardRange.location];
 		}
 	}
-	
-	/* Server Port */
-	if ([tempval hasPrefix:@":"]) {
-		NSInteger chopIndex = 1;
-		
-		if ([tempval hasPrefix:@":+"]) {
-			chopIndex = 2;
-			
-			useSSL = YES;
-		}
-		
-		tempval = [tempval safeSubstringFromIndex:chopIndex];
-		
-		if ([TLORegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
-			port = [tempval integerValue];
-		}
+
+	/* We now have each section of the URL in its own store so time
+	 to run the first section through NSURL to see if it returns a
+	 valid scheme and host. */
+
+	NSURL *baseURL = [NSURL URLWithString:serverInfo];
+
+	NSString *serverAddress = [baseURL host];
+	NSString *addressScheme = [baseURL scheme];
+
+	NSNumber *serverPort = [baseURL port];
+
+	if (PointerIsEmpty(serverPort)) {
+		serverPort = @(IRCConnectionDefaultServerPort);
 	}
-	
-	tempval = [location safeSubstringAfterIndex:slashPos];
-	
-	if (NSObjectIsNotEmpty(tempval)) {
-		if ([tempval contains:@","]) {
-			NSArray         *items  = [tempval componentsSeparatedByString:@","];
-			NSMutableArray  *mitems = [items mutableCopy];
-			
-			target = [mitems safeObjectAtIndex:0];
-			
-			if ([target hasPrefix:@"#"] == NO) {
-				target = [NSString stringWithFormat:@"#%@", target];
-			}
-			
-			[mitems removeObjectAtIndex:0];
-			
-			for (NSString *setting in mitems) {
-				if ([setting isEqualNoCase:@"needssl"]) {
-					useSSL = YES;
+
+	BOOL connectionUsesSSL = NO;
+
+	NSObjectIsEmptyAssert(serverAddress);
+	NSObjectIsEmptyAssert(addressScheme);
+
+	if ([addressScheme isEqualToString:@"ircs"]) {
+		connectionUsesSSL = YES;
+	}
+
+	/* If we have made it to this point without this method returning,
+	 then everything is going smooth so far. We have established our
+	 server address, the URL scheme, and associated channel information. */
+
+	/* We will now parse the actual channel information. */
+	/* As mentioned in the comment block above, this method does not
+	 actually create the connection. It only formats the input so that
+	 another can. Therefore, we do not have to take much care with the
+	 channel information. Just a basic parse to establish if the "needssl"
+	 token is present as well as the channel name having a pound (#) sign
+	 in front of it. */
+
+	NSMutableString *channelList = [NSMutableString string];
+
+	if (NSObjectIsNotEmpty(channelInfo)) {
+		NSInteger channelCount = 0;
+
+		NSArray *dataSections = [channelInfo split:@","];
+
+		NSString *lastObject = dataSections.lastObject;
+
+		for (__strong NSString *dataValue in dataSections) {
+			NSAssertReturnLoopBreak(channelCount < 5);
+
+			BOOL isLastObject = [dataValue isEqualToString:lastObject];
+
+			if ([dataValue isEqualIgnoringCase:@"needssl"] && isLastObject) {
+				connectionUsesSSL = YES;
+			} else {
+				if ([dataValue isChannelName] == NO) {
+					dataValue = [@"#" stringByAppendingString:dataValue];
 				}
+
+				[channelList appendString:dataValue];
+				[channelList appendString:@","];
 			}
-			
-		} else {
-			target = tempval;
-			
-			if ([target hasPrefix:@"#"] == NO) {
-				target = [NSString stringWithFormat:@"#%@", target];
-			}
+
+			channelCount += 1;
 		}
-    }
-    
-    /* Add Server */
-    if (NSObjectIsEmpty(server)) {
-        return;
-    }
-    
-    NSMutableString *servsubmit = [NSMutableString string];
-    
-    if (useSSL) {
-        [servsubmit appendString:@"-SSL "];
-    }
-    
-    [servsubmit appendFormat:@"%@:%ld", server, port];
-    
-    [self createConnectionAndJoinChannel:servsubmit chan:target];
+
+		/* Erase end commas. */
+		[channelList deleteCharactersInRange:NSMakeRange((channelList.length - 1), 1)];
+	}
+
+	/* We have parsed every part of our URL. Build the final result and
+	 pass it along. We are done here. */
+
+	NSString *finalResult = NSStringEmptyPlaceholder;
+
+	if (connectionUsesSSL) {
+		finalResult = @"-SSL ";
+	}
+
+	finalResult = [finalResult stringByAppendingFormat:@"%@:%@", serverAddress, serverPort];
+
+	/* A URL is consider untrusted and will not auto connect. */
+	[IRCExtras createConnectionAndJoinChannel:finalResult channel:channelList autoConnect:NO];
 }
 
-/* 
- createConnectionAndJoinChannel:chan: is the method used to parse the input
- of the "/server" command. It also handles input from parseIRCProtocolURI:
++ (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect
+{
+	NSObjectIsEmptyAssert(serverInfo);
 
- The following syntax is supported by this method and is recommended:
+	/* Establish our variables. */
+	NSInteger serverPort = IRCConnectionDefaultServerPort;
 
- "-SSL irc.example.com:0000 serverpassword"
+	NSString *serverAddress = nil;
+	NSString *serverPassword = nil;
 
- Input can also vary including formats such as:
+    BOOL connectionUsesSSL = NO;
 
- "irc.example.com:0000 serverpassword"
- "irc.example.com 0000 serverpassword"
+	/* Begin parsing. */
+	NSString *tempStore = nil;
 
- "irc.example.com:+0000 serverpassword"
- "irc.example.com +0000 serverpassword"
+    NSMutableString *base = [serverInfo mutableCopy];
 
- Of course -SSL being the front most token would favor SSL for the
- connection being created. Additionally, a server port proceeded by
- a plus sign (+) also indicates the connection will be SSL based.
+	/* Get our first token. A token is everything before
+	 the first occurrence of a space character. getToken
+	 will get everything before a space in a string, then
+	 erase the remaining content of that string so that
+	 each call to getToken gives us the next section
+	 of our string. */
+    tempStore = [base getToken];
 
- Server port can be associated with the server using a colon (:) or
- simply making it second to the server using a space.
+    /* Secure Socket Layer? */
+    if ([tempStore isEqualIgnoringCase:@"-SSL"]) {
+        connectionUsesSSL = YES;
 
- The server password passed using the "PASS" command is last in list.
- Nothing should follow it.
- */
-
-- (void)createConnectionAndJoinChannel:(NSString *)s chan:(NSString *)c
-{	
-	NSInteger port = 6667;
-	
-	NSString *server   = nil;
-	NSString *password = nil;
-    NSString *tempval  = nil;
-    
-    BOOL useSSL = NO;
-    
-    NSMutableString *base = [s mutableCopy];
-    
-    tempval = [base getToken];
-    
-    /* Secure Socket Layer */
-    if ([tempval isEqualNoCase:@"-SSL"]) {
-        useSSL = YES;
-        
-        tempval = [base getToken];
+		/* If the SSL define was our first token, we
+		 go to our next token. */
+        tempStore = [base getToken];
     }
-    
-    /* Server Address */
-    if ([tempval hasPrefix:@"["]) {
-        if ([tempval contains:@"]"]) {
-            NSInteger startPos = ([tempval stringPosition:@"["] + 1);
-            NSInteger endPos   =  [tempval stringPosition:@"]"];
-            
-            NSRange servRange = NSMakeRange(startPos, (endPos - startPos));
-            
-            server  = [tempval safeSubstringWithRange:servRange];
-            tempval = [tempval safeSubstringAfterIndex:endPos];
-        } else {
-            return;
-        }
+
+    /* Server Address. */
+	BOOL hasOpeningBracket = [tempStore hasPrefix:@"["];
+	BOOL hasClosingBracket = [tempStore contains:@"]"];
+
+    if (hasOpeningBracket && hasClosingBracket) {
+		/* Get address from inside brackets. */
+
+		NSInteger startPos = ([tempStore stringPosition:@"["] + 1);
+		NSInteger srendPos =  [tempStore stringPosition:@"]"];
+
+		NSRange servRange = NSMakeRange(startPos, (srendPos - startPos));
+
+		serverAddress = [tempStore safeSubstringWithRange:servRange];
+
+		tempStore = [tempStore safeSubstringAfterIndex:srendPos];
     } else {
-        if ([tempval contains:@":"]) {
-            NSInteger cutPos = [tempval stringPosition:@":"];
-            
-            server  = [tempval safeSubstringToIndex:cutPos];
-            tempval = [tempval safeSubstringFromIndex:cutPos];
-        } else {
-            server  = tempval;
-            tempval = nil;
-        }
-    }
-    
+		if (hasOpeningBracket == NO && hasClosingBracket == NO) {
+			/* Our server address did not contain brackets. Does it
+			 contain a colon (:) which means a port is included? */
+
+			if ([tempStore contains:@":"]) {
+				NSInteger cutPos = [tempStore stringPosition:@":"];
+
+				serverAddress = [tempStore safeSubstringToIndex:cutPos];
+
+				/* We cut the server address out of our temporary store,
+				 but left the colon and everything after it, in it. */
+				tempStore = [tempStore safeSubstringFromIndex:cutPos];
+			} else {
+				serverAddress = tempStore;
+			}
+		} else {
+			/* If we have a opening bracket but no closing or any
+			 combination of the two, then return this method as our
+			 server address is already invalid. If there were not
+			 brackets either, then we are not treating the server
+			 as an IPv4 address so any colon will be considered
+			 for port use only. */
+
+			return;
+		}
+	}
+
     /* Server Port */
-    if ([tempval hasPrefix:@":"]) {
+    if ([tempStore hasPrefix:@":"]) {
         NSInteger chopIndex = 1;
-        
-        if ([tempval hasPrefix:@":+"]) {
+
+		/* Does the port define an SSL connection? */
+        if ([tempStore hasPrefix:@":+"]) {
             chopIndex = 2;
-            
-            useSSL = YES;
+
+            connectionUsesSSL = YES;
         }
-        
-        tempval = [tempval safeSubstringFromIndex:chopIndex];
-        
-        if ([TLORegularExpression string:tempval isMatchedByRegex:@"^([0-9]{1,6})$"]) {
-            port = [tempval integerValue];
+
+        tempStore = [tempStore safeSubstringFromIndex:chopIndex];
+
+		/* Make sure the port number matches a valid format. If it does,
+		 then we are all good, and done with the port. */
+        if ([TLORegularExpression string:tempStore isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+            serverPort = [tempStore integerValue];
         }
     } else {
+		/* If our temporary store did not have a colon in front of it indicating
+		 a port, then we get our next token and see if that will parse correctly. */
         if (NSObjectIsNotEmpty(base)) {
-            tempval = [base getToken];
-            
-            if ([TLORegularExpression string:tempval isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
-                if ([tempval hasPrefix:@"+"]) {
-                    tempval = [tempval safeSubstringFromIndex:1];
-                    useSSL = YES;
+            tempStore = [base getToken];
+
+            if ([TLORegularExpression string:tempStore isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
+                if ([tempStore hasPrefix:@"+"]) {
+                    tempStore = [tempStore safeSubstringFromIndex:1];
+
+                    connectionUsesSSL = YES;
                 }
-                
-                port = [tempval integerValue];
+
+				/* Looks like our token gave us a valid port. */
+				serverPort = [tempStore integerValue];
             }
         }
     }
-    
-    /* Server Password */
+
+    /* Server Password. */
+	/* If our base is still not empty after taking out the token for the
+	 server address and port, then we are going to treat that as the server
+	 password. Anything after this token will be ignored completely. */
     if (NSObjectIsNotEmpty(base)) {
-        tempval = [base getToken];
+        tempStore = [base getToken];
         
-        password = tempval;
+        serverPassword = tempStore;
     }
     
-    /* Add Server */
-    if (NSObjectIsEmpty(server)) {
-        return;
-    }
+    /* Add Server. */
+	NSObjectIsEmptyAssert(serverAddress);
     
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	dic[@"serverAddress"] = server;
-	dic[@"connectionName"] = server;
-	
-	[dic setInteger:port forKey:@"serverPort"];
-	
-	[dic setBool:useSSL forKey:@"connectUsingSSL"];
-	[dic setBool:NO		forKey:@"connectOnLaunch"];
-	
-	dic[@"identityNckname"] = [TPCPreferences defaultNickname];
-	dic[@"identityUsername"] = [TPCPreferences defaultUsername];
-	dic[@"identityRealname"] = [TPCPreferences defaultRealname];
-	
-	dic[@"characterEncodingDefault"] = NSNumberWithLong(NSUTF8StringEncoding);
-	
-	if (NSObjectIsNotEmpty(c)) {
-		NSMutableArray *channels = [NSMutableArray array];
-		
-        if ([c contains:@","]) {
-            NSArray *chunks = [c componentsSeparatedByString:@","];
-            
-            for (__strong NSString *cc in chunks) {
-                cc = cc.trim;
-                
-                if ([cc isChannelName]) {
-                    [channels safeAddObject:@{
-					 @"channelName" : cc,
-					 @"joinOnConnect" : NSNumberWithBOOL(YES),
-					 @"enableNotifications" : NSNumberWithBOOL(YES),
+	dic[@"serverAddress"] = serverAddress;
+	dic[@"connectionName"] = serverAddress;
 
-					 /* Migration Assistant Dictionary Addition. */
-					TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
-                }
-            }
-        } else {
-            if ([c isChannelName]) {
-                [channels safeAddObject:@{
-				 @"channelName" : c,
-				 @"joinOnConnect" : NSNumberWithBOOL(YES),
-				 @"enableNotifications" : NSNumberWithBOOL(YES),
-
-				 /* Migration Assistant Dictionary Addition. */
-				TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath}];
-            }
-        }
+	dic[@"serverPort"]		= @(serverPort);
+	dic[@"connectOnLaunch"] = @(autoConnect);
+	dic[@"connectUsingSSL"]	= @(connectionUsesSSL);
+	
+	NSMutableArray *channels = [NSMutableArray array];
+	
+	NSArray *chunks = [channelList split:@","];
 		
-		dic[@"channelList"] = channels;
+	for (NSString *cc in chunks) {
+		[channels safeAddObject:[IRCChannelConfig seedDictionary:cc.trim]];
 	}
-	
+
+	dic[@"channelList"] = channels;
+
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
-	
-	IRCClient *uf = [self.world createClient:dic reload:YES];
 
-	if (NSObjectIsNotEmpty(password)) {
-		[uf.config setPassword:password];
+	/* Feed the world our seed and finish up. */
+	IRCClient *uf = [[self worldController] createClient:dic reload:YES];
+
+	if (NSObjectIsNotEmpty(serverPassword)) {
+		[uf.config setServerPassword:serverPassword];
 	}
 	
-	[self.world save];
-	
-	[uf connect];
+	[[self worldController] save];
+
+	if (autoConnect) {
+		[uf connect];
+	}
 }
 
 @end

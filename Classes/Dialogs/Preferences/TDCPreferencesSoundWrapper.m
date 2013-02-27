@@ -60,18 +60,16 @@
 	return [TPCPreferences titleForEvent:self.eventType];
 }
 
-- (NSString *)sound
+- (NSString *)alertSound
 {
 	NSString *soundd = [TPCPreferences soundForEvent:self.eventType];
-	
-	if (NSObjectIsEmpty(soundd)) {
-		return TXEmptySoundAlertLabel;
-	} else {
-		return soundd;
-	}
+
+	NSObjectIsEmptyAssertReturn(soundd, TXEmptySoundAlertLabel);
+
+	return soundd;
 }
 
-- (void)setSound:(NSString *)value
+- (void)setAlertSound:(NSString *)value
 {
 	if ([value isEqualToString:TXEmptySoundAlertLabel]) {
 		value = NSStringEmptyPlaceholder;
@@ -84,34 +82,24 @@
 	[TPCPreferences setSound:value forEvent:self.eventType];
 }
 
-- (BOOL)growl
+- (BOOL)pushNotification
 {
 	return [TPCPreferences growlEnabledForEvent:self.eventType];
 }
 
-- (void)setGrowl:(BOOL)value
+- (void)setPushNotification:(BOOL)value
 {
 	[TPCPreferences setGrowlEnabled:value forEvent:self.eventType];
 }
 
-- (BOOL)growlSticky
+- (BOOL)disabledWhileAway
 {
-	return [TPCPreferences growlStickyForEvent:self.eventType];
+	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];
 }
 
-- (void)setGrowlSticky:(BOOL)value
+- (void)setDisabledWhileAway:(BOOL)value
 {
-	[TPCPreferences setGrowlSticky:value forEvent:self.eventType];
-}
-
-- (BOOL)disableWhileAway
-{
-	return [TPCPreferences disableWhileAwayForEvent:self.eventType];
-}
-
-- (void)setDisableWhileAway:(BOOL)value
-{
-	[TPCPreferences setDisableWhileAway:value forEvent:self.eventType];
+	[TPCPreferences setDisabledWhileAway:value forEvent:self.eventType];
 }
 
 @end

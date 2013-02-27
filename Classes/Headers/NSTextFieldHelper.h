@@ -37,6 +37,11 @@
 
 #import "TextualApplication.h"
 
+@interface NSTextField (TXTextFieldHelper)
+- (NSString *)stringValue;
+- (NSString *)firstTokenStringValue;
+@end
+
 @interface NSTextView (TXTextViewHelper)
 - (void)focus;
 - (BOOL)isFocused;

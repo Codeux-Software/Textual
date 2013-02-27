@@ -38,6 +38,6 @@
 #import "TextualApplication.h"
 
 @interface NSDate (TXDateHelper)
-+ (NSInteger)epochTime;
-+ (NSInteger)secondsSinceUnixTimestamp:(NSInteger)stamp;
++ (NSTimeInterval)epochTime;
++ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)stamp;
 @end

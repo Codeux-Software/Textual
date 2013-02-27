@@ -37,15 +37,25 @@
 
 #import "TextualApplication.h"
 
+/* The actual socket is handled by IRCConnectionSocket.m,
+ which is an extension of this class. */
+
 @implementation IRCConnection
+
+#pragma mark -
+#pragma mark Initialization 
 
 - (id)init
 {
 	if ((self = [super init])) {
 		self.sendQueue = [NSMutableArray new];
 		
-		self.timer = [TLOTimer new];
-		self.timer.delegate = self;
+		self.floodTimer = [TLOTimer new];
+		self.floodTimer.delegate = self;
+
+		self.maxMsgCount = 0;
+
+		self.socketBuffer = [NSMutableData new];
 	}
 	
 	return self;
@@ -53,145 +63,128 @@
 
 - (void)dealloc
 {
-	[self.conn close];
-	[self.timer stop];
+	[self close];
 }
+
+#pragma mark -
+#pragma mark Open/Close Connection
 
 - (void)open
 {
-	[self close];
+	[self close]; // Reset state.
 	
-	self.maxMsgCount = 0;
-	
-	self.conn			= [TLOSocketClient new];
-	self.conn.delegate	= self;
-	self.conn.host		= self.host;
-	self.conn.port		= self.port;
-	self.conn.useSSL	= self.useSSL;
-	
-	if (self.useSystemSocks) {
-		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
-		NSNumber *num = (__bridge NSNumber *)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
-		CFRelease(proxyDic);
-		
-		BOOL systemSocksEnabled = BOOLReverseValue([num integerValue] == 0);
-		
-		self.conn.useSocks			= systemSocksEnabled;
-		self.conn.useSystemSocks	= systemSocksEnabled;
-	} else {
-		self.conn.useSocks		= self.useSocks;
-		self.conn.socksVersion	= self.socksVersion;
-	}
-	
-	self.conn.proxyHost		= self.proxyHost;
-	self.conn.proxyPort		= self.proxyPort;
-	self.conn.proxyUser		= self.proxyUser;
-	self.conn.proxyPassword = self.proxyPassword;
-	
-	[self.conn open];
+	[self openSocket];
 }
 
 - (void)close
 {
-	self.loggedIn = NO;
+	self.isConnected = NO;
+	self.isConnecting = NO;
+	self.isSending = NO;
 	
 	self.maxMsgCount = 0;
-	
-	[self.timer stop];
-	
+
 	[self.sendQueue removeAllObjects];
 	
-	[self.conn close];
-	self.conn = nil;
+	[self stopTimer];
+	[self closeSocket];
 }
 
-- (BOOL)active
+#pragma mark -
+#pragma mark Encode Data
+
+- (NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	return [self.conn active];
+	return [self.client convertFromCommonEncoding:data];
 }
 
-- (BOOL)connecting
+- (NSData *)convertToCommonEncoding:(NSString *)data
 {
-	return [self.conn connecting];
+	return [self.client convertToCommonEncoding:data];
 }
 
-- (BOOL)connected
-{
-	return [self.conn connected];
-}
+#pragma mark -
+#pragma mark Send Data
 
 - (BOOL)readyToSend
 {
-    IRCClient *c = self.delegate;
-    
-	return (self.sending == NO && self.maxMsgCount < c.config.floodControlMaximumMessages);
-}
-
-- (void)clearSendQueue
-{
-	[self.sendQueue removeAllObjects];
-	
-	[self updateTimer];
+	return (self.isSending == NO && NSObjectIsNotEmpty(self.sendQueue) &&
+			self.maxMsgCount < self.client.config.floodControlMaximumMessages);
 }
 
 - (void)sendLine:(NSString *)line
 {
 	[self.sendQueue safeAddObject:line];
-	
+
 	[self tryToSend];
 	[self updateTimer];
 }
 
-- (NSData *)convertToCommonEncoding:(NSString *)s
-{
-	return [self.delegate convertToCommonEncoding:s];
-}
-
 - (BOOL)tryToSend
 {
-    IRCClient *c = self.delegate;
-    
-	if (self.sending) return NO;
-	if (NSObjectIsEmpty(self.sendQueue)) return NO;
-	if (self.maxMsgCount > c.config.floodControlMaximumMessages) return NO;
-	
-	NSString *s = [[self.sendQueue safeObjectAtIndex:0] stringByAppendingString:@"\r\n"];
+	NSAssertReturnR([self readyToSend], NO);
+
+	NSString *firstItem = [self.sendQueue[0] stringByAppendingString:@"\r\n"];
 	
 	[self.sendQueue safeRemoveObjectAtIndex:0];
 	
-	NSData *data = [self convertToCommonEncoding:s];
+	NSData *data = [self convertToCommonEncoding:firstItem];
 	
 	if (data) {
-		self.sending = YES;
-		
-		if (self.loggedIn && c.config.outgoingFloodControl) {
+		self.isSending = YES;
+
+		/* isLoggedIn is set on the client when it receives raw numeric 005 from
+		 the server. We wait until then before we begin counting against flood
+		 control because the initial connect may send a lot of data resulting in
+		 it kicking in prematurely. */
+		if (self.client.isLoggedIn && self.client.config.outgoingFloodControl) {
 			self.maxMsgCount++;
 		}
 		
-		[self.conn write:data];
+		[self write:data];
 		
-		if ([self.delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
-			[self.delegate ircConnectionWillSend:s];
+		if ([self.client respondsToSelector:@selector(ircConnectionWillSend:)]) {
+			[self.client ircConnectionWillSend:firstItem];
 		}
 	}
 	
 	return YES;
 }
 
+- (void)clearSendQueue
+{
+	[self.sendQueue removeAllObjects];
+
+	[self updateTimer];
+}
+
+#pragma mark -
+#pragma mark Flood Control Timer
+
 - (void)updateTimer
 {
-    IRCClient *c = self.delegate;
-    
 	if (NSObjectIsEmpty(self.sendQueue) && self.maxMsgCount < 1) {
-		if (self.timer.isActive) {
-			[self.timer stop];
-		}
+		[self stopTimer];
 	} else {
-		if (self.timer.isActive == NO) {
-			if (c.config.outgoingFloodControl) {
-				[self.timer start:c.config.floodControlDelayTimerInterval];
-            }
+		[self startTimer];
+	}
+}
+
+- (void)startTimer
+{
+	if (self.floodTimer.timerIsActive == NO) {
+		IRCClientConfig *config = self.client.config;
+
+		if (config.outgoingFloodControl) {
+			[self.floodTimer start:config.floodControlDelayTimerInterval];
 		}
+	}
+}
+
+- (void)stopTimer
+{
+	if (self.floodTimer.timerIsActive) {
+		[self.floodTimer stop];
 	}
 }
 
@@ -200,10 +193,8 @@
 	self.maxMsgCount = 0;
 	
 	if (NSObjectIsNotEmpty(self.sendQueue)) {
-		while (NSObjectIsNotEmpty(self.sendQueue)) {
-			if ([self tryToSend] == NO) {
-				break;
-			}
+		while (self.sendQueue.count >= 1) {
+			NSAssertReturnLoopBreak([self tryToSend]);
 			
 			[self updateTimer];
 		}
@@ -212,53 +203,54 @@
 	}
 }
 
-- (void)tcpClientDidConnect:(TLOSocketClient *)sender
+#pragma mark -
+#pragma mark Socket Delegate
+
+- (void)tcpClientDidConnect
 {
-	[self.sendQueue removeAllObjects];
+	[self clearSendQueue];
 	
-	if ([self.delegate respondsToSelector:@selector(ircConnectionDidConnect:)]) {
-		[self.delegate ircConnectionDidConnect:self];
+	if ([self.client respondsToSelector:@selector(ircConnectionDidConnect:)]) {
+		[self.client ircConnectionDidConnect:self];
 	}
 }
 
-- (void)tcpClient:(TLOSocketClient *)sender error:(NSString *)error
+- (void)tcpClientDidError:(NSString *)error
 {
-	[self.timer stop];
+	[self clearSendQueue];
 	
-	[self.sendQueue removeAllObjects];
-	
-	if ([self.delegate respondsToSelector:@selector(ircConnectionDidError:)]) {
-		[self.delegate ircConnectionDidError:error];
+	if ([self.client respondsToSelector:@selector(ircConnectionDidError:)]) {
+		[self.client ircConnectionDidError:error];
 	}
 }
 
-- (void)tcpClientDidDisconnect:(TLOSocketClient *)sender
+- (void)tcpClientDidDisconnect
 {
-	[self.timer stop];
+	[self clearSendQueue];
 	
-	[self.sendQueue removeAllObjects];
-	
-	if ([self.delegate respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
-		[self.delegate ircConnectionDidDisconnect:self];
+	if ([self.client respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
+		[self.client ircConnectionDidDisconnect:self];
 	}
 }
 
-- (void)tcpClientDidReceiveData:(TLOSocketClient *)sender
+- (void)tcpClientDidReceiveData
 {
 	while (1 == 1) {
-		NSData *data = [self.conn readLine];
+		NSString *data = [self readLine];
 		
-		if (data == nil) break;
+		if (data == nil) {
+			break;
+		}
 		
-		if ([self.delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
-			[self.delegate ircConnectionDidReceive:data];
+		if ([self.client respondsToSelector:@selector(ircConnectionDidReceive:)]) {
+			[self.client ircConnectionDidReceive:data];
 		}
 	}
 }
 
-- (void)tcpClientDidSendData:(TLOSocketClient *)sender
+- (void)tcpClientDidSendData
 {
-	self.sending = NO;
+	self.isSending = NO;
 	
 	[self tryToSend];
 }
