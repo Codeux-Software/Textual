@@ -48,33 +48,33 @@
 @interface IRCClient ()
 /* These are all considered private. */
 
-@property (nonatomic, assign) BOOL inFirstISONRun;				// YES if first time running ISON command for user trackig, else NO.
-@property (nonatomic, assign) BOOL inUserInvokedWhoRequest;		// YES if user invoked /WHO and should output results, else NO.
-@property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;	// YES if WHOIS information should be treated as WHOWAS.
-@property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;	// YES if CTCP LAGCHECK reply should be posted to active channel, else NO.
-@property (nonatomic, assign) NSInteger lastMessageReceived;
-@property (nonatomic, assign) NSInteger tryingNickNumber;		// Used for nick collision connections.
-@property (nonatomic, assign) NSTimeInterval lastLagCheck;
-@property (nonatomic, assign) NSUInteger CAPpausedStatus;		// Used as a BOOL, but can also represent an integer in special cases.
-@property (nonatomic, strong) IRCChannel *whoisChannel;
 @property (nonatomic, strong) IRCConnection *socket;
-@property (nonatomic, strong) NSString *myHost;				// Host of local user cached during JOIN.
-@property (nonatomic, strong) NSString *myNick;				// Cached value of local user nickname.
-@property (nonatomic, strong) NSString *sentNick;			// Nickname used for nick collision connections. Is equal to myNick if there is no collision.
-@property (nonatomic, strong) TDCListDialog *channelListDialog;
-@property (nonatomic, strong) TDChanBanExceptionSheet *banExceptionSheet;
-@property (nonatomic, strong) TDChanBanSheet *chanBanListSheet;
-@property (nonatomic, strong) TDChanInviteExceptionSheet *inviteExceptionSheet;
+@property (nonatomic, assign) BOOL inFirstISONRun;
+@property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
+@property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
+@property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
+@property (nonatomic, assign) NSInteger lastMessageReceived;
+@property (nonatomic, assign) NSInteger tryingNickNumber;
+@property (nonatomic, assign) NSUInteger CAPpausedStatus;
+@property (nonatomic, assign) NSTimeInterval lastLagCheck;
+@property (nonatomic, strong) IRCChannel *whoisChannel;
+@property (nonatomic, strong) NSString *myHost;
+@property (nonatomic, strong) NSString *myNick;
+@property (nonatomic, strong) NSString *sentNick;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *autoJoinTimer;
-@property (nonatomic, strong) TLOTimer *commandQueueTimer;		// "/timer" command queue.
-@property (nonatomic, strong) TLOTimer *isonTimer;			// Timer responsible for sending ISON commands for user tracking.
+@property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *trialPeriodTimer;
+@property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
+@property (nonatomic, strong) TDCListDialog *channelListDialog;
+@property (nonatomic, strong) TDChanBanSheet *chanBanListSheet;
+@property (nonatomic, strong) TDChanBanExceptionSheet *banExceptionSheet;
+@property (nonatomic, strong) TDChanInviteExceptionSheet *inviteExceptionSheet;
 @end
 
 @implementation IRCClient
@@ -139,19 +139,18 @@
 
 - (void)dealloc
 {
-	[self.autoJoinTimer		stop];
+	[self.isonTimer	stop];
+	[self.pongTimer	stop];
+	[self.retryTimer stop];
+	[self.autoJoinTimer	stop];
+	[self.reconnectTimer stop];
 	[self.commandQueueTimer stop];
-	[self.isonTimer			stop];
-	[self.pongTimer			stop];
-	[self.reconnectTimer	stop];
-	[self.retryTimer		stop];
 
 	[self.socket close];
 
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
-
 }
 
 - (void)setup:(id)seed
@@ -899,7 +898,7 @@
 															   channel:channel.name
 															  hostmask:self.myHost];
 
-			[self print:channel type:type nick:self.myNick text:newstr];
+			[self print:channel type:type nick:self.localNickname text:newstr];
 
             if (encryptChat) {
                 NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
@@ -1220,7 +1219,7 @@
 					}
 
 					if (channel) {
-						[self print:channel type:type nick:self.myNick text:t];
+						[self print:channel type:type nick:self.localNickname text:t];
 
 						NSAssertReturnLoopContinue([self encryptOutgoingMessage:&t channel:channel]);
 					}
@@ -1432,7 +1431,7 @@
 				}
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umode")]) {
 				[s insertAttributedString:[NSAttributedString emptyStringWithBase:NSStringWhitespacePlaceholder]	atIndex:0];
-				[s insertAttributedString:[NSAttributedString emptyStringWithBase:self.myNick]						atIndex:0];
+				[s insertAttributedString:[NSAttributedString emptyStringWithBase:self.localNickname]				atIndex:0];
 			} else {
 				if (selChannel && selChannel.isChannel && [s.string isModeChannelName] == NO) {
 					targetChannelName = selChannel.name;
@@ -1564,14 +1563,13 @@
 
 				g.hostmask = [user banMask];
 
+				g.ignoreCTCP = YES;
+				g.ignoreJPQE = YES;
+				g.ignoreNotices	= YES;
 				g.ignorePublicMessages = YES;
 				g.ignorePrivateMessages = YES;
 				g.ignorePublicHighlights = YES;
 				g.ignorePrivateHighlights = YES;
-				
-				g.ignoreNotices	= YES;
-				g.ignoreCTCP	= YES;
-				g.ignoreJPQE	= YES;
 
 				g.notifyJoins	= NO;
 
@@ -1884,7 +1882,7 @@
 				self.sendLagcheckReplyToChannel = YES;
 			}
 
-			[self sendCTCPQuery:self.myNick command:IRCPrivateCommandIndex("ctcp_lagcheck") text:[NSString stringWithDouble:self.lastLagCheck]];
+			[self sendCTCPQuery:self.localNickname command:IRCPrivateCommandIndex("ctcp_lagcheck") text:[NSString stringWithDouble:self.lastLagCheck]];
 
 			[self printDebugInformation:TXTLS(@"LagCheckRequestSentMessage")];
 
@@ -2184,7 +2182,7 @@
 
 	TVCLogLine *c = [TVCLogLine new];
 
-	if (nick && [nick isEqualToString:self.myNick]) {
+	if (nick && [nick isEqualToString:self.localNickname]) {
 		memberType = TVCLogMemberLocalUserType;
 	}
 
@@ -2206,8 +2204,8 @@
 			excludeKeywords = [TPCPreferences highlightExcludeKeywords];
 
 			if (([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) == NO) {
-				if ([TPCPreferences highlightCurrentNickname] && NSObjectIsNotEmpty(self.myNick)) {
-					matchKeywords = [matchKeywords arrayByAddingObject:self.myNick];
+				if ([TPCPreferences highlightCurrentNickname]) {
+					matchKeywords = [matchKeywords arrayByAddingObject:self.localNickname];
 				}
 			}
 		}
@@ -2603,7 +2601,7 @@
 			case 1027: // Command: NACHAT
 			case 1003: // Command: ADCHAT
 			{
-				[m.params safeInsertObject:self.myNick atIndex:0];
+				[m.params safeInsertObject:self.localNickname atIndex:0];
 
 				NSString *text = [m.params safeObjectAtIndex:1];
 
@@ -2769,7 +2767,7 @@
 	}
 	else // The target is not a channel.
 	{
-		BOOL targetOurself = [target isEqualIgnoringCase:self.myNick];
+		BOOL targetOurself = [target isEqualIgnoringCase:self.localNickname];
 
 		/* Is the sender a server? */
 		if ([sender isNickname] == NO) {
@@ -3049,7 +3047,7 @@
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
 			TXNSDouble time = [NSDate epochTime];
 
-			if (time >= self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:self.myNick]) {
+			if (time >= self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:self.localNickname]) {
 				TXNSDouble delta = (time - self.lastLagCheck);
 
 				NSString *rating;
@@ -3135,7 +3133,7 @@
 	NSString *sendern = m.sender.nickname;
 	NSString *channel = [m paramAt:0];
 
-	BOOL myself = [sendern isEqualIgnoringCase:self.myNick];
+	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
 	IRCChannel *c = [self findChannelOrCreate:channel];
 
@@ -3168,6 +3166,7 @@
 		u.nickname = sendern;
 		u.username = m.sender.username;
 		u.address = m.sender.address;
+        
 		u.supportInfo = self.isupport;
 
 		[c addMember:u];
@@ -3201,7 +3200,7 @@
 	
 	PointerIsEmptyAssert(c);
 
-	if ([sendern isEqualIgnoringCase:self.myNick]) {
+	if ([sendern isEqualIgnoringCase:self.localNickname]) {
 		[c deactivate];
 
 		[self.worldController reloadTree];
@@ -3240,7 +3239,7 @@
 	
 	PointerIsEmptyAssert(c);
 
-	if ([targetu isEqualIgnoringCase:self.myNick]) {
+	if ([targetu isEqualIgnoringCase:self.localNickname]) {
 		[c deactivate];
 
 		[self.worldController reloadTree];
@@ -3275,10 +3274,10 @@
 	NSString *sendern = m.sender.nickname;
 	NSString *comment = [m paramAt:0];
 
-	BOOL myself = [sendern isEqualIgnoringCase:self.myNick];
+	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-														withMatches:@[@"ignoreJPQE"]];
+														withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
 	NSString *text = TXTFLS(@"IRCUserDisconnected", sendern, m.sender.username, m.sender.address);
 
@@ -3337,14 +3336,21 @@
 		return;
 	}
 
-	BOOL myself = [oldNick isEqualIgnoringCase:self.myNick];
+	BOOL myself = [oldNick isEqualIgnoringCase:self.localNickname];
 
 	if (myself) {
 		self.myNick = newNick;
 		self.sentNick = newNick;
 	} else {
+        /* Check new nickname in address book user check. */
+		ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
+											withMatches:@[@"notifyJoins"]];
+
+		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+
+        /* Check old nickname in address book user check. */
 		ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-											withMatches:@[@"ignoreJPQE"]];
+											withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
 		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 	}
@@ -4010,9 +4016,55 @@
 		}
 		case 303: // RPL_ISON
 		{
+			if (self.hasIRCopAccess) {
+				[self printUnknownReply:m];
+			} else {
+                NSArray *users = [m.sequence split:NSStringWhitespacePlaceholder];
+				
+				for (NSString *name in self.trackedUsers) {
+					NSString *langkey = nil;
+
+					BOOL ison = [self.trackedUsers boolForKey:name];
+
+					if (ison) {
+						if ([users containsObjectIgnoringCase:name] == NO) {
+							if (self.inFirstISONRun == NO) {
+								langkey = @"UserTrackingNicknameNoLongerAvailable";
+							}
+
+							[self.trackedUsers setBool:NO forKey:name];
+						}
+					} else {
+						if ([users containsObjectIgnoringCase:name]) {
+                            if (self.inFirstISONRun) {
+                                langkey = @"UserTrackingNicknameIsAvailable";
+                            } else {
+                                langkey = @"UserTrackingNicknameNowAvailable";
+                            }
+                            
+							[self.trackedUsers setBool:YES forKey:name];
+						}
+					}
+
+					if (NSObjectIsNotEmpty(langkey)) {
+						for (IRCAddressBook *g in self.config.ignoreList) {
+							NSString *trname = [g trackingNickname];
+
+							if ([trname isEqualIgnoringCase:name]) {
+								[self handleUserTrackingNotification:g nickname:name hostmask:name langitem:langkey];
+							}
+						}
+					}
+				}
+
+				if (self.inFirstISONRun) {
+					self.inFirstISONRun = NO;
+				}
+			}
 
 			break;
 		}
+
 		case 315: // RPL_ENDOFWHO
 		{
 			NSString *channel = [m paramAt:1];
@@ -4335,7 +4387,7 @@
 
 			break;
 		}
-		case 900: // RPL_CAPSASLGENERAL
+		case 900: // RPL_LOGGEDIN
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 4);
 			
@@ -4345,11 +4397,11 @@
 
 			break;
 		}
-		case 903: // RPL_CAPSASLGENERAL
-		case 904: // RPL_CAPSASLGENERAL
-		case 905: // RPL_CAPSASLGENERAL
-		case 906: // RPL_CAPSASLGENERAL
-		case 907: // RPL_CAPSASLGENERAL
+		case 903: // RPL_SASLSUCCESS
+		case 904: // ERR_SASLFAIL
+		case 905: // ERR_SASLTOOLONG
+		case 906: // ERR_SASLABORTED
+		case 907: // ERR_SASLALREADY
 		{
 			if (n == 903) { // success
 				[self print:self type:TVCLogLineNoticeType nick:nil text:[m sequence:1] receivedAt:m.receivedAt];
@@ -4434,7 +4486,6 @@
 		case 475: // ERR_BADCHANNEL
 		case 476: // ERR_BADCHANMASK
 		case 477: // ERR_NEEDREGGEDNICK
-		case 485: // RPL_(?????) — Legacy code. What goes here?
 		{
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 
@@ -4888,10 +4939,10 @@
 	{
 		self.socket.connectionUsesNormalSocks = YES;
 		
-		self.socket.proxyAddress	= self.config.proxyAddress;
-		self.socket.proxyPassword	= self.config.proxyPassword;
-		self.socket.proxyPort	= self.config.proxyPort;
-		self.socket.proxyUsername	= self.config.proxyUsername;
+		self.socket.proxyPort = self.config.proxyPort;
+		self.socket.proxyAddress = self.config.proxyAddress;
+		self.socket.proxyPassword = self.config.proxyPassword;
+		self.socket.proxyUsername = self.config.proxyUsername;
 		self.socket.proxySocksVersion = self.config.proxyType;
 
 		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithNormalProxy", host, self.config.serverPort, self.config.proxyAddress, self.config.proxyPort)];
@@ -4927,6 +4978,10 @@
 
 - (void)quit:(NSString *)comment
 {
+    if (self.isQuitting) {
+        return;
+    }
+    
 	if (self.isLoggedIn == NO) {
 		[self disconnect];
 
@@ -5150,25 +5205,6 @@
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #pragma mark -
 #pragma mark Command Queue
 
@@ -5245,7 +5281,6 @@
 	[self processCommandsInCommandQueue];
 }
 
-
 #pragma mark -
 #pragma mark User Tracking
 
@@ -5254,7 +5289,7 @@
 							  hostmask:(NSString *)host
 							  langitem:(NSString *)localKey
 {
-	if ([ignoreItem notifyJoins] == YES) {
+	if ([ignoreItem notifyJoins]) {
 		NSString *text = TXTFLS(localKey, host, ignoreItem.hostmask);
 
 		[self notifyEvent:TXNotificationAddressBookMatchType
@@ -5267,8 +5302,8 @@
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
 {
-	if (self.hasIRCopAccess) return;
-	if (self.isLoggedIn == NO) return;
+    NSAssertReturn(self.hasIRCopAccess == NO);
+    NSAssertReturn(self.isLoggedIn);
 
 	if (PointerIsEmpty(self.trackedUsers)) {
 		self.trackedUsers = [NSMutableDictionary new];
@@ -5318,9 +5353,9 @@
 
 - (void)startISONTimer
 {
-	if (self.isonTimer.timerIsActive) return;
-
-	[self.isonTimer start:_isonCheckInterval];
+	if (self.isonTimer.timerIsActive == NO) {
+        [self.isonTimer start:_isonCheckInterval];
+    }
 }
 
 - (void)stopISONTimer
@@ -5332,37 +5367,90 @@
 
 - (void)onISONTimer:(id)sender
 {
-	if (self.isLoggedIn) {
-		if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess) {
-			return [self stopISONTimer];
-		}
+    NSAssertReturn(self.isLoggedIn);
+    
+    if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess) {
+        return [self stopISONTimer];
+    }
 
-		NSMutableString *userstr = [NSMutableString string];
+    NSMutableString *userstr = [NSMutableString string];
 
-		for (NSString *name in self.trackedUsers) {
-			[userstr appendFormat:@" %@", name];
-		}
+    for (NSString *name in self.trackedUsers) {
+        [userstr appendFormat:@" %@", name];
+    }
 
-		[self send:IRCPrivateCommandIndex("ison"), userstr, nil];
-	}
+    [self send:IRCPrivateCommandIndex("ison"), userstr, nil];
 }
 
 - (void)checkAddressBookForTrackedUser:(IRCAddressBook *)abEntry inMessage:(IRCMessage *)message
 {
-	// [ignoreChecks notifyJoins]
-	/*NSString *tracker = [ignoreChecks trackingNickname];
+    PointerIsEmptyAssert(abEntry);
+    
+    NSString *tracker = [abEntry trackingNickname];
 
 	BOOL ison = [self.trackedUsers boolForKey:tracker];
 
-	if (ison == NO) {
-		[self handleUserTrackingNotification:ignoreChecks
-									nickname:m.sender.nick
-									hostmask:[m.sender.raw hostmaskFromRawString]
-									langitem:@"UserTrackingHostmaskNowAvailable"];
+    /* Notification Type: JOIN Command. */
+    if ([message.command isEqualIgnoringCase:@"JOIN"]) {
+        if (ison == NO) {
+            [self handleUserTrackingNotification:abEntry
+                                        nickname:message.sender.nickname
+                                        hostmask:message.sender.hostmask.hostmaskFromRawString
+                                        langitem:@"UserTrackingHostmaskNowAvailable"];
+            
+            [self.trackedUsers setBool:YES forKey:tracker];
+        }
 
-		[self.trackedUsers setBool:YES forKey:tracker];
-	}*/
+        return;
+    }
+    
+    /* Notification Type: QUIT Command. */
+    if ([message.command isEqualIgnoringCase:@"QUIT"]) {
+        if (ison) {
+            [self handleUserTrackingNotification:abEntry
+                                        nickname:message.sender.nickname
+                                        hostmask:message.sender.hostmask.hostmaskFromRawString
+                                        langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+
+            [self.trackedUsers setBool:NO forKey:tracker];
+        }
+
+        return;
+    }
+    
+    /* Notification Type: NICK Command. */
+    if ([message.command isEqualIgnoringCase:@"NICK"]) {
+        if (ison) {
+            [self handleUserTrackingNotification:abEntry
+                                        nickname:message.sender.nickname
+                                        hostmask:message.sender.hostmask.hostmaskFromRawString
+                                        langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+        } else {
+            [self handleUserTrackingNotification:abEntry
+                                        nickname:message.sender.nickname
+                                        hostmask:message.sender.hostmask.hostmaskFromRawString
+                                        langitem:@"UserTrackingHostmaskNowAvailable"];
+        }
+
+        [self.trackedUsers setBool:BOOLReverseValue(ison) forKey:tracker];
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #pragma mark -
 #pragma mark Channel Ban List Dialog
