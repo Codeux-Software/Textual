@@ -310,9 +310,9 @@
 	}
 }
 
-- (NSString *)privateMessageStatusIconFilename
+- (NSString *)privateMessageStatusIconFilename:(BOOL)selected
 {
-	return [NSColor defineUserInterfaceItem:@"NSUser" invertedItem:@"DarkServerListViewSelectedPrivateMessageUser"];
+	return [NSColor defineUserInterfaceItem:@"NSUser" invertedItem:@"DarkServerListViewSelectedPrivateMessageUser" withOperator:(selected == NO)];
 }
 
 @end

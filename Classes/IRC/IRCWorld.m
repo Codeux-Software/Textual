@@ -1154,16 +1154,7 @@
 	[self updateIcon];
 	[self updateTitle];
 
-    id previousItem = self.previouslySelectedItem;
-
-    PointerIsEmptyAssert(previousItem);
-
-    if ([self.serverList isGroupItem:previousItem       ]) {
-        /* Draw the view again if our previous selection was a server.
-         This is done to redraw the disclosure triangles in dark mode. */
-        
-        [self.serverList setNeedsDisplay];
-    }
+    [self.serverList setNeedsDisplay];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
