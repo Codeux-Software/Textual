@@ -70,13 +70,11 @@
 
 + (NSString *)applicationBandwidthStatistics:(IRCWorld *)world
 {
-	CGFloat messageAvg = (world.messagesReceived / [TPI_SP_SysInfo applicationUptime]);
-
 	return TPIFLS(@"SystemInformationMsgcountCommandResult",
 				  TXFormattedNumber(world.messagesSent),
 				  TXFormattedNumber(world.messagesReceived),
 				  [TPI_SP_SysInfo formattedDiskSize:world.bandwidthIn],
-				  [TPI_SP_SysInfo formattedDiskSize:world.bandwidthOut], messageAvg);
+				  [TPI_SP_SysInfo formattedDiskSize:world.bandwidthOut]);
 }
 
 + (NSString *)applicationMemoryUsage
