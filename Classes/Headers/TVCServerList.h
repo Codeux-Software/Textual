@@ -48,7 +48,7 @@
 /* User interface elements. */
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
-- (NSString *)privateMessageStatusIconFilename;
+- (NSString *)privateMessageStatusIconFilename:(BOOL)selected;
 
 - (NSFont *)messageCountBadgeFont;
 - (NSFont *)normalChannelCellFont;
