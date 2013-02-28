@@ -101,13 +101,15 @@
 	IRCClient *firstSelection = nil;
 	
 	for (IRCClient *e in self.clients) {
-		[self expandClient:e];
-		
-		if (e.config.autoConnect) {
-			if (PointerIsEmpty(firstSelection)) {
-				firstSelection = e;
-			}
-		}
+        if (e.config.sidebarItemExpanded) {
+            [self expandClient:e];
+            
+            if (e.config.autoConnect) {
+                if (PointerIsEmpty(firstSelection)) {
+                    firstSelection = e;
+                }
+            }
+        }
 	}
 	
 	if (firstSelection) {
@@ -1028,14 +1030,14 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
 {
-	item.isExpanded = YES;
+	[item.client.config setSidebarItemExpanded:YES];
 	
 	return YES;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
 {
-	item.isExpanded = NO;
+	[item.client.config setSidebarItemExpanded:NO];
 	
 	return YES;
 }

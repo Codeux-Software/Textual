@@ -220,6 +220,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
 
+        self.sidebarItemExpanded = NSDictionaryBOOLKeyValueCompare(dic, @"serverListItemIsExpanded", YES);
+
 		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
 		self.clientName		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.clientName);
 		self.nickname		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nickname);
@@ -299,6 +301,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setBool:self.invisibleMode				forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.isTrustedConnection		forKey:@"trustedSSLConnection"];
     [dic setBool:self.connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
+    [dic setBool:self.sidebarItemExpanded       forKey:@"serverListItemIsExpanded"];
 	
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
