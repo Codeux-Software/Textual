@@ -998,7 +998,7 @@
 	
 	[self.worldController save];
 	
-	if (u.isExpanded) { // Only expand new client if old was expanded already.
+	if (u.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
 		[self.worldController expandClient:n];
 	}
 }
