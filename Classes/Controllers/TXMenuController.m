@@ -532,7 +532,7 @@
 				}
 			}
 		} else {
-			if (pontrEmpty) {
+			if (pontrEmpty == NO) {
 				IRCUser *m = [c findMember:self.pointedNickname];
 				
 				if (m) {
