@@ -75,6 +75,13 @@
 	NSString *person  = senderDict[@"senderNickname"];
 	NSString *message = messageDict[@"messageSequence"];
 
+    if ([message hasPrefix:@"+"]) {
+        /* For some reason, NOTICE has a + prefix for key exchange on
+         Freenode. This fixex that. */
+        
+        message = [message safeSubstringFromIndex:1];
+    }
+
 	BOOL isRequest = [message hasPrefix:TXExchangeRequestPrefix];
 	BOOL isResponse = [message hasPrefix:TXExchangeResponsePrefix];
 
