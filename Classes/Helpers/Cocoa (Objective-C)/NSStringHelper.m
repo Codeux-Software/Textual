@@ -59,6 +59,48 @@
 	return uuidString;
 }
 
++ (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8
+{
+    NSMutableDictionary *encodingList = [NSMutableDictionary dictionary];
+
+    NSArray *supportedEncodings = [NSString supportedStringEncodings:favorUTF8];
+
+    for (id encoding in supportedEncodings) {
+        NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding integerValue]];
+
+        [encodingList safeSetObject:encoding forKey:encodingTitle];
+    }
+
+    return encodingList;
+}
+
++ (NSArray *)supportedStringEncodings:(BOOL)favorUTF8
+{
+    NSMutableArray *encodingList = [NSMutableArray array];
+
+    const NSStringEncoding *encodings = [NSString availableStringEncodings];
+
+    if (favorUTF8) {
+        [encodingList safeAddObject:@(NSUTF8StringEncoding)];
+    }
+
+    while (1 == 1) {
+        NSStringEncoding encoding = (*encodings++);
+
+        if (encoding == 0) {
+            break;
+        }
+
+        if (favorUTF8 && encoding == NSUTF8StringEncoding) {
+            continue;
+        }
+
+        [encodingList safeAddObject:@(encoding)];
+    }
+
+    return encodingList;
+}
+
 - (NSString *)safeSubstringWithRange:(NSRange)range
 {
 	if (NSRangeIsValidInBounds(range, self.length) == NO) {
