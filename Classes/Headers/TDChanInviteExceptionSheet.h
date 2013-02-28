@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDChanInviteExceptionSheet : TDCSheetBase
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, nweak) IBOutlet TVCListView *exceptionTable;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) TVCListView *exceptionTable;
 @property (nonatomic, strong) NSMutableArray *changeModeList;
 @property (nonatomic, strong) NSMutableArray *exceptionList;
 
