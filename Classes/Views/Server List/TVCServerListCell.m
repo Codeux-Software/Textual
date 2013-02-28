@@ -53,7 +53,7 @@
 	/* The private message icon is designed a little different than the 
 	 channel status icon. Therefore, we have to change its origin to make
 	 up for the difference in design. */
-	if ([iconName isEqualToString:self.serverList.privateMessageStatusIconFilename]) {
+	if ([iconName hasPrefix:@"colloquy"] == NO) {
 		extraMath = -1;
 	} 
 
@@ -302,7 +302,7 @@
 				[self drawStatusBadge:@"colloquyRoomTabRegular" inCell:cellFrame withAlpha:0.5];
 			}
 		} else {
-			[self drawStatusBadge:self.serverList.privateMessageStatusIconFilename inCell:cellFrame withAlpha:0.8];
+			[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] inCell:cellFrame withAlpha:0.8];
 		}
 
 		/* Message count badge. */
