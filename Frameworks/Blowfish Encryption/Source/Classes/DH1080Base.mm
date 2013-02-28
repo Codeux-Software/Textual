@@ -90,21 +90,25 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (void)dealloc
 {
-	[self reset];
+    [self resetStatus];
+    [self resetPublicInformation];
 }
 
-- (void)reset
+- (void)resetPublicInformation
+{
+	if (ISNO(self.publicBigNum == 0)) {
+		BN_free(self.publicBigNum);
+
+		self.publicBigNum = 0;
+	}
+}
+
+- (void)resetStatus
 {
 	if (ISNO(self.DHStatus == 0)) {
 		DH_free(self.DHStatus);
 
 		self.DHStatus = 0;
-	}
-
-	if (ISNO(self.publicBigNum == 0)) {
-		BN_free(self.publicBigNum);
-
-		self.publicBigNum = 0;
 	}
 }
 
@@ -213,7 +217,14 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	return [self base64Encode:secretHash];
 }
 
-- (NSString *)publicKeyValue
+- (NSString *)publicKeyValue:(NSString *)publicInput
+{
+	DHAssertNO(publicInput.length >= 1);
+
+	return [self base64Encode:publicInput];
+}
+
+- (NSString *)rawPublicKey
 {
 	DHAssertYES(self.DHStatus	 == 0);
 	DHAssertYES(self.DHStatus->g == 0);
@@ -231,7 +242,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	DHAssertNO(publicInput.length >= 1);
 
-	return [self base64Encode:publicInput];
+	return publicInput;
 }
 
 #pragma mark -
