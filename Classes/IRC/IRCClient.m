@@ -3522,7 +3522,7 @@
 {
 	/* Implementation based off Colloquy's own. */
 
-	NSAssertReturn(m.params.count >= 3);
+	NSAssertReturn(m.params.count >= 1);
 
 	NSString *command = [m command];
 	NSString *starprt = [m paramAt:0];
@@ -3557,7 +3557,10 @@
 		[self sendNextCap];
 	} else {
 		if ([starprt isEqualToString:@"+"]) {
-			NSString *authStringD = [NSString stringWithFormat:@"%C%@%C%@", 0x00, self.config.nickname,  0x00, self.config.nicknamePassword];
+			NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",   self.config.nickname, 0x00,
+                                                                                self.config.nickname, 0x00,
+                                                                                self.config.nicknamePassword];
+            
 			NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
 
 			NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
