@@ -277,9 +277,9 @@
 	NSInteger bang1pos = [self stringPosition:@"!"];
 	NSInteger bang2pos = [self stringPosition:@"@"];
 
-	NSRange subrange = NSMakeRange((bang1pos + 1), (bang2pos - (bang1pos - 1)));
+    NSString *bob = [self safeSubstringToIndex:bang2pos];
 
-	return [self safeSubstringWithRange:subrange];
+	return [bob safeSubstringAfterIndex:bang1pos];
 }
 
 - (NSString *)addressFromHostmask
