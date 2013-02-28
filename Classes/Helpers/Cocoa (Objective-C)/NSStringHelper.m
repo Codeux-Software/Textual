@@ -637,6 +637,16 @@
 
 - (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength
 {
+    /*
+     *
+     * Getting error?:
+     *     Use of undeclared identifier 'CSFWBase64Encoding'; did you mean 'kSecBase64Encoding'?
+     *
+     * Fix: 
+     *     Erase the folder "Frameworks/Blowfish Encryption/BlowfishEncryption.framework" then build.
+     *
+     */
+
 	NSString *encodedResult = [CSFWBase64Encoding encodeData:self];
 	
 	if (NSObjectIsNotEmpty(encodedResult)) {
