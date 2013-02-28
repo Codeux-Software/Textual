@@ -62,6 +62,9 @@
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)prepareForSleep;
 
+- (void)prepareForScreenSleep;
+- (void)awakeFomScreenSleep;
+
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 

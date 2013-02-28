@@ -312,12 +312,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)computerScreenWillSleep:(NSNotification *)note
 {
-	//[self.worldController prepareForScreenSleep];
+	[self.worldController prepareForScreenSleep];
 }
 
 - (void)computerScreenDidWake:(NSNotification *)note
 {
-	//[self.worldController awakeFomScreenSleep];
+	[self.worldController awakeFomScreenSleep];
 }
 
 - (void)computerWillSleep:(NSNotification *)note

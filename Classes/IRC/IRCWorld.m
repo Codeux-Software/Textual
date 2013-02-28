@@ -218,7 +218,7 @@
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
 		NSString *messageBody;
-		NSString *nicknameBody = [logLine formattedNickname:channel];
+		NSString *nicknameBody = [logLine formattedNickname:channel].trim;
 
 		if (logLine.lineType == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
@@ -231,7 +231,7 @@
 		}
 
 		/* Create entry. */
-		NSArray *entry = @[channel.name, @([NSDate epochTime]), [messageBody.trim attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
+		NSArray *entry = @[channel.name, @([NSDate epochTime]), [messageBody attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
 		
 		/* We insert at head so that latest is always on top. */
 		[channel.client.highlights insertObject:entry atIndex:0];
@@ -240,7 +240,7 @@
 		id highlightSheet = [self.masterController.menuController windowFromWindowList:@"TDCHighlightSheet"];
 
 		if (highlightSheet) {
-			[highlightSheet reloadTable];
+            [highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
 		}
 	} else {
 		[channel.client.highlights removeAllObjects];
@@ -278,6 +278,24 @@
         
 			[c quit:c.config.sleepModeLeavingComment];
 		}
+	}
+}
+
+- (void)prepareForScreenSleep
+{
+    NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
+
+	for (IRCClient *c in self.clients) {
+        [c toggleAwayStatus:YES];
+	}
+}
+
+- (void)awakeFomScreenSleep
+{
+    NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
+
+	for (IRCClient *c in self.clients) {
+        [c toggleAwayStatus:NO];
 	}
 }
 
@@ -480,18 +498,10 @@
 	NSMutableString *title = [NSMutableString string];
 
 	if ([selectedItem isClient]) {
-		NSString *networkName = [client networkName];
+		[title appendString:client.altNetworkName];
+		[title appendString:@" — "];
+        
 		NSString *networkAddress = [client networkAddress];
-
-		if (NSObjectIsEmpty(networkName)) {
-			[title appendString:client.name];
-		} else {
-			[title appendString:networkName];
-		}
-		
-		if (NSObjectIsNotEmpty(title)) {
-			[title appendString:@" — "];
-		}
 
 		if (NSObjectIsEmpty(networkAddress)) {
 			[title appendString:client.config.serverAddress];
@@ -499,17 +509,8 @@
 			[title appendString:networkAddress];
 		}
 	} else {
-		NSString *networkName = [client networkName];
-
-		if (NSObjectIsEmpty(networkName)) {
-			[title appendString:client.name];
-		} else {
-			[title appendString:networkName];
-		}
-		
-		if (NSObjectIsNotEmpty(title)) {
-			[title appendString:@" — "];
-		}
+		[title appendString:client.altNetworkName];
+		[title appendString:@" — "];
 		
 		if (NSObjectIsNotEmpty(channel.name)) {
 			[title appendString:channel.name];
@@ -754,8 +755,8 @@
 	
 	IRCChannelConfig *seed = [IRCChannelConfig new];
 	
-	seed.channelName = nick;
 	seed.type = IRCChannelPrivateMessageType;
+	seed.channelName = nick;
 	
 	IRCChannel *c = [self createChannel:seed client:client reload:YES adjust:YES];
 	
@@ -838,7 +839,6 @@
 - (void)destroyClient:(IRCClient *)u
 {
 	[u terminate];
-	[u disconnect];
 	
 	if (self.selectedItem && self.selectedItem.client == u) {
 		[self selectOtherAndDestroy:u];
@@ -1194,32 +1194,35 @@
 
 - (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-	if (index < 0) return NSDragOperationNone;
+    NSAssertReturnR((index >= 0), NSDragOperationNone);
 	
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if (PointerIsEmpty([pboard availableTypeFromArray:_treeDragItemTypes])) return NSDragOperationNone;
+    PointerIsEmptyAssertReturn([pboard availableTypeFromArray:_treeDragItemTypes], NSDragOperationNone);
 	
 	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
-	if (PointerIsEmpty(infoStr)) return NSDragOperationNone;
+    PointerIsEmptyAssertReturn(infoStr, NSDragOperationNone);
 	
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-	if (PointerIsEmpty(i)) return NSDragOperationNone;
+    PointerIsEmptyAssertReturn(i, NSDragOperationNone);
 	
 	if (i.isClient) {
 		if (item) {
 			return NSDragOperationNone;
 		}
 	} else {
-		if (PointerIsEmpty(item)) return NSDragOperationNone;
+        PointerIsEmptyAssertReturn(item, NSDragOperationNone);
 		
 		IRCChannel *c = (IRCChannel *)i;
-		if (NSDissimilarObjects(item, c.client)) return NSDragOperationNone;
+        
+		if (NSDissimilarObjects(item, c.client)) {
+            return NSDragOperationNone;
+        }
 		
 		IRCClient *toClient = (IRCClient *)item;
 		
 		NSArray *ary = toClient.channels;
 		
-		NSMutableArray *low  = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
+		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
 		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
 		
 		[low removeObjectIdenticalTo:c];
@@ -1228,14 +1231,14 @@
 		if (c.isChannel) {
 			if (NSObjectIsNotEmpty(low)) {
 				IRCChannel *prev = [low lastObject];
-				
-				if (prev.isChannel == NO) return NSDragOperationNone;
+
+                NSAssertReturnR(prev.isChannel, NSDragOperationNone);
 			}
 		} else {
 			if (NSObjectIsNotEmpty(high)) {
 				IRCChannel *next = [high safeObjectAtIndex:0];
-				
-				if (next.isChannel) return NSDragOperationNone;
+
+                NSAssertReturnR((next.isChannel == NO), NSDragOperationNone);
 			}
 		}
 	}
@@ -1243,24 +1246,26 @@
 	return NSDragOperationGeneric;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id < NSDraggingInfo >)info
-			   item:(id)item childIndex:(NSInteger)index
+- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
-	if (index < 0) return NO;
-	
+    NSAssertReturnR((index >= 0), NSDragOperationNone);
+
 	NSPasteboard *pboard = [info draggingPasteboard];
-	if (PointerIsEmpty([pboard availableTypeFromArray:_treeDragItemTypes])) return NO;
-	
+    PointerIsEmptyAssertReturn([pboard availableTypeFromArray:_treeDragItemTypes], NSDragOperationNone);
+
 	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
-	if (PointerIsEmpty(infoStr)) return NO;
-	
+    PointerIsEmptyAssertReturn(infoStr, NSDragOperationNone);
+
 	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-	if (PointerIsEmpty(i)) return NO;
+    PointerIsEmptyAssertReturn(i, NSDragOperationNone);
 	
 	if (i.isClient) {
-		if (item) return NO;
+		if (item) {
+            return NO;
+        }
 		
 		NSMutableArray *ary = self.clients;
+        
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
 		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
 		
@@ -1276,11 +1281,14 @@
 		[self reloadTree];
 		[self save];
 	} else {
-		if (PointerIsEmpty(item) || NSDissimilarObjects(item, i.client)) return NO;
+		if (PointerIsEmpty(item) || NSDissimilarObjects(item, i.client)) {
+            return NO;
+        }
 		
 		IRCClient *u = (IRCClient *)item;
 		
 		NSMutableArray *ary = u.channels;
+        
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
 		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
 		
@@ -1373,12 +1381,8 @@
 	}
 
 	id selected = self.worldController.selectedItem;
-	
-	// ---- //
 
 	NSOperationQueuePriority retval = NSOperationQueuePriorityLow;
-
-	// ---- //
 	
 	if ((target || selected) && target == selected) {
 		retval = NSOperationQueuePriorityNormal;
@@ -1391,8 +1395,6 @@
 	if (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]) {
 		retval += 4L;
 	}
-
-	// ---- //
 	
 	return retval;
 }
