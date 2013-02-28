@@ -4111,6 +4111,8 @@
 			NSArray *items = [nameblob componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (__strong NSString *nickname in items) {
+                NSObjectIsEmptyAssertLoopContinue(nickname);
+                
 				IRCUser *member = [IRCUser new];
 
 				NSInteger i;
