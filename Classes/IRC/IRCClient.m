@@ -57,7 +57,6 @@
 @property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) NSUInteger CAPpausedStatus;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
-@property (nonatomic, strong) IRCChannel *whoisChannel;
 @property (nonatomic, strong) NSString *myHost;
 @property (nonatomic, strong) NSString *myNick;
 @property (nonatomic, strong) NSString *sentNick;
@@ -71,10 +70,6 @@
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
-@property (nonatomic, strong) TDCListDialog *channelListDialog;
-@property (nonatomic, strong) TDChanBanSheet *chanBanListSheet;
-@property (nonatomic, strong) TDChanBanExceptionSheet *banExceptionSheet;
-@property (nonatomic, strong) TDChanInviteExceptionSheet *inviteExceptionSheet;
 @end
 
 @implementation IRCClient
@@ -260,11 +255,10 @@
 
 - (void)closeDialogs
 {
-	[self.channelListDialog close];
-	
-	[self.chanBanListSheet ok:nil];
-	[self.banExceptionSheet ok:nil];
-	[self.inviteExceptionSheet ok:nil];
+    TXMenuController *menuController = self.masterController.menuController;
+
+    [menuController popWindowViewIfExists:@"TDCListDialog"];
+    [menuController popWindowSheetIfExists];
 }
 
 - (void)preferencesChanged
@@ -1101,7 +1095,7 @@
 		}
 		case 5037: // Command: LIST
 		{
-			if (PointerIsEmpty(self.channelListDialog)) {
+			if (PointerIsEmpty([self listDialog])) {
 				[self createChannelListDialog];
 			}
 
@@ -3741,15 +3735,11 @@
 
 			NSString *text = TXTFLS(@"IRCUserIsAway", awaynick, comment);
 
-			if (self.whoisChannel && [self.whoisChannel isEqualTo:ac] == NO) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				if (ac) {
-					[self print:ac type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-				} else {
-					[self print:sc type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-				}
-			}
+            if (ac) {
+                [self print:ac type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+            } else {
+                [self print:sc type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+            }
 
 			break;
 		}
@@ -3781,11 +3771,7 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+            [self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -3795,11 +3781,7 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+            [self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -3827,11 +3809,7 @@
 				text = TXTFLS(@"IRCUserWhoisHostmask", nickname, username, hostmask, realname);
 			}
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -3855,11 +3833,7 @@
 				text = TXTFLS(@"IRCUserWhoisConnectedFrom", nickname, serverHost, serverInfo);
 			}
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -3879,11 +3853,7 @@
 
 			NSString *text = TXTFLS(@"IRCUserWhoisUptime", nickname, connTime, idleTime);
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -3896,17 +3866,7 @@
 
 			NSString *text = TXTFLS(@"IRCUserWhoisChannels", nickname, channels);
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
-
-			break;
-		}
-		case 318: // RPL_ENDOFWHOIS
-		{
-			self.whoisChannel = nil;
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -4108,6 +4068,7 @@
 				u = [IRCUser new];
 
 				u.nickname = nickname;
+                
 				u.supportInfo = self.isupport;
 			}
 
@@ -4236,18 +4197,16 @@
 			
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
 		case 321: // RPL_LISTSTART
 		{
-			if (self.channelListDialog) {
-				[self.channelListDialog clear];
+            TDCListDialog *channelListDialog = [self listDialog];
+
+			if (channelListDialog) {
+				[channelListDialog clear];
 			}
 
 			break;
@@ -4260,8 +4219,10 @@
 			NSString *uscount = [m paramAt:2];
 			NSString *topicva = [m sequence:3];
 
-			if (self.channelListDialog) {
-				[self.channelListDialog addChannel:channel count:uscount.integerValue topic:topicva];
+            TDCListDialog *channelListDialog = [self listDialog];
+
+			if (channelListDialog) {
+				[channelListDialog addChannel:channel count:uscount.integerValue topic:topicva];
 			}
 
 			break;
@@ -4271,6 +4232,7 @@
 		case 368: // RPL_ENDOFBANLIST
 		case 347: // RPL_ENDOFINVITELIST
 		case 349: // RPL_ENDOFEXCEPTLIST
+		case 318: // RPL_ENDOFWHOIS
 		{
 			break; // Ignored numerics.
 		}
@@ -4280,11 +4242,7 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 
-			if (self.whoisChannel) {
-				[self print:self.whoisChannel type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			} else {
-				[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
-			}
+			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
 
 			break;
 		}
@@ -4300,8 +4258,12 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-			if (self.chanBanListSheet) {
-				[self.chanBanListSheet addBan:hostmask tset:settime	setby:banowner];
+            TXMenuController *menuController = self.masterController.menuController;
+
+            TDChanBanSheet *chanBanListSheet = [menuController windowFromWindowList:@"TDChanBanSheet"];
+
+            if (chanBanListSheet) {
+				[chanBanListSheet addBan:hostmask tset:settime	setby:banowner];
 			}
 
 			break;
@@ -4318,8 +4280,12 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-			if (self.inviteExceptionSheet) {
-				[self.inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
+            TXMenuController *menuController = self.masterController.menuController;
+
+            TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController windowFromWindowList:@"TDChanInviteExceptionSheet"];
+
+			if (inviteExceptionSheet) {
+				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
 			}
 
 			break;
@@ -4336,8 +4302,12 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-			if (self.banExceptionSheet) {
-				[self.banExceptionSheet addException:hostmask tset:settime setby:banowner];
+            TXMenuController *menuController = self.masterController.menuController;
+
+            TDChanBanExceptionSheet *banExceptionSheet = [menuController windowFromWindowList:@"TDChanBanExceptionSheet"];
+
+			if (banExceptionSheet) {
+				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
 			}
 
 			break;
@@ -5428,65 +5398,47 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #pragma mark -
 #pragma mark Channel Ban List Dialog
 
 - (void)createChanBanListDialog
 {
-	if (PointerIsEmpty(self.chanBanListSheet)) {
-		IRCClient *u = [self.worldController selectedClient];
-		IRCChannel *c = [self.worldController selectedChannel];
+    TXMenuController *menuController = self.masterController.menuController;
 
-		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
+    [menuController popWindowSheetIfExists];
+    
+    IRCClient *u = [self.worldController selectedClient];
+    IRCChannel *c = [self.worldController selectedChannel];
+    
+    PointerIsEmptyAssert(u);
+    PointerIsEmptyAssert(c);
 
-		self.chanBanListSheet = [TDChanBanSheet new];
-		self.chanBanListSheet.delegate = self;
-		self.chanBanListSheet.window = self.masterController.mainWindow;
-	} else {
-		[self.chanBanListSheet ok:nil];
+    TDChanBanSheet *chanBanListSheet = [TDChanBanSheet new];
+    
+    chanBanListSheet.delegate = self;
+    chanBanListSheet.window = self.masterController.mainWindow;
 
-		self.chanBanListSheet = nil;
+	[chanBanListSheet show];
 
-		[self createChanBanListDialog];
-
-		return;
-	}
-
-	[self.chanBanListSheet show];
+    [menuController addWindowToWindowList:chanBanListSheet];
 }
 
 - (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender
 {
 	[sender.banList removeAllObjects];
 
-	[self send:IRCPrivateCommandIndex("mode"), [self.worldController.selectedChannel name], @"+b", nil];
+	[self send:IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, @"+b", nil];
 }
 
 - (void)chanBanDialogWillClose:(TDChanBanSheet *)sender
 {
 	if (NSObjectIsNotEmpty(sender.changeModeList)) {
 		for (NSString *mode in sender.changeModeList) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [self.worldController selectedChannel].name, mode]];
+			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, mode]];
 		}
 	}
 
-	self.chanBanListSheet = nil;
+    [self.masterController.menuController removeWindowFromWindowList:@"TDChanBanSheet"];
 }
 
 #pragma mark -
@@ -5494,41 +5446,42 @@
 
 - (void)createChanInviteExceptionListDialog
 {
-	if (self.inviteExceptionSheet) {
-		[self.inviteExceptionSheet ok:nil];
+    TXMenuController *menuController = self.masterController.menuController;
 
-		self.inviteExceptionSheet = nil;
+    [menuController popWindowSheetIfExists];
 
-		[self createChanInviteExceptionListDialog];
-	} else {
-		IRCClient *u = [self.worldController selectedClient];
-		IRCChannel *c = [self.worldController selectedChannel];
+    IRCClient *u = [self.worldController selectedClient];
+    IRCChannel *c = [self.worldController selectedChannel];
 
-		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
+    PointerIsEmptyAssert(u);
+    PointerIsEmptyAssert(c);
 
-		self.inviteExceptionSheet = [TDChanInviteExceptionSheet new];
-		self.inviteExceptionSheet.delegate = self;
-		self.inviteExceptionSheet.window = self.masterController.mainWindow;
-		[self.inviteExceptionSheet show];
-	}
+    TDChanInviteExceptionSheet *inviteExceptionSheet = [TDChanInviteExceptionSheet new];
+
+    inviteExceptionSheet.delegate = self;
+    inviteExceptionSheet.window = self.masterController.mainWindow;
+
+    [inviteExceptionSheet show];
+
+    [menuController addWindowToWindowList:inviteExceptionSheet];
 }
 
 - (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender
 {
 	[sender.exceptionList removeAllObjects];
 
-	[self send:IRCPrivateCommandIndex("mode"), [self.worldController.selectedChannel name], @"+I", nil];
+	[self send:IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, @"+I", nil];
 }
 
 - (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender
 {
 	if (NSObjectIsNotEmpty(sender.changeModeList)) {
 		for (NSString *mode in sender.changeModeList) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [self.worldController selectedChannel].name, mode]];
+			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, mode]];
 		}
 	}
 
-	self.inviteExceptionSheet = nil;
+    [self.masterController.menuController removeWindowFromWindowList:@"TDChanInviteExceptionSheet"];
 }
 
 #pragma mark -
@@ -5536,64 +5489,70 @@
 
 - (void)createChanBanExceptionListDialog
 {
-	if (PointerIsEmpty(self.banExceptionSheet)) {
-		IRCClient *u = [self.worldController selectedClient];
-		IRCChannel *c = [self.worldController selectedChannel];
+    TXMenuController *menuController = self.masterController.menuController;
 
-		if (PointerIsEmpty(u) || PointerIsEmpty(c)) return;
+    [menuController popWindowSheetIfExists];
 
-		self.banExceptionSheet = [TDChanBanExceptionSheet new];
-		self.banExceptionSheet.delegate = self;
-		self.banExceptionSheet.window = self.masterController.mainWindow;
-	} else {
-		[self.banExceptionSheet ok:nil];
+    IRCClient *u = [self.worldController selectedClient];
+    IRCChannel *c = [self.worldController selectedChannel];
 
-		self.banExceptionSheet = nil;
+    PointerIsEmptyAssert(u);
+    PointerIsEmptyAssert(c);
 
-		[self createChanBanExceptionListDialog];
+    TDChanBanExceptionSheet *banExceptionSheet = [TDChanBanExceptionSheet new];
 
-		return;
-	}
+    banExceptionSheet.delegate = self;
+    banExceptionSheet.window = self.masterController.mainWindow;
 
-	[self.banExceptionSheet show];
+	[banExceptionSheet show];
+
+    [menuController addWindowToWindowList:banExceptionSheet];
 }
 
 - (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender
 {
 	[sender.exceptionList removeAllObjects];
 
-	[self send:IRCPrivateCommandIndex("mode"), [self.worldController.selectedChannel name], @"+e", nil];
+	[self send:IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, @"+e", nil];
 }
 
 - (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender
 {
 	if (NSObjectIsNotEmpty(sender.changeModeList)) {
 		for (NSString *mode in sender.changeModeList) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [self.worldController selectedChannel].name, mode]];
+			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), self.worldController.selectedChannel.name, mode]];
 		}
 	}
 
-	self.banExceptionSheet = nil;
+    [self.masterController.menuController removeWindowFromWindowList:@"TDChanBanExceptionSheet"];
 }
 
 #pragma mark -
 #pragma mark Network Channel List Dialog
 
+- (TDCListDialog *)listDialog
+{
+    return [self.masterController.menuController windowFromWindowList:@"TDCListDialog"];
+}
+
 - (void)createChannelListDialog
 {
-	if (PointerIsEmpty(self.channelListDialog)) {
-		self.channelListDialog = [TDCListDialog new];
-		self.channelListDialog.delegate = self;
-		[self.channelListDialog start];
-	} else {
-		[self.channelListDialog show];
-	}
+    TXMenuController *menuController = self.masterController.menuController;
+
+    NSAssertReturn([menuController popWindowViewIfExists:@"TDCListDialog"] == NO);
+    
+    TDCListDialog *channelListDialog = [TDCListDialog new];
+
+    channelListDialog.client = self;
+	channelListDialog.delegate = self;
+    
+    [channelListDialog start];
+
+    [menuController addWindowToWindowList:channelListDialog];
 }
 
 - (void)listDialogOnUpdate:(TDCListDialog *)sender
 {
-	[sender.list removeAllObjects];
-
 	[self sendLine:IRCPrivateCommandIndex("list")];
 }
 
@@ -5604,14 +5563,7 @@
 
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
-	self.channelListDialog = nil;
+    [self.masterController.menuController removeWindowFromWindowList:@"TDCListDialog"];
 }
-
-
-
-
-
-
-
 
 @end

@@ -588,13 +588,13 @@
 		4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesSoundWrapper.m; sourceTree = "<group>"; };
 		4C8AF518158E99520026668C /* TDCAboutPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAboutPanel.m; path = Dialogs/TDCAboutPanel.m; sourceTree = "<group>"; };
 		4C8AF519158E99520026668C /* TDCAddressBookSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAddressBookSheet.m; path = Dialogs/TDCAddressBookSheet.m; sourceTree = "<group>"; };
-		4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDChanBanExceptionSheet.m; sourceTree = "<group>"; };
-		4C8AF51B158E99520026668C /* TDChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDChanBanSheet.m; sourceTree = "<group>"; };
-		4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDChanInviteExceptionSheet.m; sourceTree = "<group>"; };
+		4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDChanBanExceptionSheet.m; path = Dialogs/TDChanBanExceptionSheet.m; sourceTree = "<group>"; };
+		4C8AF51B158E99520026668C /* TDChanBanSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDChanBanSheet.m; path = Dialogs/TDChanBanSheet.m; sourceTree = "<group>"; };
+		4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDChanInviteExceptionSheet.m; path = Dialogs/TDChanInviteExceptionSheet.m; sourceTree = "<group>"; };
 		4C8AF51D158E99520026668C /* TDChannelSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDChannelSheet.m; path = Dialogs/TDChannelSheet.m; sourceTree = "<group>"; };
 		4C8AF51E158E99520026668C /* TDCHighlightSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCHighlightSheet.m; path = Dialogs/TDCHighlightSheet.m; sourceTree = "<group>"; };
 		4C8AF51F158E99520026668C /* TDCInviteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCInviteSheet.m; path = Dialogs/TDCInviteSheet.m; sourceTree = "<group>"; };
-		4C8AF520158E99520026668C /* TDCListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCListDialog.m; sourceTree = "<group>"; };
+		4C8AF520158E99520026668C /* TDCListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCListDialog.m; path = Dialogs/TDCListDialog.m; sourceTree = "<group>"; };
 		4C8AF521158E99520026668C /* TDCModeSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCModeSheet.m; path = Dialogs/TDCModeSheet.m; sourceTree = "<group>"; };
 		4C8AF522158E99520026668C /* TDCNickSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCNickSheet.m; path = Dialogs/TDCNickSheet.m; sourceTree = "<group>"; };
 		4C8AF523158E99520026668C /* TDCServerSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCServerSheet.m; path = Dialogs/TDCServerSheet.m; sourceTree = "<group>"; };
@@ -716,7 +716,7 @@
 		4C8AF5B6158E99520026668C /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannel.m; path = IRC/IRCChannel.m; sourceTree = "<group>"; };
 		4C8AF5B7158E99520026668C /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannelConfig.m; path = IRC/IRCChannelConfig.m; sourceTree = "<group>"; };
 		4C8AF5B8158E99520026668C /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannelMode.m; path = IRC/IRCChannelMode.m; sourceTree = "<group>"; };
-		4C8AF5B9158E99520026668C /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClient.m; sourceTree = "<group>"; };
+		4C8AF5B9158E99520026668C /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCClient.m; path = IRC/IRCClient.m; sourceTree = "<group>"; };
 		4C8AF5BA158E99520026668C /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCClientConfig.m; path = IRC/IRCClientConfig.m; sourceTree = "<group>"; };
 		4C8AF5BB158E99520026668C /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnection.m; path = IRC/IRCConnection.m; sourceTree = "<group>"; };
 		4C8AF5BC158E99520026668C /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCExtras.m; path = IRC/IRCExtras.m; sourceTree = "<group>"; };
@@ -943,8 +943,15 @@
 		4C46CB001580429D00846B64 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
-				4C950BFC16D5F9AB00A93D8D /* Version 2.1.2 */,
-				4C950BFB16D5F99300A93D8D /* Version 3.0.0 */,
+				4C8AF50F158E99520026668C /* Controllers */,
+				4C7A309D16DAC1F500B231DE /* Dialogs */,
+				4C8AF527158E99520026668C /* Headers */,
+				4C950C0216D6C61D00A93D8D /* Helpers */,
+				4CFF8DBD16DC4CBA00E4204D /* IRC */,
+				4C950BFD16D68DD700A93D8D /* Library */,
+				4C8AF5E7158E99520026668C /* Others */,
+				4CD1FB0E16D7D4500085BC82 /* Preferences */,
+				4C8AF5EF158E99520026668C /* Views */,
 			);
 			name = "Source Code";
 			path = Classes;
@@ -1271,9 +1278,13 @@
 				4C8AF514158E99520026668C /* Preferences */,
 				4C8AF518158E99520026668C /* TDCAboutPanel.m */,
 				4C8AF519158E99520026668C /* TDCAddressBookSheet.m */,
+				4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */,
+				4C8AF51B158E99520026668C /* TDChanBanSheet.m */,
+				4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */,
 				4C8AF51D158E99520026668C /* TDChannelSheet.m */,
 				4C8AF51E158E99520026668C /* TDCHighlightSheet.m */,
 				4C8AF51F158E99520026668C /* TDCInviteSheet.m */,
+				4C8AF520158E99520026668C /* TDCListDialog.m */,
 				4C8AF521158E99520026668C /* TDCModeSheet.m */,
 				4C8AF522158E99520026668C /* TDCNickSheet.m */,
 				4C8AF523158E99520026668C /* TDCServerSheet.m */,
@@ -1284,7 +1295,7 @@
 			name = Dialogs;
 			sourceTree = "<group>";
 		};
-		4C8AF50F158E99520026668C /* Controllers ⎀ */ = {
+		4C8AF50F158E99520026668C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
@@ -1293,19 +1304,7 @@
 				4C8AF511158E99520026668C /* TXMasterController.m */,
 				4C8AF512158E99520026668C /* TXMenuController.m */,
 			);
-			name = "Controllers ⎀";
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		4C8AF513158E99520026668C /* Dialogs */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */,
-				4C8AF51B158E99520026668C /* TDChanBanSheet.m */,
-				4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */,
-				4C8AF520158E99520026668C /* TDCListDialog.m */,
-			);
-			path = Dialogs;
 			sourceTree = "<group>";
 		};
 		4C8AF514158E99520026668C /* Preferences */ = {
@@ -1458,14 +1457,6 @@
 			path = "Helpers/External Libraries/Google";
 			sourceTree = "<group>";
 		};
-		4C8AF5B3158E99520026668C /* IRC */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF5B9158E99520026668C /* IRCClient.m */,
-			);
-			path = IRC;
-			sourceTree = "<group>";
-		};
 		4C8AF5B4158E99520026668C /* Address Book */ = {
 			isa = PBXGroup;
 			children = (
@@ -1512,12 +1503,11 @@
 			path = Sockets;
 			sourceTree = "<group>";
 		};
-		4C8AF5E7158E99520026668C /* Others ⎀ */ = {
+		4C8AF5E7158E99520026668C /* Others */ = {
 			isa = PBXGroup;
 			children = (
 				4C8AF5E8158E99520026668C /* main.m */,
 			);
-			name = "Others ⎀";
 			path = Others;
 			sourceTree = "<group>";
 		};
@@ -1531,7 +1521,7 @@
 			path = Preferences/Themes;
 			sourceTree = "<group>";
 		};
-		4C8AF5EF158E99520026668C /* Views ⎀ */ = {
+		4C8AF5EF158E99520026668C /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				4C8AF5F0158E99520026668C /* Channel View */,
@@ -1547,7 +1537,6 @@
 				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
 				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
 			);
-			name = "Views ⎀";
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -1632,32 +1621,7 @@
 			name = Mustache;
 			sourceTree = "<group>";
 		};
-		4C950BFB16D5F99300A93D8D /* Version 3.0.0 */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF50F158E99520026668C /* Controllers ⎀ */,
-				4C7A309D16DAC1F500B231DE /* Dialogs */,
-				4C8AF527158E99520026668C /* Headers */,
-				4C950C0216D6C61D00A93D8D /* Helpers ⎀ */,
-				4CFF8DBD16DC4CBA00E4204D /* IRC */,
-				4C950BFD16D68DD700A93D8D /* Library ⎀ */,
-				4C8AF5E7158E99520026668C /* Others ⎀ */,
-				4CD1FB0E16D7D4500085BC82 /* Preferences ⎀ */,
-				4C8AF5EF158E99520026668C /* Views ⎀ */,
-			);
-			name = "Version 3.0.0";
-			sourceTree = "<group>";
-		};
-		4C950BFC16D5F9AB00A93D8D /* Version 2.1.2 */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF513158E99520026668C /* Dialogs */,
-				4C8AF5B3158E99520026668C /* IRC */,
-			);
-			name = "Version 2.1.2";
-			sourceTree = "<group>";
-		};
-		4C950BFD16D68DD700A93D8D /* Library ⎀ */ = {
+		4C950BFD16D68DD700A93D8D /* Library */ = {
 			isa = PBXGroup;
 			children = (
 				4C8AF5C7158E99520026668C /* Color Formatting */,
@@ -1676,10 +1640,10 @@
 				4C8AF5E5158E99520026668C /* TLOTimer.m */,
 				4C8AF5E6158E99520026668C /* TLOTimerCommand.m */,
 			);
-			name = "Library ⎀";
+			name = Library;
 			sourceTree = "<group>";
 		};
-		4C950C0216D6C61D00A93D8D /* Helpers ⎀ */ = {
+		4C950C0216D6C61D00A93D8D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				4C8AF599158E99520026668C /* Cocoa (Objective-C) */,
@@ -1687,7 +1651,7 @@
 				4CBCF89F16C7D0B300DC3521 /* Plugin Architecture */,
 				4C950C0316D6C64300A93D8D /* Threading */,
 			);
-			name = "Helpers ⎀";
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		4C950C0316D6C64300A93D8D /* Threading */ = {
@@ -1757,14 +1721,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4CD1FB0E16D7D4500085BC82 /* Preferences ⎀ */ = {
+		4CD1FB0E16D7D4500085BC82 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
 				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
 			);
-			name = "Preferences ⎀";
+			name = Preferences;
 			sourceTree = "<group>";
 		};
 		4CDDF3421678C5DF00FE8684 /* Encryption Badges */ = {
@@ -1794,6 +1758,7 @@
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
+				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 				4C8AF5BB158E99520026668C /* IRCConnection.m */,
 				4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */,

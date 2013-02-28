@@ -60,15 +60,6 @@
     [self startSheet];
 }
 
-- (void)cancel:(id)sender
-{
-	if ([self.delegate respondsToSelector:@selector(chanBanDialogWillClose:)]) {
-		[self.delegate chanBanDialogWillClose:self];
-	}
-
-	[super cancel:nil];
-}
-
 - (void)clear
 {
     [self.banList removeAllObjects];
@@ -137,7 +128,7 @@
         [self.changeModeList safeAddObject:modeString];
     }
 
-	[self cancel:nil];
+	[super cancel:nil];
 }
 
 #pragma mark -
@@ -159,6 +150,16 @@
     } else {
 		return [item safeObjectAtIndex:2];
     }
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(chanBanDialogWillClose:)]) {
+		[self.delegate chanBanDialogWillClose:self];
+	}
 }
 
 @end

@@ -39,15 +39,16 @@
 
 @interface TDCListDialog : NSWindowController
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, assign) NSInteger sortKey;
-@property (nonatomic, assign) NSComparisonResult sortOrder;
-@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, nweak) NSButton *updateButton;
+@property (nonatomic, nweak) NSSearchField *searchField;
+@property (nonatomic, nweak) NSTextField *channelCountField;
+@property (nonatomic, nweak) NSTextField *networkNameField;
+@property (nonatomic, nweak) TVCListView *channelListTable;
+@property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
-@property (nonatomic, strong) TVCListView *table;
-@property (nonatomic, strong) NSSearchField *filterText;
-@property (nonatomic, strong) NSButton *updateButton;
-@property (nonatomic, strong) NSTextField *channelCount;
-@property (nonatomic, strong) NSTextField *networkName;
+@property (nonatomic, assign) NSComparisonResult sortOrder;
+@property (nonatomic, assign) NSInteger sortKey;
 
 - (void)start;
 - (void)show;
@@ -57,8 +58,8 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic;
 
 - (void)onClose:(id)sender;
+
 - (void)onUpdate:(id)sender;
-- (void)onJoin:(id)sender;
 - (void)onSearchFieldChange:(id)sender;
 @end
 
