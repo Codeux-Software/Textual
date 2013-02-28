@@ -109,7 +109,6 @@ a:hover {
 	color: #a39888;
 	z-index: 400;
 	opacity: 0; /* Set by JavaScript */
-	font-size: 13px;
 	line-height: 145%;
 	position: fixed;
 	background: -webkit-linear-gradient(top, #494949 0%, #282828 100%);
