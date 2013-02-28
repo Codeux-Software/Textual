@@ -38,11 +38,18 @@
 #define DH1080RequiredKeyLength		135
 
 @interface DH1080Base : NSObject
+- (void)initalizeKeyExchange; // Do not call.
+
 - (void)computeKey;
 - (void)setKeyForComputation:(NSString *)publicKey;
 
+- (void)resetStatus;
+- (void)resetPublicInformation;
+
 - (NSString *)secretStringValue;
-- (NSString *)publicKeyValue;
+
+- (NSString *)rawPublicKey;
+- (NSString *)publicKeyValue:(NSString *)publicInput;
 
 - (NSString *)base64Encode:(NSString *)input;
 - (NSString *)base64Decode:(NSString *)input;

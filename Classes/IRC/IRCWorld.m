@@ -431,7 +431,7 @@
 	NSString *uid = self.previousSelectedClientId;
 	NSString *cid = self.previousSelectedChannelId;
 	
-	IRCTreeItem *item;
+	IRCTreeItem *item = nil;
 	
 	if (NSObjectIsEmpty(cid)) {
 		item = [self findClientById:uid];
