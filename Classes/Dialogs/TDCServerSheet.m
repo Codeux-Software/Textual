@@ -294,6 +294,8 @@
 			self.config.serverAddress = (self.serverList)[realhost];
 		}
 	}
+
+    self.config.serverAddress = self.config.serverAddress.lowercaseString;
 	
 	if (NSObjectIsEmpty(self.serverNameField.stringValue)) {
 		if (NSObjectIsEmpty(realhost)) {
@@ -341,6 +343,8 @@
 	self.config.proxyPort		= self.proxyPortField.integerValue;
 	self.config.proxyUsername	= self.proxyUsernameField.firstTokenStringValue;
 	self.config.proxyPassword	= self.proxyPasswordField.firstTokenStringValue;
+
+    self.config.proxyAddress = self.config.proxyAddress.lowercaseString;
 
 	if (NSObjectIsEmpty(self.config.proxyAddress)) {
 		self.config.proxyType = TXConnectionNoProxyType;
