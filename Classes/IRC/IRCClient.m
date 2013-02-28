@@ -480,7 +480,7 @@
 	if ([self isSupportedMessageEncryptionFormat:(*message) channel:channel]) {
 		NSString *newstr = [CSFWBlowfish encodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
 
-		if ((*message).length < 5) {
+		if (newstr.length < 5) {
 			[self printDebugInformation:TXTLS(@"BlowfishEncryptionFailed") channel:channel];
 
 			return NO;
