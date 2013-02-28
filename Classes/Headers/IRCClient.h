@@ -155,6 +155,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (void)sendCommand:(id)str;
 - (void)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
 - (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat;
 - (void)inputText:(id)str command:(NSString *)command;
 
 - (void)sendLine:(NSString *)str;

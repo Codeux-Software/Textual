@@ -867,6 +867,11 @@
 
 - (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel
 {
+    [self sendText:str command:command channel:channel withEncryption:YES];
+}
+
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat
+{
 	NSObjectIsEmptyAssert(str);
 	NSObjectIsEmptyAssert(command);
 	
@@ -896,8 +901,10 @@
 
 			[self print:channel type:type nick:self.myNick text:newstr];
 
-			NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
-
+            if (encryptChat) {
+                NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
+            }
+            
 			if (type == TVCLogLineActionType) {
 				command = IRCPrivateCommandIndex("privmsg");
 

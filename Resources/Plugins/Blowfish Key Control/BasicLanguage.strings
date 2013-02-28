@@ -49,4 +49,9 @@
 "BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for \002%@\002 has expired.";
 "BlowfishKeyExchangeResponseSent" = "Key exchange response has been sent to \002%@\002.";
 "BlowfishKeyExchangeResponseReceived" = "Received key exchange response from \002%@\002. Processing …";
-"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
+
+"BlowfishKeyExchangeCannotHandleEncryptedRequest_1" = "Cannot process key exchange request from \002%@\002 until the active encryption keys are reset.";
+"BlowfishKeyExchangeCannotHandleEncryptedRequest_2" = "Cannot process key exchange request for \002%@\002 until the active encryption keys are reset.";
+
+"BlowfishKeyExchangeErrorOccurred_1" = "Key exchange failed: failure to generate public key.";
+"BlowfishKeyExchangeErrorOccurred_2" = "Key exchange failed: failure to compute secret from public key.";

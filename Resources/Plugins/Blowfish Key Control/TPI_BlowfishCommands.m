@@ -155,13 +155,15 @@
 			} else {
 				if ([self keyExchangeRequestExists:c]) {
 					[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
-				} else {
+				} else if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+                    [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_2", c.name) channel:c];
+                } else {
 					CFDH1080 *keyRequest = [CFDH1080 new];
 
-					NSString *publicKey = [keyRequest generatePublicKey];
+					NSString *publicKey = [keyRequest generatePublicKey:YES];
 
 					if (NSObjectIsEmpty(publicKey)) {
-						[client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:c];
+						[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:c];
 					} else {
 						NSString *requestKey = [self keyExchangeDictionaryKey:c];
 						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
@@ -210,18 +212,28 @@
 
 - (void)keyExchangeRequestReceived:(NSString *)requestData on:(IRCClient *)client from:(NSString *)requestSender
 {
+    [self keyExchangeRequestReceived:requestData on:client from:requestSender withRecursion:0];
+}
+
+- (void)keyExchangeRequestReceived:(NSString *)requestDataRaw on:(IRCClient *)client from:(NSString *)requestSender withRecursion:(NSInteger)recursionCount
+{
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
-	requestData = [requestData safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
+    if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+
+        return;
+    }
+
+	NSString *requestData = [requestDataRaw safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
 
 	//DebugLogToConsole(@"Key Exchange Request Received:");
 	//DebugLogToConsole(@"	Client: %@", client);
 	//DebugLogToConsole(@"	Channel: %@", channel);
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
-	[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
-
 	if ([self keyExchangeRequestExists:channel]) {
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", channel.name) channel:channel];
 	} else {
 		CFDH1080 *keyRequest = [CFDH1080 new];
@@ -230,29 +242,49 @@
 		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
+            if (recursionCount >= 0 && recursionCount <= 5) {
+                return [self keyExchangeRequestReceived:requestDataRaw on:client from:requestSender withRecursion:(recursionCount + 1)];
+            }
+            
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+            [client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
+
+            return;
+		}
+
+		/* Generate our own public key. If everything has gone correctly up to here,
+		 then when the user that sent the request computes our public key, we both
+		 should have the same secret. */
+		NSString *publicKey = [keyRequest generatePublicKey:NO];
+
+		if (NSObjectIsEmpty(publicKey)) {
+            /* If we failed to generate our public key, then let us try running this request one more
+             time by creating a brand new instance of CFDH1080 to make up for any possible error that
+             may have unexpectedly resulted in a bad public key. */
+
+            if (recursionCount >= 0 && recursionCount <= 5) {
+                return [self keyExchangeRequestReceived:requestDataRaw on:client from:requestSender withRecursion:(recursionCount + 1)];
+            }
+
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+			[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:channel];
+
+            return;
 		}
 
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 
 		channel.config.encryptionKey = theSecret;
 
-		/* Generate our own public key. If everything has gone correctly up to here,
-		 then when the user that sent the request computes our public key, we both
-		 should have the same secret. */
-		NSString *publicKey = [keyRequest generatePublicKey];
-
-		if (NSObjectIsEmpty(publicKey)) {
-			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
-		}
-
 		/* Finish up. */
 		NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
 
 		[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
 				 command:IRCPrivateCommandIndex("notice")
-				 channel:channel];
+				 channel:channel
+          withEncryption:NO];
 
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
@@ -273,6 +305,12 @@
 
 		CFDH1080 *request = exchangeData[0];
 		IRCChannel *channel = exchangeData[1];
+        
+        if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+
+            return;
+        }
 		
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseReceived", channel.name) channel:channel];
 		
@@ -282,7 +320,7 @@
 		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeUnknownErrorOccurred") channel:channel];
+			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);

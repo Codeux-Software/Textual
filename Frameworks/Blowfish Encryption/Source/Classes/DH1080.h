@@ -36,6 +36,6 @@
  *********************************************************************** */
 
 @interface CFDH1080 : NSObject
-- (NSString *)generatePublicKey;
+- (NSString *)generatePublicKey:(BOOL)enforceKeyLength;
 - (NSString *)secretKeyFromPublicKey:(NSString *)publicKey;
 @end

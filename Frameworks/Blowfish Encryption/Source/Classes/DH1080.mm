@@ -50,7 +50,7 @@
 {
 	if ((self = [super init])) {
 		self.keyExchanger = [DH1080Base new];
-		
+
 		return self;
 	}
 
@@ -64,13 +64,42 @@
 
 #pragma mark -
 
-- (NSString *)generatePublicKey
+- (NSString *)generatePublicKey:(BOOL)enforceKeyLength
 {
-	NSString *publicKey = [self.keyExchanger publicKeyValue];
-		
-	if (publicKey.length >= 1) {
-		return publicKey;
-	}
+	NSString *publicKeyRaw = [self.keyExchanger rawPublicKey];
+
+    /* During development there were times when the generated key were not the
+     correct length making key exchange fail on each end. If the length of the
+     public key is not correct, then we will reset and create it again several
+     times until we have one that is. The loop is limited to prevent it from 
+     ending up being infinitely ran. */
+
+    if ((publicKeyRaw.length == DH1080RequiredKeyLength) == NO && enforceKeyLength) {
+       NSInteger loopIndex = 0;
+
+        while (1 == 1) {
+            if (loopIndex > 10) {
+                break;
+            }
+            
+            [self.keyExchanger resetStatus];
+            [self.keyExchanger resetPublicInformation];
+
+            [self.keyExchanger initalizeKeyExchange];
+
+            publicKeyRaw = [self.keyExchanger rawPublicKey];
+
+            if (publicKeyRaw.length == DH1080RequiredKeyLength) {
+                break;
+            }
+
+            loopIndex += 1;
+        }
+    }
+
+    if (publicKeyRaw.length == DH1080RequiredKeyLength) {
+        return [self.keyExchanger publicKeyValue:publicKeyRaw];
+    }
 
 	return nil;
 }
