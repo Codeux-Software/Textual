@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSArray *tabViewList;
 @property (nonatomic, strong) NSDictionary *serverList;
+@property (nonatomic, strong) NSDictionary *encodingList;
 @property (nonatomic, strong) IRCClientConfig *config;
 @property (nonatomic, nweak) NSButton *addChannelButton;
 @property (nonatomic, nweak) NSButton *addIgnoreButton;

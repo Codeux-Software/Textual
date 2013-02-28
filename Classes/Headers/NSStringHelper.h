@@ -58,6 +58,10 @@
 
 + (NSString *)stringWithUUID;
 
++ (NSArray *)supportedStringEncodings:(BOOL)favorUTF8;
+
++ (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8;
+
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex;

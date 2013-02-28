@@ -137,6 +137,17 @@
 	return NSObjectIsNotEmpty([self keyIgnoringCase:baseKey]);
 }
 
+- (NSString *)firstKeyForObject:(id)object
+{
+	for (NSString *key in [self allKeys]) {
+		if ([object isEqual:self[key]]) {
+			return key;
+		}
+	}
+
+	return nil;
+}
+
 - (NSString *)keyIgnoringCase:(NSString *)baseKey
 {
 	for (NSString *key in [self allKeys]) {
