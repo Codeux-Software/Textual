@@ -108,7 +108,7 @@
 		return ary;
 	} else if (self.nickname) {
 		self.menuController.pointedNickname = self.nickname;
-		
+
 		self.nickname = nil;
 
 		BOOL isIRCop = self.worldController.selectedClient.hasIRCopAccess;
