@@ -52,6 +52,8 @@
 - (TXNSDouble)doubleForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
 
+- (NSString *)firstKeyForObject:(id)object;
+
 - (BOOL)containsKey:(NSString *)baseKey;
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
 

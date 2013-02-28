@@ -75,6 +75,26 @@
 		for (NSString *key in sortedKeys) {
 			[self.serverAddressCombo addItemWithObjectValue:key];
 		}
+
+        /* Build list of encodings. */
+        self.encodingList = [NSString supportedStringEncodingsWithTitle:NO];
+
+        /* What we are basically doing now is sorting all the encodings, then removing
+         UTF-8 from the sorted list and inserting it at the top of the list. */
+        NSString *utf8title = [NSString localizedNameOfStringEncoding:NSUTF8StringEncoding];
+
+        NSMutableArray *encodingAdditions = [self.encodingList.sortedDictionaryKeys mutableCopy];
+
+        [encodingAdditions removeObject:utf8title];
+
+        [self.primaryEncodingButton addItemWithTitle:utf8title];
+        [self.fallbackEncodingButton addItemWithTitle:utf8title];
+
+        [self.primaryEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+        [self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+        
+        [self.primaryEncodingButton addItemsWithTitles:encodingAdditions];
+        [self.fallbackEncodingButton addItemsWithTitles:encodingAdditions];
 	}
     
 	return self;
@@ -245,8 +265,11 @@
 	self.normalLeavingCommentField.stringValue = self.config.normalLeavingComment;
 	
 	/* Encoding */
-	[self.primaryEncodingButton	selectItemWithTag:self.config.primaryEncoding];
-	[self.fallbackEncodingButton selectItemWithTag:self.config.fallbackEncoding];
+    NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
+    NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
+
+    [self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
+    [self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
 	
 	/* Proxy Server */
 	[self.proxyTypeButton selectItemWithTag:self.config.proxyType];
@@ -334,8 +357,11 @@
 	self.config.normalLeavingComment		= self.normalLeavingCommentField.stringValue;
 	
 	/* Encoding */
-	self.config.primaryEncoding		= self.primaryEncodingButton.selectedTag;
-	self.config.fallbackEncoding	= self.fallbackEncodingButton.selectedTag;
+    NSInteger primaryEncoding = [self.encodingList integerForKey:self.primaryEncodingButton.title];
+    NSInteger fallbackEncoding = [self.encodingList integerForKey:self.fallbackEncodingButton.title];
+    
+	self.config.primaryEncoding		= primaryEncoding;
+	self.config.fallbackEncoding	= fallbackEncoding;
 	
 	/* Proxy Server */
 	self.config.proxyType		= self.proxyTypeButton.selectedTag;
@@ -368,6 +394,8 @@
 	
     self.config.floodControlMaximumMessages = self.floodControlMessageCountSlider.integerValue;
     self.config.floodControlDelayTimerInterval = self.floodControlDelayTimerSlider.integerValue;
+
+    /* @end */
 }
 
 - (void)updateConnectionPage
@@ -443,7 +471,9 @@
 
 - (void)primaryEncodingChanged:(id)sender
 {
-	[self.fallbackEncodingButton setEnabled:(self.primaryEncodingButton.selectedTag == NSUTF8StringEncoding)];
+    NSInteger encoding = [self.encodingList integerForKey:self.primaryEncodingButton.title];
+    
+	[self.fallbackEncodingButton setEnabled:(encoding == NSUTF8StringEncoding)];
 }
 
 - (void)proxyTypeChanged:(id)sender

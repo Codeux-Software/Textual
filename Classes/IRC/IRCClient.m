@@ -356,22 +356,15 @@
 
 - (NSArray *)encodingDictionary
 {
-	/* This needs to be improved. */
-	
-	return @[
-		@(self.config.primaryEncoding),
-		@(self.config.fallbackEncoding),
-		@(NSUTF8StringEncoding),
-		@(NSISOLatin1StringEncoding),
-		@(NSISOLatin2StringEncoding),
-		@(NSUnicodeStringEncoding),
-		@(NSASCIIStringEncoding),
-		@([NSString defaultCStringEncoding])
-	];
+    NSArray *primaryDict = @[@(self.config.primaryEncoding), @(self.config.fallbackEncoding)];
+    NSArray *fallbackDict = [NSString supportedStringEncodings:YES];
+
+    return [primaryDict arrayByAddingObjectsFromArray:fallbackDict];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
+    LogToConsole(@"%i", self.config.primaryEncoding);
 	NSArray *encodings = [self encodingDictionary];
 
 	for (id base in encodings) {

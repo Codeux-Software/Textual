@@ -62,8 +62,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, assign) BOOL outgoingFloodControl;
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;
-@property (nonatomic, assign) NSStringEncoding fallbackEncoding;
-@property (nonatomic, assign) NSStringEncoding primaryEncoding;
+@property (nonatomic, assign) NSInteger fallbackEncoding;
+@property (nonatomic, assign) NSInteger primaryEncoding;
 @property (nonatomic, assign) TXConnectionProxyType proxyType;
 @property (nonatomic, strong) NSMutableArray *alternateNicknames;
 @property (nonatomic, strong) NSMutableArray *channelList;
