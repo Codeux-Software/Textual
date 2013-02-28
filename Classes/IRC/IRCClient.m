@@ -364,7 +364,6 @@
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
-    LogToConsole(@"%i", self.config.primaryEncoding);
 	NSArray *encodings = [self encodingDictionary];
 
 	for (id base in encodings) {
