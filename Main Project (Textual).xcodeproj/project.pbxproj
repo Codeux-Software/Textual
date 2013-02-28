@@ -721,13 +721,13 @@
 		4C8AF5BB158E99520026668C /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnection.m; path = IRC/IRCConnection.m; sourceTree = "<group>"; };
 		4C8AF5BC158E99520026668C /* IRCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCExtras.m; path = IRC/IRCExtras.m; sourceTree = "<group>"; };
 		4C8AF5BD158E99520026668C /* IRCISupportInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCISupportInfo.m; path = IRC/IRCISupportInfo.m; sourceTree = "<group>"; };
-		4C8AF5BE158E99520026668C /* IRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCMessage.m; sourceTree = "<group>"; };
+		4C8AF5BE158E99520026668C /* IRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCMessage.m; path = IRC/IRCMessage.m; sourceTree = "<group>"; };
 		4C8AF5BF158E99520026668C /* IRCModeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCModeInfo.m; path = IRC/IRCModeInfo.m; sourceTree = "<group>"; };
 		4C8AF5C0158E99520026668C /* IRCPrefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCPrefix.m; path = IRC/IRCPrefix.m; sourceTree = "<group>"; };
 		4C8AF5C1158E99520026668C /* IRCSendingMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCSendingMessage.m; path = IRC/IRCSendingMessage.m; sourceTree = "<group>"; };
 		4C8AF5C2158E99520026668C /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCTreeItem.m; path = IRC/IRCTreeItem.m; sourceTree = "<group>"; };
 		4C8AF5C3158E99520026668C /* IRCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUser.m; path = IRC/IRCUser.m; sourceTree = "<group>"; };
-		4C8AF5C4158E99520026668C /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
+		4C8AF5C4158E99520026668C /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorld.m; path = IRC/IRCWorld.m; sourceTree = "<group>"; };
 		4C8AF5C8158E99520026668C /* IRCColorFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCColorFormat.m; sourceTree = "<group>"; };
 		4C8AF5D1158E99520026668C /* AGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGKeychain.m; sourceTree = "<group>"; };
 		4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -1462,8 +1462,6 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
-				4C8AF5BE158E99520026668C /* IRCMessage.m */,
-				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 			);
 			path = IRC;
 			sourceTree = "<group>";
@@ -1801,11 +1799,13 @@
 				4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */,
 				4C8AF5BC158E99520026668C /* IRCExtras.m */,
 				4C8AF5BD158E99520026668C /* IRCISupportInfo.m */,
+				4C8AF5BE158E99520026668C /* IRCMessage.m */,
 				4C8AF5BF158E99520026668C /* IRCModeInfo.m */,
 				4C8AF5C0158E99520026668C /* IRCPrefix.m */,
 				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
 				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
 				4C8AF5C3158E99520026668C /* IRCUser.m */,
+				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
