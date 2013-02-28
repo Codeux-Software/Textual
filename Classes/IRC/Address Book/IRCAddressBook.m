@@ -43,10 +43,9 @@
 {
 	if ((self = [super init])) {
 		self.itemUUID = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", [NSString stringWithUUID]);
-
-		self.hostmask = NSDictionaryObjectKeyValueCompare(dic, @"hostmask", nil);
 		
 		self.notifyJoins				= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
+        
 		self.ignoreCTCP					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
 		self.ignoreJPQE					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
 		self.ignoreNotices				= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreNotices", NO);
@@ -56,6 +55,8 @@
 		self.ignorePublicMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
 
 		self.entryType = NSDictionaryIntegerKeyValueCompare(dic, @"entryType", IRCAddressBookIgnoreEntryType);
+
+		self.hostmask = NSDictionaryObjectKeyValueCompare(dic, @"hostmask", nil);
 
 		return self;
 	}
@@ -82,7 +83,7 @@
 	if ([hostmask isEqualToString:self.hostmask]) {
 		return;
 	}
-	
+
 	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
         hostmask = [hostmask nicknameFromHostmask];
         
@@ -152,6 +153,7 @@
 	[dic setBool:self.ignoreNotices				forKey:@"ignoreNotices"];
 	[dic setBool:self.ignoreCTCP				forKey:@"ignoreCTCP"];
 	[dic setBool:self.ignoreJPQE				forKey:@"ignoreJPQE"];
+    
 	[dic setBool:self.notifyJoins				forKey:@"notifyJoins"];
 	
 	return dic;
