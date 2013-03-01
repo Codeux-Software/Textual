@@ -124,9 +124,9 @@
 {
 	if ([_topic isEqualToString:topic] == NO) {
 		_topic = topic;
-
-		[self.viewController setTopic:topic];
 	}
+
+    [self.viewController setTopic:topic];
 }
 
 #pragma mark -
