@@ -1189,6 +1189,11 @@
 #pragma mark -
 #pragma mark WebView Delegate
 
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+{
+    [[challenge sender] cancelAuthenticationChallenge:challenge];
+}
+
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
