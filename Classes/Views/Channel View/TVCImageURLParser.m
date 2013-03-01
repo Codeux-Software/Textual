@@ -174,14 +174,14 @@
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
 			}
-	} else if ([host hasSuffix:@"imgur.com"]) {
+	/* } else if ([host hasSuffix:@"imgur.com"]) {
 		if ([path hasPrefix:@"/gallery/"]) {
 			NSString *s = [path safeSubstringFromIndex:9];
 
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://i.imgur.com/%@.png", s];
 			}
-		}
+		} */
 	} else if ([host hasSuffix:@"d.pr"]) {
 		if ([path hasPrefix:@"/i/"]) {
 			NSString *s = [path safeSubstringFromIndex:3];
