@@ -75,6 +75,13 @@ Textual = {
         channelParted                   — Channel associated with this view has been parted.
         channelMemberAdded              — Member added to the channel associated with this view.
         channelMemberRemoved            — Member removed from the channel list associated with this view.
+        
+        These events are pushed when they occur. When a style is reloaded by Textual or
+        the end user, these events are not sent again. It is recommended to use a feature
+        of WebKit known as sessionStorage if these events are required to be known between
+        reloads. When a reload occurs to a style, the entire HTML and JavaScript is replaced
+        so the previous style will actuallly have no knowledge of the new one unless it is 
+        stored in a local database. 
     */
     handleEvent:                            function(eventToken) {}, 
 	
