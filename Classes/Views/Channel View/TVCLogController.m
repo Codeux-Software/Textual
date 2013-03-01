@@ -730,7 +730,7 @@
 	self.reloadingHistory = NO;
 	self.needsLimitNumberOfLines = NO;
 	
-	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+	[self loadAlternateHTML:[self initialDocument:self.channel.topic]];
 }
 
 - (void)clear
