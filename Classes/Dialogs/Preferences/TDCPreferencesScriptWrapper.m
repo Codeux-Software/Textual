@@ -52,6 +52,10 @@
 {
 	[self.scripts addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
 	[self.scripts addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
+
+    for (NSString *command in [RZPluginManager() dangerousCommandNames]) {
+        [self.scripts removeObject:command];
+    }
 	
 	[self.scripts sortUsingSelector:@selector(compare:)];
 }
