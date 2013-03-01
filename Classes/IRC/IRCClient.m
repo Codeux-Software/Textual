@@ -4670,7 +4670,7 @@
 - (void)onTrialPeriodTimer:(id)sender
 {
 	if (self.isLoggedIn) {
-		self.disconnectType = IRCTrialPeriodDisconnectMode;
+		self.disconnectType = IRCDisconnectTrialPeriodMode;
 
 		[self quit];
 	}
