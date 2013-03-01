@@ -2126,7 +2126,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -R \"${PROJECT_DIR}/Build Results/\"\nrm -R \"${PROJECT_DIR}/.tmp/\"\n";
+			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -rf \"${PROJECT_DIR}/Build Results/\"\nrm -rf \"${PROJECT_DIR}/.tmp/\"\n";
 		};
 		4C01BA0B15810DDE007E2DAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
