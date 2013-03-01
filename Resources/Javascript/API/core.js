@@ -67,9 +67,9 @@ Textual = {
         actions going on behind the schenes. The following event tokens are 
         currently supported. 
         
-        serverConnected                 - Server associated with this view is has connected.
+        serverConnected                 - Server associated with this view has connected.
         serverConnecting                - Server associated with this view is connecting.
-        serverDisconnected              - Server associated with this view is disconnected.
+        serverDisconnected              - Server associated with this view has disconnected.
         serverDisconnecting             - Server associated with this view is disconnecting.
         channelJoined                   - Channel associated with this view has been joined.
         channelParted                   — Channel associated with this view has been parted.
