@@ -3585,6 +3585,8 @@
 	[self startPongTimer];
 	[self stopRetryTimer];
 
+    [self postEventToViewController:@"serverConnected"];
+
 	/* Manage local variables. */
 	self.isupport.networkAddress = m.sender.hostmask;
 
@@ -4553,6 +4555,19 @@
 }
 
 #pragma mark -
+#pragma mark Post Events
+
+- (void)postEventToViewController:(NSString *)eventToken
+{
+    [self.viewController executeScriptCommand:@"handleEvent" withArguments:@[eventToken]];
+}
+
+- (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel
+{
+    [channel.viewController executeScriptCommand:@"handleEvent" withArguments:@[eventToken]];
+}
+
+#pragma mark -
 #pragma mark Timers
 
 - (void)startPongTimer
@@ -4861,6 +4876,8 @@
 	if (self.isQuitting) {
 		return;
 	}
+
+    [self postEventToViewController:@"serverConnecting"];
 	
 	[self stopReconnectTimer];
 
@@ -4931,6 +4948,8 @@
 	}
 
 	[self changeStateOff];
+
+    [self postEventToViewController:@"serverDisconnected"];
 }
 
 - (void)quit
@@ -4949,6 +4968,8 @@
 
 		return;
 	}
+
+    [self postEventToViewController:@"serverDisconnecting"];
 
 	self.isQuitting	= YES;
 	self.reconnectEnabled = NO;

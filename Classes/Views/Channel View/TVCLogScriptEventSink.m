@@ -153,6 +153,26 @@
 	[self.owner.policy nicknameDoubleClicked];
 }
 
+- (NSInteger)channelMemberCount
+{
+    return self.owner.channel.memberList.count;
+}
+
+- (NSInteger)serverChannelCount
+{
+    return self.owner.client.channels.count;
+}
+
+- (BOOL)serverIsConnected
+{
+    return self.owner.client.isLoggedIn;
+}
+
+- (BOOL)channelIsJoined
+{
+    return self.owner.channel.isActive;
+}
+
 - (void)print:(NSString *)s
 {
 }
