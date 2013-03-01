@@ -108,6 +108,9 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 - (BOOL)isReconnecting;
 
+- (void)postEventToViewController:(NSString *)eventToken;
+- (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
+
 - (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)channel;
