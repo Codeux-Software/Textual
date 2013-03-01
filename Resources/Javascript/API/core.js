@@ -80,6 +80,7 @@ Textual = {
 	
     /* The following API calls can be called at any time. */
     
+   // app.logToConsole(<input>)        - Log a message to the Mac OS console.
    // app.serverIsConnected()          - Boolean if associated server is connected.
    // app.channelIsJoined()            — Boolean if associated channel is joined.
    // app.channelMemberCount()         — Number of members on the channel associated with this view.
