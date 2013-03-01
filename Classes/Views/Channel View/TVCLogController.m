@@ -1031,38 +1031,32 @@
 	// Internally, TVCLogMessageBlock should only return a
 	// BOOL as NSValue or NSString absolute value.
 
-	BOOL rrslt = NO;
-
-	// ---- //
-
-	__block id stslt = nil;
+	__block BOOL rrslt = NO;
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		stslt = ((TVCLogMessageBlock)messageBlock)();
+		id stslt = ((TVCLogMessageBlock)messageBlock)();
+
+        // ---- //
+
+        if ([stslt isKindOfClass:[NSString class]]) {
+            if (NSObjectIsNotEmpty(stslt)) {
+                [self appendToDocumentBody:stslt];
+
+                if (self.reloadingBacklog || self.reloadingHistory) {
+                    // We move it to the top whenever a reload is in progress
+                    // so our loading screen message is always visible. Without
+                    // this call, each new message posted would scroll our view
+                    // back to the bottom.
+
+                    [self moveToTop];
+                }
+                
+                rrslt = YES;
+            }
+        } else {
+            rrslt = [stslt boolValue];
+        }
 	});
-
-	// ---- //
-
-	if ([stslt isKindOfClass:[NSString class]]) {
-		if (NSObjectIsNotEmpty(stslt)) {
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[self appendToDocumentBody:stslt];
-
-				if (self.reloadingBacklog || self.reloadingHistory) {
-					// We move it to the top whenever a reload is in progress
-					// so our loading screen message is always visible. Without
-					// this call, each new message posted would scroll our view
-					// back to the bottom.
-					
-					[self moveToTop];
-				}
-			}];
-
-			rrslt = YES;
-		}
-	} else {
-		rrslt = [stslt boolValue];
-	}
 
 	// ---- //
 
