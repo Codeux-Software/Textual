@@ -61,7 +61,32 @@ Textual = {
 	viewPositionMovedToHistoryIndicator: 	function() {},
 	viewPositionMovedToLine: 				function(lineNumber) {},
 	viewPositionMovedToTop: 				function() {},
+    
+    /* 
+        handleEvent allows a theme to recieve status information about several
+        actions going on behind the schenes. The following event tokens are 
+        currently supported. 
+        
+        serverConnected                 - Server associated with this view is has connected.
+        serverConnecting                - Server associated with this view is connecting.
+        serverDisconnected              - Server associated with this view is disconnected.
+        serverDisconnecting             - Server associated with this view is disconnecting.
+        channelJoined                   - Channel associated with this view has been joined.
+        channelParted                   — Channel associated with this view has been parted.
+        channelMemberAdded              — Member added to the channel associated with this view.
+        channelMemberRemoved            — Member removed from the channel list associated with this view.
+    */
+    handleEvent:                            function(eventToken) {}, 
 	
+    /* The following API calls can be called at any time. */
+    
+   // app.serverIsConnected()          - Boolean if associated server is connected.
+   // app.channelIsJoined()            — Boolean if associated channel is joined.
+   // app.channelMemberCount()         — Number of members on the channel associated with this view.
+   // app.serverChannelCount()         — Number of channels part of the server associated with this view.
+   //                                    This number does not count against the status of the channels being
+   //                                    against. They can be joined or all parted. It is only a raw count.
+
 	/* *********************************************************************** */
 	
 	scrollToBottomOfView: function()

@@ -157,11 +157,15 @@
 
 - (void)activate
 {
+    [self.client postEventToViewController:@"channelJoined" forChannel:self];
+    
 	[self resetStatus:IRCChannelJoined];
 }
 
 - (void)deactivate
 {
+    [self.client postEventToViewController:@"channelParted" forChannel:self];
+    
 	[self resetStatus:IRCChannelParted];
 }
 
@@ -282,6 +286,8 @@
 	
 	[self removeMember:user.nickname reload:NO];
 	[self sortedInsert:user];
+
+    [self.client postEventToViewController:@"channelMemberAdded" forChannel:self];
 	
 	if (reload) {
 		[self reloadMemberList];
@@ -303,6 +309,8 @@
 	
 	if (n >= 0) {
 		[self.memberList safeRemoveObjectAtIndex:n];
+
+        [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
 	}
 	
 	if (reload) {
