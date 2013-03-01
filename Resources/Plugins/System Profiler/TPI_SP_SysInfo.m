@@ -50,12 +50,13 @@
 + (NSString *)applicationActiveStyle
 {
 	NSString *fname = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+    NSString *ftype = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 
-	if (NSObjectIsNotEmpty(fname)) {
-		return TPIFLS(@"SystemInformationStyleCommandResult", fname);
-	}
-
-    return TPILS(@"SystemInformationStyleCommandResultError");
+    if ([ftype isEqualIgnoringCase:@"user"]) {
+		return TPIFLS(@"SystemInformationStyleCommandResultCustom", fname);
+    } else {
+		return TPIFLS(@"SystemInformationStyleCommandResultBundle", fname);
+    }
 }
 
 + (NSString *)applicationAndSystemUptime

@@ -77,8 +77,8 @@
 "SystemInformationFilesizeMB" = "%.2f MB";
 "SystemInformationFilesizeKB" = "%.2f KB";
 
-"SystemInformationStyleCommandResult" = "\002Current Style:\002 %@";
-"SystemInformationStyleCommandResultError" = "\002Current Style:\002 Unknown";
+"SystemInformationStyleCommandResultBundle" = "\002Current Style:\002 %@";
+"SystemInformationStyleCommandResultCustom" = "\002Current Style:\002 %@ (Custom)";
 
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
