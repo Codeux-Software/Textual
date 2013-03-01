@@ -148,7 +148,8 @@
 	self.isGatheringModeInfo = NO;
 	
 	self.status = newStatus;
-	self.topic = nil;
+
+    _topic = nil;
 	
 	[self.modeInfo clear];
 
@@ -165,6 +166,8 @@
 - (void)deactivate
 {
     [self.client postEventToViewController:@"channelParted" forChannel:self];
+
+    [self.viewController setTopic:nil];
     
 	[self resetStatus:IRCChannelParted];
 }
