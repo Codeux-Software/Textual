@@ -141,6 +141,19 @@
 #pragma mark -
 #pragma mark Extension Information.
 
+/* List of commands that may be part of Textual that we hide due to them
+ being known to the general populous may result in unexpected harm such as 
+ spamming by not understanding what they do. 
+ 
+ These commands are only excluded from the list of installed addons. We 
+ cannot actually prevent the user from executing them. */
+
+- (NSArray *)dangerousCommandNames
+{
+    return @[@"clone", @"cloned", @"unclone", @"hspam", @"spam"];
+}
+
+/* Everything else. */
 - (NSArray *)outputRulesForCommand:(NSString *)command
 {
 	NSMutableArray *allRules = [NSMutableArray array];
