@@ -949,6 +949,10 @@
 
 	// ---- //
 
+    attributes[@"configuredServerName"] = self.client.config.clientName;
+
+    // ---- //
+
 	[self writeLine:line attributes:attributes specialWrite:isSpecial];
 
 	// ************************************************************************** /
@@ -1081,7 +1085,9 @@
 	
 	templateTokens[@"cacheToken"]				= [NSString stringWithInteger:TXRandomNumber(5000)];
 
-	// ---- //
+    templateTokens[@"configuredServerName"]     = self.client.config.clientName;
+
+    // ---- //
 
 	if (self.channel) {
 		templateTokens[@"isChannelView"]  = @(YES);
