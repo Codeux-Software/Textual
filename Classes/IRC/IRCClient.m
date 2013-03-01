@@ -3482,11 +3482,12 @@
 	// extensions can be found at: http://ircv3.atheme.org
 
 	return ([cap isEqualIgnoringCase:@"identify-msg"]			||
-			[cap isEqualIgnoringCase:@"identify-ctcp"]		||
+			[cap isEqualIgnoringCase:@"identify-ctcp"]          ||
 			[cap isEqualIgnoringCase:@"multi-prefix"]			||
-			[cap isEqualIgnoringCase:@"userhost-in-names"]	||
+			[cap isEqualIgnoringCase:@"userhost-in-names"]      ||
 			[cap isEqualIgnoringCase:@"server-time"]			||
-			[cap isEqualIgnoringCase:@"znc.in/server-time"]	||
+			[cap isEqualIgnoringCase:@"znc.in/server-time"]     ||
+            [cap isEqualIgnoringCase:@"znc.in/server-time-iso"] ||
 		   ([cap isEqualIgnoringCase:@"sasl"] && NSObjectIsNotEmpty(self.config.nicknamePassword)));
 }
 
