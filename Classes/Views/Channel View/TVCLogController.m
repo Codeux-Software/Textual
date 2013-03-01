@@ -988,7 +988,7 @@
 			[self.highlightedLineNumbers safeAddObject:@(self.activeLineNumber)];
 		}
 
-		[self executeScriptCommand:@"newMessagePostedToDisplay" withArguments:@[@(self.activeLineCount)]];
+		[self executeScriptCommand:@"newMessagePostedToView" withArguments:@[@(self.activeLineNumber)]];
 
 		[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
 											   toKey:[@(self.activeLineNumber) integerWithLeadingZero:10]];
