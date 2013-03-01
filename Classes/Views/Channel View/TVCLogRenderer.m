@@ -843,42 +843,36 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 {
 	NSArray *possibleColors = [NSColor possibleFormatterColors];
 
-	if ([color numberOfComponents] == 4) {
-		CGFloat _redc   = [color redComponent];
-		CGFloat _bluec  = [color blueComponent];
-		CGFloat _greenc = [color greenComponent];
-		CGFloat _alphac = [color alphaComponent];
+	if ([color numberOfComponents] < 4) {
+        color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    }
+    
+    CGFloat _redc   = [color redComponent];
+    CGFloat _bluec  = [color blueComponent];
+    CGFloat _greenc = [color greenComponent];
+    CGFloat _alphac = [color alphaComponent];
 
-		for (NSInteger i = 0; i <= 15; i++) {
-			NSColor *mapped = possibleColors[i];
+    for (NSInteger i = 0; i <= 15; i++) {
+        NSColor *mapped = possibleColors[i];
 
-			if ([mapped numberOfComponents] == 4) {
-				CGFloat redc   = [mapped redComponent];
-				CGFloat bluec  = [mapped blueComponent];
-				CGFloat greenc = [mapped greenComponent];
-				CGFloat alphac = [mapped alphaComponent];
+        if ([mapped numberOfComponents] == 4) {
+            CGFloat redc   = [mapped redComponent];
+            CGFloat bluec  = [mapped blueComponent];
+            CGFloat greenc = [mapped greenComponent];
+            CGFloat alphac = [mapped alphaComponent];
 
-				if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
-					TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
+            if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
+                TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
 
-					return i;
-				}
-			} else {
-				if ([color isEqual:mapped]) {
-					return i;
-				}
-			}
-		}
-	} else {
-		for (NSInteger i = 0; i <= 15; i++) {
-			NSColor *mapped = [TVCLogRenderer mapColorCode:i];
+                return i;
+            }
+        } else {
+            if ([color isEqual:mapped]) {
+                return i;
+            }
+        }
+    }
 
-			if ([color isEqual:mapped]) {
-				return i;
-			}
-		}
-	}
-	
 	return -1;
 }
 
