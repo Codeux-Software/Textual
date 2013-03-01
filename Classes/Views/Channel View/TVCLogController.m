@@ -148,6 +148,12 @@
 	}
 	
 	[self.historicLogFile reopenIfNeeded];
+
+    if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+        /* Reset our file if we do not want to load historic items. */
+        
+        [self.historicLogFile reset];
+    }
 }
 
 - (void)closeHistoricLog
