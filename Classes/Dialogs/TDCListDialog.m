@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TDCListDialog ()
+@property (nonatomic, assign) BOOL waitingForReload;
+@end
+
 @implementation TDCListDialog
 
 - (id)init
@@ -108,12 +112,28 @@
 		}
 
 		[self sortedInsert:item inArray:self.unfilteredList];
-		[self reloadTable];
+
+        /* Reload table instantly until we reach at least 200 channels. 
+         At that point we begin reloading every 2.0 seconds. For networks
+         large as Freenode with 12,000 channels. This is much better than 
+         a reload for each. */
+        
+        if (self.unfilteredList.count < 200) {
+            [self reloadTable];
+        } else {
+            if (self.waitingForReload == NO) {
+                self.waitingForReload = YES;
+                
+                [self performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
+            }
+        }
 	}
 }
 
 - (void)reloadTable
 {
+    self.waitingForReload = NO;
+    
 	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
 		[self.channelCountField setStringValue:TXTFLS(@"ListDialogHasSearchResults", self.unfilteredList.count, self.filteredList.count)];
 	} else {

@@ -350,10 +350,12 @@
 
 - (NSArray *)encodingDictionary
 {
-    NSArray *primaryDict = @[@(self.config.primaryEncoding), @(self.config.fallbackEncoding)];
-    NSArray *fallbackDict = [NSString supportedStringEncodings:YES];
+    return @[@(self.config.primaryEncoding), @(self.config.fallbackEncoding)];
+}
 
-    return [primaryDict arrayByAddingObjectsFromArray:fallbackDict];
+- (NSArray *)fallbackEncodingDictionary
+{
+    return [NSString supportedStringEncodings:YES];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
@@ -368,6 +370,17 @@
 		return s;
 	}
 
+    encodings = [self fallbackEncodingDictionary];
+
+	for (id base in encodings) {
+		NSData *s = [data dataUsingEncoding:[base integerValue]];
+
+		NSObjectIsEmptyAssertLoopContinue(s);
+
+		return s;
+	}
+
+
 	LogToConsole(@"NSData encode failure. (%@)", data);
 
 	return nil;
@@ -376,6 +389,16 @@
 - (NSString *)convertFromCommonEncoding:(NSData *)data
 {
 	NSArray *encodings = [self encodingDictionary];
+
+	for (id base in encodings) {
+		NSString *s = [NSString stringWithData:data encoding:[base integerValue]];
+
+		NSObjectIsEmptyAssertLoopContinue(s);
+
+		return s;
+	}
+
+    encodings = [self fallbackEncodingDictionary];
 
 	for (id base in encodings) {
 		NSString *s = [NSString stringWithData:data encoding:[base integerValue]];
@@ -2611,6 +2634,10 @@
 
 	[self.invokeInBackgroundThread processBundlesServerMessage:m];
 
+    if (m.numericReply == 322) { // Do not reload stuff for /list replies.322
+        return;
+    }
+
 	[self.worldController reloadTree];
 }
 
@@ -2916,7 +2943,8 @@
 					} else if ([text hasPrefix:@"You are now identified"] ||
 							   [text hasPrefix:@"You are already identified"] ||
 							   [text hasSuffix:@"you are now recognized."] ||
-							   [text hasPrefix:@"Password accepted"])
+							   [text hasPrefix:@"Password accepted"] ||
+                               [text hasPrefix:@"You are successfully identified"])
 					{
 						if ([TPCPreferences autojoinWaitsForNickServ]) {
 							if (self.isAutojoined == NO) {
