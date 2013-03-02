@@ -228,8 +228,16 @@
 - (BOOL)isNickname
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
-	
-	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO && self.length <= TXMaximumIRCNicknameLength);
+
+	for (NSInteger i = 0; i < self.length; ++i) {
+        NSString *c = [self stringCharacterAtIndex:i];
+
+		if ([IRCNicknameValidCharacters contains:c] == NO) {
+            return NO;
+        }
+	}
+    
+	return ([self isNotEqualTo:@"*"] && self.length <= TXMaximumIRCNicknameLength);
 }
 
 - (BOOL)isChannelName
