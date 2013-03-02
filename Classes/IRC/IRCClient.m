@@ -1193,7 +1193,7 @@
 			lowercaseCommand = uppercaseCommand.lowercaseString;
 
 			/* Destination. */
-			if (selChannel && selChannel.isChannel && type == TVCLogLineActionType && secretMsg == NO) {
+			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
 				targetChannelName = selChannel.name;
 			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName] == NO) {
 				targetChannelName = selChannel.name;
