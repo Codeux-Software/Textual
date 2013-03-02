@@ -48,8 +48,8 @@
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
 
-- (IBAction)onUpdate:(id)sender;
-- (IBAction)onRemoveExceptions:(id)sender;
+- (void)onUpdate:(id)sender;
+- (void)onRemoveExceptions:(id)sender;
 @end
 
 @interface NSObject (TXChanInviteExceptionSheetDelegate)

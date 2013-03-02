@@ -251,6 +251,20 @@
 }
 
 #pragma mark -
+#pragma mark Input Replacement
+
+- (id)processInterceptedInput:(id)input command:(NSString *)command
+{
+    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+        if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
+            input = [plugin.primaryClass interceptUserInput:input command:command];
+        }
+    }
+
+    return input;
+}
+
+#pragma mark -
 #pragma mark AppleScript Support.
 
 - (id)supportedAppleScriptCommands
