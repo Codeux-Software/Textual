@@ -1268,6 +1268,8 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
 
+    d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
+
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
 	
