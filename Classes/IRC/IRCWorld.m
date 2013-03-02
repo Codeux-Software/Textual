@@ -305,6 +305,8 @@
 {
 	PointerIsEmptyAssert(self.selectedItem);
 
+    str = [RZPluginManager() processInterceptedInput:str command:command];
+
 	[self.selectedItem.client inputText:str command:command];
 }
 
