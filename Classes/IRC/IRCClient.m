@@ -3358,7 +3358,7 @@
 
 	PointerIsEmptyAssert(c);
 
-	if (t) {
+	if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
 		[self.worldController destroyChannel:t];
 	}
 
