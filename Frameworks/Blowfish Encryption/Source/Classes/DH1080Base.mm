@@ -214,7 +214,13 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	DHAssertNO(secretHash.length >= 1);
 
-	return [self base64Encode:secretHash];
+    secretHash = [self base64Encode:secretHash];
+
+    if (secretHash.length > DH1080SecretValueReturnLength) {
+        secretHash = [secretHash substringToIndex:DH1080SecretValueReturnLength];
+    }
+
+    return secretHash;
 }
 
 - (NSString *)publicKeyValue:(NSString *)publicInput
