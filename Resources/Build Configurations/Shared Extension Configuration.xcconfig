@@ -1,0 +1,28 @@
+#include "Shared Release Configuration.xcconfig"
+
+// This configuration is designed for the Plugins folder of
+// Textual and assumes that the paths are relative to that
+// location.
+
+TEXTUAL_PROJECT_ROOT = ${SRCROOT}/../../../
+
+OBJROOT = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults
+
+SYMROOT = ${OBJROOT}
+BUILD_DIR = ${OBJROOT}
+TARGET_TEMP_DIR = ${OBJROOT}
+SHARED_PRECOMPS_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildPCH
+CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts
+
+CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Exceptions/Auxiliary.entitlements
+
+HEADER_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**"
+LIBRARY_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**"
+FRAMEWORK_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**" "${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts/**"
+
+// BUNDLE_LOADER is passed during the run script.
+//BUNDLE_LOADER = 
+
+DEAD_CODE_STRIPPING = YES
+PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES
+GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO
