@@ -4122,12 +4122,16 @@
 			NSString *username = [m paramAt:2];
 			NSString *flfields = [m paramAt:6];
 
+            BOOL isIRCop = NO;
+
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
 			flfields = [flfields substringFromIndex:1];
 
 			if ([flfields hasPrefix:@"*"]) {
 				flfields = [flfields substringFromIndex:1];
+
+                isIRCop = YES;
 			}
 
 			IRCUser *u = [c findMember:nickname];
@@ -4136,6 +4140,7 @@
 				u = [IRCUser new];
 
 				u.nickname = nickname;
+                u.isCop = isIRCop;
                 
 				u.supportInfo = self.isupport;
 			}

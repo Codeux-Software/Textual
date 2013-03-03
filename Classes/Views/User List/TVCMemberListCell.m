@@ -169,9 +169,63 @@
 #pragma mark -
 #pragma mark Cell Drawing
 
-- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+- (void)drawWithExpansionFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-    return NSZeroRect;
+    /* Hide yellow tooltip. */
+    [[NSColor clearColor] set];
+    NSRectFill(cellFrame);
+
+    /* Begin popover. */
+    TVCMemberListUserInfoPopover *userInfoPopover = self.masterController.memberListUserInfoPopover;
+
+    /* What permissions does the user have? */
+    NSString *permissions = @"UserHostmaskHoverTooltipMode_NA";
+
+    if (self.memberPointer.q) {
+        permissions = @"UserHostmaskHoverTooltipMode_Q";
+    } else if (self.memberPointer.a) {
+        permissions = @"UserHostmaskHoverTooltipMode_A";
+    } else if (self.memberPointer.o) {
+        permissions = @"UserHostmaskHoverTooltipMode_O";
+    } else if (self.memberPointer.h) {
+        permissions = @"UserHostmaskHoverTooltipMode_H";
+    } else if (self.memberPointer.v) {
+        permissions = @"UserHostmaskHoverTooltipMode_V";
+    }
+
+    permissions = TXTLS(permissions);
+
+    if (self.memberPointer.isCop) {
+        permissions = [permissions stringByAppendingString:TXTLS(@"UserHostmaskHoverTooltipMode_IRCop")];
+    }
+
+    /* User info. */
+    NSString *nickname = self.memberPointer.nickname;
+    NSString *username = self.memberPointer.username;
+    NSString *address = self.memberPointer.address;
+
+    if (NSObjectIsEmpty(username)) {
+        username = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+    }
+
+    if (NSObjectIsEmpty(address)) {
+        address = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+    }
+
+    /* Where is our cell? */
+	NSInteger rowIndex = [self.memberList rowAtPoint:cellFrame.origin];
+    
+    cellFrame = [self.memberList rectOfRow:rowIndex];
+
+    /* Pop our popover. */
+    userInfoPopover.nicknameField.stringValue = nickname;
+    userInfoPopover.usernameField.stringValue = username;
+    userInfoPopover.addressField.stringValue = address;
+    userInfoPopover.privilegesField.stringValue = permissions;
+
+    [userInfoPopover showRelativeToRect:cellFrame
+                                 ofView:view
+                          preferredEdge:NSMinXEdge];
 }
 
 - (NSColor *)highlightColorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView

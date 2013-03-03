@@ -37,26 +37,9 @@
 
 #import "TextualApplication.h"
 
-@interface IRCUser : NSObject
-@property (nonatomic, nweak) IRCISupportInfo *supportInfo;
-@property (nonatomic, strong) NSString *nickname;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *address;
-@property (nonatomic, assign) NSInteger colorNumber;
-@property (nonatomic, assign) BOOL q;
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL o;
-@property (nonatomic, assign) BOOL h;
-@property (nonatomic, assign) BOOL v;
-@property (nonatomic, assign) BOOL isCop;
-
-- (NSString *)mark;
-
-- (BOOL)isOp;
-- (BOOL)isHalfOp;
-
-- (NSString *)banMask;
-- (NSString *)hostmask;
-
-- (NSComparisonResult)compare:(IRCUser *)other;
+@interface TVCMemberListUserInfoPopover : NSPopover
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *addressField;
+@property (nonatomic, nweak) IBOutlet NSTextField *privilegesField;
 @end
