@@ -69,8 +69,10 @@
 	return TPIFLS(@"SystemInformationUptimeCommandResult", systemUptime, textualUptime);
 }
 
-+ (NSString *)applicationBandwidthStatistics:(IRCWorld *)world
++ (NSString *)applicationBandwidthStatistics
 {
+    IRCWorld *world = [TPI_SP_CompiledOutput worldController];
+
 	return TPIFLS(@"SystemInformationMsgcountCommandResult",
 				  TXFormattedNumber(world.messagesSent),
 				  TXFormattedNumber(world.messagesReceived),
