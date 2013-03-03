@@ -110,7 +110,8 @@
 
 - (NSColor *)userMarkBadgeBackgroundColor_V
 {
-	return [NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1];
+    return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:57 green:154 blue:199 alpha:1]
+                               invertedItem:[NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1]];
 }
 
 - (NSColor *)userMarkBadgeSelectedBackgroundColor
