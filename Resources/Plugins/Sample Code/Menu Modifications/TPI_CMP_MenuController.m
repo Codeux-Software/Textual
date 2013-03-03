@@ -41,11 +41,11 @@
 
 - (void)postLinkToTextualHomepage:(id)sender
 {
-	IRCClient *u = [self.world selectedClient];
+	IRCClient *u = [self.worldController selectedClient];
 	if (PointerIsEmpty(u)) return;
 
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[[u invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"%@, the Textual IRC Client can be downloaded from: http://www.textualapp.com/", m.nick]];
+		[[u invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"%@, the Textual IRC Client can be downloaded from: http://www.textualapp.com/", m.nickname]];
 	}
 	
 	[self deselectMembers:sender];
