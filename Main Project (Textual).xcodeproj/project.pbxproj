@@ -2532,14 +2532,6 @@
 			};
 			name = "Release + No Sandbox";
 		};
-		4C01BA021580C592007E2DAF /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "App Store Release";
-		};
 		4C01BA0615810DD8007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2579,16 +2571,6 @@
 				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
 			};
 			name = "Release + No Sandbox";
-		};
-		4C01BA0A15810DD8007E2DAF /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "appstore,modern";
-			};
-			name = "App Store Release";
 		};
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2687,30 +2669,6 @@
 			};
 			name = "Release (Trial)";
 		};
-		4CCF2F96158049A8006FFE21 /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CD6203016E31F2A00D780D6 /* Shared Release Configuration.xcconfig */;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_NEW_APPSTORE_ACCOUNT=1";
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
-				TEXTUAL_BUNDLE_ID = "";
-				TEXTUAL_GITREF_BUILD_ID = "";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "App Store Release";
-		};
-		4CCF2F97158049A8006FFE21 /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-			};
-			name = "App Store Release";
-		};
 		4CCF301215804DCE006FFE21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2743,14 +2701,6 @@
 			};
 			name = "Release + No Sandbox";
 		};
-		4CCF301615804DCE006FFE21 /* App Store Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "App Store Release";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2761,7 +2711,6 @@
 				4C01B9FF1580C592007E2DAF /* Release */,
 				4C01BA001580C592007E2DAF /* Release (Trial) */,
 				4C01BA011580C592007E2DAF /* Release + No Sandbox */,
-				4C01BA021580C592007E2DAF /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2773,7 +2722,6 @@
 				4C01BA0715810DD8007E2DAF /* Release */,
 				4C01BA0815810DD8007E2DAF /* Release (Trial) */,
 				4C01BA0915810DD8007E2DAF /* Release + No Sandbox */,
-				4C01BA0A15810DD8007E2DAF /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2785,7 +2733,6 @@
 				4C1DC56F1580420500A47BC9 /* Release */,
 				4CCF2F9015804987006FFE21 /* Release (Trial) */,
 				4CCF2F8E1580497B006FFE21 /* Release + No Sandbox */,
-				4CCF2F96158049A8006FFE21 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2797,7 +2744,6 @@
 				4C1DC5721580420500A47BC9 /* Release */,
 				4CCF2F9115804987006FFE21 /* Release (Trial) */,
 				4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */,
-				4CCF2F97158049A8006FFE21 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2809,7 +2755,6 @@
 				4CCF301315804DCE006FFE21 /* Release */,
 				4CCF301415804DCE006FFE21 /* Release (Trial) */,
 				4CCF301515804DCE006FFE21 /* Release + No Sandbox */,
-				4CCF301615804DCE006FFE21 /* App Store Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
