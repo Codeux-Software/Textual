@@ -93,7 +93,7 @@
 		} else if ([commandString isEqualToString:@"NETSTATS"]) {
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
 		} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics:client.worldController]];
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics]];
 		} else if ([commandString isEqualToString:@"DISKSPACE"]) {
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
 		} else if ([commandString isEqualToString:@"STYLE"]) {
