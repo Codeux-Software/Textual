@@ -261,7 +261,7 @@
 	[RZSpellChecker() ignoreWord:t inSpellDocumentWithTag:inputTextField.spellCheckerDocumentTag];
 
 	/* Create our final string. */
-	if (commandMode || channelMode) {
+	if (commandMode || channelMode || isAtStart == NO) {
 		if (isAtEnd) {
 			t = [t stringByAppendingString:NSStringWhitespacePlaceholder];
 		}
