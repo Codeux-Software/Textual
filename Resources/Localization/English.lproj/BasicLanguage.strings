@@ -303,6 +303,15 @@
 
 "Unknown" = "Unknown";
 
+"UserHostmaskHoverTooltipMode_NA" = "No Privileges";
+"UserHostmaskHoverTooltipMode_V" = "Voice";
+"UserHostmaskHoverTooltipMode_H" = "Half-op";
+"UserHostmaskHoverTooltipMode_O" = "Operator";
+"UserHostmaskHoverTooltipMode_A" = "Super Admin";
+"UserHostmaskHoverTooltipMode_Q" = "Channel Owner";
+"UserHostmaskHoverTooltipMode_IRCop" = " — Server Staff Member";
+"UserHostmaskHoverTooltipNoInfo" = "Information Not Available";
+
 "UserTrackingHostmaskConnected" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
 "UserTrackingHostmaskNoLongerAvailable" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
 "UserTrackingHostmaskNowAvailable" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
