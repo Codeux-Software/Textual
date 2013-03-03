@@ -122,6 +122,7 @@
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
+    @class TVCMemberListUserInfoPopover;
 	@class TVCServerList;
 	@class TVCServerListCell;
 	@class TVCTextFieldSTextView;
@@ -266,6 +267,7 @@
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
+    #import "TVCMemberListUserInfoPopover.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
 	#import "TVCTextField.h"
