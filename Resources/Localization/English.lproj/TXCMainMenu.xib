@@ -3979,7 +3979,7 @@
 			<object class="NSPopover" id="711524322">
 				<nil key="NSNextResponder"/>
 				<int key="NSAppearance">1</int>
-				<int key="NSBehavior">0</int>
+				<int key="NSBehavior">1</int>
 				<double key="NSContentWidth">0.0</double>
 				<double key="NSContentHeight">0.0</double>
 				<bool key="NSAnimates">YES</bool>
@@ -4021,7 +4021,7 @@
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="626050212">
-							<int key="NSCellFlags">67108928</int>
+							<int key="NSCellFlags">69206081</int>
 							<int key="NSCellFlags2">272632320</int>
 							<string key="NSContents">################################</string>
 							<reference key="NSSupport" ref="1042841078"/>
@@ -4041,7 +4041,7 @@
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="605396319">
-							<int key="NSCellFlags">67108928</int>
+							<int key="NSCellFlags">69206081</int>
 							<int key="NSCellFlags2">272632320</int>
 							<string key="NSContents">################################</string>
 							<reference key="NSSupport" ref="1042841078"/>
@@ -4062,7 +4062,7 @@
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="888597706">
-							<int key="NSCellFlags">67108928</int>
+							<int key="NSCellFlags">69206081</int>
 							<int key="NSCellFlags2">272632320</int>
 							<string key="NSContents">################################</string>
 							<reference key="NSSupport" ref="1042841078"/>
