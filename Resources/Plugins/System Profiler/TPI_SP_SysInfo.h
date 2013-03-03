@@ -40,7 +40,7 @@
 @interface TPI_SP_CompiledOutput : NSObject
 + (NSString *)applicationActiveStyle;
 + (NSString *)applicationAndSystemUptime;
-+ (NSString *)applicationBandwidthStatistics:(IRCWorld *)world;
++ (NSString *)applicationBandwidthStatistics;
 + (NSString *)applicationMemoryUsage;
 + (NSString *)applicationRuntimeStatistics;
 + (NSString *)systemCPULoadInformation;
