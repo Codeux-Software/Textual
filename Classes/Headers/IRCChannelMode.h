@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,19 @@
 #import "TextualApplication.h"
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
-@property (nonatomic, weak) IRCISupportInfo *isupport;
-@property (nonatomic, strong) NSMutableDictionary *allModes;
+@property (nonatomic, nweak) IRCISupportInfo *isupport;
 
 - (void)clear;
 
 - (NSArray *)update:(NSString *)str;
+
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode;
+
+- (NSDictionary *)modeInformation;
 
 - (NSString *)string;
 - (NSString *)titleString;
+
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode;
 
 - (BOOL)modeIsDefined:(NSString *)mode;

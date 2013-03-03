@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -67,6 +67,9 @@
 	NSMutableString *s = [line mutableCopy];
 
 	// ---- //
+
+    /* Get extensions from in front of input string. See IRCv3.atheme.org for
+     more information regarding extensions in the IRC protocol. */
 	
 	NSMutableDictionary *extensions = [NSMutableDictionary dictionary];
 	
@@ -77,18 +80,20 @@
 
 		for (NSString *comp in values) {
 			NSArray *info = [comp componentsSeparatedByString:@"="];
+
+            NSAssertReturnLoopContinue(info.count == 2);
 			
-			if (NSDissimilarObjects(info.count, 2)) {
-				continue;
-			}
-			
-			[extensions setObject:[info objectAtIndex:1]
-						   forKey:[info objectAtIndex:0]];
+			[extensions safeSetObject:info[1] forKey:info[0]];
 		}
 	}
 
-	// ---- //
-	
+    /* Process value of supported extensions. */
+
+    /* NSDictionaryObjectKeyValueCompare() is not documented, but it is used throughout the Textual
+     source code. The first value presented to it is an NSDictionary, the second is the key to search
+     for in that dictionary. The third value is what should be returned if the key does not exist in
+     the dictionary. It is designed as an easy way to set a default value for a missing dictionary key. */
+    
 	NSString *serverTime = NSDictionaryObjectKeyValueCompare(extensions, @"t", [extensions objectForKey:@"time"]);
 
 	if (NSObjectIsNotEmpty(serverTime)) {
@@ -98,7 +103,12 @@
 		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
 		
 		NSDate *date = [dateFormatter dateFromString:serverTime];
-		
+
+        /* If no date is returned by using the defined date format, then we are going to 
+         take the doubleValue of our input and compare it against the epoch start time.
+         If that does not return anything either, then we will simply set the date that
+         this message was processed as the date used. */
+        
 		if (PointerIsEmpty(date)) {
 			date = [NSDate dateWithTimeIntervalSince1970:[serverTime doubleValue]];
 		}
@@ -113,44 +123,41 @@
 	}
 
 	// ---- //
-	
+
+    /* Begin the parsing of the actual input string. */
+    /* First thing to do is get the sender information from in 
+     front of the message. */
+    
 	if ([s hasPrefix:@":"]) {
-		NSString *t;
+		NSString *t = [s.getToken safeSubstringFromIndex:1];
 		
-		t = [s getToken];
-		t = [t safeSubstringFromIndex:1];
-		
-		self.sender.raw = t;
-		
-		NSInteger i = [t findCharacter:'!'];
-		
-		if (i < 0) {
-			self.sender.nick = t;
-			self.sender.isServer = YES;
-		} else {
-			self.sender.nick = [t safeSubstringToIndex:i];
-			
-			t = [t safeSubstringAfterIndex:i];
-			i = [t findCharacter:'@'];
-			
-			if (i >= 0) {
-				self.sender.user = [t safeSubstringToIndex:i];
-				self.sender.address = [t safeSubstringAfterIndex:i];
-			}
-		}
+		self.sender.hostmask = t;
+        self.sender.nickname = [t nicknameFromHostmask];
+
+        if ([t isHostmask]) {
+            self.sender.username = [t usernameFromHostmask];
+            self.sender.address = [t addressFromHostmask];
+        }
 	}
-	
+
+    /* Now that we have the sender information… continue to the
+     actual command being used. */
+    
 	self.command = [s.getToken uppercaseString];
 	
 	self.numericReply = [self.command integerValue];
-	
+
+    /* After the sender information and command information is extracted,
+     there is not much left to the parse. Just searching for the beginning
+     of a message segment or getting the next token. */
+    
 	while (NSObjectIsNotEmpty(s)) {
 		if ([s hasPrefix:@":"]) {
 			[self.params safeAddObject:[s safeSubstringFromIndex:1]];
 			
 			break;
 		} else {
-			[self.params safeAddObject:[s getToken]];
+			[self.params safeAddObject:s.getToken];
 		}
 	}
 	
@@ -189,23 +196,6 @@
 	}
 	
 	return s;
-}
-
-- (NSString *)description
-{
-	NSMutableString *ms = [NSMutableString string];
-	
-	[ms appendString:@"<IRCMessage "];
-	[ms appendString:self.command];
-	
-	for (NSString *s in self.params) {
-		[ms appendString:NSStringWhitespacePlaceholder];
-		[ms appendString:s];
-	}
-	
-	[ms appendString:@">"];
-	
-	return ms;
 }
 
 @end

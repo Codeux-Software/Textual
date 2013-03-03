@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,12 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TDCAboutPanel : NSWindowController
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, strong) NSTextField *versionInfo;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, nweak) NSTextField *versionInfoField;
 
 - (void)show;
 @end
 
-@interface NSObject (TXAboutPanelDelegate)
+@interface NSObject (TDCAboutPanelDelegate)
 - (void)aboutPanelWillClose:(TDCAboutPanel *)sender;
 @end

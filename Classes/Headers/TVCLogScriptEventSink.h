@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,9 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TVCLogScriptEventSink : NSObject
-@property (nonatomic, unsafe_unretained) id owner;
-@property (nonatomic, strong) id policy;
+@property (nonatomic, nweak) TVCLogController *owner;
 @property (nonatomic, assign) NSInteger x;
 @property (nonatomic, assign) NSInteger y;
-@property CFAbsoluteTime lastClickTime;
+@property (nonatomic, assign) NSTimeInterval lastClickTime;
 @end

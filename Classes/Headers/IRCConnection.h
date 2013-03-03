@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,40 +38,61 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection : NSObject
-@property (nonatomic, unsafe_unretained) IRCClient *delegate;
-@property (nonatomic, strong) TLOTimer *timer;
-@property (nonatomic, strong) NSString *host;
-@property (nonatomic, assign) NSInteger port;
-@property (nonatomic, assign) BOOL useSSL;
-@property (nonatomic, assign) BOOL useSystemSocks;
-@property (nonatomic, assign) BOOL useSocks;
-@property (nonatomic, assign) NSInteger socksVersion;
+@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, strong) TLOTimer *floodTimer;
+@property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isConnecting;
+@property (nonatomic, assign) BOOL isReadyToSend;
+@property (nonatomic, assign) BOOL isSending;
+@property (nonatomic, assign) BOOL connectionPrefersIPv6;
+@property (nonatomic, assign) BOOL connectionUsesSSL;
+@property (nonatomic, assign) BOOL connectionUsesNormalSocks;
+@property (nonatomic, assign) BOOL connectionUsesSystemSocks;
 @property (nonatomic, assign) NSInteger maxMsgCount;
-@property (nonatomic, strong) NSString *proxyHost;
-@property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, strong) NSString *proxyUser;
+@property (nonatomic, strong) NSString *serverAddress;
+@property (nonatomic, assign) NSInteger serverPort;
+@property (nonatomic, strong) NSString *proxyAddress;
 @property (nonatomic, strong) NSString *proxyPassword;
-@property (nonatomic, readonly) BOOL active;
-@property (nonatomic, readonly) BOOL connecting;
-@property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, readonly) BOOL readyToSend;
-@property (nonatomic, assign) BOOL loggedIn;
-@property (nonatomic, strong) TLOSocketClient *conn;
+@property (nonatomic, strong) NSString *proxyUsername;
+@property (nonatomic, assign) NSInteger proxyPort;
+@property (nonatomic, assign) NSInteger proxySocksVersion;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
-@property (nonatomic, assign) BOOL sending;
+
+/* IRCConnectionSocket.m properties. */
+
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
+@property (nonatomic, strong) NSMutableData *socketBuffer;
+
+/* Textual cannot pass proxy information to the GCD version of the
+ AsyncSocket library because it does not give us access to the
+ CFWrite and CFRead streams of the underlying socket. If the
+ server has a proxy configured, then we have to use the old
+ run loop version of AsyncSocket. That is why socketConnection
+ is type "id" because depending on the settings of the owning
+ client; it can be two different classes.
+
+ IRCConnectionSocket is smart enough to automatically handle
+ the connection between either class. It is not recommended
+ for any extension developer to reference this property as
+ talking to it directly may result in unexpected behavior. */
+@property (nonatomic, strong) id socketConnection;
 
 - (void)open;
 - (void)close;
-- (void)clearSendQueue;
+
 - (void)sendLine:(NSString *)line;
 
-- (NSData *)convertToCommonEncoding:(NSString *)s;
+- (void)clearSendQueue;
+
+- (NSString *)convertFromCommonEncoding:(NSData *)data;
+- (NSData *)convertToCommonEncoding:(NSString *)data;
 @end
 
 @interface NSObject (IRCConnectionDelegate)
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender;
 - (void)ircConnectionDidError:(NSString *)error;
-- (void)ircConnectionDidReceive:(NSData *)data;
+- (void)ircConnectionDidReceive:(NSString *)data;
 - (void)ircConnectionWillSend:(NSString *)line;
 @end

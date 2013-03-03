@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -48,20 +48,22 @@
 	return self;
 }
 
-- (void)start:(NSString *)nick
+- (void)start:(NSString *)nickname
 {
-	[self.nicknameNewInfo setStringValue:nick];
-	[self.currentText setStringValue:nick];
+	[self.tnewNicknameField setStringValue:nickname];
+	[self.toldNicknameField setStringValue:nickname];
 	
-	[self.sheet makeFirstResponder:self.nicknameNewInfo];
+	[self.sheet makeFirstResponder:self.tnewNicknameField];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-		[self.delegate nickSheet:self didInputNick:self.nicknameNewInfo.stringValue];
+	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
+		NSString *newNickname = self.tnewNicknameField.firstTokenStringValue;
+		
+		[self.delegate nickSheet:self didInputNickname:newNickname];
 	}
 	
 	[super ok:sender];

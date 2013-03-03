@@ -1,25 +1,25 @@
-/* *********************************************************************
- _____        _               _    ___ ____   ____
- |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
- | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
- | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
- |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
- Please see Contributors.pdf and Acknowledgements.pdf
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
 
- * Redistributions of source code must retain the above copyright
- notice, this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright
- notice, this list of conditions and the following disclaimer in the
- documentation and/or other materials provided with the distribution.
- * Neither the name of the Textual IRC Client & Codeux Software nor the
- names of its contributors may be used to endorse or promote products
- derived from this software without specific prior written permission.
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface IRCChannelMode ()
+@property (nonatomic, strong) NSMutableDictionary *allModes;
+@end
+
 @implementation IRCChannelMode
 
 - (id)init
@@ -50,7 +54,7 @@
 
 - (id)initWithChannelMode:(IRCChannelMode *)other
 {
-	if (self == [super init]) {
+	if ((self = [super init])) {
 		self.isupport = other.isupport;
 		self.allModes = other.allModes;
 
@@ -65,6 +69,11 @@
 	[self.allModes removeAllObjects];
 }
 
+- (NSDictionary *)modeInformation
+{
+	return self.allModes;
+}
+
 - (NSArray *)badModes
 {
 	return @[@"q", @"a", @"o", @"h", @"v", @"b", @"e", @"I"];
@@ -75,17 +84,11 @@
 	NSArray *ary = [self.isupport parseMode:str];
 
 	for (IRCModeInfo *h in ary) {
-		if (h.op) {
+		if ([self.badModes containsObject:h.modeToken]) {
 			continue;
 		}
-
-		NSString *modec = [NSString stringWithChar:h.mode];
-
-		if ([self.badModes containsObject:modec]) {
-			continue;
-		}
-
-		[self.allModes setObject:h forKey:modec];
+		
+		[self.allModes safeSetObject:h forKey:h.modeToken];
 	}
 
 	return ary;
@@ -93,38 +96,59 @@
 
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode
 {
-	NSMutableString *str   = [NSMutableString string];
+	NSMutableString *frstr = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
+	NSMutableString *track = [NSMutableString string];
 
-	NSArray *modes = mode.allModes.sortedDictionaryKeys;
+	NSArray *modes = mode.modeInformation.sortedDictionaryKeys;
 
+	/* Build the removals first. */
 	for (NSString *mkey in modes) {
 		IRCModeInfo *h = [mode.allModes objectForKey:mkey];
 
-		if (h.plus == YES) {
-			if (h.param) {
-				[trail appendFormat:@" %@", h.param];
+		if (h.modeIsSet) {
+			if (NSObjectIsNotEmpty(h.modeParamater)) {
+				[trail appendFormat:@" %@", h.modeParamater];
 			}
 
-			[str appendFormat:@"+%c", h.mode];
-		} else {
-			if (h.param) {
-				[trail appendFormat:@" %@", h.param];
-			}
+			[track appendString:h.modeToken];
 
-			[str appendFormat:@"-%c", h.mode];
-
-			if (h.mode == 'k') {
-				h.param = NSStringEmptyPlaceholder;
+			if ([h.modeToken isEqualToString:@"k"]) {
+				h.modeParamater = NSStringEmptyPlaceholder;
 			} else {
-				if (h.mode == 'l') {
-					h.param = 0;
+				if ([h.modeToken isEqualToString:@"l"]) {
+					h.modeParamater = 0;
 				}
 			}
 		}
 	}
 
-	return [[str stringByAppendingString:trail] trim];
+	if (track) {
+		[frstr appendString:@"+"];
+		[frstr appendString:track];
+
+		[track setString:NSStringEmptyPlaceholder];
+	}
+
+	/* Build the additions next. */
+	for (NSString *mkey in modes) {
+		IRCModeInfo *h = [mode.allModes objectForKey:mkey];
+
+		if (h.modeIsSet == NO) {
+			if (NSObjectIsNotEmpty(h.modeParamater)) {
+				[trail appendFormat:@" %@", h.modeParamater];
+			}
+
+			[track appendString:h.modeToken];
+		}
+	}
+	
+	if (track) {
+		[frstr appendString:@"-"];
+		[frstr appendString:track];
+	}
+
+	return [frstr stringByAppendingString:trail];
 }
 
 - (BOOL)modeIsDefined:(NSString *)mode
@@ -134,12 +158,10 @@
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode
 {
-	BOOL objk = [self modeIsDefined:mode];
-
-	if (objk == NO) {
+	if ([self modeIsDefined:mode] == NO) {
 		IRCModeInfo *m = [self.isupport createMode:mode];
 
-		[self.allModes setObject:m forKey:mode];
+		[self.allModes safeSetObject:m forKey:mode];
 	}
 
 	return [self.allModes objectForKey:mode];
@@ -147,30 +169,30 @@
 
 - (NSString *)format:(BOOL)maskK
 {
-	NSMutableString *str   = [NSMutableString string];
+	NSMutableString *frstr = [NSMutableString string];
 	NSMutableString *trail = [NSMutableString string];
 
-	[str appendString:@"+"];
+	[frstr appendString:@"+"];
 
 	NSArray *modes = self.allModes.sortedDictionaryKeys;
 
 	for (NSString *mkey in modes) {
 		IRCModeInfo *h = [self.allModes objectForKey:mkey];
 
-		if (h.plus) {
-			if (h.param && maskK == NO) {
-				if (h.mode == 'k') {
+		if (h.modeIsSet) {
+			if (h.modeParamater && maskK == NO) {
+				if ([h.modeToken isEqualToString:@"k"]) {
 					[trail appendFormat:@" ******"];
 				} else {
-					[trail appendFormat:@" %@", h.param];
+					[trail appendFormat:@" %@", h.modeParamater];
 				}
 			}
 
-			[str appendFormat:@"%c", h.mode];
+			[frstr appendFormat:@"%@", h.modeToken];
 		}
 	}
 
-	return [[str stringByAppendingString:trail] trim];
+	return [frstr stringByAppendingString:trail];
 }
 
 - (NSString *)string

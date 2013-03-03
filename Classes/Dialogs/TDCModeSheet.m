@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -50,33 +50,35 @@
 
 - (void)start
 {
-	[self.sCheck setState:[self.mode modeInfoFor:@"s"].plus];
-	[self.pCheck setState:[self.mode modeInfoFor:@"p"].plus];
-	[self.nCheck setState:[self.mode modeInfoFor:@"n"].plus];
-	[self.tCheck setState:[self.mode modeInfoFor:@"t"].plus];
-	[self.iCheck setState:[self.mode modeInfoFor:@"i"].plus];
-	[self.mCheck setState:[self.mode modeInfoFor:@"m"].plus];
+	[self.sCheck setState:[self.mode modeInfoFor:@"s"].modeIsSet];
+	[self.pCheck setState:[self.mode modeInfoFor:@"p"].modeIsSet];
+	[self.nCheck setState:[self.mode modeInfoFor:@"n"].modeIsSet];
+	[self.tCheck setState:[self.mode modeInfoFor:@"t"].modeIsSet];
+	[self.iCheck setState:[self.mode modeInfoFor:@"i"].modeIsSet];
+	[self.mCheck setState:[self.mode modeInfoFor:@"m"].modeIsSet];
+
+	IRCModeInfo *kCheckInfo = [self.mode modeInfoFor:@"k"];
+	IRCModeInfo *lCheckInfo = [self.mode modeInfoFor:@"l"];
 	
-	[self.kCheck setState:NSObjectIsNotEmpty([self.mode modeInfoFor:@"k"].param)];
-	[self.lCheck setState:([self.mode modeInfoFor:@"s"].param.integerValue > 0)];
+	BOOL kCheckOn = NSObjectIsNotEmpty(kCheckInfo.modeParamater);
+	BOOL lCheckOn = (lCheckInfo.modeParamater.integerValue > 0);
+
+	[self.kCheck setState:kCheckOn];
+	[self.lCheck setState:lCheckOn];
 	
-	if ([self.mode modeInfoFor:@"k"].plus) {
-		[self.kText setStringValue:[self.mode modeInfoFor:@"k"].param];
+	if (kCheckInfo.modeIsSet) {
+		[self.kText setStringValue:kCheckInfo.modeParamater];
 	} else {
 		[self.kText setStringValue:NSStringEmptyPlaceholder];
 	}
 	
-	NSInteger lCount = [self.mode modeInfoFor:@"l"].param.integerValue;
+	NSInteger lCheckCount = lCheckInfo.modeParamater.integerValue;
 								
-	if (lCount < 0) {
-		lCount = 0;
+	if (lCheckCount < 0) {
+		lCheckCount = 0;
 	}
 	
-	if (lCount > 0) {
-		[self.lCheck setState:NSOnState];
-	}
-	
-	[self.lText setStringValue:[NSString stringWithInteger:lCount]];
+	[self.lText setStringValue:[NSString stringWithInteger:lCheckCount]];
 	
 	[self updateTextFields];
 	[self startSheet];
@@ -93,8 +95,8 @@
 	[self updateTextFields];
 	
 	if ([self.sCheck state] == NSOnState &&
-		[self.pCheck state] == NSOnState) {
-		
+		[self.pCheck state] == NSOnState)
+	{
 		if (sender == self.sCheck) {
 			[self.pCheck setState:NSOffState];
 		} else {
@@ -105,33 +107,33 @@
 
 - (void)ok:(id)sender
 {
-	[self.mode modeInfoFor:@"s"].plus = [self.sCheck state];
-	[self.mode modeInfoFor:@"p"].plus = [self.pCheck state];
-	[self.mode modeInfoFor:@"n"].plus = [self.nCheck state];
-	[self.mode modeInfoFor:@"t"].plus = [self.tCheck state];
-	[self.mode modeInfoFor:@"i"].plus = [self.iCheck state];
-	[self.mode modeInfoFor:@"m"].plus = [self.mCheck state];
+	[self.mode modeInfoFor:@"s"].modeIsSet = [self.sCheck state];
+	[self.mode modeInfoFor:@"p"].modeIsSet = [self.pCheck state];
+	[self.mode modeInfoFor:@"n"].modeIsSet = [self.nCheck state];
+	[self.mode modeInfoFor:@"t"].modeIsSet = [self.tCheck state];
+	[self.mode modeInfoFor:@"i"].modeIsSet = [self.iCheck state];
+	[self.mode modeInfoFor:@"m"].modeIsSet = [self.mCheck state];
 	
 	if ([self.kCheck state] == NSOnState) {
-		[self.mode modeInfoFor:@"k"].plus = YES;
-		[self.mode modeInfoFor:@"k"].param = [self.kText stringValue];
+		[self.mode modeInfoFor:@"k"].modeIsSet = YES;
+		[self.mode modeInfoFor:@"k"].modeParamater = self.kText.firstTokenStringValue;
 	} else {
-		[self.mode modeInfoFor:@"k"].plus = NO;
+		[self.mode modeInfoFor:@"k"].modeIsSet = NO;
 	}
 	
 	if ([self.lCheck state] == NSOnState) {
-		[self.mode modeInfoFor:@"l"].plus = YES;
-		[self.mode modeInfoFor:@"l"].param = [self.lText stringValue];
+		[self.mode modeInfoFor:@"l"].modeIsSet = YES;
+		[self.mode modeInfoFor:@"l"].modeParamater = self.lText.firstTokenStringValue;
 	} else {
-		[self.mode modeInfoFor:@"l"].plus = NO;
-		[self.mode modeInfoFor:@"l"].param = @"0";
+		[self.mode modeInfoFor:@"l"].modeIsSet = NO;
+		[self.mode modeInfoFor:@"l"].modeParamater = @"0";
 	}
 	
 	if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
 		[self.delegate modeSheetOnOK:self];
 	}
 	
-	[super ok:sender];
+	[super ok:nil];
 }
 
 #pragma mark -

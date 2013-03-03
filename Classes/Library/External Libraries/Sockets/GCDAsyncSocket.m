@@ -2938,7 +2938,7 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 {
 	NSString *errMsg = [NSString stringWithUTF8String:strerror(errno)];
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:errMsg, NSLocalizedDescriptionKey,
-							  reason, NSLocalizedFailureReasonErrorKey, nil];
+                              reason, NSLocalizedFailureReasonErrorKey, nil];
 
 	return [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:userInfo];
 }
@@ -4244,7 +4244,7 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 		return;
 	}
 
-	BOOL hasBytesAvailable;
+	BOOL hasBytesAvailable = NO;
 	unsigned long estimatedBytesAvailable;
 
 	if ([self usingCFStreamForTLS])
@@ -4399,7 +4399,7 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 		// Copy bytes from prebuffer into packet buffer
 
 		uint8_t *buffer = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset +
-		currentRead->bytesDone;
+        currentRead->bytesDone;
 
 		memcpy(buffer, [preBuffer readBuffer], bytesToCopy);
 
@@ -4711,7 +4711,7 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 					// Copy bytes from prebuffer into read buffer
 
 					uint8_t *readBuf = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset
-					+ currentRead->bytesDone;
+                    + currentRead->bytesDone;
 
 					memcpy(readBuf, [preBuffer readBuffer], bytesToRead);
 
@@ -4810,7 +4810,7 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 					// Copy bytes from prebuffer into read buffer
 
 					uint8_t *readBuf = (uint8_t *)[currentRead->buffer mutableBytes] + currentRead->startOffset
-					+ currentRead->bytesDone;
+                    + currentRead->bytesDone;
 
 					memcpy(readBuf, [preBuffer readBuffer], bytesRead);
 
@@ -5138,8 +5138,8 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 			NSTimeInterval timeoutExtension = 0.0;
 
 			timeoutExtension = [theDelegate socket:self shouldTimeoutReadWithTag:theRead->tag
-										   elapsed:theRead->timeout
-										 bytesDone:theRead->bytesDone];
+                                           elapsed:theRead->timeout
+                                         bytesDone:theRead->bytesDone];
 
 			dispatch_async(socketQueue, ^{ @autoreleasepool {
 
@@ -5517,8 +5517,8 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 			if (hasNewDataToWrite)
 			{
 				const uint8_t *buffer = (const uint8_t *)[currentWrite->buffer bytes]
-				+ currentWrite->bytesDone
-				+ bytesWritten;
+                + currentWrite->bytesDone
+                + bytesWritten;
 
 				NSUInteger bytesToWrite = [currentWrite->buffer length] - currentWrite->bytesDone - bytesWritten;
 
@@ -5768,8 +5768,8 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 			NSTimeInterval timeoutExtension = 0.0;
 
 			timeoutExtension = [theDelegate socket:self shouldTimeoutWriteWithTag:theWrite->tag
-										   elapsed:theWrite->timeout
-										 bytesDone:theWrite->bytesDone];
+                                           elapsed:theWrite->timeout
+                                         bytesDone:theWrite->bytesDone];
 
 			dispatch_async(socketQueue, ^{ @autoreleasepool {
 
@@ -6725,23 +6725,23 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 }
 
 + (void)cfstreamThread { @autoreleasepool
-	{
-		[[NSThread currentThread] setName:GCDAsyncSocketThreadName];
+    {
+        [[NSThread currentThread] setName:GCDAsyncSocketThreadName];
 
-		LogInfo(@"CFStreamThread: Started");
+        LogInfo(@"CFStreamThread: Started");
 
-		// We can't run the run loop unless it has an associated input source or a timer.
-		// So we'll just create a timer that will never fire - unless the server runs for decades.
-		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
-										 target:self
-									   selector:@selector(doNothingAtAll:)
-									   userInfo:nil
-										repeats:YES];
+        // We can't run the run loop unless it has an associated input source or a timer.
+        // So we'll just create a timer that will never fire - unless the server runs for decades.
+        [NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
+                                         target:self
+                                       selector:@selector(doNothingAtAll:)
+                                       userInfo:nil
+                                        repeats:YES];
 
-		[[NSRunLoop currentRunLoop] run];
+        [[NSRunLoop currentRunLoop] run];
 
-		LogInfo(@"CFStreamThread: Stopped");
-	}}
+        LogInfo(@"CFStreamThread: Stopped");
+    }}
 
 + (void)scheduleCFStreams:(GCDAsyncSocket *)asyncSocket
 {

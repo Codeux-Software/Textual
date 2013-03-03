@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -50,22 +50,15 @@
 
 - (void)start:(NSString *)topic
 {
-	TXMenuController *menu = self.delegate;
+	IRCChannel *c = [self.worldController findChannelByClientId:self.clientID channelId:self.channelID];
+	
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:self.headerTitleField.stringValue, c.name]];
+	
+	[self.topicValueField setAttributedStringValue:[topic attributedStringWithIRCFormatting:TXDefaultTextFieldFont
+																  honorFormattingPreference:NO]];
 
-	IRCChannel *c = [menu.world selectedChannel];
-	
-	NSString *nheader;
-	
-	nheader = [self.header stringValue];
-	nheader = [NSString stringWithFormat:nheader, c.name];
-	
-	[menu.master.formattingMenu enableSheetField:self.text];
-    
-	[self.header setStringValue:nheader];
-	
-	[self.text setAttributedStringValue:[topic attributedStringWithIRCFormatting:TXDefaultTextFieldFont
-													  followFormattingPreference:NO]];
-    
+	[self.masterController.formattingMenu enableSheetField:self.topicValueField];
+
 	[self startSheet];
 }
 
@@ -73,12 +66,12 @@
 {
 	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
 		NSString *topicv;
-		NSArray  *topicc;
 
-		topicv = [self.text.attributedStringValue attributedStringToASCIIFormatting];
-		topicc = [topicv componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-		topicv = [topicc componentsJoinedByString:NSStringWhitespacePlaceholder];
-		
+		topicv = [self.topicValueField.attributedStringValue attributedStringToASCIIFormatting];
+
+		topicv = [topicv stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
+												   withString:NSStringWhitespacePlaceholder];
+
 		[self.delegate topicSheet:self onOK:topicv];
 	}
 	
@@ -90,7 +83,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[[self.delegate master].formattingMenu enableWindowField:[self.delegate master].text];
+	[self.masterController.formattingMenu enableWindowField:self.masterController.inputTextField];
 	
 	if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
 		[self.delegate topicSheetWillClose:self];

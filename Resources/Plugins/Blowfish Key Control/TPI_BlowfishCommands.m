@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,29 +37,90 @@
 
 #import "TPI_BlowfishCommands.h"
 
-/* It may seem confusing why these commands are an extension when
- the actual encryption support is built into Textual. Well, it is
- an extension just because the actual commands are considered 
- not that important to be in the actual core when an everyday
- user would use the actual user interface to set a key. These
- are considered more an addon for "pro" users. */
+#define TXExchangeRequestPrefix				@"DH1080_INIT "
+#define TXExchangeResponsePrefix			@"DH1080_FINISH "
 
-#define TXExchangeRequestPrefix			@"DH1080_INIT "
-#define TXExchangeResponsePrefix		@"DH1080_FINISH "
+#define TXExchangeReuqestTimeoutDelay		10
+
+@interface TPI_BlowfishCommands ()
+/* 
+	  key format:	STRING("<client UUID> —> <remote nickname>")
+	value format:	 ARRAY("<pointer to CFDH1080>", "<pointer to IRCChannel>")
+ 
+	-keyExchangeDictionaryKey: can be used to generate key.
+*/
+
+@property (nonatomic, strong) NSMutableDictionary *keyExchangeRequests;
+@end
 
 @implementation TPI_BlowfishCommands
 
 #pragma mark -
-#pragma mark Plugin Structure
+#pragma mark Plugin Structure.
+
+- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+{
+	self.keyExchangeRequests = [NSMutableDictionary dictionary];
+}
+
+- (void)pluginUnloadedFromMemory
+{
+	self.keyExchangeRequests = nil;
+}
+
+- (void)messageReceivedByServer:(IRCClient *)client
+						 sender:(NSDictionary *)senderDict
+						message:(NSDictionary *)messageDict
+{
+	NSString *person  = senderDict[@"senderNickname"];
+	NSString *message = messageDict[@"messageSequence"];
+
+    if ([message hasPrefix:@"+"]) {
+        /* For some reason, NOTICE has a + prefix for key exchange on
+         Freenode. This fixex that. */
+        
+        message = [message safeSubstringFromIndex:1];
+    }
+
+	BOOL isRequest = [message hasPrefix:TXExchangeRequestPrefix];
+	BOOL isResponse = [message hasPrefix:TXExchangeResponsePrefix];
+
+	if (isRequest || isResponse) {
+		if (isRequest) {
+			/* A request may create a query so it must be invoked on
+			 the main thread. Creating a channel requires access to
+			 WebKit and WebKit will throw an exception because they
+			 hate running on anything else. */
+
+			[self.iomt keyExchangeRequestReceived:message on:client from:person];
+		} else {
+			/* We do not want to create the channel if it is a response.
+			 If the user closed the query, then allow old request to expire.
+			 This is done so that the IRCChannel pointer part of our request
+			 dictionary will remain same instead of creating a new one and
+			 the old pointing to nothing. */
+			
+			IRCChannel *channel = [client findChannel:person];
+
+			if (channel) {
+				NSString *requestKey = [self keyExchangeDictionaryKey:channel];
+
+				if (NSObjectIsNotEmpty(requestKey)) {
+					[self keyExchangeResponseReceived:message on:client from:requestKey];
+				}
+			}
+		}
+	}
+}
 
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	IRCChannel *c = [client.world selectedChannelOn:client];
+	IRCChannel *c = [client.worldController selectedChannelOn:client];
 	
-	if (c.isChannel || c.isTalk) {
-		messageString = [messageString trim];
+	if (c.isChannel || c.isPrivateMessage) {
+		messageString = messageString.trim;
 		
 		if ([messageString contains:NSStringWhitespacePlaceholder]) {
 			messageString = [messageString substringToIndex:[messageString stringPosition:NSStringWhitespacePlaceholder]];
@@ -76,8 +137,8 @@
 						[client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
 					}
 				} else {
-					if (c.isTalk) {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStartedInQuery") channel:c];
+					if (c.isPrivateMessage) {
+						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInPrivateMessage") channel:c];
 					} else {
 						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 					}
@@ -91,12 +152,41 @@
 			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
-				[client printDebugInformation:TXTFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
+				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
 			} else {	
-				[client printDebugInformation:TXTLS(@"BlowfishNoEncryptionKeySet") channel:c];
+				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-			[client printDebugInformation:TXTLS(@"BlowfishKeyExchangeFeatureNotReadyYet") channel:c];
+			if (c.isPrivateMessage == NO) {
+				[client printDebugInformation:TPILS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
+			} else {
+				if ([self keyExchangeRequestExists:c]) {
+					[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
+				} else if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+                    [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_2", c.name) channel:c];
+                } else {
+					CFDH1080 *keyRequest = [CFDH1080 new];
+
+					NSString *publicKey = [keyRequest generatePublicKey:YES];
+
+					if (NSObjectIsEmpty(publicKey)) {
+						[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:c];
+					} else {
+						NSString *requestKey = [self keyExchangeDictionaryKey:c];
+						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
+
+						[self.keyExchangeRequests safeSetObject:@[keyRequest, c] forKey:requestKey];
+
+						[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
+								 command:IRCPrivateCommandIndex("notice")
+								 channel:c];
+
+						[self performSelectorOnMainThread:@selector(keyExchangeSetupTimeoutTimer:) withObject:requestKey waitUntilDone:NO];
+						
+						[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestSent", c.name) channel:c];
+					}
+				}
+			}
 		}
 	}
 }
@@ -106,23 +196,212 @@
 	return @[@"setkey", @"delkey", @"key", @"keyx"];
 }
 
+- (NSArray *)pluginSupportsServerInputCommands
+{
+	return @[@"notice"];
+}
+
 - (NSDictionary *)pluginOutputDisplayRules
 {
-	/* This is an undocumented plugin call to suppress certain messages. */
-	/* These rules hide encryption request and replies in private messages. 
-	 Now Textual just needs to add actual support for them… */
+	NSString *ruleKey = IRCCommandFromLineType(TVCLogLineNoticeType);
+
+	NSArray *rule_1 = @[[@"^" stringByAppendingString:TXExchangeRequestPrefix],
+	NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
+
+	NSArray *rule_2 = @[[@"^" stringByAppendingString:TXExchangeResponsePrefix],
+	NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
+
+	return @{ruleKey : @[rule_1, rule_2]};
+}
+
+#pragma mark -
+#pragma mark Key Exchange.
+
+- (void)keyExchangeRequestReceived:(NSString *)requestData on:(IRCClient *)client from:(NSString *)requestSender
+{
+    [self keyExchangeRequestReceived:requestData on:client from:requestSender withRecursion:0];
+}
+
+- (void)keyExchangeRequestReceived:(NSString *)requestDataRaw on:(IRCClient *)client from:(NSString *)requestSender withRecursion:(NSInteger)recursionCount
+{
+	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
+
+    if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+
+        return;
+    }
+
+	NSString *requestData = [requestDataRaw safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
+
+	//DebugLogToConsole(@"Key Exchange Request Received:");
+	//DebugLogToConsole(@"	Client: %@", client);
+	//DebugLogToConsole(@"	Channel: %@", channel);
+	//DebugLogToConsole(@"	Message: %@", requestData);
 	
-	NSMutableDictionary *rules = [NSMutableDictionary dictionary];
+	if ([self keyExchangeRequestExists:channel]) {
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", channel.name) channel:channel];
+	} else {
+		CFDH1080 *keyRequest = [CFDH1080 new];
+
+		/* Process secret from the Receiver. */
+		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
+
+		if (NSObjectIsEmpty(theSecret)) {
+            if (recursionCount >= 0 && recursionCount <= 5) {
+                return [self keyExchangeRequestReceived:requestDataRaw on:client from:requestSender withRecursion:(recursionCount + 1)];
+            }
+            
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+            [client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
+
+            return;
+		}
+
+		/* Generate our own public key. If everything has gone correctly up to here,
+		 then when the user that sent the request computes our public key, we both
+		 should have the same secret. */
+		NSString *publicKey = [keyRequest generatePublicKey:NO];
+
+		if (NSObjectIsEmpty(publicKey)) {
+            /* If we failed to generate our public key, then let us try running this request one more
+             time by creating a brand new instance of CFDH1080 to make up for any possible error that
+             may have unexpectedly resulted in a bad public key. */
+
+            if (recursionCount >= 0 && recursionCount <= 5) {
+                return [self keyExchangeRequestReceived:requestDataRaw on:client from:requestSender withRecursion:(recursionCount + 1)];
+            }
+
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+			[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:channel];
+
+            return;
+		}
+
+		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+
+		channel.config.encryptionKey = theSecret;
+
+		/* Finish up. */
+		NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
+
+		[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
+				 command:IRCPrivateCommandIndex("notice")
+				 channel:channel
+          withEncryption:NO];
+
+        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
+	}
+}
+
+- (void)keyExchangeResponseReceived:(NSString *)responseData on:(IRCClient *)client from:(NSString *)responseKey
+{
+	NSArray *exchangeData = [self keyExchangeInformation:responseKey];
+
+	if (NSObjectIsNotEmpty(exchangeData)) {
+		responseData = [responseData safeSubstringFromIndex:[TXExchangeResponsePrefix length]];
+		
+		//DebugLogToConsole(@"Key Exchange Response Received:");
+		//DebugLogToConsole(@"	Response Key: %@", responseKey);
+		//DebugLogToConsole(@"	Response Info: %@", exchangeData);
+		//DebugLogToConsole(@"	Message: %@", responseData);
+
+		CFDH1080 *request = exchangeData[0];
+		IRCChannel *channel = exchangeData[1];
+        
+        if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+
+            return;
+        }
+		
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseReceived", channel.name) channel:channel];
+		
+		/* Compute the public key received against our own. Our original public key
+		 was sent to the user which has responded by computing their own against 
+		 that. Now we compute the key received to obtain the shared secret. What?… */
+		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
+
+		if (NSObjectIsEmpty(theSecret)) {
+			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
+		}
+		
+		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+
+		channel.config.encryptionKey = theSecret;
+
+		/* Finish up. */
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
+		
+		[self.keyExchangeRequests removeObjectForKey:responseKey];
+	}
+}
+
+#pragma mark -
+#pragma mark Key Exchange Timer.
+
+- (void)keyExchangeSetupTimeoutTimer:(NSString *)requestKey
+{
+	[self performSelector:@selector(keyExchangeTimedOut:) withObject:requestKey afterDelay:TXExchangeReuqestTimeoutDelay];
+}
+
+- (void)keyExchangeTimedOut:(NSString *)requestKey
+{
+	NSArray *requestData = [self keyExchangeInformation:requestKey];
+
+	if (NSObjectIsNotEmpty(requestKey)) {
+		IRCChannel *channel = requestData[1];
+		
+		[channel.client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestTimedOut", channel.name) channel:channel];
+
+		[self.keyExchangeRequests removeObjectForKey:requestKey];
+	}
+}
+
+#pragma mark -
+#pragma mark Key Exchange Information.
+
+- (BOOL)keyExchangeRequestExists:(IRCChannel *)channel
+{
+	NSString *requestKey = [self keyExchangeDictionaryKey:channel];
+
+	return NSObjectIsNotEmpty([self keyExchangeInformation:requestKey]);
+}
+
+- (NSArray *)keyExchangeInformation:(NSString *)requestKey
+{
+	NSArray *requestData = [self.keyExchangeRequests arrayForKey:requestKey];
+
+	if (NSObjectIsNotEmpty(requestData)) {
+		id request = requestData[0];
+		id channel = requestData[1];
+
+		if (requestData.count == 2								&& // Array count is equal to 2.
+			PointerIsNotEmpty( request )						&& // Pointer are not empty.
+			PointerIsNotEmpty( channel )						&& // Pointer are not empty.
+			PointerIsNotEmpty([channel client])					&& // Pointer are not empty.
+			[request isKindOfClass:[CFDH1080 class]]			&& // Type of class is correct.
+			[channel isKindOfClass:[IRCChannel class]]) {		   // Type of class is correct.
+
+			return requestData;
+		}
+	}
+
+	return nil;
+}
+
+- (NSString *)keyExchangeDictionaryKey:(IRCChannel *)channel
+{
+	if (PointerIsEmpty(channel) || channel.isPrivateMessage == NO) {
+		return nil;
+	}
 	
-	NSArray *privmsgRule_1 = @[[@"^" stringByAppendingString:TXExchangeRequestPrefix], 
-							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
-	
-	NSArray *privmsgRule_2 = @[[@"^" stringByAppendingString:TXExchangeResponsePrefix], 
-							  NSNumberWithBOOL(YES), NSNumberWithBOOL(YES), NSNumberWithBOOL(YES)];
-	
-	rules[IRCCommandFromLineType(TVCLogLineNoticeType)] = @[privmsgRule_1, privmsgRule_2];
-	
-	return rules;
+	return [NSString stringWithFormat:@"%@ –> %@", channel.client.config.itemUUID, channel.name];
 }
 
 @end

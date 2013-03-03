@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,14 @@
 
 #import "TextualApplication.h"
 
-#define TXEmptySoundAlertLabel		TXTLS(@"TXEmptySoundAlertLabel")
+#define TXEmptySoundAlertLabel			TXTLS(@"TXEmptySoundAlertLabel")
 
 @interface TDCPreferencesSoundWrapper : NSObject
 @property (nonatomic, assign) TXNotificationType eventType;
-@property (nonatomic, weak) NSString *displayName;
-@property (nonatomic, weak) NSString *sound;
-@property (nonatomic, assign) BOOL growl;
-@property (nonatomic, assign) BOOL growlSticky;
-@property (nonatomic, assign) BOOL disableWhileAway;
+@property (nonatomic, nweak) NSString *displayName;
+@property (nonatomic, nweak) NSString *alertSound;
+@property (nonatomic, assign) BOOL pushNotification;
+@property (nonatomic, assign) BOOL disabledWhileAway;
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
 @end

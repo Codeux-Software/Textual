@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,12 +39,12 @@
 
 @implementation NSDate (TXDateHelper)
  
-+ (NSInteger)secondsSinceUnixTimestamp:(NSInteger)stamp
++ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)stamp
 {
 	return ([self epochTime] - stamp);
 }
 
-+ (NSInteger)epochTime
++ (NSTimeInterval)epochTime
 {
 	return [[NSDate date] timeIntervalSince1970];
 }

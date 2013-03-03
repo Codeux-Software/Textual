@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,20 +37,42 @@
 
 #import "TextualApplication.h"
 
+@implementation NSTextField (TXTextFieldHelper)
+
+- (NSString *)stringValue
+{
+	NSString *value = [super stringValue];
+
+	return [value trim];
+}
+
+- (NSString *)firstTokenStringValue
+{
+	NSString *value = self.stringValue;
+
+	NSInteger spacePosition = [value stringPosition:NSStringWhitespacePlaceholder];
+
+	if (spacePosition >= 1) {
+		return [value safeSubstringToIndex:spacePosition];
+	}
+
+	return value;
+}
+
+@end
+
 @implementation NSTextView (TXTextViewHelper)
 
 - (BOOL)isFocused
 {
-    return BOOLReverseValue(NSDissimilarObjects([self.window firstResponder], self));
+	return (self.window.firstResponder == self);
 }
 
 - (void)focus
 {
-    if ([self isFocused]) {
-        return;
-    }
-    
-    [self.window makeFirstResponder:self];
+    if ([self isFocused] == NO) {
+		[self.window makeFirstResponder:self];
+	}
 }
 
 - (NSRange)fullSelectionRange

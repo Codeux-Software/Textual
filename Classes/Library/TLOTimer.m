@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,15 +39,21 @@
 
 #import <objc/objc-runtime.h>
 
+@interface TLOTimer ()
+@property (nonatomic, strong) NSTimer *timer;
+@end
+
 @implementation TLOTimer
 
 - (id)init
 {
 	if ((self = [super init])) {
-		self.reqeat = YES;
-		self.selector = @selector(timerOnTimer:);
+		self.reqeatTimer = YES;
+		
+		self.selector = nil;
+		self.delegate = nil;
 	}
-	
+
 	return self;
 }
 
@@ -56,20 +62,24 @@
 	[self stop];
 }
 
-- (BOOL)isActive
+- (BOOL)timerIsActive
 {
-	return BOOLValueFromObject(self.timer);
+	return PointerIsNotEmpty(self.timer);
 }
 
 - (void)start:(NSTimeInterval)interval
 {
+	PointerIsEmptyAssert(self.delegate);
+	PointerIsEmptyAssert(self.selector);
+
 	[self stop];
-	
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval 
-											  target:self 
-											selector:@selector(onTimer:) 
-											userInfo:nil repeats:self.reqeat];
-	
+
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval
+												  target:self
+												selector:@selector(onTimer:)
+												userInfo:nil
+												 repeats:self.reqeatTimer];
+
 	[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
 
@@ -81,12 +91,12 @@
 
 - (void)onTimer:(id)sender
 {
-	if (self.isActive == NO) return;
-	
-	if (self.reqeat == NO) {
+	NSAssertReturn(self.timerIsActive);
+
+	if (self.reqeatTimer == NO) {
 		[self stop];
 	}
-	
+
 	if ([self.delegate respondsToSelector:self.selector]) {
 		objc_msgSend(self.delegate, self.selector, self);
 	}

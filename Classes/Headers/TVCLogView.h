@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,19 +38,18 @@
 #import "TextualApplication.h"
 
 @interface TVCLogView : WebView
-@property (nonatomic, unsafe_unretained) id keyDelegate;
-@property (nonatomic, unsafe_unretained) id resizeDelegate;
+@property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, uweak) id resizeDelegate;
 
 - (NSString *)contentString;
-- (WebScriptObject *)js_api;
 
-- (void)clearSelection;
+- (WebScriptObject *)javaScriptAPI;
+
 - (BOOL)hasSelection;
+- (void)clearSelection;
 - (NSString *)selection;
 @end
 
-@interface NSObject (LogViewDelegate)
+@interface NSObject (TVCLogViewDelegate)
 - (void)logViewKeyDown:(NSEvent *)e;
-- (void)logViewWillResize;
-- (void)logViewDidResize;
 @end

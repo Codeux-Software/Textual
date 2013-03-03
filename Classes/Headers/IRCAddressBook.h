@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -42,25 +42,24 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 	IRCAddressBookUserTrackingEntryType
 } IRCAddressBookEntryType;
 
-@interface IRCAddressBook : NSObject
-@property (nonatomic, assign) NSInteger cid;
+@interface IRCAddressBook : NSObject <NSMutableCopying>
+@property (nonatomic, assign) IRCAddressBookEntryType entryType;
+@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, strong) NSString *hostmask;
-@property (nonatomic, assign) BOOL ignorePublicMsg;
-@property (nonatomic, assign) BOOL ignorePrivateMsg;
-@property (nonatomic, assign) BOOL ignoreHighlights;
-@property (nonatomic, assign) BOOL ignoreNotices;
+@property (nonatomic, strong) NSString *hostmaskRegex;
 @property (nonatomic, assign) BOOL ignoreCTCP;
 @property (nonatomic, assign) BOOL ignoreJPQE;
+@property (nonatomic, assign) BOOL ignoreNotices;
+@property (nonatomic, assign) BOOL ignorePrivateHighlights;
+@property (nonatomic, assign) BOOL ignorePrivateMessages;
+@property (nonatomic, assign) BOOL ignorePublicHighlights;
+@property (nonatomic, assign) BOOL ignorePublicMessages;
 @property (nonatomic, assign) BOOL notifyJoins;
-@property (nonatomic, strong) NSString *hostmaskRegex;
-@property (nonatomic, assign) BOOL ignorePMHighlights;
-@property (nonatomic, assign) IRCAddressBookEntryType entryType;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;
 
 - (NSString *)trackingNickname;
-- (BOOL)checkIgnore:(NSString *)thehost;
 
-- (void)processHostMaskRegex;
+- (BOOL)checkIgnore:(NSString *)thehost;
 @end

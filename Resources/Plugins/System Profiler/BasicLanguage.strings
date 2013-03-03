@@ -1,0 +1,93 @@
+/* ********************************************************************* 
+       _____        _               _    ___ ____   ____
+      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
+        Please see Contributors.pdf and Acknowledgements.pdf
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Textual IRC Client & Codeux Software nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
+
+"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
+
+"SystemInformationCompiledOutputPrefix" = "System Information:";
+"SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
+"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Cores: %3$lu Physical, %4$lu Virtual) @ %5$@ \002•\002";
+"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
+"SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
+"SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
+"SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
+"SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
+"SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
+"SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
+"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
+"SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
+"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
+
+"SystemInformationGraphicsInformationResultBase" = "%@";
+"SystemInformationGraphicsInformationResultMiddle" = ", %@";
+
+"SystemInformationOSVersionLion" = "Lion";
+"SystemInformationOSVersionMountainLion" = "Mountain Lion";
+
+"SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
+
+"SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
+"SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
+
+"SystemInformationDiskspaceCommandResultPrefix" = "\002Mounted Drives:\002 %@";
+"SystemInformationDiskspaceCommandResultBase" = "%1$@: Total: %2$@; Free: %3$@";
+"SystemInformationDiskspaceCommandResultMiddle" = " — %1$@: Total: %2$@; Free: %3$@";
+"SystemInformationDiskspaceCommandResultError" = "Error: Unable to find any mounted drives."; // what are we running on?
+
+"SystemInformationNetstatsCommandResultPrefix" = "\002Network Traffic:\002%@";
+"SystemInformationNetstatsCommandResultBase" = " [%1$@]: %2$@ in, %3$@ out";
+"SystemInformationNetstatsCommandResultMiddle" = " — [%1$@]: %2$@ in, %3$@ out";
+"SystemInformationNetstatsCommandResultError" = "Error: Unable to locate any network statistics. ";
+
+"SystemInformationFilesizeTB" = "%.2f TB";
+"SystemInformationFilesizeGB" = "%.2f GB";
+"SystemInformationFilesizeMB" = "%.2f MB";
+"SystemInformationFilesizeKB" = "%.2f KB";
+
+"SystemInformationStyleCommandResultBundle" = "\002Current Style:\002 %@";
+"SystemInformationStyleCommandResultCustom" = "\002Current Style:\002 %@ (Custom)";
+
+"SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
+"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
+"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %1$ld: %2$.0f x %2$.0f";
+"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
+
+"SystemInformationWindowCCommandResult" = "\002Open Windows:\002 %ld";
+"SystemInformationUptimeCommandResult" = "System Uptime: %1$@ - Textual Uptime: %2$@";
+"SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
+"SystemInformationRuncountCommandResult" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
+"SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %1$@";
+"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";

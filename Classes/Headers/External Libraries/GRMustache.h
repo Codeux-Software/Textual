@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
 
 @protocol GRMustacheRendering;
-
 @class GRMustacheTag;
 @class GRMustacheContext;
 @class GRMustacheTemplateRepository;
@@ -59,8 +59,9 @@ typedef struct {
  */
 + (GRMustacheVersion)version AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
+
 ////////////////////////////////////////////////////////////////////////////////
-/// @name Preventing NSUndefinedKeyException when using GRMustache in Development configuration
+/// @name Preventing NSUndefinedKeyException in Development configuration
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -93,6 +94,23 @@ typedef struct {
  */
 + (void)preventNSUndefinedKeyExceptionAttack AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
+
+////////////////////////////////////////////////////////////////////////////////
+/// @name Standard Library
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @return The GRMustache standard library.
+ *
+ * @since v6.4
+ */
++ (NSObject *)standardLibrary AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// @name Building rendering objects
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Returns a rendering object that is able to render the argument _object_ for
  * the various Mustache tags.
@@ -116,10 +134,14 @@ typedef struct {
 /**
  * Returns a rendering object that renders with the provided block.
  *
- * @param block  A block that returns a tag rendering, provided with a rendering
- *               context.
+ * @param block  A block that follows the semantics of the
+ *               renderForMustacheTag:context:HTMLSafe:error: method defined by
+ *               the GRMustacheRendering protocol. See the documentation of this
+ *               method.
  *
  * @return A rendering object
+ *
+ * @see GRMustacheRendering protocol
  *
  * @since v6.0
  */
@@ -136,3 +158,5 @@ typedef struct {
 #import "GRMustacheContext.h"
 #import "GRMustacheRendering.h"
 #import "GRMustacheTag.h"
+#import "GRMustacheConfiguration.h"
+#import "GRMustacheLocalizer.h"

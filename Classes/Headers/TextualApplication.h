@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -41,6 +41,10 @@
 	#import <Security/Security.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
 
+	#import <BlowfishEncryption/BlowfishEncryption.h>
+	#import <SystemInformation/SystemInformation.h>
+	#import <AutoHyperlinks/AutoHyperlinks.h>
+
 	#import "StaticDefinitions.h"
 
 	/* Class Forwarders. */
@@ -61,8 +65,7 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class IRCWorldConfig;
-	@class LVCLogRenderer;
+	@class TVCLogRenderer;
 	@class TDCAboutPanelSWindowController;
 	@class TDCAddressBookSheet;
 	@class TDCHighlightSheet;
@@ -81,12 +84,10 @@
 	@class TDChanBanSheet;
 	@class TDChanInviteExceptionSheet;
 	@class TDChannelSheet;
-	@class THOPluginProtocol;
-	@class THOTextualPluginItem;
-	@class THOUnicodeHelper;
+	@class THOPluginItem;
+	@class THOPluginManager;
 	@class TKMessageBlockOperation;
 	@class TLOFileLogger;
-	@class TLOFileWithContent;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
 	@class TLOKeyEventHandler;
@@ -95,15 +96,14 @@
 	@class TLONickCompletionStatus;
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
-	@class TLOSocketClient;
 	@class TLOSoundPlayer;
 	@class TLOTimer;
 	@class TLOTimerCommand;
 	@class TLOpenLink;
-	@class TPCOtherTheme;
 	@class TPCPreferences;
 	@class TPCPreferencesMigrationAssistant;
-	@class TPCViewTheme;
+	@class TPCThemeController;
+	@class TPCThemeSettings;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
 	@class TVCInputPromptDialog;
@@ -117,6 +117,7 @@
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
+	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
@@ -137,23 +138,24 @@
 	#import "DDInvocation.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
-	#import "GRMustacheAvailabilityMacros.h"
-	#import "GRMustacheContext.h"
-	#import "GRMustacheError.h"
-	#import "GRMustacheFilter.h"
-	#import "GRMustacheRendering.h"
-	#import "GRMustacheTag.h"
-	#import "GRMustacheTagDelegate.h"
-	#import "GRMustacheTemplate.h"
-	#import "GRMustacheTemplateRepository.h"
-	#import "GRMustacheVersion.h"
-	#import "GRMustache.h"
 	#import "GTMDefines.h"
 	#import "GTMGarbageCollection.h"
 	#import "GTMEncodeHTML.h"
 	#import "GTMEncodeURL.h"
-	#import "RLMAsyncSocket.h"
-	#import "RegexKitLite.h"
+    #import "RLMAsyncSocket.h"
+    #import "GRMustache.h"
+    #import "GRMustacheAvailabilityMacros.h"
+    #import "GRMustacheConfiguration.h"
+    #import "GRMustacheContext.h"
+    #import "GRMustacheError.h"
+    #import "GRMustacheFilter.h"
+    #import "GRMustacheLocalizer.h"
+    #import "GRMustacheRendering.h"
+    #import "GRMustacheTag.h"
+    #import "GRMustacheTagDelegate.h"
+    #import "GRMustacheTemplate.h"
+    #import "GRMustacheTemplateRepository.h"
+    #import "GRMustacheVersion.h"
 
 	/* IRC Controllers — Core. */
 
@@ -166,6 +168,7 @@
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
 	#import "IRCConnection.h"
+	#import "IRCConnectionSocket.h"
 	#import "IRCExtras.h"
 	#import "IRCISupportInfo.h"
 	#import "IRCMessage.h"
@@ -175,20 +178,18 @@
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCWorld.h"
-	#import "IRCWorldConfig.h"
 
 	/* Framework Extensions (Helpers). */
 
 	#import "NSArrayHelper.h"
-	#import "NSBundleHelper.h"
 	#import "NSColorHelper.h"
-	#import "NSDataHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSNumberHelper.h"
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"
+	#import "NSRangeHelper.h"
 	#import "NSRectHelper.h"
 	#import "NSScreenHelper.h"
 	#import "NSSplitViewHelper.h"
@@ -220,13 +221,12 @@
 	/* Helpers. */
 
 	#import "THOPluginItem.h"
+	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
-	#import "THOUnicodeHelper.h"
 
 	/* Library. */
 
 	#import "TLOFileLogger.h"
-	#import "TLOFileWithContent.h"
 	#import "TLOGrowlController.h"
 	#import "TLOInputHistory.h"
 	#import "TLOKeyEventHandler.h"
@@ -235,7 +235,6 @@
 	#import "TLONickCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLORegularExpression.h"
-	#import "TLOSocketClient.h"
 	#import "TLOSoundPlayer.h"
 	#import "TLOTimer.h"
 	#import "TLOTimerCommand.h"
@@ -243,10 +242,10 @@
 
 	/* Preferences. */
 
-	#import "TPCOtherTheme.h"
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesMigrationAssistant.h"
-	#import "TPCViewTheme.h"
+	#import "TPCThemeController.h"
+	#import "TPCThemeSettings.h"
 
 	/* View Controllers. */
 
@@ -263,6 +262,7 @@
 	#import "TVCLogScriptEventSink.h"
 	#import "TVCLogView.h"
 	#import "TVCMainWindow.h"
+	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"

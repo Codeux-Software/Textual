@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -36,68 +36,94 @@
  *********************************************************************** */
 
 #import "DH1080.h"
-#import "dh1080_be.hpp"
+#import "DH1080Base.h"
 
-#define requiredPublicKeyLength		135
+@interface CFDH1080 ()
+@property (nonatomic, strong) DH1080Base *keyExchanger;
+@end
 
 @implementation CFDH1080
 
-static dhclass *keyExchanger;
+#pragma mark -
+
+- (id)init
+{
+	if ((self = [super init])) {
+		self.keyExchanger = [DH1080Base new];
+
+		return self;
+	}
+
+	return nil;
+}
 
 - (void)dealloc
 {
-	if (keyExchanger) {
-		free(keyExchanger);
-	}
+	self.keyExchanger = nil;
 }
 
-- (NSString *)generatePublicKey
+#pragma mark -
+
+- (NSString *)generatePublicKey:(BOOL)enforceKeyLength
 {
-	std::string publicKey;
-	
-	keyExchanger = new dhclass;
-	
-	if (keyExchanger) {
-		if (keyExchanger->generate()) {
-			keyExchanger->get_public_key(publicKey);
-			
-			NSString *_publicKey = @(publicKey.c_str());
-			
-			if ([_publicKey length] >= 1) {
-				return _publicKey;
-			}
-		}
-	}
-	
+	NSString *publicKeyRaw = [self.keyExchanger rawPublicKey];
+
+    /* During development there were times when the generated key were not the
+     correct length making key exchange fail on each end. If the length of the
+     public key is not correct, then we will reset and create it again several
+     times until we have one that is. The loop is limited to prevent it from 
+     ending up being infinitely ran. */
+
+    if ((publicKeyRaw.length == DH1080RequiredKeyLength) == NO && enforceKeyLength) {
+       NSInteger loopIndex = 0;
+
+        while (1 == 1) {
+            if (loopIndex > 10) {
+                break;
+            }
+            
+            [self.keyExchanger resetStatus];
+            [self.keyExchanger resetPublicInformation];
+
+            [self.keyExchanger initalizeKeyExchange];
+
+            publicKeyRaw = [self.keyExchanger rawPublicKey];
+
+            if (publicKeyRaw.length == DH1080RequiredKeyLength) {
+                break;
+            }
+
+            loopIndex += 1;
+        }
+    }
+
+    if (publicKeyRaw.length == DH1080RequiredKeyLength) {
+        return [self.keyExchanger publicKeyValue:publicKeyRaw];
+    }
+
 	return nil;
 }
 
 - (NSString *)secretKeyFromPublicKey:(NSString *)publicKey
 {
-	std::string specialPrivateKey;
-	std::string specialPublicKey([publicKey UTF8String]);
-	
-	dh_base64decode(specialPublicKey);
+	publicKey = [self.keyExchanger base64Decode:publicKey];
 
-	if (specialPublicKey.size() < requiredPublicKeyLength ||
-		specialPublicKey.size() > requiredPublicKeyLength) {
-		
+	if (publicKey.length < DH1080RequiredKeyLength ||
+		publicKey.length > DH1080RequiredKeyLength) {
+
 		return nil;
 	}
-	
-	keyExchanger->set_her_key(specialPublicKey);
-	
-	if (keyExchanger->compute() == NO) {
+
+	[self.keyExchanger setKeyForComputation:publicKey];
+	[self.keyExchanger computeKey];
+
+	NSString *secretString = [self.keyExchanger secretStringValue];
+
+	if (secretString.length <= 0) {
 		return nil;
 	}
-	
-	keyExchanger->get_secret(specialPrivateKey);
-	
-	NSString *privateKey = [[NSString alloc] initWithBytes:specialPrivateKey.c_str()
-													length:specialPrivateKey.length()
-												 encoding:NSASCIIStringEncoding];
-	
-	return privateKey;
+
+	return secretString;
 }
 
 @end

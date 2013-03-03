@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,8 @@
  *********************************************************************** */
 
 #import "TextualApplication.h"
+
+#include <objc/message.h>
 
 @implementation NSArray (TXArrayHelper)
 
@@ -140,7 +142,7 @@
 {
 	for (id object in self) {
 		if ([object isKindOfClass:[NSString class]]) {
-			if ([object isEqualNoCase:anObject]) {
+			if ([object isEqualIgnoringCase:anObject]) {
 				return YES;
 			}
 		} 
@@ -163,6 +165,13 @@
 - (void)safeAddObject:(id)anObject
 {
 	if (PointerIsEmpty(anObject) == NO) {
+		[self addObject:anObject];
+	}
+	
+}
+- (void)safeAddObjectWithoutDuplication:(id)anObject
+{
+	if (PointerIsEmpty(anObject) == NO && [self containsObject:anObject] == NO) {
 		[self addObject:anObject];
 	}
 }
@@ -222,6 +231,21 @@
 - (void)addPointer:(void *)value
 {
 	[self safeAddObject:[NSValue valueWithPointer:value]];
+}
+
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
+{
+	NSMutableArray *oldArray = [self mutableCopy];
+
+	[self removeAllObjects];
+
+	for (__strong id object in oldArray) {
+		if ([object respondsToSelector:performSelector]) {
+			object = objc_msgSend(object, performSelector);
+		}
+
+		[self safeAddObject:object];
+	}
 }
 
 @end

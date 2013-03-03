@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -47,15 +47,15 @@ typedef enum TXNicknameHighlightMatchType : NSInteger {
     TXNicknameHighlightRegularExpressionMatchType,
 } TXNicknameHighlightMatchType;
 
-typedef enum TXTabKeyActionType : NSInteger {
-	TXTabKeyActionNickCompleteType = 0,
-	TXTabKeyActionUnreadChannelType,
-	TXTabKeyActionNoneType = 100,
-} TXTabKeyActionType;
+typedef enum TXTabKeyAction : NSInteger {
+	TXTabKeyNickCompleteAction = 0,
+	TXTabKeyUnreadChannelAction,
+	TXTabKeyNoneTypeAction = 100,
+} TXTabKeyAction;
 
 typedef enum TXUserDoubleClickAction : NSInteger {
 	TXUserDoubleClickWhoisAction = 100,
-	TXUserDoubleClickQueryAction = 200,
+	TXUserDoubleClickPrivateMessageAction = 200,
 } TXUserDoubleClickAction;
 
 typedef enum TXNoticeSendLocationType : NSInteger {
@@ -63,12 +63,12 @@ typedef enum TXNoticeSendLocationType : NSInteger {
 	TXNoticeSendCurrentChannelType = 1,
 } TXNoticeSendLocationType;
 
-typedef enum TXCmdWShortcutResponseType : NSInteger {
-	TXCmdWShortcutCloseWindowType = 0,
-	TXCmdWShortcutPartChannelType = 1,
-	TXCmdWShortcutDisconnectType = 2,
-	TXCmdWShortcutTerminateType = 3,
-} TXCmdWShortcutResponseType;
+typedef enum TXCommandWKeyAction : NSInteger {
+	TXCommandWKeyCloseWindowAction = 0,
+	TXCommandWKeyPartChannelAction = 1,
+	TXCommandWKeyDisconnectAction = 2,
+	TXCommandWKeyTerminateAction = 3,
+} TXCommandWKeyAction;
 
 typedef enum TXHostmaskBanFormat : NSInteger {
 	TXHostmaskBanWHNINFormat  = 0, // With Hostmask, No Username/Nickname
@@ -78,15 +78,17 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 } TXHostmaskBanFormat;
 
 @interface TPCPreferences : NSObject
++ (BOOL)isDefaultIRCClient;
+
 + (BOOL)sandboxEnabled;
 + (BOOL)securityScopedBookmarksAvailable;
 
-+ (TXMasterController *)masterController;
-+ (void)setMasterController:(TXMasterController *)master;
++ (NSTimeInterval)timeIntervalSinceApplicationLaunch;
++ (NSTimeInterval)timeIntervalSinceApplicationInstall;
++ (void)saveTimeIntervalSinceApplicationInstall;
 
-+ (NSInteger)startTime;
-+ (NSInteger)totalRunTime;
-+ (void)updateTotalRunTime;
++ (NSInteger)applicationRunCount;
++ (void)updateApplicationRunCount;
 
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
@@ -95,15 +97,14 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (NSString *)masqueradeCTCPVersion;
 
-+ (NSData *)applicationIcon;
 + (NSString *)applicationName;
-+ (NSInteger)applicationProcessID;
 + (NSString *)applicationBundleIdentifier;
+
++ (NSInteger)applicationProcessID;
 
 + (NSString *)gitBuildReference;
 
 + (NSDictionary *)textualInfoPlist;
-+ (NSDictionary *)systemInfoPlist;
 
 + (NSString *)applicationBundlePath;
 + (NSString *)applicationSupportFolderPath;
@@ -115,20 +116,21 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)bundledThemeFolderPath;
 + (NSString *)bundledExtensionFolderPath;
 + (NSString *)bundledScriptFolderPath;
-+ (NSString *)appleStoreReceiptFilePath;
-+ (NSString *)userHomeDirectoryPathOutsideSandbox;
-
-#ifdef TXUserScriptsFolderAvailable
 + (NSString *)systemUnsupervisedScriptFolderPath;
-#endif
+
++ (BOOL)logTranscript;
 
 + (NSString *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;
-+ (void)stopUsingTranscriptFolderBookmarkResources;
+
++ (void)startUsingTranscriptFolderSecurityScopedBookmark;
++ (void)stopUsingTranscriptFolderSecurityScopedBookmark;
 
 + (NSArray *)publicIRCCommandList;
 + (NSInteger)indexOfIRCommand:(NSString *)command;
 + (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic;
+
++ (NSArray *)IRCCommandIndex:(BOOL)isPublic;
 
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
@@ -143,34 +145,34 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)IRCopDefaultShunMessage;
 + (NSString *)IRCopAlertMatch;
 
++ (BOOL)giveFocusOnMessageCommand;
+
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
-+ (BOOL)giveFocusOnMessage;
 + (BOOL)nickAllConnections;
 + (BOOL)clearAllOnlyOnActiveServer;
 
 + (TXNoticeSendLocationType)locationToSendNotices;
 
 + (BOOL)trackConversations;
-+ (BOOL)disableNicknameColors;
-
-+ (BOOL)logAllHighlightsToQuery;
-+ (BOOL)keywordCurrentNick;
-
-+ (TXNicknameHighlightMatchType)keywordMatchingMethod;
++ (BOOL)disableNicknameColorHashing;
 
 + (BOOL)displayDockBadge;
-+ (BOOL)countPublicMessagesInIconBadge;
++ (BOOL)displayPublicMessageCountOnDockBadge;
+
++ (BOOL)setAwayOnScreenSleep;
 
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
-+ (BOOL)invertSidebarColors;
-+ (BOOL)hideMainWindowSegmentedController;
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;
+
 + (BOOL)useLogAntialiasing;
++ (BOOL)invertSidebarColors;
++ (BOOL)invertInputTextFieldColors;
++ (BOOL)hideMainWindowSegmentedController;
 
 + (BOOL)reloadScrollbackOnLaunch;
 
@@ -181,12 +183,11 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)rejoinOnKick;
 + (BOOL)copyOnSelect;
 + (BOOL)replyToCTCPRequests;
-+ (BOOL)autojoinWaitForNickServ;
++ (BOOL)autojoinWaitsForNickServ;
+
 + (BOOL)inputHistoryIsChannelSpecific;
 
-+ (TXCmdWShortcutResponseType)cmdWResponseType;
-
-+ (BOOL)logTranscript;
++ (TXCommandWKeyAction)commandWKeyAction;
 
 + (BOOL)openBrowserInBackground;
 
@@ -195,21 +196,24 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)joinOnDoubleclick;
 + (BOOL)leaveOnDoubleclick;
 
++ (NSInteger)autojoinMaxChannelJoins;
+
 + (TXUserDoubleClickAction)userDoubleClickOption;
 
-+ (NSInteger)autojoinMaxChannelJoins;
 + (TXHostmaskBanFormat)banFormat;
 
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 
 + (NSString *)themeName;
-+ (NSString *)themeChannelViewFontName;
 + (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;
+
 + (TXNSDouble)themeTransparency;
-+ (TXNSDouble)themeChannelViewFontSize;
+
 + (NSFont *)themeChannelViewFont;
++ (NSString *)themeChannelViewFontName;
++ (TXNSDouble)themeChannelViewFontSize;
 
 + (void)setThemeName:(NSString *)value;
 + (void)setThemeChannelViewFontName:(NSString *)value;
@@ -224,18 +228,16 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)soundForEvent:(TXNotificationType)event;
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event;
-+ (BOOL)growlStickyForEvent:(TXNotificationType)event;
-+ (BOOL)disableWhileAwayForEvent:(TXNotificationType)event;
++ (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event;
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event;
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setGrowlSticky:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setDisableWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
++ (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
 
-+ (TXTabKeyActionType)tabAction;
++ (TXTabKeyAction)tabKeyAction;
 
-+ (NSString *)completionSuffix;
-+ (void)setCompletionSuffix:(NSString *)value;
++ (NSString *)tabCompletionSuffix;
++ (void)setTabCompletionSuffix:(NSString *)value;
 
 + (NSDictionary *)loadWorld;
 + (void)saveWorld:(NSDictionary *)value;
@@ -243,9 +245,15 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSDictionary *)loadWindowStateWithName:(NSString *)name;
 + (void)saveWindowState:(NSDictionary *)value name:(NSString *)name;
 
-+ (NSArray *)keywords;
-+ (NSArray *)excludeWords;
-+ (void)cleanUpWords;
++ (TXNicknameHighlightMatchType)highlightMatchingMethod;
+
++ (BOOL)logHighlights;
++ (BOOL)highlightCurrentNickname;
+
++ (NSArray *)highlightMatchKeywords;
++ (NSArray *)highlightExcludeKeywords;
+
++ (void)cleanUpHighlightKeywords;
 
 + (void)defaultIRCClientPrompt:(BOOL)forced;
 

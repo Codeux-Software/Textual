@@ -7,13 +7,11 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.frameworks.blowfish</string>
+	<string>com.codeux.frameworks.BlowfishEncryption</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
-	<key>CFBundleSignature</key>
-	<string>CSBF</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 </dict>

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,26 +38,21 @@
 #import "TextualApplication.h"
 
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, strong) TVCLogController *log;
-@property (nonatomic, assign) BOOL isKeyword;
-@property (nonatomic, assign) BOOL isUnread;
-@property (nonatomic, assign) BOOL isNewTalk;
-@property (nonatomic, assign) NSInteger keywordCount;
-@property (nonatomic, assign) NSInteger dockUnreadCount;
-@property (nonatomic, assign) NSInteger treeUnreadCount;
+@property (nonatomic, nweak) NSString *label;
+@property (nonatomic, nweak) NSString *name;
+@property (nonatomic, strong) NSString *treeUUID; // Unique Identifier (UUID)
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL isClient;
-@property (nonatomic, assign) BOOL isExpanded;
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, weak) NSString *label;
-@property (nonatomic, weak) NSString *name;
+@property (nonatomic, assign) BOOL isUnread;
+@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, assign) NSInteger dockUnreadCount;
+@property (nonatomic, assign) NSInteger treeUnreadCount;
+@property (nonatomic, assign) NSInteger nicknameHighlightCount;
+@property (nonatomic, strong) TVCLogController *viewController;
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
-@property (nonatomic, strong) NSAttributedString *currentInputHistory;
 
 - (void)resetState;
+
 - (NSInteger)numberOfChildren;
 - (IRCTreeItem *)childAtIndex:(NSInteger)index;
-
-- (void)resetLogView:(IRCWorld *)world withChannel:(IRCChannel *)c andClient:(IRCClient *)u;
 @end

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -41,22 +41,27 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	NSString *value = [self stringValue];
+	NSString *value = self.stringValue;
 	
 	if ([value isEqualToString:TXDefaultListSeperatorCellIndex]) {
-		CGFloat lineWidth	= 0;
-		CGFloat lineX		= 0;
-		CGFloat lineY		= 0;
+		NSColor *fillColor = [NSColor darkGrayColor];
 		
-		lineWidth = cellFrame.size.width;
+		CGFloat lineW = 0;
+		CGFloat lineX = 0;
+		CGFloat lineY = 0;
 		
-		lineY  = ((cellFrame.size.height - 2) / 2);
+		lineY  = cellFrame.size.height;
+		lineY -= 2;
+		lineY /= 2;
 		lineY += 1.0;
 		
-		NSRect lineRect = NSMakeRect((cellFrame.origin.x + lineX), 
-									 (cellFrame.origin.y + lineY), lineWidth, 0.5);
+		lineW = cellFrame.size.width;
 		
-		[[NSColor darkGrayColor] set];
+		NSRect lineRect = NSMakeRect((cellFrame.origin.x + lineX), 
+									 (cellFrame.origin.y + lineY), lineW, 0.5);
+		
+		[fillColor set];
+		
 		NSRectFill(lineRect);
 	} else {
 		[super drawWithFrame:cellFrame inView:controlView];

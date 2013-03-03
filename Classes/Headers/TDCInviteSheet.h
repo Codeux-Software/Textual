@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,15 @@
 #import "TextualApplication.h"
 
 @interface TDCInviteSheet : TDCSheetBase
-@property (nonatomic, strong) NSArray *nicks;
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, strong) NSTextField *titleLabel;
-@property (nonatomic, strong) NSPopUpButton *channelPopup;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSArray *nicknames;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) NSPopUpButton *channelListPopup;
 
 - (void)startWithChannels:(NSArray *)channels;
-- (void)invite:(id)sender;
 @end
 
-@interface NSObject (TXInviteSheetDelegate)
+@interface NSObject (TDCInviteSheetDelegate)
 - (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName;
 - (void)inviteSheetWillClose:(TDCInviteSheet *)sender;
 @end

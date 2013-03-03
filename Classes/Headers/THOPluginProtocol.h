@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,25 @@
 
 #import "TextualApplication.h"
 
-/* Model for Textual plugins */
+/* TPILS and TPIFLS allow a plugin to use localized text within the plugin itself using
+ Textual's own API. TPILS takes a single paramater and that is the key to look inside 
+ the .strings file for. TPIFLS takes a key then as many paramaters as needed after. 
+ TPIFLS takes the key given, finds the localized string, then formats it similar to 
+ NSString stringWithFormat:… 
+ 
+ These calls expect the localized strings to be inside the filename "BasicLanguage.strings"
+ Any other name will not work unless the actual cocoa APIs for accessing localized strings
+ is used in place of these. */
+#define TPILS(k)			 TSBLS(k, [NSBundle bundleForClass:[self class]])
+#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
 
-@interface THOPluginProtocol : NSObject
+@protocol THOPluginProtocol <NSObject>
 
-/* Supported Commands */
+@optional
+
 - (NSArray *)pluginSupportsUserInputCommands;
 - (NSArray *)pluginSupportsServerInputCommands;
 
-/* Supported Commands Delegates */
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;
@@ -54,14 +64,21 @@
 						 sender:(NSDictionary *)senderDict 
 						message:(NSDictionary *)messageDict;
 
-/* Output Rules */
 - (NSDictionary *)pluginOutputDisplayRules;
 
-/* Allocation & Deallocation */
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world;
 - (void)pluginUnloadedFromMemory;
 
-/* Preference Pane */
 - (NSView *)preferencesView;
 - (NSString *)preferencesMenuItemName;
+
+/* Process user input before Textual does. */
+/* This command may be fed an NSAttributedString or NSString. If it is an
+ NSAttributedString it most likely contains user defined text formatting.
+ Honor that formatting. Do not turn an NSAttributedString into an NSString.
+
+ Return the type you are given and make sure you check the type you get to
+ make sure it is handled appropriately. Do not give us a clean NSString if
+ we handed you an NSAttributedString that contains formatting. */
+- (id)interceptUserInput:(id)input command:(NSString *)command;
 @end

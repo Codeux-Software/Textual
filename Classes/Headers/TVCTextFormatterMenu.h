@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,13 +37,13 @@
 
 #import "TextualApplication.h"
 
-#define IRCTextFormatterMenuTag		53037
+#define IRCTextFormatterMenuTag			53037
 
 @interface TVCTextFormatterMenu : NSObject
-@property (nonatomic, unsafe_unretained) TVCTextField *textField;
-@property (nonatomic, strong) NSMenuItem *formatterMenu;
-@property (nonatomic, strong) NSMenu *foregroundColorMenu;
-@property (nonatomic, strong) NSMenu *backgroundColorMenu;
+@property (nonatomic, uweak) TVCTextField *textField;
+@property (nonatomic, nweak) NSMenuItem *formatterMenu;
+@property (nonatomic, nweak) NSMenu *foregroundColorMenu;
+@property (nonatomic, nweak) NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(TVCTextField *)field;
