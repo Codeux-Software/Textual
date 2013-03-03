@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,15 +38,15 @@
 #import "TextualApplication.h"
 
 @interface TDCTopicSheet : TDCSheetBase
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, strong) TVCTextField *text;
-@property (nonatomic, strong) NSTextField *header;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, uweak) TVCTextField *topicValueField;
 
 - (void)start:(NSString *)topic;
 @end
 
-@interface NSObject (TXTopicSheetDelegate)
+@interface NSObject (TDCTopicSheetDelegate)
 - (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic;
 - (void)topicSheetWillClose:(TDCTopicSheet *)sender;
 @end

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,27 +39,155 @@
 
 @implementation IRCChannelConfig
 
+@synthesize secretKey = _secretKey;
+@synthesize encryptionKey = _encryptionKey;
+
 - (id)init
 {
 	if ((self = [super init])) {
-		self.guid = [NSString stringWithUUID];
+		self.itemUUID = [NSString stringWithUUID];
 
 		self.type = IRCChannelNormalType;
 		
+		self.autoJoin			= YES;
+        self.ignoreHighlights	= NO;
         self.ignoreInlineImages	= NO;
         self.ignoreJPQActivity	= NO;
-        self.ignoreHighlights	= NO;
-		self.autoJoin			= YES;
-		self.growl				= YES;
-		
-		self.name			= NSStringEmptyPlaceholder;
-		self.mode			= NSStringEmptyPlaceholder;
-		self.topic			= NSStringEmptyPlaceholder;
-		self.password		= NSStringEmptyPlaceholder;
+		self.pushNotifications	= YES;
+
+		self.defaultModes	= NSStringEmptyPlaceholder;
+		self.defaultTopic	= NSStringEmptyPlaceholder;
 		self.encryptionKey	= NSStringEmptyPlaceholder;
+		self.channelName	= NSStringEmptyPlaceholder;
+		self.secretKey		= NSStringEmptyPlaceholder;
 	}
     
 	return self;
+}
+
+- (void)dealloc
+{
+	if (self.type == IRCChannelPrivateMessageType) {
+		[self destroyKeychains];
+	}
+}
+
+#pragma mark -
+#pragma mark Keychain Management
+
+- (NSString *)encryptionKey
+{
+	NSString *kcPassword = nil;
+
+	if (NSObjectIsEmpty(_encryptionKey)) {
+		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
+												withItemKind:@"application password"
+												 forUsername:nil
+												 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	}
+
+	if (kcPassword) {
+		if ([kcPassword isEqualToString:_encryptionKey] == NO) {
+			_encryptionKey = nil;
+			_encryptionKey = kcPassword;
+		}
+	}
+
+	return _encryptionKey;
+}
+
+- (NSString *)secretKey
+{
+	NSString *kcPassword = nil;
+
+	if (NSObjectIsEmpty(_secretKey)) {
+		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
+												withItemKind:@"application password"
+												 forUsername:nil
+												 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+
+	}
+
+	if (kcPassword) {
+		if ([kcPassword isEqualToString:_secretKey] == NO) {
+			_secretKey = nil;
+			_secretKey = kcPassword;
+		}
+	}
+
+	return _secretKey;
+}
+
+- (void)setEncryptionKey:(NSString *)pass
+{
+	if ([_encryptionKey isEqualToString:pass] == NO) {
+		if (NSObjectIsEmpty(pass)) {
+			[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+		} else {
+			[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+								   withItemKind:@"application password"
+									forUsername:nil
+								withNewPassword:pass
+									serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+		}
+
+		_encryptionKey = nil;
+		_encryptionKey = pass;
+	}
+}
+
+- (void)setSecretKey:(NSString *)pass
+{
+	if ([_secretKey isEqualToString:pass] == NO) {
+		if (NSObjectIsEmpty(pass)) {
+			[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+		} else {
+			[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+								   withItemKind:@"application password"
+									forUsername:nil
+								withNewPassword:pass
+									serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+		}
+
+		_secretKey = nil;
+		_secretKey = pass;
+	}
+}
+
+- (void)destroyKeychains
+{
+	[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	
+	[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+}
+
+#pragma mark -
+#pragma mark Channel Configuration
+
++ (NSDictionary *)seedDictionary:(NSString *)channelName
+{
+	if ([channelName isChannelName]) {
+		return @{
+			@"channelName" : channelName,
+
+			/* Migration Assistant Dictionary Addition. */
+			TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath
+		};
+	}
+
+	return nil;
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic
@@ -67,22 +195,32 @@
 	if ((self = [self init])) {
 		dic = [TPCPreferencesMigrationAssistant convertIRCChannelConfiguration:dic];
 
-		self.type			= (IRCChannelType)[dic integerForKey:@"channelType"];
+		self.type			= (IRCChannelType)NSDictionaryIntegerKeyValueCompare(dic, @"channelType", self.type);
 
-		self.guid			= (([dic stringForKey:@"uniqueIdentifier"]) ?: self.guid);
+		self.itemUUID			= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
+		self.channelName		= NSDictionaryObjectKeyValueCompare(dic, @"channelName", self.channelName);
+
+		self.autoJoin			= NSDictionaryBOOLKeyValueCompare(dic, @"joinOnConnect", self.autoJoin);
+		self.ignoreHighlights	= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", self.ignoreHighlights);
+		self.ignoreInlineImages	= NSDictionaryBOOLKeyValueCompare(dic, @"disableInlineMedia", self.ignoreInlineImages);
+		self.ignoreJPQActivity	= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQActivity", self.ignoreJPQActivity);
+		self.pushNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"enableNotifications", self.pushNotifications);
 		
-		self.name			= (([dic stringForKey:@"channelName"])	 ?: NSStringEmptyPlaceholder);
-		self.password		= (([dic stringForKey:@"secretJoinKey"]) ?: NSStringEmptyPlaceholder);
-		
-		self.growl				= [dic boolForKey:@"enableNotifications"];
-		self.autoJoin			= [dic boolForKey:@"joinOnConnect"];
-		self.ignoreHighlights	= [dic boolForKey:@"ignoreHighlights"];
-		self.ignoreInlineImages	= [dic boolForKey:@"disableInlineMedia"];
-		self.ignoreJPQActivity	= [dic boolForKey:@"ignoreJPQActivity"];
-		
-		self.mode			= (([dic stringForKey:@"defaultMode"])		?: NSStringEmptyPlaceholder);
-		self.topic			= (([dic stringForKey:@"defaultTopic"])		?: NSStringEmptyPlaceholder);
-		self.encryptionKey	= (([dic stringForKey:@"encryptionKey"])	?: NSStringEmptyPlaceholder);
+		self.defaultModes		= NSDictionaryObjectKeyValueCompare(dic, @"defaultMode", self.defaultModes);
+		self.defaultTopic		= NSDictionaryObjectKeyValueCompare(dic, @"defaultTopic", self.defaultTopic);
+
+		// ---- // Migrate to keychain.
+
+		NSString *oldEncKey = [dic stringForKey:@"encryptionKey"];
+		NSString *oldJoinKey = [dic stringForKey:@"secretJoinKey"];
+
+		if (NSObjectIsNotEmpty(oldEncKey)) {
+			[self setEncryptionKey:oldEncKey];
+		}
+
+		if (NSObjectIsNotEmpty(oldJoinKey)) {
+			[self setSecretKey:oldJoinKey];
+		}
 		
 		return self;
 	}
@@ -96,18 +234,16 @@
 	
 	[dic setInteger:self.type forKey:@"channelType"];
 	
-	[dic setBool:self.growl					forKey:@"enableNotifications"];
 	[dic setBool:self.autoJoin				forKey:@"joinOnConnect"];
+	[dic setBool:self.pushNotifications		forKey:@"enableNotifications"];
     [dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
     [dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
     [dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
 
-	[dic safeSetObject:self.guid				forKey:@"uniqueIdentifier"];
-	[dic safeSetObject:self.name				forKey:@"channelName"];
-	[dic safeSetObject:self.password			forKey:@"secretJoinKey"];
-	[dic safeSetObject:self.mode				forKey:@"defaultMode"];
-	[dic safeSetObject:self.topic				forKey:@"defaultTopic"];
-	[dic safeSetObject:self.encryptionKey		forKey:@"encryptionKey"];
+	[dic safeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
+	[dic safeSetObject:self.channelName			forKey:@"channelName"];
+	[dic safeSetObject:self.defaultModes		forKey:@"defaultMode"];
+	[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
 	
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath

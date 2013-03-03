@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCServerListCell ()
+@property (nonatomic, readonly, uweak) TVCServerList *serverList;
+@end
+
 @implementation TVCServerListCell
 
 #pragma mark -
@@ -45,27 +49,32 @@
 - (void)drawStatusBadge:(NSString *)iconName inCell:(NSRect)cellFrame withAlpha:(CGFloat)alpha
 {
 	NSInteger extraMath = 0;
-	
-	if ([iconName isEqualNoCase:@"NSUser"] || [iconName isEqualNoCase:@"DarkServerListViewSelectedQueryUser"]) {
-		extraMath = 1;
+
+	/* The private message icon is designed a little different than the 
+	 channel status icon. Therefore, we have to change its origin to make
+	 up for the difference in design. */
+	if ([iconName hasPrefix:@"colloquy"] == NO) {
+		extraMath = -1;
 	} 
-	
+
+	/* More math… */
 	NSSize iconSize = NSMakeSize(16, 16);
-	NSRect iconRect = NSMakeRect( (NSMinX(cellFrame) - iconSize.width - self.parent.layoutIconSpacing),
-								 ((NSMidY(cellFrame) - (iconSize.width / 2.0f) - extraMath)),
+	NSRect iconRect = NSMakeRect((NSMinX(cellFrame) -   iconSize.width - self.serverList.channelCellStatusIconMargin),
+								 (NSMidY(cellFrame) - ((iconSize.height / 2.0f) - extraMath)),
 								 iconSize.width, iconSize.height);
 	
 	NSImage *icon = [NSImage imageNamed:iconName];
-	
+
+	/* Draw the icon. */
 	if (icon) {
 		NSSize actualIconSize = [icon size];
 		
 		if ((actualIconSize.width < iconSize.width) || 
-		    (actualIconSize.height < iconSize.height)) {
-			
+		    (actualIconSize.height < iconSize.height))
+		{
 			iconRect = NSMakeRect((NSMidX(iconRect) - (actualIconSize.width / 2.0f)),
 								  (NSMidY(iconRect) - (actualIconSize.height / 2.0f)),
-								  actualIconSize.width, actualIconSize.height);
+									actualIconSize.width, actualIconSize.height);
 		}
 		
 		iconRect.origin.y += 1;
@@ -74,7 +83,8 @@
 				fromRect:NSZeroRect
 			   operation:NSCompositeSourceOver
 				fraction:alpha
-		  respectFlipped:YES hints:nil];
+		  respectFlipped:YES
+				   hints:nil];
 	}
 }
 
@@ -83,24 +93,19 @@
 
 - (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount selected:(BOOL)isSelected
 {
-	NSString *messageCountString;
-	
-	if ([_NSUserDefaults() boolForKey:@"ForceServerListBadgeLocalization"]) {
-		messageCountString = TXFormattedNumber(messageCount);
-	} else {
-		messageCountString = [NSString stringWithInteger:messageCount];
-	}
-	
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
-	NSColor *textColor = self.parent.layoutBadgeTextColorNS;
+	NSString *messageCountString = TXFormattedNumber(messageCount);
+
+    /* Pick which font size best aligns with the badge. */
+	NSColor *textColor = self.serverList.messageCountBadgeNormalTextColor;
 	
 	if (isSelected) {
-		textColor = self.parent.layoutBadgeTextColorTS;
+		textColor = self.serverList.messageCountBadgeSelectedTextColor;
 	}
-	
-	attributes[NSFontAttributeName] = self.parent.layoutBadgeFont;
-	attributes[NSForegroundColorAttributeName] = textColor;
+
+	NSDictionary *attributes = @{
+		NSForegroundColorAttributeName : textColor,
+		NSFontAttributeName : self.serverList.messageCountBadgeFont
+	};
 	
 	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
 																   attributes:attributes];
@@ -110,20 +115,17 @@
 
 - (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring 
 {
-	NSRect badgeFrame;
+	NSInteger messageCountWidth = (mcstring.size.width + (self.serverList.messageCountBadgePadding * 2));
 	
-	NSSize    messageCountSize  = [mcstring size];
-	NSInteger messageCountWidth = (messageCountSize.width + (self.parent.layoutBadgeInsideMargin * 2));
+	NSRect badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (self.serverList.messageCountBadgeRightMargin + messageCountWidth)),
+								   (NSMidY(cellFrame) - (self.serverList.messageCountBadgeHeight / 2.0)),
+								      messageCountWidth, self.serverList.messageCountBadgeHeight);
 	
-	badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (self.parent.layoutBadgeRightMargin + messageCountWidth)),
-							(NSMidY(cellFrame) - (self.parent.layoutBadgeHeight / 2.0)),
-							messageCountWidth, self.parent.layoutBadgeHeight);
-	
-	if (badgeFrame.size.width < self.parent.layoutBadgeMinimumWidth) {
-		NSInteger widthDiff = (self.parent.layoutBadgeMinimumWidth - badgeFrame.size.width);
+	if (badgeFrame.size.width < self.serverList.messageCountBadgeMinimumWidth) {
+		NSInteger widthDiff = (self.serverList.messageCountBadgeMinimumWidth - badgeFrame.size.width);
 		
 		badgeFrame.size.width += widthDiff;
-		badgeFrame.origin.x   -= widthDiff;
+		badgeFrame.origin.x -= widthDiff;
 	}
 	
 	return badgeFrame;
@@ -135,65 +137,71 @@
                           selected:(BOOL)isSelected
 {
 	NSBezierPath *badgePath;
-	
-	NSSize messageCountSize = [mcstring size];
-	NSRect shadowFrame;
-	
+
+	/* Draw the badge's drop shadow. */
 	if (isSelected == NO) {
-		shadowFrame = badgeFrame;
+		NSRect shadowFrame = badgeFrame;
+		
 		shadowFrame.origin.y += 1;
 		
 		badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
-													xRadius:(self.parent.layoutBadgeHeight / 2.0)
-													yRadius:(self.parent.layoutBadgeHeight / 2.0)];
+													xRadius:(self.serverList.messageCountBadgeHeight / 2.0)
+													yRadius:(self.serverList.messageCountBadgeHeight / 2.0)];
+
+		[self.serverList.messageCountBadgeShadowColor set];
 		
-		[self.parent.layoutBadgeShadowColor set];
 		[badgePath fill];
 	}
-	
+
+	/* Draw the background color. */
 	NSColor *backgroundColor;
 	
 	if (highlight) {
-		backgroundColor = self.parent.layoutBadgeHighlightBackgroundColor;
+		backgroundColor = self.serverList.messageCountBadgeHighlightBackgroundColor;
 	} else {
 		if (isSelected) {
-			backgroundColor = self.parent.layoutBadgeMessageBackgroundColorTS;
+			backgroundColor = self.serverList.messageCountBadgeSelectedBackgroundColor;
 		} else {
 			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-				backgroundColor = self.parent.layoutBadgeMessageBackgroundColorGraphite;
+				backgroundColor = self.serverList.messageCountBadgeGraphtieBackgroundColor;
 			} else {
-				backgroundColor = self.parent.layoutBadgeMessageBackgroundColorAqua;
+				backgroundColor = self.serverList.messageCountBadgeAquaBackgroundColor;
 			}
 		}
 	}
 	
 	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame
-												xRadius:(self.parent.layoutBadgeHeight / 2.0)
-												yRadius:(self.parent.layoutBadgeHeight / 2.0)];
+												xRadius:(self.serverList.messageCountBadgeHeight / 2.0)
+												yRadius:(self.serverList.messageCountBadgeHeight / 2.0)];
 	
 	[backgroundColor set];
+	
 	[badgePath fill];
-	
+
+	/* Center the text relative to the badge itself. */
 	NSPoint badgeTextPoint;
-	
-	badgeTextPoint = NSMakePoint( (NSMidX(badgeFrame) - (messageCountSize.width / 2.0)),
-								 ((NSMidY(badgeFrame) - (messageCountSize.height / 2.0)) + 1));
-	
+
+	badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (mcstring.size.width / 2.0)),
+								((NSMidY(badgeFrame) - (mcstring.size.height / 2.0)) + 1));
+
+	/* Mountain Lion did not like our origin. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		badgeTextPoint.y -= 1;
 	}
 	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[_NSGraphicsCurrentContext() saveGraphicsState];
-		[_NSGraphicsCurrentContext() setShouldAntialias:NO];
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
 	}
-	
+
+	/* The actual draw. */
 	[mcstring drawAtPoint:badgeTextPoint];
 	
 	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[_NSGraphicsCurrentContext() restoreGraphicsState];
+		[RZGraphicsCurrentContext() restoreGraphicsState];
 	}
-	
+
+	/* Return the frame of the badge. */
 	return badgeFrame.size.width;
 }
 
@@ -212,210 +220,229 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
+	PointerIsEmptyAssert(self.cellItem);
+
+	/* Define variables. */
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
 
-	// ---- //
-
-	NSInteger selectedRow = [self.parent selectedRow];
+	IRCClient *client = self.cellItem.viewController.client;
+	IRCChannel *channel = self.cellItem.viewController.channel;
 	
-	if (self.cellItem) {
-		NSInteger rowIndex = [self.parent rowForItem:self.cellItem];
+	BOOL isGroupItem = [self.serverList isGroupItem:self.cellItem];
+	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
+	BOOL isKeyWindow = [self.masterController.mainWindow isOnCurrentWorkspace];
+	BOOL isSelected = ([self.serverList rowForItem:self.cellItem] == self.serverList.selectedRow);
+	
+	/* Draw Background */
+	if (isSelected) {
+		NSRect backgdRect = cellFrame;
+		NSRect parentRect = self.serverList.frame;
 		
-		NSWindow *parentWindow = [self.parent.keyDelegate window];
+		backgdRect.origin.x = parentRect.origin.x;
+		backgdRect.size.width = parentRect.size.width;
 		
-		BOOL isGroupItem = [self.parent isGroupItem:self.cellItem];
-		BOOL isSelected  = (rowIndex == selectedRow);
-		BOOL isKeyWindow = [parentWindow isOnCurrentWorkspace];
-		BOOL isGraphite  = ([NSColor currentControlTint] == NSGraphiteControlTint);
+		NSString *backgroundImage;
 		
-		IRCChannel *channel = self.cellItem.log.channel;
-		
-		/* Draw Background */
-		if (isSelected) {
-			NSRect backgroundRect = cellFrame;
-			NSRect parentRect	  = [self.parent frame];
-			
-			backgroundRect.origin.x   = parentRect.origin.x;
-			backgroundRect.size.width = parentRect.size.width;
-			
-			NSString *backgroundImage;
-			
-			if (channel.isChannel || channel.isTalk) {
-				backgroundImage = @"ChannelCellSelection";
-			} else {
-				backgroundImage = @"ServerCellSelection";
-			}
-			
-			if (invertedColors == NO) {
-				if (isKeyWindow) {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
-				} else {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
-				}
-				
-				if (isGraphite) {
-					backgroundImage = [backgroundImage stringByAppendingString:@"self.parent.layoutGraphite"];
-				} else {
-					backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
-				}
-			}
-			
-			if ([TPCPreferences invertSidebarColors]) {
-				backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
-			}
-			
-			NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
-			
-			[origBackgroundImage drawInRect:backgroundRect
-								   fromRect:NSZeroRect
-								  operation:NSCompositeSourceOver
-								   fraction:1
-							 respectFlipped:YES hints:nil];
+		if (channel.isChannel || channel.isPrivateMessage) {
+			backgroundImage = @"ChannelCellSelection";
+		} else {
+			backgroundImage = @"ServerCellSelection";
 		}
 		
-		/* Draw Badges, Text, and Status Icon */
-		
-		NSAttributedString			*stringValue	= [self attributedStringValue];	
-		NSMutableAttributedString	*newValue		= [stringValue mutableCopy];
-		
-		NSShadow *itemShadow = [NSShadow new];
-		
-		BOOL drawMessageBadge = (isSelected == NO ||
-								 (isKeyWindow == NO && isSelected));
-
-		NSInteger unreadCount  = self.cellItem.treeUnreadCount;
-		NSInteger keywordCount = self.cellItem.keywordCount;
-		
-		BOOL isHighlight = (keywordCount >= 1);
-		
-		if (isGroupItem == NO) {
-			if (channel.isChannel) {
-				NSString *iconName = @"colloquyRoomTabRegular";
-				
-				if (channel.isActive) {
-					[self drawStatusBadge:iconName inCell:cellFrame withAlpha:1.0];
-				} else {
-					[self drawStatusBadge:iconName inCell:cellFrame withAlpha:0.5];
-				}
+		if (invertedColors == NO) {
+			if (isKeyWindow) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
 			} else {
-				if (isSelected == NO && invertedColors) {
-					[self drawStatusBadge:@"DarkServerListViewSelectedQueryUser" inCell:cellFrame withAlpha:0.8];
-				} else {
-					[self drawStatusBadge:@"NSUser" inCell:cellFrame withAlpha:0.8];
-				}
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
 			}
 			
-			if (unreadCount >= 1 && drawMessageBadge) {
-				NSAttributedString *mcstring  = [self messageCountBadgeText:unreadCount selected:(isSelected && isHighlight == NO)];
-				NSRect              badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
-				
-				[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:isHighlight selected:isSelected];
-				
-				cellFrame.size.width -= badgeRect.size.width;
-			}
-			
-			cellFrame.size.width -= (self.parent.layoutBadgeRightMargin * 2);
-			
-			[itemShadow setShadowBlurRadius:1.0];
-			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-			
-			if (isSelected == NO) {
-				[itemShadow setShadowColor:self.parent.layoutChannelCellShadowColor];
+			if (isGraphite) {
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
 			} else {
-				if (invertedColors == NO) {
-					[itemShadow setShadowBlurRadius:2.0];
-				}
-				
-				if (isKeyWindow) {
-					if (isGraphite && invertedColors == NO) {
-						[itemShadow setShadowColor:self.parent.layoutGraphiteSelectionColorAW];
-					} else {
-						[itemShadow setShadowColor:self.parent.layoutChannelCellSelectionShadowColor_AW];
-					}
-				} else {
-					[itemShadow setShadowColor:self.parent.layoutChannelCellSelectionShadowColor_IA];
-				}
+				backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
 			}
-			
-			cellFrame.origin.y += 2;
-			cellFrame.origin.x -= 2;
-			
-			NSRange textRange = NSMakeRange(0, [newValue length]);
-			
-			if (isSelected) {
-				[newValue addAttribute:NSFontAttributeName              value:self.parent.layoutChannelCellSelectionFont       range:textRange];
-				
-				if (isKeyWindow) {
-					[newValue addAttribute:NSForegroundColorAttributeName value:self.parent.layoutChannelCellSelectionFontColor_AW range:textRange];
-				} else {
-					[newValue addAttribute:NSForegroundColorAttributeName value:self.parent.layoutChannelCellSelectionFontColor_IA range:textRange];
-				}
-			} else {
-				[newValue addAttribute:NSFontAttributeName              value:self.parent.layoutChannelCellFont         range:textRange];
-				[newValue addAttribute:NSForegroundColorAttributeName   value:self.parent.layoutChannelCellFontColor	range:textRange];
-			}
-			
-			[newValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-		}
-		else // isGroupItem == NO
-		{ 
-			cellFrame.origin.y += 4;
-			
-			NSColor *controlColor	= self.parent.layoutServerCellFontColor;
-			NSFont  *groupFont		= self.parent.layoutServerCellFont;
-			
-			if (self.cellItem.client.isConnected == NO) {
-				controlColor = self.parent.layoutServerCellFontColorDisabled;
-			}
-			
-			[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-			
-			if (invertedColors) {
-				[itemShadow setShadowBlurRadius:1.0];
-			}
-			
-			if (isSelected) {
-				if (isKeyWindow) {
-					controlColor = self.parent.layoutServerCellSelectionFontColor_AW;
-				} else {
-					controlColor = self.parent.layoutServerCellSelectionFontColor_IA;
-				}
-				
-				if (isKeyWindow) {
-					if (isGraphite) {
-						[itemShadow setShadowColor:self.parent.layoutGraphiteSelectionColorAW];
-					} else {
-						[itemShadow setShadowColor:self.parent.layoutServerCellSelectionShadowColorAW];
-					}
-				} else {
-					[itemShadow setShadowColor:self.parent.layoutServerCellSelectionShadowColorIA];
-				}
-			} else {
-				if (isKeyWindow) {
-					[itemShadow setShadowColor:self.parent.layoutServerCellShadowColorAW];
-				} else {
-					[itemShadow setShadowColor:self.parent.layoutServerCellShadowColorNA];
-				}
-			}
-			
-			NSRange textRange = NSMakeRange(0, [newValue length]);
-			
-			[newValue addAttribute:NSFontAttributeName				value:groupFont		range:textRange];
-			[newValue addAttribute:NSShadowAttributeName			value:itemShadow	range:textRange];
-			[newValue addAttribute:NSForegroundColorAttributeName	value:controlColor	range:textRange];
 		}
 		
-		if ([TPCPreferences useLogAntialiasing] == NO) {
-			[_NSGraphicsCurrentContext() saveGraphicsState];
-			[_NSGraphicsCurrentContext() setShouldAntialias:NO];
+		if (invertedColors) {
+			backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
 		}
 		
-		[newValue drawInRect:cellFrame];
+		NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
 		
-		if ([TPCPreferences useLogAntialiasing] == NO) {
-			[_NSGraphicsCurrentContext() restoreGraphicsState];
-		}
+		[origBackgroundImage drawInRect:backgdRect
+							   fromRect:NSZeroRect
+							  operation:NSCompositeSourceOver
+							   fraction:1
+						 respectFlipped:YES
+								  hints:nil];
 	}
+	
+	/* Draw Badges, Text, and Status Icon */
+	NSMutableAttributedString *newStrValue = self.attributedStringValue.mutableCopy;
+	
+	NSShadow *itemShadow = [NSShadow new];
+	
+	BOOL drawMessageBadge = (isSelected == NO || (isKeyWindow == NO && isSelected));
+
+	NSInteger channelTreeUnreadCount = self.cellItem.treeUnreadCount;
+	NSInteger nicknameHighlightCount = self.cellItem.nicknameHighlightCount;
+	
+	BOOL isHighlight = (nicknameHighlightCount >= 1);
+	
+	if (isGroupItem == NO) {
+		// ************************************************************** /
+		// Draw related items for a channel.							  /
+		// ************************************************************** /
+
+		/* Status icon. */
+		if (channel.isChannel) {
+			if (channel.isActive) {
+				[self drawStatusBadge:@"colloquyRoomTabRegular" inCell:cellFrame withAlpha:1.0];
+			} else {
+				[self drawStatusBadge:@"colloquyRoomTabRegular" inCell:cellFrame withAlpha:0.5];
+			}
+		} else {
+			[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] inCell:cellFrame withAlpha:0.8];
+		}
+
+		/* Message count badge. */
+		if (channelTreeUnreadCount >= 1 && drawMessageBadge) {
+			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(isSelected && isHighlight == NO)];
+			
+			NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
+			
+			[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:isHighlight selected:isSelected];
+			
+			cellFrame.size.width -= badgeRect.size.width;
+		}
+
+		cellFrame.size.width -= (self.serverList.messageCountBadgeRightMargin * 2);
+
+		/* Prepare text shadow. */
+		[itemShadow setShadowBlurRadius:1.0];
+		[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+		
+		if (isSelected == NO) {
+			[itemShadow setShadowColor:self.serverList.channelCellNormalTextShadowColor];
+		} else {
+			if (invertedColors == NO) {
+				[itemShadow setShadowBlurRadius:2.0];
+			}
+			
+			if (isKeyWindow) {
+				if (isGraphite && invertedColors == NO) {
+					[itemShadow setShadowColor:self.serverList.graphiteTextSelectionShadowColor];
+				} else {
+					[itemShadow setShadowColor:self.serverList.channelCellSelectedTextShadowColorForActiveWindow];
+				}
+			} else {
+				[itemShadow setShadowColor:self.serverList.channelCellSelectedTextShadowColorForInactiveWindow];
+			}
+		}
+
+		/* Set frame and define our attributes. */
+		cellFrame.origin.y += 2;
+		cellFrame.origin.x -= 2;
+		
+		NSRange textRange = NSMakeRange(0, newStrValue.length);
+		
+		if (isSelected) {
+			[newStrValue addAttribute:NSFontAttributeName value:self.serverList.selectedChannelCellFont range:textRange];
+			
+			if (isKeyWindow) {
+				[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellSelectedTextColorForActiveWindow range:textRange];
+			} else {
+				[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellSelectedTextColorForInactiveWindow range:textRange];
+			}
+		} else {
+			[newStrValue addAttribute:NSFontAttributeName value:self.serverList.normalChannelCellFont range:textRange];
+			
+			[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellNormalTextColor range:textRange];
+		}
+		
+		[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
+		
+		// ************************************************************** /
+		// End channel draw.											  /
+		// ************************************************************** /
+	}
+	else // isGroupItem == NO
+	{
+		// ************************************************************** /
+		// Draw related items for a client.								  /
+		// ************************************************************** /
+
+		cellFrame.origin.y += 4;
+
+		/* Text font and color. */
+		NSColor *controlColor = self.serverList.serverCellNormalTextColor;
+
+		if (client.isConnected == NO) {
+			controlColor = self.serverList.serverCellDisabledTextColor;
+		}
+		
+		NSFont *groupFont = self.serverList.serverCellFont;
+
+		/* Prepare text shadow. */
+		[itemShadow setShadowOffset:NSMakeSize(0, -1)];
+		
+		if (invertedColors) {
+			[itemShadow setShadowBlurRadius:1.0];
+		}
+		
+		if (isSelected) {
+			if (isKeyWindow) {
+				controlColor = self.serverList.serverCellSelectedTextColorForActiveWindow;
+			} else {
+				controlColor = self.serverList.serverCellSelectedTextColorForInactiveWindow;
+			}
+			
+			if (isKeyWindow) {
+				if (isGraphite) {
+					[itemShadow setShadowColor:self.serverList.graphiteTextSelectionShadowColor];
+				} else {
+					[itemShadow setShadowColor:self.serverList.serverCellSelectedTextShadowColorForActiveWindow];
+				}
+			} else {
+				[itemShadow setShadowColor:self.serverList.serverCellSelectedTextShadowColorForInactiveWindow];
+			}
+		} else {
+			if (isKeyWindow) {
+				[itemShadow setShadowColor:self.serverList.serverCellNormalTextShadowColorForActiveWindow];
+			} else {
+				[itemShadow setShadowColor:self.serverList.serverCellNormalTextShadowColorForInactiveWindow];
+
+			}
+		}
+
+		/* Define attributes. */
+		NSRange textRange = NSMakeRange(0, newStrValue.length);
+		
+		[newStrValue addAttribute:NSFontAttributeName value:groupFont range:textRange];
+		[newStrValue addAttribute:NSShadowAttributeName	value:itemShadow range:textRange];
+		[newStrValue addAttribute:NSForegroundColorAttributeName value:controlColor	range:textRange];
+		
+		// ************************************************************** /
+		// End client draw.												  /
+		// ************************************************************** /
+	}
+	
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
+	}
+
+	/* Draw the final result. */
+	[newStrValue drawInRect:cellFrame];
+	
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() restoreGraphicsState];
+	}
+}
+
+- (TVCServerList *)serverList
+{
+	return self.masterController.serverList;
 }
 
 @end

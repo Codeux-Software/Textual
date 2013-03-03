@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,26 +37,28 @@
 
 #import "TextualApplication.h"
 
-@interface TVCInputPromptDialog : NSObject 
-@property (nonatomic, assign) NSInteger buttonClicked;
+/* This diaog is not designed to be called directly. See
+ TLOPopupPrompts.h for methods used to run such dialogs. */
+
+@interface TVCInputPromptDialog : NSObject
 @property (nonatomic, strong) NSString *finalModalValue;
-@property (nonatomic, strong) NSWindow *dialogWindow;
-@property (nonatomic, strong) NSButton *defaultButton;
-@property (nonatomic, strong) NSButton *alternateButton;
-@property (nonatomic, strong) NSTextField *dialogTitle;
-@property (nonatomic, strong) NSTextField *userInputField;
-@property (nonatomic, strong) NSTextField *informationalText;
+@property (nonatomic, assign) NSInteger buttonClicked;
+@property (nonatomic, nweak) NSButton *defaultButton;
+@property (nonatomic, nweak) NSButton *alternateButton;
+@property (nonatomic, nweak) NSTextField *informationalText;
+@property (nonatomic, nweak) NSTextField *informationalTitle;
+@property (nonatomic, nweak) NSTextField *informationalInput;
+@property (nonatomic, uweak) NSWindow *dialogWindow;
 
 - (void)runModal;
 
-- (NSInteger)buttonClicked;
 - (NSString *)promptValue;
 
-- (void)alertWithMessageText:(NSString *)messageTitle 
-			   defaultButton:(NSString *)defaultButtonTitle 
-			 alternateButton:(NSString *)alternateButtonTitle 
-			 informativeText:(NSString *)informativeText
-			defaultUserInput:(NSString *)userInputText;
+- (void)alertWithMessageTitle:(NSString *)messageTitle
+				defaultButton:(NSString *)defaultButtonTitle
+			  alternateButton:(NSString *)alternateButtonTitle
+			  informativeText:(NSString *)informativeText
+			 defaultUserInput:(NSString *)userInputText;
 
 - (void)modalDidCloseWithDefaultButton:(id)sender;
 - (void)modalDidCloseWithAlternateButton:(id)sender;

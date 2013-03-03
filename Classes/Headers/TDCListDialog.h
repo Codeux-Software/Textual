@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,17 @@
 #import "TextualApplication.h"
 
 @interface TDCListDialog : NSWindowController
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, assign) NSInteger sortKey;
-@property (nonatomic, assign) NSComparisonResult sortOrder;
-@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, nweak) NSButton *updateButton;
+@property (nonatomic, nweak) NSSearchField *searchField;
+@property (nonatomic, nweak) NSTextField *channelCountField;
+@property (nonatomic, nweak) NSTextField *networkNameField;
+@property (nonatomic, nweak) TVCListView *channelListTable;
+@property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
-@property (nonatomic, strong) TVCListView *table;
-@property (nonatomic, strong) NSSearchField *filterText;
-@property (nonatomic, strong) NSButton *updateButton;
-@property (nonatomic, strong) NSTextField *channelCount;
-@property (nonatomic, strong) NSTextField *networkName;
+@property (nonatomic, assign) NSComparisonResult sortOrder;
+@property (nonatomic, assign) NSInteger sortKey;
 
 - (void)start;
 - (void)show;
@@ -57,8 +58,8 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic;
 
 - (void)onClose:(id)sender;
+
 - (void)onUpdate:(id)sender;
-- (void)onJoin:(id)sender;
 - (void)onSearchFieldChange:(id)sender;
 @end
 

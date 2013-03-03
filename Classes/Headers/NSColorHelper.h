@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,9 @@
 #define TXCalibratedRGBColor(r, g, b)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
 
 @interface NSColor (TXColorHelper)
++ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem;
++ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition;
+
 - (NSColor *)invertColor;
 
 + (NSColor *)formatterWhiteColor;
@@ -61,13 +64,11 @@
 
 + (NSArray *)possibleFormatterColors;
 
-- (NSString *)hexadecimalValue;
 + (NSColor *)fromCSS:(NSString *)str;
 
 + (NSColor *)sourceListBackgroundColor;
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 
-+ (NSColor *)internalColorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 + (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end

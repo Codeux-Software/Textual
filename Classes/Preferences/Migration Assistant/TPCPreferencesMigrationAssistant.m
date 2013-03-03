@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -58,35 +58,33 @@
 	/* If not, then migrate. */
 	[nconfig removeAllObjects];
 	
+	[nconfig setInteger:[config integerForKey:@"encoding"]				forKey:@"characterEncodingDefault"];
+	[nconfig setInteger:[config integerForKey:@"fallback_encoding"]		forKey:@"characterEncodingFallback"];
 	[nconfig setInteger:[config integerForKey:@"port"]					forKey:@"serverPort"];
 	[nconfig setInteger:[config integerForKey:@"proxy"]					forKey:@"proxyServerType"];
 	[nconfig setInteger:[config integerForKey:@"proxy_port"]			forKey:@"proxyServerPort"];
-	[nconfig setInteger:[config integerForKey:@"encoding"]				forKey:@"characterEncodingDefault"];
-	[nconfig setInteger:[config integerForKey:@"fallback_encoding"]		forKey:@"characterEncodingFallback"];
 	
-	[nconfig setBool:[config boolForKey:@"ssl"]					forKey:@"connectUsingSSL"];
-    [nconfig setBool:[config boolForKey:@"prefersIPv6"]			forKey:@"DNSResolverPrefersIPv6"];
 	[nconfig setBool:[config boolForKey:@"auto_connect"]		forKey:@"connectOnLaunch"];
 	[nconfig setBool:[config boolForKey:@"auto_reconnect"]		forKey:@"connectOnDisconnect"];
 	[nconfig setBool:[config boolForKey:@"bouncer_mode"]		forKey:@"serverIsIRCBouncer"];
 	[nconfig setBool:[config boolForKey:@"invisible"]			forKey:@"setInvisibleOnConnect"];
+	[nconfig setBool:[config boolForKey:@"ssl"]					forKey:@"connectUsingSSL"];
 	[nconfig setBool:[config boolForKey:@"trustedConnection"]	forKey:@"trustedSSLConnection"];
-	
-	[nconfig setInteger:[config integerForKey:@"cuid"]				forKey:@"connectionID"];
-	
-	[nconfig safeSetObject:config[@"guid"]				forKey:@"uniqueIdentifier"];
-	[nconfig safeSetObject:config[@"name"]				forKey:@"connectionName"];
-	[nconfig safeSetObject:config[@"host"]				forKey:@"serverAddress"];
-	[nconfig safeSetObject:config[@"nick"]				forKey:@"identityNickname"];
-	[nconfig safeSetObject:config[@"username"]			forKey:@"identityUsername"];
-	[nconfig safeSetObject:config[@"realname"]			forKey:@"identityRealname"];
-	[nconfig safeSetObject:config[@"alt_nicks"]			forKey:@"identityAlternateNicknames"];
-	[nconfig safeSetObject:config[@"proxy_host"]			forKey:@"proxyServerAddress"];
-	[nconfig safeSetObject:config[@"proxy_user"]			forKey:@"proxyServerUsername"];
-	[nconfig safeSetObject:config[@"proxy_password"]		forKey:@"proxyServerPassword"];
+    [nconfig setBool:[config boolForKey:@"prefersIPv6"]			forKey:@"DNSResolverPrefersIPv6"];
+
+	[nconfig safeSetObject:config[@"alt_nicks"]				forKey:@"identityAlternateNicknames"];
+	[nconfig safeSetObject:config[@"guid"]					forKey:@"uniqueIdentifier"];
+	[nconfig safeSetObject:config[@"host"]					forKey:@"serverAddress"];
 	[nconfig safeSetObject:config[@"leaving_comment"]		forKey:@"connectionDisconnectDefaultMessage"];
-	[nconfig safeSetObject:config[@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
 	[nconfig safeSetObject:config[@"login_commands"]		forKey:@"onConnectCommands"];
+	[nconfig safeSetObject:config[@"name"]					forKey:@"connectionName"];
+	[nconfig safeSetObject:config[@"nick"]					forKey:@"identityNickname"];
+	[nconfig safeSetObject:config[@"proxy_host"]			forKey:@"proxyServerAddress"];
+	[nconfig safeSetObject:config[@"proxy_password"]		forKey:@"proxyServerPassword"];
+	[nconfig safeSetObject:config[@"proxy_user"]			forKey:@"proxyServerUsername"];
+	[nconfig safeSetObject:config[@"realname"]				forKey:@"identityRealname"];
+	[nconfig safeSetObject:config[@"sleep_quit_message"]	forKey:@"connectionDisconnectSleepModeMessage"];
+	[nconfig safeSetObject:config[@"username"]				forKey:@"identityUsername"];
 	
 	NSMutableDictionary *floodControl = [config dictionaryForKey:@"flood_control"].mutableCopy;
 	
@@ -124,18 +122,18 @@
 	
 	[nconfig setInteger:[config integerForKey:@"type"]		forKey:@"channelType"];
 	
-	[nconfig setBool:[config boolForKey:@"growl"]				forKey:@"enableNotifications"];
 	[nconfig setBool:[config boolForKey:@"auto_join"]			forKey:@"joinOnConnect"];
-    [nconfig setBool:[config boolForKey:@"ignore_highlights"]	forKey:@"ignoreHighlights"];
+	[nconfig setBool:[config boolForKey:@"growl"]				forKey:@"enableNotifications"];
     [nconfig setBool:[config boolForKey:@"disable_images"]		forKey:@"disableInlineMedia"];
+    [nconfig setBool:[config boolForKey:@"ignore_highlights"]	forKey:@"ignoreHighlights"];
     [nconfig setBool:[config boolForKey:@"ignore_join,leave"]	forKey:@"ignoreJPQActivity"];
 	
+	[nconfig safeSetObject:config[@"encryptionKey"]	forKey:@"encryptionKey"];
+	[nconfig safeSetObject:config[@"mode"]			forKey:@"defaultMode"];
 	[nconfig safeSetObject:config[@"name"]			forKey:@"channelName"];
 	[nconfig safeSetObject:config[@"password"]		forKey:@"secretJoinKey"];
-	[nconfig safeSetObject:config[@"mode"]			forKey:@"defaultMode"];
-	[nconfig safeSetObject:config[@"topic"]			forKey:@"defaultTopic"];
 	[nconfig safeSetObject:config[@"password"]		forKey:@"secretKey"];
-	[nconfig safeSetObject:config[@"encryptionKey"]	forKey:@"encryptionKey"];
+	[nconfig safeSetObject:config[@"topic"]			forKey:@"defaultTopic"];
 	
 	[nconfig safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 					forKey:TPCPreferencesMigrationAssistantVersionKey];
@@ -148,15 +146,15 @@
 
 + (void)migrateGlobalPreference:(NSString *)newKey from:(NSString *)oldKey
 {
-	[_NSUserDefaults() setObject:[_NSUserDefaults() objectForKey:oldKey] forKey:newKey];
+	[RZUserDefaults() setObject:[RZUserDefaults() objectForKey:oldKey] forKey:newKey];
 	
-	[_NSUserDefaults() removeObjectForKey:oldKey];
+	[RZUserDefaults() removeObjectForKey:oldKey];
 }
 
 + (void)convertExistingGlobalPreferences
 {
 	/* Has this configuration file already been migrated? */
-	NSString *lastUpgrade = [_NSUserDefaults() objectForKey:TPCPreferencesMigrationAssistantVersionKey];
+	NSString *lastUpgrade = [RZUserDefaults() objectForKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	if (NSObjectIsNotEmpty(lastUpgrade)) {
 		if ([lastUpgrade isEqualToString:TPCPreferencesMigrationAssistantUpgradePath]) {
@@ -262,18 +260,6 @@
 	[self.class migrateGlobalPreference:@"NotificationType -> Disconnected -> Sound"					from:@"eventDisconnectSound"];
 	[self.class migrateGlobalPreference:@"NotificationType -> Address Bok Match -> Enabled"				from:@"eventAddressBookMatchSound"];
 
-	[self.class migrateGlobalPreference:@"NotificationType -> Highlight -> Sticky"						from:@"eventHighlightGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Private Message (New) -> Sticky"			from:@"eventNewtalkGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Public Message -> Sticky"					from:@"eventChannelTextGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Public Notice -> Sticky"					from:@"eventChannelNoticeGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Private Message -> Sticky"				from:@"eventTalkTextGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Private Notice -> Sticky"					from:@"eventTalkNoticeGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Kicked from Channel -> Sticky"			from:@"eventKickedGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Channel Invitation -> Sticky"				from:@"eventInvitedGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Connected -> Sticky"						from:@"eventLoginGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Disconnected -> Sticky"					from:@"eventDisconnectGrowlSticky"];
-	[self.class migrateGlobalPreference:@"NotificationType -> Address Bok Match -> Enabled"				from:@"eventAddressBookMatchGrowlSticky"];
-	
 	[self.class migrateGlobalPreference:@"NotificationType -> Highlight -> Disable While Away"					from:@"eventHighlightDisableWhileAway"];
 	[self.class migrateGlobalPreference:@"NotificationType -> Private Message (New) -> Disable While Away"		from:@"eventNewtalkDisableWhileAway"];
 	[self.class migrateGlobalPreference:@"NotificationType -> Public Message -> Disable While Away"				from:@"eventChannelTextDisableWhileAway"];
@@ -286,7 +272,7 @@
 	[self.class migrateGlobalPreference:@"NotificationType -> Disconnected -> Disable While Away"				from:@"eventDisconnectDisableWhileAway"];
 	[self.class migrateGlobalPreference:@"NotificationType -> Address Bok Match -> Enabled"						from:@"eventAddressBookMatchDisableWhileAway"];
 	
-	[_NSUserDefaults() setObject:TPCPreferencesMigrationAssistantUpgradePath
+	[RZUserDefaults() setObject:TPCPreferencesMigrationAssistantUpgradePath
 						  forKey:TPCPreferencesMigrationAssistantVersionKey];
 }
 

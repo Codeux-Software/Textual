@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -44,9 +44,9 @@
 	if (self.keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
+		BOOL cmd = (m & NSCommandKeyMask);
+		BOOL alt = (m & NSAlternateKeyMask);
 		BOOL ctrl = (m & NSControlKeyMask);
-		BOOL cmd  = (m & NSCommandKeyMask);
-		BOOL alt  = (m & NSAlternateKeyMask);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
 			if ([self.keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
@@ -60,19 +60,6 @@
 	[super keyDown:e];
 }
 
-- (void)setFrame:(NSRect)rect
-{
-	if (self.resizeDelegate && [self.resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
-		[self.resizeDelegate logViewWillResize];
-	}
-	
-	[super setFrame:rect];
-	
-	if (self.resizeDelegate && [self.resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
-		[self.resizeDelegate logViewDidResize];
-	}
-}
-
 - (BOOL)maintainsInactiveSelection
 {
 	return YES;
@@ -81,18 +68,18 @@
 - (NSString *)contentString
 {
 	DOMDocument *doc = [self.mainFrame DOMDocument];
-	if (PointerIsEmpty(doc)) return NSStringEmptyPlaceholder;
+	PointerIsEmptyAssertReturn(doc, NSStringEmptyPlaceholder);
 	
 	DOMElement *body = [doc body];
-	if (PointerIsEmpty(body)) return NSStringEmptyPlaceholder;
+	PointerIsEmptyAssertReturn(body, NSStringEmptyPlaceholder);
 	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	if (PointerIsEmpty(root)) return NSStringEmptyPlaceholder;
+	PointerIsEmptyAssertReturn(root, NSStringEmptyPlaceholder);
 	
 	return [root outerHTML];
 }
 
-- (WebScriptObject *)js_api
+- (WebScriptObject *)javaScriptAPI
 {
 	return [[self windowScriptObject] evaluateWebScript:@"Textual"];
 }
@@ -104,13 +91,14 @@
 
 - (BOOL)hasSelection
 {
-	return BOOLReverseValue(NSObjectIsEmpty([self selection]));
+	return NSObjectIsNotEmpty(self.selection);
 }
 
 - (NSString *)selection
 {
 	DOMRange *range = [self selectedDOMRange];
-	if (PointerIsEmpty(range)) return nil;
+
+	PointerIsEmptyAssertReturn(range, nil);
 	
 	return [range toString];
 }

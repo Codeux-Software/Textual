@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,21 +38,21 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanExceptionSheet : TDCSheetBase
-@property (nonatomic, strong) TVCListView *table;
-@property (nonatomic, strong) NSTextField *header;
-@property (nonatomic, strong) NSMutableArray *list;
-@property (nonatomic, strong) NSMutableArray *modes;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) TVCListView *exceptionTable;
+@property (nonatomic, strong) NSMutableArray *changeModeList;
+@property (nonatomic, strong) NSMutableArray *exceptionList;
 
 - (void)show;
 - (void)clear;
 
-- (void)addException:(NSString *)host tset:(NSString *)time setby:(NSString *)owner;
+- (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
 
 - (void)onUpdate:(id)sender;
 - (void)onRemoveExceptions:(id)sender;
 @end
 
-@interface NSObject (TXChanBanExceptionSheetDelegate)
+@interface NSObject (TDChanBanExceptionSheetDelegate)
 - (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender;
 - (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender;
 @end

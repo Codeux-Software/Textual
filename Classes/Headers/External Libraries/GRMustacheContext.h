@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 
 #import <objc/message.h>
-
-#import "TextualApplication.h"
-#import "GRMustacheTagDelegate.h" // @protocol
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheTagDelegate.h"
 
 /**
  * The GRMustacheContext represents a Mustache rendering context: it internally
@@ -33,9 +33,6 @@
  *   object, and to perform key lookup.
  * - a *tag delegate stack*, so that tag delegates are notified when a Mustache
  *   tag is rendered.
- *
- * You may derive new rendering contexts when you implement *rendering objects*,
- * using the contextByAddingObject: and contextByAddingTagDelegate: methods.
  *
  * @see GRMustacheRendering protocol
  */
@@ -52,6 +49,64 @@
     GRMustacheContext *_templateOverrideParent;
     id _templateOverride;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// @name Creating Contexts
+////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * @return An empty rendering context.
+ *
+ * @since v6.4
+ */
++ (instancetype)context AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
+
+/**
+ * Returns a context with _object_ at the top of the context stack.
+ *
+ * If _object_ conforms to the GRMustacheTemplateDelegate protocol, it is also
+ * made the top of the tag delegate stack.
+ *
+ * @param object  An object
+ *
+ * @return A rendering context.
+ *
+ * @since v6.4
+ */
++ (instancetype)contextWithObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
+
+/**
+ * Returns a context with _object_ at the top of the protected context stack.
+ *
+ * Unlike contextWithObject:, this method does not put the object to the
+ * tag delegate stack if it conforms to the GRMustacheTemplateDelegate protocol.
+ *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/protected_context.md
+ *
+ * @param object  An object
+ *
+ * @return A rendering context.
+ *
+ * @since v6.4
+ */
++ (instancetype)contextWithProtectedObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
+
+/**
+ * Returns a context with _tagDelegate_ at the top of the tag delegate stack.
+ *
+ * @param tagDelegate  A tag delegate
+ *
+ * @return A rendering context.
+ */
++ (instancetype)contextWithTagDelegate:(id<GRMustacheTagDelegate>)tagDelegate AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// @name Deriving New Contexts
+////////////////////////////////////////////////////////////////////////////////
+
 
 /**
  * Returns a new rendering context that is the copy of the receiver, and the
@@ -74,6 +129,8 @@
  *
  * Unlike contextByAddingObject:, this method does not add the object to the
  * tag delegate stack if it conforms to the GRMustacheTemplateDelegate protocol.
+ *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/protected_context.md
  *
  * @param object  An object
  *

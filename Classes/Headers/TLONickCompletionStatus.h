@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TLONickCompletionStatus : NSObject
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, assign) NSRange range;
+@property (nonatomic, strong) NSString *stringValue;
+@property (nonatomic, assign) NSRange stringRange;
 
+- (void)completeNick:(BOOL)forward;
 - (void)clear;
 @end

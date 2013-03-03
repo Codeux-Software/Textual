@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,19 +37,22 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]   : s) 
+#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]  : s) 
 #define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
 #define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
 
 @interface NSDictionary (TXDictionaryHelper)
+- (NSString *)stringForKey:(NSString *)key;
+
 - (BOOL)boolForKey:(NSString *)key;
 - (NSArray *)arrayForKey:(NSString *)key;
-- (NSString *)stringForKey:(NSString *)key;
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
 - (NSInteger)integerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
 - (TXNSDouble)doubleForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
+
+- (NSString *)firstKeyForObject:(id)object;
 
 - (BOOL)containsKey:(NSString *)baseKey;
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
@@ -58,12 +61,15 @@
 
 - (id)sortedDictionary;
 - (id)sortedReversedDictionary;
+
 - (NSArray *)sortedDictionaryKeys;
 - (NSArray *)sortedDictionaryReversedKeys;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
-- (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey;
+- (void)safeSetObject:(id)value forKey:(NSString *)key;
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key;
+
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;

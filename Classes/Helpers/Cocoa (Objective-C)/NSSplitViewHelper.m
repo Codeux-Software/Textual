@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,8 @@
 	NSView *leftSide  = [self subviews][0];
 	NSView *rightSide = [self subviews][1];
 	
-	return ([self isSubviewCollapsed:leftSide] || [self isSubviewCollapsed:rightSide]);
+	return ([self isSubviewCollapsed:leftSide] ||
+			[self isSubviewCollapsed:rightSide]);
 }
 
 @end

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,6 +39,7 @@
 
 @interface NSArray (TXArrayHelper)
 - (id)safeObjectAtIndex:(NSInteger)n;
+
 - (BOOL)boolAtIndex:(NSInteger)n;
 - (NSArray *)arrayAtIndex:(NSInteger)n;
 - (NSString *)stringAtIndex:(NSInteger)n;
@@ -55,6 +56,8 @@
 - (void)safeRemoveObjectAtIndex:(NSInteger)n;
 
 - (void)safeAddObject:(id)anObject;
+- (void)safeAddObjectWithoutDuplication:(id)anObject;
+
 - (void)addBool:(BOOL)value;
 - (void)addInteger:(NSInteger)value;
 - (void)addLongLong:(long long)value;
@@ -62,11 +65,14 @@
 - (void)addPointer:(void *)value;
 
 - (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index;
+
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index;
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index;
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index;
 - (void)insertDouble:(TXNSDouble)value atIndex:(NSUInteger)index;
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index;
+
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)

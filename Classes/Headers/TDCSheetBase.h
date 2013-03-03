@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,11 @@
 #import "TextualApplication.h"
 
 @interface TDCSheetBase : NSObject
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, unsafe_unretained) NSWindow *window;
-@property (nonatomic, strong) NSWindow *sheet;
-@property (nonatomic, strong) NSButton *okButton;
-@property (nonatomic, strong) NSButton *cancelButton;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, uweak) NSWindow *window;
+@property (nonatomic, uweak) NSWindow *sheet;
+@property (nonatomic, nweak) NSButton *okButton;
+@property (nonatomic, nweak) NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

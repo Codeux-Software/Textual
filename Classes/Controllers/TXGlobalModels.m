@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,14 +39,17 @@
 
 #import <objc/objc-runtime.h>
 
+#pragma mark -
+#pragma mark Validity.
+
 BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
 		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(length)] < 1);
-	} else {
-		if ([obj respondsToSelector:@selector(count)]) {
-			return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(count)] < 1);
-		}
+	}
+
+	if ([obj respondsToSelector:@selector(count)]) {
+		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(count)] < 1);
 	}
 	
 	return PointerIsEmpty(obj);
@@ -57,30 +60,18 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-NSString *TXTLS(NSString *key)
-{
-	return [TLOLanguagePreferences localizedStringWithKey:key];
-}
-
-NSString *TXTFLS(NSString *key, ...)
-{
-	NSString *formattedString = [NSString alloc];
-	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key];
-	
-	va_list args;
-	va_start(args, key);
-	
-	formattedString = [formattedString initWithFormat:languageString arguments:args];
-	
-	va_end(args);
-	
-	return formattedString;
-}
+#pragma mark -
+#pragma mark Time.
 
 NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override) 
 {
-	if (NSObjectIsEmpty(format))      format = TXDefaultTextualTimestampFormat;
-	if (NSObjectIsNotEmpty(override)) format = override;
+	if (NSObjectIsEmpty(format)) {
+		format = TXDefaultTextualTimestampFormat;
+	}
+
+	if (NSObjectIsNotEmpty(override)) {
+		format = override;
+	}
 	
 	return [NSString stringWithFormat:@"%@", [date dateWithCalendarFormat:format timeZone:nil]];
 }
@@ -103,13 +94,13 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 	
 	NSUInteger unitFlags = 0;
 
-	if ([orderMatrix containsObject:@"year"])		unitFlags |= NSYearCalendarUnit;
-	if ([orderMatrix containsObject:@"month"])		unitFlags |= NSMonthCalendarUnit;
-	if ([orderMatrix containsObject:@"week"])		unitFlags |= NSWeekCalendarUnit;
-	if ([orderMatrix containsObject:@"day"])		unitFlags |= NSDayCalendarUnit;
-	if ([orderMatrix containsObject:@"hour"])		unitFlags |= NSHourCalendarUnit;
-	if ([orderMatrix containsObject:@"minute"])		unitFlags |= NSMinuteCalendarUnit;
-	if ([orderMatrix containsObject:@"second"])		unitFlags |= NSSecondCalendarUnit;
+	if ([orderMatrix containsObject:@"year"])		{ unitFlags |= NSYearCalendarUnit;		}
+	if ([orderMatrix containsObject:@"month"])		{ unitFlags |= NSMonthCalendarUnit;		}
+	if ([orderMatrix containsObject:@"week"])		{ unitFlags |= NSWeekCalendarUnit;		}
+	if ([orderMatrix containsObject:@"day"])		{ unitFlags |= NSDayCalendarUnit;		}
+	if ([orderMatrix containsObject:@"hour"])		{ unitFlags |= NSHourCalendarUnit;		}
+	if ([orderMatrix containsObject:@"minute"])		{ unitFlags |= NSMinuteCalendarUnit;	}
+	if ([orderMatrix containsObject:@"second"])		{ unitFlags |= NSSecondCalendarUnit;	}
 	
 	NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1 toDate:date2 options:0];
 	
@@ -133,15 +124,15 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 				}
 				
 				if (shortValue) {
-					return [NSString stringWithFormat:@"%d %@", total, TXTLS(languageKey)];
+					return [NSString stringWithFormat:@"%ld %@", total, TXTLS(languageKey)];
 				} else {
-					[finalResult appendFormat:@"%d %@, ", total, TXTLS(languageKey)];
+					[finalResult appendFormat:@"%ld %@, ", total, TXTLS(languageKey)];
 				}
 			}
 		}
 		
 		if ([finalResult length] >= 3) {
-			[finalResult safeDeleteCharactersInRange:NSMakeRange(([finalResult length] - 2), 2)];
+			[finalResult safeDeleteCharactersInRange:NSMakeRange((finalResult.length - 2), 2)];
 		}
 		
 		return finalResult;
@@ -155,6 +146,52 @@ NSString *TXReadableTime(NSInteger dateInterval)
 	return TXSpecialReadableTime(dateInterval, NO, nil);
 }
 
+#pragma mark -
+#pragma mark Localized String File.
+
+NSString *TXTLS(NSString *key)
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key];
+}
+
+NSString *TSBLS(NSString *key, NSBundle *bundle)
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
+}
+
+NSString *TXTFLS(NSString *key, ...)
+{
+	NSString *formattedString = [NSString alloc];
+	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key];
+
+	va_list args;
+	va_start(args, key);
+	
+	formattedString = [formattedString initWithFormat:languageString arguments:args];
+
+	va_end(args);
+
+	return formattedString;
+}
+
+NSString *TSBFLS(NSString *key, NSBundle *bundle, ...)
+{
+	NSString *formattedString = [NSString alloc];
+	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
+
+	va_list args;
+	va_start(args, bundle);
+
+	formattedString = [formattedString initWithFormat:languageString arguments:args];
+
+	va_end(args);
+
+	return formattedString;
+}
+
+#pragma mark -
+#pragma mark Misc.
+
 NSInteger TXRandomNumber(NSInteger maxset)
 {
 	return ((1 + arc4random()) % (maxset + 1));
@@ -162,7 +199,5 @@ NSInteger TXRandomNumber(NSInteger maxset)
 
 NSString *TXFormattedNumber(NSInteger number)
 {
-	NSNumber *numberbar = @(number);
-	
-	return [NSNumberFormatter localizedStringFromNumber:numberbar numberStyle:kCFNumberFormatterDecimalStyle];
+	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:NSNumberFormatterDecimalStyle];
 }

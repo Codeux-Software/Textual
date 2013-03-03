@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,14 @@
 
 #import "TextualApplication.h"
 
-#define TXDirtyCGFloatsMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+#define TXDirtyCGFloatMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+
+#define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
+#define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
+#define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
+#define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
+#define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
+#define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
 @interface NSNumber (TXNumberHelper)
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;

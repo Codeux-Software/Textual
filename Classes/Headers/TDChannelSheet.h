@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,36 +38,32 @@
 #import "TextualApplication.h"
 
 @interface TDChannelSheet : TDCSheetBase
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, strong) NSView *contentView;
-@property (nonatomic, strong) NSView *generalView;
-@property (nonatomic, strong) NSView *encryptView;
-@property (nonatomic, strong) NSView *defaultsView;
+@property (nonatomic, assign) BOOL newItem;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *channelID;
 @property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, strong) NSTextField *nameText;
-@property (nonatomic, strong) NSTextField *passwordText;
-@property (nonatomic, strong) NSTextField *modeText;
-@property (nonatomic, strong) NSTextField *topicText;
-@property (nonatomic, strong) NSTextField *encryptKeyText;
-@property (nonatomic, strong) NSSegmentedControl *tabView;
-@property (nonatomic, strong) NSButton *autoJoinCheck;
-@property (nonatomic, strong) NSButton *ihighlights;
-@property (nonatomic, strong) NSButton *growlCheck;
-@property (nonatomic, strong) NSButton *inlineImagesCheck;
-@property (nonatomic, strong) NSButton *JPQActivityCheck;
+@property (nonatomic, nweak) NSTextField *channelNameField;
+@property (nonatomic, nweak) NSTextField *defaultModesField;
+@property (nonatomic, nweak) NSTextField *defaultTopicField;
+@property (nonatomic, nweak) NSTextField *encryptionKeyField;
+@property (nonatomic, nweak) NSTextField *secretKeyField;
+@property (nonatomic, nweak) NSButton *autoJoinCheck;
+@property (nonatomic, nweak) NSButton *ignoreHighlightsCheck;
+@property (nonatomic, nweak) NSButton *inlineImagesCheck;
+@property (nonatomic, nweak) NSButton *pushNotificationsCheck;
+@property (nonatomic, nweak) NSButton *JPQActivityCheck;
+@property (nonatomic, nweak) NSSegmentedControl *contentViewTabView;
+@property (nonatomic, nweak) NSView *contentView;
+@property (nonatomic, nweak) NSView *defaultsView;
+@property (nonatomic, nweak) NSView *encryptionView;
+@property (nonatomic, nweak) NSView *generalView;
 
 - (void)start;
-- (void)show;
-- (void)close;
-
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
 
 - (void)onMenuBarItemChanged:(id)sender;
 @end
 
-@interface NSObject (TXChannelSheetDelegate)
+@interface NSObject (TDChannelSheetDelegate)
 - (void)channelSheetOnOK:(TDChannelSheet *)sender;
 - (void)channelSheetWillClose:(TDChannelSheet *)sender;
 @end

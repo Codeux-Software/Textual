@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ Textual = {
 	 viewInitiated:
 
 		@viewType:		Type of view being represented. Server console, channel, query, etc. 
-						Possible values: server, channel, talk. — talk = private message.
+						Possible values: server, channel, query. — query = private message.
 		@serverHash:	A unique identifier to differentiate between each server a view may represent.
 		@channelHash:	A unique identifier to differentiate between each channel a view may represent.
 		@channelName:	Name of the view. Actual channel name, nickname for a private message, or blank for console.
@@ -61,7 +61,40 @@ Textual = {
 	viewPositionMovedToHistoryIndicator: 	function() {},
 	viewPositionMovedToLine: 				function(lineNumber) {},
 	viewPositionMovedToTop: 				function() {},
+    
+    /* 
+        handleEvent allows a theme to recieve status information about several
+        actions going on behind the schenes. The following event tokens are 
+        currently supported. 
+        
+        serverConnected                 - Server associated with this view has connected.
+        serverConnecting                - Server associated with this view is connecting.
+        serverDisconnected              - Server associated with this view has disconnected.
+        serverDisconnecting             - Server associated with this view is disconnecting.
+        channelJoined                   - Channel associated with this view has been joined.
+        channelParted                   — Channel associated with this view has been parted.
+        channelMemberAdded              — Member added to the channel associated with this view.
+        channelMemberRemoved            — Member removed from the channel list associated with this view.
+        
+        These events are pushed when they occur. When a style is reloaded by Textual or
+        the end user, these events are not sent again. It is recommended to use a feature
+        of WebKit known as sessionStorage if these events are required to be known between
+        reloads. When a reload occurs to a style, the entire HTML and JavaScript is replaced
+        so the previous style will actuallly have no knowledge of the new one unless it is 
+        stored in a local database. 
+    */
+    handleEvent:                            function(eventToken) {}, 
 	
+    /* The following API calls can be called at any time. */
+    
+   // app.logToConsole(<input>)        - Log a message to the Mac OS console.
+   // app.serverIsConnected()          - Boolean if associated server is connected.
+   // app.channelIsJoined()            — Boolean if associated channel is joined.
+   // app.channelMemberCount()         — Number of members on the channel associated with this view.
+   // app.serverChannelCount()         — Number of channels part of the server associated with this view.
+   //                                    This number does not count against the status of the channels being
+   //                                    against. They can be joined or all parted. It is only a raw count.
+
 	/* *********************************************************************** */
 	
 	scrollToBottomOfView: function()

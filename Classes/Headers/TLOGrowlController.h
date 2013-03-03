@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -41,11 +41,11 @@
 
 typedef enum TXNotificationType : NSInteger {
 	TXNotificationHighlightType				= 1000,
-	TXNotificationNewQueryType				= 1001,
+	TXNotificationNewPrivateMessageType		= 1001,
 	TXNotificationChannelMessageType		= 1002,
 	TXNotificationChannelNoticeType			= 1003,
-	TXNotificationQueryMessageType			= 1004,
-	TXNotificationQueryNoticeType			= 1005,
+	TXNotificationPrivateMessageType		= 1004,
+	TXNotificationPrivateNoticeType			= 1005,
 	TXNotificationKickType					= 1006,
 	TXNotificationInviteType				= 1007,
 	TXNotificationConnectType				= 1008,
@@ -53,23 +53,22 @@ typedef enum TXNotificationType : NSInteger {
 	TXNotificationAddressBookMatchType		= 1010,
 } TXNotificationType;
 
-#define TXNotificationDialogStandardNicknameFormat		@"<%@>: %@"
-#define TXNotificationDialogActionNicknameFormat		@"• %@: %@"
+#define TXNotificationDialogStandardNicknameFormat		@"%@ %@"
+#define TXNotificationDialogActionNicknameFormat			@"• %@: %@"
 
 #define TXNotificationHighlightLogStandardActionFormat			@"• %@: %@"
 #define TXNotificationHighlightLogStandardMessageFormat			@"%@ %@"
 #define TXNotificationHighlightLogAlternativeActionFormat		@"• %@ %@"
 
-#ifdef TXNativeNotificationCenterAvailable
+#ifdef TXForceNativeNotificationCenterDispatch
 	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate
 #else
 	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate
 #endif
 
 @interface TLOGrowlController : NSObject <GrowlControllerDelegate>
-@property (nonatomic, weak) IRCWorld *owner;
-@property (nonatomic, strong) id lastClickedContext;
-@property (nonatomic, assign) CFAbsoluteTime lastClickedTime;
-
-- (void)notify:(TXNotificationType)type title:(NSString *)title desc:(NSString *)desc userInfo:(NSDictionary *)info;
+- (void)notify:(TXNotificationType)eventType
+		 title:(NSString *)eventTitle
+   description:(NSString *)eventDescription
+	  userInfo:(NSDictionary *)eventContext;
 @end

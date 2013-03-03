@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,14 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TDCNickSheet : TDCSheetBase
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, strong) NSTextField *currentText;
-@property (nonatomic, strong) NSTextField *nicknameNewInfo;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, nweak) NSTextField *tnewNicknameField;
+@property (nonatomic, nweak) NSTextField *toldNicknameField;
 
-- (void)start:(NSString *)nick;
+- (void)start:(NSString *)nickname;
 @end
 
-@interface NSObject (TXNickSheetDelegate)
-- (void)nickSheet:(TDCNickSheet *)sender didInputNick:(NSString *)nick;
+@interface NSObject (TDCNickSheetDelegate)
+- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname;
 - (void)nickSheetWillClose:(TDCNickSheet *)sender;
 @end

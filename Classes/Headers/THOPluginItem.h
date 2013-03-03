@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,14 +37,12 @@
 
 #import "TextualApplication.h"
 
-@interface THOTextualPluginItem : NSObject
-@property (nonatomic, strong) NSBundle *pluginBundle;
-@property (nonatomic, strong) THOPluginProtocol *pluginPrimaryClass;
+@interface THOPluginItem : NSObject
+@property (nonatomic, readonly, strong) id primaryClass;
+@property (nonatomic, readonly, assign) BOOL hasPreferencePaneView;
+@property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
+@property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
+@property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
 
-- (void)initWithPluginClass:(Class)primaryClass 
-				  andBundle:(NSBundle *)bundle
-				andIRCWorld:(IRCWorld *)world
-		  withUserInputDict:(NSMutableDictionary **)userDict
-		withServerInputDict:(NSMutableDictionary **)serverDict
-		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict;
+- (void)loadBundle:(NSBundle *)bundle;
 @end

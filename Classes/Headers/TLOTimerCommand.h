@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TLOTimerCommand : NSObject
-@property (nonatomic, assign) CFAbsoluteTime time;
-@property (nonatomic, assign) NSInteger cid;
-@property (nonatomic, copy) NSString *input;
+@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, strong) NSString *rawInput;
+@property (nonatomic, assign) NSTimeInterval timerInterval;
 @end

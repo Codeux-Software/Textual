@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@
 
 - (NSString *)attributedStringToASCIIFormatting
 {
-	NSString *realBody = [self string];
+	NSString *realBody = self.string;
 	
 	NSMutableString *result = [NSMutableString string];
 	
@@ -57,9 +57,9 @@
 	
 	while (limitRange.length > 0) {
 		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
-		
-		NSInteger foregroundColor = mapColorValue(dict[NSForegroundColorAttributeName]);
-		NSInteger backgroundColor = mapColorValue(dict[NSBackgroundColorAttributeName]);
+
+		NSInteger foregroundColor = [TVCLogRenderer mapColorValue:dict[NSForegroundColorAttributeName]];
+		NSInteger backgroundColor = [TVCLogRenderer mapColorValue:dict[NSBackgroundColorAttributeName]];
         
         NSNumber *foregroundNumber = @(foregroundColor);
         NSNumber *backgroundNumber = @(backgroundColor);
@@ -72,9 +72,9 @@
 		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
 		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
-		if (underlineText)  [result appendFormat:@"%c", 0x1F];
-		if (italicText)     [result appendFormat:@"%c", 0x16];
-		if (boldText)       [result appendFormat:@"%c", 0x02];
+		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
 		
 		if (color) {
 			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
@@ -86,13 +86,12 @@
 		
 		[result appendString:[realBody safeSubstringWithRange:effectiveRange]];
 		
-		if (color)          [result appendFormat:@"%c", 0x03];
-		if (boldText)       [result appendFormat:@"%c", 0x02];
-		if (italicText)     [result appendFormat:@"%c", 0x16];
-		if (underlineText)  [result appendFormat:@"%c", 0x1F];
+		if (color)          { [result appendFormat:@"%c", 0x03]; }
+		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}		
 	
 	return result;
@@ -141,7 +140,7 @@
 		baseMath += _textTruncationACTIONCommandConstant;
 	}
 	
-	NSInteger totalCalculatedLength = baseMath;
+	NSInteger totalCalculatedLength = 0;
 	NSInteger stringDeletionLength  = 0;
 	
 	NSRange effectiveRange;
@@ -160,10 +159,10 @@
 		/* ///////////////////////////////////////////////////// */
 		
 		NSDictionary *dict = [base safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
-        
-		NSInteger foregroundColor = mapColorValue(dict[NSForegroundColorAttributeName]);
-		NSInteger backgroundColor = mapColorValue(dict[NSBackgroundColorAttributeName]);
-        
+
+		NSInteger foregroundColor = [TVCLogRenderer mapColorValue:dict[NSForegroundColorAttributeName]];
+		NSInteger backgroundColor = [TVCLogRenderer mapColorValue:dict[NSBackgroundColorAttributeName]];
+
         NSNumber *foregroundNumber = @(foregroundColor);
         NSNumber *backgroundNumber = @(backgroundColor);
         
@@ -172,15 +171,15 @@
 		BOOL foregroundColorD = (foregroundColor >= 0 && foregroundColor <= 15);
         BOOL backgroundColorD = (backgroundColor >= 0 && backgroundColor <= 15);
 		
-		BOOL boldText       =  [baseFont fontTraitSet:NSBoldFontMask];
-		BOOL italicText     =  [baseFont fontTraitSet:NSItalicFontMask];
+		BOOL boldText       = [baseFont fontTraitSet:NSBoldFontMask];
+		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
 		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
-        if (italicText)         startCharCount += 1; stopCharCount += 1;
-        if (underlineText)      startCharCount += 1; stopCharCount += 1;
-        if (underlineText)      startCharCount += 1; stopCharCount += 1;
-        if (foregroundColorD)   startCharCount += 3; stopCharCount += 1;
-        if (backgroundColorD)   startCharCount += 3;
+        if (italicText)         { startCharCount += 1; stopCharCount += 1; }
+        if (underlineText)      { startCharCount += 1; stopCharCount += 1; }
+        if (underlineText)      { startCharCount += 1; stopCharCount += 1; }
+        if (foregroundColorD)   { startCharCount += 3; stopCharCount += 1; }
+        if (backgroundColorD)   { startCharCount += 3; }
 		
 		NSInteger formattingCharacterCount = (startCharCount + stopCharCount);
 		
@@ -246,7 +245,7 @@
 		 guessed it was going to be assigned to the substringed value. */
 		cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
 		
-		DebugLogToConsole(@"cake: %@\nLength: %i", cake, totalCalculatedLength);
+		//DebugLogToConsole(@"cake: %@\nLength: %i", cake, totalCalculatedLength);
 		
 		/* Truncate at first available space as long as it is within range. */
 		if (breakLoopAfterAppend && cake.length >= _textTruncationSpacePositionMaxDifferential) {
@@ -257,22 +256,22 @@
 													  options:NSBackwardsSearch
 														range:spaceCharSearchBase];
 			
-			DebugLogToConsole(@"spaceCharacter: %@", NSStringFromRange(spaceChar));
+			//DebugLogToConsole(@"spaceCharacter: %@", NSStringFromRange(spaceChar));
 			
 			if (NSDissimilarObjects(spaceChar.location, NSNotFound)) {
 				totalCalculatedLength = spaceChar.location;
 				
 				cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
 
-				DebugLogToConsole(@"newCake: %@\nLength: %i", cake, totalCalculatedLength);
+				//DebugLogToConsole(@"newCake: %@\nLength: %i", cake, totalCalculatedLength);
 			}
 		}
 		
 		/* Append the actual formatting. This uses the same technology used
 		 in the above defined -attributedStringToASCIIFormatting method. */
-		if (underlineText)  [result appendFormat:@"%c", 0x1F];
-		if (italicText)     [result appendFormat:@"%c", 0x16];
-		if (boldText)       [result appendFormat:@"%c", 0x02];
+		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
 		
 		if (foregroundColorD) {
 			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
@@ -284,10 +283,10 @@
 		
 		[result appendString:cake];
 		
-		if (foregroundColorD)   [result appendFormat:@"%c", 0x03];
-		if (boldText)           [result appendFormat:@"%c", 0x02];
-		if (italicText)         [result appendFormat:@"%c", 0x16];
-		if (underlineText)      [result appendFormat:@"%c", 0x1F];
+		if (foregroundColorD)   { [result appendFormat:@"%c", 0x03]; }
+		if (boldText)           { [result appendFormat:@"%c", 0x02]; }
+		if (italicText)         { [result appendFormat:@"%c", 0x16]; }
+		if (underlineText)      { [result appendFormat:@"%c", 0x1F]; }
 		
 		/* Skip to next attributed section if we have not broken out of the loop by now. */
 		stringDeletionLength += totalCalculatedLength;
@@ -299,7 +298,7 @@
 		effectiveRange.location += totalCalculatedLength;
 		effectiveRange.length    = (base.string.length - stringDeletionLength);
 		
-		DebugLogToConsole(@"effectiveRange: %@", NSStringFromRange(effectiveRange));
+		//DebugLogToConsole(@"effectiveRange: %@", NSStringFromRange(effectiveRange));
 		
 		limitRange = effectiveRange;
 	}
@@ -309,7 +308,7 @@
 	
     [*string deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
 	
-	DebugLogToConsole(@"string: %@\nresult: %@\nrange: 0, %i", [*string string], result, stringDeletionLength);
+	//DebugLogToConsole(@"string: %@\nresult: %@\nrange: 0, %i", [*string string], result, stringDeletionLength);
 	
     return result;
 }
@@ -352,24 +351,26 @@
 			{
 				BOOL result = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 				
-				if (result) {
-					return YES;
-				}
+				return result;
 				
 				break;
 			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
 				NSColor *foregroundColor = dict[NSForegroundColorAttributeName];
+
+				/* We compare the white value of our foreground color to that of
+				 our text field so that we do not say we have a color when it is
+				 only the color of the text field itself. */
 				
                 if (PointerIsNotEmpty(foregroundColor)) {
-					NSColor *defaultColor = TXDefaultTextFieldFontColor;
+					NSColor *defaultColor = [self defaultTextColor];
 					NSColor *compareColor = [foregroundColor colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
 					
 					CGFloat defaultWhite = [defaultColor whiteComponent];
 					CGFloat compareWhite = [compareColor whiteComponent];
 					
-					if (TXDirtyCGFloatsMatch(defaultWhite, compareWhite)) {
+					if (TXDirtyCGFloatMatch(defaultWhite, compareWhite)) {
 						return NO;
 					}
 					
@@ -388,11 +389,10 @@
 				
 				break;
 			} 
-            default: return NO; break;
+            default: { return NO; break; }
 		}
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
 	return NO;
@@ -405,8 +405,8 @@
 {
 	if (clearAttributes) {
 		NSDictionary *attributes = @{
-		NSForegroundColorAttributeName	: TXDefaultTextFieldFontColor,
-		NSFontAttributeName				: TXDefaultTextFieldFont
+			NSFontAttributeName				: TXDefaultTextFieldFont,
+			NSForegroundColorAttributeName	: [self defaultTextColor]
 		};
 
 		[self setTypingAttributes:attributes];
@@ -437,7 +437,7 @@
             case IRCTextFormatterBoldEffect:
             {
                 if ([baseFont fontTraitSet:NSBoldFontMask] == NO) {
-                    baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
+                    baseFont = [RZFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
                 }
                 
                 if (baseFont) {
@@ -449,7 +449,7 @@
             case IRCTextFormatterItalicEffect:
             {
                 if ([baseFont fontTraitSet:NSItalicFontMask] == NO) {
-                    baseFont = [_NSFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
+                    baseFont = [RZFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
                 }
                 
                 if (baseFont) {
@@ -469,7 +469,7 @@
                 NSInteger colorCode = [value integerValue];
                 
                 if (colorCode >= 0 && colorCode <= 15) {
-                    newDict[NSForegroundColorAttributeName] = mapColorCode(colorCode);
+                    newDict[NSForegroundColorAttributeName] = [TVCLogRenderer mapColorCode:colorCode];
                 }
                 
                 break;
@@ -479,20 +479,19 @@
                 NSInteger colorCode = [value integerValue];
                 
                 if (colorCode >= 0 && colorCode <= 15) {
-                    newDict[NSBackgroundColorAttributeName] = mapColorCode(colorCode);
+                    newDict[NSBackgroundColorAttributeName] = [TVCLogRenderer mapColorCode:colorCode];
                 }
                 
                 break;
             }
-            default: break;
+            default: { break; }
         }
 
 		[self addUndoActionForAttributes:dict inRange:effectiveRange];
 		
         [self setAttributes:newDict inRange:effectiveRange];
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
     }
 }
 
@@ -516,7 +515,7 @@
 				case IRCTextFormatterBoldEffect:
 				{
 					if ([baseFont fontTraitSet:NSBoldFontMask]) {
-						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSBoldFontMask];
+						baseFont = [RZFontManager() convertFont:baseFont toNotHaveTrait:NSBoldFontMask];
 					
 						if (baseFont) {
 							newDict[NSFontAttributeName] = baseFont;
@@ -530,7 +529,7 @@
 				case IRCTextFormatterItalicEffect:
 				{
 					if ([baseFont fontTraitSet:NSItalicFontMask]) {
-						baseFont = [_NSFontManager() convertFont:baseFont toNotHaveTrait:NSItalicFontMask];
+						baseFont = [RZFontManager() convertFont:baseFont toNotHaveTrait:NSItalicFontMask];
 						
 						if (baseFont) {
 							newDict[NSFontAttributeName] = baseFont;
@@ -569,8 +568,7 @@
 
 		[self addUndoActionForAttributes:dict inRange:effectiveRange];
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), 
-                                 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 }
 

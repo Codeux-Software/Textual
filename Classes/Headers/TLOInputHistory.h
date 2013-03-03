@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,9 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TLOInputHistory : NSObject
-@property (nonatomic, strong) id lastHistoryItem;
-@property (nonatomic, strong) NSMutableArray *buf;
-@property (nonatomic, assign) NSInteger pos;
+@property (nonatomic, assign) NSInteger historyBufferPosition;
+@property (nonatomic, strong) NSMutableArray *historyBuffer;
+
+/* lastHistoryItem is not manipulated by TLOInputHistory. It is used
+ for a temporary store when input history is configured to be channel
+ specific. lastHistoryItem is set to the value of the input text field
+ of the previous selection when switching views. */
+@property (nonatomic, strong) NSAttributedString *lastHistoryItem;
 
 - (void)add:(NSAttributedString *)s;
 

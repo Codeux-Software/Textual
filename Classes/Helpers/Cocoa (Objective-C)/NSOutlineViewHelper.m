@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -41,12 +41,13 @@
 
 - (NSInteger)countSelectedRows
 {
-	return [[self selectedRowIndexes] count];
+	return self.selectedRowIndexes.count;
 }
 
 - (void)selectItemAtIndex:(NSInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+	
 	[self scrollRowToVisible:index];
 }
 
@@ -63,30 +64,36 @@
 		id curRow = [self itemAtRow:i];
 		
 		if ([self isGroupItem:curRow]) {
-			[groups addInteger:i];
+			[groups safeAddObject:curRow];
 		}
 	}
 	
 	return groups;
 }
 
-- (NSInteger)rowsInGroup:(id)group
+- (NSArray *)rowsFromParentGroup:(id)child
 {
-	NSInteger totalRows = 0;
+	if ([self isGroupItem:child] == NO) {
+		child = [self parentForItem:child];
+	}
+	
+	return [self rowsInGroup:child];
+}
+
+- (NSArray *)rowsInGroup:(id)group
+{
+	NSMutableArray *allRows = [NSMutableArray array];
 	
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		id curRow = [self itemAtRow:i];
-		
-		if ([self isGroupItem:curRow]) {
-			id parent = [self parentForItem:curRow];
-			
-			if ([parent isEqual:group]) {
-				totalRows++;
-			}
+		id curent = [self itemAtRow:i];
+		id parent = [self parentForItem:curent];
+
+		if ([parent isEqual:group]) {
+			[allRows safeAddObject:curent];
 		}
 	}
 	
-	return totalRows;
+	return allRows;
 }
 
 @end

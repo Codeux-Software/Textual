@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -41,10 +41,6 @@
 
 - (BOOL)boolForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return NO;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(boolValue)]) {
@@ -56,10 +52,6 @@
 
 - (NSInteger)integerForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(integerValue)]) {
@@ -71,10 +63,6 @@
 
 - (long long)longLongForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(longLongValue)]) {
@@ -86,10 +74,6 @@
 
 - (TXNSDouble)doubleForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return 0;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj respondsToSelector:@selector(doubleValue)]) {
@@ -101,10 +85,6 @@
 
 - (NSString *)stringForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSString class]]) {
@@ -116,10 +96,6 @@
 
 - (NSDictionary *)dictionaryForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -131,10 +107,6 @@
 
 - (NSArray *)arrayForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSArray class]]) {
@@ -146,10 +118,6 @@
 
 - (void *)pointerForKey:(NSString *)key
 {
-	if (self.count <= 0) {
-		return nil;
-	}
-	
 	id obj = self[key];
 	
 	if ([obj isKindOfClass:[NSValue class]]) {
@@ -161,7 +129,7 @@
 
 - (BOOL)containsKey:(NSString *)baseKey
 {	
-	return BOOLValueFromObject([self objectForKey:baseKey]);
+	return [self.allKeys containsObject:baseKey];
 }
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
@@ -169,10 +137,21 @@
 	return NSObjectIsNotEmpty([self keyIgnoringCase:baseKey]);
 }
 
+- (NSString *)firstKeyForObject:(id)object
+{
+	for (NSString *key in [self allKeys]) {
+		if ([object isEqual:self[key]]) {
+			return key;
+		}
+	}
+
+	return nil;
+}
+
 - (NSString *)keyIgnoringCase:(NSString *)baseKey
 {
 	for (NSString *key in [self allKeys]) {
-		if ([key isEqualNoCase:baseKey]) {
+		if ([key isEqualIgnoringCase:baseKey]) {
 			return key;
 		} 
 	}
@@ -228,36 +207,43 @@
 
 @implementation NSMutableDictionary (TXMutableDictionaryHelper)
 
-- (void)safeSetObject:(id)anObject forKey:(id<NSCopying>)aKey
+- (void)safeSetObject:(id)value forKey:(NSString *)key
 {
-	if (PointerIsNotEmpty(anObject)) {
-		self[aKey] = anObject;
+	if (PointerIsNotEmpty(value)) {
+		self[key] = value;
+	}
+}
+
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
+{
+	if (PointerIsNotEmpty(value) && [self containsKey:key] == NO) {
+		self[key] = value;
 	}
 }
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setDouble:(TXNSDouble)value forKey:(NSString *)key
 {
-	self[key] = @(value);
+	[self safeSetObject:@(value) forKey:key];
 }
 
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
-	self[key] = [NSValue valueWithPointer:value];
+	[self safeSetObject:[NSValue valueWithPointer:value] forKey:key];
 }
 
 @end

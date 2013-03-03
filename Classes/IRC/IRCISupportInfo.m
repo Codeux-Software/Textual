@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define _isupportSuffix		@" are supported by this server"
-#define _opValue			100
+#define _isupportSuffix				@" are supported by this server"
+#define _channelUserModeValue		100
 
 @implementation IRCISupportInfo
 
@@ -53,151 +53,125 @@
 
 - (void)reset
 {
-	memset(modes, 0, TXModesSize);
+	self.networkAddress = nil;
+	self.networkName = nil;
 	
-	self.nickLen    = 9;
-	self.modesCount = 3;
-	
-	[self setValue:_opValue forMode:'o'];
-	[self setValue:_opValue forMode:'h'];
-	[self setValue:_opValue forMode:'v'];
-	[self setValue:_opValue forMode:'a'];
-	[self setValue:_opValue forMode:'q'];
-	[self setValue:_opValue forMode:'b'];
-	[self setValue:_opValue forMode:'e'];
-    [self setValue:_opValue forMode:'u'];
-	
-	[self setValue:1 forMode:'I'];
-	[self setValue:1 forMode:'R'];
-	[self setValue:2 forMode:'k'];
-	[self setValue:3 forMode:'l'];
-	[self setValue:4 forMode:'i'];
-	[self setValue:4 forMode:'m'];
-	[self setValue:4 forMode:'n'];
-	[self setValue:4 forMode:'p'];
-	[self setValue:4 forMode:'s'];
-	[self setValue:4 forMode:'t'];
-	[self setValue:4 forMode:'r'];
-	
+	self.nicknameLength = 9; // Default for IRC protocol.
+	self.modesCount = TXMaximumNodesPerModeCommand;
+
+	[self setUserModeQPrefix:nil];
+	[self setUserModeAPrefix:nil];
 	[self setUserModeOPrefix:@"@"];
+	[self setUserModeHPrefix:nil];
 	[self setUserModeVPrefix:@"+"];
+
+	self.channelModes = @{
+		@"o" : @(_channelUserModeValue),
+		@"v" : @(_channelUserModeValue)
+	};
 }
 
-- (BOOL)update:(NSString *)str client:(IRCClient *)client
+- (void)update:(NSString *)configData client:(IRCClient *)client
 {
-	if ([str hasSuffix:_isupportSuffix]) {
-		str = [str safeSubstringToIndex:(str.length - _isupportSuffix.length)];
+	if ([configData hasSuffix:_isupportSuffix]) {
+		configData = [configData safeSubstringToIndex:(configData.length - _isupportSuffix.length)];
 	}
+
+	NSObjectIsEmptyAssert(configData);
 	
-	NSArray *ary = [str split:NSStringWhitespacePlaceholder];
+	NSArray *configVariables = [configData split:NSStringWhitespacePlaceholder];
 	
-	for (NSString *s in ary) {
-		NSString *key   = s;
+	for (NSString *cvar in configVariables) {
+		NSString *vakey = cvar;
 		NSString *value = nil;
 		
-		NSRange r = [s rangeOfString:@"="];
+		NSRange r = [cvar rangeOfString:@"="];
 		
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
-			key   = [s safeSubstringToIndex:r.location].uppercaseString;
-			value = [s safeSubstringFromIndex:NSMaxRange(r)];
+			vakey = [cvar safeSubstringToIndex:r.location];
+			value = [cvar safeSubstringFromIndex:NSMaxRange(r)];
 		}
 		
 		if (value) {
-			if ([key isEqualToString:@"PREFIX"]) {
+			if ([vakey isEqualIgnoringCase:@"PREFIX"]) {
 				[self parsePrefix:value];
-			} else if ([key isEqualToString:@"CHANMODES"]) {
-				[self parseChanmodes:value];
-			} else if ([key isEqualToString:@"NICKLEN"]) {
-				self.nickLen = [value integerValue];
-			} else if ([key isEqualToString:@"MODES"]) {
+			} else if ([vakey isEqualIgnoringCase:@"CHANMODES"]) {
+				[self parseChannelModes:value];
+			} else if ([vakey isEqualIgnoringCase:@"NICKLEN"]) {
+				self.nicknameLength = [value integerValue];
+			} else if ([vakey isEqualIgnoringCase:@"MODES"]) {
 				self.modesCount = [value integerValue];
-			} else if ([key isEqualToString:@"NETWORK"]) {
-				self.networkName = value;
+			} else if ([vakey isEqualIgnoringCase:@"NETWORK"]) {
+				self.networkName = TXTFLS(@"IRCServerNetworkName", value);
 			}
 		}
 		
-		if ([key isEqualToString:@"NAMESX"] && client.multiPrefix == NO) {
+		if ([vakey isEqualIgnoringCase:@"NAMESX"] && client.CAPmultiPrefix == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
 			
-			client.multiPrefix = YES;
+			client.CAPmultiPrefix = YES;
 			
-			[client.acceptedCaps addObject:@"multi-prefix"];
-		} else if ([key isEqualToString:@"UHNAMES"] && client.userhostInNames == NO) {
+			[client.CAPacceptedCaps addObject:@"multi-prefix"];
+		} else if ([vakey isEqualIgnoringCase:@"UHNAMES"] && client.CAPuserhostInNames == NO) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
 			
-			client.userhostInNames = YES;
+			client.CAPuserhostInNames = YES;
 			
-			[client.acceptedCaps addObject:@"userhost-in-names"];
+			[client.CAPacceptedCaps addObject:@"userhost-in-names"];
 		}
 	}
-	
-	return NO;
 }
 
-- (NSArray *)parseMode:(NSString *)str
+- (NSArray *)parseMode:(NSString *)modeString
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray *modeArray = [NSMutableArray array];
 	
-	NSMutableString *s = [str mutableCopy];
+	NSMutableString *modeInfo = [modeString mutableCopy];
 	
-	BOOL plus = NO;
+	BOOL beingSet = NO;
 	
-	while (NSObjectIsNotEmpty(s)) {
-		NSString *token = [s getToken];
-		if (NSObjectIsEmpty(token)) break;
+	while (modeInfo.length >= 1) {
+		NSString *token = [modeInfo getToken];
+
+		NSObjectIsEmptyAssertLoopBreak(token);
+
+		NSString *c = [token stringCharacterAtIndex:0];
 		
-		UniChar c = [token characterAtIndex:0];
-		
-		if (c == '+' || c == '-') {
-			plus = (c == '+');
+		if ([c isEqualToString:@"+"] || [c isEqualToString:@"-"]) {
+			beingSet = [c isEqualToString:@"+"];
 			
 			token = [token safeSubstringFromIndex:1];
 			
 			for (NSInteger i = 0; i < token.length; i++) {
-				c = [token characterAtIndex:i];
-				
-				switch (c) {
-					case '-': plus = NO; break;
-					case '+': plus = YES; break;
-					default:
-					{
-						IRCModeInfo *m = [IRCModeInfo modeInfo];
-						
-						if ([self hasParamForMode:c plus:plus]) {
-							m.mode = c;
-							m.plus = plus;
-							m.param = [s getToken];
-						} else {
-							m.mode = c;
-							m.plus = plus;
-						}
-						
-						[ary safeAddObject:m];
-						
-						break;
+				c = [token stringCharacterAtIndex:i];
+
+				if ([c isEqualToString:@"-"]) {
+					beingSet = NO;
+				} else if ([c isEqualToString:@"+"]) {
+					beingSet = YES;
+				} else {
+					IRCModeInfo *m = [IRCModeInfo modeInfo];
+
+					m.modeToken = c;
+					m.modeIsSet = beingSet;
+					
+					if ([self hasParamForMode:c isSet:beingSet]) {
+						m.modeParamater = [modeInfo getToken];
 					}
+
+					[modeArray safeAddObject:m];
 				}
 			}
 		}
 	}
 	
-	return ary;
-}
-
-- (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus
-{
-	switch ([self valueForMode:m]) {
-		case 0: return NO; break;
-		case 1: return YES; break;
-		case 2: return YES; break;
-		case 3: return plus; break;
-		case _opValue: return YES; break;
-		default: return NO; break;
-	}
+	return modeArray;
 }
 
 - (void)parsePrefix:(NSString *)value
 {
+	// Format: (qaohv)~&@%+
+	
 	if ([value contains:@"("] && [value contains:@")"]) {
 		NSInteger endSignPos = [value stringPosition:@")"];
 		NSInteger modeLength = 0;
@@ -213,12 +187,13 @@
 		
 		charLength = [chars length];
 		modeLength = [nodes length];
+
+		NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
 		
 		if (charLength == modeLength) {
 			for (NSInteger i = 0; i < charLength; i++) {
-				UniChar  rawKey     = [nodes characterAtIndex:i];
-				NSString *modeKey   = [nodes stringCharacterAtIndex:i];
-				NSString *modeChar  = [chars stringCharacterAtIndex:i];
+				NSString *modeKey = [nodes stringCharacterAtIndex:i];
+				NSString *modeChar = [chars stringCharacterAtIndex:i];
 				
 				if ([modeKey isEqualToString:@"q"] || [modeKey isEqualToString:@"u"]) {
 					self.userModeQPrefix = modeChar;
@@ -231,63 +206,70 @@
 				} else if ([modeKey isEqualToString:@"v"]) {
 					self.userModeVPrefix = modeChar;
 				}
-				
-				[self setValue:_opValue forMode:rawKey];
+
+				[channelModes setInteger:_channelUserModeValue forKey:modeKey];
 			}
 		}
+
+		self.channelModes = channelModes;
 	}
 }
 
-- (void)parseChanmodes:(NSString *)str
+- (BOOL)hasParamForMode:(NSString *)m isSet:(BOOL)modeIsSet
 {
-	NSArray *ary = [str split:@","];
-	
-	for (NSInteger i = 0; i < ary.count; i++) {
-		NSString *s = [ary safeObjectAtIndex:i];
+	// Input: CHANMODES=A,B,C,D
+	//
+	// A = Always has a paramater.			Index: 1
+	// B = Always has a paramater.			Index: 2
+	// C = Only has a paramater when set.	Index: 3
+	// D = Never has a paramater.			Index: 4
+
+	NSInteger modeIndex = [self.channelModes integerForKey:m];
+
+	if (modeIndex == 1 || modeIndex == 2 || modeIndex == _channelUserModeValue) {
+		return YES;
+	} else if (modeIndex == 3) {
+		return modeIsSet;
+	} else {
+		return NO;
+	}
+}
+
+- (void)parseChannelModes:(NSString *)str
+{
+	// Input: CHANMODES=A,B,C,D
+	//
+	// A = Always has a paramater.			Index: 1
+	// B = Always has a paramater.			Index: 2
+	// C = Only has a paramater when set.	Index: 3
+	// D = Never has a paramater.			Index: 4
+
+	NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
+
+	NSArray *allmodes = [str split:@","];
+
+	for (NSInteger i = 0; i < allmodes.count; i++) {
+		NSString *modeset = [allmodes safeObjectAtIndex:i];
 		
-		for (NSInteger j = 0; j < s.length; j++) {
-			UniChar c = [s characterAtIndex:j];
-			
-			[self setValue:(i + 1) forMode:c];
+		for (NSInteger j = 0; j < modeset.length; j++) {
+			NSString *mode = [modeset stringCharacterAtIndex:j];
+
+			[channelModes setInteger:(i + 1) forKey:mode];
 		}
 	}
-}
 
-- (void)setValue:(NSInteger)value forMode:(unsigned char)m
-{
-	if ('a' <= m && m <= 'z') {
-		NSInteger n = (m - 'a');
-		
-		modes[n] = value;
-	} else if ('A' <= m && m <= 'Z') {
-		NSInteger n = ((m - 'A') + 26);
-		
-		modes[n] = value;
-	}
-}
-
-- (NSInteger)valueForMode:(unsigned char)m
-{
-	if ('a' <= m && m <= 'z') {
-		NSInteger n = (m - 'a');
-		
-		return modes[n];
-	} else if ('A' <= m && m <= 'Z') {
-		NSInteger n = ((m - 'A') + 26);
-		
-		return modes[n];
-	}
-	
-	return 0;
+	self.channelModes = channelModes;
 }
 
 - (IRCModeInfo *)createMode:(NSString *)mode
 {
-	IRCModeInfo *m = [IRCModeInfo modeInfo];
+	NSObjectIsEmptyAssertReturn(mode, nil);
 	
-	m.plus  = NO;
-	m.param = NSStringEmptyPlaceholder;
-	m.mode  = [mode characterAtIndex:0];
+	IRCModeInfo *m = [IRCModeInfo modeInfo];
+
+	m.modeIsSet = NO;
+	m.modeParamater = NSStringEmptyPlaceholder;
+	m.modeToken = [mode stringCharacterAtIndex:0];
 	
 	return m;
 }

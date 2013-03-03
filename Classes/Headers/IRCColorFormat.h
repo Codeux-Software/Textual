@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
                                        hostmask:(NSString *)host; // Only Textual should be calling this.
 @end
 
-@interface TVCTextField (TextFieldFormattingHelper) 
+@interface TVCTextField (TVCTextFieldFormattingHelper) 
 - (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes;
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 

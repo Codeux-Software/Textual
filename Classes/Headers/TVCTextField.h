@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,9 @@
 @interface TVCTextField : NSTextView 
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
+@property (nonatomic, assign) BOOL allowColorInversion; // Do not call. 
+
+- (NSColor *)defaultTextColor;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;
@@ -51,7 +54,9 @@
 - (NSInteger)numberOfLines;
 
 - (void)keyDownToSuper:(NSEvent *)e;
+
 - (void)setKeyHandlerTarget:(id)target;
+
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 

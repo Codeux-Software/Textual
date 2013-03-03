@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -42,27 +42,27 @@
 
 #define _WebMenuItemTagIRCopServices	42354
 
+@interface TVCLogPolicy ()
+@property (nonatomic, readonly, uweak) TXMenuController *menuController;
+@end
+
 @implementation TVCLogPolicy
 
-- (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation
-  modifierFlags:(NSUInteger)modifierFlags
+- (void)webView:(TVCLogView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
 {
-	if ([TPCPreferences copyOnSelect]) {
-		NSEvent *currentEvent = [NSApp currentEvent];
-		
-		if ((currentEvent.modifierFlags & NSCommandKeyMask) == NSCommandKeyMask) {
-			return;
-		}
-		
-		if (currentEvent.type == NSLeftMouseUp) {
-			DOMRange *range = [sender selectedDOMRange];
-			
-			if (PointerIsEmpty(range)) return;
-			if ([(id)sender hasSelection] == NO) return;
-			
+	NSAssertReturn([TPCPreferences copyOnSelect]);
+	
+	NSEvent *currentEvent = [NSApp currentEvent];
+	
+	if ((currentEvent.modifierFlags & NSCommandKeyMask) == NSCommandKeyMask) {
+		return;
+	}
+	
+	if (currentEvent.type == NSLeftMouseUp) {
+		if ([sender hasSelection]) {
 			[NSApp sendAction:@selector(copy:) to:[NSApp mainWindow].firstResponder from:self];
-			
-			[sender setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
+		
+			[sender clearSelection];
 		}
 	}
 }
@@ -74,41 +74,48 @@
 
 - (void)channelDoubleClicked
 {
-	self.menuController.pointedChannelName = self.chan;
-	self.chan = nil;
+	self.menuController.pointedChannelName = self.channelName;
+
+	self.channelName = nil;
 	
 	[self.menuController joinClickedChannel:nil];
 }
 
 - (void)nicknameDoubleClicked
 {
-	self.menuController.pointedNick = self.nick;
-	self.nick = nil;
+	self.menuController.pointedNickname = self.nickname;
+
+	self.nickname = nil;
 	
 	[self.menuController memberListDoubleClicked:nil];
 }
 
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element
-	defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	NSMutableArray *ary = [NSMutableArray array];
 	
-	if (self.url) {
-		self.menuController.pointedUrl = self.url;
-		self.url = nil;
+	if (self.anchorURL) {
+		self.menuController.pointedUrl = self.anchorURL;
 		
-		for (NSMenuItem *item in [self.urlMenu itemArray]) {
+		self.anchorURL = nil;
+
+		NSMenu *urlMenu = self.masterController.tcopyURLMenu;
+		
+		for (NSMenuItem *item in [urlMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else if (self.nick) {
-		self.menuController.pointedNick = self.nick;
-		self.nick = nil;
+	} else if (self.nickname) {
+		self.menuController.pointedNickname = self.nickname;
+
+		self.nickname = nil;
+
+		BOOL isIRCop = self.worldController.selectedClient.hasIRCopAccess;
+
+		NSMenu *memberMenu = self.masterController.userControlMenu;
 		
-		BOOL isIRCop = self.menuController.world.selectedClient.IRCopStatus;
-		
-		for (NSMenuItem *item in [self.memberMenu itemArray]) {
+		for (NSMenuItem *item in [memberMenu itemArray]) {
 			if ([item tag] == _WebMenuItemTagIRCopServices && isIRCop == NO) {
 				continue;
 			}
@@ -117,16 +124,21 @@
 		}
 		
 		return ary;
-	} else if (self.chan) {
-		self.menuController.pointedChannelName = self.chan;
-		self.chan = nil;
+	} else if (self.channelName) {
+		self.menuController.pointedChannelName = self.channelName;
 		
-		for (NSMenuItem *item in [self.chanMenu itemArray]) {
+		self.channelName = nil;
+
+		NSMenu *chanMenu = self.masterController.joinChannelMenu;
+		
+		for (NSMenuItem *item in [chanMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else if (self.menu) {
+	} else {
+		NSMenu *menu = self.masterController.channelViewMenu;;
+		
 		NSMenuItem *inspectElementItem		= nil;
 		NSMenuItem *lookupInDictionaryItem	= nil;
 		
@@ -134,16 +146,16 @@
 			if ([item tag] == WebMenuItemTagLookUpInDictionary) {
 				lookupInDictionaryItem = item;
 			} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
-					   [item tag] == _WebMenuItemTagInspectElementMountainLion) {
-			
+					   [item tag] == _WebMenuItemTagInspectElementMountainLion)
+			{
 				inspectElementItem = item;
 			}
 		}
 		
-		for (NSMenuItem *item in [self.menu itemArray]) {
+		for (NSMenuItem *item in [menu itemArray]) {
 			if ([item tag] == _WebMenuItemTagInspectElementLion ||
-				[item tag] == _WebMenuItemTagInspectElementMountainLion) {
-
+				[item tag] == _WebMenuItemTagInspectElementMountainLion)
+			{
 				if (lookupInDictionaryItem) {
 					[ary safeAddObject:[lookupInDictionaryItem copy]];
 				}
@@ -152,53 +164,53 @@
 			}
 		}
 		
-		if ([_NSUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
 			[ary safeAddObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {
 				[ary safeAddObject:[inspectElementItem copy]];
 			}
+
+			NSMenuItem *newItem = [NSMenuItem new];
 			
-			NSMenuItem *copyHTML = [[NSMenuItem alloc] initWithTitle:TXTLS(@"CopyLogAsHTMLMenuItem") 
-															   action:@selector(copyLogAsHtml:) keyEquivalent:NSStringEmptyPlaceholder];
-			
-			NSMenuItem *reloadTheme = [[NSMenuItem alloc] initWithTitle:TXTLS(@"ForceReloadThemeMenuItem") 
-																  action:@selector(forceReloadTheme:) keyEquivalent:NSStringEmptyPlaceholder];
-			
-			[copyHTML	 setTarget:self.menuController];
-			[reloadTheme setTarget:self.menuController];
-		
-			[ary safeAddObject:copyHTML];
-			[ary safeAddObject:reloadTheme];
+			[newItem setTarget:self.menuController];
+			[newItem setKeyEquivalent:NSStringEmptyPlaceholder];
+
+			[newItem setTitle:TXTLS(@"CopyLogAsHTMLMenuItem")];
+			[newItem setAction:@selector(copyLogAsHtml:)];
+
+			[ary safeAddObject:[newItem copy]];
+
+			[newItem setTitle:TXTLS(@"ForceReloadThemeMenuItem")];
+			[newItem setAction:@selector(forceReloadTheme:)];
+
+			[ary safeAddObject:[newItem copy]];
 		}
 		
 		return ary;
-	} else {
-		return @[];
 	}
 	
 	return defaultMenuItems;
 }
 
-- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation
-		request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
 	NSInteger action = [actionInformation integerForKey:WebActionNavigationTypeKey];
-	
-	switch (action) {
-		case WebNavigationTypeLinkClicked:
-			[listener ignore];
-			
-			[TLOpenLink open:actionInformation[WebActionOriginalURLKey]];
-			
-			break;
-		case WebNavigationTypeOther:
-			[listener use];
-			break;
-		default:
-			[listener ignore];
-			break;
+
+	if (action == WebNavigationTypeLinkClicked) {
+		[listener ignore];
+
+		[TLOpenLink open:actionInformation[WebActionOriginalURLKey]];
+	} else if (action == WebNavigationTypeOther) {
+		[listener use];
+	} else {
+		[listener use];
 	}
+}
+
+- (TXMenuController *)menuController
+{
+	return self.masterController.menuController;
 }
 
 @end
