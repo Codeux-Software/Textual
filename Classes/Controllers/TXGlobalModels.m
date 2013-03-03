@@ -199,5 +199,5 @@ NSInteger TXRandomNumber(NSInteger maxset)
 
 NSString *TXFormattedNumber(NSInteger number)
 {
-	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:kCFNumberFormatterDecimalStyle];
+	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:NSNumberFormatterDecimalStyle];
 }

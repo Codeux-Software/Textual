@@ -1155,7 +1155,7 @@
 			BOOL opMsg = NO;
 			BOOL secretMsg = NO;
 
-			TVCLogLineType type;
+			TVCLogLineType type = TVCLogLinePrivateMessageType;
 
 			/* Command Type. */
 			if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("msg")]) {
@@ -1178,7 +1178,7 @@
 				type = TVCLogLineActionType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("sme")]) {
 				secretMsg = YES;
-				
+
 				type = TVCLogLineActionType;
 			}
 
@@ -2646,6 +2646,35 @@
 }
 
 #pragma mark -
+#pragma mark NickServ Information
+
+- (NSArray *)nickServSupportedNeedIdentificationTokens
+{
+    return @[
+        @"nickname is owned",
+        @"nickname is registered",
+        @"owned by someone else",
+        @"nick belongs to another user",
+        @"if you do not change your nickname",
+        @"authentication required",
+        @"authenticate yourself",
+        @"identify yourself"
+    ];
+}
+
+- (NSArray *)nickServSupportedSuccessfulIdentificationTokens
+{
+    return @[
+            @"now recognized",
+            @"already identified",
+            @"successfully identified",
+            @"you are already logged in",
+            @"you are now identified",
+            @"password accepted"
+        ];
+}
+
+#pragma mark -
 #pragma mark Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage *)m
@@ -2920,38 +2949,46 @@
 				/* Nice to see you, NickServ. */
 				if ([sender isEqualIgnoringCase:@"NickServ"]) {
 					self.serverHasNickServ = YES;
-					
-					if ([text hasPrefix:@"This nickname is registered"] ||
-						[text hasPrefix:@"This nickname is owned by someone else"] ||
-						[text hasPrefix:@"This nick is owned by someone else"])
-					{
-						if (NSObjectIsNotEmpty(self.config.nicknamePassword)) {
-							NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
-							
-							if ([[self networkAddress] hasSuffix:@"dal.net"]) {
-								self.isWaitingForNickServ = YES;
 
-								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
-							} else {
-								if (self.CAPisIdentifiedWithSASL == NO) {
-									self.isWaitingForNickServ = YES;
+                    BOOL continueNickServScan = YES;
 
-									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
-								}
-							}
-						}
-					} else if ([text hasPrefix:@"You are now identified"] ||
-							   [text hasPrefix:@"You are already identified"] ||
-							   [text hasSuffix:@"you are now recognized."] ||
-							   [text hasPrefix:@"Password accepted"] ||
-                               [text hasPrefix:@"You are successfully identified"])
-					{
-						if ([TPCPreferences autojoinWaitsForNickServ]) {
-							if (self.isAutojoined == NO) {
-								[self performAutoJoin];
-							}
-						}
-					}
+                    /* Scan for messages telling us that we need to identify. */
+                    for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
+                        if ([text containsIgnoringCase:token]) {
+                            continueNickServScan = NO;
+
+                            NSObjectIsEmptyAssertLoopBreak(self.config.nicknamePassword);
+                            
+                            NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
+
+                            if ([[self networkAddress] hasSuffix:@"dal.net"]) {
+                                self.isWaitingForNickServ = YES;
+
+                                [self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
+                            } else {
+                                if (self.CAPisIdentifiedWithSASL == NO) {
+                                    self.isWaitingForNickServ = YES;
+                                    
+                                    [self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+                                }
+                            }
+                        }
+                    }
+
+                    /* Scan for messages telling us that we are now identified. */
+                    if (continueNickServScan) {
+                        for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
+                            if ([text containsIgnoringCase:token]) {
+                                if ([TPCPreferences autojoinWaitsForNickServ]) {
+                                    if (self.isAutojoined == NO) {
+                                        [self performAutoJoin];
+                                    }
+                                }
+
+                                self.isIdentifiedWithNickServ = YES;
+                            }
+                        }
+                    }
 				}
 
 				/* Set the query as unread and inform Growl. */
