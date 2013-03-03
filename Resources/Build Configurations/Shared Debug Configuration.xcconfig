@@ -1,0 +1,4 @@
+#include "Shared Release Configuration.xcconfig"
+
+GCC_OPTIMIZATION_LEVEL = 0
+VERSION_INFO_BUILDER = ${USER}

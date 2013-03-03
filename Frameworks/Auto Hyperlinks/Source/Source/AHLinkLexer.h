@@ -32,4 +32,4 @@ typedef enum {
     AHDegenerateURL,
 } AHParserStatus;
 
-#define YY_EXTRA_TYPE unsigned int
+#define YY_EXTRA_TYPE unsigned long
