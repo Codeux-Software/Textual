@@ -12,12 +12,14 @@
 		4C1AD75912DF636E00B4AD56 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1AD75812DF636E00B4AD56 /* libssl.dylib */; };
 		4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* Encryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* Encryption.m */; };
-		4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */; };
-		4CB13EC312E14312008119B8 /* dh1080_be.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB13EBF12E14312008119B8 /* dh1080_be.cpp */; };
-		4CB13EC512E14312008119B8 /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB13EC112E14312008119B8 /* misc.cpp */; };
-		4CB13EEB12E14455008119B8 /* DH1080.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB13EE912E14455008119B8 /* DH1080.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CBD7909133F14B700792CC3 /* blowfish_be.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD7907133F14B700792CC3 /* blowfish_be.m */; };
-		4CCDDEF6133F28ED0029D685 /* DH1080.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDDEF5133F28ED0029D685 /* DH1080.mm */; };
+		4C500F3C16C06C5A001692AF /* DH1080Base.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3A16C06C5A001692AF /* DH1080Base.h */; };
+		4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F3B16C06C5A001692AF /* DH1080Base.mm */; };
+		4C500F4116C06C79001692AF /* DH1080.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3F16C06C79001692AF /* DH1080.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C500F4216C06C79001692AF /* DH1080.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F4016C06C79001692AF /* DH1080.mm */; };
+		4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */; };
+		4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */; };
+		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -32,15 +34,14 @@
 		4C1AD75812DF636E00B4AD56 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		4C292F7D12DFD69400BE23FE /* Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* Encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encryption.m; sourceTree = "<group>"; };
-		4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = "../../../Classes/Library/External Libraries/ARC Weak Refrences/PLWeakCompatibilityStubs.m"; sourceTree = "<group>"; };
-		4CB13EBF12E14312008119B8 /* dh1080_be.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dh1080_be.cpp; sourceTree = "<group>"; };
-		4CB13EC012E14312008119B8 /* dh1080_be.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dh1080_be.hpp; sourceTree = "<group>"; };
-		4CB13EC112E14312008119B8 /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
-		4CB13EC212E14312008119B8 /* misc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = misc.hpp; sourceTree = "<group>"; };
-		4CB13EE912E14455008119B8 /* DH1080.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080.h; sourceTree = "<group>"; };
-		4CBD7906133F14B700792CC3 /* blowfish_be.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish_be.h; sourceTree = "<group>"; };
-		4CBD7907133F14B700792CC3 /* blowfish_be.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = blowfish_be.m; sourceTree = "<group>"; };
-		4CCDDEF5133F28ED0029D685 /* DH1080.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080.mm; sourceTree = "<group>"; };
+		4C500F3A16C06C5A001692AF /* DH1080Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080Base.h; sourceTree = "<group>"; };
+		4C500F3B16C06C5A001692AF /* DH1080Base.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080Base.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4C500F3F16C06C79001692AF /* DH1080.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080.h; sourceTree = "<group>"; };
+		4C500F4016C06C79001692AF /* DH1080.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080.mm; sourceTree = "<group>"; };
+		4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishBase.h; sourceTree = "<group>"; };
+		4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishBase.m; sourceTree = "<group>"; };
+		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; };
+		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CEC815C133F13140026DFAE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlowfishEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +122,6 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4C88845D158EB77700747ABB /* Weak Refrences */,
 				4CEC815C133F13140026DFAE /* BlowfishEncryption.h */,
 				32DBCF5E0370ADEE00C91783 /* BlowfishEncryption_Prefix.pch */,
 			);
@@ -141,11 +141,13 @@
 		4C1AD6AF12DF618E00B4AD56 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				4CA0F08712DFFF22007624C5 /* Core */,
+				4C8455A816C18FDE00AD9203 /* Core */,
+				4CCE47E716C0EEF800915F60 /* Base64Encoding.h */,
+				4CCE47E816C0EEF800915F60 /* Base64Encoding.m */,
 				4C292F7D12DFD69400BE23FE /* Encryption.h */,
 				4C292F7E12DFD69400BE23FE /* Encryption.m */,
-				4CB13EE912E14455008119B8 /* DH1080.h */,
-				4CCDDEF5133F28ED0029D685 /* DH1080.mm */,
+				4C500F3F16C06C79001692AF /* DH1080.h */,
+				4C500F4016C06C79001692AF /* DH1080.mm */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -159,33 +161,15 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		4C88845D158EB77700747ABB /* Weak Refrences */ = {
+		4C8455A816C18FDE00AD9203 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				4C88845E158EB78200747ABB /* PLWeakCompatibilityStubs.m */,
-			);
-			name = "Weak Refrences";
-			sourceTree = "<group>";
-		};
-		4CA0F08712DFFF22007624C5 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				4CB13ECA12E14315008119B8 /* Dirt */,
+				4C500F3A16C06C5A001692AF /* DH1080Base.h */,
+				4C500F3B16C06C5A001692AF /* DH1080Base.mm */,
+				4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */,
+				4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		4CB13ECA12E14315008119B8 /* Dirt */ = {
-			isa = PBXGroup;
-			children = (
-				4CBD7906133F14B700792CC3 /* blowfish_be.h */,
-				4CBD7907133F14B700792CC3 /* blowfish_be.m */,
-				4CB13EC012E14312008119B8 /* dh1080_be.hpp */,
-				4CB13EBF12E14312008119B8 /* dh1080_be.cpp */,
-				4CB13EC212E14312008119B8 /* misc.hpp */,
-				4CB13EC112E14312008119B8 /* misc.cpp */,
-			);
-			name = Dirt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,9 +179,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB13EEB12E14455008119B8 /* DH1080.h in Headers */,
 				4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */,
+				4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */,
 				4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */,
+				4C500F4116C06C79001692AF /* DH1080.h in Headers */,
+				4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */,
+				4C500F3C16C06C5A001692AF /* DH1080Base.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +215,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Blowfish Encryption Framework" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -256,11 +243,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C292F8012DFD69400BE23FE /* Encryption.m in Sources */,
-				4CB13EC312E14312008119B8 /* dh1080_be.cpp in Sources */,
-				4CB13EC512E14312008119B8 /* misc.cpp in Sources */,
-				4CBD7909133F14B700792CC3 /* blowfish_be.m in Sources */,
-				4CCDDEF6133F28ED0029D685 /* DH1080.mm in Sources */,
-				4C88845F158EB78200747ABB /* PLWeakCompatibilityStubs.m in Sources */,
+				4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */,
+				4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */,
+				4C500F4216C06C79001692AF /* DH1080.mm in Sources */,
+				4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,20 +256,12 @@
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = Debug;
 		};
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OTHER_CFLAGS = (
-					"-Xclang",
-					"-fobjc-runtime-has-weak",
-				);
 			};
 			name = Release;
 		};
@@ -292,29 +270,50 @@
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BlowfishEncryption_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				LD_NO_PIE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = BlowfishEncryption;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "${USER}";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -325,30 +324,49 @@
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CONFIGURATION_BUILD_DIR = ..;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BlowfishEncryption_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OBJROOT = ._build;
+				LD_NO_PIE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = BlowfishEncryption;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SYMROOT = BuildResults;
 				VERSION_INFO_BUILDER = "Codeux Software";
 				WRAPPER_EXTENSION = framework;
 			};

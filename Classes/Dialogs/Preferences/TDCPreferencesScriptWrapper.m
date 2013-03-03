@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -50,49 +50,12 @@
 
 - (void)populateData
 {
-#ifdef TXUserScriptsFolderAvailable
-	NSArray *scriptPaths = @[
-	NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-	NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
-	NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath])
-	];
-#else
-	NSArray *scriptPaths = @[
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsLocalPath]),
-	NSStringNilValueSubstitute([TPCPreferences whereScriptsPath])
-	];
-#endif
-	
-	for (NSString *path in scriptPaths) {
-		if (NSObjectIsEmpty(path)) {
-			continue;
-		}
-		
-		NSArray *resourceFiles = [_NSFileManager() contentsOfDirectoryAtPath:path error:NULL];
-		
-		if (NSObjectIsNotEmpty(resourceFiles)) {
-			for (NSString *file in resourceFiles) {
-				if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-					continue;
-				}
-				
-				NSArray  *nameParts = [file componentsSeparatedByString:@"."];
-				NSString *script    = [nameParts stringAtIndex:0].lowercaseString;
-				
-				if ([self.scripts containsObject:script] == NO) {
-					[self.scripts safeAddObject:script];
-				}
-			}
-		}
-	}
-    
-	for (__strong NSString *cmd in self.world.bundlesForUserInput) {
-		cmd = [cmd lowercaseString];
-		
-		if ([self.scripts containsObject:cmd] == NO) {
-			[self.scripts safeAddObject:cmd];
-		}
-	}
+	[self.scripts addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
+	[self.scripts addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
+
+    for (NSString *command in [RZPluginManager() dangerousCommandNames]) {
+        [self.scripts removeObject:command];
+    }
 	
 	[self.scripts sortUsingSelector:@selector(compare:)];
 }

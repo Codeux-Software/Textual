@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,13 @@
 #import "TextualApplication.h"
 
 @interface TLOTimer : NSObject
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, unsafe_unretained) SEL selector;
-@property (nonatomic, assign) BOOL reqeat;
-@property (nonatomic, readonly) BOOL isActive;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, uweak) id delegate;
+@property (nonatomic, uweak) SEL selector;
+
+@property (nonatomic, assign) BOOL reqeatTimer;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;
-@end
 
-@interface NSObject (TimerDelegate)
-- (void)timerOnTimer:(TLOTimer *)sender;
+- (BOOL)timerIsActive;
 @end

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,8 @@
 
 + (void)sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
+	/* This callback is internal so we will not verify the context. */
+	
 	NSArray *sheetInfo = (NSArray *)CFBridgingRelease(contextInfo);
 
 	NSString *suppressionKey = sheetInfo[0];
@@ -57,7 +59,7 @@
 	if (NSObjectIsNotEmpty(suppressionKey)) {
 		NSButton *button = [alert suppressionButton];
 
-		[_NSUserDefaults() setBool:[button state] forKey:suppressionKey];
+		[RZUserDefaults() setBool:button.state forKey:suppressionKey];
 	}
 
 	if ([targetClass isKindOfClass:[self class]]) {
@@ -86,30 +88,24 @@
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText
 {
-	BOOL useSupression = NO;
+	/* Check suppression. */
+	BOOL useSupression = NSObjectIsNotEmpty(suppressKey);
 
-	NSString *__suppressionKey = NSStringEmptyPlaceholder;
+	NSString *privateSuppressionKey = NSStringEmptyPlaceholder;
 
-	if (NSObjectIsNotEmpty(suppressKey)) {
-        __suppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	if (suppressKey) {
+		privateSuppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
-		if ([suppressText isEqualToString:@"-"] == NO) {
-			useSupression = YES;
-
-			if ([_NSUserDefaults() boolForKey:__suppressionKey] == YES) {
-				return;
-			}
+		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
+			return;
 		}
 	}
 
-	if (useSupression) {
-		if (NSObjectIsEmpty(suppressText)) {
-			suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
-		}
-	} else {
-		suppressText = nil;
+	if (NSObjectIsEmpty(suppressText)) {
+		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
 	}
 
+	/* Pop sheet. */
 	NSAlert *alert = [NSAlert new];
 
 	[alert setAlertStyle:NSInformationalAlertStyle];
@@ -119,14 +115,17 @@
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
 	[alert addButtonWithTitle:otherButton];
-	[alert setShowsSuppressionButton:useSupression];
 
-	[[alert suppressionButton] setTitle:suppressText];
+	if (useSupression) {
+		[alert setShowsSuppressionButton:useSupression];
 
-	NSArray *context = @[__suppressionKey, targetClass,
-	NSStringFromSelector(actionSelector)];
+		[alert.suppressionButton setTitle:suppressText];
+	}
+	
+	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector)];
 
-	[alert beginSheetModalForWindow:window modalDelegate:[self class]
+	[alert beginSheetModalForWindow:window
+					  modalDelegate:[self class]
 					 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
 						contextInfo:(void *)CFBridgingRetain(context)];
 }
@@ -146,41 +145,42 @@
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText
 {
-	BOOL useSupression = NO;
+	/* Prepare suppression. */
+	BOOL useSupression = NSObjectIsNotEmpty(suppressKey);
 
-	NSString *__suppressKey = NSStringEmptyPlaceholder;
+	NSString *privateSuppressionKey = nil;
 
-	if (NSObjectIsNotEmpty(suppressKey) && [suppressText isEqualToString:@"-"] == NO) {
-        __suppressKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	if (suppressKey) {
+		privateSuppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
-		useSupression = YES;
-
-		if ([_NSUserDefaults() boolForKey:__suppressKey] == YES) {
+		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
 			return YES;
 		}
 	}
 
+	if (NSObjectIsEmpty(suppressText)) {
+		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
+	}
+
+	/* Pop dialog. */
 	NSAlert *alert = [NSAlert alertWithMessageText:titleText
 									 defaultButton:buttonDefault
 								   alternateButton:buttonAlternate
 									   otherButton:nil
 						 informativeTextWithFormat:bodyText];
 
-	NSButton *button = [alert suppressionButton];
-
-	[alert setShowsSuppressionButton:useSupression];
-
+	NSButton *suppressionButton = [alert suppressionButton];
+	
 	if (useSupression) {
-		if (NSObjectIsEmpty(suppressText)) {
-			suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
-		}
+		[alert setShowsSuppressionButton:useSupression];
 
-		[button setTitle:suppressText];
+		[suppressionButton setTitle:suppressText];
 	}
-
+	
+	/* Return result. */
 	if ([alert runModal] == NSAlertDefaultReturn) {
 		if (useSupression) {
-			[_NSUserDefaults() setBool:[button state] forKey:__suppressKey];
+			[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
 		}
 
 		return YES;
@@ -188,6 +188,13 @@
 		return NO;
 	}
 }
+
+/* TLOPopupPrompts and TVCInputPromptDialog were originally developed because
+ we wanted the input text field in an NSAlert to be focused on run. In a a normal
+ NSAlert, the input text field would be an auxiliary view which Textual does not
+ have access to. Instead of using NSAlert for dialogs that require input, Textual
+ uses its own view which mimics system alerts. A normal user cannot tell the
+ difference. */
 
 + (NSString *)dialogWindowWithInput:(NSString *)bodyText
 							  title:(NSString *)titleText
@@ -197,7 +204,7 @@
 {
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	[dialog alertWithMessageText:titleText
+	[dialog alertWithMessageTitle:titleText
 				   defaultButton:buttonDefault
 				 alternateButton:buttonAlternate
 				 informativeText:bodyText
@@ -205,11 +212,11 @@
 
 	[dialog runModal];
 
-	NSInteger button = [dialog buttonClicked];
-
 	NSString *result = [dialog promptValue];
 
-	if (NSObjectIsNotEmpty(result) && button == NSAlertDefaultReturn) {
+	NSObjectIsEmptyAssertReturn(result, nil);
+
+	if (dialog.buttonClicked == NSAlertDefaultReturn) {
 		return result;
 	}
 

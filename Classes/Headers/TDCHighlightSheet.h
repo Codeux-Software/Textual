@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,14 +38,16 @@
 #import "TextualApplication.h"
 
 @interface TDCHighlightSheet : TDCSheetBase
-@property (nonatomic, strong) TVCListView *table;
-@property (nonatomic, strong) NSTextField *header;
-@property (nonatomic, weak) NSMutableArray *list;
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) TVCListView *highlightListTable;
 
 - (void)show;
+
+- (void)reloadTable;
+
 - (void)onClearList:(id)sender;
 @end
 
-@interface NSObject (TXHighlightSheetDelegate)
+@interface NSObject (TDCHighlightSheetDelegate)
 - (void)highlightSheetWillClose:(TDCHighlightSheet *)sender;
 @end

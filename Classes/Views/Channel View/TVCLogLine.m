@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -42,114 +42,86 @@
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
 	switch (type) {
-		case TVCLogLineCTCPType:							return @"ctcp";
-		case TVCLogLinePrivateMessageType:					return @"privmsg";
-		case TVCLogLinePrivateMessageNoHighlightType:		return @"privmsg";
-		case TVCLogLineNoticeType:							return @"notice";
-		case TVCLogLineActionType:							return @"action";
-		case TVCLogLineActionNoHighlightType:				return @"action";
-		case TVCLogLineJoinType:							return @"join";
-		case TVCLogLinePartType:							return @"part";
-		case TVCLogLineKickType:							return @"kick";
-		case TVCLogLineQuitType:							return @"quit";
-		case TVCLogLineKillType:							return @"kill";
-		case TVCLogLineNickType:							return @"nick";
-		case TVCLogLineModeType:							return @"mode";
-		case TVCLogLineTopicType:							return @"topic";
-		case TVCLogLineInviteType:							return @"invite";
-		case TVCLogLineWebsiteType:							return @"website";
-		case TVCLogLineDebugType:							return @"debug";
-		case TVCLogLineRawHTMLType:							return @"rawhtml";
+		case TVCLogLineActionType:							{ return @"action";		}
+		case TVCLogLineActionNoHighlightType:				{ return @"action";		}
+		case TVCLogLineCTCPType:							{ return @"ctcp";		}
+		case TVCLogLineDebugType:							{ return @"debug";		}
+		case TVCLogLineInviteType:							{ return @"invite";		}
+		case TVCLogLineJoinType:							{ return @"join";		}
+		case TVCLogLineKickType:							{ return @"kick";		}
+		case TVCLogLineKillType:							{ return @"kill";		}
+		case TVCLogLineModeType:							{ return @"mode";		}
+		case TVCLogLineNickType:							{ return @"nick";		}
+		case TVCLogLineNoticeType:							{ return @"notice";		}
+		case TVCLogLinePartType:							{ return @"part";		}
+		case TVCLogLinePrivateMessageType:					{ return @"privmsg";	}
+		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";	}
+		case TVCLogLineQuitType:							{ return @"quit";		}
+		case TVCLogLineRawHTMLType:							{ return @"rawhtml";	}
+		case TVCLogLineTopicType:							{ return @"topic";		}
+		case TVCLogLineWebsiteType:							{ return @"website";	}
 	}
 	
 	return NSStringEmptyPlaceholder;
-}
-
-- (id)initWithLineType:(TVCLogLineType)lineType
-			memberType:(TVCLogMemberType)memberType
-			receivedAt:(NSDate *)receivedAt
-				  body:(NSString *)body
-{
-	if ((self = [self init])) {
-		self.receivedAt = receivedAt;
-		
-		self.nick = nil;
-		self.body = body;
-		
-		self.lineType	= lineType;
-		self.memberType = memberType;
-		
-		self.nickColorNumber = 0;
-		
-		self.keywords		= nil;
-		self.excludeWords	= nil;
-
-		self.isHistoric = NO;
-
-		return self;
-	}
-
-	return nil;
 }
 
 + (NSString *)memberTypeString:(TVCLogMemberType)type
 {
-	switch (type) {
-		case TVCLogMemberNormalType:	return @"normal";
-		case TVCLogMemberLocalUserType:	return @"myself";
+	if (type == TVCLogMemberLocalUserType) {
+		return @"myself";
 	}
-	
-	return NSStringEmptyPlaceholder;
+
+	return @"normal";
 }
 
 - (NSString *)formattedTimestamp
 {
-	IRCWorld *world = TPCPreferences.masterController.world;
+	TPCThemeSettings *customSettings = self.masterController.themeController.customSettings;
+
+	NSObjectIsEmptyAssertReturn(self.receivedAt, nil);
 	
-	if (NSObjectIsNotEmpty(self.receivedAt)) {
-		NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], world.viewTheme.other.timestampFormat);
+	NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], customSettings.timestampFormat);
 
-		if (NSObjectIsNotEmpty(time)) {
-			return [time stringByAppendingString:NSStringWhitespacePlaceholder];
-		}
-	}
+	NSObjectIsEmptyAssertReturn(time, nil);
 
-	return nil;
+	return [time stringByAppendingString:NSStringWhitespacePlaceholder];
 }
 
 - (NSString *)formattedNickname:(IRCChannel *)owner
 {
-	if (NSObjectIsNotEmpty(self.nick)) {
-		if (self.lineType == TVCLogLineActionType) {
-			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nick];
-		} else if (self.lineType == TVCLogLineNoticeType) {
-			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nick];
-		} else {
-			return [owner.client formatNick:self.nick channel:owner];
-		}
+	NSObjectIsEmptyAssertReturn(self.nickname, nil);
+	
+	if (self.lineType == TVCLogLineActionType) {
+		return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nickname];
+	} else if (self.lineType == TVCLogLineNoticeType) {
+		return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
 	}
 
-	return nil;
+	PointerIsEmptyAssertReturn(owner, nil);
+
+	return [owner.client formatNick:self.nickname channel:owner];
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		NSInteger receivedAt = NSDictionaryIntegerKeyValueCompare(dic, @"receivedAt",		[NSDate.date timeIntervalSince1970]);
+		NSInteger receivedAt = NSDictionaryIntegerKeyValueCompare(dic, @"receivedAt", [NSDate epochTime]);
 
-		self.nick			= NSDictionaryObjectKeyValueCompare(dic, @"nick",			NSStringEmptyPlaceholder);
-		self.body			= NSDictionaryObjectKeyValueCompare(dic, @"body",			NSStringEmptyPlaceholder);
+		self.nickname				= NSDictionaryObjectKeyValueCompare(dic, @"nickname", NSStringEmptyPlaceholder);
+		self.nicknameColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nicknameColorNumber", 0);
+		
+		self.messageBody		= NSDictionaryObjectKeyValueCompare(dic, @"messageBody", NSStringEmptyPlaceholder);
 
-		self.keywords		= NSDictionaryObjectKeyValueCompare(dic, @"keywords",		@[]);
-		self.excludeWords	= NSDictionaryObjectKeyValueCompare(dic, @"excludeWords",	@[]);
+		self.highlightKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"highlightKeywords", @[]);
+		self.excludeKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"excludeKeywords", @[]);
 
-		self.lineType			= NSDictionaryIntegerKeyValueCompare(dic, @"lineType",			TVCLogLineRawHTMLType);
-		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType",		TVCLogMemberNormalType);
-		self.nickColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nickColorNumber",	0);
+		self.lineType			= NSDictionaryIntegerKeyValueCompare(dic, @"lineType", TVCLogLineRawHTMLType);
+		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType", TVCLogMemberNormalType);
 
-		self.isHistoric	= [dic boolForKey:@"isHistoric"];
+		self.isHistoric		= NSDictionaryBOOLKeyValueCompare(dic, @"isHistoric", self.isHistoric);
+		self.isEncrypted	= NSDictionaryBOOLKeyValueCompare(dic, @"isEncrypted", self.isHistoric);
 
-		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+		self.receivedAt		= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 
 		return self;
 	}
@@ -163,16 +135,17 @@
 
 	[dict safeSetObject:@([self.receivedAt timeIntervalSince1970])		forKey:@"receivedAt"];
 
-	[dict safeSetObject:self.nick					forKey:@"nick"];
-	[dict safeSetObject:self.body					forKey:@"body"];
-	[dict safeSetObject:self.keywords				forKey:@"keywords"];
-	[dict safeSetObject:self.excludeWords			forKey:@"excludeWords"];
+	[dict safeSetObject:self.highlightKeywords		forKey:@"highlightKeywords"];
+	[dict safeSetObject:self.excludeKeywords		forKey:@"excludeKeywords"];
+	[dict safeSetObject:self.messageBody			forKey:@"messageBody"];
+	[dict safeSetObject:self.nickname				forKey:@"nickname"];
 
-	[dict safeSetObject:@(self.lineType)			forKey:@"lineType"];
-	[dict safeSetObject:@(self.memberType)			forKey:@"memberType"];
-	[dict safeSetObject:@(self.nickColorNumber)		forKey:@"nickColorNumber"];
+	[dict safeSetObject:@(self.lineType)				forKey:@"lineType"];
+	[dict safeSetObject:@(self.memberType)				forKey:@"memberType"];
+	[dict safeSetObject:@(self.nicknameColorNumber)		forKey:@"nicknameColorNumber"];
 
-	[dict setBool:self.isHistoric					forKey:@"isHistoric"];
+	[dict setBool:self.isEncrypted		forKey:@"isEncrypted"];
+	[dict setBool:self.isHistoric		forKey:@"isHistoric"];
 
 	return dict;
 }

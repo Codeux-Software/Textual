@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -45,10 +45,15 @@
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
 
+"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
+"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
+"BlowfishEncryptionStarted" = "Encryption started.";
+"BlowfishEncryptionStopped" = "Encryption stopped.";
+
 "CancelButton" = "Cancel";
 
 "ChannelApplicationTitleModeValue" = " (%@)";
-"ChannelApplicationTitleUserCount" = " (%i Users)";
+"ChannelApplicationTitleUserCount" = " (%ld Users)";
 
 "ChannelDeletePromptMessage" = "There is no undo and all data related to this channel will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";
@@ -57,7 +62,7 @@
 
 "CloseButton" = "Close";
 
-"CmdWShortcutCloseQueryType" = "Close Query";
+"CmdWShortcutClosePrivateMessageType" = "Close Query";
 "CmdWShortcutCloseWindowType" = "Close Window";
 "CmdWShortcutDisconnectServerType" = "Disconnect from %@";
 "CmdWShortcutLeaveChannelType" = "Leave Channel";
@@ -75,7 +80,7 @@
 "DeleteButton" = "Delete";
 
 "DeleteChannelMenuItem" = "Delete Channel";
-"DeleteQueryMenuItem" = "Close Query";
+"DeletePrivateMessageMenuItem" = "Close Query";
 
 "FindSearchPanelPromptButton" = "Search";
 "FindSearchPanelPromptMessage" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
@@ -102,16 +107,18 @@
 "IRCConnectedToServer" = "Connection to host completed.";
 "IRCDisconnectedBySleepMode" = "Disconnect for Sleep Mode";
 "IRCDisconnectedByBadSSLCertificate" = "Disconnected from server because of an untrusted SSL certificate.";
-"IRCDisconnectedByTimeout" = "%i minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"IRCDisconnectedByTimeout" = "%ld minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRCDisconnectedByTrialPeriodTimer" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "IRCDisconnectedFromServer" = "Disconnected";
 "IRCHadRawError" = "Message(%1$d): %2$@";
-"IRCIsConnecting" = "Connecting to [%1$@] on port %2$i";
+"IRCIsConnecting" = "Connecting to [%1$@] on port %2$ld";
+"IRCIsConnectingWithNormalProxy" = "Connecting to [%1$@, port %2$ld] via [%3$@, port %4$ld]";
+"IRCIsConnectingWithSystemProxy" = "Connecting to [%1$@, port %2$ld] via System Socks";
 "IRCIsReconnecting" = "Reconnecting …";
 "IRCIsRetryingConnection" = "Retrying …";
 "IRCModeSet" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRCRawModeIsDisabled" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"IRCRawModeIsEnabled" = "Raw mode has been enabled. Textual will now output all data that it receives and sends to the IRC server in the Mac OS X \"Console\" application. To disable, execute \"/debug raw off\"";
+"IRCRawModeIsEnabled" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the Mac OS X \"Console\" application. To disable, execute \"/debug raw off\"";
 "IRCRecievedCTCPPingReply" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "IRCRecievedCTCPReply" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "IRCRecievedCTCPRequest" = "\002-CTCP-\002 %1$@ from %2$@";
@@ -134,8 +141,6 @@
 "IRCUserWhoisUptime" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRCUserWhowasConnectedFrom" = "%1$@ was connected to %2$@ on %3$@";
 "IRCUserWhowasHostmask" = "%1$@ had userhost %2$@@%3$@ and real name \"%4$@\"";
-"IRCWeightsCommandNoResults" = "No information available.";
-"IRCWeightsCommandResultRow" = "%@ — sent: %f; receive: %f; total: %f;";
 
 "InputRequiredToContinue" = "Input Required to Continue";
 
@@ -162,8 +167,8 @@
 "LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
 "LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";
 
-"ListDialogHasChannels" = "%i Public Channels";
-"ListDialogHasSearchResults" = "%1$i Public Channels - %2$i Search Results";
+"ListDialogHasChannels" = "%ld Public Channels";
+"ListDialogHasSearchResults" = "%1$ld Public Channels - %2$ld Search Results";
 
 "LogPathDoesNotExistMessage" = "No logs were found for this chat session.";
 "LogPathDoesNotExistTitle" = "No Logs Found";
@@ -181,27 +186,21 @@
 "NoButton" = "No";
 
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
-"NotificationChannelNoticeMessage"			= "Channel Notice Received";
-"NotificationChannelNoticeMessageTitle"		= "Notice: %@";
-"NotificationChannelTalkMessage"			= "Channel Message Received";
-"NotificationConnectedMessage"				= "Connected";
+"NotificationChannelMessageMessageTitle"	= "Channel Message: %@";
+"NotificationChannelNoticeMessageTitle"		= "Channel Notice: %@";
 "NotificationConnectedMessageTitle"			= "Connected: %@";
-"NotificationDisconnectMessage"				= "Disconnected";
 "NotificationDisconnectMessageTitle"		= "Disconnected: %@";
-"NotificationHighlightMessage"				= "Name is Mentioned";
 "NotificationHighlightMessageTitle"			= "Highlight: %@";
-"NotificationInvitedMessage"				= "Invited to Channel";
-"NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
 "NotificationInvitedMessageTitle"			= "Invited: %@";
-"NotificationKickedMessage"					= "Kicked from Channel";
-"NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 "NotificationKickedMessageTitle"			= "Kicked: %@";
-"NotificationNewPrivateQueryMessage"		= "New Private Message Started";
-"NotificationNewPrivateQueryMessageTitle"	= "New Private Message";
-"NotificationPrivateNoticeMessage"			= "Private Notice Received";
+"NotificationNewPrivateMessageMessageTitle"	= "New Private Message";
+"NotificationPrivateMessageMessageTitle"	= "Private Message";
 "NotificationPrivateNoticeMessageTitle"		= "Private Notice";
-"NotificationPrivateQueryMessage"			= "Private Message Received";
-"NotificationPrivateQueryMessageTitle"		= "Private Message";
+
+"NotificationConnectedMessageDescription"	= "Connection successful.";
+"NotificationDisconnectMessageDescription"	= "Disconnection successful.";
+"NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
+"NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 
 "OSXGoingToSleepQuitMessage" = "Computer has gone to sleep.";
 
@@ -217,12 +216,15 @@
 
 "QuitButton" = "Quit";
 
-"ScriptExecutionFailure" = "Script Execution Failure: %@";
+"ScriptExecutionFailureBasic" = "Script Execution Failure: %@";
+"ScriptExecutionFailureDetailed" = "Script Execution Failure (%1$@: %2$@): %3$@";
 
 "SelfBanDetectedMessage" = "Textual has prevented you from banning yourself on %@.";
 
 "ServerDeletePromptMessage" = "There is no undo and all data related to this server will be erased.";
 "ServerDeletePromptTitle" = "Do you want to delete the selection?";
+
+"ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
 
 "ServerNoticeTreeItemTitle"	= "Server Notices";
 
@@ -251,7 +253,7 @@
 "SoundIsAlreadyMuted" = "Sound is already muted.";
 "SoundIsNoLongerMuted" = "Sound is no longer muted. ";
 "SoundIsNotMuted" = "Sound is not muted.";
-"SoundIsNowMuted" = "Sound has been muted. This mute is server specific.";
+"SoundIsNowMuted" = "Sound has been muted.";
 
 "StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
 
@@ -265,9 +267,9 @@
 "TXNotificationHighlightType"			= "Highlight";
 "TXNotificationInviteType"				= "Channel Invitation";
 "TXNotificationKickType"				= "Kicked from Channel";
-"TXNotificationNewQueryType"			= "Private Message (new)";
-"TXNotificationQueryMessageType"		= "Private Message";
-"TXNotificationQueryNoticeType"			= "Private Notice";
+"TXNotificationNewPrivateMessageType"	= "Private Message (new)";
+"TXNotificationPrivateMessageType"		= "Private Message";
+"TXNotificationPrivateNoticeType"		= "Private Notice";
 
 "ThemeChangeOverridePromptChannelFont" = "• Channel View Font";
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
@@ -310,91 +312,3 @@
 "UserTrackingNicknameNowAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
 
 "YesButton" = "Yes";
-
-/* Blowfish Encryption Extension. */
-
-"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
-"BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
-"BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
-"BlowfishEncryptionStarted" = "Encryption started.";
-"BlowfishEncryptionStartedInQuery" = "Encryption started in query. If this query is closed, then the key must be set again.";
-"BlowfishEncryptionStopped" = "Encryption stopped.";
-
-"BlowfishKeyExchangeFeatureNotReadyYet" = "Key exchange is currently not supported.";
-"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
-"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for %@. Please wait for the current one to expire before requesting a new one.";
-"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from %@. Processing …";
-"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
-"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for %@ has expired.";
-"BlowfishKeyExchangeUnknownErrorOccurred" = "An unknown error occurred during key exchange.";
-"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
-
-/* Brag Spam Extension. */
-
-"BragspamPluginChannelResult" = "I am within the channels %@, ";
-"BragspamPluginChannelResultEndItem" = "and %1$@ on the %2$@.";
-"BragspamPluginChannelResultMiddleItem" = "%@, ";
-"BragspamPluginChannelResultNone" = "I am not within any channels on the %2$@.";
-"BragspamPluginChannelResultSingle" = "I am only within the channel %1$@ on the %2$@.";
-"BragspamPluginChannelResultDouble" = "I am within the channels %1$@ and %2$@ on the %3$@.";
-"BragspamPluginNormalResult" = "I am in %i channels while connected to %i networks. I have %i o:lines, %i ops, %i halfops, and %i voices with power over %i individual users.";
-
-/* System Profiler Extension. */
-
-"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
-
-"SystemInformationCompiledOutputPrefix" = "System Information:";
-"SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
-"SystemInformationCompiledOutputCPUSingleCore" = " \002CPU:\002 %1$@ (%2$@ Core) @ %3$@ \002•\002";
-"SystemInformationCompiledOutputCPUMultiCore" = " \002CPU:\002 %1$@ (%2$@ Cores) @ %3$@ \002•\002";
-"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$i:\002 %2$@ \002•\002";
-"SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
-"SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
-"SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
-"SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
-"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
-"SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
-"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
-
-"SystemInformationGraphicsInformationResultBase" = "%@";
-"SystemInformationGraphicsInformationResultMiddle" = ", %@";
-
-"SystemInformationOSVersionSnowLeopard" = "Snow Leopard";
-"SystemInformationOSVersionLion" = "Lion";
-"SystemInformationOSVersionMountainLion" = "Mountain Lion";
-
-"SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
-
-"SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
-"SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
-
-"SystemInformationDiskspaceCommandResultPrefix" = "\002Mounted Drives:\002 %@";
-"SystemInformationDiskspaceCommandResultBase" = "%@: Total: %@; Free: %@";
-"SystemInformationDiskspaceCommandResultMiddle" = " — %@: Total: %@; Free: %@";
-"SystemInformationDiskspaceCommandResultError" = "Error: Unable to find any mounted drives."; // what are we running on?
-
-"SystemInformationNetstatsCommandResultPrefix" = "\002Network Traffic:\002%@";
-"SystemInformationNetstatsCommandResultBase" = " [%@]: %@ in, %@ out";
-"SystemInformationNetstatsCommandResultMiddle" = " — [%@]: %@ in, %@ out";
-"SystemInformationNetstatsCommandResultError" = "Error: Unable to locate any network statistics. ";
-
-"SystemInformationFilesizeTB" = "%.2f TB";
-"SystemInformationFilesizeGB" = "%.2f GB";
-"SystemInformationFilesizeMB" = "%.2f MB";
-"SystemInformationFilesizeKB" = "%.2f KB";
-
-"SystemInformationThemeCommandResult" = "\002Current Theme:\002 %@";
-"SystemInformationThemeCommandResultError" = "\002Current Theme:\002 Unknown";
-
-"SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %i: %.0f x %.0f";
-"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %i: %.0f x %.0f";
-"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
-
-"SystemInformationUptimeCommandResult" = "System Uptime: %@ - Textual Uptime: %@";
-"SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %@; Used: %@; Total: %@; — [%@]";
-"SystemInformationRuncountCommandResult" = "Textual has been opened \002%@\002 times with a total runtime of %@";
-"SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %@";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%5$.2f\002 messages a second. Combined this comes to around \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";

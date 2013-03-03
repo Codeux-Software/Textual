@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,14 +37,14 @@
 
 #import "TextualApplication.h"
 
-#define _inputHistoryMax	50
+#define _inputHistoryMax			50
 
 @implementation TLOInputHistory
 
 - (id)init
 {
 	if ((self = [super init])) {
-		self.buf = [NSMutableArray new];
+		self.historyBuffer = [NSMutableArray new];
 	}
 	
 	return self;
@@ -52,20 +52,21 @@
 
 - (void)add:(NSAttributedString *)s
 {
-	NSAttributedString *lo = self.buf.lastObject;
+	NSAttributedString *lo = self.historyBuffer.lastObject;
 	
-	self.pos = self.buf.count;
+	self.historyBufferPosition = self.historyBuffer.count;
+
+	NSObjectIsEmptyAssert(s);
 	
-	if (NSObjectIsEmpty(s)) return;
-	if ([lo.string isEqualToString:s.string]) return;
+	if ([lo.string isEqualToString:s.string] == NO) {
+		[self.historyBuffer safeAddObject:s];
 	
-	[self.buf safeAddObject:s];
+		if (self.historyBuffer.count > _inputHistoryMax) {
+			[self.historyBuffer safeRemoveObjectAtIndex:0];
+		}
 	
-	if (self.buf.count > _inputHistoryMax) {
-		[self.buf safeRemoveObjectAtIndex:0];
+		self.historyBufferPosition = self.historyBuffer.count;
 	}
-	
-	self.pos = self.buf.count;
 }
 
 - (NSAttributedString *)up:(NSAttributedString *)s
@@ -73,29 +74,29 @@
 	if (NSObjectIsNotEmpty(s)) {
 		NSAttributedString *cur = nil;
 		
-		if (0 <= self.pos && self.pos < self.buf.count) {
-			cur = [self.buf safeObjectAtIndex:self.pos];
+		if (0 <= self.historyBufferPosition && self.historyBufferPosition < self.historyBuffer.count) {
+			cur = [self.historyBuffer safeObjectAtIndex:self.historyBufferPosition];
 		}
 		
 		if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
-			[self.buf safeAddObject:s];
+			[self.historyBuffer safeAddObject:s];
 			
-			if (self.buf.count > _inputHistoryMax) {
-				[self.buf safeRemoveObjectAtIndex:0];
+			if (self.historyBuffer.count > _inputHistoryMax) {
+				[self.historyBuffer safeRemoveObjectAtIndex:0];
 				
-				--self.pos;
+				self.historyBufferPosition += 1;
 			}
 		}
 	}	
+
+	self.historyBufferPosition -= 1;
 	
-	--self.pos;
-	
-	if (self.pos < 0) {
-		self.pos = 0;
+	if (self.historyBufferPosition < 0) {
+		self.historyBufferPosition = 0;
 		
 		return nil;
-	} else if (0 <= self.pos && self.pos < self.buf.count) {
-		return [self.buf safeObjectAtIndex:self.pos];
+	} else if (0 <= self.historyBufferPosition && self.historyBufferPosition < self.historyBuffer.count) {
+		return [self.historyBuffer safeObjectAtIndex:self.historyBufferPosition];
 	} else {
 		return [NSAttributedString emptyString];
 	}
@@ -104,15 +105,15 @@
 - (NSAttributedString *)down:(NSAttributedString *)s
 {
 	if (NSObjectIsEmpty(s)) {
-		self.pos = self.buf.count;
+		self.historyBufferPosition = self.historyBuffer.count;
 		
 		return nil;
 	}
 	
 	NSAttributedString *cur = nil;
 	
-	if (0 <= self.pos && self.pos < self.buf.count) {
-		cur = [self.buf safeObjectAtIndex:self.pos];
+	if (0 <= self.historyBufferPosition && self.historyBufferPosition < self.historyBuffer.count) {
+		cur = [self.historyBuffer safeObjectAtIndex:self.historyBufferPosition];
 	}
 
 	if (NSObjectIsEmpty(cur) || [cur.string isEqualToString:s.string] == NO) {
@@ -120,12 +121,12 @@
 		
 		return [NSAttributedString emptyString];
 	} else {
-		++self.pos;
+		self.historyBufferPosition += 1;
 		
-		if (0 <= self.pos && self.pos < self.buf.count) {
-			return [self.buf safeObjectAtIndex:self.pos];
+		if (0 <= self.historyBufferPosition && self.historyBufferPosition < self.historyBuffer.count) {
+			return [self.historyBuffer safeObjectAtIndex:self.historyBufferPosition];
 		}
-		
+
 		return [NSAttributedString emptyString];
 	}
 }

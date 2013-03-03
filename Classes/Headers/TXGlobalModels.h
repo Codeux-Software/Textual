@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,9 @@ TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
 TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
+
+TEXTUAL_EXTERN NSString *TSBLS(NSString *key, NSBundle *bundle); // Textual Secondary Bundle (aka plugin) Language String
+TEXTUAL_EXTERN NSString *TSBFLS(NSString *key, NSBundle *bundle, ...); // Textual Secondary Bundle (aka plugin) Formatted Language String
 
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
 

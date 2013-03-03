@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,76 +38,71 @@
 #import "TextualApplication.h"
 
 @interface TDCServerSheet : TDCSheetBase
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, strong) IRCClientConfig *config;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSArray *tabViewList;
 @property (nonatomic, strong) NSDictionary *serverList;
-@property (nonatomic, strong) NSMutableArray *tabViewList;
-@property (nonatomic, strong) NSView *contentView;
-@property (nonatomic, strong) NSView *generalView;
-@property (nonatomic, strong) NSView *identityView;
-@property (nonatomic, strong) NSView *messagesView;
-@property (nonatomic, strong) NSView *encodingView;
-@property (nonatomic, strong) NSView *autojoinView;
-@property (nonatomic, strong) NSView *ignoresView;
-@property (nonatomic, strong) NSView *commandsView;
-@property (nonatomic, strong) NSView *floodControlView;
-@property (nonatomic, strong) NSView *floodControlToolView;
-@property (nonatomic, strong) NSView *proxyServerView;
-@property (nonatomic, strong) NSButton *outgoingFloodControl;
-@property (nonatomic, strong) NSSlider *floodControlMessageCount;
-@property (nonatomic, strong) NSSlider *floodControlDelayTimer;
-@property (nonatomic, strong) TVCListView *tabView;
-@property (nonatomic, strong) NSTextField *nameText;
-@property (nonatomic, strong) NSButton *prefersIPv6Check;
-@property (nonatomic, strong) NSButton *autoReconnectCheck;
-@property (nonatomic, strong) NSButton *autoConnectCheck;
-@property (nonatomic, strong) NSComboBox *hostCombo;
-@property (nonatomic, strong) NSButton *sslCheck;
-@property (nonatomic, strong) NSTextField *portText;
-@property (nonatomic, strong) NSTextField *nickText;
-@property (nonatomic, strong) NSTextField *passwordText;
-@property (nonatomic, strong) NSTextField *usernameText;
-@property (nonatomic, strong) NSTextField *realNameText;
-@property (nonatomic, strong) NSTextField *nickPasswordText;
-@property (nonatomic, strong) NSTextField *altNicksText;
-@property (nonatomic, strong) NSTextView *sleepQuitMessageText;
-@property (nonatomic, strong) NSTextView *leavingCommentText;
-@property (nonatomic, strong) NSPopUpButton *encodingCombo;
-@property (nonatomic, strong) NSPopUpButton *fallbackEncodingCombo;
-@property (nonatomic, strong) NSPopUpButton *proxyCombo;
-@property (nonatomic, strong) NSTextField *proxyHostText;
-@property (nonatomic, strong) NSTextField *proxyPortText;
-@property (nonatomic, strong) NSTextField *proxyUserText;
-@property (nonatomic, strong) NSTextField *proxyPasswordText;
-@property (nonatomic, strong) TVCListView *channelTable;
-@property (nonatomic, strong) NSButton *addChannelButton;
-@property (nonatomic, strong) NSButton *editChannelButton;
-@property (nonatomic, strong) NSButton *deleteChannelButton;
-@property (nonatomic, strong) NSTextView *loginCommandsText;
-@property (nonatomic, strong) NSButton *invisibleCheck;
-@property (nonatomic, strong) TVCListView *ignoreTable;
-@property (nonatomic, strong) NSButton *addIgnoreButton;
-@property (nonatomic, strong) NSButton *editIgnoreButton;
-@property (nonatomic, strong) NSButton *deleteIgnoreButton;
-@property (nonatomic, strong) NSMenu *addIgnoreMenu;
+@property (nonatomic, strong) NSDictionary *encodingList;
+@property (nonatomic, strong) IRCClientConfig *config;
+@property (nonatomic, nweak) NSButton *addChannelButton;
+@property (nonatomic, nweak) NSButton *addIgnoreButton;
+@property (nonatomic, nweak) NSButton *autoConnectCheck;
+@property (nonatomic, nweak) NSButton *autoDisconnectOnSleepCheck;
+@property (nonatomic, nweak) NSButton *autoReconnectCheck;
+@property (nonatomic, nweak) NSButton *connectionUsesSSLCheck;
+@property (nonatomic, nweak) NSButton *deleteChannelButton;
+@property (nonatomic, nweak) NSButton *deleteIgnoreButton;
+@property (nonatomic, nweak) NSButton *editChannelButton;
+@property (nonatomic, nweak) NSButton *editIgnoreButton;
+@property (nonatomic, nweak) NSButton *floodControlCheck;
+@property (nonatomic, nweak) NSButton *invisibleModeCheck;
+@property (nonatomic, nweak) NSButton *prefersIPv6Check;
+@property (nonatomic, nweak) NSComboBox *serverAddressCombo;
+@property (nonatomic, nweak) NSMenu *addIgnoreMenu;
+@property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
+@property (nonatomic, nweak) NSPopUpButton *primaryEncodingButton;
+@property (nonatomic, nweak) NSPopUpButton *proxyTypeButton;
+@property (nonatomic, nweak) NSSlider *floodControlDelayTimerSlider;
+@property (nonatomic, nweak) NSSlider *floodControlMessageCountSlider;
+@property (nonatomic, nweak) NSTextField *alternateNicknamesField;
+@property (nonatomic, nweak) NSTextField *nicknameField;
+@property (nonatomic, nweak) NSTextField *nicknamePasswordField;
+@property (nonatomic, nweak) NSTextField *proxyAddressField;
+@property (nonatomic, nweak) NSTextField *proxyPortField;
+@property (nonatomic, nweak) NSTextField *proxyPasswordField;
+@property (nonatomic, nweak) NSTextField *proxyUsernameField;
+@property (nonatomic, nweak) NSTextField *realnameField;
+@property (nonatomic, nweak) NSTextField *serverNameField;
+@property (nonatomic, nweak) NSTextField *serverPortField;
+@property (nonatomic, nweak) NSTextField *serverPasswordField;
+@property (nonatomic, nweak) NSTextField *usernameField;
+@property (nonatomic, nweak) NSTextField *loginCommandsField;
+@property (nonatomic, nweak) NSTextField *normalLeavingCommentField;
+@property (nonatomic, nweak) NSTextField *sleepModeQuitMessageField;
+@property (nonatomic, nweak) NSView *autojoinView;
+@property (nonatomic, nweak) NSView *commandsView;
+@property (nonatomic, nweak) NSView *contentView;
+@property (nonatomic, nweak) NSView *encodingView;
+@property (nonatomic, nweak) NSView *floodControlToolView;
+@property (nonatomic, nweak) NSView *floodControlView;
+@property (nonatomic, nweak) NSView *generalView;
+@property (nonatomic, nweak) NSView *identityView;
+@property (nonatomic, nweak) NSView *ignoresView;
+@property (nonatomic, nweak) NSView *messagesView;
+@property (nonatomic, nweak) NSView *proxyServerView;
+@property (nonatomic, nweak) TVCListView *tabView;
+@property (nonatomic, nweak) TVCListView *channelTable;
+@property (nonatomic, nweak) TVCListView *ignoreTable;
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 
 - (void)startWithIgnoreTab:(NSString *)imask;
 
-- (void)show;
-- (void)showWithDefaultView:(NSView *)view andSegment:(NSInteger)segment;
-
 - (void)close;
 
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
-
-- (void)hostComboChanged:(id)sender;
-- (void)encodingChanged:(id)sender;
-- (void)proxyChanged:(id)sender;
 - (void)floodControlChanged:(id)sender;
+- (void)primaryEncodingChanged:(id)sender;
+- (void)proxyTypeChanged:(id)sender;
+- (void)serverAddressChanged:(id)sender;
 
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
@@ -116,10 +111,11 @@
 - (void)addIgnore:(id)sender;
 - (void)editIgnore:(id)sender;
 - (void)deleteIgnore:(id)sender;
+
 - (void)showAddIgnoreMenu:(id)sender;
 @end
 
-@interface NSObject (TXServerSheetDelegate)
+@interface NSObject (TDCServerSheetDelegate)
 - (void)serverSheetOnOK:(TDCServerSheet *)sender;
 - (void)serverSheetWillClose:(TDCServerSheet *)sender;
 @end

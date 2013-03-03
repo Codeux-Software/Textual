@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,26 +38,24 @@
 #import "TextualApplication.h"
 
 @interface TDCWelcomeSheet : TDCSheetBase
-@property (nonatomic, strong) NSMutableArray *channels;
-@property (nonatomic, strong) NSTextField *nickText;
-@property (nonatomic, strong) NSTextField *hostCombo;
-@property (nonatomic, strong) TVCListView *channelTable;
-@property (nonatomic, strong) NSButton *autoConnectCheck;
-@property (nonatomic, strong) NSButton *addChannelButton;
-@property (nonatomic, strong) NSButton *deleteChannelButton;
+@property (nonatomic, nweak) NSButton *autoConnectCheck;
+@property (nonatomic, nweak) NSButton *addChannelButton;
+@property (nonatomic, nweak) NSButton *deleteChannelButton;
+@property (nonatomic, nweak) NSTextField *nicknameField;
+@property (nonatomic, nweak) NSTextField *serverAddressField;
+@property (nonatomic, nweak) TVCListView *channelTable;
+@property (nonatomic, strong) NSMutableArray *channelList;
 
 - (void)show;
 - (void)close;
 
-- (void)onOK:(id)sender;
-- (void)onCancel:(id)sender;
 - (void)onAddChannel:(id)sender;
 - (void)onDeleteChannel:(id)sender;
 
-- (void)onHostComboChanged:(id)sender;
+- (void)onServerAddressChanged:(id)sender;
 @end
 
-@interface NSObject (TXWelcomeSheetDelegate)
+@interface NSObject (TDCWelcomeSheetDelegate)
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config;
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
 @end

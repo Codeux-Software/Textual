@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 				  command:(NSString *)commandString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		if (client.world.selectedChannel.isChannel == NO) return;
+		NSAssertReturn(client.worldController.selectedChannel.isChannel);
 		
 		NSInteger operCount      = 0;
 		NSInteger chanOpCount    = 0;
@@ -54,7 +54,7 @@
 		NSInteger networkCount   = 0;
 		NSInteger powerOverCount = 0;
 		
-		for (IRCClient *c in [client.world clients]) {
+		for (IRCClient *c in client.worldController.clients) {
 			if (c.isConnected == NO) continue;
 			
 			networkCount++;
@@ -70,7 +70,7 @@
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch findMember:c.myNick];
+				IRCUser *myself = [ch findMember:client.localNickname];
 				
 				if (myself.q || myself.a || myself.o) {
 					chanOpCount++;
@@ -80,8 +80,9 @@
 					chanVopCount++;
 				}
 				
-				for (IRCUser *m in ch.members) {
+				for (IRCUser *m in ch.memberList) {
 					if ([m isEqual:myself]) continue;
+					
 					BOOL addUser = NO;
 					
 					if (myself.q && m.q == NO) {
@@ -95,10 +96,10 @@
 					}
 					
 					if (addUser == YES) {
-						if ([trackedUsers containsObject:m.nick] == NO) {
+						if ([trackedUsers containsObject:m.nickname] == NO) {
 							powerOverCount++;
 							
-							[trackedUsers addObject:m.nick];	
+							[trackedUsers addObject:m.nickname];
 						}
 					}
 				}
@@ -106,62 +107,18 @@
 			
 		}
 		
-		NSString *result = TXTFLS(@"BragspamPluginNormalResult", channelCount, networkCount, operCount, 
-								  chanOpCount, chanHopCount, chanVopCount, powerOverCount);
+		NSString *result = TPIFLS(@"BragspamPluginNormalResult",
+								  channelCount, networkCount, operCount,
+								  chanOpCount, chanHopCount, chanVopCount,
+								  powerOverCount);
 		
 		[client sendPrivmsgToSelectedChannel:result];
-	} else if ([commandString isEqualToString:@"CBRAG"]) {
-		IRCChannel *cc;
-		
-		NSMutableArray *chanlist = [client.channels mutableCopy];
-		
-		for (IRCChannel *c in client.channels) {
-			IRCChannelMode *modes = c.mode;
-			
-			if (c.isTalk || [modes modeInfoFor:@"p"].plus ||
-				[modes modeInfoFor:@"s"].plus ||
-				[modes modeInfoFor:@"i"].plus) {
-				
-				[chanlist removeObject:c];
-			}
-		}
-		
-		NSMutableString *result = [NSMutableString string];
-		
-		if (NSObjectIsEmpty(chanlist)) {	
-			[result appendString:TXTFLS(@"BragspamPluginChannelResultNone", client.config.network)];
-		} else {
-			cc = chanlist[0];
-			
-			if (chanlist.count == 1) {	
-				[result appendString:TXTFLS(@"BragspamPluginChannelResultSingle", cc.name, client.config.network)];
-			} else if (chanlist.count == 2) {
-				IRCChannel *ccsecond = chanlist[1];
-				
-				[result appendString:TXTFLS(@"BragspamPluginChannelResultDouble", cc.name, ccsecond.name, client.config.network)];
-			} else {
-				[result appendString:TXTFLS(@"BragspamPluginChannelResult", cc.name)];
-				
-				[chanlist removeObjectAtIndex:0];
-				
-				for (cc in chanlist) {
-					if (NSDissimilarObjects(cc, [chanlist lastObject])) {
-						[result appendString:TXTFLS(@"BragspamPluginChannelResultMiddleItem", cc.name)];
-					} else {
-						[result appendString:TXTFLS(@"BragspamPluginChannelResultEndItem", cc.name, client.config.network)];
-					}
-				}
-			}
-		}		
-		
-		[client sendPrivmsgToSelectedChannel:result];
-		
 	}
 }
 
 - (NSArray*)pluginSupportsUserInputCommands
 {
-	return @[@"brag", @"cbrag"];
+	return @[@"brag"];
 }	
 
 @end

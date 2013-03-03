@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -42,17 +42,16 @@ typedef enum TVCLogRendererType : NSInteger {
 	TVCLogRendererAttributedStringType,
 } TVCLogRendererType;
 
-TEXTUAL_EXTERN NSString *logEscape(NSString *s);
-TEXTUAL_EXTERN NSString *logEscapeWithNil(NSString *s);
+@interface TVCLogRenderer : NSObject
++ (NSString *)escapeString:(NSString *)s;
++ (NSString *)escapeStringWithoutNil:(NSString *)s;
 
-TEXTUAL_EXTERN NSInteger mapColorValue(NSColor *color);
-TEXTUAL_EXTERN NSColor *mapColorCode(NSInteger colorChar);
++ (NSInteger)mapColorValue:(NSColor *)color;
++ (NSColor *)mapColorCode:(NSInteger)colorCode;
 
-TEXTUAL_EXTERN NSString *TXRenderStyleTemplate(NSString *templateName,
-											   NSDictionary *templateTokens,
-											   TVCLogController *logController);
++ (NSString *)renderTemplate:(NSString *)templateName;
++ (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateToken;
 
-@interface LVCLogRenderer : NSObject
 + (NSString *)renderBody:(NSString *)body 
 			  controller:(TVCLogController *)log
 			  renderType:(TVCLogRendererType)drawingType

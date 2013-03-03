@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,14 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TVCLogPolicy : NSObject
-@property (nonatomic, unsafe_unretained) TXMenuController *menuController;
-@property (nonatomic, strong) NSMenu *menu;
-@property (nonatomic, strong) NSMenu *urlMenu;
-@property (nonatomic, strong) NSMenu *memberMenu;
-@property (nonatomic, strong) NSMenu *chanMenu;
-@property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *nick;
-@property (nonatomic, strong) NSString *chan;
+@property (nonatomic, strong) NSString *anchorURL;
+@property (nonatomic, strong) NSString *channelName;
+@property (nonatomic, strong) NSString *nickname;
 
 - (void)channelDoubleClicked;
 - (void)nicknameDoubleClicked;

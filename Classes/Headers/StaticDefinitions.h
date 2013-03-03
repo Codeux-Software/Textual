@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
-/* Imports from Carbon Headers. */
+/* This define was no longer needed as of version 3.0.0. It may return 
+ in the next major version of Mac OS when Apple adds a API feature
+ specific to that version. */
+
+// #define TXLoadMacOSVersionSpecificFeatures	1
+
 #ifndef kASAppleScriptSuite
 	#define kASAppleScriptSuite 'ascr'
 #endif
@@ -48,90 +53,95 @@
 	#define keyASSubroutineName 'snam'
 #endif
 
-/* Availability Macros */
-#define TXLoadMacOSLibraries 1
-
-#if TXLoadMacOSLibraries
-	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER) 
-		#define TXMacOSMountainLionOrNewer
-	#endif
-
-	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER) 
-		#define TXMacOSLionOrNewer
-	#endif
-#endif
+// #if TXLoadMacOSVersionSpecificFeatures
+// 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER)
+// 		#define TXSystemIsMacOSMountainLionOrNewer
+// 	#endif
+// #endif
 
 #define NSAppKitVersionNumber10_6		1038
 #define NSAppKitVersionNumber10_7		1138
 #define NSAppKitVersionNumber10_7_2		1138.23
 
-#define PointerIsEmpty(s)				(s == NULL || s == nil)
-#define PointerIsNotEmpty(s)			(s != NULL && s != nil)
-
-#ifdef TXMacOSLionOrNewer
-	#define TXNativeRegularExpressionAvailable
-#endif
-
-#ifdef TXMacOSMountainLionOrNewer
-	#define TXUserScriptsFolderAvailable
-	#define TXFoundationBasedUUIDAvailable
-#endif
-
 //#define TXForceNativeNotificationCenterDispatch		— Force notification center use regardless of Growl's installation.
 
-#define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], \
-															__PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 #ifdef DEBUG
-	#define DebugLogToConsole(fmt, ...) LogToConsole(fmt, ##__VA_ARGS__);
+	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
 #else
 	#define DebugLogToConsole(...)
 #endif
 
-/* Establish Common Pointers */
-#define _NSMainScreen()							[NSScreen mainScreen]
-#define _NSFileManager()						[NSFileManager defaultManager]
-#define _NSPasteboard()							[NSPasteboard generalPasteboard]
-#define _NSFontManager()						[NSFontManager sharedFontManager]
-#define _NSGraphicsCurrentContext()				[NSGraphicsContext currentContext]
-#define _NSNotificationCenter()					[NSNotificationCenter defaultCenter]
-#define _NSWorkspace()							[NSWorkspace sharedWorkspace]
-#define _NSWorkspaceNotificationCenter()		[_NSWorkspace() notificationCenter]
-#define _NSDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
-#define _NSAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
-#define _NSUserDefaults()						[NSUserDefaults standardUserDefaults]
-#define _NSUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
-#define _NSSpellChecker()						[NSSpellChecker sharedSpellChecker]
-#define _NSSharedApplication()					[NSApplication sharedApplication]
+/* Shortcut defines. */
+#define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
+#define RZAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define RZDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
+#define RZFileManager()							[NSFileManager defaultManager]
+#define RZFontManager()							[NSFontManager sharedFontManager]
+#define RZGraphicsCurrentContext()				[NSGraphicsContext currentContext]
+#define RZMainBundle()							[NSBundle mainBundle]
+#define RZMainScreen()							[NSScreen mainScreen]
+#define RZNotificationCenter()					[NSNotificationCenter defaultCenter]
+#define RZPasteboard()							[NSPasteboard generalPasteboard]
+#define RZProcessInfo()							[NSProcessInfo processInfo]
+#define RZSharedApplication()					[NSApplication sharedApplication]
+#define RZSpellChecker()						[NSSpellChecker	sharedSpellChecker]
+#define RZUserDefaults()						[NSUserDefaults	standardUserDefaults]
+#define RZUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
+#define RZWorkspace()							[NSWorkspace sharedWorkspace]
+#define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
+#define RZRunningApplication()					[NSRunningApplication currentApplication]
 
-#ifdef TXNativeNotificationCenterAvailable
-	#define _NSUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
+#ifdef TXForceNativeNotificationCenterDispatch
+#define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #endif
 
-/* Miscellaneous functions to handle small tasks. */
-#define CFItemRefToID(s)					(id)s
-#define BOOLReverseValue(b)					((b == YES) ? NO : YES)
-#define BOOLValueFromObject(b)				PointerIsNotEmpty(b)
-#define NSDissimilarObjects(o,n)			(o != n)
+/* Lazy-man defines. */
+#define PointerIsEmpty(s)						(s == NULL || s == nil)
+#define PointerIsNotEmpty(s)					(s != NULL && s != nil)
 
-#define TEXTUAL_EXTERN                      __attribute__((visibility("default")))
-#define TEXTUAL_DEPRECATED					__attribute__((deprecated))
+#define BOOLReverseValue(b)						((b == YES) ? NO : YES)
+#define BOOLValueFromObject(b)					PointerIsNotEmpty(b)
+#define CFItemRefToID(s)						(id)s
+#define NSDissimilarObjects(o,n)				(o != n)
 
-/* Item types */
-typedef double				TXNSDouble;
-typedef unsigned long long	TXFSLongInt; // filesizes
+#define NSAssertReturn(c)						if (c == NO) { return; }
+#define NSAssertReturnR(c, r)					if (c == NO) { return r; }
+#define NSAssertReturnLoopContinue(c)			if (c == NO) { continue; }
+#define NSAssertReturnLoopBreak(c)				if (c == NO) { break; }
 
-/* Number Handling */
-#define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
-#define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
-#define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
-#define NSNumberWithLongLong(l)				[NSNumber numberWithLongLong:l]
-#define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
-#define NSNumberInRange(n,s,e)				(n >= s && n <= e)
+#define NSObjectIsEmptyAssert(o)				if (NSObjectIsEmpty(o)) { return; }
+#define NSObjectIsEmptyAssertReturn(o, r)		if (NSObjectIsEmpty(o)) { return r; }
+#define NSObjectIsEmptyAssertLoopContinue(o)	if (NSObjectIsEmpty(o)) { continue; }
+#define NSObjectIsEmptyAssertLoopBreak(o)		if (NSObjectIsEmpty(o)) { break; }
 
-/* Everything Else */
-#define NSStringEmptyPlaceholder			@""
-#define NSStringNewlinePlaceholder			@"\n"
-#define NSStringWhitespacePlaceholder		@" "
+#define PointerIsEmptyAssert(o)					if (PointerIsEmpty(o)) { return; }
+#define PointerIsEmptyAssertReturn(o, r)		if (PointerIsEmpty(o)) { return r; }
+#define PointerIsEmptyAssertLoopContinue(o)		if (PointerIsEmpty(o)) { continue; }
+#define PointerIsEmptyAssertLoopBreak(o)		if (PointerIsEmpty(o)) { break; }
 
-#define TXDeveloperEnvironmentToken			@"TextualDeveloperEnvironment"
+/* Deprecation and symbol visibility. */
+#define TEXTUAL_EXTERN							__attribute__((visibility("default")))
+#define TEXTUAL_DEPRECATED						__attribute__((deprecated))
+
+#define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
+#define TEXTUAL_DEPRECATED_ASSERT_C				NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
+
+#define TXDeveloperEnvironmentToken				@"TextualDeveloperEnvironment"
+
+/* nweak and uweak are pretty useless defines. They are
+ only defined to make a long list of properties easier to 
+ read by making the types the same length. Easier to follow
+ a property list when all the types are aligned in a line.
+ 
+ It doesn't make sense. I know. */
+
+#define nweak									weak
+#define uweak									unsafe_unretained
+
+/* Just like nweak and uweak, these are useless, but hey, whatever. */
+typedef double									TXNSDouble;
+typedef unsigned long long						TXFSLongInt;
+
+/* @end */

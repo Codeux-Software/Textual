@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,6 @@
 #import "TextualApplication.h"
 
 @implementation TVCMainWindow
-
-- (BOOL)canBecomeMainWindow
-{
-	return YES;
-}
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
@@ -92,6 +87,11 @@
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
 	}
+}
+
+- (BOOL)canBecomeMainWindow
+{
+	return YES;
 }
 
 @end

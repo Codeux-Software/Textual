@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-@interface CFDH1080 : NSObject 
-- (NSString *)generatePublicKey;
+@interface CFDH1080 : NSObject
+- (NSString *)generatePublicKey:(BOOL)enforceKeyLength;
 - (NSString *)secretKeyFromPublicKey:(NSString *)publicKey;
 @end

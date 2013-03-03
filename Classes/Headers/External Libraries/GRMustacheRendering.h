@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
 
 @class GRMustacheContext;
 @class GRMustacheTag;
@@ -42,6 +43,9 @@
  * Input values are the tag that should be rendered, and the context object that
  * represents the current context stack.
  *
+ * Depending on the content type of the currently rendered template, an output
+ * parameter _HTMLSafe_ set to NO will have the returned string HTML-escaped.
+ *
  * @param tag       The tag to be rendered
  * @param context   A context for rendering inner tags.
  * @param HTMLSafe  Upon return contains YES if the result is HTML-safe.
@@ -53,6 +57,7 @@
  *
  * @see GRMustacheTag
  * @see GRMustacheContext
+ * @see GRMustacheContentType
  */
 - (NSString *)renderForMustacheTag:(GRMustacheTag *)tag
                            context:(GRMustacheContext *)context

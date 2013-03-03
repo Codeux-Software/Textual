@@ -5,18 +5,27 @@
       location = "container:Main Project (Textual).xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Frameworks/Blowfish Encryption/Source/Blowfish Encryption Framework.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Frameworks/Auto Hyperlinks/Source/Hyperlink Processor Framework.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Frameworks/Blowfish/Source/../../../Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj">
+      location = "group:Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/Wikipedia Links/Wikipedia Links Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Frameworks/Blowfish Encryption/Source/Blowfish Encryption Framework.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Frameworks/Auto Hyperlinks/Source/Hyperlink Processor Framework.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Frameworks/System Information/Source/System Information Framework.xcodeproj">
    </FileRef>
 </Workspace>

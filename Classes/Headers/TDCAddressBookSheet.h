@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -40,23 +40,23 @@
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, strong) IRCAddressBook *ignore;
-@property (nonatomic, strong) NSTextField *hostmask;
-@property (nonatomic, strong) NSTextField *nickname;
-@property (nonatomic, strong) NSButton *ignorePublicMsg;
-@property (nonatomic, strong) NSButton *ignorePrivateMsg;
-@property (nonatomic, strong) NSButton *ignoreHighlights;
-@property (nonatomic, strong) NSButton *ignoreNotices;
-@property (nonatomic, strong) NSButton *ignoreCTCP;
-@property (nonatomic, strong) NSButton *ignoreJPQE;
-@property (nonatomic, strong) NSButton *notifyJoins;
-@property (nonatomic, strong) NSButton *ignorePMHighlights;
-@property (nonatomic, strong) NSWindow *ignoreWindow;
-@property (nonatomic, strong) NSWindow *notifyWindow;
+@property (nonatomic, nweak) NSButton *ignoreCTCPCheck;
+@property (nonatomic, nweak) NSButton *ignoreJPQECheck;
+@property (nonatomic, nweak) NSButton *ignoreNoticesCheck;
+@property (nonatomic, nweak) NSButton *ignorePrivateHighlightsCheck;
+@property (nonatomic, nweak) NSButton *ignorePrivateMessagesCheck;
+@property (nonatomic, nweak) NSButton *ignorePublicHighlightsCheck;
+@property (nonatomic, nweak) NSButton *ignorePublicMessagesCheck;
+@property (nonatomic, nweak) NSButton *notifyJoinsCheck;
+@property (nonatomic, nweak) NSTextField *hostmaskField;
+@property (nonatomic, nweak) NSTextField *nicknameField;
+@property (nonatomic, nweak) NSWindow *ignoreView;
+@property (nonatomic, nweak) NSWindow *notifyView;
 
 - (void)start;
 @end
 
-@interface NSObject (TXIgnoreItemSheetDelegate)
+@interface NSObject (TDCAddressBookSheetDelegate)
 - (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
 - (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
 @end

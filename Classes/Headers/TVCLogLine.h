@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -45,24 +45,24 @@
 #define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
 typedef enum TVCLogLineType : NSInteger {
-	TVCLogLineCTCPType,
-	TVCLogLinePrivateMessageType,
-	TVCLogLinePrivateMessageNoHighlightType,
-	TVCLogLineNoticeType,
 	TVCLogLineActionType,
 	TVCLogLineActionNoHighlightType,
-	TVCLogLineJoinType,
-	TVCLogLinePartType,
-	TVCLogLineKickType,
-	TVCLogLineQuitType,
-	TVCLogLineKillType,
-	TVCLogLineNickType,
-	TVCLogLineModeType,
-	TVCLogLineTopicType,
-	TVCLogLineInviteType,
-	TVCLogLineWebsiteType,
+	TVCLogLineCTCPType,
 	TVCLogLineDebugType,
+	TVCLogLineInviteType,
+	TVCLogLineJoinType,
+	TVCLogLineKickType,
+	TVCLogLineKillType,
+	TVCLogLineModeType,
+	TVCLogLineNickType,
+	TVCLogLineNoticeType,
+	TVCLogLinePartType,
+	TVCLogLinePrivateMessageType,
+	TVCLogLinePrivateMessageNoHighlightType,
+	TVCLogLineQuitType,
 	TVCLogLineRawHTMLType,
+	TVCLogLineTopicType,
+	TVCLogLineWebsiteType,
 } TVCLogLineType;
 
 typedef enum TVCLogMemberType : NSInteger {
@@ -73,26 +73,22 @@ typedef enum TVCLogMemberType : NSInteger {
 #define IRCCommandFromLineType(t)		[TVCLogLine lineTypeString:t]
 
 @interface TVCLogLine : NSObject
+@property (nonatomic, assign) BOOL isEncrypted;
+@property (nonatomic, assign) BOOL isHistoric;
 @property (nonatomic, strong) NSDate *receivedAt;
-@property (nonatomic, strong) NSString *nick;
-@property (nonatomic, strong) NSString *body;
+@property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, strong) NSString *messageBody;
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogMemberType memberType;
-@property (nonatomic, assign) NSInteger nickColorNumber;
-@property (nonatomic, strong) NSArray *keywords;
-@property (nonatomic, strong) NSArray *excludeWords;
-@property (nonatomic, assign) BOOL isHistoric;
+@property (nonatomic, strong) NSArray *highlightKeywords;
+@property (nonatomic, strong) NSArray *excludeKeywords;
+@property (nonatomic, assign) NSInteger nicknameColorNumber;
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedNickname:(IRCChannel *)owner;
 
 + (NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogMemberType)type;
-
-- (id)initWithLineType:(TVCLogLineType)lineType
-			memberType:(TVCLogMemberType)memberType
-			receivedAt:(NSDate *)receivedAt
-				  body:(NSString *)body; // For internal use only. A plugin should not call.
 
 - (id)initWithDictionary:(NSDictionary *)dic;	// For internal use only. A plugin should not call.
 - (NSDictionary *)dictionaryValue;				// For internal use only. A plugin should not call.

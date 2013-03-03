@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,11 +39,21 @@
 
 @implementation NSNumber (TXNumberHelper)
 
-/* I wrote this method long ago and still don't understand what
- it does or how it works… */
 + (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber
 {
-	if (TXIsNumeric(c) && firstNumber < 2) {
+	/* An IRC color is interpreted using a value of 00 to 15. This 
+	 method is used mainly in situations in which each character of 
+	 a string is exaimined one by one. 
+	 
+	 The firstNumber given to this method is either a 0 or 1. If it is
+	 neither, then the number is not valid. Next, the c, or second part
+	 of firstNumber has to be 0 to 5 if firstNumber = 1, or it can be 0
+	 to 9 if firstNumber = 0. 
+	 
+	 The method basically combines firstNumber and c to make sure it is
+	 within 00 and 15. */
+	
+	if (TXStringIsBase10Numeric(c) && firstNumber < 2) {
 		NSInteger ci = (c - '0');
 		
 		if ((firstNumber == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 

@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -50,8 +50,13 @@
 
 + (void)drawWithHilightCount:(NSInteger)highlightCount messageCount:(NSInteger)messageCount 
 {
-	messageCount   = ((messageCount   > 9999) ? 9999 : messageCount);
-	highlightCount = ((highlightCount > 9999) ? 9999 : highlightCount);
+	if (messageCount > 9999) {
+		messageCount = 9999;
+	}
+
+	if (highlightCount > 9999) {
+		highlightCount = 9999;
+	}
 	
 	BOOL showRedBadge = (messageCount >= 1);
 	BOOL showGreenBadge = (highlightCount >= 1);
@@ -65,18 +70,15 @@
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
 	
 	NSMutableDictionary *badgeTextAttrs = [NSMutableDictionary dictionary];
-	
-	badgeTextAttrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
+
 	badgeTextAttrs[NSFontAttributeName] = _badgeTextFont;
+	badgeTextAttrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Load Drawing Images. */
 	/* ////////////////////////////////////////////////////////// */
 	
-	NSImage *appIcon;
-	
-	appIcon = [NSImage imageNamed:@"NSApplicationIcon"];
-	appIcon = [appIcon copy];
+	NSImage *appIcon = [[NSImage imageNamed:@"NSApplicationIcon"] copy];
 	
 	NSImage *redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeft.png"];
 	NSImage *redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenter.png"];
@@ -236,11 +238,10 @@
 + (NSInteger)badgeCenterTileWidth:(NSInteger)count
 {
 	switch (count) {
-		case 1 ... 9: return 5; break;
-		case 10 ... 99: return 16; break;
-		case 100 ... 999: return 28; break;
-		case 1000 ... 9999: return 38; break;
-		default: break;
+		case 1 ... 9: { return 5; break; }
+		case 10 ... 99: { return 16; break; }
+		case 100 ... 999: { return 28; break; }
+		case 1000 ... 9999: { return 38; break; }
 	}
 	
 	return 1;

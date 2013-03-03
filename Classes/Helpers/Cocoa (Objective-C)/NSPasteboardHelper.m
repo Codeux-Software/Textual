@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -39,11 +39,6 @@
 
 @implementation NSPasteboard (TXPasteboardHelper)
 
-- (NSArray *)pasteboardStringType
-{
-	return @[NSStringPboardType];
-}
-
 - (NSString *)stringContent
 {
 	return [self stringForType:NSStringPboardType];
@@ -51,7 +46,7 @@
 
 - (void)setStringContent:(NSString *)s
 {
-	[self declareTypes:[self pasteboardStringType] owner:nil];
+	[self declareTypes:@[NSStringPboardType] owner:nil];
 	
 	[self setString:s forType:NSStringPboardType];
 }

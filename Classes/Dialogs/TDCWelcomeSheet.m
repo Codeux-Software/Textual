@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"TDCWelcomeSheet" owner:self];
 		
-		self.channels = [NSMutableArray new];
+		self.channelList = [NSMutableArray new];
 	}
 	
 	return self;
@@ -54,65 +54,54 @@
 {
 	[self tableViewSelectionIsChanging:nil];
 	[self updateOKButton];
+
+	self.channelTable.textEditingDelegate = self;
 	
-	[self.nickText setStringValue:[TPCPreferences defaultNickname]];
+	[self.nicknameField setStringValue:[TPCPreferences defaultNickname]];
 	
 	[self startSheet];
 }
 
 - (void)close
 {
-	self.delegate = nil;
-	
-	[self endSheet];
+	[super cancel:nil];
 }
 
-- (void)onOK:(id)sender
+- (void)ok:(id)sender
 {
-	NSMutableSet *set = [NSMutableSet set];
+	NSMutableArray *channels = [NSMutableArray array];
 	
-	NSMutableArray *chans = [NSMutableArray array];
-	
-	for (__strong NSString *s in self.channels) {
-		if (NSObjectIsNotEmpty(s)) {
-			if ([s isChannelName] == NO) {
-				s = [@"#" stringByAppendingString:s];
-			}
-			
-			if ([set containsObject:s] == NO) {
-				[chans addObject:s];
-				[set   addObject:s];
-			}
+	for (__strong NSString *s in self.channelList) {
+		NSObjectIsEmptyAssertLoopContinue(s);
+		
+		if ([s isChannelName] == NO) {
+			s = [@"#" stringByAppendingString:s];
 		}
+
+		[channels safeAddObjectWithoutDuplication:s];
 	}
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	[dic setBool:self.autoConnectCheck.state forKey:@"connectOnLaunch"];
-	
-	dic[@"channelList"] = chans;
-	dic[@"identityNickname"] = self.nickText.stringValue;
-	dic[@"serverAddress"] = [self.hostCombo.stringValue cleanedServerHostmask];
-	
+	dic[@"channelList"]			= channels;
+	dic[@"connectOnLaunch"]		= @(self.autoConnectCheck.state);
+	dic[@"identityNickname"]	= self.nicknameField.firstTokenStringValue;
+	dic[@"serverAddress"]		= self.serverAddressField.firstTokenStringValue.cleanedServerHostmask;
+
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
 		[self.delegate welcomeSheet:self onOK:dic];
 	}
-	
-	[self endSheet];
-}
 
-- (void)onCancel:(id)sender
-{
-	[self endSheet];
+	[super ok:nil];
 }
 
 - (void)onAddChannel:(id)sender
 {
-	[self.channels safeAddObject:NSStringEmptyPlaceholder];
+	[self.channelList safeAddObject:NSStringEmptyPlaceholder];
 	
 	[self.channelTable reloadData];
 	
-	NSInteger row = (self.channels.count - 1);
+	NSInteger row = (self.channelList.count - 1);
 	
 	[self.channelTable selectItemAtIndex:row];
 	[self.channelTable editColumn:0 row:row withEvent:nil select:YES];
@@ -123,12 +112,15 @@
 	NSInteger n = [self.channelTable selectedRow];
 	
 	if (n >= 0) {
-		[self.channels safeRemoveObjectAtIndex:n];
-		
+		[self.channelList safeRemoveObjectAtIndex:n];
+
 		[self.channelTable reloadData];
 		
-		NSInteger count = self.channels.count;
-		if (count <= n) n = (count - 1);
+		NSInteger count = self.channelList.count;
+		
+		if (count <= n) {
+			n = (count - 1);
+		}
 		
 		if (n >= 0) {
 			[self.channelTable selectItemAtIndex:n];
@@ -143,15 +135,15 @@
 	[self updateOKButton];
 }
 
-- (void)onHostComboChanged:(id)sender
+- (void)onServerAddressChanged:(id)sender
 {
 	[self updateOKButton];
 }
 
 - (void)updateOKButton
 {
-	NSString *nick = self.nickText.stringValue;
-	NSString *host = self.hostCombo.stringValue;
+	NSString *nick = self.nicknameField.stringValue;
+	NSString *host = self.serverAddressField.stringValue;
 	
 	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
 	
@@ -159,16 +151,16 @@
 }
 
 #pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark NSTableView Delegate
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
 	NSInteger n = [self.channelTable editedRow];
 	
 	if (n >= 0) {
-		NSString *s = [[note object] textStorage].string.copy;
+		NSString *s = [note.object textStorage].string.copy;
 		
-		(self.channels)[n] = s;
+		self.channelList[n] = s;
 		
 		[self.channelTable reloadData];
 		[self.channelTable selectItemAtIndex:n];
@@ -179,17 +171,17 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return self.channels.count;
+	return self.channelList.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	return [self.channels safeObjectAtIndex:row];
+	return [self.channelList safeObjectAtIndex:row];
 }
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
 {
-	[self.deleteChannelButton setEnabled:([self.channelTable selectedRow] >= 0)];
+	[self.deleteChannelButton setEnabled:(self.channelTable.selectedRow >= 0)];
 }
 
 #pragma mark -

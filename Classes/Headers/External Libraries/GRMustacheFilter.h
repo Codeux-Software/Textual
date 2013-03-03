@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
+
 
 // =============================================================================
 #pragma mark - <GRMustacheFilter>
@@ -32,7 +34,7 @@
  * The responsability of a GRMustacheFilter is to transform a value into
  * another.
  *
- * For instance, the tag `{{ uppercase(name) }}` uses a filter object that
+ * For example, the tag `{{ uppercase(name) }}` uses a filter object that
  * returns the uppercase version of its input.
  *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime/filters.md
@@ -92,7 +94,7 @@
  *
  * @see variadicFilterWithBlock:
  */
-+ (id)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
++ (id<GRMustacheFilter>)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Returns a GRMustacheFilter object that executes the provided block, given an
@@ -113,6 +115,6 @@
  *
  * @see filterWithBlock:
  */
-+ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
++ (id<GRMustacheFilter>)variadicFilterWithBlock:(id(^)(NSArray *arguments))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end

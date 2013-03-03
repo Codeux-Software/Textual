@@ -77,6 +77,16 @@ body[dir=rtl] .time {
 	display: inline-block;
 }
 
+/* Encryption Lock */
+
+.encryptionLock img {
+	margin: 0;
+	padding: 0;
+	height: 11px;
+	margin-bottom: -1px;
+	display: inline-block;
+}
+
 /* Links */
 
 a {

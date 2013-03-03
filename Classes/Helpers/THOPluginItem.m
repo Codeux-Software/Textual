@@ -5,7 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2010 — 2012 Codeux Software & respective contributors.
+ Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
@@ -37,129 +37,147 @@
 
 #import "TextualApplication.h"
 
-@implementation THOTextualPluginItem
+@implementation THOPluginItem
 
-- (void)initWithPluginClass:(Class)primaryClass 
-				  andBundle:(NSBundle *)bundle
-				andIRCWorld:(IRCWorld *)world
-		  withUserInputDict:(NSMutableDictionary **)userDict
-		withServerInputDict:(NSMutableDictionary **)serverDict
-		 withOuputRulesDict:(NSMutableDictionary **)outputRulesDict
+#define OINE(o)					 NSObjectIsNotEmpty(o)
+
+#define VOCT(o, t)				 [o isKindOfClass:[t class]]
+#define VTAE(o, t)				([o isKindOfClass:[t class]] && NSObjectIsNotEmpty(o))
+
+- (void)loadBundle:(NSBundle *)bundle
 {
-	self.pluginPrimaryClass = [primaryClass new];
+	/* Only load once. */
+	if (PointerIsNotEmpty(self.primaryClass)) {
+		return;
+	}
 
-	if (self.pluginPrimaryClass) {
-		NSMutableDictionary *newUserDict		= [*userDict mutableCopy];
-		NSMutableDictionary *newServerDict		= [*serverDict mutableCopy];
-		NSMutableDictionary *newOutputRulesDict	= [*outputRulesDict mutableCopy];
-		
-		// Ouput Rules
-		
-		if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginOutputDisplayRules)]) {
-			NSDictionary *pluginRules = [self.pluginPrimaryClass pluginOutputDisplayRules];
-			
-			if (NSObjectIsNotEmpty(pluginRules)) {
-				for (NSString *command in pluginRules) {
-					if ([TPCPreferences indexOfIRCommand:command publicSearch:NO] >= 1) {
-						id objectValue = pluginRules[command];
-						
-						if ([objectValue isKindOfClass:[NSArray class]]) {
-							for (NSArray *commandRules in objectValue) {
-								if ([commandRules count] == 4) {
-									NSString *regex		= [commandRules safeObjectAtIndex:0];
-									
-									NSNumber *channels	= [commandRules safeObjectAtIndex:1];
-									NSNumber *queries	= [commandRules safeObjectAtIndex:2];
-									NSNumber *console	= [commandRules safeObjectAtIndex:3];
-									
-									if (NSObjectIsNotEmpty(regex)) {
-										NSArray *boss_entry = @[console, channels, queries];
-										
-										if ([newOutputRulesDict containsKey:command] == NO) {
-											newOutputRulesDict[command] = [[NSMutableDictionary alloc] init];
-										}
-										
-										NSDictionary *originalEntries = newOutputRulesDict[command];
-										
-										if ([originalEntries containsKeyIgnoringCase:regex]) {
-											LogToConsole(@"Extension Error: Found multiple entries of the same regular expression in an output rule. Using only first. (Command = \"%@\" Expression = \"%@\")", command, regex);
-										} else {
-											newOutputRulesDict[command][regex] = boss_entry;
-										}
-									}
-								}
-							}
-						}
-					}
+	/* Initialize the principal class. */
+	Class principalClass = [bundle principalClass];
+
+	if (PointerIsEmpty(principalClass)) {
+		return;
+	}
+
+	_primaryClass = [principalClass new];
+
+	/* Say hello! */
+	if ([self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)])
+	{
+		TXMasterController *master = TPCPreferences.masterController;
+
+		if (master) {
+			[self.primaryClass pluginLoadedIntoMemory:master.world];
+		}
+	}
+	
+	/* Process server output suppression rules. */
+	if ([self.primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
+	{
+		// Use id, never assume what a 3rd party might give.
+		id outputRulesO = [self.primaryClass pluginOutputDisplayRules];
+
+		if (VTAE(outputRulesO, NSDictionary)) {
+			NSMutableDictionary *sharedRules = [NSMutableDictionary dictionary];
+
+			for (NSString *command in outputRulesO) { // Dictionary keys are always NSString.
+				NSArray *appndix = [self processOutputSuppressionRules:outputRulesO forCommand:command];
+
+				if (NSObjectIsNotEmpty(appndix)) {
+					[sharedRules safeSetObject:appndix forKey:command];
 				}
 			}
+
+			_outputSuppressionRules = sharedRules;
 		}
-		
-		// User Input
-		
-		if ([self.pluginPrimaryClass respondsToSelector:@selector(messageSentByUser:message:command:)]) {
-			if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]) {
-				NSArray *spdcmds = [self.pluginPrimaryClass pluginSupportsUserInputCommands];
-				
-				if (NSObjectIsNotEmpty(spdcmds)) {
-					for (__strong NSString *cmd in spdcmds) {
-						cmd = [cmd uppercaseString];
-						
-						NSArray *cmdDict = newUserDict[cmd];
-						
-						if (NSObjectIsEmpty(cmdDict)) {
-							newUserDict[cmd] = [[NSMutableArray alloc] init];
-						}
-						
-						if ([cmdDict containsObject:bundle] == NO) {
-							[newUserDict[cmd] safeAddObject:self];
-						}
-					}
+	}
+
+	/* Does the bundle have a preference pane?… */
+	if ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
+		[self.primaryClass respondsToSelector:@selector(preferencesView)])
+	{
+		id itemView = [self.primaryClass preferencesView];
+		id itemName = [self.primaryClass preferencesMenuItemName];
+
+		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
+			_hasPreferencePaneView = YES;
+		}
+	}
+
+	/* Process user input commands. */
+	if ([self.primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
+		[self.primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)])
+	{
+		id spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
+
+		if (VTAE(spdcmds, NSArray)) {
+			NSMutableArray *supportedCommands = [NSMutableArray array];
+
+			for (id command in spdcmds) {
+				if (VOCT(command, NSString))  {
+					[supportedCommands safeAddObject:[command lowercaseString]];
 				}
 			}
+
+			_supportedUserInputCommands = supportedCommands;
 		}
-		
-		// Server Input
-		
-		if ([self.pluginPrimaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)]) {
-			if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]) {
-				NSArray *spdcmds = [self.pluginPrimaryClass pluginSupportsServerInputCommands];
-				
-				if (NSObjectIsNotEmpty(spdcmds)) {
-					for (__strong NSString *cmd in spdcmds) {
-						cmd = [cmd uppercaseString];
-						
-						NSArray *cmdDict = newServerDict[cmd];
-						
-						if (NSObjectIsEmpty(cmdDict)) {
-							newServerDict[cmd] = [[NSMutableArray alloc] init];
-						}
-						
-						if ([cmdDict containsObject:bundle] == NO) {
-							[newServerDict[cmd] safeAddObject:self];
-						}
-					}
+	}
+
+	/* Process server input commands. */
+	if ([self.primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
+		[self.primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)])
+	{
+		id spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
+
+		if (VTAE(spdcmds, NSArray)) {
+			NSMutableArray *supportedCommands = [NSMutableArray array];
+
+			for (id command in spdcmds) {
+				if (VOCT(command, NSString))  {
+					[supportedCommands safeAddObject:[command lowercaseString]];
 				}
 			}
+
+			_supportedServerInputCommands = supportedCommands;
 		}
-		
-		if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)]) {
-			[self.pluginPrimaryClass pluginLoadedIntoMemory:world];
-		}
-		
-		*userDict			= newUserDict;
-		*serverDict			= newServerDict;
-		*outputRulesDict	= newOutputRulesDict;
 	}
 }
 
 - (void)dealloc
 {
-	if ([self.pluginPrimaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
-		[self.pluginPrimaryClass pluginUnloadedFromMemory];
+	if ([self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
+		[self.primaryClass pluginUnloadedFromMemory];
 	}
+}
+
+- (NSArray *)processOutputSuppressionRules:(NSDictionary *)outputRules forCommand:(NSString *)sourceCommand
+{
+	id commandRules = outputRules[sourceCommand];
 	
-	
+	if (VTAE(commandRules, NSArray)) {
+		NSArray *newBosses;
+
+		for (id commandRule in commandRules) {
+			if (VTAE(commandRule, NSArray) && [commandRule count] == 4) {
+				NSString *ruleMatch	= commandRule[0];
+
+				id hideChannel	= commandRule[1];
+				id hideQuery	= commandRule[2];
+				id hideConsole	= commandRule[3];
+
+				NSArray *bossEntry = @[ruleMatch, hideConsole, hideChannel, hideQuery];
+
+				if (NSObjectIsEmpty(newBosses)) {
+					newBosses = @[bossEntry];
+				} else {
+					newBosses = [newBosses arrayByAddingObject:bossEntry];
+				}
+			}
+		}
+
+		return newBosses;
+	}
+
+	return nil;
 }
 
 @end
