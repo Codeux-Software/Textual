@@ -38,6 +38,7 @@
 		4C500F3B16C06C5A001692AF /* DH1080Base.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080Base.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C500F3F16C06C79001692AF /* DH1080.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DH1080.h; sourceTree = "<group>"; };
 		4C500F4016C06C79001692AF /* DH1080.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DH1080.mm; sourceTree = "<group>"; };
+		4C588BAD16E34BEC007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C69187216E3240900BDE3A8 /* Shared Framework Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Framework Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishBase.m; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		4CD2127D16E321FD002FDD21 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
+				4C588BAD16E34BEC007EFF6D /* Code Signing Identity.xcconfig */,
 				4C69187216E3240900BDE3A8 /* Shared Framework Configuration.xcconfig */,
 				4CD2128016E321FD002FDD21 /* Shared Release Configuration.xcconfig */,
 			);

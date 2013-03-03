@@ -1,0 +1,7 @@
+
+// Code signing identity used by all build configurations.
+// Edit this file to use a different one. This file will not
+// be changed in the foreseeable future so it is safe to edit
+// and define your own identity.
+
+CODE_SIGN_IDENTITY = 3rd Party Mac Developer Application

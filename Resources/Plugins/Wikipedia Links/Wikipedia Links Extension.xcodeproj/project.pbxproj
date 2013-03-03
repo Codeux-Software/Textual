@@ -10,6 +10,7 @@
 		4C34F94416E23BF8009F573D /* TPIWikipediaLinkParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C34F94216E23BF8009F573D /* TPIWikipediaLinkParser.xib */; };
 		4C393AAD121AE217004C66F4 /* TPIWikipediaLinkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPIWikipediaLinkParser.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
+		4C588BAF16E34BF1007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */; };
 		4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */; };
 /* End PBXBuildFile section */
 
@@ -19,6 +20,7 @@
 		4C393AAB121AE217004C66F4 /* TPIWikipediaLinkParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIWikipediaLinkParser.h; sourceTree = "<group>"; };
 		4C393AAC121AE217004C66F4 /* TPIWikipediaLinkParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIWikipediaLinkParser.m; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; path = BasicLanguage.strings; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		4C69189716E3276C00BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
+				4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */,
 				4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */,
 				4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */,
 			);
@@ -175,6 +178,7 @@
 			files = (
 				4C34F94416E23BF8009F573D /* TPIWikipediaLinkParser.xib in Resources */,
 				4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */,
+				4C588BAF16E34BF1007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
