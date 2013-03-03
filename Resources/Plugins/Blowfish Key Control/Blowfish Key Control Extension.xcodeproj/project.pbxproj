@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C588BB716E34C0F007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */; };
 		4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */; };
 		4CD4027016C8CE5700FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4026916C8CC5800FEA686 /* BasicLanguage.strings */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
@@ -15,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../.tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C69187E16E3275700BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C69188016E3275700BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		4C69187C16E3275700BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
+				4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */,
 				4C69187E16E3275700BDE3A8 /* Shared Extension Configuration.xcconfig */,
 				4C69188016E3275700BDE3A8 /* Shared Release Configuration.xcconfig */,
 			);
@@ -183,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD4027016C8CE5700FEA686 /* BasicLanguage.strings in Resources */,
+				4C588BB716E34C0F007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
