@@ -42,19 +42,19 @@
 
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
-	NSMenu *newMenu = world.memberMenu;
+	NSMenu *newMenu = self.masterController.userControlMenu;
 
 	NSMenuItem *newMenuItem = [NSMenuItem new];
 
 	[newMenuItem setTitle:@"Post Link to Textual Download Page"];
 	[newMenuItem setKeyEquivalent:NSStringEmptyPlaceholder];
-	[newMenuItem setTarget:world.menuController];
+	[newMenuItem setTarget:self.masterController.menuController];
 	[newMenuItem setAction:@selector(postLinkToTextualHomepage:)];
 	
 	[newMenu addItem:[NSMenuItem separatorItem]];
 	[newMenu addItem:newMenuItem];
-	
-	world.memberMenu = newMenu;
+
+    self.masterController.userControlMenu = newMenu;
 }
 
 @end

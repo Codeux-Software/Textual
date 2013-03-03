@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TPI_PreferencePaneExample : NSObject
+@interface TPI_PreferencePaneExample : NSObject <THOPluginProtocol>
 @property (nonatomic, strong) IBOutlet NSView *ourView;
 
 - (NSView *)preferencesView;
