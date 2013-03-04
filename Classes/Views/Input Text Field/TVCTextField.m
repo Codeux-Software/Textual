@@ -75,6 +75,11 @@
 	self.formattingQueue = NULL;
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    [self.window makeFirstResponder:self];
+}
+
 #pragma mark -
 #pragma mark Color
 
