@@ -82,11 +82,12 @@ body[dir=rtl] .time {
 /* Encryption Lock */
 
 .encryptionLock img {
+	float: right;
 	margin: 0;
 	padding: 0;
 	height: 11px;
 	margin-bottom: -1px;
-	display: inline-block;
+	padding-left: 10px;
 }
 
 /* Links */
