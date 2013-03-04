@@ -907,9 +907,11 @@
 															   channel:channel.name
 															  hostmask:self.myHost];
 
-			[self print:channel type:type nick:self.localNickname text:newstr];
+            BOOL encrypted = (encryptChat && [self isSupportedMessageEncryptionFormat:newstr channel:channel]);
 
-            if (encryptChat) {
+            [self print:channel type:type nick:self.localNickname text:newstr encrypted:encrypted receivedAt:[NSDate date]];
+
+            if (encrypted) {
                 NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
             }
             
@@ -1149,11 +1151,15 @@
 		case 5043: // Command: MSG
 		case 5064: // Command: SME
 		case 5065: // Command: SMSG
+		case 5088: // Command: UMSG
+		case 5089: // Command: UME
+		case 5090: // Command: UNOTICE
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
 			BOOL opMsg = NO;
 			BOOL secretMsg = NO;
+            BOOL doNotEncrypt = NO;
 
 			TVCLogLineType type = TVCLogLinePrivateMessageType;
 
@@ -1168,10 +1174,18 @@
 				opMsg = YES;
 
 				type = TVCLogLinePrivateMessageType;
+			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umsg")]) {
+				doNotEncrypt = YES;
+
+				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("notice")]) {
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("onotice")]) {
 				opMsg = YES;
+
+				type = TVCLogLineNoticeType;
+			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("unotice")]) {
+				doNotEncrypt = YES;
 
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("me")]) {
@@ -1180,8 +1194,12 @@
 				secretMsg = YES;
 
 				type = TVCLogLineActionType;
-			}
+			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("ume")]) {
+				doNotEncrypt = YES;
 
+				type = TVCLogLineActionType;
+			}
+            
 			/* Actual command being sent. */
 			if (type == TVCLogLineNoticeType) {
 				uppercaseCommand = IRCPrivateCommandIndex("notice");
@@ -1228,10 +1246,14 @@
 					}
 
 					if (channel) {
-						[self print:channel type:type nick:self.localNickname text:t];
+                        BOOL encrypted = (doNotEncrypt == NO && [self isSupportedMessageEncryptionFormat:t channel:channel]);
 
-						NSAssertReturnLoopContinue([self encryptOutgoingMessage:&t channel:channel]);
-					}
+                        [self print:channel type:type nick:self.localNickname text:t encrypted:encrypted receivedAt:[NSDate date]];
+
+                        if (encrypted) {
+                            NSAssertReturnLoopContinue([self encryptOutgoingMessage:&t channel:channel]);
+                        }
+                    }
 
 					if ([channelName isChannelName]) {
 						if (opMsg || opPrefix) {
@@ -2249,12 +2271,7 @@
 		colorNumber = -1;
 	}
 
-	if (channel && NSObjectIsNotEmpty(channel.config.encryptionKey)) {
-		if (isEncrypted || memberType == TVCLogMemberLocalUserType) {
-			c.isEncrypted = YES;
-		}
-	}
-
+	c.isEncrypted           = isEncrypted;
 	c.excludeKeywords		= excludeKeywords;
 	c.highlightKeywords		= matchKeywords;
 	c.lineType				= type;
