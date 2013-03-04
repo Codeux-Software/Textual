@@ -360,7 +360,19 @@ NSString *IRCPublicCommandIndex(const char *key)
 	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
 
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+        /* Starting with Mountain Lion Apple has created a folder that users can place scripts within 
+         that will allow them to run outside of the Mac OS sandbox. Starting with version of 3.0.0 of
+         Textual, we will default our Scripts folder path to this location and only create a symbolic
+         link to the real folder in our custom location so that users can follow it there. 
+         
+         The new folder only works on Mountain Lion so we still have to check which OS we are on before
+         deciding whether to create an actual folder or symbolic link. */
+        
+        if ([self featureAvailableToOSXMountainLion]) {
+            [RZFileManager() createSymbolicLinkAtPath:dest withDestinationPath:[self systemUnsupervisedScriptFolderPath] error:NULL];
+        } else {
+            [RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+        }
 	}
 
 	return dest;
