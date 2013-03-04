@@ -2996,13 +2996,13 @@
                     if (continueNickServScan) {
                         for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
                             if ([text containsIgnoringCase:token]) {
+                                self.isIdentifiedWithNickServ = YES;
+                                
                                 if ([TPCPreferences autojoinWaitsForNickServ]) {
                                     if (self.isAutojoined == NO) {
                                         [self performAutoJoin];
                                     }
                                 }
-
-                                self.isIdentifiedWithNickServ = YES;
                             }
                         }
                     }
@@ -3714,9 +3714,20 @@
 	[self.worldController reloadTree];
 
 	/* Everything else. */
-	if ([TPCPreferences autojoinWaitsForNickServ] == NO) {
+	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.CAPisIdentifiedWithSASL) {
 		[self performAutoJoin];
-	}
+	} else {
+        /* If we wait for NickServ we set a timer of 3.0 seconds before performing NickServ.
+         When this timer is executed, if we do not have any knowledge of NickServ existing
+         on the current server, then we perform the autojoin. This is primarly a fix for the
+         ZNC SASL module which will complete identification before connecting and once connected
+         Textual will have no knowledge of whether the local user is identified or not. 
+         
+         NickServ will send a notice asking for identification as soon as connection occurs so
+         this is the best patch. At least for right now. */
+
+        [self performSelector:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
+    }
 	
 	[self populateISONTrackedUsersList:self.config.ignoreList];
 }
@@ -4625,6 +4636,12 @@
 
 - (void)performAutoJoin
 {
+    if ([TPCPreferences autojoinWaitsForNickServ]) {
+        if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
+            return;
+        }
+    }
+    
 	self.autojoinInProgress = YES;
 
 	NSMutableArray *ary = [NSMutableArray array];
