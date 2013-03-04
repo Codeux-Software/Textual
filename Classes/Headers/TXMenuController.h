@@ -61,6 +61,8 @@
 
 - (void)showPreferencesDialog:(id)sender;
 
+- (void)paste:(id)sender;
+
 - (void)searchGoogle:(id)sender;
 - (void)closeWindow:(id)sender;
 - (void)copyLogAsHtml:(id)sender;
