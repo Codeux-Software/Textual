@@ -43,11 +43,6 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;
 
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict;
-
 - (NSArray *)pluginSupportsUserInputCommands;
-- (NSArray *)pluginSupportsServerInputCommands;
 
 @end
