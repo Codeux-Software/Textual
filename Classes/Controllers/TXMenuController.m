@@ -766,6 +766,20 @@
 #pragma mark -
 #pragma mark Menu Item Actions
 
+- (void)paste:(id)sender
+{
+    NSWindow *keyWindow = [NSApp keyWindow];
+
+    if ([keyWindow isEqual:self.masterController.mainWindow]) {
+        [self.masterController.inputTextField focus];
+        [self.masterController.inputTextField paste:sender];
+    } else {
+        if ([keyWindow.firstResponder respondsToSelector:@selector(paste:)]) {
+            [keyWindow.firstResponder performSelector:@selector(paste:) withObject:nil];
+        }
+    }
+}
+
 - (void)closeWindow:(id)sender
 {
 	[[NSApp keyWindow] performClose:nil];
