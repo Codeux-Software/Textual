@@ -78,6 +78,8 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [self.window makeFirstResponder:self];
+
+    [super mouseDown:theEvent];
 }
 
 #pragma mark -
