@@ -46,6 +46,7 @@
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CD2128016E321FD002FDD21 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CEC815C133F13140026DFAE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
+		4CF2F9A916E4CC7000B2F999 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlowfishEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -99,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD2127D16E321FD002FDD21 /* Build Configurations */,
+				4CF2F9A916E4CC7000B2F999 /* License.txt */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 			);
 			name = Resources;
