@@ -1241,6 +1241,12 @@ static NSMutableArray *excludeKeywords = nil;
 	if ([self isDefaultIRCClient] == NO || forced) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
+        NSString *supkey = @"default_irc_client";
+
+        if (forced) {
+            supkey = nil;
+        }
+        
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
 								 action:@selector(defaultIRCClientSheetCallback:)
@@ -1249,7 +1255,7 @@ static NSMutableArray *excludeKeywords = nil;
 						  defaultButton:TXTLS(@"YesButton")
 						alternateButton:TXTLS(@"NoButton")
 							otherButton:nil
-						 suppressionKey:@"default_irc_client"
+						 suppressionKey:supkey
 						suppressionText:nil];
 	}
 }
