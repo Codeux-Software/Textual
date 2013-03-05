@@ -803,6 +803,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
 }
 
++ (NSInteger)trackUserAwayStatusMaximumChannelSize
+{
+    return [RZUserDefaults() integerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
+}
+
 + (TXTabKeyAction)tabKeyAction
 {
 	return (TXTabKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Tab Key Action"];
@@ -1309,7 +1314,8 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
-	
+
+    d[@"TrackUserAwayStatusMaximumChannelSize"] = @(200);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
 	d[@"ScrollbackMaximumLineCount"]			= @(300);
 	d[@"InlineMediaScalingWidth"]				= @(300);
