@@ -172,6 +172,12 @@
 							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1]];
 }
 
+- (NSColor *)awayUserCellTextColor
+{
+	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.0 alpha:0.6]
+							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.6]];
+}
+
 - (NSColor *)selectedCellTextColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]

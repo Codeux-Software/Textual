@@ -4164,9 +4164,14 @@
 			NSString *flfields = [m paramAt:6];
 
             BOOL isIRCop = NO;
+            BOOL isAway = NO;
 
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
+            if ([flfields hasPrefix:@"G"]) {
+                isAway = YES;
+            }
+
 			flfields = [flfields substringFromIndex:1];
 
 			if ([flfields hasPrefix:@"*"]) {
@@ -4181,7 +4186,6 @@
 				u = [IRCUser new];
 
 				u.nickname = nickname;
-                u.isCop = isIRCop;
                 
 				u.supportInfo = self.isupport;
 			}
@@ -4190,6 +4194,9 @@
 				u.address = hostmask;
 				u.username = username;
 			}
+            
+            u.isCop = isIRCop;
+            u.isAway = isAway;
 
 			NSInteger i;
 
@@ -5451,11 +5458,7 @@
 		}
 	}
 
-	if (NSObjectIsNotEmpty(self.trackedUsers)) {
-		[self performSelector:@selector(startISONTimer)];
-	} else {
-		[self performSelector:@selector(stopISONTimer)];
-	}
+    [self startISONTimer];
 }
 
 - (void)startISONTimer
@@ -5475,9 +5478,17 @@
 - (void)onISONTimer:(id)sender
 {
     NSAssertReturn(self.isLoggedIn);
-    
+
+    if ([TPCPreferences processChannelModes]) {
+        for (IRCChannel *channel in self.channels) {
+            if (channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+                [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
+            }
+        }
+    }
+
     if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess) {
-        return [self stopISONTimer];
+        return;
     }
 
     NSMutableString *userstr = [NSMutableString string];

@@ -350,7 +350,12 @@
 		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.selectedCellTextColor range:textRange];
 	} else {
 		[newStrValue addAttribute:NSFontAttributeName value:self.memberList.normalCellFont range:textRange];
-		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.normalCellTextColor range:textRange];
+        
+        if (self.memberPointer.isAway) {
+            [newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.awayUserCellTextColor range:textRange];
+        } else {
+            [newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.normalCellTextColor range:textRange];
+        }
 	}
 	
 	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
