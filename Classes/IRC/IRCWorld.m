@@ -406,9 +406,6 @@
 	self.isReloadingTree = YES;
 	
 	[self.serverList reloadData];
-
-	[self updateTitle];
-	[self updateIcon];
 	
 	[self.masterController updateSegmentedController];
 

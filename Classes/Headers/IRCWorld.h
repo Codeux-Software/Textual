@@ -85,6 +85,9 @@
 
 - (void)markAllScrollbacks;
 
+- (void)updateIcon;
+- (void)updateTitle;
+
 - (void)reloadTree;
 - (void)adjustSelection;
 
