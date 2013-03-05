@@ -215,7 +215,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	/* Redraw dock icon on potential screen resolution changes. */
-	[self.worldController reloadTree];
+    [self.worldController updateIcon];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -227,6 +227,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
     [self.worldController reloadTree];
+    [self.worldController updateIcon];
 	
 	[self.inputTextField.backgroundView setWindowIsActive:YES];
 }
@@ -363,6 +364,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
     [self.worldController reloadTree];
+    [self.worldController updateIcon];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
