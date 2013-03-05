@@ -4142,6 +4142,10 @@
 
             [self.worldController updateTitle];
 
+            if ([TPCPreferences processChannelModes]) {
+                [self.worldController.selectedChannel reloadMemberList];
+            }
+
 			break;
 		}
 		case 352: // RPL_WHOREPLY
