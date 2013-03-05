@@ -43,9 +43,30 @@
 
 @implementation TVCDockIcon
 
++ (NSImage *)applicationIcon
+{
+    /* THIS IS A SECRET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     
+     Birthday icon designed by Alex Sørlie Glomsaas. */
+
+    BOOL forceEnable = [RZUserDefaults() boolForKey:@"Force Enable Bugfix #96905433"];
+
+	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
+
+    NSDateComponents *breakdownInfo = [sysCalendar components:(NSDayCalendarUnit | NSMonthCalendarUnit) fromDate:[NSDate date]];
+
+    /* The first public commit of Textual occured on July, 23, 2010. This is the day
+     that we consider the birthday of the application. */
+    if (([breakdownInfo month] == 7 && [breakdownInfo day] == 23) || forceEnable) {
+        return [NSImage imageNamed:@"birthdayIcon"];
+    } else {
+        return [NSImage imageNamed:@"NSApplicationIcon"];
+    }
+}
+
 + (void)drawWithoutCount
 {
-	[NSApp setApplicationIconImage:[NSImage imageNamed:@"NSApplicationIcon"]];
+	[NSApp setApplicationIconImage:[self applicationIcon]];
 }
 
 + (void)drawWithHilightCount:(NSInteger)highlightCount messageCount:(NSInteger)messageCount 
@@ -78,7 +99,7 @@
 	/* Load Drawing Images. */
 	/* ////////////////////////////////////////////////////////// */
 	
-	NSImage *appIcon = [[NSImage imageNamed:@"NSApplicationIcon"] copy];
+	NSImage *appIcon = [[self applicationIcon] copy];
 	
 	NSImage *redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeft.png"];
 	NSImage *redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenter.png"];
