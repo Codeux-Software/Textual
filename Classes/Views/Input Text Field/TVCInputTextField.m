@@ -48,7 +48,7 @@
 #define _WindowContentBorderDefaultHeight		38.0
 
 #define _WindowSegmentedControllerDefaultX		10.0
-#define _InputTextFieldOriginDefaultX			144.0
+#define _InputTextFieldOriginDefaultX			166.0
 
 @interface TVCInputTextField ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
