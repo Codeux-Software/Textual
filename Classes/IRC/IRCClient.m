@@ -605,8 +605,8 @@
 		return NO;
 	}
 	
-	NSObjectIsEmptyAssertReturn(text, NO);
-	NSObjectIsEmptyAssertReturn(nick, NO);
+	//NSObjectIsEmptyAssertReturn(text, NO);
+	//NSObjectIsEmptyAssertReturn(nick, NO);
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
