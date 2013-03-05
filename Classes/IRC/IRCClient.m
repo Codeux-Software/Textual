@@ -267,6 +267,14 @@
 
 	for (IRCChannel *c in self.channels) {
 		[c preferencesChanged];
+
+        if ([TPCPreferences processChannelModes]) {
+            if (c.memberList.count > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+                for (IRCUser *u in c.memberList) {
+                    u.isAway = NO;
+                }
+            }
+        }
 	}
 }
 
