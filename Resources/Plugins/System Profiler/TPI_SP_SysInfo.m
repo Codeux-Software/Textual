@@ -266,7 +266,7 @@
 	if (_show_cpu_model) {
 		/* CPU Information. */
 		if (_cpu_count_p >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-			_new = TPIFLS(@"SystemInformationCompiledOutputCPUCore", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_count_vt, _cpu_speed);
+			_new = TPIFLS(@"SystemInformationCompiledOutputCPUCore", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_speed);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
@@ -668,7 +668,7 @@
 
 	size_t len = sizeof(size);
 
-	if (sysctlbyname("hw.activecpu", &size, &len, NULL, 0) == 0) {
+	if (sysctlbyname("hw.logicalcpu", &size, &len, NULL, 0) == 0) {
 		return size;
 	}
 
