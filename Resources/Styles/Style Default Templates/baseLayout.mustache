@@ -3,6 +3,10 @@
 		{{#isChannelView}}
 			channelname="{{channelName}}" 
 		{{/isChannelView}}
+        
+		{{#isPrivateMessageView}}
+			channelname="{{channelName}}" 
+		{{/isPrivateMessageView}}
 		
 		dir="{{textDirectionToken}}">
 		
@@ -44,6 +48,10 @@
 		{{#isChannelView}}
 			channelname="{{channelName}}" 
 		{{/isChannelView}}
+        
+		{{#isPrivateMessageView}}
+			channelname="{{channelName}}" 
+		{{/isPrivateMessageView}}
 		
 		dir="{{textDirectionToken}}">
 			<!-- The elements "body_home," "loading_screen," "topic_bar," and "mark" must always 

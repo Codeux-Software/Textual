@@ -3042,6 +3042,8 @@
 
 				if ([hostTopic isEqualIgnoringCase:c.topic] == NO) {
 					[c setTopic:hostTopic];
+
+                    [self.worldController updateTitle];
 				}
 			}
 		}

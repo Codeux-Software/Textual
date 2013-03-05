@@ -512,12 +512,20 @@
 	} else {
 		[title appendString:client.altNetworkName];
 		[title appendString:@" — "];
-		
-		if (NSObjectIsNotEmpty(channel.name)) {
-			[title appendString:channel.name];
-		}
+
+        if (channel.isPrivateMessage) {
+            /* Textual defines the topic of a private message as the user host. */
+            NSString *hostmask = channel.topic;
+
+            if ([hostmask isHostmask] == NO) {
+                [title appendString:channel.name];
+            } else {
+                [title appendString:hostmask];
+            }
+        }
 		
 		if (channel.isChannel) {
+			[title appendString:channel.name];
 			[title appendFormat:TXTLS(@"ChannelApplicationTitleUserCount"), channel.numberOfMembers];
 			
 			NSString *modes = [channel.modeInfo titleString];
