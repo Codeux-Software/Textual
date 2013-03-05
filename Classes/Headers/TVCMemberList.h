@@ -42,6 +42,8 @@
 
 /* User interface elements. */
 - (NSColor *)normalCellTextColor;
+- (NSColor *)awayUserCellTextColor;
+
 - (NSColor *)normalCellTextShadowColor;
 - (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
 - (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
