@@ -220,7 +220,6 @@
 
 	NSUInteger _cpu_count_p		= [TPI_SP_SysInfo processorPhysicalCoreCount];
 	NSUInteger _cpu_count_v		= [TPI_SP_SysInfo processorVirtualCoreCount];
-	NSUInteger _cpu_count_vt	= (_cpu_count_v - _cpu_count_p);
 
 	NSString *_cpu_l2		= [TPI_SP_SysInfo processorL2CacheSize];
 	NSString *_cpu_l3		= [TPI_SP_SysInfo processorL3CacheSize];
