@@ -697,6 +697,7 @@
 		[NSApp requestUserAttention:NSInformationalRequest];
 	}
 
+    [self.worldController updateIcon];
 	[self.worldController reloadTree];
 }
 
@@ -727,6 +728,7 @@
 		return;
 	}
 
+    [self.worldController updateIcon];
 	[self.worldController reloadTree];
 }
 
@@ -2650,12 +2652,6 @@
 	}
 
 	[self.invokeInBackgroundThread processBundlesServerMessage:m];
-
-    if (m.numericReply == 322) { // Do not reload stuff for /list replies.322
-        return;
-    }
-
-	[self.worldController reloadTree];
 }
 
 - (void)ircConnectionWillSend:(NSString *)line
@@ -3254,6 +3250,9 @@
 
 		[self print:c type:TVCLogLineJoinType nick:nil text:text receivedAt:m.receivedAt];
 	}
+
+	[self.worldController reloadTree];
+    [self.worldController updateTitle];
 }
 
 - (void)receivePart:(IRCMessage *)m
@@ -3292,6 +3291,9 @@
 
 		[self print:c type:TVCLogLinePartType nick:nil text:message receivedAt:m.receivedAt];
 	}
+
+	[self.worldController reloadTree];
+    [self.worldController updateTitle];
 }
 
 - (void)receiveKick:(IRCMessage *)m
@@ -3335,6 +3337,9 @@
 
 		[self print:c type:TVCLogLineKickType nick:nil text:message receivedAt:m.receivedAt];
 	}
+
+	[self.worldController reloadTree];
+    [self.worldController updateTitle];
 }
 
 - (void)receiveQuit:(IRCMessage *)m
@@ -3376,6 +3381,7 @@
 	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 	
 	[self.worldController reloadTree];
+    [self.worldController updateTitle];
 }
 
 - (void)receiveKill:(IRCMessage *)m
@@ -3482,6 +3488,8 @@
 	} else {
 		[self print:nil type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
 	}
+    
+    [self.worldController updateTitle];
 }
 
 - (void)receiveTopic:(IRCMessage *)m
@@ -3712,6 +3720,7 @@
 	}
 
 	[self.worldController reloadTree];
+    [self.worldController updateTitle];
 
 	/* Everything else. */
 	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.CAPisIdentifiedWithSASL) {
@@ -4129,6 +4138,8 @@
 				self.inUserInvokedWhoRequest = NO;
 			}
 
+            [self.worldController updateTitle];
+
 			break;
 		}
 		case 352: // RPL_WHOREPLY
@@ -4289,6 +4300,8 @@
 			if ([TPCPreferences processChannelModes]) {
 				[self requestUserHosts:c];
 			}
+            
+            [self.worldController updateTitle];
 
 			break;
 		}
