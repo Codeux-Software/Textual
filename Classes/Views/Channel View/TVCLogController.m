@@ -1084,7 +1084,8 @@
     // ---- //
 
 	if (self.channel) {
-		templateTokens[@"isChannelView"]  = @(YES);
+		templateTokens[@"isChannelView"]        = @(self.channel.isChannel);
+        templateTokens[@"isPrivateMessageView"] = @(self.channel.isPrivateMessage);
 
 		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:self.channel.name];
 		templateTokens[@"viewTypeToken"]  = [self.channel channelTypeString];
