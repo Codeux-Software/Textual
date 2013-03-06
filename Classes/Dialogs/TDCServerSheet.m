@@ -130,15 +130,7 @@
 #pragma mark -
 #pragma mark Initalization Handler
 
-/* Four values can be sent as the ignoreMask:
- 
-	<nil>			— No value, normal start, open General tab.
-	"-"				— One dash, normal start, open Ignore tab.
-	"--"			— Two dashes, normal start, open ignore tab, start a new ignore entry with blank hostmask.
-	<hostmask>		— Two dashes, normal start, open ignore tab, start a new ignore entry with hostmask.
- */
-
-- (void)startWithIgnoreTab:(NSString *)ignoreMask
+- (void)start:(NSString *)viewToken withContext:(NSString *)context
 {
 	[self.channelTable setTarget:self];
 	[self.channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
@@ -160,12 +152,12 @@
 	[self reloadChannelTable];
 	[self reloadIgnoreTable];
 	
-	if (NSObjectIsEmpty(ignoreMask)) {
-		[self showWithDefaultView:self.generalView andSegment:0];
-	} else {
+	if ([viewToken isEqualToString:@"floodControl"]) {
+        [self showWithDefaultView:self.floodControlView andSegment:9];
+    } else if ([viewToken isEqualToString:@"addressBook"]) {
 		[self showWithDefaultView:self.ignoresView andSegment:5];
 		
-		if ([ignoreMask isEqualToString:@"-"] == NO) {
+		if ([context isEqualToString:@"-"] == NO) {
 			self.ignoreSheet = nil;
 			
 			self.ignoreSheet = [TDCAddressBookSheet new];
@@ -174,15 +166,17 @@
 			self.ignoreSheet.newItem = YES;
 			self.ignoreSheet.ignore = [IRCAddressBook new];
             
-            if ([ignoreMask isEqualToString:@"--"]) {
+            if ([context isEqualToString:@"--"]) {
 				self.ignoreSheet.ignore.hostmask = @"<nickname>";
             } else {
-				self.ignoreSheet.ignore.hostmask = ignoreMask;
+				self.ignoreSheet.ignore.hostmask = context;
 			}
 
 			[self.ignoreSheet start];
 		}
-	}
+	} else {
+		[self showWithDefaultView:self.generalView andSegment:0];
+    }
 }
 
 - (void)showWithDefaultView:(NSView *)view andSegment:(NSInteger)segment

@@ -74,7 +74,8 @@
 - (void)openDefaultIRCClientDialog:(id)sender;
 
 - (void)showHighlightSheet:(id)sender;
-- (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask;
+
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context;
 
 - (void)markScrollback:(id)sender;
 - (void)clearScrollback:(id)sender;
