@@ -37,66 +37,17 @@
 
 #import "TextualApplication.h"
 
-typedef id (^TVCLogMessageBlock)(void);
+@interface IRCClientOperationQueue : NSOperationQueue
+/* Add new operations. */
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
+- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
 
-@interface TVCLogController : NSObject
-@property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, strong) TLOFileLogger *historicLogFile;
-@property (nonatomic, assign) NSInteger activeLineCount;
-@property (nonatomic, assign) NSInteger activeLineNumber;
-@property (nonatomic, assign) NSInteger lastVisitedHighlight;
-@property (nonatomic, assign) NSInteger maximumLineCount;
-@property (nonatomic, strong) TVCLogView *view;
-@property (nonatomic, strong) TVCLogPolicy *policy;
-@property (nonatomic, strong) TVCLogScriptEventSink *sink;
-@property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
-@property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
+/* Update isReady state. */
+- (void)updateReadinessState;
 
-/* These two properties are VERY important to be in sync accross 
- multiple threads. Therefore, these are not delcared nonatomic. */
-@property (assign) BOOL reloadingBacklog;
-@property (assign) BOOL reloadingHistory;
-
-- (void)setUp;
-- (void)notifyDidBecomeVisible;
-
-- (void)preferencesChanged;
-- (void)terminate;
-
-- (void)nextHighlight;
-- (void)previousHighlight;
-
-- (BOOL)highlightAvailable:(BOOL)previous;
-
-- (DOMDocument *)mainFrameDocument;
-
-- (void)moveToTop;
-- (void)moveToBottom;
-
-- (NSString *)topicValue;
-- (void)setTopic:(NSString *)topic;
-
-- (void)mark;
-- (void)unmark;
-- (void)goToMark;
-
-- (void)clear;
-
-- (void)reloadTheme;
-
-- (void)changeTextSize:(BOOL)bigger;
-
-- (BOOL)print:(TVCLogLine *)line;
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML;
-
-- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
-
-- (void)logViewOnDoubleClick:(NSString *)e;
-
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args;
-
-- (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context;
+/* Return the queue item that was last added to the list of operations. This item
+ will be used as a dependency of the next item added so each item is only executed
+ after the one above it has finished. This ensures that the queue is executed in the
+ order that each item is added to it. May be nil. */
+- (NSOperation *)dependencyOfLastQueueItem;
 @end

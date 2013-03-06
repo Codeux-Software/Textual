@@ -66,11 +66,6 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
-		
-		self.messageOperationQueue = [NSOperationQueue new];
-		
-		self.messageOperationQueue.name = @"IRCWordMessageOperationQueue";
-		self.messageOperationQueue.maxConcurrentOperationCount = 1;
 	}
 	
 	return self;
@@ -1331,96 +1326,6 @@
 - (void)serverListKeyDown:(NSEvent *)e
 {
 	[self logKeyDown:e];
-}
-
-#pragma mark -
-
-- (void)updateReadinessState:(TVCLogController *)controller
-{
-	NSArray *queues = [self.messageOperationQueue operations];
-
-	for (TKMessageBlockOperation *op in queues) {
-		if (op.controller == controller) {
-			[op willChangeValueForKey:@"isReady"];
-			[op didChangeValueForKey:@"isReady"];
-		}
-	}
-}
-
-@end
-
-#pragma mark -
-
-@interface TKMessageBlockOperation () /* @private */
-@property (nonatomic, strong) NSDictionary *context;
-@end
-
-@implementation TKMessageBlockOperation
-
-+ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
-								  forController:(TVCLogController *)controller
-									withContext:(NSDictionary *)context
-{
-	PointerIsEmptyAssertReturn(block, nil);
-	PointerIsEmptyAssertReturn(controller, nil);
-	
-	TKMessageBlockOperation *retval = [TKMessageBlockOperation new];
-
-	retval.controller		= controller;
-	retval.context			= context;
-	
-	retval.queuePriority	= retval.priority;
-	retval.completionBlock	= block;
-	
-	return retval;
-}
-
-+ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
-								  forController:(TVCLogController *)controller
-{
-	return [self operationWithBlock:block forController:controller withContext:nil];
-}
-
-- (NSOperationQueuePriority)priority
-{
-	id target = self.controller.channel;
-
-	if (PointerIsEmpty(target)) {
-		target = self.controller.client;
-	}
-
-	id selected = self.worldController.selectedItem;
-
-	NSOperationQueuePriority retval = NSOperationQueuePriorityLow;
-	
-	if ((target || selected) && target == selected) {
-		retval = NSOperationQueuePriorityNormal;
-	}
-
-	if (NSObjectIsNotEmpty(self.context) && self.context[@"highPriority"]) {
-		retval += 4L;
-	}
-
-	if (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]) {
-		retval += 4L;
-	}
-	
-	return retval;
-}
-
-- (BOOL)isReady
-{
-	if (self.controller.reloadingHistory) {
-		BOOL isHistoric = (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]);
-
-		if (isHistoric) {
-			return ([self.controller.view isLoading] == NO);
-		}
-	} else {
-		return ([self.controller.view isLoading] == NO);
-	}
-
-	return NO;
 }
 
 @end
