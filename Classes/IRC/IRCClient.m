@@ -3850,6 +3850,10 @@
 			
 			[self.worldController reloadTree];
 
+            if (self.rawModeEnabled || [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+                [self printReply:m];
+            }
+
 			break;
 		}
 		case 10: // RPL_(?????) — Legacy code. What goes here?
