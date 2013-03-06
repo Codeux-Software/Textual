@@ -281,8 +281,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 
-    [self.worldController.messageOperationQueue cancelAllOperations];
-
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
 		[self.worldController terminate];

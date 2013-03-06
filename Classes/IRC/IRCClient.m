@@ -81,6 +81,11 @@
 {
 	if ((self = [super init]))
 	{
+		self.operationQueue = [IRCClientOperationQueue new];
+
+		self.operationQueue.name = @"IRCClientMessageOperationQueue";
+		self.operationQueue.maxConcurrentOperationCount = 1;
+        
 		self.isupport = [IRCISupportInfo new];
 
 		self.channels			= [NSMutableArray new];
@@ -245,6 +250,8 @@
 {
 	[self quit];
 	[self closeDialogs];
+
+    [self.operationQueue cancelAllOperations];
 
 	for (IRCChannel *c in self.channels) {
 		[c terminate];
@@ -1717,7 +1724,7 @@
 		}
 		case 5011: // Command: CLEARALL
 		{
-			[self.worldController.messageOperationQueue setSuspended:YES];
+			[self.operationQueue setSuspended:YES];
 
 			if ([TPCPreferences clearAllOnlyOnActiveServer]) {
 				[self.worldController clearContentsOfClient:self];
@@ -1731,7 +1738,7 @@
 				[self.worldController destroyAllEvidence];
 			}
 
-			[self.worldController.messageOperationQueue setSuspended:NO];
+			[self.operationQueue setSuspended:NO];
 
 			break;
 		}
@@ -2431,6 +2438,8 @@
 			}
 		}
 
+        [self.viewController mark];
+        
 		[self printDebugInformationToConsole:TXTLS(dcntmsg)];
 
 		if (self.isConnected) {
@@ -3577,9 +3586,9 @@
                             otherButton:TXTLS(@"ExcessFloodIRCDisconnectAlertOpenFloodControlButton")
                          suppressionKey:nil
                         suppressionText:nil];
+    } else {
+        [self printError:m.sequence];
     }
-    
-	[self printError:m.sequence];
 }
 
 #pragma mark -
