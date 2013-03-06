@@ -2648,6 +2648,10 @@
 				[self receiveCapacityOrAuthenticationRequest:m];
 				break;
 			}
+            case 1050: // Command: AWAY (away-notify CAP)
+            {
+                [self receiveAwayNotifyCapacity:m];
+            }
 		}
 	}
 
@@ -3575,6 +3579,7 @@
 
 	return ([cap isEqualIgnoringCase:@"identify-msg"]			||
 			[cap isEqualIgnoringCase:@"identify-ctcp"]          ||
+            [cap isEqualIgnoringCase:@"away-notify"]            ||
 			[cap isEqualIgnoringCase:@"multi-prefix"]			||
 			[cap isEqualIgnoringCase:@"userhost-in-names"]      ||
 			[cap isEqualIgnoringCase:@"server-time"]			||
@@ -3599,7 +3604,9 @@
 			self.CAPidentifyMsg = YES;
 		} else if ([cap isEqualIgnoringCase:@"identify-ctcp"]) {
 			self.CAPidentifyCTCP = YES;
-		}
+		} else if ([cap isEqualIgnoringCase:@"away-notify"]) {
+            self.CAPawayNotify = YES;
+        }
 	}
 }
 
@@ -3666,6 +3673,27 @@
 	NSAssertReturn(m.params.count >= 1);
 
 	[self send:IRCPrivateCommandIndex("pong"), [m sequence:0], nil];
+}
+
+- (void)receiveAwayNotifyCapacity:(IRCMessage *)m
+{
+    NSAssertReturn(self.CAPawayNotify);
+
+    /* What are we changing to? */
+    BOOL isAway = NSObjectIsNotEmpty([m sequence]);
+
+    /* Find all users matching user info. */
+    NSString *nickname = m.sender.nickname;
+
+    for (IRCChannel *channel in self.channels) {
+        IRCUser *user = [channel findMember:nickname];
+
+        PointerIsEmptyAssertLoopContinue(user);
+
+        user.isAway = isAway;
+    }
+
+    [self.worldController.selectedChannel reloadMemberList];
 }
 
 - (void)receiveInit:(IRCMessage *)m

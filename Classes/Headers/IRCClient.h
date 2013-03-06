@@ -82,6 +82,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) BOOL CAPisIdentifiedWithSASL;		// YES if SASL authentication was successful, else NO.
 @property (nonatomic, assign) BOOL CAPmultiPrefix;				// YES if multi-prefix CAP supported.
 @property (nonatomic, assign) BOOL CAPuserhostInNames;			// YES if userhost-in-names CAP supported.
+@property (nonatomic, assign) BOOL CAPawayNotify;               // YES if away-notify CAP supported.
 @property (nonatomic, strong) NSMutableArray *CAPacceptedCaps;
 @property (nonatomic, strong) NSMutableArray *CAPpendingCaps;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
