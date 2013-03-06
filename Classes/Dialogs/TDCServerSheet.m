@@ -143,6 +143,9 @@
 	[self.channelTable setTarget:self];
 	[self.channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 	[self.channelTable registerForDraggedTypes:_tableRowTypes];
+
+    [self.ignoreTable setTarget:self];
+    [self.ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 	
 	[self load];
 	
