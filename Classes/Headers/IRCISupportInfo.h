@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define IRCISupportRawSuffix				@"are supported by this server"
+
 @interface IRCISupportInfo : NSObject
 @property (nonatomic, strong) NSDictionary *channelModes;
 @property (nonatomic, assign) NSInteger nicknameLength;
@@ -51,6 +53,7 @@
 
 - (void)reset;
 - (void)update:(NSString *)configData client:(IRCClient *)client;
+- (void)update:(NSString *)configData client:(IRCClient *)client formattedOutput:(NSString **)outputString;
 
 - (NSArray *)parseMode:(NSString *)modeString;
 - (IRCModeInfo *)createMode:(NSString *)mode;

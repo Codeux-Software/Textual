@@ -37,7 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _isupportSuffix				@" are supported by this server"
 #define _channelUserModeValue		100
 
 @implementation IRCISupportInfo
@@ -71,11 +70,23 @@
 	};
 }
 
+
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {
-	if ([configData hasSuffix:_isupportSuffix]) {
-		configData = [configData safeSubstringToIndex:(configData.length - _isupportSuffix.length)];
+    [self update:configData client:client formattedOutput:NULL];
+}
+
+- (void)update:(NSString *)configData client:(IRCClient *)client formattedOutput:(NSString **)outputString
+{
+    BOOL includeSuffix = NO;
+    
+	if ([configData hasSuffix:IRCISupportRawSuffix]) {
+        includeSuffix = YES;
+        
+		configData = [configData safeSubstringToIndex:(configData.length - IRCISupportRawSuffix.length)];
 	}
+
+    NSString *resultString = NSStringEmptyPlaceholder;
 
 	NSObjectIsEmptyAssert(configData);
 	
@@ -86,12 +97,17 @@
 		NSString *value = nil;
 		
 		NSRange r = [cvar rangeOfString:@"="];
-		
+
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
 			vakey = [cvar safeSubstringToIndex:r.location];
 			value = [cvar safeSubstringFromIndex:NSMaxRange(r)];
-		}
-		
+
+            resultString = [resultString stringByAppendingFormat:@"\002%@\002", vakey];
+            resultString = [resultString stringByAppendingFormat:@"=%@ ", value];
+		} else {
+            resultString = [resultString stringByAppendingFormat:@"\002%@\002 ", vakey];
+        }
+        
 		if (value) {
 			if ([vakey isEqualIgnoringCase:@"PREFIX"]) {
 				[self parsePrefix:value];
@@ -120,6 +136,14 @@
 			[client.CAPacceptedCaps addObject:@"userhost-in-names"];
 		}
 	}
+
+    if (includeSuffix) {
+        resultString = [resultString.trim stringByAppendingString:IRCISupportRawSuffix];
+    }
+
+    PointerIsEmptyAssert(outputString);
+
+    *outputString = resultString;
 }
 
 - (NSArray *)parseMode:(NSString *)modeString
