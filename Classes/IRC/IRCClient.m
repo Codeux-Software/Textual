@@ -3850,14 +3850,13 @@
 		}
 		case 5: // RPL_ISUPPORT
 		{
+            [self.isupport update:[m sequence:1] client:self];
+            
             if (self.rawModeEnabled || [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
-                NSString *formattedOutput = nil;
+                NSArray *configRep = [self.isupport buildConfigurationRepresentation];
 
-                [self.isupport update:[m sequence:1] client:self formattedOutput:&formattedOutput];
-
-                [self printDebugInformationToConsole:formattedOutput];
-            } else {
-                [self.isupport update:[m sequence:1] client:self];
+                /* Just updated our configuration so pull last object from our rep to get last insert. */
+                [self printDebugInformationToConsole:[configRep lastObject]];
             }
 
 			[self.worldController reloadTree];

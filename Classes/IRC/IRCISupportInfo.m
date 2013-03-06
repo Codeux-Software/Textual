@@ -52,9 +52,17 @@
 
 - (void)reset
 {
+    /* Our configuration cache is not used very much throughout Textual, but having it
+     part of the source does make future expansion that may require access to it possible. */
+    /* Each item of the configuration cache is a dictionary containing key and values for 
+     each configuration that was feeded for the line that was parsed then inserted. If a 
+     configuration key does not have an actual value, then it is defined as a BOOL, YES. */
+
+    _cachedConfiguration = @[];
+    
 	self.networkAddress = nil;
 	self.networkName = nil;
-	
+
 	self.nicknameLength = 9; // Default for IRC protocol.
 	self.modesCount = TXMaximumNodesPerModeCommand;
 
@@ -73,22 +81,13 @@
 
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {
-    [self update:configData client:client formattedOutput:NULL];
-}
-
-- (void)update:(NSString *)configData client:(IRCClient *)client formattedOutput:(NSString **)outputString
-{
-    BOOL includeSuffix = NO;
-    
 	if ([configData hasSuffix:IRCISupportRawSuffix]) {
-        includeSuffix = YES;
-        
 		configData = [configData safeSubstringToIndex:(configData.length - IRCISupportRawSuffix.length)];
 	}
 
-    NSString *resultString = NSStringEmptyPlaceholder;
-
 	NSObjectIsEmptyAssert(configData);
+
+    NSMutableDictionary *cachedConfig = [NSMutableDictionary dictionary];
 	
 	NSArray *configVariables = [configData split:NSStringWhitespacePlaceholder];
 	
@@ -102,10 +101,9 @@
 			vakey = [cvar safeSubstringToIndex:r.location];
 			value = [cvar safeSubstringFromIndex:NSMaxRange(r)];
 
-            resultString = [resultString stringByAppendingFormat:@"\002%@\002", vakey];
-            resultString = [resultString stringByAppendingFormat:@"=%@ ", value];
+            [cachedConfig safeSetObject:value forKey:vakey];
 		} else {
-            resultString = [resultString stringByAppendingFormat:@"\002%@\002 ", vakey];
+            [cachedConfig safeSetObject:@(YES) forKey:vakey];
         }
         
 		if (value) {
@@ -137,13 +135,47 @@
 		}
 	}
 
-    if (includeSuffix) {
-        resultString = [resultString.trim stringByAppendingString:IRCISupportRawSuffix];
+    _cachedConfiguration = [_cachedConfiguration arrayByAddingObject:cachedConfig];
+}
+
+- (NSArray *)buildConfigurationRepresentation
+{
+    /* This takes our cached configuration data and builds it into what it would look like if we
+      were to receive an actual 005. The only difference is this method formats each token that
+      is in our configuration cache to make them easier to see. We use bold for the tokens. This
+      is pretty much only used in developer mode, but it could have other uses? */
+
+    NSObjectIsEmptyAssertReturn(self.cachedConfiguration, nil);
+
+    NSArray *resultArray = @[];
+
+    for (NSDictionary *cachedConfig in self.cachedConfiguration) {
+        NSObjectIsEmptyAssertLoopContinue(cachedConfig);
+
+        NSMutableString *cacheString = [NSMutableString string];
+
+        NSArray *sortedKeys = cachedConfig.sortedDictionaryKeys;
+
+        for (NSString *configToken in sortedKeys) {
+            /* Does it have value or is it empty? */
+
+            id objectValue = cachedConfig[configToken];
+
+            if ([objectValue isKindOfClass:[NSString class]]) {
+                [cacheString appendFormat:@"\002%@\002=%@ ", configToken, objectValue];
+            } else {
+                [cacheString appendFormat:@"\002%@\002 ", configToken];
+            }
+        }
+
+        NSObjectIsEmptyAssertLoopContinue(cacheString);
+
+        [cacheString appendString:IRCISupportRawSuffix];
+
+        resultArray = [resultArray arrayByAddingObject:cacheString];
     }
 
-    PointerIsEmptyAssert(outputString);
-
-    *outputString = resultString;
+    return resultArray;
 }
 
 - (NSArray *)parseMode:(NSString *)modeString
