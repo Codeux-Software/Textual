@@ -3807,12 +3807,27 @@
 		case 20: // RPL_(?????) — Legacy code. What goes here?
 		case 42: // RPL_(?????) — Legacy code. What goes here?
 		case 250 ... 255: // RPL_STATSCONN, RPL_LUSERCLIENT, RPL_LUSERHOP, RPL_LUSERUNKNOWN, RPL_LUSERCHANNELS, RPL_LUSERME
-		case 265 ... 266: // RPL_LOCALUSERS, RPL_GLOBALUSERS
 		{
 			[self printReply:m];
 
 			break;
 		}
+		case 265 ... 266: // RPL_LOCALUSERS, RPL_GLOBALUSERS
+        {
+            NSString *message = [m sequence];
+
+            LogToConsole(@"%@", m.params);
+
+            if (m.params.count == 4) {
+                /* Removes user count from in front of messages on IRCds that send them.
+                 Example: ">> :irc.example.com 265 Guest 2 3 :Current local users 2, max 3" */
+                
+                message = [m sequence:3];
+            }
+
+            [self print:nil type:TVCLogLineDebugType nick:nil text:message encrypted:NO receivedAt:m.receivedAt];
+        }
+
 		case 372: // RPL_MOTD
 		case 375: // RPL_MOTDSTART
 		case 376: // RPL_ENDOFMOTD
