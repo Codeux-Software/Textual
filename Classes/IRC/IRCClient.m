@@ -2628,11 +2628,6 @@
 				break;
 			}
 			case 1038: // Command: WALLOPS
-			case 1006: // Command: CHATOPS
-			case 1017: // Command: GLOBOPS
-			case 1024: // Command: LOCOPS
-			case 1027: // Command: NACHAT
-			case 1003: // Command: ADCHAT
 			{
 				[m.params safeInsertObject:self.localNickname atIndex:0];
 
