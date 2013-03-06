@@ -1230,7 +1230,7 @@ static NSMutableArray *excludeKeywords = nil;
 	if (status == noErr) {
 		NSBundle *baseBundle = [NSBundle bundleWithURL:CFBridgingRelease(appURL)];
 
-		return [baseBundle.bundleIdentifier isEqualTo:RZMainBundle().bundleIdentifier];
+		return [baseBundle.bundleIdentifier isEqualTo:[self applicationBundleIdentifier]];
 	}
 
 	return NO;
@@ -1364,20 +1364,20 @@ static NSMutableArray *excludeKeywords = nil;
 	NSString *themeName = [TPCThemeController extractThemeName:[self themeName]];
 	NSString *themeType = [TPCThemeController extractThemeSource:[self themeName]];
 
-	if ([themeType isEqualToString:@"user"]) {
-		NSString *customPath = [[self customThemeFolderPath] stringByAppendingPathComponent:themeName];
-		NSString *bundlePath = [[self bundledThemeFolderPath] stringByAppendingPathComponent:themeName];
+    NSString *customPath = [[self customThemeFolderPath] stringByAppendingPathComponent:themeName];
+    NSString *bundlePath = [[self bundledThemeFolderPath] stringByAppendingPathComponent:themeName];
 
-		if ([RZFileManager() fileExistsAtPath:customPath] == NO) {
-			if ([RZFileManager() fileExistsAtPath:bundlePath] == NO) {
-				[self setThemeName:TXDefaultTextualLogStyle];
-			} else {
-				NSString *newName = [TPCThemeController buildResourceFilename:themeName];
+    if ([RZFileManager() fileExistsAtPath:customPath] == NO) {
+        if ([RZFileManager() fileExistsAtPath:bundlePath] == NO) {
+            [self setThemeName:TXDefaultTextualLogStyle];
+        } else {
+            if ([themeType isEqualToString:@"resource"] == NO) {
+                NSString *newName = [TPCThemeController buildResourceFilename:themeName];
 
-				[self setThemeName:newName];
-			}
-		}
-	}
+                [self setThemeName:newName];
+            }
+        }
+    }
 }
 
 + (void)sync
