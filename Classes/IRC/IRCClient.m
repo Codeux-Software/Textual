@@ -1574,9 +1574,9 @@
 				
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
 				if (isIgnoreCommand) {
-					[self.masterController.menuController showServerPropertyDialog:self ignore:@"--"];
+                    [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"--"];
 				} else {
-					[self.masterController.menuController showServerPropertyDialog:self ignore:@"-"];
+                    [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
 				}
 			} else {
 				NSString *nickname = s.getToken.string;
@@ -1585,9 +1585,9 @@
 
 				if (PointerIsEmpty(user)) {
 					if (isIgnoreCommand) {
-						[self.masterController.menuController showServerPropertyDialog:self ignore:nickname];
+                        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
 					} else {
-						[self.masterController.menuController showServerPropertyDialog:self ignore:@"-"];
+                        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
 					}
 
 					return;
@@ -3535,8 +3535,50 @@
 	}
 }
 
+- (void)receiveErrorExcessFloodWarningPopupCallback:(TLOPopupPromptReturnType)returnType
+{
+    if (returnType == TLOPopupPromptReturnPrimaryType) {
+        [self startReconnectTimer];
+    } else if (returnType == TLOPopupPromptReturnSecondaryType) {
+        [self cancelReconnect];
+    } else {
+        /* Our menuController already has built in methods for handling the opening
+         of our server properties so we are going to call that instead of creating a 
+         new instance of TDCServerSheet here ourselves. */
+
+        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"floodControl" andContext:nil];
+    }
+}
+
 - (void)receiveError:(IRCMessage *)m
 {
+    NSString *message = m.sequence;
+
+    /* This match is pretty general, but it works in most situations. */
+    if ([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Excess Flood)"]) {
+        [self.worldController select:self]; // Bring server to attention before popping view.
+
+        /* Cancel any active reconnect before asking if the user wants to do it. */
+        /* We cancel after 1.0 second to allow this popup prompt to be called and then 
+         for Textual to process the actual drop in socket. receiveError: is called before
+         our reconnect begins so we have to race it. */
+        [self performSelector:@selector(cancelReconnect) withObject:nil afterDelay:1.0];
+
+        /* Prompt user about disconnect. */
+        TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+
+        [prompt sheetWindowWithQuestion:self.masterController.mainWindow
+                                 target:self
+                                 action:@selector(receiveErrorExcessFloodWarningPopupCallback:)
+                                   body:TXTLS(@"ExcessFloodIRCDisconnectAlertMessage")
+                                  title:TXTLS(@"ExcessFloodIRCDisconnectAlertTitle")
+                          defaultButton:TXTLS(@"YesButton")
+                        alternateButton:TXTLS(@"NoButton")
+                            otherButton:TXTLS(@"ExcessFloodIRCDisconnectAlertOpenFloodControlButton")
+                         suppressionKey:nil
+                        suppressionText:nil];
+    }
+    
 	[self printError:m.sequence];
 }
 

@@ -615,16 +615,25 @@
 - (void)popWindowSheetIfExists
 {
 	/* Close any existing sheet by canceling the previous instance of it. */
-	
 	for (NSString *windowKey in self.openWindowList) {
 		id windowObject = [self.openWindowList objectForKey:windowKey];
 
 		if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
 			if ([windowObject respondsToSelector:@selector(cancel:)]) {
 				[windowObject performSelector:@selector(cancel:) withObject:nil];
+
+                return;
 			}
 		}
 	}
+
+    /* If our sheet was not one we delegate, then force close it using "close" */
+    /* We only handle sheets on the main window. */
+    NSWindow *attachedSheet = [self.masterController.mainWindow attachedSheet];
+
+    PointerIsEmptyAssert(attachedSheet);
+
+    [attachedSheet close];
 }
 
 #pragma mark -
@@ -989,8 +998,8 @@
 	d.delegate = self;
 	d.config = [IRCClientConfig new];
 	d.window = self.masterController.mainWindow;
-	
-	[d startWithIgnoreTab:NSStringEmptyPlaceholder];
+
+    [d start:nil withContext:nil];
 
 	[self addWindowToWindowList:d];
 }
@@ -1045,7 +1054,7 @@
 #pragma mark -
 #pragma mark Server Properties
 
-- (void)showServerPropertyDialog:(IRCClient *)u ignore:(NSString *)imask
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context
 {
 	if (_noClient) {
 		return;
@@ -1060,14 +1069,14 @@
 	d.config = u.storedConfig.mutableCopy;
 	d.window = self.masterController.mainWindow;
 	
-	[d startWithIgnoreTab:imask];
+	[d start:viewType withContext:context];
 
 	[self addWindowToWindowList:d];
 }
 
 - (void)showServerPropertiesDialog:(id)sender
 {
-	[self showServerPropertyDialog:self.worldController.selectedClient ignore:NSStringEmptyPlaceholder];
+	[self showServerPropertyDialog:self.worldController.selectedClient withDefaultView:nil andContext:nil];
 }
 
 - (void)serverSheetOnOK:(TDCServerSheet *)sender
@@ -1607,7 +1616,7 @@
 
 - (void)showChannelIgnoreList:(id)sender
 {
-	[self showServerPropertyDialog:self.worldController.selectedClient ignore:@"-"];
+	[self showServerPropertyDialog:self.worldController.selectedClient withDefaultView:@"addressBook" andContext:@"-"];
 }
 
 #pragma mark -

@@ -90,6 +90,10 @@
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
+"ExcessFloodIRCDisconnectAlertTitle" = "Excess Flood";
+"ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
+"ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
+
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "IRCCTCPSupportedReplies" = "VERSION CLIENTINFO USERINFO PING TIME";

@@ -95,7 +95,7 @@
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 
-- (void)startWithIgnoreTab:(NSString *)imask;
+- (void)start:(NSString *)viewToken withContext:(NSString *)context;
 
 - (void)close;
 
