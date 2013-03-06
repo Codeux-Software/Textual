@@ -1321,7 +1321,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
 
-    d[@"TrackUserAwayStatusMaximumChannelSize"] = @(200);
+    d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
 	d[@"ScrollbackMaximumLineCount"]			= @(300);
 	d[@"InlineMediaScalingWidth"]				= @(300);

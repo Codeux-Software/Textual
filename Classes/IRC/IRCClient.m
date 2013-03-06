@@ -695,6 +695,9 @@
 
 	if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
+
+        [self.worldController updateIcon];
+        [self.worldController reloadTree];
 	}
 
 	if (t.isUnread || (isActiveWindow && self.worldController.selectedItem == t)) {
@@ -704,9 +707,6 @@
 	if (isActiveWindow == NO) {
 		[NSApp requestUserAttention:NSInformationalRequest];
 	}
-
-    [self.worldController updateIcon];
-	[self.worldController reloadTree];
 }
 
 - (void)setUnreadState:(IRCChannel *)t
@@ -721,23 +721,20 @@
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
 		if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
 			t.dockUnreadCount += 1;
+            
+            [self.worldController updateIcon];
 		}
 	}
 
 	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
 		t.treeUnreadCount += 1;
+
+        [self.worldController reloadTree];
 	}
 
 	if (isActiveWindow == NO && popIcon) {
 		[NSApp requestUserAttention:NSInformationalRequest];
 	}
-
-	if (isActiveWindow && self.worldController.selectedItem == t) {
-		return;
-	}
-
-    [self.worldController updateIcon];
-	[self.worldController reloadTree];
 }
 
 #pragma mark -
