@@ -2550,6 +2550,8 @@
     /* Intercept input. */
     m = [RZPluginManager() processInterceptedServerInput:m for:self];
 
+    PointerIsEmptyAssert(m);
+
     /* If we have a nickname, it better have a host associated with it. */
 	if (m.sender.nickname.length >= 1 && [m.sender.nickname isNickname]) {
 		NSObjectIsEmptyAssert(m.sender.username);
