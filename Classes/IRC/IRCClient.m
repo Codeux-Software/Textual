@@ -3676,6 +3676,8 @@
 
 			for (NSString *cap in caps) {
 				if ([self isCapAvailable:cap]) {
+                    NSObjectIsEmptyAssertLoopContinue(cap);
+
 					[self.CAPpendingCaps addObject:cap];
 				}
 			}
@@ -3683,6 +3685,8 @@
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
+                NSObjectIsEmptyAssertLoopContinue(cap);
+                
 				[self.CAPacceptedCaps addObject:cap];
 
 				[self cap:cap result:YES];
@@ -3847,7 +3851,7 @@
 		case 5: // RPL_ISUPPORT
 		{
 			[self.isupport update:[m sequence:1] client:self];
-			
+
 			[self.worldController reloadTree];
 
             if (self.rawModeEnabled || [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
