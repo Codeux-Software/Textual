@@ -2955,7 +2955,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																					<int key="NSColorSpace">1</int>
 																					<bytes key="NSRGB">MC41MDE5NjA3ODQzIDAuNTAxOTYwNzg0MyAwLjUwMTk2MDc4NDMAA</bytes>
 																				</object>
-																				<object class="NSFont" key="NSFont">
+																				<object class="NSFont" key="NSFont" id="25">
 																					<string key="NSName">LucidaGrande-Bold</string>
 																					<double key="NSSize">10</double>
 																					<int key="NSfFlags">16</int>
@@ -4845,7 +4845,7 @@ wGw</bytes>
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSButton" id="714477844">
+					<object class="NSButton" id="770294129">
 						<reference key="NSNextResponder" ref="701308596"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{30, 143}, {260, 18}}</string>
@@ -4854,13 +4854,13 @@ wGw</bytes>
 						<reference key="NSNextKeyView" ref="734798055"/>
 						<string key="NSReuseIdentifierKey">_NS:239</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="431578672">
+						<object class="NSButtonCell" key="NSCell" id="1008792437">
 							<int key="NSCellFlags">-2080374784</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Force birthday icon onto dock.</string>
 							<reference key="NSSupport" ref="325354301"/>
 							<string key="NSCellIdentifier">_NS:239</string>
-							<reference key="NSControlView" ref="714477844"/>
+							<reference key="NSControlView" ref="770294129"/>
 							<int key="NSButtonFlags">1211912448</int>
 							<int key="NSButtonFlags2">2</int>
 							<reference key="NSNormalImage" ref="149444798"/>
@@ -4878,7 +4878,7 @@ wGw</bytes>
 						<string key="NSFrame">{{31, 171}, {260, 18}}</string>
 						<reference key="NSSuperview" ref="701308596"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="714477844"/>
+						<reference key="NSNextKeyView" ref="770294129"/>
 						<string key="NSReuseIdentifierKey">_NS:239</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="321040719">
@@ -5048,7 +5048,7 @@ wGw</bytes>
 					<object class="NSTextField" id="460208236">
 						<reference key="NSNextResponder" ref="701308596"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{108, 239}, {317, 28}}</string>
+						<string key="NSFrame">{{31, 239}, {473, 28}}</string>
 						<reference key="NSSuperview" ref="701308596"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="212464219"/>
@@ -5056,8 +5056,8 @@ wGw</bytes>
 						<object class="NSTextFieldCell" key="NSCell" id="806262702">
 							<int key="NSCellFlags">69206017</int>
 							<int key="NSCellFlags2">138412032</int>
-							<string key="NSContents">The following settings are for testing purposes only and are considered experiemtnal. Use at your own risk.</string>
-							<reference key="NSSupport" ref="24"/>
+							<string key="NSContents">The following settings are for testing purposes only and are considered experiemtnal. Use at your own risk. There is no guarantee these will function or even continue to exist.</string>
+							<reference key="NSSupport" ref="25"/>
 							<reference key="NSControlView" ref="460208236"/>
 							<reference key="NSBackgroundColor" ref="326222776"/>
 							<reference key="NSTextColor" ref="794601834"/>
@@ -9025,10 +9025,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.Force Enable Bugfix #96905433</string>
-						<reference key="source" ref="714477844"/>
+						<reference key="source" ref="770294129"/>
 						<reference key="destination" ref="1032655829"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="714477844"/>
+							<reference key="NSSource" ref="770294129"/>
 							<reference key="NSDestination" ref="1032655829"/>
 							<string key="NSLabel">value: values.Force Enable Bugfix #96905433</string>
 							<string key="NSBinding">value</string>
@@ -10898,15 +10898,15 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<int key="objectID">6648</int>
 						<reference key="object" ref="701308596"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="460208236"/>
 							<reference ref="212464219"/>
 							<reference ref="672335610"/>
 							<reference ref="800030108"/>
-							<reference ref="714477844"/>
 							<reference ref="779481008"/>
 							<reference ref="98051281"/>
 							<reference ref="431940728"/>
 							<reference ref="734798055"/>
+							<reference ref="770294129"/>
+							<reference ref="460208236"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Hidden Settings</string>
@@ -12166,16 +12166,16 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7492</int>
-						<reference key="object" ref="714477844"/>
+						<reference key="object" ref="770294129"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="431578672"/>
+							<reference ref="1008792437"/>
 						</array>
 						<reference key="parent" ref="701308596"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7493</int>
-						<reference key="object" ref="431578672"/>
-						<reference key="parent" ref="714477844"/>
+						<reference key="object" ref="1008792437"/>
+						<reference key="parent" ref="770294129"/>
 					</object>
 				</array>
 			</object>
@@ -12762,7 +12762,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="6638.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6639.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6648.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="6648.IBUserGuides">
+				<array class="NSMutableArray" key="6648.IBUserGuides">
 					<object class="IBUserGuide">
 						<reference key="view" ref="701308596"/>
 						<double key="location">32</double>
@@ -12776,11 +12776,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBUserGuide">
 						<reference key="view" ref="701308596"/>
 						<double key="location">21</double>
-						<int key="affinity">1</int>
-					</object>
-					<object class="IBUserGuide">
-						<reference key="view" ref="701308596"/>
-						<double key="location">251</double>
 						<int key="affinity">1</int>
 					</object>
 				</array>
