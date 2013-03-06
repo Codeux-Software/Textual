@@ -1027,18 +1027,14 @@
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
-				if (self.isAway == NO) {
-					uncutInput = TXTLS(@"IRCAwayCommandDefaultReason");
-				}
+                uncutInput = TXTLS(@"IRCAwayCommandDefaultReason");
 			}
+            
+            if (self.isAway) {
+                uncutInput = nil;
+            }
 
-			if ([TPCPreferences awayAllConnections]) {
-				for (IRCClient *client in self.worldController.clients) {
-					[client send:uppercaseCommand, uncutInput, nil];
-				}
-			} else {
-				[self send:uppercaseCommand, uncutInput, nil];
-			}
+            [self toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
 
 			break;
 		}
@@ -3892,18 +3888,26 @@
 			break;
 		}
 		case 305: // RPL_UNAWAY
-		{
-			self.isAway = NO;
-
-			[self printUnknownReply:m];
-
-			break;
-		}
 		case 306: // RPL_NOWAWAY
 		{
-			self.isAway = YES;
+			self.isAway = (m.numericReply == 306);
 
 			[self printUnknownReply:m];
+            
+            /* Update our own status. This has to only be done with away-notify CAP enabled.
+             Old, WHO based information requests will still show our own status. */
+
+            NSAssertReturnLoopBreak(self.CAPawayNotify);
+
+            for (IRCChannel *channel in self.channels) {
+                IRCUser *myself = [channel findMember:self.localNickname];
+                
+                PointerIsEmptyAssertLoopContinue(myself); // This *should* never be empty.
+                
+                myself.isAway = self.isAway;
+            }
+
+            [self.worldController.selectedChannel reloadMemberList];
 
 			break;
 		}
@@ -4396,7 +4400,7 @@
 			break;
 		}
 		case 323: // RPL_LISTEND
-		case 329: // RPL_(?????) — Legacy code. What goes here?
+		case 329: // RPL_CREATIONTIME
 		case 368: // RPL_ENDOFBANLIST
 		case 347: // RPL_ENDOFINVITELIST
 		case 349: // RPL_ENDOFEXCEPTLIST
@@ -5353,14 +5357,20 @@
 
 - (void)toggleAwayStatus:(BOOL)setAway
 {
+    [self toggleAwayStatus:setAway withReason:TXTLS(@"IRCAwayCommandDefaultReason")];
+}
+
+- (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason
+{
 	NSAssertReturn(self.isLoggedIn);
 
-	if (setAway && self.isAway == NO) {
-		[self send:IRCPrivateCommandIndex("away"), TXTLS(@"IRCAwayCommandDefaultReason"), nil];
+    /* Our internal self.isAway status will be updated by the numeric replies 
+     for these. */
+
+	if (setAway && NSObjectIsNotEmpty(reason)) {
+		[self send:IRCPrivateCommandIndex("away"), reason, nil];
 	} else {
-		if (self.isAway) {
-			[self send:IRCPrivateCommandIndex("away"), nil];
-		}
+		[self send:IRCPrivateCommandIndex("away"), nil];
 	}
 }
 
