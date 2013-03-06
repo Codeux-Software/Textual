@@ -3816,8 +3816,6 @@
         {
             NSString *message = [m sequence];
 
-            LogToConsole(@"%@", m.params);
-
             if (m.params.count == 4) {
                 /* Removes user count from in front of messages on IRCds that send them.
                  Example: ">> :irc.example.com 265 Guest 2 3 :Current local users 2, max 3" */
@@ -5241,7 +5239,7 @@
 {
 	PointerIsEmptyAssert(channel);
 
-	NSAssertReturn(channel.status == IRCChannelTerminated);
+	NSAssertReturn(channel.status == IRCChannelParted);
 
 	[self joinChannel:channel];
 }
