@@ -60,7 +60,9 @@
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 
 /* Talk to plugins. */
-- (id)processInterceptedInput:(id)input command:(NSString *)command;
+- (id)processInterceptedUserInput:(id)input command:(NSString *)command;
+
+- (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client;
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client
 						   message:(NSString *)message

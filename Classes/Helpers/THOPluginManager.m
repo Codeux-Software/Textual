@@ -253,11 +253,22 @@
 #pragma mark -
 #pragma mark Input Replacement
 
-- (id)processInterceptedInput:(id)input command:(NSString *)command
+- (id)processInterceptedUserInput:(id)input command:(NSString *)command
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins) {
         if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
             input = [plugin.primaryClass interceptUserInput:input command:command];
+        }
+    }
+
+    return input;
+}
+
+- (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client
+{
+    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+        if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
+            input = [plugin.primaryClass interceptServerInput:input for:client];
         }
     }
 

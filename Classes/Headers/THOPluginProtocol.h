@@ -72,13 +72,43 @@
 - (NSView *)preferencesView;
 - (NSString *)preferencesMenuItemName;
 
-/* Process user input before Textual does. */
+/* ****************************************************************
+
+ Important: Added in version 3.0.0
+
+ The commands available below to intercept user input or server input
+ and manipulate it or have it ignored completely are very sensitive
+ methods to use. These methods should not be used by plugins unless
+ absolutely needed. Users expect a certain standard with Textual, and
+ if a plugin overrides something it can make everybody look bad; plus
+ each end user expects a certain event to produce a specific reaction
+ by Textual or the server. Try to match those expectations.
+
+ **************************************************************** */
+
+/* Process server input before Textual does. Return nil to have it ignored. */
+/* This method is passed a copy of the IRCMessage class which is an internal
+ representation of the parsed input line. This method can be used to have
+ certain events ignored completely based on what the plugin functions as. */
+/* Expected result is the same IRCMessage item with parameters and information
+ manipulated as needed. Or, nil for the item to be ignored. */
+/* The input of this call is passed to every plugin that Textual has loaded in 
+ sequential order based on when it was loaded. Keep this in mind as another plugin 
+ loaded may have altered the input already. This is unlikely unless the user has 
+ loaded a lot of custom plugins, but it is a possibility. */
+- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client;
+
+/* Process user input before Textual does. Return nil to have it ignored. */
 /* This command may be fed an NSAttributedString or NSString. If it is an
- NSAttributedString it most likely contains user defined text formatting.
+ NSAttributedString, it most likely contains user defined text formatting.
  Honor that formatting. Do not turn an NSAttributedString into an NSString.
 
  Return the type you are given and make sure you check the type you get to
  make sure it is handled appropriately. Do not give us a clean NSString if
  we handed you an NSAttributedString that contains formatting. */
+/* The input of this call is passed to every plugin that Textual has loaded in
+ sequential order based on when it was loaded. Keep this in mind as another plugin
+ loaded may have altered the input already. This is unlikely unless the user has
+ loaded a lot of custom plugins, but it is a possibility. */
 - (id)interceptUserInput:(id)input command:(NSString *)command;
 @end
