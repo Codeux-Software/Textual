@@ -51,9 +51,18 @@
 @property (nonatomic, strong) NSString *userModeHPrefix;
 @property (nonatomic, strong) NSString *userModeVPrefix;
 
+/* Technically speaking, all these properties should be readonly, but
+ Textual does not enforce that too much since almost no plugins will 
+ be trying to override these. That is the way it is in most of the 
+ headers. We put trust in the idea that plugins will be basic bundles
+ that do fine with our plugin API. */
+@property (nonatomic, readonly, strong) NSArray *cachedConfiguration;
+
 - (void)reset;
+
 - (void)update:(NSString *)configData client:(IRCClient *)client;
-- (void)update:(NSString *)configData client:(IRCClient *)client formattedOutput:(NSString **)outputString;
+
+- (NSArray *)buildConfigurationRepresentation;
 
 - (NSArray *)parseMode:(NSString *)modeString;
 - (IRCModeInfo *)createMode:(NSString *)mode;
