@@ -54,6 +54,7 @@
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
 	@class IRCClient;
+    @class IRCClientOperationQueue;
 	@class IRCClientConfig;
 	@class IRCConnection;
 	@class IRCExtras;
@@ -166,6 +167,7 @@
 	#import "IRCChannelConfig.h"
 	#import "IRCChannelMode.h"
 	#import "IRCClient.h"
+    #import "IRCClientOperationQueue.h"
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
 	#import "IRCConnection.h"

@@ -49,7 +49,6 @@
 @property (nonatomic, strong) IRCTreeItem *selectedItem;
 @property (nonatomic, assign) NSString *previousSelectedClientId;
 @property (nonatomic, assign) NSString *previousSelectedChannelId;
-@property (nonatomic, strong) NSOperationQueue *messageOperationQueue;
 
 - (void)setupConfiguration;
 - (void)setupTree;
@@ -117,19 +116,4 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
 - (void)destroyAllEvidence;
-
-- (void)updateReadinessState:(TVCLogController *)controller;
-@end
-
-#pragma mark -
-
-@interface TKMessageBlockOperation : NSOperation
-@property (nonatomic, nweak) TVCLogController *controller;
-
-+ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
-								  forController:(TVCLogController *)controller
-									withContext:(NSDictionary *)context;
-
-+ (TKMessageBlockOperation *)operationWithBlock:(void(^)(void))block
-								  forController:(TVCLogController *)controller;
 @end

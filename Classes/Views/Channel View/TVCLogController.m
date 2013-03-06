@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController ()
+@property (nonatomic, readonly, uweak) IRCClientOperationQueue *operationQueue;
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @end
 
@@ -50,7 +51,7 @@
 {
 	if ((self = [super init])) {
 		self.highlightedLineNumbers	= [NSMutableArray new];
-		
+
 		self.activeLineCount = 0;
 		self.lastVisitedHighlight = -1;
 
@@ -58,7 +59,7 @@
 		self.reloadingBacklog = NO;
 		self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
-		
+
 		self.maximumLineCount = 300;
 	}
 
@@ -97,7 +98,7 @@
 	self.sink.owner = self;
 
 	self.view = [[TVCLogView alloc] initWithFrame:NSZeroRect];
-	
+
 	self.view.autoresizingMask		= (NSViewWidthSizable | NSViewHeightSizable);
 	self.view.keyDelegate			= self;
 	self.view.frameLoadDelegate		= self;
@@ -109,7 +110,7 @@
 
 	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
 	[self.view.preferences setUsesPageCache:NO];
-	
+
 	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
@@ -122,7 +123,7 @@
 	}
 
 	[(id)self.view setBackgroundColor:windowColor];
-	
+
 	[self.view.mainFrame loadHTMLString:newHTML baseURL:[self baseURL]];
 }
 
@@ -134,7 +135,7 @@
 	if (PointerIsNotEmpty(self.historicLogFile)) {
 		return;
 	}
-	
+
 	self.historicLogFile = [TLOFileLogger new];
 	self.historicLogFile.flatFileStructure = YES;
 	self.historicLogFile.writePlainText = NO;
@@ -146,12 +147,12 @@
 	} else {
 		self.historicLogFile.filenameOverride = [NSString stringWithFormat:@"%@-%@", self.client.config.itemUUID, self.channel.name];
 	}
-	
+
 	[self.historicLogFile reopenIfNeeded];
 
     if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
         /* Reset our file if we do not want to load historic items. */
-        
+
         [self.historicLogFile reset];
     }
 }
@@ -162,19 +163,19 @@
 
 	/* The historic log file is always open regardless of whether the user asked
 	 Textual to remember the history between restarts. It is always open because
-	 the reloading of a theme uses it to fill in the backlog after a reload. 
-	 
-	 closeHistoricLog is the point where we decide to actually save the file 
+	 the reloading of a theme uses it to fill in the backlog after a reload.
+
+	 closeHistoricLog is the point where we decide to actually save the file
 	 or erase it. If the user has Textual configured to remember between restarts,
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
-	
+
 	if ([TPCPreferences reloadScrollbackOnLaunch] && (self.channel && self.channel.isChannel)) {
 		[self.historicLogFile updateCache];
 	} else {
 		[self.historicLogFile reset];
 	}
-	
+
 	self.historicLogFile = nil;
 }
 
@@ -204,6 +205,11 @@
 - (NSURL *)baseURL
 {
 	return self.masterController.themeController.baseURL;
+}
+
+- (IRCClientOperationQueue *)operationQueue
+{
+    return self.client.operationQueue;
 }
 
 - (NSInteger)scrollbackCorrectionInit
@@ -268,11 +274,11 @@
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		[self internalExecuteScriptCommand:command withArguments:args];
-		
+
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self withContext:context];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:context];
 }
 
 #pragma mark -
@@ -281,7 +287,7 @@
 - (NSString *)topicValue
 {
 	DOMElement *topicBar = [self documentChannelTopicBar];
-	
+
 	PointerIsEmptyAssertReturn(topicBar, NSStringEmptyPlaceholder);
 
 	return [(id)topicBar innerHTML];
@@ -297,9 +303,9 @@
 		if ([self.topicValue isEqualToString:topic] == NO)
 		{
 			DOMElement *topicBar = [self documentChannelTopicBar];
-			
+
 			PointerIsEmptyAssertReturn(topicBar, @(NO));
-			
+
 			NSString *body = [TVCLogRenderer renderBody:topic
 											 controller:self
 											 renderType:TVCLogRendererHTMLType
@@ -314,7 +320,7 @@
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 #pragma mark -
@@ -331,7 +337,7 @@
 	PointerIsEmptyAssert(body);
 
 	[body setValue:@0 forKey:@"scrollTop"];
-	
+
 	[self executeScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
 
@@ -359,7 +365,7 @@
 
 	DOMElement *body = [doc body];
 	PointerIsEmptyAssertReturn(body, NO);
-	
+
 	NSInteger viewHeight = self.view.frame.size.height;
 
 	NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
@@ -380,7 +386,7 @@
 
 		DOMDocument *doc = [self mainFrameDocument];
 		PointerIsEmptyAssertReturn(doc, nil);
-		
+
 		DOMElement *e = [doc getElementById:@"mark"];
 
 		while (e) {
@@ -388,7 +394,7 @@
 
 			e = [doc getElementById:@"mark"];
 		}
-		
+
 		[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 
 		NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
@@ -396,7 +402,7 @@
 		return (__bridge void *)html;
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)unmark
@@ -420,7 +426,7 @@
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)goToMark
@@ -430,7 +436,7 @@
 	}
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark Reload Scrollback
 
 - (void)reloadOldLines:(BOOL)markHistoric
@@ -446,7 +452,7 @@
 	 0000002, 0000003, etc. Sorting the dictionary puts these keys in
 	 order so that each message is rendered in the correct order it
 	 was originally printed. */
-	
+
 	NSArray *keys = oldLines.sortedDictionaryKeys;
 
 	for (NSString *key in keys) {
@@ -478,17 +484,19 @@
 
 		[self mark];
 
-		[self.worldController updateReadinessState:self];
+		[self.operationQueue updateReadinessState];
 
 		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{
-		@"highPriority" : @(YES),
-		@"isHistoric" : @(YES)
-	 }];
+    [self.operationQueue enqueueMessageBlock:messageBlock
+                                  fromSender:self
+                                 withContext:@{
+                                    @"highPriority" : @(YES),
+                                    @"isHistoric" : @(YES)
+                                 }];
 }
 
 - (void)reloadTheme
@@ -496,7 +504,7 @@
 	NSAssertReturn(self.reloadingHistory == NO);
 
 	[self clearWithReset:NO];
-	
+
 	self.reloadingBacklog = YES;
 
 	[self reloadOldLines:NO];
@@ -511,7 +519,7 @@
 		return @(YES);
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
 }
 
 #pragma mark -
@@ -646,7 +654,7 @@
 	[self jumpToLine:self.lastVisitedHighlight];
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark Manage Scrollback Size
 
 - (void)limitNumberOfLines
@@ -654,7 +662,7 @@
 	self.needsLimitNumberOfLines = NO;
 
 	NSInteger n = (self.activeLineCount - self.maximumLineCount);
-	
+
 	if (self.isLoaded == NO || n <= 0 || self.activeLineCount <= 0) {
 		return;
 	}
@@ -691,7 +699,7 @@
 
 		DOMElement *e = [doc getElementById:lid];
 
-		/* If the element does not exist, then it means 
+		/* If the element does not exist, then it means
 		 that we removed it up above. */
 		if (e) {
 			[newList safeAddObject:lineNumber];
@@ -706,7 +714,7 @@
 	if (self.needsLimitNumberOfLines) {
 		return;
 	}
-	
+
 	_needsLimitNumberOfLines = YES;
 
 	[self limitNumberOfLines];
@@ -717,11 +725,9 @@
 	if (resetQueue) {
 		[self.historicLogFile reset];
 
-		[self.worldController.messageOperationQueue cancelAllOperations];
-
-		[[NSOperationQueue mainQueue] cancelAllOperations];
+		[self.operationQueue cancelAllOperations];
 	}
-	
+
 	self.activeLineCount = 0;
 	self.lastVisitedHighlight = -1;
 
@@ -729,7 +735,7 @@
 	self.reloadingBacklog = NO;
 	self.reloadingHistory = NO;
 	self.needsLimitNumberOfLines = NO;
-	
+
 	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
 }
 
@@ -801,7 +807,7 @@
 
 	BOOL isPlainText = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
 	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
-	
+
 	BOOL drawLinks = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeStng]);
 
 	NSArray *urlRanges = @[];
@@ -841,7 +847,7 @@
 	specialAttributes[@"applicationResourcePath"] = [TPCPreferences applicationResourcesFolderPath];
 
 	NSMutableDictionary *attributes = specialAttributes;
-	
+
 	// ************************************************************************** /
 	// Find all inline media.                                                     /
 	// ************************************************************************** /
@@ -865,7 +871,7 @@
 		}
 	}
 
-	
+
 	attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
 	attributes[@"inlineMediaArray"]		= [NSMutableArray array];
 
@@ -873,9 +879,9 @@
 		NSString *nurl = [inlineImageLinks objectForKey:iurl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
-			@"anchorLink"				: [nurl stringWithValidURIScheme],
-			@"imageURL"					: [iurl stringWithValidURIScheme],
+         @"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+         @"anchorLink"				: [nurl stringWithValidURIScheme],
+         @"imageURL"					: [iurl stringWithValidURIScheme],
 		 }];
 	}
 
@@ -943,7 +949,7 @@
 
 	if (line.isEncrypted) {
 		attributes[@"isEncrypted"] = @(line.isEncrypted);
-		
+
 		attributes[@"encryptedMessageLockTemplate"]	= [TVCLogRenderer renderTemplate:@"encryptedMessageLock" attributes:specialAttributes];
 	}
 
@@ -1002,28 +1008,16 @@
 
 		[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
 											   toKey:[@(self.activeLineNumber) integerWithLeadingZero:10]];
-		
+
 		return (__bridge void *)html;
 	} copy];
 
-	[self enqueueMessageBlock:messageBlock
-				   fromSender:self
-				  withContext:@{
-						@"isHistoric" : @(line.isHistoric),
-						@"highPriority" : @(isSpecial)
-					} ];
-}
-
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
-{
-	[self enqueueMessageBlock:messageBlock fromSender:sender withContext:nil];
-}
-
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
-{
-	[self.worldController.messageOperationQueue addOperation:[TKMessageBlockOperation operationWithBlock:^{
-		[sender handleMessageBlock:messageBlock withContext:context];
-	} forController:sender withContext:context]];
+	[self.operationQueue enqueueMessageBlock:messageBlock
+                                  fromSender:self
+                                 withContext:@{
+                                            @"isHistoric" : @(line.isHistoric),
+                                            @"highPriority" : @(isSpecial)
+                                    }];
 }
 
 - (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context
@@ -1050,7 +1044,7 @@
 
                     [self moveToTop];
                 }
-                
+
                 rrslt = YES;
             }
         } else {
@@ -1061,7 +1055,7 @@
 	// ---- //
 
 	if (rrslt == NO) {
-		[self enqueueMessageBlock:messageBlock fromSender:self withContext:context];
+		[self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:context];
 	}
 }
 
@@ -1076,7 +1070,7 @@
 
 	templateTokens[@"activeStyleAbsolutePath"]	= [self baseURL].absoluteString;
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences applicationResourcesFolderPath];
-	
+
 	templateTokens[@"cacheToken"]				= [NSString stringWithInteger:TXRandomNumber(5000)];
 
     templateTokens[@"configuredServerName"]     = self.client.config.clientName;
@@ -1221,28 +1215,28 @@
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
 	NSString *viewType = @"server";
-
+    
 	if (self.channel) {
 		viewType = [self.channel channelTypeString];
 	}
-
+    
 	[self executeScriptCommand:@"viewInitiated" withArguments:@[
-		NSStringNilValueSubstitute(viewType),
-		NSStringNilValueSubstitute(self.client.config.itemUUID),
-		NSStringNilValueSubstitute(self.channel.config.itemUUID),
-		NSStringNilValueSubstitute(self.channel.name)
+     NSStringNilValueSubstitute(viewType),
+     NSStringNilValueSubstitute(self.client.config.itemUUID),
+     NSStringNilValueSubstitute(self.channel.config.itemUUID),
+     NSStringNilValueSubstitute(self.channel.name)
 	 ]];
-
+    
 	if ([TPCPreferences reloadScrollbackOnLaunch] && self.reloadingBacklog == NO) {
 		[self reloadHistory];
 	} else {
-		[self.worldController updateReadinessState:self];
-
+		[self.operationQueue updateReadinessState];
+        
 		if (self.reloadingBacklog == NO) {
 			[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 		}
 	}
-
+    
 	self.isLoaded = YES;
 
 	[self setUpScroller];
