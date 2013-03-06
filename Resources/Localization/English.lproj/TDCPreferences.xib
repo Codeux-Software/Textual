@@ -4845,7 +4845,7 @@ wGw</bytes>
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSButton" id="770294129">
+					<object class="NSButton" id="989637458">
 						<reference key="NSNextResponder" ref="701308596"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{30, 143}, {260, 18}}</string>
@@ -4854,13 +4854,13 @@ wGw</bytes>
 						<reference key="NSNextKeyView" ref="734798055"/>
 						<string key="NSReuseIdentifierKey">_NS:239</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="1008792437">
+						<object class="NSButtonCell" key="NSCell" id="359897009">
 							<int key="NSCellFlags">-2080374784</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Force birthday icon onto dock.</string>
 							<reference key="NSSupport" ref="325354301"/>
 							<string key="NSCellIdentifier">_NS:239</string>
-							<reference key="NSControlView" ref="770294129"/>
+							<reference key="NSControlView" ref="989637458"/>
 							<int key="NSButtonFlags">1211912448</int>
 							<int key="NSButtonFlags2">2</int>
 							<reference key="NSNormalImage" ref="149444798"/>
@@ -4878,7 +4878,7 @@ wGw</bytes>
 						<string key="NSFrame">{{31, 171}, {260, 18}}</string>
 						<reference key="NSSuperview" ref="701308596"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="770294129"/>
+						<reference key="NSNextKeyView" ref="989637458"/>
 						<string key="NSReuseIdentifierKey">_NS:239</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="321040719">
@@ -9025,10 +9025,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.Force Enable Bugfix #96905433</string>
-						<reference key="source" ref="770294129"/>
+						<reference key="source" ref="989637458"/>
 						<reference key="destination" ref="1032655829"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="770294129"/>
+							<reference key="NSSource" ref="989637458"/>
 							<reference key="NSDestination" ref="1032655829"/>
 							<string key="NSLabel">value: values.Force Enable Bugfix #96905433</string>
 							<string key="NSBinding">value</string>
@@ -10905,7 +10905,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="98051281"/>
 							<reference ref="431940728"/>
 							<reference ref="734798055"/>
-							<reference ref="770294129"/>
+							<reference ref="989637458"/>
 							<reference ref="460208236"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -12166,16 +12166,16 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7492</int>
-						<reference key="object" ref="770294129"/>
+						<reference key="object" ref="989637458"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1008792437"/>
+							<reference ref="359897009"/>
 						</array>
 						<reference key="parent" ref="701308596"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7493</int>
-						<reference key="object" ref="1008792437"/>
-						<reference key="parent" ref="770294129"/>
+						<reference key="object" ref="359897009"/>
+						<reference key="parent" ref="989637458"/>
 					</object>
 				</array>
 			</object>
