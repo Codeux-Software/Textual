@@ -439,13 +439,13 @@
 #pragma mark -
 #pragma mark Reload Scrollback
 
-- (void)reloadOldLines:(BOOL)markHistoric
+- (NSInteger)reloadOldLines:(BOOL)markHistoric
 {
 	NSDictionary *oldLines = self.historicLogFile.data;
 
 	[self.historicLogFile reset];
 
-	NSObjectIsEmptyAssert(oldLines);
+	NSObjectIsEmptyAssertReturn(oldLines, 0);
 
 	/* The dictionary keys of the historic log file is the line number
 	 of each line prefixed with a couple zeros (0). For example, 0000001,
@@ -466,13 +466,15 @@
 
 		[self print:line withHTML:(line.lineType == TVCLogLineRawHTMLType) specialWrite:YES];
 	}
+
+    return oldLines.count;
 }
 
 - (void)reloadHistory
 {
 	self.reloadingHistory = YES;
 
-	[self reloadOldLines:YES];
+	NSInteger reloadedLines = [self reloadOldLines:YES];
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		self.reloadingHistory = NO;
@@ -482,8 +484,10 @@
 		 when we are done reloading our history we reset our state so that
 		 normal messages know to hit the block. */
 
-		[self mark];
-
+        if (reloadedLines) {
+            [self mark];
+        }
+        
 		[self.operationQueue updateReadinessState];
 
 		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
@@ -507,12 +511,14 @@
 
 	self.reloadingBacklog = YES;
 
-	[self reloadOldLines:NO];
+	NSInteger reloadedLines = [self reloadOldLines:NO];
 
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
 		self.reloadingBacklog = NO;
 
-		[self mark];
+        if (reloadedLines) {
+            [self mark];
+        }
 
 		[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
 
