@@ -43,6 +43,9 @@
 
 @implementation TVCDockIcon
 
+static NSInteger _cachedMessageCount = 0;
+static NSInteger _cachedHighlightCount = 0;
+
 + (NSImage *)applicationIcon
 {
     /* THIS IS A SECRET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -66,11 +69,25 @@
 
 + (void)drawWithoutCount
 {
+    if (_cachedHighlightCount == 0 && _cachedMessageCount == 0) {
+        return;
+    }
+
+    _cachedMessageCount = 0;
+    _cachedHighlightCount = 0;
+    
 	[NSApp setApplicationIconImage:[self applicationIcon]];
 }
 
 + (void)drawWithHilightCount:(NSInteger)highlightCount messageCount:(NSInteger)messageCount 
 {
+    if (_cachedHighlightCount == highlightCount && _cachedMessageCount == messageCount) {
+        return;
+    }
+
+    _cachedMessageCount = messageCount;
+    _cachedHighlightCount = highlightCount;
+    
 	if (messageCount > 9999) {
 		messageCount = 9999;
 	}
