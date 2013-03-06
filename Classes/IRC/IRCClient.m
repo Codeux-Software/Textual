@@ -268,7 +268,7 @@
 	for (IRCChannel *c in self.channels) {
 		[c preferencesChanged];
 
-        if ([TPCPreferences processChannelModes]) {
+        if ([TPCPreferences processChannelModes] && self.CAPawayNotify) {
             if (c.memberList.count > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 for (IRCUser *u in c.memberList) {
                     u.isAway = NO;
@@ -5526,7 +5526,7 @@
 {
     NSAssertReturn(self.isLoggedIn);
 
-    if ([TPCPreferences processChannelModes]) {
+    if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
         for (IRCChannel *channel in self.channels) {
             if (channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
