@@ -1085,6 +1085,8 @@
 
     templateTokens[@"configuredServerName"]     = self.client.config.clientName;
 
+	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.client.config.primaryEncoding];
+
     // ---- //
 
 	if (self.channel) {
