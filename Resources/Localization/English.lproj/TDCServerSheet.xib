@@ -1138,17 +1138,16 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="321907547">
+					<object class="NSTextField" id="382566032">
 						<reference key="NSNextResponder" ref="735313424"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{36, 20}, {444, 34}}</string>
 						<reference key="NSSuperview" ref="735313424"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="992900688">
+						<object class="NSTextFieldCell" key="NSCell" id="341220415">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">272629760</int>
 							<string key="NSContents">If the primary &amp; fallback encoding both fail during use, then all other encodings will be used until a successful conversion is found. </string>
@@ -1158,7 +1157,7 @@
 								<int key="NSfFlags">16</int>
 							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="321907547"/>
+							<reference key="NSControlView" ref="382566032"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
 							<object class="NSColor" key="NSTextColor" id="901505041">
 								<int key="NSColorSpace">6</int>
@@ -1239,7 +1238,7 @@
 						<string key="NSFrame">{{171, 122}, {243, 26}}</string>
 						<reference key="NSSuperview" ref="735313424"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="321907547"/>
+						<reference key="NSNextKeyView" ref="382566032"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="142661272">
 							<int key="NSCellFlags">-2076180416</int>
@@ -3065,14 +3064,6 @@
 					<int key="connectionID">2271</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">primaryEncodingChanged:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="158603501"/>
-					</object>
-					<int key="connectionID">2274</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">fallbackEncodingButton</string>
 						<reference key="source" ref="108852464"/>
@@ -3858,7 +3849,7 @@
 							<reference ref="67037723"/>
 							<reference ref="568236896"/>
 							<reference ref="846809599"/>
-							<reference ref="321907547"/>
+							<reference ref="382566032"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Encoding View</string>
@@ -4825,16 +4816,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2307</int>
-						<reference key="object" ref="321907547"/>
+						<reference key="object" ref="382566032"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="992900688"/>
+							<reference ref="341220415"/>
 						</array>
 						<reference key="parent" ref="735313424"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2308</int>
-						<reference key="object" ref="992900688"/>
-						<reference key="parent" ref="321907547"/>
+						<reference key="object" ref="341220415"/>
+						<reference key="parent" ref="382566032"/>
 					</object>
 				</array>
 			</object>
