@@ -100,7 +100,6 @@
 - (void)close;
 
 - (void)floodControlChanged:(id)sender;
-- (void)primaryEncodingChanged:(id)sender;
 - (void)proxyTypeChanged:(id)sender;
 - (void)serverAddressChanged:(id)sender;
 
