@@ -75,9 +75,9 @@
 @property (nonatomic, nweak) NSTextField *serverPortField;
 @property (nonatomic, nweak) NSTextField *serverPasswordField;
 @property (nonatomic, nweak) NSTextField *usernameField;
-@property (nonatomic, nweak) NSTextField *loginCommandsField;
 @property (nonatomic, nweak) NSTextField *normalLeavingCommentField;
 @property (nonatomic, nweak) NSTextField *sleepModeQuitMessageField;
+@property (nonatomic, uweak) NSTextView *loginCommandsField;
 @property (nonatomic, nweak) NSView *autojoinView;
 @property (nonatomic, nweak) NSView *commandsView;
 @property (nonatomic, nweak) NSView *contentView;
