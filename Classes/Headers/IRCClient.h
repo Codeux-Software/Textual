@@ -150,6 +150,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (void)sendCTCPPing:(NSString *)target;
 
 - (void)toggleAwayStatus:(BOOL)setAway;
+- (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason;
 
 - (void)createChannelListDialog;
 - (void)createChanBanListDialog;
