@@ -498,10 +498,12 @@
 - (TVCLogControllerOperationQueue *)operationQueue
 {
     if ([TPCPreferences operationQueueIsChannelSpecific]) {
-        return _operationQueue;
-    } else {
-        return [_client operationQueue];
+        if (_operationQueue) {
+            return _operationQueue;
+        }
     }
+    
+    return [_client operationQueue];
 }
 
 #pragma mark -
