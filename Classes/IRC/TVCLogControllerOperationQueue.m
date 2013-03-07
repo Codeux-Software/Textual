@@ -40,19 +40,19 @@
 #pragma mark -
 #pragma mark Define Private Header
 
-@interface IRCClientOperationQueueItem : NSOperation
+@interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, strong) NSDictionary *context;
 @property (nonatomic, nweak) TVCLogController *controller;
 
-+ (IRCClientOperationQueueItem *)operationWithBlock:(void(^)(void))block
-                                      forController:(TVCLogController *)controller
-                                        withContext:(NSDictionary *)context;
++ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block
+                                        forController:(TVCLogController *)controller
+                                          withContext:(NSDictionary *)context;
 @end
 
 #pragma mark -
-#pragma mark Operation Queue 
+#pragma mark Operation Queue
 
-@implementation IRCClientOperationQueue
+@implementation TVCLogControllerOperationQueue
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
 {
@@ -61,7 +61,7 @@
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
 {
-	[self addOperation:[IRCClientOperationQueueItem operationWithBlock:^{
+	[self addOperation:[TVCLogControllerOperationItem operationWithBlock:^{
 		[sender handleMessageBlock:messageBlock withContext:context];
 	} forController:sender withContext:context]];
 }
@@ -72,7 +72,7 @@
 {
 	NSArray *queues = [self operations];
 
-	for (IRCClientOperationQueueItem *op in queues) {
+	for (TVCLogControllerOperationItem *op in queues) {
         [op willChangeValueForKey:@"isReady"];
         [op didChangeValueForKey:@"isReady"];
 	}
@@ -92,16 +92,16 @@
 #pragma mark -
 #pragma mark Operation Queue Items
 
-@implementation IRCClientOperationQueueItem
+@implementation TVCLogControllerOperationItem
 
-+ (IRCClientOperationQueueItem *)operationWithBlock:(void(^)(void))block
-                                      forController:(TVCLogController *)controller
-                                        withContext:(NSDictionary *)context
++ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block
+                                        forController:(TVCLogController *)controller
+                                          withContext:(NSDictionary *)context
 {
 	PointerIsEmptyAssertReturn(block, nil);
 	PointerIsEmptyAssertReturn(controller, nil);
 
-    IRCClientOperationQueueItem *retval = [IRCClientOperationQueueItem new];
+    TVCLogControllerOperationItem *retval = [TVCLogControllerOperationItem new];
 
 	retval.controller		= controller;
 	retval.context			= context;

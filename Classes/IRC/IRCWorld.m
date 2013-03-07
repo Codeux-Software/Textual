@@ -682,7 +682,12 @@
 	[c setup:seed];
 
 	PointerIsEmptyAssertReturn(c.config, nil);
-	
+
+    c.operationQueue = [TVCLogControllerOperationQueue new];
+
+    c.operationQueue.name = @"IRCClientMessageOperationQueue";
+    c.operationQueue.maxConcurrentOperationCount = 1;
+
 	c.viewController = [self createLogWithClient:c channel:nil];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
@@ -715,7 +720,14 @@
 	}
 
 	c = [IRCChannel new];
-	
+
+    if ([TPCPreferences operationQueueIsChannelSpecific]) {
+        c.operationQueue = [TVCLogControllerOperationQueue new];
+
+        c.operationQueue.name = @"IRCChannelMessageOperationQueue";
+        c.operationQueue.maxConcurrentOperationCount = 1;
+    }
+
 	c.client = client;
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
