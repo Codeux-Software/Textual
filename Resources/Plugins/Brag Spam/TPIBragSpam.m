@@ -39,6 +39,15 @@
 
 @implementation TPIBragSpam
 
+- (void)appendPluralOrSingular:(NSMutableString **)resultString valueToken:(NSString *)valueToken value:(NSInteger)valueActual
+{
+	if (NSDissimilarObjects(valueActual, 1)) {
+		valueToken = [valueToken stringByAppendingString:@"[PLURAL]"];
+	}
+
+	[*resultString appendString:TPIFLS(valueToken, valueActual)];
+}
+
 - (void)messageSentByUser:(IRCClient*)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
@@ -55,7 +64,9 @@
 		NSInteger powerOverCount = 0;
 		
 		for (IRCClient *c in client.worldController.clients) {
-			if (c.isConnected == NO) continue;
+			if (c.isConnected == NO) {
+				continue;
+			}
 			
 			networkCount++;
 			
@@ -66,7 +77,9 @@
 			NSMutableArray *trackedUsers = [NSMutableArray new];
 			
 			for (IRCChannel *ch in c.channels) {
-				if ([ch isActive] == NO || [ch isChannel] == NO) continue;
+				if ([ch isActive] == NO || [ch isChannel] == NO) {
+					continue;
+				}
 
 				channelCount += 1;
 				
@@ -106,13 +119,18 @@
 			}
 			
 		}
-		
-		NSString *result = TPIFLS(@"BragspamPluginNormalResult",
-								  channelCount, networkCount, operCount,
-								  chanOpCount, chanHopCount, chanVopCount,
-								  powerOverCount);
-		
-		[client sendPrivmsgToSelectedChannel:result];
+
+		NSMutableString *resultString = [NSMutableString string];
+
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultChannel" value:chanHopCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultNetwork" value:networkCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultIRCopStatus" value:operCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultOpMode" value:chanOpCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultHalfopMode" value:chanHopCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultVoiceMode" value:chanVopCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultUserPower" value:powerOverCount];
+
+		[client sendPrivmsgToSelectedChannel:resultString];
 	}
 }
 
