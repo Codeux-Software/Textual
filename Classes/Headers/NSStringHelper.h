@@ -58,6 +58,8 @@
 
 + (NSString *)stringWithUUID;
 
++ (NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding;
+
 + (NSArray *)supportedStringEncodings:(BOOL)favorUTF8;
 
 + (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8;
