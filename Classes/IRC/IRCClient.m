@@ -1036,7 +1036,13 @@
                 uncutInput = nil;
             }
 
-            [self toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
+            if ([TPCPreferences awayAllConnections]) {
+                for (IRCClient *client in self.worldController.clients) {
+                    [client toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
+                }
+            } else {
+                [self toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
+            }
 
 			break;
 		}
