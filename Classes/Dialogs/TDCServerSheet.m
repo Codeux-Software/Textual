@@ -147,7 +147,6 @@
 
 	[self proxyTypeChanged:nil];
     [self floodControlChanged:nil];
-	[self primaryEncodingChanged:nil];
 	
 	[self reloadChannelTable];
 	[self reloadIgnoreTable];
@@ -468,13 +467,6 @@
 - (void)serverAddressChanged:(id)sender
 {
 	[self updateConnectionPage];
-}
-
-- (void)primaryEncodingChanged:(id)sender
-{
-    NSInteger encoding = [self.encodingList integerForKey:self.primaryEncodingButton.title];
-    
-	[self.fallbackEncodingButton setEnabled:(encoding == NSUTF8StringEncoding)];
 }
 
 - (void)proxyTypeChanged:(id)sender
