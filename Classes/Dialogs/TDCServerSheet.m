@@ -278,7 +278,7 @@
 	/* Connect Commands */
 	self.invisibleModeCheck.state = self.config.invisibleMode;
 	
-	self.loginCommandsField.stringValue = [self.config.loginCommands componentsJoinedByString:NSStringNewlinePlaceholder];
+	self.loginCommandsField.string = [self.config.loginCommands componentsJoinedByString:NSStringNewlinePlaceholder];
     
     /* Flood Control */
 	self.floodControlCheck.state = self.config.outgoingFloodControl;
@@ -377,7 +377,7 @@
 	}
 	
 	/* Connect Commands */
-    NSArray *commands = [self.loginCommandsField.stringValue split:NSStringNewlinePlaceholder];
+    NSArray *commands = [self.loginCommandsField.string split:NSStringNewlinePlaceholder];
 	
 	[self.config.loginCommands removeAllObjects];
     
