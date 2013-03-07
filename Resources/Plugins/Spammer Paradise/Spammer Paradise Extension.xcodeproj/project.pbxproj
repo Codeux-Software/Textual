@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C393AAD121AE217004C66F4 /* TPISpammerParadise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPISpammerParadise.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
-		4C588BB116E34BF8007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BB016E34BF8007EFF6D /* Code Signing Identity.xcconfig */; };
 		4CD4026E16C8CCAF00FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4026D16C8CCAF00FEA686 /* BasicLanguage.strings */; };
 /* End PBXBuildFile section */
 
@@ -166,7 +165,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD4026E16C8CCAF00FEA686 /* BasicLanguage.strings in Resources */,
-				4C588BB116E34BF8007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
