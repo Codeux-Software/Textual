@@ -43,8 +43,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C08885716E7A6A3006FD7D8 /* IRCClientOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08885616E7A6A3006FD7D8 /* IRCClientOperationQueue.m */; };
-		4C08885A16E7A6C7006FD7D8 /* IRCClientOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08885916E7A6C7006FD7D8 /* IRCClientOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C08885716E7A6A3006FD7D8 /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08885616E7A6A3006FD7D8 /* TVCLogControllerOperationQueue.m */; };
+		4C08885A16E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
@@ -520,8 +520,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C08885616E7A6A3006FD7D8 /* IRCClientOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCClientOperationQueue.m; path = ../../IRC/IRCClientOperationQueue.m; sourceTree = "<group>"; };
-		4C08885916E7A6C7006FD7D8 /* IRCClientOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCClientOperationQueue.h; sourceTree = "<group>"; };
+		4C08885616E7A6A3006FD7D8 /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogControllerOperationQueue.m; path = ../../IRC/TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
+		4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerOperationQueue.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
@@ -908,7 +908,7 @@
 		4C08885816E7A6AF006FD7D8 /* Message Queue */ = {
 			isa = PBXGroup;
 			children = (
-				4C08885616E7A6A3006FD7D8 /* IRCClientOperationQueue.m */,
+				4C08885616E7A6A3006FD7D8 /* TVCLogControllerOperationQueue.m */,
 			);
 			name = "Message Queue";
 			sourceTree = "<group>";
@@ -1372,7 +1372,7 @@
 				4C8AF537158E99520026668C /* IRCChannelMode.h */,
 				4C8AF538158E99520026668C /* IRCClient.h */,
 				4C8AF539158E99520026668C /* IRCClientConfig.h */,
-				4C08885916E7A6C7006FD7D8 /* IRCClientOperationQueue.h */,
+				4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */,
 				4C8AF53A158E99520026668C /* IRCColorFormat.h */,
 				4C8AF53B158E99520026668C /* IRCConnection.h */,
 				4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */,
@@ -1840,7 +1840,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C08885A16E7A6C7006FD7D8 /* IRCClientOperationQueue.h in Headers */,
+				4C08885A16E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h in Headers */,
 				4CBBD1A516E3570800D2FEFE /* TVCMemberListUserInfoPopover.h in Headers */,
 				4C8BC0FB16DE553C00360EEF /* GRMustache.h in Headers */,
 				4C8BC0FC16DE553C00360EEF /* GRMustacheAvailabilityMacros.h in Headers */,
@@ -2354,7 +2354,7 @@
 				4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */,
 				4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */,
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
-				4C08885716E7A6A3006FD7D8 /* IRCClientOperationQueue.m in Sources */,
+				4C08885716E7A6A3006FD7D8 /* TVCLogControllerOperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

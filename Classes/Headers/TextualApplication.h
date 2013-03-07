@@ -54,7 +54,6 @@
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
 	@class IRCClient;
-    @class IRCClientOperationQueue;
 	@class IRCClientConfig;
 	@class IRCConnection;
 	@class IRCExtras;
@@ -112,7 +111,8 @@
 	@class TVCInputTextFieldBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
-	@class TVCLogController;
+    @class TVCLogController;
+    @class TVCLogControllerOperationQueue;
 	@class TVCLogLine;
 	@class TVCLogPolicy;
 	@class TVCLogScriptEventSink;
@@ -167,7 +167,7 @@
 	#import "IRCChannelConfig.h"
 	#import "IRCChannelMode.h"
 	#import "IRCClient.h"
-    #import "IRCClientOperationQueue.h"
+    #import "TVCLogControllerOperationQueue.h"
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
 	#import "IRCConnection.h"

@@ -81,11 +81,6 @@
 {
 	if ((self = [super init]))
 	{
-		self.operationQueue = [IRCClientOperationQueue new];
-
-		self.operationQueue.name = @"IRCClientMessageOperationQueue";
-		self.operationQueue.maxConcurrentOperationCount = 1;
-        
 		self.isupport = [IRCISupportInfo new];
 
 		self.channels			= [NSMutableArray new];
