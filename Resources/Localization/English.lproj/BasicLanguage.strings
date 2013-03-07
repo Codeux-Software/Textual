@@ -161,7 +161,7 @@
 "LagCheckRequestSentMessage" = "Waiting for response from lag check …";
 "LagCheckRequestUnknownReply" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
 
-"LagCheckRequestReplyRating_01" = "Too fast to be real.";
+"LagCheckRequestReplyRating_01" = "Are you plugged into the server?…";
 "LagCheckRequestReplyRating_02" = "Almost No Lag.";
 "LagCheckRequestReplyRating_03" = "Very Fast.";
 "LagCheckRequestReplyRating_04" = "Fast.";
