@@ -59,6 +59,15 @@
 	return uuidString;
 }
 
++ (NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding
+{
+	CFStringEncoding cfencoding = CFStringConvertNSStringEncodingToEncoding(encoding);
+
+	CFStringRef charsetStr = CFStringConvertEncodingToIANACharSetName(cfencoding);
+
+	return (__bridge NSString *)(charsetStr);
+}
+
 + (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8
 {
     NSMutableDictionary *encodingList = [NSMutableDictionary dictionary];
