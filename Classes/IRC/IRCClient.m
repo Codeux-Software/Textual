@@ -1915,6 +1915,27 @@
 
 			break;
 		}
+		case 5091: // Command: LOADED_PLUGINS
+		{
+			NSArray *loadedBundles = [RZPluginManager() allLoadedExtensions];
+			NSArray *loadedScripts = [RZPluginManager() supportedAppleScriptCommands];
+
+			NSString *bundleResult = [loadedBundles componentsJoinedByString:@", "];
+			NSString *scriptResult = [loadedScripts componentsJoinedByString:@", "];
+
+			if (NSObjectIsEmpty(bundleResult)) {
+				bundleResult = TXTLS(@"LoadedPlguinsCommandNothingLoaded");
+			}
+
+			if (NSObjectIsEmpty(scriptResult)) {
+				scriptResult = TXTLS(@"LoadedPlguinsCommandNothingLoaded");
+			}
+
+			[self printDebugInformation:TXTFLS(@"LoadedPlguinsCommandLoadedBundles", bundleResult)];
+			[self printDebugInformation:TXTFLS(@"LoadedPlguinsCommandLoadedScripts", scriptResult)];
+
+			break;
+		}
 		case 5084: // Command: LAGCHECK
 		case 5045: // Command: MYLAG
 		{

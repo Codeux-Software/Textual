@@ -76,7 +76,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	// ---- //
 
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
-	
+
 	// ---- //
 
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {

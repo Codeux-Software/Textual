@@ -47,6 +47,8 @@
 - (void)unloadPlugins;
 
 /* Information about loaded plugins. */
+- (NSArray *)allLoadedExtensions;
+
 - (NSArray *)dangerousCommandNames;
 
 - (NSArray *)supportedUserInputCommands;
