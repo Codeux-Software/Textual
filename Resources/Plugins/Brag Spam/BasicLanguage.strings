@@ -35,4 +35,18 @@
 
  *********************************************************************** */
 
-"BragspamPluginNormalResult" = "I am in %ld channels while connected to %ld networks. I have %ld o:lines, %ld ops, %ld halfops, and %ld voices with power over %ld individual users.";
+"BragspamPluginNormalResultChannel"					= "I am in %ld channel while connected to ";
+"BragspamPluginNormalResultNetwork"					= "%ld network. ";
+"BragspamPluginNormalResultIRCopStatus"				= "I have %ld o:line, ";
+"BragspamPluginNormalResultOpMode"					= "%ld op, ";
+"BragspamPluginNormalResultHalfopMode"				= "%ld halfop, ";
+"BragspamPluginNormalResultVoiceMode"				= "and %ld voice ";
+"BragspamPluginNormalResultUserPower"				= "with power over %ld user.";
+
+"BragspamPluginNormalResultChannel[PLURAL]"			= "I am in %ld channels while connected to ";
+"BragspamPluginNormalResultNetwork[PLURAL]"			= "%ld networks. ";
+"BragspamPluginNormalResultIRCopStatus[PLURAL]"		= "I have %ld o:lines, ";
+"BragspamPluginNormalResultOpMode[PLURAL]"			= "%ld ops, ";
+"BragspamPluginNormalResultHalfopMode[PLURAL]"		= "%ld halfops, ";
+"BragspamPluginNormalResultVoiceMode[PLURAL]"		= "and %ld voices ";
+"BragspamPluginNormalResultUserPower[PLURAL]"		= "with power over %ld individual users.";

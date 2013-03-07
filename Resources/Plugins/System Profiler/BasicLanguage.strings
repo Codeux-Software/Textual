@@ -39,7 +39,7 @@
 
 "SystemInformationCompiledOutputPrefix" = "System Information:";
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
-"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Threads: %3$lu Cores) @ %4$@ \002•\002";
+"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
 "SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
 "SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
 "SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
@@ -47,7 +47,7 @@
 "SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
 "SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
 "SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
-"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (Retina Enabled) \002•\002";
+"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
 "SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
 "SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
 
@@ -83,7 +83,7 @@
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
 "SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %1$ld: %2$.0f x %2$.0f";
-"SystemInformationScreensCommandResultHighResoMode" = " (Retina Enabled)";
+"SystemInformationScreensCommandResultHighResoMode" = " (HiDPI Mode)";
 
 "SystemInformationWindowCCommandResult" = "\002Open Windows:\002 %ld";
 "SystemInformationUptimeCommandResult" = "System Uptime: %1$@ - Textual Uptime: %2$@";
