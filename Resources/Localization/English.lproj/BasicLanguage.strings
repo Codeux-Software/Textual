@@ -157,6 +157,10 @@
 "KickReason" = "Your behavior is not conducive to the desired environment.";
 "KillReason" = "Your behavior is not conducive to the desired environment.";
 
+"LoadedPlguinsCommandLoadedBundles" = "Loaded Bundles: %@";
+"LoadedPlguinsCommandLoadedScripts" = "Loaded Scripts: %@";
+"LoadedPlguinsCommandNothingLoaded" = "Nothing loaded.";
+
 "LagCheckRequestReplyMessage" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
 "LagCheckRequestSentMessage" = "Waiting for response from lag check …";
 "LagCheckRequestUnknownReply" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";

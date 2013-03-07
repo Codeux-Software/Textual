@@ -204,6 +204,24 @@
 	return allExtensions;
 }
 
+- (NSArray *)allLoadedExtensions
+{
+	NSMutableArray *allPlugins = [NSMutableArray array];
+
+	for (NSBundle *bundle in self.allLoadedBundles) {
+		NSString *path = bundle.bundlePath;
+		NSString *name = path.lastPathComponent;
+
+		NSInteger extpos = [name stringPosition:@".bundle"];
+
+		name = [name safeSubstringToIndex:extpos];
+
+		[allPlugins safeAddObjectWithoutDuplication:name];
+	}
+
+	return allPlugins;
+}
+
 #pragma mark -
 #pragma mark Talk.
 
