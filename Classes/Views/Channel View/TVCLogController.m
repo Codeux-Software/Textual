@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController ()
-@property (nonatomic, readonly, uweak) IRCClientOperationQueue *operationQueue;
+@property (nonatomic, readonly, uweak) TVCLogControllerOperationQueue *operationQueue;
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @end
 
@@ -207,8 +207,12 @@
 	return self.masterController.themeController.baseURL;
 }
 
-- (IRCClientOperationQueue *)operationQueue
+- (TVCLogControllerOperationQueue *)operationQueue
 {
+    if (self.channel) {
+        return self.channel.operationQueue;
+    }
+    
     return self.client.operationQueue;
 }
 

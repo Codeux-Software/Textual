@@ -648,6 +648,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];
 }
 
++ (BOOL)operationQueueIsChannelSpecific
+{
+    return [RZUserDefaults() boolForKey:@"OperationQueueIsChannelSpecific"];
+}
+
 + (BOOL)copyOnSelect
 {
 	return [RZUserDefaults() boolForKey:@"CopyTextSelectionOnMouseUp"];

@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCClientOperationQueue : NSOperationQueue
+@interface TVCLogControllerOperationQueue : NSOperationQueue
 /* Add new operations. */
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
