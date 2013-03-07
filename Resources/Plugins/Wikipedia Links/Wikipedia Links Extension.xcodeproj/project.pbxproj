@@ -10,7 +10,6 @@
 		4C34F94416E23BF8009F573D /* TPIWikipediaLinkParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C34F94216E23BF8009F573D /* TPIWikipediaLinkParser.xib */; };
 		4C393AAD121AE217004C66F4 /* TPIWikipediaLinkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPIWikipediaLinkParser.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
-		4C588BAF16E34BF1007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */; };
 		4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */; };
 /* End PBXBuildFile section */
 
@@ -178,7 +177,6 @@
 			files = (
 				4C34F94416E23BF8009F573D /* TPIWikipediaLinkParser.xib in Resources */,
 				4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */,
-				4C588BAF16E34BF1007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

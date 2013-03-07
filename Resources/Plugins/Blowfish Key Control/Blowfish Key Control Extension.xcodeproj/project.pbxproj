@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C588BB716E34C0F007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */; };
 		4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */; };
 		4CD4027016C8CE5700FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4026916C8CC5800FEA686 /* BasicLanguage.strings */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
@@ -186,7 +185,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD4027016C8CE5700FEA686 /* BasicLanguage.strings in Resources */,
-				4C588BB716E34C0F007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

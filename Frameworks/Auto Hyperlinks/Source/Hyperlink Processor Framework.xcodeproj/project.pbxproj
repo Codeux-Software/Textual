@@ -11,7 +11,6 @@
 		3496A82507CE69270055BBAB /* AHLinkLexer.l in Sources */ = {isa = PBXBuildFile; fileRef = 3496A81E07CE69270055BBAB /* AHLinkLexer.l */; };
 		3496A82707CE69270055BBAB /* AHHyperlinkScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496A82007CE69270055BBAB /* AHHyperlinkScanner.m */; };
 		3496A82807CE69270055BBAB /* AHHyperlinkScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 3496A82107CE69270055BBAB /* AHHyperlinkScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C588BAC16E34BE5007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BAB16E34BE5007EFF6D /* Code Signing Identity.xcconfig */; };
 		4C68FF43130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C68FF42130D811A00AE3A7C /* AutoHyperlinks.framework_Prefix.pch */; };
 		4C68FF47130D813900AE3A7C /* Copyright.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C68FF45130D813900AE3A7C /* Copyright.txt */; };
 		4C68FF48130D813900AE3A7C /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C68FF46130D813900AE3A7C /* License.txt */; };
@@ -210,7 +209,6 @@
 			files = (
 				4C68FF47130D813900AE3A7C /* Copyright.txt in Resources */,
 				4C68FF48130D813900AE3A7C /* License.txt in Resources */,
-				4C588BAC16E34BE5007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,6 @@
 		4C1BE0FA159A5FCF00DB3341 /* TPISystemProfiler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1BE0F8159A5FCF00DB3341 /* TPISystemProfiler.xib */; };
 		4C57A681131D378900252759 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */; };
 		4C57A682131D378900252759 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A680131D378900252759 /* TPISystemProfiler.m */; };
-		4C588BB316E34C00007EFF6D /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C588BB216E34C00007EFF6D /* Code Signing Identity.xcconfig */; };
 		4C78926D16C628920081E859 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926A16C628040081E859 /* SystemInformation.framework */; };
 		4CD4026016C8C0EF00FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4025F16C8C0EF00FEA686 /* BasicLanguage.strings */; };
 		4CD69D82131E2BD200F4618E /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CD69D81131E2BD200F4618E /* MacintoshModels.plist */; };
@@ -198,7 +197,6 @@
 				4CD4026016C8C0EF00FEA686 /* BasicLanguage.strings in Resources */,
 				4CD69D82131E2BD200F4618E /* MacintoshModels.plist in Resources */,
 				4C1BE0FA159A5FCF00DB3341 /* TPISystemProfiler.xib in Resources */,
-				4C588BB316E34C00007EFF6D /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
