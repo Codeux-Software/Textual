@@ -91,7 +91,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.realname = [TPCPreferences defaultRealname];
 		
 		self.normalLeavingComment		= TXTLS(@"DefaultDisconnectQuitMessage");
-		self.sleepModeLeavingComment	= TXTLS(@"OSXGoingToSleepQuitMessage");
+		self.sleepModeLeavingComment	= TXTFLS(@"OSXGoingToSleepQuitMessage", [CSFWSystemInformation systemModelName]);
 	}
 	
 	return self;
