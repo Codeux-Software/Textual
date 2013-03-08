@@ -364,18 +364,14 @@
 		}
 		
 		[self removeMember:m.nickname reload:NO];
-		
-		if (m.q && NSObjectIsEmpty(self.client.isupport.userModeQPrefix)) {
-			m.q = NO;
-		} else if (m.a && NSObjectIsEmpty(self.client.isupport.userModeAPrefix)) {
-			m.a = NO;
-		} else if (m.o && NSObjectIsEmpty(self.client.isupport.userModeOPrefix)) {
-			m.o = NO;
-		} else if (m.h && NSObjectIsEmpty(self.client.isupport.userModeHPrefix)) {
-			m.h = NO;
-		} else if (m.v && NSObjectIsEmpty(self.client.isupport.userModeVPrefix)) {
-			m.v = NO;
-		}
+
+		IRCISupportInfo *isupport = self.client.isupport;
+
+		m.q = (m.q && [isupport modeIsSupportedUserPrefix:@"q"]);
+		m.a = (m.a && [isupport modeIsSupportedUserPrefix:@"a"]);
+		m.o = (m.o && [isupport modeIsSupportedUserPrefix:@"o"]);
+		m.h = (m.h && [isupport modeIsSupportedUserPrefix:@"h"]);
+		m.v = (m.v && [isupport modeIsSupportedUserPrefix:@"v"]);
 		
 		[self sortedInsert:m];
 		[self reloadMemberList];
