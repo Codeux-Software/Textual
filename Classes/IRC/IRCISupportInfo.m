@@ -66,11 +66,10 @@
 	self.nicknameLength = 9; // Default for IRC protocol.
 	self.modesCount = TXMaximumNodesPerModeCommand;
 
-	[self setUserModeQPrefix:nil];
-	[self setUserModeAPrefix:nil];
-	[self setUserModeOPrefix:@"@"];
-	[self setUserModeHPrefix:nil];
-	[self setUserModeVPrefix:@"+"];
+	self.userModePrefixes = @{
+		@"o" : @"@",
+		@"v" : @"+"
+	};
 
 	self.channelModes = @{
 		@"o" : @(_channelUserModeValue),
@@ -227,11 +226,9 @@
 - (void)parsePrefix:(NSString *)value
 {
 	// Format: (qaohv)~&@%+
-	
+
 	if ([value contains:@"("] && [value contains:@")"]) {
 		NSInteger endSignPos = [value stringPosition:@")"];
-		NSInteger modeLength = 0;
-		NSInteger charLength = 0;
 		
 		NSString *nodes;
 		NSString *chars;
@@ -240,34 +237,26 @@
 		nodes = [nodes safeSubstringFromIndex:1];
 		
 		chars = [value safeSubstringAfterIndex:endSignPos];
-		
-		charLength = [chars length];
-		modeLength = [nodes length];
+
+		NSInteger modeLength = nodes.length;
+		NSInteger charLength = chars.length;
 
 		NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
+		NSMutableDictionary *modePrefixes = [self.userModePrefixes mutableCopy];
 		
 		if (charLength == modeLength) {
 			for (NSInteger i = 0; i < charLength; i++) {
 				NSString *modeKey = [nodes stringCharacterAtIndex:i];
 				NSString *modeChar = [chars stringCharacterAtIndex:i];
-				
-				if ([modeKey isEqualToString:@"q"] || [modeKey isEqualToString:@"u"]) {
-					self.userModeQPrefix = modeChar;
-				} else if ([modeKey isEqualToString:@"a"]) {
-					self.userModeAPrefix = modeChar;
-				} else if ([modeKey isEqualToString:@"o"]) {
-					self.userModeOPrefix = modeChar;
-				} else if ([modeKey isEqualToString:@"h"]) {
-					self.userModeHPrefix = modeChar;
-				} else if ([modeKey isEqualToString:@"v"]) {
-					self.userModeVPrefix = modeChar;
-				}
 
+				[modePrefixes setObject:modeChar forKey:modeKey];
+				
 				[channelModes setInteger:_channelUserModeValue forKey:modeKey];
 			}
 		}
 
 		self.channelModes = channelModes;
+		self.userModePrefixes = modePrefixes;
 	}
 }
 
@@ -315,6 +304,16 @@
 	}
 
 	self.channelModes = channelModes;
+}
+
+- (NSString *)userModePrefixSymbol:(NSString *)mode
+{
+	return [self.userModePrefixes objectForKey:mode];
+}
+
+- (BOOL)modeIsSupportedUserPrefix:(NSString *)mode
+{
+	return NSObjectIsNotEmpty([self userModePrefixSymbol:mode]);
 }
 
 - (IRCModeInfo *)createMode:(NSString *)mode

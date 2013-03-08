@@ -4338,15 +4338,15 @@
 			for (i = 0; i < flfields.length; i++) {
 				NSString *prefix = [flfields safeSubstringWithRange:NSMakeRange(i, 1)];
 
-				if ([prefix isEqualTo:self.isupport.userModeQPrefix]) {
+				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
 					u.q = YES;
-				} else if ([prefix isEqualTo:self.isupport.userModeAPrefix]) {
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 					u.a = YES;
-				} else if ([prefix isEqualTo:self.isupport.userModeOPrefix]) {
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"o"]]) {
 					u.o = YES;
-				} else if ([prefix isEqualTo:self.isupport.userModeHPrefix]) {
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"h"]]) {
 					u.h = YES;
-				} else if ([prefix isEqualTo:self.isupport.userModeVPrefix]) {
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"v"]]) {
 					u.v = YES;
 				} else {
 					break;
@@ -4381,15 +4381,15 @@
 				for (i = 0; i < nickname.length; i++) {
 					NSString *prefix = [nickname safeSubstringWithRange:NSMakeRange(i, 1)];
 
-					if ([prefix isEqualTo:self.isupport.userModeQPrefix]) {
+					if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
 						member.q = YES;
-					} else if ([prefix isEqualTo:self.isupport.userModeAPrefix]) {
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 						member.a = YES;
-					} else if ([prefix isEqualTo:self.isupport.userModeOPrefix]) {
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"o"]]) {
 						member.o = YES;
-					} else if ([prefix isEqualTo:self.isupport.userModeHPrefix]) {
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"h"]]) {
 						member.h = YES;
-					} else if ([prefix isEqualTo:self.isupport.userModeVPrefix]) {
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"v"]]) {
 						member.v = YES;
 					} else {
 						break;
