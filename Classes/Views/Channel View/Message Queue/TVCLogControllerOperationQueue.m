@@ -54,6 +54,18 @@
 
 @implementation TVCLogControllerOperationQueue
 
+- (id)init
+{
+	if ((self = [super init])) {
+		self.maxConcurrentOperationCount = 1;
+		self.name = [NSString stringWithFormat:@"TVCLogControllerOperationQueue-%@", [NSString stringWithUUID]];
+
+		return self;
+	}
+
+	return nil;
+}
+
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
 {
     [self enqueueMessageBlock:messageBlock fromSender:sender withContext:nil];
