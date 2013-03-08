@@ -356,10 +356,6 @@
     NSInteger primaryEncoding = [self.encodingList integerForKey:self.primaryEncodingButton.title];
     NSInteger fallbackEncoding = [self.encodingList integerForKey:self.fallbackEncodingButton.title];
 
-	if (NSDissimilarObjects(primaryEncoding, self.config.primaryEncoding)) {
-		[self.worldController reloadTheme];
-	}
-
 	self.config.primaryEncoding		= primaryEncoding;
 	self.config.fallbackEncoding	= fallbackEncoding;
 	
