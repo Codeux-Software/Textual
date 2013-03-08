@@ -210,7 +210,7 @@
 "NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
 "NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 
-"OSXGoingToSleepQuitMessage" = "Computer has gone to sleep.";
+"OSXGoingToSleepQuitMessage" = "My %@ has gone to sleep. ZZZzzz…";
 
 "OkButton" = "OK";
 

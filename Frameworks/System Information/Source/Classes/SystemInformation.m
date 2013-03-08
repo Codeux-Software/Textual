@@ -37,6 +37,8 @@
 
 #import "SystemInformation.h"
 
+#include <sys/sysctl.h>
+
 @implementation CSFWSystemInformation
 
 #pragma mark -
@@ -59,6 +61,55 @@
 
 #pragma mark -
 #pragma mark Private.
+
++ (NSString *)systemModelToken
+{
+	char modelBuffer[256];
+
+	size_t sz = sizeof(modelBuffer);
+
+	if (sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0) == 0) {
+		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
+
+		return @(modelBuffer);
+	}
+
+	return nil;
+}
+
++ (NSString *)systemModelName
+{
+	/* This method is not returning very detailed information. Only
+	 the model being ran on. Therefore, not much love will be put into
+	 it. As can be seen below, we are defining our models inline instead
+	 of using a dictionary that will have to be loaded from a file. */
+	
+	NSDictionary *modelPrefixes = @{
+		 @"macbookpro"	: @"MacBook Pro",
+		 @"macbookair"	: @"MacBook Air",
+		 @"macbook"		: @"MacBook",
+		 @"macpro"		: @"Mac Pro",
+		 @"macmini"		: @"Mac Mini",
+		 @"imac"		: @"iMac",
+		 @"xserve"		: @"Xserve"
+	};
+
+	NSString *modelToken = [self systemModelToken];
+
+	if (modelToken.length <= 0) {
+		return nil;
+	}
+
+	modelToken = modelToken.lowercaseString;
+
+	for (NSString *modelPrefix in modelPrefixes) {
+		if ([modelToken hasPrefix:modelPrefix]) {
+			return modelPrefixes[modelPrefix];
+		}
+	}
+
+	return nil;
+}
 
 + (NSString *)retrieveSystemInformationKey:(NSString *)key
 {
