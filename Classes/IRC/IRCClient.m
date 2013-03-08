@@ -1725,8 +1725,6 @@
 		}
 		case 5011: // Command: CLEARALL
 		{
-			[self.operationQueue setSuspended:YES];
-
 			if ([TPCPreferences clearAllOnlyOnActiveServer]) {
 				[self.worldController clearContentsOfClient:self];
 
@@ -1738,8 +1736,6 @@
 			} else {
 				[self.worldController destroyAllEvidence];
 			}
-
-			[self.operationQueue setSuspended:NO];
 
 			break;
 		}

@@ -653,6 +653,8 @@
 {
 	[c resetState];
 
+	[c.operationQueue cancelAllOperations];
+
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
 
@@ -666,6 +668,8 @@
 - (void)clearContentsOfClient:(IRCClient *)u
 {
 	[u resetState];
+
+	[u.operationQueue cancelAllOperations];
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
@@ -683,12 +687,8 @@
 
 	PointerIsEmptyAssertReturn(c.config, nil);
 
-    c.operationQueue = [TVCLogControllerOperationQueue new];
-
-    c.operationQueue.name = @"IRCClientMessageOperationQueue";
-    c.operationQueue.maxConcurrentOperationCount = 1;
-
 	c.viewController = [self createLogWithClient:c channel:nil];
+    c.operationQueue = [TVCLogControllerOperationQueue new];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];
@@ -720,15 +720,12 @@
 	}
 
 	c = [IRCChannel new];
+	
+	c.client = client;
 
     if ([TPCPreferences operationQueueIsChannelSpecific]) {
         c.operationQueue = [TVCLogControllerOperationQueue new];
-
-        c.operationQueue.name = @"IRCChannelMessageOperationQueue";
-        c.operationQueue.maxConcurrentOperationCount = 1;
     }
-
-	c.client = client;
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];
