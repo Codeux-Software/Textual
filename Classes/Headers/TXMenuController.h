@@ -149,6 +149,7 @@
 
 - (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
+- (void)openMacAppStoreDownloadPage:(id)sender;
 - (void)showContributors:(id)sender;
 - (void)showAcknowledgments:(id)sender;
 - (void)processNavigationItem:(id)sender;
