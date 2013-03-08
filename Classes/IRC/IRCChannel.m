@@ -178,7 +178,8 @@
 	[self resetStatus:IRCChannelTerminated];
 	
 	[self closeLogFile];
-	
+
+	[self.operationQueue cancelAllOperations];
 	[self.viewController terminate];
 }
 
