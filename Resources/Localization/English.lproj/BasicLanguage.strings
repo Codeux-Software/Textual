@@ -304,9 +304,6 @@
 "TimeConvert[WEEK]" = "Week";
 "TimeConvert[YEAR]" = "Year";
 
-"TrialPeriodIntroductionDialogMessage" = "This version of Textual is designed to demonstrate the features, performance, reliability, and usability of Textual without having to purchase it.\n\nHowever, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours.\n\nWe hope that this glimpse of Textual will help show that it is worth its low sale price.";
-"TrialPeriodIntroductionDialogTitle" = "Welcome to the Textual IRC Client";
-
 "TrustButton" = "Trust";
 
 "Unknown" = "Unknown";
