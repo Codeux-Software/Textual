@@ -122,7 +122,7 @@
 
 		NSMutableString *resultString = [NSMutableString string];
 
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultChannel" value:chanHopCount];
+		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultChannel" value:channelCount];
 		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultNetwork" value:networkCount];
 		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultIRCopStatus" value:operCount];
 		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultOpMode" value:chanOpCount];
