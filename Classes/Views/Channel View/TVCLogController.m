@@ -734,8 +734,6 @@
 {
 	if (resetQueue) {
 		[self.historicLogFile reset];
-
-		[self.operationQueue cancelAllOperations];
 	}
 
 	self.activeLineCount = 0;

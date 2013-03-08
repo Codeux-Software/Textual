@@ -50,6 +50,11 @@
     return nil;
 }
 
+- (void)dealloc
+{
+	[self.operationQueue cancelAllOperations];
+}
+
 - (IRCClient *)client
 {
 	return nil;
