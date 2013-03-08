@@ -1089,8 +1089,14 @@
 		if (_noClient) {
 			return;
 		}
+
+		BOOL samencoding = (sender.config.primaryEncoding == u.config.primaryEncoding);
 		
 		[u updateConfig:sender.config];
+
+		if (samencoding == NO) {
+			[self.worldController reloadTheme];
+		}
 
 		[u populateISONTrackedUsersList:sender.config.ignoreList];
 	}
