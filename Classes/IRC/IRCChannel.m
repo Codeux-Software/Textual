@@ -179,7 +179,6 @@
 	
 	[self closeLogFile];
 
-	[self.operationQueue cancelAllOperations];
 	[self.viewController terminate];
 }
 

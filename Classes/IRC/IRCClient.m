@@ -246,8 +246,6 @@
 	[self quit];
 	[self closeDialogs];
 
-    [self.operationQueue cancelAllOperations];
-
 	for (IRCChannel *c in self.channels) {
 		[c terminate];
 	}
