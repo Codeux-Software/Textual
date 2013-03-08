@@ -44,5 +44,7 @@
 + (NSString *)systemStandardVersion;
 + (NSString *)systemOperatingSystemName;
 
++ (NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
+
 + (NSString *)retrieveSystemInformationKey:(NSString *)key;
 @end
