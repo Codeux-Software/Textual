@@ -85,15 +85,15 @@
 - (NSString *)mark
 {
 	if (self.q) {
-		return self.supportInfo.userModeQPrefix;
+		return [self.supportInfo userModePrefixSymbol:@"q"];
 	} else if (self.a) {
-		return self.supportInfo.userModeAPrefix;
+		return [self.supportInfo userModePrefixSymbol:@"a"];
 	} else if (self.o) {
-		return self.supportInfo.userModeOPrefix;
+		return [self.supportInfo userModePrefixSymbol:@"o"];
 	} else if (self.h) {
-		return self.supportInfo.userModeHPrefix;
+		return [self.supportInfo userModePrefixSymbol:@"h"];
 	} else if (self.v) {
-		return self.supportInfo.userModeVPrefix;
+		return [self.supportInfo userModePrefixSymbol:@"v"];
 	}
 	
 	return nil;
