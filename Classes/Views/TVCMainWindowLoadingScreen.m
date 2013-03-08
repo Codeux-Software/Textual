@@ -49,10 +49,20 @@
 - (void)popWelcomeAddServerView
 {
 	if (self.stackLocked == NO) {
+#ifdef TEXTUAL_TRIAL_BINARY
+		[self displayView:self.welcomeAddServerTrialView];
+		
+		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
+		[self.welcomePurchaseTextualButton setTarget:self.masterController.menuController];
+		
+		[self.welcomeAddServerViewButton setAction:@selector(openWelcomeSheet:)];
+		[self.welcomeAddServerViewButton setTarget:self.masterController];
+#else
 		[self displayView:self.welcomeAddServerView];
 
 		[self.welcomeAddServerViewButton setAction:@selector(addServer:)];
 		[self.welcomeAddServerViewButton setTarget:self.masterController.menuController];
+#endif
 	}
 }
 
@@ -172,7 +182,7 @@
 {
 	/* For future expansion. */
 
-	return @[self.loadingConfigurationView, self.welcomeAddServerView];
+	return @[self.loadingConfigurationView, self.welcomeAddServerView, self.welcomeAddServerTrialView];
 }
 
 - (void)disableBackgroundControls

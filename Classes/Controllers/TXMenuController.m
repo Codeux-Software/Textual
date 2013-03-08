@@ -1946,6 +1946,11 @@
 	}
 }
 
+- (void)openMacAppStoreDownloadPage:(id)sender
+{
+	[RZWorkspace() openURL:[NSURL URLWithString:@"http://www.textualapp.com/"]];
+}
+
 - (void)processNavigationItem:(NSMenuItem *)sender
 {
 	switch ([sender tag]) {

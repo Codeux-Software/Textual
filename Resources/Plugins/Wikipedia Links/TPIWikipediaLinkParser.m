@@ -41,7 +41,7 @@
 #define _linkMatchRegex             @"\\[\\[([^\\]]+)\\]\\]"
 
 @interface TPIWikipediaLinkParser ()
-@property (nonatomic, weak) IBOutlet NSView *preferencePane;
+@property (nonatomic, weak) NSView *preferencePane;
 @end
 
 @implementation TPIWikipediaLinkParser

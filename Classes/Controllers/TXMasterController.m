@@ -64,17 +64,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)awakeFromNib
 {
-#ifdef TEXTUAL_TRIAL_BINARY
-	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TrialPeriodIntroductionDialogMessage")
-										title:TXTLS(@"TrialPeriodIntroductionDialogTitle")
-								defaultButton:TXTLS(@"OkButton")
-							  alternateButton:nil
-							   suppressionKey:@"trial_period_info"
-							  suppressionText:nil];
-#endif
-
-	// ---- //
-
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
 
 	// ---- //
@@ -175,7 +164,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.mainWindowLoadingScreen hideAll:NO];
 		[self.mainWindowLoadingScreen popWelcomeAddServerView];
 
+#ifndef TEXTUAL_TRIAL_BINARY
 		[self openWelcomeSheet:nil];
+#endif
 	} else {
 		[self.mainWindowLoadingScreen hideLoadingConfigurationView];
 		
