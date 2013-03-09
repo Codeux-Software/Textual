@@ -46,6 +46,7 @@
 	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
 
 	NSString *scheme = u.scheme;
+	
 	NSString *host = u.host.lowercaseString;
 	NSString *path = u.path;
 
@@ -69,6 +70,12 @@
 		if ([lowerUrl containsIgnoringCase:NSHomeDirectory()] == NO) {
 			return nil;
 		}
+	}
+
+	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:url];
+
+	if (NSObjectIsNotEmpty(plguinResult)) {
+		return plguinResult;
 	}
 
 	// The following parsing engine is mostly unmainted by Codeux Software. Nearly all, if
