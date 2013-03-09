@@ -56,6 +56,7 @@
 @interface AsyncSocket (RLMAsyncSocketExtensions)
 + (id)socketWithDelegate:(id)delegate;
 
+- (void)useSSL;
 - (void)useSystemSocksProxy;
 - (void)useSocksProxyVersion:(NSInteger)version
 					 address:(NSString *)address
