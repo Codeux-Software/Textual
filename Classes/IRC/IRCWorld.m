@@ -1053,6 +1053,13 @@
 	return YES;
 }
 
+- (void)outlineViewItemWillCollapse:(NSNotification *)notification
+{
+	PointerIsEmptyAssert(self.selectedChannel);
+
+	[self select:self.selectedClient];
+}
+
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(NSButtonCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	if (PointerIsEmpty(self.serverList.defaultDisclosureTriangle)) {
