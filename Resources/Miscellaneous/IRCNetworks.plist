@@ -44,6 +44,8 @@
 	<string>irc.thinstack.net</string>
 	<key>Flux.cd</key>
 	<string>irc.flux.cd</string>
+	<key>Japoland</key>
+	<string>irc.japoland.net</string>
 	<key>TWiT</key>
 	<string>irc.twit.tv</string>
 </dict>
