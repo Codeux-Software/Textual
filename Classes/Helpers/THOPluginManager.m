@@ -344,7 +344,7 @@
         }
     }
 
-	return resource;
+	return nil;
 }
 
 #pragma mark -
