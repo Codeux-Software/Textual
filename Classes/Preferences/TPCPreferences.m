@@ -47,7 +47,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 + (void)populateCommandIndex
 {
-	IRCInternalUseCommandIndexMap = @[ // Open Key: 1051
+	IRCInternalUseCommandIndexMap = @[ // Open Key: 1052
 	//		 key				 command				 index		  is special	  outgoing colon index
 		@[@"action",			@"ACTION",				@(1002),		@(NO),			@(NSNotFound)],
 		@[@"adchat",			@"ADCHAT",				@(1003),		@(YES),			@(0)],
@@ -58,6 +58,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"ctcp",				@"CTCP",				@(1007),		@(NO),			@(NSNotFound)],
 		@[@"ctcp_clientinfo",	@"CLIENTINFO",			@(1008),		@(NO),			@(NSNotFound)],
 		@[@"ctcp_ctcpreply",	@"CTCPREPLY",			@(1009),		@(NO),			@(NSNotFound)],
+		@[@"ctcp_finger",		@"FINGER",				@(1051),		@(NO),			@(NSNotFound)],
 		@[@"ctcp_lagcheck", 	@"LAGCHECK",			@(1010),		@(NO),			@(NSNotFound)],
 		@[@"ctcp_ping", 		@"PING",				@(1011),		@(NO),			@(NSNotFound)],
 		@[@"ctcp_time", 		@"TIME",				@(1012),		@(NO),			@(NSNotFound)],

@@ -3133,8 +3133,16 @@
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
-		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")]) {
-			[self sendCTCPReply:sendern command:command text:NSStringEmptyPlaceholder];
+		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
+				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")])
+		{
+			NSString *userinfo = [NSString stringWithFormat:@"%@ — %@ %@ (%@)",
+								  [CSFWSystemInformation systemModelName],
+								  [CSFWSystemInformation systemOperatingSystemName],
+								  [CSFWSystemInformation systemStandardVersion],
+								  [CSFWSystemInformation systemBuildVersion]];
+			
+			[self sendCTCPReply:sendern command:command text:userinfo];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRCCTCPSupportedReplies")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
