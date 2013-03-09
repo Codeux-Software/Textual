@@ -62,14 +62,14 @@
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 
 /* Talk to plugins. */
+/* Unless you are Textual, do not call these. We mean it. */
+
+- (NSString *)processInlineMediaContentURL:(NSString *)resource;
+
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command;
 
 - (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client;
 
-- (void)sendUserInputDataToBundles:(IRCClient *)client
-						   message:(NSString *)message
-						   command:(NSString *)command;
-
-- (void)sendServerInputDataToBundles:(IRCClient *)client
-							 message:(IRCMessage *)message;
+- (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message;
+- (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
 @end

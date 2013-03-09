@@ -139,6 +139,75 @@
 }
 
 #pragma mark -
+#pragma mark AppleScript Support.
+
+- (id)supportedAppleScriptCommands
+{
+	return [self supportedAppleScriptCommands:NO];
+}
+
+- (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
+{
+	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
+
+	NSArray *scriptPaths = @[
+		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
+        NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+	];
+
+	id returnData;
+
+	if (returnPathInfo) {
+		returnData = [NSMutableDictionary dictionary];
+	} else {
+		returnData = [NSMutableArray array];
+	}
+
+	for (NSString *path in scriptPaths) {
+		if (NSObjectIsNotEmpty(path)) {
+			NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
+
+			if (NSObjectIsNotEmpty(resourceFiles)) {
+				for (NSString *file in resourceFiles) {
+					NSString *fullpa = [path stringByAppendingPathComponent:file];
+					NSString *script = [file lowercaseString];
+
+					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
+						continue;
+					}
+
+					NSString *extens = NSStringEmptyPlaceholder;
+
+					if ([script contains:@"."]) {
+						NSArray *nameParts = [script componentsSeparatedByString:@"."];
+
+						script = nameParts[0];
+						extens = nameParts[1];
+
+						if ([scriptExtensions containsObject:extens] == NO) {
+							continue;
+						}
+					}
+
+					if (returnPathInfo) {
+						if ([returnData containsKey:script] == NO) {
+							[returnData safeSetObjectWithoutOverride:fullpa forKey:script];
+						}
+					} else {
+						if ([returnData containsObject:script] == NO) {
+							[returnData safeAddObjectWithoutDuplication:script];
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	return returnData;
+}
+
+#pragma mark -
 #pragma mark Extension Information.
 
 /* List of commands that may be part of Textual that we hide due to them
@@ -210,13 +279,8 @@
 
 	for (NSBundle *bundle in self.allLoadedBundles) {
 		NSString *path = bundle.bundlePath;
-		NSString *name = path.lastPathComponent;
 
-		NSInteger extpos = [name stringPosition:@".bundle"];
-
-		name = [name safeSubstringToIndex:extpos];
-
-		[allPlugins safeAddObjectWithoutDuplication:name];
+		[allPlugins safeAddObjectWithoutDuplication:path.lastPathComponent.stringByDeletingPathExtension];
 	}
 
 	return allPlugins;
@@ -225,9 +289,7 @@
 #pragma mark -
 #pragma mark Talk.
 
-- (void)sendUserInputDataToBundles:(IRCClient *)client
-						   message:(NSString *)message
-						   command:(NSString *)command
+- (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
 	NSString *cmdu = command.uppercaseString;
 	NSString *cmdl = command.lowercaseString;
@@ -239,8 +301,7 @@
 	}
 }
 
-- (void)sendServerInputDataToBundles:(IRCClient *)client
-							 message:(IRCMessage *)message
+- (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
 	NSString *cmdl = message.command.lowercaseString;
 
@@ -269,6 +330,24 @@
 }
 
 #pragma mark -
+#pragma mark Inline Content
+
+- (NSString *)processInlineMediaContentURL:(NSString *)resource
+{
+    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+        if ([plugin.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
+            NSString *input = [plugin.primaryClass processInlineMediaContentURL:resource];
+
+			if (input.length >= 15) {
+				return input;
+			}
+        }
+    }
+
+	return resource;
+}
+
+#pragma mark -
 #pragma mark Input Replacement
 
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command
@@ -291,75 +370,6 @@
     }
 
     return input;
-}
-
-#pragma mark -
-#pragma mark AppleScript Support.
-
-- (id)supportedAppleScriptCommands
-{
-	return [self supportedAppleScriptCommands:NO];
-}
-
-- (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
-{
-	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
-	
-	NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-        NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
-	];
-
-	id returnData;
-
-	if (returnPathInfo) {
-		returnData = [NSMutableDictionary dictionary];
-	} else {
-		returnData = [NSMutableArray array];
-	}
-
-	for (NSString *path in scriptPaths) {
-		if (NSObjectIsNotEmpty(path)) {
-			NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
-
-			if (NSObjectIsNotEmpty(resourceFiles)) {
-				for (NSString *file in resourceFiles) {
-					NSString *fullpa = [path stringByAppendingPathComponent:file];
-					NSString *script = [file lowercaseString];
-					
-					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-						continue;
-					}
-					
-					NSString *extens = NSStringEmptyPlaceholder;
-
-					if ([script contains:@"."]) {
-						NSArray *nameParts = [script componentsSeparatedByString:@"."];
-
-						script = nameParts[0];
-						extens = nameParts[1];
-
-						if ([scriptExtensions containsObject:extens] == NO) {
-							continue;
-						}
-					}
-					
-					if (returnPathInfo) {
-						if ([returnData containsKey:script] == NO) {
-							[returnData safeSetObjectWithoutOverride:fullpa forKey:script];
-						}
-					} else {
-						if ([returnData containsObject:script] == NO) {
-							[returnData safeAddObjectWithoutDuplication:script];
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return returnData;
 }
 
 @end
