@@ -71,6 +71,11 @@
 	return [self menu];
 }
 
+- (void)highlightSelectionInClipRect:(NSRect)clipRect
+{
+	/* Do not draw a selection color for group items during drag events. */
+}
+
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
