@@ -74,7 +74,7 @@
 {
 	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
 	@"msgcount", @"diskspace", @"style", @"screens",
-	@"runcount", @"loadavg", @"sysmem", @"windowc"];
+	@"runcount", @"loadavg", @"sysmem", @"sfont"];
 }
 
 - (void)messageSentByUser:(IRCClient *)client
@@ -106,8 +106,8 @@
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemCPULoadInformation]];
 		} else if ([commandString isEqualToString:@"SYSMEM"]) {
 			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemMemoryInformation]];
-		} else if ([commandString isEqualToString:@"WINDOWC"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemVisibleWindowCount]];
+		} else if ([commandString isEqualToString:@"SFONT"]) {
+			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationConfiguredFontInformation]];
 		}
 	}
 }

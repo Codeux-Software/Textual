@@ -42,9 +42,9 @@
 
 @implementation TPI_SP_CompiledOutput
 
-+ (NSString *)systemVisibleWindowCount
++ (NSString *)applicationConfiguredFontInformation
 {
-	return TPIFLS(@"SystemInformationWindowCCommandResult", [TPI_SP_SysInfo visibleWindowCount]);
+	return TPIFLS(@"SystemInformationSFontCommandResult", [TPCPreferences themeChannelViewFontName], [TPCPreferences themeChannelViewFontSize]);
 }
 
 + (NSString *)applicationActiveStyle
@@ -572,15 +572,6 @@
 
 #pragma mark -
 #pragma mark System Information
-
-+ (NSInteger)visibleWindowCount
-{
-	NSInteger count = 0;
-
-	NSCountWindows(&count);
-
-	return count;
-}
 
 + (NSInteger)systemUptime
 {
