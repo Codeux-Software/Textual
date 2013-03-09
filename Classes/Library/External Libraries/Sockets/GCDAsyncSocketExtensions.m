@@ -151,6 +151,23 @@
 	return [[self alloc] initWithDelegate:delegate];
 }
 
+- (void)useSSL
+{
+	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+
+	settings[CFItemRefToID(kCFStreamSSLLevel)] = CFItemRefToID(kCFStreamSocketSecurityLevelNegotiatedSSL);
+
+	settings[CFItemRefToID(kCFStreamSSLPeerName)] = CFItemRefToID(kCFNull);
+	settings[CFItemRefToID(kCFStreamSSLIsServer)] = CFItemRefToID(kCFBooleanFalse);
+	settings[CFItemRefToID(kCFStreamSSLAllowsAnyRoot)] = CFItemRefToID(kCFBooleanTrue);
+	settings[CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)]	= CFItemRefToID(kCFBooleanTrue);
+	settings[CFItemRefToID(kCFStreamSSLAllowsExpiredCertificates)] = CFItemRefToID(kCFBooleanTrue);
+	settings[CFItemRefToID(kCFStreamSSLValidatesCertificateChain)] = CFItemRefToID(kCFBooleanFalse);
+
+    CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, (__bridge CFTypeRef)(settings));
+    CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, (__bridge CFTypeRef)(settings));
+}
+
 - (void)useSystemSocksProxy
 {
 	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);

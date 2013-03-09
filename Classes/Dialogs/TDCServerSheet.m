@@ -368,7 +368,7 @@
 
     self.config.proxyAddress = self.config.proxyAddress.lowercaseString;
 
-	if (NSObjectIsEmpty(self.config.proxyAddress)) {
+	if (NSObjectIsEmpty(self.config.proxyAddress) && NSDissimilarObjects(self.config.proxyType, TXConnectionSystemSocksProxyType)) {
 		self.config.proxyType = TXConnectionNoProxyType;
 	}
 	
