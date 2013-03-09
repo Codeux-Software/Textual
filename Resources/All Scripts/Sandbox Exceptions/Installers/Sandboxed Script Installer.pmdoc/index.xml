@@ -15,5 +15,6 @@ Commands available after installation:\
 	\'95 page 	     \'97 Information about active page in Safari.\
 	\'95 spotify     \'97 Now playing information for Spotify. \
        \'95 rdio 	    \'97 Now playing information for Rdio.\
+       \'95 vlc           \'97 Now playing information for VLC\
 	\'95 yolo         \'97 You only live once.\
 }]]></resource></locale></resources><flags/><extra-files/><item type="file">01scripts.xml</item><item type="file">02scripts.xml</item><item type="file">03scripts.xml</item><mod>properties.title</mod><mod>properties.customizeOption</mod><mod>properties.userDomain</mod><mod>properties.anywhereDomain</mod><mod>extraFiles</mod></pkmkdoc>
