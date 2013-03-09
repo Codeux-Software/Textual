@@ -199,8 +199,14 @@
 											   port:self.proxyPort
 										   username:self.proxyUsername
 										   password:self.proxyPassword];
-	} else if (self.connectionUsesSSL) {
-		[self.socketConnection useSSLWithClient:self.client];
+	}
+
+	if (self.connectionUsesSSL) {
+		if ([self useNewSocketEngine]) {
+			[self.socketConnection useSSLWithClient:self.client];
+		} else {
+			[self.socketConnection useSSL];
+		}
 	}
 
 	return YES;
