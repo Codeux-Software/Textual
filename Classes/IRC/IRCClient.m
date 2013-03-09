@@ -3145,7 +3145,7 @@
 
 				NSString *rating;
 
-					   if (delta <= 0.09) {						rating = TXTLS(@"LagCheckRequestReplyRating_01");
+					   if (delta < 0.1) {						rating = TXTLS(@"LagCheckRequestReplyRating_01");
 				} else if (delta >= 0.1 && delta < 0.2) {		rating = TXTLS(@"LagCheckRequestReplyRating_02");
 				} else if (delta >= 0.2 && delta < 0.5) {		rating = TXTLS(@"LagCheckRequestReplyRating_03");
 				} else if (delta >= 0.5 && delta < 1.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_04");
