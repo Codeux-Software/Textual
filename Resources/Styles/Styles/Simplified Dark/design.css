@@ -84,7 +84,7 @@ body[dir=rtl] .time {
 	margin: 0;
 	padding: 0;
 	height: 11px;
-	margin-bottom: -1px;
+	margin-top: 2px;
 	padding-left: 10px;
 }
 
