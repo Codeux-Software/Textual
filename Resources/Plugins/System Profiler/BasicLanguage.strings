@@ -85,7 +85,7 @@
 "SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %1$ld: %2$.0f x %2$.0f";
 "SystemInformationScreensCommandResultHighResoMode" = " (HiDPI Mode)";
 
-"SystemInformationWindowCCommandResult" = "\002Open Windows:\002 %ld";
+"SystemInformationSFontCommandResult" = "\002Configured Font:\002 %1$@ — \002Size:\002 %2$f";
 "SystemInformationUptimeCommandResult" = "System Uptime: %1$@ - Textual Uptime: %2$@";
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
