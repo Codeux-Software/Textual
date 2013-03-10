@@ -769,8 +769,12 @@
 
 	if (NSObjectIsNotEmpty(line.nickname)) {
 		NSString *nick = [line formattedNickname:self.channel];
-
+		
 		[s appendString:nick];
+		
+		if ([nick hasSuffix:NSStringWhitespacePlaceholder] == NO) {
+			[s appendString:NSStringWhitespacePlaceholder];
+		}
 	}
 
 	[s appendString:line.messageBody];
