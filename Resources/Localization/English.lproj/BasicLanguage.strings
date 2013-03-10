@@ -184,6 +184,9 @@
 
 "NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 
+"LogFileBeginOfSessionHeader" = "————————————— Begin Session —————————————";
+"LogFileEndOfSessionHeader" = "————————————— End Session —————————————";
+
 /* OldSandboxContainerFoundDialog* messages are actually not used in Textual 
  as of the time that this comment was written. It used to be during beta testing
  of an older version of Textual. It is being kept around in case it is needed again. */

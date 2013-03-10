@@ -226,6 +226,26 @@
 #pragma mark -
 #pragma mark Printing
 
+- (void)writeToLogFile:(TVCLogLine *)line
+{
+	if ([TPCPreferences logTranscript]) {
+		if (PointerIsEmpty(self.logFile)) {
+			self.logFile = [TLOFileLogger new];
+
+			self.logFile.client = self.client;
+			self.logFile.channel = self;
+			self.logFile.writePlainText = YES;
+			self.logFile.flatFileStructure = NO;
+		}
+
+		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
+
+		if (NSObjectIsNotEmpty(logstr)) {
+			[self.logFile writePlainTextLine:logstr];
+		}
+	}
+}
+
 - (BOOL)print:(TVCLogLine *)line
 {
 	return [self print:line withHTML:NO];
@@ -235,21 +255,8 @@
 {
 	BOOL result = [self.viewController print:line withHTML:rawHTML];
 	
-	if ([TPCPreferences logTranscript] && rawHTML == NO) {
-		if (PointerIsEmpty(self.logFile)) {
-			self.logFile = [TLOFileLogger new];
-			
-			self.logFile.client = self.client;
-			self.logFile.channel = self;
-			self.logFile.writePlainText = YES;
-			self.logFile.flatFileStructure = NO;
-		}
-		
-		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
-
-		if (NSObjectIsNotEmpty(logstr)) {
-			[self.logFile writePlainTextLine:logstr];
-		}
+	if (rawHTML == NO) {
+		[self writeToLogFile:line];
 	}
 	
 	return result;
