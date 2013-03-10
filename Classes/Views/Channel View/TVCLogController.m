@@ -260,29 +260,19 @@
 	[body appendChild:frag];
 }
 
-- (void)internalExecuteScriptCommand:(NSString *)command withArguments:(NSArray *)args
-{
-	WebScriptObject *js_api = [self.view javaScriptAPI];
-
-	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:command	withArguments:args];
-	}
-}
-
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	[self executeScriptCommand:command withArguments:args withContext:nil];
-}
-
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args withContext:(NSDictionary *)context
-{
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		[self internalExecuteScriptCommand:command withArguments:args];
+		WebScriptObject *js_api = [self.view javaScriptAPI];
 
-		return @(YES);
+		if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
+			[js_api callWebScriptMethod:command	withArguments:args];
+		}
+
+		return nil;
 	} copy];
 
-    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:context];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:nil];
 }
 
 #pragma mark -
@@ -308,7 +298,7 @@
 		{
 			DOMElement *topicBar = [self documentChannelTopicBar];
 
-			PointerIsEmptyAssertReturn(topicBar, @(NO));
+			PointerIsEmptyAssertReturn(topicBar, nil);
 
 			NSString *body = [TVCLogRenderer renderBody:topic
 											 controller:self
@@ -321,7 +311,7 @@
 			[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 		}
 
-		return @(YES);
+		return nil;
 	} copy];
 
     [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
@@ -412,10 +402,10 @@
 - (void)unmark
 {
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		NSAssertReturnR(self.isLoaded, @(NO));
+		NSAssertReturnR(self.isLoaded, nil);
 
 		DOMDocument *doc = [self mainFrameDocument];
-		PointerIsEmptyAssertReturn(doc, @(NO));
+		PointerIsEmptyAssertReturn(doc, nil);
 
 		DOMElement *e = [doc getElementById:@"mark"];
 
@@ -427,7 +417,7 @@
 
 		[self executeScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
 
-		return @(YES);
+		return nil;
 	} copy];
 
     [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
@@ -443,20 +433,19 @@
 #pragma mark -
 #pragma mark Reload Scrollback
 
-- (NSInteger)reloadOldLines:(BOOL)markHistoric
+/* reloadOldLines: is supposed to be called from inside a queue. */
+- (NSString *)reloadOldLines:(BOOL)markHistoric
 {
+	/* What lines are we reloading? */
 	NSDictionary *oldLines = self.historicLogFile.data;
 
+	/* We have what we are going to load. Reset the old. */
 	[self.historicLogFile reset];
 
 	NSObjectIsEmptyAssertReturn(oldLines, 0);
 
-	/* The dictionary keys of the historic log file is the line number
-	 of each line prefixed with a couple zeros (0). For example, 0000001,
-	 0000002, 0000003, etc. Sorting the dictionary puts these keys in
-	 order so that each message is rendered in the correct order it
-	 was originally printed. */
-
+	/* Sort the data we are going to reload and insert it into our
+	 cache queue. After that, we will process the cache. */
 	NSArray *keys = oldLines.sortedDictionaryKeys;
 
 	for (NSString *key in keys) {
@@ -468,43 +457,66 @@
 			line.isHistoric = YES;
 		}
 
+		/* Special write tells print: that we want our write cached, not sent to the queue. */
 		[self print:line withHTML:(line.lineType == TVCLogLineRawHTMLType) specialWrite:YES];
 	}
 
-    return oldLines.count;
+	/* We have reached our next step. Now we will go through the cached operations and
+	 build a string which will be appended to our document body. We build one big string
+	 here instead of inserting one at a time. Quicker.(?) */
+	
+	if (oldLines.count >= 1) {
+		NSMutableString *bodyAppend = [NSMutableString string];
+
+		for (NSArray *blockInfo in self.operationQueue.cachedOperations) {
+			NSAssertReturnLoopContinue(blockInfo.count == 3);
+
+			TVCLogController *controller = blockInfo[1];
+
+			/* Our queue may contain items from other controllers. We only
+			 want our items so let us compare each item. */
+			
+			if (controller == self) {
+				id blockResult = ((TVCLogMessageBlock)blockInfo[0])();
+
+				if ([blockResult isKindOfClass:[NSString class]]) {
+					[bodyAppend appendString:blockResult];
+				}
+			}
+		}
+		
+		/* Destroy cached items. */
+		[self.operationQueue destroyCachedOperationsFor:self];
+		
+		/* We are supposed to be in a secondary thread so tell Webkit on
+		 the main thread that we want to append. Do not try this on anything
+		 that is not the main thread. Webkit will beat you with a stick. */
+
+		return bodyAppend;
+	}
+
+	return nil;
 }
 
 - (void)reloadHistory
 {
 	self.reloadingHistory = YES;
 
-	NSInteger reloadedLines = [self reloadOldLines:YES];
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
+		NSString *reloadedLines = [self reloadOldLines:YES];
+
+		if (reloadedLines) {
+            [self mark];
+		}
+		
 		self.reloadingHistory = NO;
 
-		/* isHistoric queue items take priority over normal messages. Normal
-		 messages are not processed while reloadingHistory is YES. Therefore,
-		 when we are done reloading our history we reset our state so that
-		 normal messages know to hit the block. */
+		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 
-        if (reloadedLines) {
-            [self mark];
-        }
-        
-		[self.operationQueue updateReadinessState];
-
-		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
-
-		return @(YES);
+		return reloadedLines;
 	} copy];
 
-    [self.operationQueue enqueueMessageBlock:messageBlock
-                                  fromSender:self
-                                 withContext:@{
-                                    @"highPriority" : @(YES),
-                                    @"isHistoric" : @(YES)
-                                 }];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 - (void)reloadTheme
@@ -515,21 +527,21 @@
 
 	self.reloadingBacklog = YES;
 
-	NSInteger reloadedLines = [self reloadOldLines:NO];
-
 	TVCLogMessageBlock (^messageBlock)(void) = [^{
-		self.reloadingBacklog = NO;
+		NSString *reloadedLines = [self reloadOldLines:NO];
 
         if (reloadedLines) {
             [self mark];
         }
 
-		[self internalExecuteScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		self.reloadingBacklog = NO;
 
-		return @(YES);
+		[self executeScriptCommand:@"viewFinishedReload" withArguments:@[]];
+
+		return reloadedLines;
 	} copy];
 
-    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:@{@"highPriority" : @(YES)}];
+    [self.operationQueue enqueueMessageBlock:messageBlock fromSender:self];
 }
 
 #pragma mark -
@@ -891,9 +903,9 @@
 		NSString *nurl = [inlineImageLinks objectForKey:iurl];
 
 		[(id)attributes[@"inlineMediaArray"] addObject:@{
-         @"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
-         @"anchorLink"				: [nurl stringWithValidURIScheme],
-         @"imageURL"					: [iurl stringWithValidURIScheme],
+			@"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
+			@"anchorLink"				: [nurl stringWithValidURIScheme],
+			@"imageURL"					: [iurl stringWithValidURIScheme],
 		 }];
 	}
 
@@ -1026,49 +1038,22 @@
 
 	[self.operationQueue enqueueMessageBlock:messageBlock
                                   fromSender:self
-                                 withContext:@{
-                                            @"isHistoric" : @(line.isHistoric),
-                                            @"highPriority" : @(isSpecial)
-                                    }];
+                                 withContext:@{@"cacheOperation" : @(isSpecial)}];
 }
 
 - (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context
 {
-	// Internally, TVCLogMessageBlock should only return a
-	// BOOL as NSValue or NSString absolute value.
-
-	__block BOOL rrslt = NO;
+	// Internally, TVCLogMessageBlock should only return a NSString absolute value.
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
 		id stslt = ((TVCLogMessageBlock)messageBlock)();
 
-        // ---- //
-
         if ([stslt isKindOfClass:[NSString class]]) {
             if (NSObjectIsNotEmpty(stslt)) {
                 [self appendToDocumentBody:stslt];
-
-                if (self.reloadingBacklog || self.reloadingHistory) {
-                    // We move it to the top whenever a reload is in progress
-                    // so our loading screen message is always visible. Without
-                    // this call, each new message posted would scroll our view
-                    // back to the bottom.
-
-                    [self moveToTop];
-                }
-
-                rrslt = YES;
             }
-        } else {
-            rrslt = [stslt boolValue];
         }
 	});
-
-	// ---- //
-
-	if (rrslt == NO) {
-		[self.operationQueue enqueueMessageBlock:messageBlock fromSender:self withContext:context];
-	}
 }
 
 #pragma mark -
@@ -1235,22 +1220,22 @@
 	}
     
 	[self executeScriptCommand:@"viewInitiated" withArguments:@[
-     NSStringNilValueSubstitute(viewType),
-     NSStringNilValueSubstitute(self.client.config.itemUUID),
-     NSStringNilValueSubstitute(self.channel.config.itemUUID),
-     NSStringNilValueSubstitute(self.channel.name)
+		 NSStringNilValueSubstitute(viewType),
+		 NSStringNilValueSubstitute(self.client.config.itemUUID),
+		 NSStringNilValueSubstitute(self.channel.config.itemUUID),
+		 NSStringNilValueSubstitute(self.channel.name)
 	 ]];
     
 	if ([TPCPreferences reloadScrollbackOnLaunch] && self.reloadingBacklog == NO) {
 		[self reloadHistory];
 	} else {
-		[self.operationQueue updateReadinessState];
-        
 		if (self.reloadingBacklog == NO) {
 			[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 		}
 	}
-    
+	
+	[self.operationQueue updateReadinessState];
+
 	self.isLoaded = YES;
 
 	[self setUpScroller];
