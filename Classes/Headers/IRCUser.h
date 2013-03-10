@@ -50,6 +50,10 @@
 @property (nonatomic, assign) BOOL v;
 @property (nonatomic, assign) BOOL isCop;
 @property (nonatomic, assign) BOOL isAway;
+@property (nonatomic, readonly) CGFloat totalWeight;
+@property (nonatomic, readonly) CGFloat incomingWeight;
+@property (nonatomic, readonly) CGFloat outgoingWeight;
+@property (nonatomic, assign) CFAbsoluteTime lastWeightFade;
 
 - (NSString *)mark;
 
@@ -58,6 +62,10 @@
 
 - (NSString *)banMask;
 - (NSString *)hostmask;
+
+- (void)outgoingConversation;
+- (void)incomingConversation;
+- (void)conversation;
 
 - (NSComparisonResult)compare:(IRCUser *)other;
 @end
