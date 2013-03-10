@@ -330,11 +330,41 @@
 
 - (NSString *)buildPath
 {
+	return [self buildPath:YES];
+}
+
+- (NSString *)buildPath:(BOOL)forceUUID
+{
 	NSString *base = self.fileWritePath;
 
 	if (self.flatFileStructure == NO) {
 		NSString *serv = [self.client.name safeFilename];
 		NSString *chan = [self.channel.name safeFilename];
+
+		/* When our folder structure is not flat, then we have to make sure the folders
+		 that we create our unique. The check of whether our folders are unique was not
+		 added until version 3.0.0. To keep backwards compatible, we first see if our 
+		 folder exists using the old naming scheme. If it does, then we use that for
+		 our write path. This makes the transition to the new naming scheme seamless
+		 for the end user. */
+
+		/* To make the folder unique, we take the first five characters of the client's
+		 UUID which does not change between restarts. Not 100% accurate, but still works
+		 99.9999% of the time. */
+
+		if (forceUUID) {
+			NSString *oldPath = [self buildPath:NO];
+
+			/* Does the old path exist? */
+			if ([RZFileManager() fileExistsAtPath:oldPath]) {
+				return oldPath;
+			}
+
+			/* It did not exist… use new naming scheme. */
+			NSString *servHead = [self.client.config.itemUUID safeSubstringToIndex:5];
+
+			serv = [serv stringByAppendingFormat:@" (%@)", servHead];
+		}
 		
 		if (PointerIsEmpty(self.channel)) {
 			return [base stringByAppendingFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName];
