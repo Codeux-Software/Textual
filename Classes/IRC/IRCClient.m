@@ -2146,6 +2146,64 @@
 }
 
 #pragma mark -
+#pragma mark Log File
+
+- (void)writeToLogFile:(TVCLogLine *)line
+{
+	if ([TPCPreferences logTranscript]) {
+		if (PointerIsEmpty(self.logFile)) {
+			self.logFile = [TLOFileLogger new];
+			self.logFile.client = self;
+			self.logFile.writePlainText = YES;
+			self.logFile.flatFileStructure = NO;
+		}
+
+		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
+
+		if (NSObjectIsNotEmpty(logstr)) {
+			[self.logFile writePlainTextLine:logstr];
+		}
+	}
+}
+
+- (void)logFileRecordSessionChanges:(BOOL)newSession /* @private */
+{
+	NSString *langkey = @"LogFileBeginOfSessionHeader";
+
+	if (newSession == NO) {
+		langkey = @"LogFileEndOfSessionHeader";
+	}
+
+	TVCLogLine *top = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : @" "}];
+	TVCLogLine *mid = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : TXTLS(langkey)}];
+	TVCLogLine *end = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : @" "}];
+
+	[self writeToLogFile:top];
+	[self writeToLogFile:mid];
+	[self writeToLogFile:end];
+
+	for (IRCChannel *channel in self.channels) {
+		[channel writeToLogFile:top];
+		[channel writeToLogFile:mid];
+		[channel writeToLogFile:end];
+	}
+
+	top = nil;
+	mid = nil;
+	end = nil;
+}
+
+- (void)logFileWriteSessionBegin
+{
+	[self logFileRecordSessionChanges:YES];
+}
+
+- (void)logFileWriteSessionEnd
+{
+	[self logFileRecordSessionChanges:NO];
+}
+
+#pragma mark -
 #pragma mark Print
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
@@ -2193,21 +2251,8 @@
 {
 	BOOL result = [self.viewController print:line withHTML:rawHTML];
 
-	NSAssertReturnR(self.isConnected, NO);
-
-	if ([TPCPreferences logTranscript] && rawHTML == NO) {
-		if (PointerIsEmpty(self.logFile)) {
-			self.logFile = [TLOFileLogger new];
-			self.logFile.client = self;
-			self.logFile.writePlainText = YES;
-			self.logFile.flatFileStructure = NO;
-		}
-
-		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
-
-		if (NSObjectIsNotEmpty(logstr)) {
-			[self.logFile writePlainTextLine:logstr];
-		}
+	if (rawHTML == NO) {
+		[self writeToLogFile:line];
 	}
 
 	return result;
@@ -2466,6 +2511,7 @@
 		}
 	}
 
+	[self logFileWriteSessionEnd];
 	[self resetAllPropertyValues];
 
 	[self.worldController reloadTree];
@@ -2474,7 +2520,7 @@
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
 {
 	[self startRetryTimer];
-	
+
 	[self printDebugInformationToConsole:TXTLS(@"IRCConnectedToServer")];
 
 	self.isLoggedIn	= NO;
@@ -5178,6 +5224,8 @@
 	self.reconnectEnabled = YES;
 
 	NSString *host = self.config.serverAddress;
+	
+	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode || mode == IRCConnectBadSSLCertificateMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
