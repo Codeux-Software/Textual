@@ -3283,7 +3283,7 @@
 		
 		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
 
-		if (self.CAPuserhostInNames == NO) {
+		if (self.CAPuserhostInNames == NO || self.CAPawayNotify) {
 			// We can skip requesting WHO, we already have this information.
 
 			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
