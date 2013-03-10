@@ -91,6 +91,7 @@
 
 - (NSString *)trim;
 - (NSString *)trimNewlines;
+- (NSString *)trimCharacters:(NSString *)charset;
 
 - (NSString *)removeAllNewlines;
 

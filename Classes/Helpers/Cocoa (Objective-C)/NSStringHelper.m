@@ -195,6 +195,11 @@
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 
+- (NSString *)trimCharacters:(NSString *)charset
+{
+	return [self stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:charset]];
+}
+
 - (NSString *)removeAllNewlines
 {
 	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
