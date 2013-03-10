@@ -190,7 +190,9 @@
 			[upperChoices safeAddObject:c.name];
 		}
 	} else {
-		for (IRCUser *m in channel.memberList) {
+		NSArray *memberList = [channel.memberList sortedArrayUsingSelector:@selector(compareUsingWeights:)];
+		
+		for (IRCUser *m in memberList) {
 			[upperChoices safeAddObject:m.nickname];
 		}
 

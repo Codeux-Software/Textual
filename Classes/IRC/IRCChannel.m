@@ -183,6 +183,26 @@
 }
 
 #pragma mark -
+#pragma mark Weights
+
+- (void)detectOutgoingConversation:(NSString *)text
+{
+	NSString *suffix = [TPCPreferences tabCompletionSuffix];
+
+	NSObjectIsEmptyAssert(suffix);
+
+	NSArray *pieces = [text split:suffix];
+
+	if ([pieces count] > 1) {
+		IRCUser *talker = [self findMember:[pieces safeObjectAtIndex:0]];
+
+		if (talker) {
+			[talker incomingConversation];
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Log File
 
 - (void)reopenLogFileIfNeeded
