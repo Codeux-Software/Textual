@@ -2854,8 +2854,9 @@
 
 			PointerIsEmptyAssert(owner);
 
-			NSString *trimmedMyNick = [self.myNick stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_"]];
+			NSString *trimmedMyNick = [self.localNickname trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
 
+			/* If we are mentioned in this piece of text, then update our weight for the user. */
 			if ([text stringPositionIgnoringCase:trimmedMyNick] >= 0) {
 				[owner outgoingConversation];
 			} else {
