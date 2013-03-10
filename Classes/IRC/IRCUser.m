@@ -131,6 +131,69 @@
 	return [self.nickname isEqualIgnoringCase:[other nickname]];
 }
 
+- (CGFloat)totalWeight
+{
+	[self decayConversation];
+
+	return (self.incomingWeight + self.outgoingWeight);
+}
+
+- (void)outgoingConversation
+{
+	CGFloat change = ((self.outgoingWeight == 0) ? 20 : 5);
+
+	_outgoingWeight += change;
+}
+
+- (void)incomingConversation
+{
+	CGFloat change = ((self.incomingWeight == 0) ? 100 : 20);
+
+	_outgoingWeight += change;
+}
+
+- (void)conversation
+{
+	CGFloat change = ((self.outgoingWeight == 0) ? 4 : 1);
+
+	_outgoingWeight += change;
+}
+
+- (void)decayConversation
+{
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+
+	CGFloat minutes = ((now - self.lastWeightFade) / 60);
+
+	if (minutes > 1) {
+		self.lastWeightFade = now;
+
+		if (self.incomingWeight > 0) {
+			_incomingWeight /= pow(2, minutes);
+		}
+
+		if (self.outgoingWeight > 0) {
+			_outgoingWeight /= pow(2, minutes);
+		}
+	}
+}
+
+- (NSComparisonResult)compareUsingWeights:(IRCUser *)other
+{
+	CGFloat local = self.totalWeight;
+	CGFloat remte = other.totalWeight;
+
+	if (local > remte) {
+		return NSOrderedAscending;
+	}
+	
+	if (local < remte) {
+		return NSOrderedDescending;
+	}
+
+	return [self.nickname.lowercaseString compare:other.nickname.lowercaseString];
+}
+
 - (NSComparisonResult)compare:(IRCUser *)other
 {
 	/* Not even going to touch this mess… */

@@ -926,6 +926,9 @@
 				command = IRCPrivateCommandIndex("privmsg");
 
 				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
+			} else if (type == TVCLogLinePrivateMessageType) {
+				/* Weights. */
+				[channel detectOutgoingConversation:newstr];
 			}
 
 			[self send:command, channel.name, newstr, nil];
@@ -2844,6 +2847,19 @@
 			/* Mark channel as unread. */
 			if (postevent && (highlight || c.config.pushNotifications)) {
 				[self setUnreadState:c];
+			}
+
+			/* Weights. */
+			IRCUser *owner = [c findMember:sender];
+
+			PointerIsEmptyAssert(owner);
+
+			NSString *trimmedMyNick = [self.myNick stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_"]];
+
+			if ([text stringPositionIgnoringCase:trimmedMyNick] >= 0) {
+				[owner outgoingConversation];
+			} else {
+				[owner conversation];
 			}
 		}
 	}
