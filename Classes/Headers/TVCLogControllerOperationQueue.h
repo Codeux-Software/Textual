@@ -38,9 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerOperationQueue : NSOperationQueue
+@property (nonatomic, strong, readonly) NSMutableArray *cachedOperations;
+
 /* Add new operations. */
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
+
+/* Clear cached operations. */
+- (void)destroyCachedOperationsFor:(TVCLogController *)controller;
 
 /* Update isReady state. */
 - (void)updateReadinessState;
