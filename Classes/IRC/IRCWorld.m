@@ -335,8 +335,13 @@
 			[c resetState];
 		}
 	}
-	
-	[self reloadTree];
+
+	if (limitedClient) {
+		[self reloadTreeGroup:limitedClient];
+	} else {
+		[self reloadTree];
+	}
+
 	[self markAllScrollbacks];
 }
 
@@ -388,6 +393,16 @@
 			[self.masterController.mainWindowLoadingScreen hideAll:YES];
 		}
 	}
+}
+
+- (void)reloadTreeItem:(IRCTreeItem *)item
+{
+	[self.serverList reloadItem:item reloadChildren:NO];
+}
+
+- (void)reloadTreeGroup:(IRCTreeItem *)item
+{
+	[self.serverList reloadItem:item reloadChildren:YES];
 }
 
 - (void)reloadTree
@@ -474,6 +489,13 @@
 
 #pragma mark -
 #pragma mark Window Title
+
+- (void)updateTitleFor:(IRCTreeItem *)item
+{
+	if (self.selectedItem == item) {
+		[self updateTitle];
+	}
+}
 
 - (void)updateTitle
 {

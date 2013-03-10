@@ -85,9 +85,14 @@
 - (void)markAllScrollbacks;
 
 - (void)updateIcon;
+
 - (void)updateTitle;
+- (void)updateTitleFor:(IRCTreeItem *)item;
 
 - (void)reloadTree;
+- (void)reloadTreeItem:(IRCTreeItem *)item;
+- (void)reloadTreeGroup:(IRCTreeItem *)item;
+
 - (void)adjustSelection;
 
 - (void)expandClient:(IRCClient *)client;
