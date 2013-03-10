@@ -3652,7 +3652,9 @@
     NSString *message = m.sequence;
 
     /* This match is pretty general, but it works in most situations. */
-    if ([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Excess Flood)"]) {
+    if (([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Excess Flood)"]) ||
+		([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Max SendQ exceeded)"]))
+	{
         [self.worldController select:self]; // Bring server to attention before popping view.
 
         /* Cancel any active reconnect before asking if the user wants to do it. */
