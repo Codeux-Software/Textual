@@ -58,7 +58,25 @@
 {
 	if ((self = [super init])) {
 		self.maxConcurrentOperationCount = 1;
-		self.name = [NSString stringWithFormat:@"TVCLogControllerOperationQueue-%@", [NSString stringWithUUID]];
+
+		/* cachedOperations are primarly used by application start message playback
+		 and style reloads. Instead of adding a new operation for thousands of lines
+		 used by these two actions, we will add the actual blocks to our cache array
+		 and then only add one operation to the operation queue.
+		 
+		 When this operation is called, it has a context that tells the recieving
+		 method that our cachedOperations array should be flushed. The cached 
+		 operations array is never called during normal prints that may occur
+		 during the above mentioned actions. 
+		 
+		 As long as new operations added use the operation that calls our cached
+		 operations array as a dependant, the others should execute in order because
+		 they will have to wait until this is finished. 
+		 
+		 Each cache entry is an array with the format: Index 0 = messageBlock; 
+		 Index 1 = the controller, Index 2 = the context. */
+		
+		_cachedOperations = [NSMutableArray array];
 
 		return self;
 	}
@@ -73,9 +91,34 @@
 
 - (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
 {
+	/* Ask our context whether this item should be inserted into our cache instead of the queue. */
+	if (context && [context[@"cacheOperation"] boolValue] == YES) {
+		[self.cachedOperations addObject:@[messageBlock, sender, context]];
+
+		return;
+	}
+
+	/* It wants in the queue. Create operation and insert. */
 	[self addOperation:[TVCLogControllerOperationItem operationWithBlock:^{
 		[sender handleMessageBlock:messageBlock withContext:context];
 	} forController:sender withContext:context]];
+}
+
+#pragma mark -
+
+- (void)destroyCachedOperationsFor:(TVCLogController *)controller
+{
+	NSArray *cacheCopy = [self.cachedOperations copy];
+
+	for (NSArray *cacheItem in cacheCopy) {
+		NSAssertReturnLoopContinue(cacheItem.count == 3);
+
+		TVCLogController *cont = cacheItem[1];
+
+		if (cont == controller) {
+			[self.cachedOperations removeObject:cacheItem];
+		}
+	}
 }
 
 #pragma mark -
@@ -118,8 +161,8 @@
 	retval.controller		= controller;
 	retval.context			= context;
 
+	retval.queuePriority	= NSOperationQueuePriorityNormal;
 	retval.completionBlock	= block;
-	retval.queuePriority	= retval.priority;
 
     NSOperation *lastOp = nil;
 
@@ -139,46 +182,9 @@
 	return retval;
 }
 
-- (NSOperationQueuePriority)priority
-{
-	id target = self.controller.channel;
-
-	if (PointerIsEmpty(target)) {
-		target = self.controller.client;
-	}
-
-	id selected = self.worldController.selectedItem;
-
-	NSOperationQueuePriority retval = NSOperationQueuePriorityLow;
-
-	if ((target || selected) && target == selected) {
-		retval = NSOperationQueuePriorityNormal;
-	}
-
-	if (NSObjectIsNotEmpty(self.context) && self.context[@"highPriority"]) {
-		retval += 4L;
-	}
-
-	if (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]) {
-		retval += 4L;
-	}
-
-	return retval;
-}
-
 - (BOOL)isReady
 {
-	if (self.controller.reloadingHistory) {
-		BOOL isHistoric = (NSObjectIsNotEmpty(self.context) && self.context[@"isHistoric"]);
-
-		if (isHistoric) {
-			return ([self.controller.view isLoading] == NO);
-		}
-	} else {
-		return ([self.controller.view isLoading] == NO);
-	}
-    
-	return NO;
+	return ([self.controller.view isLoading] == NO);
 }
 
 @end
