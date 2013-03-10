@@ -205,7 +205,7 @@
 
 	[self.config.channelList removeAllObjects];
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeGroup:self];
 	[self.worldController adjustSelection];
 }
 
@@ -697,7 +697,7 @@
 		t.nicknameHighlightCount += 1;
 
         [self.worldController updateIcon];
-        [self.worldController reloadTree];
+        [self.worldController reloadTreeItem:t];
 	}
 
 	if (t.isUnread || (isActiveWindow && self.worldController.selectedItem == t)) {
@@ -729,7 +729,7 @@
 	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
 		t.treeUnreadCount += 1;
 
-        [self.worldController reloadTree];
+        [self.worldController reloadTreeItem:t];
 	}
 
 	if (isActiveWindow == NO && popIcon) {
@@ -2066,7 +2066,7 @@
 				[oc setNicknameHighlightCount:1];
 			}
 			
-			[self.worldController reloadTree];
+			[self.worldController reloadTreeItem:oc];
 
 			break;
 		}
@@ -2514,7 +2514,7 @@
 	[self logFileWriteSessionEnd];
 	[self resetAllPropertyValues];
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeGroup:self];
 }
 
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
@@ -2557,7 +2557,7 @@
 	[self send:IRCPrivateCommandIndex("nick"), self.sentNick, nil];
 	[self send:IRCPrivateCommandIndex("user"), userName, modeParam, @"*", realName, nil];
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeGroup:self];
 }
 
 #pragma mark -
@@ -3133,7 +3133,7 @@
 				if ([hostTopic isEqualIgnoringCase:c.topic] == NO) {
 					[c setTopic:hostTopic];
 
-                    [self.worldController updateTitle];
+                    [self.worldController updateTitleFor:c];
 				}
 			}
 		}
@@ -3311,7 +3311,7 @@
 		
 		[c activate];
 
-		[self.worldController reloadTree];
+		[self.worldController reloadTreeItem:c];
 		
 		self.myHost = m.sender.hostmask;
 
@@ -3352,8 +3352,7 @@
 		[self print:c type:TVCLogLineJoinType nick:nil text:text receivedAt:m.receivedAt];
 	}
 
-	[self.worldController reloadTree];
-    [self.worldController updateTitle];
+    [self.worldController updateTitleFor:c];
 }
 
 - (void)receivePart:(IRCMessage *)m
@@ -3371,7 +3370,7 @@
 	if ([sendern isEqualIgnoringCase:self.localNickname]) {
 		[c deactivate];
 
-		[self.worldController reloadTree];
+		[self.worldController reloadTreeItem:c];
 	}
 
 	[c removeMember:sendern];
@@ -3393,8 +3392,7 @@
 		[self print:c type:TVCLogLinePartType nick:nil text:message receivedAt:m.receivedAt];
 	}
 
-	[self.worldController reloadTree];
-    [self.worldController updateTitle];
+    [self.worldController updateTitleFor:c];
 }
 
 - (void)receiveKick:(IRCMessage *)m
@@ -3413,7 +3411,7 @@
 	if ([targetu isEqualIgnoringCase:self.localNickname]) {
 		[c deactivate];
 
-		[self.worldController reloadTree];
+		[self.worldController reloadTreeItem:c];
 
 		[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:sendern text:comment];
 
@@ -3439,8 +3437,7 @@
 		[self print:c type:TVCLogLineKickType nick:nil text:message receivedAt:m.receivedAt];
 	}
 
-	[self.worldController reloadTree];
-    [self.worldController updateTitle];
+    [self.worldController updateTitleFor:c];
 }
 
 - (void)receiveQuit:(IRCMessage *)m
@@ -3480,8 +3477,11 @@
 	}
 
 	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
-	
-	[self.worldController reloadTree];
+
+	if (myself) {
+		[self.worldController reloadTreeGroup:self];
+	}
+
     [self.worldController updateTitle];
 }
 
@@ -3553,7 +3553,7 @@
 
 	c.name = newNick;
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeItem:c];
 }
 
 - (void)receiveMode:(IRCMessage *)m
@@ -3586,11 +3586,11 @@
 		}
 
 		[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
+
+		[self.worldController updateTitleFor:c];
 	} else {
 		[self print:nil type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
 	}
-    
-    [self.worldController updateTitle];
 }
 
 - (void)receiveTopic:(IRCMessage *)m
@@ -3892,7 +3892,7 @@
 		}
 	}
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeGroup:self];
     [self.worldController updateTitle];
 
 	/* Everything else. */
@@ -3949,7 +3949,7 @@
                 [self printDebugInformationToConsole:[configRep lastObject]];
             }
 
-			[self.worldController reloadTree];
+			[self.worldController reloadTreeGroup:self];
 
 			break;
 		}
@@ -4339,7 +4339,7 @@
 				self.inUserInvokedWhoRequest = NO;
 			}
 
-            [self.worldController updateTitle];
+            [self.worldController updateTitleFor:c];
 
             if ([TPCPreferences processChannelModes]) {
                 [self.worldController.selectedChannel reloadMemberList];
@@ -4513,7 +4513,7 @@
 				[self requestUserHosts:c];
 			}
             
-            [self.worldController updateTitle];
+            [self.worldController updateTitleFor:c];
 
 			break;
 		}
@@ -5267,7 +5267,7 @@
 
 	[self.socket open];
 
-	[self.worldController reloadTree];
+	[self.worldController reloadTreeGroup:self];
 }
 
 - (void)autoConnect:(NSInteger)delay
