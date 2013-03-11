@@ -89,6 +89,8 @@ typedef id (^TVCLogMessageBlock)(void);
 
 - (void)changeTextSize:(BOOL)bigger;
 
+- (TVCLogControllerOperationQueue *)operationQueue;
+
 - (BOOL)print:(TVCLogLine *)line;
 - (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML;
 

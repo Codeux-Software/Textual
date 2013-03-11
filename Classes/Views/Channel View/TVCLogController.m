@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController ()
-@property (nonatomic, readonly, uweak) TVCLogControllerOperationQueue *operationQueue;
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @end
 
