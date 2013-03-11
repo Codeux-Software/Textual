@@ -119,7 +119,19 @@
 		DOMHTMLAnchorElement *anchor = object;
 		
 		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-			[anchor.parentNode removeChild:object];
+			DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[object getElementsByTagName:@"img"] item:0];
+
+			int height = imageElement.height;
+			int width  = imageElement.width;
+
+			if ( ! [imageElement.src isEqualToString:anchor.href]) {
+				imageElement.src    = anchor.href;
+			}
+			else {
+				imageElement.src    = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"FormattingColor_15" ofType:@"png"]] relativePath];
+				imageElement.height = height;
+				imageElement.width  = width;
+			}
 			
 			return @"false";
 		}
