@@ -68,7 +68,7 @@
 	return mcstring;
 }
 
-- (void)drawModeBadge:(NSString *)mcnstring inCell:(NSRect)badgeFrame isSelected:(BOOL)selected
+- (void)drawModeBadge:(NSRect)badgeFrame isSelected:(BOOL)selected
 {
 	/* Align the badge. */
     badgeFrame = NSMakeRect((badgeFrame.origin.x + self.memberList.userMarkBadgeMargin),
@@ -76,8 +76,6 @@
 												   self.memberList.userMarkBadgeWidth,
 												   self.memberList.userMarkBadgeHeight);
 
-	char mcstring = [mcnstring characterAtIndex:0];
-	
     NSBezierPath *badgePath = nil;
     
 	if (selected == NO) {
@@ -99,20 +97,29 @@
         badgeFrame.size.width += 1;
     }
 
+	/* Gather info about the user being drawn. */
+	IRCUser *puser = self.memberPointer;
+
+	NSString *mcnstring = puser.mark;
+
+	char mcstring = [mcnstring characterAtIndex:0];
+
 	/* Determin the badge's background color. White is the default
 	 because that is the color used when the badge is selected. */
     NSColor *backgroundColor = [NSColor whiteColor];
-    
+	
     if (selected == NO) {
-        if (mcstring == '~') {
+        if (puser.isCop) {
+            backgroundColor = [self.memberList userMarkBadgeBackgroundColor_Y];
+		} else if (puser.q) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_Q];
-        } else if (mcstring == '&' || mcstring == '!') {
+        } else if (puser.a) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_A];
-        } else if (mcstring == '@') {
+        } else if (puser.o) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_O];
-        } else if (mcstring == '%') {
+        } else if (puser.h) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_H];
-        } else if (mcstring == '+') {
+        } else if (puser.v) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_V];
         } else {
 			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
@@ -304,7 +311,7 @@
 	}
 		
 	/* Draw Badges, Text, and Status Icon */
-	[self drawModeBadge:member.mark inCell:cellFrame isSelected:isSelected];
+	[self drawModeBadge:cellFrame isSelected:isSelected];
 	
 	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:member.nickname
 																					attributes:self.attributedStringValue.attributes];
