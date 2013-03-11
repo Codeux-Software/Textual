@@ -164,13 +164,7 @@
 	retval.queuePriority	= NSOperationQueuePriorityNormal;
 	retval.completionBlock	= block;
 
-    NSOperation *lastOp = nil;
-
-	if (controller.channel && [TPCPreferences operationQueueIsChannelSpecific]) {
-		lastOp = [controller.channel.operationQueue dependencyOfLastQueueItem];
-	} else {
-		lastOp = [controller.client.operationQueue dependencyOfLastQueueItem];
-	}
+    NSOperation *lastOp = [controller.operationQueue dependencyOfLastQueueItem];
 
     if (lastOp) {
         /* Make this queue item dependent on the execution on the item above it to
