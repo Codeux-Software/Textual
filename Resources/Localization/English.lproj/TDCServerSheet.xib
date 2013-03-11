@@ -1122,7 +1122,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="232067233">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">71303168</int>
-							<string key="NSContents">Part &amp; Quit Mesage:</string>
+							<string key="NSContents">Part &amp; Quit Message:</string>
 							<reference key="NSSupport" ref="788253527"/>
 							<reference key="NSControlView" ref="809371268"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
