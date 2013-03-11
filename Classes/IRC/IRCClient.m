@@ -4371,7 +4371,7 @@
 
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
-            if ([flfields hasPrefix:@"G"]) {
+            if ([flfields hasPrefix:@"G"] && self.inUserInvokedWhoRequest == NO) {
                 isAway = YES;
             }
 
