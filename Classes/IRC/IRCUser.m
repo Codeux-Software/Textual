@@ -94,6 +94,8 @@
 		return [self.supportInfo userModePrefixSymbol:@"h"];
 	} else if (self.v) {
 		return [self.supportInfo userModePrefixSymbol:@"v"];
+	} else if (self.isCop) {
+		return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
 	}
 	
 	return nil;
@@ -198,7 +200,11 @@
 {
 	/* Not even going to touch this mess… */
 
-	if (NSDissimilarObjects(self.q, other.q)) {
+	if (NSDissimilarObjects(self.isCop, other.isCop)) {
+		return ((self.isCop) ? NSOrderedAscending : NSOrderedDescending);
+	} else if (self.isCop) {
+		return [self.nickname caseInsensitiveCompare:other.nickname];
+	} else if (NSDissimilarObjects(self.q, other.q)) {
 		return ((self.q) ? NSOrderedAscending : NSOrderedDescending);
 	} else if (self.q) {
 		return [self.nickname caseInsensitiveCompare:other.nickname];
