@@ -4377,7 +4377,7 @@
 
 			flfields = [flfields substringFromIndex:1];
 
-			if ([flfields hasPrefix:@"*"]) {
+			if ([flfields contains:@"*"]) {
 				flfields = [flfields substringFromIndex:1];
 
                 isIRCop = YES;
@@ -4416,6 +4416,8 @@
 					u.h = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"v"]]) {
 					u.v = YES;
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"y"]]) { // InspIRCd-2.0
+					u.isCop = YES;
 				} else {
 					break;
 				}
@@ -4459,6 +4461,8 @@
 						member.h = YES;
 					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"v"]]) {
 						member.v = YES;
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"y"]]) { // InspIRCd-2.0
+						member.isCop = YES;
 					} else {
 						break;
 					}

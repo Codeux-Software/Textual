@@ -88,6 +88,11 @@
 							   invertedItem:[NSColor internalCalibratedRed:48 green:48 blue:48 alpha:1]];
 }
 
+- (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
+{
+	return [NSColor internalCalibratedRed:224 green:27 blue:93 alpha:1];
+}
+
 - (NSColor *)userMarkBadgeBackgroundColor_Q
 {
 	return [NSColor internalCalibratedRed:186 green:0 blue:0 alpha:1];
