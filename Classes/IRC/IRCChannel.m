@@ -553,7 +553,6 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(TVCMemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	cell.channelPointer = self;
 	cell.memberPointer = self.memberList[row];
 }
 
