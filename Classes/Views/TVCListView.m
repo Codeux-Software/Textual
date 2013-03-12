@@ -37,7 +37,12 @@
 
 #import "TextualApplication.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation TVCListView
+
+#pragma mark -
+#pragma mark Table View
 
 - (NSInteger)countSelectedRows
 {
@@ -102,6 +107,70 @@
 	} else {
 		[super textDidEndEditing:note];
 	}
+}
+
+@end
+
+/* TVCListViewScrollClipView and TVCListViewScrollView are based off the blog posted located at:
+ 
+ <http://jwilling.com/post/40530077255/optimized-scrolling-in-a-view-based-nstableview> */
+
+#pragma mark -
+#pragma mark Scroll View Clip View
+
+@implementation TVCListViewScrollClipView
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		self.layer = [CAScrollLayer layer];
+
+		self.wantsLayer = YES;
+		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
+		return self;
+	}
+
+	return nil;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Scroll View
+
+@implementation TVCListViewScrollView
+
+- (void)swapClipView
+{
+    self.wantsLayer = YES;
+
+    id documentView = self.documentView;
+
+	TVCListViewScrollClipView *clipView = [[TVCListViewScrollClipView alloc] initWithFrame:self.contentView.frame];
+
+	self.contentView = clipView;
+	self.documentView = documentView;
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		[self swapClipView];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    if ([self.contentView isKindOfClass:[TVCListViewScrollClipView class]] == NO) {
+        [self swapClipView];
+    }
 }
 
 @end

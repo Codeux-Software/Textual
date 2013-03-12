@@ -51,3 +51,9 @@
 - (void)selectRows:(NSArray *)indices;
 - (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend;
 @end
+
+@interface TVCListViewScrollClipView : NSClipView
+@end
+
+@interface TVCListViewScrollView : NSScrollView
+@end

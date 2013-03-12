@@ -111,6 +111,8 @@
 	@class TVCInputTextFieldBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
+	@class TVCListViewScrollView;
+	@class TVCListViewScrollClipView;
     @class TVCLogController;
     @class TVCLogControllerOperationQueue;
 	@class TVCLogLine;
