@@ -248,9 +248,6 @@
 	/* Declare variables. */
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
 
-	IRCChannel *channel = self.channelPointer;
-	IRCUser *member = self.memberPointer;
-
 	NSInteger rowIndex = [self.memberList rowAtPoint:cellFrame.origin];
 	
 	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
@@ -274,7 +271,7 @@
 		
 		NSString *backgroundImage;
 		
-		if (channel.isChannel || channel.isPrivateMessage) {
+		if (self.channelPointer.isChannel || self.channelPointer.isPrivateMessage) {
 			backgroundImage = @"ChannelCellSelection";
 		} else {
 			backgroundImage = @"ServerCellSelection";
@@ -313,8 +310,8 @@
 	/* Draw Badges, Text, and Status Icon */
 	[self drawModeBadge:cellFrame isSelected:isSelected];
 	
-	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:member.nickname
-																					attributes:self.attributedStringValue.attributes];
+	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:self.memberPointer.nickname
+																					attributes:@{}];
 
 	/* Prepare the drop shadow. */
 	NSShadow *itemShadow = [NSShadow new];
@@ -378,6 +375,11 @@
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[RZGraphicsCurrentContext() restoreGraphicsState];
 	}
+}
+
+- (IRCChannel *)channelPointer
+{
+	return self.worldController.selectedChannel;
 }
 
 - (TVCMemberList *)memberList
