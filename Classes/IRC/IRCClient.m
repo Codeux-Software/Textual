@@ -3335,6 +3335,13 @@
 		u.supportInfo = self.isupport;
 
 		[c addMember:u];
+
+		/* Add to existing query? */
+		IRCChannel *query = [self findChannel:sendern];
+
+		if (query) {
+			[query addMember:u];
+		}
 	}
 
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
