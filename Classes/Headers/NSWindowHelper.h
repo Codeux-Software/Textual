@@ -40,6 +40,5 @@
 @interface NSWindow (TXWindowHelper)
 - (void)exactlyCenterWindow;
 
-- (BOOL)isOnCurrentWorkspace;
 - (BOOL)isInFullscreenMode;
 @end

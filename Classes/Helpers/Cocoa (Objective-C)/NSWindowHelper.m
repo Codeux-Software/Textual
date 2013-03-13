@@ -58,13 +58,6 @@
 	}	
 }
 
-- (BOOL)isOnCurrentWorkspace
-{
-	/* Is all this really necessary?… */
-	
-	return ([self isOnActiveSpace] && [self isMainWindow] && [self isVisible] && [NSApp keyWindow] == self);
-}
-
 - (BOOL)isInFullscreenMode
 {
 	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);

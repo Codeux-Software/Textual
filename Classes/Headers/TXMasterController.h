@@ -43,6 +43,7 @@
 @property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, assign) BOOL skipTerminateSave;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
+@property (nonatomic, assign) BOOL mainWindowIsActive;
 @property (nonatomic, nweak) NSBox *channelViewBox;
 @property (nonatomic, nweak) NSMenu *addServerMenu;
 @property (nonatomic, nweak) NSMenu *channelViewMenu;

@@ -38,17 +38,45 @@
 #import "TextualApplication.h"
 
 @interface TVCServerList : NSOutlineView
+@property (nonatomic, assign, readonly) BOOL isDrawing;
+
 @property (nonatomic, uweak) id keyDelegate;
 
 @property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
 @property (nonatomic, strong) NSImage *alternateDisclosureTriangle;
 
+/* addItemToList and removeItemFromList work two completely different ways. 
+ addItemToList expects that you have already added the item to the data source
+ and that you are giving the list the index of the newly inserted item relative
+ to the parent group. The list then manages that object. */
+- (void)addItemToList:(NSInteger)index inParent:(id)parent;
+
+/* removeItemFromList does not care about the index of an object as long as the
+ object exists in the list. It will look for it anywhere. It checks if the item
+ is a parent group or just a child and removes it based on that context. */
+- (void)removeItemFromList:(id)oldObject;
+
+/* Drawing. */
+/* All these drawing calls are pretty much reserved for internal use by Textual.
+ Just because these are defined in a header does not mean they should ever, EVER,
+ EEEEEEVVVVVVEEEEERRRRRRRR be called from a plugin. Ever. Use IRCWorld for any
+ updates you may need to make to a item. */
+
+- (void)reloadAllDrawings;
+
+- (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
+- (void)updateDrawingForRow:(NSInteger)rowIndex;
+
 - (void)updateBackgroundColor;
+- (void)updateSelectionBackground;
 
 /* User interface elements. */
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)selected;
+
+- (NSColor *)inactiveWindowListBackgroundColor;
+- (NSColor *)activeWindowListBackgroundColor;
 
 - (NSFont *)messageCountBadgeFont;
 - (NSFont *)normalChannelCellFont;

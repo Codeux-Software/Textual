@@ -396,26 +396,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4C01BA0C15810F27007E2DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01B9FC1580C591007E2DAF;
-			remoteInfo = "Clean Up Resources";
-		};
-		4C01BA0E15810F2A007E2DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
-			remoteInfo = "Update Version Info";
-		};
 		4C34F94C16E24056009F573D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C34F94816E24056009F573D /* Wikipedia Links Extension.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = WikipediaLinkParser;
+		};
+		4CBB842C16F0DA1D004E3ED6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
+			remoteInfo = "Build Frameworks";
+		};
+		4CBB842E16F0DA1F004E3ED6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C01B9FC1580C591007E2DAF;
+			remoteInfo = "Clean Up Resources";
+		};
+		4CBB843016F0DA21004E3ED6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
+			remoteInfo = "Update Version Info";
 		};
 		4CCC6B69158E8CCC003A102B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -437,13 +444,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = SystemProfiler;
-		};
-		4CCF301815804DF0006FFE21 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
-			remoteInfo = "Build Frameworks";
 		};
 		4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1994,9 +1994,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C01BA0D15810F27007E2DAF /* PBXTargetDependency */,
-				4C01BA0F15810F2A007E2DAF /* PBXTargetDependency */,
-				4CCF301915804DF0006FFE21 /* PBXTargetDependency */,
+				4CBB842F16F0DA1F004E3ED6 /* PBXTargetDependency */,
+				4CBB843116F0DA21004E3ED6 /* PBXTargetDependency */,
+				4CBB842D16F0DA1D004E3ED6 /* PBXTargetDependency */,
 			);
 			name = Textual;
 			productName = Textual;
@@ -2366,20 +2366,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C01BA0D15810F27007E2DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01B9FC1580C591007E2DAF /* Clean Up Resources */;
-			targetProxy = 4C01BA0C15810F27007E2DAF /* PBXContainerItemProxy */;
-		};
-		4C01BA0F15810F2A007E2DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01BA0415810DD8007E2DAF /* Update Version Info */;
-			targetProxy = 4C01BA0E15810F2A007E2DAF /* PBXContainerItemProxy */;
-		};
-		4CCF301915804DF0006FFE21 /* PBXTargetDependency */ = {
+		4CBB842D16F0DA1D004E3ED6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CCF301015804DCE006FFE21 /* Build Frameworks */;
-			targetProxy = 4CCF301815804DF0006FFE21 /* PBXContainerItemProxy */;
+			targetProxy = 4CBB842C16F0DA1D004E3ED6 /* PBXContainerItemProxy */;
+		};
+		4CBB842F16F0DA1F004E3ED6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C01B9FC1580C591007E2DAF /* Clean Up Resources */;
+			targetProxy = 4CBB842E16F0DA1F004E3ED6 /* PBXContainerItemProxy */;
+		};
+		4CBB843116F0DA21004E3ED6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C01BA0415810DD8007E2DAF /* Update Version Info */;
+			targetProxy = 4CBB843016F0DA21004E3ED6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

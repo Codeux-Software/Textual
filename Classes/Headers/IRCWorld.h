@@ -44,7 +44,6 @@
 @property (nonatomic, assign) TXFSLongInt bandwidthOut;
 @property (nonatomic, strong) NSMutableArray *clients;
 @property (nonatomic, assign) BOOL isSoundMuted;
-@property (nonatomic, assign) BOOL isReloadingTree;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, strong) IRCTreeItem *selectedItem;
 @property (nonatomic, assign) NSString *previousSelectedClientId;
