@@ -208,10 +208,6 @@
 
 - (TVCLogControllerOperationQueue *)operationQueue
 {
-    if (self.channel) {
-        return self.channel.operationQueue;
-    }
-    
     return self.client.operationQueue;
 }
 

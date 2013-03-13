@@ -47,6 +47,10 @@
 /* Clear cached operations. */
 - (void)destroyCachedOperationsFor:(TVCLogController *)controller;
 
+/* Limit scope of cancelAllOperations. */
+- (void)destroyOperationsForChannel:(IRCChannel *)channel;
+- (void)destroyOperationsForClient:(IRCClient *)client;
+
 /* Update isReady state. */
 - (void)updateReadinessState;
 
