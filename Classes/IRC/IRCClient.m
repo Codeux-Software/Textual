@@ -1167,8 +1167,6 @@
 		case 5089: // Command: UME
 		case 5090: // Command: UNOTICE
 		{
-			NSObjectIsEmptyAssert(uncutInput);
-			
 			BOOL opMsg = NO;
 			BOOL secretMsg = NO;
             BOOL doNotEncrypt = NO;
@@ -1231,7 +1229,18 @@
 				targetChannelName = s.getToken.string;
 			}
 
-			NSObjectIsEmptyAssert(s);
+			if (type == TVCLogLineActionType) {
+				if (NSObjectIsEmpty(s)) {
+					/* If the input is empty, then set one space character as our input
+					 when using the /me command so that the use of /me without any input
+					 still sends an action. */
+
+					s = [[NSAttributedString emptyStringWithBase:NSStringWhitespacePlaceholder] mutableCopy];
+				}
+			} else {
+				NSObjectIsEmptyAssert(s);
+			}
+			
 			NSObjectIsEmptyAssert(targetChannelName);
 			
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
@@ -2809,8 +2818,19 @@
 	NSAssertReturn(m.params.count >= 1);
 
 	NSObjectIsEmptyAssert(command);
-	NSObjectIsEmptyAssert(text);
 
+	if ([command isEqualToString:IRCPrivateCommandIndex("action")] == NO) {
+		/* Allow in actions without a body. */
+		
+		NSObjectIsEmptyAssert(text);
+	} else {
+		if (NSObjectIsEmpty(text)) {
+			/* Use a single space if an action is empty. */
+
+			text = NSStringWhitespacePlaceholder;
+		}
+	}
+	
 	NSString *sender = m.sender.nickname;
 	NSString *target = [m paramAt:0];
 	
