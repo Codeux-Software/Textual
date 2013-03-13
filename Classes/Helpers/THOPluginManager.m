@@ -151,9 +151,9 @@
 	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
 	NSArray *scriptPaths = @[
-		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
         NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
 		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
+		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
 	];
 
 	id returnData;
