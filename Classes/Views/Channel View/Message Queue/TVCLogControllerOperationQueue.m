@@ -121,9 +121,32 @@
 	}
 }
 
+- (void)cancelOperationsForViewController:(TVCLogController *)controller
+{
+	PointerIsEmptyAssert(controller);
+	
+	NSArray *queues = [self operations];
+
+	for (TVCLogControllerOperationItem *op in queues) {
+		if (op.controller == controller) {
+			[op cancel];
+		}
+	}
+}
+
+- (void)destroyOperationsForChannel:(IRCChannel *)channel
+{
+	[self cancelOperationsForViewController:channel.viewController];
+}
+
+- (void)destroyOperationsForClient:(IRCClient *)client
+{
+	[self cancelOperationsForViewController:client.viewController];
+}
+
 #pragma mark -
 
-- (void)updateReadinessState
+- (void)updateReadinessState:(TVCLogController *)controller
 {
 	NSArray *queues = [self operations];
 
