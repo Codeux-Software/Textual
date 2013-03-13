@@ -145,6 +145,8 @@
 		}
 	}
 
+	eventDescription = [eventDescription stripIRCEffects];
+
 #ifdef TXForceNativeNotificationCenterDispatch
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		NSUserNotification *notification = [NSUserNotification new];
