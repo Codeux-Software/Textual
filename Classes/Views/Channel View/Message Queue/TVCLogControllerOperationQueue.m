@@ -146,7 +146,7 @@
 
 #pragma mark -
 
-- (void)updateReadinessState:(TVCLogController *)controller
+- (void)updateReadinessState
 {
 	NSArray *queues = [self operations];
 
