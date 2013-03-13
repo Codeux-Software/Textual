@@ -249,8 +249,12 @@
 			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
 
 			[theGradient drawInRect:clipRect angle:90];
+
+			return;
 		}
 	}
+
+	[super drawBackgroundInClipRect:clipRect];
 }
 
 #pragma mark -
