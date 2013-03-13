@@ -52,11 +52,27 @@
 	NSString *fname = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
     NSString *ftype = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 
+	NSMutableString *resultString = [NSMutableString string];
+
     if ([ftype isEqualIgnoringCase:@"user"]) {
-		return TPIFLS(@"SystemInformationStyleCommandResultCustom", fname);
+		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultCustom", fname)];
     } else {
-		return TPIFLS(@"SystemInformationStyleCommandResultBundle", fname);
+		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultBundle", fname)];
     }
+
+	if ([TPCPreferences invertSidebarColors]) {
+		[resultString appendString:TPILS(@"SystemInformationStyleCommandResultDarkMode")];
+	} else {
+		[resultString appendString:TPILS(@"SystemInformationStyleCommandResultLightMode")];
+	}
+
+	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+		[resultString appendString:TPILS(@"SystemInformationStyleCommandResultGraphiteMode")];
+	} else {
+		[resultString appendString:TPILS(@"SystemInformationStyleCommandResultAquaMode")];
+	}
+
+	return resultString;
 }
 
 + (NSString *)applicationAndSystemUptime
