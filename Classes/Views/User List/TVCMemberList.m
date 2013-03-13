@@ -57,22 +57,37 @@
 	}
 }
 
+- (void)updateBackgroundColor
+{
+	[self setBackgroundColor:self.properBackgroundColor];
+}
+
 - (void)drawContextMenuHighlightForRow:(int)row
 {
     // Do not draw focus ring …
 }
 
-- (void)updateBackgroundColor
-{
-	[self setBackgroundColor:[self listBackgroundColor]];
-}
-
 #pragma mark -
 #pragma mark User Interface Design Elements
 
-- (NSColor *)listBackgroundColor
+- (NSColor *)properBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
+	if (self.masterController.mainWindowIsActive) {
+		return [self activeWindowListBackgroundColor];
+	} else {
+		return [self inactiveWindowListBackgroundColor];
+	}
+}
+
+- (NSColor *)activeWindowListBackgroundColor
+{
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:226.0 green:230.0 blue:236.0 alpha:1]
+							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
+}
+
+- (NSColor *)inactiveWindowListBackgroundColor
+{
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1]
 							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 }
 

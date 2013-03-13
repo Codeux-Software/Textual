@@ -37,6 +37,27 @@
 
 #import "TextualApplication.h"
 
-@interface TVCServerListCell : NSTextFieldCell 
+@interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
+
+/* Image view holding the image for selected cell. */
+@property (nonatomic, nweak) NSImageView *backgroundImageCell;
+
+- (void)updateDrawing:(NSRect)cellFrame;
+
+- (void)updateGroupDisclosureTriangle;
+- (void)updateSelectionBackgroundView;
+@end
+
+@interface TVCServerListCellChildItem : TVCServerListCell
+@end
+
+@interface TVCServerListCellGroupItem : TVCServerListCell
+@end
+
+@interface TVCServerListCellItemTextField : NSTextFieldCell
+@property (nonatomic, assign) BOOL isSelected;        //       <------ Information defined by parent cell for badge drawing.
+@property (nonatomic, assign) BOOL isKeyWindow;       //       <-----/
+@property (nonatomic, assign) BOOL drawMessageCountBadge;
+@property (nonatomic, nweak) IRCChannel *channelPointer; // Must be set to gather badge information.
 @end
