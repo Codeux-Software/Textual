@@ -81,7 +81,7 @@
 
 - (NSColor *)activeWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:226.0 green:230.0 blue:236.0 alpha:1]
+	return [NSColor defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
 							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 }
 

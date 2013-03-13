@@ -7,16 +7,16 @@
       buildImplicitDependencies = "NO">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+               BlueprintIdentifier = "4C5BA37216F1302F00A96CA2"
                BuildableName = "Textual.app"
-               BlueprintName = "Textual"
+               BlueprintName = "Textual (No Addons)"
                ReferencedContainer = "container:Main Project (Textual).xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4C5BA37216F1302F00A96CA2"
             BuildableName = "Textual.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (No Addons)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4C5BA37216F1302F00A96CA2"
             BuildableName = "Textual.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (No Addons)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -64,14 +64,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4C5BA37216F1302F00A96CA2"
             BuildableName = "Textual.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (No Addons)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,7 +80,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Debug"
-      revealArchiveInOrganizer = "NO">
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
