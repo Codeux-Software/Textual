@@ -73,7 +73,7 @@
 											<string key="NSFrameSize">{818, 380}</string>
 											<reference key="NSSuperview" ref="363273225"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="934369256"/>
+											<reference key="NSNextKeyView" ref="862570851"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -288,7 +288,7 @@
 							<string key="NSFrame">{{-1, 47}, {790, 398}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="363273225"/>
+							<reference key="NSNextKeyView" ref="934369256"/>
 							<int key="NSsFlags">133810</int>
 							<reference key="NSVScroller" ref="862570851"/>
 							<reference key="NSHScroller" ref="17276569"/>
@@ -305,6 +305,7 @@
 							<string key="NSFrame">{{685, 6}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="365165194">
 								<int key="NSCellFlags">67108864</int>
@@ -789,7 +790,6 @@
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{590, 493}, {788, 480}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="65.CustomClassName">TVCListViewScrollView</string>
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="68.CustomClassName">TVCListView</string>
 				<string key="68.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -824,14 +824,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TVCListView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TVCListViewScrollView</string>
-					<string key="superclassName">NSScrollView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TVCListViewScrollView.h</string>
 					</object>
 				</object>
 			</array>
