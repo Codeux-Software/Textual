@@ -78,6 +78,13 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[TPCPreferences initPreferences];
 
+	BOOL disableWindowSizeRequirement = [RZUserDefaults() boolForKey:@"MinimumWindowSizeIsNotForced"];
+
+	/* That's a long var name. */
+	if (disableWindowSizeRequirement) {
+		[self.mainWindow setMinSize:NSMakeSize(0, 0)];
+	}
+
 	[self loadWindowState:YES];
 
 	[self.mainWindow makeMainWindow];
